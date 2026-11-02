@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/siglibs",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "siglibs/library/EspEepromManager/1.0.0/EspEepromManager-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspEepromManager-1.0.0.tar.gz",
+    "size_bytes": 3878,
+    "sha256": "1284d71fedfdd5fbb126cd3fb74e0a693fa1e671633e7bc8a44dccdb7eb5b483",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/siglibs/library/EspEepromManager/1.0.0/EspEepromManager-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/siglibs/library/EspEepromManager/1.0.0/EspEepromManager-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "siglibs/library/OutputPin/1.0.2/OutputPin-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OutputPin-1.0.2.tar.gz",
+    "size_bytes": 6587,
+    "sha256": "d999c6f9b6b27889aa412dafb2a45cdd1e11cd34a4708379aaa978207e54bf01",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/siglibs/library/OutputPin/1.0.2/OutputPin-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/siglibs/library/OutputPin/1.0.2/OutputPin-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

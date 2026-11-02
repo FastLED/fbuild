@@ -1,0 +1,191 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/thomasfredericks",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "thomasfredericks/library/Bounce2/2.52/Bounce2-2.52.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bounce2-2.52.tar.gz",
+    "size_bytes": 35103,
+    "sha256": "cab7b916489fcdb51b9650c9a5a318e38e7e192c12766786b6fb49350a3ae84d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thomasfredericks/library/Bounce2/2.52/Bounce2-2.52.tar.gz",
+     "https://dl.registry.platformio.org/download/thomasfredericks/library/Bounce2/2.52/Bounce2-2.52.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thomasfredericks/library/Bounce2/2.71/Bounce2-2.71.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bounce2-2.71.tar.gz",
+    "size_bytes": 243748,
+    "sha256": "dc78890e249a7969d68dc8c90574fbddf8c9b2a7e4cab8cfe1af83895714940d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thomasfredericks/library/Bounce2/2.71/Bounce2-2.71.tar.gz",
+     "https://dl.registry.platformio.org/download/thomasfredericks/library/Bounce2/2.71/Bounce2-2.71.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thomasfredericks/library/Bounce2/2.72/Bounce2-2.72.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bounce2-2.72.tar.gz",
+    "size_bytes": 89322,
+    "sha256": "6b2c470504c6e8cfdb05351a35e243075a8246ec6c0057618b4266d6fc51a7e5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thomasfredericks/library/Bounce2/2.72/Bounce2-2.72.tar.gz",
+     "https://dl.registry.platformio.org/download/thomasfredericks/library/Bounce2/2.72/Bounce2-2.72.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thomasfredericks/library/Chrono/1.2.0/Chrono-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Chrono-1.2.0.tar.gz",
+    "size_bytes": 20007,
+    "sha256": "aa8ca559cf8da733836bf70b7266ea67702c1aabbbef8871b42187931ce9220d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thomasfredericks/library/Chrono/1.2.0/Chrono-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/thomasfredericks/library/Chrono/1.2.0/Chrono-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thomasfredericks/library/Chrono/1.2.1/Chrono-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Chrono-1.2.1.tar.gz",
+    "size_bytes": 20681,
+    "sha256": "5c049f2a18141404cc9056abd41704a7ffa2918b3906074a4a1295c8ad348838",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thomasfredericks/library/Chrono/1.2.1/Chrono-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/thomasfredericks/library/Chrono/1.2.1/Chrono-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thomasfredericks/library/M5_Encoder/0.0.3/M5_Encoder-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5_Encoder-0.0.3.tar.gz",
+    "size_bytes": 3309,
+    "sha256": "40a5f58313940a28a7a8b525d4482043937f367ad92dbe6dfb5f6eb913776ad6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thomasfredericks/library/M5_Encoder/0.0.3/M5_Encoder-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/thomasfredericks/library/M5_Encoder/0.0.3/M5_Encoder-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thomasfredericks/library/M5_PbHub/0.1.5/M5_PbHub-0.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5_PbHub-0.1.5.tar.gz",
+    "size_bytes": 3414,
+    "sha256": "8e430ceacb1cb18a6430032c14b7025a3da0efa0a20e7a89c61057a91c2092e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thomasfredericks/library/M5_PbHub/0.1.5/M5_PbHub-0.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/thomasfredericks/library/M5_PbHub/0.1.5/M5_PbHub-0.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thomasfredericks/library/MicroNet/0.1.1/MicroNet-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MicroNet-0.1.1.tar.gz",
+    "size_bytes": 6866,
+    "sha256": "1801202b8ff83c79e4e519a1db2c779a32bf3173a524eb19a9ab054049d307d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thomasfredericks/library/MicroNet/0.1.1/MicroNet-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/thomasfredericks/library/MicroNet/0.1.1/MicroNet-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thomasfredericks/library/MicroOsc/0.1.9/MicroOsc-0.1.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MicroOsc-0.1.9.tar.gz",
+    "size_bytes": 16657,
+    "sha256": "d206b4884b4d2466597829a044be1dadb5b20a217d82f5c9714d9f6026219142",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thomasfredericks/library/MicroOsc/0.1.9/MicroOsc-0.1.9.tar.gz",
+     "https://dl.registry.platformio.org/download/thomasfredericks/library/MicroOsc/0.1.9/MicroOsc-0.1.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thomasfredericks/library/MicroOsc/0.2.0/MicroOsc-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MicroOsc-0.2.0.tar.gz",
+    "size_bytes": 16242,
+    "sha256": "2e8710e4fed899d2e40309b68df28eb4085e615b443f81f69b50787e0131c54e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thomasfredericks/library/MicroOsc/0.2.0/MicroOsc-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/thomasfredericks/library/MicroOsc/0.2.0/MicroOsc-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thomasfredericks/library/MicroOsc/0.2.1/MicroOsc-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MicroOsc-0.2.1.tar.gz",
+    "size_bytes": 16601,
+    "sha256": "fd2f96f0ce29692141aa24d662ab9a3bbf71753d4aa14928acb335b2c82a7154",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thomasfredericks/library/MicroOsc/0.2.1/MicroOsc-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/thomasfredericks/library/MicroOsc/0.2.1/MicroOsc-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thomasfredericks/library/MicroSlip/0.1.9/MicroSlip-0.1.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MicroSlip-0.1.9.tar.gz",
+    "size_bytes": 14199,
+    "sha256": "cb65029182dd045adf5678b6a6f64207067e3905789e68c11721eec3633fb199",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thomasfredericks/library/MicroSlip/0.1.9/MicroSlip-0.1.9.tar.gz",
+     "https://dl.registry.platformio.org/download/thomasfredericks/library/MicroSlip/0.1.9/MicroSlip-0.1.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thomasfredericks/library/Stepper_28BYJ_48/1.0/Stepper_28BYJ_48-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Stepper_28BYJ_48-1.0.tar.gz",
+    "size_bytes": 2031,
+    "sha256": "3b9cc1667ac31757e1b7fd49070309a16b9a4160c337581be31a75f476cb7e8b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thomasfredericks/library/Stepper_28BYJ_48/1.0/Stepper_28BYJ_48-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/thomasfredericks/library/Stepper_28BYJ_48/1.0/Stepper_28BYJ_48-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thomasfredericks/library/Wemos%20Matrix%20Adafruit%20GFX/1.4/WemosMatrixAdafruitGFX-1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WemosMatrixAdafruitGFX-1.4.tar.gz",
+    "size_bytes": 7125,
+    "sha256": "a7d692c027e5275d7f96c3c5e95035aebc72ad2ea4986612e4401ea427c3d527",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thomasfredericks/library/Wemos%2520Matrix%2520Adafruit%2520GFX/1.4/WemosMatrixAdafruitGFX-1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/thomasfredericks/library/Wemos%20Matrix%20Adafruit%20GFX/1.4/WemosMatrixAdafruitGFX-1.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

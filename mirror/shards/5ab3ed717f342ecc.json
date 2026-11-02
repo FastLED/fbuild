@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-bogdanl",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-bogdanl/library/Hibernus-KL05Z/0.0.0+sha.57ca0bfdc2d8/Hibernus-KL05Z-0.0.0+sha.57ca0bfdc2d8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Hibernus-KL05Z-0.0.0+sha.57ca0bfdc2d8.tar.gz",
+    "size_bytes": 7129,
+    "sha256": "f91bce818bfd054cb123d1e949844b959bf1953d43a835a5648c7378bd573638",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bogdanl/library/Hibernus-KL05Z/0.0.0%2Bsha.57ca0bfdc2d8/Hibernus-KL05Z-0.0.0%2Bsha.57ca0bfdc2d8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bogdanl/library/Hibernus-KL05Z/0.0.0%2Bsha.57ca0bfdc2d8/Hibernus-KL05Z-0.0.0%2Bsha.57ca0bfdc2d8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-bogdanl/library/Hibernus-LPC11U24/0.0.0+sha.697a3b20c1d1/Hibernus-LPC11U24-0.0.0+sha.697a3b20c1d1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Hibernus-LPC11U24-0.0.0+sha.697a3b20c1d1.tar.gz",
+    "size_bytes": 5953,
+    "sha256": "eb1cb98207ba4dae6339231f2e8a45a0749841aeb72e64da9b2f9221b4796249",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bogdanl/library/Hibernus-LPC11U24/0.0.0%2Bsha.697a3b20c1d1/Hibernus-LPC11U24-0.0.0%2Bsha.697a3b20c1d1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bogdanl/library/Hibernus-LPC11U24/0.0.0%2Bsha.697a3b20c1d1/Hibernus-LPC11U24-0.0.0%2Bsha.697a3b20c1d1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

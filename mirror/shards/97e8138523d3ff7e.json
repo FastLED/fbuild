@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/junior-robotics-club",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "junior-robotics-club/library/JRCCARLIB/1.0.0/JRCCARLIB-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JRCCARLIB-1.0.0.tar.gz",
+    "size_bytes": 13375,
+    "sha256": "428b963004277bb6e6a311dc22495dc8e746fe61a5edb9df86ebe97d5a84c995",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/junior-robotics-club/library/JRCCARLIB/1.0.0/JRCCARLIB-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/junior-robotics-club/library/JRCCARLIB/1.0.0/JRCCARLIB-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

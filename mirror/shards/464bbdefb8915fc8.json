@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sui77",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sui77/library/rc-switch/2.6.4/rc-switch-2.6.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "rc-switch-2.6.4.tar.gz",
+    "size_bytes": 13114,
+    "sha256": "369ca9e21c4e632c9234af7122204bc1fda1757ebee0a70b89a86c5bb7987810",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sui77/library/rc-switch/2.6.4/rc-switch-2.6.4.tar.gz",
+     "https://dl.registry.platformio.org/download/sui77/library/rc-switch/2.6.4/rc-switch-2.6.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

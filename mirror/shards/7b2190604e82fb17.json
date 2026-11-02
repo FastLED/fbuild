@@ -1,0 +1,191 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dzhiblavi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dzhiblavi/library/exec/0.0.1/exec-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "exec-0.0.1.tar.gz",
+    "size_bytes": 18005,
+    "sha256": "27c74540137d454acd71a1229e8c98f6f6429ec5d50aea369629475f7180cd97",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dzhiblavi/library/exec/0.0.1/exec-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dzhiblavi/library/exec/0.0.1/exec-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dzhiblavi/library/logging/0.0.1/logging-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "logging-0.0.1.tar.gz",
+    "size_bytes": 3364,
+    "sha256": "faa0352aa092ed62b5b893e61b0af185ab0327f737a8ddb6248ce5e537f476ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dzhiblavi/library/logging/0.0.1/logging-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dzhiblavi/library/logging/0.0.1/logging-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dzhiblavi/library/logging/0.0.2/logging-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "logging-0.0.2.tar.gz",
+    "size_bytes": 3372,
+    "sha256": "a92f5c1208e0d30505878b2da4f3963c38cd4a70490de2d950d2ca105cf3d493",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dzhiblavi/library/logging/0.0.2/logging-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dzhiblavi/library/logging/0.0.2/logging-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dzhiblavi/library/logging/0.0.3/logging-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "logging-0.0.3.tar.gz",
+    "size_bytes": 3382,
+    "sha256": "a5fad7796e7ca751cd4bf9bdb512f502ec31e154a70d47cc85260ad5417ed993",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dzhiblavi/library/logging/0.0.3/logging-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dzhiblavi/library/logging/0.0.3/logging-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dzhiblavi/library/logging/0.0.4/logging-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "logging-0.0.4.tar.gz",
+    "size_bytes": 3381,
+    "sha256": "134f9804c4bc631ae41773fe2965eaefcb7ef9402c5c4cefb8ae4395f1bc8d79",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dzhiblavi/library/logging/0.0.4/logging-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/dzhiblavi/library/logging/0.0.4/logging-0.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dzhiblavi/library/sml/0.0.1/sml-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "sml-0.0.1.tar.gz",
+    "size_bytes": 9056,
+    "sha256": "7f1ccc4b76fd0f77890a74fb597d00dcc98fe4843c1ba916ec056648c67e7102",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dzhiblavi/library/sml/0.0.1/sml-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dzhiblavi/library/sml/0.0.1/sml-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dzhiblavi/library/stdlike/0.0.4/stdlike-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "stdlike-0.0.4.tar.gz",
+    "size_bytes": 6783,
+    "sha256": "dc9790234f1ea4561914040d3f3759683ecaaf4fb307775987e5729905f05c4e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dzhiblavi/library/stdlike/0.0.4/stdlike-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/dzhiblavi/library/stdlike/0.0.4/stdlike-0.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dzhiblavi/library/support/0.0.2/support-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "support-0.0.2.tar.gz",
+    "size_bytes": 10801,
+    "sha256": "2a801bfcde1794dd91c5fb77b819b1fb3b5de8e65a1806b52143ae619fefd4fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dzhiblavi/library/support/0.0.2/support-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dzhiblavi/library/support/0.0.2/support-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dzhiblavi/library/support/0.0.4/support-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "support-0.0.4.tar.gz",
+    "size_bytes": 10803,
+    "sha256": "7e58058d5090b07f141ade55a614a2ce8f106af6bbe7b909d4d66925933f0b68",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dzhiblavi/library/support/0.0.4/support-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/dzhiblavi/library/support/0.0.4/support-0.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dzhiblavi/library/time/0.0.1/time-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "time-0.0.1.tar.gz",
+    "size_bytes": 6091,
+    "sha256": "90be9be4b2afb59d8e516bb919b6db15d3002570e479b11e40c6879ed7a625f3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dzhiblavi/library/time/0.0.1/time-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dzhiblavi/library/time/0.0.1/time-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dzhiblavi/library/time/0.0.2/time-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "time-0.0.2.tar.gz",
+    "size_bytes": 6635,
+    "sha256": "51a340bac43cb440476e76cefdf4fadb889ab2b4aee1611dc515d204e06c4b06",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dzhiblavi/library/time/0.0.2/time-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dzhiblavi/library/time/0.0.2/time-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dzhiblavi/library/time/0.0.3/time-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "time-0.0.3.tar.gz",
+    "size_bytes": 4715,
+    "sha256": "e9d5c56787b3b824a67ea9d7a107f37a1da360f22bcdc7298262500761d3eb37",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dzhiblavi/library/time/0.0.3/time-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dzhiblavi/library/time/0.0.3/time-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dzhiblavi/library/time/0.0.4/time-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "time-0.0.4.tar.gz",
+    "size_bytes": 4714,
+    "sha256": "a4882b03fa32b4202d803300677a332e302d1319dbcd482efa2b321ef885e941",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dzhiblavi/library/time/0.0.4/time-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/dzhiblavi/library/time/0.0.4/time-0.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dzhiblavi/library/utest/0.0.4/utest-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "utest-0.0.4.tar.gz",
+    "size_bytes": 3015,
+    "sha256": "bb3cb0d7b1fb6bd0b72cc4d54879ba0a2824ba40408d3475a69f0d8ef969f0de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dzhiblavi/library/utest/0.0.4/utest-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/dzhiblavi/library/utest/0.0.4/utest-0.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/zceemja",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "zceemja/platform/timsp432/0.1.1/timsp432-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "timsp432-0.1.1.tar.gz",
+    "size_bytes": 10562,
+    "sha256": "41666cd7bca493632f7f97e8874ededccc4abe62a2d0b9bb705a635100c8e01e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zceemja/platform/timsp432/0.1.1/timsp432-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/zceemja/platform/timsp432/0.1.1/timsp432-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zceemja/tool/framework-energiamsp432r/1.10807.0/framework-energiamsp432r-1.10807.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "framework-energiamsp432r-1.10807.0.tar.gz",
+    "size_bytes": 36766837,
+    "sha256": "d72ae4583d0c2d0b8110f7dbc9f47e0cef3cb809c46cc17a4c6ee03302536751",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zceemja/tool/framework-energiamsp432r/1.10807.0/framework-energiamsp432r-1.10807.0.tar.gz",
+     "https://dl.registry.platformio.org/download/zceemja/tool/framework-energiamsp432r/1.10807.0/framework-energiamsp432r-1.10807.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

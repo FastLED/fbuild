@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jorgegbeltre",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jorgegbeltre/library/ESP32_MQTTv5/1.0.2/ESP32_MQTTv5-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_MQTTv5-1.0.2.tar.gz",
+    "size_bytes": 20813,
+    "sha256": "ab456d5942b790ba83919d026df28b697733b8388b7650cb711172180b68adc4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jorgegbeltre/library/ESP32_MQTTv5/1.0.2/ESP32_MQTTv5-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jorgegbeltre/library/ESP32_MQTTv5/1.0.2/ESP32_MQTTv5-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jorgegbeltre/library/ESP32_MQTTv5/1.0.3/ESP32_MQTTv5-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_MQTTv5-1.0.3.tar.gz",
+    "size_bytes": 20892,
+    "sha256": "282ee890fda8295ad604d76bc260b769083e8232659001764f6a5d5394e6fe3d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jorgegbeltre/library/ESP32_MQTTv5/1.0.3/ESP32_MQTTv5-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/jorgegbeltre/library/ESP32_MQTTv5/1.0.3/ESP32_MQTTv5-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jorgegbeltre/library/MQTTOTA/1.0.0/MQTTOTA-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQTTOTA-1.0.0.tar.gz",
+    "size_bytes": 13775,
+    "sha256": "bc5e964571856672807ac3de2693e364a2ec2526ac4c62edd3b57c096bcbd32f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jorgegbeltre/library/MQTTOTA/1.0.0/MQTTOTA-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jorgegbeltre/library/MQTTOTA/1.0.0/MQTTOTA-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jorgegbeltre/library/MQTTOTA/1.2.0/MQTTOTA-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQTTOTA-1.2.0.tar.gz",
+    "size_bytes": 26634,
+    "sha256": "d76f89748062027d7b3665f3fb9d10443a1ea0a3ef64098addc8af3e6ab3bbe1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jorgegbeltre/library/MQTTOTA/1.2.0/MQTTOTA-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jorgegbeltre/library/MQTTOTA/1.2.0/MQTTOTA-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jorgegbeltre/library/MQTTOTAv5/1.0.0/MQTTOTAv5-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQTTOTAv5-1.0.0.tar.gz",
+    "size_bytes": 18226,
+    "sha256": "7f21b8c98dff394f890d5868d66bca33462e29bf0cffadb31b45a075a28e466e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jorgegbeltre/library/MQTTOTAv5/1.0.0/MQTTOTAv5-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jorgegbeltre/library/MQTTOTAv5/1.0.0/MQTTOTAv5-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jorgegbeltre/library/MQTTOTAv5/1.0.1/MQTTOTAv5-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQTTOTAv5-1.0.1.tar.gz",
+    "size_bytes": 18221,
+    "sha256": "56e02ef5176bc94bf179b85078196e6f53d7cb1da0b46fef1de138d23d9daaff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jorgegbeltre/library/MQTTOTAv5/1.0.1/MQTTOTAv5-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jorgegbeltre/library/MQTTOTAv5/1.0.1/MQTTOTAv5-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jorgegbeltre/library/MQTTOTAv5/1.0.2/MQTTOTAv5-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQTTOTAv5-1.0.2.tar.gz",
+    "size_bytes": 19285,
+    "sha256": "d6baa0193ba747fac631238864e172d18cc9fa2e3452c15d5ee09b21b94813d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jorgegbeltre/library/MQTTOTAv5/1.0.2/MQTTOTAv5-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jorgegbeltre/library/MQTTOTAv5/1.0.2/MQTTOTAv5-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

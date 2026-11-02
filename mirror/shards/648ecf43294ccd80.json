@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dergachovda",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dergachovda/library/SimpleLogger/0.0.1/SimpleLogger-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleLogger-0.0.1.tar.gz",
+    "size_bytes": 5110,
+    "sha256": "f6bd5df4660f8424824e7b5f6cc5092a12da600c14fd3738b4dda969d0a1edaa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dergachovda/library/SimpleLogger/0.0.1/SimpleLogger-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dergachovda/library/SimpleLogger/0.0.1/SimpleLogger-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

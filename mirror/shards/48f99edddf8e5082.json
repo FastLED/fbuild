@@ -1,0 +1,191 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rolialpha",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rolialpha/library/ArduAppTemplate/1.2.0/ArduAppTemplate-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduAppTemplate-1.2.0.tar.gz",
+    "size_bytes": 1396,
+    "sha256": "dc6bb5639625c688b1ee82493cb57fb08e0b37d462f5b929a85f708a17140192",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rolialpha/library/ArduAppTemplate/1.2.0/ArduAppTemplate-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rolialpha/library/ArduAppTemplate/1.2.0/ArduAppTemplate-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rolialpha/library/ArduSensorPlatform/3.8.0/ArduSensorPlatform-3.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduSensorPlatform-3.8.0.tar.gz",
+    "size_bytes": 327778,
+    "sha256": "eb75b08ee5bf60a8b39f0ad8b22c25ae490a52c47e1d886afa22ee43eec20bdd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rolialpha/library/ArduSensorPlatform/3.8.0/ArduSensorPlatform-3.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rolialpha/library/ArduSensorPlatform/3.8.0/ArduSensorPlatform-3.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rolialpha/library/ArduSensorPlatformCoreBase/1.2.0/ArduSensorPlatformCoreBase-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduSensorPlatformCoreBase-1.2.0.tar.gz",
+    "size_bytes": 2930,
+    "sha256": "c9eb03a365e901038d23f545099be2e37db17e4c3078c37a4e553a6a0b6aaf5c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rolialpha/library/ArduSensorPlatformCoreBase/1.2.0/ArduSensorPlatformCoreBase-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rolialpha/library/ArduSensorPlatformCoreBase/1.2.0/ArduSensorPlatformCoreBase-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rolialpha/library/Dh11Sensor/1.2.0/Dh11Sensor-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Dh11Sensor-1.2.0.tar.gz",
+    "size_bytes": 2591,
+    "sha256": "2e3cfb8e94388ff112a3c7bd6540e1b7bc25fdf3a873a91b7b744719e5ebcf72",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rolialpha/library/Dh11Sensor/1.2.0/Dh11Sensor-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rolialpha/library/Dh11Sensor/1.2.0/Dh11Sensor-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rolialpha/library/DigitalPinSensor/1.2.0/DigitalPinSensor-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DigitalPinSensor-1.2.0.tar.gz",
+    "size_bytes": 1669,
+    "sha256": "9a73f693bc7988aa3a969086f4cfb39c3a242ed4c3fa8f0ca4a7028101238597",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rolialpha/library/DigitalPinSensor/1.2.0/DigitalPinSensor-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rolialpha/library/DigitalPinSensor/1.2.0/DigitalPinSensor-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rolialpha/library/FanSwitchSensor/1.2.0/FanSwitchSensor-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FanSwitchSensor-1.2.0.tar.gz",
+    "size_bytes": 1479,
+    "sha256": "4bb19674e3f1f8d546f1e0e56337e4227acc838774ab3812fa9e1f218343a892",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rolialpha/library/FanSwitchSensor/1.2.0/FanSwitchSensor-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rolialpha/library/FanSwitchSensor/1.2.0/FanSwitchSensor-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rolialpha/library/MAX31855ThermoSensor/1.2.0/MAX31855ThermoSensor-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX31855ThermoSensor-1.2.0.tar.gz",
+    "size_bytes": 2821,
+    "sha256": "f6c6ecd02aa5ca54f4fabab4659f1dddf5313030170c0d0cd6df65152e01ac21",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rolialpha/library/MAX31855ThermoSensor/1.2.0/MAX31855ThermoSensor-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rolialpha/library/MAX31855ThermoSensor/1.2.0/MAX31855ThermoSensor-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rolialpha/library/Modbus485RaintubeSensor/1.2.0/Modbus485RaintubeSensor-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Modbus485RaintubeSensor-1.2.0.tar.gz",
+    "size_bytes": 9279,
+    "sha256": "aedee550df41a9e529935baca8ef84aca51b8bf1b0b2b16263990bcb1c326ca5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rolialpha/library/Modbus485RaintubeSensor/1.2.0/Modbus485RaintubeSensor-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rolialpha/library/Modbus485RaintubeSensor/1.2.0/Modbus485RaintubeSensor-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rolialpha/library/Modbus485TH10S_TempHumSensor/1.2.0/Modbus485TH10S_TempHumSensor-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Modbus485TH10S_TempHumSensor-1.2.0.tar.gz",
+    "size_bytes": 9399,
+    "sha256": "866f364bc887ed64c86a9a5adb0d6189b8061273e974a3d54070cb3c88dcd8da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rolialpha/library/Modbus485TH10S_TempHumSensor/1.2.0/Modbus485TH10S_TempHumSensor-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rolialpha/library/Modbus485TH10S_TempHumSensor/1.2.0/Modbus485TH10S_TempHumSensor-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rolialpha/library/ModbusCommOverXbeeAPI/1.2.0/ModbusCommOverXbeeAPI-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ModbusCommOverXbeeAPI-1.2.0.tar.gz",
+    "size_bytes": 24781,
+    "sha256": "3c0f9dbafa06a90aa816e10764d97dcb1da07de19a8be7e802392f67797384d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rolialpha/library/ModbusCommOverXbeeAPI/1.2.0/ModbusCommOverXbeeAPI-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rolialpha/library/ModbusCommOverXbeeAPI/1.2.0/ModbusCommOverXbeeAPI-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rolialpha/library/ModbusRTUCommunicator/1.2.0/ModbusRTUCommunicator-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ModbusRTUCommunicator-1.2.0.tar.gz",
+    "size_bytes": 3536,
+    "sha256": "7d99ba2c8f2aebcdba2d444b4cf21e08d6a6dd07c1bf3846be801f329097d02d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rolialpha/library/ModbusRTUCommunicator/1.2.0/ModbusRTUCommunicator-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rolialpha/library/ModbusRTUCommunicator/1.2.0/ModbusRTUCommunicator-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rolialpha/library/PWM_outputSensor/1.2.0/PWM_outputSensor-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PWM_outputSensor-1.2.0.tar.gz",
+    "size_bytes": 1790,
+    "sha256": "20923c9d51dfdd45dc8372a4daf6a68401f3ff49c642794e2a5f1898346cd444",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rolialpha/library/PWM_outputSensor/1.2.0/PWM_outputSensor-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rolialpha/library/PWM_outputSensor/1.2.0/PWM_outputSensor-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rolialpha/library/TempHummCaculator/1.2.0/TempHummCaculator-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TempHummCaculator-1.2.0.tar.gz",
+    "size_bytes": 2100,
+    "sha256": "2d2b347320b98a728f1045cd15a82be4233181224658b02628912afd881c05d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rolialpha/library/TempHummCaculator/1.2.0/TempHummCaculator-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rolialpha/library/TempHummCaculator/1.2.0/TempHummCaculator-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rolialpha/library/UartCommunicatior/1.2.0/UartCommunicatior-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UartCommunicatior-1.2.0.tar.gz",
+    "size_bytes": 1287,
+    "sha256": "5578b28b37c084edb1de0298961e8136a2bd20353370a2b3e4e2541f436ee9c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rolialpha/library/UartCommunicatior/1.2.0/UartCommunicatior-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rolialpha/library/UartCommunicatior/1.2.0/UartCommunicatior-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

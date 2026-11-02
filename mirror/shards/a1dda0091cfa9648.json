@@ -1,0 +1,152 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sv-zanshin",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sv-zanshin/library/BME280_Zanshin/1.0.4/BME280_Zanshin-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BME280_Zanshin-1.0.4.tar.gz",
+    "size_bytes": 78534,
+    "sha256": "4170d1d5ffe711b395a94b64da6b5ddaf9a0dbfec4fa7272983ebe62dc50c6d3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sv-zanshin/library/BME280_Zanshin/1.0.4/BME280_Zanshin-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/sv-zanshin/library/BME280_Zanshin/1.0.4/BME280_Zanshin-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sv-zanshin/library/BME680/1.0.12/BME680-1.0.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BME680-1.0.12.tar.gz",
+    "size_bytes": 2459344,
+    "sha256": "c9aa7cd3943409ca2300d7c1b4cbd64fe966309b3224b2b4d29486ccb2b5818f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sv-zanshin/library/BME680/1.0.12/BME680-1.0.12.tar.gz",
+     "https://dl.registry.platformio.org/download/sv-zanshin/library/BME680/1.0.12/BME680-1.0.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sv-zanshin/library/DS1631/1.0.4/DS1631-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS1631-1.0.4.tar.gz",
+    "size_bytes": 38407,
+    "sha256": "dd2c92a43875dec1616834de6ffe6813f35be2c936a5593e283d4fc3f6bc489a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sv-zanshin/library/DS1631/1.0.4/DS1631-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/sv-zanshin/library/DS1631/1.0.4/DS1631-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sv-zanshin/library/DS3231M/1.0.8/DS3231M-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS3231M-1.0.8.tar.gz",
+    "size_bytes": 245371,
+    "sha256": "0b61066c50d1730b40f53684323957b8fe027c5fb6aaa5de995563d308503d3a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sv-zanshin/library/DS3231M/1.0.8/DS3231M-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/sv-zanshin/library/DS3231M/1.0.8/DS3231M-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sv-zanshin/library/DSFamily/1.1.0/DSFamily-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DSFamily-1.1.0.tar.gz",
+    "size_bytes": 84736,
+    "sha256": "efd4f6a22585db6a31f580b2158c4f4592495ffacbe75152ae08c096a28c12ba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sv-zanshin/library/DSFamily/1.1.0/DSFamily-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sv-zanshin/library/DSFamily/1.1.0/DSFamily-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sv-zanshin/library/INA2xx/1.1.0/INA2xx-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "INA2xx-1.1.0.tar.gz",
+    "size_bytes": 299603,
+    "sha256": "4fc82626ef65acb041ade2352351ff7032ada193a7b09b7345dcfd7d16d58428",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sv-zanshin/library/INA2xx/1.1.0/INA2xx-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sv-zanshin/library/INA2xx/1.1.0/INA2xx-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sv-zanshin/library/MAX31855/1.0.7/MAX31855-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX31855-1.0.7.tar.gz",
+    "size_bytes": 42574,
+    "sha256": "8d525ec752ada9cf5b0c07a00e225cf0ff59da7b5028c09d93963e755e1dd7f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sv-zanshin/library/MAX31855/1.0.7/MAX31855-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/sv-zanshin/library/MAX31855/1.0.7/MAX31855-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sv-zanshin/library/MB85_FRAM/1.0.8/MB85_FRAM-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MB85_FRAM-1.0.8.tar.gz",
+    "size_bytes": 41359,
+    "sha256": "ceeeb612e0b960ae7d0c7310862a6126a49aaac6155efc965993c64d922b9fdb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sv-zanshin/library/MB85_FRAM/1.0.8/MB85_FRAM-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/sv-zanshin/library/MB85_FRAM/1.0.8/MB85_FRAM-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sv-zanshin/library/MCP7940/1.2.0/MCP7940-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP7940-1.2.0.tar.gz",
+    "size_bytes": 693579,
+    "sha256": "aab7c3854e523542d2557c79cc318ef2fb8341cd05c3b98f0837fdfc45c7b448",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sv-zanshin/library/MCP7940/1.2.0/MCP7940-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sv-zanshin/library/MCP7940/1.2.0/MCP7940-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sv-zanshin/library/MicrochipSRAM/1.0.6/MicrochipSRAM-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MicrochipSRAM-1.0.6.tar.gz",
+    "size_bytes": 206287,
+    "sha256": "b231de96e22de2a9cf4e9d5a5668075da0cd232c361bd56a8bdfc5d30deead1f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sv-zanshin/library/MicrochipSRAM/1.0.6/MicrochipSRAM-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/sv-zanshin/library/MicrochipSRAM/1.0.6/MicrochipSRAM-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sv-zanshin/library/VCNL4010/1.1.0/VCNL4010-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VCNL4010-1.1.0.tar.gz",
+    "size_bytes": 720379,
+    "sha256": "3d63d25672c97867ff8816ee0459b6651c260ae2be5d63d2d0b48f9523017fae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sv-zanshin/library/VCNL4010/1.1.0/VCNL4010-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sv-zanshin/library/VCNL4010/1.1.0/VCNL4010-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

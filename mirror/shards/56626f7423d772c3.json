@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-johnylafleur",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-johnylafleur/library/LSM303DLH/0.0.0+sha.38cd86f4249d/LSM303DLH-0.0.0+sha.38cd86f4249d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LSM303DLH-0.0.0+sha.38cd86f4249d.tar.gz",
+    "size_bytes": 4313,
+    "sha256": "fd33b06c1a1f9e97c7bf1b41621263d262564e249451f32d39bc0679a79dc7ac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-johnylafleur/library/LSM303DLH/0.0.0%2Bsha.38cd86f4249d/LSM303DLH-0.0.0%2Bsha.38cd86f4249d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-johnylafleur/library/LSM303DLH/0.0.0%2Bsha.38cd86f4249d/LSM303DLH-0.0.0%2Bsha.38cd86f4249d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

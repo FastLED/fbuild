@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-doky1301",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-doky1301/library/LedStrip/0.0.0+sha.5d708538c44c/LedStrip-0.0.0+sha.5d708538c44c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LedStrip-0.0.0+sha.5d708538c44c.tar.gz",
+    "size_bytes": 2031,
+    "sha256": "bcef517aab07f183636f74eac6e5e1bcc30f524afc31d75e3361a8f658b8c4e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-doky1301/library/LedStrip/0.0.0%2Bsha.5d708538c44c/LedStrip-0.0.0%2Bsha.5d708538c44c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-doky1301/library/LedStrip/0.0.0%2Bsha.5d708538c44c/LedStrip-0.0.0%2Bsha.5d708538c44c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

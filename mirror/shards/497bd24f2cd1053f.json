@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-2014",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-2014/library/IRM2121_2/0.0.0+sha.bb38fe5771fb/IRM2121_2-0.0.0+sha.bb38fe5771fb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IRM2121_2-0.0.0+sha.bb38fe5771fb.tar.gz",
+    "size_bytes": 1558,
+    "sha256": "6c7e12cc48d8a4f777b16a250f024f143a1141b84da9269b9a7573c2d46c122b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-2014/library/IRM2121_2/0.0.0%2Bsha.bb38fe5771fb/IRM2121_2-0.0.0%2Bsha.bb38fe5771fb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-2014/library/IRM2121_2/0.0.0%2Bsha.bb38fe5771fb/IRM2121_2-0.0.0%2Bsha.bb38fe5771fb.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-2014/library/L6470_lib/0.0.0+sha.63e59749ff49/L6470_lib-0.0.0+sha.63e59749ff49.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "L6470_lib-0.0.0+sha.63e59749ff49.tar.gz",
+    "size_bytes": 3374,
+    "sha256": "11d25b15022fc52ad20d11700c035d290eaf20fccc0f49ad583e1e130aa71994",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-2014/library/L6470_lib/0.0.0%2Bsha.63e59749ff49/L6470_lib-0.0.0%2Bsha.63e59749ff49.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-2014/library/L6470_lib/0.0.0%2Bsha.63e59749ff49/L6470_lib-0.0.0%2Bsha.63e59749ff49.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-2014/library/WatchDogTimer/0.0.0+sha.2d7cdbcc260e/WatchDogTimer-0.0.0+sha.2d7cdbcc260e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WatchDogTimer-0.0.0+sha.2d7cdbcc260e.tar.gz",
+    "size_bytes": 1605,
+    "sha256": "71b35b2e88b816c0b48991077794a4e342dd66426af65a7652795eda4e15cb9c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-2014/library/WatchDogTimer/0.0.0%2Bsha.2d7cdbcc260e/WatchDogTimer-0.0.0%2Bsha.2d7cdbcc260e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-2014/library/WatchDogTimer/0.0.0%2Bsha.2d7cdbcc260e/WatchDogTimer-0.0.0%2Bsha.2d7cdbcc260e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

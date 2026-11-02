@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/flok99",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "flok99/library/M.A.X.X/1.5.1/M.A.X.X-1.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M.A.X.X-1.5.1.tar.gz",
+    "size_bytes": 296702,
+    "sha256": "5b521c0ba60a01bcd11152d8d0fa0c3029fbf3ab1d0c087451a6dc8a53f5304f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/flok99/library/M.A.X.X/1.5.1/M.A.X.X-1.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/flok99/library/M.A.X.X/1.5.1/M.A.X.X-1.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "flok99/library/esp-mdns-fvh/1.0/esp-mdns-fvh-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-mdns-fvh-1.0.tar.gz",
+    "size_bytes": 4283,
+    "sha256": "0a57d05d3de39c6c99296f4575095c559e8a583bd26d2dcbb57fed36623f5ba0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/flok99/library/esp-mdns-fvh/1.0/esp-mdns-fvh-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/flok99/library/esp-mdns-fvh/1.0/esp-mdns-fvh-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hexaedron",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hexaedron/library/PostNeoSWSerial/1.0.6/PostNeoSWSerial-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PostNeoSWSerial-1.0.6.tar.gz",
+    "size_bytes": 8436,
+    "sha256": "4a3d688b23d5270a777c1625e3e79ecf1074c88666d6d6f913e6e83ac8a54825",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hexaedron/library/PostNeoSWSerial/1.0.6/PostNeoSWSerial-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/hexaedron/library/PostNeoSWSerial/1.0.6/PostNeoSWSerial-1.0.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

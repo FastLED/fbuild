@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/yergin",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "yergin/library/YetAnotherButtonLibrary/0.1.1/YetAnotherButtonLibrary-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YetAnotherButtonLibrary-0.1.1.tar.gz",
+    "size_bytes": 9455,
+    "sha256": "4eb2ab620b28b2313811fd80f126e7b05fa5532967916c79143e3248990eecf3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yergin/library/YetAnotherButtonLibrary/0.1.1/YetAnotherButtonLibrary-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/yergin/library/YetAnotherButtonLibrary/0.1.1/YetAnotherButtonLibrary-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

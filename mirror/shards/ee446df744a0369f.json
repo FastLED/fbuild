@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/schoolpost",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "schoolpost/library/BlueMagic32/1.0.1/BlueMagic32-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BlueMagic32-1.0.1.tar.gz",
+    "size_bytes": 20674,
+    "sha256": "9dc5b914accdd8fbd18360c4d4915148cbae3af15aa53ccbf13f797f1216d6af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/schoolpost/library/BlueMagic32/1.0.1/BlueMagic32-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/schoolpost/library/BlueMagic32/1.0.1/BlueMagic32-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

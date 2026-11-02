@@ -1,0 +1,256 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pedrofnseca",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pedrofnseca/library/ESP32-HTTP-Client/1.0.0/ESP32-HTTP-Client-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-HTTP-Client-1.0.0.tar.gz",
+    "size_bytes": 8450,
+    "sha256": "ded8c727bd8a870c1f8d469a905343567187496832c60f687a7500ecca962406",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pedrofnseca/library/ESP32-HTTP-Client/1.0.0/ESP32-HTTP-Client-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pedrofnseca/library/ESP32-HTTP-Client/1.0.0/ESP32-HTTP-Client-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pedrofnseca/library/ESP32-HTTP-Client/1.0.1/ESP32HTTPClient-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32HTTPClient-1.0.1.tar.gz",
+    "size_bytes": 9042,
+    "sha256": "96f2fd3e088d2616fd7a9b59e710925639b66d98b1e7a317d184231004c2ccd9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pedrofnseca/library/ESP32-HTTP-Client/1.0.1/ESP32HTTPClient-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pedrofnseca/library/ESP32-HTTP-Client/1.0.1/ESP32HTTPClient-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pedrofnseca/library/ESP32-HTTP-Client/1.2.1/ESP32-HTTP-Client-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-HTTP-Client-1.2.1.tar.gz",
+    "size_bytes": 11474,
+    "sha256": "5e7d6f70b65cbc3523817e67f91c003f1835a2bd1735a362b21efbda0af7b065",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pedrofnseca/library/ESP32-HTTP-Client/1.2.1/ESP32-HTTP-Client-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pedrofnseca/library/ESP32-HTTP-Client/1.2.1/ESP32-HTTP-Client-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pedrofnseca/library/ESP32-HTTP-Client/1.2.4/ESP32-HTTP-Client-1.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-HTTP-Client-1.2.4.tar.gz",
+    "size_bytes": 22420,
+    "sha256": "530670e7250fa07dbe74beb177237d2c6c913b815e60b8de4bae98ba97346120",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pedrofnseca/library/ESP32-HTTP-Client/1.2.4/ESP32-HTTP-Client-1.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/pedrofnseca/library/ESP32-HTTP-Client/1.2.4/ESP32-HTTP-Client-1.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pedrofnseca/library/ESP32-HTTP-Client/1.3.1/ESP32-HTTP-Client-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-HTTP-Client-1.3.1.tar.gz",
+    "size_bytes": 23095,
+    "sha256": "c485b0a9e894cdaab1964613cedb0071df55de403d1ed39f472036f94dc5702d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pedrofnseca/library/ESP32-HTTP-Client/1.3.1/ESP32-HTTP-Client-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pedrofnseca/library/ESP32-HTTP-Client/1.3.1/ESP32-HTTP-Client-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pedrofnseca/library/ESP32-HTTP-Client/1.3.5/ESP32-HTTP-Client-1.3.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-HTTP-Client-1.3.5.tar.gz",
+    "size_bytes": 25464,
+    "sha256": "70721e6e487d40d27d890c022be0846c4af1b95a7e186f256547c96b1fb80d3a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pedrofnseca/library/ESP32-HTTP-Client/1.3.5/ESP32-HTTP-Client-1.3.5.tar.gz",
+     "https://dl.registry.platformio.org/download/pedrofnseca/library/ESP32-HTTP-Client/1.3.5/ESP32-HTTP-Client-1.3.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pedrofnseca/library/ESP32-HTTP-Client/1.4.0/ESP32-HTTP-Client-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-HTTP-Client-1.4.0.tar.gz",
+    "size_bytes": 26793,
+    "sha256": "78dfd3870322bf746ac5668a7f01abaa8912f3b22ce84772a91cdb287f98f755",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pedrofnseca/library/ESP32-HTTP-Client/1.4.0/ESP32-HTTP-Client-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pedrofnseca/library/ESP32-HTTP-Client/1.4.0/ESP32-HTTP-Client-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pedrofnseca/library/ESP32-HTTP-Client/1.4.1/ESP32-HTTP-Client-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-HTTP-Client-1.4.1.tar.gz",
+    "size_bytes": 28349,
+    "sha256": "0ffd2f0c38cd11e1695d57d0f3d8ad3f9da10a2f101cc8c4d8017801bc7cbfb2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pedrofnseca/library/ESP32-HTTP-Client/1.4.1/ESP32-HTTP-Client-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pedrofnseca/library/ESP32-HTTP-Client/1.4.1/ESP32-HTTP-Client-1.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pedrofnseca/library/ESP32-HTTP-Client/1.5.0/ESP32-HTTP-Client-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-HTTP-Client-1.5.0.tar.gz",
+    "size_bytes": 36638,
+    "sha256": "dbe97b5728bf56f9ace2b874b00b70296e9a29570e48752d0cfee9428c978254",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pedrofnseca/library/ESP32-HTTP-Client/1.5.0/ESP32-HTTP-Client-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pedrofnseca/library/ESP32-HTTP-Client/1.5.0/ESP32-HTTP-Client-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pedrofnseca/library/ESP32-HTTP-Client/1.5.1/ESP32-HTTP-Client-1.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-HTTP-Client-1.5.1.tar.gz",
+    "size_bytes": 37691,
+    "sha256": "88fda26414a85268d1ca8a8b63a9bb3a1065ef572381c8b8c440c2688bbeddfc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pedrofnseca/library/ESP32-HTTP-Client/1.5.1/ESP32-HTTP-Client-1.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pedrofnseca/library/ESP32-HTTP-Client/1.5.1/ESP32-HTTP-Client-1.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pedrofnseca/library/ESP32-HTTP-Client/1.5.2/ESP32-HTTP-Client-1.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-HTTP-Client-1.5.2.tar.gz",
+    "size_bytes": 38797,
+    "sha256": "5da401bd750064a4296e80cafc37be1f5f1512051b3d99cf980550699857e2f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pedrofnseca/library/ESP32-HTTP-Client/1.5.2/ESP32-HTTP-Client-1.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/pedrofnseca/library/ESP32-HTTP-Client/1.5.2/ESP32-HTTP-Client-1.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pedrofnseca/library/ESP32-HTTP-Client/1.5.3/ESP32-HTTP-Client-1.5.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-HTTP-Client-1.5.3.tar.gz",
+    "size_bytes": 38938,
+    "sha256": "1e5b59c9e52ba4aa680f2cf5d161e4f5d5a70408b47c5edf060f618b85cf2017",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pedrofnseca/library/ESP32-HTTP-Client/1.5.3/ESP32-HTTP-Client-1.5.3.tar.gz",
+     "https://dl.registry.platformio.org/download/pedrofnseca/library/ESP32-HTTP-Client/1.5.3/ESP32-HTTP-Client-1.5.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pedrofnseca/library/ESP32-HTTP-Client/1.6.0/ESP32-HTTP-Client-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-HTTP-Client-1.6.0.tar.gz",
+    "size_bytes": 49197,
+    "sha256": "eb7dd50ab2c43f95345738386dba9e8083f2f9da1121d4304659ec16f1ccc678",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pedrofnseca/library/ESP32-HTTP-Client/1.6.0/ESP32-HTTP-Client-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pedrofnseca/library/ESP32-HTTP-Client/1.6.0/ESP32-HTTP-Client-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pedrofnseca/library/ESP32-HTTP-Client/1.7.0/ESP32-HTTP-Client-1.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-HTTP-Client-1.7.0.tar.gz",
+    "size_bytes": 74769,
+    "sha256": "55ab1d2b2c1beb8ba8527b603482c58629e8c92ff8c6d806b9d93e97ec3d88fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pedrofnseca/library/ESP32-HTTP-Client/1.7.0/ESP32-HTTP-Client-1.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pedrofnseca/library/ESP32-HTTP-Client/1.7.0/ESP32-HTTP-Client-1.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pedrofnseca/library/ESP32-HTTP-Client/1.7.1/ESP32-HTTP-Client-1.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-HTTP-Client-1.7.1.tar.gz",
+    "size_bytes": 75376,
+    "sha256": "e6764803fdb06d1360b109fc825d806fccef3ce53b9d14ab91fc3b9097eeb3c4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pedrofnseca/library/ESP32-HTTP-Client/1.7.1/ESP32-HTTP-Client-1.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pedrofnseca/library/ESP32-HTTP-Client/1.7.1/ESP32-HTTP-Client-1.7.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pedrofnseca/library/ESP32-HTTP-Client/1.8.0/ESP32-HTTP-Client-1.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-HTTP-Client-1.8.0.tar.gz",
+    "size_bytes": 84181,
+    "sha256": "11a256f663a13df9f86af7aec46433e392886c01126ce0ac34ab49e07c829ee2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pedrofnseca/library/ESP32-HTTP-Client/1.8.0/ESP32-HTTP-Client-1.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pedrofnseca/library/ESP32-HTTP-Client/1.8.0/ESP32-HTTP-Client-1.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pedrofnseca/library/ESP32-HTTP-Client/1.8.2/ESP32-HTTP-Client-1.8.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-HTTP-Client-1.8.2.tar.gz",
+    "size_bytes": 84864,
+    "sha256": "f5def616cd4a4976fe73aa154e9833668084dcc1d66101532b1de4446e807a90",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pedrofnseca/library/ESP32-HTTP-Client/1.8.2/ESP32-HTTP-Client-1.8.2.tar.gz",
+     "https://dl.registry.platformio.org/download/pedrofnseca/library/ESP32-HTTP-Client/1.8.2/ESP32-HTTP-Client-1.8.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pedrofnseca/library/ESP32-HTTP-Client/1.9.0/ESP32-HTTP-Client-1.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-HTTP-Client-1.9.0.tar.gz",
+    "size_bytes": 94756,
+    "sha256": "3bde93b2d332534cfce9d36687966033c9962c4f472ef6a3b6a919e1e49ae7a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pedrofnseca/library/ESP32-HTTP-Client/1.9.0/ESP32-HTTP-Client-1.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pedrofnseca/library/ESP32-HTTP-Client/1.9.0/ESP32-HTTP-Client-1.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pedrofnseca/library/ESP32-MCP/0.1.0/ESP32-MCP-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-MCP-0.1.0.tar.gz",
+    "size_bytes": 15462,
+    "sha256": "0f9b9974aa28454c90b69793916e20ca30eaf83af81a3e7777f9191a8ab8278d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pedrofnseca/library/ESP32-MCP/0.1.0/ESP32-MCP-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pedrofnseca/library/ESP32-MCP/0.1.0/ESP32-MCP-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

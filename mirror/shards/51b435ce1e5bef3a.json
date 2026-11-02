@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nordicalliance",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nordicalliance/library/Tgui%20Sensor%20GUI%20Library/1.0.0/TguiSensorGUILibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TguiSensorGUILibrary-1.0.0.tar.gz",
+    "size_bytes": 15163,
+    "sha256": "4f7f1d26a4a073876f67f155a8bf36ffa40868c2821a1705e2a5579207f2cc18",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nordicalliance/library/Tgui%2520Sensor%2520GUI%2520Library/1.0.0/TguiSensorGUILibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nordicalliance/library/Tgui%20Sensor%20GUI%20Library/1.0.0/TguiSensorGUILibrary-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

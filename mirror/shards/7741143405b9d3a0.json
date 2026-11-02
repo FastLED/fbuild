@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-wizo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-wizo/library/C12832_lcd/0.0.0+sha.ab787614c0d8/C12832_lcd-0.0.0+sha.ab787614c0d8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "C12832_lcd-0.0.0+sha.ab787614c0d8.tar.gz",
+    "size_bytes": 10716,
+    "sha256": "dd7d9194e74b14079ebf3da2bd968abef57bcc61f94ca16bc85fb31d908f6449",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wizo/library/C12832_lcd/0.0.0%2Bsha.ab787614c0d8/C12832_lcd-0.0.0%2Bsha.ab787614c0d8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wizo/library/C12832_lcd/0.0.0%2Bsha.ab787614c0d8/C12832_lcd-0.0.0%2Bsha.ab787614c0d8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

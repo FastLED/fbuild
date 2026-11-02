@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/aduen",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "aduen/library/ThreadedTimer/0.1.0/ThreadedTimer-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ThreadedTimer-0.1.0.tar.gz",
+    "size_bytes": 14229,
+    "sha256": "80c2133f6d9541e3978bdd9fa8233f696bdaa7720e0f4285e6f5e192a0d65454",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aduen/library/ThreadedTimer/0.1.0/ThreadedTimer-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aduen/library/ThreadedTimer/0.1.0/ThreadedTimer-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

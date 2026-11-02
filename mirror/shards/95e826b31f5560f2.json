@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gustavo_stroschon",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gustavo_stroschon/library/CronOut/1.1.0/CronOut-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CronOut-1.1.0.tar.gz",
+    "size_bytes": 3763,
+    "sha256": "04b5e9b42680004d36617400f5036b7d3a21357c52e7d02822155aed1b4bef2f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gustavo_stroschon/library/CronOut/1.1.0/CronOut-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gustavo_stroschon/library/CronOut/1.1.0/CronOut-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

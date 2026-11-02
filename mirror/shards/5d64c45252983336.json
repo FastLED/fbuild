@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/iotgurulive",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "iotgurulive/library/IoTGuru/1.3.1/IoTGuru-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTGuru-1.3.1.tar.gz",
+    "size_bytes": 24937,
+    "sha256": "e99c3adbb5be219141c1989472d9b8bc5ae4702f04c36f6762cf165471ecb7af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iotgurulive/library/IoTGuru/1.3.1/IoTGuru-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/iotgurulive/library/IoTGuru/1.3.1/IoTGuru-1.3.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

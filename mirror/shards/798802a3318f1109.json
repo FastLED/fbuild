@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kiosdron",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kiosdron/library/Balora/1.0.3/Balora-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Balora-1.0.3.tar.gz",
+    "size_bytes": 151716,
+    "sha256": "d37445163f587fe7c7d4a0451990b60ff8c3fc69ae12036af0bb4fb51a076458",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kiosdron/library/Balora/1.0.3/Balora-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/kiosdron/library/Balora/1.0.3/Balora-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

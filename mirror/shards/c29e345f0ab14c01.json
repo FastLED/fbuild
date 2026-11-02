@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/petrows",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "petrows/library/esp-32-vid6608-rmt/1.2/esp-32-vid6608-rmt-1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-32-vid6608-rmt-1.2.tar.gz",
+    "size_bytes": 75575,
+    "sha256": "e80fae6e9ce7167a21506894c540f897e26f0437102162bda1e4ea12b7665940",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/petrows/library/esp-32-vid6608-rmt/1.2/esp-32-vid6608-rmt-1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/petrows/library/esp-32-vid6608-rmt/1.2/esp-32-vid6608-rmt-1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "petrows/library/esp-32-vid6608/1.0/esp-32-vid6608-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-32-vid6608-1.0.tar.gz",
+    "size_bytes": 75117,
+    "sha256": "4f50ffc30ef1b71390ea0f7749a99854d469da960199cda5a4fb1323737ae783",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/petrows/library/esp-32-vid6608/1.0/esp-32-vid6608-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/petrows/library/esp-32-vid6608/1.0/esp-32-vid6608-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "petrows/library/esp-32-vid6608/1.1/esp-32-vid6608-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-32-vid6608-1.1.tar.gz",
+    "size_bytes": 75572,
+    "sha256": "dc0bd09a1cccf0662c4cd837bb1f4508e10bd7e5444d02b05ed73a412432e9b0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/petrows/library/esp-32-vid6608/1.1/esp-32-vid6608-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/petrows/library/esp-32-vid6608/1.1/esp-32-vid6608-1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "petrows/library/vid6608/1.0.0/vid6608-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vid6608-1.0.0.tar.gz",
+    "size_bytes": 17829,
+    "sha256": "fd70e6d4bc98c6e90fb5fc2ee44a31c94df1f02ccb2d1cd406f8579c98d0ec85",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/petrows/library/vid6608/1.0.0/vid6608-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/petrows/library/vid6608/1.0.0/vid6608-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "petrows/library/vid6608/1.0.1/vid6608-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vid6608-1.0.1.tar.gz",
+    "size_bytes": 19342,
+    "sha256": "0bfc4b5ef2207230fb2b495e1774d5ea8364ee5faee5a42f558c8849b43dd864",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/petrows/library/vid6608/1.0.1/vid6608-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/petrows/library/vid6608/1.0.1/vid6608-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "petrows/library/vid6608/1.0.2/vid6608-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vid6608-1.0.2.tar.gz",
+    "size_bytes": 19370,
+    "sha256": "49cd4b888c753f27e3e9d1a72ef3f1ebdb83849248659f64e9cd1a533354fe9a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/petrows/library/vid6608/1.0.2/vid6608-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/petrows/library/vid6608/1.0.2/vid6608-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "petrows/library/vid6608/1.0.3/vid6608-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vid6608-1.0.3.tar.gz",
+    "size_bytes": 19461,
+    "sha256": "633bde79e78a724ba432e7ce7fcb028d9fe05fa7aead08f0be4d214fb2109c0a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/petrows/library/vid6608/1.0.3/vid6608-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/petrows/library/vid6608/1.0.3/vid6608-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "petrows/library/vid6608/1.0.4/vid6608-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vid6608-1.0.4.tar.gz",
+    "size_bytes": 19665,
+    "sha256": "16623e0ec7c27e6473e1d83a565868333082efab510a97e0cf197fdf413d638b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/petrows/library/vid6608/1.0.4/vid6608-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/petrows/library/vid6608/1.0.4/vid6608-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

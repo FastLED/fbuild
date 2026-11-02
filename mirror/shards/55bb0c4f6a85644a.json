@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/airgradienthq",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "airgradienthq/library/AirGradient%20Air%20Quality%20Sensor/3.6.0/AirGradientAirQualitySensor-3.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AirGradientAirQualitySensor-3.6.0.tar.gz",
+    "size_bytes": 11384529,
+    "sha256": "4da996ca12ffc76007f943e22844135eaa2c6f83eafc384ed6b67aea99e94899",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/airgradienthq/library/AirGradient%2520Air%2520Quality%2520Sensor/3.6.0/AirGradientAirQualitySensor-3.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/airgradienthq/library/AirGradient%20Air%20Quality%20Sensor/3.6.0/AirGradientAirQualitySensor-3.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "airgradienthq/library/AirGradient%20Air%20Quality%20Sensor/3.6.1/AirGradientAirQualitySensor-3.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AirGradientAirQualitySensor-3.6.1.tar.gz",
+    "size_bytes": 11388218,
+    "sha256": "3c15a4bf0be14e6e92845b751c12c56cefcefefeb377c11cd90e7a49e341710f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/airgradienthq/library/AirGradient%2520Air%2520Quality%2520Sensor/3.6.1/AirGradientAirQualitySensor-3.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/airgradienthq/library/AirGradient%20Air%20Quality%20Sensor/3.6.1/AirGradientAirQualitySensor-3.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "airgradienthq/library/AirGradient%20Air%20Quality%20Sensor/3.6.2/AirGradientAirQualitySensor-3.6.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AirGradientAirQualitySensor-3.6.2.tar.gz",
+    "size_bytes": 11388074,
+    "sha256": "6d7d7bd695845850ae0485419a3e9705a54af267ef9d14883642ef20e5f9eebc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/airgradienthq/library/AirGradient%2520Air%2520Quality%2520Sensor/3.6.2/AirGradientAirQualitySensor-3.6.2.tar.gz",
+     "https://dl.registry.platformio.org/download/airgradienthq/library/AirGradient%20Air%20Quality%20Sensor/3.6.2/AirGradientAirQualitySensor-3.6.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "airgradienthq/library/AirGradient%20Air%20Quality%20Sensor/3.6.3/AirGradientAirQualitySensor-3.6.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AirGradientAirQualitySensor-3.6.3.tar.gz",
+    "size_bytes": 11388608,
+    "sha256": "387237754436371715945f225680cb730ae7d2a4ab201cb7b8c3cc4941ca49a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/airgradienthq/library/AirGradient%2520Air%2520Quality%2520Sensor/3.6.3/AirGradientAirQualitySensor-3.6.3.tar.gz",
+     "https://dl.registry.platformio.org/download/airgradienthq/library/AirGradient%20Air%20Quality%20Sensor/3.6.3/AirGradientAirQualitySensor-3.6.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "airgradienthq/library/AirGradient%20Air%20Quality%20Sensor/3.6.4/AirGradientAirQualitySensor-3.6.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AirGradientAirQualitySensor-3.6.4.tar.gz",
+    "size_bytes": 11389450,
+    "sha256": "53295e74b286fad35b07f6eeed12b7b161a67d66a31ef19a1b5446e8ef272312",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/airgradienthq/library/AirGradient%2520Air%2520Quality%2520Sensor/3.6.4/AirGradientAirQualitySensor-3.6.4.tar.gz",
+     "https://dl.registry.platformio.org/download/airgradienthq/library/AirGradient%20Air%20Quality%20Sensor/3.6.4/AirGradientAirQualitySensor-3.6.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "airgradienthq/library/AirGradient%20Air%20Quality%20Sensor/3.6.5/AirGradientAirQualitySensor-3.6.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AirGradientAirQualitySensor-3.6.5.tar.gz",
+    "size_bytes": 11377817,
+    "sha256": "026a70085c4fdcf53907c1a3fa9343fd20533cc062f4db7e8ac323f5f5da296a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/airgradienthq/library/AirGradient%2520Air%2520Quality%2520Sensor/3.6.5/AirGradientAirQualitySensor-3.6.5.tar.gz",
+     "https://dl.registry.platformio.org/download/airgradienthq/library/AirGradient%20Air%20Quality%20Sensor/3.6.5/AirGradientAirQualitySensor-3.6.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "airgradienthq/library/AirGradient%20Air%20Quality%20Sensor/3.7.0/AirGradientAirQualitySensor-3.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AirGradientAirQualitySensor-3.7.0.tar.gz",
+    "size_bytes": 11410500,
+    "sha256": "461b76f52e0062dec389a8f9ae6326dc1b64bf2291e1ed93e56b490809dbd9d2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/airgradienthq/library/AirGradient%2520Air%2520Quality%2520Sensor/3.7.0/AirGradientAirQualitySensor-3.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/airgradienthq/library/AirGradient%20Air%20Quality%20Sensor/3.7.0/AirGradientAirQualitySensor-3.7.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

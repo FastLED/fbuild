@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-5st7-hil",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-5st7-hil/library/KrsServolib/0.0.0+sha.0bbad9087061/KrsServolib-0.0.0+sha.0bbad9087061.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KrsServolib-0.0.0+sha.0bbad9087061.tar.gz",
+    "size_bytes": 1885,
+    "sha256": "cd57c4c917aab24c5eee4c2ffc2156057f16b76ad1207c34cedbdc9ea24a37cd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-5st7-hil/library/KrsServolib/0.0.0%2Bsha.0bbad9087061/KrsServolib-0.0.0%2Bsha.0bbad9087061.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-5st7-hil/library/KrsServolib/0.0.0%2Bsha.0bbad9087061/KrsServolib-0.0.0%2Bsha.0bbad9087061.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-5st7-hil/library/SerialHalfDuplex/0.0.0+sha.5ff62bfc3d64/SerialHalfDuplex-0.0.0+sha.5ff62bfc3d64.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialHalfDuplex-0.0.0+sha.5ff62bfc3d64.tar.gz",
+    "size_bytes": 3487,
+    "sha256": "cbfe8e763bd31212900adc8378f2942c06ede79382d01494da7af5fdc769a79e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-5st7-hil/library/SerialHalfDuplex/0.0.0%2Bsha.5ff62bfc3d64/SerialHalfDuplex-0.0.0%2Bsha.5ff62bfc3d64.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-5st7-hil/library/SerialHalfDuplex/0.0.0%2Bsha.5ff62bfc3d64/SerialHalfDuplex-0.0.0%2Bsha.5ff62bfc3d64.tar.gz"
+    ]
+   }
+  }
+ ]
+}

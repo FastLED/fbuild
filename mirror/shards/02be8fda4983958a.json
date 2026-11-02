@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ktos",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ktos/library/Mokosh/0.6.0/Mokosh-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Mokosh-0.6.0.tar.gz",
+    "size_bytes": 20098,
+    "sha256": "dea4b630ee7cf506f8fbbe6488b00468f12ce44f43ebd759188e176fafbf205c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ktos/library/Mokosh/0.6.0/Mokosh-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ktos/library/Mokosh/0.6.0/Mokosh-0.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ktos/library/arduino-unleash/0.1.0/arduino-unleash-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arduino-unleash-0.1.0.tar.gz",
+    "size_bytes": 9944,
+    "sha256": "8e6b225a86db3f505193fbd9262de3f4c6653e9b34af4e7c6007fa53a5f31f82",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ktos/library/arduino-unleash/0.1.0/arduino-unleash-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ktos/library/arduino-unleash/0.1.0/arduino-unleash-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

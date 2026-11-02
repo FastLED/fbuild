@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-yoshua0207",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-yoshua0207/library/GT511C_fingerprint_scanner/0.0.0+sha.a1ba925cf903/GT511C_fingerprint_scanner-0.0.0+sha.a1ba925cf903.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GT511C_fingerprint_scanner-0.0.0+sha.a1ba925cf903.tar.gz",
+    "size_bytes": 7782,
+    "sha256": "ed7880cbee8788c28e2b2e462fd8fc1964697499435cdfd724f5142c79561d5b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yoshua0207/library/GT511C_fingerprint_scanner/0.0.0%2Bsha.a1ba925cf903/GT511C_fingerprint_scanner-0.0.0%2Bsha.a1ba925cf903.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yoshua0207/library/GT511C_fingerprint_scanner/0.0.0%2Bsha.a1ba925cf903/GT511C_fingerprint_scanner-0.0.0%2Bsha.a1ba925cf903.tar.gz"
+    ]
+   }
+  }
+ ]
+}

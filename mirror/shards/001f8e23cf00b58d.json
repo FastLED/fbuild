@@ -1,0 +1,490 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/majerle",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "majerle/library/LwBTN/1.1.0/LwBTN-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LwBTN-1.1.0.tar.gz",
+    "size_bytes": 572217,
+    "sha256": "176ec294a3410b868b59f65f84689ce1fc39d9d92b6911db45647711d891b82e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majerle/library/LwBTN/1.1.0/LwBTN-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/majerle/library/LwBTN/1.1.0/LwBTN-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majerle/library/LwBTN/1.2.0/LwBTN-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LwBTN-1.2.0.tar.gz",
+    "size_bytes": 572686,
+    "sha256": "e301a88fdb64ad4c8d3e06b1d477c113b085ec7a8d0de50be6a05e93e58ba774",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majerle/library/LwBTN/1.2.0/LwBTN-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/majerle/library/LwBTN/1.2.0/LwBTN-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majerle/library/LwBTN/1.2.1/LwBTN-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LwBTN-1.2.1.tar.gz",
+    "size_bytes": 572797,
+    "sha256": "6b3843e7fbe3d81a9fad08676b6d7871a2a6966db72567ee009a1a3d248adc8b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majerle/library/LwBTN/1.2.1/LwBTN-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/majerle/library/LwBTN/1.2.1/LwBTN-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majerle/library/LwBTN/1.3.0/LwBTN-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LwBTN-1.3.0.tar.gz",
+    "size_bytes": 573335,
+    "sha256": "0a91b279cf937bd20e118572935eec0dd7ed5e953f042b41d4f74c513efccc70",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majerle/library/LwBTN/1.3.0/LwBTN-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/majerle/library/LwBTN/1.3.0/LwBTN-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majerle/library/LwBTN/1.3.1/LwBTN-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LwBTN-1.3.1.tar.gz",
+    "size_bytes": 574951,
+    "sha256": "bee92bdc03c4acdea31007152266bd83b8e06441eaf243fd53376afab9fb8790",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majerle/library/LwBTN/1.3.1/LwBTN-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/majerle/library/LwBTN/1.3.1/LwBTN-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majerle/library/LwBTN/1.3.2/LwBTN-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LwBTN-1.3.2.tar.gz",
+    "size_bytes": 576795,
+    "sha256": "da6495b45a88a927d8b754d061e463014ef8d0b7622c68001fdfd68e724cfb51",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majerle/library/LwBTN/1.3.2/LwBTN-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/majerle/library/LwBTN/1.3.2/LwBTN-1.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majerle/library/LwDTC/1.0.0/LwDTC-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LwDTC-1.0.0.tar.gz",
+    "size_bytes": 18212,
+    "sha256": "9319c86a96d41590cb88fa8153243d812d61e7f12e695d91f7d111eb70674afa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majerle/library/LwDTC/1.0.0/LwDTC-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/majerle/library/LwDTC/1.0.0/LwDTC-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majerle/library/LwESP/1.1.2-dev/LwESP-1.1.2-dev.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LwESP-1.1.2-dev.tar.gz",
+    "size_bytes": 1408613,
+    "sha256": "657299f8f27a8300b6a0440662f5a5441002c44fee50612e94ef23e1899391ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majerle/library/LwESP/1.1.2-dev/LwESP-1.1.2-dev.tar.gz",
+     "https://dl.registry.platformio.org/download/majerle/library/LwESP/1.1.2-dev/LwESP-1.1.2-dev.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majerle/library/LwEVT/1.1.0/LwEVT-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LwEVT-1.1.0.tar.gz",
+    "size_bytes": 12074,
+    "sha256": "ed63d206845ee4ceb9a28dfb0fa19aab76258c42180c9d5b15a4d030b5e5740a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majerle/library/LwEVT/1.1.0/LwEVT-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/majerle/library/LwEVT/1.1.0/LwEVT-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majerle/library/LwGPS/2.3.0/LwGPS-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LwGPS-2.3.0.tar.gz",
+    "size_bytes": 27950,
+    "sha256": "38312da1c186ca7fe7f7dd6e79ce6f91d80737236fc32f07feb749253fc4e662",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majerle/library/LwGPS/2.3.0/LwGPS-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/majerle/library/LwGPS/2.3.0/LwGPS-2.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majerle/library/LwGPS/2.4.0/LwGPS-2.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LwGPS-2.4.0.tar.gz",
+    "size_bytes": 29548,
+    "sha256": "dc2889dd16e9dbdaa6717ea51c997b8db38eebccdcee38018dabd6f6ed0b7d5b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majerle/library/LwGPS/2.4.0/LwGPS-2.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/majerle/library/LwGPS/2.4.0/LwGPS-2.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majerle/library/LwGPS/2.4.1/LwGPS-2.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LwGPS-2.4.1.tar.gz",
+    "size_bytes": 33940,
+    "sha256": "eb31ec18aafb56f563494b5f6aed3ca738b6ab83c1aca24ee9c74e1eb528ab7c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majerle/library/LwGPS/2.4.1/LwGPS-2.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/majerle/library/LwGPS/2.4.1/LwGPS-2.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majerle/library/LwGSM/0.1.1/LwGSM-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LwGSM-0.1.1.tar.gz",
+    "size_bytes": 20881330,
+    "sha256": "b25963d9ddb6204e1cf01b441df7d1e85a1d3e724d4f91182bf8575fc8a28410",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majerle/library/LwGSM/0.1.1/LwGSM-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/majerle/library/LwGSM/0.1.1/LwGSM-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majerle/library/LwJSON/1.10.0/LwJSON-1.10.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LwJSON-1.10.0.tar.gz",
+    "size_bytes": 53098,
+    "sha256": "a7c478ad1db063d4baabe99a55cc452a01c1789a1936759e403480f47f65f86f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majerle/library/LwJSON/1.10.0/LwJSON-1.10.0.tar.gz",
+     "https://dl.registry.platformio.org/download/majerle/library/LwJSON/1.10.0/LwJSON-1.10.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majerle/library/LwJSON/1.10.1/LwJSON-1.10.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LwJSON-1.10.1.tar.gz",
+    "size_bytes": 53313,
+    "sha256": "ba4a56f2fd3b47e1f3793291ceee001943cdbc52cd1bee5938d3cf3901da9000",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majerle/library/LwJSON/1.10.1/LwJSON-1.10.1.tar.gz",
+     "https://dl.registry.platformio.org/download/majerle/library/LwJSON/1.10.1/LwJSON-1.10.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majerle/library/LwJSON/1.8.0/LwJSON-1.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LwJSON-1.8.0.tar.gz",
+    "size_bytes": 43078,
+    "sha256": "af3b74ddbb1d934d30529726bb69831d6acad27588c806ee5433f78ef97ba73f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majerle/library/LwJSON/1.8.0/LwJSON-1.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/majerle/library/LwJSON/1.8.0/LwJSON-1.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majerle/library/LwJSON/1.8.1/LwJSON-1.8.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LwJSON-1.8.1.tar.gz",
+    "size_bytes": 43293,
+    "sha256": "b5354b91ccb9872f0a65eaa726c1f2d0123d9fca61da15dc700907d08e734d45",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majerle/library/LwJSON/1.8.1/LwJSON-1.8.1.tar.gz",
+     "https://dl.registry.platformio.org/download/majerle/library/LwJSON/1.8.1/LwJSON-1.8.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majerle/library/LwJSON/1.9.0/LwJSON-1.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LwJSON-1.9.0.tar.gz",
+    "size_bytes": 50589,
+    "sha256": "ec98d8e3e68e0bc5b993039db074083dac778205a182e87f063f8bd4862219af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majerle/library/LwJSON/1.9.0/LwJSON-1.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/majerle/library/LwJSON/1.9.0/LwJSON-1.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majerle/library/LwMEM/2.2.3/LwMEM-2.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LwMEM-2.2.3.tar.gz",
+    "size_bytes": 866472,
+    "sha256": "e11e3c91f62784cb8f1474729d4214996f30f7786d818c78c7fab9e4bfbe5c8c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majerle/library/LwMEM/2.2.3/LwMEM-2.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/majerle/library/LwMEM/2.2.3/LwMEM-2.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majerle/library/LwMEM/2.2.4/LwMEM-2.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LwMEM-2.2.4.tar.gz",
+    "size_bytes": 861326,
+    "sha256": "3b846d0e289b548360826e45956e403ac01faa2ca96d8c03eb6de9e46088dc8b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majerle/library/LwMEM/2.2.4/LwMEM-2.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/majerle/library/LwMEM/2.2.4/LwMEM-2.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majerle/library/LwOW/4.0.0/LwOW-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LwOW-4.0.0.tar.gz",
+    "size_bytes": 4214113,
+    "sha256": "74be8068fab43a861248b327ef18bb110cdbf7c091bc53b78641399bfa932ab1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majerle/library/LwOW/4.0.0/LwOW-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/majerle/library/LwOW/4.0.0/LwOW-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majerle/library/LwPKT/1.4.1/LwPKT-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LwPKT-1.4.1.tar.gz",
+    "size_bytes": 31799,
+    "sha256": "d51faf31cbe558161b61a5a2c37e455a43bbb2472270424ca74d65a84ac3796e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majerle/library/LwPKT/1.4.1/LwPKT-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/majerle/library/LwPKT/1.4.1/LwPKT-1.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majerle/library/LwPKT/1.5.1/LwPKT-1.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LwPKT-1.5.1.tar.gz",
+    "size_bytes": 31378,
+    "sha256": "eeda85b68e0d77ad6f35b54e920e5615ed92a96ef9c5b5e34a7a592cd9e036b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majerle/library/LwPKT/1.5.1/LwPKT-1.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/majerle/library/LwPKT/1.5.1/LwPKT-1.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majerle/library/LwPKT/2.0.0/LwPKT-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LwPKT-2.0.0.tar.gz",
+    "size_bytes": 40138,
+    "sha256": "c67a9ac454168f136f731067c5e523e9edab54c6f946c82b34598c6fe1202590",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majerle/library/LwPKT/2.0.0/LwPKT-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/majerle/library/LwPKT/2.0.0/LwPKT-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majerle/library/LwPRINTF/1.0.6/LwPRINTF-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LwPRINTF-1.0.6.tar.gz",
+    "size_bytes": 506292,
+    "sha256": "c3751713a583de134e2e11ffb6d5cd31f68ea0eb94e1662041aee280540b6ddd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majerle/library/LwPRINTF/1.0.6/LwPRINTF-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/majerle/library/LwPRINTF/1.0.6/LwPRINTF-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majerle/library/LwPRINTF/1.1.0/LwPRINTF-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LwPRINTF-1.1.0.tar.gz",
+    "size_bytes": 505823,
+    "sha256": "5d958f4d4ee6ad663daca162c030a9eb40bb1a6dd0275733b4a945008ea5e153",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majerle/library/LwPRINTF/1.1.0/LwPRINTF-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/majerle/library/LwPRINTF/1.1.0/LwPRINTF-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majerle/library/LwRB/3.2.0/LwRB-3.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LwRB-3.2.0.tar.gz",
+    "size_bytes": 391229,
+    "sha256": "ba1ce3209c7296014de875f2fc08c0043d1f082f24b04ae17426a192ccf572e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majerle/library/LwRB/3.2.0/LwRB-3.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/majerle/library/LwRB/3.2.0/LwRB-3.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majerle/library/LwRB/3.3.0/LwRB-3.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LwRB-3.3.0.tar.gz",
+    "size_bytes": 21033,
+    "sha256": "454a833d954485d5bff9afefa7ddb91aafb07dbd3b34f9de5e13dd16f36924f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majerle/library/LwRB/3.3.0/LwRB-3.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/majerle/library/LwRB/3.3.0/LwRB-3.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majerle/library/LwSHELL/1.2.0/LwSHELL-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LwSHELL-1.2.0.tar.gz",
+    "size_bytes": 13401,
+    "sha256": "8de2d85f61b2a13b6a78a67fc15ab66cc523e67358f34b14955aef5dfe1fec7f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majerle/library/LwSHELL/1.2.0/LwSHELL-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/majerle/library/LwSHELL/1.2.0/LwSHELL-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majerle/library/LwUTIL/1.3.0/LwUTIL-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LwUTIL-1.3.0.tar.gz",
+    "size_bytes": 12586,
+    "sha256": "5d3858022607f7b7b8a596d7e4f2f0ed5b25008ac5be51ab2cfd40b16ccb57f9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majerle/library/LwUTIL/1.3.0/LwUTIL-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/majerle/library/LwUTIL/1.3.0/LwUTIL-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majerle/library/LwUTIL/1.4.0/LwUTIL-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LwUTIL-1.4.0.tar.gz",
+    "size_bytes": 15367,
+    "sha256": "4f505f555d2197ea42995df5d21dc56bc43961137fd44da85b537bb25b02f532",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majerle/library/LwUTIL/1.4.0/LwUTIL-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/majerle/library/LwUTIL/1.4.0/LwUTIL-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majerle/library/LwUTIL/1.5.0/LwUTIL-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LwUTIL-1.5.0.tar.gz",
+    "size_bytes": 19245,
+    "sha256": "4383469644d9f48f4248a7774453e467c82ddd40854e3e7e2167c8c04416bea4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majerle/library/LwUTIL/1.5.0/LwUTIL-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/majerle/library/LwUTIL/1.5.0/LwUTIL-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majerle/library/LwUTIL/1.6.0/LwUTIL-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LwUTIL-1.6.0.tar.gz",
+    "size_bytes": 22060,
+    "sha256": "15c5d5c03543a61190919df44eb2449759c665cd66042989c8810e14c259a0b6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majerle/library/LwUTIL/1.6.0/LwUTIL-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/majerle/library/LwUTIL/1.6.0/LwUTIL-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majerle/library/LwUTIL/1.6.1/LwUTIL-1.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LwUTIL-1.6.1.tar.gz",
+    "size_bytes": 23499,
+    "sha256": "48fc27946b369312812fde755e1ad3e6f391c4b0fb36d55e5f4a8bc822de71ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majerle/library/LwUTIL/1.6.1/LwUTIL-1.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/majerle/library/LwUTIL/1.6.1/LwUTIL-1.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majerle/library/LwWDG/1.1.2/LwWDG-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LwWDG-1.1.2.tar.gz",
+    "size_bytes": 12914,
+    "sha256": "75a779cb62ee620891045cb5687b87e49b7bf41a32e97dc8a7197d42f6b9bb72",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majerle/library/LwWDG/1.1.2/LwWDG-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/majerle/library/LwWDG/1.1.2/LwWDG-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majerle/library/pio-ci-test/0.1.0/pio-ci-test-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pio-ci-test-0.1.0.tar.gz",
+    "size_bytes": 867,
+    "sha256": "c3839dbbe6c9ced37fd3e378a1b6748e22a8b7b53bc25406b72e3a39029c60b2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majerle/library/pio-ci-test/0.1.0/pio-ci-test-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/majerle/library/pio-ci-test/0.1.0/pio-ci-test-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majerle/library/pio-ci-test/0.7.0/pio-ci-test-0.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pio-ci-test-0.7.0.tar.gz",
+    "size_bytes": 1254,
+    "sha256": "7f7b61579043f64d68d31a3c5e2787d513b92b2fb4e9d6cb3bdd178eec02bbf6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majerle/library/pio-ci-test/0.7.0/pio-ci-test-0.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/majerle/library/pio-ci-test/0.7.0/pio-ci-test-0.7.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

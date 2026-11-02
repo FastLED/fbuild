@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-davetshave",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-davetshave/library/counter/0.0.0+sha.bd08a59ee473/counter-0.0.0+sha.bd08a59ee473.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "counter-0.0.0+sha.bd08a59ee473.tar.gz",
+    "size_bytes": 1196,
+    "sha256": "4a4df553d0e70a7aa4447c8f86324e1218b2b8e23123c1012be279a0b66cc8d2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-davetshave/library/counter/0.0.0%2Bsha.bd08a59ee473/counter-0.0.0%2Bsha.bd08a59ee473.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-davetshave/library/counter/0.0.0%2Bsha.bd08a59ee473/counter-0.0.0%2Bsha.bd08a59ee473.tar.gz"
+    ]
+   }
+  }
+ ]
+}

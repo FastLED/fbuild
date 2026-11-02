@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hidaka",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hidaka/library/AD717x-AD411x-Arduino/0.0.1/AD717x-AD411x-Arduino-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AD717x-AD411x-Arduino-0.0.1.tar.gz",
+    "size_bytes": 10245,
+    "sha256": "6edf517354e8a512cf89d6b175af2ab93abe55ff40b2344a5370414b01e32832",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hidaka/library/AD717x-AD411x-Arduino/0.0.1/AD717x-AD411x-Arduino-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/hidaka/library/AD717x-AD411x-Arduino/0.0.1/AD717x-AD411x-Arduino-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hidaka/library/VectorNav-PIO/0.0.0/VectorNav-PIO-0.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VectorNav-PIO-0.0.0.tar.gz",
+    "size_bytes": 1786147,
+    "sha256": "a5e0af14384ec3cf9ac96343692a547098a1326fe662095aabc95434e73fdf76",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hidaka/library/VectorNav-PIO/0.0.0/VectorNav-PIO-0.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hidaka/library/VectorNav-PIO/0.0.0/VectorNav-PIO-0.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

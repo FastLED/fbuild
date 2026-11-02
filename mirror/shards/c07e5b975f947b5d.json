@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/wh0datguy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "wh0datguy/library/Simpletimer/2.1.1/Simpletimer-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Simpletimer-2.1.1.tar.gz",
+    "size_bytes": 15088,
+    "sha256": "29779adfae6bd21cd95a62a0b172e93ed1904eac15a9a2a8a51fdfcffe82dd56",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wh0datguy/library/Simpletimer/2.1.1/Simpletimer-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/wh0datguy/library/Simpletimer/2.1.1/Simpletimer-2.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

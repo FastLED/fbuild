@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/matmunk",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "matmunk/library/DS18B20/1.0.0/DS18B20-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS18B20-1.0.0.tar.gz",
+    "size_bytes": 5029,
+    "sha256": "6340530fd3a52defbf996d8b015b42344d6bc11160aa1779f8581a1360254118",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matmunk/library/DS18B20/1.0.0/DS18B20-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/matmunk/library/DS18B20/1.0.0/DS18B20-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "matmunk/library/LiquidCrystal_74HC595/1.0.0/LiquidCrystal_74HC595-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LiquidCrystal_74HC595-1.0.0.tar.gz",
+    "size_bytes": 4418,
+    "sha256": "d92c99cabd4ee09122c6b761ccaaf3579cd148800b7319abbfbf7d4be6c1d20d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matmunk/library/LiquidCrystal_74HC595/1.0.0/LiquidCrystal_74HC595-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/matmunk/library/LiquidCrystal_74HC595/1.0.0/LiquidCrystal_74HC595-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

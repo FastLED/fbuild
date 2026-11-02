@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-sowmy87",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-sowmy87/library/Robot/0.0.0+sha.36c4d1dbed7e/Robot-0.0.0+sha.36c4d1dbed7e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Robot-0.0.0+sha.36c4d1dbed7e.tar.gz",
+    "size_bytes": 2674,
+    "sha256": "3d8637d20d5acfd0dd61c68121b567c4ca35a877677ccb2dd8e614d3612e2d05",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sowmy87/library/Robot/0.0.0%2Bsha.36c4d1dbed7e/Robot-0.0.0%2Bsha.36c4d1dbed7e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sowmy87/library/Robot/0.0.0%2Bsha.36c4d1dbed7e/Robot-0.0.0%2Bsha.36c4d1dbed7e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

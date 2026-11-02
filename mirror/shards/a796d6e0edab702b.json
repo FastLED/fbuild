@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/th0m4sk",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "th0m4sk/library/FileSystem/1.0.2/FileSystem-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FileSystem-1.0.2.tar.gz",
+    "size_bytes": 14585,
+    "sha256": "ad369df21af2c391a61aba7a4eeba33ea6dfed52947c067a52dc11f03de11078",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/th0m4sk/library/FileSystem/1.0.2/FileSystem-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/th0m4sk/library/FileSystem/1.0.2/FileSystem-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "th0m4sk/library/SerialDebugTHK/1.0.3/SerialDebugTHK-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialDebugTHK-1.0.3.tar.gz",
+    "size_bytes": 14144,
+    "sha256": "f727df5d18f273c386c0856e289e155bcbb945403030fc8a414d96ce0a767b76",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/th0m4sk/library/SerialDebugTHK/1.0.3/SerialDebugTHK-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/th0m4sk/library/SerialDebugTHK/1.0.3/SerialDebugTHK-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "th0m4sk/library/TM1638-extended/2.3.0/TM1638-extended-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TM1638-extended-2.3.0.tar.gz",
+    "size_bytes": 11581,
+    "sha256": "dc94b493ff27364a199a24d05dd0a0eb32443233cd438b29a3b57415ff8ecf8c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/th0m4sk/library/TM1638-extended/2.3.0/TM1638-extended-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/th0m4sk/library/TM1638-extended/2.3.0/TM1638-extended-2.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "th0m4sk/library/Time%20Trigger/1.0.1/TimeTrigger-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TimeTrigger-1.0.1.tar.gz",
+    "size_bytes": 13710,
+    "sha256": "79aa63668278cbc868d8bb43a6ed94b62e15f737540691438c2be04d6af93335",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/th0m4sk/library/Time%2520Trigger/1.0.1/TimeTrigger-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/th0m4sk/library/Time%20Trigger/1.0.1/TimeTrigger-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

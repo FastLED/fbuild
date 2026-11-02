@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-andresiforware2018",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-andresiforware2018/library/WIZnet_Library/0.0.0+sha.d7f8ce7771c3/WIZnet_Library-0.0.0+sha.d7f8ce7771c3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WIZnet_Library-0.0.0+sha.d7f8ce7771c3.tar.gz",
+    "size_bytes": 15739,
+    "sha256": "2d7063ff1f51c90b4721434b63c462a302ff3596d532da5913bb4e9d0809680b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-andresiforware2018/library/WIZnet_Library/0.0.0%2Bsha.d7f8ce7771c3/WIZnet_Library-0.0.0%2Bsha.d7f8ce7771c3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-andresiforware2018/library/WIZnet_Library/0.0.0%2Bsha.d7f8ce7771c3/WIZnet_Library-0.0.0%2Bsha.d7f8ce7771c3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

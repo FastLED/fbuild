@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mr-glt",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mr-glt/library/SHA-1%20Hash/1.1.0/SHA-1Hash-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SHA-1Hash-1.1.0.tar.gz",
+    "size_bytes": 29010,
+    "sha256": "760ee4f92e569f780f9e7b2ca918b82f36ea2afbbab1c89ed2bb0eeb8415d7e2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mr-glt/library/SHA-1%2520Hash/1.1.0/SHA-1Hash-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mr-glt/library/SHA-1%20Hash/1.1.0/SHA-1Hash-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

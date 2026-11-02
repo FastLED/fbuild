@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-alphaemmeo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-alphaemmeo/library/LoRaWAN-lib-st-murata/0.0.0+sha.5b3e495baefb/LoRaWAN-lib-st-murata-0.0.0+sha.5b3e495baefb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LoRaWAN-lib-st-murata-0.0.0+sha.5b3e495baefb.tar.gz",
+    "size_bytes": 38075,
+    "sha256": "cd66dbcab5a90d9021b8744514962d6d9327752ebff0a3a7d5c459c372b2fe60",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-alphaemmeo/library/LoRaWAN-lib-st-murata/0.0.0%2Bsha.5b3e495baefb/LoRaWAN-lib-st-murata-0.0.0%2Bsha.5b3e495baefb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-alphaemmeo/library/LoRaWAN-lib-st-murata/0.0.0%2Bsha.5b3e495baefb/LoRaWAN-lib-st-murata-0.0.0%2Bsha.5b3e495baefb.tar.gz"
+    ]
+   }
+  }
+ ]
+}

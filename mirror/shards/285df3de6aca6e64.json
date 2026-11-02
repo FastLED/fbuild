@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-flying-monkeys",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-flying-monkeys/library/FXOS8700CQ_ISP/0.0.0+sha.dedb67ca5bc5/FXOS8700CQ_ISP-0.0.0+sha.dedb67ca5bc5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FXOS8700CQ_ISP-0.0.0+sha.dedb67ca5bc5.tar.gz",
+    "size_bytes": 2019,
+    "sha256": "80df4394bfba734f87ebe20f9c6657b58497a1656eb47b956d806d5b7a72f986",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-flying-monkeys/library/FXOS8700CQ_ISP/0.0.0%2Bsha.dedb67ca5bc5/FXOS8700CQ_ISP-0.0.0%2Bsha.dedb67ca5bc5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-flying-monkeys/library/FXOS8700CQ_ISP/0.0.0%2Bsha.dedb67ca5bc5/FXOS8700CQ_ISP-0.0.0%2Bsha.dedb67ca5bc5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

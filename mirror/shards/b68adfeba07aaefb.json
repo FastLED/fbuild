@@ -1,0 +1,321 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bkwoka",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bkwoka/library/SemVerChecker/1.1.0/SemVerChecker-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SemVerChecker-1.1.0.tar.gz",
+    "size_bytes": 7236,
+    "sha256": "04315d6b7368607a673117b7f8e4136d79ec295c75bc30b44190db8f932de393",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bkwoka/library/SemVerChecker/1.1.0/SemVerChecker-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bkwoka/library/SemVerChecker/1.1.0/SemVerChecker-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bkwoka/library/SemVerChecker/1.1.1/SemVerChecker-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SemVerChecker-1.1.1.tar.gz",
+    "size_bytes": 10793,
+    "sha256": "261a9f2cc8eaa335c3af600ce2c4217bcb78ed0088371a0a63a8f7658514618b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bkwoka/library/SemVerChecker/1.1.1/SemVerChecker-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bkwoka/library/SemVerChecker/1.1.1/SemVerChecker-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bkwoka/library/SemVerChecker/1.1.2/SemVerChecker-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SemVerChecker-1.1.2.tar.gz",
+    "size_bytes": 11660,
+    "sha256": "4c29c12cf665417af9a212146dbd52a4f90a05e3544cffbd8f5f077e805b06da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bkwoka/library/SemVerChecker/1.1.2/SemVerChecker-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bkwoka/library/SemVerChecker/1.1.2/SemVerChecker-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bkwoka/library/SemVerChecker/1.1.3/SemVerChecker-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SemVerChecker-1.1.3.tar.gz",
+    "size_bytes": 11805,
+    "sha256": "9bad44faa084bda3b9ab021ecf5f1a1d683f0da0001ab2664416e962c87d0042",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bkwoka/library/SemVerChecker/1.1.3/SemVerChecker-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/bkwoka/library/SemVerChecker/1.1.3/SemVerChecker-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bkwoka/library/SemVerChecker/1.1.4/SemVerChecker-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SemVerChecker-1.1.4.tar.gz",
+    "size_bytes": 11829,
+    "sha256": "3e9fda9422e3905467bf180b84a579f6eec019f78826c956c7419e2280e82d77",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bkwoka/library/SemVerChecker/1.1.4/SemVerChecker-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/bkwoka/library/SemVerChecker/1.1.4/SemVerChecker-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bkwoka/library/SemVerChecker/1.2.0/SemVerChecker-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SemVerChecker-1.2.0.tar.gz",
+    "size_bytes": 17904,
+    "sha256": "64ef4847f8851bb1d2379882f59648ab07ca84f01f698e2b54503f20eef522e2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bkwoka/library/SemVerChecker/1.2.0/SemVerChecker-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bkwoka/library/SemVerChecker/1.2.0/SemVerChecker-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bkwoka/library/SemVerChecker/1.2.1/SemVerChecker-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SemVerChecker-1.2.1.tar.gz",
+    "size_bytes": 17930,
+    "sha256": "49eb40274a456898046f9d208a25c36e579a3054b8c3eaba9c617fe7cd399984",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bkwoka/library/SemVerChecker/1.2.1/SemVerChecker-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bkwoka/library/SemVerChecker/1.2.1/SemVerChecker-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bkwoka/library/SemVerChecker/2.0.0/SemVerChecker-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SemVerChecker-2.0.0.tar.gz",
+    "size_bytes": 17047,
+    "sha256": "fc4942109f012108a0626582d3f263580633526fa043f8ca01be10c4125935fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bkwoka/library/SemVerChecker/2.0.0/SemVerChecker-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bkwoka/library/SemVerChecker/2.0.0/SemVerChecker-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bkwoka/library/SemVerChecker/2.1.0/SemVerChecker-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SemVerChecker-2.1.0.tar.gz",
+    "size_bytes": 17773,
+    "sha256": "8ae821f13e98c9844295c85798f5b7cad82ee1144c2756079aec66d9f47c917b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bkwoka/library/SemVerChecker/2.1.0/SemVerChecker-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bkwoka/library/SemVerChecker/2.1.0/SemVerChecker-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bkwoka/library/SemVerChecker/2.1.1/SemVerChecker-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SemVerChecker-2.1.1.tar.gz",
+    "size_bytes": 18022,
+    "sha256": "81d0c61dcdc20985eec0200642e5c4a8a4e66d496a30db3d14c44e66c321bd0c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bkwoka/library/SemVerChecker/2.1.1/SemVerChecker-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bkwoka/library/SemVerChecker/2.1.1/SemVerChecker-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bkwoka/library/SemVerChecker/2.1.2/SemVerChecker-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SemVerChecker-2.1.2.tar.gz",
+    "size_bytes": 18066,
+    "sha256": "c691395654eb5299dfca76ea1a87a910cd4e11fb29e336575316c17649e61650",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bkwoka/library/SemVerChecker/2.1.2/SemVerChecker-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bkwoka/library/SemVerChecker/2.1.2/SemVerChecker-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bkwoka/library/SemVerChecker/2.1.4/SemVerChecker-2.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SemVerChecker-2.1.4.tar.gz",
+    "size_bytes": 18076,
+    "sha256": "b42c709c72180605fcfaa2bf31ec7d97149d9524f8d454b2224415af22a94dba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bkwoka/library/SemVerChecker/2.1.4/SemVerChecker-2.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/bkwoka/library/SemVerChecker/2.1.4/SemVerChecker-2.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bkwoka/library/SemVerChecker/2.1.5/SemVerChecker-2.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SemVerChecker-2.1.5.tar.gz",
+    "size_bytes": 18087,
+    "sha256": "506fd70d2f8f3b8dd3655f615088f4e7a224e938ba8b5b6afc9ea1206dc7cadb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bkwoka/library/SemVerChecker/2.1.5/SemVerChecker-2.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/bkwoka/library/SemVerChecker/2.1.5/SemVerChecker-2.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bkwoka/library/UUIDv7/1.0.0/UUIDv7-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UUIDv7-1.0.0.tar.gz",
+    "size_bytes": 19178,
+    "sha256": "89d43b4d41c7d3333f4f714b77de478c4c3bf18e72479ac12cb73fa9e7ca88eb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bkwoka/library/UUIDv7/1.0.0/UUIDv7-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bkwoka/library/UUIDv7/1.0.0/UUIDv7-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bkwoka/library/UUIDv7/1.0.1/UUIDv7-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UUIDv7-1.0.1.tar.gz",
+    "size_bytes": 19397,
+    "sha256": "5e039a06f7855974f8092c25694e8312d39007e1d917c4af9bea7f5a14e79b20",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bkwoka/library/UUIDv7/1.0.1/UUIDv7-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bkwoka/library/UUIDv7/1.0.1/UUIDv7-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bkwoka/library/UUIDv7/1.0.2/UUIDv7-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UUIDv7-1.0.2.tar.gz",
+    "size_bytes": 19382,
+    "sha256": "b382254bac2f124ff199ed77068e28568186d162c22198428f672405a54e4798",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bkwoka/library/UUIDv7/1.0.2/UUIDv7-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bkwoka/library/UUIDv7/1.0.2/UUIDv7-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bkwoka/library/UUIDv7/1.0.3/UUIDv7-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UUIDv7-1.0.3.tar.gz",
+    "size_bytes": 20945,
+    "sha256": "cde8253d0ecb9b77d5de761f421854646a33df777e55dbb34669a5fce2106f81",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bkwoka/library/UUIDv7/1.0.3/UUIDv7-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/bkwoka/library/UUIDv7/1.0.3/UUIDv7-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bkwoka/library/UUIDv7/1.0.4/UUIDv7-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UUIDv7-1.0.4.tar.gz",
+    "size_bytes": 20996,
+    "sha256": "99540f3228cac1a724ef44f24d8b7e36e0b02d311cfcf5ecacc4113be9dc5ff4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bkwoka/library/UUIDv7/1.0.4/UUIDv7-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/bkwoka/library/UUIDv7/1.0.4/UUIDv7-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bkwoka/library/UUIDv7/1.1.0/UUIDv7-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UUIDv7-1.1.0.tar.gz",
+    "size_bytes": 23414,
+    "sha256": "22306fd66248bb2a62a74322705ddf9f5b49af4dda4cbdae2e3c3c6cedee1daf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bkwoka/library/UUIDv7/1.1.0/UUIDv7-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bkwoka/library/UUIDv7/1.1.0/UUIDv7-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bkwoka/library/UUIDv7/1.1.1/UUIDv7-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UUIDv7-1.1.1.tar.gz",
+    "size_bytes": 24621,
+    "sha256": "195783103671ecd50c4cea87ce5122d1a1fd03ff1a5e4d10e2520a7460d72e49",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bkwoka/library/UUIDv7/1.1.1/UUIDv7-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bkwoka/library/UUIDv7/1.1.1/UUIDv7-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bkwoka/library/UUIDv7/1.2.0/UUIDv7-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UUIDv7-1.2.0.tar.gz",
+    "size_bytes": 26230,
+    "sha256": "f4a8f0e89412312b1a9f7fdb02bd77824313532eec43a78847e14291872190d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bkwoka/library/UUIDv7/1.2.0/UUIDv7-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bkwoka/library/UUIDv7/1.2.0/UUIDv7-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bkwoka/library/UUIDv7/1.3.0/UUIDv7-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UUIDv7-1.3.0.tar.gz",
+    "size_bytes": 31414,
+    "sha256": "50fcec8ae81726a7cdf939aaa6c9904f678dbb2b02a9c82b734221edc3681270",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bkwoka/library/UUIDv7/1.3.0/UUIDv7-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bkwoka/library/UUIDv7/1.3.0/UUIDv7-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bkwoka/library/UUIDv7/1.3.1/UUIDv7-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UUIDv7-1.3.1.tar.gz",
+    "size_bytes": 31678,
+    "sha256": "fad59cd382f5480e985f24b5822a6d8ad2a5a712ba456d83ffa57ae8095088e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bkwoka/library/UUIDv7/1.3.1/UUIDv7-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bkwoka/library/UUIDv7/1.3.1/UUIDv7-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bkwoka/library/UUIDv7/1.3.2/UUIDv7-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UUIDv7-1.3.2.tar.gz",
+    "size_bytes": 32711,
+    "sha256": "9972297f3520ed8f470d004c2d072057d6f02798b2b7a1c6a10991a6e283042b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bkwoka/library/UUIDv7/1.3.2/UUIDv7-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bkwoka/library/UUIDv7/1.3.2/UUIDv7-1.3.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

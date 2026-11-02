@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/arkecosystem",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "arkecosystem/library/Ark-Cpp-Client/1.4.1/Ark-Cpp-Client-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ark-Cpp-Client-1.4.1.tar.gz",
+    "size_bytes": 22187,
+    "sha256": "cbc345ea44937405b1be44fdc70e2ade87df639830e9c413f8594a0ca89bd98a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arkecosystem/library/Ark-Cpp-Client/1.4.1/Ark-Cpp-Client-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arkecosystem/library/Ark-Cpp-Client/1.4.1/Ark-Cpp-Client-1.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arkecosystem/library/Ark-Cpp-Crypto/1.1.0/Ark-Cpp-Crypto-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ark-Cpp-Crypto-1.1.0.tar.gz",
+    "size_bytes": 81062,
+    "sha256": "ff7e2bb38070698d6cc274d1e1c8225b6f8fa176c29eb08d6936a16bb6e0d3f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arkecosystem/library/Ark-Cpp-Crypto/1.1.0/Ark-Cpp-Crypto-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arkecosystem/library/Ark-Cpp-Crypto/1.1.0/Ark-Cpp-Crypto-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

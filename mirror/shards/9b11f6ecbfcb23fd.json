@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kroimon",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kroimon/library/SerialCommand/0.0.0-alpha+sha.76ebd2d60e/SerialCommand-0.0.0-alphasha.76ebd2d60e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialCommand-0.0.0-alphasha.76ebd2d60e.tar.gz",
+    "size_bytes": 4126,
+    "sha256": "5fa29467d85be3be6c4e4d0bf9ae62ea1af82e236ebf52301706559f259328fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kroimon/library/SerialCommand/0.0.0-alpha%2Bsha.76ebd2d60e/SerialCommand-0.0.0-alphasha.76ebd2d60e.tar.gz",
+     "https://dl.registry.platformio.org/download/kroimon/library/SerialCommand/0.0.0-alpha%2Bsha.76ebd2d60e/SerialCommand-0.0.0-alphasha.76ebd2d60e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

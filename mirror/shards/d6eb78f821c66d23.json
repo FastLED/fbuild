@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-mkanli",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-mkanli/library/DimEngAcc3D/0.0.0+sha.9b3ea4450259/DimEngAcc3D-0.0.0+sha.9b3ea4450259.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DimEngAcc3D-0.0.0+sha.9b3ea4450259.tar.gz",
+    "size_bytes": 2838,
+    "sha256": "a1742097c1d2bcb08a1ae8a6e1fbc682e4bed20a9981b112c8d87cbc8d4b7a94",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mkanli/library/DimEngAcc3D/0.0.0%2Bsha.9b3ea4450259/DimEngAcc3D-0.0.0%2Bsha.9b3ea4450259.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mkanli/library/DimEngAcc3D/0.0.0%2Bsha.9b3ea4450259/DimEngAcc3D-0.0.0%2Bsha.9b3ea4450259.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-mkanli/library/MaxSonar/0.0.0+sha.b439ab68c8d9/MaxSonar-0.0.0+sha.b439ab68c8d9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MaxSonar-0.0.0+sha.b439ab68c8d9.tar.gz",
+    "size_bytes": 3615,
+    "sha256": "d6768f50186b8b8be92eaf6dde41aaa65246701c1613a6dd4bc24cda696ae55f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mkanli/library/MaxSonar/0.0.0%2Bsha.b439ab68c8d9/MaxSonar-0.0.0%2Bsha.b439ab68c8d9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mkanli/library/MaxSonar/0.0.0%2Bsha.b439ab68c8d9/MaxSonar-0.0.0%2Bsha.b439ab68c8d9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

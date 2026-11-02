@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/iowascaledengineering",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "iowascaledengineering/library/I2C-IRSENSE%20Library/1.0.2/I2C-IRSENSELibrary-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2C-IRSENSELibrary-1.0.2.tar.gz",
+    "size_bytes": 18132,
+    "sha256": "4fe38355f84fe32acd48a89af3b73364c7becda4f3625dc32e8b064cb0ff070b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iowascaledengineering/library/I2C-IRSENSE%2520Library/1.0.2/I2C-IRSENSELibrary-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/iowascaledengineering/library/I2C-IRSENSE%20Library/1.0.2/I2C-IRSENSELibrary-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "iowascaledengineering/library/ISE%20I2C-MCP3427%20Library/1.0.0/ISEI2C-MCP3427Library-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ISEI2C-MCP3427Library-1.0.0.tar.gz",
+    "size_bytes": 16962,
+    "sha256": "24f08db621339e89a9a5996580bc0ad10facb3abf0587b2747f5cc2b5585daf6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iowascaledengineering/library/ISE%2520I2C-MCP3427%2520Library/1.0.0/ISEI2C-MCP3427Library-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/iowascaledengineering/library/ISE%20I2C-MCP3427%20Library/1.0.0/ISEI2C-MCP3427Library-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "iowascaledengineering/library/MSS-XCADE%20Control%20Library/1.0.1/MSS-XCADEControlLibrary-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MSS-XCADEControlLibrary-1.0.1.tar.gz",
+    "size_bytes": 24845,
+    "sha256": "e1b4758e073ce9d457abc6a10e99a4aab6ec20c84997c633f374ae5aace6e41c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iowascaledengineering/library/MSS-XCADE%2520Control%2520Library/1.0.1/MSS-XCADEControlLibrary-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/iowascaledengineering/library/MSS-XCADE%20Control%20Library/1.0.1/MSS-XCADEControlLibrary-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "iowascaledengineering/library/MSS-XCADE%20Control%20Library/1.0.2/MSS-XCADEControlLibrary-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MSS-XCADEControlLibrary-1.0.2.tar.gz",
+    "size_bytes": 24916,
+    "sha256": "680b3e8232074ae248ed3cd575bce031724ce6faa2f52ee9c7b72c21913afe86",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iowascaledengineering/library/MSS-XCADE%2520Control%2520Library/1.0.2/MSS-XCADEControlLibrary-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/iowascaledengineering/library/MSS-XCADE%20Control%20Library/1.0.2/MSS-XCADEControlLibrary-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "iowascaledengineering/library/MSS-XCADE%20Control%20Library/1.0.3/MSS-XCADEControlLibrary-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MSS-XCADEControlLibrary-1.0.3.tar.gz",
+    "size_bytes": 25800,
+    "sha256": "7479a9472139399d5bb86f65fc6e86c75486ea7eacb10e16023ce082357f6a5f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iowascaledengineering/library/MSS-XCADE%2520Control%2520Library/1.0.3/MSS-XCADEControlLibrary-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/iowascaledengineering/library/MSS-XCADE%20Control%20Library/1.0.3/MSS-XCADEControlLibrary-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

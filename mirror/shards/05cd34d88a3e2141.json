@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sle118",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sle118/library/ESPITachEmulator/1.0.0/ESPITachEmulator-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPITachEmulator-1.0.0.tar.gz",
+    "size_bytes": 22260,
+    "sha256": "cf22bec1cceca867a34da0b04c1f7baf3077efadf33fa6e589a29db9d2077ef8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sle118/library/ESPITachEmulator/1.0.0/ESPITachEmulator-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sle118/library/ESPITachEmulator/1.0.0/ESPITachEmulator-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sle118/library/IrServiceBase/1.0.0/IrServiceBase-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IrServiceBase-1.0.0.tar.gz",
+    "size_bytes": 9257,
+    "sha256": "629a5a86282b7e828ba744d782bce99a28bd7a72d08e670fa1df19342fe84dd0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sle118/library/IrServiceBase/1.0.0/IrServiceBase-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sle118/library/IrServiceBase/1.0.0/IrServiceBase-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

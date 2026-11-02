@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/petruspierre",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "petruspierre/library/EasyHTTP/0.1.1/EasyHTTP-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyHTTP-0.1.1.tar.gz",
+    "size_bytes": 3063,
+    "sha256": "8c516c472aaed7c5a1a309ddbbc5db0a981586bcc3e4eed461d0a5e5379e7ace",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/petruspierre/library/EasyHTTP/0.1.1/EasyHTTP-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/petruspierre/library/EasyHTTP/0.1.1/EasyHTTP-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-altb",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-altb/library/Misc_Lib/0.0.0+sha.78e723ede0c6/Misc_Lib-0.0.0+sha.78e723ede0c6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Misc_Lib-0.0.0+sha.78e723ede0c6.tar.gz",
+    "size_bytes": 6601,
+    "sha256": "9e2c31aaa5b628314cfc92260ab1c40fe3350e9db9cbe9643f370ca79906ab55",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-altb/library/Misc_Lib/0.0.0%2Bsha.78e723ede0c6/Misc_Lib-0.0.0%2Bsha.78e723ede0c6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-altb/library/Misc_Lib/0.0.0%2Bsha.78e723ede0c6/Misc_Lib-0.0.0%2Bsha.78e723ede0c6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

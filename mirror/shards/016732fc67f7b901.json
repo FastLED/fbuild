@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/thingpulse",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "thingpulse/library/ESP8266%20Weather%20Station/2.3.0/ESP8266WeatherStation-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266WeatherStation-2.3.0.tar.gz",
+    "size_bytes": 86654,
+    "sha256": "78c31d9ed9b41019419f004fe0aac2e01e6628eb0388052b9a5c809852b1c95c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thingpulse/library/ESP8266%2520Weather%2520Station/2.3.0/ESP8266WeatherStation-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/thingpulse/library/ESP8266%20Weather%20Station/2.3.0/ESP8266WeatherStation-2.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thingpulse/library/ESP8266%20and%20ESP32%20OLED%20driver%20for%20SSD1306%20displays/4.3.0/ESP8266andESP32OLEDdriverforSSD1306displays-4.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266andESP32OLEDdriverforSSD1306displays-4.3.0.tar.gz",
+    "size_bytes": 57544,
+    "sha256": "c93ee1c850195d89d095f77e6514bb891539b2c688ad1c39c4fc57dfd1093db4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thingpulse/library/ESP8266%2520and%2520ESP32%2520OLED%2520driver%2520for%2520SSD1306%2520displays/4.3.0/ESP8266andESP32OLEDdriverforSSD1306displays-4.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/thingpulse/library/ESP8266%20and%20ESP32%20OLED%20driver%20for%20SSD1306%20displays/4.3.0/ESP8266andESP32OLEDdriverforSSD1306displays-4.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thingpulse/library/ESP8266%20and%20ESP32%20OLED%20driver%20for%20SSD1306%20displays/4.4.0/ESP8266andESP32OLEDdriverforSSD1306displays-4.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266andESP32OLEDdriverforSSD1306displays-4.4.0.tar.gz",
+    "size_bytes": 57852,
+    "sha256": "6c8cc5519f3e466b702d6d7a1d0a135b11f20f08a10a95b87f738b97c445b45d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thingpulse/library/ESP8266%2520and%2520ESP32%2520OLED%2520driver%2520for%2520SSD1306%2520displays/4.4.0/ESP8266andESP32OLEDdriverforSSD1306displays-4.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/thingpulse/library/ESP8266%20and%20ESP32%20OLED%20driver%20for%20SSD1306%20displays/4.4.0/ESP8266andESP32OLEDdriverforSSD1306displays-4.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thingpulse/library/ESP8266%20and%20ESP32%20OLED%20driver%20for%20SSD1306%20displays/4.4.1/ESP8266andESP32OLEDdriverforSSD1306displays-4.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266andESP32OLEDdriverforSSD1306displays-4.4.1.tar.gz",
+    "size_bytes": 58294,
+    "sha256": "6973befe15e55e1561519451460595f1a9cad187e0ab042274e081088378ce09",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thingpulse/library/ESP8266%2520and%2520ESP32%2520OLED%2520driver%2520for%2520SSD1306%2520displays/4.4.1/ESP8266andESP32OLEDdriverforSSD1306displays-4.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/thingpulse/library/ESP8266%20and%20ESP32%20OLED%20driver%20for%20SSD1306%20displays/4.4.1/ESP8266andESP32OLEDdriverforSSD1306displays-4.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thingpulse/library/ESP8266%20and%20ESP32%20OLED%20driver%20for%20SSD1306%20displays/4.5.0/ESP8266andESP32OLEDdriverforSSD1306displays-4.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266andESP32OLEDdriverforSSD1306displays-4.5.0.tar.gz",
+    "size_bytes": 59641,
+    "sha256": "d4beef08e06294c69d4a1e11faa9fc0373955bab438870e06c63644b7153cf09",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thingpulse/library/ESP8266%2520and%2520ESP32%2520OLED%2520driver%2520for%2520SSD1306%2520displays/4.5.0/ESP8266andESP32OLEDdriverforSSD1306displays-4.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/thingpulse/library/ESP8266%20and%20ESP32%20OLED%20driver%20for%20SSD1306%20displays/4.5.0/ESP8266andESP32OLEDdriverforSSD1306displays-4.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thingpulse/library/ESP8266%20and%20ESP32%20OLED%20driver%20for%20SSD1306%20displays/4.6.1/ESP8266andESP32OLEDdriverforSSD1306displays-4.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266andESP32OLEDdriverforSSD1306displays-4.6.1.tar.gz",
+    "size_bytes": 73103,
+    "sha256": "ccb8924d019e34a78a46ef0ed3fd8ed88faa9122b65752c31db70b6c93e283ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thingpulse/library/ESP8266%2520and%2520ESP32%2520OLED%2520driver%2520for%2520SSD1306%2520displays/4.6.1/ESP8266andESP32OLEDdriverforSSD1306displays-4.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/thingpulse/library/ESP8266%20and%20ESP32%20OLED%20driver%20for%20SSD1306%20displays/4.6.1/ESP8266andESP32OLEDdriverforSSD1306displays-4.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thingpulse/library/ESP8266%20and%20ESP32%20OLED%20driver%20for%20SSD1306%20displays/4.6.2/ESP8266andESP32OLEDdriverforSSD1306displays-4.6.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266andESP32OLEDdriverforSSD1306displays-4.6.2.tar.gz",
+    "size_bytes": 74342,
+    "sha256": "37781b3a7786e17037bd35c712759b5e5c1f9844e81eae12198683070c018569",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thingpulse/library/ESP8266%2520and%2520ESP32%2520OLED%2520driver%2520for%2520SSD1306%2520displays/4.6.2/ESP8266andESP32OLEDdriverforSSD1306displays-4.6.2.tar.gz",
+     "https://dl.registry.platformio.org/download/thingpulse/library/ESP8266%20and%20ESP32%20OLED%20driver%20for%20SSD1306%20displays/4.6.2/ESP8266andESP32OLEDdriverforSSD1306displays-4.6.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thingpulse/library/ThingPulse%20XPT2046%20Touch/1.4/ThingPulseXPT2046Touch-1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ThingPulseXPT2046Touch-1.4.tar.gz",
+    "size_bytes": 6120,
+    "sha256": "7d14434be103cbb9d392b4873fec94971174556acc64a2840f5efc056e8772a6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thingpulse/library/ThingPulse%2520XPT2046%2520Touch/1.4/ThingPulseXPT2046Touch-1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/thingpulse/library/ThingPulse%20XPT2046%20Touch/1.4/ThingPulseXPT2046Touch-1.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

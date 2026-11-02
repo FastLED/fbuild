@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/peto-3210",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "peto-3210/library/ModbusRTU/2.1.1/ModbusRTU-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ModbusRTU-2.1.1.tar.gz",
+    "size_bytes": 20624,
+    "sha256": "6983509a715270e3d6b3b9768a99d5db763c7245e890fa06826117ccd5f1d96a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/peto-3210/library/ModbusRTU/2.1.1/ModbusRTU-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/peto-3210/library/ModbusRTU/2.1.1/ModbusRTU-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "peto-3210/library/ModbusRTU/2.1.2/ModbusRTU-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ModbusRTU-2.1.2.tar.gz",
+    "size_bytes": 29369,
+    "sha256": "caef2452822b68a8aab93113fc9a5c3d63740faf6e19bb6c265402d7843f61bd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/peto-3210/library/ModbusRTU/2.1.2/ModbusRTU-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/peto-3210/library/ModbusRTU/2.1.2/ModbusRTU-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "peto-3210/library/ModbusRTU/2.1.3/ModbusRTU-2.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ModbusRTU-2.1.3.tar.gz",
+    "size_bytes": 22183,
+    "sha256": "7bae9045d15b486bca8abac73c8aa2c4339958819cbdbf51cf796609aca660ab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/peto-3210/library/ModbusRTU/2.1.3/ModbusRTU-2.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/peto-3210/library/ModbusRTU/2.1.3/ModbusRTU-2.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "peto-3210/library/ShiftRegisterPISO/1.0.10/ShiftRegisterPISO-1.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ShiftRegisterPISO-1.0.10.tar.gz",
+    "size_bytes": 14920,
+    "sha256": "c7adccbe8ee6d7e1ff965889ea0c61adace0ed64d971e7249e9c99db2fcee7c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/peto-3210/library/ShiftRegisterPISO/1.0.10/ShiftRegisterPISO-1.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/peto-3210/library/ShiftRegisterPISO/1.0.10/ShiftRegisterPISO-1.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "peto-3210/library/ShiftRegisterPISO/1.0.5/ShiftRegisterPISO-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ShiftRegisterPISO-1.0.5.tar.gz",
+    "size_bytes": 13193,
+    "sha256": "a8683c8e33209d2adf6dce25fe360f6c411e61bed190521d26a51989e7bd3f49",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/peto-3210/library/ShiftRegisterPISO/1.0.5/ShiftRegisterPISO-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/peto-3210/library/ShiftRegisterPISO/1.0.5/ShiftRegisterPISO-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "peto-3210/library/ShiftRegisterPISO/1.0.8/ShiftRegisterPISO-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ShiftRegisterPISO-1.0.8.tar.gz",
+    "size_bytes": 14505,
+    "sha256": "07f2b2afd798e8431a523db96a37efd8d1ebb912a59596cb0f11656f83e8f8f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/peto-3210/library/ShiftRegisterPISO/1.0.8/ShiftRegisterPISO-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/peto-3210/library/ShiftRegisterPISO/1.0.8/ShiftRegisterPISO-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "peto-3210/library/ShiftRegisterPISO/1.0.9/ShiftRegisterPISO-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ShiftRegisterPISO-1.0.9.tar.gz",
+    "size_bytes": 14556,
+    "sha256": "32df80b1fb684637e5e94e2f0ef9a75d036ddc9740ad29631ea7cba3b9135d98",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/peto-3210/library/ShiftRegisterPISO/1.0.9/ShiftRegisterPISO-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/peto-3210/library/ShiftRegisterPISO/1.0.9/ShiftRegisterPISO-1.0.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-nanashino",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-nanashino/library/USB400Serial/0.0.0+sha.0dd5d1e4cf71/USB400Serial-0.0.0+sha.0dd5d1e4cf71.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "USB400Serial-0.0.0+sha.0dd5d1e4cf71.tar.gz",
+    "size_bytes": 4102,
+    "sha256": "891bb9f7225dfff3941a880778104529cdae16b6eab2439988cfac1591d2ee39",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nanashino/library/USB400Serial/0.0.0%2Bsha.0dd5d1e4cf71/USB400Serial-0.0.0%2Bsha.0dd5d1e4cf71.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nanashino/library/USB400Serial/0.0.0%2Bsha.0dd5d1e4cf71/USB400Serial-0.0.0%2Bsha.0dd5d1e4cf71.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ardutech0",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ardutech0/library/ATGENXlib/1.0.1/ATGENXlib-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ATGENXlib-1.0.1.tar.gz",
+    "size_bytes": 22723,
+    "sha256": "a7998b39826880b255ae55b17a0d47648cae2f047fae34ea9439d59729ece690",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ardutech0/library/ATGENXlib/1.0.1/ATGENXlib-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ardutech0/library/ATGENXlib/1.0.1/ATGENXlib-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ardutech0/library/ATGENXlib/2.0.1/ATGENXlib-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ATGENXlib-2.0.1.tar.gz",
+    "size_bytes": 33520,
+    "sha256": "f58132aebb647625f5293157e1387a64da90934c7042ce7bb67b535d293d0cda",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ardutech0/library/ATGENXlib/2.0.1/ATGENXlib-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ardutech0/library/ATGENXlib/2.0.1/ATGENXlib-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ardutech0/library/ATGENXlib/2.1.0/ATGENXlib-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ATGENXlib-2.1.0.tar.gz",
+    "size_bytes": 47867,
+    "sha256": "71a0079c2135f2cc957000f4f6a25b56f8f8584905c386acdce45e7a07911690",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ardutech0/library/ATGENXlib/2.1.0/ATGENXlib-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ardutech0/library/ATGENXlib/2.1.0/ATGENXlib-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ardutech0/library/ATGENXlib/2.2.0/ATGENXlib-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ATGENXlib-2.2.0.tar.gz",
+    "size_bytes": 48054,
+    "sha256": "bca90f9190bb6ca12010be3340089e1c66163b3d177f8e8b3859b51370769be1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ardutech0/library/ATGENXlib/2.2.0/ATGENXlib-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ardutech0/library/ATGENXlib/2.2.0/ATGENXlib-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ardutech0/library/ATGenX_Hub/1.0.0/ATGenX_Hub-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ATGenX_Hub-1.0.0.tar.gz",
+    "size_bytes": 20265,
+    "sha256": "b06aa337abeb3f0a1dc2d51190dbd82455790b75760ec55a2f097d08fd289137",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ardutech0/library/ATGenX_Hub/1.0.0/ATGenX_Hub-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ardutech0/library/ATGenX_Hub/1.0.0/ATGenX_Hub-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ardutech0/library/ATGenX_Hub/2.3.0/ATGenX_Hub-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ATGenX_Hub-2.3.0.tar.gz",
+    "size_bytes": 25727,
+    "sha256": "e3041baca230455cbb8c9e763fbbaf580d0dfd2a39056cf4a67459bf819e4223",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ardutech0/library/ATGenX_Hub/2.3.0/ATGenX_Hub-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ardutech0/library/ATGenX_Hub/2.3.0/ATGenX_Hub-2.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ardutech0/library/ATGenX_Hub/2.4.0/ATGenX_Hub-2.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ATGenX_Hub-2.4.0.tar.gz",
+    "size_bytes": 26105,
+    "sha256": "b5c3694ac8014d71048ed72fff9721e15afc59f45d8dd92ecd74e15cc51845b6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ardutech0/library/ATGenX_Hub/2.4.0/ATGenX_Hub-2.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ardutech0/library/ATGenX_Hub/2.4.0/ATGenX_Hub-2.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ardutech0/library/ATGenX_Hub/2.5.0/ATGenX_Hub-2.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ATGenX_Hub-2.5.0.tar.gz",
+    "size_bytes": 29182,
+    "sha256": "d1ef3f84e62f6c87b56575beb1cf5da6ea4f89c7f39770ed2ff073c02c67c12b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ardutech0/library/ATGenX_Hub/2.5.0/ATGenX_Hub-2.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ardutech0/library/ATGenX_Hub/2.5.0/ATGenX_Hub-2.5.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

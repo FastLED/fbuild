@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mrdunk",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mrdunk/library/esp8266_mdns/0.0.0-alpha+sha.b7c88fda89/esp8266_mdns-0.0.0-alphasha.b7c88fda89.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp8266_mdns-0.0.0-alphasha.b7c88fda89.tar.gz",
+    "size_bytes": 11290,
+    "sha256": "669a0de5fb361c8fe94d236366e935f15b85913c5da645c0852e08e44e0f5065",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mrdunk/library/esp8266_mdns/0.0.0-alpha%2Bsha.b7c88fda89/esp8266_mdns-0.0.0-alphasha.b7c88fda89.tar.gz",
+     "https://dl.registry.platformio.org/download/mrdunk/library/esp8266_mdns/0.0.0-alpha%2Bsha.b7c88fda89/esp8266_mdns-0.0.0-alphasha.b7c88fda89.tar.gz"
+    ]
+   }
+  }
+ ]
+}

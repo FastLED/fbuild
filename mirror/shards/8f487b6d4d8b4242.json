@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-tpadovani",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-tpadovani/library/at25sf041/0.0.0+sha.e6ad2967ec95/at25sf041-0.0.0+sha.e6ad2967ec95.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "at25sf041-0.0.0+sha.e6ad2967ec95.tar.gz",
+    "size_bytes": 2527,
+    "sha256": "8d16ffcc0dab7511ca1fc2e2839a39d98d20678b09c933ebbc85322abc9955bf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tpadovani/library/at25sf041/0.0.0%2Bsha.e6ad2967ec95/at25sf041-0.0.0%2Bsha.e6ad2967ec95.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tpadovani/library/at25sf041/0.0.0%2Bsha.e6ad2967ec95/at25sf041-0.0.0%2Bsha.e6ad2967ec95.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/martinzw",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "martinzw/library/ILI9225_Due/0.1/ILI9225_Due-0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ILI9225_Due-0.1.tar.gz",
+    "size_bytes": 80716,
+    "sha256": "dc0950db9f6d468c207845b12fa1789c6b57a516e71b705bee2198b5cf39deb9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinzw/library/ILI9225_Due/0.1/ILI9225_Due-0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/martinzw/library/ILI9225_Due/0.1/ILI9225_Due-0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

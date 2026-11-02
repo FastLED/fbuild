@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-appnearme",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-appnearme/library/AppNearMe_MuNFC_PN532/0.0.0+sha.6f98851e025b/AppNearMe_MuNFC_PN532-0.0.0+sha.6f98851e025b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AppNearMe_MuNFC_PN532-0.0.0+sha.6f98851e025b.tar.gz",
+    "size_bytes": 40261,
+    "sha256": "dd76097d2ed3f860a622fb5c8345598a84b7ef88b3d91d00062cac8de9757ec0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-appnearme/library/AppNearMe_MuNFC_PN532/0.0.0%2Bsha.6f98851e025b/AppNearMe_MuNFC_PN532-0.0.0%2Bsha.6f98851e025b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-appnearme/library/AppNearMe_MuNFC_PN532/0.0.0%2Bsha.6f98851e025b/AppNearMe_MuNFC_PN532-0.0.0%2Bsha.6f98851e025b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-appnearme/library/MicroNFCBoardAPI/0.0.0+sha.9b0733b8fa95/MicroNFCBoardAPI-0.0.0+sha.9b0733b8fa95.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MicroNFCBoardAPI-0.0.0+sha.9b0733b8fa95.tar.gz",
+    "size_bytes": 4489,
+    "sha256": "8076ef83fde9d867f212d21fde933baf5b8aa1b3b7a5e2a337258ec668a0ca35",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-appnearme/library/MicroNFCBoardAPI/0.0.0%2Bsha.9b0733b8fa95/MicroNFCBoardAPI-0.0.0%2Bsha.9b0733b8fa95.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-appnearme/library/MicroNFCBoardAPI/0.0.0%2Bsha.9b0733b8fa95/MicroNFCBoardAPI-0.0.0%2Bsha.9b0733b8fa95.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/shnam7",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "shnam7/library/ardukit/1.1.1/ardukit-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ardukit-1.1.1.tar.gz",
+    "size_bytes": 21557,
+    "sha256": "ad379ed62d46ff5f89f164cc0c678a79d8ddddcc18bd09beb7207600c9e4153a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shnam7/library/ardukit/1.1.1/ardukit-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/shnam7/library/ardukit/1.1.1/ardukit-1.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

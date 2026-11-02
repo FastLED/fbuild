@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/technophyscal",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "technophyscal/library/TGP%20Bouton/2.0.2/TGPBouton-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TGPBouton-2.0.2.tar.gz",
+    "size_bytes": 6612,
+    "sha256": "eac3bf0c4d5174b5f853bc585c6ad53c439910511234ef490ac78982824883ba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/technophyscal/library/TGP%2520Bouton/2.0.2/TGPBouton-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/technophyscal/library/TGP%20Bouton/2.0.2/TGPBouton-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "technophyscal/library/TGP%20Decodeur/2.0.0/TGPDecodeur-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TGPDecodeur-2.0.0.tar.gz",
+    "size_bytes": 5871,
+    "sha256": "49c5a70120f290ed6959a777a473d3612e2d3e0e106018e9358c6590e99b274f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/technophyscal/library/TGP%2520Decodeur/2.0.0/TGPDecodeur-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/technophyscal/library/TGP%20Decodeur/2.0.0/TGPDecodeur-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "technophyscal/library/TGP%20Del/2.0.1/TGPDel-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TGPDel-2.0.1.tar.gz",
+    "size_bytes": 5234,
+    "sha256": "632f2307541f3cc02ab089f8abdd4639715a7a5e67b11cf4cf2820542e4f0918",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/technophyscal/library/TGP%2520Del/2.0.1/TGPDel-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/technophyscal/library/TGP%20Del/2.0.1/TGPDel-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "technophyscal/library/TGP%20Ecran/2.0.0/TGPEcran-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TGPEcran-2.0.0.tar.gz",
+    "size_bytes": 6330,
+    "sha256": "6f470a896698a396185335a2121f343012d2af2d3b039995c19474d927c72ecf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/technophyscal/library/TGP%2520Ecran/2.0.0/TGPEcran-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/technophyscal/library/TGP%20Ecran/2.0.0/TGPEcran-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "technophyscal/library/TGP%20LCD%20Keypad/1.0.0/TGPLCDKeypad-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TGPLCDKeypad-1.0.0.tar.gz",
+    "size_bytes": 7432,
+    "sha256": "f3bf2c29767da5e689995cb11173ce2fe36a0fb72e0d8d439b4bd8286c0f6d67",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/technophyscal/library/TGP%2520LCD%2520Keypad/1.0.0/TGPLCDKeypad-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/technophyscal/library/TGP%20LCD%20Keypad/1.0.0/TGPLCDKeypad-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "technophyscal/library/TGP%20Menu%20OLED/2.0.2/TGPMenuOLED-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TGPMenuOLED-2.0.2.tar.gz",
+    "size_bytes": 17442,
+    "sha256": "b07c3948d739801e217aef7136631d5a417d327d38ab932707d12a395da49a99",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/technophyscal/library/TGP%2520Menu%2520OLED/2.0.2/TGPMenuOLED-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/technophyscal/library/TGP%20Menu%20OLED/2.0.2/TGPMenuOLED-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "technophyscal/library/TGP%20ProtoTGP/2.0.0/TGPProtoTGP-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TGPProtoTGP-2.0.0.tar.gz",
+    "size_bytes": 5336,
+    "sha256": "a3d84d106979ec5b96a57a54533007ff2f4b1e169d35a9ea3ae57ebf0ceaf304",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/technophyscal/library/TGP%2520ProtoTGP/2.0.0/TGPProtoTGP-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/technophyscal/library/TGP%20ProtoTGP/2.0.0/TGPProtoTGP-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "technophyscal/library/TGP%20Suiveur/1.0.1/TGPSuiveur-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TGPSuiveur-1.0.1.tar.gz",
+    "size_bytes": 4634,
+    "sha256": "8db60488ea5ae475a9ef20a347a080ddfcd29444e553f58e6f32d673e5ed84aa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/technophyscal/library/TGP%2520Suiveur/1.0.1/TGPSuiveur-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/technophyscal/library/TGP%20Suiveur/1.0.1/TGPSuiveur-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

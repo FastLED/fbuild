@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/signetica",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "signetica/library/MoonRise/2.1.0/MoonRise-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MoonRise-2.1.0.tar.gz",
+    "size_bytes": 11328,
+    "sha256": "d73581fcf772b29b8d5de95a42555c53880e344b541289c59b8797bda2df9611",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/signetica/library/MoonRise/2.1.0/MoonRise-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/signetica/library/MoonRise/2.1.0/MoonRise-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "signetica/library/SunRise/2.0.2/SunRise-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SunRise-2.0.2.tar.gz",
+    "size_bytes": 9457,
+    "sha256": "95f7dc33622e824e55febd90ff49554e0121c10cce4bc1d49fd20f685f662e9a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/signetica/library/SunRise/2.0.2/SunRise-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/signetica/library/SunRise/2.0.2/SunRise-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "signetica/library/SunRise/2.1.0/SunRise-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SunRise-2.1.0.tar.gz",
+    "size_bytes": 10549,
+    "sha256": "6579628a476f277cce5ca11d4a228f7a571a607a952c82244610736820cf660e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/signetica/library/SunRise/2.1.0/SunRise-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/signetica/library/SunRise/2.1.0/SunRise-2.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

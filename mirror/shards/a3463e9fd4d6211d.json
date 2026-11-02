@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/uminus",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "uminus/library/OneButton_ch32fun/0.1.0/OneButton_ch32fun-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OneButton_ch32fun-0.1.0.tar.gz",
+    "size_bytes": 8756,
+    "sha256": "e2a5b33c74ee2c13f3a197bc0cd3684cb14fbed1f887f43ef0dc6d331285b40e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/uminus/library/OneButton_ch32fun/0.1.0/OneButton_ch32fun-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/uminus/library/OneButton_ch32fun/0.1.0/OneButton_ch32fun-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "uminus/library/OneButton_ch32fun/0.1.1/OneButton_ch32fun-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OneButton_ch32fun-0.1.1.tar.gz",
+    "size_bytes": 8665,
+    "sha256": "c1f3d35eb608427c6d170c46c958b559b32b962a751203b735464f378dfa1a69",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/uminus/library/OneButton_ch32fun/0.1.1/OneButton_ch32fun-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/uminus/library/OneButton_ch32fun/0.1.1/OneButton_ch32fun-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

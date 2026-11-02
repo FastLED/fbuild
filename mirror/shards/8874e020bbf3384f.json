@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fablabnbg",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fablabnbg/library/ESPHomieCCS811Node/0.1.0/ESPHomieCCS811Node-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPHomieCCS811Node-0.1.0.tar.gz",
+    "size_bytes": 7931,
+    "sha256": "a9b99cb063ffce365e099f4f11c3caf698055e210238b671967fb3131bd6c6a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fablabnbg/library/ESPHomieCCS811Node/0.1.0/ESPHomieCCS811Node-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fablabnbg/library/ESPHomieCCS811Node/0.1.0/ESPHomieCCS811Node-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fablabnbg/library/ESP_HomieLED_CT/0.0.2/ESP_HomieLED_CT-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP_HomieLED_CT-0.0.2.tar.gz",
+    "size_bytes": 9816,
+    "sha256": "c6752b798fc7dfd0ef9a6eefb3fd3f947948ef26a6863b23546d38b61e05cc66",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fablabnbg/library/ESP_HomieLED_CT/0.0.2/ESP_HomieLED_CT-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/fablabnbg/library/ESP_HomieLED_CT/0.0.2/ESP_HomieLED_CT-0.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

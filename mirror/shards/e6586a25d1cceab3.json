@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dndg",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dndg/library/Finder%206M%20for%20Finder%20Opta/2.0.4/Finder6MforFinderOpta-2.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Finder6MforFinderOpta-2.0.4.tar.gz",
+    "size_bytes": 15663,
+    "sha256": "b2ee437537bd77d533e7eda704b154cdbe726104791db81b70e16208c31202e5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dndg/library/Finder%25206M%2520for%2520Finder%2520Opta/2.0.4/Finder6MforFinderOpta-2.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/dndg/library/Finder%206M%20for%20Finder%20Opta/2.0.4/Finder6MforFinderOpta-2.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dndg/library/Finder%207M%20for%20Finder%20Opta/1.1.5/Finder7MforFinderOpta-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Finder7MforFinderOpta-1.1.5.tar.gz",
+    "size_bytes": 15449,
+    "sha256": "8d7c1120cb42b6e15ab0e845019e49209f3a152ae566de5c54fc5f524be20746",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dndg/library/Finder%25207M%2520for%2520Finder%2520Opta/1.1.5/Finder7MforFinderOpta-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/dndg/library/Finder%207M%20for%20Finder%20Opta/1.1.5/Finder7MforFinderOpta-1.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dndg/library/OptaUSBUpdate/1.0.1/OptaUSBUpdate-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OptaUSBUpdate-1.0.1.tar.gz",
+    "size_bytes": 21083,
+    "sha256": "afe83731f2d65e12c58399e50abf41ed615bc5b6b19372b02d929ebfd1403914",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dndg/library/OptaUSBUpdate/1.0.1/OptaUSBUpdate-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dndg/library/OptaUSBUpdate/1.0.1/OptaUSBUpdate-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/wolfv6",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "wolfv6/library/keybrd/0.6.7/keybrd-0.6.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "keybrd-0.6.7.tar.gz",
+    "size_bytes": 73519,
+    "sha256": "7fed6c3eff19872243919be9d4be280e8bc74847a4db172441e8fde759dcc76f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wolfv6/library/keybrd/0.6.7/keybrd-0.6.7.tar.gz",
+     "https://dl.registry.platformio.org/download/wolfv6/library/keybrd/0.6.7/keybrd-0.6.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

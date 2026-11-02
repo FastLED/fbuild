@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-mederic",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-mederic/library/ADS1248/0.0.0+sha.d62be7487e9d/ADS1248-0.0.0+sha.d62be7487e9d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADS1248-0.0.0+sha.d62be7487e9d.tar.gz",
+    "size_bytes": 2270,
+    "sha256": "55beb091967672edb953f77c61a8f65c9ec3c118ce2d7dafa88c7bb1543f97b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mederic/library/ADS1248/0.0.0%2Bsha.d62be7487e9d/ADS1248-0.0.0%2Bsha.d62be7487e9d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mederic/library/ADS1248/0.0.0%2Bsha.d62be7487e9d/ADS1248-0.0.0%2Bsha.d62be7487e9d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-mederic/library/Ee24xx08/0.0.0+sha.e295d3596c85/Ee24xx08-0.0.0+sha.e295d3596c85.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ee24xx08-0.0.0+sha.e295d3596c85.tar.gz",
+    "size_bytes": 1634,
+    "sha256": "2650df3670e029f0ec9af46d5b1aa94aca382ff65a104865aa2327accb7c8e2f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mederic/library/Ee24xx08/0.0.0%2Bsha.e295d3596c85/Ee24xx08-0.0.0%2Bsha.e295d3596c85.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mederic/library/Ee24xx08/0.0.0%2Bsha.e295d3596c85/Ee24xx08-0.0.0%2Bsha.e295d3596c85.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-mederic/library/MAX31855/0.0.0+sha.c4d43aacb666/MAX31855-0.0.0+sha.c4d43aacb666.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX31855-0.0.0+sha.c4d43aacb666.tar.gz",
+    "size_bytes": 1900,
+    "sha256": "cabab4bdcd31bfb9252de10c9222857b7362eaed3fbbf9115188046ef1aedc8e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mederic/library/MAX31855/0.0.0%2Bsha.c4d43aacb666/MAX31855-0.0.0%2Bsha.c4d43aacb666.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mederic/library/MAX31855/0.0.0%2Bsha.c4d43aacb666/MAX31855-0.0.0%2Bsha.c4d43aacb666.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-mederic/library/MCP9808/0.0.0+sha.46326feade89/MCP9808-0.0.0+sha.46326feade89.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP9808-0.0.0+sha.46326feade89.tar.gz",
+    "size_bytes": 1807,
+    "sha256": "ba151bdc3b785c9206543defdb85803137b4a21eeb5cb1f351cf22708a16480f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mederic/library/MCP9808/0.0.0%2Bsha.46326feade89/MCP9808-0.0.0%2Bsha.46326feade89.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mederic/library/MCP9808/0.0.0%2Bsha.46326feade89/MCP9808-0.0.0%2Bsha.46326feade89.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-mederic/library/QT1070/0.0.0+sha.324c2c093ab8/QT1070-0.0.0+sha.324c2c093ab8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QT1070-0.0.0+sha.324c2c093ab8.tar.gz",
+    "size_bytes": 2774,
+    "sha256": "0520d158aaf5760812461f19fab104c1bc266636326b051aa17a07acc8fb0e99",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mederic/library/QT1070/0.0.0%2Bsha.324c2c093ab8/QT1070-0.0.0%2Bsha.324c2c093ab8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mederic/library/QT1070/0.0.0%2Bsha.324c2c093ab8/QT1070-0.0.0%2Bsha.324c2c093ab8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-mederic/library/Stepper/0.0.0+sha.a456aa3935ca/Stepper-0.0.0+sha.a456aa3935ca.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Stepper-0.0.0+sha.a456aa3935ca.tar.gz",
+    "size_bytes": 3466,
+    "sha256": "39debaad56659d9cc416c92e76ec1b3f2987ce6c3dd724a0608a6ccb4d7d3831",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mederic/library/Stepper/0.0.0%2Bsha.a456aa3935ca/Stepper-0.0.0%2Bsha.a456aa3935ca.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mederic/library/Stepper/0.0.0%2Bsha.a456aa3935ca/Stepper-0.0.0%2Bsha.a456aa3935ca.tar.gz"
+    ]
+   }
+  }
+ ]
+}

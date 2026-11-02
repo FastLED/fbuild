@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-tshl",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-tshl/library/CharLcd4bit/0.0.0+sha.0e84781e64cf/CharLcd4bit-0.0.0+sha.0e84781e64cf.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CharLcd4bit-0.0.0+sha.0e84781e64cf.tar.gz",
+    "size_bytes": 1928,
+    "sha256": "6f44b392f295dcd3d25a1a27d44a6b468a2895500661bb19c514dd76562a5cc9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tshl/library/CharLcd4bit/0.0.0%2Bsha.0e84781e64cf/CharLcd4bit-0.0.0%2Bsha.0e84781e64cf.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tshl/library/CharLcd4bit/0.0.0%2Bsha.0e84781e64cf/CharLcd4bit-0.0.0%2Bsha.0e84781e64cf.tar.gz"
+    ]
+   }
+  }
+ ]
+}

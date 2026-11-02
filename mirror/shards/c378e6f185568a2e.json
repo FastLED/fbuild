@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/xamrex",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "xamrex/library/InstagramFollowers/1.0.0/InstagramFollowers-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "InstagramFollowers-1.0.0.tar.gz",
+    "size_bytes": 3030,
+    "sha256": "d1eb65fbf67badf906cd2ea835d3633bc970f8bcc9036b8e957d67704aae7a8d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xamrex/library/InstagramFollowers/1.0.0/InstagramFollowers-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xamrex/library/InstagramFollowers/1.0.0/InstagramFollowers-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

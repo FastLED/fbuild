@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/shurik179",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "shurik179/library/POV%20library/0.9/POVlibrary-0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "POVlibrary-0.9.tar.gz",
+    "size_bytes": 15448,
+    "sha256": "478b239aa5bbbbfcc634727bf224c74f7172d30c7697464b7635ab85cf64acf3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shurik179/library/POV%2520library/0.9/POVlibrary-0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/shurik179/library/POV%20library/0.9/POVlibrary-0.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

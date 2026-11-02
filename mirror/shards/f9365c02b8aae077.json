@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/upbeatlabs",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "upbeatlabs/library/UpbeatLabs%20MCP39F521/2.0.0/UpbeatLabsMCP39F521-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UpbeatLabsMCP39F521-2.0.0.tar.gz",
+    "size_bytes": 23614,
+    "sha256": "ba12e8c643badcfdc057b4372bece81127b023dabe7edcfdbeffa68bca000573",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/upbeatlabs/library/UpbeatLabs%2520MCP39F521/2.0.0/UpbeatLabsMCP39F521-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/upbeatlabs/library/UpbeatLabs%20MCP39F521/2.0.0/UpbeatLabsMCP39F521-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gmkdotus",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gmkdotus/library/GKScroll/1.0.1/GKScroll-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GKScroll-1.0.1.tar.gz",
+    "size_bytes": 13896,
+    "sha256": "6fedb2f488b7ff4f02e944b0f58e07120a3f38eb0fca545363907129fcd68dd6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gmkdotus/library/GKScroll/1.0.1/GKScroll-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gmkdotus/library/GKScroll/1.0.1/GKScroll-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

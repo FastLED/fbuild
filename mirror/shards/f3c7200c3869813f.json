@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kmark",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kmark/library/Bee/1.0/Bee-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bee-1.0.tar.gz",
+    "size_bytes": 18704,
+    "sha256": "d5e3e9dafa4781a444f88579090bbbfdb911f0aa0a3464e0e201de8e6bfd6068",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kmark/library/Bee/1.0/Bee-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kmark/library/Bee/1.0/Bee-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

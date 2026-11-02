@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/adiya21j",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "adiya21j/library/mega-sem-lib/1.0.5/mega-sem-lib-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mega-sem-lib-1.0.5.tar.gz",
+    "size_bytes": 9932,
+    "sha256": "8c1228e7ed22eeea30fe6bd75f20c02215df080b10fb1dbae3bb1496952f2a6c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/adiya21j/library/mega-sem-lib/1.0.5/mega-sem-lib-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/adiya21j/library/mega-sem-lib/1.0.5/mega-sem-lib-1.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

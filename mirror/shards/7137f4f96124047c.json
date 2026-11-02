@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mmarkin",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mmarkin/library/GeoIP/1.4.1/GeoIP-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GeoIP-1.4.1.tar.gz",
+    "size_bytes": 5841,
+    "sha256": "f3ef11f5ce564a90938974ed00fe40446e2c99880f5f1a99db352cfbea7374a1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mmarkin/library/GeoIP/1.4.1/GeoIP-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mmarkin/library/GeoIP/1.4.1/GeoIP-1.4.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-mbotkinl",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-mbotkinl/library/HTTPClient_GPRS/0.0.0+sha.aaab2081c1c0/HTTPClient_GPRS-0.0.0+sha.aaab2081c1c0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HTTPClient_GPRS-0.0.0+sha.aaab2081c1c0.tar.gz",
+    "size_bytes": 8418,
+    "sha256": "76102573dcce7e4ae3796729a329f62fd87ae6df960486ae56c2301fdb8c3725",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mbotkinl/library/HTTPClient_GPRS/0.0.0%2Bsha.aaab2081c1c0/HTTPClient_GPRS-0.0.0%2Bsha.aaab2081c1c0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mbotkinl/library/HTTPClient_GPRS/0.0.0%2Bsha.aaab2081c1c0/HTTPClient_GPRS-0.0.0%2Bsha.aaab2081c1c0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

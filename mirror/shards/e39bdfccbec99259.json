@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/manicken",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "manicken/library/sf22aswt/0.1.5/sf22aswt-0.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "sf22aswt-0.1.5.tar.gz",
+    "size_bytes": 35479,
+    "sha256": "cda3a1efd21eb3538a6286a84b8b04978181b9b8a2d47c2ac9a9175576c65872",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/manicken/library/sf22aswt/0.1.5/sf22aswt-0.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/manicken/library/sf22aswt/0.1.5/sf22aswt-0.1.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

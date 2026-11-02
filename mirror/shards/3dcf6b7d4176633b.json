@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/michael71",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "michael71/library/EthernetBonjour3/1.0.0/EthernetBonjour3-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EthernetBonjour3-1.0.0.tar.gz",
+    "size_bytes": 28515,
+    "sha256": "5baad71797b89bec09543c6c64f0c62ce1b7c65a25c05f1bfbc7a6a1936fa12d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/michael71/library/EthernetBonjour3/1.0.0/EthernetBonjour3-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/michael71/library/EthernetBonjour3/1.0.0/EthernetBonjour3-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "michael71/library/Timer5/1.0.0/Timer5-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Timer5-1.0.0.tar.gz",
+    "size_bytes": 15425,
+    "sha256": "2463ffe30d5c363a498373287496361567a62d2ad657e9efa1438de309efdee2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/michael71/library/Timer5/1.0.0/Timer5-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/michael71/library/Timer5/1.0.0/Timer5-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pylo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pylo/library/MCreator%20Link/1.3.1/MCreatorLink-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCreatorLink-1.3.1.tar.gz",
+    "size_bytes": 8883,
+    "sha256": "41929f1d70d9f3f2d1d7b2618d8831979239634aa189726c23b6c9f835c5a37c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pylo/library/MCreator%2520Link/1.3.1/MCreatorLink-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pylo/library/MCreator%20Link/1.3.1/MCreatorLink-1.3.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

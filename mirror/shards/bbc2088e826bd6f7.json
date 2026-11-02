@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-rwunderl",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-rwunderl/library/IBT2/0.0.0+sha.fe72c69ab361/IBT2-0.0.0+sha.fe72c69ab361.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IBT2-0.0.0+sha.fe72c69ab361.tar.gz",
+    "size_bytes": 2297,
+    "sha256": "535ce7564512ea0e7ec3ab617e06fdeb68a25d37962783fa1e213cd25a964ee9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rwunderl/library/IBT2/0.0.0%2Bsha.fe72c69ab361/IBT2-0.0.0%2Bsha.fe72c69ab361.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rwunderl/library/IBT2/0.0.0%2Bsha.fe72c69ab361/IBT2-0.0.0%2Bsha.fe72c69ab361.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-rwunderl/library/Joystick/0.0.0+sha.13d10cc6a822/Joystick-0.0.0+sha.13d10cc6a822.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Joystick-0.0.0+sha.13d10cc6a822.tar.gz",
+    "size_bytes": 2825,
+    "sha256": "d9bfac623691c68c66fb5a9ce2c5065e15b75e88e94dbff9c3bc1286db21653e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rwunderl/library/Joystick/0.0.0%2Bsha.13d10cc6a822/Joystick-0.0.0%2Bsha.13d10cc6a822.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rwunderl/library/Joystick/0.0.0%2Bsha.13d10cc6a822/Joystick-0.0.0%2Bsha.13d10cc6a822.tar.gz"
+    ]
+   }
+  }
+ ]
+}

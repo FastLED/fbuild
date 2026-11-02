@@ -1,0 +1,204 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/iskakfatoni",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "iskakfatoni/library/IskakINO/1.0.0/IskakINO-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IskakINO-1.0.0.tar.gz",
+    "size_bytes": 75007,
+    "sha256": "83f102cdcc56ddb2ebc696b372ef104c918cc350b98821097628f975ec53f8cf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iskakfatoni/library/IskakINO/1.0.0/IskakINO-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/iskakfatoni/library/IskakINO/1.0.0/IskakINO-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "iskakfatoni/library/IskakINO/1.1.0/IskakINO-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IskakINO-1.1.0.tar.gz",
+    "size_bytes": 178109,
+    "sha256": "8aa52ccf54bbc67fd6a4c8266198594c45d78a8c3eb8343dcc3ec875e8f7a258",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iskakfatoni/library/IskakINO/1.1.0/IskakINO-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/iskakfatoni/library/IskakINO/1.1.0/IskakINO-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "iskakfatoni/library/IskakINO/1.1.5/IskakINO-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IskakINO-1.1.5.tar.gz",
+    "size_bytes": 20907479,
+    "sha256": "9ca2cd187df67075a7d4c8e340f67ef54048aab3f305a620036cc9bf39f97f7e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iskakfatoni/library/IskakINO/1.1.5/IskakINO-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/iskakfatoni/library/IskakINO/1.1.5/IskakINO-1.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "iskakfatoni/library/IskakINO/1.1.6/IskakINO-1.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IskakINO-1.1.6.tar.gz",
+    "size_bytes": 7372638,
+    "sha256": "86a4d0098b22407d018eb5634b480d8d3f5388cf48e03ea922640d53337b830d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iskakfatoni/library/IskakINO/1.1.6/IskakINO-1.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/iskakfatoni/library/IskakINO/1.1.6/IskakINO-1.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "iskakfatoni/library/IskakINO_ArduFast/1.0.0/IskakINO_ArduFast-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IskakINO_ArduFast-1.0.0.tar.gz",
+    "size_bytes": 11369,
+    "sha256": "249f286d038f9a955492ca4f4a8467c1e9c17ba8f36480b25366f85576a7165b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iskakfatoni/library/IskakINO_ArduFast/1.0.0/IskakINO_ArduFast-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/iskakfatoni/library/IskakINO_ArduFast/1.0.0/IskakINO_ArduFast-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "iskakfatoni/library/IskakINO_ArduFast/1.0.1/IskakINO_ArduFast-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IskakINO_ArduFast-1.0.1.tar.gz",
+    "size_bytes": 15632,
+    "sha256": "ea85e3b5a738f44f9b4a7cb1ecda7753008f1e83b6603b3879dcbd51205f7532",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iskakfatoni/library/IskakINO_ArduFast/1.0.1/IskakINO_ArduFast-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/iskakfatoni/library/IskakINO_ArduFast/1.0.1/IskakINO_ArduFast-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "iskakfatoni/library/IskakINO_FastNTP/1.0.0/IskakINO_FastNTP-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IskakINO_FastNTP-1.0.0.tar.gz",
+    "size_bytes": 11612,
+    "sha256": "a79b22034536f83cb78d7bbb9483cce38cb27aa05b359e9e302577a364f8c5e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iskakfatoni/library/IskakINO_FastNTP/1.0.0/IskakINO_FastNTP-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/iskakfatoni/library/IskakINO_FastNTP/1.0.0/IskakINO_FastNTP-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "iskakfatoni/library/IskakINO_FastNTP/1.0.1/IskakINO_FastNTP-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IskakINO_FastNTP-1.0.1.tar.gz",
+    "size_bytes": 15814,
+    "sha256": "5c82a6335071f0734ad1fec8ef08135d2d50fff5ca2edaaba10c41b226f24bbd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iskakfatoni/library/IskakINO_FastNTP/1.0.1/IskakINO_FastNTP-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/iskakfatoni/library/IskakINO_FastNTP/1.0.1/IskakINO_FastNTP-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "iskakfatoni/library/IskakINO_LiquidCrystal_I2C/1.0.0/IskakINO_LiquidCrystal_I2C-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IskakINO_LiquidCrystal_I2C-1.0.0.tar.gz",
+    "size_bytes": 6202,
+    "sha256": "3fa6d4d8cc371758ff1658a05c651fbcdceaf09ce3846a3439a73fbea5cd5830",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iskakfatoni/library/IskakINO_LiquidCrystal_I2C/1.0.0/IskakINO_LiquidCrystal_I2C-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/iskakfatoni/library/IskakINO_LiquidCrystal_I2C/1.0.0/IskakINO_LiquidCrystal_I2C-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "iskakfatoni/library/IskakINO_LiquidCrystal_I2C/1.0.1/IskakINO_LiquidCrystal_I2C-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IskakINO_LiquidCrystal_I2C-1.0.1.tar.gz",
+    "size_bytes": 13169,
+    "sha256": "2cebf452da54da0459200b194feb51302b3d8e16c739dfffd042aeccfff81d57",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iskakfatoni/library/IskakINO_LiquidCrystal_I2C/1.0.1/IskakINO_LiquidCrystal_I2C-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/iskakfatoni/library/IskakINO_LiquidCrystal_I2C/1.0.1/IskakINO_LiquidCrystal_I2C-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "iskakfatoni/library/IskakINO_LiquidCrystal_I2C/1.1.0/IskakINO_LiquidCrystal_I2C-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IskakINO_LiquidCrystal_I2C-1.1.0.tar.gz",
+    "size_bytes": 23216,
+    "sha256": "853cfe62a214c7129f9f4f0d0a9b542833a9be1d8ac2aa9ea9b4c122d8c43c66",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iskakfatoni/library/IskakINO_LiquidCrystal_I2C/1.1.0/IskakINO_LiquidCrystal_I2C-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/iskakfatoni/library/IskakINO_LiquidCrystal_I2C/1.1.0/IskakINO_LiquidCrystal_I2C-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "iskakfatoni/library/IskakINO_Storage/1.0.0/IskakINO_Storage-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IskakINO_Storage-1.0.0.tar.gz",
+    "size_bytes": 9014,
+    "sha256": "631510cac75f66a2436fd4388b45d7b567a54fbec44d74ffefed5f86a8e002c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iskakfatoni/library/IskakINO_Storage/1.0.0/IskakINO_Storage-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/iskakfatoni/library/IskakINO_Storage/1.0.0/IskakINO_Storage-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "iskakfatoni/library/IskakINO_Storage/1.0.1/IskakINO_Storage-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IskakINO_Storage-1.0.1.tar.gz",
+    "size_bytes": 11249,
+    "sha256": "98477a792eaa306b63ca7396e05403ccc7989010022ea4b7b2ba13171c8b74a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iskakfatoni/library/IskakINO_Storage/1.0.1/IskakINO_Storage-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/iskakfatoni/library/IskakINO_Storage/1.0.1/IskakINO_Storage-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "iskakfatoni/library/IskakINO_WifiPortal/1.0.0/IskakINO_WifiPortal-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IskakINO_WifiPortal-1.0.0.tar.gz",
+    "size_bytes": 13404,
+    "sha256": "fad00ee6e2d2322d05d8b873e28a17460104b58f4c3f4b9a82b884799a636cf6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iskakfatoni/library/IskakINO_WifiPortal/1.0.0/IskakINO_WifiPortal-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/iskakfatoni/library/IskakINO_WifiPortal/1.0.0/IskakINO_WifiPortal-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "iskakfatoni/library/IskakINO_WifiPortal/1.0.1/IskakINO_WifiPortal-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IskakINO_WifiPortal-1.0.1.tar.gz",
+    "size_bytes": 17309,
+    "sha256": "e3ded8e5af5f46cb9157d9e9439928b8f53f42bed283c3556459029287793f4f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iskakfatoni/library/IskakINO_WifiPortal/1.0.1/IskakINO_WifiPortal-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/iskakfatoni/library/IskakINO_WifiPortal/1.0.1/IskakINO_WifiPortal-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

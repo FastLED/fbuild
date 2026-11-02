@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/vonnieda",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "vonnieda/library/ScreenUi/1.1.0/ScreenUi-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ScreenUi-1.1.0.tar.gz",
+    "size_bytes": 11423,
+    "sha256": "53ff3fadb7b205c7648e1b1a032cfaeae0d4ca55d705965b84e2f2f0eb0ff894",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vonnieda/library/ScreenUi/1.1.0/ScreenUi-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vonnieda/library/ScreenUi/1.1.0/ScreenUi-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

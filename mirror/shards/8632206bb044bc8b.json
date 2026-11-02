@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/td-er",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "td-er/library/ESPeasySerial/3.0.0/ESPeasySerial-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPeasySerial-3.0.0.tar.gz",
+    "size_bytes": 30858,
+    "sha256": "e810d3b890d85f0c550cc5230610555d802c3cb4acb0d1f92529be1fce70d7ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/td-er/library/ESPeasySerial/3.0.0/ESPeasySerial-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/td-er/library/ESPeasySerial/3.0.0/ESPeasySerial-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "td-er/library/RABurton%20ESP8266%20Mutex/1.0.2/RABurtonESP8266Mutex-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RABurtonESP8266Mutex-1.0.2.tar.gz",
+    "size_bytes": 2210,
+    "sha256": "2685f1dea07a056d33b0df394cf9e24401a25d0a372dc5e26191c1373a27216e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/td-er/library/RABurton%2520ESP8266%2520Mutex/1.0.2/RABurtonESP8266Mutex-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/td-er/library/RABurton%20ESP8266%20Mutex/1.0.2/RABurtonESP8266Mutex-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "td-er/library/SC16IS752/1.0.2/SC16IS752-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SC16IS752-1.0.2.tar.gz",
+    "size_bytes": 20538,
+    "sha256": "a878ccc2c274dcab64bf6db03c6fd2d0b12a69040582c409badb2973fb6393ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/td-er/library/SC16IS752/1.0.2/SC16IS752-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/td-er/library/SC16IS752/1.0.2/SC16IS752-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "td-er/library/SparkFun%20MAX1704x%20Fuel%20Gauge%20Arduino%20Library/1.0.1/SparkFunMAX1704xFuelGaugeArduinoLibrary-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunMAX1704xFuelGaugeArduinoLibrary-1.0.1.tar.gz",
+    "size_bytes": 13569,
+    "sha256": "48f94f76a772b8012cfa2cb7e802f87c549826b58a4df28c256fc6b1ff00837d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/td-er/library/SparkFun%2520MAX1704x%2520Fuel%2520Gauge%2520Arduino%2520Library/1.0.1/SparkFunMAX1704xFuelGaugeArduinoLibrary-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/td-er/library/SparkFun%20MAX1704x%20Fuel%20Gauge%20Arduino%20Library/1.0.1/SparkFunMAX1704xFuelGaugeArduinoLibrary-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

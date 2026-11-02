@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/levi--g",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "levi--g/library/USBLibrarySTM32/1.0.1/USBLibrarySTM32-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "USBLibrarySTM32-1.0.1.tar.gz",
+    "size_bytes": 42028,
+    "sha256": "ae67436ed7e841ca1594722da2db45a0b08eb48ce308ff2e94ee5ce3a331141d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/levi--g/library/USBLibrarySTM32/1.0.1/USBLibrarySTM32-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/levi--g/library/USBLibrarySTM32/1.0.1/USBLibrarySTM32-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

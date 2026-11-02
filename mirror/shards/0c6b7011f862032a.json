@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/membeddedtlb",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "membeddedtlb/library/Device/1.0.0/Device-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Device-1.0.0.tar.gz",
+    "size_bytes": 10313,
+    "sha256": "24021a5db09b360f081502d039e7173e936aad59a1b5215cc1b66e1b4d7e7d4b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/membeddedtlb/library/Device/1.0.0/Device-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/membeddedtlb/library/Device/1.0.0/Device-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "membeddedtlb/library/Devices/1.0.0/Devices-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Devices-1.0.0.tar.gz",
+    "size_bytes": 10637,
+    "sha256": "e0a63fdf21e4659ed570a887bc301270fb59b949d5daea3f4a171008e958a385",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/membeddedtlb/library/Devices/1.0.0/Devices-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/membeddedtlb/library/Devices/1.0.0/Devices-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

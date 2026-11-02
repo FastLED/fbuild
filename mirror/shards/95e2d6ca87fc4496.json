@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jrveale",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jrveale/library/FunctionFsm/1.0.0/FunctionFsm-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FunctionFsm-1.0.0.tar.gz",
+    "size_bytes": 4917,
+    "sha256": "fd4a69f9efe5c11ff65aae29a965c733347e78c86992db1743d466ef7b5e2cd5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jrveale/library/FunctionFsm/1.0.0/FunctionFsm-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jrveale/library/FunctionFsm/1.0.0/FunctionFsm-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

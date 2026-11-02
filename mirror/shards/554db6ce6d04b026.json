@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tinkerspy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tinkerspy/library/Automaton-Esp8266/0.1.0/Automaton-Esp8266-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Automaton-Esp8266-0.1.0.tar.gz",
+    "size_bytes": 9356,
+    "sha256": "3d4ebfea68fd0b5a40285ea02802b55fde55310a2b1115b7b83c34eadc6bff09",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tinkerspy/library/Automaton-Esp8266/0.1.0/Automaton-Esp8266-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tinkerspy/library/Automaton-Esp8266/0.1.0/Automaton-Esp8266-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tinkerspy/library/Automaton/1.0.3/Automaton-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Automaton-1.0.3.tar.gz",
+    "size_bytes": 29175,
+    "sha256": "7acd50035eac79ec748799721c6496e3d36ad9a9a377566c8fb4a0c377936ba0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tinkerspy/library/Automaton/1.0.3/Automaton-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tinkerspy/library/Automaton/1.0.3/Automaton-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

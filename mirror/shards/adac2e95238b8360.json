@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/d10i",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "d10i/library/TFA%20433%20Receiver%20for%20Dostmann%2030.3208.02/0.1.0/TFA433ReceiverforDostmann30.3208.02-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFA433ReceiverforDostmann30.3208.02-0.1.0.tar.gz",
+    "size_bytes": 3650,
+    "sha256": "dce280b0b6fcf609c75ea69217d50d0a251c12847ff7caeab7981218b1b63f9c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/d10i/library/TFA%2520433%2520Receiver%2520for%2520Dostmann%252030.3208.02/0.1.0/TFA433ReceiverforDostmann30.3208.02-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/d10i/library/TFA%20433%20Receiver%20for%20Dostmann%2030.3208.02/0.1.0/TFA433ReceiverforDostmann30.3208.02-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

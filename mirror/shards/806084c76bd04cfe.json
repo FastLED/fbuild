@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ericksimoes",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ericksimoes/library/Ultrasonic/3.0.0/Ultrasonic-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ultrasonic-3.0.0.tar.gz",
+    "size_bytes": 8832,
+    "sha256": "94c9a02c8a1c68542a7db3d05b3d38fb3705ed93b8810c368b01bd12239951b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ericksimoes/library/Ultrasonic/3.0.0/Ultrasonic-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ericksimoes/library/Ultrasonic/3.0.0/Ultrasonic-3.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

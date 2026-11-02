@@ -1,0 +1,126 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/x-croot",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "x-croot/library/BuzzerXCR/1.0.0/BuzzerXCR-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BuzzerXCR-1.0.0.tar.gz",
+    "size_bytes": 4949,
+    "sha256": "3015c801132fc44863e9a64ebd63c0ed6b5a19adde58350d8b988b36aa11ec5e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/x-croot/library/BuzzerXCR/1.0.0/BuzzerXCR-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/x-croot/library/BuzzerXCR/1.0.0/BuzzerXCR-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "x-croot/library/L298N-XCR/1.0.0/L298N-XCR-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "L298N-XCR-1.0.0.tar.gz",
+    "size_bytes": 4229,
+    "sha256": "983073d1fe57c1416c6185b17319a1a44c57fb97ccb4cd10e679065c509c7adb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/x-croot/library/L298N-XCR/1.0.0/L298N-XCR-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/x-croot/library/L298N-XCR/1.0.0/L298N-XCR-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "x-croot/library/LM35_XCR/1.0.0/LM35_XCR-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LM35_XCR-1.0.0.tar.gz",
+    "size_bytes": 2362,
+    "sha256": "34c70b4e75bd86e741dcbba4a9b68fd19943dc0438f7a87efc92d33f7bfaf45d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/x-croot/library/LM35_XCR/1.0.0/LM35_XCR-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/x-croot/library/LM35_XCR/1.0.0/LM35_XCR-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "x-croot/library/MPU6050Auto/1.0.0/MPU6050Auto-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPU6050Auto-1.0.0.tar.gz",
+    "size_bytes": 11447,
+    "sha256": "44161d2bc2227bb17e52869d7519ce6288131445888a8ad04770472cfda83dea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/x-croot/library/MPU6050Auto/1.0.0/MPU6050Auto-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/x-croot/library/MPU6050Auto/1.0.0/MPU6050Auto-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "x-croot/library/MQ135-XCR/1.0.0/MQ135-XCR-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQ135-XCR-1.0.0.tar.gz",
+    "size_bytes": 3116,
+    "sha256": "d89958958a87ab8ef17f87b58b2b0c7c5758f0778f311f6e1add98bd422e45df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/x-croot/library/MQ135-XCR/1.0.0/MQ135-XCR-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/x-croot/library/MQ135-XCR/1.0.0/MQ135-XCR-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "x-croot/library/NewPID/1.0.1/NewPID-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NewPID-1.0.1.tar.gz",
+    "size_bytes": 10739,
+    "sha256": "85a59d7e507db016c908dbadcd8675b4bcdd2c89fb2053dfb6296d7d0d1eb86c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/x-croot/library/NewPID/1.0.1/NewPID-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/x-croot/library/NewPID/1.0.1/NewPID-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "x-croot/library/RelayXCR/1.0.0/RelayXCR-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RelayXCR-1.0.0.tar.gz",
+    "size_bytes": 2477,
+    "sha256": "1c6c26230140e9d4a2ef7d2a234d46a633e2ddee558b9428686564870abd65dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/x-croot/library/RelayXCR/1.0.0/RelayXCR-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/x-croot/library/RelayXCR/1.0.0/RelayXCR-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "x-croot/library/TB6612FNG_XCR/1.0.0/TB6612FNG_XCR-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TB6612FNG_XCR-1.0.0.tar.gz",
+    "size_bytes": 4380,
+    "sha256": "5e0c30084833d8bfe929d4731ccc0d19639f5e7ecbbac19d27fe92e1ce26c323",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/x-croot/library/TB6612FNG_XCR/1.0.0/TB6612FNG_XCR-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/x-croot/library/TB6612FNG_XCR/1.0.0/TB6612FNG_XCR-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "x-croot/library/UltraSonicXCR/1.0.0/UltraSonicXCR-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UltraSonicXCR-1.0.0.tar.gz",
+    "size_bytes": 2673,
+    "sha256": "5e3ddc005e548831920035a5bbe6fbc3f0c38a128c8eb5128b2427aa722fb1b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/x-croot/library/UltraSonicXCR/1.0.0/UltraSonicXCR-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/x-croot/library/UltraSonicXCR/1.0.0/UltraSonicXCR-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

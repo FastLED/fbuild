@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jareklupinski",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jareklupinski/library/EPD215/1.0/EPD215-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EPD215-1.0.tar.gz",
+    "size_bytes": 76085,
+    "sha256": "c232934715038e3ec3f0463f2d985b9083e1e1fc964fef92becb36662933fd43",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jareklupinski/library/EPD215/1.0/EPD215-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jareklupinski/library/EPD215/1.0/EPD215-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,347 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/aloriumtechnology",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "aloriumtechnology/library/UbidotsXLR8/1.1.0/UbidotsXLR8-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UbidotsXLR8-1.1.0.tar.gz",
+    "size_bytes": 5033,
+    "sha256": "eb455642789a0378591fe83934e1d5bfdfdb28e2dda16915d839f2fd279e1e6b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aloriumtechnology/library/UbidotsXLR8/1.1.0/UbidotsXLR8-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aloriumtechnology/library/UbidotsXLR8/1.1.0/UbidotsXLR8-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aloriumtechnology/library/XLR8ADC/1.1.1/XLR8ADC-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XLR8ADC-1.1.1.tar.gz",
+    "size_bytes": 3345,
+    "sha256": "caf01e389dbc90673d47b753fa904a1c377be6d36b6689abc9d4e7ed93a9d3aa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aloriumtechnology/library/XLR8ADC/1.1.1/XLR8ADC-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/aloriumtechnology/library/XLR8ADC/1.1.1/XLR8ADC-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aloriumtechnology/library/XLR8AddrPack/1.0.0/XLR8AddrPack-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XLR8AddrPack-1.0.0.tar.gz",
+    "size_bytes": 2996,
+    "sha256": "1b0cb39553f4b5fed5c3251b5649492414c320f94e807230d1e9587812fda322",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aloriumtechnology/library/XLR8AddrPack/1.0.0/XLR8AddrPack-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aloriumtechnology/library/XLR8AddrPack/1.0.0/XLR8AddrPack-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aloriumtechnology/library/XLR8BuildTemplate/1.4.4/XLR8BuildTemplate-1.4.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XLR8BuildTemplate-1.4.4.tar.gz",
+    "size_bytes": 4138,
+    "sha256": "eea31ee71ada82244b0ef7f49827d50d9d60055fe8924d387b897f380aac7e52",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aloriumtechnology/library/XLR8BuildTemplate/1.4.4/XLR8BuildTemplate-1.4.4.tar.gz",
+     "https://dl.registry.platformio.org/download/aloriumtechnology/library/XLR8BuildTemplate/1.4.4/XLR8BuildTemplate-1.4.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aloriumtechnology/library/XLR8Core/1.4.4/XLR8Core-1.4.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XLR8Core-1.4.4.tar.gz",
+    "size_bytes": 1946,
+    "sha256": "b2f2950c34b0101e10562bb93cec4e1b1506521b9cef9f0a5ce638dacb64f292",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aloriumtechnology/library/XLR8Core/1.4.4/XLR8Core-1.4.4.tar.gz",
+     "https://dl.registry.platformio.org/download/aloriumtechnology/library/XLR8Core/1.4.4/XLR8Core-1.4.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aloriumtechnology/library/XLR8DMem/1.0.2/XLR8DMem-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XLR8DMem-1.0.2.tar.gz",
+    "size_bytes": 4967,
+    "sha256": "970a739d8e30195935f73ea5987951368c9af67249d0620b3563c2ac8e54e116",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aloriumtechnology/library/XLR8DMem/1.0.2/XLR8DMem-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/aloriumtechnology/library/XLR8DMem/1.0.2/XLR8DMem-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aloriumtechnology/library/XLR8DigitalIO/1.0.0/XLR8DigitalIO-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XLR8DigitalIO-1.0.0.tar.gz",
+    "size_bytes": 1875,
+    "sha256": "8d632fa12980a2d6ca5dacf3c2b05d6995a4dfe8e42dddd9753aef23befe086c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aloriumtechnology/library/XLR8DigitalIO/1.0.0/XLR8DigitalIO-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aloriumtechnology/library/XLR8DigitalIO/1.0.0/XLR8DigitalIO-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aloriumtechnology/library/XLR8Float/2.0.1/XLR8Float-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XLR8Float-2.0.1.tar.gz",
+    "size_bytes": 7049,
+    "sha256": "bcc16e0a9fd19d6cb0893c5705c1b35454760f34cd0dce0005e9d51fa5dcd564",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aloriumtechnology/library/XLR8Float/2.0.1/XLR8Float-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/aloriumtechnology/library/XLR8Float/2.0.1/XLR8Float-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aloriumtechnology/library/XLR8HardwareSerial/1.0.0/XLR8HardwareSerial-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XLR8HardwareSerial-1.0.0.tar.gz",
+    "size_bytes": 5537,
+    "sha256": "98b03630ad522ec6af65566260657013ca0b15e3f3a301de9938eef810348b94",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aloriumtechnology/library/XLR8HardwareSerial/1.0.0/XLR8HardwareSerial-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aloriumtechnology/library/XLR8HardwareSerial/1.0.0/XLR8HardwareSerial-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aloriumtechnology/library/XLR8Info/2.0.0/XLR8Info-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XLR8Info-2.0.0.tar.gz",
+    "size_bytes": 12265,
+    "sha256": "7913451db45d214401da55d43fbc7cbb3a66b0e0880bdb4d04d94d92c1b098aa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aloriumtechnology/library/XLR8Info/2.0.0/XLR8Info-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aloriumtechnology/library/XLR8Info/2.0.0/XLR8Info-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aloriumtechnology/library/XLR8LFSR/1.1.0/XLR8LFSR-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XLR8LFSR-1.1.0.tar.gz",
+    "size_bytes": 4226,
+    "sha256": "da58b1f36019129bba13e551d2ae8689eac366fd16863d081faf42c7e5f6e621",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aloriumtechnology/library/XLR8LFSR/1.1.0/XLR8LFSR-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aloriumtechnology/library/XLR8LFSR/1.1.0/XLR8LFSR-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aloriumtechnology/library/XLR8NeoPixel/1.0.5/XLR8NeoPixel-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XLR8NeoPixel-1.0.5.tar.gz",
+    "size_bytes": 28388,
+    "sha256": "35294297062bf593695b4264ee0817c761ba21ce95195586b850f54984aed066",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aloriumtechnology/library/XLR8NeoPixel/1.0.5/XLR8NeoPixel-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/aloriumtechnology/library/XLR8NeoPixel/1.0.5/XLR8NeoPixel-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aloriumtechnology/library/XLR8PID/1.0.0/XLR8PID-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XLR8PID-1.0.0.tar.gz",
+    "size_bytes": 2826,
+    "sha256": "afa8cb2f1a9a0040ff3502d124a34b33bc2713d9c2a9b92f8d9a0c0d1f043aff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aloriumtechnology/library/XLR8PID/1.0.0/XLR8PID-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aloriumtechnology/library/XLR8PID/1.0.0/XLR8PID-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aloriumtechnology/library/XLR8PWM/1.0.1/XLR8PWM-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XLR8PWM-1.0.1.tar.gz",
+    "size_bytes": 2576,
+    "sha256": "31f48500b70ed536a683e63f5e97e8f1a7e5835b5ca7474ea45035d11c027589",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aloriumtechnology/library/XLR8PWM/1.0.1/XLR8PWM-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/aloriumtechnology/library/XLR8PWM/1.0.1/XLR8PWM-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aloriumtechnology/library/XLR8Pong/1.0.0/XLR8Pong-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XLR8Pong-1.0.0.tar.gz",
+    "size_bytes": 5170,
+    "sha256": "047f9efeb5ff74dc13e56ceac0afdcc369f549164e36aae5697ada4f7b590549",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aloriumtechnology/library/XLR8Pong/1.0.0/XLR8Pong-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aloriumtechnology/library/XLR8Pong/1.0.0/XLR8Pong-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aloriumtechnology/library/XLR8Quadrature/1.2.0/XLR8Quadrature-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XLR8Quadrature-1.2.0.tar.gz",
+    "size_bytes": 18846,
+    "sha256": "ecfe6f60ba50cad924fe2d46f8c0e7011d6a2b9200d736ed82081505caf473ba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aloriumtechnology/library/XLR8Quadrature/1.2.0/XLR8Quadrature-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aloriumtechnology/library/XLR8Quadrature/1.2.0/XLR8Quadrature-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aloriumtechnology/library/XLR8RC/1.0.0/XLR8RC-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XLR8RC-1.0.0.tar.gz",
+    "size_bytes": 2235,
+    "sha256": "70691dbf08adc8339ce4e182fe9ba823add7aaf08e4a74d3374561ea5e220371",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aloriumtechnology/library/XLR8RC/1.0.0/XLR8RC-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aloriumtechnology/library/XLR8RC/1.0.0/XLR8RC-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aloriumtechnology/library/XLR8SPI/2.0.1/XLR8SPI-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XLR8SPI-2.0.1.tar.gz",
+    "size_bytes": 10607,
+    "sha256": "2c2549866189d41b8f7012d15dcd229f9453ab81d4b2e01916a213e474b772f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aloriumtechnology/library/XLR8SPI/2.0.1/XLR8SPI-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/aloriumtechnology/library/XLR8SPI/2.0.1/XLR8SPI-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aloriumtechnology/library/XLR8Servo/2.2.0/XLR8Servo-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XLR8Servo-2.2.0.tar.gz",
+    "size_bytes": 9356,
+    "sha256": "7a2d0a756a085b0b4d108feb4200b45b9db19b3602d54443f4741811c47dec8c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aloriumtechnology/library/XLR8Servo/2.2.0/XLR8Servo-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aloriumtechnology/library/XLR8Servo/2.2.0/XLR8Servo-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aloriumtechnology/library/XLR8Servo_vhdl/1.0.0/XLR8Servo_vhdl-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XLR8Servo_vhdl-1.0.0.tar.gz",
+    "size_bytes": 10634,
+    "sha256": "97a9c07050c14bd86b3fc83bf61180d1511a02311584ffecd8bd7fdca72bb38b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aloriumtechnology/library/XLR8Servo_vhdl/1.0.0/XLR8Servo_vhdl-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aloriumtechnology/library/XLR8Servo_vhdl/1.0.0/XLR8Servo_vhdl-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aloriumtechnology/library/XLR8USB/1.0.0/XLR8USB-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XLR8USB-1.0.0.tar.gz",
+    "size_bytes": 3240,
+    "sha256": "e61aeb3e4a2a0cb650fdbb1507d7f439b775116c12afb9e4142d126a2d48beba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aloriumtechnology/library/XLR8USB/1.0.0/XLR8USB-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aloriumtechnology/library/XLR8USB/1.0.0/XLR8USB-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aloriumtechnology/library/XLR8Wire/1.0.0/XLR8Wire-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XLR8Wire-1.0.0.tar.gz",
+    "size_bytes": 17861,
+    "sha256": "4ff033ad8c982f3b1af295f827d4aacf9267ebd617d7342bc05460f76d5ff66d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aloriumtechnology/library/XLR8Wire/1.0.0/XLR8Wire-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aloriumtechnology/library/XLR8Wire/1.0.0/XLR8Wire-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aloriumtechnology/library/evo_bsp/1.1.0/evo_bsp-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "evo_bsp-1.1.0.tar.gz",
+    "size_bytes": 1495,
+    "sha256": "8a7d2759a1dd9f481b599c9c75c57a8ce52ebcb6e61fdaa2d2e8ada7a4a2d1fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aloriumtechnology/library/evo_bsp/1.1.0/evo_bsp-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aloriumtechnology/library/evo_bsp/1.1.0/evo_bsp-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aloriumtechnology/library/evo_build_template/1.1.0/evo_build_template-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "evo_build_template-1.1.0.tar.gz",
+    "size_bytes": 3073,
+    "sha256": "c4cc384445d34384b2ec835e49cfbbf3268721ce6b7e5c4b50192adbd291269c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aloriumtechnology/library/evo_build_template/1.1.0/evo_build_template-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aloriumtechnology/library/evo_build_template/1.1.0/evo_build_template-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aloriumtechnology/library/evo_pmux_csr/1.0.1/evo_pmux_csr-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "evo_pmux_csr-1.0.1.tar.gz",
+    "size_bytes": 1456,
+    "sha256": "ba62b781a0577749a2dfa7f14b2220154a37360035550458b03fab2310ce21ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aloriumtechnology/library/evo_pmux_csr/1.0.1/evo_pmux_csr-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/aloriumtechnology/library/evo_pmux_csr/1.0.1/evo_pmux_csr-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aloriumtechnology/library/evo_servo/1.0.0/evo_servo-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "evo_servo-1.0.0.tar.gz",
+    "size_bytes": 5082,
+    "sha256": "baba8b5ec672d5ec69584d3f6ebe2f2cd3b98f8ef21ad2bae9e35b6c56f74198",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aloriumtechnology/library/evo_servo/1.0.0/evo_servo-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aloriumtechnology/library/evo_servo/1.0.0/evo_servo-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/aztechell",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "aztechell/library/AzDeck/0.1.0/AzDeck-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AzDeck-0.1.0.tar.gz",
+    "size_bytes": 16241,
+    "sha256": "a542dd34d9c7bc63716f6674ecbc6f8a7bfd1cff5008e4e040ce35b89d457b86",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aztechell/library/AzDeck/0.1.0/AzDeck-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aztechell/library/AzDeck/0.1.0/AzDeck-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aztechell/library/AzDeck/0.1.1/AzDeck-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AzDeck-0.1.1.tar.gz",
+    "size_bytes": 18112,
+    "sha256": "1c86f5ac9a3f65b72c3e3273ace93ed910758f2d1eb88839a89b959a15a2acb3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aztechell/library/AzDeck/0.1.1/AzDeck-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/aztechell/library/AzDeck/0.1.1/AzDeck-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aztechell/library/AzDeck/0.1.3/AzDeck-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AzDeck-0.1.3.tar.gz",
+    "size_bytes": 20056,
+    "sha256": "f2c5dd0a4f551f3dd6cd328015636117b5a6dd84ebd5f33756775be5a2c9c773",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aztechell/library/AzDeck/0.1.3/AzDeck-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/aztechell/library/AzDeck/0.1.3/AzDeck-0.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aztechell/library/AzDeck/0.2.1/AzDeck-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AzDeck-0.2.1.tar.gz",
+    "size_bytes": 19720,
+    "sha256": "3f1bc13477b11dd73250880a73c32228688ba334b2844f4d6dc899014d40691b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aztechell/library/AzDeck/0.2.1/AzDeck-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/aztechell/library/AzDeck/0.2.1/AzDeck-0.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/prenticedavid",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "prenticedavid/library/MCUFRIEND_kbv/3.1.0-Beta/MCUFRIEND_kbv-3.1.0-Beta.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCUFRIEND_kbv-3.1.0-Beta.tar.gz",
+    "size_bytes": 141160,
+    "sha256": "9a2722c1960ff9964d9042fa3fae01842326698d7decd9fe4e47139fa25411b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/prenticedavid/library/MCUFRIEND_kbv/3.1.0-Beta/MCUFRIEND_kbv-3.1.0-Beta.tar.gz",
+     "https://dl.registry.platformio.org/download/prenticedavid/library/MCUFRIEND_kbv/3.1.0-Beta/MCUFRIEND_kbv-3.1.0-Beta.tar.gz"
+    ]
+   }
+  }
+ ]
+}

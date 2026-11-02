@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lifely-cc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lifely-cc/library/Lifely%20Agrumino%20Lemon/1.5.4/LifelyAgruminoLemon-1.5.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LifelyAgruminoLemon-1.5.4.tar.gz",
+    "size_bytes": 53525,
+    "sha256": "6aeb6c7b11dd215ae927031c294fc2bc3481408fc6f27a9b2bc681394168c3e1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lifely-cc/library/Lifely%2520Agrumino%2520Lemon/1.5.4/LifelyAgruminoLemon-1.5.4.tar.gz",
+     "https://dl.registry.platformio.org/download/lifely-cc/library/Lifely%20Agrumino%20Lemon/1.5.4/LifelyAgruminoLemon-1.5.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

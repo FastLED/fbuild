@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-stavlin",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-stavlin/library/MAX31855/0.0.0+sha.5eeee89cb281/MAX31855-0.0.0+sha.5eeee89cb281.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX31855-0.0.0+sha.5eeee89cb281.tar.gz",
+    "size_bytes": 1971,
+    "sha256": "5738380c4e907c60da1ec0efaf00d4958713d6c95ad07839f6427e1abb1edc4a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-stavlin/library/MAX31855/0.0.0%2Bsha.5eeee89cb281/MAX31855-0.0.0%2Bsha.5eeee89cb281.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-stavlin/library/MAX31855/0.0.0%2Bsha.5eeee89cb281/MAX31855-0.0.0%2Bsha.5eeee89cb281.tar.gz"
+    ]
+   }
+  }
+ ]
+}

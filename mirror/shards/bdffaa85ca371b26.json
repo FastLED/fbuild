@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-michael-embed1",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-michael-embed1/library/DS18B20_1wire/0.0.0+sha.a2306865901f/DS18B20_1wire-0.0.0+sha.a2306865901f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS18B20_1wire-0.0.0+sha.a2306865901f.tar.gz",
+    "size_bytes": 3608,
+    "sha256": "93da344873dce9e4d1a4d81d3face0919b7a59d661945f6681c529d6f6eb4e16",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-michael-embed1/library/DS18B20_1wire/0.0.0%2Bsha.a2306865901f/DS18B20_1wire-0.0.0%2Bsha.a2306865901f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-michael-embed1/library/DS18B20_1wire/0.0.0%2Bsha.a2306865901f/DS18B20_1wire-0.0.0%2Bsha.a2306865901f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

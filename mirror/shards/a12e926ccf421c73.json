@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-harrypowers",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-harrypowers/library/BMP180/0.0.0+sha.01c74f1b5f4d/BMP180-0.0.0+sha.01c74f1b5f4d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMP180-0.0.0+sha.01c74f1b5f4d.tar.gz",
+    "size_bytes": 5193,
+    "sha256": "0acb8ce2ed3be60ca4e75ebca6f8b609b6666795312f5214731c6c21311fcd51",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-harrypowers/library/BMP180/0.0.0%2Bsha.01c74f1b5f4d/BMP180-0.0.0%2Bsha.01c74f1b5f4d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-harrypowers/library/BMP180/0.0.0%2Bsha.01c74f1b5f4d/BMP180-0.0.0%2Bsha.01c74f1b5f4d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-harrypowers/library/DS1307/0.0.0+sha.c3e4da8feb10/DS1307-0.0.0+sha.c3e4da8feb10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS1307-0.0.0+sha.c3e4da8feb10.tar.gz",
+    "size_bytes": 6499,
+    "sha256": "d6e9d20a22fffcf71e4c1c066e9114bdfef08bd840714be8be2a57a81a668ee0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-harrypowers/library/DS1307/0.0.0%2Bsha.c3e4da8feb10/DS1307-0.0.0%2Bsha.c3e4da8feb10.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-harrypowers/library/DS1307/0.0.0%2Bsha.c3e4da8feb10/DS1307-0.0.0%2Bsha.c3e4da8feb10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-harrypowers/library/DTH22/0.0.0+sha.75e2489cecfe/DTH22-0.0.0+sha.75e2489cecfe.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DTH22-0.0.0+sha.75e2489cecfe.tar.gz",
+    "size_bytes": 4521,
+    "sha256": "37d17161c5f3dd3835bf73d3f2382bdebe9a6e6bb031637878ff79b2dfc18077",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-harrypowers/library/DTH22/0.0.0%2Bsha.75e2489cecfe/DTH22-0.0.0%2Bsha.75e2489cecfe.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-harrypowers/library/DTH22/0.0.0%2Bsha.75e2489cecfe/DTH22-0.0.0%2Bsha.75e2489cecfe.tar.gz"
+    ]
+   }
+  }
+ ]
+}

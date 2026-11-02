@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-altasoul",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-altasoul/library/RTOS-Serial/0.0.0+sha.d974f46f6882/RTOS-Serial-0.0.0+sha.d974f46f6882.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RTOS-Serial-0.0.0+sha.d974f46f6882.tar.gz",
+    "size_bytes": 4188,
+    "sha256": "1653670421fafd6b508bfcf9a9e807a50b181689e557ee424509c8ac716509ab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-altasoul/library/RTOS-Serial/0.0.0%2Bsha.d974f46f6882/RTOS-Serial-0.0.0%2Bsha.d974f46f6882.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-altasoul/library/RTOS-Serial/0.0.0%2Bsha.d974f46f6882/RTOS-Serial-0.0.0%2Bsha.d974f46f6882.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-altasoul/library/scope-RAM/0.0.0+sha.b6905730f836/scope-RAM-0.0.0+sha.b6905730f836.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "scope-RAM-0.0.0+sha.b6905730f836.tar.gz",
+    "size_bytes": 1650,
+    "sha256": "03e28c9ea142f215fb0d5e6427de9da4e46ca7642d1c61065011e6ee8704aadc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-altasoul/library/scope-RAM/0.0.0%2Bsha.b6905730f836/scope-RAM-0.0.0%2Bsha.b6905730f836.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-altasoul/library/scope-RAM/0.0.0%2Bsha.b6905730f836/scope-RAM-0.0.0%2Bsha.b6905730f836.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-altasoul/library/snet/0.0.0+sha.45bae1fecc36/snet-0.0.0+sha.45bae1fecc36.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "snet-0.0.0+sha.45bae1fecc36.tar.gz",
+    "size_bytes": 7213,
+    "sha256": "96cf4db480b2a4ce4772e79989276b9946a4e35c2caa95d1880a12c218907b91",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-altasoul/library/snet/0.0.0%2Bsha.45bae1fecc36/snet-0.0.0%2Bsha.45bae1fecc36.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-altasoul/library/snet/0.0.0%2Bsha.45bae1fecc36/snet-0.0.0%2Bsha.45bae1fecc36.tar.gz"
+    ]
+   }
+  }
+ ]
+}

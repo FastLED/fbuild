@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-iulian-radu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-iulian-radu/library/AC_dimmer/0.0.0+sha.513c1ae9298f/AC_dimmer-0.0.0+sha.513c1ae9298f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AC_dimmer-0.0.0+sha.513c1ae9298f.tar.gz",
+    "size_bytes": 2446,
+    "sha256": "b2a4d8b4ddeaf63978b7e6568b332e1fc2f6e78b2edc449f95697a3e7bc7ff9d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-iulian-radu/library/AC_dimmer/0.0.0%2Bsha.513c1ae9298f/AC_dimmer-0.0.0%2Bsha.513c1ae9298f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-iulian-radu/library/AC_dimmer/0.0.0%2Bsha.513c1ae9298f/AC_dimmer-0.0.0%2Bsha.513c1ae9298f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/thexspaceacademy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "thexspaceacademy/library/XSControl/1.1.5/XSControl-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XSControl-1.1.5.tar.gz",
+    "size_bytes": 11172,
+    "sha256": "2502809d7a027c44039e368ed0fb9d1ba0ef2c500eab50e870004b06d9cef233",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thexspaceacademy/library/XSControl/1.1.5/XSControl-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/thexspaceacademy/library/XSControl/1.1.5/XSControl-1.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thexspaceacademy/library/XSensors/1.0.0/XSensors-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XSensors-1.0.0.tar.gz",
+    "size_bytes": 5926,
+    "sha256": "dca7896be31e53049b1784aa03db6a93e34d1a08b382786a2092b516b6d25799",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thexspaceacademy/library/XSensors/1.0.0/XSensors-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/thexspaceacademy/library/XSensors/1.0.0/XSensors-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thexspaceacademy/library/XSpaceBioV10/1.0.6/XSpaceBioV10-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XSpaceBioV10-1.0.6.tar.gz",
+    "size_bytes": 9227,
+    "sha256": "6880803b41228a5b80cf4f857f3681200a298961dd30a5b22f610917e12c08a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thexspaceacademy/library/XSpaceBioV10/1.0.6/XSpaceBioV10-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/thexspaceacademy/library/XSpaceBioV10/1.0.6/XSpaceBioV10-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thexspaceacademy/library/XSpaceIoT/1.1.3/XSpaceIoT-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XSpaceIoT-1.1.3.tar.gz",
+    "size_bytes": 12360,
+    "sha256": "7ebbaa52f118f8e5d947e934230f6514445e03442d866669223da5398959663e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thexspaceacademy/library/XSpaceIoT/1.1.3/XSpaceIoT-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/thexspaceacademy/library/XSpaceIoT/1.1.3/XSpaceIoT-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thexspaceacademy/library/XSpaceV10/1.0.1/XSpaceV10-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XSpaceV10-1.0.1.tar.gz",
+    "size_bytes": 4595,
+    "sha256": "7fd9e09ecf8cc52af91f8cfd1146ac0d5495f93f624d83378603bdd153b36beb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thexspaceacademy/library/XSpaceV10/1.0.1/XSpaceV10-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/thexspaceacademy/library/XSpaceV10/1.0.1/XSpaceV10-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thexspaceacademy/library/XSpaceV20/1.1.1/XSpaceV20-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XSpaceV20-1.1.1.tar.gz",
+    "size_bytes": 7908,
+    "sha256": "d5198fc08ee8e883d122c8fefe7672ce4a4dd3ddc50453828c16dd1ced86850f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thexspaceacademy/library/XSpaceV20/1.1.1/XSpaceV20-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/thexspaceacademy/library/XSpaceV20/1.1.1/XSpaceV20-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thexspaceacademy/library/XSpaceV21/1.0.6/XSpaceV21-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XSpaceV21-1.0.6.tar.gz",
+    "size_bytes": 22452,
+    "sha256": "0a6fffd790db1112ee01363f925b11958f6f854854a60310535971df08a92ad1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thexspaceacademy/library/XSpaceV21/1.0.6/XSpaceV21-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/thexspaceacademy/library/XSpaceV21/1.0.6/XSpaceV21-1.0.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

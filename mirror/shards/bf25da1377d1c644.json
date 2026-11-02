@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gurusr",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gurusr/library/SmallRTC/2.4.7/SmallRTC-2.4.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmallRTC-2.4.7.tar.gz",
+    "size_bytes": 14259,
+    "sha256": "19094c4de889cb95d2b367b602b2250230d0ee9ea79bc16662f6bec6e6a9aa6f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gurusr/library/SmallRTC/2.4.7/SmallRTC-2.4.7.tar.gz",
+     "https://dl.registry.platformio.org/download/gurusr/library/SmallRTC/2.4.7/SmallRTC-2.4.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

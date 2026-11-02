@@ -1,0 +1,269 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/okalachev",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "okalachev/library/FlixPeriph/1.10.1/FlixPeriph-1.10.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FlixPeriph-1.10.1.tar.gz",
+    "size_bytes": 66351,
+    "sha256": "e223a134915413cbfdac51223c4c802fe0a3028a9685e41adef511492375cb18",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/okalachev/library/FlixPeriph/1.10.1/FlixPeriph-1.10.1.tar.gz",
+     "https://dl.registry.platformio.org/download/okalachev/library/FlixPeriph/1.10.1/FlixPeriph-1.10.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "okalachev/library/FlixPeriph/1.10.2/FlixPeriph-1.10.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FlixPeriph-1.10.2.tar.gz",
+    "size_bytes": 66375,
+    "sha256": "b1686a83506de2f737872b8d983a1eb9a3becdaa68421c7b01fed28cb0fb4bae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/okalachev/library/FlixPeriph/1.10.2/FlixPeriph-1.10.2.tar.gz",
+     "https://dl.registry.platformio.org/download/okalachev/library/FlixPeriph/1.10.2/FlixPeriph-1.10.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "okalachev/library/FlixPeriph/1.10.3/FlixPeriph-1.10.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FlixPeriph-1.10.3.tar.gz",
+    "size_bytes": 66525,
+    "sha256": "35686a546b74f893d3118b621dad60453540921856c66639f719bd19ce1c56c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/okalachev/library/FlixPeriph/1.10.3/FlixPeriph-1.10.3.tar.gz",
+     "https://dl.registry.platformio.org/download/okalachev/library/FlixPeriph/1.10.3/FlixPeriph-1.10.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "okalachev/library/FlixPeriph/1.10.4/FlixPeriph-1.10.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FlixPeriph-1.10.4.tar.gz",
+    "size_bytes": 66605,
+    "sha256": "abd9520d5aaa7e95c990c471010eb273a3164237ad95f9a089004658574cd417",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/okalachev/library/FlixPeriph/1.10.4/FlixPeriph-1.10.4.tar.gz",
+     "https://dl.registry.platformio.org/download/okalachev/library/FlixPeriph/1.10.4/FlixPeriph-1.10.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "okalachev/library/FlixPeriph/1.11.0/FlixPeriph-1.11.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FlixPeriph-1.11.0.tar.gz",
+    "size_bytes": 69959,
+    "sha256": "e74854be9bac2197476a5d9affdb9b83aac7bf09c260f09f6f6bd3c1a36948d5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/okalachev/library/FlixPeriph/1.11.0/FlixPeriph-1.11.0.tar.gz",
+     "https://dl.registry.platformio.org/download/okalachev/library/FlixPeriph/1.11.0/FlixPeriph-1.11.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "okalachev/library/FlixPeriph/1.12.1/FlixPeriph-1.12.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FlixPeriph-1.12.1.tar.gz",
+    "size_bytes": 70269,
+    "sha256": "d1b635f5fd88471106a06b3647fe9b2ae5020060a4db1be4b0e1df8ba86bbf50",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/okalachev/library/FlixPeriph/1.12.1/FlixPeriph-1.12.1.tar.gz",
+     "https://dl.registry.platformio.org/download/okalachev/library/FlixPeriph/1.12.1/FlixPeriph-1.12.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "okalachev/library/MAVLink/2.0.21/MAVLink-2.0.21.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAVLink-2.0.21.tar.gz",
+    "size_bytes": 1214499,
+    "sha256": "d2e4a3f05c74ab9dd84f57ede6f52fa1ee536ec7dc2de6dfb3fd556af433c86f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/okalachev/library/MAVLink/2.0.21/MAVLink-2.0.21.tar.gz",
+     "https://dl.registry.platformio.org/download/okalachev/library/MAVLink/2.0.21/MAVLink-2.0.21.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "okalachev/library/MAVLink/2.0.22/MAVLink-2.0.22.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAVLink-2.0.22.tar.gz",
+    "size_bytes": 1219526,
+    "sha256": "8ea80f26eca55a6d08eaaeb56d2c4edadf80d42d7c48e9de1e48f1716722c60d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/okalachev/library/MAVLink/2.0.22/MAVLink-2.0.22.tar.gz",
+     "https://dl.registry.platformio.org/download/okalachev/library/MAVLink/2.0.22/MAVLink-2.0.22.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "okalachev/library/MAVLink/2.0.23/MAVLink-2.0.23.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAVLink-2.0.23.tar.gz",
+    "size_bytes": 1221135,
+    "sha256": "5bdc0ee133a467b56c0cfb2b3686c39ed9ba8e74053f9ff403815872698f599f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/okalachev/library/MAVLink/2.0.23/MAVLink-2.0.23.tar.gz",
+     "https://dl.registry.platformio.org/download/okalachev/library/MAVLink/2.0.23/MAVLink-2.0.23.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "okalachev/library/MAVLink/2.0.24/MAVLink-2.0.24.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAVLink-2.0.24.tar.gz",
+    "size_bytes": 1224887,
+    "sha256": "75ab296a1348c1b4c6c92d5b36a76798d8c93b4b39dc9164338db0d6811d6f39",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/okalachev/library/MAVLink/2.0.24/MAVLink-2.0.24.tar.gz",
+     "https://dl.registry.platformio.org/download/okalachev/library/MAVLink/2.0.24/MAVLink-2.0.24.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "okalachev/library/MAVLink/2.0.25/MAVLink-2.0.25.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAVLink-2.0.25.tar.gz",
+    "size_bytes": 1235870,
+    "sha256": "777ecafc4f6b6fb2240732129f10e1251e9022b247fac64cdb3ffab86b2a0ba5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/okalachev/library/MAVLink/2.0.25/MAVLink-2.0.25.tar.gz",
+     "https://dl.registry.platformio.org/download/okalachev/library/MAVLink/2.0.25/MAVLink-2.0.25.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "okalachev/library/MAVLink/2.0.26/MAVLink-2.0.26.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAVLink-2.0.26.tar.gz",
+    "size_bytes": 1238107,
+    "sha256": "f9203fe9c38073ce543c1fdc41b6c6d581195d41709654540bc5c97b00179c15",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/okalachev/library/MAVLink/2.0.26/MAVLink-2.0.26.tar.gz",
+     "https://dl.registry.platformio.org/download/okalachev/library/MAVLink/2.0.26/MAVLink-2.0.26.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "okalachev/library/MAVLink/2.0.27/MAVLink-2.0.27.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAVLink-2.0.27.tar.gz",
+    "size_bytes": 1239211,
+    "sha256": "565171b9a0194cb88053eb248715c79874161e3dc36c8f26a6e9888211f7cd8b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/okalachev/library/MAVLink/2.0.27/MAVLink-2.0.27.tar.gz",
+     "https://dl.registry.platformio.org/download/okalachev/library/MAVLink/2.0.27/MAVLink-2.0.27.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "okalachev/library/MAVLink/2.0.28/MAVLink-2.0.28.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAVLink-2.0.28.tar.gz",
+    "size_bytes": 1248142,
+    "sha256": "44def0908b81a12cb4bb8e1a626422b4b6714923e4ceedc22e539ef907e56a8f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/okalachev/library/MAVLink/2.0.28/MAVLink-2.0.28.tar.gz",
+     "https://dl.registry.platformio.org/download/okalachev/library/MAVLink/2.0.28/MAVLink-2.0.28.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "okalachev/library/MAVLink/2.0.29/MAVLink-2.0.29.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAVLink-2.0.29.tar.gz",
+    "size_bytes": 1251605,
+    "sha256": "6553583a2ad86d85788c98976a27042723e7469ff6aa61332ffd3a6ef7f5c51d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/okalachev/library/MAVLink/2.0.29/MAVLink-2.0.29.tar.gz",
+     "https://dl.registry.platformio.org/download/okalachev/library/MAVLink/2.0.29/MAVLink-2.0.29.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "okalachev/library/MAVLink/2.0.30/MAVLink-2.0.30.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAVLink-2.0.30.tar.gz",
+    "size_bytes": 1255737,
+    "sha256": "4c17bbeb8b1c11a2c5686c035ad43a34062f817c752680c60495409a57979216",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/okalachev/library/MAVLink/2.0.30/MAVLink-2.0.30.tar.gz",
+     "https://dl.registry.platformio.org/download/okalachev/library/MAVLink/2.0.30/MAVLink-2.0.30.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "okalachev/library/MAVLink/2.0.31/MAVLink-2.0.31.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAVLink-2.0.31.tar.gz",
+    "size_bytes": 1180663,
+    "sha256": "eee978a00b4190e8009a139df13b8cb35909a14f3fd582da3775a799312911f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/okalachev/library/MAVLink/2.0.31/MAVLink-2.0.31.tar.gz",
+     "https://dl.registry.platformio.org/download/okalachev/library/MAVLink/2.0.31/MAVLink-2.0.31.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "okalachev/library/MAVLink/2.0.32/MAVLink-2.0.32.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAVLink-2.0.32.tar.gz",
+    "size_bytes": 1182844,
+    "sha256": "be35aca584ec62634a3744becea9566fc8fca17d4b0e96eb32473a64ecd90103",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/okalachev/library/MAVLink/2.0.32/MAVLink-2.0.32.tar.gz",
+     "https://dl.registry.platformio.org/download/okalachev/library/MAVLink/2.0.32/MAVLink-2.0.32.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "okalachev/library/MAVLink/2.0.33/MAVLink-2.0.33.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAVLink-2.0.33.tar.gz",
+    "size_bytes": 1186137,
+    "sha256": "9100d4ec7d34d9ed23aee4fbabea3a72cca59c92a7b9b27fd862e5b07c8ebf2e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/okalachev/library/MAVLink/2.0.33/MAVLink-2.0.33.tar.gz",
+     "https://dl.registry.platformio.org/download/okalachev/library/MAVLink/2.0.33/MAVLink-2.0.33.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "okalachev/library/MAVLink/2.0.34/MAVLink-2.0.34.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAVLink-2.0.34.tar.gz",
+    "size_bytes": 1203222,
+    "sha256": "0b1330ea26d291f22d137cc81b786d2b6ad6343c0b8e9b82bfe7d8e45cf4d10e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/okalachev/library/MAVLink/2.0.34/MAVLink-2.0.34.tar.gz",
+     "https://dl.registry.platformio.org/download/okalachev/library/MAVLink/2.0.34/MAVLink-2.0.34.tar.gz"
+    ]
+   }
+  }
+ ]
+}

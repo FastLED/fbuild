@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kuanglei",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kuanglei/library/fDigitsSegtPin/1.1.7/fDigitsSegtPin-1.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "fDigitsSegtPin-1.1.7.tar.gz",
+    "size_bytes": 16410,
+    "sha256": "1d6f2f5c7bdbf68ff2aca240cda46957d1376b0b4004986fb8ec5a163affb73e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kuanglei/library/fDigitsSegtPin/1.1.7/fDigitsSegtPin-1.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/kuanglei/library/fDigitsSegtPin/1.1.7/fDigitsSegtPin-1.1.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cloudchip-io",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cloudchip-io/library/Cloudchip%20IoT/2.1.1/CloudchipIoT-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CloudchipIoT-2.1.1.tar.gz",
+    "size_bytes": 37685,
+    "sha256": "8e8f7456abedda0019c8c2bc655b9eadc40b41a28a9ca91a8f8e0f913c00739d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cloudchip-io/library/Cloudchip%2520IoT/2.1.1/CloudchipIoT-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cloudchip-io/library/Cloudchip%20IoT/2.1.1/CloudchipIoT-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cloudchip-io/library/Cloudchip/2.0.6/Cloudchip-2.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Cloudchip-2.0.6.tar.gz",
+    "size_bytes": 37808,
+    "sha256": "666a6c15849cb775d26f133d61141e96825cddb7271c539e33a16f3f5220a3f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cloudchip-io/library/Cloudchip/2.0.6/Cloudchip-2.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/cloudchip-io/library/Cloudchip/2.0.6/Cloudchip-2.0.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

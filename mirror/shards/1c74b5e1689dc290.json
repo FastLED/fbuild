@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-takoyaki",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-takoyaki/library/TA7291P/0.0.0+sha.2abc17614090/TA7291P-0.0.0+sha.2abc17614090.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TA7291P-0.0.0+sha.2abc17614090.tar.gz",
+    "size_bytes": 1452,
+    "sha256": "7da42fac7aee3ffe24680b9fa49fe674bb1a736e0c118f29dfc2a5a302ad843e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-takoyaki/library/TA7291P/0.0.0%2Bsha.2abc17614090/TA7291P-0.0.0%2Bsha.2abc17614090.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-takoyaki/library/TA7291P/0.0.0%2Bsha.2abc17614090/TA7291P-0.0.0%2Bsha.2abc17614090.tar.gz"
+    ]
+   }
+  }
+ ]
+}

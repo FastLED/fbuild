@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gregtriant",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gregtriant/library/SocketClient/1.3.3/SocketClient-1.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SocketClient-1.3.3.tar.gz",
+    "size_bytes": 12437,
+    "sha256": "2155d46e713b83c43629c7841696da98f41864793855aab7105ef93f0bc580d3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gregtriant/library/SocketClient/1.3.3/SocketClient-1.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/gregtriant/library/SocketClient/1.3.3/SocketClient-1.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gregtriant/library/SocketClient/1.3.4/SocketClient-1.3.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SocketClient-1.3.4.tar.gz",
+    "size_bytes": 14558,
+    "sha256": "06c339d330f8aa796e29d1e8b76f37542c9057934f255c60a1227345c73a6b94",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gregtriant/library/SocketClient/1.3.4/SocketClient-1.3.4.tar.gz",
+     "https://dl.registry.platformio.org/download/gregtriant/library/SocketClient/1.3.4/SocketClient-1.3.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gregtriant/library/SocketClient/1.3.5/SocketClient-1.3.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SocketClient-1.3.5.tar.gz",
+    "size_bytes": 18953,
+    "sha256": "1c62d5b239718d82024e49392e38409b9338cf20de808cefd3304e96b0772e0e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gregtriant/library/SocketClient/1.3.5/SocketClient-1.3.5.tar.gz",
+     "https://dl.registry.platformio.org/download/gregtriant/library/SocketClient/1.3.5/SocketClient-1.3.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gregtriant/library/SocketClient/1.3.6/SocketClient-1.3.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SocketClient-1.3.6.tar.gz",
+    "size_bytes": 21075,
+    "sha256": "76c322e9466050c734124ac16667019b7ac1f4e13ca3f38791ace69e42523f1e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gregtriant/library/SocketClient/1.3.6/SocketClient-1.3.6.tar.gz",
+     "https://dl.registry.platformio.org/download/gregtriant/library/SocketClient/1.3.6/SocketClient-1.3.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gregtriant/library/SocketClient/1.7.1/SocketClient-1.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SocketClient-1.7.1.tar.gz",
+    "size_bytes": 41355,
+    "sha256": "a113db403bb3e1703d18869e2294c82a184baee0112690a465574b945e2d6ed3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gregtriant/library/SocketClient/1.7.1/SocketClient-1.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gregtriant/library/SocketClient/1.7.1/SocketClient-1.7.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gregtriant/library/SocketClient/1.8.0/SocketClient-1.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SocketClient-1.8.0.tar.gz",
+    "size_bytes": 42097,
+    "sha256": "54160cc86a4f7b94a5760447298f30cc254afe62677da0a50a0dd8d6926b57ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gregtriant/library/SocketClient/1.8.0/SocketClient-1.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gregtriant/library/SocketClient/1.8.0/SocketClient-1.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gregtriant/library/SocketClient/1.9.1/SocketClient-1.9.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SocketClient-1.9.1.tar.gz",
+    "size_bytes": 60751,
+    "sha256": "6850e1a16937eefe9199b54e8a32d385202c5653cc568fce1aa864e42913c320",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gregtriant/library/SocketClient/1.9.1/SocketClient-1.9.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gregtriant/library/SocketClient/1.9.1/SocketClient-1.9.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

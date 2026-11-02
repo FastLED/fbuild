@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/oaleksander",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "oaleksander/library/Prizm_Controller/1.0.3/Prizm_Controller-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Prizm_Controller-1.0.3.tar.gz",
+    "size_bytes": 10070,
+    "sha256": "67851d13ccb17f02b0c8430e2e2b2cb16d70edf4fbb590f8e63c3d284629ed0c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/oaleksander/library/Prizm_Controller/1.0.3/Prizm_Controller-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/oaleksander/library/Prizm_Controller/1.0.3/Prizm_Controller-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

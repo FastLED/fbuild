@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/instanceofma",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "instanceofma/library/Fetch/0.1.1/Fetch-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Fetch-0.1.1.tar.gz",
+    "size_bytes": 27175,
+    "sha256": "013d85284fa703b4eb2c53d4fcadb0b8ae6dc7780a502cbb1e9d3d34fbdcaa6a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/instanceofma/library/Fetch/0.1.1/Fetch-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/instanceofma/library/Fetch/0.1.1/Fetch-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/maakbaas",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "maakbaas/library/ESP8266%20IoT%20Framework/1.12.0/ESP8266IoTFramework-1.12.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266IoTFramework-1.12.0.tar.gz",
+    "size_bytes": 904710,
+    "sha256": "8ae35c42b5ed67e95f23a71b89f050f6c6b78ef863f462273506c294a6efdc51",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maakbaas/library/ESP8266%2520IoT%2520Framework/1.12.0/ESP8266IoTFramework-1.12.0.tar.gz",
+     "https://dl.registry.platformio.org/download/maakbaas/library/ESP8266%20IoT%20Framework/1.12.0/ESP8266IoTFramework-1.12.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

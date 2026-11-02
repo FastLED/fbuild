@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/xiangfuli",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "xiangfuli/library/L298NDriver/1.0.0/L298NDriver-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "L298NDriver-1.0.0.tar.gz",
+    "size_bytes": 2076,
+    "sha256": "1ae43c4a91f81cb3dd8d9a157b7240403f30634b7293aea1290cc9e00932e8c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xiangfuli/library/L298NDriver/1.0.0/L298NDriver-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xiangfuli/library/L298NDriver/1.0.0/L298NDriver-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

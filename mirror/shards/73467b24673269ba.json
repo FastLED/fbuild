@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ennio64",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ennio64/library/CL57RStepper/1.0.0/CL57RStepper-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CL57RStepper-1.0.0.tar.gz",
+    "size_bytes": 13539,
+    "sha256": "18230fe5ff58fd5d008e6550f9d98e63a5e76309891f37e39f3f087412062438",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ennio64/library/CL57RStepper/1.0.0/CL57RStepper-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ennio64/library/CL57RStepper/1.0.0/CL57RStepper-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ennio64/library/StepperHAL_STM32F4x1/1.0.0/StepperHAL_STM32F4x1-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StepperHAL_STM32F4x1-1.0.0.tar.gz",
+    "size_bytes": 21360,
+    "sha256": "c867836364900851f3df9f1f695df5f370c1105aba1ba2076901d76a808e5417",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ennio64/library/StepperHAL_STM32F4x1/1.0.0/StepperHAL_STM32F4x1-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ennio64/library/StepperHAL_STM32F4x1/1.0.0/StepperHAL_STM32F4x1-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

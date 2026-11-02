@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ropg",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ropg/library/ESP32_RTC_EEPROM/0.2.0/ESP32_RTC_EEPROM-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_RTC_EEPROM-0.2.0.tar.gz",
+    "size_bytes": 13806,
+    "sha256": "1f40ce2d34164e7486f513eea6206e0256a064af6f857f74316e7560f8db927a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ropg/library/ESP32_RTC_EEPROM/0.2.0/ESP32_RTC_EEPROM-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ropg/library/ESP32_RTC_EEPROM/0.2.0/ESP32_RTC_EEPROM-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ropg/library/Heltec_ESP32_LoRa_v3/0.9.2/Heltec_ESP32_LoRa_v3-0.9.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Heltec_ESP32_LoRa_v3-0.9.2.tar.gz",
+    "size_bytes": 44876,
+    "sha256": "429c7eeaf5192d5eab48899814729ff55c0a34e8bced07be82679d56c52b7a5a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ropg/library/Heltec_ESP32_LoRa_v3/0.9.2/Heltec_ESP32_LoRa_v3-0.9.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ropg/library/Heltec_ESP32_LoRa_v3/0.9.2/Heltec_ESP32_LoRa_v3-0.9.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ropg/library/HotButton/0.1.1/HotButton-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HotButton-0.1.1.tar.gz",
+    "size_bytes": 4211,
+    "sha256": "e39dda7656d5b2d5ab3859006b948fd9d5728d761b5ec069817bb7203b124b79",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ropg/library/HotButton/0.1.1/HotButton-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ropg/library/HotButton/0.1.1/HotButton-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ropg/library/LVGL_CYD/1.2.2/LVGL_CYD-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LVGL_CYD-1.2.2.tar.gz",
+    "size_bytes": 11318,
+    "sha256": "5ec2734f81fc211e1cec7a0ba5a6eb9a25cb4b6ce37573984d4ac1d6476252c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ropg/library/LVGL_CYD/1.2.2/LVGL_CYD-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ropg/library/LVGL_CYD/1.2.2/LVGL_CYD-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ropg/library/LoRaWAN_ESP32/1.2.0/LoRaWAN_ESP32-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LoRaWAN_ESP32-1.2.0.tar.gz",
+    "size_bytes": 12604,
+    "sha256": "3dafe7679542a17152e7faf8a0ca7c2ac7aa1a9afdc36c34b638fd25bc8c79af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ropg/library/LoRaWAN_ESP32/1.2.0/LoRaWAN_ESP32-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ropg/library/LoRaWAN_ESP32/1.2.0/LoRaWAN_ESP32-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ropg/library/LoRaWAN_ESP32/1.3.0/LoRaWAN_ESP32-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LoRaWAN_ESP32-1.3.0.tar.gz",
+    "size_bytes": 12605,
+    "sha256": "d1efa5ecd54ee8512c0d94fc99c5b3616058112bbcb85aa0c6515e4584b531d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ropg/library/LoRaWAN_ESP32/1.3.0/LoRaWAN_ESP32-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ropg/library/LoRaWAN_ESP32/1.3.0/LoRaWAN_ESP32-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ropg/library/ezTime/0.8.3/ezTime-0.8.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ezTime-0.8.3.tar.gz",
+    "size_bytes": 45808,
+    "sha256": "9ad2189324eff41ad7bb1303e2db802805a2ba0b953e249a5de408623ef2d2a1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ropg/library/ezTime/0.8.3/ezTime-0.8.3.tar.gz",
+     "https://dl.registry.platformio.org/download/ropg/library/ezTime/0.8.3/ezTime-0.8.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ropg/library/spi_lcd_read/1.0.0/spi_lcd_read-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "spi_lcd_read-1.0.0.tar.gz",
+    "size_bytes": 4702,
+    "sha256": "535a9daeb3e8a3ea98e877d7c4dc6dd95ac05f0fbe2d5b7b1767565b35fd959e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ropg/library/spi_lcd_read/1.0.0/spi_lcd_read-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ropg/library/spi_lcd_read/1.0.0/spi_lcd_read-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

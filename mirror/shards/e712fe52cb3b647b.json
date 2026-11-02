@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-okp-mh",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-okp-mh/library/I2CLCD/0.0.0+sha.61518c45ea07/I2CLCD-0.0.0+sha.61518c45ea07.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2CLCD-0.0.0+sha.61518c45ea07.tar.gz",
+    "size_bytes": 2363,
+    "sha256": "8eaa56ad787682b284dd6db5313cde200800034744c89d4121918d842b3fab97",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-okp-mh/library/I2CLCD/0.0.0%2Bsha.61518c45ea07/I2CLCD-0.0.0%2Bsha.61518c45ea07.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-okp-mh/library/I2CLCD/0.0.0%2Bsha.61518c45ea07/I2CLCD-0.0.0%2Bsha.61518c45ea07.tar.gz"
+    ]
+   }
+  }
+ ]
+}

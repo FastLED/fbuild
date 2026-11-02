@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bindthings",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bindthings/library/BindThings/1.0.0/BindThings-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BindThings-1.0.0.tar.gz",
+    "size_bytes": 5306,
+    "sha256": "c9c415ae671285c92478559939714ffe1e46babcf1f44077c9655a54b4520a52",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bindthings/library/BindThings/1.0.0/BindThings-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bindthings/library/BindThings/1.0.0/BindThings-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

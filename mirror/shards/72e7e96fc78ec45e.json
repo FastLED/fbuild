@@ -1,0 +1,152 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/harryskerritt",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "harryskerritt/library/SpotifyCPP-esp/0.9.2/SpotifyCPP-esp-0.9.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SpotifyCPP-esp-0.9.2.tar.gz",
+    "size_bytes": 64363,
+    "sha256": "ae19e122841be103849a8280f42bc99e1e0ec19d58ce6717ec7cb22e40b01a89",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/harryskerritt/library/SpotifyCPP-esp/0.9.2/SpotifyCPP-esp-0.9.2.tar.gz",
+     "https://dl.registry.platformio.org/download/harryskerritt/library/SpotifyCPP-esp/0.9.2/SpotifyCPP-esp-0.9.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "harryskerritt/library/SpotifyCPP-esp/0.9.3/SpotifyCPP-esp-0.9.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SpotifyCPP-esp-0.9.3.tar.gz",
+    "size_bytes": 64463,
+    "sha256": "148d344e5f7093404c4ac34c39d798a8e211d363cdf069b41c5b04e96ea64971",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/harryskerritt/library/SpotifyCPP-esp/0.9.3/SpotifyCPP-esp-0.9.3.tar.gz",
+     "https://dl.registry.platformio.org/download/harryskerritt/library/SpotifyCPP-esp/0.9.3/SpotifyCPP-esp-0.9.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "harryskerritt/library/SpotifyCPP-esp/0.9.4/SpotifyCPP-esp-0.9.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SpotifyCPP-esp-0.9.4.tar.gz",
+    "size_bytes": 65412,
+    "sha256": "2f21eeea1c8c12c1e0b7067a1e9f7a56e454592ed01fce5b59955d3e668377ac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/harryskerritt/library/SpotifyCPP-esp/0.9.4/SpotifyCPP-esp-0.9.4.tar.gz",
+     "https://dl.registry.platformio.org/download/harryskerritt/library/SpotifyCPP-esp/0.9.4/SpotifyCPP-esp-0.9.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "harryskerritt/library/SpotifyCPP-esp/0.9.5/SpotifyCPP-esp-0.9.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SpotifyCPP-esp-0.9.5.tar.gz",
+    "size_bytes": 64288,
+    "sha256": "1c388dff7fc564ad64163397942c0611f2e7f98b87aad9d3af1017ddd0e7cda3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/harryskerritt/library/SpotifyCPP-esp/0.9.5/SpotifyCPP-esp-0.9.5.tar.gz",
+     "https://dl.registry.platformio.org/download/harryskerritt/library/SpotifyCPP-esp/0.9.5/SpotifyCPP-esp-0.9.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "harryskerritt/library/SpotifyCPP/0.9.0/SpotifyCPP-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SpotifyCPP-0.9.0.tar.gz",
+    "size_bytes": 290514,
+    "sha256": "3b8b8e71ada2291a3f6d9080093f64f87dd7728f3bef8b8a907d8d956b80376a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/harryskerritt/library/SpotifyCPP/0.9.0/SpotifyCPP-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/harryskerritt/library/SpotifyCPP/0.9.0/SpotifyCPP-0.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "harryskerritt/library/SpotifyCPP/0.9.1/SpotifyCPP-0.9.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SpotifyCPP-0.9.1.tar.gz",
+    "size_bytes": 290924,
+    "sha256": "5c602a35f49ebea9fdfecc45b92e9bcbd5744b1484bee921f97d0c467f9c250e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/harryskerritt/library/SpotifyCPP/0.9.1/SpotifyCPP-0.9.1.tar.gz",
+     "https://dl.registry.platformio.org/download/harryskerritt/library/SpotifyCPP/0.9.1/SpotifyCPP-0.9.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "harryskerritt/library/SpotifyCPP/0.9.2/SpotifyCPP-0.9.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SpotifyCPP-0.9.2.tar.gz",
+    "size_bytes": 291024,
+    "sha256": "52cd56af2621fee913e8c0c5b3fabf0378f513e818329e27a698e0e5ee5252b4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/harryskerritt/library/SpotifyCPP/0.9.2/SpotifyCPP-0.9.2.tar.gz",
+     "https://dl.registry.platformio.org/download/harryskerritt/library/SpotifyCPP/0.9.2/SpotifyCPP-0.9.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "harryskerritt/library/SpotifyCPP/0.9.3/SpotifyCPP-0.9.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SpotifyCPP-0.9.3.tar.gz",
+    "size_bytes": 290220,
+    "sha256": "bf6390ce14b454d49381274f49a15c6577a77c17324b4cf27776e08f2081cf97",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/harryskerritt/library/SpotifyCPP/0.9.3/SpotifyCPP-0.9.3.tar.gz",
+     "https://dl.registry.platformio.org/download/harryskerritt/library/SpotifyCPP/0.9.3/SpotifyCPP-0.9.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "harryskerritt/library/SpotifyCPP/0.9.4/SpotifyCPP-0.9.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SpotifyCPP-0.9.4.tar.gz",
+    "size_bytes": 291548,
+    "sha256": "96f316118387ec32b6a43a49f2d1d2141ee8e41df1be7c868b35aef70e494b41",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/harryskerritt/library/SpotifyCPP/0.9.4/SpotifyCPP-0.9.4.tar.gz",
+     "https://dl.registry.platformio.org/download/harryskerritt/library/SpotifyCPP/0.9.4/SpotifyCPP-0.9.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "harryskerritt/library/SpotifyCPP/0.9.5/SpotifyCPP-0.9.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SpotifyCPP-0.9.5.tar.gz",
+    "size_bytes": 291575,
+    "sha256": "96ef0f7098524442097179143f60772a30a00b564f6fe235b71b05a236a6e773",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/harryskerritt/library/SpotifyCPP/0.9.5/SpotifyCPP-0.9.5.tar.gz",
+     "https://dl.registry.platformio.org/download/harryskerritt/library/SpotifyCPP/0.9.5/SpotifyCPP-0.9.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "harryskerritt/library/SpotifyCPP/0.9.6/SpotifyCPP-0.9.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SpotifyCPP-0.9.6.tar.gz",
+    "size_bytes": 290919,
+    "sha256": "6ebde2724be3350870d20f04516dcfb05052f38430671a0621421ac2389acd7b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/harryskerritt/library/SpotifyCPP/0.9.6/SpotifyCPP-0.9.6.tar.gz",
+     "https://dl.registry.platformio.org/download/harryskerritt/library/SpotifyCPP/0.9.6/SpotifyCPP-0.9.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

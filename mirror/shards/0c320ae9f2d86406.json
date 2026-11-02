@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/powerfeather",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "powerfeather/library/PowerFeather-SDK/1.1.1/PowerFeather-SDK-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PowerFeather-SDK-1.1.1.tar.gz",
+    "size_bytes": 25637,
+    "sha256": "019aa4e13250415d19bf3bc30e2edbd0b029ef2c8c5a202d7ba4e445991a3ea5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/powerfeather/library/PowerFeather-SDK/1.1.1/PowerFeather-SDK-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/powerfeather/library/PowerFeather-SDK/1.1.1/PowerFeather-SDK-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "powerfeather/library/PowerFeather-SDK/2.0.0/PowerFeather-SDK-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PowerFeather-SDK-2.0.0.tar.gz",
+    "size_bytes": 46844,
+    "sha256": "195adaf7f0b40a7caca994b20ac65daa4b23a7398077cad5ed7e41fbaa60315c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/powerfeather/library/PowerFeather-SDK/2.0.0/PowerFeather-SDK-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/powerfeather/library/PowerFeather-SDK/2.0.0/PowerFeather-SDK-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "powerfeather/library/PowerFeather-SDK/2.1.0/PowerFeather-SDK-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PowerFeather-SDK-2.1.0.tar.gz",
+    "size_bytes": 47672,
+    "sha256": "0db96d446cdbdaf972b28e090b1536ebfbbbcd40631dd610f39f3fa90e9cf053",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/powerfeather/library/PowerFeather-SDK/2.1.0/PowerFeather-SDK-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/powerfeather/library/PowerFeather-SDK/2.1.0/PowerFeather-SDK-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "powerfeather/library/PowerFeather-SDK/2.1.1/PowerFeather-SDK-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PowerFeather-SDK-2.1.1.tar.gz",
+    "size_bytes": 47684,
+    "sha256": "c1c744ee1f9641b98fc8b3adeb787d31514e1278670123d6878406f88642a897",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/powerfeather/library/PowerFeather-SDK/2.1.1/PowerFeather-SDK-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/powerfeather/library/PowerFeather-SDK/2.1.1/PowerFeather-SDK-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "powerfeather/library/PowerFeather-SDK/2.1.2/PowerFeather-SDK-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PowerFeather-SDK-2.1.2.tar.gz",
+    "size_bytes": 47675,
+    "sha256": "3e5803f1263dd22b1d0bdd5950012e7b1f601a80cb2c0f558a574d827b1f77fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/powerfeather/library/PowerFeather-SDK/2.1.2/PowerFeather-SDK-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/powerfeather/library/PowerFeather-SDK/2.1.2/PowerFeather-SDK-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "powerfeather/library/PowerFeather-SDK/2.1.3/PowerFeather-SDK-2.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PowerFeather-SDK-2.1.3.tar.gz",
+    "size_bytes": 47951,
+    "sha256": "f5729ff647dd34f374dc66055e0d02d9a633e38fdf3163b59b6188cbb4b721e8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/powerfeather/library/PowerFeather-SDK/2.1.3/PowerFeather-SDK-2.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/powerfeather/library/PowerFeather-SDK/2.1.3/PowerFeather-SDK-2.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "powerfeather/library/PowerFeather-SDK/2.1.4/PowerFeather-SDK-2.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PowerFeather-SDK-2.1.4.tar.gz",
+    "size_bytes": 48030,
+    "sha256": "10a12add88e3757b4936db30e05ace86f7356ec24f280e24b549a1499000d04d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/powerfeather/library/PowerFeather-SDK/2.1.4/PowerFeather-SDK-2.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/powerfeather/library/PowerFeather-SDK/2.1.4/PowerFeather-SDK-2.1.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

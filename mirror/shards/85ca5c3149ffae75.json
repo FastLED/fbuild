@@ -1,0 +1,139 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ktauchathuranga",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ktauchathuranga/library/CC1101_AnalogFM/1.0.0/CC1101_AnalogFM-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CC1101_AnalogFM-1.0.0.tar.gz",
+    "size_bytes": 4156,
+    "sha256": "de5089943833b5ba3c36b68fcc8599fb1168b24bcd68ce57711f3321ae601ca5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ktauchathuranga/library/CC1101_AnalogFM/1.0.0/CC1101_AnalogFM-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ktauchathuranga/library/CC1101_AnalogFM/1.0.0/CC1101_AnalogFM-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ktauchathuranga/library/CC1101_AnalogFM/1.1.0/CC1101_AnalogFM-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CC1101_AnalogFM-1.1.0.tar.gz",
+    "size_bytes": 5443,
+    "sha256": "312a8a4fad0974744d8c966b585b76a6810ec693d78d53902dbdbe4d12d1312b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ktauchathuranga/library/CC1101_AnalogFM/1.1.0/CC1101_AnalogFM-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ktauchathuranga/library/CC1101_AnalogFM/1.1.0/CC1101_AnalogFM-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ktauchathuranga/library/CC1101_AnalogFM/1.1.1/CC1101_AnalogFM-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CC1101_AnalogFM-1.1.1.tar.gz",
+    "size_bytes": 5727,
+    "sha256": "0fab56dd0dee8bbd6b6b5d50e34b1e391878a8cece9570ca837c3fc1ebac69c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ktauchathuranga/library/CC1101_AnalogFM/1.1.1/CC1101_AnalogFM-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ktauchathuranga/library/CC1101_AnalogFM/1.1.1/CC1101_AnalogFM-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ktauchathuranga/library/MorseEncoder/2.0.3/MorseEncoder-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MorseEncoder-2.0.3.tar.gz",
+    "size_bytes": 4930,
+    "sha256": "ada5f49a9fa6c2102d748295cb2720d63d5cbfa7cb89d43565c831131cd5f14b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ktauchathuranga/library/MorseEncoder/2.0.3/MorseEncoder-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/ktauchathuranga/library/MorseEncoder/2.0.3/MorseEncoder-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ktauchathuranga/library/OpenPager/1.0.0/OpenPager-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OpenPager-1.0.0.tar.gz",
+    "size_bytes": 5554,
+    "sha256": "05e0230679bbef4f3390914b535447859ed5215e88fd08e88697a7a9de627e91",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ktauchathuranga/library/OpenPager/1.0.0/OpenPager-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ktauchathuranga/library/OpenPager/1.0.0/OpenPager-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ktauchathuranga/library/OpenPager/1.0.1/OpenPager-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OpenPager-1.0.1.tar.gz",
+    "size_bytes": 6759,
+    "sha256": "956ac944883bb58f9b0ddc48a9e5a407412a7e7a6909b5b7de4049d2c1430a92",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ktauchathuranga/library/OpenPager/1.0.1/OpenPager-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ktauchathuranga/library/OpenPager/1.0.1/OpenPager-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ktauchathuranga/library/OpenPager/1.1.0/OpenPager-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OpenPager-1.1.0.tar.gz",
+    "size_bytes": 11372,
+    "sha256": "5775d3a6b36a21777400d6d2fe12e403e5926952c9e824c653aab44f6ae07503",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ktauchathuranga/library/OpenPager/1.1.0/OpenPager-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ktauchathuranga/library/OpenPager/1.1.0/OpenPager-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ktauchathuranga/library/OpenPager/2.0.2/OpenPager-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OpenPager-2.0.2.tar.gz",
+    "size_bytes": 17369,
+    "sha256": "b8339475a6e2f57a3d890d1ab8be5a66079036d7853ce768cb86857d31f8b8ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ktauchathuranga/library/OpenPager/2.0.2/OpenPager-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ktauchathuranga/library/OpenPager/2.0.2/OpenPager-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ktauchathuranga/library/OpenPager/2.1.0/OpenPager-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OpenPager-2.1.0.tar.gz",
+    "size_bytes": 16501,
+    "sha256": "351a4e031c5910d7b3a6dfef7875454601e365ca250fc8bd1d1fe8e11d9280e3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ktauchathuranga/library/OpenPager/2.1.0/OpenPager-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ktauchathuranga/library/OpenPager/2.1.0/OpenPager-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ktauchathuranga/library/Telnet/0.2.0/Telnet-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Telnet-0.2.0.tar.gz",
+    "size_bytes": 6062,
+    "sha256": "7df1872bcc328e625bf77b198fef06314c9ee9c42d09c33c7cf6d0e8ba1c5b46",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ktauchathuranga/library/Telnet/0.2.0/Telnet-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ktauchathuranga/library/Telnet/0.2.0/Telnet-0.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

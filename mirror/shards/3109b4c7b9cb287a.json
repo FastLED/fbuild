@@ -1,0 +1,1153 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bitbank2",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bitbank2/library/AnimatedGIF/1.4.7/AnimatedGIF-1.4.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AnimatedGIF-1.4.7.tar.gz",
+    "size_bytes": 1258471,
+    "sha256": "aca628004ea01e3b173bdc804e29671aa8f4057b9481864b872a9fafba6e5785",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/AnimatedGIF/1.4.7/AnimatedGIF-1.4.7.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/AnimatedGIF/1.4.7/AnimatedGIF-1.4.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/AnimatedGIF/2.1.0/AnimatedGIF-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AnimatedGIF-2.1.0.tar.gz",
+    "size_bytes": 4380450,
+    "sha256": "e32795c0322e191bee951b03a2e42ff0bced104b38cf0ec35731017d0689a463",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/AnimatedGIF/2.1.0/AnimatedGIF-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/AnimatedGIF/2.1.0/AnimatedGIF-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/AnimatedGIF/2.1.1/AnimatedGIF-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AnimatedGIF-2.1.1.tar.gz",
+    "size_bytes": 4381452,
+    "sha256": "95f5fb674beda1be2145eeebd4c1ff2c2ce6eb682ca3e4bc66c689190a568632",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/AnimatedGIF/2.1.1/AnimatedGIF-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/AnimatedGIF/2.1.1/AnimatedGIF-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/AnimatedGIF/2.2.0/AnimatedGIF-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AnimatedGIF-2.2.0.tar.gz",
+    "size_bytes": 6886911,
+    "sha256": "6ecfccefcf5d5178cc448dbcf9daef38e4111c769551194a8fe3de48f8a569e8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/AnimatedGIF/2.2.0/AnimatedGIF-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/AnimatedGIF/2.2.0/AnimatedGIF-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/AnimatedGIF/2.2.1/AnimatedGIF-2.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AnimatedGIF-2.2.1.tar.gz",
+    "size_bytes": 12496031,
+    "sha256": "09e5cc5ec2ef56eaaab3814da394ca1157ad566b42041bb059615213c08d42e7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/AnimatedGIF/2.2.1/AnimatedGIF-2.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/AnimatedGIF/2.2.1/AnimatedGIF-2.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/AnimatedGIF/2.2.2/AnimatedGIF-2.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AnimatedGIF-2.2.2.tar.gz",
+    "size_bytes": 12496985,
+    "sha256": "a1b6a3830046506a79a0b688b8bb309ca840ddd995f45436c0138724b1287451",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/AnimatedGIF/2.2.2/AnimatedGIF-2.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/AnimatedGIF/2.2.2/AnimatedGIF-2.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/AnimatedGIF/2.2.3/AnimatedGIF-2.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AnimatedGIF-2.2.3.tar.gz",
+    "size_bytes": 12497198,
+    "sha256": "5891c744e301e8459efd29c9aa89a0151c50cbbf507ea247291485b44f45986f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/AnimatedGIF/2.2.3/AnimatedGIF-2.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/AnimatedGIF/2.2.3/AnimatedGIF-2.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/BitBang_I2C/2.2.1/BitBang_I2C-2.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BitBang_I2C-2.2.1.tar.gz",
+    "size_bytes": 27376,
+    "sha256": "d577a02a9d71452d5eb87b974366e29054f29e6c0f3d8d4d2b623c176e8c2255",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/BitBang_I2C/2.2.1/BitBang_I2C-2.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/BitBang_I2C/2.2.1/BitBang_I2C-2.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/FT6236G/1.0.0/FT6236G-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FT6236G-1.0.0.tar.gz",
+    "size_bytes": 6678,
+    "sha256": "0919f26543e21bdd75a2b3207349f9f9984dce1f248d7e7ef6ab116c3ef54141",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/FT6236G/1.0.0/FT6236G-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/FT6236G/1.0.0/FT6236G-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/FastEPD/1.3.0/FastEPD-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastEPD-1.3.0.tar.gz",
+    "size_bytes": 658151,
+    "sha256": "440c1de8f7b78faa549f13c48fc94fceff038ae55038b3de65747e294c596ce5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/FastEPD/1.3.0/FastEPD-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/FastEPD/1.3.0/FastEPD-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/FastEPD/1.4.0/FastEPD-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastEPD-1.4.0.tar.gz",
+    "size_bytes": 1326671,
+    "sha256": "9359148c4d5d8a47f46989e91bc1a626f0c976dd14a8d4f3b9a09fdbbee76e4e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/FastEPD/1.4.0/FastEPD-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/FastEPD/1.4.0/FastEPD-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/FastEPD/1.4.1/FastEPD-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastEPD-1.4.1.tar.gz",
+    "size_bytes": 1326803,
+    "sha256": "4815e76ea8d1ccd96c1906b0821c1fcd3a1eb5fb5b1c5c0e2cf4d14bd07cb0cf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/FastEPD/1.4.1/FastEPD-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/FastEPD/1.4.1/FastEPD-1.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/FastEPD/1.4.2/FastEPD-1.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastEPD-1.4.2.tar.gz",
+    "size_bytes": 1326693,
+    "sha256": "feb8e9f97381f7fd0f15a38b44369c3a4d6db866b81cb07e7d4d1755fa8c624c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/FastEPD/1.4.2/FastEPD-1.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/FastEPD/1.4.2/FastEPD-1.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/FastEPD/1.4.3/FastEPD-1.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastEPD-1.4.3.tar.gz",
+    "size_bytes": 1327195,
+    "sha256": "0d7f0c63c9ae2a4c4f76e28a983756620779ac46f4cc6dc7a318d7ad6b89b68c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/FastEPD/1.4.3/FastEPD-1.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/FastEPD/1.4.3/FastEPD-1.4.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/FastEPD/1.4.5/FastEPD-1.4.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastEPD-1.4.5.tar.gz",
+    "size_bytes": 1328174,
+    "sha256": "518243946fa3b77346e004dcf2b491dfa992c0672e89cb98433bbd464b3f89a7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/FastEPD/1.4.5/FastEPD-1.4.5.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/FastEPD/1.4.5/FastEPD-1.4.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/FastEPD/1.4.6/FastEPD-1.4.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastEPD-1.4.6.tar.gz",
+    "size_bytes": 1328189,
+    "sha256": "72fb24414e7c8f1d8e8407619298f68cf9b7db8183d71664afabd55d7c18594c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/FastEPD/1.4.6/FastEPD-1.4.6.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/FastEPD/1.4.6/FastEPD-1.4.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/FastEPD/2.0.0/FastEPD-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastEPD-2.0.0.tar.gz",
+    "size_bytes": 2204165,
+    "sha256": "0074a9b39307ce30549b08af09cf3b677b42a9a8fbefdc34a67808ba3d6f9fde",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/FastEPD/2.0.0/FastEPD-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/FastEPD/2.0.0/FastEPD-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/FastEPD/2.0.1/FastEPD-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastEPD-2.0.1.tar.gz",
+    "size_bytes": 2186303,
+    "sha256": "5ad9c13c26ce4731381fd3674cb50cfa3cd2cfba0027b602dbf1b721e5dea2ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/FastEPD/2.0.1/FastEPD-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/FastEPD/2.0.1/FastEPD-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/FastEPD/2.1.0/FastEPD-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastEPD-2.1.0.tar.gz",
+    "size_bytes": 2194324,
+    "sha256": "8f49ebf84071ceaeb195eb81c6c58faf8344e29394f42aa794225d73404b63de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/FastEPD/2.1.0/FastEPD-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/FastEPD/2.1.0/FastEPD-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/FastEPD/2.2.0/FastEPD-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastEPD-2.2.0.tar.gz",
+    "size_bytes": 2194247,
+    "sha256": "cdf64c9ac286d983bfa676ba03d36d0240a65a03bddd8b4f6eb4c4cc7772e67b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/FastEPD/2.2.0/FastEPD-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/FastEPD/2.2.0/FastEPD-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/G4Enc/1.1.0/G4Enc-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "G4Enc-1.1.0.tar.gz",
+    "size_bytes": 17544,
+    "sha256": "4477d91eed9a89903107d730a613e9b6155cd8d429834ea6c54dcdc5fd634983",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/G4Enc/1.1.0/G4Enc-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/G4Enc/1.1.0/G4Enc-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/JPEGDEC/1.2.8/JPEGDEC-1.2.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JPEGDEC-1.2.8.tar.gz",
+    "size_bytes": 792035,
+    "sha256": "84f1fb8993448a261a229f0883953de4f3d0e483d97b0a9554cb85e85783a831",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/JPEGDEC/1.2.8/JPEGDEC-1.2.8.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/JPEGDEC/1.2.8/JPEGDEC-1.2.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/JPEGDEC/1.8.2/JPEGDEC-1.8.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JPEGDEC-1.8.2.tar.gz",
+    "size_bytes": 1265060,
+    "sha256": "52379eb77bd851559a24d0d4ce3cf9120d6ccea3f9c07a4ecfbf5c2653b6260e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/JPEGDEC/1.8.2/JPEGDEC-1.8.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/JPEGDEC/1.8.2/JPEGDEC-1.8.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/JPEGDEC/1.8.3/JPEGDEC-1.8.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JPEGDEC-1.8.3.tar.gz",
+    "size_bytes": 1265378,
+    "sha256": "085de4be3ce32749c2cf5c6f8bc3bc886d2c9dbd43b7384a8517575bd47bca03",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/JPEGDEC/1.8.3/JPEGDEC-1.8.3.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/JPEGDEC/1.8.3/JPEGDEC-1.8.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/JPEGDEC/1.8.4/JPEGDEC-1.8.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JPEGDEC-1.8.4.tar.gz",
+    "size_bytes": 1265394,
+    "sha256": "45a27e706b6616e65165f300ed94533d7cca788cf4882e739bb40f3f7a2d942b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/JPEGDEC/1.8.4/JPEGDEC-1.8.4.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/JPEGDEC/1.8.4/JPEGDEC-1.8.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/JPEGDEC/1.8.5/JPEGDEC-1.8.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JPEGDEC-1.8.5.tar.gz",
+    "size_bytes": 1418256,
+    "sha256": "0a5dc66faa9fe68ff76d8ba411e65fb58f837810b2267beb657db03afa48addd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/JPEGDEC/1.8.5/JPEGDEC-1.8.5.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/JPEGDEC/1.8.5/JPEGDEC-1.8.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/JPEGENC/1.1.0/JPEGENC-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JPEGENC-1.1.0.tar.gz",
+    "size_bytes": 31408,
+    "sha256": "387cf30404b704abbdaa6ad972f30dc40df27cd2119eaa5a1d0d48ab23ca9dc3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/JPEGENC/1.1.0/JPEGENC-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/JPEGENC/1.1.0/JPEGENC-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/Multi_BitBang/1.0.0/Multi_BitBang-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Multi_BitBang-1.0.0.tar.gz",
+    "size_bytes": 17450,
+    "sha256": "e7cc7f25f44bf40ba11347a1abd99023118211ae371061bc341ec07088ec26f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/Multi_BitBang/1.0.0/Multi_BitBang-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/Multi_BitBang/1.0.0/Multi_BitBang-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/Multi_OLED/1.0.0/Multi_OLED-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Multi_OLED-1.0.0.tar.gz",
+    "size_bytes": 24047,
+    "sha256": "b1adc15746476f6e78e8b9b88dfeb7a0980866f2c0f551cec4998611b8eb980f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/Multi_OLED/1.0.0/Multi_OLED-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/Multi_OLED/1.0.0/Multi_OLED-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/OneBitDisplay/2.3.3/OneBitDisplay-2.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OneBitDisplay-2.3.3.tar.gz",
+    "size_bytes": 1615089,
+    "sha256": "3d972ebaa1ac8c6019a18a8cb7a5cfa54f890c76e9f48f3f0176b95ecbf4d746",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/OneBitDisplay/2.3.3/OneBitDisplay-2.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/OneBitDisplay/2.3.3/OneBitDisplay-2.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/OneBitDisplay/3.0.0/OneBitDisplay-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OneBitDisplay-3.0.0.tar.gz",
+    "size_bytes": 1882066,
+    "sha256": "34ae8ccbd71fd04c189eb58b9348c0da48aed5c1ab47186f0f882240d55aa113",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/OneBitDisplay/3.0.0/OneBitDisplay-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/OneBitDisplay/3.0.0/OneBitDisplay-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/PNGdec/1.0.1/PNGdec-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PNGdec-1.0.1.tar.gz",
+    "size_bytes": 138442,
+    "sha256": "7bcd4c073cc8f8814b65489376af612795f4775e78a4c7cbd6002057b6d2844e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/PNGdec/1.0.1/PNGdec-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/PNGdec/1.0.1/PNGdec-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/PNGdec/1.0.2/PNGdec-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PNGdec-1.0.2.tar.gz",
+    "size_bytes": 140311,
+    "sha256": "0f33f864f6b8930b04afca755a787ca9f10b3a87fc657d6254a1435dcebd9707",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/PNGdec/1.0.2/PNGdec-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/PNGdec/1.0.2/PNGdec-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/PNGdec/1.0.3/PNGdec-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PNGdec-1.0.3.tar.gz",
+    "size_bytes": 652929,
+    "sha256": "2cc08c27d01447cf381c6167033479f3e8b70956fc739434ea10e4538586e231",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/PNGdec/1.0.3/PNGdec-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/PNGdec/1.0.3/PNGdec-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/PNGdec/1.1.3/PNGdec-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PNGdec-1.1.3.tar.gz",
+    "size_bytes": 739971,
+    "sha256": "55a2f846d4800254a67e637cd9bd895f52947e0c2e967c98bc547ddf54b488a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/PNGdec/1.1.3/PNGdec-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/PNGdec/1.1.3/PNGdec-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/PNGdec/1.1.4/PNGdec-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PNGdec-1.1.4.tar.gz",
+    "size_bytes": 737006,
+    "sha256": "0c1e4932d5dd3cc80354b1680a884384471a505d87f2c2f7b220bbba5326f451",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/PNGdec/1.1.4/PNGdec-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/PNGdec/1.1.4/PNGdec-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/PNGdec/1.1.5/PNGdec-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PNGdec-1.1.5.tar.gz",
+    "size_bytes": 738099,
+    "sha256": "c334763de2884c4091a0c1003841daa1d81da9be9f24705c9705a2fb029afb4c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/PNGdec/1.1.5/PNGdec-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/PNGdec/1.1.5/PNGdec-1.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/PNGdec/1.1.6/PNGdec-1.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PNGdec-1.1.6.tar.gz",
+    "size_bytes": 738199,
+    "sha256": "9b4e4ff56c7924396048efbda182b554e8a42770b5efe8dd1ccc40dc7ea9ca58",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/PNGdec/1.1.6/PNGdec-1.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/PNGdec/1.1.6/PNGdec-1.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/PNGenc/1.4.0/PNGenc-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PNGenc-1.4.0.tar.gz",
+    "size_bytes": 313965,
+    "sha256": "be0de99eb06177bdbf47535bb3bb0cf8cc831800e208d239e70ac87548974364",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/PNGenc/1.4.0/PNGenc-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/PNGenc/1.4.0/PNGenc-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/SLIC/1.0.2/SLIC-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SLIC-1.0.2.tar.gz",
+    "size_bytes": 36835,
+    "sha256": "1fc3b1e266019aa581094136e5019231bea665175d995a12a790d628eaaa1b22",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/SLIC/1.0.2/SLIC-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/SLIC/1.0.2/SLIC-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/TIFF_G4/1.3.0/TIFF_G4-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TIFF_G4-1.3.0.tar.gz",
+    "size_bytes": 111562,
+    "sha256": "4f7d9040a7f3241f7428611c403b0413768dea6af6b81b06acee1781dc948ec0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/TIFF_G4/1.3.0/TIFF_G4-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/TIFF_G4/1.3.0/TIFF_G4-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/Thermal%20Printer%20Library/2.2.1/ThermalPrinterLibrary-2.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ThermalPrinterLibrary-2.2.1.tar.gz",
+    "size_bytes": 221420,
+    "sha256": "80c6a02523b7d8c1444ca0f1b450e224c2d20cd331ccd344631d217853f10b61",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/Thermal%2520Printer%2520Library/2.2.1/ThermalPrinterLibrary-2.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/Thermal%20Printer%20Library/2.2.1/ThermalPrinterLibrary-2.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/bb_captouch/1.3.1/bb_captouch-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bb_captouch-1.3.1.tar.gz",
+    "size_bytes": 15939,
+    "sha256": "d74a2af7bf8bc89a59ba64439b9cc6f7f6391a7a71ea0e6e1744f96e35045277",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/bb_captouch/1.3.1/bb_captouch-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/bb_captouch/1.3.1/bb_captouch-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/bb_captouch/1.3.2/bb_captouch-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bb_captouch-1.3.2.tar.gz",
+    "size_bytes": 18408,
+    "sha256": "1e5755884a2a8a98b7bb84ff52fd8363fc03c930a56e5b50257adfd34afb056a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/bb_captouch/1.3.2/bb_captouch-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/bb_captouch/1.3.2/bb_captouch-1.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/bb_epaper/2.0.0/bb_epaper-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bb_epaper-2.0.0.tar.gz",
+    "size_bytes": 404126,
+    "sha256": "d7e914520226b84a0894ccbf6b177f635d97bb86a5f738d5d38f4d7ce7c2ae09",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/bb_epaper/2.0.0/bb_epaper-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/bb_epaper/2.0.0/bb_epaper-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/bb_epaper/2.0.1/bb_epaper-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bb_epaper-2.0.1.tar.gz",
+    "size_bytes": 801253,
+    "sha256": "95b0430617b2ae2b4a1f1cea95a06b5522807d5a89f390603c7db5b843e34c98",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/bb_epaper/2.0.1/bb_epaper-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/bb_epaper/2.0.1/bb_epaper-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/bb_epaper/2.0.2/bb_epaper-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bb_epaper-2.0.2.tar.gz",
+    "size_bytes": 807610,
+    "sha256": "662d4bedd180ced4e17fe1f568691fd7c3fdbf3849cab3035349738740244a3f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/bb_epaper/2.0.2/bb_epaper-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/bb_epaper/2.0.2/bb_epaper-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/bb_epaper/2.0.3/bb_epaper-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bb_epaper-2.0.3.tar.gz",
+    "size_bytes": 833433,
+    "sha256": "3d56f6a685809df55d464d79f72531ee01cc7ee2aadba79efa32b8384f23ec73",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/bb_epaper/2.0.3/bb_epaper-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/bb_epaper/2.0.3/bb_epaper-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/bb_epaper/2.0.4/bb_epaper-2.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bb_epaper-2.0.4.tar.gz",
+    "size_bytes": 833652,
+    "sha256": "0f139bee420a380d73fcae9eced3af3be97831931f96b0331d3691d962c8029c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/bb_epaper/2.0.4/bb_epaper-2.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/bb_epaper/2.0.4/bb_epaper-2.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/bb_epaper/2.0.5/bb_epaper-2.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bb_epaper-2.0.5.tar.gz",
+    "size_bytes": 833746,
+    "sha256": "5189c25bb2855e192e21db3b512a49485f16d3e7f29b3f1cdf47f8575616cc84",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/bb_epaper/2.0.5/bb_epaper-2.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/bb_epaper/2.0.5/bb_epaper-2.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/bb_epaper/2.0.6/bb_epaper-2.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bb_epaper-2.0.6.tar.gz",
+    "size_bytes": 833871,
+    "sha256": "cf8b07906aaf5d953dab870c4b7fc450b81bc4e58d4f5c68e374ff80613fc731",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/bb_epaper/2.0.6/bb_epaper-2.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/bb_epaper/2.0.6/bb_epaper-2.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/bb_epaper/2.0.7/bb_epaper-2.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bb_epaper-2.0.7.tar.gz",
+    "size_bytes": 834038,
+    "sha256": "7007e2b0537203c1d7ac0507cc5c1d16081a1e9507f24c10fb1261f7e36a3075",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/bb_epaper/2.0.7/bb_epaper-2.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/bb_epaper/2.0.7/bb_epaper-2.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/bb_epaper/2.0.8/bb_epaper-2.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bb_epaper-2.0.8.tar.gz",
+    "size_bytes": 835000,
+    "sha256": "ece1bd9daec027e4067d6856e23a3f340d9b29811b98706bfbcd6c33ead6f515",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/bb_epaper/2.0.8/bb_epaper-2.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/bb_epaper/2.0.8/bb_epaper-2.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/bb_epaper/2.1.1/bb_epaper-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bb_epaper-2.1.1.tar.gz",
+    "size_bytes": 835140,
+    "sha256": "7e55f97b1adc5ebad64faf5425ad5d78bee985de8de6b25e7613491b5972994b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/bb_epaper/2.1.1/bb_epaper-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/bb_epaper/2.1.1/bb_epaper-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/bb_epaper/2.1.10/bb_epaper-2.1.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bb_epaper-2.1.10.tar.gz",
+    "size_bytes": 860631,
+    "sha256": "84381fa9d5c933721600201e7fc50378cc6bca4b57181d1e74175137bb63084d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/bb_epaper/2.1.10/bb_epaper-2.1.10.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/bb_epaper/2.1.10/bb_epaper-2.1.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/bb_epaper/2.1.11/bb_epaper-2.1.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bb_epaper-2.1.11.tar.gz",
+    "size_bytes": 860596,
+    "sha256": "6234bae37d100ff18ada0e3bf48532f351c9140c5f3314dbcafaad188ec5a753",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/bb_epaper/2.1.11/bb_epaper-2.1.11.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/bb_epaper/2.1.11/bb_epaper-2.1.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/bb_epaper/2.1.6/bb_epaper-2.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bb_epaper-2.1.6.tar.gz",
+    "size_bytes": 836218,
+    "sha256": "18f3c66bdb89244a505c36c61d72d07975c69a3dacedb844c062ba6f4ca1828c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/bb_epaper/2.1.6/bb_epaper-2.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/bb_epaper/2.1.6/bb_epaper-2.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/bb_epaper/2.1.7/bb_epaper-2.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bb_epaper-2.1.7.tar.gz",
+    "size_bytes": 836338,
+    "sha256": "89ed966c191e3d16c9f1c0bb6c6a0df0737d612d2048fc7b7ac35608845da936",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/bb_epaper/2.1.7/bb_epaper-2.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/bb_epaper/2.1.7/bb_epaper-2.1.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/bb_epaper/2.1.8/bb_epaper-2.1.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bb_epaper-2.1.8.tar.gz",
+    "size_bytes": 836714,
+    "sha256": "29bcb5922d78ff9d830f3988c351aee5d64bdb9448353498cabc17b243ca4d9f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/bb_epaper/2.1.8/bb_epaper-2.1.8.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/bb_epaper/2.1.8/bb_epaper-2.1.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/bb_epaper/2.1.9/bb_epaper-2.1.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bb_epaper-2.1.9.tar.gz",
+    "size_bytes": 836533,
+    "sha256": "c1628fd889d50a2e3baf0b3dbb54070f63b38bc0781c72b7c06061b2af75377b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/bb_epaper/2.1.9/bb_epaper-2.1.9.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/bb_epaper/2.1.9/bb_epaper-2.1.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/bb_hx1230/1.0.1/bb_hx1230-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bb_hx1230-1.0.1.tar.gz",
+    "size_bytes": 10279,
+    "sha256": "2a2a0b2f2c49ccd18d0edfbec850866b86b5eb609b68f70b3eb332f723cf3f6c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/bb_hx1230/1.0.1/bb_hx1230-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/bb_hx1230/1.0.1/bb_hx1230-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/bb_imu/1.3.0/bb_imu-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bb_imu-1.3.0.tar.gz",
+    "size_bytes": 23389,
+    "sha256": "f83926c4d7b40f74ed7a4476062ce24d6cd5273275c274a7c98e4a575119f2f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/bb_imu/1.3.0/bb_imu-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/bb_imu/1.3.0/bb_imu-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/bb_ltr390/1.0.1/bb_ltr390-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bb_ltr390-1.0.1.tar.gz",
+    "size_bytes": 7979,
+    "sha256": "3fe31a4d7ff73b9982d95c456557a52cb77ce53a7157ac2821b7c98d40cac673",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/bb_ltr390/1.0.1/bb_ltr390-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/bb_ltr390/1.0.1/bb_ltr390-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/bb_proximity/1.0.0/bb_proximity-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bb_proximity-1.0.0.tar.gz",
+    "size_bytes": 58868,
+    "sha256": "9d1cb87e38786d65054c691b801344278b05fc745baebb8a1e20b9988a3fe2e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/bb_proximity/1.0.0/bb_proximity-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/bb_proximity/1.0.0/bb_proximity-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/bb_rtc/1.2.0/bb_rtc-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bb_rtc-1.2.0.tar.gz",
+    "size_bytes": 53010,
+    "sha256": "79302f59ecbd4be9f1054e7f9986d9aa3ca753d8f12c87c8ee402e0b366a83ca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/bb_rtc/1.2.0/bb_rtc-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/bb_rtc/1.2.0/bb_rtc-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/bb_rtc/1.3.0/bb_rtc-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bb_rtc-1.3.0.tar.gz",
+    "size_bytes": 51917,
+    "sha256": "3c77a76ba041b4753bc66e8511d58afbaad3cfd2ca0473642ef3b71148eddd70",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/bb_rtc/1.3.0/bb_rtc-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/bb_rtc/1.3.0/bb_rtc-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/bb_rtc/1.3.1/bb_rtc-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bb_rtc-1.3.1.tar.gz",
+    "size_bytes": 54914,
+    "sha256": "4e8cf467b5fc6f23d106664ac483c38a684868b9cee782abdcbfb7c869486411",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/bb_rtc/1.3.1/bb_rtc-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/bb_rtc/1.3.1/bb_rtc-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/bb_scd41/1.1.1/bb_scd41-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bb_scd41-1.1.1.tar.gz",
+    "size_bytes": 42630,
+    "sha256": "28351150dc3e36b9e4989ee2faeeb6eff70d53714285787d815035dd5aa76862",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/bb_scd41/1.1.1/bb_scd41-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/bb_scd41/1.1.1/bb_scd41-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/bb_scd41/1.1.2/bb_scd41-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bb_scd41-1.1.2.tar.gz",
+    "size_bytes": 47302,
+    "sha256": "97ffb642c22dc56a38cf433446b2b6c63682a68eeb60d46f7b1fb9c6524d3ecc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/bb_scd41/1.1.2/bb_scd41-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/bb_scd41/1.1.2/bb_scd41-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/bb_scd41/1.3.0/bb_scd41-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bb_scd41-1.3.0.tar.gz",
+    "size_bytes": 47482,
+    "sha256": "ab67bdf0cca4243de628449c0c6e1ff4e7a53d4173a1675d1f3f997614b35ed0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/bb_scd41/1.3.0/bb_scd41-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/bb_scd41/1.3.0/bb_scd41-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/bb_scd41/1.3.1/bb_scd41-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bb_scd41-1.3.1.tar.gz",
+    "size_bytes": 47890,
+    "sha256": "8255c98bdab318a2eed76c2770d347f4336e25bd72eb2f8928294497a72be562",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/bb_scd41/1.3.1/bb_scd41-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/bb_scd41/1.3.1/bb_scd41-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/bb_scd41/1.3.2/bb_scd41-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bb_scd41-1.3.2.tar.gz",
+    "size_bytes": 44249,
+    "sha256": "94ffbcc3289fc7a732f36ca608f10c9f273ad72bdee2c408f98254a28f4498c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/bb_scd41/1.3.2/bb_scd41-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/bb_scd41/1.3.2/bb_scd41-1.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/bb_scd41/1.3.3/bb_scd41-1.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bb_scd41-1.3.3.tar.gz",
+    "size_bytes": 44606,
+    "sha256": "9c8f0216135401c0266d41eba6d63608f0167f6ac54dcfb9af8cd367ea8da51f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/bb_scd41/1.3.3/bb_scd41-1.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/bb_scd41/1.3.3/bb_scd41-1.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/bb_spi_lcd/2.4.4/bb_spi_lcd-2.4.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bb_spi_lcd-2.4.4.tar.gz",
+    "size_bytes": 4944759,
+    "sha256": "d24ac0a1af1549d0ba42a2fed6f69c976b13e9cfba1e7d1ffcb9fb1890033029",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/bb_spi_lcd/2.4.4/bb_spi_lcd-2.4.4.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/bb_spi_lcd/2.4.4/bb_spi_lcd-2.4.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/bb_spi_lcd/2.9.7/bb_spi_lcd-2.9.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bb_spi_lcd-2.9.7.tar.gz",
+    "size_bytes": 5193908,
+    "sha256": "61a5f07074afb41f90aaebb1ad78c5f7d5fb3ab9996b817fc96700cb60cb1359",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/bb_spi_lcd/2.9.7/bb_spi_lcd-2.9.7.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/bb_spi_lcd/2.9.7/bb_spi_lcd-2.9.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/bb_spi_lcd/2.9.8/bb_spi_lcd-2.9.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bb_spi_lcd-2.9.8.tar.gz",
+    "size_bytes": 5169000,
+    "sha256": "c60d16db81a80cf44f1f4c0cb0c3d5bbc300560888a36ed990fdaf3b730591d4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/bb_spi_lcd/2.9.8/bb_spi_lcd-2.9.8.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/bb_spi_lcd/2.9.8/bb_spi_lcd-2.9.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/bb_spi_lcd/2.9.9/bb_spi_lcd-2.9.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bb_spi_lcd-2.9.9.tar.gz",
+    "size_bytes": 5169699,
+    "sha256": "86ae886b6d31e1c1c01298d5a1c5f0d28b946e1249010cee6987f4746f2b78c9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/bb_spi_lcd/2.9.9/bb_spi_lcd-2.9.9.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/bb_spi_lcd/2.9.9/bb_spi_lcd-2.9.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/bb_temperature/1.0.0/bb_temperature-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bb_temperature-1.0.0.tar.gz",
+    "size_bytes": 46210,
+    "sha256": "b68075d3c8877f30a8f50db2ef5ee2749f8563424cc8c5b91562296cf213524f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/bb_temperature/1.0.0/bb_temperature-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/bb_temperature/1.0.0/bb_temperature-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/bb_temperature/1.0.1/bb_temperature-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bb_temperature-1.0.1.tar.gz",
+    "size_bytes": 47881,
+    "sha256": "eb9f9e3fe7e9b8693400b0f49d88b5daf8bbb33e786aad5bbb96c68d54e0d8a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/bb_temperature/1.0.1/bb_temperature-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/bb_temperature/1.0.1/bb_temperature-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/bb_temperature/1.0.2/bb_temperature-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bb_temperature-1.0.2.tar.gz",
+    "size_bytes": 48859,
+    "sha256": "1206e3938c0f00c4e1fe2fc97fa3a4cbe229daa93ab4e10e65d25a94e01c2497",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/bb_temperature/1.0.2/bb_temperature-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/bb_temperature/1.0.2/bb_temperature-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/bb_temperature/1.1.0/bb_temperature-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bb_temperature-1.1.0.tar.gz",
+    "size_bytes": 51136,
+    "sha256": "aacb75364de13f21dbbb5a6edf65e75c74ee4972c14e1003a8d6006de9d1d1d9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/bb_temperature/1.1.0/bb_temperature-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/bb_temperature/1.1.0/bb_temperature-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/bb_truetype/1.0.0/bb_truetype-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bb_truetype-1.0.0.tar.gz",
+    "size_bytes": 127144,
+    "sha256": "5ff5ac11bd6a884c1167e2a51b5099204c8379e259fcd324e5373cc9ea6bbe26",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/bb_truetype/1.0.0/bb_truetype-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/bb_truetype/1.0.0/bb_truetype-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/bb_uc1701/1.0.0/bb_uc1701-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bb_uc1701-1.0.0.tar.gz",
+    "size_bytes": 24192,
+    "sha256": "bc580a872e55b3adf3900e537b2ba4fa1ca23310f293e07e958ac5658e1acef9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/bb_uc1701/1.0.0/bb_uc1701-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/bb_uc1701/1.0.0/bb_uc1701-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/esp32_gamepad/1.0.1/esp32_gamepad-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32_gamepad-1.0.1.tar.gz",
+    "size_bytes": 16982,
+    "sha256": "afcc8d4456f981faed018380e368433d8764a7c53a3e0ffa38982038121eb69e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/esp32_gamepad/1.0.1/esp32_gamepad-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/esp32_gamepad/1.0.1/esp32_gamepad-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/ss_oled/4.3.1/ss_oled-4.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ss_oled-4.3.1.tar.gz",
+    "size_bytes": 50889,
+    "sha256": "c60b931b26cb276bc2303d770686eecaf4660191e8df400b358813d563ebb0d5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/ss_oled/4.3.1/ss_oled-4.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/ss_oled/4.3.1/ss_oled-4.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/ssd1327/2.0.0/ssd1327-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ssd1327-2.0.0.tar.gz",
+    "size_bytes": 16547,
+    "sha256": "ef79f9a821e69985e898290700f2c523f84442e6d394856652bf23dc73a66e44",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/ssd1327/2.0.0/ssd1327-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/ssd1327/2.0.0/ssd1327-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/unzipLIB/1.0.0/unzipLIB-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "unzipLIB-1.0.0.tar.gz",
+    "size_bytes": 148070,
+    "sha256": "f27148957bcdbbc9c4ae5b67dde53574decc0b4993d292531bd8829a3d73b58f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/unzipLIB/1.0.0/unzipLIB-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/unzipLIB/1.0.0/unzipLIB-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbank2/library/zlib_turbo/1.0.0/zlib_turbo-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "zlib_turbo-1.0.0.tar.gz",
+    "size_bytes": 29258,
+    "sha256": "b3b8015427fa67267315323f8b7d9fdad1c9dc7a73ccbad3c5477ac69dc6d51a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbank2/library/zlib_turbo/1.0.0/zlib_turbo-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbank2/library/zlib_turbo/1.0.0/zlib_turbo-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

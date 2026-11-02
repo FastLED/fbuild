@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-littlexc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-littlexc/library/GP2xx/0.0.0+sha.e3ea40a41d27/GP2xx-0.0.0+sha.e3ea40a41d27.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GP2xx-0.0.0+sha.e3ea40a41d27.tar.gz",
+    "size_bytes": 2448,
+    "sha256": "7ea16314873f0980aa82833bf71612b6e1a96718cbc38248b6fa336d1d380f9a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-littlexc/library/GP2xx/0.0.0%2Bsha.e3ea40a41d27/GP2xx-0.0.0%2Bsha.e3ea40a41d27.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-littlexc/library/GP2xx/0.0.0%2Bsha.e3ea40a41d27/GP2xx-0.0.0%2Bsha.e3ea40a41d27.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-littlexc/library/Motordriver/0.0.0+sha.3110b9209d3c/Motordriver-0.0.0+sha.3110b9209d3c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Motordriver-0.0.0+sha.3110b9209d3c.tar.gz",
+    "size_bytes": 3085,
+    "sha256": "ead86b5ead6ffeaad63c258ef38f35e46a53deb7be54dce19c10c7500bf11a61",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-littlexc/library/Motordriver/0.0.0%2Bsha.3110b9209d3c/Motordriver-0.0.0%2Bsha.3110b9209d3c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-littlexc/library/Motordriver/0.0.0%2Bsha.3110b9209d3c/Motordriver-0.0.0%2Bsha.3110b9209d3c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-littlexc/library/motordrivercs/0.0.0+sha.3ece560dd2da/motordrivercs-0.0.0+sha.3ece560dd2da.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "motordrivercs-0.0.0+sha.3ece560dd2da.tar.gz",
+    "size_bytes": 2972,
+    "sha256": "9c21f49f110ae6251742926191c4ed00c8fcc4d9a2db3bb9067a7e2bc41a5f9d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-littlexc/library/motordrivercs/0.0.0%2Bsha.3ece560dd2da/motordrivercs-0.0.0%2Bsha.3ece560dd2da.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-littlexc/library/motordrivercs/0.0.0%2Bsha.3ece560dd2da/motordrivercs-0.0.0%2Bsha.3ece560dd2da.tar.gz"
+    ]
+   }
+  }
+ ]
+}

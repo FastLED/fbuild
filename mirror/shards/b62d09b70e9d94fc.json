@@ -1,0 +1,139 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/s-light",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "s-light/library/slight_ButtonInput/1.0.0/slight_ButtonInput-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "slight_ButtonInput-1.0.0.tar.gz",
+    "size_bytes": 9681,
+    "sha256": "2a2989b9ff46c7a9439efc43ce00ec66bc47308478f9e8901abab96b97728f9e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/s-light/library/slight_ButtonInput/1.0.0/slight_ButtonInput-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/s-light/library/slight_ButtonInput/1.0.0/slight_ButtonInput-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "s-light/library/slight_DebugMenu/2.1.0/slight_DebugMenu-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "slight_DebugMenu-2.1.0.tar.gz",
+    "size_bytes": 13886,
+    "sha256": "faa5e42982d8d46d553ca23abef6e01286a3186dddebbfd8f6f5799db9a35e55",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/s-light/library/slight_DebugMenu/2.1.0/slight_DebugMenu-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/s-light/library/slight_DebugMenu/2.1.0/slight_DebugMenu-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "s-light/library/slight_FDC1004/1.0.0/slight_FDC1004-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "slight_FDC1004-1.0.0.tar.gz",
+    "size_bytes": 20218,
+    "sha256": "4ef272e906792c87767227b6b22760a74de0ef18468e252bc246eb57baac3bb4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/s-light/library/slight_FDC1004/1.0.0/slight_FDC1004-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/s-light/library/slight_FDC1004/1.0.0/slight_FDC1004-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "s-light/library/slight_Fade/3.1.2/slight_Fade-3.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "slight_Fade-3.1.2.tar.gz",
+    "size_bytes": 27550,
+    "sha256": "6ee93dd907bcac5aae70451ef9c73bb0dd4f98aec7d1f8f8b639633392d3676f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/s-light/library/slight_Fade/3.1.2/slight_Fade-3.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/s-light/library/slight_Fade/3.1.2/slight_Fade-3.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "s-light/library/slight_LiquidCrystalDummy/1.0.0/slight_LiquidCrystalDummy-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "slight_LiquidCrystalDummy-1.0.0.tar.gz",
+    "size_bytes": 10090,
+    "sha256": "5b7f9e2fd9a6b7294c8aab0f1aa61448228ed691a5139ff6b9ab66bc726a4580",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/s-light/library/slight_LiquidCrystalDummy/1.0.0/slight_LiquidCrystalDummy-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/s-light/library/slight_LiquidCrystalDummy/1.0.0/slight_LiquidCrystalDummy-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "s-light/library/slight_PlainTime/1.0.0/slight_PlainTime-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "slight_PlainTime-1.0.0.tar.gz",
+    "size_bytes": 33015,
+    "sha256": "be40c36dfe4aec74621a35ab674e118891cf69c279b7dc41a958b4cbaa3c8eec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/s-light/library/slight_PlainTime/1.0.0/slight_PlainTime-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/s-light/library/slight_PlainTime/1.0.0/slight_PlainTime-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "s-light/library/slight_RotaryEncoder/1.0.0/slight_RotaryEncoder-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "slight_RotaryEncoder-1.0.0.tar.gz",
+    "size_bytes": 21012,
+    "sha256": "228e6b05af1f29dd17e3b40486cf18983ef5b58995b5bbf71097432e066ebcdb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/s-light/library/slight_RotaryEncoder/1.0.0/slight_RotaryEncoder-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/s-light/library/slight_RotaryEncoder/1.0.0/slight_RotaryEncoder-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "s-light/library/slight_TLC5957/1.0.0/slight_TLC5957-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "slight_TLC5957-1.0.0.tar.gz",
+    "size_bytes": 19565,
+    "sha256": "fb61f73b9debd5dbbda28fc10676b8b5217f61523203bab742e2b915df7ca46d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/s-light/library/slight_TLC5957/1.0.0/slight_TLC5957-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/s-light/library/slight_TLC5957/1.0.0/slight_TLC5957-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "s-light/library/slight_easing/1.0.0/slight_easing-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "slight_easing-1.0.0.tar.gz",
+    "size_bytes": 4292,
+    "sha256": "4aef33b103e64a9cfee5781bfd6ef0257b01ae715018bcdb744034312353072b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/s-light/library/slight_easing/1.0.0/slight_easing-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/s-light/library/slight_easing/1.0.0/slight_easing-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "s-light/library/slight_mapping/2.0.1/slight_mapping-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "slight_mapping-2.0.1.tar.gz",
+    "size_bytes": 4003,
+    "sha256": "8ae796ca3418853f524bad60519023b2ed4f210ad6484ea2e755fbb3995177b4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/s-light/library/slight_mapping/2.0.1/slight_mapping-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/s-light/library/slight_mapping/2.0.1/slight_mapping-2.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

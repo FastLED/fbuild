@@ -1,0 +1,503 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mitra42",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mitra42/library/Frugal-IoT/0.0.1/Frugal-IoT-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Frugal-IoT-0.0.1.tar.gz",
+    "size_bytes": 101776,
+    "sha256": "17c2aca0a5a992fee93d554b656c2a8a06b0e956b9a9555b64ee79952921cec6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mitra42/library/Frugal-IoT/0.0.1/Frugal-IoT-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mitra42/library/Frugal-IoT/0.0.1/Frugal-IoT-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mitra42/library/Frugal-IoT/0.0.10/Frugal-IoT-0.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Frugal-IoT-0.0.10.tar.gz",
+    "size_bytes": 175748,
+    "sha256": "382147e557c6af55e353215ca8b8b2965c88dad546599df6addfe22d657d7eb8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mitra42/library/Frugal-IoT/0.0.10/Frugal-IoT-0.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/mitra42/library/Frugal-IoT/0.0.10/Frugal-IoT-0.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mitra42/library/Frugal-IoT/0.0.11/Frugal-IoT-0.0.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Frugal-IoT-0.0.11.tar.gz",
+    "size_bytes": 176626,
+    "sha256": "e22a315d859a4b50f00405bec3c1d97de16431b95c397ce867f8aadddce36411",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mitra42/library/Frugal-IoT/0.0.11/Frugal-IoT-0.0.11.tar.gz",
+     "https://dl.registry.platformio.org/download/mitra42/library/Frugal-IoT/0.0.11/Frugal-IoT-0.0.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mitra42/library/Frugal-IoT/0.0.12/Frugal-IoT-0.0.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Frugal-IoT-0.0.12.tar.gz",
+    "size_bytes": 176628,
+    "sha256": "267c9fa7bdb7c2f43dc354dc6c98c32ef51df21d2a811e1a22775ebd6366de4a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mitra42/library/Frugal-IoT/0.0.12/Frugal-IoT-0.0.12.tar.gz",
+     "https://dl.registry.platformio.org/download/mitra42/library/Frugal-IoT/0.0.12/Frugal-IoT-0.0.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mitra42/library/Frugal-IoT/0.0.13/Frugal-IoT-0.0.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Frugal-IoT-0.0.13.tar.gz",
+    "size_bytes": 112343,
+    "sha256": "5a3df45c2fdadc770a78e00804fe7da98307b8c9e1d0f99e8c57394aa5c798ab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mitra42/library/Frugal-IoT/0.0.13/Frugal-IoT-0.0.13.tar.gz",
+     "https://dl.registry.platformio.org/download/mitra42/library/Frugal-IoT/0.0.13/Frugal-IoT-0.0.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mitra42/library/Frugal-IoT/0.0.14/Frugal-IoT-0.0.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Frugal-IoT-0.0.14.tar.gz",
+    "size_bytes": 120681,
+    "sha256": "68aecffb4c68731308929e4c523cabd32fb2f2afea4fbce8e7bee14dc29ced6d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mitra42/library/Frugal-IoT/0.0.14/Frugal-IoT-0.0.14.tar.gz",
+     "https://dl.registry.platformio.org/download/mitra42/library/Frugal-IoT/0.0.14/Frugal-IoT-0.0.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mitra42/library/Frugal-IoT/0.0.15/Frugal-IoT-0.0.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Frugal-IoT-0.0.15.tar.gz",
+    "size_bytes": 130736,
+    "sha256": "3c63e22ce38ca21eba9859bf5a6a6625d85e2520bba1c96723de614b8a163ba0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mitra42/library/Frugal-IoT/0.0.15/Frugal-IoT-0.0.15.tar.gz",
+     "https://dl.registry.platformio.org/download/mitra42/library/Frugal-IoT/0.0.15/Frugal-IoT-0.0.15.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mitra42/library/Frugal-IoT/0.0.16/Frugal-IoT-0.0.16.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Frugal-IoT-0.0.16.tar.gz",
+    "size_bytes": 130842,
+    "sha256": "675cb92b567581d2184f52b6bb4076a415f992e94cbd8398b735aa3ad787cda3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mitra42/library/Frugal-IoT/0.0.16/Frugal-IoT-0.0.16.tar.gz",
+     "https://dl.registry.platformio.org/download/mitra42/library/Frugal-IoT/0.0.16/Frugal-IoT-0.0.16.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mitra42/library/Frugal-IoT/0.0.17/Frugal-IoT-0.0.17.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Frugal-IoT-0.0.17.tar.gz",
+    "size_bytes": 132922,
+    "sha256": "d00dea5218a6d62d60cdf8a1356e41e66adf9db16fbd0ea4d1634068a2d34b7e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mitra42/library/Frugal-IoT/0.0.17/Frugal-IoT-0.0.17.tar.gz",
+     "https://dl.registry.platformio.org/download/mitra42/library/Frugal-IoT/0.0.17/Frugal-IoT-0.0.17.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mitra42/library/Frugal-IoT/0.0.18/Frugal-IoT-0.0.18.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Frugal-IoT-0.0.18.tar.gz",
+    "size_bytes": 133961,
+    "sha256": "56c27b431dd4e499cc252c5eeeb2fa48b1fa391d9b9bd6f65c0b7269bb1dda13",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mitra42/library/Frugal-IoT/0.0.18/Frugal-IoT-0.0.18.tar.gz",
+     "https://dl.registry.platformio.org/download/mitra42/library/Frugal-IoT/0.0.18/Frugal-IoT-0.0.18.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mitra42/library/Frugal-IoT/0.0.19/Frugal-IoT-0.0.19.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Frugal-IoT-0.0.19.tar.gz",
+    "size_bytes": 151553,
+    "sha256": "62e5301cde434db6f43049fabc203902d8d42909c54eb0ee220422cbb6f24e62",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mitra42/library/Frugal-IoT/0.0.19/Frugal-IoT-0.0.19.tar.gz",
+     "https://dl.registry.platformio.org/download/mitra42/library/Frugal-IoT/0.0.19/Frugal-IoT-0.0.19.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mitra42/library/Frugal-IoT/0.0.2/Frugal-IoT-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Frugal-IoT-0.0.2.tar.gz",
+    "size_bytes": 101830,
+    "sha256": "30add8495e1918bf8989bf86e4690c9f2756a13bd163c51d6d30de86788a632c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mitra42/library/Frugal-IoT/0.0.2/Frugal-IoT-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mitra42/library/Frugal-IoT/0.0.2/Frugal-IoT-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mitra42/library/Frugal-IoT/0.0.20/Frugal-IoT-0.0.20.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Frugal-IoT-0.0.20.tar.gz",
+    "size_bytes": 152769,
+    "sha256": "324ee9a4426731ba15ed1fb2f2f1e2caa803ca77be5c0cdce717b44c26bf798e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mitra42/library/Frugal-IoT/0.0.20/Frugal-IoT-0.0.20.tar.gz",
+     "https://dl.registry.platformio.org/download/mitra42/library/Frugal-IoT/0.0.20/Frugal-IoT-0.0.20.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mitra42/library/Frugal-IoT/0.0.21/Frugal-IoT-0.0.21.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Frugal-IoT-0.0.21.tar.gz",
+    "size_bytes": 178026,
+    "sha256": "56d8043d955d85e57f6ec20b43519e4047180b765f8e742a27f7ea795d48c1f3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mitra42/library/Frugal-IoT/0.0.21/Frugal-IoT-0.0.21.tar.gz",
+     "https://dl.registry.platformio.org/download/mitra42/library/Frugal-IoT/0.0.21/Frugal-IoT-0.0.21.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mitra42/library/Frugal-IoT/0.0.22/Frugal-IoT-0.0.22.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Frugal-IoT-0.0.22.tar.gz",
+    "size_bytes": 178009,
+    "sha256": "8aa4d529bcbc79e51dca1dae0444d8634994483ccd891ba37fc52881b5f5de0c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mitra42/library/Frugal-IoT/0.0.22/Frugal-IoT-0.0.22.tar.gz",
+     "https://dl.registry.platformio.org/download/mitra42/library/Frugal-IoT/0.0.22/Frugal-IoT-0.0.22.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mitra42/library/Frugal-IoT/0.0.3/Frugal-IoT-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Frugal-IoT-0.0.3.tar.gz",
+    "size_bytes": 101892,
+    "sha256": "cc389627561d6d877e8e980a09f49ae55534dc6147aac91f2179f53084c1f518",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mitra42/library/Frugal-IoT/0.0.3/Frugal-IoT-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mitra42/library/Frugal-IoT/0.0.3/Frugal-IoT-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mitra42/library/Frugal-IoT/0.0.4/Frugal-IoT-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Frugal-IoT-0.0.4.tar.gz",
+    "size_bytes": 153690,
+    "sha256": "42b4ca1aa0f675814fc998a8b41ba3eb65639fbd6b616860ec85c04e97f586b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mitra42/library/Frugal-IoT/0.0.4/Frugal-IoT-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/mitra42/library/Frugal-IoT/0.0.4/Frugal-IoT-0.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mitra42/library/Frugal-IoT/0.0.5/Frugal-IoT-0.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Frugal-IoT-0.0.5.tar.gz",
+    "size_bytes": 169340,
+    "sha256": "a8bfef0bb4678fd7841322171b96bc586be409e949f3896823689337aee26abf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mitra42/library/Frugal-IoT/0.0.5/Frugal-IoT-0.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/mitra42/library/Frugal-IoT/0.0.5/Frugal-IoT-0.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mitra42/library/Frugal-IoT/0.0.6/Frugal-IoT-0.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Frugal-IoT-0.0.6.tar.gz",
+    "size_bytes": 174122,
+    "sha256": "abb0d00212fa10c0e127f304a94ac49b1a32ce099dbba2ce8213a9f99388d067",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mitra42/library/Frugal-IoT/0.0.6/Frugal-IoT-0.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/mitra42/library/Frugal-IoT/0.0.6/Frugal-IoT-0.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mitra42/library/Frugal-IoT/0.0.7/Frugal-IoT-0.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Frugal-IoT-0.0.7.tar.gz",
+    "size_bytes": 175308,
+    "sha256": "ea485016e42549ce851ec47d2d6430847d21f6e72f0a26a868005e3d7edc3b5d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mitra42/library/Frugal-IoT/0.0.7/Frugal-IoT-0.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/mitra42/library/Frugal-IoT/0.0.7/Frugal-IoT-0.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mitra42/library/Frugal-IoT/0.0.8/Frugal-IoT-0.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Frugal-IoT-0.0.8.tar.gz",
+    "size_bytes": 178282,
+    "sha256": "7ed004191f47b3ccee86c7ae192dace2fb46f205fb5ac599eb6f79c52c256643",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mitra42/library/Frugal-IoT/0.0.8/Frugal-IoT-0.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/mitra42/library/Frugal-IoT/0.0.8/Frugal-IoT-0.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mitra42/library/Frugal-IoT/0.0.9/Frugal-IoT-0.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Frugal-IoT-0.0.9.tar.gz",
+    "size_bytes": 178295,
+    "sha256": "4167984842ac14de72238d1c27744392f33e74ac9cfa15ecb82e3c9f6fe2c0fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mitra42/library/Frugal-IoT/0.0.9/Frugal-IoT-0.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/mitra42/library/Frugal-IoT/0.0.9/Frugal-IoT-0.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mitra42/library/Frugal-IoT/0.1.0/Frugal-IoT-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Frugal-IoT-0.1.0.tar.gz",
+    "size_bytes": 198509,
+    "sha256": "4ba111741bbe100237fc50ff90bdfe91c5a40e275bbf3ed012b079694acca1da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mitra42/library/Frugal-IoT/0.1.0/Frugal-IoT-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mitra42/library/Frugal-IoT/0.1.0/Frugal-IoT-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mitra42/library/Frugal-IoT/0.1.1/Frugal-IoT-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Frugal-IoT-0.1.1.tar.gz",
+    "size_bytes": 206416,
+    "sha256": "ee0c62a2e29d43a61b993f7dfd072badebf5188d0ecdbbbf8fa3bae93d7bab73",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mitra42/library/Frugal-IoT/0.1.1/Frugal-IoT-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mitra42/library/Frugal-IoT/0.1.1/Frugal-IoT-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mitra42/library/Frugal-IoT/0.1.2/Frugal-IoT-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Frugal-IoT-0.1.2.tar.gz",
+    "size_bytes": 214527,
+    "sha256": "164768f6de82d816b75601c457f8492f8797644b277ae3068fafee5b582e928e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mitra42/library/Frugal-IoT/0.1.2/Frugal-IoT-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mitra42/library/Frugal-IoT/0.1.2/Frugal-IoT-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mitra42/library/Frugal-IoT/0.1.3/Frugal-IoT-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Frugal-IoT-0.1.3.tar.gz",
+    "size_bytes": 287758,
+    "sha256": "b69a49f47abe97d46827e62d1a0e3d92341397e91eb528c012a63e5a8abd282c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mitra42/library/Frugal-IoT/0.1.3/Frugal-IoT-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mitra42/library/Frugal-IoT/0.1.3/Frugal-IoT-0.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mitra42/library/Frugal-IoT/0.1.4/Frugal-IoT-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Frugal-IoT-0.1.4.tar.gz",
+    "size_bytes": 315258,
+    "sha256": "6d259c3124a89d01c7b960592badb84ac75bee3f1da137064d4fff3e5833c9ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mitra42/library/Frugal-IoT/0.1.4/Frugal-IoT-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/mitra42/library/Frugal-IoT/0.1.4/Frugal-IoT-0.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mitra42/library/Frugal-IoT/0.1.5/Frugal-IoT-0.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Frugal-IoT-0.1.5.tar.gz",
+    "size_bytes": 344033,
+    "sha256": "c147cc6c7b5c6c2cf289159ab6fb8acf287cc169e797a5ebf5dada5eaefc9f22",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mitra42/library/Frugal-IoT/0.1.5/Frugal-IoT-0.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/mitra42/library/Frugal-IoT/0.1.5/Frugal-IoT-0.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mitra42/library/Frugal-IoT/0.1.6/Frugal-IoT-0.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Frugal-IoT-0.1.6.tar.gz",
+    "size_bytes": 374112,
+    "sha256": "a702465d37d19b67af6998400409e2b6015a7d7b73378dbb2997bc10262cb744",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mitra42/library/Frugal-IoT/0.1.6/Frugal-IoT-0.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/mitra42/library/Frugal-IoT/0.1.6/Frugal-IoT-0.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mitra42/library/Frugal-IoT/0.1.7/Frugal-IoT-0.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Frugal-IoT-0.1.7.tar.gz",
+    "size_bytes": 437827,
+    "sha256": "d34effa5ebd342dba1751e6122b286cfa79951268fe735b1667586109a904ede",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mitra42/library/Frugal-IoT/0.1.7/Frugal-IoT-0.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/mitra42/library/Frugal-IoT/0.1.7/Frugal-IoT-0.1.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mitra42/library/Frugal-IoT/2.0.0/Frugal-IoT-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Frugal-IoT-2.0.0.tar.gz",
+    "size_bytes": 455144,
+    "sha256": "43b961460eb4d4e181829b91cfb3e762e3dc0485a19e729ebbc38ccbc153cbc3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mitra42/library/Frugal-IoT/2.0.0/Frugal-IoT-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mitra42/library/Frugal-IoT/2.0.0/Frugal-IoT-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mitra42/library/Frugal-IoT/2.0.1/Frugal-IoT-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Frugal-IoT-2.0.1.tar.gz",
+    "size_bytes": 539488,
+    "sha256": "778c72396b1f2f585f116d6b7a2fa01fef4b7b441e37536e256844fd0159444b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mitra42/library/Frugal-IoT/2.0.1/Frugal-IoT-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mitra42/library/Frugal-IoT/2.0.1/Frugal-IoT-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mitra42/library/Frugal-IoT/2.0.2/Frugal-IoT-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Frugal-IoT-2.0.2.tar.gz",
+    "size_bytes": 563941,
+    "sha256": "b9d3855cf7585edbc2844bad83eb6c1e8c51fa7cf82db7d7866dac8f4a88afcf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mitra42/library/Frugal-IoT/2.0.2/Frugal-IoT-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mitra42/library/Frugal-IoT/2.0.2/Frugal-IoT-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mitra42/library/Frugal-IoT/2.0.3/Frugal-IoT-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Frugal-IoT-2.0.3.tar.gz",
+    "size_bytes": 599969,
+    "sha256": "39b94dc8b9b8465f84955afe03f1013c56aa8e3befabccefd28f81d77f9f002f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mitra42/library/Frugal-IoT/2.0.3/Frugal-IoT-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mitra42/library/Frugal-IoT/2.0.3/Frugal-IoT-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mitra42/library/Frugal-IoT/2.0.4/Frugal-IoT-2.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Frugal-IoT-2.0.4.tar.gz",
+    "size_bytes": 599906,
+    "sha256": "ad169a56482f200100c33984c31c10db3178f5d09c753d331255a5497c784df8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mitra42/library/Frugal-IoT/2.0.4/Frugal-IoT-2.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/mitra42/library/Frugal-IoT/2.0.4/Frugal-IoT-2.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mitra42/library/Frugal-IoT/2.0.5/Frugal-IoT-2.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Frugal-IoT-2.0.5.tar.gz",
+    "size_bytes": 616255,
+    "sha256": "649a2be42ce344d6d8866a356c950bdd62d7e7346248ccdbd7bfcba5e49b2a5f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mitra42/library/Frugal-IoT/2.0.5/Frugal-IoT-2.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/mitra42/library/Frugal-IoT/2.0.5/Frugal-IoT-2.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mitra42/library/Frugal-IoT/2.0.6/Frugal-IoT-2.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Frugal-IoT-2.0.6.tar.gz",
+    "size_bytes": 659810,
+    "sha256": "c2e3333bca8bdfb817607fd564674c957d12b39c884e72bab32facca5ac73a75",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mitra42/library/Frugal-IoT/2.0.6/Frugal-IoT-2.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/mitra42/library/Frugal-IoT/2.0.6/Frugal-IoT-2.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mitra42/library/Frugal-IoT/2.0.7/Frugal-IoT-2.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Frugal-IoT-2.0.7.tar.gz",
+    "size_bytes": 681589,
+    "sha256": "2708485fbafb1d1faa0db8e6971e254352c292e587fb1311c58e1239233043f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mitra42/library/Frugal-IoT/2.0.7/Frugal-IoT-2.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/mitra42/library/Frugal-IoT/2.0.7/Frugal-IoT-2.0.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

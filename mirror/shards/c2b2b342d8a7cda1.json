@@ -1,0 +1,139 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jandrassy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jandrassy/library/ArduinoOTA/1.1.0/ArduinoOTA-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoOTA-1.1.0.tar.gz",
+    "size_bytes": 47676,
+    "sha256": "78da3f1f8ee7cb90ec0aef1c5490d1516df74f23a2dc26b70226401cf7bf29b0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jandrassy/library/ArduinoOTA/1.1.0/ArduinoOTA-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jandrassy/library/ArduinoOTA/1.1.0/ArduinoOTA-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jandrassy/library/ArduinoOTA/1.1.1/ArduinoOTA-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoOTA-1.1.1.tar.gz",
+    "size_bytes": 47781,
+    "sha256": "8ceadd21b56f7b941af904b4e5d1f1a9ceb96628b209aa74a6dbc45fa820d097",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jandrassy/library/ArduinoOTA/1.1.1/ArduinoOTA-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jandrassy/library/ArduinoOTA/1.1.1/ArduinoOTA-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jandrassy/library/EthernetENC/2.0.5/EthernetENC-2.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EthernetENC-2.0.5.tar.gz",
+    "size_bytes": 68476,
+    "sha256": "662407f6aad3e578fc15a1beb4d584a9c04737bb57d79b225fdfa89eec61d66b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jandrassy/library/EthernetENC/2.0.5/EthernetENC-2.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/jandrassy/library/EthernetENC/2.0.5/EthernetENC-2.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jandrassy/library/NetApiHelpers/1.0.2/NetApiHelpers-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NetApiHelpers-1.0.2.tar.gz",
+    "size_bytes": 18874,
+    "sha256": "b4ca24b8427667680eda358967c8401e043b877dc9ce6728b402e2532834402f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jandrassy/library/NetApiHelpers/1.0.2/NetApiHelpers-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jandrassy/library/NetApiHelpers/1.0.2/NetApiHelpers-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jandrassy/library/NetApiHelpers/1.0.3/NetApiHelpers-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NetApiHelpers-1.0.3.tar.gz",
+    "size_bytes": 18876,
+    "sha256": "898c4aefb7029a98942ac81b166df01ef2e722c93beba7517c32aba52bb3172a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jandrassy/library/NetApiHelpers/1.0.3/NetApiHelpers-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/jandrassy/library/NetApiHelpers/1.0.3/NetApiHelpers-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jandrassy/library/StreamLib/1.4.0/StreamLib-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StreamLib-1.4.0.tar.gz",
+    "size_bytes": 24114,
+    "sha256": "bea2bfe01f242c7e2cac9f8abd518cf70f5b39c592af7a742f607031ebf9e6aa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jandrassy/library/StreamLib/1.4.0/StreamLib-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jandrassy/library/StreamLib/1.4.0/StreamLib-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jandrassy/library/TelnetStream/1.3.0/TelnetStream-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TelnetStream-1.3.0.tar.gz",
+    "size_bytes": 16798,
+    "sha256": "8ef5398a06e42a1ae9c5f3d2022a7d5049a502beb7420e2d2055c10e65ee1b97",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jandrassy/library/TelnetStream/1.3.0/TelnetStream-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jandrassy/library/TelnetStream/1.3.0/TelnetStream-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jandrassy/library/Uno%20WiFi%20Developer%20Edition%20Serial1/1.0.5/UnoWiFiDeveloperEditionSerial1-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UnoWiFiDeveloperEditionSerial1-1.0.5.tar.gz",
+    "size_bytes": 18630,
+    "sha256": "217fb06e88df5adca8d4cf7a87ff76d9dae804fbd93e4cef733dbea9fe1f8502",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jandrassy/library/Uno%2520WiFi%2520Developer%2520Edition%2520Serial1/1.0.5/UnoWiFiDeveloperEditionSerial1-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/jandrassy/library/Uno%20WiFi%20Developer%20Edition%20Serial1/1.0.5/UnoWiFiDeveloperEditionSerial1-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jandrassy/library/WiFiEspAT/1.5.0/WiFiEspAT-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFiEspAT-1.5.0.tar.gz",
+    "size_bytes": 53155,
+    "sha256": "586aa07e9bf597d9ecd70e0ffd13a213da21daa320aed7f3d5a931e326e03c88",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jandrassy/library/WiFiEspAT/1.5.0/WiFiEspAT-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jandrassy/library/WiFiEspAT/1.5.0/WiFiEspAT-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jandrassy/library/WiFiEspAT/2.0.0/WiFiEspAT-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFiEspAT-2.0.0.tar.gz",
+    "size_bytes": 53735,
+    "sha256": "9f1a93dbccfe717bca90690fa60ecc5abc753e7e587c0d5b23b32884f2e42e57",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jandrassy/library/WiFiEspAT/2.0.0/WiFiEspAT-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jandrassy/library/WiFiEspAT/2.0.0/WiFiEspAT-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

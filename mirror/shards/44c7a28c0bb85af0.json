@@ -1,0 +1,399 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/artronshop",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "artronshop/library/ATD-S3-Driver/1.0.0/ATD-S3-Driver-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ATD-S3-Driver-1.0.0.tar.gz",
+    "size_bytes": 8826,
+    "sha256": "011965a637d936a3f8507701bd92373424f6ef403882199c2673a7b9c1b44901",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/artronshop/library/ATD-S3-Driver/1.0.0/ATD-S3-Driver-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/artronshop/library/ATD-S3-Driver/1.0.0/ATD-S3-Driver-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "artronshop/library/ATD1.47-S3%20Lib/1.0.0/ATD1.47-S3Lib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ATD1.47-S3Lib-1.0.0.tar.gz",
+    "size_bytes": 8084,
+    "sha256": "682124bf67d607a2fa092c96300f6e3b5e39436dce6897b79cfb50f99dd9ce2d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/artronshop/library/ATD1.47-S3%2520Lib/1.0.0/ATD1.47-S3Lib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/artronshop/library/ATD1.47-S3%20Lib/1.0.0/ATD1.47-S3Lib-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "artronshop/library/ATD3.5-S3/1.3.1/ATD3.5-S3-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ATD3.5-S3-1.3.1.tar.gz",
+    "size_bytes": 13428,
+    "sha256": "c6daf3cd0e0be7f0b8741816fac19313b6854985bacde5e93104e35e9311b8e8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/artronshop/library/ATD3.5-S3/1.3.1/ATD3.5-S3-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/artronshop/library/ATD3.5-S3/1.3.1/ATD3.5-S3-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "artronshop/library/ATD3.5-S3_HandySense_Arduino_Library/1.0.0/ATD3.5-S3_HandySense_Arduino_Library-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ATD3.5-S3_HandySense_Arduino_Library-1.0.0.tar.gz",
+    "size_bytes": 94810,
+    "sha256": "df418f3c6d3aea75b6408f80a357955e4450e2940538d33c5ecea035ca2ef541",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/artronshop/library/ATD3.5-S3_HandySense_Arduino_Library/1.0.0/ATD3.5-S3_HandySense_Arduino_Library-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/artronshop/library/ATD3.5-S3_HandySense_Arduino_Library/1.0.0/ATD3.5-S3_HandySense_Arduino_Library-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "artronshop/library/AmAlert/1.0.0/AmAlert-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AmAlert-1.0.0.tar.gz",
+    "size_bytes": 46372,
+    "sha256": "ebea01f06027ce66524006220be1488762b9eaf41f808c9346c87be776fff310",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/artronshop/library/AmAlert/1.0.0/AmAlert-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/artronshop/library/AmAlert/1.0.0/AmAlert-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "artronshop/library/Artron%20DS1338/1.0.0/ArtronDS1338-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArtronDS1338-1.0.0.tar.gz",
+    "size_bytes": 2358,
+    "sha256": "7ea7cdd775e38f600a4e23adab001ab172879890f11fc8d78966d497ad01d53c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/artronshop/library/Artron%2520DS1338/1.0.0/ArtronDS1338-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/artronshop/library/Artron%20DS1338/1.0.0/ArtronDS1338-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "artronshop/library/ArtronShop_BH1750/1.0.0/ArtronShop_BH1750-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArtronShop_BH1750-1.0.0.tar.gz",
+    "size_bytes": 1463,
+    "sha256": "3c5b7055cd8099172da538dffca0d81a9f1065c56ad825dc97d70bf08a61611b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/artronshop/library/ArtronShop_BH1750/1.0.0/ArtronShop_BH1750-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/artronshop/library/ArtronShop_BH1750/1.0.0/ArtronShop_BH1750-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "artronshop/library/ArtronShop_BL0940/1.0.0/ArtronShop_BL0940-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArtronShop_BL0940-1.0.0.tar.gz",
+    "size_bytes": 16893,
+    "sha256": "6fd37511c321abf7bd8311dd760f9b57e0a1f34fbe9ebe9efd9325bdd0e45a4c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/artronshop/library/ArtronShop_BL0940/1.0.0/ArtronShop_BL0940-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/artronshop/library/ArtronShop_BL0940/1.0.0/ArtronShop_BL0940-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "artronshop/library/ArtronShop_HDC302x/1.0.0/ArtronShop_HDC302x-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArtronShop_HDC302x-1.0.0.tar.gz",
+    "size_bytes": 1716,
+    "sha256": "c27d236ebd7510f920b4c29450ad209fae3a336de3f04d4d323e504948f9f8d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/artronshop/library/ArtronShop_HDC302x/1.0.0/ArtronShop_HDC302x-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/artronshop/library/ArtronShop_HDC302x/1.0.0/ArtronShop_HDC302x-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "artronshop/library/ArtronShop_LineMessaging/1.0.1/ArtronShop_LineMessaging-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArtronShop_LineMessaging-1.0.1.tar.gz",
+    "size_bytes": 47981,
+    "sha256": "df9ea1f963f5ba2adc42a0a4e4efa9f108f641376784cf0129af7e6c2791ec55",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/artronshop/library/ArtronShop_LineMessaging/1.0.1/ArtronShop_LineMessaging-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/artronshop/library/ArtronShop_LineMessaging/1.0.1/ArtronShop_LineMessaging-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "artronshop/library/ArtronShop_LineNotify/1.1.0/ArtronShop_LineNotify-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArtronShop_LineNotify-1.1.0.tar.gz",
+    "size_bytes": 6030,
+    "sha256": "3800db9703eda2998f3b7a2e711574aecb574ef8023d66d6aec994c2c03a62ca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/artronshop/library/ArtronShop_LineNotify/1.1.0/ArtronShop_LineNotify-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/artronshop/library/ArtronShop_LineNotify/1.1.0/ArtronShop_LineNotify-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "artronshop/library/ArtronShop_PCF85363/1.1.0/ArtronShop_PCF85363-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArtronShop_PCF85363-1.1.0.tar.gz",
+    "size_bytes": 2834,
+    "sha256": "531a93a76f3f86d4301fede09f348f6080bc1c58e609f2086aacdd08a5b379d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/artronshop/library/ArtronShop_PCF85363/1.1.0/ArtronShop_PCF85363-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/artronshop/library/ArtronShop_PCF85363/1.1.0/ArtronShop_PCF85363-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "artronshop/library/ArtronShop_PCF85363A/1.1.0/ArtronShop_PCF85363A-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArtronShop_PCF85363A-1.1.0.tar.gz",
+    "size_bytes": 2826,
+    "sha256": "e105fb28544fc0d9f5cf3fa62ab5252ecf00d44a887edcca7146d742d6c19a54",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/artronshop/library/ArtronShop_PCF85363A/1.1.0/ArtronShop_PCF85363A-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/artronshop/library/ArtronShop_PCF85363A/1.1.0/ArtronShop_PCF85363A-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "artronshop/library/ArtronShop_RX8130CE/1.0.0/ArtronShop_RX8130CE-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArtronShop_RX8130CE-1.0.0.tar.gz",
+    "size_bytes": 3095,
+    "sha256": "9b48244551b95ad3f673cc09be952d3ca3e1bea452a9fb4fe3d0e2c50e759718",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/artronshop/library/ArtronShop_RX8130CE/1.0.0/ArtronShop_RX8130CE-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/artronshop/library/ArtronShop_RX8130CE/1.0.0/ArtronShop_RX8130CE-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "artronshop/library/ArtronShop_SHT3x/1.0.0/ArtronShop_SHT3x-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArtronShop_SHT3x-1.0.0.tar.gz",
+    "size_bytes": 1700,
+    "sha256": "2ac1f0f9bdb77ca35102aa8fd1b30e2e6a805a83d0d7c3d64a17b10caa9ced69",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/artronshop/library/ArtronShop_SHT3x/1.0.0/ArtronShop_SHT3x-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/artronshop/library/ArtronShop_SHT3x/1.0.0/ArtronShop_SHT3x-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "artronshop/library/ArtronShop_SHT45/1.0.0/ArtronShop_SHT45-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArtronShop_SHT45-1.0.0.tar.gz",
+    "size_bytes": 1612,
+    "sha256": "79d249546e297d44f943b721e40515be27ea0af2d574fa87647f2237b0290b00",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/artronshop/library/ArtronShop_SHT45/1.0.0/ArtronShop_SHT45-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/artronshop/library/ArtronShop_SHT45/1.0.0/ArtronShop_SHT45-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "artronshop/library/ArtronShop_SPL06-001/1.0.0/ArtronShop_SPL06-001-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArtronShop_SPL06-001-1.0.0.tar.gz",
+    "size_bytes": 3172,
+    "sha256": "f39a9a9cf85a849058f51c9830d199d453505beecab6707d07214e5ad9aff008",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/artronshop/library/ArtronShop_SPL06-001/1.0.0/ArtronShop_SPL06-001-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/artronshop/library/ArtronShop_SPL06-001/1.0.0/ArtronShop_SPL06-001-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "artronshop/library/DuinoClaw/1.0.0/DuinoClaw-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DuinoClaw-1.0.0.tar.gz",
+    "size_bytes": 13869,
+    "sha256": "2e6063dc8a02d5a3be18447fec33ef4adb5b86fc91fc6620345e6de40435b31a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/artronshop/library/DuinoClaw/1.0.0/DuinoClaw-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/artronshop/library/DuinoClaw/1.0.0/DuinoClaw-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "artronshop/library/DuinoClaw/1.0.1/DuinoClaw-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DuinoClaw-1.0.1.tar.gz",
+    "size_bytes": 13871,
+    "sha256": "aa15607f036b838ad5114d9234ce3f365c5a95066127e68722c81202e98649fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/artronshop/library/DuinoClaw/1.0.1/DuinoClaw-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/artronshop/library/DuinoClaw/1.0.1/DuinoClaw-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "artronshop/library/DuinoClaw/1.1.0/DuinoClaw-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DuinoClaw-1.1.0.tar.gz",
+    "size_bytes": 15072,
+    "sha256": "0412df59906fce678830f3a06b0c5cbcf655503125a5ab109bb821b2b390d099",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/artronshop/library/DuinoClaw/1.1.0/DuinoClaw-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/artronshop/library/DuinoClaw/1.1.0/DuinoClaw-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "artronshop/library/IOXESP32Audio/1.0.0/IOXESP32Audio-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IOXESP32Audio-1.0.0.tar.gz",
+    "size_bytes": 168405,
+    "sha256": "6fd335d638c430c771ecc98a4306eb59e882b29c6767f652ccfff6033633631d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/artronshop/library/IOXESP32Audio/1.0.0/IOXESP32Audio-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/artronshop/library/IOXESP32Audio/1.0.0/IOXESP32Audio-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "artronshop/library/IOXESP32Motor/1.0.0/IOXESP32Motor-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IOXESP32Motor-1.0.0.tar.gz",
+    "size_bytes": 1464,
+    "sha256": "8faff86b54ac7cbc2685583b0f2f19d1faa62c77966cc45fa1d15b9d0f0473c9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/artronshop/library/IOXESP32Motor/1.0.0/IOXESP32Motor-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/artronshop/library/IOXESP32Motor/1.0.0/IOXESP32Motor-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "artronshop/library/IOXESP32_4-20mA_Receiver/1.1.0/IOXESP32_4-20mA_Receiver-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IOXESP32_4-20mA_Receiver-1.1.0.tar.gz",
+    "size_bytes": 2833,
+    "sha256": "bab98a1af5e58ee9a932723f1d5f3e1175e048139a668d0f9956365d5cdb6301",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/artronshop/library/IOXESP32_4-20mA_Receiver/1.1.0/IOXESP32_4-20mA_Receiver-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/artronshop/library/IOXESP32_4-20mA_Receiver/1.1.0/IOXESP32_4-20mA_Receiver-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "artronshop/library/IOXESP32_4-20mA_Receiver/1.1.1/IOXESP32_4-20mA_Receiver-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IOXESP32_4-20mA_Receiver-1.1.1.tar.gz",
+    "size_bytes": 2930,
+    "sha256": "21bc4d4ae6110a6b921149ebbbe9deda567010e2461238988598f10af66c6954",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/artronshop/library/IOXESP32_4-20mA_Receiver/1.1.1/IOXESP32_4-20mA_Receiver-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/artronshop/library/IOXESP32_4-20mA_Receiver/1.1.1/IOXESP32_4-20mA_Receiver-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "artronshop/library/IOXESP32_4-20mA_Receiver/1.2.0/IOXESP32_4-20mA_Receiver-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IOXESP32_4-20mA_Receiver-1.2.0.tar.gz",
+    "size_bytes": 2941,
+    "sha256": "60bc0fe4ab6d0b41d0668f98103d8a771345a0eddf1d42c299d4a252157e39ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/artronshop/library/IOXESP32_4-20mA_Receiver/1.2.0/IOXESP32_4-20mA_Receiver-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/artronshop/library/IOXESP32_4-20mA_Receiver/1.2.0/IOXESP32_4-20mA_Receiver-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "artronshop/library/KidMotorV4-Arduino/1.0.0/KidMotorV4-Arduino-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KidMotorV4-Arduino-1.0.0.tar.gz",
+    "size_bytes": 4425,
+    "sha256": "640d2f06ee9a9ac573bc7ac8ba8409f2193477486532b966cdddc50125e85d8d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/artronshop/library/KidMotorV4-Arduino/1.0.0/KidMotorV4-Arduino-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/artronshop/library/KidMotorV4-Arduino/1.0.0/KidMotorV4-Arduino-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "artronshop/library/ModbusMasterPlus/2.1.0/ModbusMasterPlus-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ModbusMasterPlus-2.1.0.tar.gz",
+    "size_bytes": 6640,
+    "sha256": "72fc4f325eae865c6a572b89578f406d0b1b2e845ad8a363cdab15fe75261832",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/artronshop/library/ModbusMasterPlus/2.1.0/ModbusMasterPlus-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/artronshop/library/ModbusMasterPlus/2.1.0/ModbusMasterPlus-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "artronshop/library/ModbusMasterPlus/2.1.1/ModbusMasterPlus-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ModbusMasterPlus-2.1.1.tar.gz",
+    "size_bytes": 32837,
+    "sha256": "f29462f031b2888f52dc477ad26b2461f043313f7b05ccbbb5324dba95155e7e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/artronshop/library/ModbusMasterPlus/2.1.1/ModbusMasterPlus-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/artronshop/library/ModbusMasterPlus/2.1.1/ModbusMasterPlus-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "artronshop/library/Tinker%20C6/1.0.1/TinkerC6-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinkerC6-1.0.1.tar.gz",
+    "size_bytes": 5999,
+    "sha256": "f1ced64bc35c1244686f0ddd344adb172b7506633a18bd0279992b6849d7c11b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/artronshop/library/Tinker%2520C6/1.0.1/TinkerC6-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/artronshop/library/Tinker%20C6/1.0.1/TinkerC6-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "artronshop/library/easyConfig/1.4.0/easyConfig-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "easyConfig-1.4.0.tar.gz",
+    "size_bytes": 48433,
+    "sha256": "8b11db4a8a173610e7ea3f71d2402555df071cde8cb22017446658f74395342a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/artronshop/library/easyConfig/1.4.0/easyConfig-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/artronshop/library/easyConfig/1.4.0/easyConfig-1.4.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

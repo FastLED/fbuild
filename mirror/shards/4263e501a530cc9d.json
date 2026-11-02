@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/masbarr",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "masbarr/library/TumbleFeeder/1.0.2/TumbleFeeder-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TumbleFeeder-1.0.2.tar.gz",
+    "size_bytes": 19918,
+    "sha256": "934c6d6b3892539bc6e4d41b5e53e048f4b30c7f4236b15a2ee0fd910011c8e3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/masbarr/library/TumbleFeeder/1.0.2/TumbleFeeder-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/masbarr/library/TumbleFeeder/1.0.2/TumbleFeeder-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "masbarr/library/TumbleFeeder/2.0.0/TumbleFeeder-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TumbleFeeder-2.0.0.tar.gz",
+    "size_bytes": 26830,
+    "sha256": "7f785a83756aa51164a159337442b5ef863c733ebe1174c2b2fdbb8aac137291",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/masbarr/library/TumbleFeeder/2.0.0/TumbleFeeder-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/masbarr/library/TumbleFeeder/2.0.0/TumbleFeeder-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

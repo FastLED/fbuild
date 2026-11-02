@@ -1,0 +1,139 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-okano",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-okano/library/DirectoryList/0.0.0+sha.0233769f991c/DirectoryList-0.0.0+sha.0233769f991c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DirectoryList-0.0.0+sha.0233769f991c.tar.gz",
+    "size_bytes": 1886,
+    "sha256": "14f0c9055eae3c44a796adc769dc7bc5c33c95e3a74b891ff0d7cad18a15a8a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-okano/library/DirectoryList/0.0.0%2Bsha.0233769f991c/DirectoryList-0.0.0%2Bsha.0233769f991c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-okano/library/DirectoryList/0.0.0%2Bsha.0233769f991c/DirectoryList-0.0.0%2Bsha.0233769f991c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-okano/library/I2C_FmPlus/0.0.0+sha.16a05acd675b/I2C_FmPlus-0.0.0+sha.16a05acd675b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2C_FmPlus-0.0.0+sha.16a05acd675b.tar.gz",
+    "size_bytes": 1572,
+    "sha256": "32286428f9f18d91eca56dbac12b6513401c1a0262df7cdeb88b2460a16f6669",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-okano/library/I2C_FmPlus/0.0.0%2Bsha.16a05acd675b/I2C_FmPlus-0.0.0%2Bsha.16a05acd675b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-okano/library/I2C_FmPlus/0.0.0%2Bsha.16a05acd675b/I2C_FmPlus-0.0.0%2Bsha.16a05acd675b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-okano/library/IAP/0.0.0+sha.59f7e32ae397/IAP-0.0.0+sha.59f7e32ae397.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IAP-0.0.0+sha.59f7e32ae397.tar.gz",
+    "size_bytes": 5788,
+    "sha256": "ea3d4d1d0806cde46fb843ac1c7a60d2d084e7c33c9655f6c8ef2b8f3c534605",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-okano/library/IAP/0.0.0%2Bsha.59f7e32ae397/IAP-0.0.0%2Bsha.59f7e32ae397.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-okano/library/IAP/0.0.0%2Bsha.59f7e32ae397/IAP-0.0.0%2Bsha.59f7e32ae397.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-okano/library/LED_Cube444/0.0.0+sha.86d2cad72832/LED_Cube444-0.0.0+sha.86d2cad72832.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LED_Cube444-0.0.0+sha.86d2cad72832.tar.gz",
+    "size_bytes": 3857,
+    "sha256": "c692d35d6cd1222d35ed25f76c97a3963f278709d768c9d158619a36d4ed98de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-okano/library/LED_Cube444/0.0.0%2Bsha.86d2cad72832/LED_Cube444-0.0.0%2Bsha.86d2cad72832.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-okano/library/LED_Cube444/0.0.0%2Bsha.86d2cad72832/LED_Cube444-0.0.0%2Bsha.86d2cad72832.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-okano/library/PCA9546A/0.0.0+sha.2d50d8bba33e/PCA9546A-0.0.0+sha.2d50d8bba33e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCA9546A-0.0.0+sha.2d50d8bba33e.tar.gz",
+    "size_bytes": 2026,
+    "sha256": "fd93c9df90935273362adb709cffd0eee6406a74fb3225916331e2be0247b861",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-okano/library/PCA9546A/0.0.0%2Bsha.2d50d8bba33e/PCA9546A-0.0.0%2Bsha.2d50d8bba33e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-okano/library/PCA9546A/0.0.0%2Bsha.2d50d8bba33e/PCA9546A-0.0.0%2Bsha.2d50d8bba33e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-okano/library/PCA9547/0.0.0+sha.c716fb3ccb8d/PCA9547-0.0.0+sha.c716fb3ccb8d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCA9547-0.0.0+sha.c716fb3ccb8d.tar.gz",
+    "size_bytes": 1716,
+    "sha256": "8123001e2510186c03cf41ad3402d88a6126424506a398ef2d26372892a096e1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-okano/library/PCA9547/0.0.0%2Bsha.c716fb3ccb8d/PCA9547-0.0.0%2Bsha.c716fb3ccb8d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-okano/library/PCA9547/0.0.0%2Bsha.c716fb3ccb8d/PCA9547-0.0.0%2Bsha.c716fb3ccb8d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-okano/library/PCT2075/0.0.0+sha.0cdfb3ea5969/PCT2075-0.0.0+sha.0cdfb3ea5969.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCT2075-0.0.0+sha.0cdfb3ea5969.tar.gz",
+    "size_bytes": 3026,
+    "sha256": "ed5de2c7072562dc828a3a0f627507f1816451aadcadb39bfaeb1e76a56ed3ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-okano/library/PCT2075/0.0.0%2Bsha.0cdfb3ea5969/PCT2075-0.0.0%2Bsha.0cdfb3ea5969.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-okano/library/PCT2075/0.0.0%2Bsha.0cdfb3ea5969/PCT2075-0.0.0%2Bsha.0cdfb3ea5969.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-okano/library/SB1602E/0.0.0+sha.baf578069dfc/SB1602E-0.0.0+sha.baf578069dfc.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SB1602E-0.0.0+sha.baf578069dfc.tar.gz",
+    "size_bytes": 4627,
+    "sha256": "2c7926c148a21b23f1b1ef09859578346154b66dbf9bacf04db7b1f31ef108b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-okano/library/SB1602E/0.0.0%2Bsha.baf578069dfc/SB1602E-0.0.0%2Bsha.baf578069dfc.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-okano/library/SB1602E/0.0.0%2Bsha.baf578069dfc/SB1602E-0.0.0%2Bsha.baf578069dfc.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-okano/library/StepperMotor/0.0.0+sha.f14b5e7276b0/StepperMotor-0.0.0+sha.f14b5e7276b0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StepperMotor-0.0.0+sha.f14b5e7276b0.tar.gz",
+    "size_bytes": 4046,
+    "sha256": "4608a057d5a09b21e5c7e406636a4bf9b697d75bb261e6bd31c604c5cb86f1da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-okano/library/StepperMotor/0.0.0%2Bsha.f14b5e7276b0/StepperMotor-0.0.0%2Bsha.f14b5e7276b0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-okano/library/StepperMotor/0.0.0%2Bsha.f14b5e7276b0/StepperMotor-0.0.0%2Bsha.f14b5e7276b0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-okano/library/StepperMotorUni/0.0.0+sha.7e6fb609780a/StepperMotorUni-0.0.0+sha.7e6fb609780a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StepperMotorUni-0.0.0+sha.7e6fb609780a.tar.gz",
+    "size_bytes": 5364,
+    "sha256": "584cea72a0720ab74b582fe2ef6ff1dbb4c63a00076072add783273e1cd29b18",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-okano/library/StepperMotorUni/0.0.0%2Bsha.7e6fb609780a/StepperMotorUni-0.0.0%2Bsha.7e6fb609780a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-okano/library/StepperMotorUni/0.0.0%2Bsha.7e6fb609780a/StepperMotorUni-0.0.0%2Bsha.7e6fb609780a.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-asaidi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-asaidi/library/TxIR/0.0.0+sha.208b4f080b2f/TxIR-0.0.0+sha.208b4f080b2f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TxIR-0.0.0+sha.208b4f080b2f.tar.gz",
+    "size_bytes": 2673,
+    "sha256": "4312719049b455d6288377975e1a85f9adfe7dd317bb2031771fd9bd6f2d6daf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-asaidi/library/TxIR/0.0.0%2Bsha.208b4f080b2f/TxIR-0.0.0%2Bsha.208b4f080b2f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-asaidi/library/TxIR/0.0.0%2Bsha.208b4f080b2f/TxIR-0.0.0%2Bsha.208b4f080b2f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

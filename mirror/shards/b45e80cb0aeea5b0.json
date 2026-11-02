@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bkleiner",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bkleiner/library/hdzero-displayport/0.0.2/hdzero-displayport-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "hdzero-displayport-0.0.2.tar.gz",
+    "size_bytes": 3831,
+    "sha256": "d76c0043337de5476bf8cc9f7160c410b96f427f09cd0e729f8db3792c2b325b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bkleiner/library/hdzero-displayport/0.0.2/hdzero-displayport-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bkleiner/library/hdzero-displayport/0.0.2/hdzero-displayport-0.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

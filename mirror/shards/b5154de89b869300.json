@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/minh16199",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "minh16199/library/mnv-iot-sdk/1.1.1/mnv-iot-sdk-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mnv-iot-sdk-1.1.1.tar.gz",
+    "size_bytes": 6963,
+    "sha256": "6e4ebaff6641f1e5dce345e3d92b90fa757b7b0bfdb1cae585659a24846da2f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/minh16199/library/mnv-iot-sdk/1.1.1/mnv-iot-sdk-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/minh16199/library/mnv-iot-sdk/1.1.1/mnv-iot-sdk-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "minh16199/library/mnv-iot-sdk/1.1.2/mnv-iot-sdk-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mnv-iot-sdk-1.1.2.tar.gz",
+    "size_bytes": 6995,
+    "sha256": "43822dbf848bff44f59af968abb82a0de10837e3deb2c963a16635343f2c1605",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/minh16199/library/mnv-iot-sdk/1.1.2/mnv-iot-sdk-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/minh16199/library/mnv-iot-sdk/1.1.2/mnv-iot-sdk-1.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

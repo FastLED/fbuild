@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-rcele-85",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-rcele-85/library/ADT7320_SPI/0.0.0+sha.f57cf8786393/ADT7320_SPI-0.0.0+sha.f57cf8786393.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADT7320_SPI-0.0.0+sha.f57cf8786393.tar.gz",
+    "size_bytes": 1857,
+    "sha256": "91b0459fa223e55d20f9cc500de6109af40f3a5426501a5c7ed60606a6903b8b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rcele-85/library/ADT7320_SPI/0.0.0%2Bsha.f57cf8786393/ADT7320_SPI-0.0.0%2Bsha.f57cf8786393.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rcele-85/library/ADT7320_SPI/0.0.0%2Bsha.f57cf8786393/ADT7320_SPI-0.0.0%2Bsha.f57cf8786393.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-rcele-85/library/GSM_MQTT/0.0.0+sha.e7957e1745cb/GSM_MQTT-0.0.0+sha.e7957e1745cb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GSM_MQTT-0.0.0+sha.e7957e1745cb.tar.gz",
+    "size_bytes": 6605,
+    "sha256": "4207c204151541c5106dfc82e56287e33cd9a7899c8a1ced31ba59352ade8ea8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rcele-85/library/GSM_MQTT/0.0.0%2Bsha.e7957e1745cb/GSM_MQTT-0.0.0%2Bsha.e7957e1745cb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rcele-85/library/GSM_MQTT/0.0.0%2Bsha.e7957e1745cb/GSM_MQTT-0.0.0%2Bsha.e7957e1745cb.tar.gz"
+    ]
+   }
+  }
+ ]
+}

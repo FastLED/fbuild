@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-hardtail",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-hardtail/library/pwm_all_out/0.0.0+sha.f9e8b982516e/pwm_all_out-0.0.0+sha.f9e8b982516e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pwm_all_out-0.0.0+sha.f9e8b982516e.tar.gz",
+    "size_bytes": 5260,
+    "sha256": "47b91ca04a588ec61a9e7e8a7bed6c90f73d02794e0df9565251cbc3651eb5e3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hardtail/library/pwm_all_out/0.0.0%2Bsha.f9e8b982516e/pwm_all_out-0.0.0%2Bsha.f9e8b982516e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hardtail/library/pwm_all_out/0.0.0%2Bsha.f9e8b982516e/pwm_all_out-0.0.0%2Bsha.f9e8b982516e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-vmiguel",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-vmiguel/library/uLipeRTOSv4/0.0.0+sha.5a26ddce5970/uLipeRTOSv4-0.0.0+sha.5a26ddce5970.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uLipeRTOSv4-0.0.0+sha.5a26ddce5970.tar.gz",
+    "size_bytes": 19992,
+    "sha256": "a9c117fa3fd4fbfe0e9562331f31869bb988016f6e363fe808cd5bd28a10a5c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-vmiguel/library/uLipeRTOSv4/0.0.0%2Bsha.5a26ddce5970/uLipeRTOSv4-0.0.0%2Bsha.5a26ddce5970.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-vmiguel/library/uLipeRTOSv4/0.0.0%2Bsha.5a26ddce5970/uLipeRTOSv4-0.0.0%2Bsha.5a26ddce5970.tar.gz"
+    ]
+   }
+  }
+ ]
+}

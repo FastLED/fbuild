@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/raffaelemorganti",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "raffaelemorganti/library/protectedAES/0.1.0/protectedAES-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "protectedAES-0.1.0.tar.gz",
+    "size_bytes": 8040,
+    "sha256": "08abef7e18caa49c6fe047468882ace83aa9a5924d6b7451f1560cb04793149d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/raffaelemorganti/library/protectedAES/0.1.0/protectedAES-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/raffaelemorganti/library/protectedAES/0.1.0/protectedAES-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

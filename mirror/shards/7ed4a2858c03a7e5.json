@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-rabad1",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-rabad1/library/TB6612FNG/0.0.0+sha.8f562bdd5e93/TB6612FNG-0.0.0+sha.8f562bdd5e93.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TB6612FNG-0.0.0+sha.8f562bdd5e93.tar.gz",
+    "size_bytes": 1939,
+    "sha256": "9e744a64fca0b969efb153f657589662d13fce70b623f09088b99c22f2628dfc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rabad1/library/TB6612FNG/0.0.0%2Bsha.8f562bdd5e93/TB6612FNG-0.0.0%2Bsha.8f562bdd5e93.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rabad1/library/TB6612FNG/0.0.0%2Bsha.8f562bdd5e93/TB6612FNG-0.0.0%2Bsha.8f562bdd5e93.tar.gz"
+    ]
+   }
+  }
+ ]
+}

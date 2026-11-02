@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-salarian",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-salarian/library/PulseDecoder/0.0.0+sha.b0ec6b86deaa/PulseDecoder-0.0.0+sha.b0ec6b86deaa.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PulseDecoder-0.0.0+sha.b0ec6b86deaa.tar.gz",
+    "size_bytes": 1486,
+    "sha256": "4b3ac468f5ea6e48026fb64b11fecb2867774d10a8ab1e1dafcc41655e6f8f64",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-salarian/library/PulseDecoder/0.0.0%2Bsha.b0ec6b86deaa/PulseDecoder-0.0.0%2Bsha.b0ec6b86deaa.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-salarian/library/PulseDecoder/0.0.0%2Bsha.b0ec6b86deaa/PulseDecoder-0.0.0%2Bsha.b0ec6b86deaa.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-salarian/library/Watchdog/0.0.0+sha.84f7c088c261/Watchdog-0.0.0+sha.84f7c088c261.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Watchdog-0.0.0+sha.84f7c088c261.tar.gz",
+    "size_bytes": 3335,
+    "sha256": "ac99300a0821cb15c5f7a164f6d05a4f9b9945bcff04aaae2c660224bb8058f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-salarian/library/Watchdog/0.0.0%2Bsha.84f7c088c261/Watchdog-0.0.0%2Bsha.84f7c088c261.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-salarian/library/Watchdog/0.0.0%2Bsha.84f7c088c261/Watchdog-0.0.0%2Bsha.84f7c088c261.tar.gz"
+    ]
+   }
+  }
+ ]
+}

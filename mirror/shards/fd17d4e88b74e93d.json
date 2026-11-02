@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dai-eoh",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dai-eoh/library/LedRGB565/1.0.1/LedRGB565-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LedRGB565-1.0.1.tar.gz",
+    "size_bytes": 1555,
+    "sha256": "2237fbe16475b1496063573a463619f4b3049e2d203f6e0c23b25a2a539c4174",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dai-eoh/library/LedRGB565/1.0.1/LedRGB565-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dai-eoh/library/LedRGB565/1.0.1/LedRGB565-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

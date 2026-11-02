@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-iop",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-iop/library/WIZwiki-7500_Blynk/0.0.0+sha.ba922c4e9aee/WIZwiki-7500_Blynk-0.0.0+sha.ba922c4e9aee.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WIZwiki-7500_Blynk-0.0.0+sha.ba922c4e9aee.tar.gz",
+    "size_bytes": 33554,
+    "sha256": "989b330eda6f79ac47b88a5e0f4fda22e10b9a6ee9bd50b5be0da6ac38455cf2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-iop/library/WIZwiki-7500_Blynk/0.0.0%2Bsha.ba922c4e9aee/WIZwiki-7500_Blynk-0.0.0%2Bsha.ba922c4e9aee.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-iop/library/WIZwiki-7500_Blynk/0.0.0%2Bsha.ba922c4e9aee/WIZwiki-7500_Blynk-0.0.0%2Bsha.ba922c4e9aee.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-iop/library/httpServer/0.0.0+sha.4c09c3f44a8f/httpServer-0.0.0+sha.4c09c3f44a8f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "httpServer-0.0.0+sha.4c09c3f44a8f.tar.gz",
+    "size_bytes": 14929,
+    "sha256": "9b61d41af35d8fba28e5b20ea64c15614501213d6405d5a3f5a013dcb19e27c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-iop/library/httpServer/0.0.0%2Bsha.4c09c3f44a8f/httpServer-0.0.0%2Bsha.4c09c3f44a8f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-iop/library/httpServer/0.0.0%2Bsha.4c09c3f44a8f/httpServer-0.0.0%2Bsha.4c09c3f44a8f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

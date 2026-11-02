@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/circuitbeard",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "circuitbeard/library/Petduino/1.1.0/Petduino-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Petduino-1.1.0.tar.gz",
+    "size_bytes": 19063,
+    "sha256": "08a76a12f19c5dac53c26bb0b91f7f311f8b2fd6e9ca5092a44f35c8d99958c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/circuitbeard/library/Petduino/1.1.0/Petduino-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/circuitbeard/library/Petduino/1.1.0/Petduino-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

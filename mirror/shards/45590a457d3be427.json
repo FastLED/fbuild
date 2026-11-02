@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/voelkerb",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "voelkerb/library/ADE9000/1.0.0/ADE9000-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADE9000-1.0.0.tar.gz",
+    "size_bytes": 24872,
+    "sha256": "f12063d9d7f12e7b168e62a8d1e572747e0a6eef748a9a71b183f36352bc2bc5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/voelkerb/library/ADE9000/1.0.0/ADE9000-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/voelkerb/library/ADE9000/1.0.0/ADE9000-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "voelkerb/library/BistableRelay/1.0.0/BistableRelay-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BistableRelay-1.0.0.tar.gz",
+    "size_bytes": 4758,
+    "sha256": "e82d826a26912f01c0479749b39bbcb154fe1cdfb5f4f6effc9645931810d6c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/voelkerb/library/BistableRelay/1.0.0/BistableRelay-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/voelkerb/library/BistableRelay/1.0.0/BistableRelay-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "voelkerb/library/STPM3X/1.0.0/STPM3X-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STPM3X-1.0.0.tar.gz",
+    "size_bytes": 15025,
+    "sha256": "cf19c4d7f62f9a0967900b8bedf51d1a7803da6889931fd9b2a53227dfc1caa1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/voelkerb/library/STPM3X/1.0.0/STPM3X-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/voelkerb/library/STPM3X/1.0.0/STPM3X-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "voelkerb/library/multiLogger/0.0.9/multiLogger-0.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "multiLogger-0.0.9.tar.gz",
+    "size_bytes": 11387,
+    "sha256": "cbc3700340be6805d76b86bbfe50c7a754de35bef30b93dc0f72401275b3e61e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/voelkerb/library/multiLogger/0.0.9/multiLogger-0.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/voelkerb/library/multiLogger/0.0.9/multiLogger-0.0.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

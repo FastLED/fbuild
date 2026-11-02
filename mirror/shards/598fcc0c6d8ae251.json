@@ -1,0 +1,269 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mcci-catena",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mcci-catena/library/MCCI%20Arduino%20Development%20Kit%20ADK/0.3.2/MCCIArduinoDevelopmentKitADK-0.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCCIArduinoDevelopmentKitADK-0.3.2.tar.gz",
+    "size_bytes": 17969,
+    "sha256": "ecdc1ee2e87c3e6538fb1d7ea38a0aab9bf6f607b4bddcbcc153c228befa3363",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mcci-catena/library/MCCI%2520Arduino%2520Development%2520Kit%2520ADK/0.3.2/MCCIArduinoDevelopmentKitADK-0.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mcci-catena/library/MCCI%20Arduino%20Development%20Kit%20ADK/0.3.2/MCCIArduinoDevelopmentKitADK-0.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mcci-catena/library/MCCI%20Arduino%20Development%20Kit%20ADK/1.0.0/MCCIArduinoDevelopmentKitADK-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCCIArduinoDevelopmentKitADK-1.0.0.tar.gz",
+    "size_bytes": 18000,
+    "sha256": "888e1467bfcd6a1b46dedc2bd49c1c48dff00081ade4ec21afdfe87743c15fc1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mcci-catena/library/MCCI%2520Arduino%2520Development%2520Kit%2520ADK/1.0.0/MCCIArduinoDevelopmentKitADK-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mcci-catena/library/MCCI%20Arduino%20Development%20Kit%20ADK/1.0.0/MCCIArduinoDevelopmentKitADK-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mcci-catena/library/MCCI%20Arduino%20Development%20Kit%20ADK/1.1.0-pre1/MCCIArduinoDevelopmentKitADK-1.1.0-pre1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCCIArduinoDevelopmentKitADK-1.1.0-pre1.tar.gz",
+    "size_bytes": 18871,
+    "sha256": "d12df23398cb32204db738f01f07a63d30d605c24e75792392a99e681e3b2d72",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mcci-catena/library/MCCI%2520Arduino%2520Development%2520Kit%2520ADK/1.1.0-pre1/MCCIArduinoDevelopmentKitADK-1.1.0-pre1.tar.gz",
+     "https://dl.registry.platformio.org/download/mcci-catena/library/MCCI%20Arduino%20Development%20Kit%20ADK/1.1.0-pre1/MCCIArduinoDevelopmentKitADK-1.1.0-pre1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mcci-catena/library/MCCI%20Arduino%20LoRaWAN%20Library/0.10.0/MCCIArduinoLoRaWANLibrary-0.10.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCCIArduinoLoRaWANLibrary-0.10.0.tar.gz",
+    "size_bytes": 57473,
+    "sha256": "e8fdb8ad269bfd7a256d78842b50fb34ba368f455e7b65c1f6afa16ebb8b25d5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mcci-catena/library/MCCI%2520Arduino%2520LoRaWAN%2520Library/0.10.0/MCCIArduinoLoRaWANLibrary-0.10.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mcci-catena/library/MCCI%20Arduino%20LoRaWAN%20Library/0.10.0/MCCIArduinoLoRaWANLibrary-0.10.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mcci-catena/library/MCCI%20Catena%20Arduino%20Platform/0.24.1/MCCICatenaArduinoPlatform-0.24.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCCICatenaArduinoPlatform-0.24.1.tar.gz",
+    "size_bytes": 183715,
+    "sha256": "c896666e5709e9fe26cb44adefbfb82f25760144c77788b2d4da745e5e9660f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mcci-catena/library/MCCI%2520Catena%2520Arduino%2520Platform/0.24.1/MCCICatenaArduinoPlatform-0.24.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mcci-catena/library/MCCI%20Catena%20Arduino%20Platform/0.24.1/MCCICatenaArduinoPlatform-0.24.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mcci-catena/library/MCCI%20Catena%20Arduino%20Platform/0.25.0-pre3/MCCICatenaArduinoPlatform-0.25.0-pre3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCCICatenaArduinoPlatform-0.25.0-pre3.tar.gz",
+    "size_bytes": 194844,
+    "sha256": "d3a896af11101053739debe8cf8c9da089088636eb61447f59bf189ea846352e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mcci-catena/library/MCCI%2520Catena%2520Arduino%2520Platform/0.25.0-pre3/MCCICatenaArduinoPlatform-0.25.0-pre3.tar.gz",
+     "https://dl.registry.platformio.org/download/mcci-catena/library/MCCI%20Catena%20Arduino%20Platform/0.25.0-pre3/MCCICatenaArduinoPlatform-0.25.0-pre3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mcci-catena/library/MCCI%20Catena%20Arduino%20Platform/0.25.0-pre5/MCCICatenaArduinoPlatform-0.25.0-pre5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCCICatenaArduinoPlatform-0.25.0-pre5.tar.gz",
+    "size_bytes": 200068,
+    "sha256": "2fc03b035278e168e568915497a3b79bad1e6c81e76a322de688734bfa6b5baf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mcci-catena/library/MCCI%2520Catena%2520Arduino%2520Platform/0.25.0-pre5/MCCICatenaArduinoPlatform-0.25.0-pre5.tar.gz",
+     "https://dl.registry.platformio.org/download/mcci-catena/library/MCCI%20Catena%20Arduino%20Platform/0.25.0-pre5/MCCICatenaArduinoPlatform-0.25.0-pre5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mcci-catena/library/MCCI%20Catena%20SCD30/0.2.0/MCCICatenaSCD30-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCCICatenaSCD30-0.2.0.tar.gz",
+    "size_bytes": 23865,
+    "sha256": "24c1e172973949902c0d72ccc441476ddda069ae2577f3a4b747385ac220fa72",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mcci-catena/library/MCCI%2520Catena%2520SCD30/0.2.0/MCCICatenaSCD30-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mcci-catena/library/MCCI%20Catena%20SCD30/0.2.0/MCCICatenaSCD30-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mcci-catena/library/MCCI%20Catena%20SDP/1.0.1/MCCICatenaSDP-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCCICatenaSDP-1.0.1.tar.gz",
+    "size_bytes": 19982,
+    "sha256": "6c3efc43b6878016980058a3799a3e5f73d2c6ed178277418489c06629a229da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mcci-catena/library/MCCI%2520Catena%2520SDP/1.0.1/MCCICatenaSDP-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mcci-catena/library/MCCI%20Catena%20SDP/1.0.1/MCCICatenaSDP-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mcci-catena/library/MCCI%20FRAM%20I2C/2.0.2/MCCIFRAMI2C-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCCIFRAMI2C-2.0.2.tar.gz",
+    "size_bytes": 5848,
+    "sha256": "f5dc90fe35cd2f94605dd63562fa64afb77de9cd81134b1aacd6734ff8b7ab1d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mcci-catena/library/MCCI%2520FRAM%2520I2C/2.0.2/MCCIFRAMI2C-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mcci-catena/library/MCCI%20FRAM%20I2C/2.0.2/MCCIFRAMI2C-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mcci-catena/library/MCCI%20LTR-329ALS/1.1.0/MCCILTR-329ALS-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCCILTR-329ALS-1.1.0.tar.gz",
+    "size_bytes": 44963,
+    "sha256": "9039a666e657f499994ecdcf62cc6035b6c0eb1a0fdc2ba0f7d787aa55e70ace",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mcci-catena/library/MCCI%2520LTR-329ALS/1.1.0/MCCILTR-329ALS-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mcci-catena/library/MCCI%20LTR-329ALS/1.1.0/MCCILTR-329ALS-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mcci-catena/library/MCCI%20LTR-329ALS/1.1.1-pre1/MCCILTR-329ALS-1.1.1-pre1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCCILTR-329ALS-1.1.1-pre1.tar.gz",
+    "size_bytes": 45160,
+    "sha256": "20dac013676de7cb0c85b3f75d9ef7524fea8faec84fda95ed7728b602cbc4a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mcci-catena/library/MCCI%2520LTR-329ALS/1.1.1-pre1/MCCILTR-329ALS-1.1.1-pre1.tar.gz",
+     "https://dl.registry.platformio.org/download/mcci-catena/library/MCCI%20LTR-329ALS/1.1.1-pre1/MCCILTR-329ALS-1.1.1-pre1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mcci-catena/library/MCCI%20LoRaWAN%20LMIC%20library/3.3.0/MCCILoRaWANLMIClibrary-3.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCCILoRaWANLMIClibrary-3.3.0.tar.gz",
+    "size_bytes": 4502635,
+    "sha256": "de19e23c31882c342382b8d50493e8eb40985e4835a967b4379e652a571900ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mcci-catena/library/MCCI%2520LoRaWAN%2520LMIC%2520library/3.3.0/MCCILoRaWANLMIClibrary-3.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mcci-catena/library/MCCI%20LoRaWAN%20LMIC%20library/3.3.0/MCCILoRaWANLMIClibrary-3.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mcci-catena/library/MCCI%20LoRaWAN%20LMIC%20library/4.1.1/MCCILoRaWANLMIClibrary-4.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCCILoRaWANLMIClibrary-4.1.1.tar.gz",
+    "size_bytes": 200966,
+    "sha256": "9a72be6c42e21147423b6300087cccb3818bbce1cc978906ec81f34c6597febf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mcci-catena/library/MCCI%2520LoRaWAN%2520LMIC%2520library/4.1.1/MCCILoRaWANLMIClibrary-4.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mcci-catena/library/MCCI%20LoRaWAN%20LMIC%20library/4.1.1/MCCILoRaWANLMIClibrary-4.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mcci-catena/library/MCCI%20LoRaWAN%20LMIC%20library/5.0.1/MCCILoRaWANLMIClibrary-5.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCCILoRaWANLMIClibrary-5.0.1.tar.gz",
+    "size_bytes": 212822,
+    "sha256": "412bc7be9d80e5774c09c9b92497df6d557cfed1a793b97dc16f4b8d870d4681",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mcci-catena/library/MCCI%2520LoRaWAN%2520LMIC%2520library/5.0.1/MCCILoRaWANLMIClibrary-5.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mcci-catena/library/MCCI%20LoRaWAN%20LMIC%20library/5.0.1/MCCILoRaWANLMIClibrary-5.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mcci-catena/library/MCCI%20LoRaWAN%20LMIC%20library/6.0.0/MCCILoRaWANLMIClibrary-6.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCCILoRaWANLMIClibrary-6.0.0.tar.gz",
+    "size_bytes": 252275,
+    "sha256": "a74ed546111c6d4aa6c4c8ba9494fe986ee451858b8a6d78bc85f2b6079e83ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mcci-catena/library/MCCI%2520LoRaWAN%2520LMIC%2520library/6.0.0/MCCILoRaWANLMIClibrary-6.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mcci-catena/library/MCCI%20LoRaWAN%20LMIC%20library/6.0.0/MCCILoRaWANLMIClibrary-6.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mcci-catena/library/MCCI%20LoRaWAN%20LMIC%20library/6.0.1/MCCILoRaWANLMIClibrary-6.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCCILoRaWANLMIClibrary-6.0.1.tar.gz",
+    "size_bytes": 253250,
+    "sha256": "92f803cfc8fede1ecd3dd3f40a6dc69c6b57fcdf0aec74dbd930d6905fdda0cd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mcci-catena/library/MCCI%2520LoRaWAN%2520LMIC%2520library/6.0.1/MCCILoRaWANLMIClibrary-6.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mcci-catena/library/MCCI%20LoRaWAN%20LMIC%20library/6.0.1/MCCILoRaWANLMIClibrary-6.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mcci-catena/library/MCCI%20SofwareSerial/3.0.0/MCCISofwareSerial-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCCISofwareSerial-3.0.0.tar.gz",
+    "size_bytes": 14739,
+    "sha256": "eb9db9e76c7571d305c740fa978fb9f3f1aa1ecad41fe282bb0f77472b9a20eb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mcci-catena/library/MCCI%2520SofwareSerial/3.0.0/MCCISofwareSerial-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mcci-catena/library/MCCI%20SofwareSerial/3.0.0/MCCISofwareSerial-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mcci-catena/library/MCCI-Catena-PMS7003/0.1.2/MCCI-Catena-PMS7003-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCCI-Catena-PMS7003-0.1.2.tar.gz",
+    "size_bytes": 41877,
+    "sha256": "643ad7ed3d01dca468c43ca45986acfde787780bd9dcc7b4ab2d8aa2a08dac76",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mcci-catena/library/MCCI-Catena-PMS7003/0.1.2/MCCI-Catena-PMS7003-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mcci-catena/library/MCCI-Catena-PMS7003/0.1.2/MCCI-Catena-PMS7003-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mcci-catena/library/MCCI-Catena-SHT3x/0.2.1/MCCI-Catena-SHT3x-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCCI-Catena-SHT3x-0.2.1.tar.gz",
+    "size_bytes": 11767,
+    "sha256": "593f00c7c1646e4538598c779611bc4601fe76bfc7c0160b07953e057f20ab52",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mcci-catena/library/MCCI-Catena-SHT3x/0.2.1/MCCI-Catena-SHT3x-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mcci-catena/library/MCCI-Catena-SHT3x/0.2.1/MCCI-Catena-SHT3x-0.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

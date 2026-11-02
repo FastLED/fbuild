@@ -1,0 +1,126 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/v7rc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "v7rc/library/V7RCRobot-ESP32/0.0.2/V7RCRobot-ESP32-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "V7RCRobot-ESP32-0.0.2.tar.gz",
+    "size_bytes": 58876,
+    "sha256": "d7a379694a66127f2a9605d403a7dcba3b9a4195d169dbfcfdf93f1640983ea3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/v7rc/library/V7RCRobot-ESP32/0.0.2/V7RCRobot-ESP32-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/v7rc/library/V7RCRobot-ESP32/0.0.2/V7RCRobot-ESP32-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "v7rc/library/V7RCRobot-ESP32/0.0.3/V7RCRobot-ESP32-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "V7RCRobot-ESP32-0.0.3.tar.gz",
+    "size_bytes": 93091,
+    "sha256": "d4d7b17f3bcab7a726911a323634ff2ac81412aa5945be69bcaf26eade5e327e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/v7rc/library/V7RCRobot-ESP32/0.0.3/V7RCRobot-ESP32-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/v7rc/library/V7RCRobot-ESP32/0.0.3/V7RCRobot-ESP32-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "v7rc/library/V7RCRobot-ESP32/0.0.5/V7RCRobot-ESP32-0.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "V7RCRobot-ESP32-0.0.5.tar.gz",
+    "size_bytes": 96094,
+    "sha256": "af7506cc1c41d0f5c7bc76713da4aff1718482504022154ef581f5cdabc676d5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/v7rc/library/V7RCRobot-ESP32/0.0.5/V7RCRobot-ESP32-0.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/v7rc/library/V7RCRobot-ESP32/0.0.5/V7RCRobot-ESP32-0.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "v7rc/library/V7RCRobot-ESP32/0.0.6/V7RCRobot-ESP32-0.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "V7RCRobot-ESP32-0.0.6.tar.gz",
+    "size_bytes": 92297,
+    "sha256": "52052cc51b5c0f686885adb06d15da3b107a2faffe74ea042d219f907c4d42dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/v7rc/library/V7RCRobot-ESP32/0.0.6/V7RCRobot-ESP32-0.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/v7rc/library/V7RCRobot-ESP32/0.0.6/V7RCRobot-ESP32-0.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "v7rc/library/V7RCServoDriver/0.0.13/V7RCServoDriver-0.0.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "V7RCServoDriver-0.0.13.tar.gz",
+    "size_bytes": 17090,
+    "sha256": "a5a9313a7f6082961801355fc507d1495f01a433efcff6de59cc09baa02b147b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/v7rc/library/V7RCServoDriver/0.0.13/V7RCServoDriver-0.0.13.tar.gz",
+     "https://dl.registry.platformio.org/download/v7rc/library/V7RCServoDriver/0.0.13/V7RCServoDriver-0.0.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "v7rc/library/V7RCServoDriver/0.0.14/V7RCServoDriver-0.0.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "V7RCServoDriver-0.0.14.tar.gz",
+    "size_bytes": 18684,
+    "sha256": "32efbcb11ab62ebab616d818d9a0927d77a26f5cff847afbdeeddad136f61410",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/v7rc/library/V7RCServoDriver/0.0.14/V7RCServoDriver-0.0.14.tar.gz",
+     "https://dl.registry.platformio.org/download/v7rc/library/V7RCServoDriver/0.0.14/V7RCServoDriver-0.0.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "v7rc/library/V7RCServoDriver/0.0.15/V7RCServoDriver-0.0.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "V7RCServoDriver-0.0.15.tar.gz",
+    "size_bytes": 19039,
+    "sha256": "e129170d637574e7fb1c5069e9d30e0132a951595af950742b84ae36fb19bacb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/v7rc/library/V7RCServoDriver/0.0.15/V7RCServoDriver-0.0.15.tar.gz",
+     "https://dl.registry.platformio.org/download/v7rc/library/V7RCServoDriver/0.0.15/V7RCServoDriver-0.0.15.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "v7rc/library/V7RCServoDriver/0.0.16/V7RCServoDriver-0.0.16.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "V7RCServoDriver-0.0.16.tar.gz",
+    "size_bytes": 19187,
+    "sha256": "610b028e33ed197d08c9a266eb569775acd40f428468f95b080cd431925d7fbb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/v7rc/library/V7RCServoDriver/0.0.16/V7RCServoDriver-0.0.16.tar.gz",
+     "https://dl.registry.platformio.org/download/v7rc/library/V7RCServoDriver/0.0.16/V7RCServoDriver-0.0.16.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "v7rc/library/V7RCServoDriver/0.0.6/V7RCServoDriver-0.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "V7RCServoDriver-0.0.6.tar.gz",
+    "size_bytes": 13679,
+    "sha256": "a71a16f70beac08ae38afac1ec489e7b5f9d0adf1506c99c16b4fb9aa3692e49",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/v7rc/library/V7RCServoDriver/0.0.6/V7RCServoDriver-0.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/v7rc/library/V7RCServoDriver/0.0.6/V7RCServoDriver-0.0.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

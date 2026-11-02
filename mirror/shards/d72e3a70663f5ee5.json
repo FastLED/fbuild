@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/zjp007",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "zjp007/library/PulseAnalyzer/1.0.0/PulseAnalyzer-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PulseAnalyzer-1.0.0.tar.gz",
+    "size_bytes": 7968,
+    "sha256": "593acdeea4f72baaa8efb6e5c96c3cc58cf5429919e0692923925aa2891ed3b4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zjp007/library/PulseAnalyzer/1.0.0/PulseAnalyzer-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/zjp007/library/PulseAnalyzer/1.0.0/PulseAnalyzer-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zjp007/library/PulseAnalyzer/1.1.0/PulseAnalyzer-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PulseAnalyzer-1.1.0.tar.gz",
+    "size_bytes": 9464,
+    "sha256": "a7166c8fff81e714466f7c4e9362229f47aa0fdf47f24c38281f222876825df1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zjp007/library/PulseAnalyzer/1.1.0/PulseAnalyzer-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/zjp007/library/PulseAnalyzer/1.1.0/PulseAnalyzer-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

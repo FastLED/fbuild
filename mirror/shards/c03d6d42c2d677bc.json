@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-peterknoben",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-peterknoben/library/PIDController/0.0.0+sha.c7f0b343df31/PIDController-0.0.0+sha.c7f0b343df31.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PIDController-0.0.0+sha.c7f0b343df31.tar.gz",
+    "size_bytes": 1193,
+    "sha256": "bc0043f5c768cf0445d44f899048fee345e4108aa876b363af99658ccb1b02e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-peterknoben/library/PIDController/0.0.0%2Bsha.c7f0b343df31/PIDController-0.0.0%2Bsha.c7f0b343df31.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-peterknoben/library/PIDController/0.0.0%2Bsha.c7f0b343df31/PIDController-0.0.0%2Bsha.c7f0b343df31.tar.gz"
+    ]
+   }
+  }
+ ]
+}

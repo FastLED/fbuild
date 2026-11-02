@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/robertsauer",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "robertsauer/library/Elementic/1.0.1/Elementic-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Elementic-1.0.1.tar.gz",
+    "size_bytes": 34890,
+    "sha256": "c7466635abbb21a5d80c48666185550742cd47f8d84dbfa7237394547d682015",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robertsauer/library/Elementic/1.0.1/Elementic-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/robertsauer/library/Elementic/1.0.1/Elementic-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robertsauer/library/Elementic/1.1.0/Elementic-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Elementic-1.1.0.tar.gz",
+    "size_bytes": 62447,
+    "sha256": "0c4177939a3fcb6bfafa2f878820e7455261344872e901dc7968e73b6f282049",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robertsauer/library/Elementic/1.1.0/Elementic-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/robertsauer/library/Elementic/1.1.0/Elementic-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robertsauer/library/Elementic/1.1.1/Elementic-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Elementic-1.1.1.tar.gz",
+    "size_bytes": 64989,
+    "sha256": "0db4947678e2763fece18992d99cf5b7e78e0bcba55a041df37544f06f54e0df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robertsauer/library/Elementic/1.1.1/Elementic-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/robertsauer/library/Elementic/1.1.1/Elementic-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robertsauer/library/Elementic/1.1.2/Elementic-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Elementic-1.1.2.tar.gz",
+    "size_bytes": 65763,
+    "sha256": "4eceff36cf87de7df0d8740cb2dfbea1bc704bc953d0760269c4b76a47df74d5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robertsauer/library/Elementic/1.1.2/Elementic-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/robertsauer/library/Elementic/1.1.2/Elementic-1.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

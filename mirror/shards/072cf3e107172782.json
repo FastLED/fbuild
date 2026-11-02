@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/maxrangner",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "maxrangner/library/GawiButtons/1.0.1/GawiButtons-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GawiButtons-1.0.1.tar.gz",
+    "size_bytes": 3241,
+    "sha256": "169e2a5ccb53cfed1198d107b808caf7d32f16666a6c4c56c4d5d12aae64e715",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maxrangner/library/GawiButtons/1.0.1/GawiButtons-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/maxrangner/library/GawiButtons/1.0.1/GawiButtons-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "maxrangner/library/GawiButtons/1.0.3/GawiButtons-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GawiButtons-1.0.3.tar.gz",
+    "size_bytes": 3461,
+    "sha256": "94de867dd7b867e7a6787f7f3d4cbb27cee3de8f82d997bfb139f44535358931",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maxrangner/library/GawiButtons/1.0.3/GawiButtons-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/maxrangner/library/GawiButtons/1.0.3/GawiButtons-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "maxrangner/library/GawiButtons/1.0.4/GawiButtons-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GawiButtons-1.0.4.tar.gz",
+    "size_bytes": 3484,
+    "sha256": "2975240a7a2205ee2de9f02e17363169c714676bca3e1ddff6e1fb22115c3a2e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maxrangner/library/GawiButtons/1.0.4/GawiButtons-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/maxrangner/library/GawiButtons/1.0.4/GawiButtons-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "maxrangner/library/GawiButtons/1.0.5/GawiButtons-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GawiButtons-1.0.5.tar.gz",
+    "size_bytes": 3490,
+    "sha256": "f6b4e899c225445fb088a9f5e4098702b51c903c02733e4bb60ee3971bf0ad1b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maxrangner/library/GawiButtons/1.0.5/GawiButtons-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/maxrangner/library/GawiButtons/1.0.5/GawiButtons-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "maxrangner/library/GawiButtons/1.0.7/GawiButtons-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GawiButtons-1.0.7.tar.gz",
+    "size_bytes": 3512,
+    "sha256": "15cb6f87cbae22ef8c24e4b2cb53cebf7dafeb736967060fdac2a55214a56dc7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maxrangner/library/GawiButtons/1.0.7/GawiButtons-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/maxrangner/library/GawiButtons/1.0.7/GawiButtons-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "maxrangner/library/GawiButtons/1.0.8/GawiButtons-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GawiButtons-1.0.8.tar.gz",
+    "size_bytes": 3547,
+    "sha256": "97ec37e56a60e4ad799ebf88f0e0c13f22e6a155d6b0a0dfdff1006487ee5db4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maxrangner/library/GawiButtons/1.0.8/GawiButtons-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/maxrangner/library/GawiButtons/1.0.8/GawiButtons-1.0.8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

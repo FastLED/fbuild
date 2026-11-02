@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/floessie",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "floessie/library/frt/0.9.5/frt-0.9.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "frt-0.9.5.tar.gz",
+    "size_bytes": 11415,
+    "sha256": "d2c5adb96e7410017439c8f5524bfdc2b4f02a29271022d52d28978e3b060d74",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/floessie/library/frt/0.9.5/frt-0.9.5.tar.gz",
+     "https://dl.registry.platformio.org/download/floessie/library/frt/0.9.5/frt-0.9.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

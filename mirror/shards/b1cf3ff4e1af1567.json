@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/yutter",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "yutter/library/ArduinoJWT/1.0.1/ArduinoJWT-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoJWT-1.0.1.tar.gz",
+    "size_bytes": 7136,
+    "sha256": "74773df21d662696e5f58f1f0d9303a57e5b8f02e310b9eb803aa6afe406fd47",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yutter/library/ArduinoJWT/1.0.1/ArduinoJWT-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/yutter/library/ArduinoJWT/1.0.1/ArduinoJWT-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

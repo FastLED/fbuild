@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/chris--a",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "chris--a/library/ArdOSC/2.2.0/ArdOSC-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArdOSC-2.2.0.tar.gz",
+    "size_bytes": 10407,
+    "sha256": "4e312fa857cd3832e734911d993dff3c285b9780cc4228fa9588bc705dbfa4e7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chris--a/library/ArdOSC/2.2.0/ArdOSC-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chris--a/library/ArdOSC/2.2.0/ArdOSC-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chris--a/library/BitBool/1.2.0/BitBool-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BitBool-1.2.0.tar.gz",
+    "size_bytes": 5319,
+    "sha256": "3dfc4c45b012d1c4bcfb9b58ca4673c66345c7c745137223cef63ba7d0d0ec2d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chris--a/library/BitBool/1.2.0/BitBool-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chris--a/library/BitBool/1.2.0/BitBool-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chris--a/library/EEWrap/1.0.0/EEWrap-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EEWrap-1.0.0.tar.gz",
+    "size_bytes": 4817,
+    "sha256": "ec57e635ff396428087dd2e9bcbc48c3b5ad2a1cdf130d3f38ada7d290e17116",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chris--a/library/EEWrap/1.0.0/EEWrap-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chris--a/library/EEWrap/1.0.0/EEWrap-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chris--a/library/Keypad/3.1.1/Keypad-3.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Keypad-3.1.1.tar.gz",
+    "size_bytes": 22962,
+    "sha256": "a2280c7b09695e8994f0b6d04f29aebcab6720152587fb2bad576265252224d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chris--a/library/Keypad/3.1.1/Keypad-3.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/chris--a/library/Keypad/3.1.1/Keypad-3.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chris--a/library/PGMWrap/1.0.0/PGMWrap-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PGMWrap-1.0.0.tar.gz",
+    "size_bytes": 2019,
+    "sha256": "53836262c4d46d50572135f2129d617d6d6edf38974c66ab39f9018530264b5e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chris--a/library/PGMWrap/1.0.0/PGMWrap-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chris--a/library/PGMWrap/1.0.0/PGMWrap-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chris--a/library/PrintEx/1.2.0/PrintEx-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PrintEx-1.2.0.tar.gz",
+    "size_bytes": 33136,
+    "sha256": "64bb8ffb15cd3f2eaacd83b5357c2dfd146d9004a3ec6af351b4b81024f402dc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chris--a/library/PrintEx/1.2.0/PrintEx-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chris--a/library/PrintEx/1.2.0/PrintEx-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chris--a/library/SmallSetup/1.0.0/SmallSetup-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmallSetup-1.0.0.tar.gz",
+    "size_bytes": 3521,
+    "sha256": "52ee3cdcbd4ae68fac4400395ba128e76f846558fd885931ea3ea2d415506e9c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chris--a/library/SmallSetup/1.0.0/SmallSetup-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chris--a/library/SmallSetup/1.0.0/SmallSetup-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

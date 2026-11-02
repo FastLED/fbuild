@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mertwhocodes",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mertwhocodes/library/mwc_stepper/1.2.0/mwc_stepper-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mwc_stepper-1.2.0.tar.gz",
+    "size_bytes": 2125,
+    "sha256": "726889c0263625218ed3f825b02c5eaf3002dfe34e80ae893dfa20b1e63248c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mertwhocodes/library/mwc_stepper/1.2.0/mwc_stepper-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mertwhocodes/library/mwc_stepper/1.2.0/mwc_stepper-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

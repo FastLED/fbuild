@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/elhayra",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "elhayra/library/MilliStopper/1.0.0/MilliStopper-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MilliStopper-1.0.0.tar.gz",
+    "size_bytes": 2095,
+    "sha256": "852069b6717911fbd13b8224ed273f6258908123786d2441090b886d23beb17c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/elhayra/library/MilliStopper/1.0.0/MilliStopper-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/elhayra/library/MilliStopper/1.0.0/MilliStopper-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "elhayra/library/SandTimer/1.0.0/SandTimer-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SandTimer-1.0.0.tar.gz",
+    "size_bytes": 2575,
+    "sha256": "f07220a4b43f3ab4756a685b1daf72216f4ea0597b1a0f781d1344b0cdbacec5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/elhayra/library/SandTimer/1.0.0/SandTimer-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/elhayra/library/SandTimer/1.0.0/SandTimer-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "elhayra/library/Strober/1.0.1/Strober-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Strober-1.0.1.tar.gz",
+    "size_bytes": 3174,
+    "sha256": "86dd0f93e94cdd2e83f3deb800016b2112b0a2b5f4a13fae28d2ce1b358f4790",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/elhayra/library/Strober/1.0.1/Strober-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/elhayra/library/Strober/1.0.1/Strober-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sphero-inc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sphero-inc/library/SpheroRVR/1.0.0/SpheroRVR-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SpheroRVR-1.0.0.tar.gz",
+    "size_bytes": 40358,
+    "sha256": "5ccba0d5877172dcd3bd69f1a2c90a7e5af673d9e2efc4c161a6bc7b6669717f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sphero-inc/library/SpheroRVR/1.0.0/SpheroRVR-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sphero-inc/library/SpheroRVR/1.0.0/SpheroRVR-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

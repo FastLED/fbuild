@@ -1,0 +1,321 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/faboplatform",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "faboplatform/library/FaBo%20201%203Axis%20ADXL345/1.0.2/FaBo2013AxisADXL345-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FaBo2013AxisADXL345-1.0.2.tar.gz",
+    "size_bytes": 7714,
+    "sha256": "255e66d4c749147205f3a8b6fa0209a676528375f7e3e77e56921ecdb981af17",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/faboplatform/library/FaBo%2520201%25203Axis%2520ADXL345/1.0.2/FaBo2013AxisADXL345-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/faboplatform/library/FaBo%20201%203Axis%20ADXL345/1.0.2/FaBo2013AxisADXL345-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "faboplatform/library/FaBo%20202%209Axis%20MPU9250/1.0.1/FaBo2029AxisMPU9250-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FaBo2029AxisMPU9250-1.0.1.tar.gz",
+    "size_bytes": 9107,
+    "sha256": "bf575d4cca3aca2bb0980de5cf91ba6bb10b6a3a3a47dac3ef767db5d6840933",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/faboplatform/library/FaBo%2520202%25209Axis%2520MPU9250/1.0.1/FaBo2029AxisMPU9250-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/faboplatform/library/FaBo%20202%209Axis%20MPU9250/1.0.1/FaBo2029AxisMPU9250-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "faboplatform/library/FaBo%20203%20Color%20S11059/1.0.2/FaBo203ColorS11059-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FaBo203ColorS11059-1.0.2.tar.gz",
+    "size_bytes": 6926,
+    "sha256": "05d93ba91b1428b7260b599bb7b203a270df7ea3e76ced5ec623e62c44b01eb3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/faboplatform/library/FaBo%2520203%2520Color%2520S11059/1.0.2/FaBo203ColorS11059-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/faboplatform/library/FaBo%20203%20Color%20S11059/1.0.2/FaBo203ColorS11059-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "faboplatform/library/FaBo%20204%20Baromter%20MPL115A2/1.0.0/FaBo204BaromterMPL115A2-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FaBo204BaromterMPL115A2-1.0.0.tar.gz",
+    "size_bytes": 6384,
+    "sha256": "fa8e624c22d3dd5c5c75da1f24a2506544dba50ae4dd789fe43d930e74fdd6bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/faboplatform/library/FaBo%2520204%2520Baromter%2520MPL115A2/1.0.0/FaBo204BaromterMPL115A2-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/faboplatform/library/FaBo%20204%20Baromter%20MPL115A2/1.0.0/FaBo204BaromterMPL115A2-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "faboplatform/library/FaBo%20205%20Proximity%20VCNL4010/1.0.0/FaBo205ProximityVCNL4010-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FaBo205ProximityVCNL4010-1.0.0.tar.gz",
+    "size_bytes": 7058,
+    "sha256": "1cf5d8089ed72c85916d53065a9e98aedf5b5781b711f1691523842b14e0fdd0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/faboplatform/library/FaBo%2520205%2520Proximity%2520VCNL4010/1.0.0/FaBo205ProximityVCNL4010-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/faboplatform/library/FaBo%20205%20Proximity%20VCNL4010/1.0.0/FaBo205ProximityVCNL4010-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "faboplatform/library/FaBo%20206%20UV%20Si1132/1.1.0/FaBo206UVSi1132-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FaBo206UVSi1132-1.1.0.tar.gz",
+    "size_bytes": 7011,
+    "sha256": "937225f51a7aace1cf09ddc09d1859e3db516c84d814b6390b885dd703173a5a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/faboplatform/library/FaBo%2520206%2520UV%2520Si1132/1.1.0/FaBo206UVSi1132-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/faboplatform/library/FaBo%20206%20UV%20Si1132/1.1.0/FaBo206UVSi1132-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "faboplatform/library/FaBo%20207%20Temperature%20ADT7410/1.0.1/FaBo207TemperatureADT7410-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FaBo207TemperatureADT7410-1.0.1.tar.gz",
+    "size_bytes": 6531,
+    "sha256": "101bd519836b9cf3438c893f19b28c685dc47291f0580d68cd5c99973854c5d3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/faboplatform/library/FaBo%2520207%2520Temperature%2520ADT7410/1.0.1/FaBo207TemperatureADT7410-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/faboplatform/library/FaBo%20207%20Temperature%20ADT7410/1.0.1/FaBo207TemperatureADT7410-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "faboplatform/library/FaBo%20208%20Humidity%20HTS221/1.0.0/FaBo208HumidityHTS221-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FaBo208HumidityHTS221-1.0.0.tar.gz",
+    "size_bytes": 7279,
+    "sha256": "a7b0bc44127d2e3081e515fc7be1b5a734f36698df4e72e4efcdf67b0c5233a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/faboplatform/library/FaBo%2520208%2520Humidity%2520HTS221/1.0.0/FaBo208HumidityHTS221-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/faboplatform/library/FaBo%20208%20Humidity%20HTS221/1.0.0/FaBo208HumidityHTS221-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "faboplatform/library/FaBo%20209%20KTemp%20MCP3421/1.0.0/FaBo209KTempMCP3421-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FaBo209KTempMCP3421-1.0.0.tar.gz",
+    "size_bytes": 6032,
+    "sha256": "8f7e215c00eb160e3858476e4fa9fd15a872d3620c632dac60b226ed4f86e4aa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/faboplatform/library/FaBo%2520209%2520KTemp%2520MCP3421/1.0.0/FaBo209KTempMCP3421-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/faboplatform/library/FaBo%20209%20KTemp%20MCP3421/1.0.0/FaBo209KTempMCP3421-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "faboplatform/library/FaBo%20210%20GPIO%20PCAL6408A/1.0.0/FaBo210GPIOPCAL6408A-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FaBo210GPIOPCAL6408A-1.0.0.tar.gz",
+    "size_bytes": 6070,
+    "sha256": "b7e8fd4abde4cf41ab9b67bd3b8c87ccb6f5aed3a59363bd58c4339fb1e1dacb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/faboplatform/library/FaBo%2520210%2520GPIO%2520PCAL6408A/1.0.0/FaBo210GPIOPCAL6408A-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/faboplatform/library/FaBo%20210%20GPIO%20PCAL6408A/1.0.0/FaBo210GPIOPCAL6408A-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "faboplatform/library/FaBo%20211%207Segment%20LED%20TLC59208F/1.0.2/FaBo2117SegmentLEDTLC59208F-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FaBo2117SegmentLEDTLC59208F-1.0.2.tar.gz",
+    "size_bytes": 7098,
+    "sha256": "950bebd20d7da9f37d3d79d0201ca437dff1642544422b06f936ccf149453eb1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/faboplatform/library/FaBo%2520211%25207Segment%2520LED%2520TLC59208F/1.0.2/FaBo2117SegmentLEDTLC59208F-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/faboplatform/library/FaBo%20211%207Segment%20LED%20TLC59208F/1.0.2/FaBo2117SegmentLEDTLC59208F-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "faboplatform/library/FaBo%20212%20LCD%20PCF8574/1.0.0/FaBo212LCDPCF8574-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FaBo212LCDPCF8574-1.0.0.tar.gz",
+    "size_bytes": 10163,
+    "sha256": "b4ba971075a91093f66f488191b0c9a14b2aa23c7a81b8e2fbddf9556a981c7b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/faboplatform/library/FaBo%2520212%2520LCD%2520PCF8574/1.0.0/FaBo212LCDPCF8574-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/faboplatform/library/FaBo%20212%20LCD%20PCF8574/1.0.0/FaBo212LCDPCF8574-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "faboplatform/library/FaBo%20213%20LCD%20mini%20AQM0802A/1.0.0/FaBo213LCDminiAQM0802A-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FaBo213LCDminiAQM0802A-1.0.0.tar.gz",
+    "size_bytes": 9628,
+    "sha256": "ae223286c5b3a53f1d8f797d794a08c2a81f55fd767d50318d8dcd0d380ff1df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/faboplatform/library/FaBo%2520213%2520LCD%2520mini%2520AQM0802A/1.0.0/FaBo213LCDminiAQM0802A-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/faboplatform/library/FaBo%20213%20LCD%20mini%20AQM0802A/1.0.0/FaBo213LCDminiAQM0802A-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "faboplatform/library/FaBo%20214%20OLED%20EROLED096/1.0.0/FaBo214OLEDEROLED096-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FaBo214OLEDEROLED096-1.0.0.tar.gz",
+    "size_bytes": 8420,
+    "sha256": "b8f9ec66a5c0b9b60a663508bd0016650f5c820045bc12d746723a30d6496cc1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/faboplatform/library/FaBo%2520214%2520OLED%2520EROLED096/1.0.0/FaBo214OLEDEROLED096-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/faboplatform/library/FaBo%20214%20OLED%20EROLED096/1.0.0/FaBo214OLEDEROLED096-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "faboplatform/library/FaBo%20215%20RTC%20PCF2129/1.0.0/FaBo215RTCPCF2129-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FaBo215RTCPCF2129-1.0.0.tar.gz",
+    "size_bytes": 7330,
+    "sha256": "281f4d9f5ce318e4b5c86a1c8c719c027b8fc67aec53ceb47a132730195722ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/faboplatform/library/FaBo%2520215%2520RTC%2520PCF2129/1.0.0/FaBo215RTCPCF2129-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/faboplatform/library/FaBo%20215%20RTC%20PCF2129/1.0.0/FaBo215RTCPCF2129-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "faboplatform/library/FaBo%20217%20Ambient%20Light%20ISL29034/1.0.1/FaBo217AmbientLightISL29034-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FaBo217AmbientLightISL29034-1.0.1.tar.gz",
+    "size_bytes": 6755,
+    "sha256": "83bb9c8566218a4daa7546147bdb14aeaa4fc3db3c9cfe3612d6802d3f35a270",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/faboplatform/library/FaBo%2520217%2520Ambient%2520Light%2520ISL29034/1.0.1/FaBo217AmbientLightISL29034-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/faboplatform/library/FaBo%20217%20Ambient%20Light%20ISL29034/1.0.1/FaBo217AmbientLightISL29034-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "faboplatform/library/FaBo%20222%20Environment%20BME680/1.0.0/FaBo222EnvironmentBME680-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FaBo222EnvironmentBME680-1.0.0.tar.gz",
+    "size_bytes": 11083,
+    "sha256": "7f57b5c53875134855d8a491c08db61ba410733a1a7f449257f1a21a0412bf2a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/faboplatform/library/FaBo%2520222%2520Environment%2520BME680/1.0.0/FaBo222EnvironmentBME680-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/faboplatform/library/FaBo%20222%20Environment%20BME680/1.0.0/FaBo222EnvironmentBME680-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "faboplatform/library/FaBo%20223%20Gas%20CCS811/1.0.0/FaBo223GasCCS811-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FaBo223GasCCS811-1.0.0.tar.gz",
+    "size_bytes": 6768,
+    "sha256": "546095bde0fe44858c298f9ebfcb8a2038185b80be06dea411f7bfc6cd3b8980",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/faboplatform/library/FaBo%2520223%2520Gas%2520CCS811/1.0.0/FaBo223GasCCS811-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/faboplatform/library/FaBo%20223%20Gas%20CCS811/1.0.0/FaBo223GasCCS811-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "faboplatform/library/FaBo%20230%20Color%20BH1749NUC/1.0.0/FaBo230ColorBH1749NUC-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FaBo230ColorBH1749NUC-1.0.0.tar.gz",
+    "size_bytes": 7190,
+    "sha256": "27b0c22bb4abf4946dda3326fe68fe4e2208f2720f3d2cf0ea0b01ca1f00ce1f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/faboplatform/library/FaBo%2520230%2520Color%2520BH1749NUC/1.0.0/FaBo230ColorBH1749NUC-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/faboplatform/library/FaBo%20230%20Color%20BH1749NUC/1.0.0/FaBo230ColorBH1749NUC-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "faboplatform/library/FaBo%20301%20BLE%20SiliconLabs/1.0.1/FaBo301BLESiliconLabs-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FaBo301BLESiliconLabs-1.0.1.tar.gz",
+    "size_bytes": 9452,
+    "sha256": "a5f048149de1bf2a455b3bebbdee89cfc3567d282653bd895dee16b015229478",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/faboplatform/library/FaBo%2520301%2520BLE%2520SiliconLabs/1.0.1/FaBo301BLESiliconLabs-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/faboplatform/library/FaBo%20301%20BLE%20SiliconLabs/1.0.1/FaBo301BLESiliconLabs-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "faboplatform/library/FaBo%20307%20BLE%20Nordic/1.0.1/FaBo307BLENordic-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FaBo307BLENordic-1.0.1.tar.gz",
+    "size_bytes": 10751,
+    "sha256": "d4eb9d1f2d77a7e79de7dadd1c54e8c7973094e16d71c1effbe344c7fee8ad33",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/faboplatform/library/FaBo%2520307%2520BLE%2520Nordic/1.0.1/FaBo307BLENordic-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/faboplatform/library/FaBo%20307%20BLE%20Nordic/1.0.1/FaBo307BLENordic-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "faboplatform/library/FaBo%20GPIO40%20PCA9698/1.0.0/FaBoGPIO40PCA9698-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FaBoGPIO40PCA9698-1.0.0.tar.gz",
+    "size_bytes": 5935,
+    "sha256": "975a3d6345d82f5e4611202f28091764086321897d408f60fe9aa8f63599f71d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/faboplatform/library/FaBo%2520GPIO40%2520PCA9698/1.0.0/FaBoGPIO40PCA9698-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/faboplatform/library/FaBo%20GPIO40%20PCA9698/1.0.0/FaBoGPIO40PCA9698-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "faboplatform/library/FaBo%20Motor%20DRV8830/1.0.0/FaBoMotorDRV8830-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FaBoMotorDRV8830-1.0.0.tar.gz",
+    "size_bytes": 5840,
+    "sha256": "343566334966c3f75599bdb6745a82ec0c74d8a284281473abb9dd67f4969ba2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/faboplatform/library/FaBo%2520Motor%2520DRV8830/1.0.0/FaBoMotorDRV8830-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/faboplatform/library/FaBo%20Motor%20DRV8830/1.0.0/FaBoMotorDRV8830-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "faboplatform/library/FaBo%20PWM%20PCA9685/1.0.0/FaBoPWMPCA9685-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FaBoPWMPCA9685-1.0.0.tar.gz",
+    "size_bytes": 6192,
+    "sha256": "236274f6f21471795fcb7d27aa9621e82d7fb220a9ceb7c515186d076a28efcd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/faboplatform/library/FaBo%2520PWM%2520PCA9685/1.0.0/FaBoPWMPCA9685-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/faboplatform/library/FaBo%20PWM%20PCA9685/1.0.0/FaBoPWMPCA9685-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/slaesh",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "slaesh/library/iizi_wifi/0.0.15/iizi_wifi-0.0.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iizi_wifi-0.0.15.tar.gz",
+    "size_bytes": 26254,
+    "sha256": "77e1268c059feebd9fec59e12b2753569752b2b1e6acad2ee47fafd211fdfc52",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/slaesh/library/iizi_wifi/0.0.15/iizi_wifi-0.0.15.tar.gz",
+     "https://dl.registry.platformio.org/download/slaesh/library/iizi_wifi/0.0.15/iizi_wifi-0.0.15.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "slaesh/library/is_timer_expired/1.0.1/is_timer_expired-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "is_timer_expired-1.0.1.tar.gz",
+    "size_bytes": 2200,
+    "sha256": "295be656d03e84993be62692332e76740c765f12f9d6d9b256eb0fb0a9888a00",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/slaesh/library/is_timer_expired/1.0.1/is_timer_expired-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/slaesh/library/is_timer_expired/1.0.1/is_timer_expired-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

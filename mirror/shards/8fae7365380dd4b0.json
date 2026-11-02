@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/recursiveerror",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "recursiveerror/library/omnicrystal/1.0.8/omnicrystal-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "omnicrystal-1.0.8.tar.gz",
+    "size_bytes": 16163,
+    "sha256": "cc2ec6fa30523c358f0d36e2cd9f36b2648f9cfe5d4a035080530036fbbd34ca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/recursiveerror/library/omnicrystal/1.0.8/omnicrystal-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/recursiveerror/library/omnicrystal/1.0.8/omnicrystal-1.0.8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

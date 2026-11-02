@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/snowda",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "snowda/library/CryptoC/1.0.0/CryptoC-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CryptoC-1.0.0.tar.gz",
+    "size_bytes": 7958,
+    "sha256": "f27fe92a452924a6f50e3d38d863b2b273f9253532cf54eed1a31b298f5e3c3b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/snowda/library/CryptoC/1.0.0/CryptoC-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/snowda/library/CryptoC/1.0.0/CryptoC-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

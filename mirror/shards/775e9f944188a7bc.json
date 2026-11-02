@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/arduino",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "arduino/library/Arduino%20Cloud%20Provider%20Examples/1.2.1/ArduinoCloudProviderExamples-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoCloudProviderExamples-1.2.1.tar.gz",
+    "size_bytes": 7335,
+    "sha256": "9c94c1cc2a01ee33160902031c4191704a2a958992be0cb000ade2fa3f304726",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino/library/Arduino%2520Cloud%2520Provider%2520Examples/1.2.1/ArduinoCloudProviderExamples-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino/library/Arduino%20Cloud%20Provider%20Examples/1.2.1/ArduinoCloudProviderExamples-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino/library/EduIntro/0.0.12/EduIntro-0.0.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EduIntro-0.0.12.tar.gz",
+    "size_bytes": 38603,
+    "sha256": "1d54b7b592fd9986851c1395fe38ddca494c787315c5505132ad4018fdb8a548",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino/library/EduIntro/0.0.12/EduIntro-0.0.12.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino/library/EduIntro/0.0.12/EduIntro-0.0.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino/library/EducationShield/1.4.9/EducationShield-1.4.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EducationShield-1.4.9.tar.gz",
+    "size_bytes": 112933,
+    "sha256": "095c7f08e07928cbf7d4604da306b1d2b3af64fef895b3368081e385125b8118",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino/library/EducationShield/1.4.9/EducationShield-1.4.9.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino/library/EducationShield/1.4.9/EducationShield-1.4.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino/library/Svante/0.0.3/Svante-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Svante-0.0.3.tar.gz",
+    "size_bytes": 24282,
+    "sha256": "9d4956c3e31e5fb2eae2a7eab3161c698adea25f9835096f6010f29b8c9c1dde",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino/library/Svante/0.0.3/Svante-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino/library/Svante/0.0.3/Svante-0.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

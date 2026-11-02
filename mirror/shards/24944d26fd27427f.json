@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nickcengel",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nickcengel/library/TinyWireSio/0.0.0-alpha+sha.722ada4382/TinyWireSio-0.0.0-alphasha.722ada4382.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyWireSio-0.0.0-alphasha.722ada4382.tar.gz",
+    "size_bytes": 15081,
+    "sha256": "a38e49b77a7c738ca8f93d667371b423a221dbaa7c10adfe1520e3b305f3ce23",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nickcengel/library/TinyWireSio/0.0.0-alpha%2Bsha.722ada4382/TinyWireSio-0.0.0-alphasha.722ada4382.tar.gz",
+     "https://dl.registry.platformio.org/download/nickcengel/library/TinyWireSio/0.0.0-alpha%2Bsha.722ada4382/TinyWireSio-0.0.0-alphasha.722ada4382.tar.gz"
+    ]
+   }
+  }
+ ]
+}

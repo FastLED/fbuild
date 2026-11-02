@@ -1,0 +1,126 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jsc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jsc/library/ACDU/1.0.2/ACDU-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ACDU-1.0.2.tar.gz",
+    "size_bytes": 18959,
+    "sha256": "1934c680e46e3d8af54d7444335af34736499bda0fc2479a65cefa2b638a9c36",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jsc/library/ACDU/1.0.2/ACDU-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jsc/library/ACDU/1.0.2/ACDU-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jsc/library/Adeon/1.1.1/Adeon-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Adeon-1.1.1.tar.gz",
+    "size_bytes": 29941,
+    "sha256": "db6ddfce50271a9086653204076487095c54a895708287136b9d37e6dcf65c18",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jsc/library/Adeon/1.1.1/Adeon-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jsc/library/Adeon/1.1.1/Adeon-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jsc/library/ArduinoLog/1.2.1/ArduinoLog-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoLog-1.2.1.tar.gz",
+    "size_bytes": 15640,
+    "sha256": "f150ad4f582a7ee3c20e73ebacb8875ca6915a5543926c2403bd7b40fb334835",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jsc/library/ArduinoLog/1.2.1/ArduinoLog-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jsc/library/ArduinoLog/1.2.1/ArduinoLog-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jsc/library/MCP342x/1.0.5/MCP342x-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP342x-1.0.5.tar.gz",
+    "size_bytes": 15611,
+    "sha256": "e54e62746618447c7a5e5dac453d1fc8577e8c46b330d2892aa5d12fb8d9124a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jsc/library/MCP342x/1.0.5/MCP342x-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/jsc/library/MCP342x/1.0.5/MCP342x-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jsc/library/ObjectButton/2.0.0/ObjectButton-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ObjectButton-2.0.0.tar.gz",
+    "size_bytes": 26615,
+    "sha256": "5e4f28e32aa49a6a3dfe405d1957a0f12044e584c24bffe0ae48b27078f40d04",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jsc/library/ObjectButton/2.0.0/ObjectButton-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jsc/library/ObjectButton/2.0.0/ObjectButton-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jsc/library/RFID%20reader/1.0.0/RFIDreader-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RFIDreader-1.0.0.tar.gz",
+    "size_bytes": 12690,
+    "sha256": "2c6f27dc5fae1da51099b759106031797cba028da218351050698682aeb2e50f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jsc/library/RFID%2520reader/1.0.0/RFIDreader-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jsc/library/RFID%20reader/1.0.0/RFIDreader-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jsc/library/SimpleMotionV2-Arduino/1.0.0/SimpleMotionV2-Arduino-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleMotionV2-Arduino-1.0.0.tar.gz",
+    "size_bytes": 413697,
+    "sha256": "b25c3d0f11c87ce9f4575dbff9fe3127bf079d3870f62c84eaa1772c04b7ee05",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jsc/library/SimpleMotionV2-Arduino/1.0.0/SimpleMotionV2-Arduino-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jsc/library/SimpleMotionV2-Arduino/1.0.0/SimpleMotionV2-Arduino-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jsc/library/SimpleRelay/1.0.2/SimpleRelay-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleRelay-1.0.2.tar.gz",
+    "size_bytes": 10656,
+    "sha256": "dee10b509152a3e285e8df832336a8fbb779f3910bc7cd133eb02ddc49713465",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jsc/library/SimpleRelay/1.0.2/SimpleRelay-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jsc/library/SimpleRelay/1.0.2/SimpleRelay-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jsc/library/Ticker/2.1.0/Ticker-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ticker-2.1.0.tar.gz",
+    "size_bytes": 13875,
+    "sha256": "53b4dc8de160b7500e46b39e34a38a068542a79c966203fbad478a00bed7ee17",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jsc/library/Ticker/2.1.0/Ticker-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jsc/library/Ticker/2.1.0/Ticker-2.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

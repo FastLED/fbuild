@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/minervabots",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "minervabots/library/MinervaBots-ESC-ESP32-Library/1.0.0/MinervaBots-ESC-ESP32-Library-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MinervaBots-ESC-ESP32-Library-1.0.0.tar.gz",
+    "size_bytes": 7118,
+    "sha256": "ebd8193db8476e13805c06fe6136c0832a216ad1540562dc1e86f592437e3c81",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/minervabots/library/MinervaBots-ESC-ESP32-Library/1.0.0/MinervaBots-ESC-ESP32-Library-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/minervabots/library/MinervaBots-ESC-ESP32-Library/1.0.0/MinervaBots-ESC-ESP32-Library-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "minervabots/library/MinervaBots-ESC-ESP32-Library/1.0.1/MinervaBots-ESC-ESP32-Library-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MinervaBots-ESC-ESP32-Library-1.0.1.tar.gz",
+    "size_bytes": 7292,
+    "sha256": "bc3746a8c2173d2313b52bfd9d73ef82093d7928e81ba3d6a6cd0e402bb4c01c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/minervabots/library/MinervaBots-ESC-ESP32-Library/1.0.1/MinervaBots-ESC-ESP32-Library-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/minervabots/library/MinervaBots-ESC-ESP32-Library/1.0.1/MinervaBots-ESC-ESP32-Library-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "minervabots/library/MinervaBots-Servo-ESP32-Library/2.0.0/MinervaBots-Servo-ESP32-Library-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MinervaBots-Servo-ESP32-Library-2.0.0.tar.gz",
+    "size_bytes": 3220,
+    "sha256": "302a2af35eaebb83e07454daeddf1e26d7ee659a527998f7b20ea8bd3059b16c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/minervabots/library/MinervaBots-Servo-ESP32-Library/2.0.0/MinervaBots-Servo-ESP32-Library-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/minervabots/library/MinervaBots-Servo-ESP32-Library/2.0.0/MinervaBots-Servo-ESP32-Library-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "minervabots/library/MinervaBots-Servo-ESP32-Library/2.0.1/MinervaBots-Servo-ESP32-Library-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MinervaBots-Servo-ESP32-Library-2.0.1.tar.gz",
+    "size_bytes": 6038,
+    "sha256": "6f5bb8b55c8d959c696fd5c6c4ec5cfd07b65570c7722535fc4d8a90ed86e90b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/minervabots/library/MinervaBots-Servo-ESP32-Library/2.0.1/MinervaBots-Servo-ESP32-Library-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/minervabots/library/MinervaBots-Servo-ESP32-Library/2.0.1/MinervaBots-Servo-ESP32-Library-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "minervabots/library/MinervaBots-Servo-ESP32-Library/2.1.0/MinervaBots-Servo-ESP32-Library-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MinervaBots-Servo-ESP32-Library-2.1.0.tar.gz",
+    "size_bytes": 6481,
+    "sha256": "852f7ce3230e084d5ba8f4071676f647095faf580b1ea6e7e63a82f82cfcc7e1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/minervabots/library/MinervaBots-Servo-ESP32-Library/2.1.0/MinervaBots-Servo-ESP32-Library-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/minervabots/library/MinervaBots-Servo-ESP32-Library/2.1.0/MinervaBots-Servo-ESP32-Library-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "minervabots/library/MinervaBots-Servo-ESP32-Library/2.2.0/MinervaBots-Servo-ESP32-Library-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MinervaBots-Servo-ESP32-Library-2.2.0.tar.gz",
+    "size_bytes": 6675,
+    "sha256": "ea4e8cf0c112b67e5d3f48d751aa039e343ff603bbc669dd4a062d7b3b784b0c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/minervabots/library/MinervaBots-Servo-ESP32-Library/2.2.0/MinervaBots-Servo-ESP32-Library-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/minervabots/library/MinervaBots-Servo-ESP32-Library/2.2.0/MinervaBots-Servo-ESP32-Library-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "minervabots/library/MinervaBots-Servo-ESP32-Library/2.2.1/MinervaBots-Servo-ESP32-Library-2.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MinervaBots-Servo-ESP32-Library-2.2.1.tar.gz",
+    "size_bytes": 6713,
+    "sha256": "ff5695f49329601a2d2c1f61fcd89636c7bcdc626417bede11886aad6ea94948",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/minervabots/library/MinervaBots-Servo-ESP32-Library/2.2.1/MinervaBots-Servo-ESP32-Library-2.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/minervabots/library/MinervaBots-Servo-ESP32-Library/2.2.1/MinervaBots-Servo-ESP32-Library-2.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kcn-judu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kcn-judu/library/KCN_Utility/2.1.0/KCN_Utility-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KCN_Utility-2.1.0.tar.gz",
+    "size_bytes": 26525,
+    "sha256": "24b7b082ff5bb0d8e957630798fb172d9cbd8109154f8f27f4f0cd970832fa62",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kcn-judu/library/KCN_Utility/2.1.0/KCN_Utility-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kcn-judu/library/KCN_Utility/2.1.0/KCN_Utility-2.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

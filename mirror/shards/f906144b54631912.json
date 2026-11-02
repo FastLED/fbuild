@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/chrmenne",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "chrmenne/library/solarfunctions/1.0.5/solarfunctions-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "solarfunctions-1.0.5.tar.gz",
+    "size_bytes": 18814,
+    "sha256": "370c4f393911c081a5585e9ae2ef4094e504bbdb9e63616d9c5df20632331726",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrmenne/library/solarfunctions/1.0.5/solarfunctions-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/chrmenne/library/solarfunctions/1.0.5/solarfunctions-1.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

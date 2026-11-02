@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-kio-liex",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-kio-liex/library/HC-05/0.0.0+sha.e0c6e95761d2/HC-05-0.0.0+sha.e0c6e95761d2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HC-05-0.0.0+sha.e0c6e95761d2.tar.gz",
+    "size_bytes": 1342,
+    "sha256": "1938626a2909b868f3a21d98a90280be3e867baa0d185dbc5861f9cb16b208ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kio-liex/library/HC-05/0.0.0%2Bsha.e0c6e95761d2/HC-05-0.0.0%2Bsha.e0c6e95761d2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kio-liex/library/HC-05/0.0.0%2Bsha.e0c6e95761d2/HC-05-0.0.0%2Bsha.e0c6e95761d2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

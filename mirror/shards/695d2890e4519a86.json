@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-kaedroho",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-kaedroho/library/MorseOut/0.0.0+sha.7c78cf1605d3/MorseOut-0.0.0+sha.7c78cf1605d3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MorseOut-0.0.0+sha.7c78cf1605d3.tar.gz",
+    "size_bytes": 1986,
+    "sha256": "b3aae4eeb0411e4881caf435de860df7aaccd5aa2a7221cf700fd6290ebfa653",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kaedroho/library/MorseOut/0.0.0%2Bsha.7c78cf1605d3/MorseOut-0.0.0%2Bsha.7c78cf1605d3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kaedroho/library/MorseOut/0.0.0%2Bsha.7c78cf1605d3/MorseOut-0.0.0%2Bsha.7c78cf1605d3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

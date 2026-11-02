@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-fep",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-fep/library/freertos-cm3/0.0.0+sha.5ff20db10a96/freertos-cm3-0.0.0+sha.5ff20db10a96.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "freertos-cm3-0.0.0+sha.5ff20db10a96.tar.gz",
+    "size_bytes": 162683,
+    "sha256": "ff371130aee1537e60cd57e52a4db57cc25779faa0f63146395f9c7c6dae50a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-fep/library/freertos-cm3/0.0.0%2Bsha.5ff20db10a96/freertos-cm3-0.0.0%2Bsha.5ff20db10a96.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-fep/library/freertos-cm3/0.0.0%2Bsha.5ff20db10a96/freertos-cm3-0.0.0%2Bsha.5ff20db10a96.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-fep/library/freertos/0.0.0+sha.62cd296ba2a7/freertos-0.0.0+sha.62cd296ba2a7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "freertos-0.0.0+sha.62cd296ba2a7.tar.gz",
+    "size_bytes": 163329,
+    "sha256": "c5c7c076d71efd12d446c54f968b23d2274d61f4416f4a3aad2d9842c05f945c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-fep/library/freertos/0.0.0%2Bsha.62cd296ba2a7/freertos-0.0.0%2Bsha.62cd296ba2a7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-fep/library/freertos/0.0.0%2Bsha.62cd296ba2a7/freertos-0.0.0%2Bsha.62cd296ba2a7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

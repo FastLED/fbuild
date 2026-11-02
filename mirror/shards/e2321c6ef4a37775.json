@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ardlib",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ardlib/library/PKAE_Timer/0.0.1/PKAE_Timer-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PKAE_Timer-0.0.1.tar.gz",
+    "size_bytes": 5223,
+    "sha256": "5ea666e8c26029964d160739b7c6694c57ec32d9cfacd357c435e6065628b629",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ardlib/library/PKAE_Timer/0.0.1/PKAE_Timer-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ardlib/library/PKAE_Timer/0.0.1/PKAE_Timer-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ardlib/library/bosejis_AMV/0.0.10/bosejis_AMV-0.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bosejis_AMV-0.0.10.tar.gz",
+    "size_bytes": 22825,
+    "sha256": "ceb2c3bc6187ee20b858757248b1487c3bb33ad06c3cd530c7a119ca6a468676",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ardlib/library/bosejis_AMV/0.0.10/bosejis_AMV-0.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/ardlib/library/bosejis_AMV/0.0.10/bosejis_AMV-0.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ardlib/library/bosejis_Bin/0.0.7/bosejis_Bin-0.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bosejis_Bin-0.0.7.tar.gz",
+    "size_bytes": 21798,
+    "sha256": "95e77339bad7881b3bd86610f304d25c1b436c5e8988afb997c07e40d4c953ea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ardlib/library/bosejis_Bin/0.0.7/bosejis_Bin-0.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/ardlib/library/bosejis_Bin/0.0.7/bosejis_Bin-0.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ardlib/library/bosejis_PString/0.0.4/bosejis_PString-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bosejis_PString-0.0.4.tar.gz",
+    "size_bytes": 20053,
+    "sha256": "4a9c60aa1be16b083e543b1f0f18446d2ba3d5792053cbb228bd336ae7a502a3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ardlib/library/bosejis_PString/0.0.4/bosejis_PString-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/ardlib/library/bosejis_PString/0.0.4/bosejis_PString-0.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ardlib/library/bosejis_TWI/0.0.0/bosejis_TWI-0.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bosejis_TWI-0.0.0.tar.gz",
+    "size_bytes": 25490,
+    "sha256": "44767320a6748a2955e3507f0b8a38f430bcbc3ea023ccf8f34a5ddde9cc3f86",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ardlib/library/bosejis_TWI/0.0.0/bosejis_TWI-0.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ardlib/library/bosejis_TWI/0.0.0/bosejis_TWI-0.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ardlib/library/bosejis_Types/1.0.1/bosejis_Types-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bosejis_Types-1.0.1.tar.gz",
+    "size_bytes": 8263,
+    "sha256": "3d083f378f55e2954dd204405e652316765f4bee579ff34912fa45a16b367a58",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ardlib/library/bosejis_Types/1.0.1/bosejis_Types-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ardlib/library/bosejis_Types/1.0.1/bosejis_Types-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dhrubasaha08",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dhrubasaha08/library/SimpleUltrasonic/1.0.0/SimpleUltrasonic-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleUltrasonic-1.0.0.tar.gz",
+    "size_bytes": 3328,
+    "sha256": "aba31a5afcbc13fbe608db709c1e5465db8376d6a9e943b74fe0b606871accd1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dhrubasaha08/library/SimpleUltrasonic/1.0.0/SimpleUltrasonic-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dhrubasaha08/library/SimpleUltrasonic/1.0.0/SimpleUltrasonic-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dhrubasaha08/library/TFminiS/0.0.1/TFminiS-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFminiS-0.0.1.tar.gz",
+    "size_bytes": 6609,
+    "sha256": "9a225a02e7fa467a637bb08b6c714f03ea7a1bbdb575314c954aac226121b284",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dhrubasaha08/library/TFminiS/0.0.1/TFminiS-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dhrubasaha08/library/TFminiS/0.0.1/TFminiS-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

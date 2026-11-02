@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-daichiarai",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-daichiarai/library/mdc_simple/0.0.0+sha.1bbe0d41813e/mdc_simple-0.0.0+sha.1bbe0d41813e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mdc_simple-0.0.0+sha.1bbe0d41813e.tar.gz",
+    "size_bytes": 2135,
+    "sha256": "c208403237d341437b5f77bc44e37b386ee8ef8c157ba889d1ad4214f72d7e12",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-daichiarai/library/mdc_simple/0.0.0%2Bsha.1bbe0d41813e/mdc_simple-0.0.0%2Bsha.1bbe0d41813e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-daichiarai/library/mdc_simple/0.0.0%2Bsha.1bbe0d41813e/mdc_simple-0.0.0%2Bsha.1bbe0d41813e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

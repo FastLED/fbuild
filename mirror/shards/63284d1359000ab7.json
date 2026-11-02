@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-netwing",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-netwing/library/FMOPN/0.0.0+sha.ea441ce9e405/FMOPN-0.0.0+sha.ea441ce9e405.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FMOPN-0.0.0+sha.ea441ce9e405.tar.gz",
+    "size_bytes": 2049,
+    "sha256": "3763eb301f0c3433d483d715a2eb3a5942bb80ca863e80c2b9d3dae2804954c9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-netwing/library/FMOPN/0.0.0%2Bsha.ea441ce9e405/FMOPN-0.0.0%2Bsha.ea441ce9e405.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-netwing/library/FMOPN/0.0.0%2Bsha.ea441ce9e405/FMOPN-0.0.0%2Bsha.ea441ce9e405.tar.gz"
+    ]
+   }
+  }
+ ]
+}

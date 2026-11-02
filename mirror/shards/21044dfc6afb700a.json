@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/appnostic-io",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "appnostic-io/library/Appnostic%20SC16IS7XX%20Arduino%20Library/1.0.0/AppnosticSC16IS7XXArduinoLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AppnosticSC16IS7XXArduinoLibrary-1.0.0.tar.gz",
+    "size_bytes": 9126,
+    "sha256": "5a8afe954ea1b2c2eb674bf81c3e8c07674248374dc4d4aa7eb75afbe52ebfc1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/appnostic-io/library/Appnostic%2520SC16IS7XX%2520Arduino%2520Library/1.0.0/AppnosticSC16IS7XXArduinoLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/appnostic-io/library/Appnostic%20SC16IS7XX%20Arduino%20Library/1.0.0/AppnosticSC16IS7XXArduinoLibrary-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

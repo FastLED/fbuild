@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/iakop",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "iakop/library/LiquidCrystal_I2C_ESP32/1.1.6/LiquidCrystal_I2C_ESP32-1.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LiquidCrystal_I2C_ESP32-1.1.6.tar.gz",
+    "size_bytes": 5011,
+    "sha256": "4d0653416124b07577fe3ccd888bcb39378fd63c9687588ed9e20739f02faf9d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iakop/library/LiquidCrystal_I2C_ESP32/1.1.6/LiquidCrystal_I2C_ESP32-1.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/iakop/library/LiquidCrystal_I2C_ESP32/1.1.6/LiquidCrystal_I2C_ESP32-1.1.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

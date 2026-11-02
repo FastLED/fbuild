@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tairabiteru",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tairabiteru/library/libaddr7seg/0.1.0/libaddr7seg-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libaddr7seg-0.1.0.tar.gz",
+    "size_bytes": 22965,
+    "sha256": "67b9a9b17bfa27a6308020a3555cd0f0dc2bc3b73d6405fb841babcb069a64c1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tairabiteru/library/libaddr7seg/0.1.0/libaddr7seg-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tairabiteru/library/libaddr7seg/0.1.0/libaddr7seg-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

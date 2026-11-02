@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-fruediger",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-fruediger/library/MPU6050_lib/0.0.0+sha.960ec35011dd/MPU6050_lib-0.0.0+sha.960ec35011dd.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPU6050_lib-0.0.0+sha.960ec35011dd.tar.gz",
+    "size_bytes": 10252,
+    "sha256": "d4cd075a3919f0d36a85286d4f1b67ae68349196610fd962f6ffdaac8ca4b37b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-fruediger/library/MPU6050_lib/0.0.0%2Bsha.960ec35011dd/MPU6050_lib-0.0.0%2Bsha.960ec35011dd.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-fruediger/library/MPU6050_lib/0.0.0%2Bsha.960ec35011dd/MPU6050_lib-0.0.0%2Bsha.960ec35011dd.tar.gz"
+    ]
+   }
+  }
+ ]
+}

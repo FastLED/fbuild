@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/chon-group",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "chon-group/library/Javino/1.7.2/Javino-1.7.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Javino-1.7.2.tar.gz",
+    "size_bytes": 107950,
+    "sha256": "ae3cada159b29a4abca733446c340c99b7e06c78450b08bfb5865774dfa4d28b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chon-group/library/Javino/1.7.2/Javino-1.7.2.tar.gz",
+     "https://dl.registry.platformio.org/download/chon-group/library/Javino/1.7.2/Javino-1.7.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chon-group/library/Javino/1.7.3/Javino-1.7.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Javino-1.7.3.tar.gz",
+    "size_bytes": 108019,
+    "sha256": "b55f008a8c2a28085f273d87187ae2d131db73234a06d590374cb9378abaa382",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chon-group/library/Javino/1.7.3/Javino-1.7.3.tar.gz",
+     "https://dl.registry.platformio.org/download/chon-group/library/Javino/1.7.3/Javino-1.7.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chon-group/library/NECK/1.0.1/NECK-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NECK-1.0.1.tar.gz",
+    "size_bytes": 78599,
+    "sha256": "887782a8a270eca02d16981f9eb1c50869fd4b4961186b3e22d2ce8b40eb4329",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chon-group/library/NECK/1.0.1/NECK-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/chon-group/library/NECK/1.0.1/NECK-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chon-group/library/NECK/1.1.1/NECK-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NECK-1.1.1.tar.gz",
+    "size_bytes": 93463,
+    "sha256": "55af210fc0f9fd5958d5afa59c095d71c312ad42b728aae71d343e8dbc04a6d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chon-group/library/NECK/1.1.1/NECK-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/chon-group/library/NECK/1.1.1/NECK-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chon-group/library/NECK/26.10.14/NECK-26.10.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NECK-26.10.14.tar.gz",
+    "size_bytes": 29031,
+    "sha256": "f65f16cdc1550e77a187c1187593738ec8bb9abb483531e655cc77b2c75120d7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chon-group/library/NECK/26.10.14/NECK-26.10.14.tar.gz",
+     "https://dl.registry.platformio.org/download/chon-group/library/NECK/26.10.14/NECK-26.10.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chon-group/library/NECK/26.10.25/NECK-26.10.25.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NECK-26.10.25.tar.gz",
+    "size_bytes": 29024,
+    "sha256": "b68062fd38576ad959a0601e45a788de5595ed71ee2fb521d3cb15d0d7b3386d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chon-group/library/NECK/26.10.25/NECK-26.10.25.tar.gz",
+     "https://dl.registry.platformio.org/download/chon-group/library/NECK/26.10.25/NECK-26.10.25.tar.gz"
+    ]
+   }
+  }
+ ]
+}

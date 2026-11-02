@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dmdhrumilmistry",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dmdhrumilmistry/library/Device%20Controller/1.0.0/DeviceController-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DeviceController-1.0.0.tar.gz",
+    "size_bytes": 2905,
+    "sha256": "6ce1bf48e4f7ce42ed840d95e318eae3d8f1d69d184243a12e287fdf5e4627d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dmdhrumilmistry/library/Device%2520Controller/1.0.0/DeviceController-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dmdhrumilmistry/library/Device%20Controller/1.0.0/DeviceController-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

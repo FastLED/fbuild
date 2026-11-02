@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-tulanthoar",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-tulanthoar/library/Data_Clock_Pair/0.0.0+sha.a288ae0fdd74/Data_Clock_Pair-0.0.0+sha.a288ae0fdd74.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Data_Clock_Pair-0.0.0+sha.a288ae0fdd74.tar.gz",
+    "size_bytes": 883,
+    "sha256": "69a8b95fb86447ef11c1a821f957f890e7c95c3a0f5432ff4c6551a9f4dc4372",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tulanthoar/library/Data_Clock_Pair/0.0.0%2Bsha.a288ae0fdd74/Data_Clock_Pair-0.0.0%2Bsha.a288ae0fdd74.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tulanthoar/library/Data_Clock_Pair/0.0.0%2Bsha.a288ae0fdd74/Data_Clock_Pair-0.0.0%2Bsha.a288ae0fdd74.tar.gz"
+    ]
+   }
+  }
+ ]
+}

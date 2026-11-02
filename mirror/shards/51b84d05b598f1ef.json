@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hamishcunningham",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hamishcunningham/library/unPhoneLibrary/9.0.0/unPhoneLibrary-9.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "unPhoneLibrary-9.0.0.tar.gz",
+    "size_bytes": 77283,
+    "sha256": "d033a5c97273e668ab8e615c5c0e8080192d380dfab35f6507b8a8f9ad46fc0a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hamishcunningham/library/unPhoneLibrary/9.0.0/unPhoneLibrary-9.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hamishcunningham/library/unPhoneLibrary/9.0.0/unPhoneLibrary-9.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

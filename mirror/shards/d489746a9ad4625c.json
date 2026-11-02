@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbrugman67",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbrugman67/library/Uno_HUB75_Driver/0.9.1/Uno_HUB75_Driver-0.9.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Uno_HUB75_Driver-0.9.1.tar.gz",
+    "size_bytes": 16205,
+    "sha256": "40c52600a9409d3213e50c582a87f3c41d13b7c90a17456c71374d5e1a7cc821",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbrugman67/library/Uno_HUB75_Driver/0.9.1/Uno_HUB75_Driver-0.9.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbrugman67/library/Uno_HUB75_Driver/0.9.1/Uno_HUB75_Driver-0.9.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

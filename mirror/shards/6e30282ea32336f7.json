@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nutela",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nutela/library/ControlSystems/0.2.6/ControlSystems-0.2.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ControlSystems-0.2.6.tar.gz",
+    "size_bytes": 8326,
+    "sha256": "8154c699f2a0d3c6213d2e9265ac0e96bb15ea8e15fa781b8fc4a1f1ce1192da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nutela/library/ControlSystems/0.2.6/ControlSystems-0.2.6.tar.gz",
+     "https://dl.registry.platformio.org/download/nutela/library/ControlSystems/0.2.6/ControlSystems-0.2.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nutela/library/InterCom/0.2.3/InterCom-0.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "InterCom-0.2.3.tar.gz",
+    "size_bytes": 6169,
+    "sha256": "202cbb0266256171dd0607e441d52bfded8404d8f17c994b77b321bc4ba6fb68",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nutela/library/InterCom/0.2.3/InterCom-0.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/nutela/library/InterCom/0.2.3/InterCom-0.2.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

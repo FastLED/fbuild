@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/techtronicsengineering",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "techtronicsengineering/library/AutoPlex14/1.1.0/AutoPlex14-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AutoPlex14-1.1.0.tar.gz",
+    "size_bytes": 10792,
+    "sha256": "c9f41c5d65739c3919065b0560681414adea0eb138e297302c5ef50339c67e7a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/techtronicsengineering/library/AutoPlex14/1.1.0/AutoPlex14-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/techtronicsengineering/library/AutoPlex14/1.1.0/AutoPlex14-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "techtronicsengineering/library/AutoPlex14/1.1.1/AutoPlex14-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AutoPlex14-1.1.1.tar.gz",
+    "size_bytes": 10945,
+    "sha256": "bdd543e4d985d1de1340e6c69838e45929f887d72567103d16baffd8b4942d6a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/techtronicsengineering/library/AutoPlex14/1.1.1/AutoPlex14-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/techtronicsengineering/library/AutoPlex14/1.1.1/AutoPlex14-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "techtronicsengineering/library/AutoPlex7/1.0.1/AutoPlex7-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AutoPlex7-1.0.1.tar.gz",
+    "size_bytes": 3979,
+    "sha256": "b889e5dc87f0de381d485c7c0cc428fe5b6ab1eab97f99ec8832c981cd6746e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/techtronicsengineering/library/AutoPlex7/1.0.1/AutoPlex7-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/techtronicsengineering/library/AutoPlex7/1.0.1/AutoPlex7-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

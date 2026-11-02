@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/diyodemag",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "diyodemag/library/DIYsplay/0.1.7/DIYsplay-0.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DIYsplay-0.1.7.tar.gz",
+    "size_bytes": 19226,
+    "sha256": "e1bc2a3f95793a52e7cc15bb028b55962262c91c1dae37acd535ae7f31a7318f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/diyodemag/library/DIYsplay/0.1.7/DIYsplay-0.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/diyodemag/library/DIYsplay/0.1.7/DIYsplay-0.1.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

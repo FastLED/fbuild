@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pimatic",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pimatic/library/RFcontrol/0.0.0-alpha+sha.8ffd76069e/RFcontrol-0.0.0-alphasha.8ffd76069e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RFcontrol-0.0.0-alphasha.8ffd76069e.tar.gz",
+    "size_bytes": 17826,
+    "sha256": "280b04b4908efd100cd9f231ff2a1c9fc1a2e47337dce071fd0bfd98bd04eba9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pimatic/library/RFcontrol/0.0.0-alpha%2Bsha.8ffd76069e/RFcontrol-0.0.0-alphasha.8ffd76069e.tar.gz",
+     "https://dl.registry.platformio.org/download/pimatic/library/RFcontrol/0.0.0-alpha%2Bsha.8ffd76069e/RFcontrol-0.0.0-alphasha.8ffd76069e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

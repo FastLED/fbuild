@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-dream-team-ece-4180",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-dream-team-ece-4180/library/FONA_Cellphone_Library/0.0.0+sha.52654f3080d9/FONA_Cellphone_Library-0.0.0+sha.52654f3080d9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FONA_Cellphone_Library-0.0.0+sha.52654f3080d9.tar.gz",
+    "size_bytes": 13915,
+    "sha256": "9deb2245bb205da46cc64243792437cc231ede443defc3bb91319fba84062436",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dream-team-ece-4180/library/FONA_Cellphone_Library/0.0.0%2Bsha.52654f3080d9/FONA_Cellphone_Library-0.0.0%2Bsha.52654f3080d9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dream-team-ece-4180/library/FONA_Cellphone_Library/0.0.0%2Bsha.52654f3080d9/FONA_Cellphone_Library-0.0.0%2Bsha.52654f3080d9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dream-team-ece-4180/library/Lab1_BasicIO/0.0.0+sha.1c8235c49b70/Lab1_BasicIO-0.0.0+sha.1c8235c49b70.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lab1_BasicIO-0.0.0+sha.1c8235c49b70.tar.gz",
+    "size_bytes": 9051,
+    "sha256": "03f49ef9f5ff256dd1f5833e912689a84861c8ff7ae3377e7f908ac940f9c264",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dream-team-ece-4180/library/Lab1_BasicIO/0.0.0%2Bsha.1c8235c49b70/Lab1_BasicIO-0.0.0%2Bsha.1c8235c49b70.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dream-team-ece-4180/library/Lab1_BasicIO/0.0.0%2Bsha.1c8235c49b70/Lab1_BasicIO-0.0.0%2Bsha.1c8235c49b70.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dream-team-ece-4180/library/Lab2_EverythingIO/0.0.0+sha.ac38b8f1190d/Lab2_EverythingIO-0.0.0+sha.ac38b8f1190d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lab2_EverythingIO-0.0.0+sha.ac38b8f1190d.tar.gz",
+    "size_bytes": 2570,
+    "sha256": "6d10759e755999d6b35c671e6bedc29ae338cd37d019e285e2bedbaac2338e20",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dream-team-ece-4180/library/Lab2_EverythingIO/0.0.0%2Bsha.ac38b8f1190d/Lab2_EverythingIO-0.0.0%2Bsha.ac38b8f1190d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dream-team-ece-4180/library/Lab2_EverythingIO/0.0.0%2Bsha.ac38b8f1190d/Lab2_EverythingIO-0.0.0%2Bsha.ac38b8f1190d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

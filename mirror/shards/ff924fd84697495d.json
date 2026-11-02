@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kalmak07",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kalmak07/library/SensorNormalization/0.0.3/SensorNormalization-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensorNormalization-0.0.3.tar.gz",
+    "size_bytes": 7531,
+    "sha256": "17a746bbee74276087230ab9599faa08efb134694eae3763cf117706960fcecf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kalmak07/library/SensorNormalization/0.0.3/SensorNormalization-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/kalmak07/library/SensorNormalization/0.0.3/SensorNormalization-0.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

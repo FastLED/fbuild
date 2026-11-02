@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-remembervin",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-remembervin/library/FXOS8700Q-driver/0.0.0+sha.6e26fb9d0a78/FXOS8700Q-driver-0.0.0+sha.6e26fb9d0a78.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FXOS8700Q-driver-0.0.0+sha.6e26fb9d0a78.tar.gz",
+    "size_bytes": 3322,
+    "sha256": "c86f58d06f8612e64ca1825f14ef89a65fe0d67f4f525268724b6fed3e435bca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-remembervin/library/FXOS8700Q-driver/0.0.0%2Bsha.6e26fb9d0a78/FXOS8700Q-driver-0.0.0%2Bsha.6e26fb9d0a78.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-remembervin/library/FXOS8700Q-driver/0.0.0%2Bsha.6e26fb9d0a78/FXOS8700Q-driver-0.0.0%2Bsha.6e26fb9d0a78.tar.gz"
+    ]
+   }
+  }
+ ]
+}

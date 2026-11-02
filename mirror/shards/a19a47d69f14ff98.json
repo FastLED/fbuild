@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/littlebitsman",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "littlebitsman/library/Asynchrony/1.0.0/Asynchrony-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Asynchrony-1.0.0.tar.gz",
+    "size_bytes": 13864,
+    "sha256": "8a5c9e3eecaa8e9682a552cb081ae142041ce9283b723580b8f8c0c412a6223a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/littlebitsman/library/Asynchrony/1.0.0/Asynchrony-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/littlebitsman/library/Asynchrony/1.0.0/Asynchrony-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

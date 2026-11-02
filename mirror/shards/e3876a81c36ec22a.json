@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/funkyfisch",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "funkyfisch/library/Knock%20Detector/1.0.0/KnockDetector-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KnockDetector-1.0.0.tar.gz",
+    "size_bytes": 5217,
+    "sha256": "72690f5e7bf142b44d941d292beee758c828b5146b03532d72db2d2fc4488f14",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/funkyfisch/library/Knock%2520Detector/1.0.0/KnockDetector-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/funkyfisch/library/Knock%20Detector/1.0.0/KnockDetector-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

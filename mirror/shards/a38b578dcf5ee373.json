@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jspark311",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jspark311/library/ADG2128/1.0.0/ADG2128-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADG2128-1.0.0.tar.gz",
+    "size_bytes": 8643,
+    "sha256": "a8b50703c3af443025a9369503398650651a5c5051827e66d7f41ff112f3bee2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jspark311/library/ADG2128/1.0.0/ADG2128-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jspark311/library/ADG2128/1.0.0/ADG2128-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jspark311/library/CppPotpourri/3.4.3/CppPotpourri-3.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CppPotpourri-3.4.3.tar.gz",
+    "size_bytes": 694078,
+    "sha256": "d14278f0a8cbe05c932f4acf0390d8704f359631d9c08364675f2d6117c13a2d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jspark311/library/CppPotpourri/3.4.3/CppPotpourri-3.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/jspark311/library/CppPotpourri/3.4.3/CppPotpourri-3.4.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jspark311/library/DS1881/1.0.0/DS1881-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS1881-1.0.0.tar.gz",
+    "size_bytes": 7601,
+    "sha256": "9e3d9255e58b8f4a49fc96b76a5ee026b3bf77d2aeaa21f28abdb0e2751c1505",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jspark311/library/DS1881/1.0.0/DS1881-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jspark311/library/DS1881/1.0.0/DS1881-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jspark311/library/ManuvrDrivers/1.9.0/ManuvrDrivers-1.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ManuvrDrivers-1.9.0.tar.gz",
+    "size_bytes": 380191,
+    "sha256": "79aa8bb55a20fa8d6a766c2ca02e9ff1be1ca299f563988bfdf1b231e0482589",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jspark311/library/ManuvrDrivers/1.9.0/ManuvrDrivers-1.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jspark311/library/ManuvrDrivers/1.9.0/ManuvrDrivers-1.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jspark311/library/SX150x/1.0.8/SX150x-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SX150x-1.0.8.tar.gz",
+    "size_bytes": 10236,
+    "sha256": "0189cd40c1fd7a392e6f7e407190bb9fe96859adcf8cd9297b27b758390d687c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jspark311/library/SX150x/1.0.8/SX150x-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/jspark311/library/SX150x/1.0.8/SX150x-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jspark311/library/SX8634/1.1.0/SX8634-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SX8634-1.1.0.tar.gz",
+    "size_bytes": 15962,
+    "sha256": "a92c34fa884eecb46d7908e3bb5685b0b3d5d5f24451e4d51fe74622979a3583",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jspark311/library/SX8634/1.1.0/SX8634-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jspark311/library/SX8634/1.1.0/SX8634-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

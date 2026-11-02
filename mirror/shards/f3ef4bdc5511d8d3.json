@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-mpetrut",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-mpetrut/library/MIDI_5Pin/0.0.0+sha.a6b78fdc6619/MIDI_5Pin-0.0.0+sha.a6b78fdc6619.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MIDI_5Pin-0.0.0+sha.a6b78fdc6619.tar.gz",
+    "size_bytes": 1480,
+    "sha256": "67ec2aaf1a93b2062806e331c54bb7152bb0f2bcb0b0f45b13dda335b1fbced8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mpetrut/library/MIDI_5Pin/0.0.0%2Bsha.a6b78fdc6619/MIDI_5Pin-0.0.0%2Bsha.a6b78fdc6619.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mpetrut/library/MIDI_5Pin/0.0.0%2Bsha.a6b78fdc6619/MIDI_5Pin-0.0.0%2Bsha.a6b78fdc6619.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-mpetrut/library/Midi5Pin/0.0.0+sha.08234a5a8598/Midi5Pin-0.0.0+sha.08234a5a8598.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Midi5Pin-0.0.0+sha.08234a5a8598.tar.gz",
+    "size_bytes": 1528,
+    "sha256": "c904c103564ef79f63f4e4249e08efb9a00dc8cbfcb0857f4fa02d6ff0008f12",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mpetrut/library/Midi5Pin/0.0.0%2Bsha.08234a5a8598/Midi5Pin-0.0.0%2Bsha.08234a5a8598.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mpetrut/library/Midi5Pin/0.0.0%2Bsha.08234a5a8598/Midi5Pin-0.0.0%2Bsha.08234a5a8598.tar.gz"
+    ]
+   }
+  }
+ ]
+}

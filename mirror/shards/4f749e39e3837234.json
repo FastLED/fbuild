@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-antulius",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-antulius/library/DHT22/0.0.0+sha.5c62a49f2667/DHT22-0.0.0+sha.5c62a49f2667.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DHT22-0.0.0+sha.5c62a49f2667.tar.gz",
+    "size_bytes": 4255,
+    "sha256": "617c1f3ca71ce132c60eebdc847249686a0f33cee57031e9167a5ef19a0aff60",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-antulius/library/DHT22/0.0.0%2Bsha.5c62a49f2667/DHT22-0.0.0%2Bsha.5c62a49f2667.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-antulius/library/DHT22/0.0.0%2Bsha.5c62a49f2667/DHT22-0.0.0%2Bsha.5c62a49f2667.tar.gz"
+    ]
+   }
+  }
+ ]
+}

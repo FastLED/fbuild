@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jourtempo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jourtempo/library/JourTempo/1.0.0/JourTempo-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JourTempo-1.0.0.tar.gz",
+    "size_bytes": 12544,
+    "sha256": "1cc2c8131646453553a11124b499ff12276251f1ef59de825867cb93f764c887",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jourtempo/library/JourTempo/1.0.0/JourTempo-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jourtempo/library/JourTempo/1.0.0/JourTempo-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

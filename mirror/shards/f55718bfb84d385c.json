@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-gerardoeh",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-gerardoeh/library/Flasher/0.0.0+sha.a7b9fb1f9bc0/Flasher-0.0.0+sha.a7b9fb1f9bc0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Flasher-0.0.0+sha.a7b9fb1f9bc0.tar.gz",
+    "size_bytes": 885,
+    "sha256": "df67a0225bdbe0364198e57a27c1bc7b0ba912c42949a41f0b15249e307df460",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-gerardoeh/library/Flasher/0.0.0%2Bsha.a7b9fb1f9bc0/Flasher-0.0.0%2Bsha.a7b9fb1f9bc0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-gerardoeh/library/Flasher/0.0.0%2Bsha.a7b9fb1f9bc0/Flasher-0.0.0%2Bsha.a7b9fb1f9bc0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-gerardoeh/library/MaxSonarEZ1measures/0.0.0+sha.261ba16bf0aa/MaxSonarEZ1measures-0.0.0+sha.261ba16bf0aa.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MaxSonarEZ1measures-0.0.0+sha.261ba16bf0aa.tar.gz",
+    "size_bytes": 1072,
+    "sha256": "f33d919d36dd075782182e93ebce24d27ef9df5e46bd8f829ea3d41c40120aee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-gerardoeh/library/MaxSonarEZ1measures/0.0.0%2Bsha.261ba16bf0aa/MaxSonarEZ1measures-0.0.0%2Bsha.261ba16bf0aa.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-gerardoeh/library/MaxSonarEZ1measures/0.0.0%2Bsha.261ba16bf0aa/MaxSonarEZ1measures-0.0.0%2Bsha.261ba16bf0aa.tar.gz"
+    ]
+   }
+  }
+ ]
+}

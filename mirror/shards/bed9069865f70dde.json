@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sylvainsicard",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sylvainsicard/library/MyJeedom/2.0.4/MyJeedom-2.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MyJeedom-2.0.4.tar.gz",
+    "size_bytes": 8137,
+    "sha256": "a54fc1ccf14367b23162121c2677be374165bd9f44dbac7a29ce319bf73ab4ea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sylvainsicard/library/MyJeedom/2.0.4/MyJeedom-2.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/sylvainsicard/library/MyJeedom/2.0.4/MyJeedom-2.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sylvainsicard/library/MyJeedom/2.0.6/MyJeedom-2.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MyJeedom-2.0.6.tar.gz",
+    "size_bytes": 7920,
+    "sha256": "967bbba4d3c1e938f537a99df50a3ca27b48f0ab39f22d8b2a937991c2e8a02e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sylvainsicard/library/MyJeedom/2.0.6/MyJeedom-2.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/sylvainsicard/library/MyJeedom/2.0.6/MyJeedom-2.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sylvainsicard/library/MyJeedom/2.0.7/MyJeedom-2.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MyJeedom-2.0.7.tar.gz",
+    "size_bytes": 7939,
+    "sha256": "fad33118629b67e9b1f5368d93cbbfaec53c0ff437b146fb446193eaa7243f4f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sylvainsicard/library/MyJeedom/2.0.7/MyJeedom-2.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/sylvainsicard/library/MyJeedom/2.0.7/MyJeedom-2.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sylvainsicard/library/MyJeedom/2.0.8/MyJeedom-2.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MyJeedom-2.0.8.tar.gz",
+    "size_bytes": 8106,
+    "sha256": "b8b6b255233a0d810034660c38cda0dcb15fd120781173ab0e44d930806048eb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sylvainsicard/library/MyJeedom/2.0.8/MyJeedom-2.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/sylvainsicard/library/MyJeedom/2.0.8/MyJeedom-2.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sylvainsicard/library/MyLog/2.0.5/MyLog-2.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MyLog-2.0.5.tar.gz",
+    "size_bytes": 10795,
+    "sha256": "275527ff749b7a2193377f64a3cc07c507cf104c9ca62bcca6362771ae5a7b9e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sylvainsicard/library/MyLog/2.0.5/MyLog-2.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/sylvainsicard/library/MyLog/2.0.5/MyLog-2.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

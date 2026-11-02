@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ozzdemir",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ozzdemir/library/MotionDriver_6_1/0.0.0+sha.7469a85601f1/MotionDriver_6_1-0.0.0+sha.7469a85601f1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MotionDriver_6_1-0.0.0+sha.7469a85601f1.tar.gz",
+    "size_bytes": 40078,
+    "sha256": "5bc6d964b0a4df180970780314e5ddcf2f4bf6931339591f1d70840e99c680f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ozzdemir/library/MotionDriver_6_1/0.0.0%2Bsha.7469a85601f1/MotionDriver_6_1-0.0.0%2Bsha.7469a85601f1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ozzdemir/library/MotionDriver_6_1/0.0.0%2Bsha.7469a85601f1/MotionDriver_6_1-0.0.0%2Bsha.7469a85601f1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ozzdemir/library/SparkFunMPU9250-DMP/0.0.0+sha.2c4e849b8ecf/SparkFunMPU9250-DMP-0.0.0+sha.2c4e849b8ecf.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunMPU9250-DMP-0.0.0+sha.2c4e849b8ecf.tar.gz",
+    "size_bytes": 10287,
+    "sha256": "85346ac658f31218cb6bc7ad5c9b93c02d37893408a95416a3abedefdc1f45de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ozzdemir/library/SparkFunMPU9250-DMP/0.0.0%2Bsha.2c4e849b8ecf/SparkFunMPU9250-DMP-0.0.0%2Bsha.2c4e849b8ecf.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ozzdemir/library/SparkFunMPU9250-DMP/0.0.0%2Bsha.2c4e849b8ecf/SparkFunMPU9250-DMP-0.0.0%2Bsha.2c4e849b8ecf.tar.gz"
+    ]
+   }
+  }
+ ]
+}

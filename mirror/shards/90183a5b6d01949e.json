@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-dipi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-dipi/library/AD5933/0.0.0+sha.6b9fc31d51b0/AD5933-0.0.0+sha.6b9fc31d51b0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AD5933-0.0.0+sha.6b9fc31d51b0.tar.gz",
+    "size_bytes": 3436,
+    "sha256": "397ac3564baa5c8e994026177df0aa855f85ae6cebde6ea3a0860d0c231b640d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dipi/library/AD5933/0.0.0%2Bsha.6b9fc31d51b0/AD5933-0.0.0%2Bsha.6b9fc31d51b0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dipi/library/AD5933/0.0.0%2Bsha.6b9fc31d51b0/AD5933-0.0.0%2Bsha.6b9fc31d51b0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

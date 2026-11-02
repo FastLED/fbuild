@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/g1ojs",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "g1ojs/library/G1OJS_Tiny_Si5351_CLK0/1.0.1/G1OJS_Tiny_Si5351_CLK0-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "G1OJS_Tiny_Si5351_CLK0-1.0.1.tar.gz",
+    "size_bytes": 4743,
+    "sha256": "0ebd76fd187e3e283cc4be3da3e32678ea4a100cc56f03f30887ab00084ee883",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/g1ojs/library/G1OJS_Tiny_Si5351_CLK0/1.0.1/G1OJS_Tiny_Si5351_CLK0-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/g1ojs/library/G1OJS_Tiny_Si5351_CLK0/1.0.1/G1OJS_Tiny_Si5351_CLK0-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

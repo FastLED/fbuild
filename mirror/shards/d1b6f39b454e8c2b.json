@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/thesolarnomad",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "thesolarnomad/library/LoRa%20Serialization/3.3.1/LoRaSerialization-3.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LoRaSerialization-3.3.1.tar.gz",
+    "size_bytes": 48153,
+    "sha256": "bf7b2c2fab1d7651293492f9a88133a07991640ef2f201187d97a359030390c1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thesolarnomad/library/LoRa%2520Serialization/3.3.1/LoRaSerialization-3.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/thesolarnomad/library/LoRa%20Serialization/3.3.1/LoRaSerialization-3.3.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

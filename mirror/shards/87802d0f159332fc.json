@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-raffaello",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-raffaello/library/ATParser/0.0.0+sha.f395d107f15e/ATParser-0.0.0+sha.f395d107f15e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ATParser-0.0.0+sha.f395d107f15e.tar.gz",
+    "size_bytes": 4311,
+    "sha256": "3bd07da1265a84642f86f746e5beb30dff6e4d301f55c54e35f42d7f5959c3bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-raffaello/library/ATParser/0.0.0%2Bsha.f395d107f15e/ATParser-0.0.0%2Bsha.f395d107f15e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-raffaello/library/ATParser/0.0.0%2Bsha.f395d107f15e/ATParser-0.0.0%2Bsha.f395d107f15e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-raffaello/library/Sigfox/0.0.0+sha.7e21590031dd/Sigfox-0.0.0+sha.7e21590031dd.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sigfox-0.0.0+sha.7e21590031dd.tar.gz",
+    "size_bytes": 2078,
+    "sha256": "c8384f7da225c88ddd240334110036cebc5ddf122b759af7b7f0b366cfa44cc4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-raffaello/library/Sigfox/0.0.0%2Bsha.7e21590031dd/Sigfox-0.0.0%2Bsha.7e21590031dd.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-raffaello/library/Sigfox/0.0.0%2Bsha.7e21590031dd/Sigfox-0.0.0%2Bsha.7e21590031dd.tar.gz"
+    ]
+   }
+  }
+ ]
+}

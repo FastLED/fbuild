@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/garmin",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "garmin/library/LIDAR-Lite/3.0.6/LIDAR-Lite-3.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LIDAR-Lite-3.0.6.tar.gz",
+    "size_bytes": 832986,
+    "sha256": "657b9c6ef6d254f78c34f2e5f841c6f09b147a635376b1df2500ebab57cf846a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/garmin/library/LIDAR-Lite/3.0.6/LIDAR-Lite-3.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/garmin/library/LIDAR-Lite/3.0.6/LIDAR-Lite-3.0.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

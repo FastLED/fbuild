@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/diydoohickeys",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "diydoohickeys/library/Preflight/1.0.0/Preflight-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Preflight-1.0.0.tar.gz",
+    "size_bytes": 466697,
+    "sha256": "5518df448154563c34e10328be5ceb52b8e808dcf266f9d62ea390af18395d00",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/diydoohickeys/library/Preflight/1.0.0/Preflight-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/diydoohickeys/library/Preflight/1.0.0/Preflight-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "diydoohickeys/library/Preflight/1.1.0/Preflight-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Preflight-1.1.0.tar.gz",
+    "size_bytes": 497652,
+    "sha256": "a19fd8d7a887ab908b0f167adc927e2444fd63637d61c1168059c7add23df04a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/diydoohickeys/library/Preflight/1.1.0/Preflight-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/diydoohickeys/library/Preflight/1.1.0/Preflight-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/markfickett",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "markfickett/library/Morse/0.0.0-alpha+sha.b4fb9b5739/Morse-0.0.0-alphasha.b4fb9b5739.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Morse-0.0.0-alphasha.b4fb9b5739.tar.gz",
+    "size_bytes": 7237,
+    "sha256": "f5122894c765181c3c7f9f71b13c41a231864533c38c3ac2401105103284e340",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/markfickett/library/Morse/0.0.0-alpha%2Bsha.b4fb9b5739/Morse-0.0.0-alphasha.b4fb9b5739.tar.gz",
+     "https://dl.registry.platformio.org/download/markfickett/library/Morse/0.0.0-alpha%2Bsha.b4fb9b5739/Morse-0.0.0-alphasha.b4fb9b5739.tar.gz"
+    ]
+   }
+  }
+ ]
+}

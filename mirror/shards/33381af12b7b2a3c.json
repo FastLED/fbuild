@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-whatnick",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-whatnick/library/Adafruit_GFX_1351/0.0.0+sha.ca4a631bfbd8/Adafruit_GFX_1351-0.0.0+sha.ca4a631bfbd8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Adafruit_GFX_1351-0.0.0+sha.ca4a631bfbd8.tar.gz",
+    "size_bytes": 12800,
+    "sha256": "2f0710798f9d9aa782c685e4ead0fcb53552162b2c6f57faf3a2feae66df15f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-whatnick/library/Adafruit_GFX_1351/0.0.0%2Bsha.ca4a631bfbd8/Adafruit_GFX_1351-0.0.0%2Bsha.ca4a631bfbd8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-whatnick/library/Adafruit_GFX_1351/0.0.0%2Bsha.ca4a631bfbd8/Adafruit_GFX_1351-0.0.0%2Bsha.ca4a631bfbd8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

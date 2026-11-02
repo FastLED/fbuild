@@ -1,0 +1,295 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/simonlmn",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "simonlmn/library/esp-iot-core/0.10.0/esp-iot-core-0.10.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-iot-core-0.10.0.tar.gz",
+    "size_bytes": 17418,
+    "sha256": "985a6a30c0b13cb8e34d5bd8a399a78597a1247a71d64fee3744c924fdc71f1d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/simonlmn/library/esp-iot-core/0.10.0/esp-iot-core-0.10.0.tar.gz",
+     "https://dl.registry.platformio.org/download/simonlmn/library/esp-iot-core/0.10.0/esp-iot-core-0.10.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "simonlmn/library/esp-iot-core/0.11.0/esp-iot-core-0.11.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-iot-core-0.11.0.tar.gz",
+    "size_bytes": 17200,
+    "sha256": "10693a5ec1bc429ae77cc16b8b750958b639239e6dfb8cdf6482fb4be2959bc1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/simonlmn/library/esp-iot-core/0.11.0/esp-iot-core-0.11.0.tar.gz",
+     "https://dl.registry.platformio.org/download/simonlmn/library/esp-iot-core/0.11.0/esp-iot-core-0.11.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "simonlmn/library/esp-iot-core/0.12.0/esp-iot-core-0.12.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-iot-core-0.12.0.tar.gz",
+    "size_bytes": 17370,
+    "sha256": "f77ee0eb64b63bfaf36bc7646d38ec7fe52b9ad9147722c3ea99da19cadb8e77",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/simonlmn/library/esp-iot-core/0.12.0/esp-iot-core-0.12.0.tar.gz",
+     "https://dl.registry.platformio.org/download/simonlmn/library/esp-iot-core/0.12.0/esp-iot-core-0.12.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "simonlmn/library/esp-iot-core/0.8.0/esp-iot-core-0.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-iot-core-0.8.0.tar.gz",
+    "size_bytes": 17267,
+    "sha256": "4feb07af1b2e00f1e7866cdc59698fc701c65745bed53efd78e5cb2ad8f52eb6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/simonlmn/library/esp-iot-core/0.8.0/esp-iot-core-0.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/simonlmn/library/esp-iot-core/0.8.0/esp-iot-core-0.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "simonlmn/library/esp-iot-core/0.9.0/esp-iot-core-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-iot-core-0.9.0.tar.gz",
+    "size_bytes": 18027,
+    "sha256": "050ba0a995013d644c4a7182fff8254eb6c9b4aca32e1fcb212e745bad95f85c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/simonlmn/library/esp-iot-core/0.9.0/esp-iot-core-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/simonlmn/library/esp-iot-core/0.9.0/esp-iot-core-0.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "simonlmn/library/gpiobj/0.5.0/gpiobj-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "gpiobj-0.5.0.tar.gz",
+    "size_bytes": 4337,
+    "sha256": "2e84793066af4b4a911455f58e291e6e2ba144f0c84cddfe7da872730c7b79a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/simonlmn/library/gpiobj/0.5.0/gpiobj-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/simonlmn/library/gpiobj/0.5.0/gpiobj-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "simonlmn/library/jsons/0.4.1/jsons-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "jsons-0.4.1.tar.gz",
+    "size_bytes": 10010,
+    "sha256": "d2b6739113e6371ec396c61051dff9ec0c66605688cc348f3029cb214eab6f3e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/simonlmn/library/jsons/0.4.1/jsons-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/simonlmn/library/jsons/0.4.1/jsons-0.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "simonlmn/library/serial-transport/0.3.0/serial-transport-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "serial-transport-0.3.0.tar.gz",
+    "size_bytes": 7184,
+    "sha256": "bea8a94e2e84428409481a47a864d0fa19e9ea1f5405641f1f427a46b791456b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/simonlmn/library/serial-transport/0.3.0/serial-transport-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/simonlmn/library/serial-transport/0.3.0/serial-transport-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "simonlmn/library/serial-transport/1.0.0/serial-transport-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "serial-transport-1.0.0.tar.gz",
+    "size_bytes": 10144,
+    "sha256": "c12eaca3a06a0d0a243289014aa2bcc4515738dc0508ef6f750821236a6ee5c1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/simonlmn/library/serial-transport/1.0.0/serial-transport-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/simonlmn/library/serial-transport/1.0.0/serial-transport-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "simonlmn/library/serial-transport/1.1.0/serial-transport-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "serial-transport-1.1.0.tar.gz",
+    "size_bytes": 10732,
+    "sha256": "d23205db347889a33550281c5163660e2c905059ce445f48649581e6f9ef899b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/simonlmn/library/serial-transport/1.1.0/serial-transport-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/simonlmn/library/serial-transport/1.1.0/serial-transport-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "simonlmn/library/serial-transport/1.2.0/serial-transport-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "serial-transport-1.2.0.tar.gz",
+    "size_bytes": 10924,
+    "sha256": "926cd4e58f7f19df41d16fbcba41ef7e35cb099f3293ef4fb741520ac8996e69",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/simonlmn/library/serial-transport/1.2.0/serial-transport-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/simonlmn/library/serial-transport/1.2.0/serial-transport-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "simonlmn/library/serial-transport/1.3.0/serial-transport-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "serial-transport-1.3.0.tar.gz",
+    "size_bytes": 10647,
+    "sha256": "18ef8a160b0c43618b9cd1d3e916d93bd1ea21d6466c0e1bf2a8b16c067627c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/simonlmn/library/serial-transport/1.3.0/serial-transport-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/simonlmn/library/serial-transport/1.3.0/serial-transport-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "simonlmn/library/toolbox/0.10.0/toolbox-0.10.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolbox-0.10.0.tar.gz",
+    "size_bytes": 14410,
+    "sha256": "c2a403f710c40e22430e0530e4c18d3a7eecf926fdbd0ff2065e830089a3d3e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/simonlmn/library/toolbox/0.10.0/toolbox-0.10.0.tar.gz",
+     "https://dl.registry.platformio.org/download/simonlmn/library/toolbox/0.10.0/toolbox-0.10.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "simonlmn/library/toolbox/0.11.0/toolbox-0.11.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolbox-0.11.0.tar.gz",
+    "size_bytes": 14510,
+    "sha256": "e1dd2c0c28bdcc70ab0dbe5a7aa20efd8276de458f26ce2aa0ad1a530ece32a1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/simonlmn/library/toolbox/0.11.0/toolbox-0.11.0.tar.gz",
+     "https://dl.registry.platformio.org/download/simonlmn/library/toolbox/0.11.0/toolbox-0.11.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "simonlmn/library/toolbox/0.11.1/toolbox-0.11.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolbox-0.11.1.tar.gz",
+    "size_bytes": 14885,
+    "sha256": "ea3f21df0d1847d16e52c14e5cdb948faf849a86a05b38915a2bbde64280e803",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/simonlmn/library/toolbox/0.11.1/toolbox-0.11.1.tar.gz",
+     "https://dl.registry.platformio.org/download/simonlmn/library/toolbox/0.11.1/toolbox-0.11.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "simonlmn/library/toolbox/0.12.0/toolbox-0.12.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolbox-0.12.0.tar.gz",
+    "size_bytes": 15122,
+    "sha256": "deab2316878f9051e4775d4bc15c9b4f068674faa85c1ac3300c17ec9365af71",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/simonlmn/library/toolbox/0.12.0/toolbox-0.12.0.tar.gz",
+     "https://dl.registry.platformio.org/download/simonlmn/library/toolbox/0.12.0/toolbox-0.12.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "simonlmn/library/toolbox/0.7.0/toolbox-0.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolbox-0.7.0.tar.gz",
+    "size_bytes": 11352,
+    "sha256": "37a7b7cf722a5b2eadc699836d39eaff971269fcc66c1c57bce607ae56157cec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/simonlmn/library/toolbox/0.7.0/toolbox-0.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/simonlmn/library/toolbox/0.7.0/toolbox-0.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "simonlmn/library/toolbox/0.8.0/toolbox-0.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolbox-0.8.0.tar.gz",
+    "size_bytes": 11729,
+    "sha256": "4f0b9d0fbbc69c2eae213d9d422e5a45185c50a4b4d6044ddc19625a7b89729c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/simonlmn/library/toolbox/0.8.0/toolbox-0.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/simonlmn/library/toolbox/0.8.0/toolbox-0.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "simonlmn/library/toolbox/0.9.0/toolbox-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolbox-0.9.0.tar.gz",
+    "size_bytes": 13066,
+    "sha256": "57d2b2c81550f7b16200850e0975951682c39f9b816bd4fbf41ea758ec0dc259",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/simonlmn/library/toolbox/0.9.0/toolbox-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/simonlmn/library/toolbox/0.9.0/toolbox-0.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "simonlmn/library/yatest/0.10.0/yatest-0.10.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "yatest-0.10.0.tar.gz",
+    "size_bytes": 16915,
+    "sha256": "1585abfc2ece7edfd85fcae12d573dbcce687d44bfe8be54283c282581a7c2b0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/simonlmn/library/yatest/0.10.0/yatest-0.10.0.tar.gz",
+     "https://dl.registry.platformio.org/download/simonlmn/library/yatest/0.10.0/yatest-0.10.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "simonlmn/library/yatest/0.5.0/yatest-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "yatest-0.5.0.tar.gz",
+    "size_bytes": 12846,
+    "sha256": "4b0eab0efe2fe66903d60c1ce5ea362c30825968ead169eaaf2e7970a2aa6af6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/simonlmn/library/yatest/0.5.0/yatest-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/simonlmn/library/yatest/0.5.0/yatest-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "simonlmn/library/yatest/0.9.0/yatest-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "yatest-0.9.0.tar.gz",
+    "size_bytes": 15771,
+    "sha256": "d934e49f9978c7fb7f71e0105ef9bba2867362532c96f5201ef09fd6ff518955",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/simonlmn/library/yatest/0.9.0/yatest-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/simonlmn/library/yatest/0.9.0/yatest-0.9.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

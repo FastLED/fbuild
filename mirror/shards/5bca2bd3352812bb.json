@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gitlab-ben-bartholomew",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gitlab-ben-bartholomew/library/Adafruit%20MAX9744%20Library/1.0.0/AdafruitMAX9744Library-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AdafruitMAX9744Library-1.0.0.tar.gz",
+    "size_bytes": 3864,
+    "sha256": "5bf506f3c3929aecbc832b3236f34d6a218d3c2278a9d0677ea51e63c30a7113",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gitlab-ben-bartholomew/library/Adafruit%2520MAX9744%2520Library/1.0.0/AdafruitMAX9744Library-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gitlab-ben-bartholomew/library/Adafruit%20MAX9744%20Library/1.0.0/AdafruitMAX9744Library-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

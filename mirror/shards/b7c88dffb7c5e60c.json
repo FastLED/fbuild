@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hardi-st",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hardi-st/library/MobaLedLib/3.5.0/MobaLedLib-3.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MobaLedLib-3.5.0.tar.gz",
+    "size_bytes": 571442,
+    "sha256": "9c207aa16bde49d0626e295f49d2002ff58886ec907a0bedc48312690fbdb4a0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hardi-st/library/MobaLedLib/3.5.0/MobaLedLib-3.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hardi-st/library/MobaLedLib/3.5.0/MobaLedLib-3.5.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hafidh",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hafidh/library/Callmebot%20ESP32/2.0.0/CallmebotESP32-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CallmebotESP32-2.0.0.tar.gz",
+    "size_bytes": 15119,
+    "sha256": "9f4dbb86937d46ace098e71bca080c2376bfcb30d957fa617ef46b4f934a8759",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hafidh/library/Callmebot%2520ESP32/2.0.0/CallmebotESP32-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hafidh/library/Callmebot%20ESP32/2.0.0/CallmebotESP32-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hafidh/library/Callmebot%20ESP8266/2.0.0/CallmebotESP8266-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CallmebotESP8266-2.0.0.tar.gz",
+    "size_bytes": 10469,
+    "sha256": "9cf83354a45df717bbdeeaf62a3e58fc0b2d25e48b39948fd6c37a8972a67882",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hafidh/library/Callmebot%2520ESP8266/2.0.0/CallmebotESP8266-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hafidh/library/Callmebot%20ESP8266/2.0.0/CallmebotESP8266-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hafidh/library/FlowSensor/1.5.2/FlowSensor-1.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FlowSensor-1.5.2.tar.gz",
+    "size_bytes": 9674,
+    "sha256": "3addbb44af0b3efeb1f1f4060b95a99501fec8e4f1a7b2393dc6049eaf45d134",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hafidh/library/FlowSensor/1.5.2/FlowSensor-1.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/hafidh/library/FlowSensor/1.5.2/FlowSensor-1.5.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

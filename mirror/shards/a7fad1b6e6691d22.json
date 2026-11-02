@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-freescale-cachan",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-freescale-cachan/library/Programme_course_JourJ1/0.0.0+sha.7714a216c91d/Programme_course_JourJ1-0.0.0+sha.7714a216c91d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Programme_course_JourJ1-0.0.0+sha.7714a216c91d.tar.gz",
+    "size_bytes": 46531,
+    "sha256": "62a34b5ed653e2cf27fbdd69168a1702877cadf091ac17dbf920702dacfb215d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-freescale-cachan/library/Programme_course_JourJ1/0.0.0%2Bsha.7714a216c91d/Programme_course_JourJ1-0.0.0%2Bsha.7714a216c91d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-freescale-cachan/library/Programme_course_JourJ1/0.0.0%2Bsha.7714a216c91d/Programme_course_JourJ1-0.0.0%2Bsha.7714a216c91d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,217 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/guernica0131",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "guernica0131/library/HyphenConnect/1.0.1/HyphenConnect-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HyphenConnect-1.0.1.tar.gz",
+    "size_bytes": 32663,
+    "sha256": "9183be223cf97e71b1c1f0698dcbeaa569764b4aa78ee5bed2bdf5a45dd353ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/guernica0131/library/HyphenConnect/1.0.1/HyphenConnect-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/guernica0131/library/HyphenConnect/1.0.1/HyphenConnect-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "guernica0131/library/HyphenConnect/1.0.10/HyphenConnect-1.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HyphenConnect-1.0.10.tar.gz",
+    "size_bytes": 35537,
+    "sha256": "fa871e21386fbf2745443084e7681f4cc1446b4198e4bbf04fded43b2ec9076e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/guernica0131/library/HyphenConnect/1.0.10/HyphenConnect-1.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/guernica0131/library/HyphenConnect/1.0.10/HyphenConnect-1.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "guernica0131/library/HyphenConnect/1.0.11/HyphenConnect-1.0.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HyphenConnect-1.0.11.tar.gz",
+    "size_bytes": 35653,
+    "sha256": "993453e2adf1c28e5a6c0a464361f7c94b1d403a1e0aa548e6eaf1568558e0bf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/guernica0131/library/HyphenConnect/1.0.11/HyphenConnect-1.0.11.tar.gz",
+     "https://dl.registry.platformio.org/download/guernica0131/library/HyphenConnect/1.0.11/HyphenConnect-1.0.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "guernica0131/library/HyphenConnect/1.0.12/HyphenConnect-1.0.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HyphenConnect-1.0.12.tar.gz",
+    "size_bytes": 35671,
+    "sha256": "5a20dc22e65e9316a2b0c1e0d2253ca1fcf63357448aa4be3f69ca06e1523f8a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/guernica0131/library/HyphenConnect/1.0.12/HyphenConnect-1.0.12.tar.gz",
+     "https://dl.registry.platformio.org/download/guernica0131/library/HyphenConnect/1.0.12/HyphenConnect-1.0.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "guernica0131/library/HyphenConnect/1.0.13/HyphenConnect-1.0.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HyphenConnect-1.0.13.tar.gz",
+    "size_bytes": 36237,
+    "sha256": "2142f9ed2043695794b8e6b82cf5ee9a25b634c7c5c78c56f10f77f7a2deda50",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/guernica0131/library/HyphenConnect/1.0.13/HyphenConnect-1.0.13.tar.gz",
+     "https://dl.registry.platformio.org/download/guernica0131/library/HyphenConnect/1.0.13/HyphenConnect-1.0.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "guernica0131/library/HyphenConnect/1.0.14/HyphenConnect-1.0.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HyphenConnect-1.0.14.tar.gz",
+    "size_bytes": 36252,
+    "sha256": "2befdb39d0300b4d008e8fc2b455da398122dd8a1e98adbb06416783302ee157",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/guernica0131/library/HyphenConnect/1.0.14/HyphenConnect-1.0.14.tar.gz",
+     "https://dl.registry.platformio.org/download/guernica0131/library/HyphenConnect/1.0.14/HyphenConnect-1.0.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "guernica0131/library/HyphenConnect/1.0.2/HyphenConnect-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HyphenConnect-1.0.2.tar.gz",
+    "size_bytes": 32979,
+    "sha256": "effaa4f1ef22c8dfaf2cae1041e2596f32ad45b733c6fd301f9985e309e28285",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/guernica0131/library/HyphenConnect/1.0.2/HyphenConnect-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/guernica0131/library/HyphenConnect/1.0.2/HyphenConnect-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "guernica0131/library/HyphenConnect/1.0.3/HyphenConnect-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HyphenConnect-1.0.3.tar.gz",
+    "size_bytes": 33245,
+    "sha256": "19b6931a8eed3aa4f382b89b9d2e6b94048dad05035d3fdc9767d6ac4b2d7104",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/guernica0131/library/HyphenConnect/1.0.3/HyphenConnect-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/guernica0131/library/HyphenConnect/1.0.3/HyphenConnect-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "guernica0131/library/HyphenConnect/1.0.4/HyphenConnect-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HyphenConnect-1.0.4.tar.gz",
+    "size_bytes": 33316,
+    "sha256": "087b22e713ea7a8dd31614b351acd89b4679aaa30651189755701c5340c52315",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/guernica0131/library/HyphenConnect/1.0.4/HyphenConnect-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/guernica0131/library/HyphenConnect/1.0.4/HyphenConnect-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "guernica0131/library/HyphenConnect/1.0.5/HyphenConnect-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HyphenConnect-1.0.5.tar.gz",
+    "size_bytes": 33314,
+    "sha256": "85be571cbcdbdd946a076294a863e95955a62713ec5b6914a192c44bdd7b1d9b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/guernica0131/library/HyphenConnect/1.0.5/HyphenConnect-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/guernica0131/library/HyphenConnect/1.0.5/HyphenConnect-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "guernica0131/library/HyphenConnect/1.0.6/HyphenConnect-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HyphenConnect-1.0.6.tar.gz",
+    "size_bytes": 34257,
+    "sha256": "d11b22c2c69f62d8ee64b1d60e0401df3f51dcc8599e60675f4a0ef48929d3e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/guernica0131/library/HyphenConnect/1.0.6/HyphenConnect-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/guernica0131/library/HyphenConnect/1.0.6/HyphenConnect-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "guernica0131/library/HyphenConnect/1.0.7/HyphenConnect-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HyphenConnect-1.0.7.tar.gz",
+    "size_bytes": 34301,
+    "sha256": "255b218928d5b31a775e7f5e9c9a362f17f722ae7482f8d805086ed70389f5ea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/guernica0131/library/HyphenConnect/1.0.7/HyphenConnect-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/guernica0131/library/HyphenConnect/1.0.7/HyphenConnect-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "guernica0131/library/HyphenConnect/1.0.8/HyphenConnect-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HyphenConnect-1.0.8.tar.gz",
+    "size_bytes": 34369,
+    "sha256": "25bee043a968ae7e8000ea21405536bfd8642304805f089a1e46243df882b554",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/guernica0131/library/HyphenConnect/1.0.8/HyphenConnect-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/guernica0131/library/HyphenConnect/1.0.8/HyphenConnect-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "guernica0131/library/HyphenConnect/1.0.9/HyphenConnect-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HyphenConnect-1.0.9.tar.gz",
+    "size_bytes": 34765,
+    "sha256": "c4c07a2fd42b63642728550904edb46b9ec4cdf9e253550bc15edc70e47bd1a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/guernica0131/library/HyphenConnect/1.0.9/HyphenConnect-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/guernica0131/library/HyphenConnect/1.0.9/HyphenConnect-1.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "guernica0131/library/HyphenConnect/1.1.0/HyphenConnect-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HyphenConnect-1.1.0.tar.gz",
+    "size_bytes": 42527,
+    "sha256": "8070ec181c31ea1625c57f6497ece918ff575897a6fce37cd868f4c9968b425f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/guernica0131/library/HyphenConnect/1.1.0/HyphenConnect-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/guernica0131/library/HyphenConnect/1.1.0/HyphenConnect-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "guernica0131/library/HyphenConnect/1.2.1/HyphenConnect-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HyphenConnect-1.2.1.tar.gz",
+    "size_bytes": 43691,
+    "sha256": "c63d170fa06b9feeac1be127a8b9c30b05c698e6fdca703a11b219643feb7a17",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/guernica0131/library/HyphenConnect/1.2.1/HyphenConnect-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/guernica0131/library/HyphenConnect/1.2.1/HyphenConnect-1.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

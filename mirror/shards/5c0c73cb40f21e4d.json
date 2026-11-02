@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/4-20ma",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "4-20ma/library/I2cDiscreteIoExpander/4.0.1/I2cDiscreteIoExpander-4.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2cDiscreteIoExpander-4.0.1.tar.gz",
+    "size_bytes": 15904,
+    "sha256": "6fb2ee35cbb82a948f5984c5cd522aa0e8227aa01ff7ee6aa7ff4df9d1db9e5e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/4-20ma/library/I2cDiscreteIoExpander/4.0.1/I2cDiscreteIoExpander-4.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/4-20ma/library/I2cDiscreteIoExpander/4.0.1/I2cDiscreteIoExpander-4.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "4-20ma/library/ModbusMaster/2.0.1/ModbusMaster-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ModbusMaster-2.0.1.tar.gz",
+    "size_bytes": 32429,
+    "sha256": "3065451ea2e73c1e32dd66fe4c43adcd9ff16ec273b9b3bdb745423c11d3050d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/4-20ma/library/ModbusMaster/2.0.1/ModbusMaster-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/4-20ma/library/ModbusMaster/2.0.1/ModbusMaster-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "4-20ma/library/i2c_adc_ads7828/2.0.2/i2c_adc_ads7828-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "i2c_adc_ads7828-2.0.2.tar.gz",
+    "size_bytes": 18103,
+    "sha256": "94abd98c9004734643cb2d95114a96b9802f3050328b61341b71075c7a26bc0c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/4-20ma/library/i2c_adc_ads7828/2.0.2/i2c_adc_ads7828-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/4-20ma/library/i2c_adc_ads7828/2.0.2/i2c_adc_ads7828-2.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

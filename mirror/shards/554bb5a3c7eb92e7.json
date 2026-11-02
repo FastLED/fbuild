@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/yannidd",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "yannidd/library/UKESF%20Sixth-Formers/2.0.2/UKESFSixth-Formers-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UKESFSixth-Formers-2.0.2.tar.gz",
+    "size_bytes": 269884,
+    "sha256": "27f04ef7ca776f61e5ca82f07bc6c09fd2dc7ccff2f8fa8f98b7a3d86dc293e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yannidd/library/UKESF%2520Sixth-Formers/2.0.2/UKESFSixth-Formers-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/yannidd/library/UKESF%20Sixth-Formers/2.0.2/UKESFSixth-Formers-2.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

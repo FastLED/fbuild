@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-kochansky",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-kochansky/library/Maestro/0.0.0+sha.f374c7b60318/Maestro-0.0.0+sha.f374c7b60318.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Maestro-0.0.0+sha.f374c7b60318.tar.gz",
+    "size_bytes": 3199,
+    "sha256": "209b2c716ed6f4914ab4d45ef61de469fb256299c432329716070207beae3912",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kochansky/library/Maestro/0.0.0%2Bsha.f374c7b60318/Maestro-0.0.0%2Bsha.f374c7b60318.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kochansky/library/Maestro/0.0.0%2Bsha.f374c7b60318/Maestro-0.0.0%2Bsha.f374c7b60318.tar.gz"
+    ]
+   }
+  }
+ ]
+}

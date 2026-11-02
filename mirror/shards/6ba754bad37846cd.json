@@ -1,0 +1,126 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-wimpie",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-wimpie/library/DHT/0.0.0+sha.9b5b3200688f/DHT-0.0.0+sha.9b5b3200688f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DHT-0.0.0+sha.9b5b3200688f.tar.gz",
+    "size_bytes": 3560,
+    "sha256": "525b7dd47fcab6b05d908f713c77de237aaf31bb31728b5a3135df15444393cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wimpie/library/DHT/0.0.0%2Bsha.9b5b3200688f/DHT-0.0.0%2Bsha.9b5b3200688f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wimpie/library/DHT/0.0.0%2Bsha.9b5b3200688f/DHT-0.0.0%2Bsha.9b5b3200688f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wimpie/library/DS18B20/0.0.0+sha.ad90c2e86a63/DS18B20-0.0.0+sha.ad90c2e86a63.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS18B20-0.0.0+sha.ad90c2e86a63.tar.gz",
+    "size_bytes": 4678,
+    "sha256": "c0b264cf83198e88a6ce6b7228e32f4887417338b1d875901b556aa1dfb9a11b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wimpie/library/DS18B20/0.0.0%2Bsha.ad90c2e86a63/DS18B20-0.0.0%2Bsha.ad90c2e86a63.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wimpie/library/DS18B20/0.0.0%2Bsha.ad90c2e86a63/DS18B20-0.0.0%2Bsha.ad90c2e86a63.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wimpie/library/LS020/0.0.0+sha.d048f09dcfb0/LS020-0.0.0+sha.d048f09dcfb0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LS020-0.0.0+sha.d048f09dcfb0.tar.gz",
+    "size_bytes": 11861,
+    "sha256": "2cc10a54286c9ae5527700132821a03ad2aedee210124c856d811af6b531e18d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wimpie/library/LS020/0.0.0%2Bsha.d048f09dcfb0/LS020-0.0.0%2Bsha.d048f09dcfb0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wimpie/library/LS020/0.0.0%2Bsha.d048f09dcfb0/LS020-0.0.0%2Bsha.d048f09dcfb0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wimpie/library/OneWireEEPROM/0.0.0+sha.193926923cb0/OneWireEEPROM-0.0.0+sha.193926923cb0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OneWireEEPROM-0.0.0+sha.193926923cb0.tar.gz",
+    "size_bytes": 10221,
+    "sha256": "ebf333d7bd24450571af5fa4a6fe6283657f91be195caaeb574aeaa055410023",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wimpie/library/OneWireEEPROM/0.0.0%2Bsha.193926923cb0/OneWireEEPROM-0.0.0%2Bsha.193926923cb0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wimpie/library/OneWireEEPROM/0.0.0%2Bsha.193926923cb0/OneWireEEPROM-0.0.0%2Bsha.193926923cb0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wimpie/library/PCD8544LCD/0.0.0+sha.ce391193b822/PCD8544LCD-0.0.0+sha.ce391193b822.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCD8544LCD-0.0.0+sha.ce391193b822.tar.gz",
+    "size_bytes": 15395,
+    "sha256": "63ce18eaaa8afe83cd05ff975bcb28d296f7800611c192d861b69f60cc3925df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wimpie/library/PCD8544LCD/0.0.0%2Bsha.ce391193b822/PCD8544LCD-0.0.0%2Bsha.ce391193b822.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wimpie/library/PCD8544LCD/0.0.0%2Bsha.ce391193b822/PCD8544LCD-0.0.0%2Bsha.ce391193b822.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wimpie/library/PCD8544MS/0.0.0+sha.61dcd2c0299a/PCD8544MS-0.0.0+sha.61dcd2c0299a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCD8544MS-0.0.0+sha.61dcd2c0299a.tar.gz",
+    "size_bytes": 16317,
+    "sha256": "0cd613076628139fd454af29d2574de230f11f0c32e4a4ab78f2087596d22de3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wimpie/library/PCD8544MS/0.0.0%2Bsha.61dcd2c0299a/PCD8544MS-0.0.0%2Bsha.61dcd2c0299a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wimpie/library/PCD8544MS/0.0.0%2Bsha.61dcd2c0299a/PCD8544MS-0.0.0%2Bsha.61dcd2c0299a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wimpie/library/PulseCounter/0.0.0+sha.d534558752b8/PulseCounter-0.0.0+sha.d534558752b8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PulseCounter-0.0.0+sha.d534558752b8.tar.gz",
+    "size_bytes": 2122,
+    "sha256": "a6599b9929ed0825f55e5f548c75445ba340bd9a505eaad4bce11688f6e46950",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wimpie/library/PulseCounter/0.0.0%2Bsha.d534558752b8/PulseCounter-0.0.0%2Bsha.d534558752b8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wimpie/library/PulseCounter/0.0.0%2Bsha.d534558752b8/PulseCounter-0.0.0%2Bsha.d534558752b8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wimpie/library/RemoteIR/0.0.0+sha.62d8d73b3c38/RemoteIR-0.0.0+sha.62d8d73b3c38.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RemoteIR-0.0.0+sha.62d8d73b3c38.tar.gz",
+    "size_bytes": 4462,
+    "sha256": "66c8fa66e6ba4c81c5fea9a18599fd2f9936dffffa018d16d682d9658301a511",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wimpie/library/RemoteIR/0.0.0%2Bsha.62d8d73b3c38/RemoteIR-0.0.0%2Bsha.62d8d73b3c38.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wimpie/library/RemoteIR/0.0.0%2Bsha.62d8d73b3c38/RemoteIR-0.0.0%2Bsha.62d8d73b3c38.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wimpie/library/VBus/0.0.0+sha.c16866ed9508/VBus-0.0.0+sha.c16866ed9508.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VBus-0.0.0+sha.c16866ed9508.tar.gz",
+    "size_bytes": 5188,
+    "sha256": "faa234e65bcc4c2bea4d6ffe4184cdc68939df9daa8916e403585752138262bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wimpie/library/VBus/0.0.0%2Bsha.c16866ed9508/VBus-0.0.0%2Bsha.c16866ed9508.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wimpie/library/VBus/0.0.0%2Bsha.c16866ed9508/VBus-0.0.0%2Bsha.c16866ed9508.tar.gz"
+    ]
+   }
+  }
+ ]
+}

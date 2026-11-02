@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/vurdalakov",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "vurdalakov/library/RadSensBoard/1.0.0/RadSensBoard-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RadSensBoard-1.0.0.tar.gz",
+    "size_bytes": 3876,
+    "sha256": "371d78b70504923061583d5c60cae1cf7883cb24dc2164507cbbf1c30c4a8df7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vurdalakov/library/RadSensBoard/1.0.0/RadSensBoard-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vurdalakov/library/RadSensBoard/1.0.0/RadSensBoard-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

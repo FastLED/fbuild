@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-readysteadygo2006",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-readysteadygo2006/library/BH1750/0.0.0+sha.be50fe376e4f/BH1750-0.0.0+sha.be50fe376e4f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BH1750-0.0.0+sha.be50fe376e4f.tar.gz",
+    "size_bytes": 2133,
+    "sha256": "f2846c806a88c63899d5902e176c8a87c5eb50ad377dacfe90625b4cdbc1e8e7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-readysteadygo2006/library/BH1750/0.0.0%2Bsha.be50fe376e4f/BH1750-0.0.0%2Bsha.be50fe376e4f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-readysteadygo2006/library/BH1750/0.0.0%2Bsha.be50fe376e4f/BH1750-0.0.0%2Bsha.be50fe376e4f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-readysteadygo2006/library/DHT/0.0.0+sha.1570961902a8/DHT-0.0.0+sha.1570961902a8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DHT-0.0.0+sha.1570961902a8.tar.gz",
+    "size_bytes": 3385,
+    "sha256": "eb89f25015c3e86a714409eafc1a32d93ed6cdde44938a57a4c9cf4ffe6c13eb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-readysteadygo2006/library/DHT/0.0.0%2Bsha.1570961902a8/DHT-0.0.0%2Bsha.1570961902a8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-readysteadygo2006/library/DHT/0.0.0%2Bsha.1570961902a8/DHT-0.0.0%2Bsha.1570961902a8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-readysteadygo2006/library/MQ135/0.0.0+sha.a43405a3d273/MQ135-0.0.0+sha.a43405a3d273.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQ135-0.0.0+sha.a43405a3d273.tar.gz",
+    "size_bytes": 1797,
+    "sha256": "97830de902c7b0461cfe54bbdd3030008c8c23c10618493f6e16d63dfecfc64c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-readysteadygo2006/library/MQ135/0.0.0%2Bsha.a43405a3d273/MQ135-0.0.0%2Bsha.a43405a3d273.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-readysteadygo2006/library/MQ135/0.0.0%2Bsha.a43405a3d273/MQ135-0.0.0%2Bsha.a43405a3d273.tar.gz"
+    ]
+   }
+  }
+ ]
+}

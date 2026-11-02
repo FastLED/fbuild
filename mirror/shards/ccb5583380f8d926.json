@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-dwini",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-dwini/library/MbedJSONValue/0.0.0+sha.a2fabe322eff/MbedJSONValue-0.0.0+sha.a2fabe322eff.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MbedJSONValue-0.0.0+sha.a2fabe322eff.tar.gz",
+    "size_bytes": 6387,
+    "sha256": "f29e36cc8262a339bc06d577168de90e788e71ed027a38041bd249a552f1eabe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dwini/library/MbedJSONValue/0.0.0%2Bsha.a2fabe322eff/MbedJSONValue-0.0.0%2Bsha.a2fabe322eff.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dwini/library/MbedJSONValue/0.0.0%2Bsha.a2fabe322eff/MbedJSONValue-0.0.0%2Bsha.a2fabe322eff.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dwini/library/NeoPixelI2cSlave/0.0.0+sha.e0269262d1f2/NeoPixelI2cSlave-0.0.0+sha.e0269262d1f2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeoPixelI2cSlave-0.0.0+sha.e0269262d1f2.tar.gz",
+    "size_bytes": 2398,
+    "sha256": "b8f44fa862c967c624eaf0859e95bfc99a2aa1f868a3712678f2ead2f6c1bfa1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dwini/library/NeoPixelI2cSlave/0.0.0%2Bsha.e0269262d1f2/NeoPixelI2cSlave-0.0.0%2Bsha.e0269262d1f2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dwini/library/NeoPixelI2cSlave/0.0.0%2Bsha.e0269262d1f2/NeoPixelI2cSlave-0.0.0%2Bsha.e0269262d1f2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dwini/library/NeoPixelString/0.0.0+sha.7d32f46a38d3/NeoPixelString-0.0.0+sha.7d32f46a38d3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeoPixelString-0.0.0+sha.7d32f46a38d3.tar.gz",
+    "size_bytes": 3467,
+    "sha256": "b1bd1e68d5e2aa2d99816e8d4721a3f8e114d6bd0895ed485a58641a0abddd56",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dwini/library/NeoPixelString/0.0.0%2Bsha.7d32f46a38d3/NeoPixelString-0.0.0%2Bsha.7d32f46a38d3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dwini/library/NeoPixelString/0.0.0%2Bsha.7d32f46a38d3/NeoPixelString-0.0.0%2Bsha.7d32f46a38d3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dwini/library/PN532/0.0.0+sha.e7bbcfa61859/PN532-0.0.0+sha.e7bbcfa61859.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PN532-0.0.0+sha.e7bbcfa61859.tar.gz",
+    "size_bytes": 24210,
+    "sha256": "f0a066731767dc1341f0b0756b805d8d7493be1e7f38d57ef17b7f048b598a9c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dwini/library/PN532/0.0.0%2Bsha.e7bbcfa61859/PN532-0.0.0%2Bsha.e7bbcfa61859.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dwini/library/PN532/0.0.0%2Bsha.e7bbcfa61859/PN532-0.0.0%2Bsha.e7bbcfa61859.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dwini/library/SimplyLog/0.0.0+sha.72f7f0c5204b/SimplyLog-0.0.0+sha.72f7f0c5204b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimplyLog-0.0.0+sha.72f7f0c5204b.tar.gz",
+    "size_bytes": 1124,
+    "sha256": "00cd9f64ac57736acc6cb18ce82b2d7a2745120955c93590f2ae2636c0c3ca6f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dwini/library/SimplyLog/0.0.0%2Bsha.72f7f0c5204b/SimplyLog-0.0.0%2Bsha.72f7f0c5204b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dwini/library/SimplyLog/0.0.0%2Bsha.72f7f0c5204b/SimplyLog-0.0.0%2Bsha.72f7f0c5204b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dwini/library/simple_task_scheduler/0.0.0+sha.bd96023168df/simple_task_scheduler-0.0.0+sha.bd96023168df.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "simple_task_scheduler-0.0.0+sha.bd96023168df.tar.gz",
+    "size_bytes": 2176,
+    "sha256": "768e46d6923a815655bfaccf756f23132839d19d85ed2de31be1f3f84b7ffab0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dwini/library/simple_task_scheduler/0.0.0%2Bsha.bd96023168df/simple_task_scheduler-0.0.0%2Bsha.bd96023168df.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dwini/library/simple_task_scheduler/0.0.0%2Bsha.bd96023168df/simple_task_scheduler-0.0.0%2Bsha.bd96023168df.tar.gz"
+    ]
+   }
+  }
+ ]
+}

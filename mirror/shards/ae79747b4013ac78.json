@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ienai-space",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ienai-space/library/IENAI%20ADC128S/1.15.2/IENAIADC128S-1.15.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IENAIADC128S-1.15.2.tar.gz",
+    "size_bytes": 5811,
+    "sha256": "9bae1cad39b06da9174df7d3beea02914c84daf2f927e5e389cbb3163bb30241",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ienai-space/library/IENAI%2520ADC128S/1.15.2/IENAIADC128S-1.15.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ienai-space/library/IENAI%20ADC128S/1.15.2/IENAIADC128S-1.15.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ienai-space/library/IENAI%20ADC128S/1.17.0/IENAIADC128S-1.17.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IENAIADC128S-1.17.0.tar.gz",
+    "size_bytes": 5946,
+    "sha256": "154a8589e824791c486e7e72c67528256916850f1b3a595e48830a1bcf806e58",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ienai-space/library/IENAI%2520ADC128S/1.17.0/IENAIADC128S-1.17.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ienai-space/library/IENAI%20ADC128S/1.17.0/IENAIADC128S-1.17.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

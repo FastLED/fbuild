@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-smhapankar",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-smhapankar/library/DebouncedIn/0.0.0+sha.0076f717ca86/DebouncedIn-0.0.0+sha.0076f717ca86.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DebouncedIn-0.0.0+sha.0076f717ca86.tar.gz",
+    "size_bytes": 1462,
+    "sha256": "f3753623c203ce0035e9bbd074b912e601fee94b6984d7e9ec3ce512289edb4a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-smhapankar/library/DebouncedIn/0.0.0%2Bsha.0076f717ca86/DebouncedIn-0.0.0%2Bsha.0076f717ca86.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-smhapankar/library/DebouncedIn/0.0.0%2Bsha.0076f717ca86/DebouncedIn-0.0.0%2Bsha.0076f717ca86.tar.gz"
+    ]
+   }
+  }
+ ]
+}

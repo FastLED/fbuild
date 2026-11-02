@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mmurdoch",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mmurdoch/library/ArduinoUnit/3.0.4/ArduinoUnit-3.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoUnit-3.0.4.tar.gz",
+    "size_bytes": 138676,
+    "sha256": "5590e1c65b4ec9a6e3e3ce0d2934191e318b5cfe332e99cc3ebc3b791eef98df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mmurdoch/library/ArduinoUnit/3.0.4/ArduinoUnit-3.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/mmurdoch/library/ArduinoUnit/3.0.4/ArduinoUnit-3.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

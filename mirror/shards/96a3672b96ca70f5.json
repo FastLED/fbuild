@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-projet-robot1",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-projet-robot1/library/Bluetooth/0.0.0+sha.d04481270eba/Bluetooth-0.0.0+sha.d04481270eba.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bluetooth-0.0.0+sha.d04481270eba.tar.gz",
+    "size_bytes": 2019,
+    "sha256": "e96b099ff1437d7d130dd4348132d802e8820c02bc331eeb952cdb165c2afba5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-projet-robot1/library/Bluetooth/0.0.0%2Bsha.d04481270eba/Bluetooth-0.0.0%2Bsha.d04481270eba.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-projet-robot1/library/Bluetooth/0.0.0%2Bsha.d04481270eba/Bluetooth-0.0.0%2Bsha.d04481270eba.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-projet-robot1/library/Bluetooth_HC05/0.0.0+sha.2f927ff39806/Bluetooth_HC05-0.0.0+sha.2f927ff39806.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bluetooth_HC05-0.0.0+sha.2f927ff39806.tar.gz",
+    "size_bytes": 1566,
+    "sha256": "adfdfff1485dbb82c856aae8fce1f3aa1fed8d80df56eb9a519449e5979e7410",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-projet-robot1/library/Bluetooth_HC05/0.0.0%2Bsha.2f927ff39806/Bluetooth_HC05-0.0.0%2Bsha.2f927ff39806.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-projet-robot1/library/Bluetooth_HC05/0.0.0%2Bsha.2f927ff39806/Bluetooth_HC05-0.0.0%2Bsha.2f927ff39806.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-projet-robot1/library/Bluetooth_HC05_LE_TRAME/0.0.0+sha.f597583e8b55/Bluetooth_HC05_LE_TRAME-0.0.0+sha.f597583e8b55.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bluetooth_HC05_LE_TRAME-0.0.0+sha.f597583e8b55.tar.gz",
+    "size_bytes": 1570,
+    "sha256": "14a5baf8e131f009fe1597bc97177429e338822a3d58d4ae033def8770481b20",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-projet-robot1/library/Bluetooth_HC05_LE_TRAME/0.0.0%2Bsha.f597583e8b55/Bluetooth_HC05_LE_TRAME-0.0.0%2Bsha.f597583e8b55.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-projet-robot1/library/Bluetooth_HC05_LE_TRAME/0.0.0%2Bsha.f597583e8b55/Bluetooth_HC05_LE_TRAME-0.0.0%2Bsha.f597583e8b55.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-projet-robot1/library/Bluetooth_HC_05_LE/0.0.0+sha.b250b28c4ed0/Bluetooth_HC_05_LE-0.0.0+sha.b250b28c4ed0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bluetooth_HC_05_LE-0.0.0+sha.b250b28c4ed0.tar.gz",
+    "size_bytes": 1471,
+    "sha256": "252a8ffc51ad1bc815a8476719dd357254357850403803dcab47fa0c84e4f996",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-projet-robot1/library/Bluetooth_HC_05_LE/0.0.0%2Bsha.b250b28c4ed0/Bluetooth_HC_05_LE-0.0.0%2Bsha.b250b28c4ed0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-projet-robot1/library/Bluetooth_HC_05_LE/0.0.0%2Bsha.b250b28c4ed0/Bluetooth_HC_05_LE-0.0.0%2Bsha.b250b28c4ed0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-projet-robot1/library/LED/0.0.0+sha.ca5c598be185/LED-0.0.0+sha.ca5c598be185.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LED-0.0.0+sha.ca5c598be185.tar.gz",
+    "size_bytes": 1029,
+    "sha256": "4eb4d0d6ccfff009baa91706157753af36cce007a4b4d103d4bcef3e3dc416a7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-projet-robot1/library/LED/0.0.0%2Bsha.ca5c598be185/LED-0.0.0%2Bsha.ca5c598be185.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-projet-robot1/library/LED/0.0.0%2Bsha.ca5c598be185/LED-0.0.0%2Bsha.ca5c598be185.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-projet-robot1/library/LED_Debug/0.0.0+sha.9db0b50dd371/LED_Debug-0.0.0+sha.9db0b50dd371.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LED_Debug-0.0.0+sha.9db0b50dd371.tar.gz",
+    "size_bytes": 1386,
+    "sha256": "0548bbaa058512dbdd7624cb183ccd1639d4fdd8c3467e601698a6d0852ee1c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-projet-robot1/library/LED_Debug/0.0.0%2Bsha.9db0b50dd371/LED_Debug-0.0.0%2Bsha.9db0b50dd371.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-projet-robot1/library/LED_Debug/0.0.0%2Bsha.9db0b50dd371/LED_Debug-0.0.0%2Bsha.9db0b50dd371.tar.gz"
+    ]
+   }
+  }
+ ]
+}

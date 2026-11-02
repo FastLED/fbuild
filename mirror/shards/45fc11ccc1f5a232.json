@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/denyschuhlib",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "denyschuhlib/library/7Segment/1.0.2/7Segment-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7Segment-1.0.2.tar.gz",
+    "size_bytes": 9086,
+    "sha256": "ce17303ce6abb8cf2c040b5f2c7411612580477e0f85027bda49f7eda0d69ae0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/denyschuhlib/library/7Segment/1.0.2/7Segment-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/denyschuhlib/library/7Segment/1.0.2/7Segment-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "denyschuhlib/library/NTPtime/1.2.1/NTPtime-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NTPtime-1.2.1.tar.gz",
+    "size_bytes": 22054,
+    "sha256": "7e6e10f689e946261230da54c0f32a63c237b8dc6aa8517f75ed3cffa23d8735",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/denyschuhlib/library/NTPtime/1.2.1/NTPtime-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/denyschuhlib/library/NTPtime/1.2.1/NTPtime-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "denyschuhlib/library/PGMTools/1.0.0/PGMTools-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PGMTools-1.0.0.tar.gz",
+    "size_bytes": 2830,
+    "sha256": "0dd8c28dc043932639dc93167209e79ae87ee93f3b3584af0fca6b269a15d2ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/denyschuhlib/library/PGMTools/1.0.0/PGMTools-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/denyschuhlib/library/PGMTools/1.0.0/PGMTools-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

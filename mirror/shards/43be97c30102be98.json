@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/.xyz",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": ".xyz/library/ESP2Sheet/1.0.4/ESP2Sheet-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP2Sheet-1.0.4.tar.gz",
+    "size_bytes": 2494,
+    "sha256": "b848e13f84259afe362ccaf5131735835556f7bf416c103ff43c18c714a2dc8f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/.xyz/library/ESP2Sheet/1.0.4/ESP2Sheet-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/.xyz/library/ESP2Sheet/1.0.4/ESP2Sheet-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": ".xyz/library/LineNotify/1.0.2/LineNotify-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LineNotify-1.0.2.tar.gz",
+    "size_bytes": 2407,
+    "sha256": "b4e44174ea60170b3c5e7aca82f5a271f0280ac338979f2b9ff8f5cbbfa312e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/.xyz/library/LineNotify/1.0.2/LineNotify-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/.xyz/library/LineNotify/1.0.2/LineNotify-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

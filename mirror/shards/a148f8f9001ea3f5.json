@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jcubuntu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jcubuntu/library/iBit_Arduino/1.0.2/iBit_Arduino-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iBit_Arduino-1.0.2.tar.gz",
+    "size_bytes": 6855,
+    "sha256": "5552f2cbfb20cd2b1d4e356bba49df4004d8e0b9e23510768a4a715253769f8a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jcubuntu/library/iBit_Arduino/1.0.2/iBit_Arduino-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jcubuntu/library/iBit_Arduino/1.0.2/iBit_Arduino-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jcubuntu/library/iKB1_Arduino/0.5.1/iKB1_Arduino-0.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iKB1_Arduino-0.5.1.tar.gz",
+    "size_bytes": 2600,
+    "sha256": "615f2562b787bd8ba8f5c2bcf049802678552eaff41fad9edd885f7f8be472b0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jcubuntu/library/iKB1_Arduino/0.5.1/iKB1_Arduino-0.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jcubuntu/library/iKB1_Arduino/0.5.1/iKB1_Arduino-0.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jcubuntu/library/uS82/1.1.1/uS82-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uS82-1.1.1.tar.gz",
+    "size_bytes": 2547,
+    "sha256": "eaeee4d0522cdba00e166d3bd21df8761532ee9cb6a6f665865f17c57060db6c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jcubuntu/library/uS82/1.1.1/uS82-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jcubuntu/library/uS82/1.1.1/uS82-1.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

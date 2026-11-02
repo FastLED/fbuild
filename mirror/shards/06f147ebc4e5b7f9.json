@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-volik2103",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-volik2103/library/URMSerial/0.0.0+sha.dbf53a91e8bd/URMSerial-0.0.0+sha.dbf53a91e8bd.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "URMSerial-0.0.0+sha.dbf53a91e8bd.tar.gz",
+    "size_bytes": 5022,
+    "sha256": "c02aac34a75102ea7e5a05ade84ed4df2234ae8831ffbef1d815d52cdf351ec0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-volik2103/library/URMSerial/0.0.0%2Bsha.dbf53a91e8bd/URMSerial-0.0.0%2Bsha.dbf53a91e8bd.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-volik2103/library/URMSerial/0.0.0%2Bsha.dbf53a91e8bd/URMSerial-0.0.0%2Bsha.dbf53a91e8bd.tar.gz"
+    ]
+   }
+  }
+ ]
+}

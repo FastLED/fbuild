@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/geek02",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "geek02/library/RC522-HCE/2.0.0/RC522-HCE-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RC522-HCE-2.0.0.tar.gz",
+    "size_bytes": 62868,
+    "sha256": "c00d863ebd521f06817018963f7a3804920a492be5eeed5ccca0cf8933d11001",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/geek02/library/RC522-HCE/2.0.0/RC522-HCE-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/geek02/library/RC522-HCE/2.0.0/RC522-HCE-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

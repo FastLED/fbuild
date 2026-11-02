@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gustavpettersson",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gustavpettersson/library/ESP32%20Fast%20Timestamp/1.0.0/ESP32FastTimestamp-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32FastTimestamp-1.0.0.tar.gz",
+    "size_bytes": 5026,
+    "sha256": "235e656b46063d5728ca241e97ca5b2eb977f8c1c0206cfe05cc2c3714995416",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gustavpettersson/library/ESP32%2520Fast%2520Timestamp/1.0.0/ESP32FastTimestamp-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gustavpettersson/library/ESP32%20Fast%20Timestamp/1.0.0/ESP32FastTimestamp-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gustavpettersson/library/Json%20Buffer%20Writer/1.0.0/JsonBufferWriter-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JsonBufferWriter-1.0.0.tar.gz",
+    "size_bytes": 6996,
+    "sha256": "d775eb2dbe434b157aec8ed30f0104c0040bead80f7d8f9296ef3f0b6405b2e1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gustavpettersson/library/Json%2520Buffer%2520Writer/1.0.0/JsonBufferWriter-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gustavpettersson/library/Json%20Buffer%20Writer/1.0.0/JsonBufferWriter-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,165 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jebradshaw",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jebradshaw/library/Axis/0.0.0+sha.bd1cb132c51c/Axis-0.0.0+sha.bd1cb132c51c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Axis-0.0.0+sha.bd1cb132c51c.tar.gz",
+    "size_bytes": 4561,
+    "sha256": "c49b38b89e76af17caaff39a68281135e96ad0fed9809be5b7e6e82bd4ad1c32",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jebradshaw/library/Axis/0.0.0%2Bsha.bd1cb132c51c/Axis-0.0.0%2Bsha.bd1cb132c51c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jebradshaw/library/Axis/0.0.0%2Bsha.bd1cb132c51c/Axis-0.0.0%2Bsha.bd1cb132c51c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jebradshaw/library/DS1307_RTC/0.0.0+sha.a9a0784930bd/DS1307_RTC-0.0.0+sha.a9a0784930bd.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS1307_RTC-0.0.0+sha.a9a0784930bd.tar.gz",
+    "size_bytes": 2271,
+    "sha256": "88a6db5b862c5bf5831f64db16e03d5be6a5a364dcc6992e382a13255207bedb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jebradshaw/library/DS1307_RTC/0.0.0%2Bsha.a9a0784930bd/DS1307_RTC-0.0.0%2Bsha.a9a0784930bd.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jebradshaw/library/DS1307_RTC/0.0.0%2Bsha.a9a0784930bd/DS1307_RTC-0.0.0%2Bsha.a9a0784930bd.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jebradshaw/library/GPSINT/0.0.0+sha.c266b90b4c74/GPSINT-0.0.0+sha.c266b90b4c74.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GPSINT-0.0.0+sha.c266b90b4c74.tar.gz",
+    "size_bytes": 4457,
+    "sha256": "222f5b5305bb7bbf8d1f1734c79b6cba739a1fc6b1e3aa9d3d83057321b10836",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jebradshaw/library/GPSINT/0.0.0%2Bsha.c266b90b4c74/GPSINT-0.0.0%2Bsha.c266b90b4c74.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jebradshaw/library/GPSINT/0.0.0%2Bsha.c266b90b4c74/GPSINT-0.0.0%2Bsha.c266b90b4c74.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jebradshaw/library/HOKUYO/0.0.0+sha.a325ad337940/HOKUYO-0.0.0+sha.a325ad337940.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HOKUYO-0.0.0+sha.a325ad337940.tar.gz",
+    "size_bytes": 3142,
+    "sha256": "717a3363e0eddc323bf4e2429dc464d2f7cd87feeeeeaada8ed0eb9cf0f7f933",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jebradshaw/library/HOKUYO/0.0.0%2Bsha.a325ad337940/HOKUYO-0.0.0%2Bsha.a325ad337940.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jebradshaw/library/HOKUYO/0.0.0%2Bsha.a325ad337940/HOKUYO-0.0.0%2Bsha.a325ad337940.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jebradshaw/library/LS7366LIB/0.0.0+sha.2193b220248b/LS7366LIB-0.0.0+sha.2193b220248b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LS7366LIB-0.0.0+sha.2193b220248b.tar.gz",
+    "size_bytes": 2717,
+    "sha256": "91b83f95c351aff0f11836eca99e302e16c9cf17cd00c9796d9bb02e2c41a03f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jebradshaw/library/LS7366LIB/0.0.0%2Bsha.2193b220248b/LS7366LIB-0.0.0%2Bsha.2193b220248b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jebradshaw/library/LS7366LIB/0.0.0%2Bsha.2193b220248b/LS7366LIB-0.0.0%2Bsha.2193b220248b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jebradshaw/library/MotCon/0.0.0+sha.7cea0061a144/MotCon-0.0.0+sha.7cea0061a144.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MotCon-0.0.0+sha.7cea0061a144.tar.gz",
+    "size_bytes": 3033,
+    "sha256": "cc5a9ad37ceaa605b76742a4ceb5e8e8b02a6098cc85d2f94dfeab069ff61de1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jebradshaw/library/MotCon/0.0.0%2Bsha.7cea0061a144/MotCon-0.0.0%2Bsha.7cea0061a144.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jebradshaw/library/MotCon/0.0.0%2Bsha.7cea0061a144/MotCon-0.0.0%2Bsha.7cea0061a144.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jebradshaw/library/MotCon2/0.0.0+sha.709761ee0a14/MotCon2-0.0.0+sha.709761ee0a14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MotCon2-0.0.0+sha.709761ee0a14.tar.gz",
+    "size_bytes": 2664,
+    "sha256": "597a4322f9de93e266b7e2d321bcd671175e9eca8e88af6f19f7a82fd00b7c71",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jebradshaw/library/MotCon2/0.0.0%2Bsha.709761ee0a14/MotCon2-0.0.0%2Bsha.709761ee0a14.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jebradshaw/library/MotCon2/0.0.0%2Bsha.709761ee0a14/MotCon2-0.0.0%2Bsha.709761ee0a14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jebradshaw/library/RunTimer/0.0.0+sha.9efa965d2111/RunTimer-0.0.0+sha.9efa965d2111.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RunTimer-0.0.0+sha.9efa965d2111.tar.gz",
+    "size_bytes": 1336,
+    "sha256": "00bf8d0ae679aa91c87d26e6fa9f6a1a1e0a7d356da550ff7decc8bc43c1753e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jebradshaw/library/RunTimer/0.0.0%2Bsha.9efa965d2111/RunTimer-0.0.0%2Bsha.9efa965d2111.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jebradshaw/library/RunTimer/0.0.0%2Bsha.9efa965d2111/RunTimer-0.0.0%2Bsha.9efa965d2111.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jebradshaw/library/SERVOGEN/0.0.0+sha.edc18509ff11/SERVOGEN-0.0.0+sha.edc18509ff11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SERVOGEN-0.0.0+sha.edc18509ff11.tar.gz",
+    "size_bytes": 2841,
+    "sha256": "8bccc1e3578b590c9b9bbcfd80ac482b9e4b9200b10617fae1d57e733618939d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jebradshaw/library/SERVOGEN/0.0.0%2Bsha.edc18509ff11/SERVOGEN-0.0.0%2Bsha.edc18509ff11.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jebradshaw/library/SERVOGEN/0.0.0%2Bsha.edc18509ff11/SERVOGEN-0.0.0%2Bsha.edc18509ff11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jebradshaw/library/ServoIn/0.0.0+sha.598ccee73ed3/ServoIn-0.0.0+sha.598ccee73ed3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ServoIn-0.0.0+sha.598ccee73ed3.tar.gz",
+    "size_bytes": 2597,
+    "sha256": "60c9a9bceafc90b93b992af3418416f69566b80bdcab8b124d4838b25d7e6a60",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jebradshaw/library/ServoIn/0.0.0%2Bsha.598ccee73ed3/ServoIn-0.0.0%2Bsha.598ccee73ed3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jebradshaw/library/ServoIn/0.0.0%2Bsha.598ccee73ed3/ServoIn-0.0.0%2Bsha.598ccee73ed3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jebradshaw/library/mbedWSEsbc/0.0.0+sha.2564f54c89df/mbedWSEsbc-0.0.0+sha.2564f54c89df.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mbedWSEsbc-0.0.0+sha.2564f54c89df.tar.gz",
+    "size_bytes": 3651,
+    "sha256": "9f3fd5e75bff47cb83296bdd83495f8a89a71c51bdeb7c7a52b77c2945830e93",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jebradshaw/library/mbedWSEsbc/0.0.0%2Bsha.2564f54c89df/mbedWSEsbc-0.0.0%2Bsha.2564f54c89df.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jebradshaw/library/mbedWSEsbc/0.0.0%2Bsha.2564f54c89df/mbedWSEsbc-0.0.0%2Bsha.2564f54c89df.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jebradshaw/library/uCAM_TTL120/0.0.0+sha.85db6ea8c0a4/uCAM_TTL120-0.0.0+sha.85db6ea8c0a4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uCAM_TTL120-0.0.0+sha.85db6ea8c0a4.tar.gz",
+    "size_bytes": 5063,
+    "sha256": "c76c8b77658704fa8655aa1ff8430c38f4075e3c314087c7fc0aac0253119f66",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jebradshaw/library/uCAM_TTL120/0.0.0%2Bsha.85db6ea8c0a4/uCAM_TTL120-0.0.0%2Bsha.85db6ea8c0a4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jebradshaw/library/uCAM_TTL120/0.0.0%2Bsha.85db6ea8c0a4/uCAM_TTL120-0.0.0%2Bsha.85db6ea8c0a4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

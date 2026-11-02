@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ngomez",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ngomez/library/BMS/0.0.0+sha.b9ec9d78ac1f/BMS-0.0.0+sha.b9ec9d78ac1f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMS-0.0.0+sha.b9ec9d78ac1f.tar.gz",
+    "size_bytes": 1960,
+    "sha256": "4fe060895e2266cc7d39e97e13cdd82cc2c1b3e59414439200b2ee066a86482f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ngomez/library/BMS/0.0.0%2Bsha.b9ec9d78ac1f/BMS-0.0.0%2Bsha.b9ec9d78ac1f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ngomez/library/BMS/0.0.0%2Bsha.b9ec9d78ac1f/BMS-0.0.0%2Bsha.b9ec9d78ac1f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ngomez/library/GROVE_SOUND/0.0.0+sha.fa75a7cf49b6/GROVE_SOUND-0.0.0+sha.fa75a7cf49b6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GROVE_SOUND-0.0.0+sha.fa75a7cf49b6.tar.gz",
+    "size_bytes": 1014,
+    "sha256": "5608d032a00f01db7a9ef680010ccc539bf8182a35f5ad56b29ab86a4f8852b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ngomez/library/GROVE_SOUND/0.0.0%2Bsha.fa75a7cf49b6/GROVE_SOUND-0.0.0%2Bsha.fa75a7cf49b6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ngomez/library/GROVE_SOUND/0.0.0%2Bsha.fa75a7cf49b6/GROVE_SOUND-0.0.0%2Bsha.fa75a7cf49b6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ngomez/library/MQ135/0.0.0+sha.59011d343342/MQ135-0.0.0+sha.59011d343342.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQ135-0.0.0+sha.59011d343342.tar.gz",
+    "size_bytes": 1401,
+    "sha256": "7f37118ab7f1e56dff4286838602658a26452ba3365bbf7fbc685ebedad3f17a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ngomez/library/MQ135/0.0.0%2Bsha.59011d343342/MQ135-0.0.0%2Bsha.59011d343342.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ngomez/library/MQ135/0.0.0%2Bsha.59011d343342/MQ135-0.0.0%2Bsha.59011d343342.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ngomez/library/MQ7/0.0.0+sha.398854b7b855/MQ7-0.0.0+sha.398854b7b855.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQ7-0.0.0+sha.398854b7b855.tar.gz",
+    "size_bytes": 954,
+    "sha256": "b1ea150e99177a5b484cb7b1fea60c5aaed9cf00e6350dcc651d4647a2c8aa4d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ngomez/library/MQ7/0.0.0%2Bsha.398854b7b855/MQ7-0.0.0%2Bsha.398854b7b855.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ngomez/library/MQ7/0.0.0%2Bsha.398854b7b855/MQ7-0.0.0%2Bsha.398854b7b855.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ngomez/library/Si7021/0.0.0+sha.f330a5e5bf1f/Si7021-0.0.0+sha.f330a5e5bf1f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Si7021-0.0.0+sha.f330a5e5bf1f.tar.gz",
+    "size_bytes": 1390,
+    "sha256": "8dce85f7dbb27073a5b5bf176008143620f4a4ffbbd5d68a93ae9907e5f1b2c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ngomez/library/Si7021/0.0.0%2Bsha.f330a5e5bf1f/Si7021-0.0.0%2Bsha.f330a5e5bf1f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ngomez/library/Si7021/0.0.0%2Bsha.f330a5e5bf1f/Si7021-0.0.0%2Bsha.f330a5e5bf1f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ngomez/library/fona_sim808/0.0.0+sha.569bd647c835/fona_sim808-0.0.0+sha.569bd647c835.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "fona_sim808-0.0.0+sha.569bd647c835.tar.gz",
+    "size_bytes": 4408,
+    "sha256": "6936e12579fa0fbe4b89cca5e4924129dc0f113b704b814bd24b68b6f219c642",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ngomez/library/fona_sim808/0.0.0%2Bsha.569bd647c835/fona_sim808-0.0.0%2Bsha.569bd647c835.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ngomez/library/fona_sim808/0.0.0%2Bsha.569bd647c835/fona_sim808-0.0.0%2Bsha.569bd647c835.tar.gz"
+    ]
+   }
+  }
+ ]
+}

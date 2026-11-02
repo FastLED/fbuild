@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-m161440",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-m161440/library/mavlink_test_full/0.0.0+sha.fa23b5d63476/mavlink_test_full-0.0.0+sha.fa23b5d63476.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mavlink_test_full-0.0.0+sha.fa23b5d63476.tar.gz",
+    "size_bytes": 244364,
+    "sha256": "57abd2fa538cb7c734168354f1f233893f00a2afce0c783aa895a3318a5eba3b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-m161440/library/mavlink_test_full/0.0.0%2Bsha.fa23b5d63476/mavlink_test_full-0.0.0%2Bsha.fa23b5d63476.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-m161440/library/mavlink_test_full/0.0.0%2Bsha.fa23b5d63476/mavlink_test_full-0.0.0%2Bsha.fa23b5d63476.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,516 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/luisllamasbinaburo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "luisllamasbinaburo/library/ArticulatedLib/1.0.0/ArticulatedLib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArticulatedLib-1.0.0.tar.gz",
+    "size_bytes": 9189,
+    "sha256": "db1c1472200e10cbdb3df6de3b8d039d2ba3e57139c308be5d060e4bdd9d9893",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luisllamasbinaburo/library/ArticulatedLib/1.0.0/ArticulatedLib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/luisllamasbinaburo/library/ArticulatedLib/1.0.0/ArticulatedLib-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "luisllamasbinaburo/library/AsyncSerial/1.0.0/AsyncSerial-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncSerial-1.0.0.tar.gz",
+    "size_bytes": 11764,
+    "sha256": "76e0c7577028be4b9c1e9724a25d162074f5f93ab67ca575da946d2bf06ff14c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luisllamasbinaburo/library/AsyncSerial/1.0.0/AsyncSerial-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/luisllamasbinaburo/library/AsyncSerial/1.0.0/AsyncSerial-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "luisllamasbinaburo/library/AsyncServoLib/1.0.0/AsyncServoLib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncServoLib-1.0.0.tar.gz",
+    "size_bytes": 7461,
+    "sha256": "bcb140bff921590aad5da6a8eb60dc0909eafab1302bd771d1a97cf5e2bf88f5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luisllamasbinaburo/library/AsyncServoLib/1.0.0/AsyncServoLib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/luisllamasbinaburo/library/AsyncServoLib/1.0.0/AsyncServoLib-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "luisllamasbinaburo/library/AsyncSonar/1.0.0/AsyncSonar-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncSonar-1.0.0.tar.gz",
+    "size_bytes": 10650,
+    "sha256": "0188c39554d65c3fc261e3fbc465106dcaa783cb2cd395266df678375244851b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luisllamasbinaburo/library/AsyncSonar/1.0.0/AsyncSonar-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/luisllamasbinaburo/library/AsyncSonar/1.0.0/AsyncSonar-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "luisllamasbinaburo/library/AsyncStepperLib/2.0.0/AsyncStepperLib-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncStepperLib-2.0.0.tar.gz",
+    "size_bytes": 9169,
+    "sha256": "ed6d2e48fbf26b71fa3dfb9901a5d123dfc000d3a20d6eff2cd889dc71855748",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luisllamasbinaburo/library/AsyncStepperLib/2.0.0/AsyncStepperLib-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/luisllamasbinaburo/library/AsyncStepperLib/2.0.0/AsyncStepperLib-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "luisllamasbinaburo/library/AsyncTaskLib/1.0.0/AsyncTaskLib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncTaskLib-1.0.0.tar.gz",
+    "size_bytes": 6965,
+    "sha256": "3e37d158a006210be0e45275b43ed4c6a64ddbc2638a4bdc83e5bab1d4c86fc3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luisllamasbinaburo/library/AsyncTaskLib/1.0.0/AsyncTaskLib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/luisllamasbinaburo/library/AsyncTaskLib/1.0.0/AsyncTaskLib-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "luisllamasbinaburo/library/AsyncTimerLib/1.0.0/AsyncTimerLib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncTimerLib-1.0.0.tar.gz",
+    "size_bytes": 5587,
+    "sha256": "e05fb18e5596fc127a04ea9f95498e0f2e00e0dae0c531651b9dffc1ec1ee64d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luisllamasbinaburo/library/AsyncTimerLib/1.0.0/AsyncTimerLib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/luisllamasbinaburo/library/AsyncTimerLib/1.0.0/AsyncTimerLib-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "luisllamasbinaburo/library/BTS7960/1.0.0/BTS7960-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BTS7960-1.0.0.tar.gz",
+    "size_bytes": 5705,
+    "sha256": "2fdceb3dff869f78f5bc4647520e5a053d621f3fc5161c9340533cf88f74fcd2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luisllamasbinaburo/library/BTS7960/1.0.0/BTS7960-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/luisllamasbinaburo/library/BTS7960/1.0.0/BTS7960-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "luisllamasbinaburo/library/CircularBufferLib/1.0.0/CircularBufferLib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CircularBufferLib-1.0.0.tar.gz",
+    "size_bytes": 6908,
+    "sha256": "477c66c3c56792807152f1cd8e2af821efdbe7dfd91addb36a5bfac6f4054daa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luisllamasbinaburo/library/CircularBufferLib/1.0.0/CircularBufferLib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/luisllamasbinaburo/library/CircularBufferLib/1.0.0/CircularBufferLib-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "luisllamasbinaburo/library/ColorConverter/1.1.0/ColorConverter-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ColorConverter-1.1.0.tar.gz",
+    "size_bytes": 6888,
+    "sha256": "850a766abc519fe8a75b0aa6afd0de588e4f0dbd55af84acccc5cbeac97b3735",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luisllamasbinaburo/library/ColorConverter/1.1.0/ColorConverter-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/luisllamasbinaburo/library/ColorConverter/1.1.0/ColorConverter-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "luisllamasbinaburo/library/CountdownLib/1.0.0/CountdownLib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CountdownLib-1.0.0.tar.gz",
+    "size_bytes": 6112,
+    "sha256": "0c679fa3de8f3295cc5ad71504d1fe8e00aa1bfb0e60abcbb18596c2e7a6465a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luisllamasbinaburo/library/CountdownLib/1.0.0/CountdownLib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/luisllamasbinaburo/library/CountdownLib/1.0.0/CountdownLib-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "luisllamasbinaburo/library/CppLinq/1.0.0/CppLinq-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CppLinq-1.0.0.tar.gz",
+    "size_bytes": 29899,
+    "sha256": "a50cb8c943681852935439d04e1d5aa29316d6fcd638fff677b5244c2c821869",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luisllamasbinaburo/library/CppLinq/1.0.0/CppLinq-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/luisllamasbinaburo/library/CppLinq/1.0.0/CppLinq-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "luisllamasbinaburo/library/DebounceFilterLib/1.0.0/DebounceFilterLib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DebounceFilterLib-1.0.0.tar.gz",
+    "size_bytes": 6978,
+    "sha256": "ee27007b54a467afb279a9e5508c258be947b6ed121caa2efe60f8836b7aa586",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luisllamasbinaburo/library/DebounceFilterLib/1.0.0/DebounceFilterLib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/luisllamasbinaburo/library/DebounceFilterLib/1.0.0/DebounceFilterLib-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "luisllamasbinaburo/library/DoubleEMAFilterLib/1.0.0/DoubleEMAFilterLib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DoubleEMAFilterLib-1.0.0.tar.gz",
+    "size_bytes": 7189,
+    "sha256": "5fc58095697ec2ef10fb4f8a71764d495dcac1259c7a1000ee5505d7221b1fd2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luisllamasbinaburo/library/DoubleEMAFilterLib/1.0.0/DoubleEMAFilterLib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/luisllamasbinaburo/library/DoubleEMAFilterLib/1.0.0/DoubleEMAFilterLib-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "luisllamasbinaburo/library/EasyCommaLib/1.0.0/EasyCommaLib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyCommaLib-1.0.0.tar.gz",
+    "size_bytes": 6757,
+    "sha256": "8d93d67e63c722983afa965efe9bfad6117c103609e1ca00e9494eb66f36eeac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luisllamasbinaburo/library/EasyCommaLib/1.0.0/EasyCommaLib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/luisllamasbinaburo/library/EasyCommaLib/1.0.0/EasyCommaLib-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "luisllamasbinaburo/library/EasyingLib/1.0.0/EasyingLib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyingLib-1.0.0.tar.gz",
+    "size_bytes": 6666,
+    "sha256": "26d14a0faf7e548252e73ca403fd725bbb9411a16edc8487d872b64500720d0a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luisllamasbinaburo/library/EasyingLib/1.0.0/EasyingLib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/luisllamasbinaburo/library/EasyingLib/1.0.0/EasyingLib-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "luisllamasbinaburo/library/GammaCorrectionLib/1.0.0/GammaCorrectionLib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GammaCorrectionLib-1.0.0.tar.gz",
+    "size_bytes": 6550,
+    "sha256": "a54a51f988a4ffaca322b95890e1da24b7ee91b12f3d12db854356424fc5224d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luisllamasbinaburo/library/GammaCorrectionLib/1.0.0/GammaCorrectionLib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/luisllamasbinaburo/library/GammaCorrectionLib/1.0.0/GammaCorrectionLib-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "luisllamasbinaburo/library/I2CScanner/1.0.1/I2CScanner-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2CScanner-1.0.1.tar.gz",
+    "size_bytes": 7016,
+    "sha256": "0c4561d5409eb1561cf8c61728ccf33d80ac230c609ec3d585673a05ab86bea8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luisllamasbinaburo/library/I2CScanner/1.0.1/I2CScanner-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/luisllamasbinaburo/library/I2CScanner/1.0.1/I2CScanner-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "luisllamasbinaburo/library/InterpolationLib/1.0.2/InterpolationLib-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "InterpolationLib-1.0.2.tar.gz",
+    "size_bytes": 7617,
+    "sha256": "db060d21980922d3b145a2d739e9e614b6b072c50efa44fd41c458dcbce675bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luisllamasbinaburo/library/InterpolationLib/1.0.2/InterpolationLib-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/luisllamasbinaburo/library/InterpolationLib/1.0.2/InterpolationLib-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "luisllamasbinaburo/library/LinkedListLib/1.0.0/LinkedListLib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LinkedListLib-1.0.0.tar.gz",
+    "size_bytes": 7352,
+    "sha256": "44083017c32e209cd35f7618bc024bc68bf085e76c1966bc51b505e197553ab4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luisllamasbinaburo/library/LinkedListLib/1.0.0/LinkedListLib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/luisllamasbinaburo/library/LinkedListLib/1.0.0/LinkedListLib-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "luisllamasbinaburo/library/ListLib/1.0.0/ListLib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ListLib-1.0.0.tar.gz",
+    "size_bytes": 8020,
+    "sha256": "7babc6a7c783c44535a228f59d139d9ec40b080200ea80219f3bfd4e4fa3d81e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luisllamasbinaburo/library/ListLib/1.0.0/ListLib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/luisllamasbinaburo/library/ListLib/1.0.0/ListLib-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "luisllamasbinaburo/library/MeanFilterLib/1.0.0/MeanFilterLib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MeanFilterLib-1.0.0.tar.gz",
+    "size_bytes": 7411,
+    "sha256": "76bd87a7c75b7814a2e414e7eb595ddf41ccb1c93401594b93dff1d8847d8746",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luisllamasbinaburo/library/MeanFilterLib/1.0.0/MeanFilterLib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/luisllamasbinaburo/library/MeanFilterLib/1.0.0/MeanFilterLib-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "luisllamasbinaburo/library/MedianFilterLib/1.0.1/MedianFilterLib-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MedianFilterLib-1.0.1.tar.gz",
+    "size_bytes": 7926,
+    "sha256": "6718e89e9247fb2d4e366aa9edb16fd8e7f3c4ca803cfe974b1e2ed4a4ddb68c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luisllamasbinaburo/library/MedianFilterLib/1.0.1/MedianFilterLib-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/luisllamasbinaburo/library/MedianFilterLib/1.0.1/MedianFilterLib-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "luisllamasbinaburo/library/MultiTaskLib/1.0.1/MultiTaskLib-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MultiTaskLib-1.0.1.tar.gz",
+    "size_bytes": 7302,
+    "sha256": "fbd734a7b0728b0bf665933f404fd2b039764eb9568a71d0f388b10be410c0a1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luisllamasbinaburo/library/MultiTaskLib/1.0.1/MultiTaskLib-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/luisllamasbinaburo/library/MultiTaskLib/1.0.1/MultiTaskLib-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "luisllamasbinaburo/library/Parser/1.0.0/Parser-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Parser-1.0.0.tar.gz",
+    "size_bytes": 13156,
+    "sha256": "b5e390d113c98ecdfffd33983c351759e7d5c3e893b014a7989af0c0edfec22a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luisllamasbinaburo/library/Parser/1.0.0/Parser-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/luisllamasbinaburo/library/Parser/1.0.0/Parser-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "luisllamasbinaburo/library/PetriNetLib/1.0.0/PetriNetLib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PetriNetLib-1.0.0.tar.gz",
+    "size_bytes": 8242,
+    "sha256": "a8bf7d3730dfe5e54ea77df382bc78188da439a201e5014399c7077daf8835bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luisllamasbinaburo/library/PetriNetLib/1.0.0/PetriNetLib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/luisllamasbinaburo/library/PetriNetLib/1.0.0/PetriNetLib-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "luisllamasbinaburo/library/PropertyChangeLib/1.0.0/PropertyChangeLib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PropertyChangeLib-1.0.0.tar.gz",
+    "size_bytes": 8575,
+    "sha256": "70b660133b7089f63b6f40ed7921d9740c49f44cba6f1acdbaa8cc452a82fcab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luisllamasbinaburo/library/PropertyChangeLib/1.0.0/PropertyChangeLib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/luisllamasbinaburo/library/PropertyChangeLib/1.0.0/PropertyChangeLib-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "luisllamasbinaburo/library/QuickMedianLib/1.1.1/QuickMedianLib-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QuickMedianLib-1.1.1.tar.gz",
+    "size_bytes": 6159,
+    "sha256": "e251ebcf4e98f18b10349e963513587bc73b4469932e836a96c16fd9aeb51ff4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luisllamasbinaburo/library/QuickMedianLib/1.1.1/QuickMedianLib-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/luisllamasbinaburo/library/QuickMedianLib/1.1.1/QuickMedianLib-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "luisllamasbinaburo/library/QuickSortLib/1.2.0/QuickSortLib-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QuickSortLib-1.2.0.tar.gz",
+    "size_bytes": 6615,
+    "sha256": "5db970607a1a94be12d7e7c74e950e1fda86562d393dccd4c2085c1d98e899dc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luisllamasbinaburo/library/QuickSortLib/1.2.0/QuickSortLib-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/luisllamasbinaburo/library/QuickSortLib/1.2.0/QuickSortLib-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "luisllamasbinaburo/library/ReactiveArduino/2.0.0/ReactiveArduino-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ReactiveArduino-2.0.0.tar.gz",
+    "size_bytes": 28660,
+    "sha256": "3c5f0a059eb6029d58a9b409fa13362a0f6ce386e871e018b8f62fe5e5d36f04",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luisllamasbinaburo/library/ReactiveArduino/2.0.0/ReactiveArduino-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/luisllamasbinaburo/library/ReactiveArduino/2.0.0/ReactiveArduino-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "luisllamasbinaburo/library/SimpleStepper/1.0.0/SimpleStepper-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleStepper-1.0.0.tar.gz",
+    "size_bytes": 6329,
+    "sha256": "276ad7a75938941a6eb5fe65a736c05034efe33981cd28d2501ca6315dd2091f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luisllamasbinaburo/library/SimpleStepper/1.0.0/SimpleStepper-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/luisllamasbinaburo/library/SimpleStepper/1.0.0/SimpleStepper-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "luisllamasbinaburo/library/SingleEMAFilterLib/1.0.0/SingleEMAFilterLib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SingleEMAFilterLib-1.0.0.tar.gz",
+    "size_bytes": 7033,
+    "sha256": "cc9fbacbce85704c1ddb49a1c35cb417954271a67a14c1a6acaceded54974380",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luisllamasbinaburo/library/SingleEMAFilterLib/1.0.0/SingleEMAFilterLib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/luisllamasbinaburo/library/SingleEMAFilterLib/1.0.0/SingleEMAFilterLib-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "luisllamasbinaburo/library/StateMachineLib/1.0.0/StateMachineLib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StateMachineLib-1.0.0.tar.gz",
+    "size_bytes": 8043,
+    "sha256": "ed1442289023b0a3415110746a901603f36705489a3f6e8c8d770b2e543c9ab2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luisllamasbinaburo/library/StateMachineLib/1.0.0/StateMachineLib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/luisllamasbinaburo/library/StateMachineLib/1.0.0/StateMachineLib-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "luisllamasbinaburo/library/StopwatchLib/1.0.0/StopwatchLib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StopwatchLib-1.0.0.tar.gz",
+    "size_bytes": 6282,
+    "sha256": "cc0e82a6f6f71601c3808670d830ae2f559d88e0920307fc835357691572ffcb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luisllamasbinaburo/library/StopwatchLib/1.0.0/StopwatchLib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/luisllamasbinaburo/library/StopwatchLib/1.0.0/StopwatchLib-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "luisllamasbinaburo/library/StoryBoardLib/1.0.0/StoryBoardLib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StoryBoardLib-1.0.0.tar.gz",
+    "size_bytes": 7765,
+    "sha256": "3153fe22b896ecdcba122cceff2b7f77905b78cb37416a99612d0bbb13a65e95",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luisllamasbinaburo/library/StoryBoardLib/1.0.0/StoryBoardLib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/luisllamasbinaburo/library/StoryBoardLib/1.0.0/StoryBoardLib-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "luisllamasbinaburo/library/SyncWaveformsLib/1.0.0/SyncWaveformsLib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SyncWaveformsLib-1.0.0.tar.gz",
+    "size_bytes": 8603,
+    "sha256": "51ec90d0ca1796245c8a540073a9c2e5dc6c7b10b6bd255e8921f5098f6ae3ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luisllamasbinaburo/library/SyncWaveformsLib/1.0.0/SyncWaveformsLib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/luisllamasbinaburo/library/SyncWaveformsLib/1.0.0/SyncWaveformsLib-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "luisllamasbinaburo/library/ThresholdLib/1.0.0/ThresholdLib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ThresholdLib-1.0.0.tar.gz",
+    "size_bytes": 7887,
+    "sha256": "7532eb70be94957fabb1de9dc9b2bf7d01e9918f531fe3b072e0cca586aaa2e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luisllamasbinaburo/library/ThresholdLib/1.0.0/ThresholdLib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/luisllamasbinaburo/library/ThresholdLib/1.0.0/ThresholdLib-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "luisllamasbinaburo/library/TimeoutTaskLib/1.0.0/TimeoutTaskLib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TimeoutTaskLib-1.0.0.tar.gz",
+    "size_bytes": 6738,
+    "sha256": "e6b6c7ce3d9ec0519ed6e78b388c514053012d34d3f9f290867fbcc0281c6428",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luisllamasbinaburo/library/TimeoutTaskLib/1.0.0/TimeoutTaskLib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/luisllamasbinaburo/library/TimeoutTaskLib/1.0.0/TimeoutTaskLib-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "luisllamasbinaburo/library/TriangleSolverLib/1.0.0/TriangleSolverLib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TriangleSolverLib-1.0.0.tar.gz",
+    "size_bytes": 7465,
+    "sha256": "fc109167896d4ebef80855c0498c6054b556495aa57b89f5740a654f7ea31a10",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luisllamasbinaburo/library/TriangleSolverLib/1.0.0/TriangleSolverLib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/luisllamasbinaburo/library/TriangleSolverLib/1.0.0/TriangleSolverLib-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

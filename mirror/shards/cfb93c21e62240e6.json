@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ambasat",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ambasat/library/AmbaSat%20BME680%20Library/1.0.1/AmbaSatBME680Library-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AmbaSatBME680Library-1.0.1.tar.gz",
+    "size_bytes": 11126,
+    "sha256": "6b62af8d6b9bf3d900d8fd595506d63899e7e9966a0a71d222f23993e89eef05",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ambasat/library/AmbaSat%2520BME680%2520Library/1.0.1/AmbaSatBME680Library-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ambasat/library/AmbaSat%20BME680%20Library/1.0.1/AmbaSatBME680Library-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ambasat/library/AmbaSat%20LMIC%20Library/1.0.2/AmbaSatLMICLibrary-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AmbaSatLMICLibrary-1.0.2.tar.gz",
+    "size_bytes": 7162,
+    "sha256": "c2fd7149c3a71b162df96f8d67e120f92343cd935a7889ce42dc3c82c8575875",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ambasat/library/AmbaSat%2520LMIC%2520Library/1.0.2/AmbaSatLMICLibrary-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ambasat/library/AmbaSat%20LMIC%20Library/1.0.2/AmbaSatLMICLibrary-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ambasat/library/AmbaSat%20LSM9DS1%20Library/1.0.1/AmbaSatLSM9DS1Library-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AmbaSatLSM9DS1Library-1.0.1.tar.gz",
+    "size_bytes": 4136,
+    "sha256": "77396d2fa12966b638a061e32025e785aee545de00a32afdf6f8333b012232bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ambasat/library/AmbaSat%2520LSM9DS1%2520Library/1.0.1/AmbaSatLSM9DS1Library-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ambasat/library/AmbaSat%20LSM9DS1%20Library/1.0.1/AmbaSatLSM9DS1Library-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ambasat/library/AmbaSat%20SAM_M8Q%20Library/1.0.0/AmbaSatSAM_M8QLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AmbaSatSAM_M8QLibrary-1.0.0.tar.gz",
+    "size_bytes": 5577,
+    "sha256": "750a2ecbdae376bbfeb6f902f6ab5adc50b8fa558fe1c284d42a6517083d9f37",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ambasat/library/AmbaSat%2520SAM_M8Q%2520Library/1.0.0/AmbaSatSAM_M8QLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ambasat/library/AmbaSat%20SAM_M8Q%20Library/1.0.0/AmbaSatSAM_M8QLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ambasat/library/AmbaSat%20SHT31%20Library/1.0.1/AmbaSatSHT31Library-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AmbaSatSHT31Library-1.0.1.tar.gz",
+    "size_bytes": 3383,
+    "sha256": "de8910c1c67111757ece2feb48879fe0a3477dfe5d6c9ead53b1736e24b9fc26",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ambasat/library/AmbaSat%2520SHT31%2520Library/1.0.1/AmbaSatSHT31Library-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ambasat/library/AmbaSat%20SHT31%20Library/1.0.1/AmbaSatSHT31Library-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ambasat/library/AmbaSat%20SI1132%20Library/1.0.1/AmbaSatSI1132Library-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AmbaSatSI1132Library-1.0.1.tar.gz",
+    "size_bytes": 5010,
+    "sha256": "ebd6f9e42a8b6bf69a40e4a6ee6724ae32298a1e94eb71b66ba815ddaec99335",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ambasat/library/AmbaSat%2520SI1132%2520Library/1.0.1/AmbaSatSI1132Library-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ambasat/library/AmbaSat%20SI1132%20Library/1.0.1/AmbaSatSI1132Library-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ambasat/library/AmbaSat%20STS21%20Library/1.0.2/AmbaSatSTS21Library-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AmbaSatSTS21Library-1.0.2.tar.gz",
+    "size_bytes": 2992,
+    "sha256": "f6350cf466efd4783ba445e231c8a25332a7fc5abd7dbe9cc3b65e2091819e93",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ambasat/library/AmbaSat%2520STS21%2520Library/1.0.2/AmbaSatSTS21Library-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ambasat/library/AmbaSat%20STS21%20Library/1.0.2/AmbaSatSTS21Library-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

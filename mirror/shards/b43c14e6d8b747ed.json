@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lacocoroco",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lacocoroco/library/DataVisualizer/1.0.1/DataVisualizer-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DataVisualizer-1.0.1.tar.gz",
+    "size_bytes": 37414,
+    "sha256": "718b9375b7aaf3171bdcea4b488649f8c91b637f3e5bd7f401f2e4305abc229f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lacocoroco/library/DataVisualizer/1.0.1/DataVisualizer-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lacocoroco/library/DataVisualizer/1.0.1/DataVisualizer-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

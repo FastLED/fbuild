@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-issaiass",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-issaiass/library/MessageQueue/0.0.0+sha.35d1a2c4fb6d/MessageQueue-0.0.0+sha.35d1a2c4fb6d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MessageQueue-0.0.0+sha.35d1a2c4fb6d.tar.gz",
+    "size_bytes": 4458,
+    "sha256": "d4a7454bd3f20aa9b40344c76694431da0c658c3557e94fbe931d9d70e7356d3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-issaiass/library/MessageQueue/0.0.0%2Bsha.35d1a2c4fb6d/MessageQueue-0.0.0%2Bsha.35d1a2c4fb6d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-issaiass/library/MessageQueue/0.0.0%2Bsha.35d1a2c4fb6d/MessageQueue-0.0.0%2Bsha.35d1a2c4fb6d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-issaiass/library/SOMO14D/0.0.0+sha.673ecbaff67b/SOMO14D-0.0.0+sha.673ecbaff67b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SOMO14D-0.0.0+sha.673ecbaff67b.tar.gz",
+    "size_bytes": 3219,
+    "sha256": "c3d1dbeefc09b3b8525ae9042f58282b295e29fb67a64a3a43e5e4c027df6e54",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-issaiass/library/SOMO14D/0.0.0%2Bsha.673ecbaff67b/SOMO14D-0.0.0%2Bsha.673ecbaff67b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-issaiass/library/SOMO14D/0.0.0%2Bsha.673ecbaff67b/SOMO14D-0.0.0%2Bsha.673ecbaff67b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-issaiass/library/includes/0.0.0+sha.9fe5e7653085/includes-0.0.0+sha.9fe5e7653085.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "includes-0.0.0+sha.9fe5e7653085.tar.gz",
+    "size_bytes": 1368,
+    "sha256": "fb7926b57833e3a352bb566d061f5f3ad99adf85299c6dd4ab12bd8349eff3fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-issaiass/library/includes/0.0.0%2Bsha.9fe5e7653085/includes-0.0.0%2Bsha.9fe5e7653085.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-issaiass/library/includes/0.0.0%2Bsha.9fe5e7653085/includes-0.0.0%2Bsha.9fe5e7653085.tar.gz"
+    ]
+   }
+  }
+ ]
+}

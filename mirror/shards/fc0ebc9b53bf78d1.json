@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/a3510377",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "a3510377/library/HC595/1.0.0/HC595-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HC595-1.0.0.tar.gz",
+    "size_bytes": 5171,
+    "sha256": "6f23bc3bf3168171f48c0b45f931705ab2d2be6b4fa0cf664912375a386efab1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/a3510377/library/HC595/1.0.0/HC595-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/a3510377/library/HC595/1.0.0/HC595-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "a3510377/library/MKPin/1.0.0/MKPin-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MKPin-1.0.0.tar.gz",
+    "size_bytes": 3952,
+    "sha256": "142d605f77176286886a4353942bee0950243b4959b0533e876061d81e0b21ff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/a3510377/library/MKPin/1.0.0/MKPin-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/a3510377/library/MKPin/1.0.0/MKPin-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "a3510377/library/UnoCar/1.1.2/UnoCar-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UnoCar-1.1.2.tar.gz",
+    "size_bytes": 20622,
+    "sha256": "90dd3349ef8b163ac701fd5c31c46b363fa9cdac6089f1f489e3311668171296",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/a3510377/library/UnoCar/1.1.2/UnoCar-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/a3510377/library/UnoCar/1.1.2/UnoCar-1.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

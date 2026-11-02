@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fluxgarage",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fluxgarage/library/FluxGarage%20RoboEyes/1.1.1/FluxGarageRoboEyes-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FluxGarageRoboEyes-1.1.1.tar.gz",
+    "size_bytes": 28458,
+    "sha256": "ec6f6e4b059e83545dcda07c2fc851f9380de49188a597e3513c37e88faaa21b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fluxgarage/library/FluxGarage%2520RoboEyes/1.1.1/FluxGarageRoboEyes-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fluxgarage/library/FluxGarage%20RoboEyes/1.1.1/FluxGarageRoboEyes-1.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

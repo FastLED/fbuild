@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/xanderwasserman",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "xanderwasserman/library/SimpleOTAClient/0.2.0/SimpleOTAClient-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleOTAClient-0.2.0.tar.gz",
+    "size_bytes": 39271,
+    "sha256": "7d6e244bfc84e8c0bba8217de4763b88e1a3d7872e159d90aca9388bc5eb1a7a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xanderwasserman/library/SimpleOTAClient/0.2.0/SimpleOTAClient-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xanderwasserman/library/SimpleOTAClient/0.2.0/SimpleOTAClient-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xanderwasserman/library/SimpleOTAClient/0.3.0/SimpleOTAClient-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleOTAClient-0.3.0.tar.gz",
+    "size_bytes": 39673,
+    "sha256": "aefed5d428bbd22f0c95474b999a2839a8c8bf4030cc551e075912a635012d19",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xanderwasserman/library/SimpleOTAClient/0.3.0/SimpleOTAClient-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xanderwasserman/library/SimpleOTAClient/0.3.0/SimpleOTAClient-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xanderwasserman/library/SimpleOTAClient/0.4.0/SimpleOTAClient-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleOTAClient-0.4.0.tar.gz",
+    "size_bytes": 89873,
+    "sha256": "0942b1f9506dcbb822f7e92923f0df6b10470f97dcf3b1cd89343d512ef02f22",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xanderwasserman/library/SimpleOTAClient/0.4.0/SimpleOTAClient-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xanderwasserman/library/SimpleOTAClient/0.4.0/SimpleOTAClient-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xanderwasserman/library/SimpleOTAClient/0.5.0/SimpleOTAClient-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleOTAClient-0.5.0.tar.gz",
+    "size_bytes": 101856,
+    "sha256": "d2106f50e9e332de45467a4d349c62f28d14784dd9bcb2c626e83bb8cf498baf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xanderwasserman/library/SimpleOTAClient/0.5.0/SimpleOTAClient-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xanderwasserman/library/SimpleOTAClient/0.5.0/SimpleOTAClient-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xanderwasserman/library/SimpleOTAClient/0.6.0/SimpleOTAClient-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleOTAClient-0.6.0.tar.gz",
+    "size_bytes": 104439,
+    "sha256": "dda77d7e88a2f41a46f333a29fe59cad556430f9513cb9a199074f06790fb68a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xanderwasserman/library/SimpleOTAClient/0.6.0/SimpleOTAClient-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xanderwasserman/library/SimpleOTAClient/0.6.0/SimpleOTAClient-0.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xanderwasserman/library/SimpleOTAClient/1.0.0/SimpleOTAClient-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleOTAClient-1.0.0.tar.gz",
+    "size_bytes": 121850,
+    "sha256": "ad8ce1fcee79f9a3aa4fab37bb2ff1e29684b99590e5cc85e8d36b531813640a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xanderwasserman/library/SimpleOTAClient/1.0.0/SimpleOTAClient-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xanderwasserman/library/SimpleOTAClient/1.0.0/SimpleOTAClient-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

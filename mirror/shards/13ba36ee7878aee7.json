@@ -1,0 +1,165 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mfurga",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mfurga/library/CC1101/1.1.0/CC1101-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CC1101-1.1.0.tar.gz",
+    "size_bytes": 9867,
+    "sha256": "11fed9528fab28075ae78fedd9a9318d1e36027a2a5436d0abf5cf4a44b13a8b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mfurga/library/CC1101/1.1.0/CC1101-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mfurga/library/CC1101/1.1.0/CC1101-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mfurga/library/CC1101/1.1.1/CC1101-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CC1101-1.1.1.tar.gz",
+    "size_bytes": 10404,
+    "sha256": "77501f65274ec222df22c388ffe16e48014625f312b31aa3fa85ac728b86c62a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mfurga/library/CC1101/1.1.1/CC1101-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mfurga/library/CC1101/1.1.1/CC1101-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mfurga/library/CC1101/1.1.2/CC1101-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CC1101-1.1.2.tar.gz",
+    "size_bytes": 10405,
+    "sha256": "b8773b0b942bb549354a5db73dd43ed5883b35a0f64dc58ff2d28207a8df0109",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mfurga/library/CC1101/1.1.2/CC1101-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mfurga/library/CC1101/1.1.2/CC1101-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mfurga/library/CC1101/1.1.3/CC1101-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CC1101-1.1.3.tar.gz",
+    "size_bytes": 10584,
+    "sha256": "48bb4695fe161edf2363d45166dac188e309184260b79e7c14ce6a2850febb5d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mfurga/library/CC1101/1.1.3/CC1101-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mfurga/library/CC1101/1.1.3/CC1101-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mfurga/library/CC1101/1.1.4/CC1101-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CC1101-1.1.4.tar.gz",
+    "size_bytes": 10585,
+    "sha256": "df7746265d78dd583e1926e01e46cfab5d5d7dcf7ad1c739b351a866f533a996",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mfurga/library/CC1101/1.1.4/CC1101-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/mfurga/library/CC1101/1.1.4/CC1101-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mfurga/library/CC1101/1.1.5/CC1101-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CC1101-1.1.5.tar.gz",
+    "size_bytes": 10560,
+    "sha256": "4816783b53ff2dc134c029db3ba33b7fe846059e566d90c4f253991b00ac7bdd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mfurga/library/CC1101/1.1.5/CC1101-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/mfurga/library/CC1101/1.1.5/CC1101-1.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mfurga/library/CC1101/1.2.0/CC1101-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CC1101-1.2.0.tar.gz",
+    "size_bytes": 10968,
+    "sha256": "b4b96d3e7168864523e69035af3d04ee2fb2328f9c0e4c7f6b4a9eea9b0c619b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mfurga/library/CC1101/1.2.0/CC1101-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mfurga/library/CC1101/1.2.0/CC1101-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mfurga/library/CC1101/1.2.1/CC1101-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CC1101-1.2.1.tar.gz",
+    "size_bytes": 12090,
+    "sha256": "a7f3be276788f9320d12764239c0d5b8750a1a49d12117eefadabce2fb96ecc8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mfurga/library/CC1101/1.2.1/CC1101-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mfurga/library/CC1101/1.2.1/CC1101-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mfurga/library/CC1101/1.2.2/CC1101-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CC1101-1.2.2.tar.gz",
+    "size_bytes": 12089,
+    "sha256": "d1ed09591dd8460c0566ea4574eaf39568df6079acf5fde2de8ad1a04bfd2e88",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mfurga/library/CC1101/1.2.2/CC1101-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mfurga/library/CC1101/1.2.2/CC1101-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mfurga/library/CC1101/1.3.0/CC1101-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CC1101-1.3.0.tar.gz",
+    "size_bytes": 15247,
+    "sha256": "7842254de281b8330e7df0294639662afaedb1a7c9a4106027bf462233167dcf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mfurga/library/CC1101/1.3.0/CC1101-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mfurga/library/CC1101/1.3.0/CC1101-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mfurga/library/CC1101/1.4.0/CC1101-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CC1101-1.4.0.tar.gz",
+    "size_bytes": 17737,
+    "sha256": "08817e950047bf2a5977fd59bd6d581f71b32a08ec7ad53a97eaba0eb18e4857",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mfurga/library/CC1101/1.4.0/CC1101-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mfurga/library/CC1101/1.4.0/CC1101-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mfurga/library/CC1101/1.5.0/CC1101-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CC1101-1.5.0.tar.gz",
+    "size_bytes": 22799,
+    "sha256": "ccb79b24c00ad556d73d0ac482ae370763d7f148d0bdcaa2e02340661f3dabad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mfurga/library/CC1101/1.5.0/CC1101-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mfurga/library/CC1101/1.5.0/CC1101-1.5.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

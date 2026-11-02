@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ampworks",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ampworks/library/Debug/0.0.0-broken/Debug-0.0.0-alphasha.b8c8ee5947.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Debug-0.0.0-alphasha.b8c8ee5947.tar.gz",
+    "size_bytes": 463,
+    "sha256": "a4fee24ff6ebe1bfe2b8a8ddf8b142dc91deb672753a97789fe03f7153adae69",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ampworks/library/Debug/0.0.0-broken/Debug-0.0.0-alphasha.b8c8ee5947.tar.gz",
+     "https://dl.registry.platformio.org/download/ampworks/library/Debug/0.0.0-broken/Debug-0.0.0-alphasha.b8c8ee5947.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ampworks/library/EEPromUtils/0.0.0-broken/EEPromUtils-0.0.0-alphasha.bdd22174ad.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EEPromUtils-0.0.0-alphasha.bdd22174ad.tar.gz",
+    "size_bytes": 493,
+    "sha256": "ee39f316c326a632331fafe4aea1890edd05a1a2cfc2f7c044b3ad6fb60e63e0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ampworks/library/EEPromUtils/0.0.0-broken/EEPromUtils-0.0.0-alphasha.bdd22174ad.tar.gz",
+     "https://dl.registry.platformio.org/download/ampworks/library/EEPromUtils/0.0.0-broken/EEPromUtils-0.0.0-alphasha.bdd22174ad.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ampworks/library/MPR121/0.0.0-broken/MPR121-0.0.0-alphasha.bdd22174ad.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPR121-0.0.0-alphasha.bdd22174ad.tar.gz",
+    "size_bytes": 519,
+    "sha256": "48fe00e9ef839393f3a000b638813a954449166bf00fd8561a009b5e7988cbdd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ampworks/library/MPR121/0.0.0-broken/MPR121-0.0.0-alphasha.bdd22174ad.tar.gz",
+     "https://dl.registry.platformio.org/download/ampworks/library/MPR121/0.0.0-broken/MPR121-0.0.0-alphasha.bdd22174ad.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ampworks/library/SerialCLI/0.0.0-broken/SerialCLI-0.0.0-alphasha.0b4c440151.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialCLI-0.0.0-alphasha.0b4c440151.tar.gz",
+    "size_bytes": 473,
+    "sha256": "365da48d13ce010dc0697efc70e10001b69cd499ee4bda96613948b34fd86ef1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ampworks/library/SerialCLI/0.0.0-broken/SerialCLI-0.0.0-alphasha.0b4c440151.tar.gz",
+     "https://dl.registry.platformio.org/download/ampworks/library/SerialCLI/0.0.0-broken/SerialCLI-0.0.0-alphasha.0b4c440151.tar.gz"
+    ]
+   }
+  }
+ ]
+}

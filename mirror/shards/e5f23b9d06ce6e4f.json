@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nickjgniklu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nickjgniklu/library/ESP_TF/2.0.1/ESP_TF-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP_TF-2.0.1.tar.gz",
+    "size_bytes": 697153,
+    "sha256": "4335cc6259f84b3e4930018cb582a2acad2ba80fb68f644a28429cb889286822",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nickjgniklu/library/ESP_TF/2.0.1/ESP_TF-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nickjgniklu/library/ESP_TF/2.0.1/ESP_TF-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nickjgniklu/library/ESP_TF/2.1.1/ESP_TF-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP_TF-2.1.1.tar.gz",
+    "size_bytes": 746959,
+    "sha256": "5cad65de8f3e781718d7f682f1bb6d7b8c6accb0cd7bd5f787ee2bc77f6259d4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nickjgniklu/library/ESP_TF/2.1.1/ESP_TF-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nickjgniklu/library/ESP_TF/2.1.1/ESP_TF-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nickjgniklu/library/MagicHome/1.0.0/MagicHome-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MagicHome-1.0.0.tar.gz",
+    "size_bytes": 3476,
+    "sha256": "add880995af23d56db10525f8d371dcfbfc0a69044a9a5bc16ba882058cadbe8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nickjgniklu/library/MagicHome/1.0.0/MagicHome-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nickjgniklu/library/MagicHome/1.0.0/MagicHome-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nickjgniklu/library/em4095/1.0.1/em4095-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "em4095-1.0.1.tar.gz",
+    "size_bytes": 7093,
+    "sha256": "12b5c20e0777e38b48777da6b7d8f8ca86330dba7c2f7240abb44486df673c7f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nickjgniklu/library/em4095/1.0.1/em4095-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nickjgniklu/library/em4095/1.0.1/em4095-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

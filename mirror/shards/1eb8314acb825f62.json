@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/aizhee",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "aizhee/library/BitNeural32/0.0.1/BitNeural32-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BitNeural32-0.0.1.tar.gz",
+    "size_bytes": 18067,
+    "sha256": "58ae9b3e41d42f8efae327ed49cdda2152c166220d3e6b6dc20f24069ca62f3c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aizhee/library/BitNeural32/0.0.1/BitNeural32-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/aizhee/library/BitNeural32/0.0.1/BitNeural32-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aizhee/library/BitNeural32/0.0.3/BitNeural32-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BitNeural32-0.0.3.tar.gz",
+    "size_bytes": 25465,
+    "sha256": "404501847cfe3c93d63af38f6abc89dc08437be59a27fa67aec9a32d5243b6a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aizhee/library/BitNeural32/0.0.3/BitNeural32-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/aizhee/library/BitNeural32/0.0.3/BitNeural32-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aizhee/library/BitNeural32/0.0.4/BitNeural32-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BitNeural32-0.0.4.tar.gz",
+    "size_bytes": 25470,
+    "sha256": "b07d43d2c20c4547985b1e7a33fade0d3769f89742f5d121d33ffb514a8bb083",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aizhee/library/BitNeural32/0.0.4/BitNeural32-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/aizhee/library/BitNeural32/0.0.4/BitNeural32-0.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

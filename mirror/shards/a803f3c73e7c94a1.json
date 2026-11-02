@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pokitto",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pokitto/library/Pokitto/0.0.5/Pokitto-0.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pokitto-0.0.5.tar.gz",
+    "size_bytes": 465131,
+    "sha256": "76c6fccce9323b271803073c35e55d707e66a5e30609bbf3fc4a3f4b2829da47",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pokitto/library/Pokitto/0.0.5/Pokitto-0.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/pokitto/library/Pokitto/0.0.5/Pokitto-0.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

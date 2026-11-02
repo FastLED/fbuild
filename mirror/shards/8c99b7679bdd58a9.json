@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jakalada",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jakalada/library/ADXL345/0.2.0/ADXL345-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADXL345-0.2.0.tar.gz",
+    "size_bytes": 5841,
+    "sha256": "147b0b8ee373d1018a86ef9c9af0dc951bc752240547fc9c78375f4c7336f338",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jakalada/library/ADXL345/0.2.0/ADXL345-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jakalada/library/ADXL345/0.2.0/ADXL345-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jakalada/library/AM50288H/0.0.2/AM50288H-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AM50288H-0.0.2.tar.gz",
+    "size_bytes": 6307,
+    "sha256": "eaa1543b9e482b9b6cf70a9b22474b2841f4b4b47ca72a6ec4921bd92791147f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jakalada/library/AM50288H/0.0.2/AM50288H-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jakalada/library/AM50288H/0.0.2/AM50288H-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jakalada/library/S11059/0.1.0/S11059-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "S11059-0.1.0.tar.gz",
+    "size_bytes": 6276,
+    "sha256": "86f82d914a0ba81446e833e91b445c16867b39043af1ab7d5ab01f9a93b77958",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jakalada/library/S11059/0.1.0/S11059-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jakalada/library/S11059/0.1.0/S11059-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jakalada/library/S5851A/1.2.1/S5851A-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "S5851A-1.2.1.tar.gz",
+    "size_bytes": 5441,
+    "sha256": "745acefe2ed09c0a9e935a99aab5641f9d2003c3522d2c2ded3a00b2527ab6ba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jakalada/library/S5851A/1.2.1/S5851A-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jakalada/library/S5851A/1.2.1/S5851A-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jakalada/library/S9706/0.1.1/S9706-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "S9706-0.1.1.tar.gz",
+    "size_bytes": 3653,
+    "sha256": "8d92958617a8b6dd4b21781261a55bc942a0430c65378fa562b091953159fe3f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jakalada/library/S9706/0.1.1/S9706-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jakalada/library/S9706/0.1.1/S9706-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

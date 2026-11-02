@@ -1,0 +1,165 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ams-osram-group",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ams-osram-group/library/OSP%202wireSPI%20aospi/1.0.1/OSP2wireSPIaospi-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSP2wireSPIaospi-1.0.1.tar.gz",
+    "size_bytes": 51188,
+    "sha256": "f3130cc4e3cb3e4e6f45ac437efb2c76deed333b3c1ed400829ec694bd8efc57",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ams-osram-group/library/OSP%25202wireSPI%2520aospi/1.0.1/OSP2wireSPIaospi-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ams-osram-group/library/OSP%202wireSPI%20aospi/1.0.1/OSP2wireSPIaospi-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ams-osram-group/library/OSP%202wireSPI%20aospi/2.0.0/OSP2wireSPIaospi-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSP2wireSPIaospi-2.0.0.tar.gz",
+    "size_bytes": 53053,
+    "sha256": "a9d0ac31b969dfd1302498a3571525213020dffec8f1a4c3edfe43912a64ea4a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ams-osram-group/library/OSP%25202wireSPI%2520aospi/2.0.0/OSP2wireSPIaospi-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ams-osram-group/library/OSP%202wireSPI%20aospi/2.0.0/OSP2wireSPIaospi-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ams-osram-group/library/OSP%20CommandInterpreter%20aocmd/0.6.1/OSPCommandInterpreteraocmd-0.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSPCommandInterpreteraocmd-0.6.1.tar.gz",
+    "size_bytes": 56382,
+    "sha256": "da735772c74f08bcad31991414559d0b3bfe2e749626823172cd6db244c5c301",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ams-osram-group/library/OSP%2520CommandInterpreter%2520aocmd/0.6.1/OSPCommandInterpreteraocmd-0.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ams-osram-group/library/OSP%20CommandInterpreter%20aocmd/0.6.1/OSPCommandInterpreteraocmd-0.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ams-osram-group/library/OSP%20CommandInterpreter%20aocmd/0.7.0/OSPCommandInterpreteraocmd-0.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSPCommandInterpreteraocmd-0.7.0.tar.gz",
+    "size_bytes": 57224,
+    "sha256": "936ffe6a54b39a58b0897ad69e72893503631ad5746d37f5605d5141b6955998",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ams-osram-group/library/OSP%2520CommandInterpreter%2520aocmd/0.7.0/OSPCommandInterpreteraocmd-0.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ams-osram-group/library/OSP%20CommandInterpreter%20aocmd/0.7.0/OSPCommandInterpreteraocmd-0.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ams-osram-group/library/OSP%20Middleware%20aomw/1.0.0/OSPMiddlewareaomw-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSPMiddlewareaomw-1.0.0.tar.gz",
+    "size_bytes": 143111,
+    "sha256": "0aec5da39ec0fe5ae94f0b7daf18d00dd4a071d956aa99b9339549514430c1b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ams-osram-group/library/OSP%2520Middleware%2520aomw/1.0.0/OSPMiddlewareaomw-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ams-osram-group/library/OSP%20Middleware%20aomw/1.0.0/OSPMiddlewareaomw-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ams-osram-group/library/OSP%20Middleware%20aomw/1.0.1/OSPMiddlewareaomw-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSPMiddlewareaomw-1.0.1.tar.gz",
+    "size_bytes": 143228,
+    "sha256": "362003c5a9f87f0f79545626c37a5872bfded20241b3c591a80dcef3384c70a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ams-osram-group/library/OSP%2520Middleware%2520aomw/1.0.1/OSPMiddlewareaomw-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ams-osram-group/library/OSP%20Middleware%20aomw/1.0.1/OSPMiddlewareaomw-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ams-osram-group/library/OSP%20Middleware%20aomw/1.1.0/OSPMiddlewareaomw-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSPMiddlewareaomw-1.1.0.tar.gz",
+    "size_bytes": 143500,
+    "sha256": "88f96b090eb1af76fd0396dd522a2b42a22e5a44950f4b5a18863513a54b402e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ams-osram-group/library/OSP%2520Middleware%2520aomw/1.1.0/OSPMiddlewareaomw-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ams-osram-group/library/OSP%20Middleware%20aomw/1.1.0/OSPMiddlewareaomw-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ams-osram-group/library/OSP%20ResultCodes%20aoresult/0.5.0/OSPResultCodesaoresult-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSPResultCodesaoresult-0.5.0.tar.gz",
+    "size_bytes": 5663,
+    "sha256": "2c6b46a71446a65f85b5c35a7d346ce384736d22a80c55f94ff6365b39cf34fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ams-osram-group/library/OSP%2520ResultCodes%2520aoresult/0.5.0/OSPResultCodesaoresult-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ams-osram-group/library/OSP%20ResultCodes%20aoresult/0.5.0/OSPResultCodesaoresult-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ams-osram-group/library/OSP%20ResultCodes%20aoresult/0.6.0/OSPResultCodesaoresult-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSPResultCodesaoresult-0.6.0.tar.gz",
+    "size_bytes": 5763,
+    "sha256": "0df963d4aeec86dd6845c6e1e426bd864059e077524beba03480d89a9032aa3c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ams-osram-group/library/OSP%2520ResultCodes%2520aoresult/0.6.0/OSPResultCodesaoresult-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ams-osram-group/library/OSP%20ResultCodes%20aoresult/0.6.0/OSPResultCodesaoresult-0.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ams-osram-group/library/OSP%20Telegrams%20aoosp/0.10.0/OSPTelegramsaoosp-0.10.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSPTelegramsaoosp-0.10.0.tar.gz",
+    "size_bytes": 85255,
+    "sha256": "95a9aa7db8dac24624d3737ad3f5fea43c1da0c8ff4b5760cdc69936242255f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ams-osram-group/library/OSP%2520Telegrams%2520aoosp/0.10.0/OSPTelegramsaoosp-0.10.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ams-osram-group/library/OSP%20Telegrams%20aoosp/0.10.0/OSPTelegramsaoosp-0.10.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ams-osram-group/library/OSP%20Telegrams%20aoosp/0.9.0/OSPTelegramsaoosp-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSPTelegramsaoosp-0.9.0.tar.gz",
+    "size_bytes": 79170,
+    "sha256": "17c79096ff1aad82d0de0197d2d51d4e371ccdbc22e83dbd02c6a7ff83ef6bc9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ams-osram-group/library/OSP%2520Telegrams%2520aoosp/0.9.0/OSPTelegramsaoosp-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ams-osram-group/library/OSP%20Telegrams%20aoosp/0.9.0/OSPTelegramsaoosp-0.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ams-osram-group/library/OSP%20UIDriversOSP32%20aoui32/0.5.0/OSPUIDriversOSP32aoui32-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSPUIDriversOSP32aoui32-0.5.0.tar.gz",
+    "size_bytes": 34776,
+    "sha256": "cee9670f501cbf99af32f879b7eddfa2ed03199fe9b60cbc1f5e4c9a9db0c9e5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ams-osram-group/library/OSP%2520UIDriversOSP32%2520aoui32/0.5.0/OSPUIDriversOSP32aoui32-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ams-osram-group/library/OSP%20UIDriversOSP32%20aoui32/0.5.0/OSPUIDriversOSP32aoui32-0.5.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

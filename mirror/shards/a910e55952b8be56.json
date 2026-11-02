@@ -1,0 +1,217 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cmb27",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cmb27/library/AutomationTimers/0.2.1/AutomationTimers-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AutomationTimers-0.2.1.tar.gz",
+    "size_bytes": 6734,
+    "sha256": "bc5b9ae77ed31279824285d7c2e82008ea3c5a73d4183c26750b8ab1101f61aa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cmb27/library/AutomationTimers/0.2.1/AutomationTimers-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cmb27/library/AutomationTimers/0.2.1/AutomationTimers-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cmb27/library/AutomationTimers/0.3.0/AutomationTimers-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AutomationTimers-0.3.0.tar.gz",
+    "size_bytes": 7553,
+    "sha256": "7df5dcc887c8d0cfbb77f0d28f5f9d02c565e98bf29be9783785f89bee6ba98e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cmb27/library/AutomationTimers/0.3.0/AutomationTimers-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cmb27/library/AutomationTimers/0.3.0/AutomationTimers-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cmb27/library/AutomationTimers/0.3.1/AutomationTimers-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AutomationTimers-0.3.1.tar.gz",
+    "size_bytes": 8839,
+    "sha256": "a64071bd6afefaff6e9ce620ca3f947312a1a0c50e16e54a09450872f2038c67",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cmb27/library/AutomationTimers/0.3.1/AutomationTimers-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cmb27/library/AutomationTimers/0.3.1/AutomationTimers-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cmb27/library/ModbusADU/1.0.2/ModbusADU-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ModbusADU-1.0.2.tar.gz",
+    "size_bytes": 4492,
+    "sha256": "b231b5339c55f5aa5d81bbaec99c7b31782e1fce6384b8170f80c0e368b3548c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cmb27/library/ModbusADU/1.0.2/ModbusADU-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cmb27/library/ModbusADU/1.0.2/ModbusADU-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cmb27/library/ModbusRTUComm/1.3.1/ModbusRTUComm-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ModbusRTUComm-1.3.1.tar.gz",
+    "size_bytes": 4770,
+    "sha256": "ae79ac27846085b67cbfee46445217c89373710e0ed475b31b9715816097fac1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cmb27/library/ModbusRTUComm/1.3.1/ModbusRTUComm-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cmb27/library/ModbusRTUComm/1.3.1/ModbusRTUComm-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cmb27/library/ModbusRTUComm/1.3.2/ModbusRTUComm-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ModbusRTUComm-1.3.2.tar.gz",
+    "size_bytes": 4763,
+    "sha256": "8a74d088767cfd0fa0c7a15dd9f03522356f05d09aca1e9aa8a2a535381d82fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cmb27/library/ModbusRTUComm/1.3.2/ModbusRTUComm-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cmb27/library/ModbusRTUComm/1.3.2/ModbusRTUComm-1.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cmb27/library/ModbusRTUMaster/1.0.5/ModbusRTUMaster-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ModbusRTUMaster-1.0.5.tar.gz",
+    "size_bytes": 8754,
+    "sha256": "66a4554146bde51a0356808d2a53f474909becea852d6a8e74f0f3660ec41744",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cmb27/library/ModbusRTUMaster/1.0.5/ModbusRTUMaster-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/cmb27/library/ModbusRTUMaster/1.0.5/ModbusRTUMaster-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cmb27/library/ModbusRTUMaster/2.0.1/ModbusRTUMaster-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ModbusRTUMaster-2.0.1.tar.gz",
+    "size_bytes": 11988,
+    "sha256": "67d64fc2e347acedcf1ea23c12c3aa3d85b855ad2593e1263ce290a0dfac45ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cmb27/library/ModbusRTUMaster/2.0.1/ModbusRTUMaster-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cmb27/library/ModbusRTUMaster/2.0.1/ModbusRTUMaster-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cmb27/library/ModbusRTUMaster/2.0.2/ModbusRTUMaster-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ModbusRTUMaster-2.0.2.tar.gz",
+    "size_bytes": 12161,
+    "sha256": "d29820059da5398f8a3bb92ca8ce95590ec946ee8066bce0fb54b4c5aca0d4ec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cmb27/library/ModbusRTUMaster/2.0.2/ModbusRTUMaster-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cmb27/library/ModbusRTUMaster/2.0.2/ModbusRTUMaster-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cmb27/library/ModbusRTUSlave/2.0.6/ModbusRTUSlave-2.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ModbusRTUSlave-2.0.6.tar.gz",
+    "size_bytes": 6882,
+    "sha256": "5b461f9d704c47403466872eba6189df13b5085d30a4e96a55672f333c2cf3bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cmb27/library/ModbusRTUSlave/2.0.6/ModbusRTUSlave-2.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/cmb27/library/ModbusRTUSlave/2.0.6/ModbusRTUSlave-2.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cmb27/library/ModbusRTUSlave/3.1.1/ModbusRTUSlave-3.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ModbusRTUSlave-3.1.1.tar.gz",
+    "size_bytes": 8030,
+    "sha256": "98f8eedbe60d29388d3ec20647390e02d6604d24af95f22aef394223f530b1f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cmb27/library/ModbusRTUSlave/3.1.1/ModbusRTUSlave-3.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cmb27/library/ModbusRTUSlave/3.1.1/ModbusRTUSlave-3.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cmb27/library/ModbusRTUSlave/3.1.2/ModbusRTUSlave-3.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ModbusRTUSlave-3.1.2.tar.gz",
+    "size_bytes": 8034,
+    "sha256": "f0fb33aed6140d7e246727e2aafecdb6a86639e213976f059d5cdbed959dac49",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cmb27/library/ModbusRTUSlave/3.1.2/ModbusRTUSlave-3.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cmb27/library/ModbusRTUSlave/3.1.2/ModbusRTUSlave-3.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cmb27/library/ModbusSlaveLogic/1.0.1/ModbusSlaveLogic-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ModbusSlaveLogic-1.0.1.tar.gz",
+    "size_bytes": 3608,
+    "sha256": "30ef74f1696e935596ce1fd34da6d133ec97b7d892b11d19124262d8e2d6abcd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cmb27/library/ModbusSlaveLogic/1.0.1/ModbusSlaveLogic-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cmb27/library/ModbusSlaveLogic/1.0.1/ModbusSlaveLogic-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cmb27/library/ModbusTCPComm/0.0.1/ModbusTCPComm-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ModbusTCPComm-0.0.1.tar.gz",
+    "size_bytes": 2347,
+    "sha256": "77b61f9b7463468f6ab4fb6f83bfe02ffe4b25f0fe7cfd76361da14335a245a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cmb27/library/ModbusTCPComm/0.0.1/ModbusTCPComm-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cmb27/library/ModbusTCPComm/0.0.1/ModbusTCPComm-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cmb27/library/ModbusTCPSlave/0.0.1/ModbusTCPSlave-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ModbusTCPSlave-0.0.1.tar.gz",
+    "size_bytes": 5260,
+    "sha256": "ef300b7fe49a38d1394298eec5c42d2f8bf983499c4067e38fb1ebf6b07a5f8a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cmb27/library/ModbusTCPSlave/0.0.1/ModbusTCPSlave-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cmb27/library/ModbusTCPSlave/0.0.1/ModbusTCPSlave-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cmb27/library/QwiicUART%20Library/0.0.1/QwiicUARTLibrary-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QwiicUARTLibrary-0.0.1.tar.gz",
+    "size_bytes": 3900,
+    "sha256": "5f9428882021720a7a0cce275fc6c9dac9f789831b6f3e6db42918111f0d4eaf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cmb27/library/QwiicUART%2520Library/0.0.1/QwiicUARTLibrary-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cmb27/library/QwiicUART%20Library/0.0.1/QwiicUARTLibrary-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

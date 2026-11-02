@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-kddi-fx0-hackathon",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-kddi-fx0-hackathon/library/DxClinet/0.0.0+sha.735163979ecf/DxClinet-0.0.0+sha.735163979ecf.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DxClinet-0.0.0+sha.735163979ecf.tar.gz",
+    "size_bytes": 13896,
+    "sha256": "f98ca62de54214da8b27a508b521046ef197641a68f559b819554f0f753d0c12",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kddi-fx0-hackathon/library/DxClinet/0.0.0%2Bsha.735163979ecf/DxClinet-0.0.0%2Bsha.735163979ecf.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kddi-fx0-hackathon/library/DxClinet/0.0.0%2Bsha.735163979ecf/DxClinet-0.0.0%2Bsha.735163979ecf.tar.gz"
+    ]
+   }
+  }
+ ]
+}

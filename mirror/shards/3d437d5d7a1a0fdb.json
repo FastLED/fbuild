@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jayasankar-jp",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jayasankar-jp/library/MenuCreator/1.0.0/MenuCreator-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MenuCreator-1.0.0.tar.gz",
+    "size_bytes": 18365,
+    "sha256": "c1b3279d4395f96f2d0ca932054878cde142293c33f24a98cb3e913d12360bb3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jayasankar-jp/library/MenuCreator/1.0.0/MenuCreator-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jayasankar-jp/library/MenuCreator/1.0.0/MenuCreator-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jayasankar-jp/library/SmartProcess/1.0.1/SmartProcess-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartProcess-1.0.1.tar.gz",
+    "size_bytes": 5055,
+    "sha256": "00b6ac4ba59cb843b7b1891a1dda6252b626f5d2c8851783a764aae64f8ba1c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jayasankar-jp/library/SmartProcess/1.0.1/SmartProcess-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jayasankar-jp/library/SmartProcess/1.0.1/SmartProcess-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

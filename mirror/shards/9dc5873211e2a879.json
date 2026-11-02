@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/chrisdinhnz",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "chrisdinhnz/library/SMoS/0.2.0/SMoS-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SMoS-0.2.0.tar.gz",
+    "size_bytes": 9680,
+    "sha256": "df7a98db4cd791d9633eda057e12aa1c5c67f0e474bc7779d85b84de187562f5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrisdinhnz/library/SMoS/0.2.0/SMoS-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chrisdinhnz/library/SMoS/0.2.0/SMoS-0.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

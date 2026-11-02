@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-maetugr",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-maetugr/library/IMU_10DOF/0.0.0+sha.f62337b907e5/IMU_10DOF-0.0.0+sha.f62337b907e5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IMU_10DOF-0.0.0+sha.f62337b907e5.tar.gz",
+    "size_bytes": 15692,
+    "sha256": "ae16de9dfc0c24446736cc92d42d29a8c9a7186396cf73912de77579875f8eb9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-maetugr/library/IMU_10DOF/0.0.0%2Bsha.f62337b907e5/IMU_10DOF-0.0.0%2Bsha.f62337b907e5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-maetugr/library/IMU_10DOF/0.0.0%2Bsha.f62337b907e5/IMU_10DOF-0.0.0%2Bsha.f62337b907e5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

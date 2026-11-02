@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/i-n-g-o",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "i-n-g-o/library/ESP%20MQTT/1.0.1/ESPMQTT-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPMQTT-1.0.1.tar.gz",
+    "size_bytes": 18159,
+    "sha256": "0fcbc836385c0b0f9ddc4ac7be53923d62180f5b1f360bb66465feaba10bd491",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/i-n-g-o/library/ESP%2520MQTT/1.0.1/ESPMQTT-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/i-n-g-o/library/ESP%20MQTT/1.0.1/ESPMQTT-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "i-n-g-o/library/Packetizer/1.0/Packetizer-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Packetizer-1.0.tar.gz",
+    "size_bytes": 10571,
+    "sha256": "f53aac3af0075395137325a6a70655f80285baa509be20f8f49fa719fc707b7e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/i-n-g-o/library/Packetizer/1.0/Packetizer-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/i-n-g-o/library/Packetizer/1.0/Packetizer-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

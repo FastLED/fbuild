@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-tomasero",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-tomasero/library/Adafruit_NeoPixel/0.0.0+sha.21d6d7016965/Adafruit_NeoPixel-0.0.0+sha.21d6d7016965.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Adafruit_NeoPixel-0.0.0+sha.21d6d7016965.tar.gz",
+    "size_bytes": 4086,
+    "sha256": "5c14a30bdfc13252cda885c0e4f89cb048cea102738c5086a59d15ab66df019b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tomasero/library/Adafruit_NeoPixel/0.0.0%2Bsha.21d6d7016965/Adafruit_NeoPixel-0.0.0%2Bsha.21d6d7016965.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tomasero/library/Adafruit_NeoPixel/0.0.0%2Bsha.21d6d7016965/Adafruit_NeoPixel-0.0.0%2Bsha.21d6d7016965.tar.gz"
+    ]
+   }
+  }
+ ]
+}

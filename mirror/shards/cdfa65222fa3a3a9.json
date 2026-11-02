@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ml-vpn",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ml-vpn/library/OtD%20Library/1.0.0/OtDLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OtDLibrary-1.0.0.tar.gz",
+    "size_bytes": 12799,
+    "sha256": "cc52f40f4cea36b69e8fd3aebc9fda90a2cd96aaa4cb60bbd3e44c29a0d189b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ml-vpn/library/OtD%2520Library/1.0.0/OtDLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ml-vpn/library/OtD%20Library/1.0.0/OtDLibrary-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

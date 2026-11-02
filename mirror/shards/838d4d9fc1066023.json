@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-alix955",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-alix955/library/ntp-client/0.0.0+sha.099750f42b02/ntp-client-0.0.0+sha.099750f42b02.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ntp-client-0.0.0+sha.099750f42b02.tar.gz",
+    "size_bytes": 1624,
+    "sha256": "7e3b37c3aaf3ee971446a2fe44ae86818ad51cfd76498b5b1ff8bb4ce07d5100",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-alix955/library/ntp-client/0.0.0%2Bsha.099750f42b02/ntp-client-0.0.0%2Bsha.099750f42b02.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-alix955/library/ntp-client/0.0.0%2Bsha.099750f42b02/ntp-client-0.0.0%2Bsha.099750f42b02.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/robgmsn",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "robgmsn/library/GMSN%20Pure%20Digit/1.0.0/GMSNPureDigit-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GMSNPureDigit-1.0.0.tar.gz",
+    "size_bytes": 10418,
+    "sha256": "63b6e868c50ea4b42aef8b13852f5c12a95c5798d7f76dad27f7e6497c7e4b3b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robgmsn/library/GMSN%2520Pure%2520Digit/1.0.0/GMSNPureDigit-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/robgmsn/library/GMSN%20Pure%20Digit/1.0.0/GMSNPureDigit-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

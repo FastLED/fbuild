@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-den-infrarde-arme",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-den-infrarde-arme/library/__IRGRID2_Driver/0.0.0+sha.8959550fdcd4/__IRGRID2_Driver-0.0.0+sha.8959550fdcd4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "__IRGRID2_Driver-0.0.0+sha.8959550fdcd4.tar.gz",
+    "size_bytes": 670,
+    "sha256": "22e191133d4c44c864b0a9ffde75c8835f018fc55ce61827de7e74b4cf87c475",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-den-infrarde-arme/library/__IRGRID2_Driver/0.0.0%2Bsha.8959550fdcd4/__IRGRID2_Driver-0.0.0%2Bsha.8959550fdcd4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-den-infrarde-arme/library/__IRGRID2_Driver/0.0.0%2Bsha.8959550fdcd4/__IRGRID2_Driver-0.0.0%2Bsha.8959550fdcd4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pushdata-io",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pushdata-io/library/Pushdata_ESP8266_SSL/0.0.9/Pushdata_ESP8266_SSL-0.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pushdata_ESP8266_SSL-0.0.9.tar.gz",
+    "size_bytes": 7181,
+    "sha256": "69b56a5cb9daf546c10eed7cd2be322522d8871596fbb7686c2d432a24fb534b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pushdata-io/library/Pushdata_ESP8266_SSL/0.0.9/Pushdata_ESP8266_SSL-0.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/pushdata-io/library/Pushdata_ESP8266_SSL/0.0.9/Pushdata_ESP8266_SSL-0.0.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

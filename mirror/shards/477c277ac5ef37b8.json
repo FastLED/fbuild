@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-morimoriynct",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-morimoriynct/library/TimerExtended/0.0.0+sha.2441ccdcd627/TimerExtended-0.0.0+sha.2441ccdcd627.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TimerExtended-0.0.0+sha.2441ccdcd627.tar.gz",
+    "size_bytes": 1380,
+    "sha256": "13a21cfc38ebc1efe8fa55b2a162137d3171c7279c1b50ffc7aa1795e4a9d2eb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-morimoriynct/library/TimerExtended/0.0.0%2Bsha.2441ccdcd627/TimerExtended-0.0.0%2Bsha.2441ccdcd627.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-morimoriynct/library/TimerExtended/0.0.0%2Bsha.2441ccdcd627/TimerExtended-0.0.0%2Bsha.2441ccdcd627.tar.gz"
+    ]
+   }
+  }
+ ]
+}

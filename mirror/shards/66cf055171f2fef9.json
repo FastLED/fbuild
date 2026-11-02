@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-thundersoft",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-thundersoft/library/LCD_for_TT_Mxx/0.0.0+sha.e8d138dfbebc/LCD_for_TT_Mxx-0.0.0+sha.e8d138dfbebc.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCD_for_TT_Mxx-0.0.0+sha.e8d138dfbebc.tar.gz",
+    "size_bytes": 16084,
+    "sha256": "6ab5386f4921069e5dec43e23a84cf9e530d3b184dba18bd86f8007ca79e3f0d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-thundersoft/library/LCD_for_TT_Mxx/0.0.0%2Bsha.e8d138dfbebc/LCD_for_TT_Mxx-0.0.0%2Bsha.e8d138dfbebc.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-thundersoft/library/LCD_for_TT_Mxx/0.0.0%2Bsha.e8d138dfbebc/LCD_for_TT_Mxx-0.0.0%2Bsha.e8d138dfbebc.tar.gz"
+    ]
+   }
+  }
+ ]
+}

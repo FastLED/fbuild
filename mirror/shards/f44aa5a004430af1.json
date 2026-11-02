@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kelasrobot",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kelasrobot/library/FonnteArduino/1.0.0/FonnteArduino-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FonnteArduino-1.0.0.tar.gz",
+    "size_bytes": 3596,
+    "sha256": "dc0777579782b242e3fab66591da1721fe400426b9a8d3d3c095ee9cf2fb2937",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kelasrobot/library/FonnteArduino/1.0.0/FonnteArduino-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kelasrobot/library/FonnteArduino/1.0.0/FonnteArduino-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kelasrobot/library/FoonteDuino/1.0.0/FoonteDuino-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FoonteDuino-1.0.0.tar.gz",
+    "size_bytes": 15174,
+    "sha256": "f48be832b6f4777f860cfb97ee6ae389cb2296712bb8d3d85c5934d0112f8e78",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kelasrobot/library/FoonteDuino/1.0.0/FoonteDuino-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kelasrobot/library/FoonteDuino/1.0.0/FoonteDuino-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kelasrobot/library/KelasRobotIO/1.0.0/KelasRobotIO-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KelasRobotIO-1.0.0.tar.gz",
+    "size_bytes": 13156,
+    "sha256": "429ab4efb9b2c46e4f7faa2bedc4040dfa02ab1d8c80ef92704fe5e6b057b6a1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kelasrobot/library/KelasRobotIO/1.0.0/KelasRobotIO-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kelasrobot/library/KelasRobotIO/1.0.0/KelasRobotIO-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kelasrobot/library/KelasRobotTime/1.0.0/KelasRobotTime-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KelasRobotTime-1.0.0.tar.gz",
+    "size_bytes": 4010,
+    "sha256": "b427b6ff30a6067a37fdce4948505bea5d8b07887ac56f8c3ee7b60bee99e35d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kelasrobot/library/KelasRobotTime/1.0.0/KelasRobotTime-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kelasrobot/library/KelasRobotTime/1.0.0/KelasRobotTime-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kelasrobot/library/MQTTESP/1.2.0/MQTTESP-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQTTESP-1.2.0.tar.gz",
+    "size_bytes": 5807,
+    "sha256": "212fc813076c7478b6ff98ba46688924090e372fbbc7b92bf6c2c9bfed409974",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kelasrobot/library/MQTTESP/1.2.0/MQTTESP-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kelasrobot/library/MQTTESP/1.2.0/MQTTESP-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

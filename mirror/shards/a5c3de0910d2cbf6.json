@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-henryeherman",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-henryeherman/library/Node/0.0.0+sha.be00bb0372eb/Node-0.0.0+sha.be00bb0372eb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Node-0.0.0+sha.be00bb0372eb.tar.gz",
+    "size_bytes": 1446,
+    "sha256": "845f8670e6a10480290fa08c108752a9f63a98f797c5dfc70c3aa8f227da9003",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-henryeherman/library/Node/0.0.0%2Bsha.be00bb0372eb/Node-0.0.0%2Bsha.be00bb0372eb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-henryeherman/library/Node/0.0.0%2Bsha.be00bb0372eb/Node-0.0.0%2Bsha.be00bb0372eb.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-henryeherman/library/linact/0.0.0+sha.de88dc2515d3/linact-0.0.0+sha.de88dc2515d3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "linact-0.0.0+sha.de88dc2515d3.tar.gz",
+    "size_bytes": 4963,
+    "sha256": "80ced54fcf055dc4fddc317b70cae9b832dce5939baecc857148e54f01e43934",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-henryeherman/library/linact/0.0.0%2Bsha.de88dc2515d3/linact-0.0.0%2Bsha.de88dc2515d3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-henryeherman/library/linact/0.0.0%2Bsha.de88dc2515d3/linact-0.0.0%2Bsha.de88dc2515d3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-henryeherman/library/shiftregister/0.0.0+sha.c3a7963d0844/shiftregister-0.0.0+sha.c3a7963d0844.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "shiftregister-0.0.0+sha.c3a7963d0844.tar.gz",
+    "size_bytes": 1232,
+    "sha256": "1fc7ffc6e76aeee0f75c92dd67b32041bca1f3c5c6a7a5a92e51f13f848178c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-henryeherman/library/shiftregister/0.0.0%2Bsha.c3a7963d0844/shiftregister-0.0.0%2Bsha.c3a7963d0844.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-henryeherman/library/shiftregister/0.0.0%2Bsha.c3a7963d0844/shiftregister-0.0.0%2Bsha.c3a7963d0844.tar.gz"
+    ]
+   }
+  }
+ ]
+}

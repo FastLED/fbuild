@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/feklee",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "feklee/library/MultiTrans/1.4.0/MultiTrans-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MultiTrans-1.4.0.tar.gz",
+    "size_bytes": 140589,
+    "sha256": "2f671851443a21d59dc00a601952817c16b9268ce7a5f89c116b27b374a00557",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/feklee/library/MultiTrans/1.4.0/MultiTrans-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/feklee/library/MultiTrans/1.4.0/MultiTrans-1.4.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

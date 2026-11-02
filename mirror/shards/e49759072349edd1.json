@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/augmented-robotics",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "augmented-robotics/library/RoboHeart/2.1.7/RoboHeart-2.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RoboHeart-2.1.7.tar.gz",
+    "size_bytes": 20409,
+    "sha256": "b417e5b640067ab096ded7eaf4442185e7014d3efa1c40743281ec28e5511585",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/augmented-robotics/library/RoboHeart/2.1.7/RoboHeart-2.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/augmented-robotics/library/RoboHeart/2.1.7/RoboHeart-2.1.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

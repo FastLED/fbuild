@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/trojanc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "trojanc/library/SensorMonitor/0.0.1/SensorMonitor-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensorMonitor-0.0.1.tar.gz",
+    "size_bytes": 4001,
+    "sha256": "b6e54d65ae10d2cd72fe41014b71b35bca6432b0073456e15b7e291954e70fe1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/trojanc/library/SensorMonitor/0.0.1/SensorMonitor-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/trojanc/library/SensorMonitor/0.0.1/SensorMonitor-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

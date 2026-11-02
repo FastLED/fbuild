@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/blasilli",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "blasilli/library/GBALib%20Potentiometer/1.0.0/GBALibPotentiometer-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GBALibPotentiometer-1.0.0.tar.gz",
+    "size_bytes": 16165,
+    "sha256": "2609605ead6975abaad393691c3016f60a628080d061029ba1fddcb7d1f096fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blasilli/library/GBALib%2520Potentiometer/1.0.0/GBALibPotentiometer-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/blasilli/library/GBALib%20Potentiometer/1.0.0/GBALibPotentiometer-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "blasilli/library/GBALib_DCMotor/1.0.0/GBALib_DCMotor-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GBALib_DCMotor-1.0.0.tar.gz",
+    "size_bytes": 3870,
+    "sha256": "26676bf2090e0c0fd76dfed6175e78936f04a66a69abf724f3afb545a00fd87f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blasilli/library/GBALib_DCMotor/1.0.0/GBALib_DCMotor-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/blasilli/library/GBALib_DCMotor/1.0.0/GBALib_DCMotor-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "blasilli/library/GBALib_ShiftRegister/1.0.0/GBALib_ShiftRegister-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GBALib_ShiftRegister-1.0.0.tar.gz",
+    "size_bytes": 15611,
+    "sha256": "296e20e88120269055de656ef69c793c9216aec7aec6e13701bfdd6800ca44ba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blasilli/library/GBALib_ShiftRegister/1.0.0/GBALib_ShiftRegister-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/blasilli/library/GBALib_ShiftRegister/1.0.0/GBALib_ShiftRegister-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "blasilli/library/GBALib_UltrasonicSensor/1.0.0/GBALib_UltrasonicSensor-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GBALib_UltrasonicSensor-1.0.0.tar.gz",
+    "size_bytes": 15617,
+    "sha256": "06905ba0a45913fdb57f27f2ac8a06851e266487efa254a5ce2af405b685a07e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blasilli/library/GBALib_UltrasonicSensor/1.0.0/GBALib_UltrasonicSensor-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/blasilli/library/GBALib_UltrasonicSensor/1.0.0/GBALib_UltrasonicSensor-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "blasilli/library/GBALib_Wave/0.1.0/GBALib_Wave-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GBALib_Wave-0.1.0.tar.gz",
+    "size_bytes": 15485,
+    "sha256": "b63b405dce7d944c7c41b1b9a7f5c2082837fccb3445cee9ac3dc453497def86",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blasilli/library/GBALib_Wave/0.1.0/GBALib_Wave-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/blasilli/library/GBALib_Wave/0.1.0/GBALib_Wave-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

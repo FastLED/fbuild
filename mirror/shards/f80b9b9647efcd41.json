@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/brawrdon",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "brawrdon/library/ESP32%20HomeKit%20SDK%20for%20Arduino/1.1.0/ESP32HomeKitSDKforArduino-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32HomeKitSDKforArduino-1.1.0.tar.gz",
+    "size_bytes": 152056,
+    "sha256": "53203a916670a0622844b818a516163164d914a1a5edbc5662158df3db172e6a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/brawrdon/library/ESP32%2520HomeKit%2520SDK%2520for%2520Arduino/1.1.0/ESP32HomeKitSDKforArduino-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/brawrdon/library/ESP32%20HomeKit%20SDK%20for%20Arduino/1.1.0/ESP32HomeKitSDKforArduino-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

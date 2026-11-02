@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rescenic",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rescenic/library/RescenicIO/0.0.1/RescenicIO-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RescenicIO-0.0.1.tar.gz",
+    "size_bytes": 13166,
+    "sha256": "38ac8d3691c398e849db2bb9ef5f8da8de142f55f51182cad4646173b17ea407",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rescenic/library/RescenicIO/0.0.1/RescenicIO-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/rescenic/library/RescenicIO/0.0.1/RescenicIO-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

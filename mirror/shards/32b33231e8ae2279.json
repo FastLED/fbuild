@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/max22",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "max22/library/ESP32-BLE-MIDI/0.3.2/ESP32-BLE-MIDI-0.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-BLE-MIDI-0.3.2.tar.gz",
+    "size_bytes": 12619,
+    "sha256": "199b68a7647cdbac41a7141ca7105052e5f34b0a969d679f8950033fb653c29e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/max22/library/ESP32-BLE-MIDI/0.3.2/ESP32-BLE-MIDI-0.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/max22/library/ESP32-BLE-MIDI/0.3.2/ESP32-BLE-MIDI-0.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "max22/library/ESP32-BLE-MIDI/0.4.0/ESP32-BLE-MIDI-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-BLE-MIDI-0.4.0.tar.gz",
+    "size_bytes": 13426,
+    "sha256": "466a2afcf5b4573ad64f8e189df9ee86d90164e11d4b80504086909ed0089060",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/max22/library/ESP32-BLE-MIDI/0.4.0/ESP32-BLE-MIDI-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/max22/library/ESP32-BLE-MIDI/0.4.0/ESP32-BLE-MIDI-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "max22/library/ble-keyboard-mouse-client/0.1.0/ble-keyboard-mouse-client-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ble-keyboard-mouse-client-0.1.0.tar.gz",
+    "size_bytes": 6735,
+    "sha256": "6d416d43629d07a3fc1ab54828199c3f447707dcaf578777603b75784ee0cff9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/max22/library/ble-keyboard-mouse-client/0.1.0/ble-keyboard-mouse-client-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/max22/library/ble-keyboard-mouse-client/0.1.0/ble-keyboard-mouse-client-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "max22/library/cst816d/0.1.0/cst816d-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cst816d-0.1.0.tar.gz",
+    "size_bytes": 4607,
+    "sha256": "592a3ea07eb2a6536b082b26bb50c6b56557b6905e367e1411d3d47c835ebb67",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/max22/library/cst816d/0.1.0/cst816d-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/max22/library/cst816d/0.1.0/cst816d-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

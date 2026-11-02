@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-togayan",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-togayan/library/BlinkLed/0.0.0+sha.1d0c09c1a8b4/BlinkLed-0.0.0+sha.1d0c09c1a8b4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BlinkLed-0.0.0+sha.1d0c09c1a8b4.tar.gz",
+    "size_bytes": 1566,
+    "sha256": "ed5f2821d3659ba979294af93876740386a0b31276be6aabe5ae486cb5b042e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-togayan/library/BlinkLed/0.0.0%2Bsha.1d0c09c1a8b4/BlinkLed-0.0.0%2Bsha.1d0c09c1a8b4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-togayan/library/BlinkLed/0.0.0%2Bsha.1d0c09c1a8b4/BlinkLed-0.0.0%2Bsha.1d0c09c1a8b4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-togayan/library/DebouncedEdgeIn/0.0.0+sha.471239ea932b/DebouncedEdgeIn-0.0.0+sha.471239ea932b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DebouncedEdgeIn-0.0.0+sha.471239ea932b.tar.gz",
+    "size_bytes": 1774,
+    "sha256": "29d0cc62dcca471711ebdb089bf20b8d89ecaca081befab6080089db781c6c46",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-togayan/library/DebouncedEdgeIn/0.0.0%2Bsha.471239ea932b/DebouncedEdgeIn-0.0.0%2Bsha.471239ea932b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-togayan/library/DebouncedEdgeIn/0.0.0%2Bsha.471239ea932b/DebouncedEdgeIn-0.0.0%2Bsha.471239ea932b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-togayan/library/Rtc8564/0.0.0+sha.ebc5f6d47cf5/Rtc8564-0.0.0+sha.ebc5f6d47cf5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Rtc8564-0.0.0+sha.ebc5f6d47cf5.tar.gz",
+    "size_bytes": 1795,
+    "sha256": "526fa00e55250d4873a3bd80e35df9adb2c4531884bf69edcc39363200a76ca6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-togayan/library/Rtc8564/0.0.0%2Bsha.ebc5f6d47cf5/Rtc8564-0.0.0%2Bsha.ebc5f6d47cf5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-togayan/library/Rtc8564/0.0.0%2Bsha.ebc5f6d47cf5/Rtc8564-0.0.0%2Bsha.ebc5f6d47cf5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

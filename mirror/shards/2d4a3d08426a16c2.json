@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-riaanehlers",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-riaanehlers/library/L298HBridge/0.0.0+sha.1c000b6cf863/L298HBridge-0.0.0+sha.1c000b6cf863.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "L298HBridge-0.0.0+sha.1c000b6cf863.tar.gz",
+    "size_bytes": 2323,
+    "sha256": "68d2dbe5ccfd226add38f25b0a3e183f42ffadf433001c74151fa28af5e3d24a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-riaanehlers/library/L298HBridge/0.0.0%2Bsha.1c000b6cf863/L298HBridge-0.0.0%2Bsha.1c000b6cf863.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-riaanehlers/library/L298HBridge/0.0.0%2Bsha.1c000b6cf863/L298HBridge-0.0.0%2Bsha.1c000b6cf863.tar.gz"
+    ]
+   }
+  }
+ ]
+}

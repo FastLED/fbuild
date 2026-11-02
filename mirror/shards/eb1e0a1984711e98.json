@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ramsesgarciad",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ramsesgarciad/library/simple_serial_protocol/1.0.1/simple_serial_protocol-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "simple_serial_protocol-1.0.1.tar.gz",
+    "size_bytes": 11055,
+    "sha256": "1e97a054bc0e3118e00b10f376f37f45d580917f604ae07cec461b353e3ba11c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ramsesgarciad/library/simple_serial_protocol/1.0.1/simple_serial_protocol-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ramsesgarciad/library/simple_serial_protocol/1.0.1/simple_serial_protocol-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

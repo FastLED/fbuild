@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ant2000",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ant2000/library/CustomJWT/2.1.2/CustomJWT-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CustomJWT-2.1.2.tar.gz",
+    "size_bytes": 12466,
+    "sha256": "b790fa2b1c438454d78551dce1f2fd4976c0a745a6641b7fb14d415c79b80075",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ant2000/library/CustomJWT/2.1.2/CustomJWT-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ant2000/library/CustomJWT/2.1.2/CustomJWT-2.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

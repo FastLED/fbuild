@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/andrealombardo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "andrealombardo/library/L298N/2.0.3/L298N-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "L298N-2.0.3.tar.gz",
+    "size_bytes": 22923,
+    "sha256": "6690906165450504af2f4507891f62302cf96405ab209f06164fec920d4bf405",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/andrealombardo/library/L298N/2.0.3/L298N-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/andrealombardo/library/L298N/2.0.3/L298N-2.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

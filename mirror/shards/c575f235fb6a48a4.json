@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-geotec",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-geotec/library/PulseCounter/0.0.0+sha.0eb01612bcb2/PulseCounter-0.0.0+sha.0eb01612bcb2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PulseCounter-0.0.0+sha.0eb01612bcb2.tar.gz",
+    "size_bytes": 3644,
+    "sha256": "9659c9ec17299bb892b2930b34e090a07eae7025093a42423fb1afe97d00af55",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-geotec/library/PulseCounter/0.0.0%2Bsha.0eb01612bcb2/PulseCounter-0.0.0%2Bsha.0eb01612bcb2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-geotec/library/PulseCounter/0.0.0%2Bsha.0eb01612bcb2/PulseCounter-0.0.0%2Bsha.0eb01612bcb2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-geotec/library/PwmOscillator/0.0.0+sha.d9fea7c1fc8d/PwmOscillator-0.0.0+sha.d9fea7c1fc8d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PwmOscillator-0.0.0+sha.d9fea7c1fc8d.tar.gz",
+    "size_bytes": 1372,
+    "sha256": "0ae7ad1e53a294852adb4cd97b81aeefe67b56a1e5488a510b7697335b17d19f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-geotec/library/PwmOscillator/0.0.0%2Bsha.d9fea7c1fc8d/PwmOscillator-0.0.0%2Bsha.d9fea7c1fc8d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-geotec/library/PwmOscillator/0.0.0%2Bsha.d9fea7c1fc8d/PwmOscillator-0.0.0%2Bsha.d9fea7c1fc8d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

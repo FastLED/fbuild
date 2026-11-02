@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nw2s",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nw2s/library/nw2s_portenta_SSD1322/0.2.0/nw2s_portenta_SSD1322-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nw2s_portenta_SSD1322-0.2.0.tar.gz",
+    "size_bytes": 24992,
+    "sha256": "19216f7e411aee1ca32c1b3f9d97851208fbdfe26d9f4675577021fbf8a993ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nw2s/library/nw2s_portenta_SSD1322/0.2.0/nw2s_portenta_SSD1322-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nw2s/library/nw2s_portenta_SSD1322/0.2.0/nw2s_portenta_SSD1322-0.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

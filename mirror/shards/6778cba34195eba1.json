@@ -1,0 +1,347 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/thomasgeissl",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "thomasgeissl/library/ESP-NOW%20MIDI/0.10.2/ESP-NOWMIDI-0.10.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-NOWMIDI-0.10.2.tar.gz",
+    "size_bytes": 39628,
+    "sha256": "c5b96773e8aefe7a987c1215261f2fed487c845ec420a44f7866566512ac8a25",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thomasgeissl/library/ESP-NOW%2520MIDI/0.10.2/ESP-NOWMIDI-0.10.2.tar.gz",
+     "https://dl.registry.platformio.org/download/thomasgeissl/library/ESP-NOW%20MIDI/0.10.2/ESP-NOWMIDI-0.10.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thomasgeissl/library/ESP-NOW%20MIDI/0.10.3/ESP-NOWMIDI-0.10.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-NOWMIDI-0.10.3.tar.gz",
+    "size_bytes": 46010,
+    "sha256": "b87baaa657b428f46c03564c5ed597bc26e9e83507dec6b136791cc60b9fa987",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thomasgeissl/library/ESP-NOW%2520MIDI/0.10.3/ESP-NOWMIDI-0.10.3.tar.gz",
+     "https://dl.registry.platformio.org/download/thomasgeissl/library/ESP-NOW%20MIDI/0.10.3/ESP-NOWMIDI-0.10.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thomasgeissl/library/ESP-NOW%20MIDI/0.10.4/ESP-NOWMIDI-0.10.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-NOWMIDI-0.10.4.tar.gz",
+    "size_bytes": 49355,
+    "sha256": "85f3ec1265d436a12b3b9c91f0fc67b495914b4c0df9c7e7c68c42d52f2831a0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thomasgeissl/library/ESP-NOW%2520MIDI/0.10.4/ESP-NOWMIDI-0.10.4.tar.gz",
+     "https://dl.registry.platformio.org/download/thomasgeissl/library/ESP-NOW%20MIDI/0.10.4/ESP-NOWMIDI-0.10.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thomasgeissl/library/ESP-NOW%20MIDI/0.10.5/ESP-NOWMIDI-0.10.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-NOWMIDI-0.10.5.tar.gz",
+    "size_bytes": 49538,
+    "sha256": "e543ec9a93de152cc2ee315176a4f71afc6c3d562a0f4f6870c1812cb634fbac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thomasgeissl/library/ESP-NOW%2520MIDI/0.10.5/ESP-NOWMIDI-0.10.5.tar.gz",
+     "https://dl.registry.platformio.org/download/thomasgeissl/library/ESP-NOW%20MIDI/0.10.5/ESP-NOWMIDI-0.10.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thomasgeissl/library/ESP-NOW%20MIDI/0.10.6/ESP-NOWMIDI-0.10.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-NOWMIDI-0.10.6.tar.gz",
+    "size_bytes": 69610,
+    "sha256": "b700a8f9d2f8e38b3d2e06fcb3c21ebf6011ca48ad9b3c9c5bc7326b952969a0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thomasgeissl/library/ESP-NOW%2520MIDI/0.10.6/ESP-NOWMIDI-0.10.6.tar.gz",
+     "https://dl.registry.platformio.org/download/thomasgeissl/library/ESP-NOW%20MIDI/0.10.6/ESP-NOWMIDI-0.10.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thomasgeissl/library/ESP-NOW%20MIDI/0.10.7/ESP-NOWMIDI-0.10.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-NOWMIDI-0.10.7.tar.gz",
+    "size_bytes": 71849,
+    "sha256": "70564909fad69ad0d75bbe19b40396af9b3c8e466a4f37b4fbfab15942694cc3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thomasgeissl/library/ESP-NOW%2520MIDI/0.10.7/ESP-NOWMIDI-0.10.7.tar.gz",
+     "https://dl.registry.platformio.org/download/thomasgeissl/library/ESP-NOW%20MIDI/0.10.7/ESP-NOWMIDI-0.10.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thomasgeissl/library/ESP-NOW%20MIDI/0.10.8/ESP-NOWMIDI-0.10.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-NOWMIDI-0.10.8.tar.gz",
+    "size_bytes": 65202,
+    "sha256": "37d96cc9f7d221099035afac7754f12b6650c66526f360f67f6317d270d25c5a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thomasgeissl/library/ESP-NOW%2520MIDI/0.10.8/ESP-NOWMIDI-0.10.8.tar.gz",
+     "https://dl.registry.platformio.org/download/thomasgeissl/library/ESP-NOW%20MIDI/0.10.8/ESP-NOWMIDI-0.10.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thomasgeissl/library/ESP-NOW%20MIDI/0.10.9/ESP-NOWMIDI-0.10.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-NOWMIDI-0.10.9.tar.gz",
+    "size_bytes": 65692,
+    "sha256": "83a47028f59b4cacaf40fd14d636dd15eeb3f680bda91cc6cf3c95f845823065",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thomasgeissl/library/ESP-NOW%2520MIDI/0.10.9/ESP-NOWMIDI-0.10.9.tar.gz",
+     "https://dl.registry.platformio.org/download/thomasgeissl/library/ESP-NOW%20MIDI/0.10.9/ESP-NOWMIDI-0.10.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thomasgeissl/library/ESP-NOW%20MIDI/0.11.0/ESP-NOWMIDI-0.11.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-NOWMIDI-0.11.0.tar.gz",
+    "size_bytes": 67835,
+    "sha256": "d4c87b91b7b729663f2319e0cad8ae6b54ca027f0e51c69af5e4d2cb1731149c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thomasgeissl/library/ESP-NOW%2520MIDI/0.11.0/ESP-NOWMIDI-0.11.0.tar.gz",
+     "https://dl.registry.platformio.org/download/thomasgeissl/library/ESP-NOW%20MIDI/0.11.0/ESP-NOWMIDI-0.11.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thomasgeissl/library/ESP-NOW%20MIDI/0.12.0/ESP-NOWMIDI-0.12.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-NOWMIDI-0.12.0.tar.gz",
+    "size_bytes": 69074,
+    "sha256": "06226d22e492a1ce9e3a091b37ebf8c4568993f6f12dd38d95719d5c519d75c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thomasgeissl/library/ESP-NOW%2520MIDI/0.12.0/ESP-NOWMIDI-0.12.0.tar.gz",
+     "https://dl.registry.platformio.org/download/thomasgeissl/library/ESP-NOW%20MIDI/0.12.0/ESP-NOWMIDI-0.12.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thomasgeissl/library/ESP-NOW%20MIDI/0.12.1/ESP-NOWMIDI-0.12.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-NOWMIDI-0.12.1.tar.gz",
+    "size_bytes": 80811,
+    "sha256": "34e60f1e72367f9630834adc6608504779fffa8e9bad735a6a54bd7b0ca767c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thomasgeissl/library/ESP-NOW%2520MIDI/0.12.1/ESP-NOWMIDI-0.12.1.tar.gz",
+     "https://dl.registry.platformio.org/download/thomasgeissl/library/ESP-NOW%20MIDI/0.12.1/ESP-NOWMIDI-0.12.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thomasgeissl/library/ESP-NOW%20MIDI/0.12.2/ESP-NOWMIDI-0.12.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-NOWMIDI-0.12.2.tar.gz",
+    "size_bytes": 82780,
+    "sha256": "85c720d6ad69e77c8e3e0f0f7b38471e43bf11819555cef89af3d2332dc73310",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thomasgeissl/library/ESP-NOW%2520MIDI/0.12.2/ESP-NOWMIDI-0.12.2.tar.gz",
+     "https://dl.registry.platformio.org/download/thomasgeissl/library/ESP-NOW%20MIDI/0.12.2/ESP-NOWMIDI-0.12.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thomasgeissl/library/ESP-NOW%20MIDI/0.12.3/ESP-NOWMIDI-0.12.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-NOWMIDI-0.12.3.tar.gz",
+    "size_bytes": 82762,
+    "sha256": "3e77cce35b2ac0bf3c173e39f5b5f14a171c77e0767255003dad96d8c97bde7e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thomasgeissl/library/ESP-NOW%2520MIDI/0.12.3/ESP-NOWMIDI-0.12.3.tar.gz",
+     "https://dl.registry.platformio.org/download/thomasgeissl/library/ESP-NOW%20MIDI/0.12.3/ESP-NOWMIDI-0.12.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thomasgeissl/library/ESP-NOW%20MIDI/0.13.1/ESP-NOWMIDI-0.13.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-NOWMIDI-0.13.1.tar.gz",
+    "size_bytes": 91075,
+    "sha256": "ac3a0232f4ac143596c6582ab55c3b947e74b449194780754501679f834b55fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thomasgeissl/library/ESP-NOW%2520MIDI/0.13.1/ESP-NOWMIDI-0.13.1.tar.gz",
+     "https://dl.registry.platformio.org/download/thomasgeissl/library/ESP-NOW%20MIDI/0.13.1/ESP-NOWMIDI-0.13.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thomasgeissl/library/ESP-NOW%20MIDI/0.14.0/ESP-NOWMIDI-0.14.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-NOWMIDI-0.14.0.tar.gz",
+    "size_bytes": 93282,
+    "sha256": "a99f297d3dc338acb1781e8688eb89f9646efb52bcb23db6aa8b2e07facc4d0a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thomasgeissl/library/ESP-NOW%2520MIDI/0.14.0/ESP-NOWMIDI-0.14.0.tar.gz",
+     "https://dl.registry.platformio.org/download/thomasgeissl/library/ESP-NOW%20MIDI/0.14.0/ESP-NOWMIDI-0.14.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thomasgeissl/library/ESP-NOW%20MIDI/0.16.0/ESP-NOWMIDI-0.16.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-NOWMIDI-0.16.0.tar.gz",
+    "size_bytes": 98229,
+    "sha256": "b9a2c9001fb9359eda3f057ba290695e28c915e9dc5488d284b6be10811aed87",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thomasgeissl/library/ESP-NOW%2520MIDI/0.16.0/ESP-NOWMIDI-0.16.0.tar.gz",
+     "https://dl.registry.platformio.org/download/thomasgeissl/library/ESP-NOW%20MIDI/0.16.0/ESP-NOWMIDI-0.16.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thomasgeissl/library/ESP-NOW%20MIDI/0.18.0/ESP-NOWMIDI-0.18.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-NOWMIDI-0.18.0.tar.gz",
+    "size_bytes": 117634,
+    "sha256": "cfe0a913d5fde76b3177572de4d38ff88939a1cf80a0acb5a2ee4c970dda052e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thomasgeissl/library/ESP-NOW%2520MIDI/0.18.0/ESP-NOWMIDI-0.18.0.tar.gz",
+     "https://dl.registry.platformio.org/download/thomasgeissl/library/ESP-NOW%20MIDI/0.18.0/ESP-NOWMIDI-0.18.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thomasgeissl/library/ESP-NOW%20MIDI/0.19.0/ESP-NOWMIDI-0.19.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-NOWMIDI-0.19.0.tar.gz",
+    "size_bytes": 149430,
+    "sha256": "f0600d03a1c57981103d980fe38a2189a809119671824fe73bf23c824be10656",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thomasgeissl/library/ESP-NOW%2520MIDI/0.19.0/ESP-NOWMIDI-0.19.0.tar.gz",
+     "https://dl.registry.platformio.org/download/thomasgeissl/library/ESP-NOW%20MIDI/0.19.0/ESP-NOWMIDI-0.19.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thomasgeissl/library/ESP-NOW%20MIDI/0.6.1/ESP-NOWMIDI-0.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-NOWMIDI-0.6.1.tar.gz",
+    "size_bytes": 14634,
+    "sha256": "447a989b9b6ff30d09054995990aa26f28ad09718542f0f8e66ccb5940228b13",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thomasgeissl/library/ESP-NOW%2520MIDI/0.6.1/ESP-NOWMIDI-0.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/thomasgeissl/library/ESP-NOW%20MIDI/0.6.1/ESP-NOWMIDI-0.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thomasgeissl/library/ESP-NOW%20MIDI/0.8.0/ESP-NOWMIDI-0.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-NOWMIDI-0.8.0.tar.gz",
+    "size_bytes": 35608,
+    "sha256": "bd46280435cbd7d0fd8e7af016f956abb532e97b54f4fc8b6d2d2ce4ff2c48a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thomasgeissl/library/ESP-NOW%2520MIDI/0.8.0/ESP-NOWMIDI-0.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/thomasgeissl/library/ESP-NOW%20MIDI/0.8.0/ESP-NOWMIDI-0.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thomasgeissl/library/ESP-NOW%20MIDI/0.9.0/ESP-NOWMIDI-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-NOWMIDI-0.9.0.tar.gz",
+    "size_bytes": 38752,
+    "sha256": "49ad7e640b9afd5f675f7ab3c2f90e626ec5f365b3365e322ab68d1b2e739797",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thomasgeissl/library/ESP-NOW%2520MIDI/0.9.0/ESP-NOWMIDI-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/thomasgeissl/library/ESP-NOW%20MIDI/0.9.0/ESP-NOWMIDI-0.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thomasgeissl/library/ESP-NOW%20MIDI/0.9.1/ESP-NOWMIDI-0.9.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-NOWMIDI-0.9.1.tar.gz",
+    "size_bytes": 38425,
+    "sha256": "a3c39a3554e335d65d57db370ac749a4c0a8ddb9357d7ee1980555a421472b6c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thomasgeissl/library/ESP-NOW%2520MIDI/0.9.1/ESP-NOWMIDI-0.9.1.tar.gz",
+     "https://dl.registry.platformio.org/download/thomasgeissl/library/ESP-NOW%20MIDI/0.9.1/ESP-NOWMIDI-0.9.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thomasgeissl/library/NeopixelCommander/0.0.1/NeopixelCommander-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeopixelCommander-0.0.1.tar.gz",
+    "size_bytes": 3960,
+    "sha256": "3a3ccfc62da2c7122980022d97a0e2be45c23bb6f0e7dc7697b1c0fe2ea53863",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thomasgeissl/library/NeopixelCommander/0.0.1/NeopixelCommander-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/thomasgeissl/library/NeopixelCommander/0.0.1/NeopixelCommander-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thomasgeissl/library/NeopixelCommander/0.0.2/NeopixelCommander-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeopixelCommander-0.0.2.tar.gz",
+    "size_bytes": 32767,
+    "sha256": "913aed5ed8a5afb84460cce34195b3cc0870442a8d2465dd22e75a3a96d54d42",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thomasgeissl/library/NeopixelCommander/0.0.2/NeopixelCommander-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/thomasgeissl/library/NeopixelCommander/0.0.2/NeopixelCommander-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thomasgeissl/library/NeopixelCommander/0.0.5/NeopixelCommander-0.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeopixelCommander-0.0.5.tar.gz",
+    "size_bytes": 86315,
+    "sha256": "e372568eaeba1f46d4e99d4767835be9298413a4e7dcbab4334b14731c228ada",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thomasgeissl/library/NeopixelCommander/0.0.5/NeopixelCommander-0.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/thomasgeissl/library/NeopixelCommander/0.0.5/NeopixelCommander-0.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thomasgeissl/library/NeopixelCommander/0.0.6/NeopixelCommander-0.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeopixelCommander-0.0.6.tar.gz",
+    "size_bytes": 87502,
+    "sha256": "bd90f3c8cfdbc0f55d2713a04985e754591eeadd08794f5b28d9127cd737dea2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thomasgeissl/library/NeopixelCommander/0.0.6/NeopixelCommander-0.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/thomasgeissl/library/NeopixelCommander/0.0.6/NeopixelCommander-0.0.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

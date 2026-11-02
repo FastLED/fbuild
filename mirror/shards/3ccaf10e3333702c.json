@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lucyamy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lucyamy/library/LapI2CTop/1.0.0/LapI2CTop-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LapI2CTop-1.0.0.tar.gz",
+    "size_bytes": 5916,
+    "sha256": "b8e9a78bf90c394fe4f4c392fbc6928169da5db3f9ef94864372277ff5f2870b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lucyamy/library/LapI2CTop/1.0.0/LapI2CTop-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lucyamy/library/LapI2CTop/1.0.0/LapI2CTop-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lucyamy/library/LapINA219/1.0.0/LapINA219-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LapINA219-1.0.0.tar.gz",
+    "size_bytes": 3472,
+    "sha256": "30e4f7eb33640732c26bc7b046556a2d5f6918f0786cfabff05257f4300c0b3c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lucyamy/library/LapINA219/1.0.0/LapINA219-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lucyamy/library/LapINA219/1.0.0/LapINA219-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lucyamy/library/LapX9C10X/1.0.2/LapX9C10X-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LapX9C10X-1.0.2.tar.gz",
+    "size_bytes": 8121,
+    "sha256": "233e79b3151ac460cfa332cbec8d3e2e8e17d2ef53e66c78e4bcfbde508f9731",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lucyamy/library/LapX9C10X/1.0.2/LapX9C10X-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lucyamy/library/LapX9C10X/1.0.2/LapX9C10X-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lucyamy/library/SevenSegInt/1.0.0/SevenSegInt-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SevenSegInt-1.0.0.tar.gz",
+    "size_bytes": 12566,
+    "sha256": "239b340a48eac6f16c0f3a13e30087378e65a9074878150b2181a84199e9cfb4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lucyamy/library/SevenSegInt/1.0.0/SevenSegInt-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lucyamy/library/SevenSegInt/1.0.0/SevenSegInt-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

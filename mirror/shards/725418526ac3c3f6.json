@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-microbug",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-microbug/library/MicroBitDAL_SB2_TEST/0.0.0+sha.8bf639bbedb5/MicroBitDAL_SB2_TEST-0.0.0+sha.8bf639bbedb5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MicroBitDAL_SB2_TEST-0.0.0+sha.8bf639bbedb5.tar.gz",
+    "size_bytes": 25666,
+    "sha256": "9a9af82561069ec5eeec1e7a61cd46fde27deb673ab3bbed094c9cb74ac9ca2b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-microbug/library/MicroBitDAL_SB2_TEST/0.0.0%2Bsha.8bf639bbedb5/MicroBitDAL_SB2_TEST-0.0.0%2Bsha.8bf639bbedb5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-microbug/library/MicroBitDAL_SB2_TEST/0.0.0%2Bsha.8bf639bbedb5/MicroBitDAL_SB2_TEST-0.0.0%2Bsha.8bf639bbedb5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

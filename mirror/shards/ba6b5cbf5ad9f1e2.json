@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/specleds",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "specleds/library/SenseAir_S88_Async/1.0.0/SenseAir_S88_Async-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SenseAir_S88_Async-1.0.0.tar.gz",
+    "size_bytes": 7739,
+    "sha256": "62619035876b62e5f7b6dc7b892e20ac61e9ce8f068ed305e4a3be8bb9101071",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/specleds/library/SenseAir_S88_Async/1.0.0/SenseAir_S88_Async-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/specleds/library/SenseAir_S88_Async/1.0.0/SenseAir_S88_Async-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "specleds/library/SenseAir_S88_Async/1.1.0/SenseAir_S88_Async-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SenseAir_S88_Async-1.1.0.tar.gz",
+    "size_bytes": 9266,
+    "sha256": "b0614fd468bf97ede96d5acaaec36451b7ad4c9e9ffa4d390354e9b6549fe48a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/specleds/library/SenseAir_S88_Async/1.1.0/SenseAir_S88_Async-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/specleds/library/SenseAir_S88_Async/1.1.0/SenseAir_S88_Async-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "specleds/library/SenseAir_S88_Async/1.2.0/SenseAir_S88_Async-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SenseAir_S88_Async-1.2.0.tar.gz",
+    "size_bytes": 9785,
+    "sha256": "9c3705d13995badbf21dec59c3c105240d43825eed44b5ee64e4a3d4fb88284e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/specleds/library/SenseAir_S88_Async/1.2.0/SenseAir_S88_Async-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/specleds/library/SenseAir_S88_Async/1.2.0/SenseAir_S88_Async-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/glebshow23-crypto",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "glebshow23-crypto/library/SharpSensor/1.0.0/SharpSensor-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SharpSensor-1.0.0.tar.gz",
+    "size_bytes": 3142,
+    "sha256": "8d07058dd75264d30ff03319d02eed7bc8eb60241e821738d87d25d570a3e4b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/glebshow23-crypto/library/SharpSensor/1.0.0/SharpSensor-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/glebshow23-crypto/library/SharpSensor/1.0.0/SharpSensor-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

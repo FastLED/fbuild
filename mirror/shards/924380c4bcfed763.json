@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/viralinkio",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "viralinkio/library/ViraLink-MQTT-Client/0.1.0/ViraLink-MQTT-Client-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ViraLink-MQTT-Client-0.1.0.tar.gz",
+    "size_bytes": 38918,
+    "sha256": "d1bdab6956eaf40ae26e63324953b9d2b603be1837d9ff4f69323428e20461f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/viralinkio/library/ViraLink-MQTT-Client/0.1.0/ViraLink-MQTT-Client-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/viralinkio/library/ViraLink-MQTT-Client/0.1.0/ViraLink-MQTT-Client-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

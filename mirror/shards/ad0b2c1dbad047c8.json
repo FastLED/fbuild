@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/costinbobes",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "costinbobes/library/NTPSharp/1.0.0/NTPSharp-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NTPSharp-1.0.0.tar.gz",
+    "size_bytes": 18324,
+    "sha256": "df8256081425912bbf3548dac76fcac787e58d8d26cc57411f7a75e392549d1d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/costinbobes/library/NTPSharp/1.0.0/NTPSharp-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/costinbobes/library/NTPSharp/1.0.0/NTPSharp-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "costinbobes/library/NTPSharp/1.0.2/NTPSharp-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NTPSharp-1.0.2.tar.gz",
+    "size_bytes": 19054,
+    "sha256": "3e8e4a423f6e35a9c994bfc509e1eade522af9fef4d890f945fe9cc54af0830e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/costinbobes/library/NTPSharp/1.0.2/NTPSharp-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/costinbobes/library/NTPSharp/1.0.2/NTPSharp-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "costinbobes/library/TimezoneTranslator/1.0.1/TimezoneTranslator-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TimezoneTranslator-1.0.1.tar.gz",
+    "size_bytes": 20770,
+    "sha256": "cc170b0d6e64b2a68c578337956d7ae7482ebc5bb2a13c2917912e59d75ad86e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/costinbobes/library/TimezoneTranslator/1.0.1/TimezoneTranslator-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/costinbobes/library/TimezoneTranslator/1.0.1/TimezoneTranslator-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "costinbobes/library/WiFi-Watchdog/1.0.1/WiFi-Watchdog-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFi-Watchdog-1.0.1.tar.gz",
+    "size_bytes": 16802,
+    "sha256": "38992184b3d50da7853dafc8698845862cf0fd4f45a885f118f2f7008ce1321b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/costinbobes/library/WiFi-Watchdog/1.0.1/WiFi-Watchdog-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/costinbobes/library/WiFi-Watchdog/1.0.1/WiFi-Watchdog-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

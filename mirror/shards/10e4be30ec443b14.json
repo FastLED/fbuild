@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/smz",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "smz/library/RTCtime/1.0.5/RTCtime-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RTCtime-1.0.5.tar.gz",
+    "size_bytes": 11727,
+    "sha256": "25672261a7cc340d88056339454d22387c661999f78d8a440441ec9d188f2628",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/smz/library/RTCtime/1.0.5/RTCtime-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/smz/library/RTCtime/1.0.5/RTCtime-1.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

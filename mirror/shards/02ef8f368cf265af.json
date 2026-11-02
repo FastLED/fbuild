@@ -1,0 +1,178 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fjulian79",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fjulian79/library/libCli/4.1.0/libCli-4.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libCli-4.1.0.tar.gz",
+    "size_bytes": 20733,
+    "sha256": "cb921339945813b851e22ee0b73909b496d7e4fa7c2ff335b384466cdb913f70",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fjulian79/library/libCli/4.1.0/libCli-4.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fjulian79/library/libCli/4.1.0/libCli-4.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fjulian79/library/libCli/4.2.0/libCli-4.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libCli-4.2.0.tar.gz",
+    "size_bytes": 21062,
+    "sha256": "1245d11069324bb9b17138d5d7c85fef5a5704db482614163be4018345aedb7c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fjulian79/library/libCli/4.2.0/libCli-4.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fjulian79/library/libCli/4.2.0/libCli-4.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fjulian79/library/libCli/4.3.0/libCli-4.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libCli-4.3.0.tar.gz",
+    "size_bytes": 24828,
+    "sha256": "2e0d529dcce17df342fff71194e279a9e4f0b0bbc3523a1d59ce6a009863e40a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fjulian79/library/libCli/4.3.0/libCli-4.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fjulian79/library/libCli/4.3.0/libCli-4.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fjulian79/library/libCli/4.3.1/libCli-4.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libCli-4.3.1.tar.gz",
+    "size_bytes": 24916,
+    "sha256": "3c6d961c1ef48dc47f434041f8687e4a649336c5e89051b63970721c5e0ca9ba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fjulian79/library/libCli/4.3.1/libCli-4.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fjulian79/library/libCli/4.3.1/libCli-4.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fjulian79/library/libCli/4.4.0/libCli-4.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libCli-4.4.0.tar.gz",
+    "size_bytes": 25539,
+    "sha256": "be9d9f318d58bb181517008888c54ba3de740b9f21bed8af3178df54ba0ce581",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fjulian79/library/libCli/4.4.0/libCli-4.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fjulian79/library/libCli/4.4.0/libCli-4.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fjulian79/library/libCli/4.5.0/libCli-4.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libCli-4.5.0.tar.gz",
+    "size_bytes": 29771,
+    "sha256": "1a9c003314bb281744c0a5842f2ade6999b2ce9a927e122e98193a70f72eadea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fjulian79/library/libCli/4.5.0/libCli-4.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fjulian79/library/libCli/4.5.0/libCli-4.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fjulian79/library/libCli/4.6.0/libCli-4.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libCli-4.6.0.tar.gz",
+    "size_bytes": 34654,
+    "sha256": "b91bbb219bc3b72e6d0ac38725ba806784de75f350b6b0d7951e0693e536f8d3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fjulian79/library/libCli/4.6.0/libCli-4.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fjulian79/library/libCli/4.6.0/libCli-4.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fjulian79/library/libCli/4.7.0/libCli-4.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libCli-4.7.0.tar.gz",
+    "size_bytes": 36308,
+    "sha256": "8a57273bd1fa410a05c05a2ab9ba1009d90023a36eae049ea7002fda24f0cf1b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fjulian79/library/libCli/4.7.0/libCli-4.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fjulian79/library/libCli/4.7.0/libCli-4.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fjulian79/library/libCli/4.8.0/libCli-4.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libCli-4.8.0.tar.gz",
+    "size_bytes": 42565,
+    "sha256": "3bca7aa0be92340b7c0eaf16a76d7aeb56a80ca628183f7a00c290b1ac96a1b4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fjulian79/library/libCli/4.8.0/libCli-4.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fjulian79/library/libCli/4.8.0/libCli-4.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fjulian79/library/libCli/4.8.1/libCli-4.8.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libCli-4.8.1.tar.gz",
+    "size_bytes": 48349,
+    "sha256": "a7abfa65f7e93d6d0dc9db7aba8fa534ed88e15a969880db1c2a3332d6d6aecf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fjulian79/library/libCli/4.8.1/libCli-4.8.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fjulian79/library/libCli/4.8.1/libCli-4.8.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fjulian79/library/libgeneric/2.0.0/libgeneric-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libgeneric-2.0.0.tar.gz",
+    "size_bytes": 28011,
+    "sha256": "6def61cab70951e6319f43bc825ff0e5d7561eff433cec99a826d3c6205cd55f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fjulian79/library/libgeneric/2.0.0/libgeneric-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fjulian79/library/libgeneric/2.0.0/libgeneric-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fjulian79/library/libgeneric/2.1.0/libgeneric-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libgeneric-2.1.0.tar.gz",
+    "size_bytes": 28095,
+    "sha256": "21d12c6bccb48b07a188501ad0b89f93316f8da5ef4aa725e674581e8db25ad7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fjulian79/library/libgeneric/2.1.0/libgeneric-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fjulian79/library/libgeneric/2.1.0/libgeneric-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fjulian79/library/libgeneric/2.2.0/libgeneric-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libgeneric-2.2.0.tar.gz",
+    "size_bytes": 37757,
+    "sha256": "3b73c3467f86b187ef91402337dce8345f2bf98fc4649ced6748c5ea1d028f94",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fjulian79/library/libgeneric/2.2.0/libgeneric-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fjulian79/library/libgeneric/2.2.0/libgeneric-2.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

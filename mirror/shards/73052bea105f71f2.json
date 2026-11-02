@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/aharshac",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "aharshac/library/EasyNTPClient/1.1.0/EasyNTPClient-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyNTPClient-1.1.0.tar.gz",
+    "size_bytes": 4959,
+    "sha256": "9b607113e9e1544f467bb1019bd4512c1c77ad46a54cc4b0902e198c907054bf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aharshac/library/EasyNTPClient/1.1.0/EasyNTPClient-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aharshac/library/EasyNTPClient/1.1.0/EasyNTPClient-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aharshac/library/EasyNTPClient/1.2.0/EasyNTPClient-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyNTPClient-1.2.0.tar.gz",
+    "size_bytes": 12629,
+    "sha256": "6fda32e8798e5d12672a5612378da47803590bc7be3b99a7474567adaa352ff8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aharshac/library/EasyNTPClient/1.2.0/EasyNTPClient-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aharshac/library/EasyNTPClient/1.2.0/EasyNTPClient-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aharshac/library/StringSplitter/1.0.0/StringSplitter-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StringSplitter-1.0.0.tar.gz",
+    "size_bytes": 14552,
+    "sha256": "333ccd03029783a39c6f9ae3370997ee6a6273fc6c226fb00183b9f328585d2d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aharshac/library/StringSplitter/1.0.0/StringSplitter-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aharshac/library/StringSplitter/1.0.0/StringSplitter-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

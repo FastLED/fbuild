@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-raulmrello",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-raulmrello/library/EventFramework/0.0.0+sha.ec12f2e32faf/EventFramework-0.0.0+sha.ec12f2e32faf.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EventFramework-0.0.0+sha.ec12f2e32faf.tar.gz",
+    "size_bytes": 8577,
+    "sha256": "d6a2352f7a3a5e2e7d6faff768a46b997d24006c6e365442642401122c312161",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-raulmrello/library/EventFramework/0.0.0%2Bsha.ec12f2e32faf/EventFramework-0.0.0%2Bsha.ec12f2e32faf.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-raulmrello/library/EventFramework/0.0.0%2Bsha.ec12f2e32faf/EventFramework-0.0.0%2Bsha.ec12f2e32faf.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kontakt",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kontakt/library/MAX30100/1.0/MAX30100-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX30100-1.0.tar.gz",
+    "size_bytes": 3914,
+    "sha256": "661a6f120c3a08450d46992d8850a876f0167ccac8fedc6bb39343d2986c5564",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kontakt/library/MAX30100/1.0/MAX30100-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kontakt/library/MAX30100/1.0/MAX30100-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

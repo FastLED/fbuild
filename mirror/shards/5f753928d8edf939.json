@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ribasco",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ribasco/library/Led%20Flow/1.0.1/LedFlow-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LedFlow-1.0.1.tar.gz",
+    "size_bytes": 35483,
+    "sha256": "77e71d7c774892842f4df9544d4c12a39097793b695ca09dbcab12d92ef39e15",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ribasco/library/Led%2520Flow/1.0.1/LedFlow-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ribasco/library/Led%20Flow/1.0.1/LedFlow-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ribasco/library/U8g2%20GLCD%20Remote%20Client/1.0.1/U8g2GLCDRemoteClient-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "U8g2GLCDRemoteClient-1.0.1.tar.gz",
+    "size_bytes": 5389,
+    "sha256": "5ff58f1c1cdbb11a06a717bdfa2c5610b64bc831df1ce2f8799471faed73e08e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ribasco/library/U8g2%2520GLCD%2520Remote%2520Client/1.0.1/U8g2GLCDRemoteClient-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ribasco/library/U8g2%20GLCD%20Remote%20Client/1.0.1/U8g2GLCDRemoteClient-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

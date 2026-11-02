@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/oxullo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "oxullo/library/MAX30100lib/1.2.1/MAX30100lib-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX30100lib-1.2.1.tar.gz",
+    "size_bytes": 24707,
+    "sha256": "97979246859f35ed1f5039adead8c0f2a32788103c63386f6e0e280ee1674a69",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/oxullo/library/MAX30100lib/1.2.1/MAX30100lib-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/oxullo/library/MAX30100lib/1.2.1/MAX30100lib-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "oxullo/library/TCM2lib/1.0.1/TCM2lib-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TCM2lib-1.0.1.tar.gz",
+    "size_bytes": 26225,
+    "sha256": "4f74637a086e5848b179db53421092439828c3e4f743f6b695cfc439f3990921",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/oxullo/library/TCM2lib/1.0.1/TCM2lib-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/oxullo/library/TCM2lib/1.0.1/TCM2lib-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dnzayan",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dnzayan/library/ESP32_Pinoo/1.8.0/ESP32_Pinoo-1.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_Pinoo-1.8.0.tar.gz",
+    "size_bytes": 4939,
+    "sha256": "4c79c2d55cc91f8ec290b93783e14b516697c83092816e7e661753e5a9624cc9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dnzayan/library/ESP32_Pinoo/1.8.0/ESP32_Pinoo-1.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dnzayan/library/ESP32_Pinoo/1.8.0/ESP32_Pinoo-1.8.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

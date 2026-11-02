@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-kcherfou",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-kcherfou/library/MPU6050IMU/0.0.0+sha.f6975e1a9800/MPU6050IMU-0.0.0+sha.f6975e1a9800.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPU6050IMU-0.0.0+sha.f6975e1a9800.tar.gz",
+    "size_bytes": 9778,
+    "sha256": "bb00d83fa6f725d69f107f3e2fc59947bd49f0ee05712363792a03fb46b15e7f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kcherfou/library/MPU6050IMU/0.0.0%2Bsha.f6975e1a9800/MPU6050IMU-0.0.0%2Bsha.f6975e1a9800.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kcherfou/library/MPU6050IMU/0.0.0%2Bsha.f6975e1a9800/MPU6050IMU-0.0.0%2Bsha.f6975e1a9800.tar.gz"
+    ]
+   }
+  }
+ ]
+}

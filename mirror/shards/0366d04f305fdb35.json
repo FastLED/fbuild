@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gitlab-enrico204",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gitlab-enrico204/library/SAM32WiFiEsp/2.2.2-f1/SAM32WiFiEsp-2.2.2-f1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SAM32WiFiEsp-2.2.2-f1.tar.gz",
+    "size_bytes": 36832,
+    "sha256": "17a1e8d353d29fc72f5f161069a539c976651e1fcac9d8622b02420983bf4df6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gitlab-enrico204/library/SAM32WiFiEsp/2.2.2-f1/SAM32WiFiEsp-2.2.2-f1.tar.gz",
+     "https://dl.registry.platformio.org/download/gitlab-enrico204/library/SAM32WiFiEsp/2.2.2-f1/SAM32WiFiEsp-2.2.2-f1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

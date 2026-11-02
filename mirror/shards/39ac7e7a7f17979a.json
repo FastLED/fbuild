@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/quicksander",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "quicksander/library/ArduinoHttpServer/0.10.1/ArduinoHttpServer-0.10.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoHttpServer-0.10.1.tar.gz",
+    "size_bytes": 25871,
+    "sha256": "2f405f0f710b37c2e7a9836c968ef5e3eaf67b790348c8014549c8e82fdf4cb7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/quicksander/library/ArduinoHttpServer/0.10.1/ArduinoHttpServer-0.10.1.tar.gz",
+     "https://dl.registry.platformio.org/download/quicksander/library/ArduinoHttpServer/0.10.1/ArduinoHttpServer-0.10.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

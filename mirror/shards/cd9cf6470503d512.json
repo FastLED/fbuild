@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-kalyan",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-kalyan/library/led/0.0.0+sha.4e434d6edc1e/led-0.0.0+sha.4e434d6edc1e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "led-0.0.0+sha.4e434d6edc1e.tar.gz",
+    "size_bytes": 907,
+    "sha256": "1f35aa19c83ed0341bf6a36dfd616f9c94bb950d41a97bbe9420411d6d860527",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kalyan/library/led/0.0.0%2Bsha.4e434d6edc1e/led-0.0.0%2Bsha.4e434d6edc1e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kalyan/library/led/0.0.0%2Bsha.4e434d6edc1e/led-0.0.0%2Bsha.4e434d6edc1e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-kalyan/library/newlib/0.0.0+sha.723a6806af61/newlib-0.0.0+sha.723a6806af61.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "newlib-0.0.0+sha.723a6806af61.tar.gz",
+    "size_bytes": 624,
+    "sha256": "99d75d5642d330883f747e339ec6e17fd9828247aca8860e07032dc52a9f4936",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kalyan/library/newlib/0.0.0%2Bsha.723a6806af61/newlib-0.0.0%2Bsha.723a6806af61.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kalyan/library/newlib/0.0.0%2Bsha.723a6806af61/newlib-0.0.0%2Bsha.723a6806af61.tar.gz"
+    ]
+   }
+  }
+ ]
+}

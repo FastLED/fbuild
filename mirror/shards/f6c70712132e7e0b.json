@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dmyrenne",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dmyrenne/library/Terabee/1.0.4/Terabee-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Terabee-1.0.4.tar.gz",
+    "size_bytes": 4360,
+    "sha256": "9337286c01b87403ef8d7014af7a649d87e8a18b3968137a299496b93326f048",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dmyrenne/library/Terabee/1.0.4/Terabee-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/dmyrenne/library/Terabee/1.0.4/Terabee-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dmyrenne/library/TerabeeEvoHub/1.0.3/TerabeeEvoHub-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TerabeeEvoHub-1.0.3.tar.gz",
+    "size_bytes": 4401,
+    "sha256": "f29c6357f21146da60cb3b225281f5f37c1f695a6057faf50e9551e44bf6e944",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dmyrenne/library/TerabeeEvoHub/1.0.3/TerabeeEvoHub-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dmyrenne/library/TerabeeEvoHub/1.0.3/TerabeeEvoHub-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dmyrenne/library/TerabeeUART/1.0.1/TerabeeUART-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TerabeeUART-1.0.1.tar.gz",
+    "size_bytes": 3303,
+    "sha256": "b182810986e53f57e99fce6a1430b7bf5edaf5a31d05cbc1c90fcae5e44cdcf5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dmyrenne/library/TerabeeUART/1.0.1/TerabeeUART-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dmyrenne/library/TerabeeUART/1.0.1/TerabeeUART-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

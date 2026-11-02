@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-nikollao",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-nikollao/library/TMP102/0.0.0+sha.fea9b4d9a373/TMP102-0.0.0+sha.fea9b4d9a373.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TMP102-0.0.0+sha.fea9b4d9a373.tar.gz",
+    "size_bytes": 1468,
+    "sha256": "5cc631dc0fbb79f4e8457366aedf48710802f349efe83232c0a4a73b85f9b6b2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nikollao/library/TMP102/0.0.0%2Bsha.fea9b4d9a373/TMP102-0.0.0%2Bsha.fea9b4d9a373.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nikollao/library/TMP102/0.0.0%2Bsha.fea9b4d9a373/TMP102-0.0.0%2Bsha.fea9b4d9a373.tar.gz"
+    ]
+   }
+  }
+ ]
+}

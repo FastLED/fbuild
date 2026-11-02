@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-krai-itb-2019",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-krai-itb-2019/library/CMPS_KRAInew/0.0.0+sha.a5111c33fd8f/CMPS_KRAInew-0.0.0+sha.a5111c33fd8f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CMPS_KRAInew-0.0.0+sha.a5111c33fd8f.tar.gz",
+    "size_bytes": 1976,
+    "sha256": "1b5fbe44c287234d337ad18f35bacbf50c904b846aa692a9c72eae1c4f842401",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-krai-itb-2019/library/CMPS_KRAInew/0.0.0%2Bsha.a5111c33fd8f/CMPS_KRAInew-0.0.0%2Bsha.a5111c33fd8f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-krai-itb-2019/library/CMPS_KRAInew/0.0.0%2Bsha.a5111c33fd8f/CMPS_KRAInew-0.0.0%2Bsha.a5111c33fd8f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-krai-itb-2019/library/Motornew/0.0.0+sha.1d0887244f8b/Motornew-0.0.0+sha.1d0887244f8b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Motornew-0.0.0+sha.1d0887244f8b.tar.gz",
+    "size_bytes": 2291,
+    "sha256": "59729539ef00e2186d75596a8c064c93a357865e0e5b022df84646b23cceeca0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-krai-itb-2019/library/Motornew/0.0.0%2Bsha.1d0887244f8b/Motornew-0.0.0%2Bsha.1d0887244f8b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-krai-itb-2019/library/Motornew/0.0.0%2Bsha.1d0887244f8b/Motornew-0.0.0%2Bsha.1d0887244f8b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

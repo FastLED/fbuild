@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fatihaslamaci",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fatihaslamaci/library/TimerFa/2.0.1/TimerFa-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TimerFa-2.0.1.tar.gz",
+    "size_bytes": 1391,
+    "sha256": "1fe3dbf5d8b93a1230783c1fc9e60a01ed7b408989c3a40bd99456c693a711c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fatihaslamaci/library/TimerFa/2.0.1/TimerFa-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fatihaslamaci/library/TimerFa/2.0.1/TimerFa-2.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nordicsemiconductor",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nordicsemiconductor/library/ble-sdk-arduino/0.9.7.beta/ble-sdk-arduino-0.9.7.beta.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ble-sdk-arduino-0.9.7.beta.tar.gz",
+    "size_bytes": 41294,
+    "sha256": "6678c18e190a7f2fa4106fa0b57cf4e5751f957614983762fa9f0beb18c87048",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nordicsemiconductor/library/ble-sdk-arduino/0.9.7.beta/ble-sdk-arduino-0.9.7.beta.tar.gz",
+     "https://dl.registry.platformio.org/download/nordicsemiconductor/library/ble-sdk-arduino/0.9.7.beta/ble-sdk-arduino-0.9.7.beta.tar.gz"
+    ]
+   }
+  }
+ ]
+}

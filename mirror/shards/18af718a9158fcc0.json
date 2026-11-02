@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/antoiot",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "antoiot/library/anto-esp8266-arduino/0.7.3/anto-esp8266-arduino-0.7.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "anto-esp8266-arduino-0.7.3.tar.gz",
+    "size_bytes": 54994,
+    "sha256": "f9b3fef623e4b7537b49758904126c5386e444a332766b0bc4b783208a36abeb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/antoiot/library/anto-esp8266-arduino/0.7.3/anto-esp8266-arduino-0.7.3.tar.gz",
+     "https://dl.registry.platformio.org/download/antoiot/library/anto-esp8266-arduino/0.7.3/anto-esp8266-arduino-0.7.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

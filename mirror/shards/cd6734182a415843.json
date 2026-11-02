@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-cmiller86",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-cmiller86/library/EasyVR/0.0.0+sha.80db49d7e068/EasyVR-0.0.0+sha.80db49d7e068.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyVR-0.0.0+sha.80db49d7e068.tar.gz",
+    "size_bytes": 2565,
+    "sha256": "3c718c53df6ed273b46536c5737865ddb0ef0a3eca35818115459b18f99db181",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-cmiller86/library/EasyVR/0.0.0%2Bsha.80db49d7e068/EasyVR-0.0.0%2Bsha.80db49d7e068.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-cmiller86/library/EasyVR/0.0.0%2Bsha.80db49d7e068/EasyVR-0.0.0%2Bsha.80db49d7e068.tar.gz"
+    ]
+   }
+  }
+ ]
+}

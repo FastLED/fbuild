@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-peipei123",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-peipei123/library/Grove_temp_sensor/0.0.0+sha.2d65df11758a/Grove_temp_sensor-0.0.0+sha.2d65df11758a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Grove_temp_sensor-0.0.0+sha.2d65df11758a.tar.gz",
+    "size_bytes": 1223,
+    "sha256": "f86a426aa04d917f221b400e0a1ca3ab99217a0d351667f0ad693fe16d85b5ba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-peipei123/library/Grove_temp_sensor/0.0.0%2Bsha.2d65df11758a/Grove_temp_sensor-0.0.0%2Bsha.2d65df11758a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-peipei123/library/Grove_temp_sensor/0.0.0%2Bsha.2d65df11758a/Grove_temp_sensor-0.0.0%2Bsha.2d65df11758a.tar.gz"
+    ]
+   }
+  }
+ ]
+}

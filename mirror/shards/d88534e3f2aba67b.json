@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/realtadango",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "realtadango/library/S.Port%20sensor%20library%20for%20FrSky/1.0.2/S.PortsensorlibraryforFrSky-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "S.PortsensorlibraryforFrSky-1.0.2.tar.gz",
+    "size_bytes": 2664451,
+    "sha256": "3562512170b261eaf52dfbc5f70ca9c252c08805cf690268725534cfd689f31c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/realtadango/library/S.Port%2520sensor%2520library%2520for%2520FrSky/1.0.2/S.PortsensorlibraryforFrSky-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/realtadango/library/S.Port%20sensor%20library%20for%20FrSky/1.0.2/S.PortsensorlibraryforFrSky-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

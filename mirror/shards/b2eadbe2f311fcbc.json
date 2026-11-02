@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/devel0",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "devel0/library/iot-flexy-stepper/1.2.1/iot-flexy-stepper-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iot-flexy-stepper-1.2.1.tar.gz",
+    "size_bytes": 202179,
+    "sha256": "91d6b8bd0e978434368f854c5acb90a3e5a1a5cdf3611d74f4b3b4ebf4f68484",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/devel0/library/iot-flexy-stepper/1.2.1/iot-flexy-stepper-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/devel0/library/iot-flexy-stepper/1.2.1/iot-flexy-stepper-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "devel0/library/iot-lcd-rotary/2.4.1/iot-lcd-rotary-2.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iot-lcd-rotary-2.4.1.tar.gz",
+    "size_bytes": 105051,
+    "sha256": "5def7f74014a80a74dfd9430c64ba543cf97583f5ba093eebfd8176b92662d8a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/devel0/library/iot-lcd-rotary/2.4.1/iot-lcd-rotary-2.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/devel0/library/iot-lcd-rotary/2.4.1/iot-lcd-rotary-2.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "devel0/library/iot-sci/1.2.5/iot-sci-1.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iot-sci-1.2.5.tar.gz",
+    "size_bytes": 146887,
+    "sha256": "7d827d1d8b8dc960de71430c64211c6ffcdea321a4735fcfb73266d0aa46af69",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/devel0/library/iot-sci/1.2.5/iot-sci-1.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/devel0/library/iot-sci/1.2.5/iot-sci-1.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "devel0/library/iot-serial-intercomm/0.5.0/iot-serial-intercomm-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iot-serial-intercomm-0.5.0.tar.gz",
+    "size_bytes": 115012,
+    "sha256": "5a1df170daabadd3b5329f297f94c241e33e12debd4b77a3b164f74ea64158de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/devel0/library/iot-serial-intercomm/0.5.0/iot-serial-intercomm-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/devel0/library/iot-serial-intercomm/0.5.0/iot-serial-intercomm-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "devel0/library/iot-stepper-motor/0.1.1/iot-stepper-motor-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iot-stepper-motor-0.1.1.tar.gz",
+    "size_bytes": 9551,
+    "sha256": "97bcd5b4b1e86a5a6dcb6e2a0b71b470ca842f3603794e05b95622b147b4d306",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/devel0/library/iot-stepper-motor/0.1.1/iot-stepper-motor-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/devel0/library/iot-stepper-motor/0.1.1/iot-stepper-motor-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "devel0/library/iot-utils/2.9.4/iot-utils-2.9.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iot-utils-2.9.4.tar.gz",
+    "size_bytes": 87790,
+    "sha256": "aa70d93167e0cf1b369b8ee9d63db87800ebb781f747c5c646c79ae1085c7308",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/devel0/library/iot-utils/2.9.4/iot-utils-2.9.4.tar.gz",
+     "https://dl.registry.platformio.org/download/devel0/library/iot-utils/2.9.4/iot-utils-2.9.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "devel0/library/scurve-impulse-stepper/0.1.0/scurve-impulse-stepper-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "scurve-impulse-stepper-0.1.0.tar.gz",
+    "size_bytes": 11088,
+    "sha256": "200300704926dac03ff0ed73902a1b2ee5ca3188f68c0831b486c23942f0f551",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/devel0/library/scurve-impulse-stepper/0.1.0/scurve-impulse-stepper-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/devel0/library/scurve-impulse-stepper/0.1.0/scurve-impulse-stepper-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

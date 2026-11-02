@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/etidbury",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "etidbury/library/FastLED/3.3.3/FastLED-3.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastLED-3.3.3.tar.gz",
+    "size_bytes": 245766,
+    "sha256": "ca2f73b96b84f745bdb55c7de117444cb928d128e4a70bd760255f84bf240989",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/etidbury/library/FastLED/3.3.3/FastLED-3.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/etidbury/library/FastLED/3.3.3/FastLED-3.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "etidbury/library/SocketIoClient/1.0.0/SocketIoClient-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SocketIoClient-1.0.0.tar.gz",
+    "size_bytes": 5243,
+    "sha256": "6eca446ab3c3da83e69cfbca27b8cb162a73236edf0637c1d2535e78f4e5d91c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/etidbury/library/SocketIoClient/1.0.0/SocketIoClient-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/etidbury/library/SocketIoClient/1.0.0/SocketIoClient-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

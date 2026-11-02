@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ekstrand",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ekstrand/library/SerialESP8266wifi/0.0.0-alpha+sha.0bf32ed60b/SerialESP8266wifi-0.0.0-alphasha.0bf32ed60b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialESP8266wifi-0.0.0-alphasha.0bf32ed60b.tar.gz",
+    "size_bytes": 11602,
+    "sha256": "47c10b60872f018e6294f56aa25a038fe87c0e3b0609db79c821601d73a87312",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ekstrand/library/SerialESP8266wifi/0.0.0-alpha%2Bsha.0bf32ed60b/SerialESP8266wifi-0.0.0-alphasha.0bf32ed60b.tar.gz",
+     "https://dl.registry.platformio.org/download/ekstrand/library/SerialESP8266wifi/0.0.0-alpha%2Bsha.0bf32ed60b/SerialESP8266wifi-0.0.0-alphasha.0bf32ed60b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

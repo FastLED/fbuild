@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mdiepart",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mdiepart/library/ESP-FTP-Server-Lib-ng/0.11.1/ESP-FTP-Server-Lib-ng-0.11.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-FTP-Server-Lib-ng-0.11.1.tar.gz",
+    "size_bytes": 11183,
+    "sha256": "a3c6d48df276330812b2388eaf9b27bd966500bc08b18ff980182eec688429b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mdiepart/library/ESP-FTP-Server-Lib-ng/0.11.1/ESP-FTP-Server-Lib-ng-0.11.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mdiepart/library/ESP-FTP-Server-Lib-ng/0.11.1/ESP-FTP-Server-Lib-ng-0.11.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mdiepart/library/esp-logger-ng/2.0.1/esp-logger-ng-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-logger-ng-2.0.1.tar.gz",
+    "size_bytes": 4030,
+    "sha256": "268094d82e2d99d19af8886c9be2528480a66bf3e9991fd7e6d5f821a13f0f3d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mdiepart/library/esp-logger-ng/2.0.1/esp-logger-ng-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mdiepart/library/esp-logger-ng/2.0.1/esp-logger-ng-2.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/switchscience",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "switchscience/library/QZSSDCX/1.0.0/QZSSDCX-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QZSSDCX-1.0.0.tar.gz",
+    "size_bytes": 35811,
+    "sha256": "05d5078770af7b4e893700e243777f8215b915c2b9af6300185f592d4fcfaaf1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/switchscience/library/QZSSDCX/1.0.0/QZSSDCX-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/switchscience/library/QZSSDCX/1.0.0/QZSSDCX-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "switchscience/library/ZPA4756-0311A-R/1.0.0/ZPA4756-0311A-R-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ZPA4756-0311A-R-1.0.0.tar.gz",
+    "size_bytes": 5193,
+    "sha256": "a378bd18ee0a713cb5da25c61602910d31372120c97409b78ed61fd1c2cd1244",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/switchscience/library/ZPA4756-0311A-R/1.0.0/ZPA4756-0311A-R-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/switchscience/library/ZPA4756-0311A-R/1.0.0/ZPA4756-0311A-R-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

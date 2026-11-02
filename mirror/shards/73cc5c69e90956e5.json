@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jack1930",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jack1930/library/LCD_i2c_GSOE/0.0.0+sha.3bac0faac335/LCD_i2c_GSOE-0.0.0+sha.3bac0faac335.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCD_i2c_GSOE-0.0.0+sha.3bac0faac335.tar.gz",
+    "size_bytes": 3468,
+    "sha256": "4c106c84b65b043f1cd448d36e02548cc82b629787b4ccb6913562f7a793adae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jack1930/library/LCD_i2c_GSOE/0.0.0%2Bsha.3bac0faac335/LCD_i2c_GSOE-0.0.0%2Bsha.3bac0faac335.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jack1930/library/LCD_i2c_GSOE/0.0.0%2Bsha.3bac0faac335/LCD_i2c_GSOE-0.0.0%2Bsha.3bac0faac335.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/yohannfra75",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "yohannfra75/library/ArduinoLog/1.0.6/ArduinoLog-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoLog-1.0.6.tar.gz",
+    "size_bytes": 18396,
+    "sha256": "8c35c39df0c6434624470ec733679eddfa1ef67c54ec4c2f5fbb79535b230c2e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yohannfra75/library/ArduinoLog/1.0.6/ArduinoLog-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/yohannfra75/library/ArduinoLog/1.0.6/ArduinoLog-1.0.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

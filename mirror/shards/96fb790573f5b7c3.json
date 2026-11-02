@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/faisalill",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "faisalill/library/BMP390/1.0.3/BMP390-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMP390-1.0.3.tar.gz",
+    "size_bytes": 5904,
+    "sha256": "deba2c59fd781659b4ea4aa44746477ff004a404648d9b52338101a4afad58ab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/faisalill/library/BMP390/1.0.3/BMP390-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/faisalill/library/BMP390/1.0.3/BMP390-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

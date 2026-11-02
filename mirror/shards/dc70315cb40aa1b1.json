@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-gregcr",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-gregcr/library/DmTftLibrary/0.0.0+sha.0e2203ae4cec/DmTftLibrary-0.0.0+sha.0e2203ae4cec.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DmTftLibrary-0.0.0+sha.0e2203ae4cec.tar.gz",
+    "size_bytes": 23914,
+    "sha256": "1df6d6a6699e8401cbd96c3753ecad936c99aaed9e84bfa9e5b2403e42a53da6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-gregcr/library/DmTftLibrary/0.0.0%2Bsha.0e2203ae4cec/DmTftLibrary-0.0.0%2Bsha.0e2203ae4cec.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-gregcr/library/DmTftLibrary/0.0.0%2Bsha.0e2203ae4cec/DmTftLibrary-0.0.0%2Bsha.0e2203ae4cec.tar.gz"
+    ]
+   }
+  }
+ ]
+}

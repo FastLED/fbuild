@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kallaspriit",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kallaspriit/library/DisplaxTouch/1.0.0/DisplaxTouch-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DisplaxTouch-1.0.0.tar.gz",
+    "size_bytes": 13532,
+    "sha256": "eb3c3f4d067acbeeb1655e9e856571f63b34fe085bb22ef77fb9d19f8dc7e4c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kallaspriit/library/DisplaxTouch/1.0.0/DisplaxTouch-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kallaspriit/library/DisplaxTouch/1.0.0/DisplaxTouch-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kallaspriit/library/DisplaxTouch/1.1.0/DisplaxTouch-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DisplaxTouch-1.1.0.tar.gz",
+    "size_bytes": 15279,
+    "sha256": "1b59e8ed06d252f61405990764cb31bcf56ccc15e9ce2d76437a4fec3eebdd5d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kallaspriit/library/DisplaxTouch/1.1.0/DisplaxTouch-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kallaspriit/library/DisplaxTouch/1.1.0/DisplaxTouch-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

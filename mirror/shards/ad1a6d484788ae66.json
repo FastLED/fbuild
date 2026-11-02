@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sakshyambastakoti",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sakshyambastakoti/library/Hawa/1.0.0/Hawa-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Hawa-1.0.0.tar.gz",
+    "size_bytes": 9717,
+    "sha256": "ce3c054c8d46db2325d74e9ea398167fd9f97589583d27fa7af4b0d88ebb8288",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sakshyambastakoti/library/Hawa/1.0.0/Hawa-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sakshyambastakoti/library/Hawa/1.0.0/Hawa-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

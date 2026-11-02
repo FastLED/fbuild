@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-denki5119z",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-denki5119z/library/ATP3011/0.0.0+sha.21becfde2e06/ATP3011-0.0.0+sha.21becfde2e06.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ATP3011-0.0.0+sha.21becfde2e06.tar.gz",
+    "size_bytes": 2240,
+    "sha256": "4948bea31914ff4b48bb58778309b7453169518beaa1432f913f2532490b4d74",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-denki5119z/library/ATP3011/0.0.0%2Bsha.21becfde2e06/ATP3011-0.0.0%2Bsha.21becfde2e06.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-denki5119z/library/ATP3011/0.0.0%2Bsha.21becfde2e06/ATP3011-0.0.0%2Bsha.21becfde2e06.tar.gz"
+    ]
+   }
+  }
+ ]
+}

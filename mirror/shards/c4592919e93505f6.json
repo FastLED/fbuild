@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-euler",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-euler/library/IMU/0.0.0+sha.7b70a3ed96c1/IMU-0.0.0+sha.7b70a3ed96c1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IMU-0.0.0+sha.7b70a3ed96c1.tar.gz",
+    "size_bytes": 4092,
+    "sha256": "31fa1c03c3c86ca036642f39f89f5ee5969f3d8ddd92626d3b437b8cc1afc37a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-euler/library/IMU/0.0.0%2Bsha.7b70a3ed96c1/IMU-0.0.0%2Bsha.7b70a3ed96c1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-euler/library/IMU/0.0.0%2Bsha.7b70a3ed96c1/IMU-0.0.0%2Bsha.7b70a3ed96c1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

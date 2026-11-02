@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/monash-railway-express",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "monash-railway-express/library/CAN_MREx/1.12.1/CAN_MREx-1.12.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CAN_MREx-1.12.1.tar.gz",
+    "size_bytes": 91527,
+    "sha256": "94ae373f11c61255d4872fe5cc2eb0ae284b975a2266ecd3c030fc6fdb6c1874",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/monash-railway-express/library/CAN_MREx/1.12.1/CAN_MREx-1.12.1.tar.gz",
+     "https://dl.registry.platformio.org/download/monash-railway-express/library/CAN_MREx/1.12.1/CAN_MREx-1.12.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "monash-railway-express/library/CAN_MREx/1.12.3/CAN_MREx-1.12.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CAN_MREx-1.12.3.tar.gz",
+    "size_bytes": 79546,
+    "sha256": "781ff08bc1aaefa65830dec395ad0d49b9854007ad4fe70c5b58139cc15cefaa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/monash-railway-express/library/CAN_MREx/1.12.3/CAN_MREx-1.12.3.tar.gz",
+     "https://dl.registry.platformio.org/download/monash-railway-express/library/CAN_MREx/1.12.3/CAN_MREx-1.12.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "monash-railway-express/library/CAN_MREx/1.13.0/CAN_MREx-1.13.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CAN_MREx-1.13.0.tar.gz",
+    "size_bytes": 42613,
+    "sha256": "4d8af12985f5e993415f2a7972bafc73f668bb0a55dbca64ee5067f99716ebce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/monash-railway-express/library/CAN_MREx/1.13.0/CAN_MREx-1.13.0.tar.gz",
+     "https://dl.registry.platformio.org/download/monash-railway-express/library/CAN_MREx/1.13.0/CAN_MREx-1.13.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

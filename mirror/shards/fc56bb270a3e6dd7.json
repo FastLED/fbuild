@@ -1,0 +1,282 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lvgl",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lvgl/library/lv_arduino/3.0.1/lv_arduino-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lv_arduino-3.0.1.tar.gz",
+    "size_bytes": 6642978,
+    "sha256": "64c68d11cfd8b62cafb2a719f7f608060a960e019eece12d556b2170d856a6f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lvgl/library/lv_arduino/3.0.1/lv_arduino-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lvgl/library/lv_arduino/3.0.1/lv_arduino-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lvgl/library/lv_demos/9.3.0/lv_demos-9.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lv_demos-9.3.0.tar.gz",
+    "size_bytes": 14142338,
+    "sha256": "554d6694dcd3cda4689f59dbde37f2c9a0baf60d8dede8be30c0cc079fea29c5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lvgl/library/lv_demos/9.3.0/lv_demos-9.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lvgl/library/lv_demos/9.3.0/lv_demos-9.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lvgl/library/lv_drivers/8.3.0/lv_drivers-8.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lv_drivers-8.3.0.tar.gz",
+    "size_bytes": 74432,
+    "sha256": "b4c5e563109f8d46bd2ae56d1e3b79ec6aefa87569644231b13bc629a0f88eed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lvgl/library/lv_drivers/8.3.0/lv_drivers-8.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lvgl/library/lv_drivers/8.3.0/lv_drivers-8.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lvgl/library/lvgl/7.11.0/lvgl-7.11.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lvgl-7.11.0.tar.gz",
+    "size_bytes": 6757705,
+    "sha256": "04d51c277dc1df7c869119559d8efbab03caf4febb423627bce02717a591a337",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lvgl/library/lvgl/7.11.0/lvgl-7.11.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lvgl/library/lvgl/7.11.0/lvgl-7.11.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lvgl/library/lvgl/8.1.0/lvgl-8.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lvgl-8.1.0.tar.gz",
+    "size_bytes": 8152603,
+    "sha256": "39121aab3376c86217ea80ef07ef1578195e36e02096b8eac0476d1daa9eff99",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lvgl/library/lvgl/8.1.0/lvgl-8.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lvgl/library/lvgl/8.1.0/lvgl-8.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lvgl/library/lvgl/8.3.10/lvgl-8.3.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lvgl-8.3.10.tar.gz",
+    "size_bytes": 17583984,
+    "sha256": "a563907577a9b3bf1bc5ba03552a1bf1cd91e6a517f1fc73af52ed0f7f1d54ca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lvgl/library/lvgl/8.3.10/lvgl-8.3.10.tar.gz",
+     "https://dl.registry.platformio.org/download/lvgl/library/lvgl/8.3.10/lvgl-8.3.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lvgl/library/lvgl/8.3.11/lvgl-8.3.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lvgl-8.3.11.tar.gz",
+    "size_bytes": 17720110,
+    "sha256": "4f229954fd7b5dc1f7a5cb57565131c13ba0a6fae4cddcc2b642445faa1e94c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lvgl/library/lvgl/8.3.11/lvgl-8.3.11.tar.gz",
+     "https://dl.registry.platformio.org/download/lvgl/library/lvgl/8.3.11/lvgl-8.3.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lvgl/library/lvgl/8.3.6/lvgl-8.3.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lvgl-8.3.6.tar.gz",
+    "size_bytes": 17552734,
+    "sha256": "68c9530e93323e1ea6cbc7cdbd2a0692f7b49d8f358b1dc9cada378611129f36",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lvgl/library/lvgl/8.3.6/lvgl-8.3.6.tar.gz",
+     "https://dl.registry.platformio.org/download/lvgl/library/lvgl/8.3.6/lvgl-8.3.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lvgl/library/lvgl/8.3.7/lvgl-8.3.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lvgl-8.3.7.tar.gz",
+    "size_bytes": 17553351,
+    "sha256": "2e6b6e5ddab4e2878984342c52a7a78984705c38e34b5826fb2fb55b3a4272ef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lvgl/library/lvgl/8.3.7/lvgl-8.3.7.tar.gz",
+     "https://dl.registry.platformio.org/download/lvgl/library/lvgl/8.3.7/lvgl-8.3.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lvgl/library/lvgl/8.3.8/lvgl-8.3.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lvgl-8.3.8.tar.gz",
+    "size_bytes": 17579097,
+    "sha256": "948e6fdc181047e6a1a121fbc1d8cbbdcc39c189ae8b462e9a9f68a8ab50ce09",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lvgl/library/lvgl/8.3.8/lvgl-8.3.8.tar.gz",
+     "https://dl.registry.platformio.org/download/lvgl/library/lvgl/8.3.8/lvgl-8.3.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lvgl/library/lvgl/8.3.9/lvgl-8.3.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lvgl-8.3.9.tar.gz",
+    "size_bytes": 17580747,
+    "sha256": "2b094874b16e8b6dbe5d9e0ccaca6b26ff0466d0882629b8995fb9a6ef3237b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lvgl/library/lvgl/8.3.9/lvgl-8.3.9.tar.gz",
+     "https://dl.registry.platformio.org/download/lvgl/library/lvgl/8.3.9/lvgl-8.3.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lvgl/library/lvgl/8.4.0/lvgl-8.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lvgl-8.4.0.tar.gz",
+    "size_bytes": 17721398,
+    "sha256": "ab49b8125456942b634ec55f952cc0c65486b3bcaae9acd6830bdbecd6525e7b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lvgl/library/lvgl/8.4.0/lvgl-8.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lvgl/library/lvgl/8.4.0/lvgl-8.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lvgl/library/lvgl/9.0.0/lvgl-9.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lvgl-9.0.0.tar.gz",
+    "size_bytes": 24107966,
+    "sha256": "13bfda1c9f796f1d91123d81a4b64dfdaaa1c8bdfb84d5c537d3b60fc3a612cf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lvgl/library/lvgl/9.0.0/lvgl-9.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lvgl/library/lvgl/9.0.0/lvgl-9.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lvgl/library/lvgl/9.1.0/lvgl-9.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lvgl-9.1.0.tar.gz",
+    "size_bytes": 24189988,
+    "sha256": "59c5b00bf3017dbaf7dae72ea111b8d77edd01a3c6c2bb3490c358ef22c18514",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lvgl/library/lvgl/9.1.0/lvgl-9.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lvgl/library/lvgl/9.1.0/lvgl-9.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lvgl/library/lvgl/9.2.0/lvgl-9.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lvgl-9.2.0.tar.gz",
+    "size_bytes": 25294270,
+    "sha256": "f0e7798721c550305431d4c877bd69ed28b3350bfe4fb145dc3bb29e6812dcb9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lvgl/library/lvgl/9.2.0/lvgl-9.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lvgl/library/lvgl/9.2.0/lvgl-9.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lvgl/library/lvgl/9.2.1/lvgl-9.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lvgl-9.2.1.tar.gz",
+    "size_bytes": 25290063,
+    "sha256": "acf16696bea48ca06a83b1a0291cc0ef6a1f605852d8ae31e1c8728116b93c36",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lvgl/library/lvgl/9.2.1/lvgl-9.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lvgl/library/lvgl/9.2.1/lvgl-9.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lvgl/library/lvgl/9.2.2/lvgl-9.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lvgl-9.2.2.tar.gz",
+    "size_bytes": 25286433,
+    "sha256": "f426065cd746d0025857a81ed79e14a38ccde8d9e688e507306c32d461f5c6c3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lvgl/library/lvgl/9.2.2/lvgl-9.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lvgl/library/lvgl/9.2.2/lvgl-9.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lvgl/library/lvgl/9.3.0/lvgl-9.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lvgl-9.3.0.tar.gz",
+    "size_bytes": 27192610,
+    "sha256": "28e1adf82711bf02fc2791b4392fdeed803a2bef6425356998d3fdecb35389c3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lvgl/library/lvgl/9.3.0/lvgl-9.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lvgl/library/lvgl/9.3.0/lvgl-9.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lvgl/library/lvgl/9.4.0/lvgl-9.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lvgl-9.4.0.tar.gz",
+    "size_bytes": 31121350,
+    "sha256": "66abe1f2502390168bfdf1a9817a13f5863bd9fbfd75aa91c4b4f93dd537c1d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lvgl/library/lvgl/9.4.0/lvgl-9.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lvgl/library/lvgl/9.4.0/lvgl-9.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lvgl/library/lvgl/9.5.0/lvgl-9.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lvgl-9.5.0.tar.gz",
+    "size_bytes": 33579478,
+    "sha256": "40d8ec941c9f6a0a984e81abc39c044b6665dfb5168def523e0e0a2d5d832844",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lvgl/library/lvgl/9.5.0/lvgl-9.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lvgl/library/lvgl/9.5.0/lvgl-9.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lvgl/library/lvgl/9.6.0/lvgl-9.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lvgl-9.6.0.tar.gz",
+    "size_bytes": 34671112,
+    "sha256": "2d4c81a2778be10e0ba21b0b6937ddfc0af909fc033e0c383f3e7abee8a105cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lvgl/library/lvgl/9.6.0/lvgl-9.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lvgl/library/lvgl/9.6.0/lvgl-9.6.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

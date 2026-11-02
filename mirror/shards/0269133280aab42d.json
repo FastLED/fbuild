@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-mpanetta",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-mpanetta/library/MODSERIAL/0.0.0+sha.ef4645a79fca/MODSERIAL-0.0.0+sha.ef4645a79fca.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MODSERIAL-0.0.0+sha.ef4645a79fca.tar.gz",
+    "size_bytes": 14414,
+    "sha256": "318a7580f5dbb3c4f5feff36a27e3d06a4adff1d5defa7877d6e9345b327b6e2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mpanetta/library/MODSERIAL/0.0.0%2Bsha.ef4645a79fca/MODSERIAL-0.0.0%2Bsha.ef4645a79fca.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mpanetta/library/MODSERIAL/0.0.0%2Bsha.ef4645a79fca/MODSERIAL-0.0.0%2Bsha.ef4645a79fca.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-mpanetta/library/m3pi/0.0.0+sha.1ce8bf1f4452/m3pi-0.0.0+sha.1ce8bf1f4452.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "m3pi-0.0.0+sha.1ce8bf1f4452.tar.gz",
+    "size_bytes": 3950,
+    "sha256": "b747d624f8ebcc670c9cbd6648b247d8ad6d0744c8b64f25e05becdb4cf061d4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mpanetta/library/m3pi/0.0.0%2Bsha.1ce8bf1f4452/m3pi-0.0.0%2Bsha.1ce8bf1f4452.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mpanetta/library/m3pi/0.0.0%2Bsha.1ce8bf1f4452/m3pi-0.0.0%2Bsha.1ce8bf1f4452.tar.gz"
+    ]
+   }
+  }
+ ]
+}

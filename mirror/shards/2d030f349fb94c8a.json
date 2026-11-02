@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kastenklicker",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kastenklicker/library/ESP-FTP-Server/0.14.2/ESP-FTP-Server-0.14.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-FTP-Server-0.14.2.tar.gz",
+    "size_bytes": 13534,
+    "sha256": "c34fd0354e04b8718cea4107c42e010ae06e27ed0b990c06696085f7ca2891b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kastenklicker/library/ESP-FTP-Server/0.14.2/ESP-FTP-Server-0.14.2.tar.gz",
+     "https://dl.registry.platformio.org/download/kastenklicker/library/ESP-FTP-Server/0.14.2/ESP-FTP-Server-0.14.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

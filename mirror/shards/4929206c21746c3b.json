@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-llumpu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-llumpu/library/USBMSD_AT45/0.0.0+sha.c0dc2df7c9fe/USBMSD_AT45-0.0.0+sha.c0dc2df7c9fe.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "USBMSD_AT45-0.0.0+sha.c0dc2df7c9fe.tar.gz",
+    "size_bytes": 5687,
+    "sha256": "c139ce63e27defdec18dc3252cabaf85d3e1d06d6670ef0c26592106e74cd8bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-llumpu/library/USBMSD_AT45/0.0.0%2Bsha.c0dc2df7c9fe/USBMSD_AT45-0.0.0%2Bsha.c0dc2df7c9fe.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-llumpu/library/USBMSD_AT45/0.0.0%2Bsha.c0dc2df7c9fe/USBMSD_AT45-0.0.0%2Bsha.c0dc2df7c9fe.tar.gz"
+    ]
+   }
+  }
+ ]
+}

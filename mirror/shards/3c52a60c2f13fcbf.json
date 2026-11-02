@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hexenmeister",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hexenmeister/library/AS_BH1750/0.0.0-alpha+sha.092f0b1c5f/AS_BH1750-0.0.0-alphasha.092f0b1c5f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AS_BH1750-0.0.0-alphasha.092f0b1c5f.tar.gz",
+    "size_bytes": 19623,
+    "sha256": "5532491a4d4b30fa2bb057612423ee9444f8f9ad63fcfa01017f1ec186faa913",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hexenmeister/library/AS_BH1750/0.0.0-alpha%2Bsha.092f0b1c5f/AS_BH1750-0.0.0-alphasha.092f0b1c5f.tar.gz",
+     "https://dl.registry.platformio.org/download/hexenmeister/library/AS_BH1750/0.0.0-alpha%2Bsha.092f0b1c5f/AS_BH1750-0.0.0-alphasha.092f0b1c5f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

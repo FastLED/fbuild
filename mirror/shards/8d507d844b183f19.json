@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/1998saeed",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "1998saeed/library/MechaNest/1.0.0/MechaNest-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MechaNest-1.0.0.tar.gz",
+    "size_bytes": 965,
+    "sha256": "339c5f495e24a139ce2385419db3371b7126187308067a5ae44197ceb55c9f54",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/1998saeed/library/MechaNest/1.0.0/MechaNest-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/1998saeed/library/MechaNest/1.0.0/MechaNest-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "1998saeed/library/MechaNest/1.0.2/MechaNest-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MechaNest-1.0.2.tar.gz",
+    "size_bytes": 1265,
+    "sha256": "5f87aa693adc6d8f4b787f83b6f561010e643f3b5c43abf3e9567cac958d4246",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/1998saeed/library/MechaNest/1.0.2/MechaNest-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/1998saeed/library/MechaNest/1.0.2/MechaNest-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

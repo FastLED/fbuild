@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-knaresh89",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-knaresh89/library/LIS2MDL/0.0.0+sha.d7ea67f32b32/LIS2MDL-0.0.0+sha.d7ea67f32b32.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LIS2MDL-0.0.0+sha.d7ea67f32b32.tar.gz",
+    "size_bytes": 3740,
+    "sha256": "212b155866e1df211a3859c2bca16e1fda08f769d8190266576466dd4bcd0ec2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-knaresh89/library/LIS2MDL/0.0.0%2Bsha.d7ea67f32b32/LIS2MDL-0.0.0%2Bsha.d7ea67f32b32.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-knaresh89/library/LIS2MDL/0.0.0%2Bsha.d7ea67f32b32/LIS2MDL-0.0.0%2Bsha.d7ea67f32b32.tar.gz"
+    ]
+   }
+  }
+ ]
+}

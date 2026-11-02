@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/arthz01",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "arthz01/library/AESUtils/1.0.0/AESUtils-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AESUtils-1.0.0.tar.gz",
+    "size_bytes": 2598,
+    "sha256": "592e090eafeec3917fd958c234262aae10fc3abd8fd97db125198d3413021070",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arthz01/library/AESUtils/1.0.0/AESUtils-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arthz01/library/AESUtils/1.0.0/AESUtils-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arthz01/library/JWTUtils/1.0.0/JWTUtils-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JWTUtils-1.0.0.tar.gz",
+    "size_bytes": 2530,
+    "sha256": "853a352356c442e5ac6a2c0f8001201a151c1c61adef6021171895fc31186d1a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arthz01/library/JWTUtils/1.0.0/JWTUtils-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arthz01/library/JWTUtils/1.0.0/JWTUtils-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

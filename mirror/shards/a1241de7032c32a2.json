@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/andhiesetyabudi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "andhiesetyabudi/library/BQ25896/1.0/BQ25896-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BQ25896-1.0.tar.gz",
+    "size_bytes": 4839,
+    "sha256": "ed792f97b4489d50339eddc1316ea64a7aa90201ffda7103e19923a958110456",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/andhiesetyabudi/library/BQ25896/1.0/BQ25896-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/andhiesetyabudi/library/BQ25896/1.0/BQ25896-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "andhiesetyabudi/library/HX710B/1.0.0/HX710B-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HX710B-1.0.0.tar.gz",
+    "size_bytes": 2502,
+    "sha256": "ccc41b3711223c49168621c9526ac311e285c609ac134241e9865aa68683a4b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/andhiesetyabudi/library/HX710B/1.0.0/HX710B-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/andhiesetyabudi/library/HX710B/1.0.0/HX710B-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "andhiesetyabudi/library/atlas_OEM_module/1.0.1/atlas_OEM_module-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "atlas_OEM_module-1.0.1.tar.gz",
+    "size_bytes": 6134,
+    "sha256": "d97457d17dbf828b0698313aa39367b60c2b748821d9d4731198b0f1a3a52499",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/andhiesetyabudi/library/atlas_OEM_module/1.0.1/atlas_OEM_module-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/andhiesetyabudi/library/atlas_OEM_module/1.0.1/atlas_OEM_module-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-aberk",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-aberk/library/ADXL345/0.0.0+sha.bd8f0f20f433/ADXL345-0.0.0+sha.bd8f0f20f433.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADXL345-0.0.0+sha.bd8f0f20f433.tar.gz",
+    "size_bytes": 5569,
+    "sha256": "d458b859610ac784907289eb0a05e7e38b5356a96d738532fe06ad5bc43401e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-aberk/library/ADXL345/0.0.0%2Bsha.bd8f0f20f433/ADXL345-0.0.0%2Bsha.bd8f0f20f433.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-aberk/library/ADXL345/0.0.0%2Bsha.bd8f0f20f433/ADXL345-0.0.0%2Bsha.bd8f0f20f433.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-aberk/library/CMPS03/0.0.0+sha.c6bcc390612a/CMPS03-0.0.0+sha.c6bcc390612a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CMPS03-0.0.0+sha.c6bcc390612a.tar.gz",
+    "size_bytes": 2481,
+    "sha256": "1243b1b91af4e0348677b1e06fb47e8cff41a9cc83d1c2e716d3cf89a6b876b6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-aberk/library/CMPS03/0.0.0%2Bsha.c6bcc390612a/CMPS03-0.0.0%2Bsha.c6bcc390612a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-aberk/library/CMPS03/0.0.0%2Bsha.c6bcc390612a/CMPS03-0.0.0%2Bsha.c6bcc390612a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-aberk/library/HMC6352/0.0.0+sha.83c0cb554099/HMC6352-0.0.0+sha.83c0cb554099.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HMC6352-0.0.0+sha.83c0cb554099.tar.gz",
+    "size_bytes": 4100,
+    "sha256": "236b0fdb1f676eeddf9aae7e94e72e97f28242b19967a0e901bb247aee423a1e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-aberk/library/HMC6352/0.0.0%2Bsha.83c0cb554099/HMC6352-0.0.0%2Bsha.83c0cb554099.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-aberk/library/HMC6352/0.0.0%2Bsha.83c0cb554099/HMC6352-0.0.0%2Bsha.83c0cb554099.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-aberk/library/IMUfilter/0.0.0+sha.8a920397b510/IMUfilter-0.0.0+sha.8a920397b510.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IMUfilter-0.0.0+sha.8a920397b510.tar.gz",
+    "size_bytes": 3758,
+    "sha256": "283bf5564683b10e132d1619275ec98b0580bbcd0ddf4541a5446b584b460089",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-aberk/library/IMUfilter/0.0.0%2Bsha.8a920397b510/IMUfilter-0.0.0%2Bsha.8a920397b510.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-aberk/library/IMUfilter/0.0.0%2Bsha.8a920397b510/IMUfilter-0.0.0%2Bsha.8a920397b510.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-aberk/library/ITG3200/0.0.0+sha.b098d99dd81e/ITG3200-0.0.0+sha.b098d99dd81e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ITG3200-0.0.0+sha.b098d99dd81e.tar.gz",
+    "size_bytes": 4364,
+    "sha256": "e5c35a9f7af92776aec3d20b9a043ed7c32befe0b5a4c4ba958af9d25da27974",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-aberk/library/ITG3200/0.0.0%2Bsha.b098d99dd81e/ITG3200-0.0.0%2Bsha.b098d99dd81e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-aberk/library/ITG3200/0.0.0%2Bsha.b098d99dd81e/ITG3200-0.0.0%2Bsha.b098d99dd81e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-aberk/library/Motor/0.0.0+sha.c75b234558af/Motor-0.0.0+sha.c75b234558af.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Motor-0.0.0+sha.c75b234558af.tar.gz",
+    "size_bytes": 2436,
+    "sha256": "cc2f61803480542e21cb765a2af63de419997cff25d4168d49d8639823ff3e8e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-aberk/library/Motor/0.0.0%2Bsha.c75b234558af/Motor-0.0.0%2Bsha.c75b234558af.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-aberk/library/Motor/0.0.0%2Bsha.c75b234558af/Motor-0.0.0%2Bsha.c75b234558af.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-aberk/library/QEI/0.0.0+sha.5c2ad81551aa/QEI-0.0.0+sha.5c2ad81551aa.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QEI-0.0.0+sha.5c2ad81551aa.tar.gz",
+    "size_bytes": 4619,
+    "sha256": "7b5c9ebd622da0c72f3bcaa5fbd9043c4cfb7034e9f09ae3782793f5259bf04d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-aberk/library/QEI/0.0.0%2Bsha.5c2ad81551aa/QEI-0.0.0%2Bsha.5c2ad81551aa.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-aberk/library/QEI/0.0.0%2Bsha.5c2ad81551aa/QEI-0.0.0%2Bsha.5c2ad81551aa.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-aberk/library/SCA3000/0.0.0+sha.f5f2e79304fb/SCA3000-0.0.0+sha.f5f2e79304fb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SCA3000-0.0.0+sha.f5f2e79304fb.tar.gz",
+    "size_bytes": 2932,
+    "sha256": "9cc59ab40b28f6c84ac587f4a60e7afda352d2b5a7249b5f6e8969abb2546de7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-aberk/library/SCA3000/0.0.0%2Bsha.f5f2e79304fb/SCA3000-0.0.0%2Bsha.f5f2e79304fb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-aberk/library/SCA3000/0.0.0%2Bsha.f5f2e79304fb/SCA3000-0.0.0%2Bsha.f5f2e79304fb.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/taraholeinit",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "taraholeinit/library/Subpixie/1.0.0/Subpixie-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Subpixie-1.0.0.tar.gz",
+    "size_bytes": 6728,
+    "sha256": "1da9b70648460fbe00005145b50aea4a01069d42a33666995eabeb9f2be5a8b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/taraholeinit/library/Subpixie/1.0.0/Subpixie-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/taraholeinit/library/Subpixie/1.0.0/Subpixie-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

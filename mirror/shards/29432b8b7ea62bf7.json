@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/h-c-c",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "h-c-c/library/Seven%20Segment%20Pixel/1.0.0/SevenSegmentPixel-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SevenSegmentPixel-1.0.0.tar.gz",
+    "size_bytes": 3382,
+    "sha256": "8f26729e27e9f843d99411a8561134515b324bedcfc4d89a5cd410b09fef6179",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/h-c-c/library/Seven%2520Segment%2520Pixel/1.0.0/SevenSegmentPixel-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/h-c-c/library/Seven%20Segment%20Pixel/1.0.0/SevenSegmentPixel-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

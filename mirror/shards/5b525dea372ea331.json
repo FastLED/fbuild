@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-fbcosentino",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-fbcosentino/library/MovingAverage/0.0.0+sha.332104904b69/MovingAverage-0.0.0+sha.332104904b69.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MovingAverage-0.0.0+sha.332104904b69.tar.gz",
+    "size_bytes": 1853,
+    "sha256": "e651611a8f0841fc4de0110146b4be7ecc3b8580719d70a500f4892b3d8429e8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-fbcosentino/library/MovingAverage/0.0.0%2Bsha.332104904b69/MovingAverage-0.0.0%2Bsha.332104904b69.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-fbcosentino/library/MovingAverage/0.0.0%2Bsha.332104904b69/MovingAverage-0.0.0%2Bsha.332104904b69.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-fbcosentino/library/ULN2003_StepperDriver/0.0.0+sha.8a14924886c4/ULN2003_StepperDriver-0.0.0+sha.8a14924886c4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ULN2003_StepperDriver-0.0.0+sha.8a14924886c4.tar.gz",
+    "size_bytes": 1828,
+    "sha256": "26d4c6a62a445ff45202ec619c0189d1a019becd7f7de9036904d865bb7e0259",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-fbcosentino/library/ULN2003_StepperDriver/0.0.0%2Bsha.8a14924886c4/ULN2003_StepperDriver-0.0.0%2Bsha.8a14924886c4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-fbcosentino/library/ULN2003_StepperDriver/0.0.0%2Bsha.8a14924886c4/ULN2003_StepperDriver-0.0.0%2Bsha.8a14924886c4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-fbcosentino/library/nRFBareRadio/0.0.0+sha.fd37281bcdf7/nRFBareRadio-0.0.0+sha.fd37281bcdf7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nRFBareRadio-0.0.0+sha.fd37281bcdf7.tar.gz",
+    "size_bytes": 5129,
+    "sha256": "d79390665466508419eabaa57cf10828952dec09f700194e98921f3f0c6e84bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-fbcosentino/library/nRFBareRadio/0.0.0%2Bsha.fd37281bcdf7/nRFBareRadio-0.0.0%2Bsha.fd37281bcdf7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-fbcosentino/library/nRFBareRadio/0.0.0%2Bsha.fd37281bcdf7/nRFBareRadio-0.0.0%2Bsha.fd37281bcdf7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-fbcosentino/library/uTerminal/0.0.0+sha.39fb12e8a2a3/uTerminal-0.0.0+sha.39fb12e8a2a3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uTerminal-0.0.0+sha.39fb12e8a2a3.tar.gz",
+    "size_bytes": 3809,
+    "sha256": "9f091f5e1443aea036d74176881d2bd94ca67e4869016adc7466514b76924f98",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-fbcosentino/library/uTerminal/0.0.0%2Bsha.39fb12e8a2a3/uTerminal-0.0.0%2Bsha.39fb12e8a2a3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-fbcosentino/library/uTerminal/0.0.0%2Bsha.39fb12e8a2a3/uTerminal-0.0.0%2Bsha.39fb12e8a2a3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

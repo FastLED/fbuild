@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/khytryy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "khytryy/library/libchunkyrec/1.0.0/libchunkyrec-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libchunkyrec-1.0.0.tar.gz",
+    "size_bytes": 2535,
+    "sha256": "8b1ee22483b6cf85db9f962db0c7264ba2fd67d406209316da0301aac185296f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khytryy/library/libchunkyrec/1.0.0/libchunkyrec-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khytryy/library/libchunkyrec/1.0.0/libchunkyrec-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khytryy/library/libchunkyrec/1.0.1/libchunkyrec-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libchunkyrec-1.0.1.tar.gz",
+    "size_bytes": 3198,
+    "sha256": "2f1935d9973fccb014b3b11b986f21fb50a81acc5c4886c03ec2e5f5d172e338",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khytryy/library/libchunkyrec/1.0.1/libchunkyrec-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khytryy/library/libchunkyrec/1.0.1/libchunkyrec-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

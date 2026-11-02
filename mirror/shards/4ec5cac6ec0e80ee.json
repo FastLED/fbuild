@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/athombv",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "athombv/library/Homeyduino/1.0.2/Homeyduino-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Homeyduino-1.0.2.tar.gz",
+    "size_bytes": 596944,
+    "sha256": "b11fb822e7342553daaf49cee8307aea381359c4749f10c92a8996cf4b27347a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/athombv/library/Homeyduino/1.0.2/Homeyduino-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/athombv/library/Homeyduino/1.0.2/Homeyduino-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

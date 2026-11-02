@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/northernwidget",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "northernwidget/library/ALog/0.3.2/ALog-0.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ALog-0.3.2.tar.gz",
+    "size_bytes": 105318,
+    "sha256": "61f8ebfead0156251f21451834d1857923d157a9838dbe3d2cce399e0cec2416",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/northernwidget/library/ALog/0.3.2/ALog-0.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/northernwidget/library/ALog/0.3.2/ALog-0.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "northernwidget/library/Apis_Library/0.1.0/Apis_Library-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Apis_Library-0.1.0.tar.gz",
+    "size_bytes": 23348,
+    "sha256": "22b5b3cbedb1c3d4c167b5e48d111c012bcf309ca412c074f919cb575facc37d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/northernwidget/library/Apis_Library/0.1.0/Apis_Library-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/northernwidget/library/Apis_Library/0.1.0/Apis_Library-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "northernwidget/library/DS3231/1.1.2/DS3231-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS3231-1.1.2.tar.gz",
+    "size_bytes": 45163,
+    "sha256": "fb4531add8e4e753bede2307e7a36e9b01ec0315627f9f85b0ed275f60d6c3e3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/northernwidget/library/DS3231/1.1.2/DS3231-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/northernwidget/library/DS3231/1.1.2/DS3231-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "northernwidget/library/DS3231/1.2.0/DS3231-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS3231-1.2.0.tar.gz",
+    "size_bytes": 46167,
+    "sha256": "32578ccf0a5b2b098698aee1d7c4f594a2ab063d00bdb64318cc3e0d4c255b27",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/northernwidget/library/DS3231/1.2.0/DS3231-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/northernwidget/library/DS3231/1.2.0/DS3231-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "northernwidget/library/MS5803/0.1.2/MS5803-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MS5803-0.1.2.tar.gz",
+    "size_bytes": 17931,
+    "sha256": "3fb4dfec718a926f62cf2366b9be7282692b288c563aa6962a9001d9865ab3d4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/northernwidget/library/MS5803/0.1.2/MS5803-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/northernwidget/library/MS5803/0.1.2/MS5803-0.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

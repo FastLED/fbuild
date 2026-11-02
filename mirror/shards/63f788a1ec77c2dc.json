@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-vsluiter",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-vsluiter/library/Encoder/0.0.0+sha.18b000b443af/Encoder-0.0.0+sha.18b000b443af.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Encoder-0.0.0+sha.18b000b443af.tar.gz",
+    "size_bytes": 2096,
+    "sha256": "91f467d01f27fecb46e7fc6f9d8d096b89692984857c525d33e9a1a7a5fd87e3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-vsluiter/library/Encoder/0.0.0%2Bsha.18b000b443af/Encoder-0.0.0%2Bsha.18b000b443af.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-vsluiter/library/Encoder/0.0.0%2Bsha.18b000b443af/Encoder-0.0.0%2Bsha.18b000b443af.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-vsluiter/library/LDC1000/0.0.0+sha.8a09279a05eb/LDC1000-0.0.0+sha.8a09279a05eb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LDC1000-0.0.0+sha.8a09279a05eb.tar.gz",
+    "size_bytes": 3039,
+    "sha256": "c277afe1dff767e8aca43381d1751112d11c1a57923e945e94c3996d850e6f93",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-vsluiter/library/LDC1000/0.0.0%2Bsha.8a09279a05eb/LDC1000-0.0.0%2Bsha.8a09279a05eb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-vsluiter/library/LDC1000/0.0.0%2Bsha.8a09279a05eb/LDC1000-0.0.0%2Bsha.8a09279a05eb.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-vsluiter/library/TSI/0.0.0+sha.4dc2f5a3a731/TSI-0.0.0+sha.4dc2f5a3a731.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TSI-0.0.0+sha.4dc2f5a3a731.tar.gz",
+    "size_bytes": 3664,
+    "sha256": "be46f03d346554ac7c28b7329de55e2f47f8fcba09c8149745b1813bb1a0f107",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-vsluiter/library/TSI/0.0.0%2Bsha.4dc2f5a3a731/TSI-0.0.0%2Bsha.4dc2f5a3a731.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-vsluiter/library/TSI/0.0.0%2Bsha.4dc2f5a3a731/TSI-0.0.0%2Bsha.4dc2f5a3a731.tar.gz"
+    ]
+   }
+  }
+ ]
+}

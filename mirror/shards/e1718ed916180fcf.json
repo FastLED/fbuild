@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/brainy-buddy-education",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "brainy-buddy-education/library/BBE%20IoT%20Class%20Library/1.0.0/BBEIoTClassLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BBEIoTClassLibrary-1.0.0.tar.gz",
+    "size_bytes": 16091,
+    "sha256": "f7f06742988a8896d96a1e317f381aeb1a7d4b1b9cb98a900620c83239fe8499",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/brainy-buddy-education/library/BBE%2520IoT%2520Class%2520Library/1.0.0/BBEIoTClassLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/brainy-buddy-education/library/BBE%20IoT%20Class%20Library/1.0.0/BBEIoTClassLibrary-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

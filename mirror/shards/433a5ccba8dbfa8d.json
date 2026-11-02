@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-adaphoto",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-adaphoto/library/IMU/0.0.0+sha.7cf70724bdb0/IMU-0.0.0+sha.7cf70724bdb0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IMU-0.0.0+sha.7cf70724bdb0.tar.gz",
+    "size_bytes": 7017,
+    "sha256": "5cc626dd202e8f5df982cf25903467b4128c45b6886316aaeda033d9df34d21a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-adaphoto/library/IMU/0.0.0%2Bsha.7cf70724bdb0/IMU-0.0.0%2Bsha.7cf70724bdb0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-adaphoto/library/IMU/0.0.0%2Bsha.7cf70724bdb0/IMU-0.0.0%2Bsha.7cf70724bdb0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-adaphoto/library/LED/0.0.0+sha.94318e6e89ff/LED-0.0.0+sha.94318e6e89ff.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LED-0.0.0+sha.94318e6e89ff.tar.gz",
+    "size_bytes": 1171,
+    "sha256": "4f4968deb56f896dc6d19379b3ee4c8cf1f607ccbed470a023998ae6518307be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-adaphoto/library/LED/0.0.0%2Bsha.94318e6e89ff/LED-0.0.0%2Bsha.94318e6e89ff.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-adaphoto/library/LED/0.0.0%2Bsha.94318e6e89ff/LED-0.0.0%2Bsha.94318e6e89ff.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-adaphoto/library/MOTOR/0.0.0+sha.d31307e787fd/MOTOR-0.0.0+sha.d31307e787fd.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MOTOR-0.0.0+sha.d31307e787fd.tar.gz",
+    "size_bytes": 1277,
+    "sha256": "7c911b24698c3ce87532b9ab438a24fd391e0e9da7ab12de62a7118f6dfc7a51",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-adaphoto/library/MOTOR/0.0.0%2Bsha.d31307e787fd/MOTOR-0.0.0%2Bsha.d31307e787fd.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-adaphoto/library/MOTOR/0.0.0%2Bsha.d31307e787fd/MOTOR-0.0.0%2Bsha.d31307e787fd.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/andatche",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "andatche/library/LCD03/1.1.2/LCD03-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCD03-1.1.2.tar.gz",
+    "size_bytes": 15452,
+    "sha256": "8e37541484ab7189668ad38828d41052d6e21a1c3b5828719747aafa8bcf7342",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/andatche/library/LCD03/1.1.2/LCD03-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/andatche/library/LCD03/1.1.2/LCD03-1.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

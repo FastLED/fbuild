@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/aremmell",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "aremmell/library/LoRa%20Feather/0.1.7/LoRaFeather-0.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LoRaFeather-0.1.7.tar.gz",
+    "size_bytes": 6702,
+    "sha256": "960e1ec223a813b344ea2883b851df47b2d259a2c038f7abe9b3f968c8a7340e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aremmell/library/LoRa%2520Feather/0.1.7/LoRaFeather-0.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/aremmell/library/LoRa%20Feather/0.1.7/LoRaFeather-0.1.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aremmell/library/libsir/2.3.0/libsir-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libsir-2.3.0.tar.gz",
+    "size_bytes": 930325,
+    "sha256": "b077a0c37889287d2d3ba3fc4e5c38be8a55578d9542c0364f604dac459feab3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aremmell/library/libsir/2.3.0/libsir-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aremmell/library/libsir/2.3.0/libsir-2.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aremmell/library/twm/0.0.1/twm-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "twm-0.0.1.tar.gz",
+    "size_bytes": 4369,
+    "sha256": "ac10bce946ac69f1779f5ad784064b67fc3adc3ccab70b5712688f2220a61d5a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aremmell/library/twm/0.0.1/twm-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/aremmell/library/twm/0.0.1/twm-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

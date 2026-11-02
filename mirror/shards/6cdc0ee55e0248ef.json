@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fun6400",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fun6400/library/Adafruit_SSD1306_72x40/1.0.1/Adafruit_SSD1306_72x40-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Adafruit_SSD1306_72x40-1.0.1.tar.gz",
+    "size_bytes": 3992,
+    "sha256": "e68b1872c736a29a24564e6bb488acb52c1382939e658142ff824faefb93d455",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fun6400/library/Adafruit_SSD1306_72x40/1.0.1/Adafruit_SSD1306_72x40-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fun6400/library/Adafruit_SSD1306_72x40/1.0.1/Adafruit_SSD1306_72x40-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fun6400/library/BLEThermalPrinterYHK/0.1.1/BLEThermalPrinterYHK-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLEThermalPrinterYHK-0.1.1.tar.gz",
+    "size_bytes": 11930,
+    "sha256": "cf1dc130102322dfd7894c44b29029553a75bb8545279c340aa6efb5e5c574df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fun6400/library/BLEThermalPrinterYHK/0.1.1/BLEThermalPrinterYHK-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fun6400/library/BLEThermalPrinterYHK/0.1.1/BLEThermalPrinterYHK-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fun6400/library/PipeGIF/1.0.0/PipeGIF-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PipeGIF-1.0.0.tar.gz",
+    "size_bytes": 21716,
+    "sha256": "60300e3dc546b8cd894530f8d7784abe88cb3d1c60c4f2e946adcd8ccd419613",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fun6400/library/PipeGIF/1.0.0/PipeGIF-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fun6400/library/PipeGIF/1.0.0/PipeGIF-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

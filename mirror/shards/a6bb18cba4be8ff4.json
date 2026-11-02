@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/teemow",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "teemow/library/planterm/0.1.0/planterm-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "planterm-0.1.0.tar.gz",
+    "size_bytes": 5070,
+    "sha256": "19896d0d4904576b759e3e7c5143f20d772d41b66da948bcb11e0df9a491a22d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teemow/library/planterm/0.1.0/planterm-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/teemow/library/planterm/0.1.0/planterm-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "teemow/library/planterm/0.1.1/planterm-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "planterm-0.1.1.tar.gz",
+    "size_bytes": 46159,
+    "sha256": "8a556606d9fa1314d7feca1f69a3ace8684417d53b41d9158086cb263de294a0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teemow/library/planterm/0.1.1/planterm-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/teemow/library/planterm/0.1.1/planterm-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

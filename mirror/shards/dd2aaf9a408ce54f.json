@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-zainulcharbiwala",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-zainulcharbiwala/library/BufSerialRPC/0.0.0+sha.d5d7e52769e7/BufSerialRPC-0.0.0+sha.d5d7e52769e7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BufSerialRPC-0.0.0+sha.d5d7e52769e7.tar.gz",
+    "size_bytes": 5013,
+    "sha256": "9e599de015cd3df6cfad9856f101b00f3ebf0bad78536eeac2baffe518724484",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-zainulcharbiwala/library/BufSerialRPC/0.0.0%2Bsha.d5d7e52769e7/BufSerialRPC-0.0.0%2Bsha.d5d7e52769e7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-zainulcharbiwala/library/BufSerialRPC/0.0.0%2Bsha.d5d7e52769e7/BufSerialRPC-0.0.0%2Bsha.d5d7e52769e7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

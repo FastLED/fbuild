@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-sjalloq",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-sjalloq/library/ntp-client/0.0.0+sha.a3aec199dc7c/ntp-client-0.0.0+sha.a3aec199dc7c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ntp-client-0.0.0+sha.a3aec199dc7c.tar.gz",
+    "size_bytes": 1817,
+    "sha256": "c90a140997f0452c7d8dd9d9ede6b566e725f14ba3ec2b87213b19350c21ddc7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sjalloq/library/ntp-client/0.0.0%2Bsha.a3aec199dc7c/ntp-client-0.0.0%2Bsha.a3aec199dc7c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sjalloq/library/ntp-client/0.0.0%2Bsha.a3aec199dc7c/ntp-client-0.0.0%2Bsha.a3aec199dc7c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

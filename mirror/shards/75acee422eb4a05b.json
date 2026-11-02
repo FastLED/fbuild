@@ -1,0 +1,3335 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/espressif",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "espressif/library/WROVER%20KIT%20LCD/1.0.3/WROVERKITLCD-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WROVERKITLCD-1.0.3.tar.gz",
+    "size_bytes": 93625,
+    "sha256": "ce752b85cd4df77b7d644fcc6124ebbaf28a62de2a30a8624fc9630d2cf57eda",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/library/WROVER%2520KIT%2520LCD/1.0.3/WROVERKITLCD-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/library/WROVER%20KIT%20LCD/1.0.3/WROVERKITLCD-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "espressif/library/esp-boost/0.4.0/esp-boost-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-boost-0.4.0.tar.gz",
+    "size_bytes": 10699051,
+    "sha256": "b158567c68379de753588c78b1f5f57297b8bd5d022766026311e14ca120ceda",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/library/esp-boost/0.4.0/esp-boost-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/library/esp-boost/0.4.0/esp-boost-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "espressif/library/esp-brookesia/0.4.3/esp-brookesia-0.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-brookesia-0.4.3.tar.gz",
+    "size_bytes": 1684170,
+    "sha256": "3504ade7cb1b6b15c3c0859481b93f8ff3ec7cb60c22595232f8ec97a74a5ba7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/library/esp-brookesia/0.4.3/esp-brookesia-0.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/library/esp-brookesia/0.4.3/esp-brookesia-0.4.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "espressif/library/esp32-camera/1.0.0/esp32-camera-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32-camera-1.0.0.tar.gz",
+    "size_bytes": 77103,
+    "sha256": "2a7093dcf992984fc587dc70422789e64dc09e0224a732c5959c6f31aef85417",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/library/esp32-camera/1.0.0/esp32-camera-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/library/esp32-camera/1.0.0/esp32-camera-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "espressif/library/esp32-camera/2.0.0/esp32-camera-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32-camera-2.0.0.tar.gz",
+    "size_bytes": 132003,
+    "sha256": "2f1daa6023ed47d31a2ff154b20edf916e74bb727fabe38ff5b015e472ad386a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/library/esp32-camera/2.0.0/esp32-camera-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/library/esp32-camera/2.0.0/esp32-camera-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "espressif/library/esp32-camera/2.0.4/esp32-camera-2.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32-camera-2.0.4.tar.gz",
+    "size_bytes": 143626,
+    "sha256": "9a4b466e8e98330dc07ae9fdd639040949a2736170670b224c9c34ca6e2a63b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/library/esp32-camera/2.0.4/esp32-camera-2.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/library/esp32-camera/2.0.4/esp32-camera-2.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/tool-riscv32-esp-elf-gdb/11.2.0+20220823/tool-riscv32-esp-elf-gdb-darwin_arm64-11.2.0+20220823.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-riscv32-esp-elf-gdb-darwin_arm64-11.2.0+20220823.tar.gz",
+    "size_bytes": 21388365,
+    "sha256": "ab7ce604acceb6adda86774754add48646d04fd30d97a2b3d22f75138af44834",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/tool-riscv32-esp-elf-gdb/11.2.0%2B20220823/tool-riscv32-esp-elf-gdb-darwin_arm64-11.2.0%2B20220823.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/tool-riscv32-esp-elf-gdb/11.2.0%2B20220823/tool-riscv32-esp-elf-gdb-darwin_arm64-11.2.0%2B20220823.tar.gz"
+    ],
+    "provides": [
+     "darwin_arm64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/tool-riscv32-esp-elf-gdb/11.2.0+20220823/tool-riscv32-esp-elf-gdb-darwin_x86_64-11.2.0+20220823.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-riscv32-esp-elf-gdb-darwin_x86_64-11.2.0+20220823.tar.gz",
+    "size_bytes": 37909590,
+    "sha256": "4c9b411885584aab285fd94ddab423083faa39fb80934b9168da6a4b3619a555",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/tool-riscv32-esp-elf-gdb/11.2.0%2B20220823/tool-riscv32-esp-elf-gdb-darwin_x86_64-11.2.0%2B20220823.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/tool-riscv32-esp-elf-gdb/11.2.0%2B20220823/tool-riscv32-esp-elf-gdb-darwin_x86_64-11.2.0%2B20220823.tar.gz"
+    ],
+    "provides": [
+     "darwin_x86_64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/tool-riscv32-esp-elf-gdb/11.2.0+20220823/tool-riscv32-esp-elf-gdb-linux_aarch64-11.2.0+20220823.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-riscv32-esp-elf-gdb-linux_aarch64-11.2.0+20220823.tar.gz",
+    "size_bytes": 26788763,
+    "sha256": "54ab60f29e43d592dab38e4dea4898050a689a5ca827c3af14d2c13ba8a9c18a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/tool-riscv32-esp-elf-gdb/11.2.0%2B20220823/tool-riscv32-esp-elf-gdb-linux_aarch64-11.2.0%2B20220823.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/tool-riscv32-esp-elf-gdb/11.2.0%2B20220823/tool-riscv32-esp-elf-gdb-linux_aarch64-11.2.0%2B20220823.tar.gz"
+    ],
+    "provides": [
+     "linux_aarch64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/tool-riscv32-esp-elf-gdb/11.2.0+20220823/tool-riscv32-esp-elf-gdb-linux_armv6l-11.2.0+20220823.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-riscv32-esp-elf-gdb-linux_armv6l-11.2.0+20220823.tar.gz",
+    "size_bytes": 25236705,
+    "sha256": "115eedc173f9348cdcc40a73946014f1e7e688870b7647be17db8840e40c22bd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/tool-riscv32-esp-elf-gdb/11.2.0%2B20220823/tool-riscv32-esp-elf-gdb-linux_armv6l-11.2.0%2B20220823.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/tool-riscv32-esp-elf-gdb/11.2.0%2B20220823/tool-riscv32-esp-elf-gdb-linux_armv6l-11.2.0%2B20220823.tar.gz"
+    ],
+    "provides": [
+     "linux_armv6l",
+     "linux_armv7l"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/tool-riscv32-esp-elf-gdb/11.2.0+20220823/tool-riscv32-esp-elf-gdb-linux_armv8l-11.2.0+20220823.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-riscv32-esp-elf-gdb-linux_armv8l-11.2.0+20220823.tar.gz",
+    "size_bytes": 23679795,
+    "sha256": "c19389f9b4de07331e47e40875de0c9182a70dbc33ba09f99511b1c869cd3204",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/tool-riscv32-esp-elf-gdb/11.2.0%2B20220823/tool-riscv32-esp-elf-gdb-linux_armv8l-11.2.0%2B20220823.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/tool-riscv32-esp-elf-gdb/11.2.0%2B20220823/tool-riscv32-esp-elf-gdb-linux_armv8l-11.2.0%2B20220823.tar.gz"
+    ],
+    "provides": [
+     "linux_armv8l"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/tool-riscv32-esp-elf-gdb/11.2.0+20220823/tool-riscv32-esp-elf-gdb-linux_i686-11.2.0+20220823.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-riscv32-esp-elf-gdb-linux_i686-11.2.0+20220823.tar.gz",
+    "size_bytes": 25912857,
+    "sha256": "ef56df8a39bc453410f2f6b6943f2a4e66c329a89d8ab229e18e3eb79af919ab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/tool-riscv32-esp-elf-gdb/11.2.0%2B20220823/tool-riscv32-esp-elf-gdb-linux_i686-11.2.0%2B20220823.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/tool-riscv32-esp-elf-gdb/11.2.0%2B20220823/tool-riscv32-esp-elf-gdb-linux_i686-11.2.0%2B20220823.tar.gz"
+    ],
+    "provides": [
+     "linux_i686"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/tool-riscv32-esp-elf-gdb/11.2.0+20220823/tool-riscv32-esp-elf-gdb-linux_x86_64-11.2.0+20220823.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-riscv32-esp-elf-gdb-linux_x86_64-11.2.0+20220823.tar.gz",
+    "size_bytes": 26482813,
+    "sha256": "1896f818cfb1ae97c69aa9aee63c6ca9a2ce5d7d2054c4ea5f95f109fbba2dc4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/tool-riscv32-esp-elf-gdb/11.2.0%2B20220823/tool-riscv32-esp-elf-gdb-linux_x86_64-11.2.0%2B20220823.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/tool-riscv32-esp-elf-gdb/11.2.0%2B20220823/tool-riscv32-esp-elf-gdb-linux_x86_64-11.2.0%2B20220823.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/tool-riscv32-esp-elf-gdb/11.2.0+20220823/tool-riscv32-esp-elf-gdb-windows_amd64-11.2.0+20220823.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-riscv32-esp-elf-gdb-windows_amd64-11.2.0+20220823.tar.gz",
+    "size_bytes": 24499675,
+    "sha256": "e7b4d64cdef9b91afcfd1807c3b3900999d174bb0c33e395ac05f423ca46a0ec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/tool-riscv32-esp-elf-gdb/11.2.0%2B20220823/tool-riscv32-esp-elf-gdb-windows_amd64-11.2.0%2B20220823.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/tool-riscv32-esp-elf-gdb/11.2.0%2B20220823/tool-riscv32-esp-elf-gdb-windows_amd64-11.2.0%2B20220823.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_arm64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/tool-riscv32-esp-elf-gdb/11.2.0+20220823/tool-riscv32-esp-elf-gdb-windows_x86-11.2.0+20220823.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-riscv32-esp-elf-gdb-windows_x86-11.2.0+20220823.tar.gz",
+    "size_bytes": 23221146,
+    "sha256": "555f3944f0570085a9fc44e625045a355b0be6aa59cbba357a114438dbc8e7f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/tool-riscv32-esp-elf-gdb/11.2.0%2B20220823/tool-riscv32-esp-elf-gdb-windows_x86-11.2.0%2B20220823.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/tool-riscv32-esp-elf-gdb/11.2.0%2B20220823/tool-riscv32-esp-elf-gdb-windows_x86-11.2.0%2B20220823.tar.gz"
+    ],
+    "provides": [
+     "windows_x86"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/tool-riscv32-esp-elf-gdb/12.1.0+20221002/tool-riscv32-esp-elf-gdb-darwin_arm64-12.1.0+20221002.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-riscv32-esp-elf-gdb-darwin_arm64-12.1.0+20221002.tar.gz",
+    "size_bytes": 27398169,
+    "sha256": "ac81bbdc5ce5e2f9736b237e7ea89cdcdd9cc5c27a405fbb25fb7ebd2bc1151b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/tool-riscv32-esp-elf-gdb/12.1.0%2B20221002/tool-riscv32-esp-elf-gdb-darwin_arm64-12.1.0%2B20221002.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/tool-riscv32-esp-elf-gdb/12.1.0%2B20221002/tool-riscv32-esp-elf-gdb-darwin_arm64-12.1.0%2B20221002.tar.gz"
+    ],
+    "provides": [
+     "darwin_arm64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/tool-riscv32-esp-elf-gdb/12.1.0+20221002/tool-riscv32-esp-elf-gdb-darwin_x86_64-12.1.0+20221002.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-riscv32-esp-elf-gdb-darwin_x86_64-12.1.0+20221002.tar.gz",
+    "size_bytes": 45527634,
+    "sha256": "74f7846d5b748b0672e4057921ec45adfb44df44d9c848072a83c42753d58d45",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/tool-riscv32-esp-elf-gdb/12.1.0%2B20221002/tool-riscv32-esp-elf-gdb-darwin_x86_64-12.1.0%2B20221002.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/tool-riscv32-esp-elf-gdb/12.1.0%2B20221002/tool-riscv32-esp-elf-gdb-darwin_x86_64-12.1.0%2B20221002.tar.gz"
+    ],
+    "provides": [
+     "darwin_x86_64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/tool-riscv32-esp-elf-gdb/12.1.0+20221002/tool-riscv32-esp-elf-gdb-linux_aarch64-12.1.0+20221002.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-riscv32-esp-elf-gdb-linux_aarch64-12.1.0+20221002.tar.gz",
+    "size_bytes": 32080372,
+    "sha256": "b0d0a3b2aa454595db3ea9f6f97ca4d13938426417a37301bfa45d0f63c02867",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/tool-riscv32-esp-elf-gdb/12.1.0%2B20221002/tool-riscv32-esp-elf-gdb-linux_aarch64-12.1.0%2B20221002.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/tool-riscv32-esp-elf-gdb/12.1.0%2B20221002/tool-riscv32-esp-elf-gdb-linux_aarch64-12.1.0%2B20221002.tar.gz"
+    ],
+    "provides": [
+     "linux_aarch64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/tool-riscv32-esp-elf-gdb/12.1.0+20221002/tool-riscv32-esp-elf-gdb-linux_armv6l-12.1.0+20221002.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-riscv32-esp-elf-gdb-linux_armv6l-12.1.0+20221002.tar.gz",
+    "size_bytes": 30230677,
+    "sha256": "4c6690e581772afde6b42124868cbe5429a68681dd4b6ca909b88b188a5c3b90",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/tool-riscv32-esp-elf-gdb/12.1.0%2B20221002/tool-riscv32-esp-elf-gdb-linux_armv6l-12.1.0%2B20221002.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/tool-riscv32-esp-elf-gdb/12.1.0%2B20221002/tool-riscv32-esp-elf-gdb-linux_armv6l-12.1.0%2B20221002.tar.gz"
+    ],
+    "provides": [
+     "linux_armv6l",
+     "linux_armv7l"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/tool-riscv32-esp-elf-gdb/12.1.0+20221002/tool-riscv32-esp-elf-gdb-linux_armv8l-12.1.0+20221002.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-riscv32-esp-elf-gdb-linux_armv8l-12.1.0+20221002.tar.gz",
+    "size_bytes": 28378018,
+    "sha256": "3637ae4c34ab0dc99fcbbbbf7d0ec930e8ca1856e7bfc0dd0f2a6bbccc74fdb0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/tool-riscv32-esp-elf-gdb/12.1.0%2B20221002/tool-riscv32-esp-elf-gdb-linux_armv8l-12.1.0%2B20221002.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/tool-riscv32-esp-elf-gdb/12.1.0%2B20221002/tool-riscv32-esp-elf-gdb-linux_armv8l-12.1.0%2B20221002.tar.gz"
+    ],
+    "provides": [
+     "linux_armv8l"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/tool-riscv32-esp-elf-gdb/12.1.0+20221002/tool-riscv32-esp-elf-gdb-linux_i686-12.1.0+20221002.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-riscv32-esp-elf-gdb-linux_i686-12.1.0+20221002.tar.gz",
+    "size_bytes": 30984905,
+    "sha256": "4b756fb95cbdb15b5343ab2e710924a82e6ba17a2b845af1fcc6d7f2c05372c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/tool-riscv32-esp-elf-gdb/12.1.0%2B20221002/tool-riscv32-esp-elf-gdb-linux_i686-12.1.0%2B20221002.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/tool-riscv32-esp-elf-gdb/12.1.0%2B20221002/tool-riscv32-esp-elf-gdb-linux_i686-12.1.0%2B20221002.tar.gz"
+    ],
+    "provides": [
+     "linux_i686"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/tool-riscv32-esp-elf-gdb/12.1.0+20221002/tool-riscv32-esp-elf-gdb-linux_x86_64-12.1.0+20221002.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-riscv32-esp-elf-gdb-linux_x86_64-12.1.0+20221002.tar.gz",
+    "size_bytes": 31661682,
+    "sha256": "868fa224bc2367d15e6fb6dae295493a3ee181467dd08dd0da8fc2c5c95a5042",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/tool-riscv32-esp-elf-gdb/12.1.0%2B20221002/tool-riscv32-esp-elf-gdb-linux_x86_64-12.1.0%2B20221002.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/tool-riscv32-esp-elf-gdb/12.1.0%2B20221002/tool-riscv32-esp-elf-gdb-linux_x86_64-12.1.0%2B20221002.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/tool-riscv32-esp-elf-gdb/12.1.0+20221002/tool-riscv32-esp-elf-gdb-windows_amd64-12.1.0+20221002.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-riscv32-esp-elf-gdb-windows_amd64-12.1.0+20221002.tar.gz",
+    "size_bytes": 29051300,
+    "sha256": "129759cab90b4acb296706b715fe4efee51c66ff22a0141491f1558b2d02eb9b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/tool-riscv32-esp-elf-gdb/12.1.0%2B20221002/tool-riscv32-esp-elf-gdb-windows_amd64-12.1.0%2B20221002.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/tool-riscv32-esp-elf-gdb/12.1.0%2B20221002/tool-riscv32-esp-elf-gdb-windows_amd64-12.1.0%2B20221002.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_arm64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/tool-riscv32-esp-elf-gdb/12.1.0+20221002/tool-riscv32-esp-elf-gdb-windows_x86-12.1.0+20221002.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-riscv32-esp-elf-gdb-windows_x86-12.1.0+20221002.tar.gz",
+    "size_bytes": 27596235,
+    "sha256": "660b99d718b6ef819473df4bc061ed6fc1c0037cef5a89968b596ff755967410",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/tool-riscv32-esp-elf-gdb/12.1.0%2B20221002/tool-riscv32-esp-elf-gdb-windows_x86-12.1.0%2B20221002.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/tool-riscv32-esp-elf-gdb/12.1.0%2B20221002/tool-riscv32-esp-elf-gdb-windows_x86-12.1.0%2B20221002.tar.gz"
+    ],
+    "provides": [
+     "windows_x86"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/tool-xtensa-esp-elf-gdb/11.2.0+20230208/tool-xtensa-esp-elf-gdb-darwin_arm64-11.2.0+20230208.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-xtensa-esp-elf-gdb-darwin_arm64-11.2.0+20230208.tar.gz",
+    "size_bytes": 21475716,
+    "sha256": "a27b64b26fb254698714aab9a6feb0f2bd0bc1c2bf1eb76c214b0f6b6580dd4f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/tool-xtensa-esp-elf-gdb/11.2.0%2B20230208/tool-xtensa-esp-elf-gdb-darwin_arm64-11.2.0%2B20230208.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/tool-xtensa-esp-elf-gdb/11.2.0%2B20230208/tool-xtensa-esp-elf-gdb-darwin_arm64-11.2.0%2B20230208.tar.gz"
+    ],
+    "provides": [
+     "darwin_arm64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/tool-xtensa-esp-elf-gdb/11.2.0+20230208/tool-xtensa-esp-elf-gdb-darwin_x86_64-11.2.0+20230208.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-xtensa-esp-elf-gdb-darwin_x86_64-11.2.0+20230208.tar.gz",
+    "size_bytes": 37929107,
+    "sha256": "767a5f550219948b48cfe9baa94a29fcd7c59068ee40594bb4575263ea7a2e77",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/tool-xtensa-esp-elf-gdb/11.2.0%2B20230208/tool-xtensa-esp-elf-gdb-darwin_x86_64-11.2.0%2B20230208.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/tool-xtensa-esp-elf-gdb/11.2.0%2B20230208/tool-xtensa-esp-elf-gdb-darwin_x86_64-11.2.0%2B20230208.tar.gz"
+    ],
+    "provides": [
+     "darwin_x86_64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/tool-xtensa-esp-elf-gdb/11.2.0+20230208/tool-xtensa-esp-elf-gdb-linux_aarch64-11.2.0+20230208.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-xtensa-esp-elf-gdb-linux_aarch64-11.2.0+20230208.tar.gz",
+    "size_bytes": 26888684,
+    "sha256": "e2c2d8766ebaa1854436beb1e719aa7de8d55962c3154c94f605ca8f206cb2b2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/tool-xtensa-esp-elf-gdb/11.2.0%2B20230208/tool-xtensa-esp-elf-gdb-linux_aarch64-11.2.0%2B20230208.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/tool-xtensa-esp-elf-gdb/11.2.0%2B20230208/tool-xtensa-esp-elf-gdb-linux_aarch64-11.2.0%2B20230208.tar.gz"
+    ],
+    "provides": [
+     "linux_aarch64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/tool-xtensa-esp-elf-gdb/11.2.0+20230208/tool-xtensa-esp-elf-gdb-linux_armv6l-11.2.0+20230208.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-xtensa-esp-elf-gdb-linux_armv6l-11.2.0+20230208.tar.gz",
+    "size_bytes": 24907205,
+    "sha256": "09933917aad5fc415f51207045ab3ddadb100ef936376c0425a5e5f9c82c8461",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/tool-xtensa-esp-elf-gdb/11.2.0%2B20230208/tool-xtensa-esp-elf-gdb-linux_armv6l-11.2.0%2B20230208.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/tool-xtensa-esp-elf-gdb/11.2.0%2B20230208/tool-xtensa-esp-elf-gdb-linux_armv6l-11.2.0%2B20230208.tar.gz"
+    ],
+    "provides": [
+     "linux_armv6l",
+     "linux_armv7l"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/tool-xtensa-esp-elf-gdb/11.2.0+20230208/tool-xtensa-esp-elf-gdb-linux_armv8l-11.2.0+20230208.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-xtensa-esp-elf-gdb-linux_armv8l-11.2.0+20230208.tar.gz",
+    "size_bytes": 23395217,
+    "sha256": "1abaa8c01418cefb0c497ace4574aa9ef314a7888ff83a6bdb4b015b5991bf53",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/tool-xtensa-esp-elf-gdb/11.2.0%2B20230208/tool-xtensa-esp-elf-gdb-linux_armv8l-11.2.0%2B20230208.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/tool-xtensa-esp-elf-gdb/11.2.0%2B20230208/tool-xtensa-esp-elf-gdb-linux_armv8l-11.2.0%2B20230208.tar.gz"
+    ],
+    "provides": [
+     "linux_armv8l"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/tool-xtensa-esp-elf-gdb/11.2.0+20230208/tool-xtensa-esp-elf-gdb-linux_i686-11.2.0+20230208.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-xtensa-esp-elf-gdb-linux_i686-11.2.0+20230208.tar.gz",
+    "size_bytes": 25705470,
+    "sha256": "45168b5b0c1a1d941213e80e76f88e77f0c3008014177c667040a6773c51a2db",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/tool-xtensa-esp-elf-gdb/11.2.0%2B20230208/tool-xtensa-esp-elf-gdb-linux_i686-11.2.0%2B20230208.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/tool-xtensa-esp-elf-gdb/11.2.0%2B20230208/tool-xtensa-esp-elf-gdb-linux_i686-11.2.0%2B20230208.tar.gz"
+    ],
+    "provides": [
+     "linux_i686"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/tool-xtensa-esp-elf-gdb/11.2.0+20230208/tool-xtensa-esp-elf-gdb-linux_x86_64-11.2.0+20230208.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-xtensa-esp-elf-gdb-linux_x86_64-11.2.0+20230208.tar.gz",
+    "size_bytes": 26632650,
+    "sha256": "49e0fbcdbbaabb4798c939f5412209e5e250274c02889b8637d0000534b05231",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/tool-xtensa-esp-elf-gdb/11.2.0%2B20230208/tool-xtensa-esp-elf-gdb-linux_x86_64-11.2.0%2B20230208.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/tool-xtensa-esp-elf-gdb/11.2.0%2B20230208/tool-xtensa-esp-elf-gdb-linux_x86_64-11.2.0%2B20230208.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/tool-xtensa-esp-elf-gdb/11.2.0+20230208/tool-xtensa-esp-elf-gdb-windows_amd64-11.2.0+20230208.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-xtensa-esp-elf-gdb-windows_amd64-11.2.0+20230208.tar.gz",
+    "size_bytes": 24831383,
+    "sha256": "d58ca186cb2323f436a87f904379aeab20ed6af743f1a393c4d0e30fb7ea8d97",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/tool-xtensa-esp-elf-gdb/11.2.0%2B20230208/tool-xtensa-esp-elf-gdb-windows_amd64-11.2.0%2B20230208.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/tool-xtensa-esp-elf-gdb/11.2.0%2B20230208/tool-xtensa-esp-elf-gdb-windows_amd64-11.2.0%2B20230208.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_arm64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/tool-xtensa-esp-elf-gdb/11.2.0+20230208/tool-xtensa-esp-elf-gdb-windows_x86-11.2.0+20230208.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-xtensa-esp-elf-gdb-windows_x86-11.2.0+20230208.tar.gz",
+    "size_bytes": 23036712,
+    "sha256": "7dfe061e4b54cbae7afa5efcaf8c457f5c311a19a320179d52885b3c72426bbc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/tool-xtensa-esp-elf-gdb/11.2.0%2B20230208/tool-xtensa-esp-elf-gdb-windows_x86-11.2.0%2B20230208.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/tool-xtensa-esp-elf-gdb/11.2.0%2B20230208/tool-xtensa-esp-elf-gdb-windows_x86-11.2.0%2B20230208.tar.gz"
+    ],
+    "provides": [
+     "windows_x86"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/tool-xtensa-esp-elf-gdb/12.1.0+20221002/tool-xtensa-esp-elf-gdb-darwin_arm64-12.1.0+20221002.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-xtensa-esp-elf-gdb-darwin_arm64-12.1.0+20221002.tar.gz",
+    "size_bytes": 27344442,
+    "sha256": "0f6adab1955c795425114130ca7cb4d1f9445faafee59978e56754622a1f4fe3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/tool-xtensa-esp-elf-gdb/12.1.0%2B20221002/tool-xtensa-esp-elf-gdb-darwin_arm64-12.1.0%2B20221002.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/tool-xtensa-esp-elf-gdb/12.1.0%2B20221002/tool-xtensa-esp-elf-gdb-darwin_arm64-12.1.0%2B20221002.tar.gz"
+    ],
+    "provides": [
+     "darwin_arm64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/tool-xtensa-esp-elf-gdb/12.1.0+20221002/tool-xtensa-esp-elf-gdb-darwin_x86_64-12.1.0+20221002.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-xtensa-esp-elf-gdb-darwin_x86_64-12.1.0+20221002.tar.gz",
+    "size_bytes": 45371049,
+    "sha256": "71583f1e8e01b52d04c1ac7ad8862d7c682e32694b75f8b187ea4116a3def7f3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/tool-xtensa-esp-elf-gdb/12.1.0%2B20221002/tool-xtensa-esp-elf-gdb-darwin_x86_64-12.1.0%2B20221002.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/tool-xtensa-esp-elf-gdb/12.1.0%2B20221002/tool-xtensa-esp-elf-gdb-darwin_x86_64-12.1.0%2B20221002.tar.gz"
+    ],
+    "provides": [
+     "darwin_x86_64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/tool-xtensa-esp-elf-gdb/12.1.0+20221002/tool-xtensa-esp-elf-gdb-linux_aarch64-12.1.0+20221002.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-xtensa-esp-elf-gdb-linux_aarch64-12.1.0+20221002.tar.gz",
+    "size_bytes": 31940188,
+    "sha256": "759eca3c13b34a4c8fc127f97a7637910bc64231d7206597a5897d2273489f07",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/tool-xtensa-esp-elf-gdb/12.1.0%2B20221002/tool-xtensa-esp-elf-gdb-linux_aarch64-12.1.0%2B20221002.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/tool-xtensa-esp-elf-gdb/12.1.0%2B20221002/tool-xtensa-esp-elf-gdb-linux_aarch64-12.1.0%2B20221002.tar.gz"
+    ],
+    "provides": [
+     "linux_aarch64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/tool-xtensa-esp-elf-gdb/12.1.0+20221002/tool-xtensa-esp-elf-gdb-linux_armv6l-12.1.0+20221002.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-xtensa-esp-elf-gdb-linux_armv6l-12.1.0+20221002.tar.gz",
+    "size_bytes": 29609411,
+    "sha256": "6ac62f0e60b413022862ff59bb26fc32fdc981183496ee3774a8aaa773e4243e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/tool-xtensa-esp-elf-gdb/12.1.0%2B20221002/tool-xtensa-esp-elf-gdb-linux_armv6l-12.1.0%2B20221002.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/tool-xtensa-esp-elf-gdb/12.1.0%2B20221002/tool-xtensa-esp-elf-gdb-linux_armv6l-12.1.0%2B20221002.tar.gz"
+    ],
+    "provides": [
+     "linux_armv6l",
+     "linux_armv7l"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/tool-xtensa-esp-elf-gdb/12.1.0+20221002/tool-xtensa-esp-elf-gdb-linux_armv8l-12.1.0+20221002.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-xtensa-esp-elf-gdb-linux_armv8l-12.1.0+20221002.tar.gz",
+    "size_bytes": 27818027,
+    "sha256": "7eb5b7dd28e34ed6f50ba8c795d1838f9f4cce8345a9df08a3fe41441400215f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/tool-xtensa-esp-elf-gdb/12.1.0%2B20221002/tool-xtensa-esp-elf-gdb-linux_armv8l-12.1.0%2B20221002.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/tool-xtensa-esp-elf-gdb/12.1.0%2B20221002/tool-xtensa-esp-elf-gdb-linux_armv8l-12.1.0%2B20221002.tar.gz"
+    ],
+    "provides": [
+     "linux_armv8l"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/tool-xtensa-esp-elf-gdb/12.1.0+20221002/tool-xtensa-esp-elf-gdb-linux_i686-12.1.0+20221002.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-xtensa-esp-elf-gdb-linux_i686-12.1.0+20221002.tar.gz",
+    "size_bytes": 30555940,
+    "sha256": "d2f95c806d24651320d775536b2952c9bcbdacc3363cdddb0706397b21fb9a6f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/tool-xtensa-esp-elf-gdb/12.1.0%2B20221002/tool-xtensa-esp-elf-gdb-linux_i686-12.1.0%2B20221002.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/tool-xtensa-esp-elf-gdb/12.1.0%2B20221002/tool-xtensa-esp-elf-gdb-linux_i686-12.1.0%2B20221002.tar.gz"
+    ],
+    "provides": [
+     "linux_i686"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/tool-xtensa-esp-elf-gdb/12.1.0+20221002/tool-xtensa-esp-elf-gdb-linux_x86_64-12.1.0+20221002.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-xtensa-esp-elf-gdb-linux_x86_64-12.1.0+20221002.tar.gz",
+    "size_bytes": 31630541,
+    "sha256": "a142ebefd60d825ce608f1f711971a4a6e76dea78e5ea89eb625cba4df126676",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/tool-xtensa-esp-elf-gdb/12.1.0%2B20221002/tool-xtensa-esp-elf-gdb-linux_x86_64-12.1.0%2B20221002.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/tool-xtensa-esp-elf-gdb/12.1.0%2B20221002/tool-xtensa-esp-elf-gdb-linux_x86_64-12.1.0%2B20221002.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/tool-xtensa-esp-elf-gdb/12.1.0+20221002/tool-xtensa-esp-elf-gdb-windows_amd64-12.1.0+20221002.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-xtensa-esp-elf-gdb-windows_amd64-12.1.0+20221002.tar.gz",
+    "size_bytes": 29216414,
+    "sha256": "1e555a1e0d8c97f329ff17813932e0e4f6d743d81ea65aedc2cf19880010994f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/tool-xtensa-esp-elf-gdb/12.1.0%2B20221002/tool-xtensa-esp-elf-gdb-windows_amd64-12.1.0%2B20221002.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/tool-xtensa-esp-elf-gdb/12.1.0%2B20221002/tool-xtensa-esp-elf-gdb-windows_amd64-12.1.0%2B20221002.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_arm64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/tool-xtensa-esp-elf-gdb/12.1.0+20221002/tool-xtensa-esp-elf-gdb-windows_x86-12.1.0+20221002.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-xtensa-esp-elf-gdb-windows_x86-12.1.0+20221002.tar.gz",
+    "size_bytes": 27161591,
+    "sha256": "a20c93888c096a887340117a6496d547541bd6399f38029ef9ad12c83ff543ef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/tool-xtensa-esp-elf-gdb/12.1.0%2B20221002/tool-xtensa-esp-elf-gdb-windows_x86-12.1.0%2B20221002.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/tool-xtensa-esp-elf-gdb/12.1.0%2B20221002/tool-xtensa-esp-elf-gdb-windows_x86-12.1.0%2B20221002.tar.gz"
+    ],
+    "provides": [
+     "windows_x86"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-esp32ulp/2.35_20220830/toolchain-esp32ulp-darwin_arm64-2.35_20220830.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-esp32ulp-darwin_arm64-2.35_20220830.tar.gz",
+    "size_bytes": 15008049,
+    "sha256": "1ee73208d79b03844349fe527d5afa4bc5a6ec450dccf48801a28f0ee3426a5c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-esp32ulp/2.35_20220830/toolchain-esp32ulp-darwin_arm64-2.35_20220830.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-esp32ulp/2.35_20220830/toolchain-esp32ulp-darwin_arm64-2.35_20220830.tar.gz"
+    ],
+    "provides": [
+     "darwin_arm64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-esp32ulp/2.35_20220830/toolchain-esp32ulp-darwin_x86_64-2.35_20220830.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-esp32ulp-darwin_x86_64-2.35_20220830.tar.gz",
+    "size_bytes": 15987612,
+    "sha256": "27c07a6dd4d213fcb6646b489730b0d84f88f24a20001e8e79719389d455a1bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-esp32ulp/2.35_20220830/toolchain-esp32ulp-darwin_x86_64-2.35_20220830.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-esp32ulp/2.35_20220830/toolchain-esp32ulp-darwin_x86_64-2.35_20220830.tar.gz"
+    ],
+    "provides": [
+     "darwin_x86_64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-esp32ulp/2.35_20220830/toolchain-esp32ulp-linux_aarch64-2.35_20220830.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-esp32ulp-linux_aarch64-2.35_20220830.tar.gz",
+    "size_bytes": 10007023,
+    "sha256": "05614157f343af57e30123d7aa5a27efd31e70ac00add4564f74e80479ac5175",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-esp32ulp/2.35_20220830/toolchain-esp32ulp-linux_aarch64-2.35_20220830.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-esp32ulp/2.35_20220830/toolchain-esp32ulp-linux_aarch64-2.35_20220830.tar.gz"
+    ],
+    "provides": [
+     "linux_aarch64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-esp32ulp/2.35_20220830/toolchain-esp32ulp-linux_armv6l-2.35_20220830.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-esp32ulp-linux_armv6l-2.35_20220830.tar.gz",
+    "size_bytes": 10040439,
+    "sha256": "fb70e428fbead99db2c87103a5003e3923f9e781ad19ff0c7b355c3b050fcc29",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-esp32ulp/2.35_20220830/toolchain-esp32ulp-linux_armv6l-2.35_20220830.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-esp32ulp/2.35_20220830/toolchain-esp32ulp-linux_armv6l-2.35_20220830.tar.gz"
+    ],
+    "provides": [
+     "linux_armv6l",
+     "linux_armv7l",
+     "linux_armv8l"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-esp32ulp/2.35_20220830/toolchain-esp32ulp-linux_x86_64-2.35_20220830.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-esp32ulp-linux_x86_64-2.35_20220830.tar.gz",
+    "size_bytes": 10629001,
+    "sha256": "fb7fef3684482e0b8f845632bad2d71cb27432f681fd5bb63e33945385eb3d3d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-esp32ulp/2.35_20220830/toolchain-esp32ulp-linux_x86_64-2.35_20220830.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-esp32ulp/2.35_20220830/toolchain-esp32ulp-linux_x86_64-2.35_20220830.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-esp32ulp/2.35_20220830/toolchain-esp32ulp-windows_amd64-2.35_20220830.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-esp32ulp-windows_amd64-2.35_20220830.tar.gz",
+    "size_bytes": 15249749,
+    "sha256": "7901bded8192d3bf59c53531d93bcd60f7117419cad9ffc070bf0e382911ec4b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-esp32ulp/2.35_20220830/toolchain-esp32ulp-windows_amd64-2.35_20220830.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-esp32ulp/2.35_20220830/toolchain-esp32ulp-windows_amd64-2.35_20220830.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_arm64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-esp32ulp/2.35_20220830/toolchain-esp32ulp-windows_x86-2.35_20220830.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-esp32ulp-windows_x86-2.35_20220830.tar.gz",
+    "size_bytes": 14490167,
+    "sha256": "62e52a2f0d8930fd158df04fee747cb9be65d18ed5d69261938305ceccd247ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-esp32ulp/2.35_20220830/toolchain-esp32ulp-windows_x86-2.35_20220830.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-esp32ulp/2.35_20220830/toolchain-esp32ulp-windows_x86-2.35_20220830.tar.gz"
+    ],
+    "provides": [
+     "windows_x86"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-riscv32-esp/11.2.0+2022r1/toolchain-riscv32-esp-darwin_arm64-11.2.0+2022r1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-riscv32-esp-darwin_arm64-11.2.0+2022r1.tar.gz",
+    "size_bytes": 207877501,
+    "sha256": "77dfba9cc86d1b4932258282fc51b01b0fe2024a10fa9215b271e4c272ba96ac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-riscv32-esp/11.2.0%2B2022r1/toolchain-riscv32-esp-darwin_arm64-11.2.0%2B2022r1.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-riscv32-esp/11.2.0%2B2022r1/toolchain-riscv32-esp-darwin_arm64-11.2.0%2B2022r1.tar.gz"
+    ],
+    "provides": [
+     "darwin_arm64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-riscv32-esp/11.2.0+2022r1/toolchain-riscv32-esp-darwin_x86_64-11.2.0+2022r1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-riscv32-esp-darwin_x86_64-11.2.0+2022r1.tar.gz",
+    "size_bytes": 222153344,
+    "sha256": "3513ed2d14067514dc312ed4a896a6ac5971085a6d4e9a3256197ad2c5e92406",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-riscv32-esp/11.2.0%2B2022r1/toolchain-riscv32-esp-darwin_x86_64-11.2.0%2B2022r1.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-riscv32-esp/11.2.0%2B2022r1/toolchain-riscv32-esp-darwin_x86_64-11.2.0%2B2022r1.tar.gz"
+    ],
+    "provides": [
+     "darwin_x86_64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-riscv32-esp/11.2.0+2022r1/toolchain-riscv32-esp-linux_aarch64-11.2.0+2022r1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-riscv32-esp-linux_aarch64-11.2.0+2022r1.tar.gz",
+    "size_bytes": 206719411,
+    "sha256": "64fbf9460165e812d5ec41b166416faf45aa3744c712b8c6f7f487f35ad62570",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-riscv32-esp/11.2.0%2B2022r1/toolchain-riscv32-esp-linux_aarch64-11.2.0%2B2022r1.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-riscv32-esp/11.2.0%2B2022r1/toolchain-riscv32-esp-linux_aarch64-11.2.0%2B2022r1.tar.gz"
+    ],
+    "provides": [
+     "linux_aarch64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-riscv32-esp/11.2.0+2022r1/toolchain-riscv32-esp-linux_armv6l-11.2.0+2022r1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-riscv32-esp-linux_armv6l-11.2.0+2022r1.tar.gz",
+    "size_bytes": 206031520,
+    "sha256": "87ff5a50b7bc55db79f27192e6c7893c70d5e086accd37a84f1689c41752c16c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-riscv32-esp/11.2.0%2B2022r1/toolchain-riscv32-esp-linux_armv6l-11.2.0%2B2022r1.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-riscv32-esp/11.2.0%2B2022r1/toolchain-riscv32-esp-linux_armv6l-11.2.0%2B2022r1.tar.gz"
+    ],
+    "provides": [
+     "linux_armv6l",
+     "linux_armv7l",
+     "linux_armv8l"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-riscv32-esp/11.2.0+2022r1/toolchain-riscv32-esp-linux_i686-11.2.0+2022r1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-riscv32-esp-linux_i686-11.2.0+2022r1.tar.gz",
+    "size_bytes": 214738878,
+    "sha256": "30d01befd2bdec77735050d893e0a5d2d55c9f159bed9528e1ea9a30da154ffc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-riscv32-esp/11.2.0%2B2022r1/toolchain-riscv32-esp-linux_i686-11.2.0%2B2022r1.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-riscv32-esp/11.2.0%2B2022r1/toolchain-riscv32-esp-linux_i686-11.2.0%2B2022r1.tar.gz"
+    ],
+    "provides": [
+     "linux_i686"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-riscv32-esp/11.2.0+2022r1/toolchain-riscv32-esp-linux_x86_64-11.2.0+2022r1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-riscv32-esp-linux_x86_64-11.2.0+2022r1.tar.gz",
+    "size_bytes": 211267330,
+    "sha256": "24444a4b2164347589d4b67e61e5d9743bb26ec4d5e85b30a2da594166fee980",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-riscv32-esp/11.2.0%2B2022r1/toolchain-riscv32-esp-linux_x86_64-11.2.0%2B2022r1.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-riscv32-esp/11.2.0%2B2022r1/toolchain-riscv32-esp-linux_x86_64-11.2.0%2B2022r1.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-riscv32-esp/11.2.0+2022r1/toolchain-riscv32-esp-windows_amd64-11.2.0+2022r1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-riscv32-esp-windows_amd64-11.2.0+2022r1.tar.gz",
+    "size_bytes": 270050790,
+    "sha256": "7caf63eb0862a147e33eef9d79d2f0784e6d4dab163152312b0eef328f30f012",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-riscv32-esp/11.2.0%2B2022r1/toolchain-riscv32-esp-windows_amd64-11.2.0%2B2022r1.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-riscv32-esp/11.2.0%2B2022r1/toolchain-riscv32-esp-windows_amd64-11.2.0%2B2022r1.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_arm64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-riscv32-esp/11.2.0+2022r1/toolchain-riscv32-esp-windows_x86-11.2.0+2022r1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-riscv32-esp-windows_x86-11.2.0+2022r1.tar.gz",
+    "size_bytes": 266915367,
+    "sha256": "3c1ea4ff5b882141d32bd28179f9d964caa0875a22841366c87cb5e34f064917",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-riscv32-esp/11.2.0%2B2022r1/toolchain-riscv32-esp-windows_x86-11.2.0%2B2022r1.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-riscv32-esp/11.2.0%2B2022r1/toolchain-riscv32-esp-windows_x86-11.2.0%2B2022r1.tar.gz"
+    ],
+    "provides": [
+     "windows_x86"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-riscv32-esp/12.2.0+20230208/toolchain-riscv32-esp-darwin_arm64-12.2.0+20230208.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-riscv32-esp-darwin_arm64-12.2.0+20230208.tar.gz",
+    "size_bytes": 249455329,
+    "sha256": "f7b34079d9c4e6c13e8178653ffa80ebf1f20bfc042803ef17852b4885a796de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-riscv32-esp/12.2.0%2B20230208/toolchain-riscv32-esp-darwin_arm64-12.2.0%2B20230208.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-riscv32-esp/12.2.0%2B20230208/toolchain-riscv32-esp-darwin_arm64-12.2.0%2B20230208.tar.gz"
+    ],
+    "provides": [
+     "darwin_arm64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-riscv32-esp/12.2.0+20230208/toolchain-riscv32-esp-darwin_x86_64-12.2.0+20230208.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-riscv32-esp-darwin_x86_64-12.2.0+20230208.tar.gz",
+    "size_bytes": 265716073,
+    "sha256": "a7459c52f7c31f4f066898f0e8a6becfcd6bc21f3473208481516090ac209133",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-riscv32-esp/12.2.0%2B20230208/toolchain-riscv32-esp-darwin_x86_64-12.2.0%2B20230208.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-riscv32-esp/12.2.0%2B20230208/toolchain-riscv32-esp-darwin_x86_64-12.2.0%2B20230208.tar.gz"
+    ],
+    "provides": [
+     "darwin_x86_64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-riscv32-esp/12.2.0+20230208/toolchain-riscv32-esp-linux_aarch64-12.2.0+20230208.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-riscv32-esp-linux_aarch64-12.2.0+20230208.tar.gz",
+    "size_bytes": 250283383,
+    "sha256": "273033058c18c0c7d26c88537d71d018f240d8029575b8cead289ed364758d6e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-riscv32-esp/12.2.0%2B20230208/toolchain-riscv32-esp-linux_aarch64-12.2.0%2B20230208.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-riscv32-esp/12.2.0%2B20230208/toolchain-riscv32-esp-linux_aarch64-12.2.0%2B20230208.tar.gz"
+    ],
+    "provides": [
+     "linux_aarch64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-riscv32-esp/12.2.0+20230208/toolchain-riscv32-esp-linux_armv6l-12.2.0+20230208.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-riscv32-esp-linux_armv6l-12.2.0+20230208.tar.gz",
+    "size_bytes": 249744489,
+    "sha256": "ebe7589c541a8bb2493342f189f998a61e805d2c6ac3c82974fb8a8006d5bff3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-riscv32-esp/12.2.0%2B20230208/toolchain-riscv32-esp-linux_armv6l-12.2.0%2B20230208.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-riscv32-esp/12.2.0%2B20230208/toolchain-riscv32-esp-linux_armv6l-12.2.0%2B20230208.tar.gz"
+    ],
+    "provides": [
+     "linux_armv6l"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-riscv32-esp/12.2.0+20230208/toolchain-riscv32-esp-linux_armv7l-12.2.0+20230208.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-riscv32-esp-linux_armv7l-12.2.0+20230208.tar.gz",
+    "size_bytes": 245837368,
+    "sha256": "ec33db12b15c39cdc7809ef1de598f92eac228ba2ffc0063a5021a07bd4cf945",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-riscv32-esp/12.2.0%2B20230208/toolchain-riscv32-esp-linux_armv7l-12.2.0%2B20230208.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-riscv32-esp/12.2.0%2B20230208/toolchain-riscv32-esp-linux_armv7l-12.2.0%2B20230208.tar.gz"
+    ],
+    "provides": [
+     "linux_armv7l",
+     "linux_armv8l"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-riscv32-esp/12.2.0+20230208/toolchain-riscv32-esp-linux_x86_64-12.2.0+20230208.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-riscv32-esp-linux_x86_64-12.2.0+20230208.tar.gz",
+    "size_bytes": 254641093,
+    "sha256": "77a4d207cf7fd65f26fc7b3814f219d9475ddbcd56831d69260818172a8a5af7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-riscv32-esp/12.2.0%2B20230208/toolchain-riscv32-esp-linux_x86_64-12.2.0%2B20230208.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-riscv32-esp/12.2.0%2B20230208/toolchain-riscv32-esp-linux_x86_64-12.2.0%2B20230208.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-riscv32-esp/12.2.0+20230208/toolchain-riscv32-esp-windows_amd64-12.2.0+20230208.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-riscv32-esp-windows_amd64-12.2.0+20230208.tar.gz",
+    "size_bytes": 326952365,
+    "sha256": "73d99215f6f31e6466e227b51035999caae6eabe05cde95218562fd27cb344f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-riscv32-esp/12.2.0%2B20230208/toolchain-riscv32-esp-windows_amd64-12.2.0%2B20230208.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-riscv32-esp/12.2.0%2B20230208/toolchain-riscv32-esp-windows_amd64-12.2.0%2B20230208.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_arm64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-riscv32-esp/12.2.0+20230208/toolchain-riscv32-esp-windows_x86-12.2.0+20230208.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-riscv32-esp-windows_x86-12.2.0+20230208.tar.gz",
+    "size_bytes": 323744492,
+    "sha256": "0cb48292460bb18362c66bd417e443167feb3a54e5e6717c31658bb93cd4a063",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-riscv32-esp/12.2.0%2B20230208/toolchain-riscv32-esp-windows_x86-12.2.0%2B20230208.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-riscv32-esp/12.2.0%2B20230208/toolchain-riscv32-esp-windows_x86-12.2.0%2B20230208.tar.gz"
+    ],
+    "provides": [
+     "windows_x86"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-riscv32-esp/8.4.0+2021r2-patch5/toolchain-riscv32-esp-darwin_x86_64-8.4.0+2021r2-patch5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-riscv32-esp-darwin_x86_64-8.4.0+2021r2-patch5.tar.gz",
+    "size_bytes": 196616149,
+    "sha256": "d0cea8c9a5a1661e98156d907a3037f9c3f2f46419523be1ad2540c900a7637c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-riscv32-esp/8.4.0%2B2021r2-patch5/toolchain-riscv32-esp-darwin_x86_64-8.4.0%2B2021r2-patch5.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-riscv32-esp/8.4.0%2B2021r2-patch5/toolchain-riscv32-esp-darwin_x86_64-8.4.0%2B2021r2-patch5.tar.gz"
+    ],
+    "provides": [
+     "darwin_x86_64",
+     "darwin_arm64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-riscv32-esp/8.4.0+2021r2-patch5/toolchain-riscv32-esp-linux_aarch64-8.4.0+2021r2-patch5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-riscv32-esp-linux_aarch64-8.4.0+2021r2-patch5.tar.gz",
+    "size_bytes": 186343026,
+    "sha256": "b6ec1fa8e4c9c496d53b7a8dfa78eb427d76c53a1638d0ac04ad4af93acdc2d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-riscv32-esp/8.4.0%2B2021r2-patch5/toolchain-riscv32-esp-linux_aarch64-8.4.0%2B2021r2-patch5.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-riscv32-esp/8.4.0%2B2021r2-patch5/toolchain-riscv32-esp-linux_aarch64-8.4.0%2B2021r2-patch5.tar.gz"
+    ],
+    "provides": [
+     "linux_aarch64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-riscv32-esp/8.4.0+2021r2-patch5/toolchain-riscv32-esp-linux_armv6l-8.4.0+2021r2-patch5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-riscv32-esp-linux_armv6l-8.4.0+2021r2-patch5.tar.gz",
+    "size_bytes": 186217870,
+    "sha256": "e8d9e1c847132ce3bff20183849df9250531bfa137a509f29d5b94b952dd632d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-riscv32-esp/8.4.0%2B2021r2-patch5/toolchain-riscv32-esp-linux_armv6l-8.4.0%2B2021r2-patch5.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-riscv32-esp/8.4.0%2B2021r2-patch5/toolchain-riscv32-esp-linux_armv6l-8.4.0%2B2021r2-patch5.tar.gz"
+    ],
+    "provides": [
+     "linux_armv6l",
+     "linux_armv7l",
+     "linux_armv8l"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-riscv32-esp/8.4.0+2021r2-patch5/toolchain-riscv32-esp-linux_i686-8.4.0+2021r2-patch5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-riscv32-esp-linux_i686-8.4.0+2021r2-patch5.tar.gz",
+    "size_bytes": 192256257,
+    "sha256": "fa01885486d0c1d1b7f684b994ef2e0b289e41d23cf2b0e80807c7bc8c09a3b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-riscv32-esp/8.4.0%2B2021r2-patch5/toolchain-riscv32-esp-linux_i686-8.4.0%2B2021r2-patch5.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-riscv32-esp/8.4.0%2B2021r2-patch5/toolchain-riscv32-esp-linux_i686-8.4.0%2B2021r2-patch5.tar.gz"
+    ],
+    "provides": [
+     "linux_i686"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-riscv32-esp/8.4.0+2021r2-patch5/toolchain-riscv32-esp-linux_x86_64-8.4.0+2021r2-patch5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-riscv32-esp-linux_x86_64-8.4.0+2021r2-patch5.tar.gz",
+    "size_bytes": 189901558,
+    "sha256": "525205ae3bb69937863d4d787818dd4f3c373c8d242da4aa22b220b12c7ed4c9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-riscv32-esp/8.4.0%2B2021r2-patch5/toolchain-riscv32-esp-linux_x86_64-8.4.0%2B2021r2-patch5.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-riscv32-esp/8.4.0%2B2021r2-patch5/toolchain-riscv32-esp-linux_x86_64-8.4.0%2B2021r2-patch5.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-riscv32-esp/8.4.0+2021r2-patch5/toolchain-riscv32-esp-windows_amd64-8.4.0+2021r2-patch5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-riscv32-esp-windows_amd64-8.4.0+2021r2-patch5.tar.gz",
+    "size_bytes": 258829021,
+    "sha256": "55c5c36593d87021ff19857d99da17a85fe4d708e77333e98ff54a8ac0ed1804",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-riscv32-esp/8.4.0%2B2021r2-patch5/toolchain-riscv32-esp-windows_amd64-8.4.0%2B2021r2-patch5.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-riscv32-esp/8.4.0%2B2021r2-patch5/toolchain-riscv32-esp-windows_amd64-8.4.0%2B2021r2-patch5.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_arm64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-riscv32-esp/8.4.0+2021r2-patch5/toolchain-riscv32-esp-windows_x86-8.4.0+2021r2-patch5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-riscv32-esp-windows_x86-8.4.0+2021r2-patch5.tar.gz",
+    "size_bytes": 256958636,
+    "sha256": "7e0e421ec6d6e24d47ea6a94aa16bbe5d0ef7bdd9770880dd4e417553b048774",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-riscv32-esp/8.4.0%2B2021r2-patch5/toolchain-riscv32-esp-windows_x86-8.4.0%2B2021r2-patch5.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-riscv32-esp/8.4.0%2B2021r2-patch5/toolchain-riscv32-esp-windows_x86-8.4.0%2B2021r2-patch5.tar.gz"
+    ],
+    "provides": [
+     "windows_x86"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32/11.2.0+2022r1/toolchain-xtensa-esp32-darwin_arm64-11.2.0+2022r1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32-darwin_arm64-11.2.0+2022r1.tar.gz",
+    "size_bytes": 106445049,
+    "sha256": "523ede72b24d77511a56153471e0d9968d13865ee43b7c6a85c9af57fc59c9f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32/11.2.0%2B2022r1/toolchain-xtensa-esp32-darwin_arm64-11.2.0%2B2022r1.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32/11.2.0%2B2022r1/toolchain-xtensa-esp32-darwin_arm64-11.2.0%2B2022r1.tar.gz"
+    ],
+    "provides": [
+     "darwin_arm64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32/11.2.0+2022r1/toolchain-xtensa-esp32-darwin_x86_64-11.2.0+2022r1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32-darwin_x86_64-11.2.0+2022r1.tar.gz",
+    "size_bytes": 117215186,
+    "sha256": "16453c91f7abafd7234484cdf4665a233dfcfb1be29510f64f928b1eee733b13",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32/11.2.0%2B2022r1/toolchain-xtensa-esp32-darwin_x86_64-11.2.0%2B2022r1.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32/11.2.0%2B2022r1/toolchain-xtensa-esp32-darwin_x86_64-11.2.0%2B2022r1.tar.gz"
+    ],
+    "provides": [
+     "darwin_x86_64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32/11.2.0+2022r1/toolchain-xtensa-esp32-linux_aarch64-11.2.0+2022r1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32-linux_aarch64-11.2.0+2022r1.tar.gz",
+    "size_bytes": 104448500,
+    "sha256": "38fdc3821b38b5e4a295b55a585076857871099329ca93c33c8ac26db6e0be94",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32/11.2.0%2B2022r1/toolchain-xtensa-esp32-linux_aarch64-11.2.0%2B2022r1.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32/11.2.0%2B2022r1/toolchain-xtensa-esp32-linux_aarch64-11.2.0%2B2022r1.tar.gz"
+    ],
+    "provides": [
+     "linux_aarch64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32/11.2.0+2022r1/toolchain-xtensa-esp32-linux_armv6l-11.2.0+2022r1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32-linux_armv6l-11.2.0+2022r1.tar.gz",
+    "size_bytes": 103396672,
+    "sha256": "d828907eb34be331f4711fd83c8877fc5735d4d534319ab21809a93c46e29566",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32/11.2.0%2B2022r1/toolchain-xtensa-esp32-linux_armv6l-11.2.0%2B2022r1.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32/11.2.0%2B2022r1/toolchain-xtensa-esp32-linux_armv6l-11.2.0%2B2022r1.tar.gz"
+    ],
+    "provides": [
+     "linux_armv6l"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32/11.2.0+2022r1/toolchain-xtensa-esp32-linux_armv7l-11.2.0+2022r1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32-linux_armv7l-11.2.0+2022r1.tar.gz",
+    "size_bytes": 99555343,
+    "sha256": "43e932fa731cdd9c3cd5c008f1cc45a7b748759849787f7dc66bf8273081dbb6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32/11.2.0%2B2022r1/toolchain-xtensa-esp32-linux_armv7l-11.2.0%2B2022r1.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32/11.2.0%2B2022r1/toolchain-xtensa-esp32-linux_armv7l-11.2.0%2B2022r1.tar.gz"
+    ],
+    "provides": [
+     "linux_armv7l",
+     "linux_armv8l"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32/11.2.0+2022r1/toolchain-xtensa-esp32-linux_i686-11.2.0+2022r1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32-linux_i686-11.2.0+2022r1.tar.gz",
+    "size_bytes": 112498395,
+    "sha256": "05a0afe121d6b99536527e365b3b2954bd8c6b4b0a054f28578383ae3b872d20",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32/11.2.0%2B2022r1/toolchain-xtensa-esp32-linux_i686-11.2.0%2B2022r1.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32/11.2.0%2B2022r1/toolchain-xtensa-esp32-linux_i686-11.2.0%2B2022r1.tar.gz"
+    ],
+    "provides": [
+     "linux_i686"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32/11.2.0+2022r1/toolchain-xtensa-esp32-linux_x86_64-11.2.0+2022r1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32-linux_x86_64-11.2.0+2022r1.tar.gz",
+    "size_bytes": 109627299,
+    "sha256": "39026e61341147ebc54b023ec58d44971b5a772813c9f729d458ece81499992c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32/11.2.0%2B2022r1/toolchain-xtensa-esp32-linux_x86_64-11.2.0%2B2022r1.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32/11.2.0%2B2022r1/toolchain-xtensa-esp32-linux_x86_64-11.2.0%2B2022r1.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32/11.2.0+2022r1/toolchain-xtensa-esp32-windows_amd64-11.2.0+2022r1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32-windows_amd64-11.2.0+2022r1.tar.gz",
+    "size_bytes": 132505747,
+    "sha256": "b8bf780e1872b6bde6d1c9a04278fafea16db0ab5a0713538fd0767ae606ba0d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32/11.2.0%2B2022r1/toolchain-xtensa-esp32-windows_amd64-11.2.0%2B2022r1.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32/11.2.0%2B2022r1/toolchain-xtensa-esp32-windows_amd64-11.2.0%2B2022r1.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_arm64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32/11.2.0+2022r1/toolchain-xtensa-esp32-windows_x86-11.2.0+2022r1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32-windows_x86-11.2.0+2022r1.tar.gz",
+    "size_bytes": 128358153,
+    "sha256": "9a07d290bee1135051dab76cfea94a12effee2bf51770bb715282adced00e67d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32/11.2.0%2B2022r1/toolchain-xtensa-esp32-windows_x86-11.2.0%2B2022r1.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32/11.2.0%2B2022r1/toolchain-xtensa-esp32-windows_x86-11.2.0%2B2022r1.tar.gz"
+    ],
+    "provides": [
+     "windows_x86"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32/12.2.0+20230208/toolchain-xtensa-esp32-darwin_arm64-12.2.0+20230208.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32-darwin_arm64-12.2.0+20230208.tar.gz",
+    "size_bytes": 105245010,
+    "sha256": "53272a902747cdeb198d643767b3b7f28e4a9d58ba222e614097baa7d4b9bff4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32/12.2.0%2B20230208/toolchain-xtensa-esp32-darwin_arm64-12.2.0%2B20230208.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32/12.2.0%2B20230208/toolchain-xtensa-esp32-darwin_arm64-12.2.0%2B20230208.tar.gz"
+    ],
+    "provides": [
+     "darwin_arm64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32/12.2.0+20230208/toolchain-xtensa-esp32-darwin_x86_64-12.2.0+20230208.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32-darwin_x86_64-12.2.0+20230208.tar.gz",
+    "size_bytes": 117961795,
+    "sha256": "42ee5b374cf294fb1c9e163f41a6ba1d76afd0e7106218defde5d80f5df74958",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32/12.2.0%2B20230208/toolchain-xtensa-esp32-darwin_x86_64-12.2.0%2B20230208.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32/12.2.0%2B20230208/toolchain-xtensa-esp32-darwin_x86_64-12.2.0%2B20230208.tar.gz"
+    ],
+    "provides": [
+     "darwin_x86_64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32/12.2.0+20230208/toolchain-xtensa-esp32-linux_aarch64-12.2.0+20230208.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32-linux_aarch64-12.2.0+20230208.tar.gz",
+    "size_bytes": 105481248,
+    "sha256": "ff60f1f96790950f2e0298a72536169764a92c72055363e48a5af554eab6d8aa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32/12.2.0%2B20230208/toolchain-xtensa-esp32-linux_aarch64-12.2.0%2B20230208.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32/12.2.0%2B20230208/toolchain-xtensa-esp32-linux_aarch64-12.2.0%2B20230208.tar.gz"
+    ],
+    "provides": [
+     "linux_aarch64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32/12.2.0+20230208/toolchain-xtensa-esp32-linux_armv6l-12.2.0+20230208.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32-linux_armv6l-12.2.0+20230208.tar.gz",
+    "size_bytes": 104545954,
+    "sha256": "51a7d006a391523dfd60f65bc7bbd5dbc1ecb4e5152efaecb6af3fa3a85a3ef0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32/12.2.0%2B20230208/toolchain-xtensa-esp32-linux_armv6l-12.2.0%2B20230208.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32/12.2.0%2B20230208/toolchain-xtensa-esp32-linux_armv6l-12.2.0%2B20230208.tar.gz"
+    ],
+    "provides": [
+     "linux_armv6l",
+     "linux_armv7l",
+     "linux_armv8l"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32/12.2.0+20230208/toolchain-xtensa-esp32-linux_i686-12.2.0+20230208.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32-linux_i686-12.2.0+20230208.tar.gz",
+    "size_bytes": 113712112,
+    "sha256": "6137e2e2cd1f21f70ab0d120b3b2ab901a8c390039f4fe59b78c76ea864af121",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32/12.2.0%2B20230208/toolchain-xtensa-esp32-linux_i686-12.2.0%2B20230208.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32/12.2.0%2B20230208/toolchain-xtensa-esp32-linux_i686-12.2.0%2B20230208.tar.gz"
+    ],
+    "provides": [
+     "linux_i686"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32/12.2.0+20230208/toolchain-xtensa-esp32-linux_x86_64-12.2.0+20230208.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32-linux_x86_64-12.2.0+20230208.tar.gz",
+    "size_bytes": 110609579,
+    "sha256": "ec77143a9db143cb25aa83b007b5783f6ced6a1210fb38a750d767406816c2a6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32/12.2.0%2B20230208/toolchain-xtensa-esp32-linux_x86_64-12.2.0%2B20230208.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32/12.2.0%2B20230208/toolchain-xtensa-esp32-linux_x86_64-12.2.0%2B20230208.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32/12.2.0+20230208/toolchain-xtensa-esp32-windows_amd64-12.2.0+20230208.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32-windows_amd64-12.2.0+20230208.tar.gz",
+    "size_bytes": 133628981,
+    "sha256": "93aacb690f9bd59cda0ec0b28ce4edd2f3fe993e93b0121f3f1156a9994e28bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32/12.2.0%2B20230208/toolchain-xtensa-esp32-windows_amd64-12.2.0%2B20230208.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32/12.2.0%2B20230208/toolchain-xtensa-esp32-windows_amd64-12.2.0%2B20230208.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_arm64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32/12.2.0+20230208/toolchain-xtensa-esp32-windows_x86-12.2.0+20230208.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32-windows_x86-12.2.0+20230208.tar.gz",
+    "size_bytes": 129457537,
+    "sha256": "5e1c746a7d5a88b730d8e2ba140a0f1869a2402dd066599a183632e2670aa911",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32/12.2.0%2B20230208/toolchain-xtensa-esp32-windows_x86-12.2.0%2B20230208.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32/12.2.0%2B20230208/toolchain-xtensa-esp32-windows_x86-12.2.0%2B20230208.tar.gz"
+    ],
+    "provides": [
+     "windows_x86"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32/8.4.0+2021r1/toolchain-xtensa-esp32-darwin_x86_64-8.4.0+2021r1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32-darwin_x86_64-8.4.0+2021r1.tar.gz",
+    "size_bytes": 92147615,
+    "sha256": "40911e9b97da25cc2da3bdad4c7763ed4cfa895ba91e468e37a6a66d189e1659",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r1/toolchain-xtensa-esp32-darwin_x86_64-8.4.0%2B2021r1.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r1/toolchain-xtensa-esp32-darwin_x86_64-8.4.0%2B2021r1.tar.gz"
+    ],
+    "provides": [
+     "darwin_x86_64",
+     "darwin_arm64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32/8.4.0+2021r1/toolchain-xtensa-esp32-linux_armv6l-8.4.0+2021r1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32-linux_armv6l-8.4.0+2021r1.tar.gz",
+    "size_bytes": 83701076,
+    "sha256": "e3de3931768fa24dc5087804b87e5cd1f8512e85bdadfe406b50cd32423c4e3c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r1/toolchain-xtensa-esp32-linux_armv6l-8.4.0%2B2021r1.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r1/toolchain-xtensa-esp32-linux_armv6l-8.4.0%2B2021r1.tar.gz"
+    ],
+    "provides": [
+     "linux_armv6l",
+     "linux_armv7l",
+     "linux_armv8l"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32/8.4.0+2021r1/toolchain-xtensa-esp32-linux_i686-8.4.0+2021r1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32-linux_i686-8.4.0+2021r1.tar.gz",
+    "size_bytes": 87441871,
+    "sha256": "76220269aa3b677693e8fe57afa98c2f3f6254871ccabf0ed38e7679a329d5da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r1/toolchain-xtensa-esp32-linux_i686-8.4.0%2B2021r1.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r1/toolchain-xtensa-esp32-linux_i686-8.4.0%2B2021r1.tar.gz"
+    ],
+    "provides": [
+     "linux_i686"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32/8.4.0+2021r1/toolchain-xtensa-esp32-linux_x86_64-8.4.0+2021r1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32-linux_x86_64-8.4.0+2021r1.tar.gz",
+    "size_bytes": 85423708,
+    "sha256": "e1be7bf602b434680fe94369758b1c4bdd69dd919e18adbf101b5f28ec12d092",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r1/toolchain-xtensa-esp32-linux_x86_64-8.4.0%2B2021r1.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r1/toolchain-xtensa-esp32-linux_x86_64-8.4.0%2B2021r1.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32/8.4.0+2021r1/toolchain-xtensa-esp32-windows_amd64-8.4.0+2021r1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32-windows_amd64-8.4.0+2021r1.tar.gz",
+    "size_bytes": 105805725,
+    "sha256": "b411de41f83b00914a32a40c94dfe4a4e2f35a28be76bf3990e9059c700f885e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r1/toolchain-xtensa-esp32-windows_amd64-8.4.0%2B2021r1.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r1/toolchain-xtensa-esp32-windows_amd64-8.4.0%2B2021r1.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_arm64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32/8.4.0+2021r1/toolchain-xtensa-esp32-windows_x86-8.4.0+2021r1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32-windows_x86-8.4.0+2021r1.tar.gz",
+    "size_bytes": 103013689,
+    "sha256": "3eba0a8fdd3ff9d9f5547d4df3c558d6954a8c0c77aa8c50ae0011705e6100e2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r1/toolchain-xtensa-esp32-windows_x86-8.4.0%2B2021r1.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r1/toolchain-xtensa-esp32-windows_x86-8.4.0%2B2021r1.tar.gz"
+    ],
+    "provides": [
+     "windows_x86"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32/8.4.0+2021r2-patch2/toolchain-xtensa-esp32-darwin_x86_64-8.4.0+2021r2-patch2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32-darwin_x86_64-8.4.0+2021r2-patch2.tar.gz",
+    "size_bytes": 96549012,
+    "sha256": "6d80df9d00d1e498d396586b31f9ebba09470c8042cdc439651e29a6ca491d0e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r2-patch2/toolchain-xtensa-esp32-darwin_x86_64-8.4.0%2B2021r2-patch2.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r2-patch2/toolchain-xtensa-esp32-darwin_x86_64-8.4.0%2B2021r2-patch2.tar.gz"
+    ],
+    "provides": [
+     "darwin_x86_64",
+     "darwin_arm64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32/8.4.0+2021r2-patch2/toolchain-xtensa-esp32-linux_armv6l-8.4.0+2021r2-patch2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32-linux_armv6l-8.4.0+2021r2-patch2.tar.gz",
+    "size_bytes": 85258658,
+    "sha256": "932ae01fb4c76c9d144a18bc3055192992afc1d18d4ed758580304c00e5ada92",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r2-patch2/toolchain-xtensa-esp32-linux_armv6l-8.4.0%2B2021r2-patch2.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r2-patch2/toolchain-xtensa-esp32-linux_armv6l-8.4.0%2B2021r2-patch2.tar.gz"
+    ],
+    "provides": [
+     "linux_armv6l",
+     "linux_armv7l",
+     "linux_armv8l"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32/8.4.0+2021r2-patch2/toolchain-xtensa-esp32-linux_i686-8.4.0+2021r2-patch2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32-linux_i686-8.4.0+2021r2-patch2.tar.gz",
+    "size_bytes": 91549014,
+    "sha256": "7d4b2933bba3f641cf14a4fe15bf7a65d6010271d7e2775f47a9943192d34e68",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r2-patch2/toolchain-xtensa-esp32-linux_i686-8.4.0%2B2021r2-patch2.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r2-patch2/toolchain-xtensa-esp32-linux_i686-8.4.0%2B2021r2-patch2.tar.gz"
+    ],
+    "provides": [
+     "linux_i686"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32/8.4.0+2021r2-patch2/toolchain-xtensa-esp32-linux_x86_64-8.4.0+2021r2-patch2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32-linux_x86_64-8.4.0+2021r2-patch2.tar.gz",
+    "size_bytes": 89530643,
+    "sha256": "6e41f7eaf97d1899fd52f5d1a9c4ea5375f0a431553f1bafc32fa0e7d5c1aada",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r2-patch2/toolchain-xtensa-esp32-linux_x86_64-8.4.0%2B2021r2-patch2.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r2-patch2/toolchain-xtensa-esp32-linux_x86_64-8.4.0%2B2021r2-patch2.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32/8.4.0+2021r2-patch2/toolchain-xtensa-esp32-windows_amd64-8.4.0+2021r2-patch2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32-windows_amd64-8.4.0+2021r2-patch2.tar.gz",
+    "size_bytes": 116823780,
+    "sha256": "56b3c0f5ad28143a90682ad0f021f67a0ca0305f649f674b6db9b634b5f327c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r2-patch2/toolchain-xtensa-esp32-windows_amd64-8.4.0%2B2021r2-patch2.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r2-patch2/toolchain-xtensa-esp32-windows_amd64-8.4.0%2B2021r2-patch2.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_arm64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32/8.4.0+2021r2-patch2/toolchain-xtensa-esp32-windows_x86-8.4.0+2021r2-patch2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32-windows_x86-8.4.0+2021r2-patch2.tar.gz",
+    "size_bytes": 113701080,
+    "sha256": "86425ac478b303a222572bdd149d3b34783593a9e83cead9ebcc660ebc367d56",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r2-patch2/toolchain-xtensa-esp32-windows_x86-8.4.0%2B2021r2-patch2.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r2-patch2/toolchain-xtensa-esp32-windows_x86-8.4.0%2B2021r2-patch2.tar.gz"
+    ],
+    "provides": [
+     "windows_x86"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32/8.4.0+2021r2-patch3/toolchain-xtensa-esp32-darwin_x86_64-8.4.0+2021r2-patch3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32-darwin_x86_64-8.4.0+2021r2-patch3.tar.gz",
+    "size_bytes": 96548006,
+    "sha256": "7cc06d9adc8e3f8a52ab743a9ac7eccbac00655f2d20e30919c702b2551aa876",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r2-patch3/toolchain-xtensa-esp32-darwin_x86_64-8.4.0%2B2021r2-patch3.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r2-patch3/toolchain-xtensa-esp32-darwin_x86_64-8.4.0%2B2021r2-patch3.tar.gz"
+    ],
+    "provides": [
+     "darwin_x86_64",
+     "darwin_arm64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32/8.4.0+2021r2-patch3/toolchain-xtensa-esp32-linux_aarch64-8.4.0+2021r2-patch3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32-linux_aarch64-8.4.0+2021r2-patch3.tar.gz",
+    "size_bytes": 85938085,
+    "sha256": "890d167ba85ffcd6261dd1675cd975b9a419bc9c3299dd19716718f27b62eb28",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r2-patch3/toolchain-xtensa-esp32-linux_aarch64-8.4.0%2B2021r2-patch3.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r2-patch3/toolchain-xtensa-esp32-linux_aarch64-8.4.0%2B2021r2-patch3.tar.gz"
+    ],
+    "provides": [
+     "linux_aarch64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32/8.4.0+2021r2-patch3/toolchain-xtensa-esp32-linux_armv6l-8.4.0+2021r2-patch3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32-linux_armv6l-8.4.0+2021r2-patch3.tar.gz",
+    "size_bytes": 85285274,
+    "sha256": "dc948db595956e916cad51cd47ce85b09c769be1fe771b05c98c92e6a4ba201d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r2-patch3/toolchain-xtensa-esp32-linux_armv6l-8.4.0%2B2021r2-patch3.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r2-patch3/toolchain-xtensa-esp32-linux_armv6l-8.4.0%2B2021r2-patch3.tar.gz"
+    ],
+    "provides": [
+     "linux_armv6l",
+     "linux_armv7l",
+     "linux_armv8l"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32/8.4.0+2021r2-patch3/toolchain-xtensa-esp32-linux_i686-8.4.0+2021r2-patch3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32-linux_i686-8.4.0+2021r2-patch3.tar.gz",
+    "size_bytes": 91512924,
+    "sha256": "954ea1c86b075079db1f715fdf9d45dde37d9b8136684a099bcb3bb103e2303b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r2-patch3/toolchain-xtensa-esp32-linux_i686-8.4.0%2B2021r2-patch3.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r2-patch3/toolchain-xtensa-esp32-linux_i686-8.4.0%2B2021r2-patch3.tar.gz"
+    ],
+    "provides": [
+     "linux_i686"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32/8.4.0+2021r2-patch3/toolchain-xtensa-esp32-linux_x86_64-8.4.0+2021r2-patch3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32-linux_x86_64-8.4.0+2021r2-patch3.tar.gz",
+    "size_bytes": 89516898,
+    "sha256": "8a3b68aa037806c93883dd17beee3c32792f5a12d8c436908cbf3ed9a57f19df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r2-patch3/toolchain-xtensa-esp32-linux_x86_64-8.4.0%2B2021r2-patch3.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r2-patch3/toolchain-xtensa-esp32-linux_x86_64-8.4.0%2B2021r2-patch3.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32/8.4.0+2021r2-patch3/toolchain-xtensa-esp32-windows_amd64-8.4.0+2021r2-patch3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32-windows_amd64-8.4.0+2021r2-patch3.tar.gz",
+    "size_bytes": 116841118,
+    "sha256": "408674e3c4912937b8ac58ba92af6ed5b3cf659f6c5aa4e914a6a73b415d2064",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r2-patch3/toolchain-xtensa-esp32-windows_amd64-8.4.0%2B2021r2-patch3.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r2-patch3/toolchain-xtensa-esp32-windows_amd64-8.4.0%2B2021r2-patch3.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_arm64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32/8.4.0+2021r2-patch3/toolchain-xtensa-esp32-windows_x86-8.4.0+2021r2-patch3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32-windows_x86-8.4.0+2021r2-patch3.tar.gz",
+    "size_bytes": 113750397,
+    "sha256": "55ae7f22d125251927bf71b1ca459e2c08ac3bd59948996a1222695b2b6db94c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r2-patch3/toolchain-xtensa-esp32-windows_x86-8.4.0%2B2021r2-patch3.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r2-patch3/toolchain-xtensa-esp32-windows_x86-8.4.0%2B2021r2-patch3.tar.gz"
+    ],
+    "provides": [
+     "windows_x86"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32/8.4.0+2021r2-patch5/toolchain-xtensa-esp32-darwin_arm64-8.4.0+2021r2-patch5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32-darwin_arm64-8.4.0+2021r2-patch5.tar.gz",
+    "size_bytes": 92114573,
+    "sha256": "c62bc015550d3b1f4209b4afa03c0243144556b8d1a764fae40c8bce9578e103",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r2-patch5/toolchain-xtensa-esp32-darwin_arm64-8.4.0%2B2021r2-patch5.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r2-patch5/toolchain-xtensa-esp32-darwin_arm64-8.4.0%2B2021r2-patch5.tar.gz"
+    ],
+    "provides": [
+     "darwin_arm64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32/8.4.0+2021r2-patch5/toolchain-xtensa-esp32-darwin_x86_64-8.4.0+2021r2-patch5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32-darwin_x86_64-8.4.0+2021r2-patch5.tar.gz",
+    "size_bytes": 100259260,
+    "sha256": "21e46d3009792b8c4116f2a94a4cb5b8962aded70dd6b1f06d8fbb1936ee8cb6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r2-patch5/toolchain-xtensa-esp32-darwin_x86_64-8.4.0%2B2021r2-patch5.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r2-patch5/toolchain-xtensa-esp32-darwin_x86_64-8.4.0%2B2021r2-patch5.tar.gz"
+    ],
+    "provides": [
+     "darwin_x86_64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32/8.4.0+2021r2-patch5/toolchain-xtensa-esp32-linux_aarch64-8.4.0+2021r2-patch5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32-linux_aarch64-8.4.0+2021r2-patch5.tar.gz",
+    "size_bytes": 89620299,
+    "sha256": "52c3b9583f0654dfc13c75437034b0cff5883e67241630a4145738fa8652aff6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r2-patch5/toolchain-xtensa-esp32-linux_aarch64-8.4.0%2B2021r2-patch5.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r2-patch5/toolchain-xtensa-esp32-linux_aarch64-8.4.0%2B2021r2-patch5.tar.gz"
+    ],
+    "provides": [
+     "linux_aarch64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32/8.4.0+2021r2-patch5/toolchain-xtensa-esp32-linux_armv6l-8.4.0+2021r2-patch5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32-linux_armv6l-8.4.0+2021r2-patch5.tar.gz",
+    "size_bytes": 88883549,
+    "sha256": "ee8cccf367c8034fd5832eba097dabd3d93ebd01f507dcacc1242162ec867a43",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r2-patch5/toolchain-xtensa-esp32-linux_armv6l-8.4.0%2B2021r2-patch5.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r2-patch5/toolchain-xtensa-esp32-linux_armv6l-8.4.0%2B2021r2-patch5.tar.gz"
+    ],
+    "provides": [
+     "linux_armv6l",
+     "linux_armv7l",
+     "linux_armv8l"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32/8.4.0+2021r2-patch5/toolchain-xtensa-esp32-linux_i686-8.4.0+2021r2-patch5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32-linux_i686-8.4.0+2021r2-patch5.tar.gz",
+    "size_bytes": 95158878,
+    "sha256": "e58c224691dcbfe346bfe463b3030cbae5f0db41788982f4f2c99151d83f27ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r2-patch5/toolchain-xtensa-esp32-linux_i686-8.4.0%2B2021r2-patch5.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r2-patch5/toolchain-xtensa-esp32-linux_i686-8.4.0%2B2021r2-patch5.tar.gz"
+    ],
+    "provides": [
+     "linux_i686"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32/8.4.0+2021r2-patch5/toolchain-xtensa-esp32-linux_x86_64-8.4.0+2021r2-patch5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32-linux_x86_64-8.4.0+2021r2-patch5.tar.gz",
+    "size_bytes": 93244717,
+    "sha256": "d356109e30ed9cbcfaba5fdee821b188fbc0781f5843aad490e20e9ac7b228dc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r2-patch5/toolchain-xtensa-esp32-linux_x86_64-8.4.0%2B2021r2-patch5.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r2-patch5/toolchain-xtensa-esp32-linux_x86_64-8.4.0%2B2021r2-patch5.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32/8.4.0+2021r2-patch5/toolchain-xtensa-esp32-windows_amd64-8.4.0+2021r2-patch5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32-windows_amd64-8.4.0+2021r2-patch5.tar.gz",
+    "size_bytes": 120571066,
+    "sha256": "abc98e1765139746154dc2927e3438eb7a65478909463210f4b5fb984cee0491",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r2-patch5/toolchain-xtensa-esp32-windows_amd64-8.4.0%2B2021r2-patch5.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r2-patch5/toolchain-xtensa-esp32-windows_amd64-8.4.0%2B2021r2-patch5.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_arm64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32/8.4.0+2021r2-patch5/toolchain-xtensa-esp32-windows_x86-8.4.0+2021r2-patch5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32-windows_x86-8.4.0+2021r2-patch5.tar.gz",
+    "size_bytes": 117307634,
+    "sha256": "ca981770bacd96e3163a04c8ec1cbb6aa2db7f8bd80cb9ae302d9c090a42516e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r2-patch5/toolchain-xtensa-esp32-windows_x86-8.4.0%2B2021r2-patch5.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r2-patch5/toolchain-xtensa-esp32-windows_x86-8.4.0%2B2021r2-patch5.tar.gz"
+    ],
+    "provides": [
+     "windows_x86"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32/8.4.0+2021r2/toolchain-xtensa-esp32-darwin_x86_64-8.4.0+2021r2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32-darwin_x86_64-8.4.0+2021r2.tar.gz",
+    "size_bytes": 96545382,
+    "sha256": "a1661b5418262a75d25311bd01a7cbc471f781acc92197e0a18196ee29f4e680",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r2/toolchain-xtensa-esp32-darwin_x86_64-8.4.0%2B2021r2.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r2/toolchain-xtensa-esp32-darwin_x86_64-8.4.0%2B2021r2.tar.gz"
+    ],
+    "provides": [
+     "darwin_x86_64",
+     "darwin_arm64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32/8.4.0+2021r2/toolchain-xtensa-esp32-linux_armv6l-8.4.0+2021r2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32-linux_armv6l-8.4.0+2021r2.tar.gz",
+    "size_bytes": 85284005,
+    "sha256": "b1ede8e5603643e282324f7a81e94f00b560a30b6be6581475c63f44b9c349f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r2/toolchain-xtensa-esp32-linux_armv6l-8.4.0%2B2021r2.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r2/toolchain-xtensa-esp32-linux_armv6l-8.4.0%2B2021r2.tar.gz"
+    ],
+    "provides": [
+     "linux_armv6l",
+     "linux_armv7l",
+     "linux_armv8l"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32/8.4.0+2021r2/toolchain-xtensa-esp32-linux_i686-8.4.0+2021r2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32-linux_i686-8.4.0+2021r2.tar.gz",
+    "size_bytes": 91516422,
+    "sha256": "daf4a4aebe49475a1e62d5460b4d02de77a54aae614389d5f8d5b4c76a890b08",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r2/toolchain-xtensa-esp32-linux_i686-8.4.0%2B2021r2.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r2/toolchain-xtensa-esp32-linux_i686-8.4.0%2B2021r2.tar.gz"
+    ],
+    "provides": [
+     "linux_i686"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32/8.4.0+2021r2/toolchain-xtensa-esp32-linux_x86_64-8.4.0+2021r2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32-linux_x86_64-8.4.0+2021r2.tar.gz",
+    "size_bytes": 89498288,
+    "sha256": "f6af66928274c9f762ce98599e6e10a6568d4d9a7817713b8584feb95066f640",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r2/toolchain-xtensa-esp32-linux_x86_64-8.4.0%2B2021r2.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r2/toolchain-xtensa-esp32-linux_x86_64-8.4.0%2B2021r2.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32/8.4.0+2021r2/toolchain-xtensa-esp32-windows_amd64-8.4.0+2021r2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32-windows_amd64-8.4.0+2021r2.tar.gz",
+    "size_bytes": 112627322,
+    "sha256": "e0135dbf8ebb66a51b2fe60b2a40a0170758a29fa4b8b76df9657bd3c6986882",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r2/toolchain-xtensa-esp32-windows_amd64-8.4.0%2B2021r2.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r2/toolchain-xtensa-esp32-windows_amd64-8.4.0%2B2021r2.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_arm64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32/8.4.0+2021r2/toolchain-xtensa-esp32-windows_x86-8.4.0+2021r2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32-windows_x86-8.4.0+2021r2.tar.gz",
+    "size_bytes": 109862309,
+    "sha256": "92c30d4a85099191628956745631fc73f684b8b02829183ea68f58055dfe8f58",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r2/toolchain-xtensa-esp32-windows_x86-8.4.0%2B2021r2.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32/8.4.0%2B2021r2/toolchain-xtensa-esp32-windows_x86-8.4.0%2B2021r2.tar.gz"
+    ],
+    "provides": [
+     "windows_x86"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s2/11.2.0+2022r1/toolchain-xtensa-esp32s2-darwin_arm64-11.2.0+2022r1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s2-darwin_arm64-11.2.0+2022r1.tar.gz",
+    "size_bytes": 79960006,
+    "sha256": "5f294cce147b1d180e0cae5743f7106f04c959bf63440ae82bd1d2251a422ae5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s2/11.2.0%2B2022r1/toolchain-xtensa-esp32s2-darwin_arm64-11.2.0%2B2022r1.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s2/11.2.0%2B2022r1/toolchain-xtensa-esp32s2-darwin_arm64-11.2.0%2B2022r1.tar.gz"
+    ],
+    "provides": [
+     "darwin_arm64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s2/11.2.0+2022r1/toolchain-xtensa-esp32s2-darwin_x86_64-11.2.0+2022r1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s2-darwin_x86_64-11.2.0+2022r1.tar.gz",
+    "size_bytes": 90551553,
+    "sha256": "26f35c5884d9d1eb7d4f32e1291f14534231e50858136e46251496f7fc310f4e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s2/11.2.0%2B2022r1/toolchain-xtensa-esp32s2-darwin_x86_64-11.2.0%2B2022r1.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s2/11.2.0%2B2022r1/toolchain-xtensa-esp32s2-darwin_x86_64-11.2.0%2B2022r1.tar.gz"
+    ],
+    "provides": [
+     "darwin_x86_64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s2/11.2.0+2022r1/toolchain-xtensa-esp32s2-linux_aarch64-11.2.0+2022r1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s2-linux_aarch64-11.2.0+2022r1.tar.gz",
+    "size_bytes": 77983510,
+    "sha256": "065c275bfa2111c941d603bf447fca6f28e26c195b4379b5d74f263bee994a59",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s2/11.2.0%2B2022r1/toolchain-xtensa-esp32s2-linux_aarch64-11.2.0%2B2022r1.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s2/11.2.0%2B2022r1/toolchain-xtensa-esp32s2-linux_aarch64-11.2.0%2B2022r1.tar.gz"
+    ],
+    "provides": [
+     "linux_aarch64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s2/11.2.0+2022r1/toolchain-xtensa-esp32s2-linux_armv6l-11.2.0+2022r1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s2-linux_armv6l-11.2.0+2022r1.tar.gz",
+    "size_bytes": 76922978,
+    "sha256": "120347713e8a4edf23e4b9ed97b0aa59b7ba388b9c8f4dcb62499a3c91532a5a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s2/11.2.0%2B2022r1/toolchain-xtensa-esp32s2-linux_armv6l-11.2.0%2B2022r1.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s2/11.2.0%2B2022r1/toolchain-xtensa-esp32s2-linux_armv6l-11.2.0%2B2022r1.tar.gz"
+    ],
+    "provides": [
+     "linux_armv6l"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s2/11.2.0+2022r1/toolchain-xtensa-esp32s2-linux_armv7l-11.2.0+2022r1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s2-linux_armv7l-11.2.0+2022r1.tar.gz",
+    "size_bytes": 73084991,
+    "sha256": "0e2dc07f2c41e25579ccac2f93a5236bd29a1e343792424afb1b72e08de7af72",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s2/11.2.0%2B2022r1/toolchain-xtensa-esp32s2-linux_armv7l-11.2.0%2B2022r1.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s2/11.2.0%2B2022r1/toolchain-xtensa-esp32s2-linux_armv7l-11.2.0%2B2022r1.tar.gz"
+    ],
+    "provides": [
+     "linux_armv7l",
+     "linux_armv8l"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s2/11.2.0+2022r1/toolchain-xtensa-esp32s2-linux_i686-11.2.0+2022r1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s2-linux_i686-11.2.0+2022r1.tar.gz",
+    "size_bytes": 86149498,
+    "sha256": "ee526566c62071eee251d945d1bebe3e5dfda28ecf0932bd7ded25b09479ade0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s2/11.2.0%2B2022r1/toolchain-xtensa-esp32s2-linux_i686-11.2.0%2B2022r1.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s2/11.2.0%2B2022r1/toolchain-xtensa-esp32s2-linux_i686-11.2.0%2B2022r1.tar.gz"
+    ],
+    "provides": [
+     "linux_i686"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s2/11.2.0+2022r1/toolchain-xtensa-esp32s2-linux_x86_64-11.2.0+2022r1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s2-linux_x86_64-11.2.0+2022r1.tar.gz",
+    "size_bytes": 83279112,
+    "sha256": "1818b0f53d558ec3904c4ee1941c01b1fac94c96137b08546ae42e10f76283bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s2/11.2.0%2B2022r1/toolchain-xtensa-esp32s2-linux_x86_64-11.2.0%2B2022r1.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s2/11.2.0%2B2022r1/toolchain-xtensa-esp32s2-linux_x86_64-11.2.0%2B2022r1.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s2/11.2.0+2022r1/toolchain-xtensa-esp32s2-windows_amd64-11.2.0+2022r1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s2-windows_amd64-11.2.0+2022r1.tar.gz",
+    "size_bytes": 97745674,
+    "sha256": "43a1c6c7e373f0755fae5049019ff50b515774eef3072a9661c8f83c66e6e9ba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s2/11.2.0%2B2022r1/toolchain-xtensa-esp32s2-windows_amd64-11.2.0%2B2022r1.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s2/11.2.0%2B2022r1/toolchain-xtensa-esp32s2-windows_amd64-11.2.0%2B2022r1.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_arm64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s2/11.2.0+2022r1/toolchain-xtensa-esp32s2-windows_x86-11.2.0+2022r1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s2-windows_x86-11.2.0+2022r1.tar.gz",
+    "size_bytes": 93654873,
+    "sha256": "61b1750a3e98563ae83bcb3471e84f7de888f8cda077808286439e2a6804aad6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s2/11.2.0%2B2022r1/toolchain-xtensa-esp32s2-windows_x86-11.2.0%2B2022r1.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s2/11.2.0%2B2022r1/toolchain-xtensa-esp32s2-windows_x86-11.2.0%2B2022r1.tar.gz"
+    ],
+    "provides": [
+     "windows_x86"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s2/12.2.0+20230208/toolchain-xtensa-esp32s2-darwin_arm64-12.2.0+20230208.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s2-darwin_arm64-12.2.0+20230208.tar.gz",
+    "size_bytes": 105664820,
+    "sha256": "8aa35ef4e7c18b47c9f1322bb08cc0a8a0b0f9a938479d33ea901550363b1019",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s2/12.2.0%2B20230208/toolchain-xtensa-esp32s2-darwin_arm64-12.2.0%2B20230208.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s2/12.2.0%2B20230208/toolchain-xtensa-esp32s2-darwin_arm64-12.2.0%2B20230208.tar.gz"
+    ],
+    "provides": [
+     "darwin_arm64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s2/12.2.0+20230208/toolchain-xtensa-esp32s2-darwin_x86_64-12.2.0+20230208.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s2-darwin_x86_64-12.2.0+20230208.tar.gz",
+    "size_bytes": 118259351,
+    "sha256": "32c95c467a7df89698df228a52e1756d56da3307887ef07847595c0922790554",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s2/12.2.0%2B20230208/toolchain-xtensa-esp32s2-darwin_x86_64-12.2.0%2B20230208.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s2/12.2.0%2B20230208/toolchain-xtensa-esp32s2-darwin_x86_64-12.2.0%2B20230208.tar.gz"
+    ],
+    "provides": [
+     "darwin_x86_64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s2/12.2.0+20230208/toolchain-xtensa-esp32s2-linux_aarch64-12.2.0+20230208.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s2-linux_aarch64-12.2.0+20230208.tar.gz",
+    "size_bytes": 105957024,
+    "sha256": "e739bd6e6661ddde6fbefb8ee1b322c8fa2346e7695e05b8359c2b80d3ca49d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s2/12.2.0%2B20230208/toolchain-xtensa-esp32s2-linux_aarch64-12.2.0%2B20230208.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s2/12.2.0%2B20230208/toolchain-xtensa-esp32s2-linux_aarch64-12.2.0%2B20230208.tar.gz"
+    ],
+    "provides": [
+     "linux_aarch64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s2/12.2.0+20230208/toolchain-xtensa-esp32s2-linux_armv6l-12.2.0+20230208.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s2-linux_armv6l-12.2.0+20230208.tar.gz",
+    "size_bytes": 105008123,
+    "sha256": "96e8524a652bdd714b4a7a6742ef1aa4fa2900f9dd4210288dd7536886a9870b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s2/12.2.0%2B20230208/toolchain-xtensa-esp32s2-linux_armv6l-12.2.0%2B20230208.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s2/12.2.0%2B20230208/toolchain-xtensa-esp32s2-linux_armv6l-12.2.0%2B20230208.tar.gz"
+    ],
+    "provides": [
+     "linux_armv6l",
+     "linux_armv7l",
+     "linux_armv8l"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s2/12.2.0+20230208/toolchain-xtensa-esp32s2-linux_i686-12.2.0+20230208.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s2-linux_i686-12.2.0+20230208.tar.gz",
+    "size_bytes": 114136582,
+    "sha256": "28b798854f130af0c69a178a600c92d730d4bbcf918e0f168718d246c799070e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s2/12.2.0%2B20230208/toolchain-xtensa-esp32s2-linux_i686-12.2.0%2B20230208.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s2/12.2.0%2B20230208/toolchain-xtensa-esp32s2-linux_i686-12.2.0%2B20230208.tar.gz"
+    ],
+    "provides": [
+     "linux_i686"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s2/12.2.0+20230208/toolchain-xtensa-esp32s2-linux_x86_64-12.2.0+20230208.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s2-linux_x86_64-12.2.0+20230208.tar.gz",
+    "size_bytes": 111025735,
+    "sha256": "f44ad0ae7ce558333deddcaee940881e2b2939bfc2b7b2d29ca8042d209c4077",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s2/12.2.0%2B20230208/toolchain-xtensa-esp32s2-linux_x86_64-12.2.0%2B20230208.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s2/12.2.0%2B20230208/toolchain-xtensa-esp32s2-linux_x86_64-12.2.0%2B20230208.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s2/12.2.0+20230208/toolchain-xtensa-esp32s2-windows_amd64-12.2.0+20230208.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s2-windows_amd64-12.2.0+20230208.tar.gz",
+    "size_bytes": 134041797,
+    "sha256": "25bed97a9ced40a817841c19803fa2b7de2b641ff3f584964abea4896f9378c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s2/12.2.0%2B20230208/toolchain-xtensa-esp32s2-windows_amd64-12.2.0%2B20230208.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s2/12.2.0%2B20230208/toolchain-xtensa-esp32s2-windows_amd64-12.2.0%2B20230208.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_arm64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s2/12.2.0+20230208/toolchain-xtensa-esp32s2-windows_x86-12.2.0+20230208.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s2-windows_x86-12.2.0+20230208.tar.gz",
+    "size_bytes": 129911719,
+    "sha256": "e8034cfdd5adb5ef2d5315113658304d3b8259f07ae3b18aa768f8b95c79abc1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s2/12.2.0%2B20230208/toolchain-xtensa-esp32s2-windows_x86-12.2.0%2B20230208.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s2/12.2.0%2B20230208/toolchain-xtensa-esp32s2-windows_x86-12.2.0%2B20230208.tar.gz"
+    ],
+    "provides": [
+     "windows_x86"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s2/8.4.0+2021r1/toolchain-xtensa-esp32s2-darwin_x86_64-8.4.0+2021r1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s2-darwin_x86_64-8.4.0+2021r1.tar.gz",
+    "size_bytes": 92544546,
+    "sha256": "c0da8acda9c98eae7ab0b8b1ea259b62fefb69d9155b5a3c75251d73dfd4cab0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s2/8.4.0%2B2021r1/toolchain-xtensa-esp32s2-darwin_x86_64-8.4.0%2B2021r1.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s2/8.4.0%2B2021r1/toolchain-xtensa-esp32s2-darwin_x86_64-8.4.0%2B2021r1.tar.gz"
+    ],
+    "provides": [
+     "darwin_x86_64",
+     "darwin_arm64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s2/8.4.0+2021r1/toolchain-xtensa-esp32s2-linux_armv6l-8.4.0+2021r1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s2-linux_armv6l-8.4.0+2021r1.tar.gz",
+    "size_bytes": 84086649,
+    "sha256": "f317db1c3ad858c69527a139d4f61b1a8397db995fd8c7a5333066c0d19d4742",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s2/8.4.0%2B2021r1/toolchain-xtensa-esp32s2-linux_armv6l-8.4.0%2B2021r1.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s2/8.4.0%2B2021r1/toolchain-xtensa-esp32s2-linux_armv6l-8.4.0%2B2021r1.tar.gz"
+    ],
+    "provides": [
+     "linux_armv6l",
+     "linux_armv7l",
+     "linux_armv8l"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s2/8.4.0+2021r1/toolchain-xtensa-esp32s2-linux_i686-8.4.0+2021r1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s2-linux_i686-8.4.0+2021r1.tar.gz",
+    "size_bytes": 87745252,
+    "sha256": "85121b240268ae85fb34efd052d4b4193ede67918321796a7f604163f0dbe466",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s2/8.4.0%2B2021r1/toolchain-xtensa-esp32s2-linux_i686-8.4.0%2B2021r1.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s2/8.4.0%2B2021r1/toolchain-xtensa-esp32s2-linux_i686-8.4.0%2B2021r1.tar.gz"
+    ],
+    "provides": [
+     "linux_i686"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s2/8.4.0+2021r1/toolchain-xtensa-esp32s2-linux_x86_64-8.4.0+2021r1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s2-linux_x86_64-8.4.0+2021r1.tar.gz",
+    "size_bytes": 85738638,
+    "sha256": "7cf899eb74cc681b7691a1878f1e718bea89a72d61d609ad6ac3297c7f6f0729",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s2/8.4.0%2B2021r1/toolchain-xtensa-esp32s2-linux_x86_64-8.4.0%2B2021r1.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s2/8.4.0%2B2021r1/toolchain-xtensa-esp32s2-linux_x86_64-8.4.0%2B2021r1.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s2/8.4.0+2021r1/toolchain-xtensa-esp32s2-windows_amd64-8.4.0+2021r1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s2-windows_amd64-8.4.0+2021r1.tar.gz",
+    "size_bytes": 106169807,
+    "sha256": "fce39d15b8f23697608d67765d05ccf2a94dfe43efeec7d54bb8f66c59e02939",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s2/8.4.0%2B2021r1/toolchain-xtensa-esp32s2-windows_amd64-8.4.0%2B2021r1.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s2/8.4.0%2B2021r1/toolchain-xtensa-esp32s2-windows_amd64-8.4.0%2B2021r1.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_arm64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s2/8.4.0+2021r1/toolchain-xtensa-esp32s2-windows_x86-8.4.0+2021r1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s2-windows_x86-8.4.0+2021r1.tar.gz",
+    "size_bytes": 103420396,
+    "sha256": "f089840929ea5dd4f4d1330522e0ae578ae61ee13b187bd01e0f2f3fda7ae502",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s2/8.4.0%2B2021r1/toolchain-xtensa-esp32s2-windows_x86-8.4.0%2B2021r1.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s2/8.4.0%2B2021r1/toolchain-xtensa-esp32s2-windows_x86-8.4.0%2B2021r1.tar.gz"
+    ],
+    "provides": [
+     "windows_x86"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s2/8.4.0+2021r2-patch2/toolchain-xtensa-esp32s2-darwin_x86_64-8.4.0+2021r2-patch2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s2-darwin_x86_64-8.4.0+2021r2-patch2.tar.gz",
+    "size_bytes": 96930841,
+    "sha256": "41bb0ded59ec5cd5524e80d27d61b741314a83b6482739a4d141eb6564948e5a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s2/8.4.0%2B2021r2-patch2/toolchain-xtensa-esp32s2-darwin_x86_64-8.4.0%2B2021r2-patch2.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s2/8.4.0%2B2021r2-patch2/toolchain-xtensa-esp32s2-darwin_x86_64-8.4.0%2B2021r2-patch2.tar.gz"
+    ],
+    "provides": [
+     "darwin_x86_64",
+     "darwin_arm64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s2/8.4.0+2021r2-patch2/toolchain-xtensa-esp32s2-linux_armv6l-8.4.0+2021r2-patch2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s2-linux_armv6l-8.4.0+2021r2-patch2.tar.gz",
+    "size_bytes": 85648592,
+    "sha256": "8154f60d9455f6551a723c12bbe300da3b2fbe2995d8fe4a393d6bfebf3a5264",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s2/8.4.0%2B2021r2-patch2/toolchain-xtensa-esp32s2-linux_armv6l-8.4.0%2B2021r2-patch2.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s2/8.4.0%2B2021r2-patch2/toolchain-xtensa-esp32s2-linux_armv6l-8.4.0%2B2021r2-patch2.tar.gz"
+    ],
+    "provides": [
+     "linux_armv6l",
+     "linux_armv7l",
+     "linux_armv8l"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s2/8.4.0+2021r2-patch2/toolchain-xtensa-esp32s2-linux_i686-8.4.0+2021r2-patch2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s2-linux_i686-8.4.0+2021r2-patch2.tar.gz",
+    "size_bytes": 91888025,
+    "sha256": "6295457791c3ccd3d7f04addd7fc9d4f576639fba5f1de993e9a0c13cc2a0561",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s2/8.4.0%2B2021r2-patch2/toolchain-xtensa-esp32s2-linux_i686-8.4.0%2B2021r2-patch2.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s2/8.4.0%2B2021r2-patch2/toolchain-xtensa-esp32s2-linux_i686-8.4.0%2B2021r2-patch2.tar.gz"
+    ],
+    "provides": [
+     "linux_i686"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s2/8.4.0+2021r2-patch2/toolchain-xtensa-esp32s2-linux_x86_64-8.4.0+2021r2-patch2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s2-linux_x86_64-8.4.0+2021r2-patch2.tar.gz",
+    "size_bytes": 89845940,
+    "sha256": "ebdfd990b5cddd0ecb6cb2d371bc44b35d769a340cb10c58ae9c3e0ab94c5585",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s2/8.4.0%2B2021r2-patch2/toolchain-xtensa-esp32s2-linux_x86_64-8.4.0%2B2021r2-patch2.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s2/8.4.0%2B2021r2-patch2/toolchain-xtensa-esp32s2-linux_x86_64-8.4.0%2B2021r2-patch2.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s2/8.4.0+2021r2-patch2/toolchain-xtensa-esp32s2-windows_amd64-8.4.0+2021r2-patch2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s2-windows_amd64-8.4.0+2021r2-patch2.tar.gz",
+    "size_bytes": 117213127,
+    "sha256": "c1ed921d8b671ac6ea4b5115db0322740bbd00a15cff7bd5b060f24cb82d9396",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s2/8.4.0%2B2021r2-patch2/toolchain-xtensa-esp32s2-windows_amd64-8.4.0%2B2021r2-patch2.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s2/8.4.0%2B2021r2-patch2/toolchain-xtensa-esp32s2-windows_amd64-8.4.0%2B2021r2-patch2.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_arm64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s2/8.4.0+2021r2-patch2/toolchain-xtensa-esp32s2-windows_x86-8.4.0+2021r2-patch2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s2-windows_x86-8.4.0+2021r2-patch2.tar.gz",
+    "size_bytes": 114138276,
+    "sha256": "38664c8971c583c303b89f22fc10341feeb2525510fc5cec7fb61513ea8e54d3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s2/8.4.0%2B2021r2-patch2/toolchain-xtensa-esp32s2-windows_x86-8.4.0%2B2021r2-patch2.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s2/8.4.0%2B2021r2-patch2/toolchain-xtensa-esp32s2-windows_x86-8.4.0%2B2021r2-patch2.tar.gz"
+    ],
+    "provides": [
+     "windows_x86"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s2/8.4.0+2021r2-patch3/toolchain-xtensa-esp32s2-darwin_x86_64-8.4.0+2021r2-patch3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s2-darwin_x86_64-8.4.0+2021r2-patch3.tar.gz",
+    "size_bytes": 96912335,
+    "sha256": "a1316287dc647ac5a67d271e14176a7e36e00f8b8948a4efc4198043036460c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s2/8.4.0%2B2021r2-patch3/toolchain-xtensa-esp32s2-darwin_x86_64-8.4.0%2B2021r2-patch3.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s2/8.4.0%2B2021r2-patch3/toolchain-xtensa-esp32s2-darwin_x86_64-8.4.0%2B2021r2-patch3.tar.gz"
+    ],
+    "provides": [
+     "darwin_x86_64",
+     "darwin_arm64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s2/8.4.0+2021r2-patch3/toolchain-xtensa-esp32s2-linux_aarch64-8.4.0+2021r2-patch3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s2-linux_aarch64-8.4.0+2021r2-patch3.tar.gz",
+    "size_bytes": 86285111,
+    "sha256": "499358d4ecde604294b2a7427abaa77507fe3fa2418df74a7542421f6a023416",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s2/8.4.0%2B2021r2-patch3/toolchain-xtensa-esp32s2-linux_aarch64-8.4.0%2B2021r2-patch3.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s2/8.4.0%2B2021r2-patch3/toolchain-xtensa-esp32s2-linux_aarch64-8.4.0%2B2021r2-patch3.tar.gz"
+    ],
+    "provides": [
+     "linux_aarch64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s2/8.4.0+2021r2-patch3/toolchain-xtensa-esp32s2-linux_armv6l-8.4.0+2021r2-patch3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s2-linux_armv6l-8.4.0+2021r2-patch3.tar.gz",
+    "size_bytes": 85661392,
+    "sha256": "78550de31cf18658a510408bff953ae5df5d0a05f5a4a023af3ac44d4ded5ab9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s2/8.4.0%2B2021r2-patch3/toolchain-xtensa-esp32s2-linux_armv6l-8.4.0%2B2021r2-patch3.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s2/8.4.0%2B2021r2-patch3/toolchain-xtensa-esp32s2-linux_armv6l-8.4.0%2B2021r2-patch3.tar.gz"
+    ],
+    "provides": [
+     "linux_armv6l",
+     "linux_armv7l",
+     "linux_armv8l"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s2/8.4.0+2021r2-patch3/toolchain-xtensa-esp32s2-linux_i686-8.4.0+2021r2-patch3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s2-linux_i686-8.4.0+2021r2-patch3.tar.gz",
+    "size_bytes": 91839536,
+    "sha256": "e4cf6fbacada8a4b8d2567aeada896dbdc0c7675b0a80d857a0b13a756e852d4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s2/8.4.0%2B2021r2-patch3/toolchain-xtensa-esp32s2-linux_i686-8.4.0%2B2021r2-patch3.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s2/8.4.0%2B2021r2-patch3/toolchain-xtensa-esp32s2-linux_i686-8.4.0%2B2021r2-patch3.tar.gz"
+    ],
+    "provides": [
+     "linux_i686"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s2/8.4.0+2021r2-patch3/toolchain-xtensa-esp32s2-linux_x86_64-8.4.0+2021r2-patch3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s2-linux_x86_64-8.4.0+2021r2-patch3.tar.gz",
+    "size_bytes": 89843809,
+    "sha256": "e6956815a4255c27608e7e17bc7b84ffa08f6f15b1ef8477beecba2121381d22",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s2/8.4.0%2B2021r2-patch3/toolchain-xtensa-esp32s2-linux_x86_64-8.4.0%2B2021r2-patch3.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s2/8.4.0%2B2021r2-patch3/toolchain-xtensa-esp32s2-linux_x86_64-8.4.0%2B2021r2-patch3.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s2/8.4.0+2021r2-patch3/toolchain-xtensa-esp32s2-windows_amd64-8.4.0+2021r2-patch3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s2-windows_amd64-8.4.0+2021r2-patch3.tar.gz",
+    "size_bytes": 117198600,
+    "sha256": "4018e4b936fb2525a490440566a9828f2cebb864fe5a46928b084248d8bdfe82",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s2/8.4.0%2B2021r2-patch3/toolchain-xtensa-esp32s2-windows_amd64-8.4.0%2B2021r2-patch3.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s2/8.4.0%2B2021r2-patch3/toolchain-xtensa-esp32s2-windows_amd64-8.4.0%2B2021r2-patch3.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_arm64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s2/8.4.0+2021r2-patch3/toolchain-xtensa-esp32s2-windows_x86-8.4.0+2021r2-patch3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s2-windows_x86-8.4.0+2021r2-patch3.tar.gz",
+    "size_bytes": 114161602,
+    "sha256": "12df94c2eedc493d455c294a7da6156d147302bb4b82a3c21c7ac8e45dece2b0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s2/8.4.0%2B2021r2-patch3/toolchain-xtensa-esp32s2-windows_x86-8.4.0%2B2021r2-patch3.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s2/8.4.0%2B2021r2-patch3/toolchain-xtensa-esp32s2-windows_x86-8.4.0%2B2021r2-patch3.tar.gz"
+    ],
+    "provides": [
+     "windows_x86"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s2/8.4.0+2021r2-patch5/toolchain-xtensa-esp32s2-darwin_arm64-8.4.0+2021r2-patch5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s2-darwin_arm64-8.4.0+2021r2-patch5.tar.gz",
+    "size_bytes": 65912680,
+    "sha256": "fef5f172c4c16591b4ae024df0a1c3a95082eff7a33a78332a843de1a85a9be4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s2/8.4.0%2B2021r2-patch5/toolchain-xtensa-esp32s2-darwin_arm64-8.4.0%2B2021r2-patch5.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s2/8.4.0%2B2021r2-patch5/toolchain-xtensa-esp32s2-darwin_arm64-8.4.0%2B2021r2-patch5.tar.gz"
+    ],
+    "provides": [
+     "darwin_arm64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s2/8.4.0+2021r2-patch5/toolchain-xtensa-esp32s2-darwin_x86_64-8.4.0+2021r2-patch5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s2-darwin_x86_64-8.4.0+2021r2-patch5.tar.gz",
+    "size_bytes": 74192377,
+    "sha256": "3d55c3f3b65db1ff5f1553d5c26aa39d58f452079705ce08df0df5a4011849d7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s2/8.4.0%2B2021r2-patch5/toolchain-xtensa-esp32s2-darwin_x86_64-8.4.0%2B2021r2-patch5.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s2/8.4.0%2B2021r2-patch5/toolchain-xtensa-esp32s2-darwin_x86_64-8.4.0%2B2021r2-patch5.tar.gz"
+    ],
+    "provides": [
+     "darwin_x86_64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s2/8.4.0+2021r2-patch5/toolchain-xtensa-esp32s2-linux_aarch64-8.4.0+2021r2-patch5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s2-linux_aarch64-8.4.0+2021r2-patch5.tar.gz",
+    "size_bytes": 63533097,
+    "sha256": "3cfccd8b9521a5a093091102f22a07be82c204f8d5ac60cda4d365abc4fafbf3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s2/8.4.0%2B2021r2-patch5/toolchain-xtensa-esp32s2-linux_aarch64-8.4.0%2B2021r2-patch5.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s2/8.4.0%2B2021r2-patch5/toolchain-xtensa-esp32s2-linux_aarch64-8.4.0%2B2021r2-patch5.tar.gz"
+    ],
+    "provides": [
+     "linux_aarch64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s2/8.4.0+2021r2-patch5/toolchain-xtensa-esp32s2-linux_armv6l-8.4.0+2021r2-patch5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s2-linux_armv6l-8.4.0+2021r2-patch5.tar.gz",
+    "size_bytes": 62824674,
+    "sha256": "79a731efeac5adc57cbc5a1f355f7e2d975a2a4a42196c3d38a4096badfb608d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s2/8.4.0%2B2021r2-patch5/toolchain-xtensa-esp32s2-linux_armv6l-8.4.0%2B2021r2-patch5.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s2/8.4.0%2B2021r2-patch5/toolchain-xtensa-esp32s2-linux_armv6l-8.4.0%2B2021r2-patch5.tar.gz"
+    ],
+    "provides": [
+     "linux_armv6l",
+     "linux_armv7l",
+     "linux_armv8l"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s2/8.4.0+2021r2-patch5/toolchain-xtensa-esp32s2-linux_i686-8.4.0+2021r2-patch5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s2-linux_i686-8.4.0+2021r2-patch5.tar.gz",
+    "size_bytes": 69040597,
+    "sha256": "1fb6446cce59ddc2694e5824b3b986f02e3be7067673f81f5def61243d518e73",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s2/8.4.0%2B2021r2-patch5/toolchain-xtensa-esp32s2-linux_i686-8.4.0%2B2021r2-patch5.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s2/8.4.0%2B2021r2-patch5/toolchain-xtensa-esp32s2-linux_i686-8.4.0%2B2021r2-patch5.tar.gz"
+    ],
+    "provides": [
+     "linux_i686"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s2/8.4.0+2021r2-patch5/toolchain-xtensa-esp32s2-linux_x86_64-8.4.0+2021r2-patch5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s2-linux_x86_64-8.4.0+2021r2-patch5.tar.gz",
+    "size_bytes": 67169169,
+    "sha256": "1c904617afbb7108dc8a4cb838aac2d2ae2e0f7de9bd907c976e48bb4afbe700",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s2/8.4.0%2B2021r2-patch5/toolchain-xtensa-esp32s2-linux_x86_64-8.4.0%2B2021r2-patch5.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s2/8.4.0%2B2021r2-patch5/toolchain-xtensa-esp32s2-linux_x86_64-8.4.0%2B2021r2-patch5.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s2/8.4.0+2021r2-patch5/toolchain-xtensa-esp32s2-windows_amd64-8.4.0+2021r2-patch5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s2-windows_amd64-8.4.0+2021r2-patch5.tar.gz",
+    "size_bytes": 84329001,
+    "sha256": "ccb057bf12087ecedc54b484fc5a973c9db4f2b89afa2053c81467a7532e171d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s2/8.4.0%2B2021r2-patch5/toolchain-xtensa-esp32s2-windows_amd64-8.4.0%2B2021r2-patch5.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s2/8.4.0%2B2021r2-patch5/toolchain-xtensa-esp32s2-windows_amd64-8.4.0%2B2021r2-patch5.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_arm64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s2/8.4.0+2021r2-patch5/toolchain-xtensa-esp32s2-windows_x86-8.4.0+2021r2-patch5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s2-windows_x86-8.4.0+2021r2-patch5.tar.gz",
+    "size_bytes": 81085205,
+    "sha256": "fbc9741d5638a2c699e29096ee8c8e4f30de69f907627d2f2edf2735a7340f47",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s2/8.4.0%2B2021r2-patch5/toolchain-xtensa-esp32s2-windows_x86-8.4.0%2B2021r2-patch5.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s2/8.4.0%2B2021r2-patch5/toolchain-xtensa-esp32s2-windows_x86-8.4.0%2B2021r2-patch5.tar.gz"
+    ],
+    "provides": [
+     "windows_x86"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s3/11.2.0+2022r1/toolchain-xtensa-esp32s3-darwin_arm64-11.2.0+2022r1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s3-darwin_arm64-11.2.0+2022r1.tar.gz",
+    "size_bytes": 80369492,
+    "sha256": "2100abd7670dff2aa4172423b383e5e402f84af04354d958eeef485bc9429ef8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s3/11.2.0%2B2022r1/toolchain-xtensa-esp32s3-darwin_arm64-11.2.0%2B2022r1.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s3/11.2.0%2B2022r1/toolchain-xtensa-esp32s3-darwin_arm64-11.2.0%2B2022r1.tar.gz"
+    ],
+    "provides": [
+     "darwin_arm64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s3/11.2.0+2022r1/toolchain-xtensa-esp32s3-darwin_x86_64-11.2.0+2022r1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s3-darwin_x86_64-11.2.0+2022r1.tar.gz",
+    "size_bytes": 91104158,
+    "sha256": "0a0d51080f0153d4597d813d13956d7199bc1999750399efe9757b5f9a52e605",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s3/11.2.0%2B2022r1/toolchain-xtensa-esp32s3-darwin_x86_64-11.2.0%2B2022r1.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s3/11.2.0%2B2022r1/toolchain-xtensa-esp32s3-darwin_x86_64-11.2.0%2B2022r1.tar.gz"
+    ],
+    "provides": [
+     "darwin_x86_64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s3/11.2.0+2022r1/toolchain-xtensa-esp32s3-linux_aarch64-11.2.0+2022r1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s3-linux_aarch64-11.2.0+2022r1.tar.gz",
+    "size_bytes": 78027708,
+    "sha256": "392a26718b4241d643e7121e0358fd315a56d2e8d51da76bba67dae43cb1708f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s3/11.2.0%2B2022r1/toolchain-xtensa-esp32s3-linux_aarch64-11.2.0%2B2022r1.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s3/11.2.0%2B2022r1/toolchain-xtensa-esp32s3-linux_aarch64-11.2.0%2B2022r1.tar.gz"
+    ],
+    "provides": [
+     "linux_aarch64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s3/11.2.0+2022r1/toolchain-xtensa-esp32s3-linux_armv6l-11.2.0+2022r1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s3-linux_armv6l-11.2.0+2022r1.tar.gz",
+    "size_bytes": 76983850,
+    "sha256": "ca1270374190beb0072fdd19ddf99427e54d29e795b419181c7106abfbe682c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s3/11.2.0%2B2022r1/toolchain-xtensa-esp32s3-linux_armv6l-11.2.0%2B2022r1.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s3/11.2.0%2B2022r1/toolchain-xtensa-esp32s3-linux_armv6l-11.2.0%2B2022r1.tar.gz"
+    ],
+    "provides": [
+     "linux_armv6l"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s3/11.2.0+2022r1/toolchain-xtensa-esp32s3-linux_armv7l-11.2.0+2022r1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s3-linux_armv7l-11.2.0+2022r1.tar.gz",
+    "size_bytes": 73128810,
+    "sha256": "eced5693ffa16226925617a2b53ca920605208e7baaae321197c8e8dd13e3ad7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s3/11.2.0%2B2022r1/toolchain-xtensa-esp32s3-linux_armv7l-11.2.0%2B2022r1.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s3/11.2.0%2B2022r1/toolchain-xtensa-esp32s3-linux_armv7l-11.2.0%2B2022r1.tar.gz"
+    ],
+    "provides": [
+     "linux_armv7l",
+     "linux_armv8l"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s3/11.2.0+2022r1/toolchain-xtensa-esp32s3-linux_i686-11.2.0+2022r1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s3-linux_i686-11.2.0+2022r1.tar.gz",
+    "size_bytes": 86327183,
+    "sha256": "fbc855b6de60d1c1ac537190a5985e7a4e8d7080736243eda7de8742ec64712c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s3/11.2.0%2B2022r1/toolchain-xtensa-esp32s3-linux_i686-11.2.0%2B2022r1.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s3/11.2.0%2B2022r1/toolchain-xtensa-esp32s3-linux_i686-11.2.0%2B2022r1.tar.gz"
+    ],
+    "provides": [
+     "linux_i686"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s3/11.2.0+2022r1/toolchain-xtensa-esp32s3-linux_x86_64-11.2.0+2022r1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s3-linux_x86_64-11.2.0+2022r1.tar.gz",
+    "size_bytes": 83444184,
+    "sha256": "beff4105376a3b91cd4c98223c2cefb3722b16bffe5e3ef37b78df08478ba455",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s3/11.2.0%2B2022r1/toolchain-xtensa-esp32s3-linux_x86_64-11.2.0%2B2022r1.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s3/11.2.0%2B2022r1/toolchain-xtensa-esp32s3-linux_x86_64-11.2.0%2B2022r1.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s3/11.2.0+2022r1/toolchain-xtensa-esp32s3-windows_amd64-11.2.0+2022r1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s3-windows_amd64-11.2.0+2022r1.tar.gz",
+    "size_bytes": 98180944,
+    "sha256": "0e1cc350c01e0399f5d71e9ba3af3c218d669beaf2c7a4a5022688301bd4bda4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s3/11.2.0%2B2022r1/toolchain-xtensa-esp32s3-windows_amd64-11.2.0%2B2022r1.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s3/11.2.0%2B2022r1/toolchain-xtensa-esp32s3-windows_amd64-11.2.0%2B2022r1.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_arm64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s3/11.2.0+2022r1/toolchain-xtensa-esp32s3-windows_x86-11.2.0+2022r1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s3-windows_x86-11.2.0+2022r1.tar.gz",
+    "size_bytes": 93923338,
+    "sha256": "38278a58d946b80ea07f9ee6efa710546c80dfa4c564e806737004c9b4ad533f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s3/11.2.0%2B2022r1/toolchain-xtensa-esp32s3-windows_x86-11.2.0%2B2022r1.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s3/11.2.0%2B2022r1/toolchain-xtensa-esp32s3-windows_x86-11.2.0%2B2022r1.tar.gz"
+    ],
+    "provides": [
+     "windows_x86"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s3/12.2.0+20230208/toolchain-xtensa-esp32s3-darwin_arm64-12.2.0+20230208.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s3-darwin_arm64-12.2.0+20230208.tar.gz",
+    "size_bytes": 105568204,
+    "sha256": "bcd3ac82dc7e95df6e6439637de4d31f94f994ae633d02edbb5c3867118ea61e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s3/12.2.0%2B20230208/toolchain-xtensa-esp32s3-darwin_arm64-12.2.0%2B20230208.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s3/12.2.0%2B20230208/toolchain-xtensa-esp32s3-darwin_arm64-12.2.0%2B20230208.tar.gz"
+    ],
+    "provides": [
+     "darwin_arm64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s3/12.2.0+20230208/toolchain-xtensa-esp32s3-darwin_x86_64-12.2.0+20230208.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s3-darwin_x86_64-12.2.0+20230208.tar.gz",
+    "size_bytes": 118440105,
+    "sha256": "bc89f4ea836995dd5ab686bb8a44909b8d49753117fe30a254d6bb9b2d5116ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s3/12.2.0%2B20230208/toolchain-xtensa-esp32s3-darwin_x86_64-12.2.0%2B20230208.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s3/12.2.0%2B20230208/toolchain-xtensa-esp32s3-darwin_x86_64-12.2.0%2B20230208.tar.gz"
+    ],
+    "provides": [
+     "darwin_x86_64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s3/12.2.0+20230208/toolchain-xtensa-esp32s3-linux_aarch64-12.2.0+20230208.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s3-linux_aarch64-12.2.0+20230208.tar.gz",
+    "size_bytes": 105614519,
+    "sha256": "43de0cf7a156ae9b0a8c678c1621bacf1e854729aae7f8f95822f896e6003749",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s3/12.2.0%2B20230208/toolchain-xtensa-esp32s3-linux_aarch64-12.2.0%2B20230208.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s3/12.2.0%2B20230208/toolchain-xtensa-esp32s3-linux_aarch64-12.2.0%2B20230208.tar.gz"
+    ],
+    "provides": [
+     "linux_aarch64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s3/12.2.0+20230208/toolchain-xtensa-esp32s3-linux_armv6l-12.2.0+20230208.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s3-linux_armv6l-12.2.0+20230208.tar.gz",
+    "size_bytes": 104702342,
+    "sha256": "6da047a17a37a9527f1cf7da62da9dff8b77337dc0e12772b3b9eaafcc13ac35",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s3/12.2.0%2B20230208/toolchain-xtensa-esp32s3-linux_armv6l-12.2.0%2B20230208.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s3/12.2.0%2B20230208/toolchain-xtensa-esp32s3-linux_armv6l-12.2.0%2B20230208.tar.gz"
+    ],
+    "provides": [
+     "linux_armv6l",
+     "linux_armv7l",
+     "linux_armv8l"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s3/12.2.0+20230208/toolchain-xtensa-esp32s3-linux_i686-12.2.0+20230208.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s3-linux_i686-12.2.0+20230208.tar.gz",
+    "size_bytes": 113920228,
+    "sha256": "9647f1db25692f64a1162a6982df5dc2fb42672ddce1cdc25727623b9e99480d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s3/12.2.0%2B20230208/toolchain-xtensa-esp32s3-linux_i686-12.2.0%2B20230208.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s3/12.2.0%2B20230208/toolchain-xtensa-esp32s3-linux_i686-12.2.0%2B20230208.tar.gz"
+    ],
+    "provides": [
+     "linux_i686"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s3/12.2.0+20230208/toolchain-xtensa-esp32s3-linux_x86_64-12.2.0+20230208.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s3-linux_x86_64-12.2.0+20230208.tar.gz",
+    "size_bytes": 110818961,
+    "sha256": "6be845ff99e476101c1ba2c107b947970e92461cd3d3f4c518236a14214d1eaf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s3/12.2.0%2B20230208/toolchain-xtensa-esp32s3-linux_x86_64-12.2.0%2B20230208.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s3/12.2.0%2B20230208/toolchain-xtensa-esp32s3-linux_x86_64-12.2.0%2B20230208.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s3/12.2.0+20230208/toolchain-xtensa-esp32s3-windows_amd64-12.2.0+20230208.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s3-windows_amd64-12.2.0+20230208.tar.gz",
+    "size_bytes": 134032978,
+    "sha256": "5965ad88be00a479e2afe7f18a00b8a977718fd78a36279f022f03ad7b291b0a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s3/12.2.0%2B20230208/toolchain-xtensa-esp32s3-windows_amd64-12.2.0%2B20230208.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s3/12.2.0%2B20230208/toolchain-xtensa-esp32s3-windows_amd64-12.2.0%2B20230208.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_arm64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s3/12.2.0+20230208/toolchain-xtensa-esp32s3-windows_x86-12.2.0+20230208.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s3-windows_x86-12.2.0+20230208.tar.gz",
+    "size_bytes": 129769965,
+    "sha256": "73a7f03675c75f6cdbb3ddfe65e61bca993fca654156ebdbbcfe8a121cb235da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s3/12.2.0%2B20230208/toolchain-xtensa-esp32s3-windows_x86-12.2.0%2B20230208.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s3/12.2.0%2B20230208/toolchain-xtensa-esp32s3-windows_x86-12.2.0%2B20230208.tar.gz"
+    ],
+    "provides": [
+     "windows_x86"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s3/8.4.0+2021r2-patch2/toolchain-xtensa-esp32s3-darwin_x86_64-8.4.0+2021r2-patch2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s3-darwin_x86_64-8.4.0+2021r2-patch2.tar.gz",
+    "size_bytes": 97275112,
+    "sha256": "fb292d822ad60169750b45826416cab63e2ef7403b44251d04e367432cc93e08",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s3/8.4.0%2B2021r2-patch2/toolchain-xtensa-esp32s3-darwin_x86_64-8.4.0%2B2021r2-patch2.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s3/8.4.0%2B2021r2-patch2/toolchain-xtensa-esp32s3-darwin_x86_64-8.4.0%2B2021r2-patch2.tar.gz"
+    ],
+    "provides": [
+     "darwin_x86_64",
+     "darwin_arm64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s3/8.4.0+2021r2-patch2/toolchain-xtensa-esp32s3-linux_armv6l-8.4.0+2021r2-patch2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s3-linux_armv6l-8.4.0+2021r2-patch2.tar.gz",
+    "size_bytes": 85544788,
+    "sha256": "00eae4e62dd786533537890e5fec9f9f5224eb27db9967b7452494d40735b33b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s3/8.4.0%2B2021r2-patch2/toolchain-xtensa-esp32s3-linux_armv6l-8.4.0%2B2021r2-patch2.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s3/8.4.0%2B2021r2-patch2/toolchain-xtensa-esp32s3-linux_armv6l-8.4.0%2B2021r2-patch2.tar.gz"
+    ],
+    "provides": [
+     "linux_armv6l",
+     "linux_armv7l",
+     "linux_armv8l"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s3/8.4.0+2021r2-patch2/toolchain-xtensa-esp32s3-linux_i686-8.4.0+2021r2-patch2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s3-linux_i686-8.4.0+2021r2-patch2.tar.gz",
+    "size_bytes": 91842984,
+    "sha256": "6bacd35dc614081c1c8d8f86521e04a32dcb3a6fc386c1fbb79b7f19e6124e73",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s3/8.4.0%2B2021r2-patch2/toolchain-xtensa-esp32s3-linux_i686-8.4.0%2B2021r2-patch2.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s3/8.4.0%2B2021r2-patch2/toolchain-xtensa-esp32s3-linux_i686-8.4.0%2B2021r2-patch2.tar.gz"
+    ],
+    "provides": [
+     "linux_i686"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s3/8.4.0+2021r2-patch2/toolchain-xtensa-esp32s3-linux_x86_64-8.4.0+2021r2-patch2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s3-linux_x86_64-8.4.0+2021r2-patch2.tar.gz",
+    "size_bytes": 89846275,
+    "sha256": "61fe3c924f8e181684d4f7ad2fa6a4904411aeb51732a8432753b640f06f614b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s3/8.4.0%2B2021r2-patch2/toolchain-xtensa-esp32s3-linux_x86_64-8.4.0%2B2021r2-patch2.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s3/8.4.0%2B2021r2-patch2/toolchain-xtensa-esp32s3-linux_x86_64-8.4.0%2B2021r2-patch2.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s3/8.4.0+2021r2-patch2/toolchain-xtensa-esp32s3-windows_amd64-8.4.0+2021r2-patch2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s3-windows_amd64-8.4.0+2021r2-patch2.tar.gz",
+    "size_bytes": 117364989,
+    "sha256": "11aed7cb75cd5ee5568b01b6df8a6a289539f738f4c90295e558228f0b1b7659",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s3/8.4.0%2B2021r2-patch2/toolchain-xtensa-esp32s3-windows_amd64-8.4.0%2B2021r2-patch2.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s3/8.4.0%2B2021r2-patch2/toolchain-xtensa-esp32s3-windows_amd64-8.4.0%2B2021r2-patch2.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_arm64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s3/8.4.0+2021r2-patch2/toolchain-xtensa-esp32s3-windows_x86-8.4.0+2021r2-patch2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s3-windows_x86-8.4.0+2021r2-patch2.tar.gz",
+    "size_bytes": 114103878,
+    "sha256": "2fc588cd66e4d1dae367c81753a4f85e608ce31fadd2f21363f8f2241e5cd766",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s3/8.4.0%2B2021r2-patch2/toolchain-xtensa-esp32s3-windows_x86-8.4.0%2B2021r2-patch2.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s3/8.4.0%2B2021r2-patch2/toolchain-xtensa-esp32s3-windows_x86-8.4.0%2B2021r2-patch2.tar.gz"
+    ],
+    "provides": [
+     "windows_x86"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s3/8.4.0+2021r2-patch3/toolchain-xtensa-esp32s3-darwin_x86_64-8.4.0+2021r2-patch3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s3-darwin_x86_64-8.4.0+2021r2-patch3.tar.gz",
+    "size_bytes": 97268912,
+    "sha256": "a2bad7f498675d69e351cf63567f9f82d291a1ea24ed06894d76b60337431f6d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s3/8.4.0%2B2021r2-patch3/toolchain-xtensa-esp32s3-darwin_x86_64-8.4.0%2B2021r2-patch3.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s3/8.4.0%2B2021r2-patch3/toolchain-xtensa-esp32s3-darwin_x86_64-8.4.0%2B2021r2-patch3.tar.gz"
+    ],
+    "provides": [
+     "darwin_x86_64",
+     "darwin_arm64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s3/8.4.0+2021r2-patch3/toolchain-xtensa-esp32s3-linux_aarch64-8.4.0+2021r2-patch3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s3-linux_aarch64-8.4.0+2021r2-patch3.tar.gz",
+    "size_bytes": 86142086,
+    "sha256": "0b81478675fc8f771de923fb43484f7e16063e3b688f8b13380832ac4649258d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s3/8.4.0%2B2021r2-patch3/toolchain-xtensa-esp32s3-linux_aarch64-8.4.0%2B2021r2-patch3.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s3/8.4.0%2B2021r2-patch3/toolchain-xtensa-esp32s3-linux_aarch64-8.4.0%2B2021r2-patch3.tar.gz"
+    ],
+    "provides": [
+     "linux_aarch64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s3/8.4.0+2021r2-patch3/toolchain-xtensa-esp32s3-linux_armv6l-8.4.0+2021r2-patch3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s3-linux_armv6l-8.4.0+2021r2-patch3.tar.gz",
+    "size_bytes": 85540929,
+    "sha256": "70010be0fbc3b18d3203264ab4c361a1a3f96b1d97cfa48098809e87dc2e2b56",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s3/8.4.0%2B2021r2-patch3/toolchain-xtensa-esp32s3-linux_armv6l-8.4.0%2B2021r2-patch3.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s3/8.4.0%2B2021r2-patch3/toolchain-xtensa-esp32s3-linux_armv6l-8.4.0%2B2021r2-patch3.tar.gz"
+    ],
+    "provides": [
+     "linux_armv6l",
+     "linux_armv7l",
+     "linux_armv8l"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s3/8.4.0+2021r2-patch3/toolchain-xtensa-esp32s3-linux_i686-8.4.0+2021r2-patch3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s3-linux_i686-8.4.0+2021r2-patch3.tar.gz",
+    "size_bytes": 91880865,
+    "sha256": "b72fd27cb9fed404231d36312152cc9d34d71f75c7d6c0b878f15699c4f826e2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s3/8.4.0%2B2021r2-patch3/toolchain-xtensa-esp32s3-linux_i686-8.4.0%2B2021r2-patch3.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s3/8.4.0%2B2021r2-patch3/toolchain-xtensa-esp32s3-linux_i686-8.4.0%2B2021r2-patch3.tar.gz"
+    ],
+    "provides": [
+     "linux_i686"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s3/8.4.0+2021r2-patch3/toolchain-xtensa-esp32s3-linux_x86_64-8.4.0+2021r2-patch3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s3-linux_x86_64-8.4.0+2021r2-patch3.tar.gz",
+    "size_bytes": 89820638,
+    "sha256": "50a1b7048b4942985eadef4e93bae79b3a5b986dc83c5d93641acb563134de75",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s3/8.4.0%2B2021r2-patch3/toolchain-xtensa-esp32s3-linux_x86_64-8.4.0%2B2021r2-patch3.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s3/8.4.0%2B2021r2-patch3/toolchain-xtensa-esp32s3-linux_x86_64-8.4.0%2B2021r2-patch3.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s3/8.4.0+2021r2-patch3/toolchain-xtensa-esp32s3-windows_amd64-8.4.0+2021r2-patch3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s3-windows_amd64-8.4.0+2021r2-patch3.tar.gz",
+    "size_bytes": 117365418,
+    "sha256": "25a8a2215e6e5a2d2c7e4613a8db5de6d3d584ff6db8ba7c5db2f9ff3fa8a7bf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s3/8.4.0%2B2021r2-patch3/toolchain-xtensa-esp32s3-windows_amd64-8.4.0%2B2021r2-patch3.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s3/8.4.0%2B2021r2-patch3/toolchain-xtensa-esp32s3-windows_amd64-8.4.0%2B2021r2-patch3.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_arm64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s3/8.4.0+2021r2-patch3/toolchain-xtensa-esp32s3-windows_x86-8.4.0+2021r2-patch3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s3-windows_x86-8.4.0+2021r2-patch3.tar.gz",
+    "size_bytes": 114102728,
+    "sha256": "4d6f514eb582bf145c8a3cd6fb5d2a83611f747fabfaa861b72a7941c5b16b51",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s3/8.4.0%2B2021r2-patch3/toolchain-xtensa-esp32s3-windows_x86-8.4.0%2B2021r2-patch3.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s3/8.4.0%2B2021r2-patch3/toolchain-xtensa-esp32s3-windows_x86-8.4.0%2B2021r2-patch3.tar.gz"
+    ],
+    "provides": [
+     "windows_x86"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s3/8.4.0+2021r2-patch5/toolchain-xtensa-esp32s3-darwin_arm64-8.4.0+2021r2-patch5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s3-darwin_arm64-8.4.0+2021r2-patch5.tar.gz",
+    "size_bytes": 66266308,
+    "sha256": "f5e195ac5268b560262af9eab058bee0572301240678fc687484186bbe56c823",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s3/8.4.0%2B2021r2-patch5/toolchain-xtensa-esp32s3-darwin_arm64-8.4.0%2B2021r2-patch5.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s3/8.4.0%2B2021r2-patch5/toolchain-xtensa-esp32s3-darwin_arm64-8.4.0%2B2021r2-patch5.tar.gz"
+    ],
+    "provides": [
+     "darwin_arm64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s3/8.4.0+2021r2-patch5/toolchain-xtensa-esp32s3-darwin_x86_64-8.4.0+2021r2-patch5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s3-darwin_x86_64-8.4.0+2021r2-patch5.tar.gz",
+    "size_bytes": 74758576,
+    "sha256": "e18ac969dbd974baaa74d8638a6286f0ab50b0a6d77a02099a0661a653fe2969",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s3/8.4.0%2B2021r2-patch5/toolchain-xtensa-esp32s3-darwin_x86_64-8.4.0%2B2021r2-patch5.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s3/8.4.0%2B2021r2-patch5/toolchain-xtensa-esp32s3-darwin_x86_64-8.4.0%2B2021r2-patch5.tar.gz"
+    ],
+    "provides": [
+     "darwin_x86_64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s3/8.4.0+2021r2-patch5/toolchain-xtensa-esp32s3-linux_aarch64-8.4.0+2021r2-patch5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s3-linux_aarch64-8.4.0+2021r2-patch5.tar.gz",
+    "size_bytes": 63601288,
+    "sha256": "a6c6e069defb77f6bbbeceffbac53403efe30d1781815025ff3b28af88d17edd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s3/8.4.0%2B2021r2-patch5/toolchain-xtensa-esp32s3-linux_aarch64-8.4.0%2B2021r2-patch5.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s3/8.4.0%2B2021r2-patch5/toolchain-xtensa-esp32s3-linux_aarch64-8.4.0%2B2021r2-patch5.tar.gz"
+    ],
+    "provides": [
+     "linux_aarch64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s3/8.4.0+2021r2-patch5/toolchain-xtensa-esp32s3-linux_armv6l-8.4.0+2021r2-patch5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s3-linux_armv6l-8.4.0+2021r2-patch5.tar.gz",
+    "size_bytes": 62934135,
+    "sha256": "e36617d7285a6a222970bc5d6e243f49faa3680c8fba760cf360557b8f56089b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s3/8.4.0%2B2021r2-patch5/toolchain-xtensa-esp32s3-linux_armv6l-8.4.0%2B2021r2-patch5.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s3/8.4.0%2B2021r2-patch5/toolchain-xtensa-esp32s3-linux_armv6l-8.4.0%2B2021r2-patch5.tar.gz"
+    ],
+    "provides": [
+     "linux_armv6l",
+     "linux_armv7l",
+     "linux_armv8l"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s3/8.4.0+2021r2-patch5/toolchain-xtensa-esp32s3-linux_i686-8.4.0+2021r2-patch5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s3-linux_i686-8.4.0+2021r2-patch5.tar.gz",
+    "size_bytes": 69325852,
+    "sha256": "53da2fc556b08e813e7f7fabfe95270dc95b416cca83e1b243f6b819036c2a85",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s3/8.4.0%2B2021r2-patch5/toolchain-xtensa-esp32s3-linux_i686-8.4.0%2B2021r2-patch5.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s3/8.4.0%2B2021r2-patch5/toolchain-xtensa-esp32s3-linux_i686-8.4.0%2B2021r2-patch5.tar.gz"
+    ],
+    "provides": [
+     "linux_i686"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s3/8.4.0+2021r2-patch5/toolchain-xtensa-esp32s3-linux_x86_64-8.4.0+2021r2-patch5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s3-linux_x86_64-8.4.0+2021r2-patch5.tar.gz",
+    "size_bytes": 67385729,
+    "sha256": "6618e8a91fca47da09c840a61bf008b1f06698553389c01c8788e595d8e84da9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s3/8.4.0%2B2021r2-patch5/toolchain-xtensa-esp32s3-linux_x86_64-8.4.0%2B2021r2-patch5.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s3/8.4.0%2B2021r2-patch5/toolchain-xtensa-esp32s3-linux_x86_64-8.4.0%2B2021r2-patch5.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s3/8.4.0+2021r2-patch5/toolchain-xtensa-esp32s3-windows_amd64-8.4.0+2021r2-patch5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s3-windows_amd64-8.4.0+2021r2-patch5.tar.gz",
+    "size_bytes": 84769299,
+    "sha256": "c45a0427288d406a530a80f486fba7e77273f8152cb057cc48ef3aa64c085bf5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s3/8.4.0%2B2021r2-patch5/toolchain-xtensa-esp32s3-windows_amd64-8.4.0%2B2021r2-patch5.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s3/8.4.0%2B2021r2-patch5/toolchain-xtensa-esp32s3-windows_amd64-8.4.0%2B2021r2-patch5.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_arm64"
+    ]
+   }
+  },
+  {
+   "id": "espressif/tool/toolchain-xtensa-esp32s3/8.4.0+2021r2-patch5/toolchain-xtensa-esp32s3-windows_x86-8.4.0+2021r2-patch5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-xtensa-esp32s3-windows_x86-8.4.0+2021r2-patch5.tar.gz",
+    "size_bytes": 81421435,
+    "sha256": "02eb9dbd6d545ec9f2880e70028dad834a70fdd2b54548f5d2f23d5e136f1b74",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/espressif/tool/toolchain-xtensa-esp32s3/8.4.0%2B2021r2-patch5/toolchain-xtensa-esp32s3-windows_x86-8.4.0%2B2021r2-patch5.tar.gz",
+     "https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s3/8.4.0%2B2021r2-patch5/toolchain-xtensa-esp32s3-windows_x86-8.4.0%2B2021r2-patch5.tar.gz"
+    ],
+    "provides": [
+     "windows_x86"
+    ]
+   }
+  }
+ ]
+}

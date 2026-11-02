@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-bborredon",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-bborredon/library/DS1621/0.0.0+sha.096dbb58d60e/DS1621-0.0.0+sha.096dbb58d60e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS1621-0.0.0+sha.096dbb58d60e.tar.gz",
+    "size_bytes": 3910,
+    "sha256": "0aeb11f33698288a7f2103c466dd053141842d996b137d65a0be428542f0e737",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bborredon/library/DS1621/0.0.0%2Bsha.096dbb58d60e/DS1621-0.0.0%2Bsha.096dbb58d60e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bborredon/library/DS1621/0.0.0%2Bsha.096dbb58d60e/DS1621-0.0.0%2Bsha.096dbb58d60e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-bborredon/library/PCF8574/0.0.0+sha.6d75da25c179/PCF8574-0.0.0+sha.6d75da25c179.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCF8574-0.0.0+sha.6d75da25c179.tar.gz",
+    "size_bytes": 3392,
+    "sha256": "f87216da8361a9629686264973948c123976d9e3006138ed887d9d799e637928",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bborredon/library/PCF8574/0.0.0%2Bsha.6d75da25c179/PCF8574-0.0.0%2Bsha.6d75da25c179.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bborredon/library/PCF8574/0.0.0%2Bsha.6d75da25c179/PCF8574-0.0.0%2Bsha.6d75da25c179.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-bborredon/library/eeprom/0.0.0+sha.925096a4c7f0/eeprom-0.0.0+sha.925096a4c7f0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "eeprom-0.0.0+sha.925096a4c7f0.tar.gz",
+    "size_bytes": 7022,
+    "sha256": "bd0014c332e2de28039ce5115df277b83c8cc72ad2c59e9052a3abe9a1cf44a3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bborredon/library/eeprom/0.0.0%2Bsha.925096a4c7f0/eeprom-0.0.0%2Bsha.925096a4c7f0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bborredon/library/eeprom/0.0.0%2Bsha.925096a4c7f0/eeprom-0.0.0%2Bsha.925096a4c7f0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-bborredon/library/sram23x/0.0.0+sha.bdd299c0e8e6/sram23x-0.0.0+sha.bdd299c0e8e6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "sram23x-0.0.0+sha.bdd299c0e8e6.tar.gz",
+    "size_bytes": 2914,
+    "sha256": "e1f972c6026ee961ee53944c8b943f1b9f6e9cc65911948cc036022b1e2626e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bborredon/library/sram23x/0.0.0%2Bsha.bdd299c0e8e6/sram23x-0.0.0%2Bsha.bdd299c0e8e6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bborredon/library/sram23x/0.0.0%2Bsha.bdd299c0e8e6/sram23x-0.0.0%2Bsha.bdd299c0e8e6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

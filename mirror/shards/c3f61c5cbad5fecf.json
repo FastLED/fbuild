@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-quincy31",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-quincy31/library/Bmp085/0.0.0+sha.904377b11e64/Bmp085-0.0.0+sha.904377b11e64.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bmp085-0.0.0+sha.904377b11e64.tar.gz",
+    "size_bytes": 2264,
+    "sha256": "89b7fea3785adf871fdc043238f68cd2d11d19b325a79e4e37112022e71276a6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-quincy31/library/Bmp085/0.0.0%2Bsha.904377b11e64/Bmp085-0.0.0%2Bsha.904377b11e64.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-quincy31/library/Bmp085/0.0.0%2Bsha.904377b11e64/Bmp085-0.0.0%2Bsha.904377b11e64.tar.gz"
+    ]
+   }
+  }
+ ]
+}

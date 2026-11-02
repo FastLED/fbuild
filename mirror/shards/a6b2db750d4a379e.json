@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-fumiyakoike",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-fumiyakoike/library/RS405CB/0.0.0+sha.e6208d124ead/RS405CB-0.0.0+sha.e6208d124ead.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RS405CB-0.0.0+sha.e6208d124ead.tar.gz",
+    "size_bytes": 2847,
+    "sha256": "fac8d212b76678a15165ac3bd2cd7acef07300661357caabd49d0ca0239d9156",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-fumiyakoike/library/RS405CB/0.0.0%2Bsha.e6208d124ead/RS405CB-0.0.0%2Bsha.e6208d124ead.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-fumiyakoike/library/RS405CB/0.0.0%2Bsha.e6208d124ead/RS405CB-0.0.0%2Bsha.e6208d124ead.tar.gz"
+    ]
+   }
+  }
+ ]
+}

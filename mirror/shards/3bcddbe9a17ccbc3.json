@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-sarahmarshy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-sarahmarshy/library/Blinky/0.0.0+sha.5b51a271d47e/Blinky-0.0.0+sha.5b51a271d47e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Blinky-0.0.0+sha.5b51a271d47e.tar.gz",
+    "size_bytes": 1912,
+    "sha256": "b9a72906ec4eee534286bd88bfdbe97a7b82af7f07a520165ce1d74e839376ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sarahmarshy/library/Blinky/0.0.0%2Bsha.5b51a271d47e/Blinky-0.0.0%2Bsha.5b51a271d47e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sarahmarshy/library/Blinky/0.0.0%2Bsha.5b51a271d47e/Blinky-0.0.0%2Bsha.5b51a271d47e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sarahmarshy/library/DnsQuery/0.0.0+sha.5705fdae6185/DnsQuery-0.0.0+sha.5705fdae6185.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DnsQuery-0.0.0+sha.5705fdae6185.tar.gz",
+    "size_bytes": 3848,
+    "sha256": "696beb23807e6d430905d4ce0d749690f48c6d1a21043c02410a1cdadecb73d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sarahmarshy/library/DnsQuery/0.0.0%2Bsha.5705fdae6185/DnsQuery-0.0.0%2Bsha.5705fdae6185.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sarahmarshy/library/DnsQuery/0.0.0%2Bsha.5705fdae6185/DnsQuery-0.0.0%2Bsha.5705fdae6185.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sarahmarshy/library/GroveGPS/0.0.0+sha.82fce70de15f/GroveGPS-0.0.0+sha.82fce70de15f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GroveGPS-0.0.0+sha.82fce70de15f.tar.gz",
+    "size_bytes": 1880,
+    "sha256": "e15378037505084a9c98f413b93da2dfa3917d21f5f5f038101c7537cbe64749",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sarahmarshy/library/GroveGPS/0.0.0%2Bsha.82fce70de15f/GroveGPS-0.0.0%2Bsha.82fce70de15f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sarahmarshy/library/GroveGPS/0.0.0%2Bsha.82fce70de15f/GroveGPS-0.0.0%2Bsha.82fce70de15f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sarahmarshy/library/HTTPClient-SSL/0.0.0+sha.a18a06b000f3/HTTPClient-SSL-0.0.0+sha.a18a06b000f3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HTTPClient-SSL-0.0.0+sha.a18a06b000f3.tar.gz",
+    "size_bytes": 12400,
+    "sha256": "30f4915f046762233c8177159cb4066ccad5bfa73b70a1bc1df8031055f61649",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sarahmarshy/library/HTTPClient-SSL/0.0.0%2Bsha.a18a06b000f3/HTTPClient-SSL-0.0.0%2Bsha.a18a06b000f3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sarahmarshy/library/HTTPClient-SSL/0.0.0%2Bsha.a18a06b000f3/HTTPClient-SSL-0.0.0%2Bsha.a18a06b000f3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/matthijskooijman",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "matthijskooijman/library/Dsmr/0.1/Dsmr-0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Dsmr-0.1.tar.gz",
+    "size_bytes": 20986,
+    "sha256": "0e518809868524c841c43fe56f7fe6d00a1c7d45e4e15046dc23b4a7b07aec13",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matthijskooijman/library/Dsmr/0.1/Dsmr-0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/matthijskooijman/library/Dsmr/0.1/Dsmr-0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "matthijskooijman/library/IBM%20LMIC%20framework/1.5.1/IBMLMICframework-1.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IBMLMICframework-1.5.1.tar.gz",
+    "size_bytes": 69460,
+    "sha256": "97b1d9ce44fc86c84faf0cb90ef8d156b377194cb3ea044d756f453b403b9d36",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matthijskooijman/library/IBM%2520LMIC%2520framework/1.5.1/IBMLMICframework-1.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/matthijskooijman/library/IBM%20LMIC%20framework/1.5.1/IBMLMICframework-1.5.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

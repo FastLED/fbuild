@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/alexistm",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "alexistm/library/LIDAREnhanced/1.1/LIDAREnhanced-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LIDAREnhanced-1.1.tar.gz",
+    "size_bytes": 20306,
+    "sha256": "93ffb861b634cc3f2e4ba6ecbc12be0d8c2105b7cb13e86e170292da4c3fb46a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alexistm/library/LIDAREnhanced/1.1/LIDAREnhanced-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/alexistm/library/LIDAREnhanced/1.1/LIDAREnhanced-1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

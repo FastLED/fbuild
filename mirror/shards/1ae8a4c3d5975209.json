@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/magdilaoun",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "magdilaoun/library/MLEncoder/1.0.0/MLEncoder-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MLEncoder-1.0.0.tar.gz",
+    "size_bytes": 2752,
+    "sha256": "4c6ede39295f26a23de873ce40b5e1c3a0de47585be96e29e807a4c2a036ec2c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/magdilaoun/library/MLEncoder/1.0.0/MLEncoder-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/magdilaoun/library/MLEncoder/1.0.0/MLEncoder-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "magdilaoun/library/MLSpeed/1.0.0/MLSpeed-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MLSpeed-1.0.0.tar.gz",
+    "size_bytes": 1951,
+    "sha256": "c8cd89924041e3981f909711d10e9ae2908a5df4e334a70e366b5655ff09d463",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/magdilaoun/library/MLSpeed/1.0.0/MLSpeed-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/magdilaoun/library/MLSpeed/1.0.0/MLSpeed-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "magdilaoun/library/MLTMC/1.0.0/MLTMC-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MLTMC-1.0.0.tar.gz",
+    "size_bytes": 4990,
+    "sha256": "da50ffc7d9944dcf93ca627fd28763ce2e94c68cdad3e1ad9d86db3e9e9f2137",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/magdilaoun/library/MLTMC/1.0.0/MLTMC-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/magdilaoun/library/MLTMC/1.0.0/MLTMC-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "magdilaoun/library/MLTMC/1.0.1/MLTMC-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MLTMC-1.0.1.tar.gz",
+    "size_bytes": 5316,
+    "sha256": "80234f251f2a5205e354e0d57a1e80884805b1076ea3a38dcc879146b47d0e0f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/magdilaoun/library/MLTMC/1.0.1/MLTMC-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/magdilaoun/library/MLTMC/1.0.1/MLTMC-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tonykambo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tonykambo/library/LiquidCrystal_I2C/0.0.0-alpha+sha.3aa702a291/LiquidCrystal_I2C-0.0.0-alphasha.3aa702a291.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LiquidCrystal_I2C-0.0.0-alphasha.3aa702a291.tar.gz",
+    "size_bytes": 17723,
+    "sha256": "254e9d826bc091145c3b9e020eadd4a706774239c838e10e7aba094c454cd6bf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tonykambo/library/LiquidCrystal_I2C/0.0.0-alpha%2Bsha.3aa702a291/LiquidCrystal_I2C-0.0.0-alphasha.3aa702a291.tar.gz",
+     "https://dl.registry.platformio.org/download/tonykambo/library/LiquidCrystal_I2C/0.0.0-alpha%2Bsha.3aa702a291/LiquidCrystal_I2C-0.0.0-alphasha.3aa702a291.tar.gz"
+    ]
+   }
+  }
+ ]
+}

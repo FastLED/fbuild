@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sembeacon",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sembeacon/library/ESP32_SemBeacon/1.1.0/ESP32_SemBeacon-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_SemBeacon-1.1.0.tar.gz",
+    "size_bytes": 8791,
+    "sha256": "2c174eedfb00fec3ec2ff5b023cdc021450ba84799e6718104cba3db2ed2c6b6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sembeacon/library/ESP32_SemBeacon/1.1.0/ESP32_SemBeacon-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sembeacon/library/ESP32_SemBeacon/1.1.0/ESP32_SemBeacon-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

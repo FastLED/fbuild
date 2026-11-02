@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/daknuett",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "daknuett/library/cryptosuite2/0.2.7/cryptosuite2-0.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cryptosuite2-0.2.7.tar.gz",
+    "size_bytes": 25165,
+    "sha256": "ee49fa9a5a956200fef8ae580d7b71c3aa16cdfe6d20bf8430f6731f4f76faad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/daknuett/library/cryptosuite2/0.2.7/cryptosuite2-0.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/daknuett/library/cryptosuite2/0.2.7/cryptosuite2-0.2.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

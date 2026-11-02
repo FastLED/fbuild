@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mprograms",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mprograms/library/QMC5883LCompass/1.2.3/QMC5883LCompass-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QMC5883LCompass-1.2.3.tar.gz",
+    "size_bytes": 21126,
+    "sha256": "01d8f80b1ea07149eee62e3c509926e397eeae1a44e7b470191c7a231d09f5cd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mprograms/library/QMC5883LCompass/1.2.3/QMC5883LCompass-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mprograms/library/QMC5883LCompass/1.2.3/QMC5883LCompass-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mprograms/library/SimpleRotary/1.1.3/SimpleRotary-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleRotary-1.1.3.tar.gz",
+    "size_bytes": 19309,
+    "sha256": "17bc7dcf17f66f883b292e68780aaa3cbbcdff0755f8a4da09612c6adc3a08be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mprograms/library/SimpleRotary/1.1.3/SimpleRotary-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mprograms/library/SimpleRotary/1.1.3/SimpleRotary-1.1.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

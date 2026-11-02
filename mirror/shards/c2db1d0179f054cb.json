@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dalegia",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dalegia/library/ESPFlash/1.0.1/ESPFlash-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPFlash-1.0.1.tar.gz",
+    "size_bytes": 19148,
+    "sha256": "faa07b690ba670016e0ccbb0a7ac5fd96840bcc0f6ffe8872f5c82f3945cf12f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dalegia/library/ESPFlash/1.0.1/ESPFlash-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dalegia/library/ESPFlash/1.0.1/ESPFlash-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dalegia/library/ESPStringTemplate/1.2.0/ESPStringTemplate-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPStringTemplate-1.2.0.tar.gz",
+    "size_bytes": 17425,
+    "sha256": "5ff7fd4317af70d4dd37a1ddbccda259f046b0c2313a9c4ac64a50c3af99a494",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dalegia/library/ESPStringTemplate/1.2.0/ESPStringTemplate-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dalegia/library/ESPStringTemplate/1.2.0/ESPStringTemplate-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dalegia/library/Nano33BLESensor/1.1.0/Nano33BLESensor-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Nano33BLESensor-1.1.0.tar.gz",
+    "size_bytes": 25879,
+    "sha256": "4b88ba0cb45ba80bde1e31077a390bc6c4127f8bd0bbd1c0c473912a4024b0be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dalegia/library/Nano33BLESensor/1.1.0/Nano33BLESensor-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dalegia/library/Nano33BLESensor/1.1.0/Nano33BLESensor-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

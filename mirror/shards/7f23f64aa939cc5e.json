@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-thumren",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-thumren/library/ADuCLoader/0.0.0+sha.91cb7f310816/ADuCLoader-0.0.0+sha.91cb7f310816.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADuCLoader-0.0.0+sha.91cb7f310816.tar.gz",
+    "size_bytes": 3961,
+    "sha256": "eb64f4af0961be6e88c87a6c322aa786bf8a1a6d70f6a4a9b7922181728ea2d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-thumren/library/ADuCLoader/0.0.0%2Bsha.91cb7f310816/ADuCLoader-0.0.0%2Bsha.91cb7f310816.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-thumren/library/ADuCLoader/0.0.0%2Bsha.91cb7f310816/ADuCLoader-0.0.0%2Bsha.91cb7f310816.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-thumren/library/RPC/0.0.0+sha.4abe1e298026/RPC-0.0.0+sha.4abe1e298026.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RPC-0.0.0+sha.4abe1e298026.tar.gz",
+    "size_bytes": 4876,
+    "sha256": "311481e5b384be2d9bacb41218cb8a9a236c47ec563a1cf39ab3af3ba4e6b344",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-thumren/library/RPC/0.0.0%2Bsha.4abe1e298026/RPC-0.0.0%2Bsha.4abe1e298026.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-thumren/library/RPC/0.0.0%2Bsha.4abe1e298026/RPC-0.0.0%2Bsha.4abe1e298026.tar.gz"
+    ]
+   }
+  }
+ ]
+}

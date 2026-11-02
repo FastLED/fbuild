@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-joelvonrotz",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-joelvonrotz/library/I2C-Master/0.0.0+sha.0af6c7cf0ed3/I2C-Master-0.0.0+sha.0af6c7cf0ed3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2C-Master-0.0.0+sha.0af6c7cf0ed3.tar.gz",
+    "size_bytes": 1450,
+    "sha256": "242c163130089e03afbc995770432b8bcd02ff9c11603a784417d78476a6c110",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-joelvonrotz/library/I2C-Master/0.0.0%2Bsha.0af6c7cf0ed3/I2C-Master-0.0.0%2Bsha.0af6c7cf0ed3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-joelvonrotz/library/I2C-Master/0.0.0%2Bsha.0af6c7cf0ed3/I2C-Master-0.0.0%2Bsha.0af6c7cf0ed3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-joelvonrotz/library/VL53L0X/0.0.0+sha.ccc67c76fecb/VL53L0X-0.0.0+sha.ccc67c76fecb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VL53L0X-0.0.0+sha.ccc67c76fecb.tar.gz",
+    "size_bytes": 63289,
+    "sha256": "f8b766705c3ce8101fff4614ea800f063e4b88c73f99da8fffd376d46837b0bd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-joelvonrotz/library/VL53L0X/0.0.0%2Bsha.ccc67c76fecb/VL53L0X-0.0.0%2Bsha.ccc67c76fecb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-joelvonrotz/library/VL53L0X/0.0.0%2Bsha.ccc67c76fecb/VL53L0X-0.0.0%2Bsha.ccc67c76fecb.tar.gz"
+    ]
+   }
+  }
+ ]
+}

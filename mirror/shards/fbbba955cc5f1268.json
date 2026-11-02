@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/alexfigas",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "alexfigas/library/Didactic%20Robot/1.0/DidacticRobot-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DidacticRobot-1.0.tar.gz",
+    "size_bytes": 49903,
+    "sha256": "e5a697f841b0f7bd791520267cc16bb076409ba860d8a013a5549f4c1baff1d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alexfigas/library/Didactic%2520Robot/1.0/DidacticRobot-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alexfigas/library/Didactic%20Robot/1.0/DidacticRobot-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

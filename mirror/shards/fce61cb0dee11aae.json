@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tikaflow",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tikaflow/library/UTF8ToGB2312/1.1.52/UTF8ToGB2312-1.1.52.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UTF8ToGB2312-1.1.52.tar.gz",
+    "size_bytes": 35855,
+    "sha256": "e112596c4efca5fe7aa8c88b2849b8a3af57561f19a96526f4456a57667b6a6c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tikaflow/library/UTF8ToGB2312/1.1.52/UTF8ToGB2312-1.1.52.tar.gz",
+     "https://dl.registry.platformio.org/download/tikaflow/library/UTF8ToGB2312/1.1.52/UTF8ToGB2312-1.1.52.tar.gz"
+    ]
+   }
+  }
+ ]
+}

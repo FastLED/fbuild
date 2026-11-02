@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-alustig3",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-alustig3/library/SOMO_II/0.0.0+sha.5a7359b415c8/SOMO_II-0.0.0+sha.5a7359b415c8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SOMO_II-0.0.0+sha.5a7359b415c8.tar.gz",
+    "size_bytes": 1769,
+    "sha256": "25c3d4f1ffd52c02baaadd2f4068699efd28b28e29f30363d00a8f198bce93f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-alustig3/library/SOMO_II/0.0.0%2Bsha.5a7359b415c8/SOMO_II-0.0.0%2Bsha.5a7359b415c8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-alustig3/library/SOMO_II/0.0.0%2Bsha.5a7359b415c8/SOMO_II-0.0.0%2Bsha.5a7359b415c8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

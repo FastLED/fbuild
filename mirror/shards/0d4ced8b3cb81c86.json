@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/samuel-ldm",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "samuel-ldm/library/Thermistor/1.0.0/Thermistor-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Thermistor-1.0.0.tar.gz",
+    "size_bytes": 60662,
+    "sha256": "43a0f3927a06be1fdc799537fff7880a6a1a7b5784ea4ecf16c852f3ee38624a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samuel-ldm/library/Thermistor/1.0.0/Thermistor-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/samuel-ldm/library/Thermistor/1.0.0/Thermistor-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

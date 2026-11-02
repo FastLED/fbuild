@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/theengs",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "theengs/library/TheengsDecoder/2.0.0/TheengsDecoder-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TheengsDecoder-2.0.0.tar.gz",
+    "size_bytes": 4135126,
+    "sha256": "7e1c96d74974c185daccfb781aec6717d484ffe48fc2ae64b0b344a519aa0089",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/theengs/library/TheengsDecoder/2.0.0/TheengsDecoder-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/theengs/library/TheengsDecoder/2.0.0/TheengsDecoder-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "theengs/library/TheengsDecoder/2.1.0/TheengsDecoder-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TheengsDecoder-2.1.0.tar.gz",
+    "size_bytes": 4136271,
+    "sha256": "c7314e40ede753cdee75de9308710934c80f6a2f8ef42f9c3ae433be66248690",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/theengs/library/TheengsDecoder/2.1.0/TheengsDecoder-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/theengs/library/TheengsDecoder/2.1.0/TheengsDecoder-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "theengs/library/TheengsDecoder/2.2.0/TheengsDecoder-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TheengsDecoder-2.2.0.tar.gz",
+    "size_bytes": 4025334,
+    "sha256": "c3e4b843fa651f33fd36902756baeb000fca55d08a6c210ae0a49865c7e91f70",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/theengs/library/TheengsDecoder/2.2.0/TheengsDecoder-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/theengs/library/TheengsDecoder/2.2.0/TheengsDecoder-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "theengs/library/TheengsDecoder/2.4.0/TheengsDecoder-2.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TheengsDecoder-2.4.0.tar.gz",
+    "size_bytes": 4039786,
+    "sha256": "97fb886b6661f7cb5a7659d2e74a834dea8c0976d0260214e86f0875023f7552",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/theengs/library/TheengsDecoder/2.4.0/TheengsDecoder-2.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/theengs/library/TheengsDecoder/2.4.0/TheengsDecoder-2.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "theengs/library/TheengsDecoder/2.4.5/TheengsDecoder-2.4.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TheengsDecoder-2.4.5.tar.gz",
+    "size_bytes": 4039890,
+    "sha256": "0d965d8633827b69d8747c783385a59aa7addfe000be706358c5b145fedace33",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/theengs/library/TheengsDecoder/2.4.5/TheengsDecoder-2.4.5.tar.gz",
+     "https://dl.registry.platformio.org/download/theengs/library/TheengsDecoder/2.4.5/TheengsDecoder-2.4.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "theengs/library/TheengsDecoder/2.5.0/TheengsDecoder-2.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TheengsDecoder-2.5.0.tar.gz",
+    "size_bytes": 4039998,
+    "sha256": "67b507a63d1eaf9f628409980b561f34d92245369584b7811ee21176e857dbba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/theengs/library/TheengsDecoder/2.5.0/TheengsDecoder-2.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/theengs/library/TheengsDecoder/2.5.0/TheengsDecoder-2.5.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

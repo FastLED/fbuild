@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/yurilopes",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "yurilopes/library/SPIFFSIniFile/1.0.0/SPIFFSIniFile-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SPIFFSIniFile-1.0.0.tar.gz",
+    "size_bytes": 18428,
+    "sha256": "6e354a1b0b86fb32f7be2a94625017806ba7988e3f3ee717069f3cf1e339ad27",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yurilopes/library/SPIFFSIniFile/1.0.0/SPIFFSIniFile-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/yurilopes/library/SPIFFSIniFile/1.0.0/SPIFFSIniFile-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

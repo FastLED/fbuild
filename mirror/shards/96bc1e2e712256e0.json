@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/yhadji",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "yhadji/library/Capsule/1.0.3/Capsule-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Capsule-1.0.3.tar.gz",
+    "size_bytes": 4728,
+    "sha256": "b1ce312dcd66126af774dc88e1eebf539ff8983bfb3333df7d1f791a10bc0a79",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yhadji/library/Capsule/1.0.3/Capsule-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/yhadji/library/Capsule/1.0.3/Capsule-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "yhadji/library/TrackStation/0.0.7/TrackStation-0.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TrackStation-0.0.7.tar.gz",
+    "size_bytes": 6000,
+    "sha256": "e90acfbdd3f62b476146b6a0c7b355f78a85bc18b678f77ae444e1491bbe1558",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yhadji/library/TrackStation/0.0.7/TrackStation-0.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/yhadji/library/TrackStation/0.0.7/TrackStation-0.0.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

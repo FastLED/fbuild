@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jemrf",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jemrf/library/max7219/1.0.0/max7219-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "max7219-1.0.0.tar.gz",
+    "size_bytes": 4813,
+    "sha256": "86ae3299480b499fcc7dae3b1a8eb1a2c80ab5d58c9ce4767dd8c59f60e3dd10",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jemrf/library/max7219/1.0.0/max7219-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jemrf/library/max7219/1.0.0/max7219-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

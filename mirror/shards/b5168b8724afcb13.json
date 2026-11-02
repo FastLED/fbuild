@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/brayner",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "brayner/library/btnlib/1.0.0/btnlib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "btnlib-1.0.0.tar.gz",
+    "size_bytes": 1173,
+    "sha256": "19f32802c2f6e287c60ba8ed46223a017042e4153720aedf9b2b63192cf33683",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/brayner/library/btnlib/1.0.0/btnlib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/brayner/library/btnlib/1.0.0/btnlib-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

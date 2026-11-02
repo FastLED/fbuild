@@ -1,0 +1,126 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rzeldent",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rzeldent/library/esp32_smartdisplay/1.0.9/esp32_smartdisplay-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32_smartdisplay-1.0.9.tar.gz",
+    "size_bytes": 25454,
+    "sha256": "56063ff9b1f08f2153dce84e00aeeccc8e810c88f4668fa51fb976265033273f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rzeldent/library/esp32_smartdisplay/1.0.9/esp32_smartdisplay-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/rzeldent/library/esp32_smartdisplay/1.0.9/esp32_smartdisplay-1.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rzeldent/library/esp32_smartdisplay/2.0.9/esp32_smartdisplay-2.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32_smartdisplay-2.0.9.tar.gz",
+    "size_bytes": 41868,
+    "sha256": "d565c255cd147d4501b9f45e5f569db8b60d0fb18047d0fd63f027d18d1a0bd0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rzeldent/library/esp32_smartdisplay/2.0.9/esp32_smartdisplay-2.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/rzeldent/library/esp32_smartdisplay/2.0.9/esp32_smartdisplay-2.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rzeldent/library/esp32_smartdisplay/2.1.0/esp32_smartdisplay-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32_smartdisplay-2.1.0.tar.gz",
+    "size_bytes": 54814,
+    "sha256": "7aa7d738f5cb6835429325a34c0d0f79c93756acbac23b02965452224e284178",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rzeldent/library/esp32_smartdisplay/2.1.0/esp32_smartdisplay-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rzeldent/library/esp32_smartdisplay/2.1.0/esp32_smartdisplay-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rzeldent/library/esp32_smartdisplay/2.1.1/esp32_smartdisplay-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32_smartdisplay-2.1.1.tar.gz",
+    "size_bytes": 57416,
+    "sha256": "14d8ac053921b5ae6a75ca7f62320089d99e1505b4ee4de22f630bcd65985a28",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rzeldent/library/esp32_smartdisplay/2.1.1/esp32_smartdisplay-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/rzeldent/library/esp32_smartdisplay/2.1.1/esp32_smartdisplay-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rzeldent/library/esp32_smartdisplay/3.0.0/esp32_smartdisplay-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32_smartdisplay-3.0.0.tar.gz",
+    "size_bytes": 42500,
+    "sha256": "569e53c499303ba0f1d4a9db74ff8043a9811ac0476eba202fce018159a49b7b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rzeldent/library/esp32_smartdisplay/3.0.0/esp32_smartdisplay-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rzeldent/library/esp32_smartdisplay/3.0.0/esp32_smartdisplay-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rzeldent/library/micro-http-status/1.0.3/micro-http-status-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "micro-http-status-1.0.3.tar.gz",
+    "size_bytes": 3523,
+    "sha256": "f953db81057cbada14ddb71b90f6f1f556b150f02a459d67cf703c106ce64386",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rzeldent/library/micro-http-status/1.0.3/micro-http-status-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/rzeldent/library/micro-http-status/1.0.3/micro-http-status-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rzeldent/library/micro-miniz/1.0.0/micro-miniz-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "micro-miniz-1.0.0.tar.gz",
+    "size_bytes": 76860,
+    "sha256": "39c6d67fe12486190bb20c197ef9c5b50947ce15c0d76d57a60a44a467217e55",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rzeldent/library/micro-miniz/1.0.0/micro-miniz-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rzeldent/library/micro-miniz/1.0.0/micro-miniz-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rzeldent/library/micro-moustache/1.0.1/micro-moustache-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "micro-moustache-1.0.1.tar.gz",
+    "size_bytes": 3492,
+    "sha256": "a1007e2c3979467b66a7e28fe290abb6f23e399b33bf3170ef391960389e566b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rzeldent/library/micro-moustache/1.0.1/micro-moustache-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/rzeldent/library/micro-moustache/1.0.1/micro-moustache-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rzeldent/library/micro-timezonedb/1.0.4/micro-timezonedb-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "micro-timezonedb-1.0.4.tar.gz",
+    "size_bytes": 9119,
+    "sha256": "19f7452fe830faeba82c2e45e0eeb7bd5d9eace0ae556c8bbdf4f552fe1996e0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rzeldent/library/micro-timezonedb/1.0.4/micro-timezonedb-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/rzeldent/library/micro-timezonedb/1.0.4/micro-timezonedb-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

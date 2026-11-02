@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/youpilab",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "youpilab/library/SIM800_YL/1.0.0/SIM800_YL-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SIM800_YL-1.0.0.tar.gz",
+    "size_bytes": 11010,
+    "sha256": "44f4f8935ec3fec4a1d035f89924b6198d8383fbf1e351b33a1aabf691a47d8e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/youpilab/library/SIM800_YL/1.0.0/SIM800_YL-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/youpilab/library/SIM800_YL/1.0.0/SIM800_YL-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "youpilab/library/YLEsp8266/1.0.0/YLEsp8266-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YLEsp8266-1.0.0.tar.gz",
+    "size_bytes": 3532,
+    "sha256": "08a9b23975637c14fd7338fe32b3000782883e20e7e21c179430fd26198c268c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/youpilab/library/YLEsp8266/1.0.0/YLEsp8266-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/youpilab/library/YLEsp8266/1.0.0/YLEsp8266-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "youpilab/library/YoupiLabESP32/2.0.0/YoupiLabESP32-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YoupiLabESP32-2.0.0.tar.gz",
+    "size_bytes": 4217,
+    "sha256": "0ba0313a31bd9158bd67f44a701ac3f168d8d182f41577580d6b78606568980a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/youpilab/library/YoupiLabESP32/2.0.0/YoupiLabESP32-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/youpilab/library/YoupiLabESP32/2.0.0/YoupiLabESP32-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "youpilab/library/YoupiLabESP32_IOT/1.0.0/YoupiLabESP32_IOT-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YoupiLabESP32_IOT-1.0.0.tar.gz",
+    "size_bytes": 3825,
+    "sha256": "e917c471a5bb9cc7597e7d993ec5bf0cd865270cf0ca70fc59d4b6575685b445",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/youpilab/library/YoupiLabESP32_IOT/1.0.0/YoupiLabESP32_IOT-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/youpilab/library/YoupiLabESP32_IOT/1.0.0/YoupiLabESP32_IOT-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "youpilab/library/YoupiLabEsp8266/1.0.2/YoupiLabEsp8266-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YoupiLabEsp8266-1.0.2.tar.gz",
+    "size_bytes": 3947,
+    "sha256": "360ef711a460472ff6259dc465dabbda0a0f386ae32016971d927b5082eb55e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/youpilab/library/YoupiLabEsp8266/1.0.2/YoupiLabEsp8266-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/youpilab/library/YoupiLabEsp8266/1.0.2/YoupiLabEsp8266-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "youpilab/library/YoupiLab_IoT_ESP/1.0.0/YoupiLab_IoT_ESP-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YoupiLab_IoT_ESP-1.0.0.tar.gz",
+    "size_bytes": 10711,
+    "sha256": "2b1edae297d5f8edffb610c070e6e73c97761eecd392d57a1bcd408322ebc2ea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/youpilab/library/YoupiLab_IoT_ESP/1.0.0/YoupiLab_IoT_ESP-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/youpilab/library/YoupiLab_IoT_ESP/1.0.0/YoupiLab_IoT_ESP-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rvt",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rvt/library/FANET%20Protocol%20implementation%20in%20c%2B%2B/0.0.1/FANETProtocolimplementationinc++-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FANETProtocolimplementationinc++-0.0.1.tar.gz",
+    "size_bytes": 34824,
+    "sha256": "50e5a56a3e7b56c1ff5d1eed9a83015c12a473f5624d8fb60c21e2fe79c723d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rvt/library/FANET%2520Protocol%2520implementation%2520in%2520c%252B%252B/0.0.1/FANETProtocolimplementationinc%2B%2B-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/rvt/library/FANET%20Protocol%20implementation%20in%20c%2B%2B/0.0.1/FANETProtocolimplementationinc%2B%2B-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

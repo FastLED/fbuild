@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-dmwahl",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-dmwahl/library/KellerDruck_pressure/0.0.0+sha.8df18eb9c0af/KellerDruck_pressure-0.0.0+sha.8df18eb9c0af.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KellerDruck_pressure-0.0.0+sha.8df18eb9c0af.tar.gz",
+    "size_bytes": 3336,
+    "sha256": "7a8128dd0bb9ad3fa89c72c7858a87919a740cd874b49e5be0dab7b52086d7f5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dmwahl/library/KellerDruck_pressure/0.0.0%2Bsha.8df18eb9c0af/KellerDruck_pressure-0.0.0%2Bsha.8df18eb9c0af.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dmwahl/library/KellerDruck_pressure/0.0.0%2Bsha.8df18eb9c0af/KellerDruck_pressure-0.0.0%2Bsha.8df18eb9c0af.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dmwahl/library/PWM-Coil-driver/0.0.0+sha.3f1d2cdcf49b/PWM-Coil-driver-0.0.0+sha.3f1d2cdcf49b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PWM-Coil-driver-0.0.0+sha.3f1d2cdcf49b.tar.gz",
+    "size_bytes": 1672,
+    "sha256": "71b3fe2c2cbc7850850f84da0acf47384ac35e8fec4193a8f1753386dfea1a0c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dmwahl/library/PWM-Coil-driver/0.0.0%2Bsha.3f1d2cdcf49b/PWM-Coil-driver-0.0.0%2Bsha.3f1d2cdcf49b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dmwahl/library/PWM-Coil-driver/0.0.0%2Bsha.3f1d2cdcf49b/PWM-Coil-driver-0.0.0%2Bsha.3f1d2cdcf49b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

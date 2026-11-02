@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mattfryer",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mattfryer/library/Board%20Identify/0.2/BoardIdentify-0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BoardIdentify-0.2.tar.gz",
+    "size_bytes": 20042,
+    "sha256": "e28fa930100fe2306247368db9d48226d3c893d125b317642f50f104e4bc00eb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mattfryer/library/Board%2520Identify/0.2/BoardIdentify-0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mattfryer/library/Board%20Identify/0.2/BoardIdentify-0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mattfryer/library/Smoothed/1.2/Smoothed-1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Smoothed-1.2.tar.gz",
+    "size_bytes": 17847,
+    "sha256": "2f2a43a657e92e746c752f22d800d46ccdf9ef4d45e34cdec02e3d97e6cd94f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mattfryer/library/Smoothed/1.2/Smoothed-1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mattfryer/library/Smoothed/1.2/Smoothed-1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

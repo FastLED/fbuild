@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/eatingjan1",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "eatingjan1/library/MCAnemometer/1.1.0/MCAnemometer-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCAnemometer-1.1.0.tar.gz",
+    "size_bytes": 4423,
+    "sha256": "cdc20b8a29268f2a93b5c551eea70cd8a72eb573f67ab70743a71d2dacc2b07e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eatingjan1/library/MCAnemometer/1.1.0/MCAnemometer-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/eatingjan1/library/MCAnemometer/1.1.0/MCAnemometer-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "eatingjan1/library/MCHyetometer-REED/1.2/MCHyetometer-REED-1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCHyetometer-REED-1.2.tar.gz",
+    "size_bytes": 2401,
+    "sha256": "1f189fbf1195f4532b57719d57932f9b1af122f1f7fe88f5a44c9e5b19d76b04",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eatingjan1/library/MCHyetometer-REED/1.2/MCHyetometer-REED-1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/eatingjan1/library/MCHyetometer-REED/1.2/MCHyetometer-REED-1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "eatingjan1/library/NeoPixel-Animation-lib/1.0.0/NeoPixel-Animation-lib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeoPixel-Animation-lib-1.0.0.tar.gz",
+    "size_bytes": 3201,
+    "sha256": "5f1cf048481470860854871ca314492b6df82e5607080f9ab294e0ae1e69cfd8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eatingjan1/library/NeoPixel-Animation-lib/1.0.0/NeoPixel-Animation-lib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/eatingjan1/library/NeoPixel-Animation-lib/1.0.0/NeoPixel-Animation-lib-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "eatingjan1/library/arduino-esp32-matter-extra-endpoints/1.1.2/arduino-esp32-matter-extra-endpoints-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arduino-esp32-matter-extra-endpoints-1.1.2.tar.gz",
+    "size_bytes": 8579,
+    "sha256": "538c34497826881d95f7f02d57a1e8b531ac466608264be309e997473c84af93",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eatingjan1/library/arduino-esp32-matter-extra-endpoints/1.1.2/arduino-esp32-matter-extra-endpoints-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/eatingjan1/library/arduino-esp32-matter-extra-endpoints/1.1.2/arduino-esp32-matter-extra-endpoints-1.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

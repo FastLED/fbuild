@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-cmorab",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-cmorab/library/DebouncedIn/0.0.0+sha.dc1131de43e8/DebouncedIn-0.0.0+sha.dc1131de43e8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DebouncedIn-0.0.0+sha.dc1131de43e8.tar.gz",
+    "size_bytes": 1623,
+    "sha256": "107b32ee1055717062beda1bc2369017f21037b2f4636fd152e995285704a4a3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-cmorab/library/DebouncedIn/0.0.0%2Bsha.dc1131de43e8/DebouncedIn-0.0.0%2Bsha.dc1131de43e8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-cmorab/library/DebouncedIn/0.0.0%2Bsha.dc1131de43e8/DebouncedIn-0.0.0%2Bsha.dc1131de43e8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-cmorab/library/DebouncedIna/0.0.0+sha.13e5c41f8363/DebouncedIna-0.0.0+sha.13e5c41f8363.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DebouncedIna-0.0.0+sha.13e5c41f8363.tar.gz",
+    "size_bytes": 1524,
+    "sha256": "a501d1b4c36e0e99e40a88a29f01ebfddc8d6c8cb3e4ed2d5910087f80534042",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-cmorab/library/DebouncedIna/0.0.0%2Bsha.13e5c41f8363/DebouncedIna-0.0.0%2Bsha.13e5c41f8363.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-cmorab/library/DebouncedIna/0.0.0%2Bsha.13e5c41f8363/DebouncedIna-0.0.0%2Bsha.13e5c41f8363.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dorkmo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dorkmo/library/FTPSclientOPTA/0.2.3/FTPSclientOPTA-0.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FTPSclientOPTA-0.2.3.tar.gz",
+    "size_bytes": 172507,
+    "sha256": "4bc3e1f54c3f95419cdd7aa1aaa49328f222dbb71a6f620720ec16e794ade21b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dorkmo/library/FTPSclientOPTA/0.2.3/FTPSclientOPTA-0.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dorkmo/library/FTPSclientOPTA/0.2.3/FTPSclientOPTA-0.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dorkmo/library/FTPSclientOPTA/0.3.0/FTPSclientOPTA-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FTPSclientOPTA-0.3.0.tar.gz",
+    "size_bytes": 173632,
+    "sha256": "d01fde85af1c4e737c24816b58fa67b4c24b6ad9e15b615b93546a276ae75ffb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dorkmo/library/FTPSclientOPTA/0.3.0/FTPSclientOPTA-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dorkmo/library/FTPSclientOPTA/0.3.0/FTPSclientOPTA-0.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

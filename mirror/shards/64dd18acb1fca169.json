@@ -1,0 +1,1166 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tdk-invn-oss",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tdk-invn-oss/library/CHx01/1.0.4/CHx01-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CHx01-1.0.4.tar.gz",
+    "size_bytes": 170165,
+    "sha256": "ed0b3b7ed77321ce38c9671c37dd0864a961efc959622f9ae1f67363dadf9319",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/CHx01/1.0.4/CHx01-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/CHx01/1.0.4/CHx01-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM42670S/1.0.8/ICM42670S-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM42670S-1.0.8.tar.gz",
+    "size_bytes": 60361,
+    "sha256": "51710c1e599b80c4b6c8ff8a06f3068085d528a28f53c4f732ac75b2c6cc46df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM42670S/1.0.8/ICM42670S-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM42670S/1.0.8/ICM42670S-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM42670S/1.0.9/ICM42670S-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM42670S-1.0.9.tar.gz",
+    "size_bytes": 62528,
+    "sha256": "0642f12ee11dd4c5e458f0e9b1643a7b9dc4453ca5b2ba1787def437473d3f0d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM42670S/1.0.9/ICM42670S-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM42670S/1.0.9/ICM42670S-1.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45605/1.0.2-test1/ICM45605-1.0.2-test1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45605-1.0.2-test1.tar.gz",
+    "size_bytes": 76078,
+    "sha256": "1667b702fe0306fc142dc31908333f22c7f27cfdd16e7fe4ba68064efc813dbe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45605/1.0.2-test1/ICM45605-1.0.2-test1.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45605/1.0.2-test1/ICM45605-1.0.2-test1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45605/1.0.3/ICM45605-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45605-1.0.3.tar.gz",
+    "size_bytes": 76079,
+    "sha256": "e95d9e3efe03169a54006c428345e81cc89327627eacb2ca41d78e9fcb13fb6f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45605/1.0.3/ICM45605-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45605/1.0.3/ICM45605-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45605/1.0.4/ICM45605-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45605-1.0.4.tar.gz",
+    "size_bytes": 76123,
+    "sha256": "5a74f3d97c38f5a33f9ffcf3cb9d5bf6ec85a3f7ec51e00bf3789c3f415a8f14",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45605/1.0.4/ICM45605-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45605/1.0.4/ICM45605-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45605/1.0.5/ICM45605-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45605-1.0.5.tar.gz",
+    "size_bytes": 76117,
+    "sha256": "0063a57bcc539af084d6060fd1fc40d9af5029bcfd594c626f6a431baf512430",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45605/1.0.5/ICM45605-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45605/1.0.5/ICM45605-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45605/1.0.6/ICM45605-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45605-1.0.6.tar.gz",
+    "size_bytes": 76115,
+    "sha256": "138d6d905c2b7a908d14a5ccf6c8de99f9ce5b1e85c4b3b0568cc64474d3278d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45605/1.0.6/ICM45605-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45605/1.0.6/ICM45605-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45605/1.0.7/ICM45605-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45605-1.0.7.tar.gz",
+    "size_bytes": 84822,
+    "sha256": "779faf3cb5ae4ce84d4e8c53734c2cb283641b007702bb1d98281a94ed3b12c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45605/1.0.7/ICM45605-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45605/1.0.7/ICM45605-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45605/1.1.1/ICM45605S-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45605S-1.1.1.tar.gz",
+    "size_bytes": 84261,
+    "sha256": "5c3ae95feb48137feeafdf58db2c4bb5212aac3052cd0e55441699de0b44db7a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45605/1.1.1/ICM45605S-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45605/1.1.1/ICM45605S-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45605/1.1.2/ICM45605-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45605-1.1.2.tar.gz",
+    "size_bytes": 87814,
+    "sha256": "d4215f5fa09ef2654487df471db4ec6d14eb91f10b296c2f1b5f64dedb1507a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45605/1.1.2/ICM45605-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45605/1.1.2/ICM45605-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45605/1.1.3/ICM45605-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45605-1.1.3.tar.gz",
+    "size_bytes": 88241,
+    "sha256": "494e2c8b3914373a579e6cc34157cc6c20f8a31244c359f109cd7423c8e58ebb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45605/1.1.3/ICM45605-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45605/1.1.3/ICM45605-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45605/1.1.4/ICM45605-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45605-1.1.4.tar.gz",
+    "size_bytes": 90554,
+    "sha256": "5e385b3f6460e1d50782608f77bdfb77234059abab4772e73e1e7d8ffad405bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45605/1.1.4/ICM45605-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45605/1.1.4/ICM45605-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45605/1.1.5/ICM45605-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45605-1.1.5.tar.gz",
+    "size_bytes": 90678,
+    "sha256": "0518d47b7c766161301940bdb58f95467a9c458023c4e9fe4ad14040fdd5342a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45605/1.1.5/ICM45605-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45605/1.1.5/ICM45605-1.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45605/1.1.7/ICM45605-1.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45605-1.1.7.tar.gz",
+    "size_bytes": 91033,
+    "sha256": "51585cde1e344e498eae7a74dbf15b96dde7e3b66e43d8ce9487d0447bc64422",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45605/1.1.7/ICM45605-1.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45605/1.1.7/ICM45605-1.1.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45605/1.1.8/ICM45605-1.1.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45605-1.1.8.tar.gz",
+    "size_bytes": 91166,
+    "sha256": "ca0baeac1790919898f5ee9d3a507097a829a7d1be2b909a1d28f7764d016249",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45605/1.1.8/ICM45605-1.1.8.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45605/1.1.8/ICM45605-1.1.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45605/1.1.9/ICM45605-1.1.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45605-1.1.9.tar.gz",
+    "size_bytes": 91119,
+    "sha256": "5c1b16c9b69ce16bd8a2514e4482ca0982371478ddd13bd09dc45d8c70c6e560",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45605/1.1.9/ICM45605-1.1.9.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45605/1.1.9/ICM45605-1.1.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45606/1.1.2/ICM45606-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45606-1.1.2.tar.gz",
+    "size_bytes": 101160,
+    "sha256": "60c1019360eb4ba93cb9cfe6a5a0ba5cf37d99fda1d22f33291226a66e04a337",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45606/1.1.2/ICM45606-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45606/1.1.2/ICM45606-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45606/1.1.3/ICM45606-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45606-1.1.3.tar.gz",
+    "size_bytes": 105575,
+    "sha256": "3a5b586ee7e6e60910cea73f9087cc221a32cadbc6cb14283027083cf1159d25",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45606/1.1.3/ICM45606-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45606/1.1.3/ICM45606-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45606/1.1.4/ICM45606-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45606-1.1.4.tar.gz",
+    "size_bytes": 108667,
+    "sha256": "8b1d48355fb8103f5a3aa12993cdec2ce65467c3504f7f966fd1fb76754851cd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45606/1.1.4/ICM45606-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45606/1.1.4/ICM45606-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45606/1.1.5/ICM45606-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45606-1.1.5.tar.gz",
+    "size_bytes": 108876,
+    "sha256": "dab578090f411a475903de1dbccc88872cd08e7b2d319d63ca31f16445709051",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45606/1.1.5/ICM45606-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45606/1.1.5/ICM45606-1.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45606/1.1.7/ICM45606-1.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45606-1.1.7.tar.gz",
+    "size_bytes": 109616,
+    "sha256": "c12c5503bf030439201f42e055565de0f00ed39cea916c041e61024a79697544",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45606/1.1.7/ICM45606-1.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45606/1.1.7/ICM45606-1.1.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45606/1.1.8/ICM45606-1.1.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45606-1.1.8.tar.gz",
+    "size_bytes": 109732,
+    "sha256": "fde65dbd097137d2b1fc262c04c9617319e3887f55a07d0fa4ae4287334d8686",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45606/1.1.8/ICM45606-1.1.8.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45606/1.1.8/ICM45606-1.1.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45606/1.1.9/ICM45606-1.1.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45606-1.1.9.tar.gz",
+    "size_bytes": 109688,
+    "sha256": "8c6de9396243c9e39c51d454bb1a9b1e46afbc22e9b4813be4a247897c4c09fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45606/1.1.9/ICM45606-1.1.9.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45606/1.1.9/ICM45606-1.1.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45608/1.0.4/ICM45608-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45608-1.0.4.tar.gz",
+    "size_bytes": 109593,
+    "sha256": "c69a7cca17dff7b97eebb52f60bc4e435d0972c94495e1a48b096c59210906f5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45608/1.0.4/ICM45608-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45608/1.0.4/ICM45608-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45608/1.0.5/ICM45608-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45608-1.0.5.tar.gz",
+    "size_bytes": 109608,
+    "sha256": "cf880c66a17c1b3c0ca4355fbf4d765753d8a51c759c446035448a682551a258",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45608/1.0.5/ICM45608-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45608/1.0.5/ICM45608-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45608/1.0.6/ICM45608-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45608-1.0.6.tar.gz",
+    "size_bytes": 109622,
+    "sha256": "26fd84318ef64dd740d67f25279a1fe6a4abb150ceba5880b9360f5fe14f3e89",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45608/1.0.6/ICM45608-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45608/1.0.6/ICM45608-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45608/1.0.7/ICM45608-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45608-1.0.7.tar.gz",
+    "size_bytes": 118403,
+    "sha256": "4f6e47c9212ac0ea483dea853dc850f8c32f2b6d7627162cb6e616f7a2f139d9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45608/1.0.7/ICM45608-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45608/1.0.7/ICM45608-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45608/1.1.2/ICM45608-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45608-1.1.2.tar.gz",
+    "size_bytes": 121678,
+    "sha256": "070ba5aac9091228e83a048e8efec7b9a1311f10c160b6e388b11c536d2508cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45608/1.1.2/ICM45608-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45608/1.1.2/ICM45608-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45608/1.1.3/ICM45608-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45608-1.1.3.tar.gz",
+    "size_bytes": 122855,
+    "sha256": "5ffcff8bef76d2789ce4c0cdf61cdc4a52da13c8b1a7dd5ca4e249f369a55a50",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45608/1.1.3/ICM45608-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45608/1.1.3/ICM45608-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45608/1.1.4/ICM45608-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45608-1.1.4.tar.gz",
+    "size_bytes": 126037,
+    "sha256": "bd9ee3bb3e1dfa7af5c1b24c146d13982554f2daa7ac877add914cecfe316038",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45608/1.1.4/ICM45608-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45608/1.1.4/ICM45608-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45608/1.1.5/ICM45608-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45608-1.1.5.tar.gz",
+    "size_bytes": 126213,
+    "sha256": "1fc324867280227d52e237f0f947bba12cc27ab04741a8a8efcb1a29f513aced",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45608/1.1.5/ICM45608-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45608/1.1.5/ICM45608-1.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45608/1.1.7/ICM45608-1.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45608-1.1.7.tar.gz",
+    "size_bytes": 126956,
+    "sha256": "a3471fbdb33afe978d35125a23b1bd0acd782671ea9257bdc78f4bcd014d0adb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45608/1.1.7/ICM45608-1.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45608/1.1.7/ICM45608-1.1.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45608/1.1.8/ICM45608-1.1.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45608-1.1.8.tar.gz",
+    "size_bytes": 127064,
+    "sha256": "1309d882a532df1dfc077383b8bd3c5336570562416f50cd7872c31aeed5c45b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45608/1.1.8/ICM45608-1.1.8.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45608/1.1.8/ICM45608-1.1.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45608/1.1.9/ICM45608-1.1.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45608-1.1.9.tar.gz",
+    "size_bytes": 127046,
+    "sha256": "1674f8d6623bb41012fc5cbb3c6b64e6338d5d05b7b839a94d74cc411a85d654",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45608/1.1.9/ICM45608-1.1.9.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45608/1.1.9/ICM45608-1.1.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45685/1.1.2/ICM45685-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45685-1.1.2.tar.gz",
+    "size_bytes": 102295,
+    "sha256": "2e5c0451e4202cb26c47e5b170fc4762210c8e69fc11d72d67d801f5529c0efa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45685/1.1.2/ICM45685-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45685/1.1.2/ICM45685-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45686/1.0.2-test1/ICM45686-1.0.2-test1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45686-1.0.2-test1.tar.gz",
+    "size_bytes": 77332,
+    "sha256": "f86f5877bb245f9adc60f4d58589fb4802e5eb0ea195fc2df2684d08ff7e21e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45686/1.0.2-test1/ICM45686-1.0.2-test1.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45686/1.0.2-test1/ICM45686-1.0.2-test1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45686/1.0.3/ICM45686-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45686-1.0.3.tar.gz",
+    "size_bytes": 77324,
+    "sha256": "d50a60e936f035faa1717398caa845f997a7f9e4fb07fdccbaf36d3b353182fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45686/1.0.3/ICM45686-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45686/1.0.3/ICM45686-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45686/1.0.4/ICM45686-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45686-1.0.4.tar.gz",
+    "size_bytes": 77378,
+    "sha256": "54f8e3e3570fb7d10ec1be6e85fd46271c74a12320a6484eff27675db5660ae7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45686/1.0.4/ICM45686-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45686/1.0.4/ICM45686-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45686/1.0.5/ICM45686-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45686-1.0.5.tar.gz",
+    "size_bytes": 77356,
+    "sha256": "a58b353184bb06473a6dfb602aa8426347ba15ee7c89117bf15de37af93d2a10",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45686/1.0.5/ICM45686-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45686/1.0.5/ICM45686-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45686/1.0.6/ICM45686-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45686-1.0.6.tar.gz",
+    "size_bytes": 77378,
+    "sha256": "c5524790f57beff9c76c3755d4bce0ad884a273a944b4a8bdfe4d1cfc3c3028d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45686/1.0.6/ICM45686-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45686/1.0.6/ICM45686-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45686/1.0.7/ICM45686-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45686-1.0.7.tar.gz",
+    "size_bytes": 85999,
+    "sha256": "0ac8bf2ff4ec73bcd3ca891486a0d9bc5f685b313a3e0078c554689512585b44",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45686/1.0.7/ICM45686-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45686/1.0.7/ICM45686-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45686/1.1.1/ICM45686-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45686-1.1.1.tar.gz",
+    "size_bytes": 88030,
+    "sha256": "be75644d4ac1cb858f6fa2e77756a8c97b50908c7b53dffe40bd8d4a8273a84d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45686/1.1.1/ICM45686-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45686/1.1.1/ICM45686-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45686/1.1.2/ICM45686S-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45686S-1.1.2.tar.gz",
+    "size_bytes": 85897,
+    "sha256": "eb28dd7cbf77e3c75dfffdd35422de0896f1620b588c0b65b2df869b58087009",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45686/1.1.2/ICM45686S-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45686/1.1.2/ICM45686S-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45686/1.1.3/ICM45686-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45686-1.1.3.tar.gz",
+    "size_bytes": 89407,
+    "sha256": "701a014a4a718d3a7006417c5a65f027b991fe7aa5c5ffb184cec43a8f9105ca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45686/1.1.3/ICM45686-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45686/1.1.3/ICM45686-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45686/1.1.4/ICM45686-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45686-1.1.4.tar.gz",
+    "size_bytes": 91756,
+    "sha256": "dda6ec90781dc49ab30c7b1472e51342ad7d277960e520d9d6fc6570d0fa1ada",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45686/1.1.4/ICM45686-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45686/1.1.4/ICM45686-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45686/1.1.5/ICM45686-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45686-1.1.5.tar.gz",
+    "size_bytes": 91867,
+    "sha256": "828168f23749ba89bc18743bbbd562280f73b2f81798420062ba10920827b803",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45686/1.1.5/ICM45686-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45686/1.1.5/ICM45686-1.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45686/1.1.7/ICM45686-1.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45686-1.1.7.tar.gz",
+    "size_bytes": 92220,
+    "sha256": "76b12d763a4735dbb8dea0c1d5073be4e8f782db91f73880e53eadcab107dc7c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45686/1.1.7/ICM45686-1.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45686/1.1.7/ICM45686-1.1.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45686/1.1.8/ICM45686-1.1.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45686-1.1.8.tar.gz",
+    "size_bytes": 92341,
+    "sha256": "caa027a1d73fd9759535a2b519187980c80e5552bd25ec028e391c0a654cd00b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45686/1.1.8/ICM45686-1.1.8.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45686/1.1.8/ICM45686-1.1.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45686/1.1.9/ICM45686-1.1.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45686-1.1.9.tar.gz",
+    "size_bytes": 92298,
+    "sha256": "4e90a6ed1584f99b71d9c6ebc9d0c04d49e73f78e11648d82c8c1616ee7d250f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45686/1.1.9/ICM45686-1.1.9.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45686/1.1.9/ICM45686-1.1.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45687/1.1.2/ICM45687-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45687-1.1.2.tar.gz",
+    "size_bytes": 102279,
+    "sha256": "48719b58efdb4cfa551b007ad140f1f44c8c8429d1eade6cc120ce451a2b2083",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45687/1.1.2/ICM45687-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45687/1.1.2/ICM45687-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45687/1.1.3/ICM45687-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45687-1.1.3.tar.gz",
+    "size_bytes": 106734,
+    "sha256": "161702f236633148063e22175ca54c215fb9af9d3b46ee10eb6428aaa45c0c93",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45687/1.1.3/ICM45687-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45687/1.1.3/ICM45687-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45687/1.1.4/ICM45687-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45687-1.1.4.tar.gz",
+    "size_bytes": 109917,
+    "sha256": "b89ecf1fd245829e20528d369c56d7409fee992646b2b0796de757e147cf25d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45687/1.1.4/ICM45687-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45687/1.1.4/ICM45687-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45687/1.1.5/ICM45687-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45687-1.1.5.tar.gz",
+    "size_bytes": 110093,
+    "sha256": "a90db9f3886add35bd61c6cba59e23b0d2427045b13d027aad0649d9a6b895c4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45687/1.1.5/ICM45687-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45687/1.1.5/ICM45687-1.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45687/1.1.7/ICM45687-1.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45687-1.1.7.tar.gz",
+    "size_bytes": 110777,
+    "sha256": "5fac2671539c2da8e9e1861c342553f17854dfc05cd35b547b207d372caf7852",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45687/1.1.7/ICM45687-1.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45687/1.1.7/ICM45687-1.1.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45687/1.1.8/ICM45687-1.1.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45687-1.1.8.tar.gz",
+    "size_bytes": 110897,
+    "sha256": "b1b90c584bef9a86ef5093a19fc166163b7b8f5ac193c659c0132d6fb06e3672",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45687/1.1.8/ICM45687-1.1.8.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45687/1.1.8/ICM45687-1.1.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45687/1.1.9/ICM45687-1.1.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45687-1.1.9.tar.gz",
+    "size_bytes": 110851,
+    "sha256": "91d2c5155de95c620c38cdfb3f0989e57f569b4ab98077a8cfb34b98061094b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45687/1.1.9/ICM45687-1.1.9.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45687/1.1.9/ICM45687-1.1.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45688P/1.0.0/ICM45688P-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45688P-1.0.0.tar.gz",
+    "size_bytes": 73886,
+    "sha256": "a389de6e40428344b2607e916fa88c675a25e7d72f12e1099b7a8775139dc0d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45688P/1.0.0/ICM45688P-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45688P/1.0.0/ICM45688P-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45689/1.0.4/ICM45689-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45689-1.0.4.tar.gz",
+    "size_bytes": 109596,
+    "sha256": "68d0d23b8cbf5fc2269474504e78b2efd5ecfd63e787f8f0aa7adafd8eea0040",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45689/1.0.4/ICM45689-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45689/1.0.4/ICM45689-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45689/1.0.5/ICM45689-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45689-1.0.5.tar.gz",
+    "size_bytes": 109595,
+    "sha256": "496b1fd404184229e5a2af5b7a7e7e01475ce006019db8bdd1728a3ecbe3902e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45689/1.0.5/ICM45689-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45689/1.0.5/ICM45689-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45689/1.0.6/ICM45689-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45689-1.0.6.tar.gz",
+    "size_bytes": 109608,
+    "sha256": "c393a4587274b9691c293a310364275724f1180dd0161836125ce6c47d7327de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45689/1.0.6/ICM45689-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45689/1.0.6/ICM45689-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45689/1.0.7/ICM45689-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45689-1.0.7.tar.gz",
+    "size_bytes": 118390,
+    "sha256": "41c7e7c1adaf82cb39806c987105c3230f4f83db5a5aa74d8bba6a0743a17647",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45689/1.0.7/ICM45689-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45689/1.0.7/ICM45689-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45689/1.1.1/ICM45689-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45689-1.1.1.tar.gz",
+    "size_bytes": 120694,
+    "sha256": "8006d6fa1e60dbb1c59737d17222bd4c9daf2d842a3edc48c01e9bf5ebc4103e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45689/1.1.1/ICM45689-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45689/1.1.1/ICM45689-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45689/1.1.2/ICM45689-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45689-1.1.2.tar.gz",
+    "size_bytes": 121669,
+    "sha256": "8b8c268b524356c3ecf919200e66c60bc45bd4cc2f70f5ee2610891c5e6a7ae8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45689/1.1.2/ICM45689-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45689/1.1.2/ICM45689-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45689/1.1.3/ICM45689-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45689-1.1.3.tar.gz",
+    "size_bytes": 122855,
+    "sha256": "29d7ebfed8b9837f55d16100223299e259aa475c94bb9144fa0336056dadaf29",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45689/1.1.3/ICM45689-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45689/1.1.3/ICM45689-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45689/1.1.4/ICM45689-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45689-1.1.4.tar.gz",
+    "size_bytes": 126027,
+    "sha256": "20b3651008359749000363cb7f507f12484dffd748c77d281ffb0714ace0c3a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45689/1.1.4/ICM45689-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45689/1.1.4/ICM45689-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45689/1.1.5/ICM45689-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45689-1.1.5.tar.gz",
+    "size_bytes": 126209,
+    "sha256": "6826f1b9fe6d2e81c37757cdb6acb8faeb85e2a20baac0842ded4ece3601b429",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45689/1.1.5/ICM45689-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45689/1.1.5/ICM45689-1.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45689/1.1.7/ICM45689-1.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45689-1.1.7.tar.gz",
+    "size_bytes": 126957,
+    "sha256": "61e48f5cd5332832b93fc117fcb5ba11f1f6422e065f9e03b0fdbaa8d5cd3ca0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45689/1.1.7/ICM45689-1.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45689/1.1.7/ICM45689-1.1.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45689/1.1.8/ICM45689-1.1.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45689-1.1.8.tar.gz",
+    "size_bytes": 127076,
+    "sha256": "4a858bf84ad5de08804db92e60bc4e2c0bec4879e24e8a7f8cb06031ac6a21d2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45689/1.1.8/ICM45689-1.1.8.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45689/1.1.8/ICM45689-1.1.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM45689/1.1.9/ICM45689-1.1.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM45689-1.1.9.tar.gz",
+    "size_bytes": 127039,
+    "sha256": "f83d5bbf6fd3bd14f4e626a973919ef928c8387ec3c90bb22e3513585acb3442",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM45689/1.1.9/ICM45689-1.1.9.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM45689/1.1.9/ICM45689-1.1.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM53607/1.0.1/ICM53607-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM53607-1.0.1.tar.gz",
+    "size_bytes": 51640,
+    "sha256": "1ec135b826375bfddcce0077007396a09465ba2e9cceec4a59877b69d00ee17d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM53607/1.0.1/ICM53607-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM53607/1.0.1/ICM53607-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM53607/1.0.2/ICM53607-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM53607-1.0.2.tar.gz",
+    "size_bytes": 56419,
+    "sha256": "292957601eda28c83504e836858ca5b87c0f575fd8b939ecb02bda4a1ba48b6f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM53607/1.0.2/ICM53607-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM53607/1.0.2/ICM53607-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM53611/1.0.1/ICM53611-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM53611-1.0.1.tar.gz",
+    "size_bytes": 51641,
+    "sha256": "a72109ceb253a5ededa52777af7d098c8e6bb12d7f526eb5eb8043dc9a3d780d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM53611/1.0.1/ICM53611-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM53611/1.0.1/ICM53611-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM53611/1.0.2/ICM53611-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM53611-1.0.2.tar.gz",
+    "size_bytes": 56424,
+    "sha256": "5daa4effa5e437add1e884f852ddb64698a81ac39f3da893332bb11a34d34add",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM53611/1.0.2/ICM53611-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM53611/1.0.2/ICM53611-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM53621/1.0.1/ICM53621-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM53621-1.0.1.tar.gz",
+    "size_bytes": 53648,
+    "sha256": "5d01f1a4352a8523d27e5e3d3465ef632da31944af1deae0afadbb6b02aeb99e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM53621/1.0.1/ICM53621-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM53621/1.0.1/ICM53621-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM53621/1.0.2/ICM53621-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM53621-1.0.2.tar.gz",
+    "size_bytes": 58435,
+    "sha256": "30f1ebc494b7fc5ae49bcaca379972190b1d0e30108f6823d7bcb5209832904b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM53621/1.0.2/ICM53621-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM53621/1.0.2/ICM53621-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM53622/1.0.0/ICM53622-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM53622-1.0.0.tar.gz",
+    "size_bytes": 53761,
+    "sha256": "18f53003fe9f0f712ebfda19f03299ef0b81bbe86cfe59fababa515c5e3e0454",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM53622/1.0.0/ICM53622-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM53622/1.0.0/ICM53622-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM53622/1.0.2/ICM53622-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM53622-1.0.2.tar.gz",
+    "size_bytes": 58442,
+    "sha256": "b432f2ae4de250d9c8cbb39120df2b0a0dc6dd011e2ba73fe7250ee372c22ac5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM53622/1.0.2/ICM53622-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM53622/1.0.2/ICM53622-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM56622/1.0.0/ICM56622-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM56622-1.0.0.tar.gz",
+    "size_bytes": 59152,
+    "sha256": "c8b4b383e79d62deafa9a27323f63f228f48e88039924403631bc0cc7d2a6b35",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM56622/1.0.0/ICM56622-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM56622/1.0.0/ICM56622-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM56622/1.0.1/ICM56622-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM56622-1.0.1.tar.gz",
+    "size_bytes": 63873,
+    "sha256": "943988a30b89b960acf716114c632f421cb58a2eaca4e3747172d44cf116d2cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM56622/1.0.1/ICM56622-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM56622/1.0.1/ICM56622-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM56686/1.0.0/ICM56686-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM56686-1.0.0.tar.gz",
+    "size_bytes": 192560,
+    "sha256": "810c126051b0a4f3b212d2fc4fc4d7a7c375479791f0a353a5d1206802b5566e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM56686/1.0.0/ICM56686-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM56686/1.0.0/ICM56686-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICM56686/1.0.1/ICM56686-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM56686-1.0.1.tar.gz",
+    "size_bytes": 197031,
+    "sha256": "2dd965d971d71effbfa5228ebe5740b20b284d99e7da8678d345ed2cec3fd14e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICM56686/1.0.1/ICM56686-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICM56686/1.0.1/ICM56686-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICP101xx/1.0.1/ICP101xx-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICP101xx-1.0.1.tar.gz",
+    "size_bytes": 10861,
+    "sha256": "728b2c03a5ead3993d41036806704794f04a3b2ed5d257ed6979a614af34e67c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICP101xx/1.0.1/ICP101xx-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICP101xx/1.0.1/ICP101xx-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICP201xx/1.0.4/ICP201xx-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICP201xx-1.0.4.tar.gz",
+    "size_bytes": 20226,
+    "sha256": "c77c38ec481e61d6b5771617b8724dce77674ac5c9bb75eb6766b4d84fde2615",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICP201xx/1.0.4/ICP201xx-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICP201xx/1.0.4/ICP201xx-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICP201xx/1.0.5/ICP201xx-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICP201xx-1.0.5.tar.gz",
+    "size_bytes": 20223,
+    "sha256": "344e44d9c4c72b6ec4c37e7228367f827c36fa8e6b3bb2d1b46a2f266aabe5da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICP201xx/1.0.5/ICP201xx-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICP201xx/1.0.5/ICP201xx-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/ICUX0201/1.0.6/ICUX0201-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICUX0201-1.0.6.tar.gz",
+    "size_bytes": 205766,
+    "sha256": "4d674bc6c395f9ab8d9c7f878968677ab83a9ec421e5e2b89616d901c4d14147",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/ICUX0201/1.0.6/ICUX0201-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/ICUX0201/1.0.6/ICUX0201-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/TAD2144/1.0.1/TAD2144-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TAD2144-1.0.1.tar.gz",
+    "size_bytes": 23848,
+    "sha256": "820c998b14c481935de5d6c1d2502d1bf4c46c84b884a3e1fa5e557fbaae7953",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/TAD2144/1.0.1/TAD2144-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/TAD2144/1.0.1/TAD2144-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/TAD2144/1.0.2/TAD2144-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TAD2144-1.0.2.tar.gz",
+    "size_bytes": 23848,
+    "sha256": "3755546911d4d57008653b994a70b23496d5a3dc36584747377d2e0b6684bd92",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/TAD2144/1.0.2/TAD2144-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/TAD2144/1.0.2/TAD2144-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tdk-invn-oss/library/TAD2144/1.0.3/TAD2144-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TAD2144-1.0.3.tar.gz",
+    "size_bytes": 85648,
+    "sha256": "a87a88bd90308512d145f9b6975fcf4bcf72c804a5cac48c9b4b42825fe6fad4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdk-invn-oss/library/TAD2144/1.0.3/TAD2144-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tdk-invn-oss/library/TAD2144/1.0.3/TAD2144-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

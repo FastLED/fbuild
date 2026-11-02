@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/commonwealthrobotics",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "commonwealthrobotics/library/BowlerCom/3.15.0/BowlerCom-3.15.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BowlerCom-3.15.0.tar.gz",
+    "size_bytes": 66235,
+    "sha256": "a57637c8674652db550378ccaefc2f0bfe3c1bbe32c52a9a990da6153c7012b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/commonwealthrobotics/library/BowlerCom/3.15.0/BowlerCom-3.15.0.tar.gz",
+     "https://dl.registry.platformio.org/download/commonwealthrobotics/library/BowlerCom/3.15.0/BowlerCom-3.15.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "commonwealthrobotics/library/bowler-device-server/0.1.2/bowler-device-server-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bowler-device-server-0.1.2.tar.gz",
+    "size_bytes": 33043,
+    "sha256": "78a3e808dc6c2f0d5ec3082b9fe7875b5dbfaa083e17723828af4df33ba5685a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/commonwealthrobotics/library/bowler-device-server/0.1.2/bowler-device-server-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/commonwealthrobotics/library/bowler-device-server/0.1.2/bowler-device-server-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "commonwealthrobotics/library/bowler-rpc-arduino/0.1.5/bowler-rpc-arduino-0.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bowler-rpc-arduino-0.1.5.tar.gz",
+    "size_bytes": 32532,
+    "sha256": "e4f1652323ed503ec558dbba7c59c4b753466a6529c369e010316502a4b47e9d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/commonwealthrobotics/library/bowler-rpc-arduino/0.1.5/bowler-rpc-arduino-0.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/commonwealthrobotics/library/bowler-rpc-arduino/0.1.5/bowler-rpc-arduino-0.1.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

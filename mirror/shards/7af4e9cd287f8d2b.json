@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-joker",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-joker/library/FRDMKL25Z-ShiftBrite/0.0.0+sha.a0f62fc80de0/FRDMKL25Z-ShiftBrite-0.0.0+sha.a0f62fc80de0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FRDMKL25Z-ShiftBrite-0.0.0+sha.a0f62fc80de0.tar.gz",
+    "size_bytes": 13524,
+    "sha256": "048a8ce690b68e4f5a79a39c784cff4d34267929c9dd5b10022652cbf4660cec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-joker/library/FRDMKL25Z-ShiftBrite/0.0.0%2Bsha.a0f62fc80de0/FRDMKL25Z-ShiftBrite-0.0.0%2Bsha.a0f62fc80de0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-joker/library/FRDMKL25Z-ShiftBrite/0.0.0%2Bsha.a0f62fc80de0/FRDMKL25Z-ShiftBrite-0.0.0%2Bsha.a0f62fc80de0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-joker/library/MMA8451Q/0.0.0+sha.2d14600116fc/MMA8451Q-0.0.0+sha.2d14600116fc.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MMA8451Q-0.0.0+sha.2d14600116fc.tar.gz",
+    "size_bytes": 3710,
+    "sha256": "c2a0bdf57b5f80ef51a45afbe5f31cbef369e17c2aea73d18042f6f11744e870",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-joker/library/MMA8451Q/0.0.0%2Bsha.2d14600116fc/MMA8451Q-0.0.0%2Bsha.2d14600116fc.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-joker/library/MMA8451Q/0.0.0%2Bsha.2d14600116fc/MMA8451Q-0.0.0%2Bsha.2d14600116fc.tar.gz"
+    ]
+   }
+  }
+ ]
+}

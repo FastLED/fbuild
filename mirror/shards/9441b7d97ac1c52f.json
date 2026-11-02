@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/charlesbaynham",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "charlesbaynham/library/OSFS/1.3.1/OSFS-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSFS-1.3.1.tar.gz",
+    "size_bytes": 20560,
+    "sha256": "7eb3e0c0b8981cfef44ca5a3270ff4da55a5524fb236650202995469f49ddf12",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/charlesbaynham/library/OSFS/1.3.1/OSFS-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/charlesbaynham/library/OSFS/1.3.1/OSFS-1.3.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

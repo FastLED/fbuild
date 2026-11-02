@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mr-xiexuan",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mr-xiexuan/library/URLCode/1.0.1/URLCode-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "URLCode-1.0.1.tar.gz",
+    "size_bytes": 2831,
+    "sha256": "3cabcb775800472d2693b2d0519bc498d1dd271de1e632a8bfb6f49a1690e535",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mr-xiexuan/library/URLCode/1.0.1/URLCode-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mr-xiexuan/library/URLCode/1.0.1/URLCode-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

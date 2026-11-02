@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/deltaphi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "deltaphi/library/AsyncShiftIn/1.0.0/AsyncShiftIn-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncShiftIn-1.0.0.tar.gz",
+    "size_bytes": 16180,
+    "sha256": "1129f237e00865580a51d7d70394105c47b0744f99555ed354f3fe14727a7562",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deltaphi/library/AsyncShiftIn/1.0.0/AsyncShiftIn-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/deltaphi/library/AsyncShiftIn/1.0.0/AsyncShiftIn-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "deltaphi/library/RR32CanLibrary/0.2.1/RR32CanLibrary-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RR32CanLibrary-0.2.1.tar.gz",
+    "size_bytes": 22759,
+    "sha256": "1a3a4306309e198ac109b75bca2b4e9fbb489c63ac65b4af1b0a9d5031c61ebe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deltaphi/library/RR32CanLibrary/0.2.1/RR32CanLibrary-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/deltaphi/library/RR32CanLibrary/0.2.1/RR32CanLibrary-0.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

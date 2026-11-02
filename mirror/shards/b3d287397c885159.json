@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-qynx",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-qynx/library/TOGGLE/0.0.0+sha.47392208fe6d/TOGGLE-0.0.0+sha.47392208fe6d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TOGGLE-0.0.0+sha.47392208fe6d.tar.gz",
+    "size_bytes": 1092,
+    "sha256": "0e63877625b919b881331bfc3796ca875f015a44a738face878b9a58f26293d9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-qynx/library/TOGGLE/0.0.0%2Bsha.47392208fe6d/TOGGLE-0.0.0%2Bsha.47392208fe6d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-qynx/library/TOGGLE/0.0.0%2Bsha.47392208fe6d/TOGGLE-0.0.0%2Bsha.47392208fe6d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

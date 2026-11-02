@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mdxmase",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mdxmase/library/asip-services/0.1.2/asip-services-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "asip-services-0.1.2.tar.gz",
+    "size_bytes": 5643,
+    "sha256": "955cda213efcd03217dcc2a2481f52f8f0207f0f4f5bab830a5b600dfcb094b2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mdxmase/library/asip-services/0.1.2/asip-services-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mdxmase/library/asip-services/0.1.2/asip-services-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mdxmase/library/asip/0.1.0/asip-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "asip-0.1.0.tar.gz",
+    "size_bytes": 17697,
+    "sha256": "8224bd34574d161d12dcb05af98cdb56a9e37e2d2fde78afdd14e5c71c90a32e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mdxmase/library/asip/0.1.0/asip-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mdxmase/library/asip/0.1.0/asip-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

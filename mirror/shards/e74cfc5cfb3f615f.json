@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-freakone",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-freakone/library/MAX31856/0.0.0+sha.104d9ee3f6c3/MAX31856-0.0.0+sha.104d9ee3f6c3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX31856-0.0.0+sha.104d9ee3f6c3.tar.gz",
+    "size_bytes": 10863,
+    "sha256": "d951298d41674372246b5c34e955a8b861422fc49d20b09b46ce29847499fcea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-freakone/library/MAX31856/0.0.0%2Bsha.104d9ee3f6c3/MAX31856-0.0.0%2Bsha.104d9ee3f6c3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-freakone/library/MAX31856/0.0.0%2Bsha.104d9ee3f6c3/MAX31856-0.0.0%2Bsha.104d9ee3f6c3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-freakone/library/MAX31865/0.0.0+sha.b42b7148fbe0/MAX31865-0.0.0+sha.b42b7148fbe0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX31865-0.0.0+sha.b42b7148fbe0.tar.gz",
+    "size_bytes": 2639,
+    "sha256": "4248d7b0b7bafcdaaa1a43ebc36bf12b0b30d1ead16639e6b0cb4e295069d4c9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-freakone/library/MAX31865/0.0.0%2Bsha.b42b7148fbe0/MAX31865-0.0.0%2Bsha.b42b7148fbe0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-freakone/library/MAX31865/0.0.0%2Bsha.b42b7148fbe0/MAX31865-0.0.0%2Bsha.b42b7148fbe0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

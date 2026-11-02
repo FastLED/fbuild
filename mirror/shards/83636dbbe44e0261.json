@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/spdrw",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "spdrw/library/SPD_Arduino/0.0.2/SPD_Arduino-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SPD_Arduino-0.0.2.tar.gz",
+    "size_bytes": 13246,
+    "sha256": "8bf612d85389f73192f8b92f654d465ba24e1536a427a948999a69fc857de888",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/spdrw/library/SPD_Arduino/0.0.2/SPD_Arduino-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/spdrw/library/SPD_Arduino/0.0.2/SPD_Arduino-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "spdrw/library/SPD_Arduino/0.0.3/SPD_Arduino-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SPD_Arduino-0.0.3.tar.gz",
+    "size_bytes": 12963,
+    "sha256": "90bff1889ed8c638fd54ccd209e207e1183bbb5752c4f0ebdc7936ee244cb769",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/spdrw/library/SPD_Arduino/0.0.3/SPD_Arduino-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/spdrw/library/SPD_Arduino/0.0.3/SPD_Arduino-0.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

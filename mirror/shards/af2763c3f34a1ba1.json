@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/wd24",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "wd24/library/AD5231%20Arduino%20Library/0.1.0/AD5231ArduinoLibrary-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AD5231ArduinoLibrary-0.1.0.tar.gz",
+    "size_bytes": 6565,
+    "sha256": "1417f54c1fed338ecdc3c1c1de314136f273166779ebcb23f16c3617dbfcfa90",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wd24/library/AD5231%2520Arduino%2520Library/0.1.0/AD5231ArduinoLibrary-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/wd24/library/AD5231%20Arduino%20Library/0.1.0/AD5231ArduinoLibrary-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

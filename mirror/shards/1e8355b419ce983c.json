@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-viswesr",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-viswesr/library/PCA9672/0.0.0+sha.27125e4cf941/PCA9672-0.0.0+sha.27125e4cf941.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCA9672-0.0.0+sha.27125e4cf941.tar.gz",
+    "size_bytes": 1953,
+    "sha256": "1c8893436760bc4075e93cf34e16e1e8d0d2d3d3aa553d6f09224d47fc925846",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-viswesr/library/PCA9672/0.0.0%2Bsha.27125e4cf941/PCA9672-0.0.0%2Bsha.27125e4cf941.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-viswesr/library/PCA9672/0.0.0%2Bsha.27125e4cf941/PCA9672-0.0.0%2Bsha.27125e4cf941.tar.gz"
+    ]
+   }
+  }
+ ]
+}

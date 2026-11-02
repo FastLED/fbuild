@@ -1,0 +1,152 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/alextaujenis",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "alextaujenis/library/RBD_Button/2.2.1/RBD_Button-2.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RBD_Button-2.2.1.tar.gz",
+    "size_bytes": 2779,
+    "sha256": "89f7e16f335ec752d4db78e2cf4412caffbff49adfffac1c154c9b3b4df3eebc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alextaujenis/library/RBD_Button/2.2.1/RBD_Button-2.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/alextaujenis/library/RBD_Button/2.2.1/RBD_Button-2.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alextaujenis/library/RBD_Capacitance/1.0.5/RBD_Capacitance-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RBD_Capacitance-1.0.5.tar.gz",
+    "size_bytes": 3527,
+    "sha256": "32dc0055d0c53d63a2d68b11ee61ba61a8280ea6ff30c33dc91144ca9db000ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alextaujenis/library/RBD_Capacitance/1.0.5/RBD_Capacitance-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/alextaujenis/library/RBD_Capacitance/1.0.5/RBD_Capacitance-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alextaujenis/library/RBD_HumanSensor/1.0.5/RBD_HumanSensor-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RBD_HumanSensor-1.0.5.tar.gz",
+    "size_bytes": 3034,
+    "sha256": "b7332e5690d4e2969aa42a5d0eff51d1df091c3856389b04c1018b4b04a96cc7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alextaujenis/library/RBD_HumanSensor/1.0.5/RBD_HumanSensor-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/alextaujenis/library/RBD_HumanSensor/1.0.5/RBD_HumanSensor-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alextaujenis/library/RBD_Light/2.1.8/RBD_Light-2.1.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RBD_Light-2.1.8.tar.gz",
+    "size_bytes": 3447,
+    "sha256": "0b9a62bd98ef5a7f1f1ac01e0ff01bab8615ed164021516b466525ddc11e02e2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alextaujenis/library/RBD_Light/2.1.8/RBD_Light-2.1.8.tar.gz",
+     "https://dl.registry.platformio.org/download/alextaujenis/library/RBD_Light/2.1.8/RBD_Light-2.1.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alextaujenis/library/RBD_LightSensor/1.0.4/RBD_LightSensor-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RBD_LightSensor-1.0.4.tar.gz",
+    "size_bytes": 2168,
+    "sha256": "24befc820985ca33d5a9d435b02be397943b059eaa768604d19e00eca61a5609",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alextaujenis/library/RBD_LightSensor/1.0.4/RBD_LightSensor-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/alextaujenis/library/RBD_LightSensor/1.0.4/RBD_LightSensor-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alextaujenis/library/RBD_Motor/2.1.2/RBD_Motor-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RBD_Motor-2.1.2.tar.gz",
+    "size_bytes": 3570,
+    "sha256": "eb8d258e9f2bb0790df01692c0d43d63f220849a6b8bdf6de52123d3c0a407a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alextaujenis/library/RBD_Motor/2.1.2/RBD_Motor-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/alextaujenis/library/RBD_Motor/2.1.2/RBD_Motor-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alextaujenis/library/RBD_SerialManager/1.0.0/RBD_SerialManager-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RBD_SerialManager-1.0.0.tar.gz",
+    "size_bytes": 2802,
+    "sha256": "189c7507950c19de18c5170008ab2c06513cb44bc5e5c1dc839b8602a12348bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alextaujenis/library/RBD_SerialManager/1.0.0/RBD_SerialManager-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alextaujenis/library/RBD_SerialManager/1.0.0/RBD_SerialManager-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alextaujenis/library/RBD_Servo/1.0.2/RBD_Servo-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RBD_Servo-1.0.2.tar.gz",
+    "size_bytes": 3093,
+    "sha256": "caf409c672f044555ba3c50035f057772e61abf38998a70a858b016ccef431b0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alextaujenis/library/RBD_Servo/1.0.2/RBD_Servo-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/alextaujenis/library/RBD_Servo/1.0.2/RBD_Servo-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alextaujenis/library/RBD_Threshold/1.0.3/RBD_Threshold-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RBD_Threshold-1.0.3.tar.gz",
+    "size_bytes": 2839,
+    "sha256": "2df027ac392c28cfead9ea8b9fdc0e2a37efa3aad08749faabc1f8ff80eeb9ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alextaujenis/library/RBD_Threshold/1.0.3/RBD_Threshold-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/alextaujenis/library/RBD_Threshold/1.0.3/RBD_Threshold-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alextaujenis/library/RBD_Timer/1.3.2/RBD_Timer-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RBD_Timer-1.3.2.tar.gz",
+    "size_bytes": 3336,
+    "sha256": "9661ce2681fd8ce263d31784ecfcd451cb61ac2731e3e10dd60952356a8bbf56",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alextaujenis/library/RBD_Timer/1.3.2/RBD_Timer-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/alextaujenis/library/RBD_Timer/1.3.2/RBD_Timer-1.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alextaujenis/library/RBD_WaterSensor/2.0.1/RBD_WaterSensor-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RBD_WaterSensor-2.0.1.tar.gz",
+    "size_bytes": 2686,
+    "sha256": "9ddaf67ca4e2031611949c6fa1bef2d6b5548e216bc78f6f0e3986f0ec5f1246",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alextaujenis/library/RBD_WaterSensor/2.0.1/RBD_WaterSensor-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/alextaujenis/library/RBD_WaterSensor/2.0.1/RBD_WaterSensor-2.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/techpaul",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "techpaul/library/PS2KeyAdvanced/1.0.9/PS2KeyAdvanced-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PS2KeyAdvanced-1.0.9.tar.gz",
+    "size_bytes": 395748,
+    "sha256": "5945fdc0a8cfe9c0231c39a8700b3599b9478136a6a1ad1ba0f55dd1f232a107",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/techpaul/library/PS2KeyAdvanced/1.0.9/PS2KeyAdvanced-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/techpaul/library/PS2KeyAdvanced/1.0.9/PS2KeyAdvanced-1.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "techpaul/library/PS2KeyMap/1.0.6/PS2KeyMap-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PS2KeyMap-1.0.6.tar.gz",
+    "size_bytes": 24831,
+    "sha256": "3b209009c92907e9e8e1524fd38b94e713f53dc3068b85ef1a39998d0a3c9655",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/techpaul/library/PS2KeyMap/1.0.6/PS2KeyMap-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/techpaul/library/PS2KeyMap/1.0.6/PS2KeyMap-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "techpaul/library/PS2KeyRaw/1.0.5/PS2KeyRaw-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PS2KeyRaw-1.0.5.tar.gz",
+    "size_bytes": 14282,
+    "sha256": "f797f5356a4a8be0aba4a6718936c036e95bd1e624451c917869ea5fa7815c98",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/techpaul/library/PS2KeyRaw/1.0.5/PS2KeyRaw-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/techpaul/library/PS2KeyRaw/1.0.5/PS2KeyRaw-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "techpaul/library/XMC_Servo/1.0.1/XMC_Servo-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XMC_Servo-1.0.1.tar.gz",
+    "size_bytes": 18573,
+    "sha256": "b60a080cb82dac0ab52c73343b4126980fd823b3fcccfa3d2b1685f92b471254",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/techpaul/library/XMC_Servo/1.0.1/XMC_Servo-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/techpaul/library/XMC_Servo/1.0.1/XMC_Servo-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

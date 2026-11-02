@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-gamadril",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-gamadril/library/DD-Booster-mbed/0.0.0+sha.4c1e47117cf8/DD-Booster-mbed-0.0.0+sha.4c1e47117cf8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DD-Booster-mbed-0.0.0+sha.4c1e47117cf8.tar.gz",
+    "size_bytes": 5038,
+    "sha256": "9fef1b648cfc8b0a8aad63784615835c873f7fc85e69370aead0e623f2e3898f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-gamadril/library/DD-Booster-mbed/0.0.0%2Bsha.4c1e47117cf8/DD-Booster-mbed-0.0.0%2Bsha.4c1e47117cf8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-gamadril/library/DD-Booster-mbed/0.0.0%2Bsha.4c1e47117cf8/DD-Booster-mbed-0.0.0%2Bsha.4c1e47117cf8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

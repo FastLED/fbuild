@@ -1,0 +1,685 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bambo1543",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bambo1543/library/MqttClientBinary/0.1.3/MqttClientBinary-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MqttClientBinary-0.1.3.tar.gz",
+    "size_bytes": 71367,
+    "sha256": "b8107557fa995bae4937784fb8df49551a6d47da4c01b60c8a527486d7260ad1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bambo1543/library/MqttClientBinary/0.1.3/MqttClientBinary-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/bambo1543/library/MqttClientBinary/0.1.3/MqttClientBinary-0.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bambo1543/library/bamboitEsp32Base/2.10.11/bamboitEsp32Base-2.10.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bamboitEsp32Base-2.10.11.tar.gz",
+    "size_bytes": 175315,
+    "sha256": "871a70449c2514c16faff517f7fb3551596dfa1488fde2bedf28948e429ff31e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bambo1543/library/bamboitEsp32Base/2.10.11/bamboitEsp32Base-2.10.11.tar.gz",
+     "https://dl.registry.platformio.org/download/bambo1543/library/bamboitEsp32Base/2.10.11/bamboitEsp32Base-2.10.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bambo1543/library/bamboitEsp32Base/2.10.12/bamboitEsp32Base-2.10.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bamboitEsp32Base-2.10.12.tar.gz",
+    "size_bytes": 175608,
+    "sha256": "5325f2890a1882d77d2caea7a2adc8a77857771f4e99e9cb4eb7def0343ea6e8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bambo1543/library/bamboitEsp32Base/2.10.12/bamboitEsp32Base-2.10.12.tar.gz",
+     "https://dl.registry.platformio.org/download/bambo1543/library/bamboitEsp32Base/2.10.12/bamboitEsp32Base-2.10.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bambo1543/library/bamboitEsp32Base/2.10.4/bamboitEsp32Base-2.10.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bamboitEsp32Base-2.10.4.tar.gz",
+    "size_bytes": 174974,
+    "sha256": "e4e0c1dc3f2f48cd516aa403444bd786a65f89e4c19fe375041d1f02b0605d91",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bambo1543/library/bamboitEsp32Base/2.10.4/bamboitEsp32Base-2.10.4.tar.gz",
+     "https://dl.registry.platformio.org/download/bambo1543/library/bamboitEsp32Base/2.10.4/bamboitEsp32Base-2.10.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bambo1543/library/bamboitEsp32Base/2.10.5/bamboitEsp32Base-2.10.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bamboitEsp32Base-2.10.5.tar.gz",
+    "size_bytes": 175100,
+    "sha256": "8f82acd0cd083fadc98cbba2f95146d3cf49a66252e86fedda9f2287a398698f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bambo1543/library/bamboitEsp32Base/2.10.5/bamboitEsp32Base-2.10.5.tar.gz",
+     "https://dl.registry.platformio.org/download/bambo1543/library/bamboitEsp32Base/2.10.5/bamboitEsp32Base-2.10.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bambo1543/library/bamboitEsp32Base/2.10.6/bamboitEsp32Base-2.10.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bamboitEsp32Base-2.10.6.tar.gz",
+    "size_bytes": 175141,
+    "sha256": "7c1616a71197fa4093b16c59b16d1df9e0ef687ca0e86c49541192e5122883cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bambo1543/library/bamboitEsp32Base/2.10.6/bamboitEsp32Base-2.10.6.tar.gz",
+     "https://dl.registry.platformio.org/download/bambo1543/library/bamboitEsp32Base/2.10.6/bamboitEsp32Base-2.10.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bambo1543/library/bamboitEsp32Base/2.10.7/bamboitEsp32Base-2.10.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bamboitEsp32Base-2.10.7.tar.gz",
+    "size_bytes": 175258,
+    "sha256": "876d778ae66159a64bb5c095fc57861b310583505fc256ab37817413af2c5d45",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bambo1543/library/bamboitEsp32Base/2.10.7/bamboitEsp32Base-2.10.7.tar.gz",
+     "https://dl.registry.platformio.org/download/bambo1543/library/bamboitEsp32Base/2.10.7/bamboitEsp32Base-2.10.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bambo1543/library/bamboitEsp32Base/2.10.8/bamboitEsp32Base-2.10.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bamboitEsp32Base-2.10.8.tar.gz",
+    "size_bytes": 175320,
+    "sha256": "0e99fdb500d61bdcc441f37ccd26ab0c86c948dd1844dcfcfea61ca7ed92c174",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bambo1543/library/bamboitEsp32Base/2.10.8/bamboitEsp32Base-2.10.8.tar.gz",
+     "https://dl.registry.platformio.org/download/bambo1543/library/bamboitEsp32Base/2.10.8/bamboitEsp32Base-2.10.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bambo1543/library/bamboitEsp32Base/2.10.9/bamboitEsp32Base-2.10.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bamboitEsp32Base-2.10.9.tar.gz",
+    "size_bytes": 175392,
+    "sha256": "06d5581e4f117649770cabc9eec36dc7e7a4687653a3278c3b14454a251cdd58",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bambo1543/library/bamboitEsp32Base/2.10.9/bamboitEsp32Base-2.10.9.tar.gz",
+     "https://dl.registry.platformio.org/download/bambo1543/library/bamboitEsp32Base/2.10.9/bamboitEsp32Base-2.10.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bambo1543/library/bamboitEsp32Base_3.0.0/2.10.10/bamboitEsp32Base_3.0.0-2.10.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bamboitEsp32Base_3.0.0-2.10.10.tar.gz",
+    "size_bytes": 175310,
+    "sha256": "ef2ec3d070d900aa6ff9d6436834e1794d9a4b611bad0bb11c03b28c1d791af2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bambo1543/library/bamboitEsp32Base_3.0.0/2.10.10/bamboitEsp32Base_3.0.0-2.10.10.tar.gz",
+     "https://dl.registry.platformio.org/download/bambo1543/library/bamboitEsp32Base_3.0.0/2.10.10/bamboitEsp32Base_3.0.0-2.10.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bambo1543/library/bamboitEsp32Base_3.0.0/2.10.11/bamboitEsp32Base_3.0.0-2.10.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bamboitEsp32Base_3.0.0-2.10.11.tar.gz",
+    "size_bytes": 175304,
+    "sha256": "7f5016fb8ffdff3141cd7e93f848cf167622ff4644f0152d60b301e638c5bb46",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bambo1543/library/bamboitEsp32Base_3.0.0/2.10.11/bamboitEsp32Base_3.0.0-2.10.11.tar.gz",
+     "https://dl.registry.platformio.org/download/bambo1543/library/bamboitEsp32Base_3.0.0/2.10.11/bamboitEsp32Base_3.0.0-2.10.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bambo1543/library/bamboitEsp32Base_3.0.0/2.10.12/bamboitEsp32Base_3.0.0-2.10.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bamboitEsp32Base_3.0.0-2.10.12.tar.gz",
+    "size_bytes": 171710,
+    "sha256": "b3451cdccf410c50b2c9b1325caff66e384834d377258d13e1825027edfdb169",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bambo1543/library/bamboitEsp32Base_3.0.0/2.10.12/bamboitEsp32Base_3.0.0-2.10.12.tar.gz",
+     "https://dl.registry.platformio.org/download/bambo1543/library/bamboitEsp32Base_3.0.0/2.10.12/bamboitEsp32Base_3.0.0-2.10.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bambo1543/library/bamboitEsp32Base_3.0.0/2.10.13/bamboitEsp32Base_3.0.0-2.10.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bamboitEsp32Base_3.0.0-2.10.13.tar.gz",
+    "size_bytes": 171716,
+    "sha256": "380e9efb8d1d402f041d3118463d950ed0aef2c0d57f3da1f029e070870d5cdf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bambo1543/library/bamboitEsp32Base_3.0.0/2.10.13/bamboitEsp32Base_3.0.0-2.10.13.tar.gz",
+     "https://dl.registry.platformio.org/download/bambo1543/library/bamboitEsp32Base_3.0.0/2.10.13/bamboitEsp32Base_3.0.0-2.10.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bambo1543/library/bamboitEsp32Base_3.0.0/2.10.14/bamboitEsp32Base_3.0.0-2.10.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bamboitEsp32Base_3.0.0-2.10.14.tar.gz",
+    "size_bytes": 171663,
+    "sha256": "6cb976a619e45831655f2c678424eeab71747bbc187560693fcffe431a74b6da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bambo1543/library/bamboitEsp32Base_3.0.0/2.10.14/bamboitEsp32Base_3.0.0-2.10.14.tar.gz",
+     "https://dl.registry.platformio.org/download/bambo1543/library/bamboitEsp32Base_3.0.0/2.10.14/bamboitEsp32Base_3.0.0-2.10.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bambo1543/library/bamboitEsp32Base_3.0.0/2.10.15/bamboitEsp32Base_3.0.0-2.10.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bamboitEsp32Base_3.0.0-2.10.15.tar.gz",
+    "size_bytes": 176230,
+    "sha256": "3930c5684040e2aa196965d77e71d3f0f9874ff7c332560838c9710fb82f7562",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bambo1543/library/bamboitEsp32Base_3.0.0/2.10.15/bamboitEsp32Base_3.0.0-2.10.15.tar.gz",
+     "https://dl.registry.platformio.org/download/bambo1543/library/bamboitEsp32Base_3.0.0/2.10.15/bamboitEsp32Base_3.0.0-2.10.15.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bambo1543/library/bamboitEsp32Base_3.0.0/2.10.9/bamboitEsp32Base_3.0.0-2.10.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bamboitEsp32Base_3.0.0-2.10.9.tar.gz",
+    "size_bytes": 175237,
+    "sha256": "11a75e6c0a9a53244210132c9231931a586107f63d17d554410754a3c508788d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bambo1543/library/bamboitEsp32Base_3.0.0/2.10.9/bamboitEsp32Base_3.0.0-2.10.9.tar.gz",
+     "https://dl.registry.platformio.org/download/bambo1543/library/bamboitEsp32Base_3.0.0/2.10.9/bamboitEsp32Base_3.0.0-2.10.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bambo1543/library/bamboitEsp32Base_3.0.1/2.10.10/bamboitEsp32Base_3.0.1-2.10.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bamboitEsp32Base_3.0.1-2.10.10.tar.gz",
+    "size_bytes": 175356,
+    "sha256": "8f3dd310f526ae5785b7c5de48971364dc6af4f8f45ccce77b200fff2c90e017",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.10/bamboitEsp32Base_3.0.1-2.10.10.tar.gz",
+     "https://dl.registry.platformio.org/download/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.10/bamboitEsp32Base_3.0.1-2.10.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bambo1543/library/bamboitEsp32Base_3.0.1/2.10.11/bamboitEsp32Base_3.0.1-2.10.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bamboitEsp32Base_3.0.1-2.10.11.tar.gz",
+    "size_bytes": 175301,
+    "sha256": "0c704481de1cfab64b0c96eecced83e1798d15f096123e4c98c582bd2586f751",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.11/bamboitEsp32Base_3.0.1-2.10.11.tar.gz",
+     "https://dl.registry.platformio.org/download/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.11/bamboitEsp32Base_3.0.1-2.10.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bambo1543/library/bamboitEsp32Base_3.0.1/2.10.12/bamboitEsp32Base_3.0.1-2.10.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bamboitEsp32Base_3.0.1-2.10.12.tar.gz",
+    "size_bytes": 171686,
+    "sha256": "d22df5ca5e4c03c5ff96525d5a7b38fa36b0f74d4ec392f2c4f61a2bce7a8d87",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.12/bamboitEsp32Base_3.0.1-2.10.12.tar.gz",
+     "https://dl.registry.platformio.org/download/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.12/bamboitEsp32Base_3.0.1-2.10.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bambo1543/library/bamboitEsp32Base_3.0.1/2.10.13/bamboitEsp32Base_3.0.1-2.10.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bamboitEsp32Base_3.0.1-2.10.13.tar.gz",
+    "size_bytes": 171699,
+    "sha256": "c0be975f59c174199b7d8f2962ad69ed61535ea61a8fcee019635eda80308b69",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.13/bamboitEsp32Base_3.0.1-2.10.13.tar.gz",
+     "https://dl.registry.platformio.org/download/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.13/bamboitEsp32Base_3.0.1-2.10.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bambo1543/library/bamboitEsp32Base_3.0.1/2.10.15/bamboitEsp32Base_3.0.1-2.10.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bamboitEsp32Base_3.0.1-2.10.15.tar.gz",
+    "size_bytes": 176233,
+    "sha256": "5f5e5222083be49c40d92bbdcf2f95bafe1998a7f75271fb15e12d30a2402115",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.15/bamboitEsp32Base_3.0.1-2.10.15.tar.gz",
+     "https://dl.registry.platformio.org/download/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.15/bamboitEsp32Base_3.0.1-2.10.15.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bambo1543/library/bamboitEsp32Base_3.0.1/2.10.16/bamboitEsp32Base_3.0.1-2.10.16.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bamboitEsp32Base_3.0.1-2.10.16.tar.gz",
+    "size_bytes": 176237,
+    "sha256": "b131aa60cd670c7f7c008c7f055ffa5a13bcdce749bbfeb2de23d2f68a9a9846",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.16/bamboitEsp32Base_3.0.1-2.10.16.tar.gz",
+     "https://dl.registry.platformio.org/download/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.16/bamboitEsp32Base_3.0.1-2.10.16.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bambo1543/library/bamboitEsp32Base_3.0.1/2.10.17/bamboitEsp32Base_3.0.1-2.10.17.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bamboitEsp32Base_3.0.1-2.10.17.tar.gz",
+    "size_bytes": 176378,
+    "sha256": "953932400104147f70928b067a9467a7068ac3aec39e4000b3a7bdf1b73e84ca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.17/bamboitEsp32Base_3.0.1-2.10.17.tar.gz",
+     "https://dl.registry.platformio.org/download/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.17/bamboitEsp32Base_3.0.1-2.10.17.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bambo1543/library/bamboitEsp32Base_3.0.1/2.10.18/bamboitEsp32Base_3.0.1-2.10.18.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bamboitEsp32Base_3.0.1-2.10.18.tar.gz",
+    "size_bytes": 176368,
+    "sha256": "df9e6a879163a42bbe0f11fc5883d2127f96c0bae97e5a8106573f5b9d29f425",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.18/bamboitEsp32Base_3.0.1-2.10.18.tar.gz",
+     "https://dl.registry.platformio.org/download/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.18/bamboitEsp32Base_3.0.1-2.10.18.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bambo1543/library/bamboitEsp32Base_3.0.1/2.10.19/bamboitEsp32Base_3.0.1-2.10.19.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bamboitEsp32Base_3.0.1-2.10.19.tar.gz",
+    "size_bytes": 176369,
+    "sha256": "9c2d9fcaf717f7698218053662b1c947c1827ce5eacbf63288591ea9c8998e70",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.19/bamboitEsp32Base_3.0.1-2.10.19.tar.gz",
+     "https://dl.registry.platformio.org/download/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.19/bamboitEsp32Base_3.0.1-2.10.19.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bambo1543/library/bamboitEsp32Base_3.0.1/2.10.20/bamboitEsp32Base_3.0.1-2.10.20.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bamboitEsp32Base_3.0.1-2.10.20.tar.gz",
+    "size_bytes": 176383,
+    "sha256": "18a6b95a502a922dc3de33fc02aa9be9255d36389c7e4e041757df6d7d8f99eb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.20/bamboitEsp32Base_3.0.1-2.10.20.tar.gz",
+     "https://dl.registry.platformio.org/download/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.20/bamboitEsp32Base_3.0.1-2.10.20.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bambo1543/library/bamboitEsp32Base_3.0.1/2.10.21/bamboitEsp32Base_3.0.1-2.10.21.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bamboitEsp32Base_3.0.1-2.10.21.tar.gz",
+    "size_bytes": 176392,
+    "sha256": "80c2495d5ea6654ab2d6efb07a4cfdeb70414ccce0ccbfc7b028792bfe92af75",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.21/bamboitEsp32Base_3.0.1-2.10.21.tar.gz",
+     "https://dl.registry.platformio.org/download/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.21/bamboitEsp32Base_3.0.1-2.10.21.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bambo1543/library/bamboitEsp32Base_3.0.1/2.10.22/bamboitEsp32Base_3.0.1-2.10.22.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bamboitEsp32Base_3.0.1-2.10.22.tar.gz",
+    "size_bytes": 180426,
+    "sha256": "daf3c4c67630eea8900a104b373ff0459d0738bcc0836d17f37c21f39e550ea3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.22/bamboitEsp32Base_3.0.1-2.10.22.tar.gz",
+     "https://dl.registry.platformio.org/download/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.22/bamboitEsp32Base_3.0.1-2.10.22.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bambo1543/library/bamboitEsp32Base_3.0.1/2.10.23/bamboitEsp32Base_3.0.1-2.10.23.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bamboitEsp32Base_3.0.1-2.10.23.tar.gz",
+    "size_bytes": 180360,
+    "sha256": "8cdafe348d9bef4667db37fa8e20322d26e3a57dc50e201682ecb495825149a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.23/bamboitEsp32Base_3.0.1-2.10.23.tar.gz",
+     "https://dl.registry.platformio.org/download/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.23/bamboitEsp32Base_3.0.1-2.10.23.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bambo1543/library/bamboitEsp32Base_3.0.1/2.10.24/bamboitEsp32Base_3.0.1-2.10.24.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bamboitEsp32Base_3.0.1-2.10.24.tar.gz",
+    "size_bytes": 180360,
+    "sha256": "569d8c3df55395c16bd2c23158e3d25b1b0fbcd85c5f8218d9c04c956c713ef6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.24/bamboitEsp32Base_3.0.1-2.10.24.tar.gz",
+     "https://dl.registry.platformio.org/download/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.24/bamboitEsp32Base_3.0.1-2.10.24.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bambo1543/library/bamboitEsp32Base_3.0.1/2.10.25/bamboitEsp32Base_3.0.1-2.10.25.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bamboitEsp32Base_3.0.1-2.10.25.tar.gz",
+    "size_bytes": 180359,
+    "sha256": "ab6ce3b4183c6695867ad3b1c8fd5d35566f74b3034185c4c8330c1a1d153594",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.25/bamboitEsp32Base_3.0.1-2.10.25.tar.gz",
+     "https://dl.registry.platformio.org/download/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.25/bamboitEsp32Base_3.0.1-2.10.25.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bambo1543/library/bamboitEsp32Base_3.0.1/2.10.26/bamboitEsp32Base_3.0.1-2.10.26.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bamboitEsp32Base_3.0.1-2.10.26.tar.gz",
+    "size_bytes": 180637,
+    "sha256": "142fd2eab6f2f55b198ef1be22685dc988ba6a809a6cca03325963ca1ec1cd20",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.26/bamboitEsp32Base_3.0.1-2.10.26.tar.gz",
+     "https://dl.registry.platformio.org/download/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.26/bamboitEsp32Base_3.0.1-2.10.26.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bambo1543/library/bamboitEsp32Base_3.0.1/2.10.27/bamboitEsp32Base_3.0.1-2.10.27.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bamboitEsp32Base_3.0.1-2.10.27.tar.gz",
+    "size_bytes": 218819,
+    "sha256": "5096adb18e2682c0867b33d3e3285e617e3fd8bb50705b15c4024616446572b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.27/bamboitEsp32Base_3.0.1-2.10.27.tar.gz",
+     "https://dl.registry.platformio.org/download/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.27/bamboitEsp32Base_3.0.1-2.10.27.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bambo1543/library/bamboitEsp32Base_3.0.1/2.10.28/bamboitEsp32Base_3.0.1-2.10.28.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bamboitEsp32Base_3.0.1-2.10.28.tar.gz",
+    "size_bytes": 219014,
+    "sha256": "a74882a2f54c6836bffc329609049da946d5fef45a9514b1be669d7d3efc241a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.28/bamboitEsp32Base_3.0.1-2.10.28.tar.gz",
+     "https://dl.registry.platformio.org/download/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.28/bamboitEsp32Base_3.0.1-2.10.28.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bambo1543/library/bamboitEsp32Base_3.0.1/2.10.29/bamboitEsp32Base_3.0.1-2.10.29.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bamboitEsp32Base_3.0.1-2.10.29.tar.gz",
+    "size_bytes": 219006,
+    "sha256": "92d7988b85082554208b9bd138c2a45964362cbd41679c8915e9951f6c30d5b4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.29/bamboitEsp32Base_3.0.1-2.10.29.tar.gz",
+     "https://dl.registry.platformio.org/download/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.29/bamboitEsp32Base_3.0.1-2.10.29.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bambo1543/library/bamboitEsp32Base_3.0.1/2.10.30/bamboitEsp32Base_3.0.1-2.10.30.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bamboitEsp32Base_3.0.1-2.10.30.tar.gz",
+    "size_bytes": 106235,
+    "sha256": "88e7b74c3adf7014d8ae40e4573998897f9bbbfe2de02bcb6db4528b0494c3fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.30/bamboitEsp32Base_3.0.1-2.10.30.tar.gz",
+     "https://dl.registry.platformio.org/download/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.30/bamboitEsp32Base_3.0.1-2.10.30.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bambo1543/library/bamboitEsp32Base_3.0.1/2.10.31/bamboitEsp32Base_3.0.1-2.10.31.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bamboitEsp32Base_3.0.1-2.10.31.tar.gz",
+    "size_bytes": 106683,
+    "sha256": "a4663df804036e3ebb4b1c5561ea2686a70d5085d37111d26967e63237ed7311",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.31/bamboitEsp32Base_3.0.1-2.10.31.tar.gz",
+     "https://dl.registry.platformio.org/download/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.31/bamboitEsp32Base_3.0.1-2.10.31.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bambo1543/library/bamboitEsp32Base_3.0.1/2.10.32/bamboitEsp32Base_3.0.1-2.10.32.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bamboitEsp32Base_3.0.1-2.10.32.tar.gz",
+    "size_bytes": 112167,
+    "sha256": "a7420b1ceda8000b54027bf6a28365b81ad94f8113addb216213e1f7211bb2ff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.32/bamboitEsp32Base_3.0.1-2.10.32.tar.gz",
+     "https://dl.registry.platformio.org/download/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.32/bamboitEsp32Base_3.0.1-2.10.32.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bambo1543/library/bamboitEsp32Base_3.0.1/2.10.33/bamboitEsp32Base_3.0.1-2.10.33.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bamboitEsp32Base_3.0.1-2.10.33.tar.gz",
+    "size_bytes": 112521,
+    "sha256": "87d612363e1393b39a2fd410d3a694249e21c64b7cd90bed342aa36a9993961f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.33/bamboitEsp32Base_3.0.1-2.10.33.tar.gz",
+     "https://dl.registry.platformio.org/download/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.33/bamboitEsp32Base_3.0.1-2.10.33.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bambo1543/library/bamboitEsp32Base_3.0.1/2.10.34/bamboitEsp32Base_3.0.1-2.10.34.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bamboitEsp32Base_3.0.1-2.10.34.tar.gz",
+    "size_bytes": 112314,
+    "sha256": "bc663487dc7133a586dc0c0f5b940b61858e377fd4c0d291e41767d7b3f02a6a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.34/bamboitEsp32Base_3.0.1-2.10.34.tar.gz",
+     "https://dl.registry.platformio.org/download/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.34/bamboitEsp32Base_3.0.1-2.10.34.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bambo1543/library/bamboitEsp32Base_3.0.1/2.10.35/bamboitEsp32Base_3.0.1-2.10.35.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bamboitEsp32Base_3.0.1-2.10.35.tar.gz",
+    "size_bytes": 112306,
+    "sha256": "2d28118456210b5fff371264a7efa05ae06cfd9b2d952ad13b5461ac9585a998",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.35/bamboitEsp32Base_3.0.1-2.10.35.tar.gz",
+     "https://dl.registry.platformio.org/download/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.35/bamboitEsp32Base_3.0.1-2.10.35.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bambo1543/library/bamboitEsp32Base_3.0.1/2.10.36/bamboitEsp32Base_3.0.1-2.10.36.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bamboitEsp32Base_3.0.1-2.10.36.tar.gz",
+    "size_bytes": 112565,
+    "sha256": "d920ad98c17b0791d2401f1e54b68088e5170f55b60386acdddf7d867168728c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.36/bamboitEsp32Base_3.0.1-2.10.36.tar.gz",
+     "https://dl.registry.platformio.org/download/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.36/bamboitEsp32Base_3.0.1-2.10.36.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bambo1543/library/bamboitEsp32Base_3.0.1/2.10.37/bamboitEsp32Base_3.0.1-2.10.37.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bamboitEsp32Base_3.0.1-2.10.37.tar.gz",
+    "size_bytes": 112554,
+    "sha256": "7ec9dd43cf321eac998df69aec5704d7aa3512035e8ccf77d2d40b5f757af946",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.37/bamboitEsp32Base_3.0.1-2.10.37.tar.gz",
+     "https://dl.registry.platformio.org/download/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.37/bamboitEsp32Base_3.0.1-2.10.37.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bambo1543/library/bamboitEsp32Base_3.0.1/2.10.38/bamboitEsp32Base_3.0.1-2.10.38.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bamboitEsp32Base_3.0.1-2.10.38.tar.gz",
+    "size_bytes": 112664,
+    "sha256": "45b0e94931088539a69ef3b2349db491a9fbe78fbb85a859cecc276957d182d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.38/bamboitEsp32Base_3.0.1-2.10.38.tar.gz",
+     "https://dl.registry.platformio.org/download/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.38/bamboitEsp32Base_3.0.1-2.10.38.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bambo1543/library/bamboitEsp32Base_3.0.1/2.10.39/bamboitEsp32Base_3.0.1-2.10.39.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bamboitEsp32Base_3.0.1-2.10.39.tar.gz",
+    "size_bytes": 112636,
+    "sha256": "6288e892f9c93866d8c2635fcb32c5490696d991f1743a37ece8c6247836a836",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.39/bamboitEsp32Base_3.0.1-2.10.39.tar.gz",
+     "https://dl.registry.platformio.org/download/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.39/bamboitEsp32Base_3.0.1-2.10.39.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bambo1543/library/bamboitEsp32Base_3.0.1/2.10.40/bamboitEsp32Base_3.0.1-2.10.40.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bamboitEsp32Base_3.0.1-2.10.40.tar.gz",
+    "size_bytes": 112744,
+    "sha256": "d1b8dbf5c5c04d11e03ae78a29d651a7eb147c1a690adb84e684bc3535822194",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.40/bamboitEsp32Base_3.0.1-2.10.40.tar.gz",
+     "https://dl.registry.platformio.org/download/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.40/bamboitEsp32Base_3.0.1-2.10.40.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bambo1543/library/bamboitEsp32Base_3.0.1/2.10.41/bamboitEsp32Base_3.0.1-2.10.41.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bamboitEsp32Base_3.0.1-2.10.41.tar.gz",
+    "size_bytes": 112795,
+    "sha256": "bdc6f997bc614a3e7a45485fac37fab2ab37315960ce833e8e66bfca8a4e5d3e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.41/bamboitEsp32Base_3.0.1-2.10.41.tar.gz",
+     "https://dl.registry.platformio.org/download/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.41/bamboitEsp32Base_3.0.1-2.10.41.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bambo1543/library/bamboitEsp32Base_3.0.1/2.10.42/bamboitEsp32Base_3.0.1-2.10.42.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bamboitEsp32Base_3.0.1-2.10.42.tar.gz",
+    "size_bytes": 112800,
+    "sha256": "828ffd612f53af5650e29f78654bf344c21d0111aaad55f34742556561f40195",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.42/bamboitEsp32Base_3.0.1-2.10.42.tar.gz",
+     "https://dl.registry.platformio.org/download/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.42/bamboitEsp32Base_3.0.1-2.10.42.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bambo1543/library/bamboitEsp32Base_3.0.1/2.10.43/bamboitEsp32Base_3.0.1-2.10.43.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bamboitEsp32Base_3.0.1-2.10.43.tar.gz",
+    "size_bytes": 112801,
+    "sha256": "fa2ee6ecc7812f2cb90389239fe609813e65becad8b6345ea136b107a497056c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.43/bamboitEsp32Base_3.0.1-2.10.43.tar.gz",
+     "https://dl.registry.platformio.org/download/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.43/bamboitEsp32Base_3.0.1-2.10.43.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bambo1543/library/bamboitEsp32Base_3.0.1/2.10.44/bamboitEsp32Base_3.0.1-2.10.44.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bamboitEsp32Base_3.0.1-2.10.44.tar.gz",
+    "size_bytes": 112848,
+    "sha256": "b8933e1d6586a554f8ec1eaef153999150798b37743357b8bd24d1cc72b001cd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.44/bamboitEsp32Base_3.0.1-2.10.44.tar.gz",
+     "https://dl.registry.platformio.org/download/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.44/bamboitEsp32Base_3.0.1-2.10.44.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bambo1543/library/bamboitEsp32Base_3.0.1/2.10.45/bamboitEsp32Base_3.0.1-2.10.45.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bamboitEsp32Base_3.0.1-2.10.45.tar.gz",
+    "size_bytes": 112857,
+    "sha256": "1cac62b42e6cdba43e0f8a4eeb5cb4af685cf89c26afc870b5164ea85dbed8eb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.45/bamboitEsp32Base_3.0.1-2.10.45.tar.gz",
+     "https://dl.registry.platformio.org/download/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.45/bamboitEsp32Base_3.0.1-2.10.45.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bambo1543/library/bamboitEsp32Base_3.0.1/2.10.9/bamboitEsp32Base_3.0.1-2.10.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bamboitEsp32Base_3.0.1-2.10.9.tar.gz",
+    "size_bytes": 175341,
+    "sha256": "083df3d65a136a69c0c36b628e53bb8307b2545290c07e09c71f5f6e451cfc49",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.9/bamboitEsp32Base_3.0.1-2.10.9.tar.gz",
+     "https://dl.registry.platformio.org/download/bambo1543/library/bamboitEsp32Base_3.0.1/2.10.9/bamboitEsp32Base_3.0.1-2.10.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

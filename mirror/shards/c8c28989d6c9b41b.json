@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-janekm",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-janekm/library/TCS3472_I2C/0.0.0+sha.2a240f6ca27a/TCS3472_I2C-0.0.0+sha.2a240f6ca27a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TCS3472_I2C-0.0.0+sha.2a240f6ca27a.tar.gz",
+    "size_bytes": 4588,
+    "sha256": "5c727386639be1aa73dd42db53fd9eaf312c64ce071150cfcc4addead1f2813a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-janekm/library/TCS3472_I2C/0.0.0%2Bsha.2a240f6ca27a/TCS3472_I2C-0.0.0%2Bsha.2a240f6ca27a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-janekm/library/TCS3472_I2C/0.0.0%2Bsha.2a240f6ca27a/TCS3472_I2C-0.0.0%2Bsha.2a240f6ca27a.tar.gz"
+    ]
+   }
+  }
+ ]
+}

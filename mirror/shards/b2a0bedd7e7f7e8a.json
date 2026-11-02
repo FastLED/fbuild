@@ -1,0 +1,165 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/smfsw",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "smfsw/library/CaptureTimer/0.9/CaptureTimer-0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CaptureTimer-0.9.tar.gz",
+    "size_bytes": 71122,
+    "sha256": "932bd2421b288eea4af6d92dd0c07f6e56c485fc250c424e19e9fa23bf70aae3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/smfsw/library/CaptureTimer/0.9/CaptureTimer-0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/smfsw/library/CaptureTimer/0.9/CaptureTimer-0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "smfsw/library/Queue/1.11/Queue-1.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Queue-1.11.tar.gz",
+    "size_bytes": 72698,
+    "sha256": "f53ae5f7b3753acc24835443f3e2e4283fd2c62c0db8f0fda080a2bec4ae57a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/smfsw/library/Queue/1.11/Queue-1.11.tar.gz",
+     "https://dl.registry.platformio.org/download/smfsw/library/Queue/1.11/Queue-1.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "smfsw/library/Queue/2.0/Queue-2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Queue-2.0.tar.gz",
+    "size_bytes": 77588,
+    "sha256": "ae59b2b0b4b6059130239aae9ec304ab7d8d6a7ab9a0f1a4d8d1f07336e0b0cd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/smfsw/library/Queue/2.0/Queue-2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/smfsw/library/Queue/2.0/Queue-2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "smfsw/library/Queue/2.1/Queue-2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Queue-2.1.tar.gz",
+    "size_bytes": 79166,
+    "sha256": "db89984f09cabc9803c8c3e3e50220825f21962d058f9bb77ed4c679d47681c5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/smfsw/library/Queue/2.1/Queue-2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/smfsw/library/Queue/2.1/Queue-2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "smfsw/library/SeqButton/1.5/SeqButton-1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SeqButton-1.5.tar.gz",
+    "size_bytes": 63098,
+    "sha256": "e695b370193fd0913abe855ff61175c6d48b132cd565cff8b086fec0247b6415",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/smfsw/library/SeqButton/1.5/SeqButton-1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/smfsw/library/SeqButton/1.5/SeqButton-1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "smfsw/library/SeqTimer/2.4/SeqTimer-2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SeqTimer-2.4.tar.gz",
+    "size_bytes": 60309,
+    "sha256": "8e9c4b3cd7e3614474df8a126a69fe8920b544a74a8af3b6ede704927268849f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/smfsw/library/SeqTimer/2.4/SeqTimer-2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/smfsw/library/SeqTimer/2.4/SeqTimer-2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "smfsw/library/SerialTerminal/1.3/SerialTerminal-1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialTerminal-1.3.tar.gz",
+    "size_bytes": 59319,
+    "sha256": "073f574b878fa7206d1dc87e6473522ae5244a97a32ce1f057109272f328b5a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/smfsw/library/SerialTerminal/1.3/SerialTerminal-1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/smfsw/library/SerialTerminal/1.3/SerialTerminal-1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "smfsw/library/SmoothADC/1.1/SmoothADC-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmoothADC-1.1.tar.gz",
+    "size_bytes": 68289,
+    "sha256": "14ff5253d1b8318dbac4d386b2710dbe5ff1bece6950ea94c9cd9a28b7961528",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/smfsw/library/SmoothADC/1.1/SmoothADC-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/smfsw/library/SmoothADC/1.1/SmoothADC-1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "smfsw/library/WireWrapper/1.4/WireWrapper-1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WireWrapper-1.4.tar.gz",
+    "size_bytes": 63687,
+    "sha256": "b09dd11a4acadfbbf93fbd8944cd5b1732c64ed82137ef219f4d023f40112b60",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/smfsw/library/WireWrapper/1.4/WireWrapper-1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/smfsw/library/WireWrapper/1.4/WireWrapper-1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "smfsw/library/cI2C/1.3/cI2C-1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cI2C-1.3.tar.gz",
+    "size_bytes": 64621,
+    "sha256": "2092526523c2c752b54289fab439f89d1b3b6a885efdd37fa775be37ad5b050f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/smfsw/library/cI2C/1.3/cI2C-1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/smfsw/library/cI2C/1.3/cI2C-1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "smfsw/library/cQueue/2.1/cQueue-2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cQueue-2.1.tar.gz",
+    "size_bytes": 78122,
+    "sha256": "0047929c8e01b149c1e656f9045b33493f23eafa00fe97e5f09a0e95ac891458",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/smfsw/library/cQueue/2.1/cQueue-2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/smfsw/library/cQueue/2.1/cQueue-2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "smfsw/library/sarmfsw/4.0/sarmfsw-4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "sarmfsw-4.0.tar.gz",
+    "size_bytes": 115978,
+    "sha256": "d59fd5c4a1079fd7829d300c00d34f39cd184890eb8dd78a6e2fdd121a90379e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/smfsw/library/sarmfsw/4.0/sarmfsw-4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/smfsw/library/sarmfsw/4.0/sarmfsw-4.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

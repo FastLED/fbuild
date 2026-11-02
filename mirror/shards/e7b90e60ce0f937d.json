@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-lemniskata",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-lemniskata/library/TCPDebug/0.0.0+sha.c2bfbcc99b65/TCPDebug-0.0.0+sha.c2bfbcc99b65.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TCPDebug-0.0.0+sha.c2bfbcc99b65.tar.gz",
+    "size_bytes": 1845,
+    "sha256": "14f9b0657efd01418ba3578d7ededaa81abaf8f80bc1213b6dd79715c10da2b0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-lemniskata/library/TCPDebug/0.0.0%2Bsha.c2bfbcc99b65/TCPDebug-0.0.0%2Bsha.c2bfbcc99b65.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-lemniskata/library/TCPDebug/0.0.0%2Bsha.c2bfbcc99b65/TCPDebug-0.0.0%2Bsha.c2bfbcc99b65.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-lemniskata/library/Threads/0.0.0+sha.d370bed31f45/Threads-0.0.0+sha.d370bed31f45.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Threads-0.0.0+sha.d370bed31f45.tar.gz",
+    "size_bytes": 1502,
+    "sha256": "0e2df5cebe958c6f3d4e4b72ce71a129cb6882722e33139a8e294a47f2378b0b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-lemniskata/library/Threads/0.0.0%2Bsha.d370bed31f45/Threads-0.0.0%2Bsha.d370bed31f45.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-lemniskata/library/Threads/0.0.0%2Bsha.d370bed31f45/Threads-0.0.0%2Bsha.d370bed31f45.tar.gz"
+    ]
+   }
+  }
+ ]
+}

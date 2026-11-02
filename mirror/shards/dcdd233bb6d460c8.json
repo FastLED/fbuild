@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/abel6jose",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "abel6jose/library/libTrial/1.1.2/libTrial-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libTrial-1.1.2.tar.gz",
+    "size_bytes": 10907,
+    "sha256": "2755b5cf99a262e135e002ec8cd90d6dbfc4227eed724a25256688c976984f6a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/abel6jose/library/libTrial/1.1.2/libTrial-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/abel6jose/library/libTrial/1.1.2/libTrial-1.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

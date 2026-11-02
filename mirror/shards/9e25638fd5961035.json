@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nada-electronics",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nada-electronics/library/AS-289R2%20Thermal%20Printer%20Shield/1.1.2/AS-289R2ThermalPrinterShield-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AS-289R2ThermalPrinterShield-1.1.2.tar.gz",
+    "size_bytes": 6301,
+    "sha256": "aa54a8df0de9e12219d96119325ad9967d4d282f2b4c36d12b76383fc4b2f34a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nada-electronics/library/AS-289R2%2520Thermal%2520Printer%2520Shield/1.1.2/AS-289R2ThermalPrinterShield-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nada-electronics/library/AS-289R2%20Thermal%20Printer%20Shield/1.1.2/AS-289R2ThermalPrinterShield-1.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

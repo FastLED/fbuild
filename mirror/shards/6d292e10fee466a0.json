@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-borjatarazona",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-borjatarazona/library/ATCommand/0.0.0+sha.6f42bbd5eb48/ATCommand-0.0.0+sha.6f42bbd5eb48.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ATCommand-0.0.0+sha.6f42bbd5eb48.tar.gz",
+    "size_bytes": 2397,
+    "sha256": "b955b759a6c2d404310c158529024a1efb273770541bca8909cdcf0ed0d745b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-borjatarazona/library/ATCommand/0.0.0%2Bsha.6f42bbd5eb48/ATCommand-0.0.0%2Bsha.6f42bbd5eb48.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-borjatarazona/library/ATCommand/0.0.0%2Bsha.6f42bbd5eb48/ATCommand-0.0.0%2Bsha.6f42bbd5eb48.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-borjatarazona/library/Azure_HTTPS_SIMCOM/0.0.0+sha.082b9b2c7935/Azure_HTTPS_SIMCOM-0.0.0+sha.082b9b2c7935.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Azure_HTTPS_SIMCOM-0.0.0+sha.082b9b2c7935.tar.gz",
+    "size_bytes": 2410,
+    "sha256": "31c6d14ceeab33a6b834be65006c90ce565074e1a8318e1f3c7f3e9f514545cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-borjatarazona/library/Azure_HTTPS_SIMCOM/0.0.0%2Bsha.082b9b2c7935/Azure_HTTPS_SIMCOM-0.0.0%2Bsha.082b9b2c7935.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-borjatarazona/library/Azure_HTTPS_SIMCOM/0.0.0%2Bsha.082b9b2c7935/Azure_HTTPS_SIMCOM-0.0.0%2Bsha.082b9b2c7935.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-borjatarazona/library/SIMInterface/0.0.0+sha.31e884326b43/SIMInterface-0.0.0+sha.31e884326b43.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SIMInterface-0.0.0+sha.31e884326b43.tar.gz",
+    "size_bytes": 2113,
+    "sha256": "d66e61cefd1cfea3127ab388c31f6795844d43364b386dd99b659f192dd686c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-borjatarazona/library/SIMInterface/0.0.0%2Bsha.31e884326b43/SIMInterface-0.0.0%2Bsha.31e884326b43.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-borjatarazona/library/SIMInterface/0.0.0%2Bsha.31e884326b43/SIMInterface-0.0.0%2Bsha.31e884326b43.tar.gz"
+    ]
+   }
+  }
+ ]
+}

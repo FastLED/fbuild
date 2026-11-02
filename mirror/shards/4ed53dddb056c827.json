@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rawarduino",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rawarduino/library/SSDisplay/1.0.0/SSDisplay-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SSDisplay-1.0.0.tar.gz",
+    "size_bytes": 11229,
+    "sha256": "050d6ed8d986b0aa0fdef44a1361c5a9cfc31e19a1c55bc08244021556ff8ece",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rawarduino/library/SSDisplay/1.0.0/SSDisplay-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rawarduino/library/SSDisplay/1.0.0/SSDisplay-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

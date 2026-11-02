@@ -1,0 +1,126 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/alash-electronics",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "alash-electronics/library/AlashIRControl/1.0.8/AlashIRControl-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlashIRControl-1.0.8.tar.gz",
+    "size_bytes": 45268,
+    "sha256": "41ab20636ca1371308c8bafa09f0c064aee9de2c981327cfdd903dd2aacf494e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alash-electronics/library/AlashIRControl/1.0.8/AlashIRControl-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/alash-electronics/library/AlashIRControl/1.0.8/AlashIRControl-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alash-electronics/library/AlashLEDMatrix8x8/1.0.7/AlashLEDMatrix8x8-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlashLEDMatrix8x8-1.0.7.tar.gz",
+    "size_bytes": 14476,
+    "sha256": "f229ec1c7df4bd1b7c3534e15f5f5894c94c8a604e38e9ddbbbe6c9c89381fbd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alash-electronics/library/AlashLEDMatrix8x8/1.0.7/AlashLEDMatrix8x8-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/alash-electronics/library/AlashLEDMatrix8x8/1.0.7/AlashLEDMatrix8x8-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alash-electronics/library/AlashMotorControlLite/1.0.8/AlashMotorControlLite-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlashMotorControlLite-1.0.8.tar.gz",
+    "size_bytes": 38020,
+    "sha256": "e40b8c0929f335c468720ee7bc0974554699ca9da187de79458bed318a4c572d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alash-electronics/library/AlashMotorControlLite/1.0.8/AlashMotorControlLite-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/alash-electronics/library/AlashMotorControlLite/1.0.8/AlashMotorControlLite-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alash-electronics/library/AlashMotorControlLite/1.1.0/AlashMotorControlLite-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlashMotorControlLite-1.1.0.tar.gz",
+    "size_bytes": 78717,
+    "sha256": "5f650b2aa91e7bb3b042084475143055d4f7e5968f992060160543d3516b24de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alash-electronics/library/AlashMotorControlLite/1.1.0/AlashMotorControlLite-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alash-electronics/library/AlashMotorControlLite/1.1.0/AlashMotorControlLite-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alash-electronics/library/AlashSerialTerminal/1.1.4/AlashSerialTerminal-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlashSerialTerminal-1.1.4.tar.gz",
+    "size_bytes": 7834,
+    "sha256": "00dc8cb117515836f613baaa54dc826a2a959f8233ee165d717f6d16855a6b41",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alash-electronics/library/AlashSerialTerminal/1.1.4/AlashSerialTerminal-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/alash-electronics/library/AlashSerialTerminal/1.1.4/AlashSerialTerminal-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alash-electronics/library/AlashUartMP3/1.0.0/AlashUartMP3-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlashUartMP3-1.0.0.tar.gz",
+    "size_bytes": 18405,
+    "sha256": "b20a827af5cf243ea94769f1cb0cc71a971cb75986bee9dbcafe3cf971a1f620",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alash-electronics/library/AlashUartMP3/1.0.0/AlashUartMP3-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alash-electronics/library/AlashUartMP3/1.0.0/AlashUartMP3-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alash-electronics/library/AlashUltrasonic/1.0.7/AlashUltrasonic-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlashUltrasonic-1.0.7.tar.gz",
+    "size_bytes": 6168,
+    "sha256": "8a7ef87c01e95530d1e1dcb8ee592040748ca8d3c95cad7325375897193d3e3f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alash-electronics/library/AlashUltrasonic/1.0.7/AlashUltrasonic-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/alash-electronics/library/AlashUltrasonic/1.0.7/AlashUltrasonic-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alash-electronics/library/Alash_DS1302/1.0.8/Alash_DS1302-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Alash_DS1302-1.0.8.tar.gz",
+    "size_bytes": 16294,
+    "sha256": "e50e2d019f64ecec88d940a4f894183da7d7814cafde83c3714e011a9ff51032",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alash-electronics/library/Alash_DS1302/1.0.8/Alash_DS1302-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/alash-electronics/library/Alash_DS1302/1.0.8/Alash_DS1302-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alash-electronics/library/I2C_LiquidCrystal_RUS/1.0.9/I2C_LiquidCrystal_RUS-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2C_LiquidCrystal_RUS-1.0.9.tar.gz",
+    "size_bytes": 11173,
+    "sha256": "200f1819c7ba5117cf16f113be2c5a5c41d0372ced78e9fae718276e5d0b75e7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alash-electronics/library/I2C_LiquidCrystal_RUS/1.0.9/I2C_LiquidCrystal_RUS-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/alash-electronics/library/I2C_LiquidCrystal_RUS/1.0.9/I2C_LiquidCrystal_RUS-1.0.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

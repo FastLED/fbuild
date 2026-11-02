@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-mlee350",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-mlee350/library/MBed_Adafruit-GPS-Library/0.0.0+sha.a23e3099bb0a/MBed_Adafruit-GPS-Library-0.0.0+sha.a23e3099bb0a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MBed_Adafruit-GPS-Library-0.0.0+sha.a23e3099bb0a.tar.gz",
+    "size_bytes": 4626,
+    "sha256": "d90608795687e0e38205eee58f23749c64af055feedcbf40862745af6ad2b761",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mlee350/library/MBed_Adafruit-GPS-Library/0.0.0%2Bsha.a23e3099bb0a/MBed_Adafruit-GPS-Library-0.0.0%2Bsha.a23e3099bb0a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mlee350/library/MBed_Adafruit-GPS-Library/0.0.0%2Bsha.a23e3099bb0a/MBed_Adafruit-GPS-Library-0.0.0%2Bsha.a23e3099bb0a.tar.gz"
+    ]
+   }
+  }
+ ]
+}

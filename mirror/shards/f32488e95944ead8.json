@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dejavu1987",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dejavu1987/library/TinyI2C/1.0.0/TinyI2C-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyI2C-1.0.0.tar.gz",
+    "size_bytes": 10324,
+    "sha256": "5ea63fa2b6c4cda98f7f84a2543fb737926bf72e0afea264f440a367c76748b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejavu1987/library/TinyI2C/1.0.0/TinyI2C-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejavu1987/library/TinyI2C/1.0.0/TinyI2C-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

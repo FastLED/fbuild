@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nullptr-deref",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nullptr-deref/library/ms5540c/1.1.0/ms5540c-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ms5540c-1.1.0.tar.gz",
+    "size_bytes": 15976,
+    "sha256": "b95690b3b791791d8687cb1a3ea8fd2af97ed8acba94d32312b8c0b5dc5d8285",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nullptr-deref/library/ms5540c/1.1.0/ms5540c-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nullptr-deref/library/ms5540c/1.1.0/ms5540c-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

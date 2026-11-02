@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/djgrrr",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "djgrrr/library/Int64String/1.1.1/Int64String-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Int64String-1.1.1.tar.gz",
+    "size_bytes": 3215,
+    "sha256": "3ce1107f847db25d1842baede64ea9c6a1a5a83f478d9f3932966b845367c2c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/djgrrr/library/Int64String/1.1.1/Int64String-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/djgrrr/library/Int64String/1.1.1/Int64String-1.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/skyisthelimit",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "skyisthelimit/library/ArrayUtils/0.0.1/ArrayUtils-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArrayUtils-0.0.1.tar.gz",
+    "size_bytes": 2487,
+    "sha256": "7be36a242291aeb706abbf825941f09f62ee31d75d90ca5dc78043d9918543ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/skyisthelimit/library/ArrayUtils/0.0.1/ArrayUtils-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/skyisthelimit/library/ArrayUtils/0.0.1/ArrayUtils-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ejteb",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ejteb/library/HC_SR04_Ultrasonic_Library/0.0.0+sha.e0f9c9fb4cf3/HC_SR04_Ultrasonic_Library-0.0.0+sha.e0f9c9fb4cf3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HC_SR04_Ultrasonic_Library-0.0.0+sha.e0f9c9fb4cf3.tar.gz",
+    "size_bytes": 1964,
+    "sha256": "d44084d75eaf7a09592917af240a2f969e9be6c62a77b50e4c5cc19a03125bd6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ejteb/library/HC_SR04_Ultrasonic_Library/0.0.0%2Bsha.e0f9c9fb4cf3/HC_SR04_Ultrasonic_Library-0.0.0%2Bsha.e0f9c9fb4cf3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ejteb/library/HC_SR04_Ultrasonic_Library/0.0.0%2Bsha.e0f9c9fb4cf3/HC_SR04_Ultrasonic_Library-0.0.0%2Bsha.e0f9c9fb4cf3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ejteb/library/WTV020SD_Sound_Breakout_Library/0.0.0+sha.d6b7b90b4387/WTV020SD_Sound_Breakout_Library-0.0.0+sha.d6b7b90b4387.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WTV020SD_Sound_Breakout_Library-0.0.0+sha.d6b7b90b4387.tar.gz",
+    "size_bytes": 2035,
+    "sha256": "66a0d44f2a13ca5f0b26f98ce117350ccd07014c8ec73854cac3160c55560387",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ejteb/library/WTV020SD_Sound_Breakout_Library/0.0.0%2Bsha.d6b7b90b4387/WTV020SD_Sound_Breakout_Library-0.0.0%2Bsha.d6b7b90b4387.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ejteb/library/WTV020SD_Sound_Breakout_Library/0.0.0%2Bsha.d6b7b90b4387/WTV020SD_Sound_Breakout_Library-0.0.0%2Bsha.d6b7b90b4387.tar.gz"
+    ]
+   }
+  }
+ ]
+}

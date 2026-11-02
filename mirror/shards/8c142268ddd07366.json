@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/krulkip",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "krulkip/library/PN532Toolkit/1.0.1/PN532Toolkit-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PN532Toolkit-1.0.1.tar.gz",
+    "size_bytes": 150998,
+    "sha256": "fe9e71c23b0468a65102996f5a0d0e3185d84af70c77e8d36c3da155cad32852",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/krulkip/library/PN532Toolkit/1.0.1/PN532Toolkit-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/krulkip/library/PN532Toolkit/1.0.1/PN532Toolkit-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

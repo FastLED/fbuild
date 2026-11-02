@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-admaclean",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-admaclean/library/PinDetect/0.0.0+sha.e4d9a2581095/PinDetect-0.0.0+sha.e4d9a2581095.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PinDetect-0.0.0+sha.e4d9a2581095.tar.gz",
+    "size_bytes": 3993,
+    "sha256": "a4d56a5545d13c7b28493c4713c74b730de8647f8d1a334e076c710afcab6c23",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-admaclean/library/PinDetect/0.0.0%2Bsha.e4d9a2581095/PinDetect-0.0.0%2Bsha.e4d9a2581095.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-admaclean/library/PinDetect/0.0.0%2Bsha.e4d9a2581095/PinDetect-0.0.0%2Bsha.e4d9a2581095.tar.gz"
+    ]
+   }
+  }
+ ]
+}

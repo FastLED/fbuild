@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/enklu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "enklu/library/DataFlash/0.1.0/DataFlash-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DataFlash-0.1.0.tar.gz",
+    "size_bytes": 5446,
+    "sha256": "30fd12e1340927088aed7851f4a0c381dda99d6ff51580b1a5a64981ad5c06ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/enklu/library/DataFlash/0.1.0/DataFlash-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/enklu/library/DataFlash/0.1.0/DataFlash-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "enklu/library/core-avr-ds/0.1.1/core-avr-ds-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "core-avr-ds-0.1.1.tar.gz",
+    "size_bytes": 3366,
+    "sha256": "c162fd369ff61accbb76d8b807668dba948c9fdd348c7d0ecd4bda42f1ad1923",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/enklu/library/core-avr-ds/0.1.1/core-avr-ds-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/enklu/library/core-avr-ds/0.1.1/core-avr-ds-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "enklu/library/core-avr-io/0.1.0/core-avr-io-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "core-avr-io-0.1.0.tar.gz",
+    "size_bytes": 2540,
+    "sha256": "33b639d8289058830198d02ef43c78f8102e886e932cd10a3b8923084966f06f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/enklu/library/core-avr-io/0.1.0/core-avr-io-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/enklu/library/core-avr-io/0.1.0/core-avr-io-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "enklu/library/core-avr-logging/0.1.1/core-avr-logging-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "core-avr-logging-0.1.1.tar.gz",
+    "size_bytes": 3068,
+    "sha256": "0e8f5e03c6454637ff7e6225892d50fe53421972c6f3faa9a47ba5a8200c0706",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/enklu/library/core-avr-logging/0.1.1/core-avr-logging-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/enklu/library/core-avr-logging/0.1.1/core-avr-logging-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

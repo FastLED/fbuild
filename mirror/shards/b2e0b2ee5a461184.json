@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/meteolab",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "meteolab/library/MeteoLabBeacon/0.1.3/MeteoLabBeacon-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MeteoLabBeacon-0.1.3.tar.gz",
+    "size_bytes": 19598,
+    "sha256": "65c08d6e03719dc1bfc909121af72c835d80fbcfdccad195ee6f282e0eea98a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/meteolab/library/MeteoLabBeacon/0.1.3/MeteoLabBeacon-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/meteolab/library/MeteoLabBeacon/0.1.3/MeteoLabBeacon-0.1.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

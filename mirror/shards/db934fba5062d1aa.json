@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/teknikio",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "teknikio/library/Bluebird/0.0.2/Bluebird-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bluebird-0.0.2.tar.gz",
+    "size_bytes": 56828,
+    "sha256": "c0da147b16cfdc12bdca3b1370d29133fe374e7c49209eadd9b6a5a0a8032bcd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teknikio/library/Bluebird/0.0.2/Bluebird-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/teknikio/library/Bluebird/0.0.2/Bluebird-0.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

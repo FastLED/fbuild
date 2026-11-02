@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/zzvllvzz",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "zzvllvzz/library/SC03_C2H5OH/1.0.1/SC03_C2H5OH-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SC03_C2H5OH-1.0.1.tar.gz",
+    "size_bytes": 2434,
+    "sha256": "072bfb31d02780e50f0e342bfb8782ce6f4e9f6ff26659863335682a0081489f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zzvllvzz/library/SC03_C2H5OH/1.0.1/SC03_C2H5OH-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/zzvllvzz/library/SC03_C2H5OH/1.0.1/SC03_C2H5OH-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zzvllvzz/library/SC03_C2H5OH/1.0.2/SC03_C2H5OH-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SC03_C2H5OH-1.0.2.tar.gz",
+    "size_bytes": 2434,
+    "sha256": "6dbd74f87f03dd88c39a30120ce2b64d3e2ad720f5894a5867178a0def35a79f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zzvllvzz/library/SC03_C2H5OH/1.0.2/SC03_C2H5OH-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/zzvllvzz/library/SC03_C2H5OH/1.0.2/SC03_C2H5OH-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

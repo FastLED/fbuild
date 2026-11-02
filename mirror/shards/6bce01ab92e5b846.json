@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-hex705",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-hex705/library/Glue/0.0.0+sha.d3119f23195f/Glue-0.0.0+sha.d3119f23195f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Glue-0.0.0+sha.d3119f23195f.tar.gz",
+    "size_bytes": 2282,
+    "sha256": "3a2803c827dbd322e981168c253ed548c5ac1f0d81dcb1f850c3545992739fde",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hex705/library/Glue/0.0.0%2Bsha.d3119f23195f/Glue-0.0.0%2Bsha.d3119f23195f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hex705/library/Glue/0.0.0%2Bsha.d3119f23195f/Glue-0.0.0%2Bsha.d3119f23195f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,178 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-frankvnk",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-frankvnk/library/CC3000_Hostdriver/0.0.0+sha.e1ab6b5ab826/CC3000_Hostdriver-0.0.0+sha.e1ab6b5ab826.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CC3000_Hostdriver-0.0.0+sha.e1ab6b5ab826.tar.gz",
+    "size_bytes": 42847,
+    "sha256": "fc5abb181e6fbf5af0693fde5e22f982b204ae72ae99f5f835ad23dd8e6fa788",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-frankvnk/library/CC3000_Hostdriver/0.0.0%2Bsha.e1ab6b5ab826/CC3000_Hostdriver-0.0.0%2Bsha.e1ab6b5ab826.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-frankvnk/library/CC3000_Hostdriver/0.0.0%2Bsha.e1ab6b5ab826/CC3000_Hostdriver-0.0.0%2Bsha.e1ab6b5ab826.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-frankvnk/library/ComparatorIn/0.0.0+sha.e6a4cd28e217/ComparatorIn-0.0.0+sha.e6a4cd28e217.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ComparatorIn-0.0.0+sha.e6a4cd28e217.tar.gz",
+    "size_bytes": 6589,
+    "sha256": "aa37643dd8a0e3a4eaab4c08f81399a93b4c686dfc4ec65345f78765099a2856",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-frankvnk/library/ComparatorIn/0.0.0%2Bsha.e6a4cd28e217/ComparatorIn-0.0.0%2Bsha.e6a4cd28e217.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-frankvnk/library/ComparatorIn/0.0.0%2Bsha.e6a4cd28e217/ComparatorIn-0.0.0%2Bsha.e6a4cd28e217.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-frankvnk/library/GetTypeName/0.0.0+sha.9723189e1955/GetTypeName-0.0.0+sha.9723189e1955.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GetTypeName-0.0.0+sha.9723189e1955.tar.gz",
+    "size_bytes": 2492,
+    "sha256": "2ece9d284574f909aa8198469533e68e0ab5eb733d93a47522c3ea05a49eb363",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-frankvnk/library/GetTypeName/0.0.0%2Bsha.9723189e1955/GetTypeName-0.0.0%2Bsha.9723189e1955.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-frankvnk/library/GetTypeName/0.0.0%2Bsha.9723189e1955/GetTypeName-0.0.0%2Bsha.9723189e1955.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-frankvnk/library/HSI2RGBW_PWM/0.0.0+sha.68daa710ba3f/HSI2RGBW_PWM-0.0.0+sha.68daa710ba3f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HSI2RGBW_PWM-0.0.0+sha.68daa710ba3f.tar.gz",
+    "size_bytes": 3938,
+    "sha256": "e91b53c1468cd0878e347ec3305ea1ed5dcef65024b3f8a88847c189c9d16d6f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-frankvnk/library/HSI2RGBW_PWM/0.0.0%2Bsha.68daa710ba3f/HSI2RGBW_PWM-0.0.0%2Bsha.68daa710ba3f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-frankvnk/library/HSI2RGBW_PWM/0.0.0%2Bsha.68daa710ba3f/HSI2RGBW_PWM-0.0.0%2Bsha.68daa710ba3f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-frankvnk/library/ISL29125/0.0.0+sha.ae36914adb6d/ISL29125-0.0.0+sha.ae36914adb6d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ISL29125-0.0.0+sha.ae36914adb6d.tar.gz",
+    "size_bytes": 5732,
+    "sha256": "64da617b31e7b6b4de4968b89d37ea5d07e15671d093bfa5da110b0ed6b8544f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-frankvnk/library/ISL29125/0.0.0%2Bsha.ae36914adb6d/ISL29125-0.0.0%2Bsha.ae36914adb6d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-frankvnk/library/ISL29125/0.0.0%2Bsha.ae36914adb6d/ISL29125-0.0.0%2Bsha.ae36914adb6d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-frankvnk/library/KL25Z_I2C_busreset/0.0.0+sha.e9beb537cf77/KL25Z_I2C_busreset-0.0.0+sha.e9beb537cf77.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KL25Z_I2C_busreset-0.0.0+sha.e9beb537cf77.tar.gz",
+    "size_bytes": 1460,
+    "sha256": "c3dd248c2bf57d3519376d797c532167deb22ae81dcdb80f3338957efa2aeffd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-frankvnk/library/KL25Z_I2C_busreset/0.0.0%2Bsha.e9beb537cf77/KL25Z_I2C_busreset-0.0.0%2Bsha.e9beb537cf77.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-frankvnk/library/KL25Z_I2C_busreset/0.0.0%2Bsha.e9beb537cf77/KL25Z_I2C_busreset-0.0.0%2Bsha.e9beb537cf77.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-frankvnk/library/KL25Z_irq_proirities/0.0.0+sha.d2dd5df65f0e/KL25Z_irq_proirities-0.0.0+sha.d2dd5df65f0e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KL25Z_irq_proirities-0.0.0+sha.d2dd5df65f0e.tar.gz",
+    "size_bytes": 1218,
+    "sha256": "8df3cb50f41bee8235d45bfbe346c4f6b483b9f5b8a40a797e5421113c3747bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-frankvnk/library/KL25Z_irq_proirities/0.0.0%2Bsha.d2dd5df65f0e/KL25Z_irq_proirities-0.0.0%2Bsha.d2dd5df65f0e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-frankvnk/library/KL25Z_irq_proirities/0.0.0%2Bsha.d2dd5df65f0e/KL25Z_irq_proirities-0.0.0%2Bsha.d2dd5df65f0e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-frankvnk/library/Mini-DK/0.0.0+sha.67989b4f61ad/Mini-DK-0.0.0+sha.67989b4f61ad.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Mini-DK-0.0.0+sha.67989b4f61ad.tar.gz",
+    "size_bytes": 20543,
+    "sha256": "b6fa58adc550a2dac24acb007878f8be28339e927afa0649d09497ebe2dc882d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-frankvnk/library/Mini-DK/0.0.0%2Bsha.67989b4f61ad/Mini-DK-0.0.0%2Bsha.67989b4f61ad.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-frankvnk/library/Mini-DK/0.0.0%2Bsha.67989b4f61ad/Mini-DK-0.0.0%2Bsha.67989b4f61ad.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-frankvnk/library/NVIC_set_all_priorities/0.0.0+sha.8acd3bf521ff/NVIC_set_all_priorities-0.0.0+sha.8acd3bf521ff.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NVIC_set_all_priorities-0.0.0+sha.8acd3bf521ff.tar.gz",
+    "size_bytes": 2253,
+    "sha256": "68744e8e7b2d4bc6b9f461a8267a7a489b589eb83ba884abe7b800ac669d2a5a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-frankvnk/library/NVIC_set_all_priorities/0.0.0%2Bsha.8acd3bf521ff/NVIC_set_all_priorities-0.0.0%2Bsha.8acd3bf521ff.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-frankvnk/library/NVIC_set_all_priorities/0.0.0%2Bsha.8acd3bf521ff/NVIC_set_all_priorities-0.0.0%2Bsha.8acd3bf521ff.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-frankvnk/library/PCA9635-6/0.0.0+sha.b89b54759940/PCA9635-6-0.0.0+sha.b89b54759940.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCA9635-6-0.0.0+sha.b89b54759940.tar.gz",
+    "size_bytes": 3696,
+    "sha256": "3346195f3aa601f0991e7ff44dbec0ef0aa980fe0f6dde626963c77133d49130",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-frankvnk/library/PCA9635-6/0.0.0%2Bsha.b89b54759940/PCA9635-6-0.0.0%2Bsha.b89b54759940.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-frankvnk/library/PCA9635-6/0.0.0%2Bsha.b89b54759940/PCA9635-6-0.0.0%2Bsha.b89b54759940.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-frankvnk/library/SPI_TFT_ILI9320/0.0.0+sha.2519f2e680af/SPI_TFT_ILI9320-0.0.0+sha.2519f2e680af.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SPI_TFT_ILI9320-0.0.0+sha.2519f2e680af.tar.gz",
+    "size_bytes": 17973,
+    "sha256": "d6dbacf65a948d4a826c345b9b45d5ee933ba93bfe57f3914a412ef13fedb35d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-frankvnk/library/SPI_TFT_ILI9320/0.0.0%2Bsha.2519f2e680af/SPI_TFT_ILI9320-0.0.0%2Bsha.2519f2e680af.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-frankvnk/library/SPI_TFT_ILI9320/0.0.0%2Bsha.2519f2e680af/SPI_TFT_ILI9320-0.0.0%2Bsha.2519f2e680af.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-frankvnk/library/SoftPdmOut/0.0.0+sha.85236b955cf6/SoftPdmOut-0.0.0+sha.85236b955cf6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SoftPdmOut-0.0.0+sha.85236b955cf6.tar.gz",
+    "size_bytes": 2508,
+    "sha256": "308af32f52fc0bfd993d55628bb5334894c74d8f7301de775172eec31e0a2706",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-frankvnk/library/SoftPdmOut/0.0.0%2Bsha.85236b955cf6/SoftPdmOut-0.0.0%2Bsha.85236b955cf6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-frankvnk/library/SoftPdmOut/0.0.0%2Bsha.85236b955cf6/SoftPdmOut-0.0.0%2Bsha.85236b955cf6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-frankvnk/library/TEMT6200/0.0.0+sha.5d1118cb5702/TEMT6200-0.0.0+sha.5d1118cb5702.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TEMT6200-0.0.0+sha.5d1118cb5702.tar.gz",
+    "size_bytes": 2336,
+    "sha256": "63fdc13dde53bd5fc8448ef3ff48def6fa8878a0d7532bd913cb41e1a5036463",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-frankvnk/library/TEMT6200/0.0.0%2Bsha.5d1118cb5702/TEMT6200-0.0.0%2Bsha.5d1118cb5702.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-frankvnk/library/TEMT6200/0.0.0%2Bsha.5d1118cb5702/TEMT6200-0.0.0%2Bsha.5d1118cb5702.tar.gz"
+    ]
+   }
+  }
+ ]
+}

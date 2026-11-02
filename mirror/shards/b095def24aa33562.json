@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/davirxavier",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "davirxavier/library/esp-config-page/1.4.4/esp-config-page-1.4.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-config-page-1.4.4.tar.gz",
+    "size_bytes": 32337,
+    "sha256": "84a8433eed0d4486c236dfc6a833d2b4c07fb1916d770c9e67499dd9c993b650",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/davirxavier/library/esp-config-page/1.4.4/esp-config-page-1.4.4.tar.gz",
+     "https://dl.registry.platformio.org/download/davirxavier/library/esp-config-page/1.4.4/esp-config-page-1.4.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "davirxavier/library/esp-config-page/1.4.5/esp-config-page-1.4.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-config-page-1.4.5.tar.gz",
+    "size_bytes": 32370,
+    "sha256": "66b42dc311ec21f97e88a85397975eb41a712d42992d017e7d49e09334890672",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/davirxavier/library/esp-config-page/1.4.5/esp-config-page-1.4.5.tar.gz",
+     "https://dl.registry.platformio.org/download/davirxavier/library/esp-config-page/1.4.5/esp-config-page-1.4.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

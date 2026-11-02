@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-porizou3",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-porizou3/library/motordriver/0.0.0+sha.876ba416c547/motordriver-0.0.0+sha.876ba416c547.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "motordriver-0.0.0+sha.876ba416c547.tar.gz",
+    "size_bytes": 1274,
+    "sha256": "6437f78f190fc3a5873f0df7e6bbaeb3f83c7473618ab4d158f524c1ac0b48c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-porizou3/library/motordriver/0.0.0%2Bsha.876ba416c547/motordriver-0.0.0%2Bsha.876ba416c547.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-porizou3/library/motordriver/0.0.0%2Bsha.876ba416c547/motordriver-0.0.0%2Bsha.876ba416c547.tar.gz"
+    ]
+   }
+  }
+ ]
+}

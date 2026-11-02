@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/claws",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "claws/library/BH1750/1.3.0/BH1750-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BH1750-1.3.0.tar.gz",
+    "size_bytes": 11631,
+    "sha256": "f3a79a43a476425f34b276dd65c741036ba8190aa3c756c8a15b2638bb2e4881",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/claws/library/BH1750/1.3.0/BH1750-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/claws/library/BH1750/1.3.0/BH1750-1.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

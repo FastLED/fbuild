@@ -1,0 +1,165 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/connornishijima",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "connornishijima/library/AlertMe/1.0.0/AlertMe-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlertMe-1.0.0.tar.gz",
+    "size_bytes": 21116,
+    "sha256": "9c6ccb41517d1fa2ae2b35720fb2b7a650925a75c25331ccf6ad132293152952",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/connornishijima/library/AlertMe/1.0.0/AlertMe-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/connornishijima/library/AlertMe/1.0.0/AlertMe-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "connornishijima/library/Buzz/1.0.3/Buzz-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Buzz-1.0.3.tar.gz",
+    "size_bytes": 19193,
+    "sha256": "0c6f65823baaeef7bec7f4e76f569382388d31e636034b3b86212ab3638f021e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/connornishijima/library/Buzz/1.0.3/Buzz-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/connornishijima/library/Buzz/1.0.3/Buzz-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "connornishijima/library/Lixie%20II/1.3.1/LixieII-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LixieII-1.3.1.tar.gz",
+    "size_bytes": 31868,
+    "sha256": "5ad84fe260e75fb67db3bb5d00c863149d15df63f75cf6c9315fb77b3a88b565",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/connornishijima/library/Lixie%2520II/1.3.1/LixieII-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/connornishijima/library/Lixie%20II/1.3.1/LixieII-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "connornishijima/library/Lixie/1.4.0/Lixie-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lixie-1.4.0.tar.gz",
+    "size_bytes": 38929,
+    "sha256": "598a110a52933f9b8e5d6fc258d23e7a13502d36652d4a98a6b5d1b3a3f92741",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/connornishijima/library/Lixie/1.4.0/Lixie-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/connornishijima/library/Lixie/1.4.0/Lixie-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "connornishijima/library/Pixie/1.3.0/Pixie-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pixie-1.3.0.tar.gz",
+    "size_bytes": 41312,
+    "sha256": "4599c236fd56daaf25a8930079b659874ccea84a2ea15adc78de275017501af7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/connornishijima/library/Pixie/1.3.0/Pixie-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/connornishijima/library/Pixie/1.3.0/Pixie-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "connornishijima/library/PixieChromaLite/0.2.0/PixieChromaLite-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PixieChromaLite-0.2.0.tar.gz",
+    "size_bytes": 8921,
+    "sha256": "0ba36a9da4a3a1e77ec189dbacf677927959fad38b6440201cba8e7fd6918bf8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/connornishijima/library/PixieChromaLite/0.2.0/PixieChromaLite-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/connornishijima/library/PixieChromaLite/0.2.0/PixieChromaLite-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "connornishijima/library/Pixie_Chroma/1.2.0/Pixie_Chroma-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pixie_Chroma-1.2.0.tar.gz",
+    "size_bytes": 59885,
+    "sha256": "f0c280f1a87c174782dc81e2833d0ea7a9a34d64138fdc225b7f1c6ed75f353a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/connornishijima/library/Pixie_Chroma/1.2.0/Pixie_Chroma-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/connornishijima/library/Pixie_Chroma/1.2.0/Pixie_Chroma-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "connornishijima/library/Synth/1.0.0/Synth-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Synth-1.0.0.tar.gz",
+    "size_bytes": 24164,
+    "sha256": "699cded0ed7c78a5419b94808519e2cdf84029a23fe797ac848c216890f1c475",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/connornishijima/library/Synth/1.0.0/Synth-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/connornishijima/library/Synth/1.0.0/Synth-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "connornishijima/library/TinySnore/1.0.1/TinySnore-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinySnore-1.0.1.tar.gz",
+    "size_bytes": 15458,
+    "sha256": "86c108a9fdcc41880ef2eb1c72e4ccfd51fb842fe110c628babccda0c8bf7a90",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/connornishijima/library/TinySnore/1.0.1/TinySnore-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/connornishijima/library/TinySnore/1.0.1/TinySnore-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "connornishijima/library/Volume%203/1.0.0/Volume3-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Volume3-1.0.0.tar.gz",
+    "size_bytes": 20285,
+    "sha256": "99715400f2ec20c3be5facb4a45f16ec40a1d52377bb29a808c6121a95a3d0c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/connornishijima/library/Volume%25203/1.0.0/Volume3-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/connornishijima/library/Volume%203/1.0.0/Volume3-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "connornishijima/library/Volume/1.1.2/Volume-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Volume-1.1.2.tar.gz",
+    "size_bytes": 21449,
+    "sha256": "ff29a8ffd90ad2e48d63b49fccafb6931f8494f6b849ac16e65418fe4b6f6bf3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/connornishijima/library/Volume/1.1.2/Volume-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/connornishijima/library/Volume/1.1.2/Volume-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "connornishijima/library/Volume2/1.0.0/Volume2-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Volume2-1.0.0.tar.gz",
+    "size_bytes": 19526,
+    "sha256": "3889d44a56d76770e68f4aa6a36aca24143e13badecdc0bac798ae44e7a1d1a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/connornishijima/library/Volume2/1.0.0/Volume2-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/connornishijima/library/Volume2/1.0.0/Volume2-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

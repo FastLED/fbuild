@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/julyighor",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "julyighor/library/PinButtonEvents/1.0.1/PinButtonEvents-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PinButtonEvents-1.0.1.tar.gz",
+    "size_bytes": 3777,
+    "sha256": "8f09626d5645e94483b4c8189a9532a3a7cec94c68f30c4bd6725e51ba1d12d5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/julyighor/library/PinButtonEvents/1.0.1/PinButtonEvents-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/julyighor/library/PinButtonEvents/1.0.1/PinButtonEvents-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

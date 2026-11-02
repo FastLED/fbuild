@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ztztno1",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ztztno1/library/SPIShiftReg/0.0.0+sha.9f0e9ea56740/SPIShiftReg-0.0.0+sha.9f0e9ea56740.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SPIShiftReg-0.0.0+sha.9f0e9ea56740.tar.gz",
+    "size_bytes": 1776,
+    "sha256": "800ed469be7a2f93738b34aa8a2ed7c04b4e5473e06233a828190beeac9428bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ztztno1/library/SPIShiftReg/0.0.0%2Bsha.9f0e9ea56740/SPIShiftReg-0.0.0%2Bsha.9f0e9ea56740.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ztztno1/library/SPIShiftReg/0.0.0%2Bsha.9f0e9ea56740/SPIShiftReg-0.0.0%2Bsha.9f0e9ea56740.tar.gz"
+    ]
+   }
+  }
+ ]
+}

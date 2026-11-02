@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/marlinfirmware",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "marlinfirmware/library/U8glib-HAL/0.4.1/U8glib-HAL-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "U8glib-HAL-0.4.1.tar.gz",
+    "size_bytes": 881255,
+    "sha256": "92f6f46e797340c6d50c7c5dfe0de804578854399b0510fcee816f3e01397778",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marlinfirmware/library/U8glib-HAL/0.4.1/U8glib-HAL-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/marlinfirmware/library/U8glib-HAL/0.4.1/U8glib-HAL-0.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marlinfirmware/library/U8glib-HAL/0.4.5/U8glib-HAL-0.4.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "U8glib-HAL-0.4.5.tar.gz",
+    "size_bytes": 866348,
+    "sha256": "9399d97159b318906737fde1fe0822a4c1be5229fae86b882ba1ffeff11b3663",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marlinfirmware/library/U8glib-HAL/0.4.5/U8glib-HAL-0.4.5.tar.gz",
+     "https://dl.registry.platformio.org/download/marlinfirmware/library/U8glib-HAL/0.4.5/U8glib-HAL-0.4.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marlinfirmware/library/U8glib-HAL/0.5.2/U8glib-HAL-0.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "U8glib-HAL-0.5.2.tar.gz",
+    "size_bytes": 867200,
+    "sha256": "7beb2dc02c7192b1536e38d061115c713153afddb97e0a41f78ac207f6582361",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marlinfirmware/library/U8glib-HAL/0.5.2/U8glib-HAL-0.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/marlinfirmware/library/U8glib-HAL/0.5.2/U8glib-HAL-0.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marlinfirmware/library/U8glib-HAL/0.5.4/U8glib-HAL-0.5.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "U8glib-HAL-0.5.4.tar.gz",
+    "size_bytes": 944724,
+    "sha256": "0ca762377cd2d8d5d8f787d8e084709bfe52888d3178688975a8576fb5fd49a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marlinfirmware/library/U8glib-HAL/0.5.4/U8glib-HAL-0.5.4.tar.gz",
+     "https://dl.registry.platformio.org/download/marlinfirmware/library/U8glib-HAL/0.5.4/U8glib-HAL-0.5.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marlinfirmware/library/U8glib-HAL/0.5.5/U8glib-HAL-0.5.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "U8glib-HAL-0.5.5.tar.gz",
+    "size_bytes": 947794,
+    "sha256": "0b37bfdcc5fdbc3ea65f3880446ddba81f583aceced1605bba18e264f1969bd7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marlinfirmware/library/U8glib-HAL/0.5.5/U8glib-HAL-0.5.5.tar.gz",
+     "https://dl.registry.platformio.org/download/marlinfirmware/library/U8glib-HAL/0.5.5/U8glib-HAL-0.5.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/maxgerhardt",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "maxgerhardt/library/CMSIS-NN/1.0.0/CMSIS-NN-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CMSIS-NN-1.0.0.tar.gz",
+    "size_bytes": 82219,
+    "sha256": "87875eeea7c28259a59f8f86af7efe24c0d84be566aae134e407852124f11db6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maxgerhardt/library/CMSIS-NN/1.0.0/CMSIS-NN-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/maxgerhardt/library/CMSIS-NN/1.0.0/CMSIS-NN-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "maxgerhardt/library/CMSIS-RTOS2-ArduinoSTM32/1.2.1/CMSIS-RTOS2-ArduinoSTM32-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CMSIS-RTOS2-ArduinoSTM32-1.2.1.tar.gz",
+    "size_bytes": 90215,
+    "sha256": "ae331f750142f874275fc43b171dd3338d3a448db5a5d55cc2212dc65b896a1c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maxgerhardt/library/CMSIS-RTOS2-ArduinoSTM32/1.2.1/CMSIS-RTOS2-ArduinoSTM32-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/maxgerhardt/library/CMSIS-RTOS2-ArduinoSTM32/1.2.1/CMSIS-RTOS2-ArduinoSTM32-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "maxgerhardt/library/SC18IS602B-arduino/1.0.0/SC18IS602B-arduino-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SC18IS602B-arduino-1.0.0.tar.gz",
+    "size_bytes": 5842,
+    "sha256": "2bcd96c31257e5d269481e478924ea272471ae99e12841483e66effe27dc3a5a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maxgerhardt/library/SC18IS602B-arduino/1.0.0/SC18IS602B-arduino-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/maxgerhardt/library/SC18IS602B-arduino/1.0.0/SC18IS602B-arduino-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "maxgerhardt/library/ghostl/1.0.1/ghostl-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ghostl-1.0.1.tar.gz",
+    "size_bytes": 36955,
+    "sha256": "8016e7e85bc3b127a3864e81618f4eef26b2b396b8f95525809cae91b88a4bba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maxgerhardt/library/ghostl/1.0.1/ghostl-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/maxgerhardt/library/ghostl/1.0.1/ghostl-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "maxgerhardt/tool/framework-spl/2.10300.0/framework-spl-2.10300.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "framework-spl-2.10300.0.tar.gz",
+    "size_bytes": 1641396,
+    "sha256": "b645bb7c455063833c6aa6c0b42101f2109ba3643280a987438d858d8b49b83f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maxgerhardt/tool/framework-spl/2.10300.0/framework-spl-2.10300.0.tar.gz",
+     "https://dl.registry.platformio.org/download/maxgerhardt/tool/framework-spl/2.10300.0/framework-spl-2.10300.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "maxgerhardt/tool/framework-spl/2.10302.0/framework-spl-2.10302.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "framework-spl-2.10302.0.tar.gz",
+    "size_bytes": 1847764,
+    "sha256": "9c8c1a8bd470ad75932e086e201734c89b18a107cfd73c83048f125682e13e09",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maxgerhardt/tool/framework-spl/2.10302.0/framework-spl-2.10302.0.tar.gz",
+     "https://dl.registry.platformio.org/download/maxgerhardt/tool/framework-spl/2.10302.0/framework-spl-2.10302.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "maxgerhardt/tool/tool-w60x-download/1.10000.0/tool-w60x-download-1.10000.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-w60x-download-1.10000.0.tar.gz",
+    "size_bytes": 93291,
+    "sha256": "90c62c4a2310777e4f2ddd75e4a78d91eb97790bb2f5ca0cfdbefbf755378b1c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maxgerhardt/tool/tool-w60x-download/1.10000.0/tool-w60x-download-1.10000.0.tar.gz",
+     "https://dl.registry.platformio.org/download/maxgerhardt/tool/tool-w60x-download/1.10000.0/tool-w60x-download-1.10000.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

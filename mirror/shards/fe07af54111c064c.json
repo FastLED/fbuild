@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jf002",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jf002/library/cfGUI/0.3.0/cfGUI-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cfGUI-0.3.0.tar.gz",
+    "size_bytes": 13363,
+    "sha256": "1a4dec7a370178060b0107fc9c8a28a2c146739177ee05c37c40894a5f87e429",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jf002/library/cfGUI/0.3.0/cfGUI-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jf002/library/cfGUI/0.3.0/cfGUI-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jf002/library/cfRFM69/0.1.2/cfRFM69-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cfRFM69-0.1.2.tar.gz",
+    "size_bytes": 9681,
+    "sha256": "796a9058795a1fa114e063a00c19245114d42b6778b85c96a3a6e6eba643461f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jf002/library/cfRFM69/0.1.2/cfRFM69-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jf002/library/cfRFM69/0.1.2/cfRFM69-0.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

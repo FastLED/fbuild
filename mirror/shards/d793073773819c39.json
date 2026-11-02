@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/apeiris",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "apeiris/library/Google%20Cloud%20IoT%20device%20libray%20for%20PlatformIO/1.02/GoogleCloudIoTdevicelibrayforPlatformIO-1.02.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GoogleCloudIoTdevicelibrayforPlatformIO-1.02.tar.gz",
+    "size_bytes": 2497,
+    "sha256": "bc09c440e62e45afbe7767f8a6c39303a94bac31c2fc7baa714a891a2e94f457",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/apeiris/library/Google%2520Cloud%2520IoT%2520device%2520libray%2520for%2520PlatformIO/1.02/GoogleCloudIoTdevicelibrayforPlatformIO-1.02.tar.gz",
+     "https://dl.registry.platformio.org/download/apeiris/library/Google%20Cloud%20IoT%20device%20libray%20for%20PlatformIO/1.02/GoogleCloudIoTdevicelibrayforPlatformIO-1.02.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "apeiris/library/MySQL%20Connector%20Arduino/1.2.1/MySQLConnectorArduino-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MySQLConnectorArduino-1.2.1.tar.gz",
+    "size_bytes": 20592,
+    "sha256": "3c3c034c24421f4bea97ec3a24cb878af65c68ab803e41ff226930adba921062",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/apeiris/library/MySQL%2520Connector%2520Arduino/1.2.1/MySQLConnectorArduino-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/apeiris/library/MySQL%20Connector%20Arduino/1.2.1/MySQLConnectorArduino-1.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

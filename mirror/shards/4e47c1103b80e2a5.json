@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-mbsd-assignment",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-mbsd-assignment/library/Ultrasonic/0.0.0+sha.549b453cd6ce/Ultrasonic-0.0.0+sha.549b453cd6ce.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ultrasonic-0.0.0+sha.549b453cd6ce.tar.gz",
+    "size_bytes": 1587,
+    "sha256": "6c4892a8f93c8198c4fc0f2128f4d99b9a8c81819bf0eb15f3a142ac71734734",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mbsd-assignment/library/Ultrasonic/0.0.0%2Bsha.549b453cd6ce/Ultrasonic-0.0.0%2Bsha.549b453cd6ce.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mbsd-assignment/library/Ultrasonic/0.0.0%2Bsha.549b453cd6ce/Ultrasonic-0.0.0%2Bsha.549b453cd6ce.tar.gz"
+    ]
+   }
+  }
+ ]
+}

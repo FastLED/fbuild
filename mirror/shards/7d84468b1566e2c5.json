@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fabyte",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fabyte/library/Tiny%20BME280/1.0.2/TinyBME280-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyBME280-1.0.2.tar.gz",
+    "size_bytes": 11932,
+    "sha256": "5be53d3dfcd02172bbac5e3409cb721db99d7171ab7b2da95a16d4b70ed36efc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fabyte/library/Tiny%2520BME280/1.0.2/TinyBME280-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/fabyte/library/Tiny%20BME280/1.0.2/TinyBME280-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

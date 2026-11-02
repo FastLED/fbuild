@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-robot-arm-demo-team",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-robot-arm-demo-team/library/AX-12A/0.0.0+sha.9afd50c38c80/AX-12A-0.0.0+sha.9afd50c38c80.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AX-12A-0.0.0+sha.9afd50c38c80.tar.gz",
+    "size_bytes": 3380,
+    "sha256": "6e9bc4625d4eddb792fe3d3bd7f549e776bbb030f569443e5ef19cfad3de9cb4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-robot-arm-demo-team/library/AX-12A/0.0.0%2Bsha.9afd50c38c80/AX-12A-0.0.0%2Bsha.9afd50c38c80.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-robot-arm-demo-team/library/AX-12A/0.0.0%2Bsha.9afd50c38c80/AX-12A-0.0.0%2Bsha.9afd50c38c80.tar.gz"
+    ]
+   }
+  }
+ ]
+}

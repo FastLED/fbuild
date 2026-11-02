@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/toernblom",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "toernblom/library/SimpleUDPController/1.0.0/SimpleUDPController-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleUDPController-1.0.0.tar.gz",
+    "size_bytes": 2036,
+    "sha256": "ba7744dd68ebb21fd76d200fd045560ed01fbdd0c95c3379b6dff0104b48a582",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/toernblom/library/SimpleUDPController/1.0.0/SimpleUDPController-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/toernblom/library/SimpleUDPController/1.0.0/SimpleUDPController-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "toernblom/library/SimpleWiFiClient/1.0.5/SimpleWiFiClient-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleWiFiClient-1.0.5.tar.gz",
+    "size_bytes": 2535,
+    "sha256": "46eb8a9f6811f507ebbd9e5536d9956162927678a090de9f6473cad4200adebe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/toernblom/library/SimpleWiFiClient/1.0.5/SimpleWiFiClient-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/toernblom/library/SimpleWiFiClient/1.0.5/SimpleWiFiClient-1.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

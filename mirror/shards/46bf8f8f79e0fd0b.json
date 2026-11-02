@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/greenponik",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "greenponik/library/DFRobot_ESP_EC_BY_GREENPONIK/1.1.4/DFRobot_ESP_EC_BY_GREENPONIK-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_ESP_EC_BY_GREENPONIK-1.1.4.tar.gz",
+    "size_bytes": 14012,
+    "sha256": "76075916537033943beba5d0cade5e79641fdd2c48f1924728e2b078cd370843",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/greenponik/library/DFRobot_ESP_EC_BY_GREENPONIK/1.1.4/DFRobot_ESP_EC_BY_GREENPONIK-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/greenponik/library/DFRobot_ESP_EC_BY_GREENPONIK/1.1.4/DFRobot_ESP_EC_BY_GREENPONIK-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "greenponik/library/DFRobot_ESP_PH_WITH_ADC_BY_GREENPONIK/1.2.3/DFRobot_ESP_PH_WITH_ADC_BY_GREENPONIK-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_ESP_PH_WITH_ADC_BY_GREENPONIK-1.2.3.tar.gz",
+    "size_bytes": 14007,
+    "sha256": "a8f6a8a96afc959b44e8686586557338156fb60c4bb3fdf4c67efedd2ef99404",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/greenponik/library/DFRobot_ESP_PH_WITH_ADC_BY_GREENPONIK/1.2.3/DFRobot_ESP_PH_WITH_ADC_BY_GREENPONIK-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/greenponik/library/DFRobot_ESP_PH_WITH_ADC_BY_GREENPONIK/1.2.3/DFRobot_ESP_PH_WITH_ADC_BY_GREENPONIK-1.2.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

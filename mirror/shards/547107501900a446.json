@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/vagarthgaurav",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "vagarthgaurav/library/Akshara/0.1.1/Akshara-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Akshara-0.1.1.tar.gz",
+    "size_bytes": 1026197,
+    "sha256": "37cd6e1b6d6384b50aed948c46337b3c657cb999c02529292593860475db051c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vagarthgaurav/library/Akshara/0.1.1/Akshara-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vagarthgaurav/library/Akshara/0.1.1/Akshara-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

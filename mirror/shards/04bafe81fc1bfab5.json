@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/datavenueliveobjects",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "datavenueliveobjects/library/LiveObjectsSDK/2.1.2/LiveObjectsSDK-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LiveObjectsSDK-2.1.2.tar.gz",
+    "size_bytes": 58797,
+    "sha256": "558dccca4c241e57c3af1fe8819f933ee34e57866db5e7926cf0b4298e1d99fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/datavenueliveobjects/library/LiveObjectsSDK/2.1.2/LiveObjectsSDK-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/datavenueliveobjects/library/LiveObjectsSDK/2.1.2/LiveObjectsSDK-2.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

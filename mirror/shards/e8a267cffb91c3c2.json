@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-durairajasivam",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-durairajasivam/library/wifly/0.0.0+sha.58a03709f3fa/wifly-0.0.0+sha.58a03709f3fa.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "wifly-0.0.0+sha.58a03709f3fa.tar.gz",
+    "size_bytes": 989,
+    "sha256": "596e865b14a439cc07fdf034ed5660614e9c22c82dd08e77a3ba1cae231c7f7d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-durairajasivam/library/wifly/0.0.0%2Bsha.58a03709f3fa/wifly-0.0.0%2Bsha.58a03709f3fa.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-durairajasivam/library/wifly/0.0.0%2Bsha.58a03709f3fa/wifly-0.0.0%2Bsha.58a03709f3fa.tar.gz"
+    ]
+   }
+  }
+ ]
+}

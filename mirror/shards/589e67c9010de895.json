@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/luos",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "luos/library/Gate/2.1.0/Gate-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Gate-2.1.0.tar.gz",
+    "size_bytes": 135952,
+    "sha256": "811ed3a81b44b33e23b667bfc5c630e84d5ecc21d0b95f3e415c1ca67b887bba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luos/library/Gate/2.1.0/Gate-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/luos/library/Gate/2.1.0/Gate-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "luos/library/Inspector/1.6.1/Inspector-1.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Inspector-1.6.1.tar.gz",
+    "size_bytes": 118315,
+    "sha256": "026c95396d1de46e8669c2a27275253ccbff6b214c2bbfafe8f5b9150b304bb0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luos/library/Inspector/1.6.1/Inspector-1.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/luos/library/Inspector/1.6.1/Inspector-1.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "luos/library/Luos/2.3.1/Luos-2.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Luos-2.3.1.tar.gz",
+    "size_bytes": 76229,
+    "sha256": "0af9496c8f345ba172bee5318dd54af6f895f129b90a43a5b663fa00f6d0748d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luos/library/Luos/2.3.1/Luos-2.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/luos/library/Luos/2.3.1/Luos-2.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "luos/library/LuosHAL/0.5.3/LuosHAL-0.5.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LuosHAL-0.5.3.tar.gz",
+    "size_bytes": 67602,
+    "sha256": "595c39c0e66ac594f9b25b7b894e62c91a290b85f820fad2c3ef029678065cf0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luos/library/LuosHAL/0.5.3/LuosHAL-0.5.3.tar.gz",
+     "https://dl.registry.platformio.org/download/luos/library/LuosHAL/0.5.3/LuosHAL-0.5.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "luos/library/Pipe/2.1.0/Pipe-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pipe-2.1.0.tar.gz",
+    "size_bytes": 15484,
+    "sha256": "3e7728daa5af1bdbb717bca12f5f871d77be79add630a8c682dfc414b3413222",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luos/library/Pipe/2.1.0/Pipe-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/luos/library/Pipe/2.1.0/Pipe-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "luos/library/luos_engine/3.1.0/luos_engine-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "luos_engine-3.1.0.tar.gz",
+    "size_bytes": 6449070,
+    "sha256": "59465688af19fc814b2843dc39307167d9c466d1eef23d2f943d8276d0fb31e2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luos/library/luos_engine/3.1.0/luos_engine-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/luos/library/luos_engine/3.1.0/luos_engine-3.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "luos/library/robus_network/3.1.0/robus_network-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "robus_network-3.1.0.tar.gz",
+    "size_bytes": 73110,
+    "sha256": "36d98197579b02dff10deca42185baf56964bcb49a8e11341aed90989db9384f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luos/library/robus_network/3.1.0/robus_network-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/luos/library/robus_network/3.1.0/robus_network-3.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "luos/library/serial_network/1.1.0/serial_network-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "serial_network-1.1.0.tar.gz",
+    "size_bytes": 13913,
+    "sha256": "09b569c7b1851967edd9966576df6aceb431b84a8581713e26f87def7c37f104",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luos/library/serial_network/1.1.0/serial_network-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/luos/library/serial_network/1.1.0/serial_network-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

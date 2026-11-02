@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-rmcwilliam101",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-rmcwilliam101/library/ADXL362/0.0.0+sha.d9853774f233/ADXL362-0.0.0+sha.d9853774f233.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADXL362-0.0.0+sha.d9853774f233.tar.gz",
+    "size_bytes": 2174,
+    "sha256": "eb9d6493cc7436af09c31f01ed5b0c66fc0c502ff8b851fb2fa3cb310c902845",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rmcwilliam101/library/ADXL362/0.0.0%2Bsha.d9853774f233/ADXL362-0.0.0%2Bsha.d9853774f233.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rmcwilliam101/library/ADXL362/0.0.0%2Bsha.d9853774f233/ADXL362-0.0.0%2Bsha.d9853774f233.tar.gz"
+    ]
+   }
+  }
+ ]
+}

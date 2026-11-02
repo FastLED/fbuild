@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bitbucket-arcogroup",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bitbucket-arcogroup/library/IceC/0.0.0-alpha+sha.0.20191003-1/IceC-0.0.0-alphasha.0.20191003-1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IceC-0.0.0-alphasha.0.20191003-1.tar.gz",
+    "size_bytes": 26399,
+    "sha256": "df662ec4e11cbb2d33c6fbcfea69c0f4b0efbdd1169cb946a75186e9a91cc864",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbucket-arcogroup/library/IceC/0.0.0-alpha%2Bsha.0.20191003-1/IceC-0.0.0-alphasha.0.20191003-1.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbucket-arcogroup/library/IceC/0.0.0-alpha%2Bsha.0.20191003-1/IceC-0.0.0-alphasha.0.20191003-1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbucket-arcogroup/library/st/0.20200217/st-0.20200217.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "st-0.20200217.tar.gz",
+    "size_bytes": 2907,
+    "sha256": "ca08804ce59f346b639f8af0105b8aba7d867131d824ee167d77e97bc001211f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbucket-arcogroup/library/st/0.20200217/st-0.20200217.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbucket-arcogroup/library/st/0.20200217/st-0.20200217.tar.gz"
+    ]
+   }
+  }
+ ]
+}

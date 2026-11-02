@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/misch2",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "misch2/library/BQ25798/1.4.11/BQ25798-1.4.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BQ25798-1.4.11.tar.gz",
+    "size_bytes": 38609,
+    "sha256": "679db47e4aa503541f5376222990215757a9444dd91dcdfc8aa3b0f3a4254841",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/misch2/library/BQ25798/1.4.11/BQ25798-1.4.11.tar.gz",
+     "https://dl.registry.platformio.org/download/misch2/library/BQ25798/1.4.11/BQ25798-1.4.11.tar.gz"
+    ]
+   }
+  }
+ ]
+}

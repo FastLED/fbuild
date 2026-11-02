@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/zhenek-kreker",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "zhenek-kreker/library/MAX6675%20with%20hardware%20SPI/1.0.0/MAX6675withhardwareSPI-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX6675withhardwareSPI-1.0.0.tar.gz",
+    "size_bytes": 2381,
+    "sha256": "8305bb89bc818825fef9cc37c732f0be961b32d271a3d210c1cc4858d7c07f68",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zhenek-kreker/library/MAX6675%2520with%2520hardware%2520SPI/1.0.0/MAX6675withhardwareSPI-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/zhenek-kreker/library/MAX6675%20with%20hardware%20SPI/1.0.0/MAX6675withhardwareSPI-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

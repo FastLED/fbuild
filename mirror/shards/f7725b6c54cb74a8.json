@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-delta",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-delta/library/BLE_iBeacon_Scan/0.0.0+sha.2c8c5bd785f4/BLE_iBeacon_Scan-0.0.0+sha.2c8c5bd785f4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLE_iBeacon_Scan-0.0.0+sha.2c8c5bd785f4.tar.gz",
+    "size_bytes": 1036,
+    "sha256": "db704e2075ee92644e8cdb4fdc4b4cc2d66357f7f65db5a0418651f9d79c09d3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-delta/library/BLE_iBeacon_Scan/0.0.0%2Bsha.2c8c5bd785f4/BLE_iBeacon_Scan-0.0.0%2Bsha.2c8c5bd785f4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-delta/library/BLE_iBeacon_Scan/0.0.0%2Bsha.2c8c5bd785f4/BLE_iBeacon_Scan-0.0.0%2Bsha.2c8c5bd785f4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-delta/library/HTTPClient_NNN50/0.0.0+sha.203c155e997a/HTTPClient_NNN50-0.0.0+sha.203c155e997a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HTTPClient_NNN50-0.0.0+sha.203c155e997a.tar.gz",
+    "size_bytes": 9171,
+    "sha256": "78aff1aed7ace317358078bc483064e79e4fb989291d6b24c206e36c10c94850",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-delta/library/HTTPClient_NNN50/0.0.0%2Bsha.203c155e997a/HTTPClient_NNN50-0.0.0%2Bsha.203c155e997a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-delta/library/HTTPClient_NNN50/0.0.0%2Bsha.203c155e997a/HTTPClient_NNN50-0.0.0%2Bsha.203c155e997a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-delta/library/non_blocking_Led_Buzzer/0.0.0+sha.c18c119011ec/non_blocking_Led_Buzzer-0.0.0+sha.c18c119011ec.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "non_blocking_Led_Buzzer-0.0.0+sha.c18c119011ec.tar.gz",
+    "size_bytes": 2669,
+    "sha256": "8d4d8d9fda0d206775f0e2c1c010c2b3aa36aabc61e6eb157c4c2ec9663053e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-delta/library/non_blocking_Led_Buzzer/0.0.0%2Bsha.c18c119011ec/non_blocking_Led_Buzzer-0.0.0%2Bsha.c18c119011ec.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-delta/library/non_blocking_Led_Buzzer/0.0.0%2Bsha.c18c119011ec/non_blocking_Led_Buzzer-0.0.0%2Bsha.c18c119011ec.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/whoelsethanjesus",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "whoelsethanjesus/library/Mintrix/1.1.2/Mintrix-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Mintrix-1.1.2.tar.gz",
+    "size_bytes": 8685,
+    "sha256": "c2154d9b4f8221d4980513d1727762746bd4a578eb7dff6b67952fbb30488fdb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/whoelsethanjesus/library/Mintrix/1.1.2/Mintrix-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/whoelsethanjesus/library/Mintrix/1.1.2/Mintrix-1.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

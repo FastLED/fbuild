@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/akoro",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "akoro/library/Console/1.2.1/Console-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Console-1.2.1.tar.gz",
+    "size_bytes": 2611,
+    "sha256": "9ccda3dc891eb099ad5fa508bb284664b2babc3a71036249ba99c7d4713ba3d4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/akoro/library/Console/1.2.1/Console-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/akoro/library/Console/1.2.1/Console-1.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

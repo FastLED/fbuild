@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/trongthan210",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "trongthan210/library/iMakerPS2/0.0.1/iMakerPS2-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iMakerPS2-0.0.1.tar.gz",
+    "size_bytes": 36213,
+    "sha256": "da37b1aa2aec798491f5acbe3e0949785f1d47e49c9a8ec90ae6453eae8e4c20",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/trongthan210/library/iMakerPS2/0.0.1/iMakerPS2-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/trongthan210/library/iMakerPS2/0.0.1/iMakerPS2-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

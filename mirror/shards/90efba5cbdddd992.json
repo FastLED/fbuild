@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-bjornvb",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-bjornvb/library/Wifly_RNXV/0.0.0+sha.07a3be55bb0a/Wifly_RNXV-0.0.0+sha.07a3be55bb0a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Wifly_RNXV-0.0.0+sha.07a3be55bb0a.tar.gz",
+    "size_bytes": 10389,
+    "sha256": "32baff23c84f73e0865e5a0ed0eccafe142119df5976d86d0f52a1a0cc93cdb3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bjornvb/library/Wifly_RNXV/0.0.0%2Bsha.07a3be55bb0a/Wifly_RNXV-0.0.0%2Bsha.07a3be55bb0a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bjornvb/library/Wifly_RNXV/0.0.0%2Bsha.07a3be55bb0a/Wifly_RNXV-0.0.0%2Bsha.07a3be55bb0a.tar.gz"
+    ]
+   }
+  }
+ ]
+}

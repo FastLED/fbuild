@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/camelcasename",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "camelcasename/library/HUB75Enano/2.0.0/HUB75Enano-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HUB75Enano-2.0.0.tar.gz",
+    "size_bytes": 38421,
+    "sha256": "f22098403bbcc4ad3c0347388d373b79f83eb364c5944d22ba532d8ce6ed4779",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/camelcasename/library/HUB75Enano/2.0.0/HUB75Enano-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/camelcasename/library/HUB75Enano/2.0.0/HUB75Enano-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "camelcasename/library/HUB75nano/2.4.4/HUB75nano-2.4.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HUB75nano-2.4.4.tar.gz",
+    "size_bytes": 52735,
+    "sha256": "4ee819c0d46d9bc393a3440b62497805af8ff7b9a177bae479ab0c97e5611813",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/camelcasename/library/HUB75nano/2.4.4/HUB75nano-2.4.4.tar.gz",
+     "https://dl.registry.platformio.org/download/camelcasename/library/HUB75nano/2.4.4/HUB75nano-2.4.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

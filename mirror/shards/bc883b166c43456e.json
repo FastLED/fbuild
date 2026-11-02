@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/defozo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "defozo/library/TouchHandler/1.1.1/TouchHandler-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TouchHandler-1.1.1.tar.gz",
+    "size_bytes": 6788,
+    "sha256": "5ed5f0a4de4adbeb81821f16275c3eaf56e913262200a18bfaa43f7999b5b0ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/defozo/library/TouchHandler/1.1.1/TouchHandler-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/defozo/library/TouchHandler/1.1.1/TouchHandler-1.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

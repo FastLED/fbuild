@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/make-arduino",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "make-arduino/library/EasyENC/1.0.0/EasyENC-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyENC-1.0.0.tar.gz",
+    "size_bytes": 2109,
+    "sha256": "e333984afc1e69aafca101744abe3dcec5345a7da877da7a89d4606b310eee66",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/make-arduino/library/EasyENC/1.0.0/EasyENC-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/make-arduino/library/EasyENC/1.0.0/EasyENC-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "make-arduino/library/EasyENC/2.1.0/EasyENC-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyENC-2.1.0.tar.gz",
+    "size_bytes": 2313,
+    "sha256": "839c817faa37c52ced15327e2764d8d49ab8980916e9a444f8955a656b21c25e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/make-arduino/library/EasyENC/2.1.0/EasyENC-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/make-arduino/library/EasyENC/2.1.0/EasyENC-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "make-arduino/library/EasyENC/3.0.0/EasyENC-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyENC-3.0.0.tar.gz",
+    "size_bytes": 2415,
+    "sha256": "f83b28f65a5054ff4645d951dadd50798fa71917bebc6067bceea3b07801cee9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/make-arduino/library/EasyENC/3.0.0/EasyENC-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/make-arduino/library/EasyENC/3.0.0/EasyENC-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "make-arduino/library/EasyENC/3.1.0/EasyENC-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyENC-3.1.0.tar.gz",
+    "size_bytes": 2363,
+    "sha256": "8d1a2ed8e8507645539f98d243bb4eccdeba080f45240708edba4bbd264e5134",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/make-arduino/library/EasyENC/3.1.0/EasyENC-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/make-arduino/library/EasyENC/3.1.0/EasyENC-3.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

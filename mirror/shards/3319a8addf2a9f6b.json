@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/markusianito",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "markusianito/library/Beverly/1.0.0/Beverly-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Beverly-1.0.0.tar.gz",
+    "size_bytes": 2983,
+    "sha256": "2e5d2b05e6849c461bde57000c049a3d9f9f745540b17ac78076a0059d2f6241",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/markusianito/library/Beverly/1.0.0/Beverly-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/markusianito/library/Beverly/1.0.0/Beverly-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "markusianito/library/Facebits/2.0.0/Facebits-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Facebits-2.0.0.tar.gz",
+    "size_bytes": 2369,
+    "sha256": "074702cd05d4767715cef681f282e27921b931edc768b9ed49c51047743ccec2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/markusianito/library/Facebits/2.0.0/Facebits-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/markusianito/library/Facebits/2.0.0/Facebits-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

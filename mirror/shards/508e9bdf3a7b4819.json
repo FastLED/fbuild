@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/strayersqh",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "strayersqh/library/IMU406/2.0.0/IMU406-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IMU406-2.0.0.tar.gz",
+    "size_bytes": 10580,
+    "sha256": "4c8b50d16d716b97df641311470e0b4955497494746bf40a69acae256fafcc53",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/strayersqh/library/IMU406/2.0.0/IMU406-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/strayersqh/library/IMU406/2.0.0/IMU406-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

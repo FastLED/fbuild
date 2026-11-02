@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/panjingwei1945",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "panjingwei1945/library/PWM_Pulse/0.3.2/PWM_Pulse-0.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PWM_Pulse-0.3.2.tar.gz",
+    "size_bytes": 9845,
+    "sha256": "65921ef515f5952b1fc6efb57c31a8444c29694cea7b7a6dc8b20452f29e477b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/panjingwei1945/library/PWM_Pulse/0.3.2/PWM_Pulse-0.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/panjingwei1945/library/PWM_Pulse/0.3.2/PWM_Pulse-0.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "panjingwei1945/library/PWM_Pulse/0.4.2/PWM_Pulse-0.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PWM_Pulse-0.4.2.tar.gz",
+    "size_bytes": 11077,
+    "sha256": "5016c883a42b298b18ad538f4d558df987373f730c426c680a2012922caaebcd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/panjingwei1945/library/PWM_Pulse/0.4.2/PWM_Pulse-0.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/panjingwei1945/library/PWM_Pulse/0.4.2/PWM_Pulse-0.4.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/debsahu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "debsahu/library/AWS%20IoT%20ESP8266%20Arduino%20Websockets/0.1.4/AWSIoTESP8266ArduinoWebsockets-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AWSIoTESP8266ArduinoWebsockets-0.1.4.tar.gz",
+    "size_bytes": 43423,
+    "sha256": "4270bf55ceb02edfd9e1eb63a858f7e57de69b3fd017d1bd947f080aaaea8216",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/debsahu/library/AWS%2520IoT%2520ESP8266%2520Arduino%2520Websockets/0.1.4/AWSIoTESP8266ArduinoWebsockets-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/debsahu/library/AWS%20IoT%20ESP8266%20Arduino%20Websockets/0.1.4/AWSIoTESP8266ArduinoWebsockets-0.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "debsahu/library/HARestAPI/0.3.2/HARestAPI-0.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HARestAPI-0.3.2.tar.gz",
+    "size_bytes": 16851,
+    "sha256": "237f754b6ec203ceac6448697fbeac3c0e89a17e42a82656511ef75da720d9c9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/debsahu/library/HARestAPI/0.3.2/HARestAPI-0.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/debsahu/library/HARestAPI/0.3.2/HARestAPI-0.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "debsahu/library/NeoAnimationFX/0.3/NeoAnimationFX-0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeoAnimationFX-0.3.tar.gz",
+    "size_bytes": 26492,
+    "sha256": "7178052d56bf01ce808e64bbb1ec61736522b7bbe734fef39b81fec32d5cade0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/debsahu/library/NeoAnimationFX/0.3/NeoAnimationFX-0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/debsahu/library/NeoAnimationFX/0.3/NeoAnimationFX-0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "debsahu/library/TwitterWebAPI/0.1/TwitterWebAPI-0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TwitterWebAPI-0.1.tar.gz",
+    "size_bytes": 29642,
+    "sha256": "02f28eb7cf16dbcb9310f669bac5c7e5ef58c8b61b41478603086038ca1d1e84",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/debsahu/library/TwitterWebAPI/0.1/TwitterWebAPI-0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/debsahu/library/TwitterWebAPI/0.1/TwitterWebAPI-0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

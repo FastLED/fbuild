@@ -1,0 +1,126 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tinyu-zhao",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tinyu-zhao/library/BMI270_Sensor/0.0.1/BMI270_Sensor-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMI270_Sensor-0.0.1.tar.gz",
+    "size_bytes": 172400,
+    "sha256": "7e2a09985951fd86825b882043db63ad77f9819fb48baac22b6a868829b06bcc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tinyu-zhao/library/BMI270_Sensor/0.0.1/BMI270_Sensor-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tinyu-zhao/library/BMI270_Sensor/0.0.1/BMI270_Sensor-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tinyu-zhao/library/FFT/0.0.1/FFT-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FFT-0.0.1.tar.gz",
+    "size_bytes": 8056,
+    "sha256": "6b84bb2c5c270359d68d6af42980e1229e0ed0d3bdacc46ffa1a90a4e64c8773",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tinyu-zhao/library/FFT/0.0.1/FFT-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tinyu-zhao/library/FFT/0.0.1/FFT-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tinyu-zhao/library/INA3221/0.0.1/INA3221-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "INA3221-0.0.1.tar.gz",
+    "size_bytes": 6621,
+    "sha256": "a014c061e23a52d7b3c418b7940088cabf4aa19cf64eddca9f722779679b93d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tinyu-zhao/library/INA3221/0.0.1/INA3221-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tinyu-zhao/library/INA3221/0.0.1/INA3221-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tinyu-zhao/library/M5-Depends/0.0.3/M5-Depends-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5-Depends-0.0.3.tar.gz",
+    "size_bytes": 3882,
+    "sha256": "6a2544a7c9c0ef01fe9a8a846114de29f5b08b5ee5c55f8a0a187d9c7adb987d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tinyu-zhao/library/M5-Depends/0.0.3/M5-Depends-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tinyu-zhao/library/M5-Depends/0.0.3/M5-Depends-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tinyu-zhao/library/M5-Outdepends/0.0.1/M5-Outdepends-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5-Outdepends-0.0.1.tar.gz",
+    "size_bytes": 3029,
+    "sha256": "de742759cf339860e337f70aecfd1e91a72c7e6f2ce9b9875567a337b3847f53",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tinyu-zhao/library/M5-Outdepends/0.0.1/M5-Outdepends-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tinyu-zhao/library/M5-Outdepends/0.0.1/M5-Outdepends-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tinyu-zhao/library/M5Unit-CatM/0.0.1/M5Unit-CatM-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-CatM-0.0.1.tar.gz",
+    "size_bytes": 11110,
+    "sha256": "6c53a2a9212d133e0e0222a6caa7dbae93df462187ba1bcda474d105439ef7f9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tinyu-zhao/library/M5Unit-CatM/0.0.1/M5Unit-CatM-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tinyu-zhao/library/M5Unit-CatM/0.0.1/M5Unit-CatM-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tinyu-zhao/library/PCA9554/0.0.1/PCA9554-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCA9554-0.0.1.tar.gz",
+    "size_bytes": 14439,
+    "sha256": "8ec67630b2b4080cec383193c2d25e01c10e22f1fafdbbfa04b802fa4aad1faa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tinyu-zhao/library/PCA9554/0.0.1/PCA9554-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tinyu-zhao/library/PCA9554/0.0.1/PCA9554-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tinyu-zhao/library/TFTTerminal/0.0.1/TFTTerminal-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFTTerminal-0.0.1.tar.gz",
+    "size_bytes": 2454,
+    "sha256": "2666bdfd442408c52800b62cb3550e098ae4958cbcb0215dc97d30278c180ef9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tinyu-zhao/library/TFTTerminal/0.0.1/TFTTerminal-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tinyu-zhao/library/TFTTerminal/0.0.1/TFTTerminal-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tinyu-zhao/library/TinyGPSPlus-ESP32/0.0.2/TinyGPSPlus-ESP32-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyGPSPlus-ESP32-0.0.2.tar.gz",
+    "size_bytes": 49401,
+    "sha256": "e53d70a9db3357340b621ee3204854b4dab3b934cd21e5cc0c43070d426a6a5e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tinyu-zhao/library/TinyGPSPlus-ESP32/0.0.2/TinyGPSPlus-ESP32-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tinyu-zhao/library/TinyGPSPlus-ESP32/0.0.2/TinyGPSPlus-ESP32-0.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

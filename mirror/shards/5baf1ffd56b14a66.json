@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-nespresso-rgb-sensor",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-nespresso-rgb-sensor/library/ColorDetector/0.0.0+sha.487acc0ebf8f/ColorDetector-0.0.0+sha.487acc0ebf8f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ColorDetector-0.0.0+sha.487acc0ebf8f.tar.gz",
+    "size_bytes": 3164,
+    "sha256": "9805520d1620c45ea5ae5e442b0d470624d5beefe707bb3217457c2d9f8433c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nespresso-rgb-sensor/library/ColorDetector/0.0.0%2Bsha.487acc0ebf8f/ColorDetector-0.0.0%2Bsha.487acc0ebf8f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nespresso-rgb-sensor/library/ColorDetector/0.0.0%2Bsha.487acc0ebf8f/ColorDetector-0.0.0%2Bsha.487acc0ebf8f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nespresso-rgb-sensor/library/ColorDetectorV2/0.0.0+sha.b7ce6f2b2a46/ColorDetectorV2-0.0.0+sha.b7ce6f2b2a46.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ColorDetectorV2-0.0.0+sha.b7ce6f2b2a46.tar.gz",
+    "size_bytes": 2043,
+    "sha256": "2f7bec61af9eeae20d15a6d9fb2c84bfbee35da30c4b181af15c0098ea97125a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nespresso-rgb-sensor/library/ColorDetectorV2/0.0.0%2Bsha.b7ce6f2b2a46/ColorDetectorV2-0.0.0%2Bsha.b7ce6f2b2a46.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nespresso-rgb-sensor/library/ColorDetectorV2/0.0.0%2Bsha.b7ce6f2b2a46/ColorDetectorV2-0.0.0%2Bsha.b7ce6f2b2a46.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nespresso-rgb-sensor/library/GroveColourSensor/0.0.0+sha.f6a136b99533/GroveColourSensor-0.0.0+sha.f6a136b99533.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GroveColourSensor-0.0.0+sha.f6a136b99533.tar.gz",
+    "size_bytes": 2820,
+    "sha256": "b68a4bb596d93fff2cab5244cfd5d132de32f7d700b5a873671e7abed05e96a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nespresso-rgb-sensor/library/GroveColourSensor/0.0.0%2Bsha.f6a136b99533/GroveColourSensor-0.0.0%2Bsha.f6a136b99533.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nespresso-rgb-sensor/library/GroveColourSensor/0.0.0%2Bsha.f6a136b99533/GroveColourSensor-0.0.0%2Bsha.f6a136b99533.tar.gz"
+    ]
+   }
+  }
+ ]
+}

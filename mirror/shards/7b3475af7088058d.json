@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mokolea",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mokolea/library/InputDebounce/1.6.0/InputDebounce-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "InputDebounce-1.6.0.tar.gz",
+    "size_bytes": 9166,
+    "sha256": "b0672bd1fb598be3de0147eadfaa90d69ec43a26aeeb03cee94888b089276750",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mokolea/library/InputDebounce/1.6.0/InputDebounce-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mokolea/library/InputDebounce/1.6.0/InputDebounce-1.6.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

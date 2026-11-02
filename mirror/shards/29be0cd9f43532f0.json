@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-lzbpli",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-lzbpli/library/Watchdog/0.0.0+sha.1c21c1f9c7b6/Watchdog-0.0.0+sha.1c21c1f9c7b6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Watchdog-0.0.0+sha.1c21c1f9c7b6.tar.gz",
+    "size_bytes": 2766,
+    "sha256": "e5464d5fb780537bc06fb51b4fefbd2e58216b3d1137ac38802bdbbdd767c2bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-lzbpli/library/Watchdog/0.0.0%2Bsha.1c21c1f9c7b6/Watchdog-0.0.0%2Bsha.1c21c1f9c7b6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-lzbpli/library/Watchdog/0.0.0%2Bsha.1c21c1f9c7b6/Watchdog-0.0.0%2Bsha.1c21c1f9c7b6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-lzbpli/library/eeprom/0.0.0+sha.143c9dcabcf0/eeprom-0.0.0+sha.143c9dcabcf0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "eeprom-0.0.0+sha.143c9dcabcf0.tar.gz",
+    "size_bytes": 992,
+    "sha256": "7c24243a8df99eef9a051c81709645ed6891531d6ddbf8485fed13604c467915",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-lzbpli/library/eeprom/0.0.0%2Bsha.143c9dcabcf0/eeprom-0.0.0%2Bsha.143c9dcabcf0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-lzbpli/library/eeprom/0.0.0%2Bsha.143c9dcabcf0/eeprom-0.0.0%2Bsha.143c9dcabcf0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-lzbpli/library/max31865/0.0.0+sha.ae18c7b91185/max31865-0.0.0+sha.ae18c7b91185.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "max31865-0.0.0+sha.ae18c7b91185.tar.gz",
+    "size_bytes": 4298,
+    "sha256": "947ab0c1b815fb78f4ffc55d9dfdd02300130f788ba34d5c46a892b43e244768",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-lzbpli/library/max31865/0.0.0%2Bsha.ae18c7b91185/max31865-0.0.0%2Bsha.ae18c7b91185.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-lzbpli/library/max31865/0.0.0%2Bsha.ae18c7b91185/max31865-0.0.0%2Bsha.ae18c7b91185.tar.gz"
+    ]
+   }
+  }
+ ]
+}

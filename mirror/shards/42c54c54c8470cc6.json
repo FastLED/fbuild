@@ -1,0 +1,165 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/shiningdanyang",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "shiningdanyang/library/Adafruit%20BNO055/1.6.4/AdafruitBNO055-1.6.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AdafruitBNO055-1.6.4.tar.gz",
+    "size_bytes": 1630781,
+    "sha256": "120949cec94232086ced6ef9d2bc55d91ead2750b354b5bdfe6cf3853a9dedfa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shiningdanyang/library/Adafruit%2520BNO055/1.6.4/AdafruitBNO055-1.6.4.tar.gz",
+     "https://dl.registry.platformio.org/download/shiningdanyang/library/Adafruit%20BNO055/1.6.4/AdafruitBNO055-1.6.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shiningdanyang/library/BKD_Fire/1.0.0/BKD_Fire-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BKD_Fire-1.0.0.tar.gz",
+    "size_bytes": 320915,
+    "sha256": "5fb567cab84e73e804ec17c2b0344a42e635a744af689f0a075d2f20eaf38b03",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shiningdanyang/library/BKD_Fire/1.0.0/BKD_Fire-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/shiningdanyang/library/BKD_Fire/1.0.0/BKD_Fire-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shiningdanyang/library/BKD_Fire/1.0.1/BKD_Fire-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BKD_Fire-1.0.1.tar.gz",
+    "size_bytes": 332291,
+    "sha256": "36f4f980c0d35f6610ae2b7532f68f39dc30f014335e0dda2dfefa9a880f02c1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shiningdanyang/library/BKD_Fire/1.0.1/BKD_Fire-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/shiningdanyang/library/BKD_Fire/1.0.1/BKD_Fire-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shiningdanyang/library/BKD_Fire/1.0.2/BKD_Fire-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BKD_Fire-1.0.2.tar.gz",
+    "size_bytes": 332287,
+    "sha256": "f892b309c9b77967b7796e8282955ebf5450e8fa81e5d24ba758254404bac4ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shiningdanyang/library/BKD_Fire/1.0.2/BKD_Fire-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/shiningdanyang/library/BKD_Fire/1.0.2/BKD_Fire-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shiningdanyang/library/BKD_Fire/1.0.3/BKD_Fire-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BKD_Fire-1.0.3.tar.gz",
+    "size_bytes": 332325,
+    "sha256": "65993a11ac98269451ee1f376878f7b7112f8074c0a0db4c0b05a76b7c1306c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shiningdanyang/library/BKD_Fire/1.0.3/BKD_Fire-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/shiningdanyang/library/BKD_Fire/1.0.3/BKD_Fire-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shiningdanyang/library/BKD_Fire/1.0.4/BKD_Fire-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BKD_Fire-1.0.4.tar.gz",
+    "size_bytes": 332325,
+    "sha256": "231ce192a0fcaff6deed3ce346d4237bda1c65d3c110a6173cc0fe1893d14bcc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shiningdanyang/library/BKD_Fire/1.0.4/BKD_Fire-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/shiningdanyang/library/BKD_Fire/1.0.4/BKD_Fire-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shiningdanyang/library/BKD_Fire/1.0.5/BKD_Fire-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BKD_Fire-1.0.5.tar.gz",
+    "size_bytes": 319744,
+    "sha256": "331ef7a6506daafab9286b9f89cf84ae51148cb2632b473fe163996fbef2ccf1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shiningdanyang/library/BKD_Fire/1.0.5/BKD_Fire-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/shiningdanyang/library/BKD_Fire/1.0.5/BKD_Fire-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shiningdanyang/library/BKD_Fire/1.0.6/BKD_Fire-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BKD_Fire-1.0.6.tar.gz",
+    "size_bytes": 319741,
+    "sha256": "e6545004d7334e4408987fce442334c3985458bec8eb57a3776c2f77f42dbc6c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shiningdanyang/library/BKD_Fire/1.0.6/BKD_Fire-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/shiningdanyang/library/BKD_Fire/1.0.6/BKD_Fire-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shiningdanyang/library/BKD_Fire/1.0.7/BKD_Fire-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BKD_Fire-1.0.7.tar.gz",
+    "size_bytes": 411153,
+    "sha256": "91929e0ad2a34bffe90adbc776456e276c828b0df6154012e854712632e198db",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shiningdanyang/library/BKD_Fire/1.0.7/BKD_Fire-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/shiningdanyang/library/BKD_Fire/1.0.7/BKD_Fire-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shiningdanyang/library/BKD_Fire/2.0.1/BKD_Fire-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BKD_Fire-2.0.1.tar.gz",
+    "size_bytes": 411866,
+    "sha256": "f731270e921be736ff3f7b475df74b592b138a61f58be7b3b892a28253518686",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shiningdanyang/library/BKD_Fire/2.0.1/BKD_Fire-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/shiningdanyang/library/BKD_Fire/2.0.1/BKD_Fire-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shiningdanyang/library/BKD_Fire/2.0.2/BKD_Fire-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BKD_Fire-2.0.2.tar.gz",
+    "size_bytes": 411871,
+    "sha256": "95619d763ec02e129b57cd9a026642e3113662458bdff6e5ed5b6c63e4c5795e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shiningdanyang/library/BKD_Fire/2.0.2/BKD_Fire-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/shiningdanyang/library/BKD_Fire/2.0.2/BKD_Fire-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shiningdanyang/library/BKD_Fire/2.0.3/BKD_Fire-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BKD_Fire-2.0.3.tar.gz",
+    "size_bytes": 411930,
+    "sha256": "a8428472b6a731dd69a4ff5c4f05c7a1c3736a309704965cb1868e6dcfdb29d3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shiningdanyang/library/BKD_Fire/2.0.3/BKD_Fire-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/shiningdanyang/library/BKD_Fire/2.0.3/BKD_Fire-2.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

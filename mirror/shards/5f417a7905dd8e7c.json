@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pjscruggs",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pjscruggs/library/NeoGPS-GarminClock/4.2.10/NeoGPS-GarminClock-4.2.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeoGPS-GarminClock-4.2.10.tar.gz",
+    "size_bytes": 106453,
+    "sha256": "9dbac34dc0b172ab20e23d7e1aa71f3f9ad4f453ac9a6bcc36dc93fbd8d9d4f5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pjscruggs/library/NeoGPS-GarminClock/4.2.10/NeoGPS-GarminClock-4.2.10.tar.gz",
+     "https://dl.registry.platformio.org/download/pjscruggs/library/NeoGPS-GarminClock/4.2.10/NeoGPS-GarminClock-4.2.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pjscruggs/library/TLC5947_SplitLatch/1.3.0/TLC5947_SplitLatch-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TLC5947_SplitLatch-1.3.0.tar.gz",
+    "size_bytes": 6123,
+    "sha256": "7e7d05919e99559c7399166a7535b69138fc959c236a060bb73e6e48a80ae1c9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pjscruggs/library/TLC5947_SplitLatch/1.3.0/TLC5947_SplitLatch-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pjscruggs/library/TLC5947_SplitLatch/1.3.0/TLC5947_SplitLatch-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pjscruggs/library/Time64/1.6.2/Time64-1.6.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Time64-1.6.2.tar.gz",
+    "size_bytes": 18398,
+    "sha256": "6ff67064e954de803012d3423f81adc59c1775834228117d83a306def26ce6ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pjscruggs/library/Time64/1.6.2/Time64-1.6.2.tar.gz",
+     "https://dl.registry.platformio.org/download/pjscruggs/library/Time64/1.6.2/Time64-1.6.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pjscruggs/library/Timezone64/1.3.0/Timezone64-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Timezone64-1.3.0.tar.gz",
+    "size_bytes": 25898,
+    "sha256": "ff86fc2bb51b8dbd4bf1ebb2e8359d7d006056af56c0d20cafdc984034f5732d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pjscruggs/library/Timezone64/1.3.0/Timezone64-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pjscruggs/library/Timezone64/1.3.0/Timezone64-1.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-dflet",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-dflet/library/FreeRTOS_V8_2_1/0.0.0+sha.91ad48ad5687/FreeRTOS_V8_2_1-0.0.0+sha.91ad48ad5687.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FreeRTOS_V8_2_1-0.0.0+sha.91ad48ad5687.tar.gz",
+    "size_bytes": 143154,
+    "sha256": "da99e06fc3aa9e0ac34c38d62482a20be9884cfde1b64308ad25fde4d45e6382",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dflet/library/FreeRTOS_V8_2_1/0.0.0%2Bsha.91ad48ad5687/FreeRTOS_V8_2_1-0.0.0%2Bsha.91ad48ad5687.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dflet/library/FreeRTOS_V8_2_1/0.0.0%2Bsha.91ad48ad5687/FreeRTOS_V8_2_1-0.0.0%2Bsha.91ad48ad5687.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dflet/library/client/0.0.0+sha.087b5655778d/client-0.0.0+sha.087b5655778d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "client-0.0.0+sha.087b5655778d.tar.gz",
+    "size_bytes": 27211,
+    "sha256": "54954af9d899fba27f92f85b9fe2f67e7bc3eb297ceb95e73c3766895c8d9ade",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dflet/library/client/0.0.0%2Bsha.087b5655778d/client-0.0.0%2Bsha.087b5655778d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dflet/library/client/0.0.0%2Bsha.087b5655778d/client-0.0.0%2Bsha.087b5655778d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dflet/library/mqtt_V1/0.0.0+sha.673880ad39ad/mqtt_V1-0.0.0+sha.673880ad39ad.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mqtt_V1-0.0.0+sha.673880ad39ad.tar.gz",
+    "size_bytes": 33987,
+    "sha256": "246f40119d03af4b40d837d73447664834b32748dc9c3884a1f9609f2f42ce3f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dflet/library/mqtt_V1/0.0.0%2Bsha.673880ad39ad/mqtt_V1-0.0.0%2Bsha.673880ad39ad.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dflet/library/mqtt_V1/0.0.0%2Bsha.673880ad39ad/mqtt_V1-0.0.0%2Bsha.673880ad39ad.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dflet/library/server/0.0.0+sha.547251f42a60/server-0.0.0+sha.547251f42a60.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "server-0.0.0+sha.547251f42a60.tar.gz",
+    "size_bytes": 35506,
+    "sha256": "434473d7b5c047a86dea729f73a0783ceda205a68d08137ddb4a93bdab3a075c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dflet/library/server/0.0.0%2Bsha.547251f42a60/server-0.0.0%2Bsha.547251f42a60.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dflet/library/server/0.0.0%2Bsha.547251f42a60/server-0.0.0%2Bsha.547251f42a60.tar.gz"
+    ]
+   }
+  }
+ ]
+}

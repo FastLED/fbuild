@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-hackerspace-ntnu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-hackerspace-ntnu/library/hello%20world/0.0.0+sha.1baa799c7239/helloworld-0.0.0+sha.1baa799c7239.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "helloworld-0.0.0+sha.1baa799c7239.tar.gz",
+    "size_bytes": 841,
+    "sha256": "2ef4d620bbf27c2c66619e7b5e07855267cb2a76cd92d042db228f475883b5c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hackerspace-ntnu/library/hello%2520world/0.0.0%2Bsha.1baa799c7239/helloworld-0.0.0%2Bsha.1baa799c7239.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hackerspace-ntnu/library/hello%20world/0.0.0%2Bsha.1baa799c7239/helloworld-0.0.0%2Bsha.1baa799c7239.tar.gz"
+    ]
+   }
+  }
+ ]
+}

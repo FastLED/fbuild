@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mirosieber",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mirosieber/library/BMS%20Client/1.0.0/BMSClient-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMSClient-1.0.0.tar.gz",
+    "size_bytes": 4387,
+    "sha256": "ed469dce95fda1552b06a9be529a14cd427a30ff7d2d494e18f58d3509019d37",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mirosieber/library/BMS%2520Client/1.0.0/BMSClient-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mirosieber/library/BMS%20Client/1.0.0/BMSClient-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mirosieber/library/MTS4X/1.0.0/MTS4X-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MTS4X-1.0.0.tar.gz",
+    "size_bytes": 3857,
+    "sha256": "f4e7d251f0c4e268d0f8512c01941fbf3cdc393d41eb4c4aefdfb2f0f178f009",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mirosieber/library/MTS4X/1.0.0/MTS4X-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mirosieber/library/MTS4X/1.0.0/MTS4X-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mirosieber/library/SCurveMotion/1.0.0/SCurveMotion-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SCurveMotion-1.0.0.tar.gz",
+    "size_bytes": 3492,
+    "sha256": "a4e0ea18761e6fe3199d48ddfb9e7f006d9d268992402f7bec63d7fc44449f4b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mirosieber/library/SCurveMotion/1.0.0/SCurveMotion-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mirosieber/library/SCurveMotion/1.0.0/SCurveMotion-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

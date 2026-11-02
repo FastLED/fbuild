@@ -1,0 +1,139 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sam8poop",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sam8poop/library/Rotary%20encoder/1.0.0/Rotaryencoder-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Rotaryencoder-1.0.0.tar.gz",
+    "size_bytes": 1220,
+    "sha256": "d81d3445240ff04c608535e5118b5f4df60251d78120613c4971ce81338cc283",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sam8poop/library/Rotary%2520encoder/1.0.0/Rotaryencoder-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sam8poop/library/Rotary%20encoder/1.0.0/Rotaryencoder-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sam8poop/library/Rotary%20encoder/1.1.0/Rotaryencoder-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Rotaryencoder-1.1.0.tar.gz",
+    "size_bytes": 1251,
+    "sha256": "b372d305d9b6abbb3f1ff6fe78a6fee2bf5a5bd781ec1acf43c8ce6437afb95c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sam8poop/library/Rotary%2520encoder/1.1.0/Rotaryencoder-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sam8poop/library/Rotary%20encoder/1.1.0/Rotaryencoder-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sam8poop/library/Rotary%20encoder/1.2.0/Rotaryencoder-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Rotaryencoder-1.2.0.tar.gz",
+    "size_bytes": 1266,
+    "sha256": "3ae246a8b6956984782ee7a012b0d0ccbb79d99b9e5d65c86c703fd92905714e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sam8poop/library/Rotary%2520encoder/1.2.0/Rotaryencoder-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sam8poop/library/Rotary%20encoder/1.2.0/Rotaryencoder-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sam8poop/library/Rotary%20encoder/1.2.1/Rotaryencoder-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Rotaryencoder-1.2.1.tar.gz",
+    "size_bytes": 1272,
+    "sha256": "993c3601ea5e8499af4625b3cb1270eb871a7b80c30d6629f14b71742268b241",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sam8poop/library/Rotary%2520encoder/1.2.1/Rotaryencoder-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sam8poop/library/Rotary%20encoder/1.2.1/Rotaryencoder-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sam8poop/library/Rotary%20encoder/1.3.0/Rotaryencoder-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Rotaryencoder-1.3.0.tar.gz",
+    "size_bytes": 1336,
+    "sha256": "9aba28a6979335830d9f57be9a5aaf5cca028351dd8f027863f181628253f988",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sam8poop/library/Rotary%2520encoder/1.3.0/Rotaryencoder-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sam8poop/library/Rotary%20encoder/1.3.0/Rotaryencoder-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sam8poop/library/Rotary%20encoder/1.4.0/Rotaryencoder-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Rotaryencoder-1.4.0.tar.gz",
+    "size_bytes": 1323,
+    "sha256": "67332d799f11b3420d481ee964a5d4495a595a1bca98b22138e8f6c2c4801084",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sam8poop/library/Rotary%2520encoder/1.4.0/Rotaryencoder-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sam8poop/library/Rotary%20encoder/1.4.0/Rotaryencoder-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sam8poop/library/Rotary%20encoder/1.5.0/Rotaryencoder-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Rotaryencoder-1.5.0.tar.gz",
+    "size_bytes": 1347,
+    "sha256": "f0fc5c6674b956d2b140e05158896dd4667afb6f40b443ee03d169006d08fc4e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sam8poop/library/Rotary%2520encoder/1.5.0/Rotaryencoder-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sam8poop/library/Rotary%20encoder/1.5.0/Rotaryencoder-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sam8poop/library/Rotary%20encoder/1.5.1/Rotaryencoder-1.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Rotaryencoder-1.5.1.tar.gz",
+    "size_bytes": 1342,
+    "sha256": "ddcf9c5e06a451a4089a6e8f97892ae2e52f22f63ff07112027b46e33c769879",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sam8poop/library/Rotary%2520encoder/1.5.1/Rotaryencoder-1.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sam8poop/library/Rotary%20encoder/1.5.1/Rotaryencoder-1.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sam8poop/library/button/1.0.0/button-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "button-1.0.0.tar.gz",
+    "size_bytes": 728,
+    "sha256": "0829bcf7c695db41c104f64c3d1723b84278ea52d5098141f3f4345b60ee6f94",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sam8poop/library/button/1.0.0/button-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sam8poop/library/button/1.0.0/button-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sam8poop/library/button/1.2.0/button-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "button-1.2.0.tar.gz",
+    "size_bytes": 1227,
+    "sha256": "ad640246b084737e39e31d91a395b7cd122a196b2d2f70e1af1bacb957bc73ab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sam8poop/library/button/1.2.0/button-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sam8poop/library/button/1.2.0/button-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

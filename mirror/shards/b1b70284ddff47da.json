@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/biagiom",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "biagiom/library/Accessory%20Shield/1.5.2/AccessoryShield-1.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AccessoryShield-1.5.2.tar.gz",
+    "size_bytes": 23143,
+    "sha256": "80da00261bbbcd4ccb231e5bd8616cc820f2a1e4e2bd6cfb2cec84aed1441d5f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/biagiom/library/Accessory%2520Shield/1.5.2/AccessoryShield-1.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/biagiom/library/Accessory%20Shield/1.5.2/AccessoryShield-1.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "biagiom/library/LedBlinky/1.3.1/LedBlinky-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LedBlinky-1.3.1.tar.gz",
+    "size_bytes": 6087,
+    "sha256": "6772c99e55b9a6d4a459df5cd6ed5a0e9589b8da7070c557031c1cee0853bb08",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/biagiom/library/LedBlinky/1.3.1/LedBlinky-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/biagiom/library/LedBlinky/1.3.1/LedBlinky-1.3.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-acosinwork",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-acosinwork/library/mbed-I2CIO/0.0.0+sha.6f07dd7cbe47/mbed-I2CIO-0.0.0+sha.6f07dd7cbe47.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mbed-I2CIO-0.0.0+sha.6f07dd7cbe47.tar.gz",
+    "size_bytes": 531076,
+    "sha256": "b0959290e31db06ceac5b907b316988fbc709fe22f8e57ad87358c040109949d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-acosinwork/library/mbed-I2CIO/0.0.0%2Bsha.6f07dd7cbe47/mbed-I2CIO-0.0.0%2Bsha.6f07dd7cbe47.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-acosinwork/library/mbed-I2CIO/0.0.0%2Bsha.6f07dd7cbe47/mbed-I2CIO-0.0.0%2Bsha.6f07dd7cbe47.tar.gz"
+    ]
+   }
+  }
+ ]
+}

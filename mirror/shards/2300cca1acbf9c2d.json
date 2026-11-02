@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pablovi33",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pablovi33/library/PanelStepper/1.0.0/PanelStepper-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PanelStepper-1.0.0.tar.gz",
+    "size_bytes": 2215,
+    "sha256": "17cd359987447abd7fa5576092192e56a50af4aafb9616ec2dc34ae146e83208",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pablovi33/library/PanelStepper/1.0.0/PanelStepper-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pablovi33/library/PanelStepper/1.0.0/PanelStepper-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

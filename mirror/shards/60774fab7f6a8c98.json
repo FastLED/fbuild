@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/andium",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "andium/library/AmazonDRS/1.0.0/AmazonDRS-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AmazonDRS-1.0.0.tar.gz",
+    "size_bytes": 16492,
+    "sha256": "c670896a3478ef7a52f0d6b35d09392b0f7c2a46068a36f719ce8a9a1a2caf76",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/andium/library/AmazonDRS/1.0.0/AmazonDRS-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/andium/library/AmazonDRS/1.0.0/AmazonDRS-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "andium/library/hueDino/1.0.1/hueDino-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "hueDino-1.0.1.tar.gz",
+    "size_bytes": 16777,
+    "sha256": "5642d9f01ff24c52861552bfa0acc6e9857dc8e347122d13b072db23690670c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/andium/library/hueDino/1.0.1/hueDino-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/andium/library/hueDino/1.0.1/hueDino-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

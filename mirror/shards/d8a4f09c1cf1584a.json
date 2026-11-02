@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-yifan-du",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-yifan-du/library/ThingSpeak_ESP8266/0.0.0+sha.6df8ccaec251/ThingSpeak_ESP8266-0.0.0+sha.6df8ccaec251.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ThingSpeak_ESP8266-0.0.0+sha.6df8ccaec251.tar.gz",
+    "size_bytes": 2472,
+    "sha256": "b83dcc3ac893db697695fef41a2eccb70dcb6b5177ed8850441fed2d5e57527e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yifan-du/library/ThingSpeak_ESP8266/0.0.0%2Bsha.6df8ccaec251/ThingSpeak_ESP8266-0.0.0%2Bsha.6df8ccaec251.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yifan-du/library/ThingSpeak_ESP8266/0.0.0%2Bsha.6df8ccaec251/ThingSpeak_ESP8266-0.0.0%2Bsha.6df8ccaec251.tar.gz"
+    ]
+   }
+  }
+ ]
+}

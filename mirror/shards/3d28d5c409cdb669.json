@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mirco04",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mirco04/library/Simple_HC-SR04_Control/0.0.1/Simple_HC-SR04_Control-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Simple_HC-SR04_Control-0.0.1.tar.gz",
+    "size_bytes": 33430,
+    "sha256": "0658e862a6591f096ba23a12b0ac23b4ae8aa8bf73e1c8ece3220584b71b6af6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mirco04/library/Simple_HC-SR04_Control/0.0.1/Simple_HC-SR04_Control-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mirco04/library/Simple_HC-SR04_Control/0.0.1/Simple_HC-SR04_Control-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mirco04/library/Simple_Robot_Motor_Control/0.0.1/Simple_Robot_Motor_Control-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Simple_Robot_Motor_Control-0.0.1.tar.gz",
+    "size_bytes": 225735,
+    "sha256": "8d953d1c8be7ebf4ad3fd5808f52333f512063ad1a1b6d4d76feaf0666b75366",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mirco04/library/Simple_Robot_Motor_Control/0.0.1/Simple_Robot_Motor_Control-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mirco04/library/Simple_Robot_Motor_Control/0.0.1/Simple_Robot_Motor_Control-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

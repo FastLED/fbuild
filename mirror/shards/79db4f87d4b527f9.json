@@ -1,0 +1,165 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/open-control",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "open-control/library/framework/0.1.0/framework-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "framework-0.1.0.tar.gz",
+    "size_bytes": 33023,
+    "sha256": "a6a2b4b297db6cf2b1dbb2e020b93d9dc508082b649d852198cb64adc3e82cae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/open-control/library/framework/0.1.0/framework-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/open-control/library/framework/0.1.0/framework-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "open-control/library/framework/0.1.1/framework-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "framework-0.1.1.tar.gz",
+    "size_bytes": 39370,
+    "sha256": "b12d77aa7700f3876345d2b1cb79581a57d2dd9e17edfc520c5dd0f703703b90",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/open-control/library/framework/0.1.1/framework-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/open-control/library/framework/0.1.1/framework-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "open-control/library/framework/0.1.2/framework-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "framework-0.1.2.tar.gz",
+    "size_bytes": 39380,
+    "sha256": "4cd478f23a9019a6d601d0a4a09cf3ff1114c15065ba123f80ef4475fa2b1443",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/open-control/library/framework/0.1.2/framework-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/open-control/library/framework/0.1.2/framework-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "open-control/library/hal-common/0.1.0/hal-common-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "hal-common-0.1.0.tar.gz",
+    "size_bytes": 4052,
+    "sha256": "74f6c614476cc99811cf3297e9d6fe85a1181ad7f0d94afa49364717f1c43701",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/open-control/library/hal-common/0.1.0/hal-common-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/open-control/library/hal-common/0.1.0/hal-common-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "open-control/library/hal-common/0.1.1/hal-common-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "hal-common-0.1.1.tar.gz",
+    "size_bytes": 4051,
+    "sha256": "1c8cf068399b6424334944a0928bb389e97b4932a1b046597f75c9e6dbc77814",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/open-control/library/hal-common/0.1.1/hal-common-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/open-control/library/hal-common/0.1.1/hal-common-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "open-control/library/hal-common/0.1.2/hal-common-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "hal-common-0.1.2.tar.gz",
+    "size_bytes": 4051,
+    "sha256": "41cd878c7776ed3247032e38e6a17415d9ae2d4d2b25e0b2e5e1d9373525210f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/open-control/library/hal-common/0.1.2/hal-common-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/open-control/library/hal-common/0.1.2/hal-common-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "open-control/library/hal-teensy/0.1.0/hal-teensy-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "hal-teensy-0.1.0.tar.gz",
+    "size_bytes": 11877,
+    "sha256": "d8de16ae8b559929ef4975051dcc9b4aca6a3bf00cf9f432235348ce6ca6346e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/open-control/library/hal-teensy/0.1.0/hal-teensy-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/open-control/library/hal-teensy/0.1.0/hal-teensy-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "open-control/library/hal-teensy/0.1.1/hal-teensy-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "hal-teensy-0.1.1.tar.gz",
+    "size_bytes": 11879,
+    "sha256": "4319a4a356f87952a51ae7504749a3cbc51067f991eda62699f9c91b48840e5a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/open-control/library/hal-teensy/0.1.1/hal-teensy-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/open-control/library/hal-teensy/0.1.1/hal-teensy-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "open-control/library/hal-teensy/0.1.2/hal-teensy-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "hal-teensy-0.1.2.tar.gz",
+    "size_bytes": 11880,
+    "sha256": "4f74106fa685843a2acc8a61d4c2c36538ee314fe9a43d13d7fc5a539a1e42ff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/open-control/library/hal-teensy/0.1.2/hal-teensy-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/open-control/library/hal-teensy/0.1.2/hal-teensy-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "open-control/library/ui-lvgl/0.1.0/ui-lvgl-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ui-lvgl-0.1.0.tar.gz",
+    "size_bytes": 5863,
+    "sha256": "24a28c124bbbea9701cdc1dd8109a07b6cc8ac1ffe26946c360e5b0e5e150e7a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/open-control/library/ui-lvgl/0.1.0/ui-lvgl-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/open-control/library/ui-lvgl/0.1.0/ui-lvgl-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "open-control/library/ui-lvgl/0.1.1/ui-lvgl-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ui-lvgl-0.1.1.tar.gz",
+    "size_bytes": 5863,
+    "sha256": "9489bc27b24c18118d14cd179a1963f00b9d4bc926aabfbf7056e2e583487367",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/open-control/library/ui-lvgl/0.1.1/ui-lvgl-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/open-control/library/ui-lvgl/0.1.1/ui-lvgl-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "open-control/library/ui-lvgl/0.1.2/ui-lvgl-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ui-lvgl-0.1.2.tar.gz",
+    "size_bytes": 5863,
+    "sha256": "c84522366020452b1cfd0f8b1ad05270028017b2651584daf4966eebc5cb7bf9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/open-control/library/ui-lvgl/0.1.2/ui-lvgl-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/open-control/library/ui-lvgl/0.1.2/ui-lvgl-0.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

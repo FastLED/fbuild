@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-calmantara186",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-calmantara186/library/CMPS_KRAI/0.0.0+sha.595938ba3741/CMPS_KRAI-0.0.0+sha.595938ba3741.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CMPS_KRAI-0.0.0+sha.595938ba3741.tar.gz",
+    "size_bytes": 1691,
+    "sha256": "5f36fe670052597e5fd5e95ef9d36d3151bbf5d06b1706f7941e9f4e3cc23c40",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-calmantara186/library/CMPS_KRAI/0.0.0%2Bsha.595938ba3741/CMPS_KRAI-0.0.0%2Bsha.595938ba3741.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-calmantara186/library/CMPS_KRAI/0.0.0%2Bsha.595938ba3741/CMPS_KRAI-0.0.0%2Bsha.595938ba3741.tar.gz"
+    ]
+   }
+  }
+ ]
+}

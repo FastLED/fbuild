@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-cognoscan",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-cognoscan/library/Adafruit_ST7735/0.0.0+sha.20134e1718b2/Adafruit_ST7735-0.0.0+sha.20134e1718b2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Adafruit_ST7735-0.0.0+sha.20134e1718b2.tar.gz",
+    "size_bytes": 6433,
+    "sha256": "c2913fe75ef610354959cf47c0b9371f3a9a7d8e453c88398fb3f132afb76f92",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-cognoscan/library/Adafruit_ST7735/0.0.0%2Bsha.20134e1718b2/Adafruit_ST7735-0.0.0%2Bsha.20134e1718b2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-cognoscan/library/Adafruit_ST7735/0.0.0%2Bsha.20134e1718b2/Adafruit_ST7735-0.0.0%2Bsha.20134e1718b2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

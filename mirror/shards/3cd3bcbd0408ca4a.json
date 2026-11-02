@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nextgentech-512",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nextgentech-512/library/SingleWireDataBus/1.1.0/SingleWireDataBus-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SingleWireDataBus-1.1.0.tar.gz",
+    "size_bytes": 2959,
+    "sha256": "29b5664a58d17ff98439df941d95f9e16ec0476c5d8eaaad337d86677cda001e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nextgentech-512/library/SingleWireDataBus/1.1.0/SingleWireDataBus-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nextgentech-512/library/SingleWireDataBus/1.1.0/SingleWireDataBus-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cmock",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cmock/library/IOTConfig/0.0.1/IOTConfig-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IOTConfig-0.0.1.tar.gz",
+    "size_bytes": 5783,
+    "sha256": "c366fc085703e64ad933fba1ae9c55862ef9524e5c2e26a4b21bafef7713d0f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cmock/library/IOTConfig/0.0.1/IOTConfig-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cmock/library/IOTConfig/0.0.1/IOTConfig-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

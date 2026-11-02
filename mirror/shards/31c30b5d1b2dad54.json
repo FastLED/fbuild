@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/diaoul",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "diaoul/library/DHTNew/1.0.0/DHTNew-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DHTNew-1.0.0.tar.gz",
+    "size_bytes": 4561,
+    "sha256": "bae9a49153d58461b995d7d562ce778255545616d3eb61943ea7c5a96aa5d96a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/diaoul/library/DHTNew/1.0.0/DHTNew-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/diaoul/library/DHTNew/1.0.0/DHTNew-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "diaoul/library/LEDEffect/1.0.0/LEDEffect-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LEDEffect-1.0.0.tar.gz",
+    "size_bytes": 11353,
+    "sha256": "9c2d1f7805bcb8913095f9f4ce99525eb39f835ac718c494dec566a9dbbb9c90",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/diaoul/library/LEDEffect/1.0.0/LEDEffect-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/diaoul/library/LEDEffect/1.0.0/LEDEffect-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

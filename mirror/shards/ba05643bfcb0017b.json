@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/shah253kt",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "shah253kt/library/C%2B%2B11%20Utilities/1.0.3/C++11Utilities-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "C++11Utilities-1.0.3.tar.gz",
+    "size_bytes": 3172,
+    "sha256": "e6cb0bb49a62defdb268fcafe37560c6e57b356455636a052e097832e85c9053",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shah253kt/library/C%252B%252B11%2520Utilities/1.0.3/C%2B%2B11Utilities-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/shah253kt/library/C%2B%2B11%20Utilities/1.0.3/C%2B%2B11Utilities-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shah253kt/library/Grbl%20Parser/2.0.5/GrblParser-2.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GrblParser-2.0.5.tar.gz",
+    "size_bytes": 9541,
+    "sha256": "56ae2c17037c2215983cb90ecbe98e2cfb2ef8fe89e4cb91bad4810eb126a477",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shah253kt/library/Grbl%2520Parser/2.0.5/GrblParser-2.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/shah253kt/library/Grbl%20Parser/2.0.5/GrblParser-2.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shah253kt/library/HC12/1.1.1/HC12-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HC12-1.1.1.tar.gz",
+    "size_bytes": 2511,
+    "sha256": "105e5178529e26a937fe3b98890bfab1d38f65638e75c62131cc394621f02381",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shah253kt/library/HC12/1.1.1/HC12-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/shah253kt/library/HC12/1.1.1/HC12-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shah253kt/library/Logger/1.0.2/Logger-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Logger-1.0.2.tar.gz",
+    "size_bytes": 2527,
+    "sha256": "44617b67795d927c60e9a0948073dd7abe16554ce90e7039076d6297e17d54ca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shah253kt/library/Logger/1.0.2/Logger-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/shah253kt/library/Logger/1.0.2/Logger-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shah253kt/library/Magic%20Enum/0.9.5/MagicEnum-0.9.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MagicEnum-0.9.5.tar.gz",
+    "size_bytes": 27696,
+    "sha256": "c02fbea06aa8f97865869a2e6ba2c5b3b18b2b37fe2e0dd5de4a27d0dcc06373",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shah253kt/library/Magic%2520Enum/0.9.5/MagicEnum-0.9.5.tar.gz",
+     "https://dl.registry.platformio.org/download/shah253kt/library/Magic%20Enum/0.9.5/MagicEnum-0.9.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shah253kt/library/SIM808/1.1.9/SIM808-1.1.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SIM808-1.1.9.tar.gz",
+    "size_bytes": 4602,
+    "sha256": "0634cb2f61fe8dd242db4e4a341d9ca93461da707b4df27e5b9fbdbca84814c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shah253kt/library/SIM808/1.1.9/SIM808-1.1.9.tar.gz",
+     "https://dl.registry.platformio.org/download/shah253kt/library/SIM808/1.1.9/SIM808-1.1.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shah253kt/library/SimpleStack/1.1.2/SimpleStack-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleStack-1.1.2.tar.gz",
+    "size_bytes": 4380,
+    "sha256": "51b894d24f00d5560cd333cc47346dbbd0bf59fb52ac9d64ad1ffc13f2608b16",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shah253kt/library/SimpleStack/1.1.2/SimpleStack-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/shah253kt/library/SimpleStack/1.1.2/SimpleStack-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shah253kt/library/UTFT/2.8.3/UTFT-2.8.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UTFT-2.8.3.tar.gz",
+    "size_bytes": 388309,
+    "sha256": "e52cd0c49d09d3696a316aee3ea8b2d895fb94e12eb6e0ebd149ea09c79d0ad8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shah253kt/library/UTFT/2.8.3/UTFT-2.8.3.tar.gz",
+     "https://dl.registry.platformio.org/download/shah253kt/library/UTFT/2.8.3/UTFT-2.8.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

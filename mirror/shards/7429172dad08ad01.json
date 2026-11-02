@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/slebedenko",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "slebedenko/library/WiFiSetup/1.0.0/WiFiSetup-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFiSetup-1.0.0.tar.gz",
+    "size_bytes": 15618,
+    "sha256": "9b67d71321e8ff234c345c051c87a0d2e18a22fcf72e2428ea5ee7a8e64552f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/slebedenko/library/WiFiSetup/1.0.0/WiFiSetup-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/slebedenko/library/WiFiSetup/1.0.0/WiFiSetup-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

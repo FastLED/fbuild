@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cdacunha71",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cdacunha71/library/KDG%20library/1.1.0/KDGlibrary-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KDGlibrary-1.1.0.tar.gz",
+    "size_bytes": 5377,
+    "sha256": "d388deb91b345a9a82ec3675aa8b5ce9d577160e2d9402d090f772eba31411fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cdacunha71/library/KDG%2520library/1.1.0/KDGlibrary-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cdacunha71/library/KDG%20library/1.1.0/KDGlibrary-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

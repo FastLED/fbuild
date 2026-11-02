@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sipeed",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sipeed/platform/kendryte210/1.3.0/kendryte210-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "kendryte210-1.3.0.tar.gz",
+    "size_bytes": 11700,
+    "sha256": "374eaef97cf8367dd695ac7cb62f76b6ca29b4e4b178b68324fb1ce590aefb5b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sipeed/platform/kendryte210/1.3.0/kendryte210-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sipeed/platform/kendryte210/1.3.0/kendryte210-1.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

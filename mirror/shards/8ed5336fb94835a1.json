@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/scruffr",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "scruffr/library/PS2Communication/0.0.8/PS2Communication-0.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PS2Communication-0.0.8.tar.gz",
+    "size_bytes": 14032,
+    "sha256": "82fb98ae5c17bcb186b2b709b8ce6ef807bb468498d0456dd192083bf039fc7e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/scruffr/library/PS2Communication/0.0.8/PS2Communication-0.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/scruffr/library/PS2Communication/0.0.8/PS2Communication-0.0.8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

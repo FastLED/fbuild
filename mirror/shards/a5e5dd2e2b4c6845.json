@@ -1,0 +1,126 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/stevemarple",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "stevemarple/library/AS3935/1.0.5/AS3935-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AS3935-1.0.5.tar.gz",
+    "size_bytes": 14684,
+    "sha256": "bf8f090f7637a2f216bd01a1683f3457436dc48bd17445d0f5e257dde5c8bd09",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stevemarple/library/AS3935/1.0.5/AS3935-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/stevemarple/library/AS3935/1.0.5/AS3935-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stevemarple/library/AsyncDelay/1.1.2/AsyncDelay-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncDelay-1.1.2.tar.gz",
+    "size_bytes": 10933,
+    "sha256": "97a7dab250a59bc45e7ede8df21c8dbaf6301799460a38af326fd46bd4263213",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stevemarple/library/AsyncDelay/1.1.2/AsyncDelay-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/stevemarple/library/AsyncDelay/1.1.2/AsyncDelay-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stevemarple/library/HIH61xx/3.0.0/HIH61xx-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HIH61xx-3.0.0.tar.gz",
+    "size_bytes": 12773,
+    "sha256": "fae64e6ad3e71098ec18ad67b01378bd4dfff795a226c6685daae5746b5c65d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stevemarple/library/HIH61xx/3.0.0/HIH61xx-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stevemarple/library/HIH61xx/3.0.0/HIH61xx-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stevemarple/library/IniFile/1.3.0/IniFile-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IniFile-1.3.0.tar.gz",
+    "size_bytes": 18424,
+    "sha256": "2d50496d20fe6cdd75d759e6eeebe1482cfdd2cbc25cac6b827dd89b77aea256",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stevemarple/library/IniFile/1.3.0/IniFile-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stevemarple/library/IniFile/1.3.0/IniFile-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stevemarple/library/MCP342x/1.0.4/MCP342x-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP342x-1.0.4.tar.gz",
+    "size_bytes": 14842,
+    "sha256": "7707e6dfbbe55102607dcad3d79d2561c78db0efe447c0ad63273bf820c820ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stevemarple/library/MCP342x/1.0.4/MCP342x-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/stevemarple/library/MCP342x/1.0.4/MCP342x-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stevemarple/library/MLX90614/0.1.5/MLX90614-0.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MLX90614-0.1.5.tar.gz",
+    "size_bytes": 11871,
+    "sha256": "f123f43659089db26cdde7c0ba2b5107a167af44a3f187948171a868d8af0150",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stevemarple/library/MLX90614/0.1.5/MLX90614-0.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/stevemarple/library/MLX90614/0.1.5/MLX90614-0.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stevemarple/library/MicroNMEA/2.0.6/MicroNMEA-2.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MicroNMEA-2.0.6.tar.gz",
+    "size_bytes": 22807,
+    "sha256": "39be9ebb73300b2e1adbca5f478db9964a6e21c1a32adb0a31c0a9ffe64ba65a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stevemarple/library/MicroNMEA/2.0.6/MicroNMEA-2.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/stevemarple/library/MicroNMEA/2.0.6/MicroNMEA-2.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stevemarple/library/RTCx/1.1.10/RTCx-1.1.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RTCx-1.1.10.tar.gz",
+    "size_bytes": 19203,
+    "sha256": "d4e133c2a46b4be19b48199340115cc564d51b5817e6b82ca317ff42588a7ea5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stevemarple/library/RTCx/1.1.10/RTCx-1.1.10.tar.gz",
+     "https://dl.registry.platformio.org/download/stevemarple/library/RTCx/1.1.10/RTCx-1.1.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stevemarple/library/SoftWire/2.0.10/SoftWire-2.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SoftWire-2.0.10.tar.gz",
+    "size_bytes": 17093,
+    "sha256": "f90a9b606089e4997162aabdce194433f4a0bf5f685c5a82ea2f9cacb63721cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stevemarple/library/SoftWire/2.0.10/SoftWire-2.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/stevemarple/library/SoftWire/2.0.10/SoftWire-2.0.10.tar.gz"
+    ]
+   }
+  }
+ ]
+}

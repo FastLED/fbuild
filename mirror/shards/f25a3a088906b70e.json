@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mjbots",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mjbots/library/Moteus/1.1.0/Moteus-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Moteus-1.1.0.tar.gz",
+    "size_bytes": 31854,
+    "sha256": "daf5594ecc85101c5dc8cfc6df69dd6d62f9a55ba034de0fe6a730da86e5233d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mjbots/library/Moteus/1.1.0/Moteus-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mjbots/library/Moteus/1.1.0/Moteus-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mjbots/library/Moteus/1.1.1/Moteus-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Moteus-1.1.1.tar.gz",
+    "size_bytes": 31860,
+    "sha256": "222ecc7bec5d72f54fa84d0f2b8b1dc9f4ac739e61b47ac78f8df44f7285f104",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mjbots/library/Moteus/1.1.1/Moteus-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mjbots/library/Moteus/1.1.1/Moteus-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mjbots/library/Moteus/1.1.2/Moteus-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Moteus-1.1.2.tar.gz",
+    "size_bytes": 37777,
+    "sha256": "37146d43bae53a667b29645a2205a44dc83f392aa074e4a265d4297bd3c9bc50",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mjbots/library/Moteus/1.1.2/Moteus-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mjbots/library/Moteus/1.1.2/Moteus-1.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

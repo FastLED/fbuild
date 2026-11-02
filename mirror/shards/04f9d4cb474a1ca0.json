@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-duncanfrance",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-duncanfrance/library/SimpleGUI/0.0.0+sha.d849f3ada858/SimpleGUI-0.0.0+sha.d849f3ada858.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleGUI-0.0.0+sha.d849f3ada858.tar.gz",
+    "size_bytes": 25436,
+    "sha256": "907bf6e62ee241e73fc0d96a80f8274c408ba4eaf3bc6f847bd979a1fcf05b25",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-duncanfrance/library/SimpleGUI/0.0.0%2Bsha.d849f3ada858/SimpleGUI-0.0.0%2Bsha.d849f3ada858.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-duncanfrance/library/SimpleGUI/0.0.0%2Bsha.d849f3ada858/SimpleGUI-0.0.0%2Bsha.d849f3ada858.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-duncanfrance/library/SimpleGUITouchScreen/0.0.0+sha.e3084e17e8e6/SimpleGUITouchScreen-0.0.0+sha.e3084e17e8e6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleGUITouchScreen-0.0.0+sha.e3084e17e8e6.tar.gz",
+    "size_bytes": 1847,
+    "sha256": "6aab410270055d194c3ac4e87fe2976fb11015b46ffa0a7899cb6164774e426b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-duncanfrance/library/SimpleGUITouchScreen/0.0.0%2Bsha.e3084e17e8e6/SimpleGUITouchScreen-0.0.0%2Bsha.e3084e17e8e6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-duncanfrance/library/SimpleGUITouchScreen/0.0.0%2Bsha.e3084e17e8e6/SimpleGUITouchScreen-0.0.0%2Bsha.e3084e17e8e6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-duncanfrance/library/TouchScreen/0.0.0+sha.8b5fcf3857ac/TouchScreen-0.0.0+sha.8b5fcf3857ac.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TouchScreen-0.0.0+sha.8b5fcf3857ac.tar.gz",
+    "size_bytes": 4051,
+    "sha256": "3b54f9182251eda86a0b8b89e315cbb235a0632a35dda06a7afb48cbedc3e500",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-duncanfrance/library/TouchScreen/0.0.0%2Bsha.8b5fcf3857ac/TouchScreen-0.0.0%2Bsha.8b5fcf3857ac.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-duncanfrance/library/TouchScreen/0.0.0%2Bsha.8b5fcf3857ac/TouchScreen-0.0.0%2Bsha.8b5fcf3857ac.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-duncanfrance/library/UniGraphic/0.0.0+sha.091b954c3205/UniGraphic-0.0.0+sha.091b954c3205.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UniGraphic-0.0.0+sha.091b954c3205.tar.gz",
+    "size_bytes": 52347,
+    "sha256": "287114ca4426f2c27f73a855fec98597399f877a90d881887ea2446de4e97fc9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-duncanfrance/library/UniGraphic/0.0.0%2Bsha.091b954c3205/UniGraphic-0.0.0%2Bsha.091b954c3205.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-duncanfrance/library/UniGraphic/0.0.0%2Bsha.091b954c3205/UniGraphic-0.0.0%2Bsha.091b954c3205.tar.gz"
+    ]
+   }
+  }
+ ]
+}

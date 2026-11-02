@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dstroy0",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dstroy0/library/DeterministicESPAsyncWebServer/7.181.1/DeterministicESPAsyncWebServer-7.181.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DeterministicESPAsyncWebServer-7.181.1.tar.gz",
+    "size_bytes": 16231992,
+    "sha256": "71166736d21a6d20ec9370f126fe4e718792dd44d35a7a06483f1e999ff515ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dstroy0/library/DeterministicESPAsyncWebServer/7.181.1/DeterministicESPAsyncWebServer-7.181.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dstroy0/library/DeterministicESPAsyncWebServer/7.181.1/DeterministicESPAsyncWebServer-7.181.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dstroy0/library/ProtoCore/0.0.1/ProtoCore-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProtoCore-0.0.1.tar.gz",
+    "size_bytes": 16405317,
+    "sha256": "d0b46ca0de41ed97e40c3128925222f172ab63326c994cac23396de03b2d8fc5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dstroy0/library/ProtoCore/0.0.1/ProtoCore-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dstroy0/library/ProtoCore/0.0.1/ProtoCore-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dstroy0/library/ProtoCore/1.0.1/ProtoCore-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProtoCore-1.0.1.tar.gz",
+    "size_bytes": 15408367,
+    "sha256": "1024c842b543c5762d7ed400cf84f51d54845d452433cafdaeb084039faa2fa8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dstroy0/library/ProtoCore/1.0.1/ProtoCore-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dstroy0/library/ProtoCore/1.0.1/ProtoCore-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dstroy0/library/ProtoCore/1.0.7/ProtoCore-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProtoCore-1.0.7.tar.gz",
+    "size_bytes": 15095086,
+    "sha256": "3648fdefffb3aea8677825ce483965e32135aa0eb676aed02f64754008fe3f4f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dstroy0/library/ProtoCore/1.0.7/ProtoCore-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/dstroy0/library/ProtoCore/1.0.7/ProtoCore-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dstroy0/library/XPoint/0.1.0/XPoint-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XPoint-0.1.0.tar.gz",
+    "size_bytes": 48651,
+    "sha256": "43503bf8743a1123ffe54126e7e18fe995fb5ce93f8e702e243ae30ac944d5a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dstroy0/library/XPoint/0.1.0/XPoint-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dstroy0/library/XPoint/0.1.0/XPoint-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

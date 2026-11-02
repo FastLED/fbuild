@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-telesensorics",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-telesensorics/library/AX-12A/0.0.0+sha.d3af28192fff/AX-12A-0.0.0+sha.d3af28192fff.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AX-12A-0.0.0+sha.d3af28192fff.tar.gz",
+    "size_bytes": 3396,
+    "sha256": "63caecce8e667097291aa6d27e5b9601218e7850cdbb7ec74c36035e20b5fd23",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-telesensorics/library/AX-12A/0.0.0%2Bsha.d3af28192fff/AX-12A-0.0.0%2Bsha.d3af28192fff.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-telesensorics/library/AX-12A/0.0.0%2Bsha.d3af28192fff/AX-12A-0.0.0%2Bsha.d3af28192fff.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-telesensorics/library/Dynamixel/0.0.0+sha.8b70bee8059b/Dynamixel-0.0.0+sha.8b70bee8059b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Dynamixel-0.0.0+sha.8b70bee8059b.tar.gz",
+    "size_bytes": 3721,
+    "sha256": "c23789f56b5eb96acb1c45984c2d647b13acf9c63e5741f8767c04105750b91e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-telesensorics/library/Dynamixel/0.0.0%2Bsha.8b70bee8059b/Dynamixel-0.0.0%2Bsha.8b70bee8059b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-telesensorics/library/Dynamixel/0.0.0%2Bsha.8b70bee8059b/Dynamixel-0.0.0%2Bsha.8b70bee8059b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

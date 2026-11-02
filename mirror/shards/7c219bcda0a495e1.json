@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/charli45235",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "charli45235/library/SyncUART/0.0.1/SyncUART-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SyncUART-0.0.1.tar.gz",
+    "size_bytes": 7391,
+    "sha256": "8b6a67e16d95b03f42d1edec9fa08bd48d0d50eae1c57574c39ce19235bc8554",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/charli45235/library/SyncUART/0.0.1/SyncUART-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/charli45235/library/SyncUART/0.0.1/SyncUART-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

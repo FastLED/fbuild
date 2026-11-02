@@ -1,0 +1,191 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-shimniok",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-shimniok/library/ADC128S/0.0.0+sha.e304ec6ed416/ADC128S-0.0.0+sha.e304ec6ed416.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADC128S-0.0.0+sha.e304ec6ed416.tar.gz",
+    "size_bytes": 1757,
+    "sha256": "117b8ce37af4a718ea5ee21a304485535c76b55ded6eb80fadb73c8327260b39",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-shimniok/library/ADC128S/0.0.0%2Bsha.e304ec6ed416/ADC128S-0.0.0%2Bsha.e304ec6ed416.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-shimniok/library/ADC128S/0.0.0%2Bsha.e304ec6ed416/ADC128S-0.0.0%2Bsha.e304ec6ed416.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-shimniok/library/Beep/0.0.0+sha.3eb39e374fc3/Beep-0.0.0+sha.3eb39e374fc3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Beep-0.0.0+sha.3eb39e374fc3.tar.gz",
+    "size_bytes": 1631,
+    "sha256": "668050d26b2337196e87c621fb87f06e5074aa0841bbf41c5b79a7d5ed2d0b1a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-shimniok/library/Beep/0.0.0%2Bsha.3eb39e374fc3/Beep-0.0.0%2Bsha.3eb39e374fc3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-shimniok/library/Beep/0.0.0%2Bsha.3eb39e374fc3/Beep-0.0.0%2Bsha.3eb39e374fc3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-shimniok/library/DCM_AHRS/0.0.0+sha.62284d27d75e/DCM_AHRS-0.0.0+sha.62284d27d75e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DCM_AHRS-0.0.0+sha.62284d27d75e.tar.gz",
+    "size_bytes": 6395,
+    "sha256": "6f93565a857e301198b89cdc389a17af30531195ea9d0f333e9fd9da3607bd85",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-shimniok/library/DCM_AHRS/0.0.0%2Bsha.62284d27d75e/DCM_AHRS-0.0.0%2Bsha.62284d27d75e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-shimniok/library/DCM_AHRS/0.0.0%2Bsha.62284d27d75e/DCM_AHRS-0.0.0%2Bsha.62284d27d75e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-shimniok/library/DigoleSerialDisp/0.0.0+sha.a78901fe6a7b/DigoleSerialDisp-0.0.0+sha.a78901fe6a7b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DigoleSerialDisp-0.0.0+sha.a78901fe6a7b.tar.gz",
+    "size_bytes": 5994,
+    "sha256": "14c3d55e75c61b42d75c3e62b24a16bb03a7d7e81841a4dcc2e5b9f6ce2c9909",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-shimniok/library/DigoleSerialDisp/0.0.0%2Bsha.a78901fe6a7b/DigoleSerialDisp-0.0.0%2Bsha.a78901fe6a7b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-shimniok/library/DigoleSerialDisp/0.0.0%2Bsha.a78901fe6a7b/DigoleSerialDisp-0.0.0%2Bsha.a78901fe6a7b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-shimniok/library/GeoPosition/0.0.0+sha.b4feb3f54fa3/GeoPosition-0.0.0+sha.b4feb3f54fa3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GeoPosition-0.0.0+sha.b4feb3f54fa3.tar.gz",
+    "size_bytes": 2331,
+    "sha256": "7f683cc459b733e5c04e1a07f47736c506d506e0c6f801ec0b03e17fb05b72bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-shimniok/library/GeoPosition/0.0.0%2Bsha.b4feb3f54fa3/GeoPosition-0.0.0%2Bsha.b4feb3f54fa3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-shimniok/library/GeoPosition/0.0.0%2Bsha.b4feb3f54fa3/GeoPosition-0.0.0%2Bsha.b4feb3f54fa3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-shimniok/library/L3G4200D/0.0.0+sha.14914cd8fdf3/L3G4200D-0.0.0+sha.14914cd8fdf3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "L3G4200D-0.0.0+sha.14914cd8fdf3.tar.gz",
+    "size_bytes": 2887,
+    "sha256": "61681e1522e8d3b4437aee040d804d46f64fbe3890d28ea28fbb0f5038df2c73",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-shimniok/library/L3G4200D/0.0.0%2Bsha.14914cd8fdf3/L3G4200D-0.0.0%2Bsha.14914cd8fdf3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-shimniok/library/L3G4200D/0.0.0%2Bsha.14914cd8fdf3/L3G4200D-0.0.0%2Bsha.14914cd8fdf3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-shimniok/library/LSM303DLH/0.0.0+sha.aea5caec809c/LSM303DLH-0.0.0+sha.aea5caec809c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LSM303DLH-0.0.0+sha.aea5caec809c.tar.gz",
+    "size_bytes": 4361,
+    "sha256": "739501a4894f0850ee6859e00c2b63e06c2dfa7b60fb70a30e0dc5276dc6dbed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-shimniok/library/LSM303DLH/0.0.0%2Bsha.aea5caec809c/LSM303DLH-0.0.0%2Bsha.aea5caec809c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-shimniok/library/LSM303DLH/0.0.0%2Bsha.aea5caec809c/LSM303DLH-0.0.0%2Bsha.aea5caec809c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-shimniok/library/LSM303DLM/0.0.0+sha.0fcea8569714/LSM303DLM-0.0.0+sha.0fcea8569714.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LSM303DLM-0.0.0+sha.0fcea8569714.tar.gz",
+    "size_bytes": 2642,
+    "sha256": "29a7ec907653e3d4f304872e277ed9633153457068b3828786883936865fa9b2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-shimniok/library/LSM303DLM/0.0.0%2Bsha.0fcea8569714/LSM303DLM-0.0.0%2Bsha.0fcea8569714.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-shimniok/library/LSM303DLM/0.0.0%2Bsha.0fcea8569714/LSM303DLM-0.0.0%2Bsha.0fcea8569714.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-shimniok/library/Schedule/0.0.0+sha.03d36a9a088b/Schedule-0.0.0+sha.03d36a9a088b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Schedule-0.0.0+sha.03d36a9a088b.tar.gz",
+    "size_bytes": 2266,
+    "sha256": "0d0ec4af097a87ab9666fb05bbe04ad467a1b96f12f527722d79de70121d78c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-shimniok/library/Schedule/0.0.0%2Bsha.03d36a9a088b/Schedule-0.0.0%2Bsha.03d36a9a088b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-shimniok/library/Schedule/0.0.0%2Bsha.03d36a9a088b/Schedule-0.0.0%2Bsha.03d36a9a088b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-shimniok/library/SerialGraphicLCD/0.0.0+sha.dff460658aed/SerialGraphicLCD-0.0.0+sha.dff460658aed.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialGraphicLCD-0.0.0+sha.dff460658aed.tar.gz",
+    "size_bytes": 2830,
+    "sha256": "a88ab11ba4290633e704759d4ff98d708e827cbf4d83acd4b7fe0d0868cffcec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-shimniok/library/SerialGraphicLCD/0.0.0%2Bsha.dff460658aed/SerialGraphicLCD-0.0.0%2Bsha.dff460658aed.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-shimniok/library/SerialGraphicLCD/0.0.0%2Bsha.dff460658aed/SerialGraphicLCD-0.0.0%2Bsha.dff460658aed.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-shimniok/library/SimpleFilter/0.0.0+sha.70348515ed2f/SimpleFilter-0.0.0+sha.70348515ed2f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleFilter-0.0.0+sha.70348515ed2f.tar.gz",
+    "size_bytes": 1399,
+    "sha256": "beb22678045da0de9d82572990979423e21cba11c6661dd286fb2569357d3f94",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-shimniok/library/SimpleFilter/0.0.0%2Bsha.70348515ed2f/SimpleFilter-0.0.0%2Bsha.70348515ed2f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-shimniok/library/SimpleFilter/0.0.0%2Bsha.70348515ed2f/SimpleFilter-0.0.0%2Bsha.70348515ed2f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-shimniok/library/Steering/0.0.0+sha.a3b128cdb78b/Steering-0.0.0+sha.a3b128cdb78b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Steering-0.0.0+sha.a3b128cdb78b.tar.gz",
+    "size_bytes": 1621,
+    "sha256": "a153ae8b0c5929209e88d26798c7f063a465d426b703e6d48454b2deefb8a8c5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-shimniok/library/Steering/0.0.0%2Bsha.a3b128cdb78b/Steering-0.0.0%2Bsha.a3b128cdb78b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-shimniok/library/Steering/0.0.0%2Bsha.a3b128cdb78b/Steering-0.0.0%2Bsha.a3b128cdb78b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-shimniok/library/TinyCHR6dm/0.0.0+sha.983f66650cd5/TinyCHR6dm-0.0.0+sha.983f66650cd5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyCHR6dm-0.0.0+sha.983f66650cd5.tar.gz",
+    "size_bytes": 4679,
+    "sha256": "749f86e0dc6a02757215da1a148f49b8936918de6e34bae4fda1982ea50390ef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-shimniok/library/TinyCHR6dm/0.0.0%2Bsha.983f66650cd5/TinyCHR6dm-0.0.0%2Bsha.983f66650cd5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-shimniok/library/TinyCHR6dm/0.0.0%2Bsha.983f66650cd5/TinyCHR6dm-0.0.0%2Bsha.983f66650cd5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-shimniok/library/TinyGPS/0.0.0+sha.f522b8bdf987/TinyGPS-0.0.0+sha.f522b8bdf987.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyGPS-0.0.0+sha.f522b8bdf987.tar.gz",
+    "size_bytes": 5158,
+    "sha256": "a79109a7cec30b0975b36b0b54c73523074bcda4743959e28396eeb224158f33",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-shimniok/library/TinyGPS/0.0.0%2Bsha.f522b8bdf987/TinyGPS-0.0.0%2Bsha.f522b8bdf987.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-shimniok/library/TinyGPS/0.0.0%2Bsha.f522b8bdf987/TinyGPS-0.0.0%2Bsha.f522b8bdf987.tar.gz"
+    ]
+   }
+  }
+ ]
+}

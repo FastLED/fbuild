@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/petrkr",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "petrkr/library/SegLCDLib/0.0.1/SegLCDLib-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SegLCDLib-0.0.1.tar.gz",
+    "size_bytes": 86907,
+    "sha256": "7739a1e31e87c9e5f7a3948d3e22ebae7ab74c91a28d2793bd28345b9228bf55",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/petrkr/library/SegLCDLib/0.0.1/SegLCDLib-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/petrkr/library/SegLCDLib/0.0.1/SegLCDLib-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "petrkr/library/SegLCDLib/0.0.2-SNAPSHOT/SegLCDLib-0.0.2-SNAPSHOT.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SegLCDLib-0.0.2-SNAPSHOT.tar.gz",
+    "size_bytes": 89236,
+    "sha256": "2de63110e0ac5a86a094cda27152a6a1e0645f283136ef33861de60eab82ae87",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/petrkr/library/SegLCDLib/0.0.2-SNAPSHOT/SegLCDLib-0.0.2-SNAPSHOT.tar.gz",
+     "https://dl.registry.platformio.org/download/petrkr/library/SegLCDLib/0.0.2-SNAPSHOT/SegLCDLib-0.0.2-SNAPSHOT.tar.gz"
+    ]
+   }
+  }
+ ]
+}

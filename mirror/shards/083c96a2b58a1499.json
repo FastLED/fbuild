@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/eric-wieser",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "eric-wieser/library/PacketIO/0.3.0/PacketIO-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PacketIO-0.3.0.tar.gz",
+    "size_bytes": 13978,
+    "sha256": "f9f6c098875682c2f6d0e3f512ba0ad381f129b8d79021dacd2e64978b6b5ef5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eric-wieser/library/PacketIO/0.3.0/PacketIO-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/eric-wieser/library/PacketIO/0.3.0/PacketIO-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "eric-wieser/library/nanopb-arduino/1.1.0/nanopb-arduino-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nanopb-arduino-1.1.0.tar.gz",
+    "size_bytes": 1514,
+    "sha256": "273d876fa4467f5e35bd67502ce9b9fe7a40242726afc6f4875a5287343e9ebb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eric-wieser/library/nanopb-arduino/1.1.0/nanopb-arduino-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/eric-wieser/library/nanopb-arduino/1.1.0/nanopb-arduino-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

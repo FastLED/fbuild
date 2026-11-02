@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-sburg",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-sburg/library/VL6180/0.0.0+sha.5d61f202b1bd/VL6180-0.0.0+sha.5d61f202b1bd.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VL6180-0.0.0+sha.5d61f202b1bd.tar.gz",
+    "size_bytes": 2205,
+    "sha256": "6c987ddf3f489d0e1b7e90004b5c75752b8c535f76342f3e60361491cf1192b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sburg/library/VL6180/0.0.0%2Bsha.5d61f202b1bd/VL6180-0.0.0%2Bsha.5d61f202b1bd.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sburg/library/VL6180/0.0.0%2Bsha.5d61f202b1bd/VL6180-0.0.0%2Bsha.5d61f202b1bd.tar.gz"
+    ]
+   }
+  }
+ ]
+}

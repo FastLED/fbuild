@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/microfire",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "microfire/library/Microfire%20Mod-EC/2.0.0/MicrofireMod-EC-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MicrofireMod-EC-2.0.0.tar.gz",
+    "size_bytes": 8822,
+    "sha256": "edd05ff0437a8665b98d40d8e0b26b8192701ebd52791354c09beb7f52dfab3d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/microfire/library/Microfire%2520Mod-EC/2.0.0/MicrofireMod-EC-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/microfire/library/Microfire%20Mod-EC/2.0.0/MicrofireMod-EC-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "microfire/library/Microfire%20Mod-ORP/2.0.0/MicrofireMod-ORP-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MicrofireMod-ORP-2.0.0.tar.gz",
+    "size_bytes": 6333,
+    "sha256": "7b4f534d5fa8b95ff44ec6f285bcbd0620adf1985d11bf0c95a03d77c50aa315",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/microfire/library/Microfire%2520Mod-ORP/2.0.0/MicrofireMod-ORP-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/microfire/library/Microfire%20Mod-ORP/2.0.0/MicrofireMod-ORP-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "microfire/library/Microfire%20Mod-pH/2.0.1/MicrofireMod-pH-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MicrofireMod-pH-2.0.1.tar.gz",
+    "size_bytes": 8299,
+    "sha256": "f4d3e61aaecec69a2dab54f04387bf077829c4d60d35a5477acb56d21b7f5a62",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/microfire/library/Microfire%2520Mod-pH/2.0.1/MicrofireMod-pH-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/microfire/library/Microfire%20Mod-pH/2.0.1/MicrofireMod-pH-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "microfire/library/Microfire%20SHT3x/0.9.0/MicrofireSHT3x-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MicrofireSHT3x-0.9.0.tar.gz",
+    "size_bytes": 4195,
+    "sha256": "d79e66448a41f4928dc741bb74d8a05da84ef7bf00aa2640f19820c6acfb8e65",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/microfire/library/Microfire%2520SHT3x/0.9.0/MicrofireSHT3x-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/microfire/library/Microfire%20SHT3x/0.9.0/MicrofireSHT3x-0.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "microfire/library/Microfire_HABridge/1.0.0/Microfire_HABridge-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Microfire_HABridge-1.0.0.tar.gz",
+    "size_bytes": 10786,
+    "sha256": "dd9b9c2a3c3c49939913095f404da7c1c51e657bdd709a8ef25508e33a8b04be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/microfire/library/Microfire_HABridge/1.0.0/Microfire_HABridge-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/microfire/library/Microfire_HABridge/1.0.0/Microfire_HABridge-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "microfire/library/Microfire_Mod-EC/2.0.1/Microfire_Mod-EC-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Microfire_Mod-EC-2.0.1.tar.gz",
+    "size_bytes": 8678,
+    "sha256": "a4c98f5a3d0292df96c0e39dd506bf338793733e02c657d5cf667baeb1cecc77",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/microfire/library/Microfire_Mod-EC/2.0.1/Microfire_Mod-EC-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/microfire/library/Microfire_Mod-EC/2.0.1/Microfire_Mod-EC-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "microfire/library/Microfire_SHT3x/1.0.0/Microfire_SHT3x-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Microfire_SHT3x-1.0.0.tar.gz",
+    "size_bytes": 5166,
+    "sha256": "25349e4001261fc4ea24feb1026e012d20d15361f5255614770e7f1563cab59e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/microfire/library/Microfire_SHT3x/1.0.0/Microfire_SHT3x-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/microfire/library/Microfire_SHT3x/1.0.0/Microfire_SHT3x-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

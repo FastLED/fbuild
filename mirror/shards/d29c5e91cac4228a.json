@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/strange-v",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "strange-v/library/MHZ19/1.1.2/MHZ19-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MHZ19-1.1.2.tar.gz",
+    "size_bytes": 16664,
+    "sha256": "67e57ec34aa957e509cb26b4ee82cc2c0355a4b7c23d6c6245991d0675473697",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/strange-v/library/MHZ19/1.1.2/MHZ19-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/strange-v/library/MHZ19/1.1.2/MHZ19-1.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

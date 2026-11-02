@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sakuhano",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sakuhano/library/JoystickProtocol/1.0.0/JoystickProtocol-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JoystickProtocol-1.0.0.tar.gz",
+    "size_bytes": 2536,
+    "sha256": "309fef4d1b532ce40f4689eda37ecdb2e4aa6e490773a006bc2df1e736e6e199",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sakuhano/library/JoystickProtocol/1.0.0/JoystickProtocol-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sakuhano/library/JoystickProtocol/1.0.0/JoystickProtocol-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

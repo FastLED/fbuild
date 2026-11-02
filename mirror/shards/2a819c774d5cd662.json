@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ptuytsch",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ptuytsch/library/DataLogging/0.0.0+sha.ec76b22829d5/DataLogging-0.0.0+sha.ec76b22829d5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DataLogging-0.0.0+sha.ec76b22829d5.tar.gz",
+    "size_bytes": 1167,
+    "sha256": "241600f481df1d0661c79c7c8cc43ed7caf597161cf29e07183968aa03b41106",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ptuytsch/library/DataLogging/0.0.0%2Bsha.ec76b22829d5/DataLogging-0.0.0%2Bsha.ec76b22829d5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ptuytsch/library/DataLogging/0.0.0%2Bsha.ec76b22829d5/DataLogging-0.0.0%2Bsha.ec76b22829d5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-mjarvisal",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-mjarvisal/library/vl53l0x_api/0.0.0+sha.e6fcdb78a136/vl53l0x_api-0.0.0+sha.e6fcdb78a136.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vl53l0x_api-0.0.0+sha.e6fcdb78a136.tar.gz",
+    "size_bytes": 65056,
+    "sha256": "533eb73224c416943e828b7d38cef7891c8e33ff2b70d80f5fc4a9e7bee4ee0b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mjarvisal/library/vl53l0x_api/0.0.0%2Bsha.e6fcdb78a136/vl53l0x_api-0.0.0%2Bsha.e6fcdb78a136.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mjarvisal/library/vl53l0x_api/0.0.0%2Bsha.e6fcdb78a136/vl53l0x_api-0.0.0%2Bsha.e6fcdb78a136.tar.gz"
+    ]
+   }
+  }
+ ]
+}

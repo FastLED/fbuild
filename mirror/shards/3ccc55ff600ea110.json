@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bitbucket-pjhardy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bitbucket-pjhardy/library/ArduinosInSpace/1.2/ArduinosInSpace-1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinosInSpace-1.2.tar.gz",
+    "size_bytes": 54648,
+    "sha256": "e0ae80b264ab37acb1b95cf1a20ec779a0d4373fa3b05dd142fa168661491e06",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbucket-pjhardy/library/ArduinosInSpace/1.2/ArduinosInSpace-1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbucket-pjhardy/library/ArduinosInSpace/1.2/ArduinosInSpace-1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbucket-pjhardy/library/Kerbal%20Sim%20Pit/1.4.0/KerbalSimPit-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KerbalSimPit-1.4.0.tar.gz",
+    "size_bytes": 10750,
+    "sha256": "b67e476c50dc9969b9283d514eba8a00410fc8d07b0f68d8242821108bcf193e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbucket-pjhardy/library/Kerbal%2520Sim%2520Pit/1.4.0/KerbalSimPit-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbucket-pjhardy/library/Kerbal%20Sim%20Pit/1.4.0/KerbalSimPit-1.4.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

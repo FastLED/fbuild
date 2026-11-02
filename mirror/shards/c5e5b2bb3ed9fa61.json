@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/saveme1507",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "saveme1507/library/EasyMQTT/1.0.10/EasyMQTT-1.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyMQTT-1.0.10.tar.gz",
+    "size_bytes": 7578,
+    "sha256": "517f47b32909a5b2202ddcbdd74eeef222d55b89b31d4e8241b25c4450aad72e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/saveme1507/library/EasyMQTT/1.0.10/EasyMQTT-1.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/saveme1507/library/EasyMQTT/1.0.10/EasyMQTT-1.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "saveme1507/library/EasyMQTT/1.0.7/EasyMQTT-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyMQTT-1.0.7.tar.gz",
+    "size_bytes": 7562,
+    "sha256": "91d31aea2c629c426993605baf7f44c33a7a4c6f05049deadf250f06ee2b508c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/saveme1507/library/EasyMQTT/1.0.7/EasyMQTT-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/saveme1507/library/EasyMQTT/1.0.7/EasyMQTT-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "saveme1507/library/EasyMQTT/1.0.8/EasyMQTT-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyMQTT-1.0.8.tar.gz",
+    "size_bytes": 7561,
+    "sha256": "073b7bbd0048765949e896cae522bd6aa42240bd33a0ba148a862eff24de8936",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/saveme1507/library/EasyMQTT/1.0.8/EasyMQTT-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/saveme1507/library/EasyMQTT/1.0.8/EasyMQTT-1.0.8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

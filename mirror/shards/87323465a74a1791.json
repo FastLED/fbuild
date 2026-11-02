@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-theterg",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-theterg/library/nRF24L01P/0.0.0+sha.be6480db326e/nRF24L01P-0.0.0+sha.be6480db326e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nRF24L01P-0.0.0+sha.be6480db326e.tar.gz",
+    "size_bytes": 7863,
+    "sha256": "8d5e1a2e23bf06c48bc12de0e15de743f61e458b98356145cfab35aa2459c2ff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-theterg/library/nRF24L01P/0.0.0%2Bsha.be6480db326e/nRF24L01P-0.0.0%2Bsha.be6480db326e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-theterg/library/nRF24L01P/0.0.0%2Bsha.be6480db326e/nRF24L01P-0.0.0%2Bsha.be6480db326e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

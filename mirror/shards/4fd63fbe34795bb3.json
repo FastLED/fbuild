@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/misterrager",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "misterrager/library/ESP32_APA102/1.2.1/ESP32_APA102-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_APA102-1.2.1.tar.gz",
+    "size_bytes": 5900,
+    "sha256": "450b860559a7db6e6350934afb26f73774609e398c5616dd9b2dc15928143a0b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/misterrager/library/ESP32_APA102/1.2.1/ESP32_APA102-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/misterrager/library/ESP32_APA102/1.2.1/ESP32_APA102-1.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

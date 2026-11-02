@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jimcarver",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jimcarver/library/AnalogIn_Diff/0.0.0+sha.7b36e4381d83/AnalogIn_Diff-0.0.0+sha.7b36e4381d83.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AnalogIn_Diff-0.0.0+sha.7b36e4381d83.tar.gz",
+    "size_bytes": 1338,
+    "sha256": "4e8bbc80199bedccf2510ee53a405324f1a5082ea39de1264d731e45d58326e0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jimcarver/library/AnalogIn_Diff/0.0.0%2Bsha.7b36e4381d83/AnalogIn_Diff-0.0.0%2Bsha.7b36e4381d83.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jimcarver/library/AnalogIn_Diff/0.0.0%2Bsha.7b36e4381d83/AnalogIn_Diff-0.0.0%2Bsha.7b36e4381d83.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jimcarver/library/FXAS21000/0.0.0+sha.a8f83b52f4df/FXAS21000-0.0.0+sha.a8f83b52f4df.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FXAS21000-0.0.0+sha.a8f83b52f4df.tar.gz",
+    "size_bytes": 2597,
+    "sha256": "409c89e2dcf6e30241595e6503eab1b7c5a8657f1f5038ac616001aa27dc11d3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jimcarver/library/FXAS21000/0.0.0%2Bsha.a8f83b52f4df/FXAS21000-0.0.0%2Bsha.a8f83b52f4df.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jimcarver/library/FXAS21000/0.0.0%2Bsha.a8f83b52f4df/FXAS21000-0.0.0%2Bsha.a8f83b52f4df.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jimcarver/library/FXLS8471Q/0.0.0+sha.b1fd3a2572e2/FXLS8471Q-0.0.0+sha.b1fd3a2572e2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FXLS8471Q-0.0.0+sha.b1fd3a2572e2.tar.gz",
+    "size_bytes": 2875,
+    "sha256": "366df8c668e787781a91571154edaced5cbf81e7fea455d96983db0efe9ee293",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jimcarver/library/FXLS8471Q/0.0.0%2Bsha.b1fd3a2572e2/FXLS8471Q-0.0.0%2Bsha.b1fd3a2572e2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jimcarver/library/FXLS8471Q/0.0.0%2Bsha.b1fd3a2572e2/FXLS8471Q-0.0.0%2Bsha.b1fd3a2572e2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jimcarver/library/FXOS8700Q/0.0.0+sha.5553a64d0762/FXOS8700Q-0.0.0+sha.5553a64d0762.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FXOS8700Q-0.0.0+sha.5553a64d0762.tar.gz",
+    "size_bytes": 3547,
+    "sha256": "c2cfcdd08cd00a191cef6136085bb2446becd4bb51deede470d041a60fdb42cf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jimcarver/library/FXOS8700Q/0.0.0%2Bsha.5553a64d0762/FXOS8700Q-0.0.0%2Bsha.5553a64d0762.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jimcarver/library/FXOS8700Q/0.0.0%2Bsha.5553a64d0762/FXOS8700Q-0.0.0%2Bsha.5553a64d0762.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jimcarver/library/eCompass_FPU_Lib/0.0.0+sha.37bc03c3b1f9/eCompass_FPU_Lib-0.0.0+sha.37bc03c3b1f9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "eCompass_FPU_Lib-0.0.0+sha.37bc03c3b1f9.tar.gz",
+    "size_bytes": 36268,
+    "sha256": "fcad091cf94957e0cc547e1a4ff16a183f5650ea55cf8eb69846aa4c9e95b433",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jimcarver/library/eCompass_FPU_Lib/0.0.0%2Bsha.37bc03c3b1f9/eCompass_FPU_Lib-0.0.0%2Bsha.37bc03c3b1f9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jimcarver/library/eCompass_FPU_Lib/0.0.0%2Bsha.37bc03c3b1f9/eCompass_FPU_Lib-0.0.0%2Bsha.37bc03c3b1f9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

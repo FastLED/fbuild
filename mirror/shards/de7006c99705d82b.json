@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/donnycraft1",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "donnycraft1/library/PIDController/0.0.1/PIDController-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PIDController-0.0.1.tar.gz",
+    "size_bytes": 4719,
+    "sha256": "046f369354fdee4f5b45d04fb00cf9acdac1c8052943475ab99be86a92345c90",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/donnycraft1/library/PIDController/0.0.1/PIDController-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/donnycraft1/library/PIDController/0.0.1/PIDController-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

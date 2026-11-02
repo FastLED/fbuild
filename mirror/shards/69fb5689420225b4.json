@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/alirezasalehy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "alirezasalehy/library/WAVRecorder/1.0.1/WAVRecorder-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WAVRecorder-1.0.1.tar.gz",
+    "size_bytes": 8516,
+    "sha256": "00465f37006a5487fc473a8eb9b33d6548e6a4fa19e85ac2b523d6cb96811230",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alirezasalehy/library/WAVRecorder/1.0.1/WAVRecorder-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/alirezasalehy/library/WAVRecorder/1.0.1/WAVRecorder-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

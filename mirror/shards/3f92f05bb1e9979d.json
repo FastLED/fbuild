@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ebradley6",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ebradley6/library/wave_player_dma/0.0.0+sha.11a670498598/wave_player_dma-0.0.0+sha.11a670498598.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "wave_player_dma-0.0.0+sha.11a670498598.tar.gz",
+    "size_bytes": 5188,
+    "sha256": "b12ab0a02fafbd0bc41e36e520ce60ef04346a9c0d373e282e4738c845f4debc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ebradley6/library/wave_player_dma/0.0.0%2Bsha.11a670498598/wave_player_dma-0.0.0%2Bsha.11a670498598.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ebradley6/library/wave_player_dma/0.0.0%2Bsha.11a670498598/wave_player_dma-0.0.0%2Bsha.11a670498598.tar.gz"
+    ]
+   }
+  }
+ ]
+}

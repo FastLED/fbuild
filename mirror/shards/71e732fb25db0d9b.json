@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/zmeiresearch",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "zmeiresearch/library/Wireguard%20client%20for%20LwIP%20on%20ESP32/1.0.1/WireguardclientforLwIPonESP32-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WireguardclientforLwIPonESP32-1.0.1.tar.gz",
+    "size_bytes": 41981,
+    "sha256": "9ed06c51ed76c4bb1ce420510001650e5686f4d48b64384919ba079656315773",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zmeiresearch/library/Wireguard%2520client%2520for%2520LwIP%2520on%2520ESP32/1.0.1/WireguardclientforLwIPonESP32-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/zmeiresearch/library/Wireguard%20client%20for%20LwIP%20on%20ESP32/1.0.1/WireguardclientforLwIPonESP32-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

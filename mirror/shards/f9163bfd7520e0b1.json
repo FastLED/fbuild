@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ilia-ametov",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ilia-ametov/library/BTHome/0.1.2/BTHome-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BTHome-0.1.2.tar.gz",
+    "size_bytes": 4336,
+    "sha256": "c5f32f2abc09d3f6a32394d17646ecd8855b618fe195bf66d4a3152ad139ca40",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ilia-ametov/library/BTHome/0.1.2/BTHome-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ilia-ametov/library/BTHome/0.1.2/BTHome-0.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

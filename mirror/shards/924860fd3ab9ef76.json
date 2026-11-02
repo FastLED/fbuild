@@ -1,0 +1,698 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bblanchon",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bblanchon/library/ArduinoJson/5.11.2/ArduinoJson-5.11.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoJson-5.11.2.tar.gz",
+    "size_bytes": 53949,
+    "sha256": "fb4ea1216ce5ff87bbe3803b6230fbf9673f282e5ec13621cb795f60451dbe7e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bblanchon/library/ArduinoJson/5.11.2/ArduinoJson-5.11.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bblanchon/library/ArduinoJson/5.11.2/ArduinoJson-5.11.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bblanchon/library/ArduinoJson/5.13.4/ArduinoJson-5.13.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoJson-5.13.4.tar.gz",
+    "size_bytes": 55674,
+    "sha256": "bd14baf092bb902cae2b24c01ded9167dd234037c54adee0baf3ffa663864328",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bblanchon/library/ArduinoJson/5.13.4/ArduinoJson-5.13.4.tar.gz",
+     "https://dl.registry.platformio.org/download/bblanchon/library/ArduinoJson/5.13.4/ArduinoJson-5.13.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bblanchon/library/ArduinoJson/6.10.1/ArduinoJson-6.10.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoJson-6.10.1.tar.gz",
+    "size_bytes": 70349,
+    "sha256": "590d9fd3b0b2e12868739a7cc8e1f2745415eec834e7d8c1f9f0f08e664ce595",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bblanchon/library/ArduinoJson/6.10.1/ArduinoJson-6.10.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bblanchon/library/ArduinoJson/6.10.1/ArduinoJson-6.10.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bblanchon/library/ArduinoJson/6.11.5/ArduinoJson-6.11.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoJson-6.11.5.tar.gz",
+    "size_bytes": 72826,
+    "sha256": "a2333ab59c1b7f598fa62b15cdb2df39ad4702868b235c20c53b483a6edc996b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bblanchon/library/ArduinoJson/6.11.5/ArduinoJson-6.11.5.tar.gz",
+     "https://dl.registry.platformio.org/download/bblanchon/library/ArduinoJson/6.11.5/ArduinoJson-6.11.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bblanchon/library/ArduinoJson/6.13.0/ArduinoJson-6.13.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoJson-6.13.0.tar.gz",
+    "size_bytes": 210079,
+    "sha256": "5f074f90fd71a30672185ec1b7ce4291d7ea00b55dd68479c9ce961343f3b0cd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bblanchon/library/ArduinoJson/6.13.0/ArduinoJson-6.13.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bblanchon/library/ArduinoJson/6.13.0/ArduinoJson-6.13.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bblanchon/library/ArduinoJson/6.14.1/ArduinoJson-6.14.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoJson-6.14.1.tar.gz",
+    "size_bytes": 215788,
+    "sha256": "771a5c30dea93475c8428c12474f94b8006094b71ab4ea51db7272ed94887d1f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bblanchon/library/ArduinoJson/6.14.1/ArduinoJson-6.14.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bblanchon/library/ArduinoJson/6.14.1/ArduinoJson-6.14.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bblanchon/library/ArduinoJson/6.15.1/ArduinoJson-6.15.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoJson-6.15.1.tar.gz",
+    "size_bytes": 81749,
+    "sha256": "6e446ac8fe4655bbfac12034504f3d1e463d21a0e634064e4e2fab329d8b4bef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bblanchon/library/ArduinoJson/6.15.1/ArduinoJson-6.15.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bblanchon/library/ArduinoJson/6.15.1/ArduinoJson-6.15.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bblanchon/library/ArduinoJson/6.15.2/ArduinoJson-6.15.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoJson-6.15.2.tar.gz",
+    "size_bytes": 82422,
+    "sha256": "52c3be9d693e6103c05668b7fe41c2f97e2ffafb3e79c425a264a99a92f40606",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bblanchon/library/ArduinoJson/6.15.2/ArduinoJson-6.15.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bblanchon/library/ArduinoJson/6.15.2/ArduinoJson-6.15.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bblanchon/library/ArduinoJson/6.16.1/ArduinoJson-6.16.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoJson-6.16.1.tar.gz",
+    "size_bytes": 84364,
+    "sha256": "16c6cbd8f465d02ba8057d08c9442711dd2b801a691fd00e62d2c68826582841",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bblanchon/library/ArduinoJson/6.16.1/ArduinoJson-6.16.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bblanchon/library/ArduinoJson/6.16.1/ArduinoJson-6.16.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bblanchon/library/ArduinoJson/6.17.0/ArduinoJson-6.17.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoJson-6.17.0.tar.gz",
+    "size_bytes": 85989,
+    "sha256": "b7483d82aa6eeded2f4ccc492d196cce9e0884235eab6a66068e1ca0d76d6179",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bblanchon/library/ArduinoJson/6.17.0/ArduinoJson-6.17.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bblanchon/library/ArduinoJson/6.17.0/ArduinoJson-6.17.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bblanchon/library/ArduinoJson/6.17.2/ArduinoJson-6.17.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoJson-6.17.2.tar.gz",
+    "size_bytes": 86652,
+    "sha256": "0b00bd87f4114412d8de28f96d4092844720ed5e041b4d631b5d6feeed553d2c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bblanchon/library/ArduinoJson/6.17.2/ArduinoJson-6.17.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bblanchon/library/ArduinoJson/6.17.2/ArduinoJson-6.17.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bblanchon/library/ArduinoJson/6.17.3/ArduinoJson-6.17.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoJson-6.17.3.tar.gz",
+    "size_bytes": 86123,
+    "sha256": "d769b81dbd200192c255841963dce3f34bb5b5cc3911cc981e95109464816b40",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bblanchon/library/ArduinoJson/6.17.3/ArduinoJson-6.17.3.tar.gz",
+     "https://dl.registry.platformio.org/download/bblanchon/library/ArduinoJson/6.17.3/ArduinoJson-6.17.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bblanchon/library/ArduinoJson/6.18.0/ArduinoJson-6.18.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoJson-6.18.0.tar.gz",
+    "size_bytes": 87829,
+    "sha256": "44792a5921d2b03afd2004146ce44dc2740413ff7760b215262794b07bfcf946",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bblanchon/library/ArduinoJson/6.18.0/ArduinoJson-6.18.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bblanchon/library/ArduinoJson/6.18.0/ArduinoJson-6.18.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bblanchon/library/ArduinoJson/6.18.3/ArduinoJson-6.18.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoJson-6.18.3.tar.gz",
+    "size_bytes": 89759,
+    "sha256": "e807fccc9bf383c9d15f19feae3fc7af2fb018a15f79e87157b17ac42586dc5e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bblanchon/library/ArduinoJson/6.18.3/ArduinoJson-6.18.3.tar.gz",
+     "https://dl.registry.platformio.org/download/bblanchon/library/ArduinoJson/6.18.3/ArduinoJson-6.18.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bblanchon/library/ArduinoJson/6.18.5/ArduinoJson-6.18.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoJson-6.18.5.tar.gz",
+    "size_bytes": 90077,
+    "sha256": "d5e71b3c81fd854545f82acc29f9c2b9e8c1bd17d82d6adeadcc1b87ea5241af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bblanchon/library/ArduinoJson/6.18.5/ArduinoJson-6.18.5.tar.gz",
+     "https://dl.registry.platformio.org/download/bblanchon/library/ArduinoJson/6.18.5/ArduinoJson-6.18.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bblanchon/library/ArduinoJson/6.19.0/ArduinoJson-6.19.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoJson-6.19.0.tar.gz",
+    "size_bytes": 86858,
+    "sha256": "e7e43c2140c32444e329990f68e9014a7d2effe47dd9d3892a8f0426fdc6428b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bblanchon/library/ArduinoJson/6.19.0/ArduinoJson-6.19.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bblanchon/library/ArduinoJson/6.19.0/ArduinoJson-6.19.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bblanchon/library/ArduinoJson/6.19.1/ArduinoJson-6.19.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoJson-6.19.1.tar.gz",
+    "size_bytes": 86812,
+    "sha256": "144f37e339caa906c0c996516b5e9325f8b6e4e25e11961683687fa548d085b2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bblanchon/library/ArduinoJson/6.19.1/ArduinoJson-6.19.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bblanchon/library/ArduinoJson/6.19.1/ArduinoJson-6.19.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bblanchon/library/ArduinoJson/6.19.3/ArduinoJson-6.19.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoJson-6.19.3.tar.gz",
+    "size_bytes": 87085,
+    "sha256": "62fa6c7fc73a82c51dee26c44e6f749148554f0b76845b919bd24c00fbe537bf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bblanchon/library/ArduinoJson/6.19.3/ArduinoJson-6.19.3.tar.gz",
+     "https://dl.registry.platformio.org/download/bblanchon/library/ArduinoJson/6.19.3/ArduinoJson-6.19.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bblanchon/library/ArduinoJson/6.19.4/ArduinoJson-6.19.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoJson-6.19.4.tar.gz",
+    "size_bytes": 87187,
+    "sha256": "88fd7a943529d4ceb1106addcba04660e61bce65670237226212da5fa82dedd3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bblanchon/library/ArduinoJson/6.19.4/ArduinoJson-6.19.4.tar.gz",
+     "https://dl.registry.platformio.org/download/bblanchon/library/ArduinoJson/6.19.4/ArduinoJson-6.19.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bblanchon/library/ArduinoJson/6.20.0/ArduinoJson-6.20.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoJson-6.20.0.tar.gz",
+    "size_bytes": 85651,
+    "sha256": "64067e1a961abf1b36758770a53db6b1bdf22a37c0c3343fcac671cb91bc7e1c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bblanchon/library/ArduinoJson/6.20.0/ArduinoJson-6.20.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bblanchon/library/ArduinoJson/6.20.0/ArduinoJson-6.20.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bblanchon/library/ArduinoJson/6.20.1/ArduinoJson-6.20.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoJson-6.20.1.tar.gz",
+    "size_bytes": 77308,
+    "sha256": "05f3f0bed7b987f864c6911e4c6ac9efab07416bbe3c80b19c35484f16f7a55d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bblanchon/library/ArduinoJson/6.20.1/ArduinoJson-6.20.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bblanchon/library/ArduinoJson/6.20.1/ArduinoJson-6.20.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bblanchon/library/ArduinoJson/6.21.0/ArduinoJson-6.21.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoJson-6.21.0.tar.gz",
+    "size_bytes": 77252,
+    "sha256": "d5df1fa08dc8cecbef1742445e68c3d757cd5318c2d7ddd115c3bebe37cc5e46",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bblanchon/library/ArduinoJson/6.21.0/ArduinoJson-6.21.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bblanchon/library/ArduinoJson/6.21.0/ArduinoJson-6.21.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bblanchon/library/ArduinoJson/6.21.1/ArduinoJson-6.21.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoJson-6.21.1.tar.gz",
+    "size_bytes": 77174,
+    "sha256": "ae32cd29127ee9676e87fd86ace492d19d32c9ddc6a42e47295f9af82eb8eb86",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bblanchon/library/ArduinoJson/6.21.1/ArduinoJson-6.21.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bblanchon/library/ArduinoJson/6.21.1/ArduinoJson-6.21.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bblanchon/library/ArduinoJson/6.21.2/ArduinoJson-6.21.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoJson-6.21.2.tar.gz",
+    "size_bytes": 77427,
+    "sha256": "4c3489ce0cb6acd12d4a895a6a360068139119b825250a7c20d7cbff35eba8b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bblanchon/library/ArduinoJson/6.21.2/ArduinoJson-6.21.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bblanchon/library/ArduinoJson/6.21.2/ArduinoJson-6.21.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bblanchon/library/ArduinoJson/6.21.3/ArduinoJson-6.21.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoJson-6.21.3.tar.gz",
+    "size_bytes": 77512,
+    "sha256": "1338b1919f1a91cee2ee5fc7c48f7bc7e4d8893833d580f9149d91ce7f48d652",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bblanchon/library/ArduinoJson/6.21.3/ArduinoJson-6.21.3.tar.gz",
+     "https://dl.registry.platformio.org/download/bblanchon/library/ArduinoJson/6.21.3/ArduinoJson-6.21.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bblanchon/library/ArduinoJson/6.21.4/ArduinoJson-6.21.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoJson-6.21.4.tar.gz",
+    "size_bytes": 77646,
+    "sha256": "b07e85e978b5def90e6aa5b42735a2bc656041afd9963b87ee2a10027a2fa243",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bblanchon/library/ArduinoJson/6.21.4/ArduinoJson-6.21.4.tar.gz",
+     "https://dl.registry.platformio.org/download/bblanchon/library/ArduinoJson/6.21.4/ArduinoJson-6.21.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bblanchon/library/ArduinoJson/6.21.5/ArduinoJson-6.21.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoJson-6.21.5.tar.gz",
+    "size_bytes": 65874,
+    "sha256": "591aa03874bd11e13f52863deeeee9ea8c87698df7238c8ec78435fe3dc9d0fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bblanchon/library/ArduinoJson/6.21.5/ArduinoJson-6.21.5.tar.gz",
+     "https://dl.registry.platformio.org/download/bblanchon/library/ArduinoJson/6.21.5/ArduinoJson-6.21.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bblanchon/library/ArduinoJson/6.21.6/ArduinoJson-6.21.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoJson-6.21.6.tar.gz",
+    "size_bytes": 66172,
+    "sha256": "69216a3e88dafa0c20762fc2c81625ca00be039746577048f452129d8b7fb9c9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bblanchon/library/ArduinoJson/6.21.6/ArduinoJson-6.21.6.tar.gz",
+     "https://dl.registry.platformio.org/download/bblanchon/library/ArduinoJson/6.21.6/ArduinoJson-6.21.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bblanchon/library/ArduinoJson/7.0.0/ArduinoJson-7.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoJson-7.0.0.tar.gz",
+    "size_bytes": 67942,
+    "sha256": "62d82b45840716c6c0f34d4a3534cb9e9a569949e040046c8f30b38d7c018ec7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bblanchon/library/ArduinoJson/7.0.0/ArduinoJson-7.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bblanchon/library/ArduinoJson/7.0.0/ArduinoJson-7.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bblanchon/library/ArduinoJson/7.0.1/ArduinoJson-7.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoJson-7.0.1.tar.gz",
+    "size_bytes": 66417,
+    "sha256": "02d16dd00b77bad1a479075ec13a83411693ddf501cf1fb5dffa0585597e662c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bblanchon/library/ArduinoJson/7.0.1/ArduinoJson-7.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bblanchon/library/ArduinoJson/7.0.1/ArduinoJson-7.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bblanchon/library/ArduinoJson/7.0.2/ArduinoJson-7.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoJson-7.0.2.tar.gz",
+    "size_bytes": 66416,
+    "sha256": "721d097f530b054dd0b0624ec6773e45676da7a6271cb2dcac9ed56e2c854ad7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bblanchon/library/ArduinoJson/7.0.2/ArduinoJson-7.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bblanchon/library/ArduinoJson/7.0.2/ArduinoJson-7.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bblanchon/library/ArduinoJson/7.0.3/ArduinoJson-7.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoJson-7.0.3.tar.gz",
+    "size_bytes": 66415,
+    "sha256": "eb9947e2627d85e54737f9ca03dd156d5db9458468e97f9412a17ce6e1046827",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bblanchon/library/ArduinoJson/7.0.3/ArduinoJson-7.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/bblanchon/library/ArduinoJson/7.0.3/ArduinoJson-7.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bblanchon/library/ArduinoJson/7.0.4/ArduinoJson-7.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoJson-7.0.4.tar.gz",
+    "size_bytes": 66533,
+    "sha256": "7245cfc6544da1d69d9ce039c451dc365a106cc23ce45b5ed01b82614089639e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bblanchon/library/ArduinoJson/7.0.4/ArduinoJson-7.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/bblanchon/library/ArduinoJson/7.0.4/ArduinoJson-7.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bblanchon/library/ArduinoJson/7.1.0/ArduinoJson-7.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoJson-7.1.0.tar.gz",
+    "size_bytes": 69417,
+    "sha256": "7c4992b6090007d078259ccc76552e0508828c7eba7d60282e4422aab3f3f461",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bblanchon/library/ArduinoJson/7.1.0/ArduinoJson-7.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bblanchon/library/ArduinoJson/7.1.0/ArduinoJson-7.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bblanchon/library/ArduinoJson/7.2.0/ArduinoJson-7.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoJson-7.2.0.tar.gz",
+    "size_bytes": 71203,
+    "sha256": "deb661f79f71f3088c483cc74217ece31cfba8709dd64031ff74a22889071a99",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bblanchon/library/ArduinoJson/7.2.0/ArduinoJson-7.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bblanchon/library/ArduinoJson/7.2.0/ArduinoJson-7.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bblanchon/library/ArduinoJson/7.2.1/ArduinoJson-7.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoJson-7.2.1.tar.gz",
+    "size_bytes": 71093,
+    "sha256": "3a8f34b83f3674ac460f039fb52cc2a565853d5586677a55defa0e43d82faf0e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bblanchon/library/ArduinoJson/7.2.1/ArduinoJson-7.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bblanchon/library/ArduinoJson/7.2.1/ArduinoJson-7.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bblanchon/library/ArduinoJson/7.2.2/ArduinoJson-7.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoJson-7.2.2.tar.gz",
+    "size_bytes": 71338,
+    "sha256": "4e08c36dd1ff9fc39538028e8c43c95c70edf30c32fa01af9a765881cf7bd675",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bblanchon/library/ArduinoJson/7.2.2/ArduinoJson-7.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bblanchon/library/ArduinoJson/7.2.2/ArduinoJson-7.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bblanchon/library/ArduinoJson/7.3.0/ArduinoJson-7.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoJson-7.3.0.tar.gz",
+    "size_bytes": 71737,
+    "sha256": "a8fd3fb61a1513aceb1d7091572293522af87dd8a348425be7acb8b31d376b4c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bblanchon/library/ArduinoJson/7.3.0/ArduinoJson-7.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bblanchon/library/ArduinoJson/7.3.0/ArduinoJson-7.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bblanchon/library/ArduinoJson/7.3.1/ArduinoJson-7.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoJson-7.3.1.tar.gz",
+    "size_bytes": 71749,
+    "sha256": "14a96ab77235d369c05d345df1d037ad0fcb5245ab3286459881b6908225f886",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bblanchon/library/ArduinoJson/7.3.1/ArduinoJson-7.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bblanchon/library/ArduinoJson/7.3.1/ArduinoJson-7.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bblanchon/library/ArduinoJson/7.3.2/ArduinoJson-7.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoJson-7.3.2.tar.gz",
+    "size_bytes": 71916,
+    "sha256": "983b0edae0abae3c154f50c4c11b71e0f56611997a6b2979c4fb1fbf98533cdc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bblanchon/library/ArduinoJson/7.3.2/ArduinoJson-7.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bblanchon/library/ArduinoJson/7.3.2/ArduinoJson-7.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bblanchon/library/ArduinoJson/7.4.0/ArduinoJson-7.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoJson-7.4.0.tar.gz",
+    "size_bytes": 72107,
+    "sha256": "05cd90d99c121382415f6030ebe7489ab2be46776691bd83ce441b8eb6114de5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bblanchon/library/ArduinoJson/7.4.0/ArduinoJson-7.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bblanchon/library/ArduinoJson/7.4.0/ArduinoJson-7.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bblanchon/library/ArduinoJson/7.4.1/ArduinoJson-7.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoJson-7.4.1.tar.gz",
+    "size_bytes": 72100,
+    "sha256": "f62e5ef0a8a718dda8bbc821db912275979f968fd240089568cdfde50893ff13",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bblanchon/library/ArduinoJson/7.4.1/ArduinoJson-7.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bblanchon/library/ArduinoJson/7.4.1/ArduinoJson-7.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bblanchon/library/ArduinoJson/7.4.2/ArduinoJson-7.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoJson-7.4.2.tar.gz",
+    "size_bytes": 72166,
+    "sha256": "64fcea6e0e19a049054d47cae5b69baedbe1dcd44d46fab7f7415559127b7f34",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bblanchon/library/ArduinoJson/7.4.2/ArduinoJson-7.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bblanchon/library/ArduinoJson/7.4.2/ArduinoJson-7.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bblanchon/library/ArduinoJson/7.4.3/ArduinoJson-7.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoJson-7.4.3.tar.gz",
+    "size_bytes": 72355,
+    "sha256": "5a6a61292733a365e9384ce6a3d61dbedf7125a814b1424a3417e3135dc25190",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bblanchon/library/ArduinoJson/7.4.3/ArduinoJson-7.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/bblanchon/library/ArduinoJson/7.4.3/ArduinoJson-7.4.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bblanchon/library/ArduinoTrace/1.2.0/ArduinoTrace-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoTrace-1.2.0.tar.gz",
+    "size_bytes": 5760,
+    "sha256": "54fe9c2da5e631373252f0af7db15833b0433fabe2c2b762297a2ae60434053a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bblanchon/library/ArduinoTrace/1.2.0/ArduinoTrace-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bblanchon/library/ArduinoTrace/1.2.0/ArduinoTrace-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bblanchon/library/ContinuousStepper/3.1.0/ContinuousStepper-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ContinuousStepper-3.1.0.tar.gz",
+    "size_bytes": 10168,
+    "sha256": "94d0a4edb504144c90bf6efc42410a4062a5f47f4bf29f2cca8af10379bf9d25",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bblanchon/library/ContinuousStepper/3.1.0/ContinuousStepper-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bblanchon/library/ContinuousStepper/3.1.0/ContinuousStepper-3.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bblanchon/library/StreamUtils/1.6.1/StreamUtils-1.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StreamUtils-1.6.1.tar.gz",
+    "size_bytes": 20851,
+    "sha256": "291baea90a8ebe683be33e9b66fff9267c367e59b981bdd26568140dcefe5e91",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bblanchon/library/StreamUtils/1.6.1/StreamUtils-1.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bblanchon/library/StreamUtils/1.6.1/StreamUtils-1.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bblanchon/library/StreamUtils/1.6.2/StreamUtils-1.6.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StreamUtils-1.6.2.tar.gz",
+    "size_bytes": 21597,
+    "sha256": "a538ddf76895981796a16eefb2225317b7f037aaad26ca28b2750e781babe95d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bblanchon/library/StreamUtils/1.6.2/StreamUtils-1.6.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bblanchon/library/StreamUtils/1.6.2/StreamUtils-1.6.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bblanchon/library/StreamUtils/1.7.3/StreamUtils-1.7.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StreamUtils-1.7.3.tar.gz",
+    "size_bytes": 23609,
+    "sha256": "2705ecadc324397b9094cfd95ee350e2091c33de5f30b50606bff5412d1959c1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bblanchon/library/StreamUtils/1.7.3/StreamUtils-1.7.3.tar.gz",
+     "https://dl.registry.platformio.org/download/bblanchon/library/StreamUtils/1.7.3/StreamUtils-1.7.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bblanchon/library/StreamUtils/1.8.0/StreamUtils-1.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StreamUtils-1.8.0.tar.gz",
+    "size_bytes": 23668,
+    "sha256": "b839f227cbe25522bcb17db5b9aef64ae43da5dd034ace7b8c1ca86b38d28a3d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bblanchon/library/StreamUtils/1.8.0/StreamUtils-1.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bblanchon/library/StreamUtils/1.8.0/StreamUtils-1.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bblanchon/library/StreamUtils/1.9.0/StreamUtils-1.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StreamUtils-1.9.0.tar.gz",
+    "size_bytes": 26033,
+    "sha256": "bb9920d21db8791fe50e6d8931f06a1ef5f2a0b37fbae1dd74a4f74d074a026d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bblanchon/library/StreamUtils/1.9.0/StreamUtils-1.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bblanchon/library/StreamUtils/1.9.0/StreamUtils-1.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bblanchon/library/StreamUtils/1.9.1/StreamUtils-1.9.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StreamUtils-1.9.1.tar.gz",
+    "size_bytes": 26139,
+    "sha256": "ec7382285e5f6cc238bcdbfc11b2ea2df768426e72e83d5cd7fd8379b358351b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bblanchon/library/StreamUtils/1.9.1/StreamUtils-1.9.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bblanchon/library/StreamUtils/1.9.1/StreamUtils-1.9.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bblanchon/library/StreamUtils/1.9.2/StreamUtils-1.9.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StreamUtils-1.9.2.tar.gz",
+    "size_bytes": 26264,
+    "sha256": "5a1a8269b87d896c0d069b8911d3618c8ed854229f2908ada4c9df4387d87587",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bblanchon/library/StreamUtils/1.9.2/StreamUtils-1.9.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bblanchon/library/StreamUtils/1.9.2/StreamUtils-1.9.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

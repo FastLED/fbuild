@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jojos1220",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jojos1220/library/adafruit_fram_i2c_mock/1.0.1/adafruit_fram_i2c_mock-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "adafruit_fram_i2c_mock-1.0.1.tar.gz",
+    "size_bytes": 5295,
+    "sha256": "45919c3d274faec33098cc8a89dfd2837a0f094166ba0d3254f5c63230630c03",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jojos1220/library/adafruit_fram_i2c_mock/1.0.1/adafruit_fram_i2c_mock-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jojos1220/library/adafruit_fram_i2c_mock/1.0.1/adafruit_fram_i2c_mock-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jojos1220/library/adafruit_ina219_mock/1.0.0/adafruit_ina219_mock-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "adafruit_ina219_mock-1.0.0.tar.gz",
+    "size_bytes": 5210,
+    "sha256": "93d1d3363b7e284bea49085d012b70c89d55330922ab98c552b70981176121d3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jojos1220/library/adafruit_ina219_mock/1.0.0/adafruit_ina219_mock-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jojos1220/library/adafruit_ina219_mock/1.0.0/adafruit_ina219_mock-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

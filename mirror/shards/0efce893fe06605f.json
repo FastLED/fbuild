@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/techlabcommunity",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "techlabcommunity/library/AFArray/0.4.0/AFArray-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AFArray-0.4.0.tar.gz",
+    "size_bytes": 7023,
+    "sha256": "588df847085dcc8ef9134769c5fc5a09904a502ae2a669f365cd01533c076928",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/techlabcommunity/library/AFArray/0.4.0/AFArray-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/techlabcommunity/library/AFArray/0.4.0/AFArray-0.4.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/centaq",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "centaq/library/AsyncBMP180Wrapper/1.0.2/AsyncBMP180Wrapper-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncBMP180Wrapper-1.0.2.tar.gz",
+    "size_bytes": 2970,
+    "sha256": "6ede90bba181a12ce72c26961f0700a81feee296fcaf29d0371c1f88bd7884e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/centaq/library/AsyncBMP180Wrapper/1.0.2/AsyncBMP180Wrapper-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/centaq/library/AsyncBMP180Wrapper/1.0.2/AsyncBMP180Wrapper-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "centaq/library/AsyncSMS/1.2.0/AsyncSMS-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncSMS-1.2.0.tar.gz",
+    "size_bytes": 6254,
+    "sha256": "88f5900c7fb59b78f394e656bd16968d6b177a6859439a240e239efa43a1c1da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/centaq/library/AsyncSMS/1.2.0/AsyncSMS-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/centaq/library/AsyncSMS/1.2.0/AsyncSMS-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "centaq/library/LEDDriver/1.0.0/LEDDriver-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LEDDriver-1.0.0.tar.gz",
+    "size_bytes": 3193,
+    "sha256": "78054c4de7496f5e97b54c7c9c6d90d620a51da3eafc1a55d52144c6ed344b3b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/centaq/library/LEDDriver/1.0.0/LEDDriver-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/centaq/library/LEDDriver/1.0.0/LEDDriver-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "centaq/library/Timers/1.0.2/Timers-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Timers-1.0.2.tar.gz",
+    "size_bytes": 2330,
+    "sha256": "910e0258fa0f479831a97bd5a34df978fb9a79fd603e7bbcf2727d565a800264",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/centaq/library/Timers/1.0.2/Timers-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/centaq/library/Timers/1.0.2/Timers-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "centaq/library/Timers/1.0.3/Timers-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Timers-1.0.3.tar.gz",
+    "size_bytes": 2360,
+    "sha256": "d3bf4d09c1b8025abcd94790a6a66d9ceb1a8adfb4b7c10b44776c7dbecf24f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/centaq/library/Timers/1.0.3/Timers-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/centaq/library/Timers/1.0.3/Timers-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

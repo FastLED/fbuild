@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fknaopen",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fknaopen/library/M5UnitNFC-M5Stack/1.0.0/M5UnitNFC-M5Stack-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5UnitNFC-M5Stack-1.0.0.tar.gz",
+    "size_bytes": 216478,
+    "sha256": "38a667fa5ffefdb1b4e3c87081ddc8c5df9c7ecd2052bda3541ac8abbc04e3fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fknaopen/library/M5UnitNFC-M5Stack/1.0.0/M5UnitNFC-M5Stack-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fknaopen/library/M5UnitNFC-M5Stack/1.0.0/M5UnitNFC-M5Stack-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

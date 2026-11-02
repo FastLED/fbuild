@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tardhiansyah",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tardhiansyah/library/ModbusWaterSensor/0.2.0/ModbusWaterSensor-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ModbusWaterSensor-0.2.0.tar.gz",
+    "size_bytes": 5190,
+    "sha256": "0f6706fc0aaf6ed024f094506cbd6e554879a0ba9a77fc0c2a2ea2fd22cdf29e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tardhiansyah/library/ModbusWaterSensor/0.2.0/ModbusWaterSensor-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tardhiansyah/library/ModbusWaterSensor/0.2.0/ModbusWaterSensor-0.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

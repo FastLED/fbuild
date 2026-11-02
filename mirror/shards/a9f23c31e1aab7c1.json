@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/qqqlab",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "qqqlab/library/ESP32_SerialRMT/1.0.0/ESP32_SerialRMT-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_SerialRMT-1.0.0.tar.gz",
+    "size_bytes": 15319,
+    "sha256": "6d35a180e58be17cb4f7ac4ce457d6800758c451850883967d9c7ee0dd0c88b2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/qqqlab/library/ESP32_SerialRMT/1.0.0/ESP32_SerialRMT-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/qqqlab/library/ESP32_SerialRMT/1.0.0/ESP32_SerialRMT-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "qqqlab/library/ESP32_SoftWire/1.0.2/ESP32_SoftWire-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_SoftWire-1.0.2.tar.gz",
+    "size_bytes": 5601,
+    "sha256": "298121ced4b14b9ef590bf08fe89cbdb22077627805093d6ad1922822b713a52",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/qqqlab/library/ESP32_SoftWire/1.0.2/ESP32_SoftWire-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/qqqlab/library/ESP32_SoftWire/1.0.2/ESP32_SoftWire-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "qqqlab/library/ESPnow-RC/1.0.0/ESPnow-RC-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPnow-RC-1.0.0.tar.gz",
+    "size_bytes": 6663,
+    "sha256": "f70737126c53c131f46fad660957d7f6d7438385c42837f4fed00ec7b607bb88",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/qqqlab/library/ESPnow-RC/1.0.0/ESPnow-RC-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/qqqlab/library/ESPnow-RC/1.0.0/ESPnow-RC-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "qqqlab/library/GPS-uBlox/1.0.1/GPS-uBlox-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GPS-uBlox-1.0.1.tar.gz",
+    "size_bytes": 30475,
+    "sha256": "80ef542ad13a91945141d17fc10788d884513901194c1bd3eb84e38c6d99826f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/qqqlab/library/GPS-uBlox/1.0.1/GPS-uBlox-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/qqqlab/library/GPS-uBlox/1.0.1/GPS-uBlox-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "qqqlab/library/madflight/2.1.2/madflight-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "madflight-2.1.2.tar.gz",
+    "size_bytes": 2069285,
+    "sha256": "0a40d6c7fc91c01cc1976f98f48566d7b60660e898b95975e59d91d1da8a3028",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/qqqlab/library/madflight/2.1.2/madflight-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/qqqlab/library/madflight/2.1.2/madflight-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "qqqlab/library/madflight/2.2.0/madflight-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "madflight-2.2.0.tar.gz",
+    "size_bytes": 2021968,
+    "sha256": "472e0284a5f33f8a73a4b8a0974fb1eec177437b5a581fa36198336990db7a97",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/qqqlab/library/madflight/2.2.0/madflight-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/qqqlab/library/madflight/2.2.0/madflight-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "qqqlab/library/qqqlab-RP2040-Toolbox/1.0.0/qqqlab-RP2040-Toolbox-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "qqqlab-RP2040-Toolbox-1.0.0.tar.gz",
+    "size_bytes": 7291,
+    "sha256": "59e6a25162c72a874ce9c38e0f314721bbe65689e182b3ced131d4cd6b47f6a0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/qqqlab/library/qqqlab-RP2040-Toolbox/1.0.0/qqqlab-RP2040-Toolbox-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/qqqlab/library/qqqlab-RP2040-Toolbox/1.0.0/qqqlab-RP2040-Toolbox-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

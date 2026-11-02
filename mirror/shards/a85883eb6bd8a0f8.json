@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dgomes",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dgomes/library/Industrial%20Shields/0.1/IndustrialShields-0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IndustrialShields-0.1.tar.gz",
+    "size_bytes": 3093,
+    "sha256": "4cd95a101ecb532aa488d407a6269ab8ac741588ecf7b1f04d9e74f32d4d90a0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dgomes/library/Industrial%2520Shields/0.1/IndustrialShields-0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dgomes/library/Industrial%20Shields/0.1/IndustrialShields-0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dgomes/library/homeGW/1.0.2/homeGW-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "homeGW-1.0.2.tar.gz",
+    "size_bytes": 5843,
+    "sha256": "0ec50cfc34ffad72da2a40e53a138c90541e1cf138d01b028b2cab90d5e46e49",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dgomes/library/homeGW/1.0.2/homeGW-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dgomes/library/homeGW/1.0.2/homeGW-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

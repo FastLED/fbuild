@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/amirna2",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "amirna2/library/RadioMesh/0.1.0/RadioMesh-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RadioMesh-0.1.0.tar.gz",
+    "size_bytes": 120677,
+    "sha256": "6dfa63e3930b0cb44f5adeffbcff6953f118761c367c06d8e99c0ada1a2fccb0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/amirna2/library/RadioMesh/0.1.0/RadioMesh-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/amirna2/library/RadioMesh/0.1.0/RadioMesh-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

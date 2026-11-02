@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jpiat",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jpiat/library/PioSPI/0.0.1/PioSPI-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PioSPI-0.0.1.tar.gz",
+    "size_bytes": 16348,
+    "sha256": "0221db05ca4e8c75259c1c7e10036a4ee0094ceb0b936c9faf128e6ee73a5e80",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jpiat/library/PioSPI/0.0.1/PioSPI-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jpiat/library/PioSPI/0.0.1/PioSPI-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

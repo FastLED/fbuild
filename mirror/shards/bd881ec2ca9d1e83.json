@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/natnqweb",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "natnqweb/library/EventOS/1.1.2/EventOS-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EventOS-1.1.2.tar.gz",
+    "size_bytes": 7188,
+    "sha256": "c049dca9735f57c84f7a7d859c36cd4b383e6dedb87529fcba08be24a97f3e29",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/natnqweb/library/EventOS/1.1.2/EventOS-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/natnqweb/library/EventOS/1.1.2/EventOS-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "natnqweb/library/EventSystem/1.2.2/EventSystem-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EventSystem-1.2.2.tar.gz",
+    "size_bytes": 5249,
+    "sha256": "5081db58f665ef5fe67f85b8ec74c11cc6dc1318263a6017227efaaa26aa6df2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/natnqweb/library/EventSystem/1.2.2/EventSystem-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/natnqweb/library/EventSystem/1.2.2/EventSystem-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "natnqweb/library/Mapf/1.0.2/Mapf-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Mapf-1.0.2.tar.gz",
+    "size_bytes": 13888,
+    "sha256": "cef30d114f7063a3f29f148c6fcbd1817a58a24c89f7f0dcddfa63b824d807bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/natnqweb/library/Mapf/1.0.2/Mapf-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/natnqweb/library/Mapf/1.0.2/Mapf-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "natnqweb/library/Motor_PID/2.0.0/Motor_PID-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Motor_PID-2.0.0.tar.gz",
+    "size_bytes": 3603,
+    "sha256": "f43dd24cbd43533e090756cc6430ef61af0101b4000d2c75696a3646fb045bae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/natnqweb/library/Motor_PID/2.0.0/Motor_PID-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/natnqweb/library/Motor_PID/2.0.0/Motor_PID-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "natnqweb/library/SD_card_logger/2.0.4/SD_card_logger-2.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SD_card_logger-2.0.4.tar.gz",
+    "size_bytes": 2421,
+    "sha256": "6cdb765f11ed6d51b79bda31b3b96e982ad6b42f4840a92c9448b1fdce1fb3f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/natnqweb/library/SD_card_logger/2.0.4/SD_card_logger-2.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/natnqweb/library/SD_card_logger/2.0.4/SD_card_logger-2.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "natnqweb/library/SkyMap/1.0.0/SkyMap-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SkyMap-1.0.0.tar.gz",
+    "size_bytes": 10056,
+    "sha256": "f4e4eb0cf4f74f6c7a35870ffc15f8e7afdeaa2a14f7a5f0804a05c9ed9c941b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/natnqweb/library/SkyMap/1.0.0/SkyMap-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/natnqweb/library/SkyMap/1.0.0/SkyMap-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "natnqweb/library/functional_button/1.0/functional_button-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "functional_button-1.0.tar.gz",
+    "size_bytes": 14700,
+    "sha256": "2002fd3fbf00460037ab16d50d91c5215f509d4ff729a4071eb6268c37dbb738",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/natnqweb/library/functional_button/1.0/functional_button-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/natnqweb/library/functional_button/1.0/functional_button-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

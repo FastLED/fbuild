@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cguimaraes",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cguimaraes/library/zenoh-pico/0.7.0-rc/zenoh-pico-0.7.0-rc.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "zenoh-pico-0.7.0-rc.tar.gz",
+    "size_bytes": 167279,
+    "sha256": "9b38d55db65d2b4973db340fea68cdb14587976395dd52c426ec523bd4e0e163",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cguimaraes/library/zenoh-pico/0.7.0-rc/zenoh-pico-0.7.0-rc.tar.gz",
+     "https://dl.registry.platformio.org/download/cguimaraes/library/zenoh-pico/0.7.0-rc/zenoh-pico-0.7.0-rc.tar.gz"
+    ]
+   }
+  }
+ ]
+}

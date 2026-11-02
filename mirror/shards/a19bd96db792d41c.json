@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/leafnode",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "leafnode/library/Ion/1.0.4/Ion-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ion-1.0.4.tar.gz",
+    "size_bytes": 11971,
+    "sha256": "7f5454856af1751195449b83882361cfee8b118d9c19f5c6e0ca2b2ed676d841",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leafnode/library/Ion/1.0.4/Ion-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/leafnode/library/Ion/1.0.4/Ion-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

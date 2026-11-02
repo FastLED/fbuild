@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-bloodline",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-bloodline/library/UniServ/0.0.0+sha.dde1a0011645/UniServ-0.0.0+sha.dde1a0011645.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UniServ-0.0.0+sha.dde1a0011645.tar.gz",
+    "size_bytes": 1796,
+    "sha256": "e12cd605b5c6de5d3db0508f6867947058e357d7d0f00fbd89fdb649050f4d28",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bloodline/library/UniServ/0.0.0%2Bsha.dde1a0011645/UniServ-0.0.0%2Bsha.dde1a0011645.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bloodline/library/UniServ/0.0.0%2Bsha.dde1a0011645/UniServ-0.0.0%2Bsha.dde1a0011645.tar.gz"
+    ]
+   }
+  }
+ ]
+}

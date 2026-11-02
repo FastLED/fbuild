@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sephony",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sephony/library/MS5611/1.1.0/MS5611-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MS5611-1.1.0.tar.gz",
+    "size_bytes": 11705,
+    "sha256": "2f5d3c4f341119c45cca3744b226ec98fb5dd32f9c2b6786af4c6dc5a7c81c09",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sephony/library/MS5611/1.1.0/MS5611-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sephony/library/MS5611/1.1.0/MS5611-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

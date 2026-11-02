@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/avivgr",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "avivgr/library/IS31FL3729_LED_Matrix/1.0.1/IS31FL3729_LED_Matrix-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IS31FL3729_LED_Matrix-1.0.1.tar.gz",
+    "size_bytes": 8442,
+    "sha256": "7fcf3a8b2c2972535b40fa29d6b2cf850b1bb203116619ac6b61743392d6e514",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/avivgr/library/IS31FL3729_LED_Matrix/1.0.1/IS31FL3729_LED_Matrix-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/avivgr/library/IS31FL3729_LED_Matrix/1.0.1/IS31FL3729_LED_Matrix-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-papanda1234",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-papanda1234/library/nmea0183/0.0.0+sha.7c6e75381419/nmea0183-0.0.0+sha.7c6e75381419.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nmea0183-0.0.0+sha.7c6e75381419.tar.gz",
+    "size_bytes": 1851,
+    "sha256": "dec017231a1dd0cbbcae8f36a580cfad1af217ec461ece2bc4726b2d32425aee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-papanda1234/library/nmea0183/0.0.0%2Bsha.7c6e75381419/nmea0183-0.0.0%2Bsha.7c6e75381419.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-papanda1234/library/nmea0183/0.0.0%2Bsha.7c6e75381419/nmea0183-0.0.0%2Bsha.7c6e75381419.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-papanda1234/library/pInterval/0.0.0+sha.b750249867c5/pInterval-0.0.0+sha.b750249867c5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pInterval-0.0.0+sha.b750249867c5.tar.gz",
+    "size_bytes": 1033,
+    "sha256": "db670fcbbfa534c2c53496079721e14f995df694b438deff96f5f83f96087e4b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-papanda1234/library/pInterval/0.0.0%2Bsha.b750249867c5/pInterval-0.0.0%2Bsha.b750249867c5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-papanda1234/library/pInterval/0.0.0%2Bsha.b750249867c5/pInterval-0.0.0%2Bsha.b750249867c5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-papanda1234/library/wdt_lpc1114/0.0.0+sha.14e0734636fa/wdt_lpc1114-0.0.0+sha.14e0734636fa.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "wdt_lpc1114-0.0.0+sha.14e0734636fa.tar.gz",
+    "size_bytes": 1194,
+    "sha256": "8a1dfdfc3a5ced129311b1fc37ac418494ca70815ad74abd0992964ecc0a8d37",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-papanda1234/library/wdt_lpc1114/0.0.0%2Bsha.14e0734636fa/wdt_lpc1114-0.0.0%2Bsha.14e0734636fa.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-papanda1234/library/wdt_lpc1114/0.0.0%2Bsha.14e0734636fa/wdt_lpc1114-0.0.0%2Bsha.14e0734636fa.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,126 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/zimbora",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "zimbora/library/ESP32Logger2/1.0.3/ESP32Logger2-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Logger2-1.0.3.tar.gz",
+    "size_bytes": 14044,
+    "sha256": "54bef7f8ca54e2dd4d6261ac1c3ffe7ce50cbb776c4d127d3c79a580b1bbbadd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zimbora/library/ESP32Logger2/1.0.3/ESP32Logger2-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/zimbora/library/ESP32Logger2/1.0.3/ESP32Logger2-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zimbora/library/autorequest/1.0.1/autorequest-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "autorequest-1.0.1.tar.gz",
+    "size_bytes": 141529,
+    "sha256": "73f0419c187d63072aa1dd7a465634f797dd5e75f65ebcc3f974f5f0fbcadad2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zimbora/library/autorequest/1.0.1/autorequest-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/zimbora/library/autorequest/1.0.1/autorequest-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zimbora/library/esp32-BG95/1.0.6/esp32-BG95-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32-BG95-1.0.6.tar.gz",
+    "size_bytes": 26176,
+    "sha256": "9e74995da05a22d82cb0e062625f8b46a3c67483e5e22244470652468ffef741",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zimbora/library/esp32-BG95/1.0.6/esp32-BG95-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/zimbora/library/esp32-BG95/1.0.6/esp32-BG95-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zimbora/library/esp32-BLE112/1.0.3/esp32-BLE112-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32-BLE112-1.0.3.tar.gz",
+    "size_bytes": 14145,
+    "sha256": "e478b50abc43999d1dbe951dfb4ac92b3adf42d98052b25b48701fd366edeb6e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zimbora/library/esp32-BLE112/1.0.3/esp32-BLE112-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/zimbora/library/esp32-BLE112/1.0.3/esp32-BLE112-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zimbora/library/modbusrtu/1.0.1/modbusrtu-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "modbusrtu-1.0.1.tar.gz",
+    "size_bytes": 144658,
+    "sha256": "4ae962777a49c4931710381211f39204cd89e9cfc4304fbb02d96830bf2d1be0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zimbora/library/modbusrtu/1.0.1/modbusrtu-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/zimbora/library/modbusrtu/1.0.1/modbusrtu-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zimbora/library/modem-freeRTOS/1.0.10/modem-freeRTOS-1.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "modem-freeRTOS-1.0.10.tar.gz",
+    "size_bytes": 27191,
+    "sha256": "8cd08b90db93e32644caca712c26d608f2a562aed8931b850a7d74759afc42fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zimbora/library/modem-freeRTOS/1.0.10/modem-freeRTOS-1.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/zimbora/library/modem-freeRTOS/1.0.10/modem-freeRTOS-1.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zimbora/library/modem-freeRTOS/1.0.11/modem-freeRTOS-1.0.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "modem-freeRTOS-1.0.11.tar.gz",
+    "size_bytes": 27347,
+    "sha256": "92de431615fa38f0c36cd43914cd7dae420bb69701d14ab1cfa3144ed122ed7b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zimbora/library/modem-freeRTOS/1.0.11/modem-freeRTOS-1.0.11.tar.gz",
+     "https://dl.registry.platformio.org/download/zimbora/library/modem-freeRTOS/1.0.11/modem-freeRTOS-1.0.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zimbora/library/modem-freeRTOS/1.0.12/modem-freeRTOS-1.0.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "modem-freeRTOS-1.0.12.tar.gz",
+    "size_bytes": 27427,
+    "sha256": "67b8924235999c622c175e079a53ca4d5efd4ed01e18330e474fcb7cbe6df54a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zimbora/library/modem-freeRTOS/1.0.12/modem-freeRTOS-1.0.12.tar.gz",
+     "https://dl.registry.platformio.org/download/zimbora/library/modem-freeRTOS/1.0.12/modem-freeRTOS-1.0.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zimbora/library/sysfile/1.0.3/sysfile-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "sysfile-1.0.3.tar.gz",
+    "size_bytes": 7336,
+    "sha256": "3c4da14cee25d5194277be1fec358dc0f19c7d1506aff21b4de0ffbaed2c7a97",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zimbora/library/sysfile/1.0.3/sysfile-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/zimbora/library/sysfile/1.0.3/sysfile-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/criticalboot",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "criticalboot/library/i2c-xio/1.0.0/i2c-xio-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "i2c-xio-1.0.0.tar.gz",
+    "size_bytes": 3316575,
+    "sha256": "a2f14e1550d280bcc81e6b9520eacbde73772c93ba009005460f218b906f6b06",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/criticalboot/library/i2c-xio/1.0.0/i2c-xio-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/criticalboot/library/i2c-xio/1.0.0/i2c-xio-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

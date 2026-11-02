@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gramedek",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gramedek/library/PIO8255/1.0.0/PIO8255-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PIO8255-1.0.0.tar.gz",
+    "size_bytes": 2159,
+    "sha256": "96ef7669c96bc449a4ea9accdb6436fef9a3eab25af184468dc13856a2e3e730",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gramedek/library/PIO8255/1.0.0/PIO8255-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gramedek/library/PIO8255/1.0.0/PIO8255-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

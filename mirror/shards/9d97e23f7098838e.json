@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dpoettler",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dpoettler/library/ExtendedChars/0.1.2/ExtendedChars-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ExtendedChars-0.1.2.tar.gz",
+    "size_bytes": 21101,
+    "sha256": "4415d26a4d6c95798b0a62216b0178870c5e49339f892ac3e484bf9c79a3f014",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dpoettler/library/ExtendedChars/0.1.2/ExtendedChars-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dpoettler/library/ExtendedChars/0.1.2/ExtendedChars-0.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

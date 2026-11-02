@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/andrasbiro",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "andrasbiro/library/AmigaMouseJoyEmu/0.1/AmigaMouseJoyEmu-0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AmigaMouseJoyEmu-0.1.tar.gz",
+    "size_bytes": 4944,
+    "sha256": "29f87a94603d311c0635e6b3e85bec92ea46b421c95cbd355c3cdf657ed0e68f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/andrasbiro/library/AmigaMouseJoyEmu/0.1/AmigaMouseJoyEmu-0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/andrasbiro/library/AmigaMouseJoyEmu/0.1/AmigaMouseJoyEmu-0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "andrasbiro/library/ArduCastControl/0.1.1/ArduCastControl-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduCastControl-0.1.1.tar.gz",
+    "size_bytes": 17655,
+    "sha256": "a7d60d7de4d2069b8fa073ba02f962c0002e62e3963c62850b6981f0fd21afd6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/andrasbiro/library/ArduCastControl/0.1.1/ArduCastControl-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/andrasbiro/library/ArduCastControl/0.1.1/ArduCastControl-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

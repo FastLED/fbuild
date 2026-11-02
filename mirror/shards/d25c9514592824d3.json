@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/okbao",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "okbao/library/KS0108_GLCD/1.0.0/KS0108_GLCD-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KS0108_GLCD-1.0.0.tar.gz",
+    "size_bytes": 9320,
+    "sha256": "30d0064ce96300d43967adbf61efee0f885aa05e421c682d287bee904232830e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/okbao/library/KS0108_GLCD/1.0.0/KS0108_GLCD-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/okbao/library/KS0108_GLCD/1.0.0/KS0108_GLCD-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "okbao/library/ST7565%20LCD/1.0.2/ST7565LCD-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ST7565LCD-1.0.2.tar.gz",
+    "size_bytes": 19316,
+    "sha256": "3fae5f269d5bfb12ae07fe7239fcefa685416904ca40adb26a59b35a5ac3983c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/okbao/library/ST7565%2520LCD/1.0.2/ST7565LCD-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/okbao/library/ST7565%20LCD/1.0.2/ST7565LCD-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

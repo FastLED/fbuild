@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-defmacro",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-defmacro/library/minimal-json/0.0.0+sha.0429411f7b3a/minimal-json-0.0.0+sha.0429411f7b3a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "minimal-json-0.0.0+sha.0429411f7b3a.tar.gz",
+    "size_bytes": 3816,
+    "sha256": "0922c45763ea85a445e4fc6dc586172d1211c855fc4e6b346aa82a960521d153",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-defmacro/library/minimal-json/0.0.0%2Bsha.0429411f7b3a/minimal-json-0.0.0%2Bsha.0429411f7b3a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-defmacro/library/minimal-json/0.0.0%2Bsha.0429411f7b3a/minimal-json-0.0.0%2Bsha.0429411f7b3a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-defmacro/library/minimal-mqtt/0.0.0+sha.311cd16389ff/minimal-mqtt-0.0.0+sha.311cd16389ff.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "minimal-mqtt-0.0.0+sha.311cd16389ff.tar.gz",
+    "size_bytes": 5446,
+    "sha256": "4fbfdf666e25c907588be53da1c2f62d093997de5fca9ca238762117a1d14b59",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-defmacro/library/minimal-mqtt/0.0.0%2Bsha.311cd16389ff/minimal-mqtt-0.0.0%2Bsha.311cd16389ff.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-defmacro/library/minimal-mqtt/0.0.0%2Bsha.311cd16389ff/minimal-mqtt-0.0.0%2Bsha.311cd16389ff.tar.gz"
+    ]
+   }
+  }
+ ]
+}

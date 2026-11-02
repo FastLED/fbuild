@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tttttx2",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tttttx2/library/DDC-CI%20VPC%20library/1.0.0/DDC-CIVPClibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DDC-CIVPClibrary-1.0.0.tar.gz",
+    "size_bytes": 2355,
+    "sha256": "a403a8422c3c76f10bbaa2d993295228c058b6cad0c4472579fc838efa5908fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tttttx2/library/DDC-CI%2520VPC%2520library/1.0.0/DDC-CIVPClibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tttttx2/library/DDC-CI%20VPC%20library/1.0.0/DDC-CIVPClibrary-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

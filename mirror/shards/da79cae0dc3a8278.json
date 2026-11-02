@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bleeesmah",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bleeesmah/library/Thermistobinkz/1.0.0/Thermistobinkz-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Thermistobinkz-1.0.0.tar.gz",
+    "size_bytes": 1750,
+    "sha256": "7cb71355f477d55c80fa2da4a48d494011e9e426d6d50ef04565af7dd0de383e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bleeesmah/library/Thermistobinkz/1.0.0/Thermistobinkz-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bleeesmah/library/Thermistobinkz/1.0.0/Thermistobinkz-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/stan-reifel",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "stan-reifel/library/ArduinoUserInterface/1.0.0/ArduinoUserInterface-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoUserInterface-1.0.0.tar.gz",
+    "size_bytes": 221940,
+    "sha256": "05be9c53fc5426616cba44c4e6199d307f1abf87c6538a80515c1a553cac27e8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stan-reifel/library/ArduinoUserInterface/1.0.0/ArduinoUserInterface-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stan-reifel/library/ArduinoUserInterface/1.0.0/ArduinoUserInterface-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stan-reifel/library/FlexyStepper/1.0.0/FlexyStepper-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FlexyStepper-1.0.0.tar.gz",
+    "size_bytes": 21228,
+    "sha256": "0021c293ca89439d8c52e81ec6c37850c26f58242f21a0630ac863d510148642",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stan-reifel/library/FlexyStepper/1.0.0/FlexyStepper-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stan-reifel/library/FlexyStepper/1.0.0/FlexyStepper-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stan-reifel/library/SpeedyStepper/1.0.0/SpeedyStepper-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SpeedyStepper-1.0.0.tar.gz",
+    "size_bytes": 20760,
+    "sha256": "d194138d1c4dab10b695edcc559656302a9330a93f5af2f4479fe7d1f8205a4f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stan-reifel/library/SpeedyStepper/1.0.0/SpeedyStepper-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stan-reifel/library/SpeedyStepper/1.0.0/SpeedyStepper-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stan-reifel/library/TeensyUserInterface/1.3.0/TeensyUserInterface-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TeensyUserInterface-1.3.0.tar.gz",
+    "size_bytes": 47906,
+    "sha256": "b0fe0bc7697d20074ba3a223b90a9511795ed1e63eb3bbdac91f3a506b1d3e5e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stan-reifel/library/TeensyUserInterface/1.3.0/TeensyUserInterface-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stan-reifel/library/TeensyUserInterface/1.3.0/TeensyUserInterface-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stan-reifel/library/TinyStepper_28BYJ_48/1.0.0/TinyStepper_28BYJ_48-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyStepper_28BYJ_48-1.0.0.tar.gz",
+    "size_bytes": 10474,
+    "sha256": "9aa3913649b9a4f8405b4b462c88dc17f92dafd8543e5f9a3cce8e3261d37465",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stan-reifel/library/TinyStepper_28BYJ_48/1.0.0/TinyStepper_28BYJ_48-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stan-reifel/library/TinyStepper_28BYJ_48/1.0.0/TinyStepper_28BYJ_48-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

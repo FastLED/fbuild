@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-flowcode",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-flowcode/library/NokiaLCD0ld/0.0.0+sha.db6ae092a33d/NokiaLCD0ld-0.0.0+sha.db6ae092a33d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NokiaLCD0ld-0.0.0+sha.db6ae092a33d.tar.gz",
+    "size_bytes": 5627,
+    "sha256": "352bbfe82db9e6b84dd418fe56cb5cd2dcccd130f564a9d94d2031417d4f1f55",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-flowcode/library/NokiaLCD0ld/0.0.0%2Bsha.db6ae092a33d/NokiaLCD0ld-0.0.0%2Bsha.db6ae092a33d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-flowcode/library/NokiaLCD0ld/0.0.0%2Bsha.db6ae092a33d/NokiaLCD0ld-0.0.0%2Bsha.db6ae092a33d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

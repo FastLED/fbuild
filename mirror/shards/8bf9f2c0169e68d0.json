@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cryptotronix",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cryptotronix/library/CryptoAuth/0.1/CryptoAuth-0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CryptoAuth-0.1.tar.gz",
+    "size_bytes": 116007,
+    "sha256": "643e4055fc12a396769636f9ace2b3e9ac6387fedab182a92a4c7b2390e12dc2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cryptotronix/library/CryptoAuth/0.1/CryptoAuth-0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cryptotronix/library/CryptoAuth/0.1/CryptoAuth-0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

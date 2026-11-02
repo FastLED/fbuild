@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lynxmotion",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lynxmotion/library/AlternativeLSS/0.9.0/AlternativeLSS-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlternativeLSS-0.9.0.tar.gz",
+    "size_bytes": 68713,
+    "sha256": "70819f38863d2bb072b3a14d4a7a1eb97c4944d165e4a4defefdcce62e3d455b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lynxmotion/library/AlternativeLSS/0.9.0/AlternativeLSS-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lynxmotion/library/AlternativeLSS/0.9.0/AlternativeLSS-0.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lynxmotion/library/Lynxmotion%20Smart%20Servo%20-LSS-/1.4.1/LynxmotionSmartServo-LSS--1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LynxmotionSmartServo-LSS--1.4.1.tar.gz",
+    "size_bytes": 13787,
+    "sha256": "6dd32b7cdd00f70b4df107c4270b7d0c615bc60630412d5ac408cd4fe127bb15",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lynxmotion/library/Lynxmotion%2520Smart%2520Servo%2520-LSS-/1.4.1/LynxmotionSmartServo-LSS--1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lynxmotion/library/Lynxmotion%20Smart%20Servo%20-LSS-/1.4.1/LynxmotionSmartServo-LSS--1.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lynxmotion/library/PPM/1.1.5/PPM-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PPM-1.1.5.tar.gz",
+    "size_bytes": 19139,
+    "sha256": "c812a706d966afb9264f196a5545723f9bf7e658c9674730dac40f67f3a3dbbe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lynxmotion/library/PPM/1.1.5/PPM-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/lynxmotion/library/PPM/1.1.5/PPM-1.1.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

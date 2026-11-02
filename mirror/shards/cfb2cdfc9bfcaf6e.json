@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/blynkkk",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "blynkkk/library/Blynk/0.6.7/Blynk-0.6.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Blynk-0.6.7.tar.gz",
+    "size_bytes": 304197,
+    "sha256": "5aba252df5acb8489a2f4860413de53d709f2851d9893488172959c3611f2557",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blynkkk/library/Blynk/0.6.7/Blynk-0.6.7.tar.gz",
+     "https://dl.registry.platformio.org/download/blynkkk/library/Blynk/0.6.7/Blynk-0.6.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "blynkkk/library/Blynk/1.2.0/Blynk-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Blynk-1.2.0.tar.gz",
+    "size_bytes": 220116,
+    "sha256": "a2b48a433dccbd04e9b0b619104fbdcf7804fd7196231cf59033d70b85a9b5e5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blynkkk/library/Blynk/1.2.0/Blynk-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/blynkkk/library/Blynk/1.2.0/Blynk-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "blynkkk/library/Blynk/1.3.2/Blynk-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Blynk-1.3.2.tar.gz",
+    "size_bytes": 198523,
+    "sha256": "537ba06b372fd2f80db99bfb273b40537817d1b3fdcfaf399d9c38a08820003e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blynkkk/library/Blynk/1.3.2/Blynk-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/blynkkk/library/Blynk/1.3.2/Blynk-1.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "blynkkk/library/Blynk/1.3.5/Blynk-1.3.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Blynk-1.3.5.tar.gz",
+    "size_bytes": 195788,
+    "sha256": "fc2986b85190ce5b2b3e07678a3c48135e98175e6650fa793fbb1c31c6e0bc3f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blynkkk/library/Blynk/1.3.5/Blynk-1.3.5.tar.gz",
+     "https://dl.registry.platformio.org/download/blynkkk/library/Blynk/1.3.5/Blynk-1.3.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "blynkkk/library/Blynk/1.4.0/Blynk-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Blynk-1.4.0.tar.gz",
+    "size_bytes": 163749,
+    "sha256": "6360342fa9d067a8334d4e1e073f6730e8371b49c8b2f6dc59bb561ab37cd3e3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blynkkk/library/Blynk/1.4.0/Blynk-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/blynkkk/library/Blynk/1.4.0/Blynk-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "blynkkk/library/BlynkNcpDriver/0.6.3/BlynkNcpDriver-0.6.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BlynkNcpDriver-0.6.3.tar.gz",
+    "size_bytes": 25691,
+    "sha256": "47c0e842f04f978da2c56c86f5f34a55360dcae6f498c7efb9e371642f3f1411",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blynkkk/library/BlynkNcpDriver/0.6.3/BlynkNcpDriver-0.6.3.tar.gz",
+     "https://dl.registry.platformio.org/download/blynkkk/library/BlynkNcpDriver/0.6.3/BlynkNcpDriver-0.6.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "blynkkk/library/BlynkNcpDriver/0.7.0/BlynkNcpDriver-0.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BlynkNcpDriver-0.7.0.tar.gz",
+    "size_bytes": 29016,
+    "sha256": "41827958958af0a4f2bda6b5bffff75d419c591fe68787005d5659f782f4a8de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blynkkk/library/BlynkNcpDriver/0.7.0/BlynkNcpDriver-0.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/blynkkk/library/BlynkNcpDriver/0.7.0/BlynkNcpDriver-0.7.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

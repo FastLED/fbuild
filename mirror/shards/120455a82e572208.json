@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cad435",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cad435/library/CH224Q_Arduino/0.0.1/CH224Q_Arduino-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CH224Q_Arduino-0.0.1.tar.gz",
+    "size_bytes": 10895,
+    "sha256": "c692baeffabdd9e7eb32f8e86e0a11c04535ef913f8cfe7bd2167ff1708f2b2e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cad435/library/CH224Q_Arduino/0.0.1/CH224Q_Arduino-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cad435/library/CH224Q_Arduino/0.0.1/CH224Q_Arduino-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cad435/library/CH224Q_Arduino/0.0.2/CH224Q_Arduino-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CH224Q_Arduino-0.0.2.tar.gz",
+    "size_bytes": 9380,
+    "sha256": "da813afa28edb235a3e03ad696ac9f4add0ed747e43a4435abce19982977dd5d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cad435/library/CH224Q_Arduino/0.0.2/CH224Q_Arduino-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cad435/library/CH224Q_Arduino/0.0.2/CH224Q_Arduino-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cad435/library/CH224Q_Arduino/0.0.3/CH224Q_Arduino-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CH224Q_Arduino-0.0.3.tar.gz",
+    "size_bytes": 8990,
+    "sha256": "fca810be45eca0bf43a2b1ce43bddfc7844843d1e96488f0bebdea2e5c60de34",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cad435/library/CH224Q_Arduino/0.0.3/CH224Q_Arduino-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/cad435/library/CH224Q_Arduino/0.0.3/CH224Q_Arduino-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cad435/library/CH224Q_Arduino/0.0.4/CH224Q_Arduino-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CH224Q_Arduino-0.0.4.tar.gz",
+    "size_bytes": 9114,
+    "sha256": "ebdd4974cd35e3f78f1e6ed8be55c516f6a7886339ec6556adbaba44e3680960",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cad435/library/CH224Q_Arduino/0.0.4/CH224Q_Arduino-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/cad435/library/CH224Q_Arduino/0.0.4/CH224Q_Arduino-0.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cad435/library/CH224Q_Arduino/0.0.5/CH224Q_Arduino-0.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CH224Q_Arduino-0.0.5.tar.gz",
+    "size_bytes": 9135,
+    "sha256": "04f23f14462f40b9ce75af8bc3a54675d4eb297721d105f0274d04d85b283614",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cad435/library/CH224Q_Arduino/0.0.5/CH224Q_Arduino-0.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/cad435/library/CH224Q_Arduino/0.0.5/CH224Q_Arduino-0.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cad435/library/CH224Q_Arduino/0.0.6/CH224Q_Arduino-0.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CH224Q_Arduino-0.0.6.tar.gz",
+    "size_bytes": 9192,
+    "sha256": "b904e495ed28adbc90c4fb01b4c769d9b76a603e0846acd0eb56356c0bcd69f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cad435/library/CH224Q_Arduino/0.0.6/CH224Q_Arduino-0.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/cad435/library/CH224Q_Arduino/0.0.6/CH224Q_Arduino-0.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cad435/library/CH224Q_Arduino/0.0.7/CH224Q_Arduino-0.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CH224Q_Arduino-0.0.7.tar.gz",
+    "size_bytes": 9751,
+    "sha256": "443c66c8cf7ffe786eb32834be387a17b40c6dcc05b047f25ffb8afd4fc749a1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cad435/library/CH224Q_Arduino/0.0.7/CH224Q_Arduino-0.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/cad435/library/CH224Q_Arduino/0.0.7/CH224Q_Arduino-0.0.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

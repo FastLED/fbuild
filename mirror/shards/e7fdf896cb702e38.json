@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fyfar",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fyfar/library/Servo/0.2.0/Servo-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Servo-0.2.0.tar.gz",
+    "size_bytes": 24561,
+    "sha256": "866f5ed0cb1c1e4252d1e289439f1498d9590cb2d3bbea8ef8166ac94bcd3df7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fyfar/library/Servo/0.2.0/Servo-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fyfar/library/Servo/0.2.0/Servo-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fyfar/library/Ticker/0.1.0/Ticker-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ticker-0.1.0.tar.gz",
+    "size_bytes": 13533,
+    "sha256": "24becb8507b3ae7b623ba16199c238a7f7b1c0edd6afe1b3eae5541d61c0ee2a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fyfar/library/Ticker/0.1.0/Ticker-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fyfar/library/Ticker/0.1.0/Ticker-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

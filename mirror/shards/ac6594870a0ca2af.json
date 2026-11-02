@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/harbaum",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "harbaum/library/Ftduino/0.0.11/Ftduino-0.0.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ftduino-0.0.11.tar.gz",
+    "size_bytes": 57178,
+    "sha256": "ed03154f3459f0754e844305419359eba50d1090611f063407e19001e2a2d0f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/harbaum/library/Ftduino/0.0.11/Ftduino-0.0.11.tar.gz",
+     "https://dl.registry.platformio.org/download/harbaum/library/Ftduino/0.0.11/Ftduino-0.0.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "harbaum/library/FtduinoSimple/0.0.11/FtduinoSimple-0.0.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FtduinoSimple-0.0.11.tar.gz",
+    "size_bytes": 118050,
+    "sha256": "237226e0d2be42a99dc8a783de87dee640ae4b4e2ee8ced48e0a0e47fbba04d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/harbaum/library/FtduinoSimple/0.0.11/FtduinoSimple-0.0.11.tar.gz",
+     "https://dl.registry.platformio.org/download/harbaum/library/FtduinoSimple/0.0.11/FtduinoSimple-0.0.11.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sensorflow",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sensorflow/library/Sensorflow/0.0.0-alpha+sha.c74e46d6ce/Sensorflow-0.0.0-alphasha.c74e46d6ce.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sensorflow-0.0.0-alphasha.c74e46d6ce.tar.gz",
+    "size_bytes": 29129,
+    "sha256": "1923520dcbdcae8bd55fb92a1883c8a0e6f4e5fc7399c05d745a314b7bbc1c2c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensorflow/library/Sensorflow/0.0.0-alpha%2Bsha.c74e46d6ce/Sensorflow-0.0.0-alphasha.c74e46d6ce.tar.gz",
+     "https://dl.registry.platformio.org/download/sensorflow/library/Sensorflow/0.0.0-alpha%2Bsha.c74e46d6ce/Sensorflow-0.0.0-alphasha.c74e46d6ce.tar.gz"
+    ]
+   }
+  }
+ ]
+}

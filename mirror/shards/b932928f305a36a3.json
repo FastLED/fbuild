@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-neobelerophon",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-neobelerophon/library/ChaNFSSD/0.0.0+sha.7532f4c4163c/ChaNFSSD-0.0.0+sha.7532f4c4163c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ChaNFSSD-0.0.0+sha.7532f4c4163c.tar.gz",
+    "size_bytes": 5831,
+    "sha256": "7ed0938a5fd6e3b90d62eabade42f646df59c1fd5581246fe7577ff01cd2d93a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-neobelerophon/library/ChaNFSSD/0.0.0%2Bsha.7532f4c4163c/ChaNFSSD-0.0.0%2Bsha.7532f4c4163c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-neobelerophon/library/ChaNFSSD/0.0.0%2Bsha.7532f4c4163c/ChaNFSSD-0.0.0%2Bsha.7532f4c4163c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-neobelerophon/library/ChaNFSUSB/0.0.0+sha.f0133ccac168/ChaNFSUSB-0.0.0+sha.f0133ccac168.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ChaNFSUSB-0.0.0+sha.f0133ccac168.tar.gz",
+    "size_bytes": 12411,
+    "sha256": "51619df20cda1af600f1dfd377f4c16ea7f804ac1b09af94b93a853c0826c102",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-neobelerophon/library/ChaNFSUSB/0.0.0%2Bsha.f0133ccac168/ChaNFSUSB-0.0.0%2Bsha.f0133ccac168.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-neobelerophon/library/ChaNFSUSB/0.0.0%2Bsha.f0133ccac168/ChaNFSUSB-0.0.0%2Bsha.f0133ccac168.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-neobelerophon/library/RS485/0.0.0+sha.916e1dd538ce/RS485-0.0.0+sha.916e1dd538ce.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RS485-0.0.0+sha.916e1dd538ce.tar.gz",
+    "size_bytes": 1219,
+    "sha256": "07542f947310447882cc0cc220a5b4c8e2a8b74e50200392439ff8a8854cc8af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-neobelerophon/library/RS485/0.0.0%2Bsha.916e1dd538ce/RS485-0.0.0%2Bsha.916e1dd538ce.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-neobelerophon/library/RS485/0.0.0%2Bsha.916e1dd538ce/RS485-0.0.0%2Bsha.916e1dd538ce.tar.gz"
+    ]
+   }
+  }
+ ]
+}

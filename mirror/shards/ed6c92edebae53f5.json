@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-slowness",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-slowness/library/IHM/0.0.0+sha.a9e51ac904e2/IHM-0.0.0+sha.a9e51ac904e2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IHM-0.0.0+sha.a9e51ac904e2.tar.gz",
+    "size_bytes": 5666,
+    "sha256": "ff4a03c01f5575a6acdc7718f20c239dd5e0bf46b3730b164e2e47f1b6daa105",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-slowness/library/IHM/0.0.0%2Bsha.a9e51ac904e2/IHM-0.0.0%2Bsha.a9e51ac904e2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-slowness/library/IHM/0.0.0%2Bsha.a9e51ac904e2/IHM-0.0.0%2Bsha.a9e51ac904e2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

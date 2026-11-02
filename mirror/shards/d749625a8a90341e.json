@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/geekmaks",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "geekmaks/library/LedWinker/1.0.3/LedWinker-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LedWinker-1.0.3.tar.gz",
+    "size_bytes": 7873,
+    "sha256": "b29b6f3b8f401a9361e45f2a1ea0d680fbad5c31a84b0b1c54bcf0802120aa81",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/geekmaks/library/LedWinker/1.0.3/LedWinker-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/geekmaks/library/LedWinker/1.0.3/LedWinker-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "geekmaks/library/config2eeprom/1.0.4/config2eeprom-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "config2eeprom-1.0.4.tar.gz",
+    "size_bytes": 4982,
+    "sha256": "c195628acd78f0e5b833a515b8a111fc50e572c3f1e833d365e9931973a8aafd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/geekmaks/library/config2eeprom/1.0.4/config2eeprom-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/geekmaks/library/config2eeprom/1.0.4/config2eeprom-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

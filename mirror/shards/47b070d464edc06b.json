@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/vcsfa-mars",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "vcsfa-mars/library/ThinSat%20Program%20TSLPB%20Library/0.6.0/ThinSatProgramTSLPBLibrary-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ThinSatProgramTSLPBLibrary-0.6.0.tar.gz",
+    "size_bytes": 18603,
+    "sha256": "246d33ef2ea150cddbe7089563c639ec8104cd9f75dbacf754a7b889ba231f8a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vcsfa-mars/library/ThinSat%2520Program%2520TSLPB%2520Library/0.6.0/ThinSatProgramTSLPBLibrary-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vcsfa-mars/library/ThinSat%20Program%20TSLPB%20Library/0.6.0/ThinSatProgramTSLPBLibrary-0.6.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

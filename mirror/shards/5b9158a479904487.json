@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/robertndrei",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "robertndrei/library/scd30_modbus/1.0.0/scd30_modbus-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "scd30_modbus-1.0.0.tar.gz",
+    "size_bytes": 6298,
+    "sha256": "bbc04e543513c00c915717696328d989fe11cdc5b923f9ae77c1dea056ebf4df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robertndrei/library/scd30_modbus/1.0.0/scd30_modbus-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/robertndrei/library/scd30_modbus/1.0.0/scd30_modbus-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

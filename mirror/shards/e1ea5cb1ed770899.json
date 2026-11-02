@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-akode",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-akode/library/MPU6050%20%2B%20MPU9150/0.0.0+sha.f8bfb37b2e1f/MPU6050+MPU9150-0.0.0+sha.f8bfb37b2e1f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPU6050+MPU9150-0.0.0+sha.f8bfb37b2e1f.tar.gz",
+    "size_bytes": 34079,
+    "sha256": "ef4a334ce0537540736b2112fd8e85377cc0a580f16e28172731b35d23b5850a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-akode/library/MPU6050%2520%252B%2520MPU9150/0.0.0%2Bsha.f8bfb37b2e1f/MPU6050%2BMPU9150-0.0.0%2Bsha.f8bfb37b2e1f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-akode/library/MPU6050%20%2B%20MPU9150/0.0.0%2Bsha.f8bfb37b2e1f/MPU6050%2BMPU9150-0.0.0%2Bsha.f8bfb37b2e1f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

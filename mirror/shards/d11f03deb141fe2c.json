@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jaerts",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jaerts/library/I2CSlaveX/0.0.0+sha.b7e586fffbf2/I2CSlaveX-0.0.0+sha.b7e586fffbf2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2CSlaveX-0.0.0+sha.b7e586fffbf2.tar.gz",
+    "size_bytes": 2629,
+    "sha256": "3841ae6914d1a97dc8879cd30a76e2dd06c33f1d27a3304e71c44e38621c08c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jaerts/library/I2CSlaveX/0.0.0%2Bsha.b7e586fffbf2/I2CSlaveX-0.0.0%2Bsha.b7e586fffbf2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jaerts/library/I2CSlaveX/0.0.0%2Bsha.b7e586fffbf2/I2CSlaveX-0.0.0%2Bsha.b7e586fffbf2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jaerts/library/I2CX/0.0.0+sha.9d9fc94594e3/I2CX-0.0.0+sha.9d9fc94594e3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2CX-0.0.0+sha.9d9fc94594e3.tar.gz",
+    "size_bytes": 2651,
+    "sha256": "9cda3ee36d2b39140091e78967b6013ad1bc94b1bb700dbb18abd8dfffb6992e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jaerts/library/I2CX/0.0.0%2Bsha.9d9fc94594e3/I2CX-0.0.0%2Bsha.9d9fc94594e3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jaerts/library/I2CX/0.0.0%2Bsha.9d9fc94594e3/I2CX-0.0.0%2Bsha.9d9fc94594e3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

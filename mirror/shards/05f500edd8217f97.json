@@ -1,0 +1,152 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nikki-build",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nikki-build/library/nikki.esp32/1.0.2/nikki.esp32-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nikki.esp32-1.0.2.tar.gz",
+    "size_bytes": 5174,
+    "sha256": "f33943a2c8f940c8583fa149e4fa22a0511f7f80cc5068b562d5c3999413c424",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nikki-build/library/nikki.esp32/1.0.2/nikki.esp32-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nikki-build/library/nikki.esp32/1.0.2/nikki.esp32-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nikki-build/library/nikki.esp32/1.0.4/nikki.esp32-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nikki.esp32-1.0.4.tar.gz",
+    "size_bytes": 5585,
+    "sha256": "c85e029ba16f6fe9e1a577fc42c3932046dfd55ffa0732b54b8dd74cfd00f12b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nikki-build/library/nikki.esp32/1.0.4/nikki.esp32-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/nikki-build/library/nikki.esp32/1.0.4/nikki.esp32-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nikki-build/library/nikki.esp32/1.0.5/nikki.esp32-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nikki.esp32-1.0.5.tar.gz",
+    "size_bytes": 5564,
+    "sha256": "527a49df774842aec8f2f6f0b59df36a70bf3fe64bd4cc7dc7e6c426fd2bade1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nikki-build/library/nikki.esp32/1.0.5/nikki.esp32-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/nikki-build/library/nikki.esp32/1.0.5/nikki.esp32-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nikki-build/library/nikki.esp32/1.2.0/nikki.esp32-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nikki.esp32-1.2.0.tar.gz",
+    "size_bytes": 5732,
+    "sha256": "be121130adf2af86bf80485c4c726bda77d412413f65ba3ee62ebec2337daaa2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nikki-build/library/nikki.esp32/1.2.0/nikki.esp32-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nikki-build/library/nikki.esp32/1.2.0/nikki.esp32-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nikki-build/library/nikki.esp32/1.2.1/nikki.esp32-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nikki.esp32-1.2.1.tar.gz",
+    "size_bytes": 5749,
+    "sha256": "000b5e68fed8e7c20cb8cf09727a765ea3fc802b200b242f436c7deff589d824",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nikki-build/library/nikki.esp32/1.2.1/nikki.esp32-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nikki-build/library/nikki.esp32/1.2.1/nikki.esp32-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nikki-build/library/nikki.esp32/1.2.3/nikki.esp32-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nikki.esp32-1.2.3.tar.gz",
+    "size_bytes": 5778,
+    "sha256": "83558d29e2f7dd1f89bb75745e46a577127397312482c5e8e188a07c2fc7d47e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nikki-build/library/nikki.esp32/1.2.3/nikki.esp32-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/nikki-build/library/nikki.esp32/1.2.3/nikki.esp32-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nikki-build/library/nikki.esp8266/1.0.0/nikki.esp8266-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nikki.esp8266-1.0.0.tar.gz",
+    "size_bytes": 5592,
+    "sha256": "9cb71dcf7f6664666c35c307a33849a8a618a5ac514c3a4d028271945bf68cce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nikki-build/library/nikki.esp8266/1.0.0/nikki.esp8266-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nikki-build/library/nikki.esp8266/1.0.0/nikki.esp8266-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nikki-build/library/nikki.esp8266/1.0.1/nikki.esp8266-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nikki.esp8266-1.0.1.tar.gz",
+    "size_bytes": 5778,
+    "sha256": "8390256cb5f35b99cb033fbfb9bcd32c456132f55fdae6e00b216a1dcdaaba01",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nikki-build/library/nikki.esp8266/1.0.1/nikki.esp8266-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nikki-build/library/nikki.esp8266/1.0.1/nikki.esp8266-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nikki-build/library/nikki.unoR4/1.0.1/nikki.unoR4-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nikki.unoR4-1.0.1.tar.gz",
+    "size_bytes": 5833,
+    "sha256": "57eeabbb84df4557f14a269c2a8e3558c733544957bafb63c99ff78d72cbce60",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nikki-build/library/nikki.unoR4/1.0.1/nikki.unoR4-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nikki-build/library/nikki.unoR4/1.0.1/nikki.unoR4-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nikki-build/library/nikki.unoR4/1.1.0/nikki.unoR4-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nikki.unoR4-1.1.0.tar.gz",
+    "size_bytes": 6019,
+    "sha256": "b9216f56fb77fb36d0fa8f81b26955c1bc03a60bb543610ea1558362284ff7b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nikki-build/library/nikki.unoR4/1.1.0/nikki.unoR4-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nikki-build/library/nikki.unoR4/1.1.0/nikki.unoR4-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nikki-build/library/nikki.unoR4/1.1.1/nikki.unoR4-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nikki.unoR4-1.1.1.tar.gz",
+    "size_bytes": 6043,
+    "sha256": "744934a39106828fff3cdd551658a4991fedcca324b11c4a13c2bce72605cb49",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nikki-build/library/nikki.unoR4/1.1.1/nikki.unoR4-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nikki-build/library/nikki.unoR4/1.1.1/nikki.unoR4-1.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

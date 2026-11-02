@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lorandil",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lorandil/library/uCompression/0.1.1/uCompression-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uCompression-0.1.1.tar.gz",
+    "size_bytes": 6685,
+    "sha256": "540c5c4bd8f987b3df80a265799858b7f43c7491139359df367da9c34f1c8fc4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lorandil/library/uCompression/0.1.1/uCompression-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lorandil/library/uCompression/0.1.1/uCompression-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

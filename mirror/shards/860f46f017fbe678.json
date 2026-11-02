@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-davervw",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-davervw/library/BibleIO/0.0.0+sha.1f3d069211cd/BibleIO-0.0.0+sha.1f3d069211cd.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BibleIO-0.0.0+sha.1f3d069211cd.tar.gz",
+    "size_bytes": 5256,
+    "sha256": "a5e162c6cd97e38abd4f4f87119f97bab8d6213cf1177c82972521fc905f825b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-davervw/library/BibleIO/0.0.0%2Bsha.1f3d069211cd/BibleIO-0.0.0%2Bsha.1f3d069211cd.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-davervw/library/BibleIO/0.0.0%2Bsha.1f3d069211cd/BibleIO-0.0.0%2Bsha.1f3d069211cd.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-davervw/library/SDHCFileSystem/0.0.0+sha.248d03543f5f/SDHCFileSystem-0.0.0+sha.248d03543f5f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SDHCFileSystem-0.0.0+sha.248d03543f5f.tar.gz",
+    "size_bytes": 6071,
+    "sha256": "4cef2e476212b6e664348ac4bb280c49d3b84ea526dcb8d1a122f14798c5858e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-davervw/library/SDHCFileSystem/0.0.0%2Bsha.248d03543f5f/SDHCFileSystem-0.0.0%2Bsha.248d03543f5f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-davervw/library/SDHCFileSystem/0.0.0%2Bsha.248d03543f5f/SDHCFileSystem-0.0.0%2Bsha.248d03543f5f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-davervw/library/SPIDebug/0.0.0+sha.0f32ac84dca5/SPIDebug-0.0.0+sha.0f32ac84dca5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SPIDebug-0.0.0+sha.0f32ac84dca5.tar.gz",
+    "size_bytes": 1536,
+    "sha256": "083cf8558e262b38be22daaef3c9c962cc37de05852ae9a38466bcbfff206b7b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-davervw/library/SPIDebug/0.0.0%2Bsha.0f32ac84dca5/SPIDebug-0.0.0%2Bsha.0f32ac84dca5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-davervw/library/SPIDebug/0.0.0%2Bsha.0f32ac84dca5/SPIDebug-0.0.0%2Bsha.0f32ac84dca5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-davervw/library/SST25VF064C/0.0.0+sha.33d8a5ea4a80/SST25VF064C-0.0.0+sha.33d8a5ea4a80.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SST25VF064C-0.0.0+sha.33d8a5ea4a80.tar.gz",
+    "size_bytes": 3927,
+    "sha256": "69ef53dbb38c69c77b8939c587166ebac9e14d925d6d9d49e7028cf32a611e6c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-davervw/library/SST25VF064C/0.0.0%2Bsha.33d8a5ea4a80/SST25VF064C-0.0.0%2Bsha.33d8a5ea4a80.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-davervw/library/SST25VF064C/0.0.0%2Bsha.33d8a5ea4a80/SST25VF064C-0.0.0%2Bsha.33d8a5ea4a80.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-davervw/library/SWSPI/0.0.0+sha.6a500a08c7fd/SWSPI-0.0.0+sha.6a500a08c7fd.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SWSPI-0.0.0+sha.6a500a08c7fd.tar.gz",
+    "size_bytes": 2578,
+    "sha256": "6261788354a4ddd8b80f559784f6689c790b664b5c4c6cc3b2a882f822a2e3a0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-davervw/library/SWSPI/0.0.0%2Bsha.6a500a08c7fd/SWSPI-0.0.0%2Bsha.6a500a08c7fd.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-davervw/library/SWSPI/0.0.0%2Bsha.6a500a08c7fd/SWSPI-0.0.0%2Bsha.6a500a08c7fd.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-davervw/library/TextLCD_NOKIA_5110/0.0.0+sha.8a3f38cbadd5/TextLCD_NOKIA_5110-0.0.0+sha.8a3f38cbadd5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TextLCD_NOKIA_5110-0.0.0+sha.8a3f38cbadd5.tar.gz",
+    "size_bytes": 2664,
+    "sha256": "1b210deeb82aea78c7713c3a147c36e38dfb5af4258dd42ab5056b8f6f000079",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-davervw/library/TextLCD_NOKIA_5110/0.0.0%2Bsha.8a3f38cbadd5/TextLCD_NOKIA_5110-0.0.0%2Bsha.8a3f38cbadd5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-davervw/library/TextLCD_NOKIA_5110/0.0.0%2Bsha.8a3f38cbadd5/TextLCD_NOKIA_5110-0.0.0%2Bsha.8a3f38cbadd5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-davervw/library/USBHOST/0.0.0+sha.9dc1cb9d5e12/USBHOST-0.0.0+sha.9dc1cb9d5e12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "USBHOST-0.0.0+sha.9dc1cb9d5e12.tar.gz",
+    "size_bytes": 223031,
+    "sha256": "c4c9617522e75406a588f714d838be58a48d000b4b0207602f7d903c39dd4a38",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-davervw/library/USBHOST/0.0.0%2Bsha.9dc1cb9d5e12/USBHOST-0.0.0%2Bsha.9dc1cb9d5e12.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-davervw/library/USBHOST/0.0.0%2Bsha.9dc1cb9d5e12/USBHOST-0.0.0%2Bsha.9dc1cb9d5e12.tar.gz"
+    ]
+   }
+  }
+ ]
+}

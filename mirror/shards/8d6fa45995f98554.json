@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ug-cp",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ug-cp/library/precise_sntp/0.2.5/precise_sntp-0.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "precise_sntp-0.2.5.tar.gz",
+    "size_bytes": 11939,
+    "sha256": "a1213cb20e8480f9a0c40d5bb1f5325442262d1d20ab2be991326ab9503a2fd9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ug-cp/library/precise_sntp/0.2.5/precise_sntp-0.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/ug-cp/library/precise_sntp/0.2.5/precise_sntp-0.2.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

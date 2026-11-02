@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/krookikk",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "krookikk/library/my_STL/1.0.4/my_STL-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "my_STL-1.0.4.tar.gz",
+    "size_bytes": 81622,
+    "sha256": "fab3ebe891eb434beeaa31b557b97dca7dee02dbbb48de8ea4dc22360129b7a1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/krookikk/library/my_STL/1.0.4/my_STL-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/krookikk/library/my_STL/1.0.4/my_STL-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

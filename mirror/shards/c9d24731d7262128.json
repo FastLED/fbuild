@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/maxpromer",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "maxpromer/library/AX-Mini/1.0.0/AX-Mini-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AX-Mini-1.0.0.tar.gz",
+    "size_bytes": 4364,
+    "sha256": "8d7274e4ecf4c4769e36cea02c507e7d4e892e542a3de7ed47f8b57c62861620",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maxpromer/library/AX-Mini/1.0.0/AX-Mini-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/maxpromer/library/AX-Mini/1.0.0/AX-Mini-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "maxpromer/library/Hanuman/1.4.0/Hanuman-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Hanuman-1.4.0.tar.gz",
+    "size_bytes": 273881,
+    "sha256": "49712a8b68edd932b1a72dffdb2d50c296d20add3250a31a9eb301ae1ecf10eb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maxpromer/library/Hanuman/1.4.0/Hanuman-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/maxpromer/library/Hanuman/1.4.0/Hanuman-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "maxpromer/library/PCA9557-arduino/1.0.0/PCA9557-arduino-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCA9557-arduino-1.0.0.tar.gz",
+    "size_bytes": 2371,
+    "sha256": "77656afdc8f7b8848b9d4640ae6761533066f40d19dce680743bcb1037fd6c4d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maxpromer/library/PCA9557-arduino/1.0.0/PCA9557-arduino-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/maxpromer/library/PCA9557-arduino/1.0.0/PCA9557-arduino-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

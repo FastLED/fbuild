@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-mehuman",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-mehuman/library/dcss500/0.0.0+sha.189698185886/dcss500-0.0.0+sha.189698185886.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "dcss500-0.0.0+sha.189698185886.tar.gz",
+    "size_bytes": 1511,
+    "sha256": "97eae7beb9b58d3b83537a4d4e7d3f691841cb52a635c09f6ba584e859072f6f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mehuman/library/dcss500/0.0.0%2Bsha.189698185886/dcss500-0.0.0%2Bsha.189698185886.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mehuman/library/dcss500/0.0.0%2Bsha.189698185886/dcss500-0.0.0%2Bsha.189698185886.tar.gz"
+    ]
+   }
+  }
+ ]
+}

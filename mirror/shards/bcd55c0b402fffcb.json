@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gitlab-sensors-library",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gitlab-sensors-library/library/MLX90614_VEGA/1.0.0/MLX90614_VEGA-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MLX90614_VEGA-1.0.0.tar.gz",
+    "size_bytes": 2110,
+    "sha256": "88b0239172bae19e8420791247bc4884113aee6b21a9984484e5fd8edefc533a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gitlab-sensors-library/library/MLX90614_VEGA/1.0.0/MLX90614_VEGA-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gitlab-sensors-library/library/MLX90614_VEGA/1.0.0/MLX90614_VEGA-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

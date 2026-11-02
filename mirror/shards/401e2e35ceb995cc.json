@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nickthelegend",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nickthelegend/library/AlgoIoT/1.0.0/AlgoIoT-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlgoIoT-1.0.0.tar.gz",
+    "size_bytes": 153397,
+    "sha256": "19259f3f9f53205ff8480489e1b84fa026bc1c09db1977b5b6d61d2b00d59e27",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nickthelegend/library/AlgoIoT/1.0.0/AlgoIoT-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nickthelegend/library/AlgoIoT/1.0.0/AlgoIoT-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

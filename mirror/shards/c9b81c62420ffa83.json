@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-15062200",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-15062200/library/SRF05_fix/0.0.0+sha.f7420569d67d/SRF05_fix-0.0.0+sha.f7420569d67d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SRF05_fix-0.0.0+sha.f7420569d67d.tar.gz",
+    "size_bytes": 2361,
+    "sha256": "5a6ad6cd104a2f2a4d1b94552bc04b4f87fe192340a472a90bf9ce4e5271fdfb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-15062200/library/SRF05_fix/0.0.0%2Bsha.f7420569d67d/SRF05_fix-0.0.0%2Bsha.f7420569d67d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-15062200/library/SRF05_fix/0.0.0%2Bsha.f7420569d67d/SRF05_fix-0.0.0%2Bsha.f7420569d67d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

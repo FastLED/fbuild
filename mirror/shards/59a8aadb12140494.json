@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/esdeveloperbr",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "esdeveloperbr/library/AnalogKeyboard/0.3.6/AnalogKeyboard-0.3.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AnalogKeyboard-0.3.6.tar.gz",
+    "size_bytes": 3894,
+    "sha256": "1be770d7bb276989a73de708473beb1903b82c685663ac7ba7d6c639c94da194",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esdeveloperbr/library/AnalogKeyboard/0.3.6/AnalogKeyboard-0.3.6.tar.gz",
+     "https://dl.registry.platformio.org/download/esdeveloperbr/library/AnalogKeyboard/0.3.6/AnalogKeyboard-0.3.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esdeveloperbr/library/ES32Lab/0.12.10/ES32Lab-0.12.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ES32Lab-0.12.10.tar.gz",
+    "size_bytes": 274192,
+    "sha256": "eb2a6a80884749d0376bcd5aed0bbfeefdde1d2a749ed90439d65b8599796616",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esdeveloperbr/library/ES32Lab/0.12.10/ES32Lab-0.12.10.tar.gz",
+     "https://dl.registry.platformio.org/download/esdeveloperbr/library/ES32Lab/0.12.10/ES32Lab-0.12.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esdeveloperbr/library/ES32Lab/0.14.1/ES32Lab-0.14.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ES32Lab-0.14.1.tar.gz",
+    "size_bytes": 308695,
+    "sha256": "ea9881cd93392b1e1f5840eb1e1e199a6b86a4274a554af3ec227fdd25076616",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esdeveloperbr/library/ES32Lab/0.14.1/ES32Lab-0.14.1.tar.gz",
+     "https://dl.registry.platformio.org/download/esdeveloperbr/library/ES32Lab/0.14.1/ES32Lab-0.14.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esdeveloperbr/library/ES32Lab/0.15.2/ES32Lab-0.15.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ES32Lab-0.15.2.tar.gz",
+    "size_bytes": 344349,
+    "sha256": "eee163793b1329b1f00af783411976601cb226b54fb98f398d490046a14e5f96",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esdeveloperbr/library/ES32Lab/0.15.2/ES32Lab-0.15.2.tar.gz",
+     "https://dl.registry.platformio.org/download/esdeveloperbr/library/ES32Lab/0.15.2/ES32Lab-0.15.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esdeveloperbr/library/ES32Lab/0.15.3/ES32Lab-0.15.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ES32Lab-0.15.3.tar.gz",
+    "size_bytes": 361578,
+    "sha256": "313e04a600de840a4bf5a0349f9e86a8837c78cfe074733a4842f108fd25c4cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esdeveloperbr/library/ES32Lab/0.15.3/ES32Lab-0.15.3.tar.gz",
+     "https://dl.registry.platformio.org/download/esdeveloperbr/library/ES32Lab/0.15.3/ES32Lab-0.15.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esdeveloperbr/library/ES32Lab/0.15.4/ES32Lab-0.15.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ES32Lab-0.15.4.tar.gz",
+    "size_bytes": 389635,
+    "sha256": "3abafe3a801d0d904abcad4803f63752959e78147cb2295570be622bbb754978",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esdeveloperbr/library/ES32Lab/0.15.4/ES32Lab-0.15.4.tar.gz",
+     "https://dl.registry.platformio.org/download/esdeveloperbr/library/ES32Lab/0.15.4/ES32Lab-0.15.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esdeveloperbr/library/TFT_eSPI_ES32Lab/2.4.80/TFT_eSPI_ES32Lab-2.4.80.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFT_eSPI_ES32Lab-2.4.80.tar.gz",
+    "size_bytes": 4471668,
+    "sha256": "b4ede0af9b0a648f07a5e5dd4468186755687ba54cc583b33a0a8e00f9aad36d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esdeveloperbr/library/TFT_eSPI_ES32Lab/2.4.80/TFT_eSPI_ES32Lab-2.4.80.tar.gz",
+     "https://dl.registry.platformio.org/download/esdeveloperbr/library/TFT_eSPI_ES32Lab/2.4.80/TFT_eSPI_ES32Lab-2.4.80.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esdeveloperbr/library/TimeInterval/0.3.7/TimeInterval-0.3.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TimeInterval-0.3.7.tar.gz",
+    "size_bytes": 4629,
+    "sha256": "b32b4dd1b399fedf20192ef25df75a2d1688314b07484e36f30257a05bf33965",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esdeveloperbr/library/TimeInterval/0.3.7/TimeInterval-0.3.7.tar.gz",
+     "https://dl.registry.platformio.org/download/esdeveloperbr/library/TimeInterval/0.3.7/TimeInterval-0.3.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

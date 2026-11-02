@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/siddheshnan",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "siddheshnan/library/ThingESP/1.3.0/ThingESP-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ThingESP-1.3.0.tar.gz",
+    "size_bytes": 64163,
+    "sha256": "4a17b7e8ec71ff5c570cd45acd90d221abf3e107059abdfb242e1c2e49ba66a1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/siddheshnan/library/ThingESP/1.3.0/ThingESP-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/siddheshnan/library/ThingESP/1.3.0/ThingESP-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "siddheshnan/library/ThingsIoT/1.2.0/ThingsIoT-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ThingsIoT-1.2.0.tar.gz",
+    "size_bytes": 61255,
+    "sha256": "27fa829e2a5ddc20b80f9e3a65a7ad36af147edf37ca14ecec492bc0821644b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/siddheshnan/library/ThingsIoT/1.2.0/ThingsIoT-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/siddheshnan/library/ThingsIoT/1.2.0/ThingsIoT-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

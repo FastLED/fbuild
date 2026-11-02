@@ -1,0 +1,191 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/xewe-labs",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "xewe-labs/library/XeWeCli/0.1.0/XeWeCli-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XeWeCli-0.1.0.tar.gz",
+    "size_bytes": 16673,
+    "sha256": "bd81a695805b93285e0e1ce3572427c09bb6913e17452bbe5bb399c18ca0ac4f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xewe-labs/library/XeWeCli/0.1.0/XeWeCli-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xewe-labs/library/XeWeCli/0.1.0/XeWeCli-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xewe-labs/library/XeWeCli/1.0.0/XeWeCli-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XeWeCli-1.0.0.tar.gz",
+    "size_bytes": 23306,
+    "sha256": "e278982a46d3da247781318e7dfb8014ff93ef396314eac388f411d861fb9d4a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xewe-labs/library/XeWeCli/1.0.0/XeWeCli-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xewe-labs/library/XeWeCli/1.0.0/XeWeCli-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xewe-labs/library/XeWeCore/0.1.0/XeWeOS-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XeWeOS-0.1.0.tar.gz",
+    "size_bytes": 21699,
+    "sha256": "11092d4a85c90afb192e6cb4f05b6c43da2d021044766877fa0ed89fff4b28a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xewe-labs/library/XeWeCore/0.1.0/XeWeOS-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xewe-labs/library/XeWeCore/0.1.0/XeWeOS-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xewe-labs/library/XeWeCore/2.0.1/XeWeCore-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XeWeCore-2.0.1.tar.gz",
+    "size_bytes": 107968,
+    "sha256": "baf63e6a847e8faffbd448dd991bb11daba3f057f78daf55c58cf4f098053920",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xewe-labs/library/XeWeCore/2.0.1/XeWeCore-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/xewe-labs/library/XeWeCore/2.0.1/XeWeCore-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xewe-labs/library/XeWeCore/2.1.0/XeWeCore-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XeWeCore-2.1.0.tar.gz",
+    "size_bytes": 134815,
+    "sha256": "f553973a4cbe0a20e5bb55a95a022120a2038c09e811b0614c9e6c5a6cda3262",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xewe-labs/library/XeWeCore/2.1.0/XeWeCore-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xewe-labs/library/XeWeCore/2.1.0/XeWeCore-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xewe-labs/library/XeWeCore/3.0.0/XeWeCore-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XeWeCore-3.0.0.tar.gz",
+    "size_bytes": 134422,
+    "sha256": "3df7422ba2d47e2f79e5916b7f9cbc3b1be4015929270824d6a7155da4a3f4b6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xewe-labs/library/XeWeCore/3.0.0/XeWeCore-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xewe-labs/library/XeWeCore/3.0.0/XeWeCore-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xewe-labs/library/XeWeCore/3.1.0/XeWeCore-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XeWeCore-3.1.0.tar.gz",
+    "size_bytes": 143939,
+    "sha256": "b9f1ccd87de27caf81ffefbb9cba399b5249aa18d2cf81e140c2c5e48df6f151",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xewe-labs/library/XeWeCore/3.1.0/XeWeCore-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xewe-labs/library/XeWeCore/3.1.0/XeWeCore-3.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xewe-labs/library/XeWeCore/3.1.2/XeWeCore-3.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XeWeCore-3.1.2.tar.gz",
+    "size_bytes": 144540,
+    "sha256": "0e2fb1a0ef84b45b079bb5f38e88cd787f457411112e7830a1ae47ac5986e49c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xewe-labs/library/XeWeCore/3.1.2/XeWeCore-3.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/xewe-labs/library/XeWeCore/3.1.2/XeWeCore-3.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xewe-labs/library/XeWeNvs/0.1.0/XeWeNvs-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XeWeNvs-0.1.0.tar.gz",
+    "size_bytes": 19409,
+    "sha256": "4f6bb9f39d0138146744dbcbc5724275f07bd5468a76a595021f6e836ea21f4d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xewe-labs/library/XeWeNvs/0.1.0/XeWeNvs-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xewe-labs/library/XeWeNvs/0.1.0/XeWeNvs-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xewe-labs/library/XeWeNvs/1.0.0/XeWeNvs-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XeWeNvs-1.0.0.tar.gz",
+    "size_bytes": 27968,
+    "sha256": "4a8b4c33ab38b76d746fbeeb7cd547d1c561cc6ad9322b57b4d815b71324cc0a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xewe-labs/library/XeWeNvs/1.0.0/XeWeNvs-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xewe-labs/library/XeWeNvs/1.0.0/XeWeNvs-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xewe-labs/library/XeWeSerial/0.1.0/XeWeSerial-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XeWeSerial-0.1.0.tar.gz",
+    "size_bytes": 20661,
+    "sha256": "f6cfd37b33c7adb3c26862ee7016d9f4b6becf08ca365100dce643212ef964a1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xewe-labs/library/XeWeSerial/0.1.0/XeWeSerial-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xewe-labs/library/XeWeSerial/0.1.0/XeWeSerial-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xewe-labs/library/XeWeSerial/1.0.0/XeWeSerial-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XeWeSerial-1.0.0.tar.gz",
+    "size_bytes": 29558,
+    "sha256": "41b187b8ae9b94ce86fb5013948c1dad2ee3e6ca81c345875c483447cc00c0d2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xewe-labs/library/XeWeSerial/1.0.0/XeWeSerial-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xewe-labs/library/XeWeSerial/1.0.0/XeWeSerial-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xewe-labs/library/XeWeUtils/0.1.0/XeWeUtils-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XeWeUtils-0.1.0.tar.gz",
+    "size_bytes": 20210,
+    "sha256": "4b2b686ce936be63da47d8dd27eb4bfdf59af3e56922e3cdf9a9f31deaa1a632",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xewe-labs/library/XeWeUtils/0.1.0/XeWeUtils-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xewe-labs/library/XeWeUtils/0.1.0/XeWeUtils-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xewe-labs/library/XeWeUtils/1.0.0/XeWeUtils-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XeWeUtils-1.0.0.tar.gz",
+    "size_bytes": 31002,
+    "sha256": "4942bfbd24e2d589d73cf85f53892094a1b3e9b2235fcbdad9a86338bc937664",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xewe-labs/library/XeWeUtils/1.0.0/XeWeUtils-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xewe-labs/library/XeWeUtils/1.0.0/XeWeUtils-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

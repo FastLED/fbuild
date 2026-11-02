@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-cumulocity",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-cumulocity/library/MbedSmartRest/0.0.0+sha.aba98ad2ac1b/MbedSmartRest-0.0.0+sha.aba98ad2ac1b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MbedSmartRest-0.0.0+sha.aba98ad2ac1b.tar.gz",
+    "size_bytes": 22261,
+    "sha256": "51190e8be2a92dfa81becaa305ece7c0a9c95bbb6c569100c1cebfbeceaef4d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-cumulocity/library/MbedSmartRest/0.0.0%2Bsha.aba98ad2ac1b/MbedSmartRest-0.0.0%2Bsha.aba98ad2ac1b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-cumulocity/library/MbedSmartRest/0.0.0%2Bsha.aba98ad2ac1b/MbedSmartRest-0.0.0%2Bsha.aba98ad2ac1b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

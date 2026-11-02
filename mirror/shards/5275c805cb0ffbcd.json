@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-thrillex13",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-thrillex13/library/RFDecoder/0.0.0+sha.adf26c4f20cd/RFDecoder-0.0.0+sha.adf26c4f20cd.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RFDecoder-0.0.0+sha.adf26c4f20cd.tar.gz",
+    "size_bytes": 2613,
+    "sha256": "4eaeef71010fe36da5d438279de658404ab6b9deb421385a18dce013f8b6c30a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-thrillex13/library/RFDecoder/0.0.0%2Bsha.adf26c4f20cd/RFDecoder-0.0.0%2Bsha.adf26c4f20cd.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-thrillex13/library/RFDecoder/0.0.0%2Bsha.adf26c4f20cd/RFDecoder-0.0.0%2Bsha.adf26c4f20cd.tar.gz"
+    ]
+   }
+  }
+ ]
+}

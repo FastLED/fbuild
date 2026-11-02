@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-cbuss",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-cbuss/library/Adafruit_LEDBackpack/0.0.0+sha.15a0fd378598/Adafruit_LEDBackpack-0.0.0+sha.15a0fd378598.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Adafruit_LEDBackpack-0.0.0+sha.15a0fd378598.tar.gz",
+    "size_bytes": 7560,
+    "sha256": "b51ade5cfdcb8bb21e88719a89d71cf336f1119da651213408e0647841397210",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-cbuss/library/Adafruit_LEDBackpack/0.0.0%2Bsha.15a0fd378598/Adafruit_LEDBackpack-0.0.0%2Bsha.15a0fd378598.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-cbuss/library/Adafruit_LEDBackpack/0.0.0%2Bsha.15a0fd378598/Adafruit_LEDBackpack-0.0.0%2Bsha.15a0fd378598.tar.gz"
+    ]
+   }
+  }
+ ]
+}

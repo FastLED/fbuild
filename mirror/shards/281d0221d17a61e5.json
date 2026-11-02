@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sergeskor",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sergeskor/library/SSVLongTime/1.0.0/SSVLongTime-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SSVLongTime-1.0.0.tar.gz",
+    "size_bytes": 2283,
+    "sha256": "54de28341b81dcf2c597d33a3533a3e3779548cc199a6eeeab96c0999af6509e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sergeskor/library/SSVLongTime/1.0.0/SSVLongTime-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sergeskor/library/SSVLongTime/1.0.0/SSVLongTime-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sergeskor/library/SSVNTPCoreClass/1.0.0/SSVNTPCoreClass-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SSVNTPCoreClass-1.0.0.tar.gz",
+    "size_bytes": 7467,
+    "sha256": "3b737d81daae95077122728147ebc3b10f1a1a1d1d3c7ff9a1f8bae6c1b35a59",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sergeskor/library/SSVNTPCoreClass/1.0.0/SSVNTPCoreClass-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sergeskor/library/SSVNTPCoreClass/1.0.0/SSVNTPCoreClass-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sergeskor/library/SSVQueueStackArray/1.0.0/SSVQueueStackArray-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SSVQueueStackArray-1.0.0.tar.gz",
+    "size_bytes": 8197,
+    "sha256": "0fdca2287576902ba12801dd9522b9ef5aa7768d4170f7cca35f61782322a3c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sergeskor/library/SSVQueueStackArray/1.0.0/SSVQueueStackArray-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sergeskor/library/SSVQueueStackArray/1.0.0/SSVQueueStackArray-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sergeskor/library/SSVRGBGradientCalc/1.0.3/SSVRGBGradientCalc-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SSVRGBGradientCalc-1.0.3.tar.gz",
+    "size_bytes": 4741,
+    "sha256": "d91f0e0451198e63aa31bf484a99dfddfac3ea7f42a81d7d6a6fa1632b368e97",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sergeskor/library/SSVRGBGradientCalc/1.0.3/SSVRGBGradientCalc-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/sergeskor/library/SSVRGBGradientCalc/1.0.3/SSVRGBGradientCalc-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sergeskor/library/SSVTimer/1.0.3/SSVTimer-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SSVTimer-1.0.3.tar.gz",
+    "size_bytes": 2255,
+    "sha256": "f13ddaf100043f034e478193e479807c934ce0cf52088335d0c19d992eaaa8d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sergeskor/library/SSVTimer/1.0.3/SSVTimer-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/sergeskor/library/SSVTimer/1.0.3/SSVTimer-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sergeskor/library/SSVWaitForStringInStream/1.0.0/SSVWaitForStringInStream-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SSVWaitForStringInStream-1.0.0.tar.gz",
+    "size_bytes": 2133,
+    "sha256": "8f584860a70a28d8f09bff14e5348704fbe1d6fa446c1b6db1bed8e801f22ad8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sergeskor/library/SSVWaitForStringInStream/1.0.0/SSVWaitForStringInStream-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sergeskor/library/SSVWaitForStringInStream/1.0.0/SSVWaitForStringInStream-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sergeskor/library/SSVXYMatrix/1.0.0/SSVXYMatrix-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SSVXYMatrix-1.0.0.tar.gz",
+    "size_bytes": 12580,
+    "sha256": "ee0f2e5d94a91331583537a22bcbd5ac1363e15554476d3767f40c09e2ce2c45",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sergeskor/library/SSVXYMatrix/1.0.0/SSVXYMatrix-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sergeskor/library/SSVXYMatrix/1.0.0/SSVXYMatrix-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sergeskor/library/SSVXYMatrixText/1.0.0/SSVXYMatrixText-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SSVXYMatrixText-1.0.0.tar.gz",
+    "size_bytes": 10309,
+    "sha256": "85aa85c1f324d42f34e277432fdb1ae47fde49990b98fe4792fb059a2f5b2a68",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sergeskor/library/SSVXYMatrixText/1.0.0/SSVXYMatrixText-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sergeskor/library/SSVXYMatrixText/1.0.0/SSVXYMatrixText-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

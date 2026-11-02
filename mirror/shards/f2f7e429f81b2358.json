@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-vandep01",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-vandep01/library/RgbLED/0.0.0+sha.396b3f9574ea/RgbLED-0.0.0+sha.396b3f9574ea.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RgbLED-0.0.0+sha.396b3f9574ea.tar.gz",
+    "size_bytes": 1372,
+    "sha256": "1224e9fde288a8bfafd276e9b9f1765610f6d456ea76c37a3fac190fc7bb2534",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-vandep01/library/RgbLED/0.0.0%2Bsha.396b3f9574ea/RgbLED-0.0.0%2Bsha.396b3f9574ea.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-vandep01/library/RgbLED/0.0.0%2Bsha.396b3f9574ea/RgbLED-0.0.0%2Bsha.396b3f9574ea.tar.gz"
+    ]
+   }
+  }
+ ]
+}

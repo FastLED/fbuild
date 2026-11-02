@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-hotboards",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-hotboards/library/Hotboards_SpiLcd/0.0.0+sha.e16488b64ef7/Hotboards_SpiLcd-0.0.0+sha.e16488b64ef7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Hotboards_SpiLcd-0.0.0+sha.e16488b64ef7.tar.gz",
+    "size_bytes": 4291,
+    "sha256": "51e8538d6d9e562054754125de1574772017273232de42a4043b543d84f81629",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hotboards/library/Hotboards_SpiLcd/0.0.0%2Bsha.e16488b64ef7/Hotboards_SpiLcd-0.0.0%2Bsha.e16488b64ef7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hotboards/library/Hotboards_SpiLcd/0.0.0%2Bsha.e16488b64ef7/Hotboards_SpiLcd-0.0.0%2Bsha.e16488b64ef7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hotboards/library/Hotboards_buttons/0.0.0+sha.810519ce94bf/Hotboards_buttons-0.0.0+sha.810519ce94bf.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Hotboards_buttons-0.0.0+sha.810519ce94bf.tar.gz",
+    "size_bytes": 1828,
+    "sha256": "aba3054408f597787ee016d0e4ec2aeaaa299ffc75d8a79afe5955ebb788969f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hotboards/library/Hotboards_buttons/0.0.0%2Bsha.810519ce94bf/Hotboards_buttons-0.0.0%2Bsha.810519ce94bf.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hotboards/library/Hotboards_buttons/0.0.0%2Bsha.810519ce94bf/Hotboards_buttons-0.0.0%2Bsha.810519ce94bf.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hotboards/library/Hotboards_eeprom/0.0.0+sha.38fad00cc45b/Hotboards_eeprom-0.0.0+sha.38fad00cc45b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Hotboards_eeprom-0.0.0+sha.38fad00cc45b.tar.gz",
+    "size_bytes": 2871,
+    "sha256": "0adb6545adfdff1a01085d2ef4f9556817d2fc6f7d7ab13fc01379dc85429745",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hotboards/library/Hotboards_eeprom/0.0.0%2Bsha.38fad00cc45b/Hotboards_eeprom-0.0.0%2Bsha.38fad00cc45b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hotboards/library/Hotboards_eeprom/0.0.0%2Bsha.38fad00cc45b/Hotboards_eeprom-0.0.0%2Bsha.38fad00cc45b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hotboards/library/Hotboards_keypad/0.0.0+sha.e870110f753b/Hotboards_keypad-0.0.0+sha.e870110f753b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Hotboards_keypad-0.0.0+sha.e870110f753b.tar.gz",
+    "size_bytes": 6577,
+    "sha256": "296707d3fb31487b90edcf3ad170e2630c453d82eec605c5d6ae2aaf8fb37951",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hotboards/library/Hotboards_keypad/0.0.0%2Bsha.e870110f753b/Hotboards_keypad-0.0.0%2Bsha.e870110f753b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hotboards/library/Hotboards_keypad/0.0.0%2Bsha.e870110f753b/Hotboards_keypad-0.0.0%2Bsha.e870110f753b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hotboards/library/Hotboards_leds/0.0.0+sha.ea0715867677/Hotboards_leds-0.0.0+sha.ea0715867677.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Hotboards_leds-0.0.0+sha.ea0715867677.tar.gz",
+    "size_bytes": 2661,
+    "sha256": "05d7a932cb9a598066b7189e6266e73e603596d07f17a2f9c40ab18c8da18222",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hotboards/library/Hotboards_leds/0.0.0%2Bsha.ea0715867677/Hotboards_leds-0.0.0%2Bsha.ea0715867677.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hotboards/library/Hotboards_leds/0.0.0%2Bsha.ea0715867677/Hotboards_leds-0.0.0%2Bsha.ea0715867677.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hotboards/library/Hotboards_rtcc/0.0.0+sha.0790bcaf8b8f/Hotboards_rtcc-0.0.0+sha.0790bcaf8b8f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Hotboards_rtcc-0.0.0+sha.0790bcaf8b8f.tar.gz",
+    "size_bytes": 3899,
+    "sha256": "023e177b0da5b4e34e6cf957a3ef6b86f7e12e21a99b71ebe2decf51f78beaa3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hotboards/library/Hotboards_rtcc/0.0.0%2Bsha.0790bcaf8b8f/Hotboards_rtcc-0.0.0%2Bsha.0790bcaf8b8f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hotboards/library/Hotboards_rtcc/0.0.0%2Bsha.0790bcaf8b8f/Hotboards_rtcc-0.0.0%2Bsha.0790bcaf8b8f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hotboards/library/Hotboards_temp/0.0.0+sha.f850ee1083ba/Hotboards_temp-0.0.0+sha.f850ee1083ba.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Hotboards_temp-0.0.0+sha.f850ee1083ba.tar.gz",
+    "size_bytes": 3441,
+    "sha256": "5b560558e33e2a69aa54453bf3b34f142ca69a0f58570d8b7bb1d82e5f2869f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hotboards/library/Hotboards_temp/0.0.0%2Bsha.f850ee1083ba/Hotboards_temp-0.0.0%2Bsha.f850ee1083ba.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hotboards/library/Hotboards_temp/0.0.0%2Bsha.f850ee1083ba/Hotboards_temp-0.0.0%2Bsha.f850ee1083ba.tar.gz"
+    ]
+   }
+  }
+ ]
+}

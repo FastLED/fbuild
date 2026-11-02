@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-goranirnas",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-goranirnas/library/ISL1208_fork/0.0.0+sha.00b8ead188f8/ISL1208_fork-0.0.0+sha.00b8ead188f8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ISL1208_fork-0.0.0+sha.00b8ead188f8.tar.gz",
+    "size_bytes": 6213,
+    "sha256": "3677e54f0d60ec592280b4bd606e148cdfda6e916ee21bf23056a0b4d9436283",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-goranirnas/library/ISL1208_fork/0.0.0%2Bsha.00b8ead188f8/ISL1208_fork-0.0.0%2Bsha.00b8ead188f8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-goranirnas/library/ISL1208_fork/0.0.0%2Bsha.00b8ead188f8/ISL1208_fork-0.0.0%2Bsha.00b8ead188f8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

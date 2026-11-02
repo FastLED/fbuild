@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jvpernis",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jvpernis/library/PS3%20Controller%20Host/1.1.0/PS3ControllerHost-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PS3ControllerHost-1.1.0.tar.gz",
+    "size_bytes": 21183,
+    "sha256": "72685229ef737128a95749a9f9c7ac12dc3364bc4d380ab4b8de80b5131e9a04",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jvpernis/library/PS3%2520Controller%2520Host/1.1.0/PS3ControllerHost-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jvpernis/library/PS3%20Controller%20Host/1.1.0/PS3ControllerHost-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pulsync",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pulsync/library/Pulsync/0.2.6/Pulsync-0.2.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pulsync-0.2.6.tar.gz",
+    "size_bytes": 68803,
+    "sha256": "b0436f1b206e9f18e0211c82446500fc4c8fb219ef5009320d3b62ec455f95b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pulsync/library/Pulsync/0.2.6/Pulsync-0.2.6.tar.gz",
+     "https://dl.registry.platformio.org/download/pulsync/library/Pulsync/0.2.6/Pulsync-0.2.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pulsync/library/Pulsync/0.2.8/Pulsync-0.2.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pulsync-0.2.8.tar.gz",
+    "size_bytes": 70805,
+    "sha256": "24f7216cc9500a4cbc5f9412f239f03a64ffeaa20ac2f7ba7be199f8e944aac5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pulsync/library/Pulsync/0.2.8/Pulsync-0.2.8.tar.gz",
+     "https://dl.registry.platformio.org/download/pulsync/library/Pulsync/0.2.8/Pulsync-0.2.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pulsync/library/Pulsync/0.3.1/Pulsync-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pulsync-0.3.1.tar.gz",
+    "size_bytes": 71576,
+    "sha256": "a5edda5017cd90f744f9f42c446631eea5f819699776d9893cf57fb1cffa724b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pulsync/library/Pulsync/0.3.1/Pulsync-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pulsync/library/Pulsync/0.3.1/Pulsync-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pulsync/library/Pulsync/0.3.2/Pulsync-0.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pulsync-0.3.2.tar.gz",
+    "size_bytes": 71578,
+    "sha256": "fe7a887e8702b61a383c8732a3916144df3aa517c86f62710c3a1c3878636646",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pulsync/library/Pulsync/0.3.2/Pulsync-0.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/pulsync/library/Pulsync/0.3.2/Pulsync-0.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pulsync/library/Pulsync/0.3.3/Pulsync-0.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pulsync-0.3.3.tar.gz",
+    "size_bytes": 73130,
+    "sha256": "e9a14495450bbe4b570a8a38d05837b778e94897de264eade4d4f795be66057f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pulsync/library/Pulsync/0.3.3/Pulsync-0.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/pulsync/library/Pulsync/0.3.3/Pulsync-0.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pulsync/library/Pulsync/0.3.4/Pulsync-0.3.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pulsync-0.3.4.tar.gz",
+    "size_bytes": 73328,
+    "sha256": "b510f3df3ad5274dbf5baafc067ae8a267850c34f1825ebd6847ec25ca03d416",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pulsync/library/Pulsync/0.3.4/Pulsync-0.3.4.tar.gz",
+     "https://dl.registry.platformio.org/download/pulsync/library/Pulsync/0.3.4/Pulsync-0.3.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mariuszlesniak",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mariuszlesniak/library/STM32%20HAL%20INA226/0.0.1/STM32HALINA226-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32HALINA226-0.0.1.tar.gz",
+    "size_bytes": 2806,
+    "sha256": "3a8eb279fc28357f0111ea4b159286536eca52a33c69424be319fa5b6f67e18f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mariuszlesniak/library/STM32%2520HAL%2520INA226/0.0.1/STM32HALINA226-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mariuszlesniak/library/STM32%20HAL%20INA226/0.0.1/STM32HALINA226-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mariuszlesniak/library/STM32%20HAL%20SSD1306%20OLED/0.0.1/STM32HALSSD1306OLED-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32HALSSD1306OLED-0.0.1.tar.gz",
+    "size_bytes": 11751,
+    "sha256": "0c94d91815dcda9d025d933fa3aaa3d17dc522c5d6df90f959e2e857b4106134",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mariuszlesniak/library/STM32%2520HAL%2520SSD1306%2520OLED/0.0.1/STM32HALSSD1306OLED-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mariuszlesniak/library/STM32%20HAL%20SSD1306%20OLED/0.0.1/STM32HALSSD1306OLED-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ip-tm",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ip-tm/library/IP_tm_stepmotor/1.0.6/IP_tm_stepmotor-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IP_tm_stepmotor-1.0.6.tar.gz",
+    "size_bytes": 1704,
+    "sha256": "f18a4e515129bb28b6decdcaabc7aa08d5cc4affa2cc9e58e2dcebdc0f603593",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ip-tm/library/IP_tm_stepmotor/1.0.6/IP_tm_stepmotor-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/ip-tm/library/IP_tm_stepmotor/1.0.6/IP_tm_stepmotor-1.0.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

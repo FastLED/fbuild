@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-neilh20",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-neilh20/library/RTC/0.0.0+sha.b61676bcc5c0/RTC-0.0.0+sha.b61676bcc5c0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RTC-0.0.0+sha.b61676bcc5c0.tar.gz",
+    "size_bytes": 3157,
+    "sha256": "661380fd689bd5fab82a0ae8285d2056db6cd195d03f77787c9c8a959447c10b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-neilh20/library/RTC/0.0.0%2Bsha.b61676bcc5c0/RTC-0.0.0%2Bsha.b61676bcc5c0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-neilh20/library/RTC/0.0.0%2Bsha.b61676bcc5c0/RTC-0.0.0%2Bsha.b61676bcc5c0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

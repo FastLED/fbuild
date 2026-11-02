@@ -1,0 +1,178 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-team",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-team/library/Controller/0.0.0+sha.875532e626ee/Controller-0.0.0+sha.875532e626ee.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Controller-0.0.0+sha.875532e626ee.tar.gz",
+    "size_bytes": 2318,
+    "sha256": "74bf471d452b702d00bbc8da3e3d5c8e586879ee9cc1b2db037eb418072a6d0b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-team/library/Controller/0.0.0%2Bsha.875532e626ee/Controller-0.0.0%2Bsha.875532e626ee.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-team/library/Controller/0.0.0%2Bsha.875532e626ee/Controller-0.0.0%2Bsha.875532e626ee.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-team/library/EEPROM_24FC1025_I2C/0.0.0+sha.d6cc210c71cc/EEPROM_24FC1025_I2C-0.0.0+sha.d6cc210c71cc.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EEPROM_24FC1025_I2C-0.0.0+sha.d6cc210c71cc.tar.gz",
+    "size_bytes": 1945,
+    "sha256": "118cb794066a8c125cd675361589595f6d93488999c9f33f8d88eb66ea2b12af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-team/library/EEPROM_24FC1025_I2C/0.0.0%2Bsha.d6cc210c71cc/EEPROM_24FC1025_I2C-0.0.0%2Bsha.d6cc210c71cc.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-team/library/EEPROM_24FC1025_I2C/0.0.0%2Bsha.d6cc210c71cc/EEPROM_24FC1025_I2C-0.0.0%2Bsha.d6cc210c71cc.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-team/library/ExternalTrigger/0.0.0+sha.5545caf08e9c/ExternalTrigger-0.0.0+sha.5545caf08e9c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ExternalTrigger-0.0.0+sha.5545caf08e9c.tar.gz",
+    "size_bytes": 2543,
+    "sha256": "752f47f5c7974c5c307ad90b6b52e4e40a25578650c29ad23d821992d3caea6a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-team/library/ExternalTrigger/0.0.0%2Bsha.5545caf08e9c/ExternalTrigger-0.0.0%2Bsha.5545caf08e9c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-team/library/ExternalTrigger/0.0.0%2Bsha.5545caf08e9c/ExternalTrigger-0.0.0%2Bsha.5545caf08e9c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-team/library/FEP/0.0.0+sha.2d308c99c668/FEP-0.0.0+sha.2d308c99c668.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FEP-0.0.0+sha.2d308c99c668.tar.gz",
+    "size_bytes": 3811,
+    "sha256": "1eb36bbce8da357fac8ab83ce7ce19ae444fdf9d225c766148ab49966f43f570",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-team/library/FEP/0.0.0%2Bsha.2d308c99c668/FEP-0.0.0%2Bsha.2d308c99c668.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-team/library/FEP/0.0.0%2Bsha.2d308c99c668/FEP-0.0.0%2Bsha.2d308c99c668.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-team/library/GPS_interrupt/0.0.0+sha.4b09630703c0/GPS_interrupt-0.0.0+sha.4b09630703c0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GPS_interrupt-0.0.0+sha.4b09630703c0.tar.gz",
+    "size_bytes": 8898,
+    "sha256": "1f72a92cc5484233757b773489ed5a1e3ddf1c63cc6df92268decc649c6995b4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-team/library/GPS_interrupt/0.0.0%2Bsha.4b09630703c0/GPS_interrupt-0.0.0%2Bsha.4b09630703c0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-team/library/GPS_interrupt/0.0.0%2Bsha.4b09630703c0/GPS_interrupt-0.0.0%2Bsha.4b09630703c0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-team/library/HDC1050_lib/0.0.0+sha.daaadb8bc892/HDC1050_lib-0.0.0+sha.daaadb8bc892.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HDC1050_lib-0.0.0+sha.daaadb8bc892.tar.gz",
+    "size_bytes": 2139,
+    "sha256": "393a0109e42a383bd5365670e344334d20388254fe8abce1904273a2e9601b75",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-team/library/HDC1050_lib/0.0.0%2Bsha.daaadb8bc892/HDC1050_lib-0.0.0%2Bsha.daaadb8bc892.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-team/library/HDC1050_lib/0.0.0%2Bsha.daaadb8bc892/HDC1050_lib-0.0.0%2Bsha.daaadb8bc892.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-team/library/INA226_lib/0.0.0+sha.8f467f3e5f01/INA226_lib-0.0.0+sha.8f467f3e5f01.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "INA226_lib-0.0.0+sha.8f467f3e5f01.tar.gz",
+    "size_bytes": 3192,
+    "sha256": "01f9138252a6d8280e0c1602691639ef8f615c8b4c91ec92c016ca67ee112fd6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-team/library/INA226_lib/0.0.0%2Bsha.8f467f3e5f01/INA226_lib-0.0.0%2Bsha.8f467f3e5f01.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-team/library/INA226_lib/0.0.0%2Bsha.8f467f3e5f01/INA226_lib-0.0.0%2Bsha.8f467f3e5f01.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-team/library/LPS25H/0.0.0+sha.028338208ba1/LPS25H-0.0.0+sha.028338208ba1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LPS25H-0.0.0+sha.028338208ba1.tar.gz",
+    "size_bytes": 1791,
+    "sha256": "cb18268b65e4bb64f657a921c610d33b5ea1b39ffb9a8df6cc99e88adfce1e11",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-team/library/LPS25H/0.0.0%2Bsha.028338208ba1/LPS25H-0.0.0%2Bsha.028338208ba1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-team/library/LPS25H/0.0.0%2Bsha.028338208ba1/LPS25H-0.0.0%2Bsha.028338208ba1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-team/library/LSM9DS1_ADVRO/0.0.0+sha.c2804ae02c80/LSM9DS1_ADVRO-0.0.0+sha.c2804ae02c80.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LSM9DS1_ADVRO-0.0.0+sha.c2804ae02c80.tar.gz",
+    "size_bytes": 18028,
+    "sha256": "ed7ff0152962eceb33b1f21f966bf0b015c067e71b2bad498cb50e03a0324879",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-team/library/LSM9DS1_ADVRO/0.0.0%2Bsha.c2804ae02c80/LSM9DS1_ADVRO-0.0.0%2Bsha.c2804ae02c80.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-team/library/LSM9DS1_ADVRO/0.0.0%2Bsha.c2804ae02c80/LSM9DS1_ADVRO-0.0.0%2Bsha.c2804ae02c80.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-team/library/SHT31_DIS_lib/0.0.0+sha.9a5de0485008/SHT31_DIS_lib-0.0.0+sha.9a5de0485008.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SHT31_DIS_lib-0.0.0+sha.9a5de0485008.tar.gz",
+    "size_bytes": 2169,
+    "sha256": "5d8307dede99a8d7bf5f77fb8f7a7cc60929f0fc068394adf50f855c8c995d91",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-team/library/SHT31_DIS_lib/0.0.0%2Bsha.9a5de0485008/SHT31_DIS_lib-0.0.0%2Bsha.9a5de0485008.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-team/library/SHT31_DIS_lib/0.0.0%2Bsha.9a5de0485008/SHT31_DIS_lib-0.0.0%2Bsha.9a5de0485008.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-team/library/TSL_2561_lib/0.0.0+sha.c1e82279b4bb/TSL_2561_lib-0.0.0+sha.c1e82279b4bb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TSL_2561_lib-0.0.0+sha.c1e82279b4bb.tar.gz",
+    "size_bytes": 2541,
+    "sha256": "1dc4dbe57ad330138ec739d440bfbe3733c907d3e75bbbdd15ac400293b5bb15",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-team/library/TSL_2561_lib/0.0.0%2Bsha.c1e82279b4bb/TSL_2561_lib-0.0.0%2Bsha.c1e82279b4bb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-team/library/TSL_2561_lib/0.0.0%2Bsha.c1e82279b4bb/TSL_2561_lib-0.0.0%2Bsha.c1e82279b4bb.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-team/library/XbeeApiLib/0.0.0+sha.30220fb0e20e/XbeeApiLib-0.0.0+sha.30220fb0e20e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XbeeApiLib-0.0.0+sha.30220fb0e20e.tar.gz",
+    "size_bytes": 4109,
+    "sha256": "5a1f1ac79593bf2be244be66c967eaaa6b84b3f6aaba6cf65be7126923574072",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-team/library/XbeeApiLib/0.0.0%2Bsha.30220fb0e20e/XbeeApiLib-0.0.0%2Bsha.30220fb0e20e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-team/library/XbeeApiLib/0.0.0%2Bsha.30220fb0e20e/XbeeApiLib-0.0.0%2Bsha.30220fb0e20e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-team/library/ikarashiMDC/0.0.0+sha.ea34af94e90c/ikarashiMDC-0.0.0+sha.ea34af94e90c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ikarashiMDC-0.0.0+sha.ea34af94e90c.tar.gz",
+    "size_bytes": 2074,
+    "sha256": "b97b5810588131619fb1909d6f7c8964f0b90051133361b2226c6a3806f97a10",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-team/library/ikarashiMDC/0.0.0%2Bsha.ea34af94e90c/ikarashiMDC-0.0.0%2Bsha.ea34af94e90c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-team/library/ikarashiMDC/0.0.0%2Bsha.ea34af94e90c/ikarashiMDC-0.0.0%2Bsha.ea34af94e90c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

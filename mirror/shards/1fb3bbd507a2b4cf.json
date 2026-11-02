@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rw0402",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rw0402/library/littlefs/2.9.3/littlefs-2.9.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "littlefs-2.9.3.tar.gz",
+    "size_bytes": 228600,
+    "sha256": "ee67f4e3f2f42310cb488b3239c9f4dcfea6271f8833aa18eb8f7fac00c500c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rw0402/library/littlefs/2.9.3/littlefs-2.9.3.tar.gz",
+     "https://dl.registry.platformio.org/download/rw0402/library/littlefs/2.9.3/littlefs-2.9.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

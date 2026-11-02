@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-fbdp1202",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-fbdp1202/library/mbed-events-master/0.0.0+sha.8a719b35d2c3/mbed-events-master-0.0.0+sha.8a719b35d2c3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mbed-events-master-0.0.0+sha.8a719b35d2c3.tar.gz",
+    "size_bytes": 35125,
+    "sha256": "21c3694c864cf51e423a40e864b6294bf827f2dc1ef0dcab213ead428533ef11",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-fbdp1202/library/mbed-events-master/0.0.0%2Bsha.8a719b35d2c3/mbed-events-master-0.0.0%2Bsha.8a719b35d2c3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-fbdp1202/library/mbed-events-master/0.0.0%2Bsha.8a719b35d2c3/mbed-events-master-0.0.0%2Bsha.8a719b35d2c3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

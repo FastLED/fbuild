@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/takamorirobot",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "takamorirobot/library/HIRO/1.0.1/HIRO-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HIRO-1.0.1.tar.gz",
+    "size_bytes": 8369,
+    "sha256": "bfa5edb981214ad6957f9bbce24568fbb431d1317079399d74db89353a29b790",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/takamorirobot/library/HIRO/1.0.1/HIRO-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/takamorirobot/library/HIRO/1.0.1/HIRO-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "takamorirobot/library/HIRO/1.0.2/HIRO-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HIRO-1.0.2.tar.gz",
+    "size_bytes": 10329,
+    "sha256": "e977bb941f2273677fd0e8e87115933b20a093715ca8428371370351f4eedd05",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/takamorirobot/library/HIRO/1.0.2/HIRO-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/takamorirobot/library/HIRO/1.0.2/HIRO-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ajangrahmat",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ajangrahmat/library/ArduMekaWiFi/1.0.0/ArduMekaWiFi-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduMekaWiFi-1.0.0.tar.gz",
+    "size_bytes": 1848,
+    "sha256": "a6deb2efb5f961a19a96de1c8d57fa74b23a323896a2fa536c0801803978fb19",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ajangrahmat/library/ArduMekaWiFi/1.0.0/ArduMekaWiFi-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ajangrahmat/library/ArduMekaWiFi/1.0.0/ArduMekaWiFi-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

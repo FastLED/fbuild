@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ricaun",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ricaun/library/ArduinoUniqueID/1.3.0/ArduinoUniqueID-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoUniqueID-1.3.0.tar.gz",
+    "size_bytes": 6554,
+    "sha256": "e1fdf086a87d6eebf500b6d9fee2e6fae36e82210f508cdcdb374af0dfb219f9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ricaun/library/ArduinoUniqueID/1.3.0/ArduinoUniqueID-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ricaun/library/ArduinoUniqueID/1.3.0/ArduinoUniqueID-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ricaun/library/CayenneLPPDecode/1.0.3/CayenneLPPDecode-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CayenneLPPDecode-1.0.3.tar.gz",
+    "size_bytes": 6427,
+    "sha256": "02db1e2a64d40969fb0be0ca82f8ebc17a91dfd48b10aa1193cbf28d0d3bed1c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ricaun/library/CayenneLPPDecode/1.0.3/CayenneLPPDecode-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/ricaun/library/CayenneLPPDecode/1.0.3/CayenneLPPDecode-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ricaun/library/LoRaNow/1.0.5/LoRaNow-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LoRaNow-1.0.5.tar.gz",
+    "size_bytes": 15913,
+    "sha256": "c218c4d186263001a1f107f083b7fb379d17d57387c97539fc4bb947b9141540",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ricaun/library/LoRaNow/1.0.5/LoRaNow-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/ricaun/library/LoRaNow/1.0.5/LoRaNow-1.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

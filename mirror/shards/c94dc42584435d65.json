@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/embergl-org",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "embergl-org/library/EmberGL/0.1.0/EmberGL-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmberGL-0.1.0.tar.gz",
+    "size_bytes": 1944251,
+    "sha256": "cf9b01ae245c55c2123b6b5fdc0556e0ab327796f879c8dae8cf6731094faf52",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/embergl-org/library/EmberGL/0.1.0/EmberGL-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/embergl-org/library/EmberGL/0.1.0/EmberGL-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-acafa",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-acafa/library/envio_tramas_gprs/0.0.0+sha.d0172354f941/envio_tramas_gprs-0.0.0+sha.d0172354f941.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "envio_tramas_gprs-0.0.0+sha.d0172354f941.tar.gz",
+    "size_bytes": 1029,
+    "sha256": "c7766c59a7ff16c0831f5c0ffb21fd88d5d54fba6a084c095db44fb6c46c251b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-acafa/library/envio_tramas_gprs/0.0.0%2Bsha.d0172354f941/envio_tramas_gprs-0.0.0%2Bsha.d0172354f941.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-acafa/library/envio_tramas_gprs/0.0.0%2Bsha.d0172354f941/envio_tramas_gprs-0.0.0%2Bsha.d0172354f941.tar.gz"
+    ]
+   }
+  }
+ ]
+}

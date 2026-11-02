@@ -1,0 +1,126 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/liammrs",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "liammrs/library/filtre-moyenne-glissante-liam/1.0.0/filtre-moyenne-glissante-liam-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "filtre-moyenne-glissante-liam-1.0.0.tar.gz",
+    "size_bytes": 645,
+    "sha256": "72d889f36ee33c3ef867467c974452a701714416d9bea6fc5fcba0a24f116517",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/liammrs/library/filtre-moyenne-glissante-liam/1.0.0/filtre-moyenne-glissante-liam-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/liammrs/library/filtre-moyenne-glissante-liam/1.0.0/filtre-moyenne-glissante-liam-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "liammrs/library/filtre-moyenne-glissante-liam/1.0.1/filtre-moyenne-glissante-liam-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "filtre-moyenne-glissante-liam-1.0.1.tar.gz",
+    "size_bytes": 3896,
+    "sha256": "f9a5e04a725789eb1572297d1aaf55165a0c9b960cd7c15fe3305e2c8f5a6760",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/liammrs/library/filtre-moyenne-glissante-liam/1.0.1/filtre-moyenne-glissante-liam-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/liammrs/library/filtre-moyenne-glissante-liam/1.0.1/filtre-moyenne-glissante-liam-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "liammrs/library/filtre-moyenne-glissante-liam/1.0.2/filtre-moyenne-glissante-liam-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "filtre-moyenne-glissante-liam-1.0.2.tar.gz",
+    "size_bytes": 12956,
+    "sha256": "c55aaf3f59b25f9d045ee42a09538c9ed558c5f2c933566d3cf8008049eb23ac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/liammrs/library/filtre-moyenne-glissante-liam/1.0.2/filtre-moyenne-glissante-liam-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/liammrs/library/filtre-moyenne-glissante-liam/1.0.2/filtre-moyenne-glissante-liam-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "liammrs/library/liammrs/1.0.3/liammrs-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "liammrs-1.0.3.tar.gz",
+    "size_bytes": 3045,
+    "sha256": "42a6aac80c73d0b8609ded9a92c5e004f86f94b9a43ad04f95ad155581c9d598",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/liammrs/library/liammrs/1.0.3/liammrs-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/liammrs/library/liammrs/1.0.3/liammrs-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "liammrs/library/liammrs/1.0.4/liammrs-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "liammrs-1.0.4.tar.gz",
+    "size_bytes": 10153,
+    "sha256": "1f11029c0a3b95d5f4b1a1a2d4c69428defa8f49eb0bb1958647b5d86172f9d3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/liammrs/library/liammrs/1.0.4/liammrs-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/liammrs/library/liammrs/1.0.4/liammrs-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "liammrs/library/liammrs/1.0.5/liammrs-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "liammrs-1.0.5.tar.gz",
+    "size_bytes": 10154,
+    "sha256": "6a7d2272e33a37129b31164a154bb667657535cf2facd6f529ca00c6b38bb41e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/liammrs/library/liammrs/1.0.5/liammrs-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/liammrs/library/liammrs/1.0.5/liammrs-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "liammrs/library/nom-de-ta-bibliotheque/1.0.0/nom-de-ta-bibliotheque-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nom-de-ta-bibliotheque-1.0.0.tar.gz",
+    "size_bytes": 2390,
+    "sha256": "61689dfb21438d3adb1322f797aba7f9c96c65fc194654f39c7e204219aa0fe0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/liammrs/library/nom-de-ta-bibliotheque/1.0.0/nom-de-ta-bibliotheque-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/liammrs/library/nom-de-ta-bibliotheque/1.0.0/nom-de-ta-bibliotheque-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "liammrs/library/nom-de-ta-bibliotheque/1.0.1/nom-de-ta-bibliotheque-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nom-de-ta-bibliotheque-1.0.1.tar.gz",
+    "size_bytes": 2489,
+    "sha256": "0d11112c49b43038d20c556e8c86bb08b23e27c4491da4c0b67558206494a70a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/liammrs/library/nom-de-ta-bibliotheque/1.0.1/nom-de-ta-bibliotheque-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/liammrs/library/nom-de-ta-bibliotheque/1.0.1/nom-de-ta-bibliotheque-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "liammrs/library/nom-de-ta-bibliotheque/1.0.2/nom-de-ta-bibliotheque-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nom-de-ta-bibliotheque-1.0.2.tar.gz",
+    "size_bytes": 2488,
+    "sha256": "42523f567552215a5c0f20800ed2acebb7644e577aec57aa65c7e1a441a08318",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/liammrs/library/nom-de-ta-bibliotheque/1.0.2/nom-de-ta-bibliotheque-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/liammrs/library/nom-de-ta-bibliotheque/1.0.2/nom-de-ta-bibliotheque-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/industrialpioneer",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "industrialpioneer/library/HX711_Vidimus/1.0.0/HX711_Vidimus-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HX711_Vidimus-1.0.0.tar.gz",
+    "size_bytes": 5082,
+    "sha256": "6c2f656f0761150db66d3658a9f06625ac138f3fea26024f4ba95bda954cbc57",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/industrialpioneer/library/HX711_Vidimus/1.0.0/HX711_Vidimus-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/industrialpioneer/library/HX711_Vidimus/1.0.0/HX711_Vidimus-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

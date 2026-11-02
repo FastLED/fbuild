@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/robocre8",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "robocre8/library/EIMU_I2C_Client/1.0.0/EIMU_I2C_Client-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EIMU_I2C_Client-1.0.0.tar.gz",
+    "size_bytes": 4699,
+    "sha256": "e94820c23780bcd19eb659732ee743292f061857b808ef2ff558427c6eac7301",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robocre8/library/EIMU_I2C_Client/1.0.0/EIMU_I2C_Client-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/robocre8/library/EIMU_I2C_Client/1.0.0/EIMU_I2C_Client-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robocre8/library/EIMU_I2C_Client/1.1.0/EIMU_I2C_Client-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EIMU_I2C_Client-1.1.0.tar.gz",
+    "size_bytes": 4634,
+    "sha256": "dfcef925fcdcfb207f162ed0719ec8d1535b0c51a1abb7203b062d2c11a4def6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robocre8/library/EIMU_I2C_Client/1.1.0/EIMU_I2C_Client-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/robocre8/library/EIMU_I2C_Client/1.1.0/EIMU_I2C_Client-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robocre8/library/EPMC_I2C_Client/1.0.0/EPMC_I2C_Client-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EPMC_I2C_Client-1.0.0.tar.gz",
+    "size_bytes": 4897,
+    "sha256": "cf06d4c029ae99b48b80ae02096d95efb757af52ca22b3d7e0bc3d050d955d5d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robocre8/library/EPMC_I2C_Client/1.0.0/EPMC_I2C_Client-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/robocre8/library/EPMC_I2C_Client/1.0.0/EPMC_I2C_Client-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robocre8/library/EPMC_I2C_Client/1.1.0/EPMC_I2C_Client-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EPMC_I2C_Client-1.1.0.tar.gz",
+    "size_bytes": 5600,
+    "sha256": "df0cb539e39d7e0d82fe504191ce51c7fcf88901a554049bb79de269379c925e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robocre8/library/EPMC_I2C_Client/1.1.0/EPMC_I2C_Client-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/robocre8/library/EPMC_I2C_Client/1.1.0/EPMC_I2C_Client-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

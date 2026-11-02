@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-rucheco1",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-rucheco1/library/RTC-DS1307/0.0.0+sha.5627b407e097/RTC-DS1307-0.0.0+sha.5627b407e097.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RTC-DS1307-0.0.0+sha.5627b407e097.tar.gz",
+    "size_bytes": 5108,
+    "sha256": "1ac9ca79ebe69c0f32dd8b6de51784bcdb350ec3d58364bb61ffda89b48ccce9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rucheco1/library/RTC-DS1307/0.0.0%2Bsha.5627b407e097/RTC-DS1307-0.0.0%2Bsha.5627b407e097.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rucheco1/library/RTC-DS1307/0.0.0%2Bsha.5627b407e097/RTC-DS1307-0.0.0%2Bsha.5627b407e097.tar.gz"
+    ]
+   }
+  }
+ ]
+}

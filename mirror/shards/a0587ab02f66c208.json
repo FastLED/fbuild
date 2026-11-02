@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lucas-sesti",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lucas-sesti/library/JWT_RS256/1.0.2/JWT_RS256-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JWT_RS256-1.0.2.tar.gz",
+    "size_bytes": 3540,
+    "sha256": "32fb745febfacd94aa591f6207fe69c8f8482c12207172a315edf1a1de9d0dff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lucas-sesti/library/JWT_RS256/1.0.2/JWT_RS256-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lucas-sesti/library/JWT_RS256/1.0.2/JWT_RS256-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

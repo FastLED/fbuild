@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-clownface",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-clownface/library/HC_SR04_Ultrasonic_Library/0.0.0+sha.c0f8b860f55d/HC_SR04_Ultrasonic_Library-0.0.0+sha.c0f8b860f55d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HC_SR04_Ultrasonic_Library-0.0.0+sha.c0f8b860f55d.tar.gz",
+    "size_bytes": 2157,
+    "sha256": "393e2b24e87776e041cbe63342ce736099582ed3d15484e7e8e7fe8d7d0b6c71",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-clownface/library/HC_SR04_Ultrasonic_Library/0.0.0%2Bsha.c0f8b860f55d/HC_SR04_Ultrasonic_Library-0.0.0%2Bsha.c0f8b860f55d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-clownface/library/HC_SR04_Ultrasonic_Library/0.0.0%2Bsha.c0f8b860f55d/HC_SR04_Ultrasonic_Library-0.0.0%2Bsha.c0f8b860f55d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

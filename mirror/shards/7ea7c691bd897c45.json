@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tatemazer",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tatemazer/library/AcaiaArduinoBLE/3.1.4/AcaiaArduinoBLE-3.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AcaiaArduinoBLE-3.1.4.tar.gz",
+    "size_bytes": 1095393,
+    "sha256": "d9bd5047418e885f75ab4c9f8fcbb2d287753e1d111b68a3be1f2b2023c40f3d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tatemazer/library/AcaiaArduinoBLE/3.1.4/AcaiaArduinoBLE-3.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/tatemazer/library/AcaiaArduinoBLE/3.1.4/AcaiaArduinoBLE-3.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tatemazer/library/AcaiaArduinoBLE/3.2.0/AcaiaArduinoBLE-3.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AcaiaArduinoBLE-3.2.0.tar.gz",
+    "size_bytes": 1095513,
+    "sha256": "44aeb6beca8a6f3f591e471da3880358b463ef7a7c25c4f36c8c52068efd7042",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tatemazer/library/AcaiaArduinoBLE/3.2.0/AcaiaArduinoBLE-3.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tatemazer/library/AcaiaArduinoBLE/3.2.0/AcaiaArduinoBLE-3.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tatemazer/library/AcaiaArduinoBLE/3.3.0/AcaiaArduinoBLE-3.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AcaiaArduinoBLE-3.3.0.tar.gz",
+    "size_bytes": 1095581,
+    "sha256": "85bb39be21eff7f18647ce35fd8d6d33ac8880b9dedaedb34fa45c9bafe8f2f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tatemazer/library/AcaiaArduinoBLE/3.3.0/AcaiaArduinoBLE-3.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tatemazer/library/AcaiaArduinoBLE/3.3.0/AcaiaArduinoBLE-3.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

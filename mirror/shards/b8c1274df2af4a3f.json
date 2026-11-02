@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-clemounet",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-clemounet/library/CAN/0.0.0+sha.b9201bec01bf/CAN-0.0.0+sha.b9201bec01bf.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CAN-0.0.0+sha.b9201bec01bf.tar.gz",
+    "size_bytes": 3797,
+    "sha256": "26d1120031280d6b34f035cc4f7d24916b1091097f4475191522435cd32e6d05",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-clemounet/library/CAN/0.0.0%2Bsha.b9201bec01bf/CAN-0.0.0%2Bsha.b9201bec01bf.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-clemounet/library/CAN/0.0.0%2Bsha.b9201bec01bf/CAN-0.0.0%2Bsha.b9201bec01bf.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-clemounet/library/Pyrn3GModem/0.0.0+sha.61ac95f0af72/Pyrn3GModem-0.0.0+sha.61ac95f0af72.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pyrn3GModem-0.0.0+sha.61ac95f0af72.tar.gz",
+    "size_bytes": 17179,
+    "sha256": "4bab56540d2a4d00f755b9cdf00b4ed47a46733132e933b8af385b2bed360fe6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-clemounet/library/Pyrn3GModem/0.0.0%2Bsha.61ac95f0af72/Pyrn3GModem-0.0.0%2Bsha.61ac95f0af72.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-clemounet/library/Pyrn3GModem/0.0.0%2Bsha.61ac95f0af72/Pyrn3GModem-0.0.0%2Bsha.61ac95f0af72.tar.gz"
+    ]
+   }
+  }
+ ]
+}

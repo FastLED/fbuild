@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/defproc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "defproc/library/Lewis/0.1.4/Lewis-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lewis-0.1.4.tar.gz",
+    "size_bytes": 10543,
+    "sha256": "abbc10907764b73724ab802e15361cdf82a37dd5b5f152aa6c3ba9a94cb41d2a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/defproc/library/Lewis/0.1.4/Lewis-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/defproc/library/Lewis/0.1.4/Lewis-0.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "defproc/library/somo-ii-lib/0.1.2/somo-ii-lib-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "somo-ii-lib-0.1.2.tar.gz",
+    "size_bytes": 3869,
+    "sha256": "dcf79f4f0a9dd06ae98c65df24e750364d332203ed480e849e15ef40aaa5eecd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/defproc/library/somo-ii-lib/0.1.2/somo-ii-lib-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/defproc/library/somo-ii-lib/0.1.2/somo-ii-lib-0.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

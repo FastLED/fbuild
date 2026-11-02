@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-joeatsumi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-joeatsumi/library/QMC5883L/0.0.0+sha.ba5655a87eea/QMC5883L-0.0.0+sha.ba5655a87eea.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QMC5883L-0.0.0+sha.ba5655a87eea.tar.gz",
+    "size_bytes": 2534,
+    "sha256": "8058936d8721a702b0a90156e3a52a73f41a9eba74b47f453059c088ccf9abbb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-joeatsumi/library/QMC5883L/0.0.0%2Bsha.ba5655a87eea/QMC5883L-0.0.0%2Bsha.ba5655a87eea.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-joeatsumi/library/QMC5883L/0.0.0%2Bsha.ba5655a87eea/QMC5883L-0.0.0%2Bsha.ba5655a87eea.tar.gz"
+    ]
+   }
+  }
+ ]
+}

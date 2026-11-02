@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dniklaus",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dniklaus/library/arduino-display-lcdkeypad/5.0.2/arduino-display-lcdkeypad-5.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arduino-display-lcdkeypad-5.0.2.tar.gz",
+    "size_bytes": 12261,
+    "sha256": "7cf07285bf2f1e4c32d5bcca23787695ade45ac34586878ffe6cbc7798c17332",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dniklaus/library/arduino-display-lcdkeypad/5.0.2/arduino-display-lcdkeypad-5.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dniklaus/library/arduino-display-lcdkeypad/5.0.2/arduino-display-lcdkeypad-5.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dniklaus/library/spin-timer/3.0.0/spin-timer-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "spin-timer-3.0.0.tar.gz",
+    "size_bytes": 12762,
+    "sha256": "ccbdab0fbc74aa9eedfd597a940e8426787c64c0a936a3df6ffd8c91ee300a3d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dniklaus/library/spin-timer/3.0.0/spin-timer-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dniklaus/library/spin-timer/3.0.0/spin-timer-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dniklaus/library/wiring-timer/2.9.0/wiring-timer-2.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "wiring-timer-2.9.0.tar.gz",
+    "size_bytes": 556092,
+    "sha256": "89326b69d723139ab33c4d054a7824c1a57a15e5ebcf2c9177d0cceee31890dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dniklaus/library/wiring-timer/2.9.0/wiring-timer-2.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dniklaus/library/wiring-timer/2.9.0/wiring-timer-2.9.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

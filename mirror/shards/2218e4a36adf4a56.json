@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/clavisound",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "clavisound/library/SlimLoRa/0.10.2/SlimLoRa-0.10.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SlimLoRa-0.10.2.tar.gz",
+    "size_bytes": 86107,
+    "sha256": "9f5063c8a2bd87128c09181cee1a070062458b6f219c558ca1d4893d6b652d1f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/clavisound/library/SlimLoRa/0.10.2/SlimLoRa-0.10.2.tar.gz",
+     "https://dl.registry.platformio.org/download/clavisound/library/SlimLoRa/0.10.2/SlimLoRa-0.10.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "clavisound/library/SlimLoRa/0.10.4/SlimLoRa-0.10.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SlimLoRa-0.10.4.tar.gz",
+    "size_bytes": 86170,
+    "sha256": "5ea739ed2901aa0c406d25ea8c21bed1a05e3b03e19d6ffc022fc924b6403526",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/clavisound/library/SlimLoRa/0.10.4/SlimLoRa-0.10.4.tar.gz",
+     "https://dl.registry.platformio.org/download/clavisound/library/SlimLoRa/0.10.4/SlimLoRa-0.10.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "clavisound/library/SlimLoRa/0.8.4/SlimLoRa-0.8.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SlimLoRa-0.8.4.tar.gz",
+    "size_bytes": 47311,
+    "sha256": "529b4ee6260f24c86bb46d27e77a3004a2879901f169b1f6e78aa49ccd9e86a6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/clavisound/library/SlimLoRa/0.8.4/SlimLoRa-0.8.4.tar.gz",
+     "https://dl.registry.platformio.org/download/clavisound/library/SlimLoRa/0.8.4/SlimLoRa-0.8.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "clavisound/library/SlimLoRa/0.8.6/SlimLoRa-0.8.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SlimLoRa-0.8.6.tar.gz",
+    "size_bytes": 48108,
+    "sha256": "b8a25da64824123caf61d0964cb7ea1851737a4f59d271bcf1140f9836b35e5f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/clavisound/library/SlimLoRa/0.8.6/SlimLoRa-0.8.6.tar.gz",
+     "https://dl.registry.platformio.org/download/clavisound/library/SlimLoRa/0.8.6/SlimLoRa-0.8.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "clavisound/library/SlimLoRa/0.9.0/SlimLoRa-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SlimLoRa-0.9.0.tar.gz",
+    "size_bytes": 48189,
+    "sha256": "103760bd04f2217753a803a324f64c5ba0b510d9f0517d9b53b29405ca70579e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/clavisound/library/SlimLoRa/0.9.0/SlimLoRa-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/clavisound/library/SlimLoRa/0.9.0/SlimLoRa-0.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "clavisound/library/SlimLoRa/0.9.1/SlimLoRa-0.9.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SlimLoRa-0.9.1.tar.gz",
+    "size_bytes": 50321,
+    "sha256": "e09ef04f172b01bb69af4fb9879b9660d2e890156ff3ea20b8472c4f85f12ba6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/clavisound/library/SlimLoRa/0.9.1/SlimLoRa-0.9.1.tar.gz",
+     "https://dl.registry.platformio.org/download/clavisound/library/SlimLoRa/0.9.1/SlimLoRa-0.9.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "clavisound/library/SlimLoRa/0.9.2/SlimLoRa-0.9.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SlimLoRa-0.9.2.tar.gz",
+    "size_bytes": 80086,
+    "sha256": "aedfb05f8032af2404d38cf0a9522154c1c6f02f271e38f0e1723a5d83ba0ab0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/clavisound/library/SlimLoRa/0.9.2/SlimLoRa-0.9.2.tar.gz",
+     "https://dl.registry.platformio.org/download/clavisound/library/SlimLoRa/0.9.2/SlimLoRa-0.9.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

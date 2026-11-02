@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/iq-motion-control",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "iq-motion-control/library/IQ%20Module%20Communication/1.5.0/IQModuleCommunication-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IQModuleCommunication-1.5.0.tar.gz",
+    "size_bytes": 36509,
+    "sha256": "afd52187ebd45da3b5c2d13a66109abb0777785465e9b7d751b2337bb3342eeb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iq-motion-control/library/IQ%2520Module%2520Communication/1.5.0/IQModuleCommunication-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/iq-motion-control/library/IQ%20Module%20Communication/1.5.0/IQModuleCommunication-1.5.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

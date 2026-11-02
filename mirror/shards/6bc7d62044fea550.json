@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bobillechristophe",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bobillechristophe/library/DCC-LocoAddr/5.0.0/DCC-LocoAddr-5.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DCC-LocoAddr-5.0.0.tar.gz",
+    "size_bytes": 65671,
+    "sha256": "da420df901b8a57e621b078cc06a3a13b350e328c10920e608bd7cf2580cdc80",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bobillechristophe/library/DCC-LocoAddr/5.0.0/DCC-LocoAddr-5.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bobillechristophe/library/DCC-LocoAddr/5.0.0/DCC-LocoAddr-5.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bobillechristophe/library/DCC-LocoAddr/5.0.1/DCC-LocoAddr-5.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DCC-LocoAddr-5.0.1.tar.gz",
+    "size_bytes": 64887,
+    "sha256": "9828aba81144db024030c32f05b9fdbf424dbb6f8ff7fc57658f8540d2eaca32",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bobillechristophe/library/DCC-LocoAddr/5.0.1/DCC-LocoAddr-5.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bobillechristophe/library/DCC-LocoAddr/5.0.1/DCC-LocoAddr-5.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bobillechristophe/library/Railuino/0.14.0/Railuino-0.14.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Railuino-0.14.0.tar.gz",
+    "size_bytes": 83740,
+    "sha256": "023b39f1d0c6db9e1972dc3576c9a0397e1fdcdc323335c3010b2950b69f5a74",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bobillechristophe/library/Railuino/0.14.0/Railuino-0.14.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bobillechristophe/library/Railuino/0.14.0/Railuino-0.14.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bobillechristophe/library/Railuino/0.14.1/Railuino-0.14.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Railuino-0.14.1.tar.gz",
+    "size_bytes": 94044,
+    "sha256": "9dbc88bf85b2233e6e24d9da7c7a59d7b8fd7e2da2db94043dc9435942389abf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bobillechristophe/library/Railuino/0.14.1/Railuino-0.14.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bobillechristophe/library/Railuino/0.14.1/Railuino-0.14.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

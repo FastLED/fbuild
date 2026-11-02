@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lsatan",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lsatan/library/SmartRC-CC1101-Driver-Lib/2.5.7/SmartRC-CC1101-Driver-Lib-2.5.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartRC-CC1101-Driver-Lib-2.5.7.tar.gz",
+    "size_bytes": 32383,
+    "sha256": "452dda880dab073e7707f8c095f0d0de77d54b605feaf25e65da5c20325dd5ea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lsatan/library/SmartRC-CC1101-Driver-Lib/2.5.7/SmartRC-CC1101-Driver-Lib-2.5.7.tar.gz",
+     "https://dl.registry.platformio.org/download/lsatan/library/SmartRC-CC1101-Driver-Lib/2.5.7/SmartRC-CC1101-Driver-Lib-2.5.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lsatan/library/SmartRC-CC1101-Driver-Lib/3.0.0/SmartRC-CC1101-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartRC-CC1101-3.0.0.tar.gz",
+    "size_bytes": 28178,
+    "sha256": "25a343f90a5648c80f4bd4278c8c6114d2c915c8127ba6ee887f601fcd938d97",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lsatan/library/SmartRC-CC1101-Driver-Lib/3.0.0/SmartRC-CC1101-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lsatan/library/SmartRC-CC1101-Driver-Lib/3.0.0/SmartRC-CC1101-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lsatan/library/SmartRC-CC1101-Driver-Lib/3.0.1/SmartRC-CC1101-Driver-Lib-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartRC-CC1101-Driver-Lib-3.0.1.tar.gz",
+    "size_bytes": 28182,
+    "sha256": "a46e67c1352c35c65215113126eddda26222c1c586a21e604051bf08317e68df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lsatan/library/SmartRC-CC1101-Driver-Lib/3.0.1/SmartRC-CC1101-Driver-Lib-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lsatan/library/SmartRC-CC1101-Driver-Lib/3.0.1/SmartRC-CC1101-Driver-Lib-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lsatan/library/SmartRC-CC1101-Driver-Lib/3.0.2/SmartRC-CC1101-Driver-Lib-3.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartRC-CC1101-Driver-Lib-3.0.2.tar.gz",
+    "size_bytes": 28363,
+    "sha256": "48adc9fad7de6ff3150b5e6f91c0909ea8222adc164f5f48fc9e1da4d4475c1d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lsatan/library/SmartRC-CC1101-Driver-Lib/3.0.2/SmartRC-CC1101-Driver-Lib-3.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lsatan/library/SmartRC-CC1101-Driver-Lib/3.0.2/SmartRC-CC1101-Driver-Lib-3.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

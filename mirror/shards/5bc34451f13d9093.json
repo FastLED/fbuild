@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cschorn01",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cschorn01/library/PlugAndPlayForLoRa/1.0.0/PlugAndPlayForLoRa-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PlugAndPlayForLoRa-1.0.0.tar.gz",
+    "size_bytes": 14155,
+    "sha256": "00cb947a789148a827f01e76e8378ba2f2ee7aff9fcdcd353362a76ea5729d2f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cschorn01/library/PlugAndPlayForLoRa/1.0.0/PlugAndPlayForLoRa-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cschorn01/library/PlugAndPlayForLoRa/1.0.0/PlugAndPlayForLoRa-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cschorn01/library/sx1280OverSpi/1.1.6/sx1280OverSpi-1.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "sx1280OverSpi-1.1.6.tar.gz",
+    "size_bytes": 12516,
+    "sha256": "a04b019b6c79938185a80f656a5aa13e01bf5a16527e695681aad8aeecfcaaf1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cschorn01/library/sx1280OverSpi/1.1.6/sx1280OverSpi-1.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/cschorn01/library/sx1280OverSpi/1.1.6/sx1280OverSpi-1.1.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-bulmecisco",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-bulmecisco/library/LM75B/0.0.0+sha.29546bb2c7dd/LM75B-0.0.0+sha.29546bb2c7dd.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LM75B-0.0.0+sha.29546bb2c7dd.tar.gz",
+    "size_bytes": 1164,
+    "sha256": "b1f7cdb2514a4d058d070e86e009b4112ae579589f7e27620129a806d4bf6c15",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bulmecisco/library/LM75B/0.0.0%2Bsha.29546bb2c7dd/LM75B-0.0.0%2Bsha.29546bb2c7dd.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bulmecisco/library/LM75B/0.0.0%2Bsha.29546bb2c7dd/LM75B-0.0.0%2Bsha.29546bb2c7dd.tar.gz"
+    ]
+   }
+  }
+ ]
+}

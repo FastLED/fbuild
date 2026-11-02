@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/alrevuelta",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "alrevuelta/library/SEN10724/1.0.0/SEN10724-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SEN10724-1.0.0.tar.gz",
+    "size_bytes": 20980,
+    "sha256": "7cea112ca8911b343517bcab34d7b976731759213a6a625f5a2fc545fd5835c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alrevuelta/library/SEN10724/1.0.0/SEN10724-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alrevuelta/library/SEN10724/1.0.0/SEN10724-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

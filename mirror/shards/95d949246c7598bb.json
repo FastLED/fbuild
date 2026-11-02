@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/monstrenyatko",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "monstrenyatko/library/ArduinoMqtt/1.6.0/ArduinoMqtt-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoMqtt-1.6.0.tar.gz",
+    "size_bytes": 29494,
+    "sha256": "6af893d8935f514a8b3365c8ac667b15cf929797cbdb5f8a7e4aeebaedfbef3c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/monstrenyatko/library/ArduinoMqtt/1.6.0/ArduinoMqtt-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/monstrenyatko/library/ArduinoMqtt/1.6.0/ArduinoMqtt-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "monstrenyatko/library/ArduinoMqtt/1.6.1/ArduinoMqtt-1.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoMqtt-1.6.1.tar.gz",
+    "size_bytes": 29607,
+    "sha256": "8dae00fc16d744cba17d3a13ffb40d19b1756280d5413e7ee5460b2b768b5d06",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/monstrenyatko/library/ArduinoMqtt/1.6.1/ArduinoMqtt-1.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/monstrenyatko/library/ArduinoMqtt/1.6.1/ArduinoMqtt-1.6.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

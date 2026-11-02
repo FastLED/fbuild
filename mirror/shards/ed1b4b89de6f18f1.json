@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jihoonkimtech",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jihoonkimtech/library/ClockForSeg_Lib/1.0.0/ClockForSeg_Lib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ClockForSeg_Lib-1.0.0.tar.gz",
+    "size_bytes": 4297,
+    "sha256": "5b3bcb09eaec07e7e7aee6cca9042a77bc02e3e64b676c4f1b1a2ec0fe9707ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jihoonkimtech/library/ClockForSeg_Lib/1.0.0/ClockForSeg_Lib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jihoonkimtech/library/ClockForSeg_Lib/1.0.0/ClockForSeg_Lib-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jihoonkimtech/library/UltraSonic_Lib/1.0.1/UltraSonic_Lib-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UltraSonic_Lib-1.0.1.tar.gz",
+    "size_bytes": 4902,
+    "sha256": "3955f3295c276c9705e004c01b94ddf2f6bfc7f7777ed72feeb1bb92c1c5ce3a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jihoonkimtech/library/UltraSonic_Lib/1.0.1/UltraSonic_Lib-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jihoonkimtech/library/UltraSonic_Lib/1.0.1/UltraSonic_Lib-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

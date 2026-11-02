@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-match314",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-match314/library/LM61/0.0.0+sha.7fe5f722fc6b/LM61-0.0.0+sha.7fe5f722fc6b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LM61-0.0.0+sha.7fe5f722fc6b.tar.gz",
+    "size_bytes": 1573,
+    "sha256": "1b7f1b7031745f86caddb638bdf79e8f651c655c1fe031bceb3f13551081cfc2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-match314/library/LM61/0.0.0%2Bsha.7fe5f722fc6b/LM61-0.0.0%2Bsha.7fe5f722fc6b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-match314/library/LM61/0.0.0%2Bsha.7fe5f722fc6b/LM61-0.0.0%2Bsha.7fe5f722fc6b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

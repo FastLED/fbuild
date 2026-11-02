@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kopanitsa",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kopanitsa/library/web3-arduino/0.9/web3-arduino-0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "web3-arduino-0.9.tar.gz",
+    "size_bytes": 194430,
+    "sha256": "e2decfafbed4afe37bc5644d3b3e2a9736f95f74781c488db681d7b4b66fa021",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kopanitsa/library/web3-arduino/0.9/web3-arduino-0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/kopanitsa/library/web3-arduino/0.9/web3-arduino-0.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

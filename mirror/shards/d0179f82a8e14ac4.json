@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/testato",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "testato/library/SoftwareWire/1.6.0/SoftwareWire-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SoftwareWire-1.6.0.tar.gz",
+    "size_bytes": 22983,
+    "sha256": "02fe95c419197d588793b1706a44d9065e442cc8443e6b3826c9fd6e7c3ac46a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/testato/library/SoftwareWire/1.6.0/SoftwareWire-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/testato/library/SoftwareWire/1.6.0/SoftwareWire-1.6.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,243 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/107-systems",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "107-systems/library/107-Arduino-24LCxx/1.1.0/107-Arduino-24LCxx-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "107-Arduino-24LCxx-1.1.0.tar.gz",
+    "size_bytes": 7936,
+    "sha256": "12fea80c55f943caaec27a72b0980478bf88aafa59dc48d78accb57094513946",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/107-systems/library/107-Arduino-24LCxx/1.1.0/107-Arduino-24LCxx-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/107-systems/library/107-Arduino-24LCxx/1.1.0/107-Arduino-24LCxx-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "107-systems/library/107-Arduino-APDS-9950/1.1.0/107-Arduino-APDS-9950-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "107-Arduino-APDS-9950-1.1.0.tar.gz",
+    "size_bytes": 8673,
+    "sha256": "cb4ccfc189e719eb174efaee19a21a36ec22b934ccf4af1e7d3819ff2984b166",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/107-systems/library/107-Arduino-APDS-9950/1.1.0/107-Arduino-APDS-9950-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/107-systems/library/107-Arduino-APDS-9950/1.1.0/107-Arduino-APDS-9950-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "107-systems/library/107-Arduino-AS504x/1.3.0/107-Arduino-AS504x-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "107-Arduino-AS504x-1.3.0.tar.gz",
+    "size_bytes": 8927,
+    "sha256": "d8bdc95a7b1198b3009fd2fb4a6b3fb47c3e916c9ba7ed2ab5a2e2312639397f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/107-systems/library/107-Arduino-AS504x/1.3.0/107-Arduino-AS504x-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/107-systems/library/107-Arduino-AS504x/1.3.0/107-Arduino-AS504x-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "107-systems/library/107-Arduino-BMP388/1.3.0/107-Arduino-BMP388-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "107-Arduino-BMP388-1.3.0.tar.gz",
+    "size_bytes": 11719,
+    "sha256": "74077f5b13d3f5b4d24ddc512ab6c1ab404e56a5fcbd428be16513f4353f3519",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/107-systems/library/107-Arduino-BMP388/1.3.0/107-Arduino-BMP388-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/107-systems/library/107-Arduino-BMP388/1.3.0/107-Arduino-BMP388-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "107-systems/library/107-Arduino-BoostUnits/1.1.0/107-Arduino-BoostUnits-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "107-Arduino-BoostUnits-1.1.0.tar.gz",
+    "size_bytes": 2218386,
+    "sha256": "3060ea95ca6f04de102ee160a56c66136eef11cee5564150fe8e041415f1c062",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/107-systems/library/107-Arduino-BoostUnits/1.1.0/107-Arduino-BoostUnits-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/107-systems/library/107-Arduino-BoostUnits/1.1.0/107-Arduino-BoostUnits-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "107-systems/library/107-Arduino-CriticalSection/1.1.0/107-Arduino-CriticalSection-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "107-Arduino-CriticalSection-1.1.0.tar.gz",
+    "size_bytes": 7617,
+    "sha256": "99b1724d9dfcd865a26675f8c507366bf92a6c0d9b9d6105c4905b199808f01e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/107-systems/library/107-Arduino-CriticalSection/1.1.0/107-Arduino-CriticalSection-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/107-systems/library/107-Arduino-CriticalSection/1.1.0/107-Arduino-CriticalSection-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "107-systems/library/107-Arduino-Cyphal-Support/0.3.1/107-Arduino-Cyphal-Support-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "107-Arduino-Cyphal-Support-0.3.1.tar.gz",
+    "size_bytes": 9515,
+    "sha256": "0a6945e7a9cbfc36f8b13728d62c062968439588b8c5511a253cf933f7fe1572",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/107-systems/library/107-Arduino-Cyphal-Support/0.3.1/107-Arduino-Cyphal-Support-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/107-systems/library/107-Arduino-Cyphal-Support/0.3.1/107-Arduino-Cyphal-Support-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "107-systems/library/107-Arduino-Cyphal/3.5.2/107-Arduino-Cyphal-3.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "107-Arduino-Cyphal-3.5.2.tar.gz",
+    "size_bytes": 333446,
+    "sha256": "abd049c285eaa750730c74709e4b0a7f28dbc7d5d65fadabca22959ec9c9b5d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/107-systems/library/107-Arduino-Cyphal/3.5.2/107-Arduino-Cyphal-3.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/107-systems/library/107-Arduino-Cyphal/3.5.2/107-Arduino-Cyphal-3.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "107-systems/library/107-Arduino-Debug/1.3.0/107-Arduino-Debug-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "107-Arduino-Debug-1.3.0.tar.gz",
+    "size_bytes": 8015,
+    "sha256": "ecb602894ee909de1fcfa8ebc1b1f31155fcb02b046e3c240b5522813ab209a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/107-systems/library/107-Arduino-Debug/1.3.0/107-Arduino-Debug-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/107-systems/library/107-Arduino-Debug/1.3.0/107-Arduino-Debug-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "107-systems/library/107-Arduino-MCP2515/1.5.2/107-Arduino-MCP2515-1.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "107-Arduino-MCP2515-1.5.2.tar.gz",
+    "size_bytes": 16702,
+    "sha256": "6ae47033b0a9e591eb7256f0eaa56e268281daee53fd3be56600c0549a5c99f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/107-systems/library/107-Arduino-MCP2515/1.5.2/107-Arduino-MCP2515-1.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/107-systems/library/107-Arduino-MCP2515/1.5.2/107-Arduino-MCP2515-1.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "107-systems/library/107-Arduino-NMEA-Parser/1.2.1/107-Arduino-NMEA-Parser-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "107-Arduino-NMEA-Parser-1.2.1.tar.gz",
+    "size_bytes": 15063,
+    "sha256": "6c58f07c1e4ce0171617e0267f283ae153b74b30f2f009e82024614c14d86125",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/107-systems/library/107-Arduino-NMEA-Parser/1.2.1/107-Arduino-NMEA-Parser-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/107-systems/library/107-Arduino-NMEA-Parser/1.2.1/107-Arduino-NMEA-Parser-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "107-systems/library/107-Arduino-Sensor/1.1.0/107-Arduino-Sensor-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "107-Arduino-Sensor-1.1.0.tar.gz",
+    "size_bytes": 7471,
+    "sha256": "f30ff23f1df42d81395d1ec5942301b36d9cb0b2fb5d946530f4333197723ce0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/107-systems/library/107-Arduino-Sensor/1.1.0/107-Arduino-Sensor-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/107-systems/library/107-Arduino-Sensor/1.1.0/107-Arduino-Sensor-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "107-systems/library/107-Arduino-Servo-RP2040/0.2.0/107-Arduino-Servo-RP2040-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "107-Arduino-Servo-RP2040-0.2.0.tar.gz",
+    "size_bytes": 7164,
+    "sha256": "e427577955871b7821cba0d1353b9c52abf838167f185451df565641cb90876d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/107-systems/library/107-Arduino-Servo-RP2040/0.2.0/107-Arduino-Servo-RP2040-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/107-systems/library/107-Arduino-Servo-RP2040/0.2.0/107-Arduino-Servo-RP2040-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "107-systems/library/107-Arduino-TCS3472/1.1.0/107-Arduino-TCS3472-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "107-Arduino-TCS3472-1.1.0.tar.gz",
+    "size_bytes": 8261,
+    "sha256": "f5996ddd86ae7faae5e913803ddfe71450ce9ce5a49849b56755401c19ae4ccd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/107-systems/library/107-Arduino-TCS3472/1.1.0/107-Arduino-TCS3472-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/107-systems/library/107-Arduino-TCS3472/1.1.0/107-Arduino-TCS3472-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "107-systems/library/107-Arduino-TMF8801/1.5.0/107-Arduino-TMF8801-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "107-Arduino-TMF8801-1.5.0.tar.gz",
+    "size_bytes": 36172,
+    "sha256": "ed22db3f16e806d0b9cb25506c4738268966360d7ab7b96dd4c5059d9af6e92f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/107-systems/library/107-Arduino-TMF8801/1.5.0/107-Arduino-TMF8801-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/107-systems/library/107-Arduino-TMF8801/1.5.0/107-Arduino-TMF8801-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "107-systems/library/107-Arduino-TSL2550/1.1.0/107-Arduino-TSL2550-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "107-Arduino-TSL2550-1.1.0.tar.gz",
+    "size_bytes": 8136,
+    "sha256": "244213a6cdf81b267022f61cc265c82bfcc00bef971d2a34a446c123f3478316",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/107-systems/library/107-Arduino-TSL2550/1.1.0/107-Arduino-TSL2550-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/107-systems/library/107-Arduino-TSL2550/1.1.0/107-Arduino-TSL2550-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "107-systems/library/107-Arduino-UniqueId/1.2.1/107-Arduino-UniqueId-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "107-Arduino-UniqueId-1.2.1.tar.gz",
+    "size_bytes": 8609,
+    "sha256": "6a995d48fdf3a5065dd7804ebfc25c43d169f76f36324a3f617eba604ce06f04",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/107-systems/library/107-Arduino-UniqueId/1.2.1/107-Arduino-UniqueId-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/107-systems/library/107-Arduino-UniqueId/1.2.1/107-Arduino-UniqueId-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "107-systems/library/107-Arduino-littlefs/0.6.0/107-Arduino-littlefs-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "107-Arduino-littlefs-0.6.0.tar.gz",
+    "size_bytes": 49538,
+    "sha256": "4fd4d3649b719f8a22f1d787daf3c01eb73425c5ca92e087781d99444cc4cbbf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/107-systems/library/107-Arduino-littlefs/0.6.0/107-Arduino-littlefs-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/107-systems/library/107-Arduino-littlefs/0.6.0/107-Arduino-littlefs-0.6.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

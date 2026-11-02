@@ -1,0 +1,126 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/eduardo-ufmg",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "eduardo-ufmg/library/AntiWindupPID/0.1.1/AntiWindupPID-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AntiWindupPID-0.1.1.tar.gz",
+    "size_bytes": 11005,
+    "sha256": "cc9571f824c1c26a0f6e3868a5d012c4fecea6c13acdd9ae6d883d8ba13d71f9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eduardo-ufmg/library/AntiWindupPID/0.1.1/AntiWindupPID-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/eduardo-ufmg/library/AntiWindupPID/0.1.1/AntiWindupPID-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "eduardo-ufmg/library/Nidec24H/0.1.0/Nidec24H-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Nidec24H-0.1.0.tar.gz",
+    "size_bytes": 6711,
+    "sha256": "4d771d702380b151784194444be04d1087a150d3467d954d01eb82d01e12c993",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eduardo-ufmg/library/Nidec24H/0.1.0/Nidec24H-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/eduardo-ufmg/library/Nidec24H/0.1.0/Nidec24H-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "eduardo-ufmg/library/Nidec24H/0.1.1/Nidec24H-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Nidec24H-0.1.1.tar.gz",
+    "size_bytes": 10225,
+    "sha256": "5bb544ea26b4c2b49c9b045caaaf2b05ff7e8babcc0ba05312eea6a3122b7978",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eduardo-ufmg/library/Nidec24H/0.1.1/Nidec24H-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/eduardo-ufmg/library/Nidec24H/0.1.1/Nidec24H-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "eduardo-ufmg/library/Nidec24H/0.1.2/Nidec24H-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Nidec24H-0.1.2.tar.gz",
+    "size_bytes": 14369,
+    "sha256": "b55f07cc76537c8ef049801baa482bde085c0289e04c4de796687b0965628920",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eduardo-ufmg/library/Nidec24H/0.1.2/Nidec24H-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/eduardo-ufmg/library/Nidec24H/0.1.2/Nidec24H-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "eduardo-ufmg/library/Nidec24H/0.2.0/Nidec24H-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Nidec24H-0.2.0.tar.gz",
+    "size_bytes": 15489,
+    "sha256": "862ba81a239b48f316d4e59fedd667c22f1656fb66d48716be25c320bd6f3f8a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eduardo-ufmg/library/Nidec24H/0.2.0/Nidec24H-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/eduardo-ufmg/library/Nidec24H/0.2.0/Nidec24H-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "eduardo-ufmg/library/Nidec24H/0.3.0/Nidec24H-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Nidec24H-0.3.0.tar.gz",
+    "size_bytes": 15758,
+    "sha256": "db3148ab0a903c7c7340a66bbdef0033e5883e42ded56b5c2930f72a3014273e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eduardo-ufmg/library/Nidec24H/0.3.0/Nidec24H-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/eduardo-ufmg/library/Nidec24H/0.3.0/Nidec24H-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "eduardo-ufmg/library/PendulumStateEstimator/0.2.0/PendulumStateEstimator-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PendulumStateEstimator-0.2.0.tar.gz",
+    "size_bytes": 16967,
+    "sha256": "aad1f99e984f491a1745a13d9dc4e395033529eabbed3aaa3fe2b95d53ed2b89",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eduardo-ufmg/library/PendulumStateEstimator/0.2.0/PendulumStateEstimator-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/eduardo-ufmg/library/PendulumStateEstimator/0.2.0/PendulumStateEstimator-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "eduardo-ufmg/library/PendulumStateEstimator/1.0.0/PendulumStateEstimator-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PendulumStateEstimator-1.0.0.tar.gz",
+    "size_bytes": 20255,
+    "sha256": "700e2c7500d4d60941bcfee1da4e2e973f8ec45c3dfd697bf3ab1e84e6e5caf0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eduardo-ufmg/library/PendulumStateEstimator/1.0.0/PendulumStateEstimator-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/eduardo-ufmg/library/PendulumStateEstimator/1.0.0/PendulumStateEstimator-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "eduardo-ufmg/library/PendulumStateEstimator/1.1.0/PendulumStateEstimator-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PendulumStateEstimator-1.1.0.tar.gz",
+    "size_bytes": 37390,
+    "sha256": "a6a15b35d6f19c42d712c7c9d71f7679638954e3c5111ae7dbe461f020820f5a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eduardo-ufmg/library/PendulumStateEstimator/1.1.0/PendulumStateEstimator-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/eduardo-ufmg/library/PendulumStateEstimator/1.1.0/PendulumStateEstimator-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,152 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jurica238814",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jurica238814/library/GDEP015OC1/0.0.0+sha.9f70a530ab01/GDEP015OC1-0.0.0+sha.9f70a530ab01.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GDEP015OC1-0.0.0+sha.9f70a530ab01.tar.gz",
+    "size_bytes": 4625,
+    "sha256": "d322a32f04cc387b03aa65624bd785f8fb4d18c6a092282e0af261fc5cd4f71f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jurica238814/library/GDEP015OC1/0.0.0%2Bsha.9f70a530ab01/GDEP015OC1-0.0.0%2Bsha.9f70a530ab01.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jurica238814/library/GDEP015OC1/0.0.0%2Bsha.9f70a530ab01/GDEP015OC1-0.0.0%2Bsha.9f70a530ab01.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jurica238814/library/LSM9DS1/0.0.0+sha.d6a0d907988f/LSM9DS1-0.0.0+sha.d6a0d907988f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LSM9DS1-0.0.0+sha.d6a0d907988f.tar.gz",
+    "size_bytes": 2170,
+    "sha256": "d94260f33ffa8ec6a3be5bd030670e28a663af0ab3596d096938bcbff82bd9ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jurica238814/library/LSM9DS1/0.0.0%2Bsha.d6a0d907988f/LSM9DS1-0.0.0%2Bsha.d6a0d907988f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jurica238814/library/LSM9DS1/0.0.0%2Bsha.d6a0d907988f/LSM9DS1-0.0.0%2Bsha.d6a0d907988f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jurica238814/library/Lis2dh12/0.0.0+sha.f1ba533021b8/Lis2dh12-0.0.0+sha.f1ba533021b8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lis2dh12-0.0.0+sha.f1ba533021b8.tar.gz",
+    "size_bytes": 2876,
+    "sha256": "ad689be8c3ed9efad86e51755f61741f092ea43080f7914d67a1ff7f10fcf2b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jurica238814/library/Lis2dh12/0.0.0%2Bsha.f1ba533021b8/Lis2dh12-0.0.0%2Bsha.f1ba533021b8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jurica238814/library/Lis2dh12/0.0.0%2Bsha.f1ba533021b8/Lis2dh12-0.0.0%2Bsha.f1ba533021b8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jurica238814/library/MAX30101_pulse_oximeter/0.0.0+sha.30640433472a/MAX30101_pulse_oximeter-0.0.0+sha.30640433472a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX30101_pulse_oximeter-0.0.0+sha.30640433472a.tar.gz",
+    "size_bytes": 2649,
+    "sha256": "0412fe9693884f1b9e5e37cf98c61d56f10416bd35be6848382e7eddc30319b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jurica238814/library/MAX30101_pulse_oximeter/0.0.0%2Bsha.30640433472a/MAX30101_pulse_oximeter-0.0.0%2Bsha.30640433472a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jurica238814/library/MAX30101_pulse_oximeter/0.0.0%2Bsha.30640433472a/MAX30101_pulse_oximeter-0.0.0%2Bsha.30640433472a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jurica238814/library/MMA8452/0.0.0+sha.ba3e65007adf/MMA8452-0.0.0+sha.ba3e65007adf.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MMA8452-0.0.0+sha.ba3e65007adf.tar.gz",
+    "size_bytes": 2563,
+    "sha256": "a1e4dad19f38560d848b3694b5941804d188219343d8fa164c8d38daf666f8d9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jurica238814/library/MMA8452/0.0.0%2Bsha.ba3e65007adf/MMA8452-0.0.0%2Bsha.ba3e65007adf.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jurica238814/library/MMA8452/0.0.0%2Bsha.ba3e65007adf/MMA8452-0.0.0%2Bsha.ba3e65007adf.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jurica238814/library/Si7006A20/0.0.0+sha.7c3c7db34528/Si7006A20-0.0.0+sha.7c3c7db34528.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Si7006A20-0.0.0+sha.7c3c7db34528.tar.gz",
+    "size_bytes": 3479,
+    "sha256": "ffe783557e06a8afd9db3fa20f676f28ae543d64cac1f8d2b2cc05f6e7ac6be5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jurica238814/library/Si7006A20/0.0.0%2Bsha.7c3c7db34528/Si7006A20-0.0.0%2Bsha.7c3c7db34528.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jurica238814/library/Si7006A20/0.0.0%2Bsha.7c3c7db34528/Si7006A20-0.0.0%2Bsha.7c3c7db34528.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jurica238814/library/acn_nrf52_saadc/0.0.0+sha.b763d9cfc063/acn_nrf52_saadc-0.0.0+sha.b763d9cfc063.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "acn_nrf52_saadc-0.0.0+sha.b763d9cfc063.tar.gz",
+    "size_bytes": 1766,
+    "sha256": "7b116d0f29dbdbd742468edcdd16072db9febf8d382bc7f0941e1d6f25468c80",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jurica238814/library/acn_nrf52_saadc/0.0.0%2Bsha.b763d9cfc063/acn_nrf52_saadc-0.0.0%2Bsha.b763d9cfc063.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jurica238814/library/acn_nrf52_saadc/0.0.0%2Bsha.b763d9cfc063/acn_nrf52_saadc-0.0.0%2Bsha.b763d9cfc063.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jurica238814/library/aconnoBLETemplate/0.0.0+sha.46333f67c87a/aconnoBLETemplate-0.0.0+sha.46333f67c87a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "aconnoBLETemplate-0.0.0+sha.46333f67c87a.tar.gz",
+    "size_bytes": 2760,
+    "sha256": "9318f8443ea18738f489ea474ecef11a6bd31fbfe6fa8a214edaa22a6ee281a0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jurica238814/library/aconnoBLETemplate/0.0.0%2Bsha.46333f67c87a/aconnoBLETemplate-0.0.0%2Bsha.46333f67c87a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jurica238814/library/aconnoBLETemplate/0.0.0%2Bsha.46333f67c87a/aconnoBLETemplate-0.0.0%2Bsha.46333f67c87a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jurica238814/library/aconno_I2C/0.0.0+sha.b2f0c302ba6d/aconno_I2C-0.0.0+sha.b2f0c302ba6d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "aconno_I2C-0.0.0+sha.b2f0c302ba6d.tar.gz",
+    "size_bytes": 2028,
+    "sha256": "96a8fdddab68d540c1188fc4d1c82d9f0ee8f74636ad9a4c7cbd63b5496715c1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jurica238814/library/aconno_I2C/0.0.0%2Bsha.b2f0c302ba6d/aconno_I2C-0.0.0%2Bsha.b2f0c302ba6d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jurica238814/library/aconno_I2C/0.0.0%2Bsha.b2f0c302ba6d/aconno_I2C-0.0.0%2Bsha.b2f0c302ba6d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jurica238814/library/aconno_bsp/0.0.0+sha.6d9c6c231034/aconno_bsp-0.0.0+sha.6d9c6c231034.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "aconno_bsp-0.0.0+sha.6d9c6c231034.tar.gz",
+    "size_bytes": 1969,
+    "sha256": "4cf964f49af507395ac1e8bf7b5f480334dd86153393ce825600e9b21cb92dbb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jurica238814/library/aconno_bsp/0.0.0%2Bsha.6d9c6c231034/aconno_bsp-0.0.0%2Bsha.6d9c6c231034.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jurica238814/library/aconno_bsp/0.0.0%2Bsha.6d9c6c231034/aconno_bsp-0.0.0%2Bsha.6d9c6c231034.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jurica238814/library/iBeacon%20acnsensa/0.0.0+sha.c90e1670ffb3/iBeaconacnsensa-0.0.0+sha.c90e1670ffb3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iBeaconacnsensa-0.0.0+sha.c90e1670ffb3.tar.gz",
+    "size_bytes": 7573,
+    "sha256": "175bf2e6a5459917864b8ed784e6a782188128c4dacebf5d105db95a705ec26c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jurica238814/library/iBeacon%2520acnsensa/0.0.0%2Bsha.c90e1670ffb3/iBeaconacnsensa-0.0.0%2Bsha.c90e1670ffb3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jurica238814/library/iBeacon%20acnsensa/0.0.0%2Bsha.c90e1670ffb3/iBeaconacnsensa-0.0.0%2Bsha.c90e1670ffb3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jaredpetersen",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jaredpetersen/library/GhostLab42Reboot/1.0.2/GhostLab42Reboot-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GhostLab42Reboot-1.0.2.tar.gz",
+    "size_bytes": 12210,
+    "sha256": "342d5ded587105681b408f455aa142fd957ae54fcc8339a81f2cd4e3423c921c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jaredpetersen/library/GhostLab42Reboot/1.0.2/GhostLab42Reboot-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jaredpetersen/library/GhostLab42Reboot/1.0.2/GhostLab42Reboot-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

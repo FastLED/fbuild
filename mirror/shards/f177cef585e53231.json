@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-psi-swarm-robot",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-psi-swarm-robot/library/PsiSwarmV8_CPP/0.0.0+sha.be92991621b4/PsiSwarmV8_CPP-0.0.0+sha.be92991621b4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PsiSwarmV8_CPP-0.0.0+sha.be92991621b4.tar.gz",
+    "size_bytes": 42007,
+    "sha256": "fbf9da4546719370052a3aebb4021934b461f8e8153c0787236b05b561a5ff83",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-psi-swarm-robot/library/PsiSwarmV8_CPP/0.0.0%2Bsha.be92991621b4/PsiSwarmV8_CPP-0.0.0%2Bsha.be92991621b4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-psi-swarm-robot/library/PsiSwarmV8_CPP/0.0.0%2Bsha.be92991621b4/PsiSwarmV8_CPP-0.0.0%2Bsha.be92991621b4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-psi-swarm-robot/library/PsiSwarmV9/0.0.0+sha.2b6ebe60929d/PsiSwarmV9-0.0.0+sha.2b6ebe60929d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PsiSwarmV9-0.0.0+sha.2b6ebe60929d.tar.gz",
+    "size_bytes": 55199,
+    "sha256": "e9b577d6ec276daf6a4d8fb7fbbe5148e2635482ee3122d1e65b8d29f31b0c0e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-psi-swarm-robot/library/PsiSwarmV9/0.0.0%2Bsha.2b6ebe60929d/PsiSwarmV9-0.0.0%2Bsha.2b6ebe60929d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-psi-swarm-robot/library/PsiSwarmV9/0.0.0%2Bsha.2b6ebe60929d/PsiSwarmV9-0.0.0%2Bsha.2b6ebe60929d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

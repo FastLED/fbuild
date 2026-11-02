@@ -1,0 +1,139 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jksoft",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jksoft/library/BD6211F/0.0.0+sha.e27bf165308f/BD6211F-0.0.0+sha.e27bf165308f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BD6211F-0.0.0+sha.e27bf165308f.tar.gz",
+    "size_bytes": 1332,
+    "sha256": "91060163622a5a17a02ca28a2899d28fc3f6163c55af32e467cc8264a6514ee9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jksoft/library/BD6211F/0.0.0%2Bsha.e27bf165308f/BD6211F-0.0.0%2Bsha.e27bf165308f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jksoft/library/BD6211F/0.0.0%2Bsha.e27bf165308f/BD6211F-0.0.0%2Bsha.e27bf165308f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jksoft/library/Milkcocoa-os/0.0.0+sha.61e0cc093180/Milkcocoa-os-0.0.0+sha.61e0cc093180.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Milkcocoa-os-0.0.0+sha.61e0cc093180.tar.gz",
+    "size_bytes": 26137,
+    "sha256": "791aa2aa64f11243c413fb838b1682aef372174960e91ed39931b4acb8a946be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jksoft/library/Milkcocoa-os/0.0.0%2Bsha.61e0cc093180/Milkcocoa-os-0.0.0%2Bsha.61e0cc093180.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jksoft/library/Milkcocoa-os/0.0.0%2Bsha.61e0cc093180/Milkcocoa-os-0.0.0%2Bsha.61e0cc093180.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jksoft/library/Milkcocoa/0.0.0+sha.9afb66979712/Milkcocoa-0.0.0+sha.9afb66979712.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Milkcocoa-0.0.0+sha.9afb66979712.tar.gz",
+    "size_bytes": 3390,
+    "sha256": "c3c77d8c7af46706c0fd7441a87970ed55fa6f0ee1bf05d7db7049ae9dc2e853",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jksoft/library/Milkcocoa/0.0.0%2Bsha.9afb66979712/Milkcocoa-0.0.0%2Bsha.9afb66979712.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jksoft/library/Milkcocoa/0.0.0%2Bsha.9afb66979712/Milkcocoa-0.0.0%2Bsha.9afb66979712.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jksoft/library/Milkcocoa_EthernetIF/0.0.0+sha.bf455cd5059f/Milkcocoa_EthernetIF-0.0.0+sha.bf455cd5059f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Milkcocoa_EthernetIF-0.0.0+sha.bf455cd5059f.tar.gz",
+    "size_bytes": 3412,
+    "sha256": "4ea14072daa636952ea989e461ca45fd0ebf8a495385f067f792dece21421ef5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jksoft/library/Milkcocoa_EthernetIF/0.0.0%2Bsha.bf455cd5059f/Milkcocoa_EthernetIF-0.0.0%2Bsha.bf455cd5059f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jksoft/library/Milkcocoa_EthernetIF/0.0.0%2Bsha.bf455cd5059f/Milkcocoa_EthernetIF-0.0.0%2Bsha.bf455cd5059f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jksoft/library/PacketBuffer/0.0.0+sha.039fb6d44f92/PacketBuffer-0.0.0+sha.039fb6d44f92.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PacketBuffer-0.0.0+sha.039fb6d44f92.tar.gz",
+    "size_bytes": 1502,
+    "sha256": "2a45c8651e5c157eb4816131062b019ffcd4c2a5b43c36275cf0c3d3572273c3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jksoft/library/PacketBuffer/0.0.0%2Bsha.039fb6d44f92/PacketBuffer-0.0.0%2Bsha.039fb6d44f92.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jksoft/library/PacketBuffer/0.0.0%2Bsha.039fb6d44f92/PacketBuffer-0.0.0%2Bsha.039fb6d44f92.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jksoft/library/SimpleIoTBoardLib/0.0.0+sha.890c12951e96/SimpleIoTBoardLib-0.0.0+sha.890c12951e96.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleIoTBoardLib-0.0.0+sha.890c12951e96.tar.gz",
+    "size_bytes": 21819,
+    "sha256": "39e634b995ce264edf1f4a2d271eca7831e145476e804be18092983344f9019b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jksoft/library/SimpleIoTBoardLib/0.0.0%2Bsha.890c12951e96/SimpleIoTBoardLib-0.0.0%2Bsha.890c12951e96.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jksoft/library/SimpleIoTBoardLib/0.0.0%2Bsha.890c12951e96/SimpleIoTBoardLib-0.0.0%2Bsha.890c12951e96.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jksoft/library/TB6612FNG/0.0.0+sha.95d5e9ee8c15/TB6612FNG-0.0.0+sha.95d5e9ee8c15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TB6612FNG-0.0.0+sha.95d5e9ee8c15.tar.gz",
+    "size_bytes": 2453,
+    "sha256": "e0333180e426c62dcf747bd266a2453f5242d6875ca275f0d5ab6e33673924d9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jksoft/library/TB6612FNG/0.0.0%2Bsha.95d5e9ee8c15/TB6612FNG-0.0.0%2Bsha.95d5e9ee8c15.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jksoft/library/TB6612FNG/0.0.0%2Bsha.95d5e9ee8c15/TB6612FNG-0.0.0%2Bsha.95d5e9ee8c15.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jksoft/library/TB6612FNG2/0.0.0+sha.051a7ecff13e/TB6612FNG2-0.0.0+sha.051a7ecff13e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TB6612FNG2-0.0.0+sha.051a7ecff13e.tar.gz",
+    "size_bytes": 1391,
+    "sha256": "6ba07da7fe24e32d6974c12253a266bb13cddea03818a34f67cd11e0ee86d6d5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jksoft/library/TB6612FNG2/0.0.0%2Bsha.051a7ecff13e/TB6612FNG2-0.0.0%2Bsha.051a7ecff13e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jksoft/library/TB6612FNG2/0.0.0%2Bsha.051a7ecff13e/TB6612FNG2-0.0.0%2Bsha.051a7ecff13e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jksoft/library/wallbot/0.0.0+sha.f8571ffd252a/wallbot-0.0.0+sha.f8571ffd252a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "wallbot-0.0.0+sha.f8571ffd252a.tar.gz",
+    "size_bytes": 12006,
+    "sha256": "82977fafee15dfc158147b67a85a17d638fde4fd497ab66fffe9732aec0aac3d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jksoft/library/wallbot/0.0.0%2Bsha.f8571ffd252a/wallbot-0.0.0%2Bsha.f8571ffd252a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jksoft/library/wallbot/0.0.0%2Bsha.f8571ffd252a/wallbot-0.0.0%2Bsha.f8571ffd252a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jksoft/library/wallbotmini/0.0.0+sha.a11da93ea3f6/wallbotmini-0.0.0+sha.a11da93ea3f6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "wallbotmini-0.0.0+sha.a11da93ea3f6.tar.gz",
+    "size_bytes": 3312,
+    "sha256": "5f0446ae8518ac3b407c3cf3fe4cc5339596fedc22bb6c168f9ab665e60516b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jksoft/library/wallbotmini/0.0.0%2Bsha.a11da93ea3f6/wallbotmini-0.0.0%2Bsha.a11da93ea3f6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jksoft/library/wallbotmini/0.0.0%2Bsha.a11da93ea3f6/wallbotmini-0.0.0%2Bsha.a11da93ea3f6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

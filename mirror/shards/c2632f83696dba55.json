@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jamesy0ung",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jamesy0ung/library/MPXA6115A/1.0.0/MPXA6115A-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPXA6115A-1.0.0.tar.gz",
+    "size_bytes": 14054,
+    "sha256": "3823ecb17499b85705a81f0abf33d1cead0f427c327854687f530386aea82cee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jamesy0ung/library/MPXA6115A/1.0.0/MPXA6115A-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jamesy0ung/library/MPXA6115A/1.0.0/MPXA6115A-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jamesy0ung/library/MPXHZ6116A/1.0.0/MPXHZ6116A-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPXHZ6116A-1.0.0.tar.gz",
+    "size_bytes": 1137,
+    "sha256": "3d88999dc5f585b89c33faf40ca73dac8c08bbd570aaeec30b39cb5aae0c3f8a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jamesy0ung/library/MPXHZ6116A/1.0.0/MPXHZ6116A-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jamesy0ung/library/MPXHZ6116A/1.0.0/MPXHZ6116A-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

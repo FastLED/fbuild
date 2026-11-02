@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/marloe",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "marloe/library/LEDDriver%20PWM/1.0.2/LEDDriverPWM-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LEDDriverPWM-1.0.2.tar.gz",
+    "size_bytes": 9203,
+    "sha256": "7a12366a6c02d34e5c1eca780fb9eef95702ad2145781caaf01a0ff7b3bce1fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marloe/library/LEDDriver%2520PWM/1.0.2/LEDDriverPWM-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/marloe/library/LEDDriver%20PWM/1.0.2/LEDDriverPWM-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

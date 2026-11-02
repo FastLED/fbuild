@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/leaphy-robotics",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "leaphy-robotics/library/Leaphy%20Extensions/1.2.2/LeaphyExtensions-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LeaphyExtensions-1.2.2.tar.gz",
+    "size_bytes": 17452,
+    "sha256": "09bd3ab6451cd64f32c7ce2fdd31d9de45ac6e67529becc16c60611bb78381b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leaphy-robotics/library/Leaphy%2520Extensions/1.2.2/LeaphyExtensions-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/leaphy-robotics/library/Leaphy%20Extensions/1.2.2/LeaphyExtensions-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leaphy-robotics/library/Leaphy%20Extensions/1.2.3/LeaphyExtensions-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LeaphyExtensions-1.2.3.tar.gz",
+    "size_bytes": 11367,
+    "sha256": "bf57778a9c004dbdb2a13fda8ebe7f9772d6fa6f003f7627ade506412f4ccf04",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leaphy-robotics/library/Leaphy%2520Extensions/1.2.3/LeaphyExtensions-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/leaphy-robotics/library/Leaphy%20Extensions/1.2.3/LeaphyExtensions-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leaphy-robotics/library/Leaphy%20Extra%20Extension/0.0.23/LeaphyExtraExtension-0.0.23.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LeaphyExtraExtension-0.0.23.tar.gz",
+    "size_bytes": 14988,
+    "sha256": "fd5d5c826e94db11a8d4059dfd63ba65bb076d321f4b00ee9d0be2d5da99576c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leaphy-robotics/library/Leaphy%2520Extra%2520Extension/0.0.23/LeaphyExtraExtension-0.0.23.tar.gz",
+     "https://dl.registry.platformio.org/download/leaphy-robotics/library/Leaphy%20Extra%20Extension/0.0.23/LeaphyExtraExtension-0.0.23.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leaphy-robotics/library/Leaphy%20Original%20Extension/0.0.3/LeaphyOriginalExtension-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LeaphyOriginalExtension-0.0.3.tar.gz",
+    "size_bytes": 1872,
+    "sha256": "4d362a78a6218959bb560374b739c7039b0d2fb454595683c229edca0de3ac21",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leaphy-robotics/library/Leaphy%2520Original%2520Extension/0.0.3/LeaphyOriginalExtension-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/leaphy-robotics/library/Leaphy%20Original%20Extension/0.0.3/LeaphyOriginalExtension-0.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

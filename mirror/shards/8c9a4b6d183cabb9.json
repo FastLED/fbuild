@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/admin3314",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "admin3314/library/ViraMediaWeb/1.0.1/ViraMediaWeb-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ViraMediaWeb-1.0.1.tar.gz",
+    "size_bytes": 9034,
+    "sha256": "38faa1241955d31910cc46aeca15630ab0f4c1d14337461ff6cb72b8de327c69",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/admin3314/library/ViraMediaWeb/1.0.1/ViraMediaWeb-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/admin3314/library/ViraMediaWeb/1.0.1/ViraMediaWeb-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "admin3314/library/Vira_Matrix/1.0.1/Vira_Matrix-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Vira_Matrix-1.0.1.tar.gz",
+    "size_bytes": 10833,
+    "sha256": "26e55d5b12afeaab712e51f2040ac8c2ee488007dd5295a1bcfeca4c310df5f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/admin3314/library/Vira_Matrix/1.0.1/Vira_Matrix-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/admin3314/library/Vira_Matrix/1.0.1/Vira_Matrix-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "admin3314/library/Vira_WiFi_Connector/1.2.1/Vira_WiFi_Connector-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Vira_WiFi_Connector-1.2.1.tar.gz",
+    "size_bytes": 10040,
+    "sha256": "666544cb48ed5d7fe39cd3b7e9eeab1adaf86930cfaf0af5d3a35ea7cd6c9082",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/admin3314/library/Vira_WiFi_Connector/1.2.1/Vira_WiFi_Connector-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/admin3314/library/Vira_WiFi_Connector/1.2.1/Vira_WiFi_Connector-1.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

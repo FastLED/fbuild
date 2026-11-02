@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-elleo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-elleo/library/Synth/0.0.0+sha.ce6724069f0a/Synth-0.0.0+sha.ce6724069f0a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Synth-0.0.0+sha.ce6724069f0a.tar.gz",
+    "size_bytes": 4117,
+    "sha256": "ed0d70d060ddaa956cf39997de5da6acb01468f69efe9e6cafed1bb68229e86f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-elleo/library/Synth/0.0.0%2Bsha.ce6724069f0a/Synth-0.0.0%2Bsha.ce6724069f0a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-elleo/library/Synth/0.0.0%2Bsha.ce6724069f0a/Synth-0.0.0%2Bsha.ce6724069f0a.tar.gz"
+    ]
+   }
+  }
+ ]
+}

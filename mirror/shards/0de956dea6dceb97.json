@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/eyr1n",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "eyr1n/library/ESP32_TWAI/0.0.5/ESP32_TWAI-0.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_TWAI-0.0.5.tar.gz",
+    "size_bytes": 13731,
+    "sha256": "c6796384eed1defaadb25a5220d590286191357a251366309344b8030766fd94",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eyr1n/library/ESP32_TWAI/0.0.5/ESP32_TWAI-0.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/eyr1n/library/ESP32_TWAI/0.0.5/ESP32_TWAI-0.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "eyr1n/library/ESP32_TWAI/0.1.0/ESP32_TWAI-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_TWAI-0.1.0.tar.gz",
+    "size_bytes": 13831,
+    "sha256": "3d256c312fe43dffb034a38d5b270b721b0c20f91d08d99c086acf6cc33e985f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eyr1n/library/ESP32_TWAI/0.1.0/ESP32_TWAI-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/eyr1n/library/ESP32_TWAI/0.1.0/ESP32_TWAI-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "eyr1n/library/Fork%20of%20PS3%20Controller%20Host/1.1.1-idf5.4/ForkofPS3ControllerHost-1.1.1-idf5.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ForkofPS3ControllerHost-1.1.1-idf5.4.tar.gz",
+    "size_bytes": 21140,
+    "sha256": "77ff919c7903b5826297cd86a9b4faaa1ad87be77040f5de83266a4cb0600e8b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eyr1n/library/Fork%2520of%2520PS3%2520Controller%2520Host/1.1.1-idf5.4/ForkofPS3ControllerHost-1.1.1-idf5.4.tar.gz",
+     "https://dl.registry.platformio.org/download/eyr1n/library/Fork%20of%20PS3%20Controller%20Host/1.1.1-idf5.4/ForkofPS3ControllerHost-1.1.1-idf5.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "eyr1n/library/RP2040PIO_CAN/0.0.6/RP2040PIO_CAN-0.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RP2040PIO_CAN-0.0.6.tar.gz",
+    "size_bytes": 28778,
+    "sha256": "c628f91485f75e2d9247eeccbbd4494ad29bc8c343727483649ec64859aa1621",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eyr1n/library/RP2040PIO_CAN/0.0.6/RP2040PIO_CAN-0.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/eyr1n/library/RP2040PIO_CAN/0.0.6/RP2040PIO_CAN-0.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "eyr1n/library/RP2040PIO_CAN/0.1.0/RP2040PIO_CAN-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RP2040PIO_CAN-0.1.0.tar.gz",
+    "size_bytes": 29049,
+    "sha256": "f3c2e0882d054e8244d672f56475aae9551ad65f0efa0e6b40861ee257c898ff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eyr1n/library/RP2040PIO_CAN/0.1.0/RP2040PIO_CAN-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/eyr1n/library/RP2040PIO_CAN/0.1.0/RP2040PIO_CAN-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "eyr1n/library/RP2040PIO_HalfDuplex/0.0.2/RP2040PIO_HalfDuplex-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RP2040PIO_HalfDuplex-0.0.2.tar.gz",
+    "size_bytes": 13337,
+    "sha256": "918a70fa99113f4cd0d5606ee3089cb1b68089f6efd9dbd32d3b0c058cc9dbfc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eyr1n/library/RP2040PIO_HalfDuplex/0.0.2/RP2040PIO_HalfDuplex-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/eyr1n/library/RP2040PIO_HalfDuplex/0.0.2/RP2040PIO_HalfDuplex-0.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

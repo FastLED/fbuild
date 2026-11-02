@@ -1,0 +1,152 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jensdmadsen",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jensdmadsen/library/ISRHandler/1.0.0/ISRHandler-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ISRHandler-1.0.0.tar.gz",
+    "size_bytes": 14255,
+    "sha256": "f270178325da2bd77525de46368bce8355c33c715b363e051d302ee6bf156272",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jensdmadsen/library/ISRHandler/1.0.0/ISRHandler-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jensdmadsen/library/ISRHandler/1.0.0/ISRHandler-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jensdmadsen/library/Multitasker/1.0.1/Multitasker-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Multitasker-1.0.1.tar.gz",
+    "size_bytes": 16136,
+    "sha256": "0236fe77b145521b148a40a2157a989c1a7b3e91efdebd8d1191f30f90345206",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jensdmadsen/library/Multitasker/1.0.1/Multitasker-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jensdmadsen/library/Multitasker/1.0.1/Multitasker-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jensdmadsen/library/RotEncoder/1.1.0/RotEncoder-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RotEncoder-1.1.0.tar.gz",
+    "size_bytes": 25701,
+    "sha256": "c5d3bd32a20c74b3e35a302f7d3584dc9c630385dfb5576ad65498e74a246e7d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jensdmadsen/library/RotEncoder/1.1.0/RotEncoder-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jensdmadsen/library/RotEncoder/1.1.0/RotEncoder-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jensdmadsen/library/SafeLED/1.0.1/SafeLED-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SafeLED-1.0.1.tar.gz",
+    "size_bytes": 19467,
+    "sha256": "251416275272ae859ee92759546fc364760b38a1b1e252cc6ced04b22a368211",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jensdmadsen/library/SafeLED/1.0.1/SafeLED-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jensdmadsen/library/SafeLED/1.0.1/SafeLED-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jensdmadsen/library/SafeLED/1.0.2/SafeLED-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SafeLED-1.0.2.tar.gz",
+    "size_bytes": 19669,
+    "sha256": "9ae2d20a7001415f024a5ccc4d282a4d4d0d57b7867e8a4aebdc9256c434f475",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jensdmadsen/library/SafeLED/1.0.2/SafeLED-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jensdmadsen/library/SafeLED/1.0.2/SafeLED-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jensdmadsen/library/StableLCD/1.0.0/StableLCD-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StableLCD-1.0.0.tar.gz",
+    "size_bytes": 34345,
+    "sha256": "519bcba8bd16b701f1bbf7d6b829cf16794c660c0b55b165d479a3af39669b74",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jensdmadsen/library/StableLCD/1.0.0/StableLCD-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jensdmadsen/library/StableLCD/1.0.0/StableLCD-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jensdmadsen/library/StableLCD/1.0.1/StableLCD-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StableLCD-1.0.1.tar.gz",
+    "size_bytes": 34387,
+    "sha256": "d669bba38a4249bd872d609df87c371b16915101199b7921505219cbf27c2a56",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jensdmadsen/library/StableLCD/1.0.1/StableLCD-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jensdmadsen/library/StableLCD/1.0.1/StableLCD-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jensdmadsen/library/StableLCD/1.0.2/StableLCD-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StableLCD-1.0.2.tar.gz",
+    "size_bytes": 34506,
+    "sha256": "d413708223da64f3805384eb358adaeeee02e7277a4a2bec8d41e27527541dcc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jensdmadsen/library/StableLCD/1.0.2/StableLCD-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jensdmadsen/library/StableLCD/1.0.2/StableLCD-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jensdmadsen/library/StableLCD/1.1.0/StableLCD-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StableLCD-1.1.0.tar.gz",
+    "size_bytes": 39676,
+    "sha256": "d232f12dc787773331e1006b385b25a4d967bf0cbe203c1057659c736c658c07",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jensdmadsen/library/StableLCD/1.1.0/StableLCD-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jensdmadsen/library/StableLCD/1.1.0/StableLCD-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jensdmadsen/library/StableLCD/1.2.0/StableLCD-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StableLCD-1.2.0.tar.gz",
+    "size_bytes": 44603,
+    "sha256": "80964668c2b55be0b67b2fbc5e75eadbf3baa90a2b9e016b2be2bdf80eba69ff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jensdmadsen/library/StableLCD/1.2.0/StableLCD-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jensdmadsen/library/StableLCD/1.2.0/StableLCD-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jensdmadsen/library/StableLCD/1.3.0/StableLCD-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StableLCD-1.3.0.tar.gz",
+    "size_bytes": 49014,
+    "sha256": "a9da8326bd23f993119aa16ee8e931cc13a44d238bfeb142752ace98876e9cb4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jensdmadsen/library/StableLCD/1.3.0/StableLCD-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jensdmadsen/library/StableLCD/1.3.0/StableLCD-1.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

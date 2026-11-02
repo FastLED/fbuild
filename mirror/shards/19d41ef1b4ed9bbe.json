@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/igrowing",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "igrowing/library/tuf2000/0.1.1/tuf2000-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tuf2000-0.1.1.tar.gz",
+    "size_bytes": 22486,
+    "sha256": "ad0565d0006ff6854643ca20615c11912a89c1f454f34adfc35109344a71a58c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/igrowing/library/tuf2000/0.1.1/tuf2000-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/igrowing/library/tuf2000/0.1.1/tuf2000-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

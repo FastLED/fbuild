@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-netblocks",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-netblocks/library/SX1272Lib/0.0.0+sha.0d1c09259f20/SX1272Lib-0.0.0+sha.0d1c09259f20.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SX1272Lib-0.0.0+sha.0d1c09259f20.tar.gz",
+    "size_bytes": 28163,
+    "sha256": "4cdc061363df160a796edb26b575daffb4e490288d06b9efb9c4cef2b1e70bf8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-netblocks/library/SX1272Lib/0.0.0%2Bsha.0d1c09259f20/SX1272Lib-0.0.0%2Bsha.0d1c09259f20.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-netblocks/library/SX1272Lib/0.0.0%2Bsha.0d1c09259f20/SX1272Lib-0.0.0%2Bsha.0d1c09259f20.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-netblocks/library/XRange_mbed_src/0.0.0+sha.ac6f3fd999f3/XRange_mbed_src-0.0.0+sha.ac6f3fd999f3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XRange_mbed_src-0.0.0+sha.ac6f3fd999f3.tar.gz",
+    "size_bytes": 623107,
+    "sha256": "0974c602931a7c6cf0132db7e89ff9dddba0203631538c605a841f56b5eeccc1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-netblocks/library/XRange_mbed_src/0.0.0%2Bsha.ac6f3fd999f3/XRange_mbed_src-0.0.0%2Bsha.ac6f3fd999f3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-netblocks/library/XRange_mbed_src/0.0.0%2Bsha.ac6f3fd999f3/XRange_mbed_src-0.0.0%2Bsha.ac6f3fd999f3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

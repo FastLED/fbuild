@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/vishnumaiea",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "vishnumaiea/library/ISL1208-RTC-Library/1.4.7/ISL1208-RTC-Library-1.4.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ISL1208-RTC-Library-1.4.7.tar.gz",
+    "size_bytes": 9018,
+    "sha256": "d1c83a530091d17b3540c13b66030b3b6f8128e71b04c100533ba788d1c89f6b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vishnumaiea/library/ISL1208-RTC-Library/1.4.7/ISL1208-RTC-Library-1.4.7.tar.gz",
+     "https://dl.registry.platformio.org/download/vishnumaiea/library/ISL1208-RTC-Library/1.4.7/ISL1208-RTC-Library-1.4.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vishnumaiea/library/R30X-Fingerprint-Sensor-Library/1.2.0/R30X-Fingerprint-Sensor-Library-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "R30X-Fingerprint-Sensor-Library-1.2.0.tar.gz",
+    "size_bytes": 17606,
+    "sha256": "248d1d8a21e3c777ef1f43e21011de597fe23fac4b011708fd29213fe497d41a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vishnumaiea/library/R30X-Fingerprint-Sensor-Library/1.2.0/R30X-Fingerprint-Sensor-Library-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vishnumaiea/library/R30X-Fingerprint-Sensor-Library/1.2.0/R30X-Fingerprint-Sensor-Library-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vishnumaiea/library/ptScheduler/2.2.0/ptScheduler-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ptScheduler-2.2.0.tar.gz",
+    "size_bytes": 17081,
+    "sha256": "4123e955ecc79f4d807e2ab2ca8158bfae25c5c4c00a6c7f4d415cd505a55a4c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vishnumaiea/library/ptScheduler/2.2.0/ptScheduler-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vishnumaiea/library/ptScheduler/2.2.0/ptScheduler-2.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

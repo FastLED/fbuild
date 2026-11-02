@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/qingmeijiupiao",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "qingmeijiupiao/library/DJIMotorCtrlESP/2.4.4/DJIMotorCtrlESP-2.4.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DJIMotorCtrlESP-2.4.4.tar.gz",
+    "size_bytes": 556012,
+    "sha256": "e7111c390b303d5e4861a3292e367357fb872ba50bd4e433060d965bbe991108",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/qingmeijiupiao/library/DJIMotorCtrlESP/2.4.4/DJIMotorCtrlESP-2.4.4.tar.gz",
+     "https://dl.registry.platformio.org/download/qingmeijiupiao/library/DJIMotorCtrlESP/2.4.4/DJIMotorCtrlESP-2.4.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "qingmeijiupiao/library/DMMotorCtrl/1.0.4/DMMotorCtrl-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DMMotorCtrl-1.0.4.tar.gz",
+    "size_bytes": 33411,
+    "sha256": "74799c61f60908a3dd912d7402fb8c9ac628817b28a2031680f7640b8dda7b20",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/qingmeijiupiao/library/DMMotorCtrl/1.0.4/DMMotorCtrl-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/qingmeijiupiao/library/DMMotorCtrl/1.0.4/DMMotorCtrl-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "qingmeijiupiao/library/HXC_CAN/1.0.5/HXC_CAN-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HXC_CAN-1.0.5.tar.gz",
+    "size_bytes": 27504,
+    "sha256": "80f4917644ed396e4bb5484c03b9787ce768fd0e9ec34fd627aab4cdd8ab71e1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/qingmeijiupiao/library/HXC_CAN/1.0.5/HXC_CAN-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/qingmeijiupiao/library/HXC_CAN/1.0.5/HXC_CAN-1.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

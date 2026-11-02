@@ -1,0 +1,386 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gin66",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gin66/library/FastAccelStepper/0.23.5/FastAccelStepper-0.23.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastAccelStepper-0.23.5.tar.gz",
+    "size_bytes": 73871,
+    "sha256": "1d50ce432b68d947a4863ee7ee098a70eba60b0158f0adec0466c7ee21e72587",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gin66/library/FastAccelStepper/0.23.5/FastAccelStepper-0.23.5.tar.gz",
+     "https://dl.registry.platformio.org/download/gin66/library/FastAccelStepper/0.23.5/FastAccelStepper-0.23.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gin66/library/FastAccelStepper/0.28.4/FastAccelStepper-0.28.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastAccelStepper-0.28.4.tar.gz",
+    "size_bytes": 93005,
+    "sha256": "ac7918782573ccd07a2d766daf69f8c56dc2acc7c8135953ebbafa88709e2d73",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gin66/library/FastAccelStepper/0.28.4/FastAccelStepper-0.28.4.tar.gz",
+     "https://dl.registry.platformio.org/download/gin66/library/FastAccelStepper/0.28.4/FastAccelStepper-0.28.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gin66/library/FastAccelStepper/0.30.15/FastAccelStepper-0.30.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastAccelStepper-0.30.15.tar.gz",
+    "size_bytes": 87505,
+    "sha256": "a3ac7d6c3b82f05991cfaffe32fb7963703214d12de72b927e6b78897ae6be96",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gin66/library/FastAccelStepper/0.30.15/FastAccelStepper-0.30.15.tar.gz",
+     "https://dl.registry.platformio.org/download/gin66/library/FastAccelStepper/0.30.15/FastAccelStepper-0.30.15.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gin66/library/FastAccelStepper/0.31.8/FastAccelStepper-0.31.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastAccelStepper-0.31.8.tar.gz",
+    "size_bytes": 101414,
+    "sha256": "24f223c4e57cc0c09cd8fe51ec9b8a79e6b80169f59548f604ad1f8ade993fa7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gin66/library/FastAccelStepper/0.31.8/FastAccelStepper-0.31.8.tar.gz",
+     "https://dl.registry.platformio.org/download/gin66/library/FastAccelStepper/0.31.8/FastAccelStepper-0.31.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gin66/library/FastAccelStepper/0.33.11/FastAccelStepper-0.33.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastAccelStepper-0.33.11.tar.gz",
+    "size_bytes": 106414,
+    "sha256": "dae62d1dcd9371d55472f9a95b74c05e370e900b6ad49f274496fe8ce633edc1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gin66/library/FastAccelStepper/0.33.11/FastAccelStepper-0.33.11.tar.gz",
+     "https://dl.registry.platformio.org/download/gin66/library/FastAccelStepper/0.33.11/FastAccelStepper-0.33.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gin66/library/FastAccelStepper/0.33.12/FastAccelStepper-0.33.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastAccelStepper-0.33.12.tar.gz",
+    "size_bytes": 106543,
+    "sha256": "88f7e1dbeb3fe367824cff9d1b499d49c44e566284ad47e777af6637e496e55b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gin66/library/FastAccelStepper/0.33.12/FastAccelStepper-0.33.12.tar.gz",
+     "https://dl.registry.platformio.org/download/gin66/library/FastAccelStepper/0.33.12/FastAccelStepper-0.33.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gin66/library/FastAccelStepper/0.33.13/FastAccelStepper-0.33.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastAccelStepper-0.33.13.tar.gz",
+    "size_bytes": 107878,
+    "sha256": "ee2a43dafabf5126b6287fd0bef9ee14ac0704922d1c04060c99202cf5c7c6d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gin66/library/FastAccelStepper/0.33.13/FastAccelStepper-0.33.13.tar.gz",
+     "https://dl.registry.platformio.org/download/gin66/library/FastAccelStepper/0.33.13/FastAccelStepper-0.33.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gin66/library/FastAccelStepper/0.33.14/FastAccelStepper-0.33.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastAccelStepper-0.33.14.tar.gz",
+    "size_bytes": 107979,
+    "sha256": "82e26c3546620899bd984b7c5cf9d805f6b0569015b6d3066429bbfeda711c4a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gin66/library/FastAccelStepper/0.33.14/FastAccelStepper-0.33.14.tar.gz",
+     "https://dl.registry.platformio.org/download/gin66/library/FastAccelStepper/0.33.14/FastAccelStepper-0.33.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gin66/library/FastAccelStepper/0.33.6/FastAccelStepper-0.33.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastAccelStepper-0.33.6.tar.gz",
+    "size_bytes": 105450,
+    "sha256": "b29b4fe126300670ad67ab19f177cd8a8b3f0cd682431eca212e2ed312c8c4e2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gin66/library/FastAccelStepper/0.33.6/FastAccelStepper-0.33.6.tar.gz",
+     "https://dl.registry.platformio.org/download/gin66/library/FastAccelStepper/0.33.6/FastAccelStepper-0.33.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gin66/library/FastAccelStepper/0.33.7/FastAccelStepper-0.33.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastAccelStepper-0.33.7.tar.gz",
+    "size_bytes": 105486,
+    "sha256": "52a49dfef058785e6676c29bc5413b95466be060062621c69dc58dc88bb42a7b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gin66/library/FastAccelStepper/0.33.7/FastAccelStepper-0.33.7.tar.gz",
+     "https://dl.registry.platformio.org/download/gin66/library/FastAccelStepper/0.33.7/FastAccelStepper-0.33.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gin66/library/FastAccelStepper/0.33.8/FastAccelStepper-0.33.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastAccelStepper-0.33.8.tar.gz",
+    "size_bytes": 105526,
+    "sha256": "67cfaed77d3220c6e90af1ed24b708bddbb67d589412e1ce87256c68deb81ff7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gin66/library/FastAccelStepper/0.33.8/FastAccelStepper-0.33.8.tar.gz",
+     "https://dl.registry.platformio.org/download/gin66/library/FastAccelStepper/0.33.8/FastAccelStepper-0.33.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gin66/library/FastAccelStepper/0.33.9/FastAccelStepper-0.33.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastAccelStepper-0.33.9.tar.gz",
+    "size_bytes": 105942,
+    "sha256": "d837039656fb7553428536bb7f8a5a5012151cd4445d99d660cb84f47c6275b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gin66/library/FastAccelStepper/0.33.9/FastAccelStepper-0.33.9.tar.gz",
+     "https://dl.registry.platformio.org/download/gin66/library/FastAccelStepper/0.33.9/FastAccelStepper-0.33.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gin66/library/FastAccelStepper/0.34.0/FastAccelStepper-0.34.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastAccelStepper-0.34.0.tar.gz",
+    "size_bytes": 98748,
+    "sha256": "3b04a197ca29eb37554e46cbc215b4d17ec669e00976491007424f71f3683907",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gin66/library/FastAccelStepper/0.34.0/FastAccelStepper-0.34.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gin66/library/FastAccelStepper/0.34.0/FastAccelStepper-0.34.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gin66/library/FastAccelStepper/1.0.0/FastAccelStepper-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastAccelStepper-1.0.0.tar.gz",
+    "size_bytes": 112573,
+    "sha256": "d66978e8c9605d0cce16e40a43194b8a4a6f2dccb1becea5185568a140af39ab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gin66/library/FastAccelStepper/1.0.0/FastAccelStepper-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gin66/library/FastAccelStepper/1.0.0/FastAccelStepper-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gin66/library/FastAccelStepper/1.2.1/FastAccelStepper-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastAccelStepper-1.2.1.tar.gz",
+    "size_bytes": 113155,
+    "sha256": "feab4111ec26fb458bddbd355016f409d7f141cd318ad473cba25dbcef0de3a3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gin66/library/FastAccelStepper/1.2.1/FastAccelStepper-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gin66/library/FastAccelStepper/1.2.1/FastAccelStepper-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gin66/library/FastAccelStepper/1.2.2/FastAccelStepper-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastAccelStepper-1.2.2.tar.gz",
+    "size_bytes": 113249,
+    "sha256": "32d9b71d387872980f24110da64f098883c88bd5a859e221a1fa55bc35100991",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gin66/library/FastAccelStepper/1.2.2/FastAccelStepper-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gin66/library/FastAccelStepper/1.2.2/FastAccelStepper-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gin66/library/FastAccelStepper/1.2.4/FastAccelStepper-1.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastAccelStepper-1.2.4.tar.gz",
+    "size_bytes": 113981,
+    "sha256": "ea740d4cfdeda6db7da63d96c474431888c1a92ddf13439c4ceb0e9f8889541d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gin66/library/FastAccelStepper/1.2.4/FastAccelStepper-1.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/gin66/library/FastAccelStepper/1.2.4/FastAccelStepper-1.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gin66/library/FastAccelStepper/1.2.5/FastAccelStepper-1.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastAccelStepper-1.2.5.tar.gz",
+    "size_bytes": 117333,
+    "sha256": "fa1a4ef3af81e7f39316d1fe745abc353226b2ca17c2c8b559c3a18d684d291f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gin66/library/FastAccelStepper/1.2.5/FastAccelStepper-1.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/gin66/library/FastAccelStepper/1.2.5/FastAccelStepper-1.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gin66/library/FastAccelStepper/1.2.6/FastAccelStepper-1.2.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastAccelStepper-1.2.6.tar.gz",
+    "size_bytes": 118707,
+    "sha256": "de65c7db3f33caa340ec3a0dfc6f2269ec6c061215db8a58080d125b4ca010f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gin66/library/FastAccelStepper/1.2.6/FastAccelStepper-1.2.6.tar.gz",
+     "https://dl.registry.platformio.org/download/gin66/library/FastAccelStepper/1.2.6/FastAccelStepper-1.2.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gin66/library/FastAccelStepper/1.2.7/FastAccelStepper-1.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastAccelStepper-1.2.7.tar.gz",
+    "size_bytes": 118868,
+    "sha256": "d78548044cbe676d0c9c0882ff10e456a5760ae9d96e0689b31ed7e23d63da94",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gin66/library/FastAccelStepper/1.2.7/FastAccelStepper-1.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/gin66/library/FastAccelStepper/1.2.7/FastAccelStepper-1.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gin66/library/FastAccelStepper/1.2.8/FastAccelStepper-1.2.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastAccelStepper-1.2.8.tar.gz",
+    "size_bytes": 127852,
+    "sha256": "24d803826b97aa3c7ac0ccde672d756c2f2dc3586022de1d2d84c78ef966e0c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gin66/library/FastAccelStepper/1.2.8/FastAccelStepper-1.2.8.tar.gz",
+     "https://dl.registry.platformio.org/download/gin66/library/FastAccelStepper/1.2.8/FastAccelStepper-1.2.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gin66/library/FastAccelStepper/1.3.0/FastAccelStepper-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastAccelStepper-1.3.0.tar.gz",
+    "size_bytes": 134063,
+    "sha256": "60099c59f0cc20e0d0462c862480845d1206a4a9020d45ae9be0c1b9c7321836",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gin66/library/FastAccelStepper/1.3.0/FastAccelStepper-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gin66/library/FastAccelStepper/1.3.0/FastAccelStepper-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gin66/library/FastAccelStepper/1.3.1/FastAccelStepper-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastAccelStepper-1.3.1.tar.gz",
+    "size_bytes": 134528,
+    "sha256": "fe9b035053de46c6392ec562e02e9804410aceefed224052f6d59706c63a5697",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gin66/library/FastAccelStepper/1.3.1/FastAccelStepper-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gin66/library/FastAccelStepper/1.3.1/FastAccelStepper-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gin66/library/FastAccelStepper/1.3.2/FastAccelStepper-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastAccelStepper-1.3.2.tar.gz",
+    "size_bytes": 135398,
+    "sha256": "eb48fe6bf5b2df96a25fe163a7b22e6bbf382340e382c042b27cedb329797f1c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gin66/library/FastAccelStepper/1.3.2/FastAccelStepper-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gin66/library/FastAccelStepper/1.3.2/FastAccelStepper-1.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gin66/library/FastAccelStepper/1.3.3/FastAccelStepper-1.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastAccelStepper-1.3.3.tar.gz",
+    "size_bytes": 135636,
+    "sha256": "7ef7ae5b30abc39bb9eb72e4b3f1aaff7abb12949403cdda8bb94e4d308f27dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gin66/library/FastAccelStepper/1.3.3/FastAccelStepper-1.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/gin66/library/FastAccelStepper/1.3.3/FastAccelStepper-1.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gin66/library/FastAccelStepper/1.3.4/FastAccelStepper-1.3.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastAccelStepper-1.3.4.tar.gz",
+    "size_bytes": 142208,
+    "sha256": "d5f64f47974ee8ae9a098d135d6194249f93271301a58d7a5aadaa3d646c3f69",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gin66/library/FastAccelStepper/1.3.4/FastAccelStepper-1.3.4.tar.gz",
+     "https://dl.registry.platformio.org/download/gin66/library/FastAccelStepper/1.3.4/FastAccelStepper-1.3.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gin66/library/FastAccelStepper/1.4.0/FastAccelStepper-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastAccelStepper-1.4.0.tar.gz",
+    "size_bytes": 165006,
+    "sha256": "129855ba7ee15ed8cceda8b3d2337109cca5a2dc7afec7a1a72716d032880fce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gin66/library/FastAccelStepper/1.4.0/FastAccelStepper-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gin66/library/FastAccelStepper/1.4.0/FastAccelStepper-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gin66/library/FastAccelStepper/2.0.0/FastAccelStepper-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastAccelStepper-2.0.0.tar.gz",
+    "size_bytes": 225720,
+    "sha256": "80c6d6fa50cb995fb5478542f223be5609b9cdd1275eefe6eeca7bb741295966",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gin66/library/FastAccelStepper/2.0.0/FastAccelStepper-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gin66/library/FastAccelStepper/2.0.0/FastAccelStepper-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gin66/library/FastAccelStepper/2.0.1/FastAccelStepper-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastAccelStepper-2.0.1.tar.gz",
+    "size_bytes": 225646,
+    "sha256": "e5d5becb40aba5e0e10d24d1f5c51a807218f70e54472a0d00e25deb930609be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gin66/library/FastAccelStepper/2.0.1/FastAccelStepper-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gin66/library/FastAccelStepper/2.0.1/FastAccelStepper-2.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

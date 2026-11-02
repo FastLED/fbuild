@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/marthaarman",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "marthaarman/library/DMX%20Serial%20Transceiver/1.0.0/DMXSerialTransceiver-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DMXSerialTransceiver-1.0.0.tar.gz",
+    "size_bytes": 18206,
+    "sha256": "7c04b203223d1ef4051ee69f8d510c3e06c6018a5c607e8d3f0e46f981498a31",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marthaarman/library/DMX%2520Serial%2520Transceiver/1.0.0/DMXSerialTransceiver-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/marthaarman/library/DMX%20Serial%20Transceiver/1.0.0/DMXSerialTransceiver-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

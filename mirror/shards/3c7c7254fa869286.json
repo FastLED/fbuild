@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tunglam0605",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tunglam0605/library/TungLam_DriverPID_UART/0.1.1/TungLam_DriverPID_UART-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TungLam_DriverPID_UART-0.1.1.tar.gz",
+    "size_bytes": 16978,
+    "sha256": "f19335d01843909cf168fb3d1a71ede1b6bf53ff2c1c177e2e25f749508caba2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tunglam0605/library/TungLam_DriverPID_UART/0.1.1/TungLam_DriverPID_UART-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tunglam0605/library/TungLam_DriverPID_UART/0.1.1/TungLam_DriverPID_UART-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tunglam0605/library/TungLam_FuzzyPID/0.1.0/TungLam_FuzzyPID-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TungLam_FuzzyPID-0.1.0.tar.gz",
+    "size_bytes": 12469,
+    "sha256": "fb67606cc1e81f4fe0551df8f870cd15f8bcf7d90e3feef72181d0080a913568",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tunglam0605/library/TungLam_FuzzyPID/0.1.0/TungLam_FuzzyPID-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tunglam0605/library/TungLam_FuzzyPID/0.1.0/TungLam_FuzzyPID-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tunglam0605/library/TungLam_HWT901B/0.1.1/TungLam_HWT901B-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TungLam_HWT901B-0.1.1.tar.gz",
+    "size_bytes": 20980,
+    "sha256": "d99d47cc54e36ef61777bce1c15c2a76a15ef1a57099934f30400461e5d70564",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tunglam0605/library/TungLam_HWT901B/0.1.1/TungLam_HWT901B-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tunglam0605/library/TungLam_HWT901B/0.1.1/TungLam_HWT901B-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tunglam0605/library/TungLam_OmniMecanum_4WD/0.11.0/TungLam_OmniMecanum_4WD-0.11.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TungLam_OmniMecanum_4WD-0.11.0.tar.gz",
+    "size_bytes": 47708,
+    "sha256": "046b04cafab7800592f260f7e5304e6adad090f17ec7ccc21ff06a4eddaca89d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tunglam0605/library/TungLam_OmniMecanum_4WD/0.11.0/TungLam_OmniMecanum_4WD-0.11.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tunglam0605/library/TungLam_OmniMecanum_4WD/0.11.0/TungLam_OmniMecanum_4WD-0.11.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tunglam0605/library/TungLam_OmniMecanum_4WD/0.11.2/TungLam_OmniMecanum_4WD-0.11.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TungLam_OmniMecanum_4WD-0.11.2.tar.gz",
+    "size_bytes": 58350,
+    "sha256": "09d6dbfa7d4d868c6f93e340518ce322091cb352c5b57b9925875574e50d06d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tunglam0605/library/TungLam_OmniMecanum_4WD/0.11.2/TungLam_OmniMecanum_4WD-0.11.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tunglam0605/library/TungLam_OmniMecanum_4WD/0.11.2/TungLam_OmniMecanum_4WD-0.11.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tunglam0605/library/TungLam_OmniMecanum_4WD/0.8.2/TungLam_OmniMecanum_4WD-0.8.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TungLam_OmniMecanum_4WD-0.8.2.tar.gz",
+    "size_bytes": 36923,
+    "sha256": "d05a2fb272605ead1a1a3bb7a40b7ca5f1bfe5a084f16a1f76d6a5e24bf682fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tunglam0605/library/TungLam_OmniMecanum_4WD/0.8.2/TungLam_OmniMecanum_4WD-0.8.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tunglam0605/library/TungLam_OmniMecanum_4WD/0.8.2/TungLam_OmniMecanum_4WD-0.8.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tunglam0605/library/TungLam_PS2/0.4.0/TungLam_PS2-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TungLam_PS2-0.4.0.tar.gz",
+    "size_bytes": 23693,
+    "sha256": "beff46d81e2a16db75d65a78f24743f84322aff9939ffad33adf208d7d9c8515",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tunglam0605/library/TungLam_PS2/0.4.0/TungLam_PS2-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tunglam0605/library/TungLam_PS2/0.4.0/TungLam_PS2-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tunglam0605/library/TungLam_Stepper/0.1.2/TungLam_Stepper-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TungLam_Stepper-0.1.2.tar.gz",
+    "size_bytes": 40657,
+    "sha256": "0a12c4762d6d9b0fb4669216728aed2c49a8bdff2bd8d35d03afb4a7a5d386df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tunglam0605/library/TungLam_Stepper/0.1.2/TungLam_Stepper-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tunglam0605/library/TungLam_Stepper/0.1.2/TungLam_Stepper-0.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

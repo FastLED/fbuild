@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ryraki",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ryraki/library/FXLS89xx_Arduino/2.0.1/FXLS89xx_Arduino-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FXLS89xx_Arduino-2.0.1.tar.gz",
+    "size_bytes": 56339,
+    "sha256": "20900a6a618762a2f6cd374486ebcad8d6ba0796d484eda52398e55ae06e4ba6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ryraki/library/FXLS89xx_Arduino/2.0.1/FXLS89xx_Arduino-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ryraki/library/FXLS89xx_Arduino/2.0.1/FXLS89xx_Arduino-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ryraki/library/FXPS7xxx_Arduino/1.0.0/FXPS7xxx_Arduino-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FXPS7xxx_Arduino-1.0.0.tar.gz",
+    "size_bytes": 15403,
+    "sha256": "39f3e13c862b42c435e666e3cfeea44d842ce6ea48ad006835e67311a52d6511",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ryraki/library/FXPS7xxx_Arduino/1.0.0/FXPS7xxx_Arduino-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ryraki/library/FXPS7xxx_Arduino/1.0.0/FXPS7xxx_Arduino-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ryraki/library/MPL3115A2_Arduino/1.0.1/MPL3115A2_Arduino-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPL3115A2_Arduino-1.0.1.tar.gz",
+    "size_bytes": 44634,
+    "sha256": "3244bab4dc90130554a086d8a6b7ca7bf1a296f7665ac9b416b838c4b5b77fe6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ryraki/library/MPL3115A2_Arduino/1.0.1/MPL3115A2_Arduino-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ryraki/library/MPL3115A2_Arduino/1.0.1/MPL3115A2_Arduino-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ryraki/library/NMH1000_Arduino/1.0.1/NMH1000_Arduino-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NMH1000_Arduino-1.0.1.tar.gz",
+    "size_bytes": 5986,
+    "sha256": "10a4279628c2919eaeaab685a3f87a9d21b0f024aabf73953b76e2d49ee4c7bf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ryraki/library/NMH1000_Arduino/1.0.1/NMH1000_Arduino-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ryraki/library/NMH1000_Arduino/1.0.1/NMH1000_Arduino-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

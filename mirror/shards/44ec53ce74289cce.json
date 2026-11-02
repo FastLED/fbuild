@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-sherckuith",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-sherckuith/library/DS1307/0.0.0+sha.ab60603c51d1/DS1307-0.0.0+sha.ab60603c51d1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS1307-0.0.0+sha.ab60603c51d1.tar.gz",
+    "size_bytes": 6307,
+    "sha256": "ed47c539bac4e5dedabcbb8b646c1270eadc5f7988c99967b36da3fa3d7c2b39",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sherckuith/library/DS1307/0.0.0%2Bsha.ab60603c51d1/DS1307-0.0.0%2Bsha.ab60603c51d1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sherckuith/library/DS1307/0.0.0%2Bsha.ab60603c51d1/DS1307-0.0.0%2Bsha.ab60603c51d1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sherckuith/library/USBCDCMSC/0.0.0+sha.8db2bcdf4574/USBCDCMSC-0.0.0+sha.8db2bcdf4574.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "USBCDCMSC-0.0.0+sha.8db2bcdf4574.tar.gz",
+    "size_bytes": 7901,
+    "sha256": "7f394a80b99c1b9245a1c154cd8f612894ac925343949e14060b84d74177cf90",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sherckuith/library/USBCDCMSC/0.0.0%2Bsha.8db2bcdf4574/USBCDCMSC-0.0.0%2Bsha.8db2bcdf4574.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sherckuith/library/USBCDCMSC/0.0.0%2Bsha.8db2bcdf4574/USBCDCMSC-0.0.0%2Bsha.8db2bcdf4574.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/u0078867",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "u0078867/library/Arduino-Websocket-Fast/1.0.0/Arduino-Websocket-Fast-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino-Websocket-Fast-1.0.0.tar.gz",
+    "size_bytes": 10455,
+    "sha256": "3f8994abd65c69069d47742672b447c2c75025701f0a671fe2b573ebe31e72fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/u0078867/library/Arduino-Websocket-Fast/1.0.0/Arduino-Websocket-Fast-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/u0078867/library/Arduino-Websocket-Fast/1.0.0/Arduino-Websocket-Fast-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-cheesew",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-cheesew/library/ADJDs311/0.0.0+sha.5d0bc4df0701/ADJDs311-0.0.0+sha.5d0bc4df0701.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADJDs311-0.0.0+sha.5d0bc4df0701.tar.gz",
+    "size_bytes": 4077,
+    "sha256": "4e2720d097c1099604138829e2434b7d43cba57a48b3421c1aca47b29c589761",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-cheesew/library/ADJDs311/0.0.0%2Bsha.5d0bc4df0701/ADJDs311-0.0.0%2Bsha.5d0bc4df0701.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-cheesew/library/ADJDs311/0.0.0%2Bsha.5d0bc4df0701/ADJDs311-0.0.0%2Bsha.5d0bc4df0701.tar.gz"
+    ]
+   }
+  }
+ ]
+}

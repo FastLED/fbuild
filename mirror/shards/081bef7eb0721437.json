@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-crac-team",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-crac-team/library/Asservissement/0.0.0+sha.dc3ec8d77b6a/Asservissement-0.0.0+sha.dc3ec8d77b6a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Asservissement-0.0.0+sha.dc3ec8d77b6a.tar.gz",
+    "size_bytes": 2494,
+    "sha256": "42b39bfcd979f9d7bc52e0034839f24cb90d7b570704a23cc108ffa1969abcd3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-crac-team/library/Asservissement/0.0.0%2Bsha.dc3ec8d77b6a/Asservissement-0.0.0%2Bsha.dc3ec8d77b6a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-crac-team/library/Asservissement/0.0.0%2Bsha.dc3ec8d77b6a/Asservissement-0.0.0%2Bsha.dc3ec8d77b6a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-crac-team/library/Encoder_Nucleo_16_bits/0.0.0+sha.c57c8fe63263/Encoder_Nucleo_16_bits-0.0.0+sha.c57c8fe63263.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Encoder_Nucleo_16_bits-0.0.0+sha.c57c8fe63263.tar.gz",
+    "size_bytes": 4549,
+    "sha256": "406f1c9bb8204440144d02fa2e59488104fbfed4c564ee38b2e9b3f5dcdadcbf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-crac-team/library/Encoder_Nucleo_16_bits/0.0.0%2Bsha.c57c8fe63263/Encoder_Nucleo_16_bits-0.0.0%2Bsha.c57c8fe63263.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-crac-team/library/Encoder_Nucleo_16_bits/0.0.0%2Bsha.c57c8fe63263/Encoder_Nucleo_16_bits-0.0.0%2Bsha.c57c8fe63263.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-crac-team/library/Pixy2-HA/0.0.0+sha.aeb9fb464ef9/Pixy2-HA-0.0.0+sha.aeb9fb464ef9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pixy2-HA-0.0.0+sha.aeb9fb464ef9.tar.gz",
+    "size_bytes": 13843,
+    "sha256": "51849c9db598b00189b95bb24d5413c9214dcfca88de008e16b9860d13550bb9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-crac-team/library/Pixy2-HA/0.0.0%2Bsha.aeb9fb464ef9/Pixy2-HA-0.0.0%2Bsha.aeb9fb464ef9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-crac-team/library/Pixy2-HA/0.0.0%2Bsha.aeb9fb464ef9/Pixy2-HA-0.0.0%2Bsha.aeb9fb464ef9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

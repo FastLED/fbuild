@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dantler",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dantler/library/GroveEncoder/1.0.0/GroveEncoder-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GroveEncoder-1.0.0.tar.gz",
+    "size_bytes": 4929,
+    "sha256": "6257e0f11798d4065b4efdfa06fc3fb0de53d1d638658635cf5fa2fbaa0eb5bd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dantler/library/GroveEncoder/1.0.0/GroveEncoder-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dantler/library/GroveEncoder/1.0.0/GroveEncoder-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dantler/library/LircPlayer101/1.0.0/LircPlayer101-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LircPlayer101-1.0.0.tar.gz",
+    "size_bytes": 4642,
+    "sha256": "76165bd2159ecd8caaa9cb07d71b2cc1c8b16f313bf46ff56eded713e0ce1410",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dantler/library/LircPlayer101/1.0.0/LircPlayer101-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dantler/library/LircPlayer101/1.0.0/LircPlayer101-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

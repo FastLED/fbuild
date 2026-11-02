@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/csl-3",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "csl-3/library/Pasos/1.0.0/Pasos-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pasos-1.0.0.tar.gz",
+    "size_bytes": 17315,
+    "sha256": "f9ae5c4b5bf8a77e3b9437c6b29339eb6326f4b70d435d1d87139b71fbe267a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/csl-3/library/Pasos/1.0.0/Pasos-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/csl-3/library/Pasos/1.0.0/Pasos-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

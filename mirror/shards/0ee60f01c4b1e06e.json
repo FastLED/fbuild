@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bg-dev",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bg-dev/library/ESPAdmin/2.0.1/ESPAdmin-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAdmin-2.0.1.tar.gz",
+    "size_bytes": 36163,
+    "sha256": "4f8cc6ab2140e648be99dfa3319ae547b2b9dde71f54d4239ff00e44cd9ec963",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bg-dev/library/ESPAdmin/2.0.1/ESPAdmin-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bg-dev/library/ESPAdmin/2.0.1/ESPAdmin-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bg-dev/library/OtaCicd/0.1.2/OtaCicd-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OtaCicd-0.1.2.tar.gz",
+    "size_bytes": 10236,
+    "sha256": "a8af12bdf8ae562919fcbfd72c59b1b9d9a2e19e2e3461be3877b8587ccce91a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bg-dev/library/OtaCicd/0.1.2/OtaCicd-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bg-dev/library/OtaCicd/0.1.2/OtaCicd-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bg-dev/library/WebConfig/0.2.1/WebConfig-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WebConfig-0.2.1.tar.gz",
+    "size_bytes": 3778678,
+    "sha256": "1a42f82c1bfcb6728dd94c235d54584944953bd1cfcd3a636a25328a215b567a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bg-dev/library/WebConfig/0.2.1/WebConfig-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bg-dev/library/WebConfig/0.2.1/WebConfig-0.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

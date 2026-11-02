@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-fiuba",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-fiuba/library/led_cube/0.0.0+sha.bd6527c8f5f3/led_cube-0.0.0+sha.bd6527c8f5f3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "led_cube-0.0.0+sha.bd6527c8f5f3.tar.gz",
+    "size_bytes": 2730,
+    "sha256": "0e4f969ce77c3fa543e7d822ad06ad7dc87cb9a8c2c8c32ac3022183f02898f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-fiuba/library/led_cube/0.0.0%2Bsha.bd6527c8f5f3/led_cube-0.0.0%2Bsha.bd6527c8f5f3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-fiuba/library/led_cube/0.0.0%2Bsha.bd6527c8f5f3/led_cube-0.0.0%2Bsha.bd6527c8f5f3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-fiuba/library/tlc5940/0.0.0+sha.40cb2f9adc4d/tlc5940-0.0.0+sha.40cb2f9adc4d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tlc5940-0.0.0+sha.40cb2f9adc4d.tar.gz",
+    "size_bytes": 2299,
+    "sha256": "3b625b46f99075509b546674ee202551fec6bafbd68046df10707c20f0a46fb3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-fiuba/library/tlc5940/0.0.0%2Bsha.40cb2f9adc4d/tlc5940-0.0.0%2Bsha.40cb2f9adc4d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-fiuba/library/tlc5940/0.0.0%2Bsha.40cb2f9adc4d/tlc5940-0.0.0%2Bsha.40cb2f9adc4d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

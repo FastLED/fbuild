@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dleval",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dleval/library/OttoArduinoLib/1.0.1/OttoArduinoLib-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OttoArduinoLib-1.0.1.tar.gz",
+    "size_bytes": 30094,
+    "sha256": "fdcf97516a769fb868dcb220105174e976ba3d22c823c630c37e1fe1f8242391",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dleval/library/OttoArduinoLib/1.0.1/OttoArduinoLib-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dleval/library/OttoArduinoLib/1.0.1/OttoArduinoLib-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dleval/library/STLED316S/1.1.0/STLED316S-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STLED316S-1.1.0.tar.gz",
+    "size_bytes": 21603,
+    "sha256": "f9d3321b16993e43e3681b57031be1fb73f68bef24f76150520f0b3922cb28ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dleval/library/STLED316S/1.1.0/STLED316S-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dleval/library/STLED316S/1.1.0/STLED316S-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

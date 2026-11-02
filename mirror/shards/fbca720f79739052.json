@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-gbloice",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-gbloice/library/EAQVGAOLED/0.0.0+sha.b3f5d19945ff/EAQVGAOLED-0.0.0+sha.b3f5d19945ff.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EAQVGAOLED-0.0.0+sha.b3f5d19945ff.tar.gz",
+    "size_bytes": 8079,
+    "sha256": "acfd65e6981621d37e060e81adbaa2b8fa5e9f2c3c01412f7eeeacc778be6c85",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-gbloice/library/EAQVGAOLED/0.0.0%2Bsha.b3f5d19945ff/EAQVGAOLED-0.0.0%2Bsha.b3f5d19945ff.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-gbloice/library/EAQVGAOLED/0.0.0%2Bsha.b3f5d19945ff/EAQVGAOLED-0.0.0%2Bsha.b3f5d19945ff.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nahomyirga787-spec",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nahomyirga787-spec/library/Biovo1020A/1.0.0/Biovo1020A-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Biovo1020A-1.0.0.tar.gz",
+    "size_bytes": 6834,
+    "sha256": "8e7b23a31e500e117f8327bc285115919a6441d165fc09bd916b2655ce8c06db",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nahomyirga787-spec/library/Biovo1020A/1.0.0/Biovo1020A-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nahomyirga787-spec/library/Biovo1020A/1.0.0/Biovo1020A-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nahomyirga787-spec/library/Biovo1020A/1.0.1/Biovo1020A-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Biovo1020A-1.0.1.tar.gz",
+    "size_bytes": 6959,
+    "sha256": "f649dc09c9a7098b98086934924e4b77624320643aabd2abaf1a1ca1cbe98e9e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nahomyirga787-spec/library/Biovo1020A/1.0.1/Biovo1020A-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nahomyirga787-spec/library/Biovo1020A/1.0.1/Biovo1020A-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nahomyirga787-spec/library/R558S/1.0.0/R558S-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "R558S-1.0.0.tar.gz",
+    "size_bytes": 6408,
+    "sha256": "8f421ba42d604debfb7442a19aa394c4b402e7e81f8456bb9ba227bbd2658409",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nahomyirga787-spec/library/R558S/1.0.0/R558S-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nahomyirga787-spec/library/R558S/1.0.0/R558S-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jeffshapiro",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jeffshapiro/library/Arduino%20Learning%20Board/1.0/ArduinoLearningBoard-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoLearningBoard-1.0.tar.gz",
+    "size_bytes": 117529,
+    "sha256": "83a8833ea756ef97cfb3f50531c8820f792abcf97d6eea7f52559da36d8e5118",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jeffshapiro/library/Arduino%2520Learning%2520Board/1.0/ArduinoLearningBoard-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jeffshapiro/library/Arduino%20Learning%20Board/1.0/ArduinoLearningBoard-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

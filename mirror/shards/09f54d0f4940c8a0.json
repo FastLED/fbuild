@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tkem",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tkem/library/CarreraDigitalControlUnit/0.8.4/CarreraDigitalControlUnit-0.8.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CarreraDigitalControlUnit-0.8.4.tar.gz",
+    "size_bytes": 12431,
+    "sha256": "e9ac2a6bacf3320a4cb87e78ae99ddb356150e895d926bef2ed2f15433d66a97",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tkem/library/CarreraDigitalControlUnit/0.8.4/CarreraDigitalControlUnit-0.8.4.tar.gz",
+     "https://dl.registry.platformio.org/download/tkem/library/CarreraDigitalControlUnit/0.8.4/CarreraDigitalControlUnit-0.8.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tkem/library/mbino/2.0.0/mbino-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mbino-2.0.0.tar.gz",
+    "size_bytes": 207429,
+    "sha256": "6f76ab90b1531a3d30020d04b97573012abc3cbafc17f343d42b1be49ca9fe9b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tkem/library/mbino/2.0.0/mbino-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tkem/library/mbino/2.0.0/mbino-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

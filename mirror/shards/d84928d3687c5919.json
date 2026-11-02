@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/arduinoclassroom",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "arduinoclassroom/library/Singlish%20Converter/1.0.0/SinglishConverter-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SinglishConverter-1.0.0.tar.gz",
+    "size_bytes": 10520,
+    "sha256": "b4527963c4490e03c3534883daa8bc85bcb6fc079bc2d4c7c7346a97c27fadc0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduinoclassroom/library/Singlish%2520Converter/1.0.0/SinglishConverter-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduinoclassroom/library/Singlish%20Converter/1.0.0/SinglishConverter-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduinoclassroom/library/SmoothUI/1.0.0/SmoothUI-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmoothUI-1.0.0.tar.gz",
+    "size_bytes": 28955,
+    "sha256": "72fb5fe9af5481aad329bc3238813af49f1befe27cee76fc0ce7886834f2d292",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduinoclassroom/library/SmoothUI/1.0.0/SmoothUI-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduinoclassroom/library/SmoothUI/1.0.0/SmoothUI-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduinoclassroom/library/Tanglish%20Converter/1.0.0/TanglishConverter-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TanglishConverter-1.0.0.tar.gz",
+    "size_bytes": 12282,
+    "sha256": "f579e255d90a3240da06ea18034b4b2ebecbf7b7b15fbe5967d34f8cf2ff9dd6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduinoclassroom/library/Tanglish%2520Converter/1.0.0/TanglishConverter-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduinoclassroom/library/Tanglish%20Converter/1.0.0/TanglishConverter-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

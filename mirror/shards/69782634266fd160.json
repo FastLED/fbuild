@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ciband",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ciband/library/Ark-Cpp/0.6.8/Ark-Cpp-0.6.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ark-Cpp-0.6.8.tar.gz",
+    "size_bytes": 120429,
+    "sha256": "f838282a76f4b77ad2f21ebc02be1e4d626cfbf55638d15918ec3cdcf9f3e575",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ciband/library/Ark-Cpp/0.6.8/Ark-Cpp-0.6.8.tar.gz",
+     "https://dl.registry.platformio.org/download/ciband/library/Ark-Cpp/0.6.8/Ark-Cpp-0.6.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ciband/library/avr_stl/1.2.3/avr_stl-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "avr_stl-1.2.3.tar.gz",
+    "size_bytes": 91396,
+    "sha256": "b62cebe1c57787df8e9852cc74f3b326c0d08b8e6a6e3e6c9c408663e077965c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ciband/library/avr_stl/1.2.3/avr_stl-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/ciband/library/avr_stl/1.2.3/avr_stl-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ciband/library/bip39/1.1.1/bip39-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bip39-1.1.1.tar.gz",
+    "size_bytes": 171048,
+    "sha256": "521de48d739dd9acaafbfc256a27a9c688878ad3df45011e75f5aa78f8ae5cc1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ciband/library/bip39/1.1.1/bip39-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ciband/library/bip39/1.1.1/bip39-1.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

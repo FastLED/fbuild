@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-sonypony",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-sonypony/library/SoftSerial/0.0.0+sha.a0029614de72/SoftSerial-0.0.0+sha.a0029614de72.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SoftSerial-0.0.0+sha.a0029614de72.tar.gz",
+    "size_bytes": 3400,
+    "sha256": "5b5fd66eee60cfc12b832aded67a53923baa38624d5bfa37bd71d178295c6a7c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sonypony/library/SoftSerial/0.0.0%2Bsha.a0029614de72/SoftSerial-0.0.0%2Bsha.a0029614de72.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sonypony/library/SoftSerial/0.0.0%2Bsha.a0029614de72/SoftSerial-0.0.0%2Bsha.a0029614de72.tar.gz"
+    ]
+   }
+  }
+ ]
+}

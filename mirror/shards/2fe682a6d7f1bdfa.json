@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/improv",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "improv/library/Improv/1.2.4/Improv-1.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Improv-1.2.4.tar.gz",
+    "size_bytes": 9270,
+    "sha256": "f181e6004d4f734bb4e688e22f95655c16613360cc01d15df10ca172edf82dcc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/improv/library/Improv/1.2.4/Improv-1.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/improv/library/Improv/1.2.4/Improv-1.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "improv/library/Improv/1.2.5/Improv-1.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Improv-1.2.5.tar.gz",
+    "size_bytes": 10312,
+    "sha256": "8333c614b20a4dbad1c90cb5feceb2bd0fb590f41537f0f655a1c332cab08e93",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/improv/library/Improv/1.2.5/Improv-1.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/improv/library/Improv/1.2.5/Improv-1.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "improv/library/Improv/1.2.6/Improv-1.2.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Improv-1.2.6.tar.gz",
+    "size_bytes": 11017,
+    "sha256": "3948621c08b368fc90fb0f1632a38f793a3f8f91b08c6bf1915175950a2bebf0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/improv/library/Improv/1.2.6/Improv-1.2.6.tar.gz",
+     "https://dl.registry.platformio.org/download/improv/library/Improv/1.2.6/Improv-1.2.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "improv/library/Improv/1.2.7/Improv-1.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Improv-1.2.7.tar.gz",
+    "size_bytes": 12023,
+    "sha256": "8aa5038a074658b8c2141c83808e85c1231656cd52731fb040fb5ddd14d77374",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/improv/library/Improv/1.2.7/Improv-1.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/improv/library/Improv/1.2.7/Improv-1.2.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

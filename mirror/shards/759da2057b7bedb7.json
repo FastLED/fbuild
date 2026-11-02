@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/solderparty",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "solderparty/library/TSC2004/1.1.0/TSC2004-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TSC2004-1.1.0.tar.gz",
+    "size_bytes": 3112,
+    "sha256": "e4d1db66ed5d6d8803e57f44f9d301dad357a62943dce2ac2632fdebbc178de8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderparty/library/TSC2004/1.1.0/TSC2004-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderparty/library/TSC2004/1.1.0/TSC2004-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

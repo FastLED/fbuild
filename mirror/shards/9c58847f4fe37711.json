@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/satoyon",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "satoyon/library/PFNFont/1.0.0/PFNFont-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PFNFont-1.0.0.tar.gz",
+    "size_bytes": 593618,
+    "sha256": "98b61377648b9ed901a45ae4e4160e106babe151fbb06cbcbc2d915c90933048",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/satoyon/library/PFNFont/1.0.0/PFNFont-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/satoyon/library/PFNFont/1.0.0/PFNFont-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

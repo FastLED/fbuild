@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/asnproject",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "asnproject/library/Panzer_Robotics_Library/1.0/Panzer_Robotics_Library-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Panzer_Robotics_Library-1.0.tar.gz",
+    "size_bytes": 9889,
+    "sha256": "3407555388b18ca8bdfa87c86a511d4d1301e5f1d65429e253f456938df616ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/asnproject/library/Panzer_Robotics_Library/1.0/Panzer_Robotics_Library-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/asnproject/library/Panzer_Robotics_Library/1.0/Panzer_Robotics_Library-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "asnproject/library/Panzer_Robotics_Library/1.1.0/Panzer_Robotics_Library-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Panzer_Robotics_Library-1.1.0.tar.gz",
+    "size_bytes": 13429,
+    "sha256": "221ac291041fffb22747e7f77561d04a2dabe416dc25c095b4ffe2073d1ab849",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/asnproject/library/Panzer_Robotics_Library/1.1.0/Panzer_Robotics_Library-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/asnproject/library/Panzer_Robotics_Library/1.1.0/Panzer_Robotics_Library-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

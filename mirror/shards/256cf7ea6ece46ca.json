@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-fmanzano-dtk",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-fmanzano-dtk/library/RF24/0.0.0+sha.992552951877/RF24-0.0.0+sha.992552951877.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RF24-0.0.0+sha.992552951877.tar.gz",
+    "size_bytes": 29344,
+    "sha256": "607e6b9bcfc0e424fdfcda947ffef7649d1d6af19fe41fc65227cf18a33c8c2d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-fmanzano-dtk/library/RF24/0.0.0%2Bsha.992552951877/RF24-0.0.0%2Bsha.992552951877.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-fmanzano-dtk/library/RF24/0.0.0%2Bsha.992552951877/RF24-0.0.0%2Bsha.992552951877.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-fmanzano-dtk/library/SeeedStudio_Grove_MP3_v2/0.0.0+sha.52ad25e0a9d0/SeeedStudio_Grove_MP3_v2-0.0.0+sha.52ad25e0a9d0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SeeedStudio_Grove_MP3_v2-0.0.0+sha.52ad25e0a9d0.tar.gz",
+    "size_bytes": 2855,
+    "sha256": "f3cb1c82b1aba6a2d9df31c0e56b360fa1540c82f42a2e9b4a38862ee059167b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-fmanzano-dtk/library/SeeedStudio_Grove_MP3_v2/0.0.0%2Bsha.52ad25e0a9d0/SeeedStudio_Grove_MP3_v2-0.0.0%2Bsha.52ad25e0a9d0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-fmanzano-dtk/library/SeeedStudio_Grove_MP3_v2/0.0.0%2Bsha.52ad25e0a9d0/SeeedStudio_Grove_MP3_v2-0.0.0%2Bsha.52ad25e0a9d0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

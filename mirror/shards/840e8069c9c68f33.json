@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-og",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-og/library/HT1621/0.0.0+sha.2377890cc77a/HT1621-0.0.0+sha.2377890cc77a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HT1621-0.0.0+sha.2377890cc77a.tar.gz",
+    "size_bytes": 2217,
+    "sha256": "4e325a1afa749df3bfcea51781528936d4fa25a6b950f2c0344730a47a6458fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-og/library/HT1621/0.0.0%2Bsha.2377890cc77a/HT1621-0.0.0%2Bsha.2377890cc77a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-og/library/HT1621/0.0.0%2Bsha.2377890cc77a/HT1621-0.0.0%2Bsha.2377890cc77a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-og/library/HX8347D/0.0.0+sha.233295bc63af/HX8347D-0.0.0+sha.233295bc63af.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HX8347D-0.0.0+sha.233295bc63af.tar.gz",
+    "size_bytes": 8146,
+    "sha256": "f381212f5fdd89d6f75711d6f7edaf09daf79e4e060f8cddfc8ed0622fbae535",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-og/library/HX8347D/0.0.0%2Bsha.233295bc63af/HX8347D-0.0.0%2Bsha.233295bc63af.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-og/library/HX8347D/0.0.0%2Bsha.233295bc63af/HX8347D-0.0.0%2Bsha.233295bc63af.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-og/library/Switch/0.0.0+sha.952d0895e274/Switch-0.0.0+sha.952d0895e274.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Switch-0.0.0+sha.952d0895e274.tar.gz",
+    "size_bytes": 1306,
+    "sha256": "b9d3aea55878cf9ccbe26015968a3ba344b0176f1bc7c40b3523a0fe03910ff0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-og/library/Switch/0.0.0%2Bsha.952d0895e274/Switch-0.0.0%2Bsha.952d0895e274.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-og/library/Switch/0.0.0%2Bsha.952d0895e274/Switch-0.0.0%2Bsha.952d0895e274.tar.gz"
+    ]
+   }
+  }
+ ]
+}

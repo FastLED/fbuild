@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-hermano",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-hermano/library/HardwarePulseCounter/0.0.0+sha.437833c86cdd/HardwarePulseCounter-0.0.0+sha.437833c86cdd.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HardwarePulseCounter-0.0.0+sha.437833c86cdd.tar.gz",
+    "size_bytes": 1851,
+    "sha256": "9e28619eb7a9f5ddedaf3a923f745e8484aba83d1e75d3dd7403fc3d252fd37c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hermano/library/HardwarePulseCounter/0.0.0%2Bsha.437833c86cdd/HardwarePulseCounter-0.0.0%2Bsha.437833c86cdd.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hermano/library/HardwarePulseCounter/0.0.0%2Bsha.437833c86cdd/HardwarePulseCounter-0.0.0%2Bsha.437833c86cdd.tar.gz"
+    ]
+   }
+  }
+ ]
+}

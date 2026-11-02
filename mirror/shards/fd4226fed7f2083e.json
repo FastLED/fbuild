@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/zfields",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "zfields/library/NesRob/1.1.2/NesRob-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NesRob-1.1.2.tar.gz",
+    "size_bytes": 40290,
+    "sha256": "c8b7c42269258b7f20b9e336aca87d1e0f8505aefc4dd647355308fcbea72b5a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zfields/library/NesRob/1.1.2/NesRob-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/zfields/library/NesRob/1.1.2/NesRob-1.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

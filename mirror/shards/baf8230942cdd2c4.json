@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/machinefi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "machinefi/library/PSACrypto/1.0.0/PSACrypto-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PSACrypto-1.0.0.tar.gz",
+    "size_bytes": 489166,
+    "sha256": "fc13e9d2416a70be3da37312f8f71e0e650b732b2d96fbee96aed12a28921a12",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/machinefi/library/PSACrypto/1.0.0/PSACrypto-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/machinefi/library/PSACrypto/1.0.0/PSACrypto-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "machinefi/library/W3bstreamClient/1.0.0/W3bstreamClient-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "W3bstreamClient-1.0.0.tar.gz",
+    "size_bytes": 12419,
+    "sha256": "616bdbac4ab4a762944966123c97f5491c62138132eed126e5e398ae1d87f98b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/machinefi/library/W3bstreamClient/1.0.0/W3bstreamClient-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/machinefi/library/W3bstreamClient/1.0.0/W3bstreamClient-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

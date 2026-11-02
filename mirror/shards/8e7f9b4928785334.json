@@ -1,0 +1,139 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/juarendra",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "juarendra/library/ADPD188BI/0.1.0/ADPD188BI-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADPD188BI-0.1.0.tar.gz",
+    "size_bytes": 3801,
+    "sha256": "d7638373d1ebd13793b49a90765a6434f19532f51fa9ae268e1479833b9df23d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/juarendra/library/ADPD188BI/0.1.0/ADPD188BI-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/juarendra/library/ADPD188BI/0.1.0/ADPD188BI-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "juarendra/library/ADS112C04/0.1.0/ADS112C04-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADS112C04-0.1.0.tar.gz",
+    "size_bytes": 3622,
+    "sha256": "1a7763c06b968e8e114fc2ec654ac4a7b9a71284e56d6b9a3e93610827abe99e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/juarendra/library/ADS112C04/0.1.0/ADS112C04-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/juarendra/library/ADS112C04/0.1.0/ADS112C04-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "juarendra/library/D6F-W04A1/0.1.0/D6F-W04A1-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "D6F-W04A1-0.1.0.tar.gz",
+    "size_bytes": 2837,
+    "sha256": "c6dac238ff60a3ca3a5293d95586b22e7764f71553af84606a910e99e08b4c5b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/juarendra/library/D6F-W04A1/0.1.0/D6F-W04A1-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/juarendra/library/D6F-W04A1/0.1.0/D6F-W04A1-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "juarendra/library/MR24HPC1/0.1.0/MR24HPC1-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MR24HPC1-0.1.0.tar.gz",
+    "size_bytes": 3337,
+    "sha256": "6a033db3905e76bd28c8a3032c0909f806d7a9d8dad9e46d835c45d7800ab20d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/juarendra/library/MR24HPC1/0.1.0/MR24HPC1-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/juarendra/library/MR24HPC1/0.1.0/MR24HPC1-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "juarendra/library/RN8209D/0.1.0/RN8209D-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RN8209D-0.1.0.tar.gz",
+    "size_bytes": 5798,
+    "sha256": "7d15e660e66c45c07eb74b133a5895cb1c68d10bdca3c21a96c143ea814644b0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/juarendra/library/RN8209D/0.1.0/RN8209D-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/juarendra/library/RN8209D/0.1.0/RN8209D-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "juarendra/library/VIA_Arduino/0.1.0/VIA_Arduino-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VIA_Arduino-0.1.0.tar.gz",
+    "size_bytes": 8770,
+    "sha256": "d9a39824a09dfa9ec227f1e232d24b63c0cae4a62eac77276975019d34816629",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/juarendra/library/VIA_Arduino/0.1.0/VIA_Arduino-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/juarendra/library/VIA_Arduino/0.1.0/VIA_Arduino-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "juarendra/library/VIA_Arduino/0.2.0/VIA_Arduino-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VIA_Arduino-0.2.0.tar.gz",
+    "size_bytes": 15961,
+    "sha256": "9c236e2e8a1d76bf6ecad8eefef41e25545742c2ae9ac12bf4315c400a3a7820",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/juarendra/library/VIA_Arduino/0.2.0/VIA_Arduino-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/juarendra/library/VIA_Arduino/0.2.0/VIA_Arduino-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "juarendra/library/VIA_Arduino/0.4.0-experimental/VIA_Arduino-0.4.0-experimental.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VIA_Arduino-0.4.0-experimental.tar.gz",
+    "size_bytes": 29818,
+    "sha256": "76ea20b678784dcb067540ae19f6a4c6952aecc1f394f023be4375d520381bfc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/juarendra/library/VIA_Arduino/0.4.0-experimental/VIA_Arduino-0.4.0-experimental.tar.gz",
+     "https://dl.registry.platformio.org/download/juarendra/library/VIA_Arduino/0.4.0-experimental/VIA_Arduino-0.4.0-experimental.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "juarendra/library/VIA_Arduino/0.5.0-experimental/VIA_Arduino-0.5.0-experimental.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VIA_Arduino-0.5.0-experimental.tar.gz",
+    "size_bytes": 36032,
+    "sha256": "55bd04af663b87c1aebd5f6e9bbcffe4f5f4fa42a7eaf0eadb4e9412e9678418",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/juarendra/library/VIA_Arduino/0.5.0-experimental/VIA_Arduino-0.5.0-experimental.tar.gz",
+     "https://dl.registry.platformio.org/download/juarendra/library/VIA_Arduino/0.5.0-experimental/VIA_Arduino-0.5.0-experimental.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "juarendra/library/ZE40B-TVOC/0.1.0/ZE40B-TVOC-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ZE40B-TVOC-0.1.0.tar.gz",
+    "size_bytes": 3280,
+    "sha256": "36e2e38ebc8adbe4449adfa3a9c55f374bc330aa6232c4cad5767d224594b8f9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/juarendra/library/ZE40B-TVOC/0.1.0/ZE40B-TVOC-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/juarendra/library/ZE40B-TVOC/0.1.0/ZE40B-TVOC-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

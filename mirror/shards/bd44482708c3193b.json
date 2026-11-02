@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-yoonghm",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-yoonghm/library/DS1820/0.0.0+sha.245af9360f0d/DS1820-0.0.0+sha.245af9360f0d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS1820-0.0.0+sha.245af9360f0d.tar.gz",
+    "size_bytes": 6513,
+    "sha256": "8708f747eecf87ff18e88e64cf02353fe453e808637478b0858fa9fac5e1c7ba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yoonghm/library/DS1820/0.0.0%2Bsha.245af9360f0d/DS1820-0.0.0%2Bsha.245af9360f0d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yoonghm/library/DS1820/0.0.0%2Bsha.245af9360f0d/DS1820-0.0.0%2Bsha.245af9360f0d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-yoonghm/library/ShiftReg/0.0.0+sha.a0e3fd47970f/ShiftReg-0.0.0+sha.a0e3fd47970f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ShiftReg-0.0.0+sha.a0e3fd47970f.tar.gz",
+    "size_bytes": 2561,
+    "sha256": "8dc8e3c4606334733b80de8f04a2e1d06fd09d510945a800c53afc43179d13d3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yoonghm/library/ShiftReg/0.0.0%2Bsha.a0e3fd47970f/ShiftReg-0.0.0%2Bsha.a0e3fd47970f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yoonghm/library/ShiftReg/0.0.0%2Bsha.a0e3fd47970f/ShiftReg-0.0.0%2Bsha.a0e3fd47970f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-yoonghm/library/jsmn/0.0.0+sha.5167da2fcc4e/jsmn-0.0.0+sha.5167da2fcc4e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "jsmn-0.0.0+sha.5167da2fcc4e.tar.gz",
+    "size_bytes": 5029,
+    "sha256": "002da28855919d1b44564d2a4ee25a304c3e5207ac8431736f3987519a8f9f3c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yoonghm/library/jsmn/0.0.0%2Bsha.5167da2fcc4e/jsmn-0.0.0%2Bsha.5167da2fcc4e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yoonghm/library/jsmn/0.0.0%2Bsha.5167da2fcc4e/jsmn-0.0.0%2Bsha.5167da2fcc4e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

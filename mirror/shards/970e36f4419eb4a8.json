@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/noranraskin",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "noranraskin/library/MT6701/1.0.2/MT6701-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MT6701-1.0.2.tar.gz",
+    "size_bytes": 16604,
+    "sha256": "45d9a92308ace57e73b6d123222005d1a1110ab93de8ffee6debcddcdcb271bd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/noranraskin/library/MT6701/1.0.2/MT6701-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/noranraskin/library/MT6701/1.0.2/MT6701-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

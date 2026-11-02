@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ekkai",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ekkai/library/Ai%20COCOCAM/1.0.0/AiCOCOCAM-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AiCOCOCAM-1.0.0.tar.gz",
+    "size_bytes": 7411,
+    "sha256": "c2fd454bbd29bbfc20438edadeb8ff499f9981996a81d8979c9fdc2bb9a60153",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ekkai/library/Ai%2520COCOCAM/1.0.0/AiCOCOCAM-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ekkai/library/Ai%20COCOCAM/1.0.0/AiCOCOCAM-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ekkai/library/KOCOAFAB/1.0.3/KOCOAFAB-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KOCOAFAB-1.0.3.tar.gz",
+    "size_bytes": 32813,
+    "sha256": "967807624d52c8bbc3eed945137461f800d09146a742092a90ba2eba5f4d96a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ekkai/library/KOCOAFAB/1.0.3/KOCOAFAB-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/ekkai/library/KOCOAFAB/1.0.3/KOCOAFAB-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ekkai/library/PMsensor/1.1.1/PMsensor-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PMsensor-1.1.1.tar.gz",
+    "size_bytes": 1906,
+    "sha256": "63ce34499353e5024775101669adad5e58050d47bf874831fc0d4e7b8a942908",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ekkai/library/PMsensor/1.1.1/PMsensor-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ekkai/library/PMsensor/1.1.1/PMsensor-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ekkai/library/WizFi360/1.0.0/WizFi360-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WizFi360-1.0.0.tar.gz",
+    "size_bytes": 35130,
+    "sha256": "b75aa57e0ce05e3414cbdd7ef44c6557284479cc58f9ce0fe5991c54f43f4ab2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ekkai/library/WizFi360/1.0.0/WizFi360-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ekkai/library/WizFi360/1.0.0/WizFi360-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ekkai/library/dustSensor_kocoa/1.0.0/dustSensor_kocoa-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "dustSensor_kocoa-1.0.0.tar.gz",
+    "size_bytes": 1424,
+    "sha256": "e7fa698b24487f7ed54eb93c7485c10f0a382169ad5383846f7adabb7ab95e9f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ekkai/library/dustSensor_kocoa/1.0.0/dustSensor_kocoa-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ekkai/library/dustSensor_kocoa/1.0.0/dustSensor_kocoa-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

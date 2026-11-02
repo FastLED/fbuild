@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-allonq",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-allonq/library/MAG3110/0.0.0+sha.8f4028440d15/MAG3110-0.0.0+sha.8f4028440d15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAG3110-0.0.0+sha.8f4028440d15.tar.gz",
+    "size_bytes": 2617,
+    "sha256": "5f0f728ba16f17d50de5ffed53a8b5dc42409a6a832b80334c2afbd40b236499",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-allonq/library/MAG3110/0.0.0%2Bsha.8f4028440d15/MAG3110-0.0.0%2Bsha.8f4028440d15.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-allonq/library/MAG3110/0.0.0%2Bsha.8f4028440d15/MAG3110-0.0.0%2Bsha.8f4028440d15.tar.gz"
+    ]
+   }
+  }
+ ]
+}

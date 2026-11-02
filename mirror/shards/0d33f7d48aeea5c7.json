@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/vvs551",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "vvs551/library/ESP_NOW_Network/1.0.0/ESP_NOW_Network-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP_NOW_Network-1.0.0.tar.gz",
+    "size_bytes": 5817,
+    "sha256": "feff2cc8410e70e6200b11d62ff272401f504e18f60391bf418e5ec7057f589f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vvs551/library/ESP_NOW_Network/1.0.0/ESP_NOW_Network-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vvs551/library/ESP_NOW_Network/1.0.0/ESP_NOW_Network-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vvs551/library/IRRemoteESP32/1.0.0/IRRemoteESP32-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IRRemoteESP32-1.0.0.tar.gz",
+    "size_bytes": 3545,
+    "sha256": "9de4f60e46192350bd8c5f3c57f3e48ab13aebd795a5799f3476309c62b7d34e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vvs551/library/IRRemoteESP32/1.0.0/IRRemoteESP32-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vvs551/library/IRRemoteESP32/1.0.0/IRRemoteESP32-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

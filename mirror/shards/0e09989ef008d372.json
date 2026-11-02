@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/slavaza",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "slavaza/library/SuperButton/0.1.2/SuperButton-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperButton-0.1.2.tar.gz",
+    "size_bytes": 14907,
+    "sha256": "855c2c0d4a31bead5eeaa3c2ceabbf4fa5bf94a8abda3ad85e2df83fb2415a11",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/slavaza/library/SuperButton/0.1.2/SuperButton-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/slavaza/library/SuperButton/0.1.2/SuperButton-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "slavaza/library/Thread/0.0.2/Thread-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Thread-0.0.2.tar.gz",
+    "size_bytes": 15653,
+    "sha256": "dc4bfac301f2d876aa888f958b4756bf30e701302453c2226b94e76d02a16f09",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/slavaza/library/Thread/0.0.2/Thread-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/slavaza/library/Thread/0.0.2/Thread-0.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

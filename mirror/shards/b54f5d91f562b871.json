@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-siliconlabs",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-siliconlabs/library/EFM32_CapSenseSlider/0.0.0+sha.8d096e5bc045/EFM32_CapSenseSlider-0.0.0+sha.8d096e5bc045.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EFM32_CapSenseSlider-0.0.0+sha.8d096e5bc045.tar.gz",
+    "size_bytes": 9643,
+    "sha256": "9b6fd1a1733709b9b368cb8e74cc5ac36548bfeb43a7433eee0ac40b977fe16c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-siliconlabs/library/EFM32_CapSenseSlider/0.0.0%2Bsha.8d096e5bc045/EFM32_CapSenseSlider-0.0.0%2Bsha.8d096e5bc045.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-siliconlabs/library/EFM32_CapSenseSlider/0.0.0%2Bsha.8d096e5bc045/EFM32_CapSenseSlider-0.0.0%2Bsha.8d096e5bc045.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-siliconlabs/library/EFM32_SegmentLCD/0.0.0+sha.114aa75da77b/EFM32_SegmentLCD-0.0.0+sha.114aa75da77b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EFM32_SegmentLCD-0.0.0+sha.114aa75da77b.tar.gz",
+    "size_bytes": 12174,
+    "sha256": "b8b37aab37cd95dda8a3f8f31a5472ad5efde54d3d4ea7b6578812eb0b3e261c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-siliconlabs/library/EFM32_SegmentLCD/0.0.0%2Bsha.114aa75da77b/EFM32_SegmentLCD-0.0.0%2Bsha.114aa75da77b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-siliconlabs/library/EFM32_SegmentLCD/0.0.0%2Bsha.114aa75da77b/EFM32_SegmentLCD-0.0.0%2Bsha.114aa75da77b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-siliconlabs/library/MemoryLCD/0.0.0+sha.0f8ae10b308d/MemoryLCD-0.0.0+sha.0f8ae10b308d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MemoryLCD-0.0.0+sha.0f8ae10b308d.tar.gz",
+    "size_bytes": 12647,
+    "sha256": "cd5f94d0ad8170b8858eaf866917e64c90c4c24d85db87bf2dbe6be9fa8c3bfc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-siliconlabs/library/MemoryLCD/0.0.0%2Bsha.0f8ae10b308d/MemoryLCD-0.0.0%2Bsha.0f8ae10b308d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-siliconlabs/library/MemoryLCD/0.0.0%2Bsha.0f8ae10b308d/MemoryLCD-0.0.0%2Bsha.0f8ae10b308d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-siliconlabs/library/SILABS_RHT/0.0.0+sha.83a8b7df827f/SILABS_RHT-0.0.0+sha.83a8b7df827f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SILABS_RHT-0.0.0+sha.83a8b7df827f.tar.gz",
+    "size_bytes": 3863,
+    "sha256": "a9b3618b094276817b833253301173eaf9823509cbcbbe7af74e685366746198",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-siliconlabs/library/SILABS_RHT/0.0.0%2Bsha.83a8b7df827f/SILABS_RHT-0.0.0%2Bsha.83a8b7df827f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-siliconlabs/library/SILABS_RHT/0.0.0%2Bsha.83a8b7df827f/SILABS_RHT-0.0.0%2Bsha.83a8b7df827f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-siliconlabs/library/Si1133/0.0.0+sha.f780ca9105bb/Si1133-0.0.0+sha.f780ca9105bb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Si1133-0.0.0+sha.f780ca9105bb.tar.gz",
+    "size_bytes": 8187,
+    "sha256": "951b3d3f5e118b5616a14bbba15562c37d06605007434a9b114baf2c09676068",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-siliconlabs/library/Si1133/0.0.0%2Bsha.f780ca9105bb/Si1133-0.0.0%2Bsha.f780ca9105bb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-siliconlabs/library/Si1133/0.0.0%2Bsha.f780ca9105bb/Si1133-0.0.0%2Bsha.f780ca9105bb.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/thingforward",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "thingforward/library/c99-sigfox-wisol-WSSFM10R1AT/0.1/c99-sigfox-wisol-WSSFM10R1AT-0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "c99-sigfox-wisol-WSSFM10R1AT-0.1.tar.gz",
+    "size_bytes": 7236,
+    "sha256": "4dd4edbf47b9c36deffa8f8dd2ef1d6e293a802b8bab3b45f434e5f7a291202d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thingforward/library/c99-sigfox-wisol-WSSFM10R1AT/0.1/c99-sigfox-wisol-WSSFM10R1AT-0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/thingforward/library/c99-sigfox-wisol-WSSFM10R1AT/0.1/c99-sigfox-wisol-WSSFM10R1AT-0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thingforward/library/nbiot-arduino/0.8/nbiot-arduino-0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nbiot-arduino-0.8.tar.gz",
+    "size_bytes": 26625,
+    "sha256": "fb396d3639a2a5749ecb219d4f3ff5561f5deaec16d503eebe012ba488618518",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thingforward/library/nbiot-arduino/0.8/nbiot-arduino-0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/thingforward/library/nbiot-arduino/0.8/nbiot-arduino-0.8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

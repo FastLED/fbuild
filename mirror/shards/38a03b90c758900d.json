@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-lucasmoraeseng",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-lucasmoraeseng/library/24cXX/0.0.0+sha.0a68754e37e4/24cXX-0.0.0+sha.0a68754e37e4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "24cXX-0.0.0+sha.0a68754e37e4.tar.gz",
+    "size_bytes": 2590,
+    "sha256": "b3941b5297fbc2522cdd4211ed07a71abfed84c7014bfebf1b601003a589b6ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-lucasmoraeseng/library/24cXX/0.0.0%2Bsha.0a68754e37e4/24cXX-0.0.0%2Bsha.0a68754e37e4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-lucasmoraeseng/library/24cXX/0.0.0%2Bsha.0a68754e37e4/24cXX-0.0.0%2Bsha.0a68754e37e4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-lucasmoraeseng/library/MAX7219/0.0.0+sha.cba98a2b97d2/MAX7219-0.0.0+sha.cba98a2b97d2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX7219-0.0.0+sha.cba98a2b97d2.tar.gz",
+    "size_bytes": 2771,
+    "sha256": "21938d8e81fdb5bed3d5358a9c1c048b270a91c575fec83e53c8799ebfc8ad0a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-lucasmoraeseng/library/MAX7219/0.0.0%2Bsha.cba98a2b97d2/MAX7219-0.0.0%2Bsha.cba98a2b97d2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-lucasmoraeseng/library/MAX7219/0.0.0%2Bsha.cba98a2b97d2/MAX7219-0.0.0%2Bsha.cba98a2b97d2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-lucasmoraeseng/library/MAX7219_SPI/0.0.0+sha.a8fe01e0ffbb/MAX7219_SPI-0.0.0+sha.a8fe01e0ffbb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX7219_SPI-0.0.0+sha.a8fe01e0ffbb.tar.gz",
+    "size_bytes": 2644,
+    "sha256": "c6fff2ca3f97f64370918e998d64af772bbedb78f384a04cce28f3dbc5e2195c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-lucasmoraeseng/library/MAX7219_SPI/0.0.0%2Bsha.a8fe01e0ffbb/MAX7219_SPI-0.0.0%2Bsha.a8fe01e0ffbb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-lucasmoraeseng/library/MAX7219_SPI/0.0.0%2Bsha.a8fe01e0ffbb/MAX7219_SPI-0.0.0%2Bsha.a8fe01e0ffbb.tar.gz"
+    ]
+   }
+  }
+ ]
+}

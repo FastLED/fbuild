@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/naszly",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "naszly/library/StaticSerialCommands/1.2.0/StaticSerialCommands-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StaticSerialCommands-1.2.0.tar.gz",
+    "size_bytes": 9060,
+    "sha256": "9801c0f095f709b74c43d9582401676aa412ac32542b87ca5b628c880ade5bd4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/naszly/library/StaticSerialCommands/1.2.0/StaticSerialCommands-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/naszly/library/StaticSerialCommands/1.2.0/StaticSerialCommands-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

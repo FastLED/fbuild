@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/danilopinotti",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "danilopinotti/library/Battery_18650_Stats/1.0.0/Battery_18650_Stats-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Battery_18650_Stats-1.0.0.tar.gz",
+    "size_bytes": 3888,
+    "sha256": "95ac2c1a9e8784ba3b79906868dcb243628dd98791cd76e2b93700103ea34b5c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/danilopinotti/library/Battery_18650_Stats/1.0.0/Battery_18650_Stats-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/danilopinotti/library/Battery_18650_Stats/1.0.0/Battery_18650_Stats-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

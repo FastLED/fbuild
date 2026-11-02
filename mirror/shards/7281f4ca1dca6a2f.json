@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/virgilvox",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "virgilvox/library/Bellows/0.1.0/Bellows-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bellows-0.1.0.tar.gz",
+    "size_bytes": 323360,
+    "sha256": "0ad1f2a1270d340ba08660b8c32830e9deb2a5788343f98f89af30f148d12846",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/virgilvox/library/Bellows/0.1.0/Bellows-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/virgilvox/library/Bellows/0.1.0/Bellows-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "virgilvox/library/Bellows/0.1.1/Bellows-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bellows-0.1.1.tar.gz",
+    "size_bytes": 322721,
+    "sha256": "a7545b2fd669dac6f66cfcf9483cde003be155d967a101954ee1bbda807beb7e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/virgilvox/library/Bellows/0.1.1/Bellows-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/virgilvox/library/Bellows/0.1.1/Bellows-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "virgilvox/library/Bellows/0.1.2/Bellows-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bellows-0.1.2.tar.gz",
+    "size_bytes": 324617,
+    "sha256": "5bcab551c0442b1b06eb3833bcc519f842390870fe9eeadbf9fc9f5f40f758bf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/virgilvox/library/Bellows/0.1.2/Bellows-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/virgilvox/library/Bellows/0.1.2/Bellows-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "virgilvox/library/Conduyt/0.3.0/Conduyt-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Conduyt-0.3.0.tar.gz",
+    "size_bytes": 38637,
+    "sha256": "2bc4ed5382ffba8778e099718674ad030c1d03655d8f2deba11742bf7b514ba1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/virgilvox/library/Conduyt/0.3.0/Conduyt-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/virgilvox/library/Conduyt/0.3.0/Conduyt-0.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

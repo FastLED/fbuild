@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/triqadafi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "triqadafi/library/TQDF_WatchOS/1.5.4/TQDF_WatchOS-1.5.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TQDF_WatchOS-1.5.4.tar.gz",
+    "size_bytes": 60182,
+    "sha256": "59182fb7f3909dac561b297e4d2cc858253c67df594a1780fba1c3e792ad8289",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/triqadafi/library/TQDF_WatchOS/1.5.4/TQDF_WatchOS-1.5.4.tar.gz",
+     "https://dl.registry.platformio.org/download/triqadafi/library/TQDF_WatchOS/1.5.4/TQDF_WatchOS-1.5.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

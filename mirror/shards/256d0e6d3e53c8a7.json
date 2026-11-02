@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/danielgarc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "danielgarc/library/Credential%20Manager/0.2.1/CredentialManager-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CredentialManager-0.2.1.tar.gz",
+    "size_bytes": 3643,
+    "sha256": "950255669fc27aa40560138efe1875160b12f68f1c279d9a6a2db6e6f73e10ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/danielgarc/library/Credential%2520Manager/0.2.1/CredentialManager-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/danielgarc/library/Credential%20Manager/0.2.1/CredentialManager-0.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/holisticsolutions",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "holisticsolutions/library/MqttClient/1.1.2/MqttClient-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MqttClient-1.1.2.tar.gz",
+    "size_bytes": 6763,
+    "sha256": "1951c569ec70fcbf03d879a8b93405a4aa8483cce6c18b70842643914537a8f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/holisticsolutions/library/MqttClient/1.1.2/MqttClient-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/holisticsolutions/library/MqttClient/1.1.2/MqttClient-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "holisticsolutions/library/SimpleSoftTimer/1.0.1/SimpleSoftTimer-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleSoftTimer-1.0.1.tar.gz",
+    "size_bytes": 3159,
+    "sha256": "ebf6041c3472bc8ba96398277034cf4ebedc7fbe15e539681c87d3ea4202db63",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/holisticsolutions/library/SimpleSoftTimer/1.0.1/SimpleSoftTimer-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/holisticsolutions/library/SimpleSoftTimer/1.0.1/SimpleSoftTimer-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "holisticsolutions/library/SimpleStateProcessor/0.5.5/SimpleStateProcessor-0.5.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleStateProcessor-0.5.5.tar.gz",
+    "size_bytes": 3955,
+    "sha256": "c6bfd02ce1555fb9ae36b290e11a8373051b2a4ab4132a6bcc42642ab209bd6f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/holisticsolutions/library/SimpleStateProcessor/0.5.5/SimpleStateProcessor-0.5.5.tar.gz",
+     "https://dl.registry.platformio.org/download/holisticsolutions/library/SimpleStateProcessor/0.5.5/SimpleStateProcessor-0.5.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "holisticsolutions/library/WiFiManager/0.6.3/WiFiManager-0.6.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFiManager-0.6.3.tar.gz",
+    "size_bytes": 4908,
+    "sha256": "c5142a4d5f98b500b1c58964e9e0863a9606f2378ccba8575b5de81a5061c7b6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/holisticsolutions/library/WiFiManager/0.6.3/WiFiManager-0.6.3.tar.gz",
+     "https://dl.registry.platformio.org/download/holisticsolutions/library/WiFiManager/0.6.3/WiFiManager-0.6.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

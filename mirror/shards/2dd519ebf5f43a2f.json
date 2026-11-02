@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/maniekq",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "maniekq/library/ArduinoUptime/0.1.1/ArduinoUptime-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoUptime-0.1.1.tar.gz",
+    "size_bytes": 1797,
+    "sha256": "048361345c080a271916da07bdc28e63e3f282a7fca683700053d5ea4aacbab7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maniekq/library/ArduinoUptime/0.1.1/ArduinoUptime-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/maniekq/library/ArduinoUptime/0.1.1/ArduinoUptime-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

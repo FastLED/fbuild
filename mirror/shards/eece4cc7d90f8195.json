@@ -1,0 +1,321 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lennarthennigs",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lennarthennigs/library/AnalogButton2/1.0.0/AnalogButton2-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AnalogButton2-1.0.0.tar.gz",
+    "size_bytes": 12917,
+    "sha256": "4ebb2dacd8e642949961ae1ac35dba881e1651f5c7431dac87602830831d5de1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lennarthennigs/library/AnalogButton2/1.0.0/AnalogButton2-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lennarthennigs/library/AnalogButton2/1.0.0/AnalogButton2-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lennarthennigs/library/AnalogButton2/2.0.0/AnalogButton2-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AnalogButton2-2.0.0.tar.gz",
+    "size_bytes": 14429,
+    "sha256": "2b85a468a70555e9bdec41f90655c88e1d44aa0c653bed4bb8f8c46ca8889990",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lennarthennigs/library/AnalogButton2/2.0.0/AnalogButton2-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lennarthennigs/library/AnalogButton2/2.0.0/AnalogButton2-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lennarthennigs/library/AnalogButton2/2.1.0/AnalogButton2-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AnalogButton2-2.1.0.tar.gz",
+    "size_bytes": 15788,
+    "sha256": "7ca7250388bcd20d3027beb5da0ad9d5948ecab73e3a6d616a832c05771d7d38",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lennarthennigs/library/AnalogButton2/2.1.0/AnalogButton2-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lennarthennigs/library/AnalogButton2/2.1.0/AnalogButton2-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lennarthennigs/library/Button2/1.0.0/Button2-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Button2-1.0.0.tar.gz",
+    "size_bytes": 4049,
+    "sha256": "436c7e843d45f14fa2d8fff822db8bf73f6096a46b1819dc4dd0408d72ebe832",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lennarthennigs/library/Button2/1.0.0/Button2-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lennarthennigs/library/Button2/1.0.0/Button2-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lennarthennigs/library/Button2/1.6.5/Button2-1.6.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Button2-1.6.5.tar.gz",
+    "size_bytes": 8416,
+    "sha256": "dbae8b832f3f645a66e1707172a73eb14c1600ce9ac77048ee11a5647de57e81",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lennarthennigs/library/Button2/1.6.5/Button2-1.6.5.tar.gz",
+     "https://dl.registry.platformio.org/download/lennarthennigs/library/Button2/1.6.5/Button2-1.6.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lennarthennigs/library/Button2/2.3.2/Button2-2.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Button2-2.3.2.tar.gz",
+    "size_bytes": 16959,
+    "sha256": "32a2aaf3df13f79a93da3cdc215ae829935ea6315db1ed0e7356e4c32f773dca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lennarthennigs/library/Button2/2.3.2/Button2-2.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lennarthennigs/library/Button2/2.3.2/Button2-2.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lennarthennigs/library/Button2/2.4.1/Button2-2.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Button2-2.4.1.tar.gz",
+    "size_bytes": 18226,
+    "sha256": "96c2f4b43e8d326fcd020c999cbd696542e6dcee6212fd14d04d48f4e2973de3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lennarthennigs/library/Button2/2.4.1/Button2-2.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lennarthennigs/library/Button2/2.4.1/Button2-2.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lennarthennigs/library/Button2/2.5.0/Button2-2.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Button2-2.5.0.tar.gz",
+    "size_bytes": 30516,
+    "sha256": "3c5f9dc3df08199582aa00242ad938f976114c8fd6f86cdaccc89f40420a0172",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lennarthennigs/library/Button2/2.5.0/Button2-2.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lennarthennigs/library/Button2/2.5.0/Button2-2.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lennarthennigs/library/Button2/2.6.0/Button2-2.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Button2-2.6.0.tar.gz",
+    "size_bytes": 27512,
+    "sha256": "08a9b4986ba3ccc2d8cad65b070be8dc852f1bbbef9f728755799b299de210e2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lennarthennigs/library/Button2/2.6.0/Button2-2.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lennarthennigs/library/Button2/2.6.0/Button2-2.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lennarthennigs/library/Button2/2.6.1/Button2-2.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Button2-2.6.1.tar.gz",
+    "size_bytes": 31565,
+    "sha256": "588a511a9399f1dc4a5a962d245645acca3bec4e0a606d24252f9173dbf7b3de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lennarthennigs/library/Button2/2.6.1/Button2-2.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lennarthennigs/library/Button2/2.6.1/Button2-2.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lennarthennigs/library/Button2/2.7.0/Button2-2.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Button2-2.7.0.tar.gz",
+    "size_bytes": 33810,
+    "sha256": "2eef4f1e7ff97b7f393372ee0ce72dd46b457adb1a4a093c3051b96c4c63d3e0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lennarthennigs/library/Button2/2.7.0/Button2-2.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lennarthennigs/library/Button2/2.7.0/Button2-2.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lennarthennigs/library/ESP%20Battery/1.1.0/ESPBattery-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPBattery-1.1.0.tar.gz",
+    "size_bytes": 5018,
+    "sha256": "b993c95ca54565cfc422c959fe020db96a8f37eb59d58e8cb1e97d2811c0e570",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lennarthennigs/library/ESP%2520Battery/1.1.0/ESPBattery-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lennarthennigs/library/ESP%20Battery/1.1.0/ESPBattery-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lennarthennigs/library/ESP%20Rotary/2.1.1/ESPRotary-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPRotary-2.1.1.tar.gz",
+    "size_bytes": 9647,
+    "sha256": "fa1a65278bd504807c744bc93413be6778074d76fed7b636d9a187442c0e3279",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lennarthennigs/library/ESP%2520Rotary/2.1.1/ESPRotary-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lennarthennigs/library/ESP%20Rotary/2.1.1/ESPRotary-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lennarthennigs/library/ESP%20Rotary/2.1.2/ESPRotary-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPRotary-2.1.2.tar.gz",
+    "size_bytes": 11543,
+    "sha256": "72b258a756c4a2cb4e51a60edc44c9af0d502ee0ccb1cb9403393dd3c00747ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lennarthennigs/library/ESP%2520Rotary/2.1.2/ESPRotary-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lennarthennigs/library/ESP%20Rotary/2.1.2/ESPRotary-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lennarthennigs/library/ESP%20Rotary/2.2.1/ESPRotary-2.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPRotary-2.2.1.tar.gz",
+    "size_bytes": 14387,
+    "sha256": "f633efdb901c8b07cc016de65fac9bdf77a1d0830de9fed81f3b2cc9311a8f12",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lennarthennigs/library/ESP%2520Rotary/2.2.1/ESPRotary-2.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lennarthennigs/library/ESP%20Rotary/2.2.1/ESPRotary-2.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lennarthennigs/library/ESP%20Telnet/2.2.1/ESPTelnet-2.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPTelnet-2.2.1.tar.gz",
+    "size_bytes": 14340,
+    "sha256": "1db82cbf95082a57b084ac0822531362c344dce1d970b530b01a91e502b2a3ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lennarthennigs/library/ESP%2520Telnet/2.2.1/ESPTelnet-2.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lennarthennigs/library/ESP%20Telnet/2.2.1/ESPTelnet-2.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lennarthennigs/library/ESP%20Telnet/2.2.3/ESPTelnet-2.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPTelnet-2.2.3.tar.gz",
+    "size_bytes": 14923,
+    "sha256": "5227f1aec0697c97d1a003caa13f53518b089178594acc9a65abfcab19f62658",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lennarthennigs/library/ESP%2520Telnet/2.2.3/ESPTelnet-2.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/lennarthennigs/library/ESP%20Telnet/2.2.3/ESPTelnet-2.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lennarthennigs/library/ESP%20Telnet/2.3.0/ESPTelnet-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPTelnet-2.3.0.tar.gz",
+    "size_bytes": 17983,
+    "sha256": "9dc33c7134b84c2f0132a18e7c38d098b27b5827898342c008dad5ad02d4b060",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lennarthennigs/library/ESP%2520Telnet/2.3.0/ESPTelnet-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lennarthennigs/library/ESP%20Telnet/2.3.0/ESPTelnet-2.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lennarthennigs/library/M5FacesEncoder/1.1.1/M5FacesEncoder-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5FacesEncoder-1.1.1.tar.gz",
+    "size_bytes": 5579,
+    "sha256": "54619e40e823d3fb29cedcffa4646b220871b54141101e4cebeba9e171efab87",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lennarthennigs/library/M5FacesEncoder/1.1.1/M5FacesEncoder-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lennarthennigs/library/M5FacesEncoder/1.1.1/M5FacesEncoder-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lennarthennigs/library/OTAWrapper/1.3.2/OTAWrapper-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OTAWrapper-1.3.2.tar.gz",
+    "size_bytes": 5660,
+    "sha256": "02fc11299b5a549d0554da00c734d1ae5b0895e024fd5472f8d2cf773222b3b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lennarthennigs/library/OTAWrapper/1.3.2/OTAWrapper-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lennarthennigs/library/OTAWrapper/1.3.2/OTAWrapper-1.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lennarthennigs/library/SimpleFSM/1.3.1/SimpleFSM-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleFSM-1.3.1.tar.gz",
+    "size_bytes": 13688,
+    "sha256": "638e71532350c3a5610c9967db0d249cf6e4329fe330bae1283cb87d589cc31e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lennarthennigs/library/SimpleFSM/1.3.1/SimpleFSM-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lennarthennigs/library/SimpleFSM/1.3.1/SimpleFSM-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lennarthennigs/library/SimpleFSM/2.0.0/SimpleFSM-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleFSM-2.0.0.tar.gz",
+    "size_bytes": 24618,
+    "sha256": "1bec02c3413ebb2b8786cadb11ce28ed4049572064bbdfa3acb4a864964581f5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lennarthennigs/library/SimpleFSM/2.0.0/SimpleFSM-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lennarthennigs/library/SimpleFSM/2.0.0/SimpleFSM-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lennarthennigs/library/SimpleFSM/2.0.1/SimpleFSM-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleFSM-2.0.1.tar.gz",
+    "size_bytes": 25745,
+    "sha256": "a6eac3a4546c1c44f21bff740d528a0b01366ae35d1f09157117d25a731781c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lennarthennigs/library/SimpleFSM/2.0.1/SimpleFSM-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lennarthennigs/library/SimpleFSM/2.0.1/SimpleFSM-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lennarthennigs/library/mmWaveKit/1.0.0/mmWaveKit-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mmWaveKit-1.0.0.tar.gz",
+    "size_bytes": 11201,
+    "sha256": "13925e1690166e9dc2f1b9c369d3be454668acbbc525b62994f995e11e97cdc5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lennarthennigs/library/mmWaveKit/1.0.0/mmWaveKit-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lennarthennigs/library/mmWaveKit/1.0.0/mmWaveKit-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

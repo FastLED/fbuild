@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/shadowfighterca",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "shadowfighterca/library/Golain%20Device%20Health/0.0.2/GolainDeviceHealth-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GolainDeviceHealth-0.0.2.tar.gz",
+    "size_bytes": 341397,
+    "sha256": "402dc1b43505a5680f2a6a53853f062fe68aff2de0f0e5e789d3cddb4c83e942",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shadowfighterca/library/Golain%2520Device%2520Health/0.0.2/GolainDeviceHealth-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/shadowfighterca/library/Golain%20Device%20Health/0.0.2/GolainDeviceHealth-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shadowfighterca/library/Golain%20Device%20Shadow/0.0.3/GolainDeviceShadow-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GolainDeviceShadow-0.0.3.tar.gz",
+    "size_bytes": 2943,
+    "sha256": "ef7a8606a45787510ee9ca8f345d8e16596fe93ab9575ff6b66cfcc0a5024334",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shadowfighterca/library/Golain%2520Device%2520Shadow/0.0.3/GolainDeviceShadow-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/shadowfighterca/library/Golain%20Device%20Shadow/0.0.3/GolainDeviceShadow-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shadowfighterca/library/Golain%20MQTT/1.9/GolainMQTT-1.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GolainMQTT-1.9.tar.gz",
+    "size_bytes": 5681,
+    "sha256": "2a945cd337d2e9cc96c209227ca01bdfffb494f74351636f45096cafe8260cac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shadowfighterca/library/Golain%2520MQTT/1.9/GolainMQTT-1.9.tar.gz",
+     "https://dl.registry.platformio.org/download/shadowfighterca/library/Golain%20MQTT/1.9/GolainMQTT-1.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shadowfighterca/library/Golain%20OTA/0.0.1/GolainOTA-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GolainOTA-0.0.1.tar.gz",
+    "size_bytes": 8506,
+    "sha256": "24828358a3fbb918444c7504fe0b130d1fe25652aa7b61d6b3804ea88c651a31",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shadowfighterca/library/Golain%2520OTA/0.0.1/GolainOTA-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/shadowfighterca/library/Golain%20OTA/0.0.1/GolainOTA-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shadowfighterca/library/Golain%20Persistent%20Logs/0.0.7/GolainPersistentLogs-0.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GolainPersistentLogs-0.0.7.tar.gz",
+    "size_bytes": 38372,
+    "sha256": "1bb2b0a7bf3385d31491b3b22bf494f3ecdca99dc277f12a69fc0736de9f493e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shadowfighterca/library/Golain%2520Persistent%2520Logs/0.0.7/GolainPersistentLogs-0.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/shadowfighterca/library/Golain%20Persistent%20Logs/0.0.7/GolainPersistentLogs-0.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shadowfighterca/library/Golain/2.6.0/Golain-2.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Golain-2.6.0.tar.gz",
+    "size_bytes": 15232,
+    "sha256": "a836120a86506705ad3accbd8d9548d8b9775d37ca004472917298b90ba0ea6a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shadowfighterca/library/Golain/2.6.0/Golain-2.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/shadowfighterca/library/Golain/2.6.0/Golain-2.6.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

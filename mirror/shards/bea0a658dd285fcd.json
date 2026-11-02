@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/copida",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "copida/library/AsyncHTTPClientLight/2.0.0/AsyncHTTPClientLight-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncHTTPClientLight-2.0.0.tar.gz",
+    "size_bytes": 18880,
+    "sha256": "e0690fbd4ea3b3d30519cd848c3ece57e2cd5c4d85cc4e6c1ee7683dfcfe2433",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/copida/library/AsyncHTTPClientLight/2.0.0/AsyncHTTPClientLight-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/copida/library/AsyncHTTPClientLight/2.0.0/AsyncHTTPClientLight-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

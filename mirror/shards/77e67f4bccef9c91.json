@@ -1,0 +1,256 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nietaktowny",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nietaktowny/library/arena/1.0.6/arena-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arena-1.0.6.tar.gz",
+    "size_bytes": 4646,
+    "sha256": "78088f784ca6e0005e7c811c0f8cc1f2b14556f22811c28785e67d86f3fec450",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nietaktowny/library/arena/1.0.6/arena-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/nietaktowny/library/arena/1.0.6/arena-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nietaktowny/library/bmp280/1.0.3/bmp280-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bmp280-1.0.3.tar.gz",
+    "size_bytes": 7097,
+    "sha256": "7965c7fda228e5641ddd1d6437616d4156defb3141ef3ee1132df58476f88068",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nietaktowny/library/bmp280/1.0.3/bmp280-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/nietaktowny/library/bmp280/1.0.3/bmp280-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nietaktowny/library/cli_manager/1.1.0/cli_manager-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cli_manager-1.1.0.tar.gz",
+    "size_bytes": 3441,
+    "sha256": "c16f46af22afb7e8504fa36371f8e27bf8064c557816b7a9056442403c1c098e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nietaktowny/library/cli_manager/1.1.0/cli_manager-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nietaktowny/library/cli_manager/1.1.0/cli_manager-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nietaktowny/library/err_controller/1.0.4/err_controller-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "err_controller-1.0.4.tar.gz",
+    "size_bytes": 3528,
+    "sha256": "6d3565d6030ee4b42815b1ae31171ee4e871715f87401def05948ea925ac36e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nietaktowny/library/err_controller/1.0.4/err_controller-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/nietaktowny/library/err_controller/1.0.4/err_controller-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nietaktowny/library/errors/1.0.2/errors-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "errors-1.0.2.tar.gz",
+    "size_bytes": 1580,
+    "sha256": "56d6bf81863252af6cae2fe96479c4f23a41995234e6dc7a6c0d4c93d6860d90",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nietaktowny/library/errors/1.0.2/errors-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nietaktowny/library/errors/1.0.2/errors-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nietaktowny/library/esp_helper_utils/1.0.5/esp_helper_utils-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_helper_utils-1.0.5.tar.gz",
+    "size_bytes": 2504,
+    "sha256": "b5f313bd41f637f16e663d5e380d5d8c82b899e145256689693f0826a0c12489",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nietaktowny/library/esp_helper_utils/1.0.5/esp_helper_utils-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/nietaktowny/library/esp_helper_utils/1.0.5/esp_helper_utils-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nietaktowny/library/http_client/1.0.7/http_client-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "http_client-1.0.7.tar.gz",
+    "size_bytes": 3313,
+    "sha256": "657266e7f783787df0f67519f2de0c626c6c3b75c983418f548347cef6f80cb8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nietaktowny/library/http_client/1.0.7/http_client-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/nietaktowny/library/http_client/1.0.7/http_client-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nietaktowny/library/i2c_controller/1.0.6/i2c_controller-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "i2c_controller-1.0.6.tar.gz",
+    "size_bytes": 3588,
+    "sha256": "ca29f75d61582b7abf02f58f6a10b1a585db09ba2f7e928ffec0f748c9cf795b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nietaktowny/library/i2c_controller/1.0.6/i2c_controller-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/nietaktowny/library/i2c_controller/1.0.6/i2c_controller-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nietaktowny/library/linked_list/1.0.8/linked_list-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "linked_list-1.0.8.tar.gz",
+    "size_bytes": 4401,
+    "sha256": "da3a7fd6ce2b36e5c39b5df4f9c3a9a04b1be7a6c04cd3530b121cb7bbc59eb2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nietaktowny/library/linked_list/1.0.8/linked_list-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/nietaktowny/library/linked_list/1.0.8/linked_list-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nietaktowny/library/logger/2.0.3/logger-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "logger-2.0.3.tar.gz",
+    "size_bytes": 5831,
+    "sha256": "ac56163f20fc165fb565578a5678d94a933e33bd68e315e865101ea2b165087e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nietaktowny/library/logger/2.0.3/logger-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/nietaktowny/library/logger/2.0.3/logger-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nietaktowny/library/memory_utils/1.0.6/memory_utils-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "memory_utils-1.0.6.tar.gz",
+    "size_bytes": 1926,
+    "sha256": "7a1df67d09ac874490e991220700e6526503b0aa1224f1924f8902c192218d80",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nietaktowny/library/memory_utils/1.0.6/memory_utils-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/nietaktowny/library/memory_utils/1.0.6/memory_utils-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nietaktowny/library/nvs_controller/1.0.7/nvs_controller-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nvs_controller-1.0.7.tar.gz",
+    "size_bytes": 21596,
+    "sha256": "f48e29ec0c4b339e78ca6b4c97fbb93675f188bf4251721fe8365bcf3639eed4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nietaktowny/library/nvs_controller/1.0.7/nvs_controller-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/nietaktowny/library/nvs_controller/1.0.7/nvs_controller-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nietaktowny/library/ota_controller/1.0.7/ota_controller-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ota_controller-1.0.7.tar.gz",
+    "size_bytes": 2917,
+    "sha256": "d350f56e915e1bfd682a3e5b86151e8b178c11be7fb0befe09d4f9c0d67becaf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nietaktowny/library/ota_controller/1.0.7/ota_controller-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/nietaktowny/library/ota_controller/1.0.7/ota_controller-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nietaktowny/library/spiffs_controller/1.0.5/spiffs_controller-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "spiffs_controller-1.0.5.tar.gz",
+    "size_bytes": 2944,
+    "sha256": "70063949b2d4aa5b617710e1fd5b4d5c0b3c790b23bf6baca7e81a14283fc013",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nietaktowny/library/spiffs_controller/1.0.5/spiffs_controller-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/nietaktowny/library/spiffs_controller/1.0.5/spiffs_controller-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nietaktowny/library/sys_utils/1.0.4/sys_utils-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "sys_utils-1.0.4.tar.gz",
+    "size_bytes": 1591,
+    "sha256": "da03806c21e6f2b3fc852801688bdef8d0f3ada53b4fbc33193b0b2fbe679825",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nietaktowny/library/sys_utils/1.0.4/sys_utils-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/nietaktowny/library/sys_utils/1.0.4/sys_utils-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nietaktowny/library/tcp_controller/1.2.6/tcp_controller-1.2.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tcp_controller-1.2.6.tar.gz",
+    "size_bytes": 4240,
+    "sha256": "9fc95caeffda974dba1d996f163699797825ef962fbdc449f15d30b8529fc3a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nietaktowny/library/tcp_controller/1.2.6/tcp_controller-1.2.6.tar.gz",
+     "https://dl.registry.platformio.org/download/nietaktowny/library/tcp_controller/1.2.6/tcp_controller-1.2.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nietaktowny/library/tcp_driver/1.0.2/tcp_driver-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tcp_driver-1.0.2.tar.gz",
+    "size_bytes": 3963,
+    "sha256": "cca8c4f3a9b14170f22bba9af7512c6cd40411e5aad6889da59009841b472cde",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nietaktowny/library/tcp_driver/1.0.2/tcp_driver-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nietaktowny/library/tcp_driver/1.0.2/tcp_driver-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nietaktowny/library/wifi_controller/2.0.6/wifi_controller-2.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "wifi_controller-2.0.6.tar.gz",
+    "size_bytes": 64338,
+    "sha256": "63f76b8b0cb3bf791a268cfae4fc255eb7996a58810c521318f7ddf630e81eca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nietaktowny/library/wifi_controller/2.0.6/wifi_controller-2.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/nietaktowny/library/wifi_controller/2.0.6/wifi_controller-2.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nietaktowny/library/wifi_manager/1.1.7/wifi_manager-1.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "wifi_manager-1.1.7.tar.gz",
+    "size_bytes": 8691,
+    "sha256": "abaac7c9675aa8ca8d2842437a11bfad8ee014a0d820992220286a2184524e59",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nietaktowny/library/wifi_manager/1.1.7/wifi_manager-1.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/nietaktowny/library/wifi_manager/1.1.7/wifi_manager-1.1.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

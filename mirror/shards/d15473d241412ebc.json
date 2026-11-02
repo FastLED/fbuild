@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/eduardomarcos",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "eduardomarcos/library/Arduino-ESP32-Rest-Client/1.1.0/Arduino-ESP32-Rest-Client-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino-ESP32-Rest-Client-1.1.0.tar.gz",
+    "size_bytes": 14637,
+    "sha256": "1210d1d1e7c98068cfadcb9b6b77ea966a0e999f11b1180f63cf87dd1017bf81",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eduardomarcos/library/Arduino-ESP32-Rest-Client/1.1.0/Arduino-ESP32-Rest-Client-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/eduardomarcos/library/Arduino-ESP32-Rest-Client/1.1.0/Arduino-ESP32-Rest-Client-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

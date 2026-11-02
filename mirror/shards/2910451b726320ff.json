@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-sktelecom-thingplug",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-sktelecom-thingplug/library/GMMP/0.0.0+sha.bb6c1ee1d5f0/GMMP-0.0.0+sha.bb6c1ee1d5f0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GMMP-0.0.0+sha.bb6c1ee1d5f0.tar.gz",
+    "size_bytes": 29031,
+    "sha256": "4939072880a451c1fae5fc7c3b3c5ad1562383420d0514ca958e2ded1e8e030e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sktelecom-thingplug/library/GMMP/0.0.0%2Bsha.bb6c1ee1d5f0/GMMP-0.0.0%2Bsha.bb6c1ee1d5f0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sktelecom-thingplug/library/GMMP/0.0.0%2Bsha.bb6c1ee1d5f0/GMMP-0.0.0%2Bsha.bb6c1ee1d5f0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sktelecom-thingplug/library/GMMP_mbed/0.0.0+sha.84a748b7d1f6/GMMP_mbed-0.0.0+sha.84a748b7d1f6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GMMP_mbed-0.0.0+sha.84a748b7d1f6.tar.gz",
+    "size_bytes": 28999,
+    "sha256": "2e76dbb99415a06b2296c2231976f557f57543dc62d6d58a70ee3d02a686f061",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sktelecom-thingplug/library/GMMP_mbed/0.0.0%2Bsha.84a748b7d1f6/GMMP_mbed-0.0.0%2Bsha.84a748b7d1f6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sktelecom-thingplug/library/GMMP_mbed/0.0.0%2Bsha.84a748b7d1f6/GMMP_mbed-0.0.0%2Bsha.84a748b7d1f6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sktelecom-thingplug/library/SNICInterface/0.0.0+sha.cb4c105a2ad2/SNICInterface-0.0.0+sha.cb4c105a2ad2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SNICInterface-0.0.0+sha.cb4c105a2ad2.tar.gz",
+    "size_bytes": 21442,
+    "sha256": "2e511ee43b810935661e379fdf069763db287f7f482d4a1cffa2c788be52009e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sktelecom-thingplug/library/SNICInterface/0.0.0%2Bsha.cb4c105a2ad2/SNICInterface-0.0.0%2Bsha.cb4c105a2ad2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sktelecom-thingplug/library/SNICInterface/0.0.0%2Bsha.cb4c105a2ad2/SNICInterface-0.0.0%2Bsha.cb4c105a2ad2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

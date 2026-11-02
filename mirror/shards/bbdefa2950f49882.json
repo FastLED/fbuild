@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/google",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "google/library/googletest/1.12.1/googletest-1.12.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "googletest-1.12.1.tar.gz",
+    "size_bytes": 359124,
+    "sha256": "f4b66104db376b9c75dabc10b83ba513756fca3f2d84a990fd7f771155aa2ee5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/google/library/googletest/1.12.1/googletest-1.12.1.tar.gz",
+     "https://dl.registry.platformio.org/download/google/library/googletest/1.12.1/googletest-1.12.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "google/library/googletest/1.15.2/googletest-1.15.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "googletest-1.15.2.tar.gz",
+    "size_bytes": 368481,
+    "sha256": "ac625b43dcf4a947551a89c3c44c93c551090c9eb62b667442ff70f8809942d7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/google/library/googletest/1.15.2/googletest-1.15.2.tar.gz",
+     "https://dl.registry.platformio.org/download/google/library/googletest/1.15.2/googletest-1.15.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "google/library/googletest/1.17.0/googletest-1.17.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "googletest-1.17.0.tar.gz",
+    "size_bytes": 372249,
+    "sha256": "07d347a295acc851fd863c838c700e5d235039cdc79b06fda7f61598e3ff8852",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/google/library/googletest/1.17.0/googletest-1.17.0.tar.gz",
+     "https://dl.registry.platformio.org/download/google/library/googletest/1.17.0/googletest-1.17.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

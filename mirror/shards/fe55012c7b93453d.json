@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/spacetrekksc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "spacetrekksc/library/BQ25887/0.1.2/BQ25887-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BQ25887-0.1.2.tar.gz",
+    "size_bytes": 27463,
+    "sha256": "aa34202fc951bc7b46f2de1e4c52d49656bce7bce259200fe33e0708a05d3a4d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/spacetrekksc/library/BQ25887/0.1.2/BQ25887-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/spacetrekksc/library/BQ25887/0.1.2/BQ25887-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "spacetrekksc/library/SpaceTrek%20EasyStarterKit/0.1.5/SpaceTrekEasyStarterKit-0.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SpaceTrekEasyStarterKit-0.1.5.tar.gz",
+    "size_bytes": 85519,
+    "sha256": "e8c41f2782a7c914ba7d9ce78fd2200a6c4367016b796a736eaa098044c6a692",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/spacetrekksc/library/SpaceTrek%2520EasyStarterKit/0.1.5/SpaceTrekEasyStarterKit-0.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/spacetrekksc/library/SpaceTrek%20EasyStarterKit/0.1.5/SpaceTrekEasyStarterKit-0.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "spacetrekksc/library/SpaceTrek%20ExoNaut/0.1.9/SpaceTrekExoNaut-0.1.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SpaceTrekExoNaut-0.1.9.tar.gz",
+    "size_bytes": 358654,
+    "sha256": "177deb9466d6362f8a6f8d348263e87a82abb2f6774ff4f49bf3bb3a92162526",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/spacetrekksc/library/SpaceTrek%2520ExoNaut/0.1.9/SpaceTrekExoNaut-0.1.9.tar.gz",
+     "https://dl.registry.platformio.org/download/spacetrekksc/library/SpaceTrek%20ExoNaut/0.1.9/SpaceTrekExoNaut-0.1.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "spacetrekksc/library/SpaceTrek%20MakerBox/0.0.1/SpaceTrekMakerBox-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SpaceTrekMakerBox-0.0.1.tar.gz",
+    "size_bytes": 88630,
+    "sha256": "883db3c3eaa430228e741a414f491a9dd54ad05295af063e83f1fade31de9b08",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/spacetrekksc/library/SpaceTrek%2520MakerBox/0.0.1/SpaceTrekMakerBox-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/spacetrekksc/library/SpaceTrek%20MakerBox/0.0.1/SpaceTrekMakerBox-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "spacetrekksc/library/SpaceTrek_ClassBot2/0.2.6/SpaceTrek_ClassBot2-0.2.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SpaceTrek_ClassBot2-0.2.6.tar.gz",
+    "size_bytes": 25295,
+    "sha256": "faaeac67dae9ddeb6ec75f5e4f0887d45d6971fa0a3f2300737bf056dfad6f71",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/spacetrekksc/library/SpaceTrek_ClassBot2/0.2.6/SpaceTrek_ClassBot2-0.2.6.tar.gz",
+     "https://dl.registry.platformio.org/download/spacetrekksc/library/SpaceTrek_ClassBot2/0.2.6/SpaceTrek_ClassBot2-0.2.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

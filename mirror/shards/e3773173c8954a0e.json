@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tswfi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tswfi/library/PE43xx/1.0.0/PE43xx-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PE43xx-1.0.0.tar.gz",
+    "size_bytes": 3685,
+    "sha256": "f26e296204f3f413f0dd102630f460fc94dcb219bc515e778e6e6cda938740e7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tswfi/library/PE43xx/1.0.0/PE43xx-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tswfi/library/PE43xx/1.0.0/PE43xx-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

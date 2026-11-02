@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-creatron",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-creatron/library/Creatron_RS485/0.0.0+sha.ca1e0ca3a673/Creatron_RS485-0.0.0+sha.ca1e0ca3a673.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Creatron_RS485-0.0.0+sha.ca1e0ca3a673.tar.gz",
+    "size_bytes": 4788,
+    "sha256": "ff9576edfc59205e9f6f53c38be6605323eefadcba0384033dd06ae604e3f05c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-creatron/library/Creatron_RS485/0.0.0%2Bsha.ca1e0ca3a673/Creatron_RS485-0.0.0%2Bsha.ca1e0ca3a673.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-creatron/library/Creatron_RS485/0.0.0%2Bsha.ca1e0ca3a673/Creatron_RS485-0.0.0%2Bsha.ca1e0ca3a673.tar.gz"
+    ]
+   }
+  }
+ ]
+}

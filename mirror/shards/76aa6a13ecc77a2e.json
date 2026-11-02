@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/steenerson",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "steenerson/library/Plex64/1.0.0/Plex64-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Plex64-1.0.0.tar.gz",
+    "size_bytes": 5487,
+    "sha256": "37c58407bb38185f9d3042c49881ea74d8131b122eade8e0ba8102e58fe86a03",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/steenerson/library/Plex64/1.0.0/Plex64-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/steenerson/library/Plex64/1.0.0/Plex64-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

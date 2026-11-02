@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-marius90",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-marius90/library/pn532-SPI-p2p/0.0.0+sha.f07ca719c12e/pn532-SPI-p2p-0.0.0+sha.f07ca719c12e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pn532-SPI-p2p-0.0.0+sha.f07ca719c12e.tar.gz",
+    "size_bytes": 3729,
+    "sha256": "56d07f31f1fad1eb9581b9a2758a2165b80daecc616ced4360be939dccf76f39",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-marius90/library/pn532-SPI-p2p/0.0.0%2Bsha.f07ca719c12e/pn532-SPI-p2p-0.0.0%2Bsha.f07ca719c12e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-marius90/library/pn532-SPI-p2p/0.0.0%2Bsha.f07ca719c12e/pn532-SPI-p2p-0.0.0%2Bsha.f07ca719c12e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

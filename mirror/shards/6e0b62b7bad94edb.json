@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-mimi3",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-mimi3/library/DirectSPI/0.0.0+sha.f63f07d07d5a/DirectSPI-0.0.0+sha.f63f07d07d5a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DirectSPI-0.0.0+sha.f63f07d07d5a.tar.gz",
+    "size_bytes": 1591,
+    "sha256": "a32a7eb7db5c063bde81a2c1a18c0775ca2c6d9fd4a5a703c4837d628d040d9e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mimi3/library/DirectSPI/0.0.0%2Bsha.f63f07d07d5a/DirectSPI-0.0.0%2Bsha.f63f07d07d5a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mimi3/library/DirectSPI/0.0.0%2Bsha.f63f07d07d5a/DirectSPI-0.0.0%2Bsha.f63f07d07d5a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-mimi3/library/SDFileSystemDMA/0.0.0+sha.7077795dbf81/SDFileSystemDMA-0.0.0+sha.7077795dbf81.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SDFileSystemDMA-0.0.0+sha.7077795dbf81.tar.gz",
+    "size_bytes": 65021,
+    "sha256": "bfad5d6b47b5ee8fa2bfa61ff0c81721dcddc35f7a1a20e09a6b0e431d7f42b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mimi3/library/SDFileSystemDMA/0.0.0%2Bsha.7077795dbf81/SDFileSystemDMA-0.0.0%2Bsha.7077795dbf81.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mimi3/library/SDFileSystemDMA/0.0.0%2Bsha.7077795dbf81/SDFileSystemDMA-0.0.0%2Bsha.7077795dbf81.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-mimi3/library/Scheduler/0.0.0+sha.6fba65b703b6/Scheduler-0.0.0+sha.6fba65b703b6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Scheduler-0.0.0+sha.6fba65b703b6.tar.gz",
+    "size_bytes": 4304,
+    "sha256": "120a6fb0777782a851b16d188d5b4e25e07cd962e64149303959b2c34614a388",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mimi3/library/Scheduler/0.0.0%2Bsha.6fba65b703b6/Scheduler-0.0.0%2Bsha.6fba65b703b6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mimi3/library/Scheduler/0.0.0%2Bsha.6fba65b703b6/Scheduler-0.0.0%2Bsha.6fba65b703b6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

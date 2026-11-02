@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/johngineer",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "johngineer/library/INA219/0.0.0-alpha+sha.1d0ead2753/INA219-0.0.0-alphasha.1d0ead2753.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "INA219-0.0.0-alphasha.1d0ead2753.tar.gz",
+    "size_bytes": 3710,
+    "sha256": "ff8f70c26d1388e7de2a66a2cd041bd4c3900e6e31a34bc7b7daf3c2044e086e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/johngineer/library/INA219/0.0.0-alpha%2Bsha.1d0ead2753/INA219-0.0.0-alphasha.1d0ead2753.tar.gz",
+     "https://dl.registry.platformio.org/download/johngineer/library/INA219/0.0.0-alpha%2Bsha.1d0ead2753/INA219-0.0.0-alphasha.1d0ead2753.tar.gz"
+    ]
+   }
+  }
+ ]
+}

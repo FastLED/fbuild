@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/zeppelin500",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "zeppelin500/library/DlmsCosemLib/0.1.0/DlmsCosemLib-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DlmsCosemLib-0.1.0.tar.gz",
+    "size_bytes": 19043,
+    "sha256": "54a104084d39fca65c095fd2744a11425f51b7a48ab471f837edf54a73410a57",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zeppelin500/library/DlmsCosemLib/0.1.0/DlmsCosemLib-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/zeppelin500/library/DlmsCosemLib/0.1.0/DlmsCosemLib-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zeppelin500/library/DlmsCosemLib/0.1.1/DlmsCosemLib-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DlmsCosemLib-0.1.1.tar.gz",
+    "size_bytes": 19528,
+    "sha256": "d70273786470d8f2f39fdcb1efdfa5f6f553cea86cfcdd9577afaf119e094c41",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zeppelin500/library/DlmsCosemLib/0.1.1/DlmsCosemLib-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/zeppelin500/library/DlmsCosemLib/0.1.1/DlmsCosemLib-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zeppelin500/library/MBusCom/0.1.7/MBusCom-0.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MBusCom-0.1.7.tar.gz",
+    "size_bytes": 18144,
+    "sha256": "664eacd07538ad35da228597d8c900ec1adbfe1186efc0994aef88717c9f7921",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zeppelin500/library/MBusCom/0.1.7/MBusCom-0.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/zeppelin500/library/MBusCom/0.1.7/MBusCom-0.1.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zeppelin500/library/MBusCom/0.1.8/MBusCom-0.1.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MBusCom-0.1.8.tar.gz",
+    "size_bytes": 18252,
+    "sha256": "b13e82f6fa0c5d05f0c4c65a77511d0547c25803b824c9ef15591bd48a8915ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zeppelin500/library/MBusCom/0.1.8/MBusCom-0.1.8.tar.gz",
+     "https://dl.registry.platformio.org/download/zeppelin500/library/MBusCom/0.1.8/MBusCom-0.1.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zeppelin500/library/MBusCom/0.1.9/MBusCom-0.1.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MBusCom-0.1.9.tar.gz",
+    "size_bytes": 18430,
+    "sha256": "bcbf6fa01da774a0a4e83611bd492fc36aab9e3b22186a5f52e089ebff4ceb64",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zeppelin500/library/MBusCom/0.1.9/MBusCom-0.1.9.tar.gz",
+     "https://dl.registry.platformio.org/download/zeppelin500/library/MBusCom/0.1.9/MBusCom-0.1.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

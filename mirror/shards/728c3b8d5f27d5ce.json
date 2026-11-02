@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gitlab-riva-lab",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gitlab-riva-lab/library/SevenSegmentPanel/1.1.0/SevenSegmentPanel-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SevenSegmentPanel-1.1.0.tar.gz",
+    "size_bytes": 13428,
+    "sha256": "dea374866430bc4afb6571b56da1c6e0a3c8939c4cf0d88c045e25db49209fed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gitlab-riva-lab/library/SevenSegmentPanel/1.1.0/SevenSegmentPanel-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gitlab-riva-lab/library/SevenSegmentPanel/1.1.0/SevenSegmentPanel-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gitlab-riva-lab/library/SimpleBME280/1.0.0/SimpleBME280-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleBME280-1.0.0.tar.gz",
+    "size_bytes": 9321,
+    "sha256": "5be9aa8d70ded96b444a7a4bdc84147c2f49b058b446474e84de94ea12ffc9a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gitlab-riva-lab/library/SimpleBME280/1.0.0/SimpleBME280-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gitlab-riva-lab/library/SimpleBME280/1.0.0/SimpleBME280-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gitlab-riva-lab/library/SimpleMeteoCalc/1.0.0/SimpleMeteoCalc-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleMeteoCalc-1.0.0.tar.gz",
+    "size_bytes": 6175,
+    "sha256": "09c2114e8d4446b25b40f7bd4c7e9c0f8af0d28d7117d757bd1508f304226b8d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gitlab-riva-lab/library/SimpleMeteoCalc/1.0.0/SimpleMeteoCalc-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gitlab-riva-lab/library/SimpleMeteoCalc/1.0.0/SimpleMeteoCalc-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gitlab-riva-lab/library/fastIO/1.1.0/fastIO-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "fastIO-1.1.0.tar.gz",
+    "size_bytes": 2102,
+    "sha256": "5006f0edfe8610b596a5907f35741071400f628078c3a45d66329cc736ce633c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gitlab-riva-lab/library/fastIO/1.1.0/fastIO-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gitlab-riva-lab/library/fastIO/1.1.0/fastIO-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

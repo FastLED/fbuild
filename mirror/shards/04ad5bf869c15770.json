@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/samy101",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "samy101/library/IISc_EdgeAI/1.0.1-Alpha/IISc_EdgeAI-1.0.1-Alpha.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IISc_EdgeAI-1.0.1-Alpha.tar.gz",
+    "size_bytes": 9320622,
+    "sha256": "f40e4b5ef8b6653b10889dedf21fb56884c7f899c858ce1b7592ee8a20ff8b59",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samy101/library/IISc_EdgeAI/1.0.1-Alpha/IISc_EdgeAI-1.0.1-Alpha.tar.gz",
+     "https://dl.registry.platformio.org/download/samy101/library/IISc_EdgeAI/1.0.1-Alpha/IISc_EdgeAI-1.0.1-Alpha.tar.gz"
+    ]
+   }
+  }
+ ]
+}

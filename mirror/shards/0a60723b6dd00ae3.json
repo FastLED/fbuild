@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-grassel",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-grassel/library/Seed_Ultrasonic_Range/0.0.0+sha.c7db0e6e8f0e/Seed_Ultrasonic_Range-0.0.0+sha.c7db0e6e8f0e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Seed_Ultrasonic_Range-0.0.0+sha.c7db0e6e8f0e.tar.gz",
+    "size_bytes": 2057,
+    "sha256": "c1511e4275dbb1ba31609cedb5358973135a24d151d90c597897ab9024ee227b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-grassel/library/Seed_Ultrasonic_Range/0.0.0%2Bsha.c7db0e6e8f0e/Seed_Ultrasonic_Range-0.0.0%2Bsha.c7db0e6e8f0e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-grassel/library/Seed_Ultrasonic_Range/0.0.0%2Bsha.c7db0e6e8f0e/Seed_Ultrasonic_Range-0.0.0%2Bsha.c7db0e6e8f0e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

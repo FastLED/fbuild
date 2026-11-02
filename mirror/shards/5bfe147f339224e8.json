@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-frada",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-frada/library/AD7606/0.0.0+sha.9341319c0d8e/AD7606-0.0.0+sha.9341319c0d8e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AD7606-0.0.0+sha.9341319c0d8e.tar.gz",
+    "size_bytes": 1774,
+    "sha256": "02c2a211593a1deb8c64a1f98b1800298e98b30a7ba6f9921341a85044df6ee5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-frada/library/AD7606/0.0.0%2Bsha.9341319c0d8e/AD7606-0.0.0%2Bsha.9341319c0d8e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-frada/library/AD7606/0.0.0%2Bsha.9341319c0d8e/AD7606-0.0.0%2Bsha.9341319c0d8e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-frada/library/ADS7828/0.0.0+sha.abbfd9c7f30c/ADS7828-0.0.0+sha.abbfd9c7f30c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADS7828-0.0.0+sha.abbfd9c7f30c.tar.gz",
+    "size_bytes": 1862,
+    "sha256": "2b98fb0972e689eadaef75577429b280e26566379f828a19722b575b3c33a4b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-frada/library/ADS7828/0.0.0%2Bsha.abbfd9c7f30c/ADS7828-0.0.0%2Bsha.abbfd9c7f30c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-frada/library/ADS7828/0.0.0%2Bsha.abbfd9c7f30c/ADS7828-0.0.0%2Bsha.abbfd9c7f30c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-frada/library/MS5803_14BA/0.0.0+sha.373f735e50e2/MS5803_14BA-0.0.0+sha.373f735e50e2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MS5803_14BA-0.0.0+sha.373f735e50e2.tar.gz",
+    "size_bytes": 3133,
+    "sha256": "b8227e09a3f17d5e0d974c585d0996730e53f1e58f6d7771b7136aab4bac1703",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-frada/library/MS5803_14BA/0.0.0%2Bsha.373f735e50e2/MS5803_14BA-0.0.0%2Bsha.373f735e50e2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-frada/library/MS5803_14BA/0.0.0%2Bsha.373f735e50e2/MS5803_14BA-0.0.0%2Bsha.373f735e50e2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

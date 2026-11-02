@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/etherkit",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "etherkit/library/Etherkit%20JTEncode/1.3.1/EtherkitJTEncode-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EtherkitJTEncode-1.3.1.tar.gz",
+    "size_bytes": 41399,
+    "sha256": "a168545d4a2525a694987aa1bd192c06ce9c877e695435adc92447ec1fe81312",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/etherkit/library/Etherkit%2520JTEncode/1.3.1/EtherkitJTEncode-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/etherkit/library/Etherkit%20JTEncode/1.3.1/EtherkitJTEncode-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "etherkit/library/Etherkit%20Morse/1.1.2/EtherkitMorse-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EtherkitMorse-1.1.2.tar.gz",
+    "size_bytes": 21289,
+    "sha256": "0c6b7c20e6dc5d70094428f4c514685eed247bbd7fc2b991cd397d5e2b3aeb92",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/etherkit/library/Etherkit%2520Morse/1.1.2/EtherkitMorse-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/etherkit/library/Etherkit%20Morse/1.1.2/EtherkitMorse-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "etherkit/library/Etherkit%20Si5351/2.2.0/EtherkitSi5351-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EtherkitSi5351-2.2.0.tar.gz",
+    "size_bytes": 42072,
+    "sha256": "c898a264036eb67d394945b0b653a9fd11dbcf9609a6ac58f4bf0a724cc9b789",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/etherkit/library/Etherkit%2520Si5351/2.2.0/EtherkitSi5351-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/etherkit/library/Etherkit%20Si5351/2.2.0/EtherkitSi5351-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "etherkit/library/Etherkit%20Si5351/2.3.0/EtherkitSi5351-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EtherkitSi5351-2.3.0.tar.gz",
+    "size_bytes": 43178,
+    "sha256": "2c25cbee65968ff04ea2ca8369501f94fdf4081e70b01fcaca2c1cec79621345",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/etherkit/library/Etherkit%2520Si5351/2.3.0/EtherkitSi5351-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/etherkit/library/Etherkit%20Si5351/2.3.0/EtherkitSi5351-2.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "etherkit/library/Etherkit%20Si5351/2.4.0/EtherkitSi5351-2.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EtherkitSi5351-2.4.0.tar.gz",
+    "size_bytes": 44590,
+    "sha256": "6eeedb336ae6c99d809cc69a64cf64e5163b6c9b5a2857c47d66edf1ee628039",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/etherkit/library/Etherkit%2520Si5351/2.4.0/EtherkitSi5351-2.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/etherkit/library/Etherkit%20Si5351/2.4.0/EtherkitSi5351-2.4.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

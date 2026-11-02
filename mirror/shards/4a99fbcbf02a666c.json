@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fmeng",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fmeng/library/EspMapping/1.0.0/EspMapping-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspMapping-1.0.0.tar.gz",
+    "size_bytes": 8214,
+    "sha256": "cc44c64c48ab6cfbd8cd3ba8e0436af6ab7de88f16f179bd93d30eb457930018",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fmeng/library/EspMapping/1.0.0/EspMapping-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fmeng/library/EspMapping/1.0.0/EspMapping-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fmeng/library/FastRotaryEncoder/1.0.1/FastRotaryEncoder-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastRotaryEncoder-1.0.1.tar.gz",
+    "size_bytes": 7372,
+    "sha256": "45ee51dd36eafd7f013667c4ea885a270c7de08bb40c57a12c8332956792f044",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fmeng/library/FastRotaryEncoder/1.0.1/FastRotaryEncoder-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fmeng/library/FastRotaryEncoder/1.0.1/FastRotaryEncoder-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fmeng/library/UserManager/1.0.3/UserManager-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UserManager-1.0.3.tar.gz",
+    "size_bytes": 5665,
+    "sha256": "a34a1534688298097f8278db7a925b222a53e0fd764cb2535c63d22513feee1c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fmeng/library/UserManager/1.0.3/UserManager-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/fmeng/library/UserManager/1.0.3/UserManager-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fmeng/library/XDigit7Segment_74HC595/1.0.0/XDigit7Segment_74HC595-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XDigit7Segment_74HC595-1.0.0.tar.gz",
+    "size_bytes": 7048,
+    "sha256": "5da8488da80fec2155e678ae1b62de3192aa1687387c96be1427c7502aa2e6d9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fmeng/library/XDigit7Segment_74HC595/1.0.0/XDigit7Segment_74HC595-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fmeng/library/XDigit7Segment_74HC595/1.0.0/XDigit7Segment_74HC595-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

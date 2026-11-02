@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/peteeutfpr",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "peteeutfpr/library/DHT_Lib/1.0.1/DHT_Lib-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DHT_Lib-1.0.1.tar.gz",
+    "size_bytes": 1510,
+    "sha256": "6beb610b5ada1ca1b8a3be63a21cde9a362c1929ad0304b2fb107d8540d94da9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/peteeutfpr/library/DHT_Lib/1.0.1/DHT_Lib-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/peteeutfpr/library/DHT_Lib/1.0.1/DHT_Lib-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "peteeutfpr/library/LCD_I2C/1.0.1/LCD_I2C-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCD_I2C-1.0.1.tar.gz",
+    "size_bytes": 1547,
+    "sha256": "25f017092c189f2fe8fafae1450ccb7eaa62d30444e262ae03b4304f5b14b783",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/peteeutfpr/library/LCD_I2C/1.0.1/LCD_I2C-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/peteeutfpr/library/LCD_I2C/1.0.1/LCD_I2C-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "peteeutfpr/library/RFID_Lib/1.0.2/RFID_Lib-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RFID_Lib-1.0.2.tar.gz",
+    "size_bytes": 1396,
+    "sha256": "6a55c652ab52588d42842063132e35eb65b2e388065614ec1a81180e7657f345",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/peteeutfpr/library/RFID_Lib/1.0.2/RFID_Lib-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/peteeutfpr/library/RFID_Lib/1.0.2/RFID_Lib-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "peteeutfpr/library/Ultrassom_Lib/1.0.1/Ultrassom_Lib-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ultrassom_Lib-1.0.1.tar.gz",
+    "size_bytes": 1100,
+    "sha256": "af4c690fd94875e5ac7aa1bad8a13e2648206a3429aa43a389acbe07aafde8d9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/peteeutfpr/library/Ultrassom_Lib/1.0.1/Ultrassom_Lib-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/peteeutfpr/library/Ultrassom_Lib/1.0.1/Ultrassom_Lib-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

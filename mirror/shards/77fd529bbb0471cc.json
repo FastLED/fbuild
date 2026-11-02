@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/midilab",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "midilab/library/uClock/2.3.0/uClock-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uClock-2.3.0.tar.gz",
+    "size_bytes": 30498,
+    "sha256": "94a243895f2b8c3598e72cacd5ea53b9570ce19862add96593c79256f5cbbac8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/midilab/library/uClock/2.3.0/uClock-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/midilab/library/uClock/2.3.0/uClock-2.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

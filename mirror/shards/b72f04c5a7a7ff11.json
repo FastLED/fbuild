@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bullm",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bullm/library/BULLM_ExtendModule/0.1.1/BULLM_ExtendModule-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BULLM_ExtendModule-0.1.1.tar.gz",
+    "size_bytes": 10077,
+    "sha256": "f9da0b489c6ce08a6770957aef6305c6eb91c9efb68e295de16a7b8d3f53a5ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bullm/library/BULLM_ExtendModule/0.1.1/BULLM_ExtendModule-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bullm/library/BULLM_ExtendModule/0.1.1/BULLM_ExtendModule-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bullm/library/BULLM_ExtendModule/0.2.0/BULLM_ExtendModule-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BULLM_ExtendModule-0.2.0.tar.gz",
+    "size_bytes": 11023,
+    "sha256": "b0c7efea7a165f0a540b219417d443040b7d4706b2197f2da0c0d74b703c1b64",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bullm/library/BULLM_ExtendModule/0.2.0/BULLM_ExtendModule-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bullm/library/BULLM_ExtendModule/0.2.0/BULLM_ExtendModule-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bullm/library/BULLM_ExtendModule/1.0.0/BULLM_ExtendModule-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BULLM_ExtendModule-1.0.0.tar.gz",
+    "size_bytes": 10721,
+    "sha256": "fa0783d95e56192243482876737932f742d5a99e329aafe08bc2f986fdc38b32",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bullm/library/BULLM_ExtendModule/1.0.0/BULLM_ExtendModule-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bullm/library/BULLM_ExtendModule/1.0.0/BULLM_ExtendModule-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bullm/library/BULLM_ExtendModule/2.0.0/BULLM_ExtendModule-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BULLM_ExtendModule-2.0.0.tar.gz",
+    "size_bytes": 12619,
+    "sha256": "eb3f9d8c515359b1612053186f637e7ca24df9f90bf24f5de48ad7ab9cd460a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bullm/library/BULLM_ExtendModule/2.0.0/BULLM_ExtendModule-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bullm/library/BULLM_ExtendModule/2.0.0/BULLM_ExtendModule-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bullm/library/BULLM_ExtendMotor/1.1.0/BULLM_ExtendMotor-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BULLM_ExtendMotor-1.1.0.tar.gz",
+    "size_bytes": 4171,
+    "sha256": "b0552136108b9d16f38476dc55dc7c528496b47c9f948943000181a37d52ab1d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bullm/library/BULLM_ExtendMotor/1.1.0/BULLM_ExtendMotor-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bullm/library/BULLM_ExtendMotor/1.1.0/BULLM_ExtendMotor-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

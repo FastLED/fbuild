@@ -1,0 +1,152 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/macmanley",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "macmanley/library/F1%2024%20UDP%20Telemetry%20Parser/1.0.7/F124UDPTelemetryParser-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "F124UDPTelemetryParser-1.0.7.tar.gz",
+    "size_bytes": 36169,
+    "sha256": "90b4fd443a89f2b62635361b91ce6dc5b97c8e992267bf1214b016a52a9758f3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/macmanley/library/F1%252024%2520UDP%2520Telemetry%2520Parser/1.0.7/F124UDPTelemetryParser-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/macmanley/library/F1%2024%20UDP%20Telemetry%20Parser/1.0.7/F124UDPTelemetryParser-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "macmanley/library/F1%2025%20UDP%20Telemetry%20Parser/1.0.5/F125UDPTelemetryParser-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "F125UDPTelemetryParser-1.0.5.tar.gz",
+    "size_bytes": 36655,
+    "sha256": "0e96c34487592662771adae6561b237e1125234ac6d2b2fdf215835e5a3f3c8a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/macmanley/library/F1%252025%2520UDP%2520Telemetry%2520Parser/1.0.5/F125UDPTelemetryParser-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/macmanley/library/F1%2025%20UDP%20Telemetry%20Parser/1.0.5/F125UDPTelemetryParser-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "macmanley/library/F1%2026%20UDP%20Telemetry%20Parser/1.0.0/F126UDPTelemetryParser-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "F126UDPTelemetryParser-1.0.0.tar.gz",
+    "size_bytes": 39829,
+    "sha256": "68cc1d0d4d297bcc507b5cff0809218c7f08e0bc3a0626ac94217710361c7d1d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/macmanley/library/F1%252026%2520UDP%2520Telemetry%2520Parser/1.0.0/F126UDPTelemetryParser-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/macmanley/library/F1%2026%20UDP%20Telemetry%20Parser/1.0.0/F126UDPTelemetryParser-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "macmanley/library/F1_23_UDP/1.1.0/F1_23_UDP-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "F1_23_UDP-1.1.0.tar.gz",
+    "size_bytes": 32988,
+    "sha256": "e07ff0d13de9c407dbb1cb75e80b1dbca7210645adc2333b6419e0f26ee8a2e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/macmanley/library/F1_23_UDP/1.1.0/F1_23_UDP-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/macmanley/library/F1_23_UDP/1.1.0/F1_23_UDP-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "macmanley/library/GT7%20UDP%20Telemetry%20Parser/2.1.1/GT7UDPTelemetryParser-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GT7UDPTelemetryParser-2.1.1.tar.gz",
+    "size_bytes": 22822,
+    "sha256": "b20f5d5638a7c276d9dc7b5eefbcafb8cd1f50e098295aad10befe2e41512954",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/macmanley/library/GT7%2520UDP%2520Telemetry%2520Parser/2.1.1/GT7UDPTelemetryParser-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/macmanley/library/GT7%20UDP%20Telemetry%20Parser/2.1.1/GT7UDPTelemetryParser-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "macmanley/library/GT7%20UDP%20Telemetry%20Parser/2.1.2/GT7UDPTelemetryParser-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GT7UDPTelemetryParser-2.1.2.tar.gz",
+    "size_bytes": 22847,
+    "sha256": "f65c66df46270905c6a2262a05e427bfa79842d1d3381b888cfc682219025a5c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/macmanley/library/GT7%2520UDP%2520Telemetry%2520Parser/2.1.2/GT7UDPTelemetryParser-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/macmanley/library/GT7%20UDP%20Telemetry%20Parser/2.1.2/GT7UDPTelemetryParser-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "macmanley/library/GT7%20UDP%20Telemetry%20Parser/2.1.3/GT7UDPTelemetryParser-2.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GT7UDPTelemetryParser-2.1.3.tar.gz",
+    "size_bytes": 22897,
+    "sha256": "7e07d9b77e58ca8d902e8a3b9d2808989bfdc5f06efc3861cff33aca2e9b9188",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/macmanley/library/GT7%2520UDP%2520Telemetry%2520Parser/2.1.3/GT7UDPTelemetryParser-2.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/macmanley/library/GT7%20UDP%20Telemetry%20Parser/2.1.3/GT7UDPTelemetryParser-2.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "macmanley/library/GT7%20UDP%20Telemetry%20Parser/2.1.4/GT7UDPTelemetryParser-2.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GT7UDPTelemetryParser-2.1.4.tar.gz",
+    "size_bytes": 22897,
+    "sha256": "69464a00b8f2a75676fa7e3dff0ae4b0e46aaab1d0f02df00f6f04518c6573fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/macmanley/library/GT7%2520UDP%2520Telemetry%2520Parser/2.1.4/GT7UDPTelemetryParser-2.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/macmanley/library/GT7%20UDP%20Telemetry%20Parser/2.1.4/GT7UDPTelemetryParser-2.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "macmanley/library/GT7%20UDP%20Telemetry%20Parser/2.1.5/GT7UDPTelemetryParser-2.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GT7UDPTelemetryParser-2.1.5.tar.gz",
+    "size_bytes": 22893,
+    "sha256": "a07b141d101f7ecdf0856f03f7f112eaaaf9ca0ddb0744fcd0d390cee56bc1bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/macmanley/library/GT7%2520UDP%2520Telemetry%2520Parser/2.1.5/GT7UDPTelemetryParser-2.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/macmanley/library/GT7%20UDP%20Telemetry%20Parser/2.1.5/GT7UDPTelemetryParser-2.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "macmanley/library/Project%20Cars%202%20UDP/1.0.1/ProjectCars2UDP-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProjectCars2UDP-1.0.1.tar.gz",
+    "size_bytes": 11141,
+    "sha256": "4f1d5d079c850e5dd7688dc4a2079a4c86fd6073597fa6f54ba6b16c6444d625",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/macmanley/library/Project%2520Cars%25202%2520UDP/1.0.1/ProjectCars2UDP-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/macmanley/library/Project%20Cars%202%20UDP/1.0.1/ProjectCars2UDP-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "macmanley/library/assetto-corsa-udp/1.0.1/assetto-corsa-udp-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "assetto-corsa-udp-1.0.1.tar.gz",
+    "size_bytes": 5974,
+    "sha256": "df3a43ae03333ec16bbbc0c03e560ba5b570768dc259d67d726fdf78ab99b44c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/macmanley/library/assetto-corsa-udp/1.0.1/assetto-corsa-udp-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/macmanley/library/assetto-corsa-udp/1.0.1/assetto-corsa-udp-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

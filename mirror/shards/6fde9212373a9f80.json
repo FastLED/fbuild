@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/schaffmb",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "schaffmb/library/TouchToggle/0.0.1/TouchToggle-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TouchToggle-0.0.1.tar.gz",
+    "size_bytes": 15500,
+    "sha256": "a306e465a9af1b45b80575e575cf79298a120befbd647447d1220923accb46f9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/schaffmb/library/TouchToggle/0.0.1/TouchToggle-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/schaffmb/library/TouchToggle/0.0.1/TouchToggle-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

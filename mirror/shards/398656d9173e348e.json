@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/skr-electronics-lab",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "skr-electronics-lab/library/OLEDKeyboard/1.0.1/OLEDKeyboard-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OLEDKeyboard-1.0.1.tar.gz",
+    "size_bytes": 11393,
+    "sha256": "6c8e0838c176a02fff9e29744a807e7950e3e4a8388fc96e30f6341251610edd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/skr-electronics-lab/library/OLEDKeyboard/1.0.1/OLEDKeyboard-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/skr-electronics-lab/library/OLEDKeyboard/1.0.1/OLEDKeyboard-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "skr-electronics-lab/library/groq_stt/1.0.1/groq_stt-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "groq_stt-1.0.1.tar.gz",
+    "size_bytes": 30909,
+    "sha256": "edd2875fa69fa0a84cce0bea089832f31e3b9239c4679ddcc23ed2d063a9a46e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/skr-electronics-lab/library/groq_stt/1.0.1/groq_stt-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/skr-electronics-lab/library/groq_stt/1.0.1/groq_stt-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "skr-electronics-lab/library/groq_stt/1.0.2/groq_stt-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "groq_stt-1.0.2.tar.gz",
+    "size_bytes": 29411,
+    "sha256": "c4def0912e0a3671b3bab71a83d20007abb28af03fc7c18801d4d5e4eb6d99a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/skr-electronics-lab/library/groq_stt/1.0.2/groq_stt-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/skr-electronics-lab/library/groq_stt/1.0.2/groq_stt-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "skr-electronics-lab/library/groq_stt/1.0.3/groq_stt-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "groq_stt-1.0.3.tar.gz",
+    "size_bytes": 30327,
+    "sha256": "b2985c3373c5d2017b23bfc75ffbb958c175abc50e4a922e9e5643b0d54f406f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/skr-electronics-lab/library/groq_stt/1.0.3/groq_stt-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/skr-electronics-lab/library/groq_stt/1.0.3/groq_stt-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

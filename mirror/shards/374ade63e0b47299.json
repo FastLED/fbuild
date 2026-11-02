@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/edrean",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "edrean/library/BQ27427%20Battery%20Fuel%20Gauge%20Arduino%20Library/1.0.3/BQ27427BatteryFuelGaugeArduinoLibrary-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BQ27427BatteryFuelGaugeArduinoLibrary-1.0.3.tar.gz",
+    "size_bytes": 15542,
+    "sha256": "d2ae7b79e99a2fd84b5c4680a3d7993bb47cbdf1b20866587f02027a05aca4e5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/edrean/library/BQ27427%2520Battery%2520Fuel%2520Gauge%2520Arduino%2520Library/1.0.3/BQ27427BatteryFuelGaugeArduinoLibrary-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/edrean/library/BQ27427%20Battery%20Fuel%20Gauge%20Arduino%20Library/1.0.3/BQ27427BatteryFuelGaugeArduinoLibrary-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "edrean/library/BQ27427%20Battery%20Fuel%20Gauge%20Arduino%20Library/1.0.4/BQ27427BatteryFuelGaugeArduinoLibrary-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BQ27427BatteryFuelGaugeArduinoLibrary-1.0.4.tar.gz",
+    "size_bytes": 15652,
+    "sha256": "3a3d3ea5bcb05eba1cb8230565030a569a2bfcd57a559c7741aeb2fb8832afd8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/edrean/library/BQ27427%2520Battery%2520Fuel%2520Gauge%2520Arduino%2520Library/1.0.4/BQ27427BatteryFuelGaugeArduinoLibrary-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/edrean/library/BQ27427%20Battery%20Fuel%20Gauge%20Arduino%20Library/1.0.4/BQ27427BatteryFuelGaugeArduinoLibrary-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

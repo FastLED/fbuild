@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/paulntu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "paulntu/library/DFRobotMLDR/1.0.0/DFRobotMLDR-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobotMLDR-1.0.0.tar.gz",
+    "size_bytes": 6429,
+    "sha256": "929e05f8fd7c06498f8d2a79759eef50ef884debd9b3b5833a4eb18b625466a1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paulntu/library/DFRobotMLDR/1.0.0/DFRobotMLDR-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/paulntu/library/DFRobotMLDR/1.0.0/DFRobotMLDR-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "paulntu/library/MoonMin%20Scanner%20Library/1.0.0/MoonMinScannerLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MoonMinScannerLibrary-1.0.0.tar.gz",
+    "size_bytes": 5976,
+    "sha256": "32f64f4763ae241e709b8d602a5e74dc277ac57639154f6e50ba199234ebd52a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paulntu/library/MoonMin%2520Scanner%2520Library/1.0.0/MoonMinScannerLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/paulntu/library/MoonMin%20Scanner%20Library/1.0.0/MoonMinScannerLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "paulntu/library/PandaCam/1.0.1/PandaCam-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PandaCam-1.0.1.tar.gz",
+    "size_bytes": 8453,
+    "sha256": "6b43f439563a3a604a78ebd3793e0a3bc127562de6c91b6446cbceb31ffd6104",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paulntu/library/PandaCam/1.0.1/PandaCam-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/paulntu/library/PandaCam/1.0.1/PandaCam-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "paulntu/library/PandaCam/1.0.2/PandaCam-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PandaCam-1.0.2.tar.gz",
+    "size_bytes": 8625,
+    "sha256": "7ac51699f2bbb15e15f2cb74f6a64a5a74ef466f07182726620f21a34233ed53",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paulntu/library/PandaCam/1.0.2/PandaCam-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/paulntu/library/PandaCam/1.0.2/PandaCam-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "paulntu/library/VescMotorController/1.1.0/VescMotorController-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VescMotorController-1.1.0.tar.gz",
+    "size_bytes": 14763,
+    "sha256": "4d5ecfd165fb3f9e90ef9e2ca121ae4f4d90e17c7027496c4bf16b76717dbda6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paulntu/library/VescMotorController/1.1.0/VescMotorController-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/paulntu/library/VescMotorController/1.1.0/VescMotorController-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

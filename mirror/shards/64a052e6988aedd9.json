@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-alexliao1995",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-alexliao1995/library/can/0.0.0+sha.094fd8dac7e5/can-0.0.0+sha.094fd8dac7e5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "can-0.0.0+sha.094fd8dac7e5.tar.gz",
+    "size_bytes": 588,
+    "sha256": "1a155d9c1d2d24854bda891d66a220402005854bfb50f23ce4de303ef3f72371",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-alexliao1995/library/can/0.0.0%2Bsha.094fd8dac7e5/can-0.0.0%2Bsha.094fd8dac7e5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-alexliao1995/library/can/0.0.0%2Bsha.094fd8dac7e5/can-0.0.0%2Bsha.094fd8dac7e5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

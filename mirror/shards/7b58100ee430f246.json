@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/marvinroger",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "marvinroger/library/AsyncMqttClient/0.8.2/AsyncMqttClient-0.8.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncMqttClient-0.8.2.tar.gz",
+    "size_bytes": 15165,
+    "sha256": "53e9e4a239082e12ea0bccbe19154b0e4f6114fddd4143c8075fed7de8282248",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marvinroger/library/AsyncMqttClient/0.8.2/AsyncMqttClient-0.8.2.tar.gz",
+     "https://dl.registry.platformio.org/download/marvinroger/library/AsyncMqttClient/0.8.2/AsyncMqttClient-0.8.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marvinroger/library/AsyncMqttClient/0.9.0/AsyncMqttClient-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncMqttClient-0.9.0.tar.gz",
+    "size_bytes": 20099,
+    "sha256": "78b5782be2571a87fc3742e4652b5f11aa72bdc8823ee6ff1f043a7eac22a1d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marvinroger/library/AsyncMqttClient/0.9.0/AsyncMqttClient-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/marvinroger/library/AsyncMqttClient/0.9.0/AsyncMqttClient-0.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marvinroger/library/ESP8266TrueRandom/1.0/ESP8266TrueRandom-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266TrueRandom-1.0.tar.gz",
+    "size_bytes": 8484,
+    "sha256": "e4b29ceaa8512374e12a52e313fdd308bcbf0995990af01a7872689a092e85cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marvinroger/library/ESP8266TrueRandom/1.0/ESP8266TrueRandom-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/marvinroger/library/ESP8266TrueRandom/1.0/ESP8266TrueRandom-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marvinroger/library/Homie/3.0.1/Homie-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Homie-3.0.1.tar.gz",
+    "size_bytes": 41874,
+    "sha256": "3d3950e4635274c9e8d02820b10ebf786a657ba3e49bd1e1bf51feb037dbfb7f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marvinroger/library/Homie/3.0.1/Homie-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/marvinroger/library/Homie/3.0.1/Homie-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marvinroger/library/Shutters/3.0.0-beta.4/Shutters-3.0.0-beta.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Shutters-3.0.0-beta.4.tar.gz",
+    "size_bytes": 7792,
+    "sha256": "f05f9b438f110451e700cbcd07642d130deb26a47c72412758e96358ced2b5bf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marvinroger/library/Shutters/3.0.0-beta.4/Shutters-3.0.0-beta.4.tar.gz",
+     "https://dl.registry.platformio.org/download/marvinroger/library/Shutters/3.0.0-beta.4/Shutters-3.0.0-beta.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marvinroger/library/SonoffDual/1.1.0/SonoffDual-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SonoffDual-1.1.0.tar.gz",
+    "size_bytes": 3195,
+    "sha256": "0105398eac6ed1b8c1917617de8e4b4dcc24076e9c79cc8fa2cd93e7147ce61b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marvinroger/library/SonoffDual/1.1.0/SonoffDual-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/marvinroger/library/SonoffDual/1.1.0/SonoffDual-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mmuratyilmaz",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mmuratyilmaz/library/KAI%20Pro%20Library/1.0.3/KAIProLibrary-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KAIProLibrary-1.0.3.tar.gz",
+    "size_bytes": 3097,
+    "sha256": "84bfc37eacf28e8c8999dca16f1ad621c03bc885c264b72a0232158c2870df6d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mmuratyilmaz/library/KAI%2520Pro%2520Library/1.0.3/KAIProLibrary-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mmuratyilmaz/library/KAI%20Pro%20Library/1.0.3/KAIProLibrary-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

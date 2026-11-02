@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/brishen",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "brishen/library/WifiGeoLocation/1.0.0/WifiGeoLocation-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WifiGeoLocation-1.0.0.tar.gz",
+    "size_bytes": 9237,
+    "sha256": "ca494c284d9e572c1066856acced3c0b10a1029d1d40718f680157f0f09b14bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/brishen/library/WifiGeoLocation/1.0.0/WifiGeoLocation-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/brishen/library/WifiGeoLocation/1.0.0/WifiGeoLocation-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

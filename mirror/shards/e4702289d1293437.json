@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/adidax",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "adidax/library/DHT11/0.0.0-alpha+sha.b7fbbcd86f/DHT11-0.0.0-alphasha.b7fbbcd86f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DHT11-0.0.0-alphasha.b7fbbcd86f.tar.gz",
+    "size_bytes": 1990,
+    "sha256": "b4cf350a8c354176584ff7ed1438d08e68325bdf75c32d1c822126d8c354b5e0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/adidax/library/DHT11/0.0.0-alpha%2Bsha.b7fbbcd86f/DHT11-0.0.0-alphasha.b7fbbcd86f.tar.gz",
+     "https://dl.registry.platformio.org/download/adidax/library/DHT11/0.0.0-alpha%2Bsha.b7fbbcd86f/DHT11-0.0.0-alphasha.b7fbbcd86f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-cuer",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-cuer/library/LTC6804/0.0.0+sha.1c94bbb97eaa/LTC6804-0.0.0+sha.1c94bbb97eaa.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LTC6804-0.0.0+sha.1c94bbb97eaa.tar.gz",
+    "size_bytes": 7478,
+    "sha256": "95140be7eefe6bb9fa22e92e9f1adbd231db23c87682050116655395f1b5ff36",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-cuer/library/LTC6804/0.0.0%2Bsha.1c94bbb97eaa/LTC6804-0.0.0%2Bsha.1c94bbb97eaa.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-cuer/library/LTC6804/0.0.0%2Bsha.1c94bbb97eaa/LTC6804-0.0.0%2Bsha.1c94bbb97eaa.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-cuer/library/RA8875/0.0.0+sha.13745364dba0/RA8875-0.0.0+sha.13745364dba0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RA8875-0.0.0+sha.13745364dba0.tar.gz",
+    "size_bytes": 99382,
+    "sha256": "d3f63b4c2f76af93982d9e0aabbbd85bda9f08f1e33f8fbd65001d72d8171725",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-cuer/library/RA8875/0.0.0%2Bsha.13745364dba0/RA8875-0.0.0%2Bsha.13745364dba0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-cuer/library/RA8875/0.0.0%2Bsha.13745364dba0/RA8875-0.0.0%2Bsha.13745364dba0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

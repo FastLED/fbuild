@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dwan6767",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dwan6767/library/lowkeyoled/1.0.2/lowkeyoled-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lowkeyoled-1.0.2.tar.gz",
+    "size_bytes": 3513,
+    "sha256": "8465fccd7ded58cdedd9dd1b1c97cb22f6eca52f7125aa8e45d853d870897bc4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dwan6767/library/lowkeyoled/1.0.2/lowkeyoled-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dwan6767/library/lowkeyoled/1.0.2/lowkeyoled-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

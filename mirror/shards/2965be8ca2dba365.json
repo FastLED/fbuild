@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pmdroid",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pmdroid/library/TeslaBLE/1.0.4/TeslaBLE-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TeslaBLE-1.0.4.tar.gz",
+    "size_bytes": 56848,
+    "sha256": "a8c716eb2b9b623866818cab8e0d9c4c14f04baec13c7827954051d2e2c03b24",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pmdroid/library/TeslaBLE/1.0.4/TeslaBLE-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/pmdroid/library/TeslaBLE/1.0.4/TeslaBLE-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pmdroid/library/tesla-vehicle-command-cpp/1.0.0/tesla-vehicle-command-cpp-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tesla-vehicle-command-cpp-1.0.0.tar.gz",
+    "size_bytes": 79620,
+    "sha256": "99c2648a4005bf7247dd8ae6dbd2d597b1d2ff9d11f5d2ab54796d5f8cf7fe31",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pmdroid/library/tesla-vehicle-command-cpp/1.0.0/tesla-vehicle-command-cpp-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pmdroid/library/tesla-vehicle-command-cpp/1.0.0/tesla-vehicle-command-cpp-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pmdroid/library/tesla-vehicle-command-cpp/1.1.0/tesla-vehicle-command-cpp-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tesla-vehicle-command-cpp-1.1.0.tar.gz",
+    "size_bytes": 140082,
+    "sha256": "c8e63adba6fc119fcc82e240068a2eb2c3d1545acd0554647daa1dd34a395ed9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pmdroid/library/tesla-vehicle-command-cpp/1.1.0/tesla-vehicle-command-cpp-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pmdroid/library/tesla-vehicle-command-cpp/1.1.0/tesla-vehicle-command-cpp-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

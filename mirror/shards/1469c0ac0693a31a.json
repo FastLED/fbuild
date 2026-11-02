@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/edumardo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "edumardo/library/Differential%20Steering/1.0.0/DifferentialSteering-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DifferentialSteering-1.0.0.tar.gz",
+    "size_bytes": 15064,
+    "sha256": "58a2f03d9cbcc469329cd594be15309eea8372e6283e38579fa498301293d09e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/edumardo/library/Differential%2520Steering/1.0.0/DifferentialSteering-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/edumardo/library/Differential%20Steering/1.0.0/DifferentialSteering-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dino-mlc-board",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dino-mlc-board/library/DINO-PLC-V2/2.0.6/DINO-PLC-V2-2.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DINO-PLC-V2-2.0.6.tar.gz",
+    "size_bytes": 2609612,
+    "sha256": "0292bc38bcb98f5e797f3ad6f820db709ef604be500f818713154501f5d22fea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dino-mlc-board/library/DINO-PLC-V2/2.0.6/DINO-PLC-V2-2.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/dino-mlc-board/library/DINO-PLC-V2/2.0.6/DINO-PLC-V2-2.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dino-mlc-board/library/DINO-PLC/1.0.0/DINO-PLC-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DINO-PLC-1.0.0.tar.gz",
+    "size_bytes": 3048496,
+    "sha256": "be96e7b8722056223d1a70fab6bf27d4fe311b96d841ee0d8c097be6026682ff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dino-mlc-board/library/DINO-PLC/1.0.0/DINO-PLC-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dino-mlc-board/library/DINO-PLC/1.0.0/DINO-PLC-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

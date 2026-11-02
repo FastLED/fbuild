@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tvde1",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tvde1/library/ConfigTool/1.1/ConfigTool-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ConfigTool-1.1.tar.gz",
+    "size_bytes": 6577,
+    "sha256": "bc761f03d1be15d692b448f9dda882d4e3440d43c7e3cd4458caef28b40277d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tvde1/library/ConfigTool/1.1/ConfigTool-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tvde1/library/ConfigTool/1.1/ConfigTool-1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tvde1/library/WiFi%20Picker/1.1/WiFiPicker-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFiPicker-1.1.tar.gz",
+    "size_bytes": 3791,
+    "sha256": "870bf8e32869d2374b2981092fe0e1978ff439d426b64406c1bb309835e9f04b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tvde1/library/WiFi%2520Picker/1.1/WiFiPicker-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tvde1/library/WiFi%20Picker/1.1/WiFiPicker-1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

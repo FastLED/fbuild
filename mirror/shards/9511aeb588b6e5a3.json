@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/coddingtonbear",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "coddingtonbear/library/arduino-async-modem/1.1.0/arduino-async-modem-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arduino-async-modem-1.1.0.tar.gz",
+    "size_bytes": 5301,
+    "sha256": "adc34a0d35143685af718f3ac50df76d9671fd5fe137f67bcb844f059da9d44c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/coddingtonbear/library/arduino-async-modem/1.1.0/arduino-async-modem-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/coddingtonbear/library/arduino-async-modem/1.1.0/arduino-async-modem-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "coddingtonbear/library/arduino-managed-serial-device/1.2.0/arduino-managed-serial-device-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arduino-managed-serial-device-1.2.0.tar.gz",
+    "size_bytes": 8079,
+    "sha256": "767caa4128aaa7425e1e655f9d7e9a3c50e82758c95c392c0ecaaf6cd9f59eaf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/coddingtonbear/library/arduino-managed-serial-device/1.2.0/arduino-managed-serial-device-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/coddingtonbear/library/arduino-managed-serial-device/1.2.0/arduino-managed-serial-device-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

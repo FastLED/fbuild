@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-sinterbaas",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-sinterbaas/library/MotorController/0.0.0+sha.ec2f323f6388/MotorController-0.0.0+sha.ec2f323f6388.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MotorController-0.0.0+sha.ec2f323f6388.tar.gz",
+    "size_bytes": 1225,
+    "sha256": "bfe7e28dcbd0c6cd72484ba44a139241331aee00ba8951ac81f878b1010e038b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sinterbaas/library/MotorController/0.0.0%2Bsha.ec2f323f6388/MotorController-0.0.0%2Bsha.ec2f323f6388.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sinterbaas/library/MotorController/0.0.0%2Bsha.ec2f323f6388/MotorController-0.0.0%2Bsha.ec2f323f6388.tar.gz"
+    ]
+   }
+  }
+ ]
+}

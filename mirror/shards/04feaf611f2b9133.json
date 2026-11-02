@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-zbraun6",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-zbraun6/library/GPS_20u7/0.0.0+sha.8a73b09fcbe6/GPS_20u7-0.0.0+sha.8a73b09fcbe6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GPS_20u7-0.0.0+sha.8a73b09fcbe6.tar.gz",
+    "size_bytes": 2152,
+    "sha256": "7704787da124c0a3a2422fbfb3e48b750e9b049994561d5585ef4cfaa5d1a973",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-zbraun6/library/GPS_20u7/0.0.0%2Bsha.8a73b09fcbe6/GPS_20u7-0.0.0%2Bsha.8a73b09fcbe6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-zbraun6/library/GPS_20u7/0.0.0%2Bsha.8a73b09fcbe6/GPS_20u7-0.0.0%2Bsha.8a73b09fcbe6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

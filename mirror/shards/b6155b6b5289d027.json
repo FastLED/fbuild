@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-grovestreams",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-grovestreams/library/LcdDiscoF746NgTracer/0.0.0+sha.ecd4f3e81bcf/LcdDiscoF746NgTracer-0.0.0+sha.ecd4f3e81bcf.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LcdDiscoF746NgTracer-0.0.0+sha.ecd4f3e81bcf.tar.gz",
+    "size_bytes": 1974,
+    "sha256": "db6ed2f9e97f7a3d6f83ee68c9e95634e1689ea59fdbe4707deaf12fc27dc58a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-grovestreams/library/LcdDiscoF746NgTracer/0.0.0%2Bsha.ecd4f3e81bcf/LcdDiscoF746NgTracer-0.0.0%2Bsha.ecd4f3e81bcf.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-grovestreams/library/LcdDiscoF746NgTracer/0.0.0%2Bsha.ecd4f3e81bcf/LcdDiscoF746NgTracer-0.0.0%2Bsha.ecd4f3e81bcf.tar.gz"
+    ]
+   }
+  }
+ ]
+}

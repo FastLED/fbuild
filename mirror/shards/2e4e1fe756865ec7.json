@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/thespacedragon",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "thespacedragon/library/RDV%20GY-512%20Library/1.0/RDVGY-512Library-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RDVGY-512Library-1.0.tar.gz",
+    "size_bytes": 1932,
+    "sha256": "1a787b33fa1e632ae1aa2e1ffeac693cc2a398ff7268630be69e2255822cc5e5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thespacedragon/library/RDV%2520GY-512%2520Library/1.0/RDVGY-512Library-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/thespacedragon/library/RDV%20GY-512%20Library/1.0/RDVGY-512Library-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

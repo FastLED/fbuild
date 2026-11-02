@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-nguyenmanhthao996tn",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-nguyenmanhthao996tn/library/ADC_Driver/0.0.0+sha.a3a6ffc62b06/ADC_Driver-0.0.0+sha.a3a6ffc62b06.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADC_Driver-0.0.0+sha.a3a6ffc62b06.tar.gz",
+    "size_bytes": 984,
+    "sha256": "5282ea96d4777483f06aefa80cbf22803112a3f899b80476174afedc3cc2ef12",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nguyenmanhthao996tn/library/ADC_Driver/0.0.0%2Bsha.a3a6ffc62b06/ADC_Driver-0.0.0%2Bsha.a3a6ffc62b06.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nguyenmanhthao996tn/library/ADC_Driver/0.0.0%2Bsha.a3a6ffc62b06/ADC_Driver-0.0.0%2Bsha.a3a6ffc62b06.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nguyenmanhthao996tn/library/ADF4350/0.0.0+sha.a37afa334923/ADF4350-0.0.0+sha.a37afa334923.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADF4350-0.0.0+sha.a37afa334923.tar.gz",
+    "size_bytes": 1798,
+    "sha256": "17e165d92b99ab3896130a3a3d7df337a763706a312501e726bd19790aaf0657",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nguyenmanhthao996tn/library/ADF4350/0.0.0%2Bsha.a37afa334923/ADF4350-0.0.0%2Bsha.a37afa334923.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nguyenmanhthao996tn/library/ADF4350/0.0.0%2Bsha.a37afa334923/ADF4350-0.0.0%2Bsha.a37afa334923.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nguyenmanhthao996tn/library/Button_Control/0.0.0+sha.ab95649b3f54/Button_Control-0.0.0+sha.ab95649b3f54.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Button_Control-0.0.0+sha.ab95649b3f54.tar.gz",
+    "size_bytes": 1259,
+    "sha256": "ff13ef6dd933a49fb0e3f14e46149e140c7967be16dde90ce0a7c4074182dffd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nguyenmanhthao996tn/library/Button_Control/0.0.0%2Bsha.ab95649b3f54/Button_Control-0.0.0%2Bsha.ab95649b3f54.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nguyenmanhthao996tn/library/Button_Control/0.0.0%2Bsha.ab95649b3f54/Button_Control-0.0.0%2Bsha.ab95649b3f54.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nguyenmanhthao996tn/library/HC05_Driver/0.0.0+sha.6635713c15e5/HC05_Driver-0.0.0+sha.6635713c15e5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HC05_Driver-0.0.0+sha.6635713c15e5.tar.gz",
+    "size_bytes": 1476,
+    "sha256": "bd31ea244f93fd8c139dbfcc8371b5de0d702d52de7ee6ab06a3c227ddd2471c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nguyenmanhthao996tn/library/HC05_Driver/0.0.0%2Bsha.6635713c15e5/HC05_Driver-0.0.0%2Bsha.6635713c15e5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nguyenmanhthao996tn/library/HC05_Driver/0.0.0%2Bsha.6635713c15e5/HC05_Driver-0.0.0%2Bsha.6635713c15e5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nguyenmanhthao996tn/library/JSONObject/0.0.0+sha.3c44784c513d/JSONObject-0.0.0+sha.3c44784c513d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JSONObject-0.0.0+sha.3c44784c513d.tar.gz",
+    "size_bytes": 1803,
+    "sha256": "3d084da3691c1a11227429ed6294c383dc005f57082dbf4461195222b0fbd906",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nguyenmanhthao996tn/library/JSONObject/0.0.0%2Bsha.3c44784c513d/JSONObject-0.0.0%2Bsha.3c44784c513d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nguyenmanhthao996tn/library/JSONObject/0.0.0%2Bsha.3c44784c513d/JSONObject-0.0.0%2Bsha.3c44784c513d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nguyenmanhthao996tn/library/delay/0.0.0+sha.89b5d90cdd9e/delay-0.0.0+sha.89b5d90cdd9e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "delay-0.0.0+sha.89b5d90cdd9e.tar.gz",
+    "size_bytes": 728,
+    "sha256": "9e87ded6ff8ddb409d398c904919994a520452fc81d6da50f8624d2adae658cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nguyenmanhthao996tn/library/delay/0.0.0%2Bsha.89b5d90cdd9e/delay-0.0.0%2Bsha.89b5d90cdd9e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nguyenmanhthao996tn/library/delay/0.0.0%2Bsha.89b5d90cdd9e/delay-0.0.0%2Bsha.89b5d90cdd9e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nguyenmanhthao996tn/library/jsmn/0.0.0+sha.6b15d3d45f70/jsmn-0.0.0+sha.6b15d3d45f70.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "jsmn-0.0.0+sha.6b15d3d45f70.tar.gz",
+    "size_bytes": 3285,
+    "sha256": "7be165cbb6b92d8bf4762ea2dd6582806766b5776bb296ece59dd21e5c86601d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nguyenmanhthao996tn/library/jsmn/0.0.0%2Bsha.6b15d3d45f70/jsmn-0.0.0%2Bsha.6b15d3d45f70.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nguyenmanhthao996tn/library/jsmn/0.0.0%2Bsha.6b15d3d45f70/jsmn-0.0.0%2Bsha.6b15d3d45f70.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nguyenmanhthao996tn/library/software_SPI/0.0.0+sha.31211abbf651/software_SPI-0.0.0+sha.31211abbf651.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "software_SPI-0.0.0+sha.31211abbf651.tar.gz",
+    "size_bytes": 998,
+    "sha256": "f8775f73aa5931418490ba69ec8b0ae7c32552a2bdc4dbec09d45d29d94fab41",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nguyenmanhthao996tn/library/software_SPI/0.0.0%2Bsha.31211abbf651/software_SPI-0.0.0%2Bsha.31211abbf651.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nguyenmanhthao996tn/library/software_SPI/0.0.0%2Bsha.31211abbf651/software_SPI-0.0.0%2Bsha.31211abbf651.tar.gz"
+    ]
+   }
+  }
+ ]
+}

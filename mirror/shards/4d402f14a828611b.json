@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/maaajaaa",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "maaajaaa/library/GaussianFilter1D/1.0.2/GaussianFilter1D-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GaussianFilter1D-1.0.2.tar.gz",
+    "size_bytes": 16390,
+    "sha256": "462e618fb7e6fe3fe2feba6f11eea4c7e093e12c53b606df110a2b29451eddc5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maaajaaa/library/GaussianFilter1D/1.0.2/GaussianFilter1D-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/maaajaaa/library/GaussianFilter1D/1.0.2/GaussianFilter1D-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "maaajaaa/library/SeeedNrf52480Battery/1.0.1/SeeedNrf52480Battery-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SeeedNrf52480Battery-1.0.1.tar.gz",
+    "size_bytes": 16088,
+    "sha256": "0acb406e83ef8b1c34c332789da27751e683adbc13338038ee6aa3e8601bff7b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maaajaaa/library/SeeedNrf52480Battery/1.0.1/SeeedNrf52480Battery-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/maaajaaa/library/SeeedNrf52480Battery/1.0.1/SeeedNrf52480Battery-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

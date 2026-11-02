@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/khrisnaijlalbachri",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "khrisnaijlalbachri/library/ESP32AnalogRead%20Custom%20by%20Khrisna%20Ijlal%20Bachri/1.0.0/ESP32AnalogReadCustombyKhrisnaIjlalBachri-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32AnalogReadCustombyKhrisnaIjlalBachri-1.0.0.tar.gz",
+    "size_bytes": 1847,
+    "sha256": "e8a252377cff596ae340931779e952384087ffaee9ba253c18d210be1fc3ee9d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khrisnaijlalbachri/library/ESP32AnalogRead%2520Custom%2520by%2520Khrisna%2520Ijlal%2520Bachri/1.0.0/ESP32AnalogReadCustombyKhrisnaIjlalBachri-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khrisnaijlalbachri/library/ESP32AnalogRead%20Custom%20by%20Khrisna%20Ijlal%20Bachri/1.0.0/ESP32AnalogReadCustombyKhrisnaIjlalBachri-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khrisnaijlalbachri/library/ESP32AnalogRead/1.0.0/ESP32AnalogRead-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32AnalogRead-1.0.0.tar.gz",
+    "size_bytes": 1818,
+    "sha256": "1dee3372651cc7c53387f613651dc905c8078959077ea37dde802cf1bdf1b395",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khrisnaijlalbachri/library/ESP32AnalogRead/1.0.0/ESP32AnalogRead-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khrisnaijlalbachri/library/ESP32AnalogRead/1.0.0/ESP32AnalogRead-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

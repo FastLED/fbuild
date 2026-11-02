@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/singlesf",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "singlesf/library/SF_Buzzer/1.0.1/SF_Buzzer-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SF_Buzzer-1.0.1.tar.gz",
+    "size_bytes": 2596,
+    "sha256": "7f2349d8bd99fc4cac8f826246cdf96f5758c1aec3c1ef22836be83f9869ee2a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/singlesf/library/SF_Buzzer/1.0.1/SF_Buzzer-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/singlesf/library/SF_Buzzer/1.0.1/SF_Buzzer-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,191 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/neuraiproject",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "neuraiproject/library/NeuraiDepinMsg/1.0.0/NeuraiDepinMsg-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeuraiDepinMsg-1.0.0.tar.gz",
+    "size_bytes": 12968,
+    "sha256": "7212422e1458a05681f207dcd5bd11c329d74feed43c71fce463ed49319d9912",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/neuraiproject/library/NeuraiDepinMsg/1.0.0/NeuraiDepinMsg-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/neuraiproject/library/NeuraiDepinMsg/1.0.0/NeuraiDepinMsg-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "neuraiproject/library/NeuraiDepinMsg/1.1.0/NeuraiDepinMsg-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeuraiDepinMsg-1.1.0.tar.gz",
+    "size_bytes": 52645,
+    "sha256": "45c71fe26f25bd4dee393736cdfa9b47e55945f1d087dfc2bfac8c9b9cb0fa73",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/neuraiproject/library/NeuraiDepinMsg/1.1.0/NeuraiDepinMsg-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/neuraiproject/library/NeuraiDepinMsg/1.1.0/NeuraiDepinMsg-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "neuraiproject/library/mldsa/0.1.0/mldsa-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mldsa-0.1.0.tar.gz",
+    "size_bytes": 98865,
+    "sha256": "915d3dc2a3cc9002b8f6683b2ba33f439973f725ac6cc69ae13167b13e3aaae1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/neuraiproject/library/mldsa/0.1.0/mldsa-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/neuraiproject/library/mldsa/0.1.0/mldsa-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "neuraiproject/library/uNeurai/0.0.11/uNeurai-0.0.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uNeurai-0.0.11.tar.gz",
+    "size_bytes": 194976,
+    "sha256": "f95812d00f03c5a3c9c83594d7bcb054115bce65316bb7bc87828dd06e7188de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/neuraiproject/library/uNeurai/0.0.11/uNeurai-0.0.11.tar.gz",
+     "https://dl.registry.platformio.org/download/neuraiproject/library/uNeurai/0.0.11/uNeurai-0.0.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "neuraiproject/library/uNeurai/0.0.2/uNeurai-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uNeurai-0.0.2.tar.gz",
+    "size_bytes": 159922,
+    "sha256": "15b95a9dd2d97bc2f81deb0cb1d0fa6d002b5f6881e9f8b7673ae220aa6110ca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/neuraiproject/library/uNeurai/0.0.2/uNeurai-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/neuraiproject/library/uNeurai/0.0.2/uNeurai-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "neuraiproject/library/uNeurai/0.0.3/uNeurai-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uNeurai-0.0.3.tar.gz",
+    "size_bytes": 160051,
+    "sha256": "008a214c652e962021d3555bbfd14bc6aafbfbd946203ed86d389e9bdc53d203",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/neuraiproject/library/uNeurai/0.0.3/uNeurai-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/neuraiproject/library/uNeurai/0.0.3/uNeurai-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "neuraiproject/library/uNeurai/0.0.4/uNeurai-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uNeurai-0.0.4.tar.gz",
+    "size_bytes": 160097,
+    "sha256": "5a836c345c5e1ee90547e021f9e990dc661b3b475c8195ffacb114c711191141",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/neuraiproject/library/uNeurai/0.0.4/uNeurai-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/neuraiproject/library/uNeurai/0.0.4/uNeurai-0.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "neuraiproject/library/uNeurai/0.0.5/uNeurai-0.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uNeurai-0.0.5.tar.gz",
+    "size_bytes": 160762,
+    "sha256": "8b39fcce9a80f319c898545dd69135a1ccfed9e20d6ac7e4dc921fe28df828f5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/neuraiproject/library/uNeurai/0.0.5/uNeurai-0.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/neuraiproject/library/uNeurai/0.0.5/uNeurai-0.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "neuraiproject/library/uNeurai/0.0.6/uNeurai-0.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uNeurai-0.0.6.tar.gz",
+    "size_bytes": 172412,
+    "sha256": "d31a799f8c0711dd9a5dbee5f796043ae633f133541598b50dadf9d939b9746a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/neuraiproject/library/uNeurai/0.0.6/uNeurai-0.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/neuraiproject/library/uNeurai/0.0.6/uNeurai-0.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "neuraiproject/library/uNeurai/0.0.7/uNeurai-0.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uNeurai-0.0.7.tar.gz",
+    "size_bytes": 186957,
+    "sha256": "7bf546d51615d1803ba99a240a0f902f9822e5022a3407721a61570aabe8828c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/neuraiproject/library/uNeurai/0.0.7/uNeurai-0.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/neuraiproject/library/uNeurai/0.0.7/uNeurai-0.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "neuraiproject/library/uNeurai/0.0.8/uNeurai-0.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uNeurai-0.0.8.tar.gz",
+    "size_bytes": 188802,
+    "sha256": "36e65eab9e4c5c607361b30e043f7f54d17e72cde117ac903fe5ed2d8df0da46",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/neuraiproject/library/uNeurai/0.0.8/uNeurai-0.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/neuraiproject/library/uNeurai/0.0.8/uNeurai-0.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "neuraiproject/library/uNeurai/0.1.0/uNeurai-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uNeurai-0.1.0.tar.gz",
+    "size_bytes": 160946,
+    "sha256": "960bd739ff43c90f633633124823a04732830b3bf73f35b5295fe3e2488848a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/neuraiproject/library/uNeurai/0.1.0/uNeurai-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/neuraiproject/library/uNeurai/0.1.0/uNeurai-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "neuraiproject/library/uNeurai/0.2.0/uNeurai-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uNeurai-0.2.0.tar.gz",
+    "size_bytes": 207046,
+    "sha256": "f51ce416305f36573d5affde9488fb10e80902aa1f53650bbcfe70e9962914d2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/neuraiproject/library/uNeurai/0.2.0/uNeurai-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/neuraiproject/library/uNeurai/0.2.0/uNeurai-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "neuraiproject/library/uNeurai/0.3.0/uNeurai-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uNeurai-0.3.0.tar.gz",
+    "size_bytes": 207415,
+    "sha256": "719ca51bf5f9be394d36231b27cc469e9dcc64252aa4bd4fa6edf97d1c3ceb22",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/neuraiproject/library/uNeurai/0.3.0/uNeurai-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/neuraiproject/library/uNeurai/0.3.0/uNeurai-0.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

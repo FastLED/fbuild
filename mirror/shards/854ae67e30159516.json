@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/wireless-tag-maker",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "wireless-tag-maker/library/WirelessTagTiny/0.1.0/WirelessTagTiny-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WirelessTagTiny-0.1.0.tar.gz",
+    "size_bytes": 11237,
+    "sha256": "f5aad1b546fc257ff867918537a3175f14bef96bb43cb2ed58aa06d2cf4bc0c4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wireless-tag-maker/library/WirelessTagTiny/0.1.0/WirelessTagTiny-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/wireless-tag-maker/library/WirelessTagTiny/0.1.0/WirelessTagTiny-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/holgerlembke",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "holgerlembke/library/ESP32%20File%20Manager%20for%20Generation%20Klick%20ESPFMfGK/2.0.17/ESP32FileManagerforGenerationKlickESPFMfGK-2.0.17.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32FileManagerforGenerationKlickESPFMfGK-2.0.17.tar.gz",
+    "size_bytes": 53663,
+    "sha256": "a3782fe7382751d6abefedf3d393470b1d95bceeb810bd12c26886946b405ede",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/holgerlembke/library/ESP32%2520File%2520Manager%2520for%2520Generation%2520Klick%2520ESPFMfGK/2.0.17/ESP32FileManagerforGenerationKlickESPFMfGK-2.0.17.tar.gz",
+     "https://dl.registry.platformio.org/download/holgerlembke/library/ESP32%20File%20Manager%20for%20Generation%20Klick%20ESPFMfGK/2.0.17/ESP32FileManagerforGenerationKlickESPFMfGK-2.0.17.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "holgerlembke/library/st7567sfGK%20128x64%20i2c%20LCD%20driver%20for%20Generation%20Klick/0.4.6/st7567sfGK128x64i2cLCDdriverforGenerationKlick-0.4.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "st7567sfGK128x64i2cLCDdriverforGenerationKlick-0.4.6.tar.gz",
+    "size_bytes": 33006,
+    "sha256": "d41319874bbda423c7f4bba7a2b439ad8528c2e8459943b186a0d7781ff054cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/holgerlembke/library/st7567sfGK%2520128x64%2520i2c%2520LCD%2520driver%2520for%2520Generation%2520Klick/0.4.6/st7567sfGK128x64i2cLCDdriverforGenerationKlick-0.4.6.tar.gz",
+     "https://dl.registry.platformio.org/download/holgerlembke/library/st7567sfGK%20128x64%20i2c%20LCD%20driver%20for%20Generation%20Klick/0.4.6/st7567sfGK128x64i2cLCDdriverforGenerationKlick-0.4.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

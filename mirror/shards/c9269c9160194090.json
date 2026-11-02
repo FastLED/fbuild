@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/steveeidemiller",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "steveeidemiller/library/SE_BME680/0.6.0/SE_BME680-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SE_BME680-0.6.0.tar.gz",
+    "size_bytes": 15492,
+    "sha256": "36b9bacf38dd66eaae5b5a40a91c76f1fa6c27c96ea374b5bd44013303941be6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/steveeidemiller/library/SE_BME680/0.6.0/SE_BME680-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/steveeidemiller/library/SE_BME680/0.6.0/SE_BME680-0.6.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

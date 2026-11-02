@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gob",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gob/library/gob_unifiedButton/0.1.5/gob_unifiedButton-0.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "gob_unifiedButton-0.1.5.tar.gz",
+    "size_bytes": 41425,
+    "sha256": "658882d15490fef5b5a4bfdfc4937875a4075209fcbf0c3ccd50952aa5ad22f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gob/library/gob_unifiedButton/0.1.5/gob_unifiedButton-0.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/gob/library/gob_unifiedButton/0.1.5/gob_unifiedButton-0.1.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

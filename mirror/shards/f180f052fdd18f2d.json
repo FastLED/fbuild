@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/igorantolic",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "igorantolic/library/Ai%20AP3216%20Ambient%20Light%20and%20Proximity%20Sensor%20Library/1.0/AiAP3216AmbientLightandProximitySensorLibrary-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AiAP3216AmbientLightandProximitySensorLibrary-1.0.tar.gz",
+    "size_bytes": 10276,
+    "sha256": "dd96c7148310e50010a5b330b5fbb0f169c5b1b15d9319a798d6d8b3bdfd23a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/igorantolic/library/Ai%2520AP3216%2520Ambient%2520Light%2520and%2520Proximity%2520Sensor%2520Library/1.0/AiAP3216AmbientLightandProximitySensorLibrary-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/igorantolic/library/Ai%20AP3216%20Ambient%20Light%20and%20Proximity%20Sensor%20Library/1.0/AiAP3216AmbientLightandProximitySensorLibrary-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "igorantolic/library/Ai%20Esp32%20Rotary%20Encoder/1.7/AiEsp32RotaryEncoder-1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AiEsp32RotaryEncoder-1.7.tar.gz",
+    "size_bytes": 29498,
+    "sha256": "a4f537537fe8477678ef7031d4529284ca6a48514d4d8e4cd2e7574cf229ef1d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/igorantolic/library/Ai%2520Esp32%2520Rotary%2520Encoder/1.7/AiEsp32RotaryEncoder-1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/igorantolic/library/Ai%20Esp32%20Rotary%20Encoder/1.7/AiEsp32RotaryEncoder-1.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

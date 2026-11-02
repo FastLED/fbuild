@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mogrinz",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mogrinz/library/AMT630A_OSD/0.7.0/AMT630A_OSD-0.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AMT630A_OSD-0.7.0.tar.gz",
+    "size_bytes": 63090,
+    "sha256": "e9cd9292dcc47d84720e559e1df584a661075c7218fe9c93f843d4bf558d04f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mogrinz/library/AMT630A_OSD/0.7.0/AMT630A_OSD-0.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mogrinz/library/AMT630A_OSD/0.7.0/AMT630A_OSD-0.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mogrinz/library/AMT630A_OSD/0.7.1/AMT630A_OSD-0.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AMT630A_OSD-0.7.1.tar.gz",
+    "size_bytes": 64550,
+    "sha256": "682af43ad5da912a3c0192463b9652f5ca927f631c56f455a521856fabd5ba0b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mogrinz/library/AMT630A_OSD/0.7.1/AMT630A_OSD-0.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mogrinz/library/AMT630A_OSD/0.7.1/AMT630A_OSD-0.7.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

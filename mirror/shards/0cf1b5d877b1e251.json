@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-sssrc-frsh2013",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-sssrc-frsh2013/library/gps_settings_venus/0.0.0+sha.d80196ed93bc/gps_settings_venus-0.0.0+sha.d80196ed93bc.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "gps_settings_venus-0.0.0+sha.d80196ed93bc.tar.gz",
+    "size_bytes": 1476,
+    "sha256": "5861e71593be6152dc453b2eaedf761b35d53f665fa09905f3ad78cb4fdbd9e7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sssrc-frsh2013/library/gps_settings_venus/0.0.0%2Bsha.d80196ed93bc/gps_settings_venus-0.0.0%2Bsha.d80196ed93bc.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sssrc-frsh2013/library/gps_settings_venus/0.0.0%2Bsha.d80196ed93bc/gps_settings_venus-0.0.0%2Bsha.d80196ed93bc.tar.gz"
+    ]
+   }
+  }
+ ]
+}

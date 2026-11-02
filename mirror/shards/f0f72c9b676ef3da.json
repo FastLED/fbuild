@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pushdisdev",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pushdisdev/library/PushDisConnector/1.0.4/PushDisConnector-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PushDisConnector-1.0.4.tar.gz",
+    "size_bytes": 8199,
+    "sha256": "50c1843eaa4d05ded8728fef04291327a95f934493dce703e6a2208b6aac612f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pushdisdev/library/PushDisConnector/1.0.4/PushDisConnector-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/pushdisdev/library/PushDisConnector/1.0.4/PushDisConnector-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

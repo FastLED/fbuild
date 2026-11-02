@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/joeljojop",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "joeljojop/library/SimpleIMU/1.0.0/SimpleIMU-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleIMU-1.0.0.tar.gz",
+    "size_bytes": 7094,
+    "sha256": "e55df8b43f1c8aae6bb782e03d3f44a1077e00e6fc9a3cf0db74a122fcbfe7e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joeljojop/library/SimpleIMU/1.0.0/SimpleIMU-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/joeljojop/library/SimpleIMU/1.0.0/SimpleIMU-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "joeljojop/library/TempReader/1.1.0/TempReader-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TempReader-1.1.0.tar.gz",
+    "size_bytes": 3108,
+    "sha256": "d9863d3a2aafebaa3ab9cb16c4eb96474c6b0068bd196e99adc7bea01ce01d29",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joeljojop/library/TempReader/1.1.0/TempReader-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/joeljojop/library/TempReader/1.1.0/TempReader-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

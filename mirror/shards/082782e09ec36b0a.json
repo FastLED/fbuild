@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ms523",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ms523/library/AX12_Hardware/0.0.0+sha.3000c6778d1c/AX12_Hardware-0.0.0+sha.3000c6778d1c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AX12_Hardware-0.0.0+sha.3000c6778d1c.tar.gz",
+    "size_bytes": 3378,
+    "sha256": "ec02466871674331da83d6a9b8d8955e3609da6aa71bab3ba7f8fccb107ade9c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ms523/library/AX12_Hardware/0.0.0%2Bsha.3000c6778d1c/AX12_Hardware-0.0.0%2Bsha.3000c6778d1c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ms523/library/AX12_Hardware/0.0.0%2Bsha.3000c6778d1c/AX12_Hardware-0.0.0%2Bsha.3000c6778d1c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ms523/library/FeRAM/0.0.0+sha.f93930fa4df5/FeRAM-0.0.0+sha.f93930fa4df5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FeRAM-0.0.0+sha.f93930fa4df5.tar.gz",
+    "size_bytes": 2648,
+    "sha256": "d7897fe06f13551de1c3d5f1cb7033b329e106094dbfcf7882fcca0fee17430f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ms523/library/FeRAM/0.0.0%2Bsha.f93930fa4df5/FeRAM-0.0.0%2Bsha.f93930fa4df5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ms523/library/FeRAM/0.0.0%2Bsha.f93930fa4df5/FeRAM-0.0.0%2Bsha.f93930fa4df5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ms523/library/Terminal/0.0.0+sha.3bea6f596c03/Terminal-0.0.0+sha.3bea6f596c03.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Terminal-0.0.0+sha.3bea6f596c03.tar.gz",
+    "size_bytes": 1705,
+    "sha256": "74b7436261558139a340600b00809d9b4cf6c1dd85e80ba34700bbfea5aca867",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ms523/library/Terminal/0.0.0%2Bsha.3bea6f596c03/Terminal-0.0.0%2Bsha.3bea6f596c03.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ms523/library/Terminal/0.0.0%2Bsha.3bea6f596c03/Terminal-0.0.0%2Bsha.3bea6f596c03.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ms523/library/uCam/0.0.0+sha.68395cd065e4/uCam-0.0.0+sha.68395cd065e4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uCam-0.0.0+sha.68395cd065e4.tar.gz",
+    "size_bytes": 4010,
+    "sha256": "a6706934199fb01ce0ae637cbdba14b541b699989a011fde46153efd943ba896",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ms523/library/uCam/0.0.0%2Bsha.68395cd065e4/uCam-0.0.0%2Bsha.68395cd065e4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ms523/library/uCam/0.0.0%2Bsha.68395cd065e4/uCam-0.0.0%2Bsha.68395cd065e4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

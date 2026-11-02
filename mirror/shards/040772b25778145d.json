@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/letjek",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "letjek/library/AURA/0.1.0/AURA-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AURA-0.1.0.tar.gz",
+    "size_bytes": 24042,
+    "sha256": "4ffdb4e94c5968bdab5bd421758906d2b0acc451630dd7a9e1f6838d908d58cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/letjek/library/AURA/0.1.0/AURA-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/letjek/library/AURA/0.1.0/AURA-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

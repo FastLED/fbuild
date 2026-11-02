@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/zapta",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "zapta/library/Serial_Packets/0.0.1/Serial_Packets-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Serial_Packets-0.0.1.tar.gz",
+    "size_bytes": 35776,
+    "sha256": "ed51496bd0299e63bce5f9c98d3fd2128a689a1a576ebd0993e1dd2d59b74271",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zapta/library/Serial_Packets/0.0.1/Serial_Packets-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/zapta/library/Serial_Packets/0.0.1/Serial_Packets-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

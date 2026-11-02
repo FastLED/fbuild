@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/arturo182",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "arturo182/library/BBQ10Keyboard/1.1.0/BBQ10Keyboard-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BBQ10Keyboard-1.1.0.tar.gz",
+    "size_bytes": 15448,
+    "sha256": "11e0134511e202d02515ddc8461bb3dfdf2bc8fd99552946ecd800e88d2440a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arturo182/library/BBQ10Keyboard/1.1.0/BBQ10Keyboard-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arturo182/library/BBQ10Keyboard/1.1.0/BBQ10Keyboard-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

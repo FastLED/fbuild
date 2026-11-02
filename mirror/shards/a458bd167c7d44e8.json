@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lucadentella",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lucadentella/library/CEClient/0.1.1/CEClient-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CEClient-0.1.1.tar.gz",
+    "size_bytes": 22335,
+    "sha256": "8f8ff8cf2b303db35dd029ba1745d96e41f0281e8fa93b98ec10217301c3175e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lucadentella/library/CEClient/0.1.1/CEClient-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lucadentella/library/CEClient/0.1.1/CEClient-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lucadentella/library/SPIFFS%20ImageReader%20Library/1.0.0/SPIFFSImageReaderLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SPIFFSImageReaderLibrary-1.0.0.tar.gz",
+    "size_bytes": 9864,
+    "sha256": "da2fcec48705f3dfa9a8d6051afec3e4c5da32a9ba4e9cd069f161577b5d8fc5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lucadentella/library/SPIFFS%2520ImageReader%2520Library/1.0.0/SPIFFSImageReaderLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lucadentella/library/SPIFFS%20ImageReader%20Library/1.0.0/SPIFFSImageReaderLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lucadentella/library/TOTP%20library/1.1.0/TOTPlibrary-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TOTPlibrary-1.1.0.tar.gz",
+    "size_bytes": 4870,
+    "sha256": "37ba31e7076f6548f862a7b50021f5406e4b0579807c398cdde931843abb4c8b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lucadentella/library/TOTP%2520library/1.1.0/TOTPlibrary-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lucadentella/library/TOTP%20library/1.1.0/TOTPlibrary-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lucadentella/library/WiThrottle/1.0.1/WiThrottle-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiThrottle-1.0.1.tar.gz",
+    "size_bytes": 19783,
+    "sha256": "c169c26c6ad93e412d1454934d89e4756c604749db43c34fe54f7ad37c607488",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lucadentella/library/WiThrottle/1.0.1/WiThrottle-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lucadentella/library/WiThrottle/1.0.1/WiThrottle-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

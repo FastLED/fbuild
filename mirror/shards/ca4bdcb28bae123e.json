@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/arpruss",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "arpruss/library/ADCTouchSensor/0.0.12/ADCTouchSensor-0.0.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADCTouchSensor-0.0.12.tar.gz",
+    "size_bytes": 7367,
+    "sha256": "7dd5662b392b53dbe296c253e417bb4ffb69c6de1e03326705446e643af56011",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arpruss/library/ADCTouchSensor/0.0.12/ADCTouchSensor-0.0.12.tar.gz",
+     "https://dl.registry.platformio.org/download/arpruss/library/ADCTouchSensor/0.0.12/ADCTouchSensor-0.0.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arpruss/library/GameControllersSTM32/0.0.8/GameControllersSTM32-0.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GameControllersSTM32-0.0.8.tar.gz",
+    "size_bytes": 11244,
+    "sha256": "2cfafe0bf8967e8d599a10f29ebf2319f447b71ab9231d43ab225feea8e45c3d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arpruss/library/GameControllersSTM32/0.0.8/GameControllersSTM32-0.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/arpruss/library/GameControllersSTM32/0.0.8/GameControllersSTM32-0.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arpruss/library/KeyboardMouse/0.1/KeyboardMouse-0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KeyboardMouse-0.1.tar.gz",
+    "size_bytes": 13727,
+    "sha256": "8a74423d4439ed981d7f3663506684f0121c255eae5d2dd6a6aff126d219e73b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arpruss/library/KeyboardMouse/0.1/KeyboardMouse-0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arpruss/library/KeyboardMouse/0.1/KeyboardMouse-0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arpruss/library/USBComposite%20for%20STM32F1/0.91/USBCompositeforSTM32F1-0.91.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "USBCompositeforSTM32F1-0.91.tar.gz",
+    "size_bytes": 64483,
+    "sha256": "21cb597b7a7be74355489916e0bb1ce3389f24f943835dfbf080024ae3b7c2b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arpruss/library/USBComposite%2520for%2520STM32F1/0.91/USBCompositeforSTM32F1-0.91.tar.gz",
+     "https://dl.registry.platformio.org/download/arpruss/library/USBComposite%20for%20STM32F1/0.91/USBCompositeforSTM32F1-0.91.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arpruss/library/USBComposite%20for%20STM32F1/1.0.9/USBCompositeforSTM32F1-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "USBCompositeforSTM32F1-1.0.9.tar.gz",
+    "size_bytes": 92348,
+    "sha256": "bcf85bf0a410df43a13a2c8638cd5f59ae15a93ba08dfe3570cb05f6cd407fec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arpruss/library/USBComposite%2520for%2520STM32F1/1.0.9/USBCompositeforSTM32F1-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/arpruss/library/USBComposite%20for%20STM32F1/1.0.9/USBCompositeforSTM32F1-1.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arpruss/library/USBComposite%20for%20STM32F1/1.06/USBCompositeforSTM32F1-1.06.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "USBCompositeforSTM32F1-1.06.tar.gz",
+    "size_bytes": 91591,
+    "sha256": "897e5438e5a705849528b742ebda8728fc3f98541b054f8d5cb3299e3e3b3db1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arpruss/library/USBComposite%2520for%2520STM32F1/1.06/USBCompositeforSTM32F1-1.06.tar.gz",
+     "https://dl.registry.platformio.org/download/arpruss/library/USBComposite%20for%20STM32F1/1.06/USBCompositeforSTM32F1-1.06.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arpruss/library/VectorDisplay/0.38.0/VectorDisplay-0.38.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VectorDisplay-0.38.0.tar.gz",
+    "size_bytes": 10511,
+    "sha256": "916d4ca13930ffa8b4f615b1ecf42b93ac7348670554f9ad7dc411558ef589c3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arpruss/library/VectorDisplay/0.38.0/VectorDisplay-0.38.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arpruss/library/VectorDisplay/0.38.0/VectorDisplay-0.38.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

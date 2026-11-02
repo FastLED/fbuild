@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ernicommunity",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ernicommunity/library/dbg-trace/1.1.0/dbg-trace-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "dbg-trace-1.1.0.tar.gz",
+    "size_bytes": 319534,
+    "sha256": "a0e69591a4d79c257fa2e4e84a3ab24519928b345c69435d360f123a780cec49",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ernicommunity/library/dbg-trace/1.1.0/dbg-trace-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ernicommunity/library/dbg-trace/1.1.0/dbg-trace-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ernicommunity/library/debug-cli/1.3.0/debug-cli-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "debug-cli-1.3.0.tar.gz",
+    "size_bytes": 299711,
+    "sha256": "f78a46d1fef0f0a695683d4ad5af4ae66139ee63edc6d24eb5034e86aaafb799",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ernicommunity/library/debug-cli/1.3.0/debug-cli-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ernicommunity/library/debug-cli/1.3.0/debug-cli-1.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

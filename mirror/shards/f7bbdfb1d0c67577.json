@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-mohamedgamal",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-mohamedgamal/library/DHT_TEST2/0.0.0+sha.2dbb2497beb6/DHT_TEST2-0.0.0+sha.2dbb2497beb6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DHT_TEST2-0.0.0+sha.2dbb2497beb6.tar.gz",
+    "size_bytes": 1003,
+    "sha256": "f3bc4d6943ae080d31184d378ad724c94e9ad57560cd28f2690277102da33807",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mohamedgamal/library/DHT_TEST2/0.0.0%2Bsha.2dbb2497beb6/DHT_TEST2-0.0.0%2Bsha.2dbb2497beb6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mohamedgamal/library/DHT_TEST2/0.0.0%2Bsha.2dbb2497beb6/DHT_TEST2-0.0.0%2Bsha.2dbb2497beb6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

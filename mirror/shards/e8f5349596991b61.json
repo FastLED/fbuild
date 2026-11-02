@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nikolo02",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nikolo02/library/FTOS/1.0.0/FTOS-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FTOS-1.0.0.tar.gz",
+    "size_bytes": 2086,
+    "sha256": "7265898c4417d3069f2302d2127973be06e756162b20362a9d8b4565f1953159",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nikolo02/library/FTOS/1.0.0/FTOS-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nikolo02/library/FTOS/1.0.0/FTOS-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nikolo02/library/FTOS/1.0.1/FTOS-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FTOS-1.0.1.tar.gz",
+    "size_bytes": 2099,
+    "sha256": "8963d7479fed62f4b81edf65e8d8c6568e0cb42ede72adfbf05b261ccb2ad0da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nikolo02/library/FTOS/1.0.1/FTOS-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nikolo02/library/FTOS/1.0.1/FTOS-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nikolo02/library/FileToHex/1.0.0/FileToHex-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FileToHex-1.0.0.tar.gz",
+    "size_bytes": 1361,
+    "sha256": "876571690a973a108a3c204c775943b90c43ef2d4a83f684d60bec582e920029",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nikolo02/library/FileToHex/1.0.0/FileToHex-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nikolo02/library/FileToHex/1.0.0/FileToHex-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nikolo02/library/VORTEX/1.0.2/VORTEX-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VORTEX-1.0.2.tar.gz",
+    "size_bytes": 2097,
+    "sha256": "839b9a163dbc54331317898888fd7f2b98a523ba89cf0d7b8d073039929b9f89",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nikolo02/library/VORTEX/1.0.2/VORTEX-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nikolo02/library/VORTEX/1.0.2/VORTEX-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

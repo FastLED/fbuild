@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sascha432",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sascha432/library/libcrc16/1.0.2/libcrc16-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libcrc16-1.0.2.tar.gz",
+    "size_bytes": 16020,
+    "sha256": "95d3745b7662797309e8514d1cdbe2cf24973300080ea4af5888d124a69adbc0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sascha432/library/libcrc16/1.0.2/libcrc16-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sascha432/library/libcrc16/1.0.2/libcrc16-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

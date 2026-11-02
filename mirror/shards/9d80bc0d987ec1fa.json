@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-scachat",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-scachat/library/DS1338/0.0.0+sha.e77d69913c46/DS1338-0.0.0+sha.e77d69913c46.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS1338-0.0.0+sha.e77d69913c46.tar.gz",
+    "size_bytes": 1940,
+    "sha256": "90d03a5c61d17aa4f2796b580b6e703c35ece00c154ac3300ed67b398266b5d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-scachat/library/DS1338/0.0.0%2Bsha.e77d69913c46/DS1338-0.0.0%2Bsha.e77d69913c46.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-scachat/library/DS1338/0.0.0%2Bsha.e77d69913c46/DS1338-0.0.0%2Bsha.e77d69913c46.tar.gz"
+    ]
+   }
+  }
+ ]
+}

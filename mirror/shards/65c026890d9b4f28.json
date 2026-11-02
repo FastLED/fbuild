@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-garivetm",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-garivetm/library/CAN_FIFO/0.0.0+sha.d1920eb1d63e/CAN_FIFO-0.0.0+sha.d1920eb1d63e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CAN_FIFO-0.0.0+sha.d1920eb1d63e.tar.gz",
+    "size_bytes": 3673,
+    "sha256": "50b3a5301cb3ab5740bbafbfa4f5c28539d1d0fb7c0f34736156b2d119b27671",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-garivetm/library/CAN_FIFO/0.0.0%2Bsha.d1920eb1d63e/CAN_FIFO-0.0.0%2Bsha.d1920eb1d63e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-garivetm/library/CAN_FIFO/0.0.0%2Bsha.d1920eb1d63e/CAN_FIFO-0.0.0%2Bsha.d1920eb1d63e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-garivetm/library/FiltrePB/0.0.0+sha.79a6e3d33887/FiltrePB-0.0.0+sha.79a6e3d33887.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FiltrePB-0.0.0+sha.79a6e3d33887.tar.gz",
+    "size_bytes": 965,
+    "sha256": "b8b428153cf51503ee1736eadcf5a671ab559d1eaa3427e370fce1daaf0a1393",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-garivetm/library/FiltrePB/0.0.0%2Bsha.79a6e3d33887/FiltrePB-0.0.0%2Bsha.79a6e3d33887.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-garivetm/library/FiltrePB/0.0.0%2Bsha.79a6e3d33887/FiltrePB-0.0.0%2Bsha.79a6e3d33887.tar.gz"
+    ]
+   }
+  }
+ ]
+}

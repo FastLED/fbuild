@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/zwer2k",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "zwer2k/library/WeatherStationDataRx/0.3.1/WeatherStationDataRx-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WeatherStationDataRx-0.3.1.tar.gz",
+    "size_bytes": 8041,
+    "sha256": "eb6a21722afd21e4334d355bbf54f51961504c7c3bbee3e3f458b1727d5284e8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zwer2k/library/WeatherStationDataRx/0.3.1/WeatherStationDataRx-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/zwer2k/library/WeatherStationDataRx/0.3.1/WeatherStationDataRx-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zwer2k/library/WeatherStationDataRx/0.5.2/WeatherStationDataRx-0.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WeatherStationDataRx-0.5.2.tar.gz",
+    "size_bytes": 12627,
+    "sha256": "7f94cd0c73525bd56b276cd1208735476064272b1ddf3a5eb7728b7aa70d0c80",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zwer2k/library/WeatherStationDataRx/0.5.2/WeatherStationDataRx-0.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/zwer2k/library/WeatherStationDataRx/0.5.2/WeatherStationDataRx-0.5.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-tinf-6abel18",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-tinf-6abel18/library/RGBLed/0.0.0+sha.6a3daf6953e7/RGBLed-0.0.0+sha.6a3daf6953e7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RGBLed-0.0.0+sha.6a3daf6953e7.tar.gz",
+    "size_bytes": 887,
+    "sha256": "564e715ad8e455225a7bddcbb8374817918f5b142f67ee42e3041dda868997b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tinf-6abel18/library/RGBLed/0.0.0%2Bsha.6a3daf6953e7/RGBLed-0.0.0%2Bsha.6a3daf6953e7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tinf-6abel18/library/RGBLed/0.0.0%2Bsha.6a3daf6953e7/RGBLed-0.0.0%2Bsha.6a3daf6953e7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

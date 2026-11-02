@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-aaronice",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-aaronice/library/MAG3110/0.0.0+sha.888035fbef65/MAG3110-0.0.0+sha.888035fbef65.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAG3110-0.0.0+sha.888035fbef65.tar.gz",
+    "size_bytes": 2627,
+    "sha256": "c9e0157c7cd614867874360acdb1750271f89a9dad49814babce69841d50e48d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-aaronice/library/MAG3110/0.0.0%2Bsha.888035fbef65/MAG3110-0.0.0%2Bsha.888035fbef65.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-aaronice/library/MAG3110/0.0.0%2Bsha.888035fbef65/MAG3110-0.0.0%2Bsha.888035fbef65.tar.gz"
+    ]
+   }
+  }
+ ]
+}

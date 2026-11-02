@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-pierrick",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-pierrick/library/LCD/0.0.0+sha.1e10e52ff124/LCD-0.0.0+sha.1e10e52ff124.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCD-0.0.0+sha.1e10e52ff124.tar.gz",
+    "size_bytes": 1792,
+    "sha256": "93ac530f1434154480edd2692a300286e327774d08ea06cabe22051a8a3d3abd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pierrick/library/LCD/0.0.0%2Bsha.1e10e52ff124/LCD-0.0.0%2Bsha.1e10e52ff124.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pierrick/library/LCD/0.0.0%2Bsha.1e10e52ff124/LCD-0.0.0%2Bsha.1e10e52ff124.tar.gz"
+    ]
+   }
+  }
+ ]
+}

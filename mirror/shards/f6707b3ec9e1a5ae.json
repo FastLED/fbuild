@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/robomaster-dlmu-cone",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "robomaster-dlmu-cone/library/RPL/0.3.1/RPL-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RPL-0.3.1.tar.gz",
+    "size_bytes": 47307,
+    "sha256": "f69ec91979d5d8e98f6c3ea22016d4f07a724511a8c749ee486510fdfc7c713b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robomaster-dlmu-cone/library/RPL/0.3.1/RPL-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/robomaster-dlmu-cone/library/RPL/0.3.1/RPL-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robomaster-dlmu-cone/library/RPL/1.1.0/RPL-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RPL-1.1.0.tar.gz",
+    "size_bytes": 1950,
+    "sha256": "1516ba8a3d3488de1b2dbfa38f3a19803180cce7e94fcc9a08d4349315d1db77",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robomaster-dlmu-cone/library/RPL/1.1.0/RPL-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/robomaster-dlmu-cone/library/RPL/1.1.0/RPL-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

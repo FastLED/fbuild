@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/b4iterdev",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "b4iterdev/library/F1sh/0.0.4/F1sh-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "F1sh-0.0.4.tar.gz",
+    "size_bytes": 9569,
+    "sha256": "41e7fdb1a59dd43fed817ba14308339938aabce0977e62403b6ac3da98888b97",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/b4iterdev/library/F1sh/0.0.4/F1sh-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/b4iterdev/library/F1sh/0.0.4/F1sh-0.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

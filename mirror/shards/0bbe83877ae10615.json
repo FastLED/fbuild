@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-nordic-pucks",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-nordic-pucks/library/IRSender/0.0.0+sha.4576fcd93ffd/IRSender-0.0.0+sha.4576fcd93ffd.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IRSender-0.0.0+sha.4576fcd93ffd.tar.gz",
+    "size_bytes": 2728,
+    "sha256": "4eb2df168107a9c166a4d76fc04053aa9bed93f580d539110523a55806bf55b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nordic-pucks/library/IRSender/0.0.0%2Bsha.4576fcd93ffd/IRSender-0.0.0%2Bsha.4576fcd93ffd.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nordic-pucks/library/IRSender/0.0.0%2Bsha.4576fcd93ffd/IRSender-0.0.0%2Bsha.4576fcd93ffd.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nordic-pucks/library/Puck/0.0.0+sha.5ac5f1d1a11e/Puck-0.0.0+sha.5ac5f1d1a11e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Puck-0.0.0+sha.5ac5f1d1a11e.tar.gz",
+    "size_bytes": 5956,
+    "sha256": "4d742568e3488b5b192fb2db98329464b11c1d0dadb0a31030bc6b7a2adb0e3d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nordic-pucks/library/Puck/0.0.0%2Bsha.5ac5f1d1a11e/Puck-0.0.0%2Bsha.5ac5f1d1a11e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nordic-pucks/library/Puck/0.0.0%2Bsha.5ac5f1d1a11e/Puck-0.0.0%2Bsha.5ac5f1d1a11e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nordic-pucks/library/lz/0.0.0+sha.0c9aeae76ab2/lz-0.0.0+sha.0c9aeae76ab2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lz-0.0.0+sha.0c9aeae76ab2.tar.gz",
+    "size_bytes": 5108,
+    "sha256": "02ebc7fb18e60d85a0afb58f9a2b28006c04f5f6fe7bf49aaa51dadca483c87b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nordic-pucks/library/lz/0.0.0%2Bsha.0c9aeae76ab2/lz-0.0.0%2Bsha.0c9aeae76ab2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nordic-pucks/library/lz/0.0.0%2Bsha.0c9aeae76ab2/lz-0.0.0%2Bsha.0c9aeae76ab2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nordic-pucks/library/seeedstudio-epaper/0.0.0+sha.2f62e2b80305/seeedstudio-epaper-0.0.0+sha.2f62e2b80305.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "seeedstudio-epaper-0.0.0+sha.2f62e2b80305.tar.gz",
+    "size_bytes": 4615,
+    "sha256": "a7f0b63aeb432f8ff85081d5aefdf292efc0c1fb829166e419b4409c8b57d250",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nordic-pucks/library/seeedstudio-epaper/0.0.0%2Bsha.2f62e2b80305/seeedstudio-epaper-0.0.0%2Bsha.2f62e2b80305.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nordic-pucks/library/seeedstudio-epaper/0.0.0%2Bsha.2f62e2b80305/seeedstudio-epaper-0.0.0%2Bsha.2f62e2b80305.tar.gz"
+    ]
+   }
+  }
+ ]
+}

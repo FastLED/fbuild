@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nitek",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nitek/library/CatGFX/0.0.3/CatGFX-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CatGFX-0.0.3.tar.gz",
+    "size_bytes": 7017,
+    "sha256": "f796b9f849f92101caee07f230b7a38aafda398a122dfcaf9b7a48705e360ce2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nitek/library/CatGFX/0.0.3/CatGFX-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/nitek/library/CatGFX/0.0.3/CatGFX-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nitek/library/NDEF_MFRC522/2.0.0/NDEF_MFRC522-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NDEF_MFRC522-2.0.0.tar.gz",
+    "size_bytes": 19468,
+    "sha256": "1686ccc655d7cf2a77e4edb58ef589ddec04af5c589ee66346ad2319d2a16a84",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nitek/library/NDEF_MFRC522/2.0.0/NDEF_MFRC522-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nitek/library/NDEF_MFRC522/2.0.0/NDEF_MFRC522-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nitek/library/XPT2046_Bitbang_Slim/2.0.0/XPT2046_Bitbang_Slim-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XPT2046_Bitbang_Slim-2.0.0.tar.gz",
+    "size_bytes": 15441,
+    "sha256": "c28d0dc1dc7092ef939f51fa4a43ec178206e1261c1cf6271f0a3aba7bc45601",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nitek/library/XPT2046_Bitbang_Slim/2.0.0/XPT2046_Bitbang_Slim-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nitek/library/XPT2046_Bitbang_Slim/2.0.0/XPT2046_Bitbang_Slim-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/m-tech-creations",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "m-tech-creations/library/NoDelay/2.2.0/NoDelay-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NoDelay-2.2.0.tar.gz",
+    "size_bytes": 5593,
+    "sha256": "9ecd36626675093c9ff1eab992d3c9bd343b78c9df456df7a416076c31d3e4ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m-tech-creations/library/NoDelay/2.2.0/NoDelay-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m-tech-creations/library/NoDelay/2.2.0/NoDelay-2.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mike-matera",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mike-matera/library/ArduinoSTL/1.3.3/ArduinoSTL-1.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoSTL-1.3.3.tar.gz",
+    "size_bytes": 96549,
+    "sha256": "e8ea391e5074029c9ba0333e61c558452db4c2f727adc94ff7ab2374186c2b38",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mike-matera/library/ArduinoSTL/1.3.3/ArduinoSTL-1.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mike-matera/library/ArduinoSTL/1.3.3/ArduinoSTL-1.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mike-matera/library/FastPID/1.3.1/FastPID-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastPID-1.3.1.tar.gz",
+    "size_bytes": 13974,
+    "sha256": "a1964e18e3e54afc214ea755ff633cc0c5618a8e19e5ffc83132c4961847a50c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mike-matera/library/FastPID/1.3.1/FastPID-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mike-matera/library/FastPID/1.3.1/FastPID-1.3.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/szczukabendeguz",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "szczukabendeguz/library/ESP32VariableTuner/1.0.0/ESP32VariableTuner-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32VariableTuner-1.0.0.tar.gz",
+    "size_bytes": 113912,
+    "sha256": "c4406f817ca7215649394e1d0ffed02941edb298d2243101a8551ae52f77587c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/szczukabendeguz/library/ESP32VariableTuner/1.0.0/ESP32VariableTuner-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/szczukabendeguz/library/ESP32VariableTuner/1.0.0/ESP32VariableTuner-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "szczukabendeguz/library/ESP32VariableTuner/1.0.1/ESP32VariableTuner-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32VariableTuner-1.0.1.tar.gz",
+    "size_bytes": 115302,
+    "sha256": "58d38c3b3c5048eae31c0b11f03428d696c736179de91b17f58cb3f008811ca2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/szczukabendeguz/library/ESP32VariableTuner/1.0.1/ESP32VariableTuner-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/szczukabendeguz/library/ESP32VariableTuner/1.0.1/ESP32VariableTuner-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "szczukabendeguz/library/ESP32VariableTuner/1.0.2/ESP32VariableTuner-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32VariableTuner-1.0.2.tar.gz",
+    "size_bytes": 116345,
+    "sha256": "64fddbf4e6203fe5dbc5d72609da1761ff3f8949e54ca19169a226d5428d5aa0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/szczukabendeguz/library/ESP32VariableTuner/1.0.2/ESP32VariableTuner-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/szczukabendeguz/library/ESP32VariableTuner/1.0.2/ESP32VariableTuner-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "szczukabendeguz/library/ESP32VariableTuner/1.0.3/ESP32VariableTuner-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32VariableTuner-1.0.3.tar.gz",
+    "size_bytes": 116366,
+    "sha256": "8e5c4a5c1dc71f16917f50e94cc165f5c6980e6a8e930a1697752813fdcb8183",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/szczukabendeguz/library/ESP32VariableTuner/1.0.3/ESP32VariableTuner-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/szczukabendeguz/library/ESP32VariableTuner/1.0.3/ESP32VariableTuner-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "szczukabendeguz/library/ESP32VariableTuner/1.0.4/ESP32VariableTuner-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32VariableTuner-1.0.4.tar.gz",
+    "size_bytes": 117309,
+    "sha256": "9aa508b66b21ea799f87e420905d0b759885f617bb89b39f0e8429e09504eceb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/szczukabendeguz/library/ESP32VariableTuner/1.0.4/ESP32VariableTuner-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/szczukabendeguz/library/ESP32VariableTuner/1.0.4/ESP32VariableTuner-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "szczukabendeguz/library/ESP32VariableTuner/1.0.5/ESP32VariableTuner-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32VariableTuner-1.0.5.tar.gz",
+    "size_bytes": 117355,
+    "sha256": "3a43793971f814c9be381dc3cd251542a6233b9c243c3e3cbbd255ae0fd84b8a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/szczukabendeguz/library/ESP32VariableTuner/1.0.5/ESP32VariableTuner-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/szczukabendeguz/library/ESP32VariableTuner/1.0.5/ESP32VariableTuner-1.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/r0oland",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "r0oland/library/matlab_serial_interface/0.1/matlab_serial_interface-0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "matlab_serial_interface-0.1.tar.gz",
+    "size_bytes": 5859,
+    "sha256": "8ddf4efc2952ca1a9df28420bb793e0eefd8c8964f8dc92f3ea463015232868c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/r0oland/library/matlab_serial_interface/0.1/matlab_serial_interface-0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/r0oland/library/matlab_serial_interface/0.1/matlab_serial_interface-0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

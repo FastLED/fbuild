@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/weoiss",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "weoiss/library/ICM-42688/1.0.1/ICM-42688-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM-42688-1.0.1.tar.gz",
+    "size_bytes": 15276,
+    "sha256": "27bdc0c525d104a069db3d74ac8ade8fd9b4455a7f3a028ac264340adde586b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/weoiss/library/ICM-42688/1.0.1/ICM-42688-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/weoiss/library/ICM-42688/1.0.1/ICM-42688-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

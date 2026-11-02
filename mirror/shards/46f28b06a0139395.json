@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/wagenadl",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "wagenadl/library/RobustQuadrature/0.1.0/RobustQuadrature-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RobustQuadrature-0.1.0.tar.gz",
+    "size_bytes": 9085,
+    "sha256": "f7973e2d0857a52e2e4271df0c797cbc95182ba76dc738a9e2c4d687a33523e0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wagenadl/library/RobustQuadrature/0.1.0/RobustQuadrature-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/wagenadl/library/RobustQuadrature/0.1.0/RobustQuadrature-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wagenadl/library/RobustQuadrature/0.1.1/RobustQuadrature-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RobustQuadrature-0.1.1.tar.gz",
+    "size_bytes": 10429,
+    "sha256": "d6310988bf9934d882b1ed71490712974fcbbebfb34b7f265e7e98d55a0a9cfe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wagenadl/library/RobustQuadrature/0.1.1/RobustQuadrature-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/wagenadl/library/RobustQuadrature/0.1.1/RobustQuadrature-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

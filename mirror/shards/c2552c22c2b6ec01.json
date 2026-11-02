@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/inmoresentum",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "inmoresentum/library/BasicTenFeaturesExtractor/0.7.1/BasicTenFeaturesExtractor-0.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BasicTenFeaturesExtractor-0.7.1.tar.gz",
+    "size_bytes": 19898,
+    "sha256": "49dd5aa84b150b7a9ec3124230d41f1df925ab4ff2fd451a81af45f7db162954",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inmoresentum/library/BasicTenFeaturesExtractor/0.7.1/BasicTenFeaturesExtractor-0.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/inmoresentum/library/BasicTenFeaturesExtractor/0.7.1/BasicTenFeaturesExtractor-0.7.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "inmoresentum/library/ESP32TFLMWrapper/0.0.4/ESP32TFLMWrapper-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32TFLMWrapper-0.0.4.tar.gz",
+    "size_bytes": 24641,
+    "sha256": "6facaf83fbfdfa4d706e5457b67ffcc2339f0ef35aa654843b349287ec2a1b86",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inmoresentum/library/ESP32TFLMWrapper/0.0.4/ESP32TFLMWrapper-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/inmoresentum/library/ESP32TFLMWrapper/0.0.4/ESP32TFLMWrapper-0.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-hippi345",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-hippi345/library/TMP36/0.0.0+sha.ae41c2cdfd94/TMP36-0.0.0+sha.ae41c2cdfd94.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TMP36-0.0.0+sha.ae41c2cdfd94.tar.gz",
+    "size_bytes": 992,
+    "sha256": "04e6a563aba7e7a5d3119e05dea6d336729921052256974912df1f8e2ce5ef58",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hippi345/library/TMP36/0.0.0%2Bsha.ae41c2cdfd94/TMP36-0.0.0%2Bsha.ae41c2cdfd94.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hippi345/library/TMP36/0.0.0%2Bsha.ae41c2cdfd94/TMP36-0.0.0%2Bsha.ae41c2cdfd94.tar.gz"
+    ]
+   }
+  }
+ ]
+}

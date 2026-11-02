@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/wasm3",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "wasm3/library/Wasm3/0.5.0/Wasm3-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Wasm3-0.5.0.tar.gz",
+    "size_bytes": 150520,
+    "sha256": "5f95222c1acbfd866dc2a130ca28fa6df524657c8c8d24c706fa567d82f20760",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wasm3/library/Wasm3/0.5.0/Wasm3-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/wasm3/library/Wasm3/0.5.0/Wasm3-0.5.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

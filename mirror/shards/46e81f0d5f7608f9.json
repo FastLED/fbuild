@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-abril1030",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-abril1030/library/GameOver/0.0.0+sha.bfdc7ede55b6/GameOver-0.0.0+sha.bfdc7ede55b6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GameOver-0.0.0+sha.bfdc7ede55b6.tar.gz",
+    "size_bytes": 1434,
+    "sha256": "392f50c328badb151029deaac96ba5f1b4527195f13d12031319750551900095",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-abril1030/library/GameOver/0.0.0%2Bsha.bfdc7ede55b6/GameOver-0.0.0%2Bsha.bfdc7ede55b6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-abril1030/library/GameOver/0.0.0%2Bsha.bfdc7ede55b6/GameOver-0.0.0%2Bsha.bfdc7ede55b6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-abril1030/library/MikeWachowski/0.0.0+sha.cd694606e7a2/MikeWachowski-0.0.0+sha.cd694606e7a2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MikeWachowski-0.0.0+sha.cd694606e7a2.tar.gz",
+    "size_bytes": 1998,
+    "sha256": "9280a432a801acfc8f6ee3cb7aa79e12f80af6b026b709db43b2643f019d82bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-abril1030/library/MikeWachowski/0.0.0%2Bsha.cd694606e7a2/MikeWachowski-0.0.0%2Bsha.cd694606e7a2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-abril1030/library/MikeWachowski/0.0.0%2Bsha.cd694606e7a2/MikeWachowski-0.0.0%2Bsha.cd694606e7a2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

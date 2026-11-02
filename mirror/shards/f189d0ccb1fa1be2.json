@@ -1,0 +1,334 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gavinlyonsrepo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gavinlyonsrepo/library/BMP280_LTSM/1.0.1/BMP280_LTSM-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMP280_LTSM-1.0.1.tar.gz",
+    "size_bytes": 20912,
+    "sha256": "bda1fbb62e2f8383358418a0105aac647de11e4ae57c73df8a065a61400414ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gavinlyonsrepo/library/BMP280_LTSM/1.0.1/BMP280_LTSM-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gavinlyonsrepo/library/BMP280_LTSM/1.0.1/BMP280_LTSM-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gavinlyonsrepo/library/BMP390_LTSM/1.0.0/BMP390_LTSM-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMP390_LTSM-1.0.0.tar.gz",
+    "size_bytes": 33091,
+    "sha256": "a8806a5ce38582ec41409fce77c4f33d5e3f3298374e664774a481996e0c97a1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gavinlyonsrepo/library/BMP390_LTSM/1.0.0/BMP390_LTSM-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gavinlyonsrepo/library/BMP390_LTSM/1.0.0/BMP390_LTSM-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gavinlyonsrepo/library/ERM19264_UC1609/1.8.2/ERM19264_UC1609-1.8.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ERM19264_UC1609-1.8.2.tar.gz",
+    "size_bytes": 51039,
+    "sha256": "627807e9ccacdeb81792a69a2b0c7e8b21b9a16aea34fbeccb504d8c03e23eb3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gavinlyonsrepo/library/ERM19264_UC1609/1.8.2/ERM19264_UC1609-1.8.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gavinlyonsrepo/library/ERM19264_UC1609/1.8.2/ERM19264_UC1609-1.8.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gavinlyonsrepo/library/ERM19264_UC1609_TEXT/1.1.0/ERM19264_UC1609_TEXT-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ERM19264_UC1609_TEXT-1.1.0.tar.gz",
+    "size_bytes": 23186,
+    "sha256": "1646cd2754c482c4e8f78b851fccf87754b90fc06fd2fb4e171fc20ac47d293b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gavinlyonsrepo/library/ERM19264_UC1609_TEXT/1.1.0/ERM19264_UC1609_TEXT-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gavinlyonsrepo/library/ERM19264_UC1609_TEXT/1.1.0/ERM19264_UC1609_TEXT-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gavinlyonsrepo/library/ER_OLEDM1_CH1115/1.4.2/ER_OLEDM1_CH1115-1.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ER_OLEDM1_CH1115-1.4.2.tar.gz",
+    "size_bytes": 51782,
+    "sha256": "a6399b3c03f6f926d400ccf9e2b4738bdaed9f66eeb3b2a426d62023cbed7d78",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gavinlyonsrepo/library/ER_OLEDM1_CH1115/1.4.2/ER_OLEDM1_CH1115-1.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gavinlyonsrepo/library/ER_OLEDM1_CH1115/1.4.2/ER_OLEDM1_CH1115-1.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gavinlyonsrepo/library/FourteenSegDisplay/2.3.0/FourteenSegDisplay-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FourteenSegDisplay-2.3.0.tar.gz",
+    "size_bytes": 15792,
+    "sha256": "608b720c692c54f1417261efd349c59fc0566001ea368f41c6732987c9cb6122",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gavinlyonsrepo/library/FourteenSegDisplay/2.3.0/FourteenSegDisplay-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gavinlyonsrepo/library/FourteenSegDisplay/2.3.0/FourteenSegDisplay-2.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gavinlyonsrepo/library/GC9107_LTSM/1.0.0/GC9107_LTSM-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GC9107_LTSM-1.0.0.tar.gz",
+    "size_bytes": 14221,
+    "sha256": "40b2e8b50da5c90617995ef822e89eaa17f082c151362c66a31420d8f037e371",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gavinlyonsrepo/library/GC9107_LTSM/1.0.0/GC9107_LTSM-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gavinlyonsrepo/library/GC9107_LTSM/1.0.0/GC9107_LTSM-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gavinlyonsrepo/library/GC9107_LTSM/1.0.1/GC9107_LTSM-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GC9107_LTSM-1.0.1.tar.gz",
+    "size_bytes": 22150,
+    "sha256": "b1add563085a800a911bde3538e5f465ca974dfac0f3d3d69dba5747a18065f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gavinlyonsrepo/library/GC9107_LTSM/1.0.1/GC9107_LTSM-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gavinlyonsrepo/library/GC9107_LTSM/1.0.1/GC9107_LTSM-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gavinlyonsrepo/library/GC9A01_LTSM/1.0.1/GC9A01_LTSM-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GC9A01_LTSM-1.0.1.tar.gz",
+    "size_bytes": 16270,
+    "sha256": "5d632650125ae84ae258aad07559cdc892366312964f729a01fda22ce51e9d90",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gavinlyonsrepo/library/GC9A01_LTSM/1.0.1/GC9A01_LTSM-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gavinlyonsrepo/library/GC9A01_LTSM/1.0.1/GC9A01_LTSM-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gavinlyonsrepo/library/GC9A01_LTSM/1.1.1/GC9A01_LTSM-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GC9A01_LTSM-1.1.1.tar.gz",
+    "size_bytes": 20596,
+    "sha256": "64a3a9ae4be21ee751ae17107ae9abb39dff89c5967cfd39b98b728b70a7ddfd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gavinlyonsrepo/library/GC9A01_LTSM/1.1.1/GC9A01_LTSM-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gavinlyonsrepo/library/GC9A01_LTSM/1.1.1/GC9A01_LTSM-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gavinlyonsrepo/library/GC9D01_LTSM/1.0.1/GC9D01_LTSM-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GC9D01_LTSM-1.0.1.tar.gz",
+    "size_bytes": 21115,
+    "sha256": "c54aefe2a57cb85063c4e81750de0749da9048fdae11a10709e199a6ea11121f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gavinlyonsrepo/library/GC9D01_LTSM/1.0.1/GC9D01_LTSM-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gavinlyonsrepo/library/GC9D01_LTSM/1.0.1/GC9D01_LTSM-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gavinlyonsrepo/library/GC9D01_LTSM/1.0.2/GC9D01_LTSM-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GC9D01_LTSM-1.0.2.tar.gz",
+    "size_bytes": 22258,
+    "sha256": "84b0089416970a4c81ce114f0b415dc38e2b8a50c4bf87b40415e05998cfa61e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gavinlyonsrepo/library/GC9D01_LTSM/1.0.2/GC9D01_LTSM-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gavinlyonsrepo/library/GC9D01_LTSM/1.0.2/GC9D01_LTSM-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gavinlyonsrepo/library/GC9D01_LTSM/1.1.0/GC9D01_LTSM-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GC9D01_LTSM-1.1.0.tar.gz",
+    "size_bytes": 25386,
+    "sha256": "2f34f336a1a2b0d9b4df6ea6e93e14c3a24a2cc2be12018ea6c3c5a5e36264d3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gavinlyonsrepo/library/GC9D01_LTSM/1.1.0/GC9D01_LTSM-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gavinlyonsrepo/library/GC9D01_LTSM/1.1.0/GC9D01_LTSM-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gavinlyonsrepo/library/HD44780_LCD_PCF8574/1.3.0/HD44780_LCD_PCF8574-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HD44780_LCD_PCF8574-1.3.0.tar.gz",
+    "size_bytes": 19515,
+    "sha256": "b18ecdb44da32903841898633eda0783c8422d6abe3b0d54e826886dc7726636",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gavinlyonsrepo/library/HD44780_LCD_PCF8574/1.3.0/HD44780_LCD_PCF8574-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gavinlyonsrepo/library/HD44780_LCD_PCF8574/1.3.0/HD44780_LCD_PCF8574-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gavinlyonsrepo/library/ILI9341_LTSM/1.1.0/ILI9341_LTSM-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ILI9341_LTSM-1.1.0.tar.gz",
+    "size_bytes": 19088,
+    "sha256": "04423aa5671af9dc002ab039bb25678810405f443bf05016f8d900e3a11ab14b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gavinlyonsrepo/library/ILI9341_LTSM/1.1.0/ILI9341_LTSM-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gavinlyonsrepo/library/ILI9341_LTSM/1.1.0/ILI9341_LTSM-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gavinlyonsrepo/library/ILI9341_LTSM/1.1.1/ILI9341_LTSM-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ILI9341_LTSM-1.1.1.tar.gz",
+    "size_bytes": 22962,
+    "sha256": "9450e6a56ce040eb073f2c9452282f90198effbdffe3cd1da9d52f08fb07f379",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gavinlyonsrepo/library/ILI9341_LTSM/1.1.1/ILI9341_LTSM-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gavinlyonsrepo/library/ILI9341_LTSM/1.1.1/ILI9341_LTSM-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gavinlyonsrepo/library/MAX471/1.0.0/MAX471-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX471-1.0.0.tar.gz",
+    "size_bytes": 14390,
+    "sha256": "b38e0ebd3b6be3a92b98ee6498cb1f9e6f966fd8339c97db19a7e17af8f8ddaa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gavinlyonsrepo/library/MAX471/1.0.0/MAX471-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gavinlyonsrepo/library/MAX471/1.0.0/MAX471-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gavinlyonsrepo/library/NOKIA5110_TEXT/2.4.0/NOKIA5110_TEXT-2.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NOKIA5110_TEXT-2.4.0.tar.gz",
+    "size_bytes": 31375,
+    "sha256": "07c6f932b23fc44842486fedc2fdeb4f18e21e44c259fbd0ee679b3d0247d83a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gavinlyonsrepo/library/NOKIA5110_TEXT/2.4.0/NOKIA5110_TEXT-2.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gavinlyonsrepo/library/NOKIA5110_TEXT/2.4.0/NOKIA5110_TEXT-2.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gavinlyonsrepo/library/SSD1331_LTSM/1.0.0/SSD1331_LTSM-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SSD1331_LTSM-1.0.0.tar.gz",
+    "size_bytes": 14518,
+    "sha256": "7695823b506f9be63847b77609478c8e54e3c9228ea03c26e5e0a103ea439164",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gavinlyonsrepo/library/SSD1331_LTSM/1.0.0/SSD1331_LTSM-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gavinlyonsrepo/library/SSD1331_LTSM/1.0.0/SSD1331_LTSM-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gavinlyonsrepo/library/ST7735_LTSM/1.0.0/ST7735_LTSM-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ST7735_LTSM-1.0.0.tar.gz",
+    "size_bytes": 18586,
+    "sha256": "85cedbda371bce5699165c901e5053ccd6ec4b8a59812b5471200cf4ab1ed9fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gavinlyonsrepo/library/ST7735_LTSM/1.0.0/ST7735_LTSM-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gavinlyonsrepo/library/ST7735_LTSM/1.0.0/ST7735_LTSM-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gavinlyonsrepo/library/ST7789_LTSM/1.0.0/ST7789_LTSM-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ST7789_LTSM-1.0.0.tar.gz",
+    "size_bytes": 16972,
+    "sha256": "b7c4e0a1a10961ce7ee96fc9d3a801575bad13704bc75ae169118cdb4d6f76ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gavinlyonsrepo/library/ST7789_LTSM/1.0.0/ST7789_LTSM-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gavinlyonsrepo/library/ST7789_LTSM/1.0.0/ST7789_LTSM-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gavinlyonsrepo/library/TM1638plus/2.2.0/TM1638plus-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TM1638plus-2.2.0.tar.gz",
+    "size_bytes": 44587,
+    "sha256": "f1503e860a0aa9a34755f97289fba2920e78cbe0560144e1efb42562b2efc221",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gavinlyonsrepo/library/TM1638plus/2.2.0/TM1638plus-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gavinlyonsrepo/library/TM1638plus/2.2.0/TM1638plus-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gavinlyonsrepo/library/display16_LTSM/1.0.0/display16_LTSM-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "display16_LTSM-1.0.0.tar.gz",
+    "size_bytes": 92726,
+    "sha256": "83758c8bdf975df2da4389c967f97ef701f182cfdf1e35fff5407d9d18c21016",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gavinlyonsrepo/library/display16_LTSM/1.0.0/display16_LTSM-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gavinlyonsrepo/library/display16_LTSM/1.0.0/display16_LTSM-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gavinlyonsrepo/library/display16_LTSM/1.0.1/display16_LTSM-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "display16_LTSM-1.0.1.tar.gz",
+    "size_bytes": 93295,
+    "sha256": "e6d0fade2973bc65650d28b0409be5b297aa1d81062ab4acd591cad4203e6a62",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gavinlyonsrepo/library/display16_LTSM/1.0.1/display16_LTSM-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gavinlyonsrepo/library/display16_LTSM/1.0.1/display16_LTSM-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gavinlyonsrepo/library/display16_LTSM/1.0.2/display16_LTSM-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "display16_LTSM-1.0.2.tar.gz",
+    "size_bytes": 93290,
+    "sha256": "861ff01ef255306eaf284e4822f3dd9c054893c3615006ab262fbaec03ec3afa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gavinlyonsrepo/library/display16_LTSM/1.0.2/display16_LTSM-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gavinlyonsrepo/library/display16_LTSM/1.0.2/display16_LTSM-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

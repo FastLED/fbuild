@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/emard",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "emard/library/LibXSVF/1.0.0/LibXSVF-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LibXSVF-1.0.0.tar.gz",
+    "size_bytes": 55988,
+    "sha256": "22d9f308156b05b6ee90ca193d8385d8dae4c914d2df1bc6c086371e8815f4f5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/emard/library/LibXSVF/1.0.0/LibXSVF-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/emard/library/LibXSVF/1.0.0/LibXSVF-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

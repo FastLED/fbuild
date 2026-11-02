@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fadeev-iliya",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fadeev-iliya/library/UNI/1.0.1/UNI-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UNI-1.0.1.tar.gz",
+    "size_bytes": 18969,
+    "sha256": "b1cdc2d6b3544a39bcafbd4229490cce7dac8edf380f71280bdda69f1f907c0c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fadeev-iliya/library/UNI/1.0.1/UNI-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fadeev-iliya/library/UNI/1.0.1/UNI-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fadeev-iliya/library/UNI/1.1.0/UNI-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UNI-1.1.0.tar.gz",
+    "size_bytes": 31506,
+    "sha256": "441daa3748d6d53dfe91256dd3aafee5c6e2b95a82562562430a621ebf1918ea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fadeev-iliya/library/UNI/1.1.0/UNI-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fadeev-iliya/library/UNI/1.1.0/UNI-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

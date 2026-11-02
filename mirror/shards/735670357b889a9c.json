@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dawson-home-automation",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dawson-home-automation/library/FirmwareBaseNodeMcu/1.0/FirmwareBaseNodeMcu-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FirmwareBaseNodeMcu-1.0.tar.gz",
+    "size_bytes": 2214,
+    "sha256": "64447dab97259231ba39ed85b1e4c52d7a0e8e0b76b85a796ff2a7745cb127d5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dawson-home-automation/library/FirmwareBaseNodeMcu/1.0/FirmwareBaseNodeMcu-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dawson-home-automation/library/FirmwareBaseNodeMcu/1.0/FirmwareBaseNodeMcu-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

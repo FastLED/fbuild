@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-infotech1",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-infotech1/library/Adafruit_GFX_MBED/0.0.0+sha.2c772b09cce5/Adafruit_GFX_MBED-0.0.0+sha.2c772b09cce5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Adafruit_GFX_MBED-0.0.0+sha.2c772b09cce5.tar.gz",
+    "size_bytes": 8824,
+    "sha256": "a8dac5090c72e2961bbd3846fb136c4898d4b2f42eaadec72f7df54f658cdd55",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-infotech1/library/Adafruit_GFX_MBED/0.0.0%2Bsha.2c772b09cce5/Adafruit_GFX_MBED-0.0.0%2Bsha.2c772b09cce5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-infotech1/library/Adafruit_GFX_MBED/0.0.0%2Bsha.2c772b09cce5/Adafruit_GFX_MBED-0.0.0%2Bsha.2c772b09cce5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-infotech1/library/Adafruit_ILI9341/0.0.0+sha.16926c5097c9/Adafruit_ILI9341-0.0.0+sha.16926c5097c9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Adafruit_ILI9341-0.0.0+sha.16926c5097c9.tar.gz",
+    "size_bytes": 4960,
+    "sha256": "a63a15fcf4f6d3635e6d9f4d31c394afd2a58b233ed18e9e35f7dcb619b6f826",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-infotech1/library/Adafruit_ILI9341/0.0.0%2Bsha.16926c5097c9/Adafruit_ILI9341-0.0.0%2Bsha.16926c5097c9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-infotech1/library/Adafruit_ILI9341/0.0.0%2Bsha.16926c5097c9/Adafruit_ILI9341-0.0.0%2Bsha.16926c5097c9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-infotech1/library/Adafruit_PCD8544_MBED/0.0.0+sha.c70a41c0d9d8/Adafruit_PCD8544_MBED-0.0.0+sha.c70a41c0d9d8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Adafruit_PCD8544_MBED-0.0.0+sha.c70a41c0d9d8.tar.gz",
+    "size_bytes": 5475,
+    "sha256": "6d48bd65aec5139516536d1dbea3353865dcc81dee5166bb8b22a62be784e7d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-infotech1/library/Adafruit_PCD8544_MBED/0.0.0%2Bsha.c70a41c0d9d8/Adafruit_PCD8544_MBED-0.0.0%2Bsha.c70a41c0d9d8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-infotech1/library/Adafruit_PCD8544_MBED/0.0.0%2Bsha.c70a41c0d9d8/Adafruit_PCD8544_MBED-0.0.0%2Bsha.c70a41c0d9d8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-infotech1/library/BurstSPI/0.0.0+sha.9d43f61b3184/BurstSPI-0.0.0+sha.9d43f61b3184.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BurstSPI-0.0.0+sha.9d43f61b3184.tar.gz",
+    "size_bytes": 3619,
+    "sha256": "da1b6fdd9ac63acf9a068328ed5259b8a0c031b8b9b8373a1c06a846043a8981",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-infotech1/library/BurstSPI/0.0.0%2Bsha.9d43f61b3184/BurstSPI-0.0.0%2Bsha.9d43f61b3184.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-infotech1/library/BurstSPI/0.0.0%2Bsha.9d43f61b3184/BurstSPI-0.0.0%2Bsha.9d43f61b3184.tar.gz"
+    ]
+   }
+  }
+ ]
+}

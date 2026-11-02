@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/shravanahs",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "shravanahs/library/ESP32ControlStudio/1.0.0/ESP32ControlStudio-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32ControlStudio-1.0.0.tar.gz",
+    "size_bytes": 3534,
+    "sha256": "91bd552211aad07d8aa7c88a1eec07e42599ba86f1d11247c6bc0bc629f91801",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shravanahs/library/ESP32ControlStudio/1.0.0/ESP32ControlStudio-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/shravanahs/library/ESP32ControlStudio/1.0.0/ESP32ControlStudio-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

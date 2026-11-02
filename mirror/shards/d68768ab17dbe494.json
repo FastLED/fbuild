@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-dimmu8410",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-dimmu8410/library/Discrete_SevenSegment_A_K/0.0.0+sha.4aefe4ad20a6/Discrete_SevenSegment_A_K-0.0.0+sha.4aefe4ad20a6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Discrete_SevenSegment_A_K-0.0.0+sha.4aefe4ad20a6.tar.gz",
+    "size_bytes": 1393,
+    "sha256": "efdd3cca0aa6f9a7c49eda38de4ee1b853d79f746f0c150f066d095049c028aa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dimmu8410/library/Discrete_SevenSegment_A_K/0.0.0%2Bsha.4aefe4ad20a6/Discrete_SevenSegment_A_K-0.0.0%2Bsha.4aefe4ad20a6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dimmu8410/library/Discrete_SevenSegment_A_K/0.0.0%2Bsha.4aefe4ad20a6/Discrete_SevenSegment_A_K-0.0.0%2Bsha.4aefe4ad20a6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

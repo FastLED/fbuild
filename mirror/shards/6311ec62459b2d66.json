@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hyperion-robotics",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hyperion-robotics/library/wCK_Series/1.0.0/wCK_Series-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "wCK_Series-1.0.0.tar.gz",
+    "size_bytes": 21151,
+    "sha256": "511467825d904ffb1470bab88d8c9b042662a88282e89cdb317cc4d422721e4c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hyperion-robotics/library/wCK_Series/1.0.0/wCK_Series-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hyperion-robotics/library/wCK_Series/1.0.0/wCK_Series-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/casanovg",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "casanovg/library/NbMicro/1.2.0/NbMicro-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NbMicro-1.2.0.tar.gz",
+    "size_bytes": 73358,
+    "sha256": "d5afbfafff530356ab9f5aabc11cd40dca1d307402bd02a69a7adf0615931b03",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/casanovg/library/NbMicro/1.2.0/NbMicro-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/casanovg/library/NbMicro/1.2.0/NbMicro-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "casanovg/library/TimonelTwiM/1.2.0/TimonelTwiM-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TimonelTwiM-1.2.0.tar.gz",
+    "size_bytes": 68228,
+    "sha256": "1bed21bb469d43d00ddbaffddb3821b3d91d5673395e5df4225fe59f40f3e9e5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/casanovg/library/TimonelTwiM/1.2.0/TimonelTwiM-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/casanovg/library/TimonelTwiM/1.2.0/TimonelTwiM-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "casanovg/library/TwiBus/1.2.0/TwiBus-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TwiBus-1.2.0.tar.gz",
+    "size_bytes": 72882,
+    "sha256": "6a5d869f2d95a1ff978edf9138cf9697319c266759f709165baac0c0a9acda0a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/casanovg/library/TwiBus/1.2.0/TwiBus-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/casanovg/library/TwiBus/1.2.0/TwiBus-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "casanovg/library/nb-twi-cmd/0.7.3/nb-twi-cmd-0.7.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nb-twi-cmd-0.7.3.tar.gz",
+    "size_bytes": 69237,
+    "sha256": "745588a9aa6795277e7af3d707f66e8a9f4b4278512c9feeaeccde3f9dcc4d81",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/casanovg/library/nb-twi-cmd/0.7.3/nb-twi-cmd-0.7.3.tar.gz",
+     "https://dl.registry.platformio.org/download/casanovg/library/nb-twi-cmd/0.7.3/nb-twi-cmd-0.7.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

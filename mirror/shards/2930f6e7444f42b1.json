@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/davidbotella",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "davidbotella/library/RTClibExtended/0.0.0-alpha+sha.71e6c48828/RTClibExtended-0.0.0-alphasha.71e6c48828.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RTClibExtended-0.0.0-alphasha.71e6c48828.tar.gz",
+    "size_bytes": 8439,
+    "sha256": "f76a9a880c100ddbf4747cf32467cb256e474933a04401e9e78585ef986da5d4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/davidbotella/library/RTClibExtended/0.0.0-alpha%2Bsha.71e6c48828/RTClibExtended-0.0.0-alphasha.71e6c48828.tar.gz",
+     "https://dl.registry.platformio.org/download/davidbotella/library/RTClibExtended/0.0.0-alpha%2Bsha.71e6c48828/RTClibExtended-0.0.0-alphasha.71e6c48828.tar.gz"
+    ]
+   }
+  }
+ ]
+}

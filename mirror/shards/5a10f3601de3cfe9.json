@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/open-embedded-probe",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "open-embedded-probe/library/OpenEmbeddedProbe/0.0.28/OpenEmbeddedProbe-0.0.28.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OpenEmbeddedProbe-0.0.28.tar.gz",
+    "size_bytes": 273888,
+    "sha256": "9c6e8d32239b8c5661fd2f112e79d79bd211b8545d2a91a7a20d10c7ff0cc9a0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/open-embedded-probe/library/OpenEmbeddedProbe/0.0.28/OpenEmbeddedProbe-0.0.28.tar.gz",
+     "https://dl.registry.platformio.org/download/open-embedded-probe/library/OpenEmbeddedProbe/0.0.28/OpenEmbeddedProbe-0.0.28.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "open-embedded-probe/library/OpenEmbeddedProbe/0.0.31/OpenEmbeddedProbe-0.0.31.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OpenEmbeddedProbe-0.0.31.tar.gz",
+    "size_bytes": 530056,
+    "sha256": "0f083f9ab409aecf48e549d5bd6da3d47bb731493f67e9df88e201cb53ebfbc3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/open-embedded-probe/library/OpenEmbeddedProbe/0.0.31/OpenEmbeddedProbe-0.0.31.tar.gz",
+     "https://dl.registry.platformio.org/download/open-embedded-probe/library/OpenEmbeddedProbe/0.0.31/OpenEmbeddedProbe-0.0.31.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "open-embedded-probe/library/OpenEmbeddedProbe/0.0.34/OpenEmbeddedProbe-0.0.34.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OpenEmbeddedProbe-0.0.34.tar.gz",
+    "size_bytes": 536461,
+    "sha256": "70014d0c1e18e9a31086f27c6822069b45ffe63ba89d6d464a6e3c7df8519eaa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/open-embedded-probe/library/OpenEmbeddedProbe/0.0.34/OpenEmbeddedProbe-0.0.34.tar.gz",
+     "https://dl.registry.platformio.org/download/open-embedded-probe/library/OpenEmbeddedProbe/0.0.34/OpenEmbeddedProbe-0.0.34.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "open-embedded-probe/library/OpenEmbeddedProbe/0.0.36/OpenEmbeddedProbe-0.0.36.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OpenEmbeddedProbe-0.0.36.tar.gz",
+    "size_bytes": 567955,
+    "sha256": "cf187d85865430002aed7228d172989657d6dcbbd938bb368d0fb4435d5339c4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/open-embedded-probe/library/OpenEmbeddedProbe/0.0.36/OpenEmbeddedProbe-0.0.36.tar.gz",
+     "https://dl.registry.platformio.org/download/open-embedded-probe/library/OpenEmbeddedProbe/0.0.36/OpenEmbeddedProbe-0.0.36.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "open-embedded-probe/library/OpenEmbeddedProbe/0.0.38/OpenEmbeddedProbe-0.0.38.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OpenEmbeddedProbe-0.0.38.tar.gz",
+    "size_bytes": 632382,
+    "sha256": "d40679c08805dc5099b342823779ecfbb8cf3adc8cd71839c993adc058873e1d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/open-embedded-probe/library/OpenEmbeddedProbe/0.0.38/OpenEmbeddedProbe-0.0.38.tar.gz",
+     "https://dl.registry.platformio.org/download/open-embedded-probe/library/OpenEmbeddedProbe/0.0.38/OpenEmbeddedProbe-0.0.38.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "open-embedded-probe/library/OpenEmbeddedProbe/0.0.39/OpenEmbeddedProbe-0.0.39.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OpenEmbeddedProbe-0.0.39.tar.gz",
+    "size_bytes": 635340,
+    "sha256": "d2e1bd3302176b1c7c4628c03011f671e2e929fa9c07db8a79c70ea0d74a02a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/open-embedded-probe/library/OpenEmbeddedProbe/0.0.39/OpenEmbeddedProbe-0.0.39.tar.gz",
+     "https://dl.registry.platformio.org/download/open-embedded-probe/library/OpenEmbeddedProbe/0.0.39/OpenEmbeddedProbe-0.0.39.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "open-embedded-probe/library/OpenEmbeddedProbe/0.0.8/OpenEmbeddedProbe-0.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OpenEmbeddedProbe-0.0.8.tar.gz",
+    "size_bytes": 176759,
+    "sha256": "db6b4f0cf5a818fbaf90f95f1dad6cda10971550e6bdb1c114a4183d3b2830cd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/open-embedded-probe/library/OpenEmbeddedProbe/0.0.8/OpenEmbeddedProbe-0.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/open-embedded-probe/library/OpenEmbeddedProbe/0.0.8/OpenEmbeddedProbe-0.0.8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

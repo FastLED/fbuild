@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/saghonfly",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "saghonfly/library/SimpleEspNowConnection/1.2.0/SimpleEspNowConnection-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleEspNowConnection-1.2.0.tar.gz",
+    "size_bytes": 11359,
+    "sha256": "e9f1b031c23bbdd51900b2d2146cc6aaa584ef339c6d7ba12ef4a5b5e625a2b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/saghonfly/library/SimpleEspNowConnection/1.2.0/SimpleEspNowConnection-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/saghonfly/library/SimpleEspNowConnection/1.2.0/SimpleEspNowConnection-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

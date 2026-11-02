@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/blacktigersoftware",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "blacktigersoftware/library/ESP8266RFCTelnet/1.0.0/ESP8266RFCTelnet-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266RFCTelnet-1.0.0.tar.gz",
+    "size_bytes": 14535,
+    "sha256": "71d914bd47933749c032d8f892b0c15c8ab1d180d4c35a4025c1d576dd8c1200",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blacktigersoftware/library/ESP8266RFCTelnet/1.0.0/ESP8266RFCTelnet-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/blacktigersoftware/library/ESP8266RFCTelnet/1.0.0/ESP8266RFCTelnet-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

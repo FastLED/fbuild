@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/freekode",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "freekode/library/TM1651/1.0.1/TM1651-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TM1651-1.0.1.tar.gz",
+    "size_bytes": 3502,
+    "sha256": "e58da794a4ca57410e5fe1e3c1920ced21354b2d6058e641586e589729d5e09a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/freekode/library/TM1651/1.0.1/TM1651-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/freekode/library/TM1651/1.0.1/TM1651-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

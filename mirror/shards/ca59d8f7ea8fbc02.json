@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/german-source",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "german-source/library/MicroOS/1.0.0/MicroOS-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MicroOS-1.0.0.tar.gz",
+    "size_bytes": 6259,
+    "sha256": "658e5848863af6f91151107b96732668ec60f8f65f4d5a4249b084b7ea0a7d85",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/german-source/library/MicroOS/1.0.0/MicroOS-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/german-source/library/MicroOS/1.0.0/MicroOS-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

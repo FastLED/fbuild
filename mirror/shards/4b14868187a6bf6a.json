@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-bear-lab",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-bear-lab/library/AHRS_fillter/0.0.0+sha.054bfc57f0f9/AHRS_fillter-0.0.0+sha.054bfc57f0f9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AHRS_fillter-0.0.0+sha.054bfc57f0f9.tar.gz",
+    "size_bytes": 5623,
+    "sha256": "a91cb37a59465e5d8298d0fcd242074cbea612dc6fc7c571e1240d3dcc58fd34",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bear-lab/library/AHRS_fillter/0.0.0%2Bsha.054bfc57f0f9/AHRS_fillter-0.0.0%2Bsha.054bfc57f0f9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bear-lab/library/AHRS_fillter/0.0.0%2Bsha.054bfc57f0f9/AHRS_fillter-0.0.0%2Bsha.054bfc57f0f9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-bear-lab/library/BEAR_Protocol/0.0.0+sha.45286c47ca0d/BEAR_Protocol-0.0.0+sha.45286c47ca0d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BEAR_Protocol-0.0.0+sha.45286c47ca0d.tar.gz",
+    "size_bytes": 4701,
+    "sha256": "f981dfde7d5027724846387b9301358ec5d78f8f17fdd0ad52140b461214e4a6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bear-lab/library/BEAR_Protocol/0.0.0%2Bsha.45286c47ca0d/BEAR_Protocol-0.0.0%2Bsha.45286c47ca0d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bear-lab/library/BEAR_Protocol/0.0.0%2Bsha.45286c47ca0d/BEAR_Protocol-0.0.0%2Bsha.45286c47ca0d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-bear-lab/library/MPU9250_Interface/0.0.0+sha.b502ea2d6ebb/MPU9250_Interface-0.0.0+sha.b502ea2d6ebb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPU9250_Interface-0.0.0+sha.b502ea2d6ebb.tar.gz",
+    "size_bytes": 10583,
+    "sha256": "5778d3ba3d6483f0beb5baa807c40b95aabab1dba92411b6684af9da669c7115",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bear-lab/library/MPU9250_Interface/0.0.0%2Bsha.b502ea2d6ebb/MPU9250_Interface-0.0.0%2Bsha.b502ea2d6ebb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bear-lab/library/MPU9250_Interface/0.0.0%2Bsha.b502ea2d6ebb/MPU9250_Interface-0.0.0%2Bsha.b502ea2d6ebb.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-bear-lab/library/MX28/0.0.0+sha.30da84384307/MX28-0.0.0+sha.30da84384307.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MX28-0.0.0+sha.30da84384307.tar.gz",
+    "size_bytes": 12418,
+    "sha256": "249a43ebfc8e2753d694d3323c85202026140ffc2cdbbf6205b8a28bfbdb609f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bear-lab/library/MX28/0.0.0%2Bsha.30da84384307/MX28-0.0.0%2Bsha.30da84384307.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bear-lab/library/MX28/0.0.0%2Bsha.30da84384307/MX28-0.0.0%2Bsha.30da84384307.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-bear-lab/library/RTC-DS1307/0.0.0+sha.73081912baf2/RTC-DS1307-0.0.0+sha.73081912baf2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RTC-DS1307-0.0.0+sha.73081912baf2.tar.gz",
+    "size_bytes": 5108,
+    "sha256": "9d4d2bcb372d343f35cb14d787dac80c6a817d3663abccce9d229628fbd91f44",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bear-lab/library/RTC-DS1307/0.0.0%2Bsha.73081912baf2/RTC-DS1307-0.0.0%2Bsha.73081912baf2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bear-lab/library/RTC-DS1307/0.0.0%2Bsha.73081912baf2/RTC-DS1307-0.0.0%2Bsha.73081912baf2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-bear-lab/library/motion_control/0.0.0+sha.e3895130e56f/motion_control-0.0.0+sha.e3895130e56f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "motion_control-0.0.0+sha.e3895130e56f.tar.gz",
+    "size_bytes": 2186,
+    "sha256": "0ef93fbff3ef2af00ec0783d47b6fa99599880116fd3cf1b510f398ed9342f7c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bear-lab/library/motion_control/0.0.0%2Bsha.e3895130e56f/motion_control-0.0.0%2Bsha.e3895130e56f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bear-lab/library/motion_control/0.0.0%2Bsha.e3895130e56f/motion_control-0.0.0%2Bsha.e3895130e56f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-bear-lab/library/motor_relay/0.0.0+sha.ab6a6dc941c7/motor_relay-0.0.0+sha.ab6a6dc941c7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "motor_relay-0.0.0+sha.ab6a6dc941c7.tar.gz",
+    "size_bytes": 967,
+    "sha256": "244c35065915644a43c07673fefab4de44d80d2cef42ccedb1f350135683a7bd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bear-lab/library/motor_relay/0.0.0%2Bsha.ab6a6dc941c7/motor_relay-0.0.0%2Bsha.ab6a6dc941c7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bear-lab/library/motor_relay/0.0.0%2Bsha.ab6a6dc941c7/motor_relay-0.0.0%2Bsha.ab6a6dc941c7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

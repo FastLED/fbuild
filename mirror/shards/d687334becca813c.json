@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-michaelruck",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-michaelruck/library/Debounce/0.0.0+sha.b80f4620fbbd/Debounce-0.0.0+sha.b80f4620fbbd.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Debounce-0.0.0+sha.b80f4620fbbd.tar.gz",
+    "size_bytes": 1082,
+    "sha256": "7397c5aad80ebce5e4e793c6f4a18a946525116538beb5a7712697abcb0444f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-michaelruck/library/Debounce/0.0.0%2Bsha.b80f4620fbbd/Debounce-0.0.0%2Bsha.b80f4620fbbd.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-michaelruck/library/Debounce/0.0.0%2Bsha.b80f4620fbbd/Debounce-0.0.0%2Bsha.b80f4620fbbd.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-michaelruck/library/Quadrature_Encoder_Switch/0.0.0+sha.7d24b4076453/Quadrature_Encoder_Switch-0.0.0+sha.7d24b4076453.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Quadrature_Encoder_Switch-0.0.0+sha.7d24b4076453.tar.gz",
+    "size_bytes": 1468,
+    "sha256": "01b9aacd1b63e9922e05c0657a9cdb2b6b015cfbf8971904e109d663ed87e204",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-michaelruck/library/Quadrature_Encoder_Switch/0.0.0%2Bsha.7d24b4076453/Quadrature_Encoder_Switch-0.0.0%2Bsha.7d24b4076453.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-michaelruck/library/Quadrature_Encoder_Switch/0.0.0%2Bsha.7d24b4076453/Quadrature_Encoder_Switch-0.0.0%2Bsha.7d24b4076453.tar.gz"
+    ]
+   }
+  }
+ ]
+}

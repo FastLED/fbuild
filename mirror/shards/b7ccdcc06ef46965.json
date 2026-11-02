@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ais-deviceintegration",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ais-deviceintegration/library/AIS_4G_EXTENSION_BOARD/1.2.2/AIS_4G_EXTENSION_BOARD-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AIS_4G_EXTENSION_BOARD-1.2.2.tar.gz",
+    "size_bytes": 59369,
+    "sha256": "175932c43438d422f52aa4370a4847fc7a11f555e4e1d7b5209b1d2023929b1a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ais-deviceintegration/library/AIS_4G_EXTENSION_BOARD/1.2.2/AIS_4G_EXTENSION_BOARD-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ais-deviceintegration/library/AIS_4G_EXTENSION_BOARD/1.2.2/AIS_4G_EXTENSION_BOARD-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ais-deviceintegration/library/Magellan_BC95%20CORPORATE/2.1.2/Magellan_BC95CORPORATE-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Magellan_BC95CORPORATE-2.1.2.tar.gz",
+    "size_bytes": 24308,
+    "sha256": "abbd3c8402afa65532648834b7628d57688ed66ea1d3ef8e859221b274bf782f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ais-deviceintegration/library/Magellan_BC95%2520CORPORATE/2.1.2/Magellan_BC95CORPORATE-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ais-deviceintegration/library/Magellan_BC95%20CORPORATE/2.1.2/Magellan_BC95CORPORATE-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ais-deviceintegration/library/Magellan_BC95_lite%20CORPORATE/2.0.1/Magellan_BC95_liteCORPORATE-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Magellan_BC95_liteCORPORATE-2.0.1.tar.gz",
+    "size_bytes": 13186,
+    "sha256": "b989e3ee503f35dd1a9077ee3b446c65a61fabe4b783ccd07316cfb68212ee84",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ais-deviceintegration/library/Magellan_BC95_lite%2520CORPORATE/2.0.1/Magellan_BC95_liteCORPORATE-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ais-deviceintegration/library/Magellan_BC95_lite%20CORPORATE/2.0.1/Magellan_BC95_liteCORPORATE-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ais-deviceintegration/library/Magellan_SIM7020E%20CORPORATE/1.5.2/Magellan_SIM7020ECORPORATE-1.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Magellan_SIM7020ECORPORATE-1.5.2.tar.gz",
+    "size_bytes": 27678,
+    "sha256": "03218ac946d2d16fcfc0e0e5183731673ce1de32a8c774007db3ba833676c314",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ais-deviceintegration/library/Magellan_SIM7020E%2520CORPORATE/1.5.2/Magellan_SIM7020ECORPORATE-1.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ais-deviceintegration/library/Magellan_SIM7020E%20CORPORATE/1.5.2/Magellan_SIM7020ECORPORATE-1.5.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

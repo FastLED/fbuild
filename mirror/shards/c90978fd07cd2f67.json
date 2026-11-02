@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sovcik",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sovcik/library/FileBuffer/2.0.0/FileBuffer-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FileBuffer-2.0.0.tar.gz",
+    "size_bytes": 7152,
+    "sha256": "2cb7d7340fb795ba54027acf7c72a53fc446922c8d162e754a3bfc11fa165197",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sovcik/library/FileBuffer/2.0.0/FileBuffer-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sovcik/library/FileBuffer/2.0.0/FileBuffer-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sovcik/library/SerialPrinter/1.0.1/SerialPrinter-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialPrinter-1.0.1.tar.gz",
+    "size_bytes": 6965,
+    "sha256": "2eea994aa5cfc0dc58adf3d4c3e5c8d4f1b42d6d9454c7b6fffb501c4445b825",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sovcik/library/SerialPrinter/1.0.1/SerialPrinter-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sovcik/library/SerialPrinter/1.0.1/SerialPrinter-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

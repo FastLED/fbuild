@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lucasetchezuri",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lucasetchezuri/library/ADS1120/1.0.1/ADS1120-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADS1120-1.0.1.tar.gz",
+    "size_bytes": 4519,
+    "sha256": "7d0ffbba4c3596b5e6f9687e2be885646a5e328fc5dd07e0ac26653d76886ffb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lucasetchezuri/library/ADS1120/1.0.1/ADS1120-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lucasetchezuri/library/ADS1120/1.0.1/ADS1120-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lucasetchezuri/library/ADS131M04/1.0.0/ADS131M04-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADS131M04-1.0.0.tar.gz",
+    "size_bytes": 4990,
+    "sha256": "c4d871d97dad5f404286be27b7868391adfc73e964f9dffafd6539e0e4e29536",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lucasetchezuri/library/ADS131M04/1.0.0/ADS131M04-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lucasetchezuri/library/ADS131M04/1.0.0/ADS131M04-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lucasetchezuri/library/DAC8830/1.1.0/DAC8830-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DAC8830-1.1.0.tar.gz",
+    "size_bytes": 1944,
+    "sha256": "79ab490cdbd42ae3daad9a4fa9c0c568085f556ef69391107c68c6a5c0560076",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lucasetchezuri/library/DAC8830/1.1.0/DAC8830-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lucasetchezuri/library/DAC8830/1.1.0/DAC8830-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lucasetchezuri/library/MAX11214/1.0.2/MAX11214-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX11214-1.0.2.tar.gz",
+    "size_bytes": 4360,
+    "sha256": "712512b58b4aa5eff69cfe14e9e2c0038068d5164fe02a2cbf6929ef748c3873",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lucasetchezuri/library/MAX11214/1.0.2/MAX11214-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lucasetchezuri/library/MAX11214/1.0.2/MAX11214-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-biagiomkr",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-biagiomkr/library/QUECTEL_L80_GPS/0.0.0+sha.a5ea5d8302ef/QUECTEL_L80_GPS-0.0.0+sha.a5ea5d8302ef.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QUECTEL_L80_GPS-0.0.0+sha.a5ea5d8302ef.tar.gz",
+    "size_bytes": 5678,
+    "sha256": "99bf44fd80a37e6ef7aa2ef44845ff9d81bff2e921450f2d252a84ea8c0f5331",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-biagiomkr/library/QUECTEL_L80_GPS/0.0.0%2Bsha.a5ea5d8302ef/QUECTEL_L80_GPS-0.0.0%2Bsha.a5ea5d8302ef.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-biagiomkr/library/QUECTEL_L80_GPS/0.0.0%2Bsha.a5ea5d8302ef/QUECTEL_L80_GPS-0.0.0%2Bsha.a5ea5d8302ef.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-biagiomkr/library/STM32_LowPower/0.0.0+sha.f37bc13b9bbf/STM32_LowPower-0.0.0+sha.f37bc13b9bbf.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32_LowPower-0.0.0+sha.f37bc13b9bbf.tar.gz",
+    "size_bytes": 5009,
+    "sha256": "ed7505d225988b93cc51671325fdb7045a59dc11a8a260ca8d73598893a1875a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-biagiomkr/library/STM32_LowPower/0.0.0%2Bsha.f37bc13b9bbf/STM32_LowPower-0.0.0%2Bsha.f37bc13b9bbf.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-biagiomkr/library/STM32_LowPower/0.0.0%2Bsha.f37bc13b9bbf/STM32_LowPower-0.0.0%2Bsha.f37bc13b9bbf.tar.gz"
+    ]
+   }
+  }
+ ]
+}

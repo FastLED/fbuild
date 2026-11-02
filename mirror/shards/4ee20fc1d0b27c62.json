@@ -1,0 +1,191 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cyril-musikaloid",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cyril-musikaloid/library/FS5113R/0.1/FS5113R-0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FS5113R-0.1.tar.gz",
+    "size_bytes": 2427,
+    "sha256": "2d19caa2e376dcfaba6cdf172ff1b60134b7ee46366743464855aaee292116eb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cyril-musikaloid/library/FS5113R/0.1/FS5113R-0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cyril-musikaloid/library/FS5113R/0.1/FS5113R-0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cyril-musikaloid/library/HP_ESP32Servo/0.7/HP_ESP32Servo-0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HP_ESP32Servo-0.7.tar.gz",
+    "size_bytes": 17006,
+    "sha256": "d4b2f80be451fd73306cfabd718057fcc2223f40cfcda2d0671b26b5566f25ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cyril-musikaloid/library/HP_ESP32Servo/0.7/HP_ESP32Servo-0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/cyril-musikaloid/library/HP_ESP32Servo/0.7/HP_ESP32Servo-0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cyril-musikaloid/library/LedModule/0.1/LedModule-0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LedModule-0.1.tar.gz",
+    "size_bytes": 69662,
+    "sha256": "448baedeff2aefb09e10a3f1a6c64c25cd00c279207b5c7dfe3f713bf7160814",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cyril-musikaloid/library/LedModule/0.1/LedModule-0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cyril-musikaloid/library/LedModule/0.1/LedModule-0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cyril-musikaloid/library/Settingator/0.3.22/Settingator-0.3.22.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Settingator-0.3.22.tar.gz",
+    "size_bytes": 49172,
+    "sha256": "7dcf566f3dd9f022c69b77f3dc0d59931afbc6ec0b69ea939c8c317952102da3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cyril-musikaloid/library/Settingator/0.3.22/Settingator-0.3.22.tar.gz",
+     "https://dl.registry.platformio.org/download/cyril-musikaloid/library/Settingator/0.3.22/Settingator-0.3.22.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cyril-musikaloid/library/Settingator/0.3.23/Settingator-0.3.23.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Settingator-0.3.23.tar.gz",
+    "size_bytes": 49867,
+    "sha256": "adf3af919748aa4ec70a83001cfe5072d816e023d18c9f4ff5a485ce4e142322",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cyril-musikaloid/library/Settingator/0.3.23/Settingator-0.3.23.tar.gz",
+     "https://dl.registry.platformio.org/download/cyril-musikaloid/library/Settingator/0.3.23/Settingator-0.3.23.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cyril-musikaloid/library/Settingator/0.3.24/Settingator-0.3.24.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Settingator-0.3.24.tar.gz",
+    "size_bytes": 50120,
+    "sha256": "3d4ef3b1be22ed2da100ca15e122566183124e12c0787194eee9fd532f1122df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cyril-musikaloid/library/Settingator/0.3.24/Settingator-0.3.24.tar.gz",
+     "https://dl.registry.platformio.org/download/cyril-musikaloid/library/Settingator/0.3.24/Settingator-0.3.24.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cyril-musikaloid/library/Settingator/0.3.25/Settingator-0.3.25.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Settingator-0.3.25.tar.gz",
+    "size_bytes": 50221,
+    "sha256": "26094072acab724679f68e3cd732aeef767c06d0edd82cfb8c0286768348768d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cyril-musikaloid/library/Settingator/0.3.25/Settingator-0.3.25.tar.gz",
+     "https://dl.registry.platformio.org/download/cyril-musikaloid/library/Settingator/0.3.25/Settingator-0.3.25.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cyril-musikaloid/library/Settingator/0.3.26/Settingator-0.3.26.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Settingator-0.3.26.tar.gz",
+    "size_bytes": 50245,
+    "sha256": "c8d145375c111bc53984a32da7e3bad252a19fcf7e8a0d8c51d4c2f754cce770",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cyril-musikaloid/library/Settingator/0.3.26/Settingator-0.3.26.tar.gz",
+     "https://dl.registry.platformio.org/download/cyril-musikaloid/library/Settingator/0.3.26/Settingator-0.3.26.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cyril-musikaloid/library/Settingator/0.3.27/Settingator-0.3.27.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Settingator-0.3.27.tar.gz",
+    "size_bytes": 66160,
+    "sha256": "0a287679f059084aa759db8230ecd1acda2a49d7fb25713cce9f8d6d11427dc7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cyril-musikaloid/library/Settingator/0.3.27/Settingator-0.3.27.tar.gz",
+     "https://dl.registry.platformio.org/download/cyril-musikaloid/library/Settingator/0.3.27/Settingator-0.3.27.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cyril-musikaloid/library/Settingator/0.3.28/Settingator-0.3.28.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Settingator-0.3.28.tar.gz",
+    "size_bytes": 94434,
+    "sha256": "42af792bd910aa5f0a65d8426b67cc3954771e1930ab45b28010fe855e71260b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cyril-musikaloid/library/Settingator/0.3.28/Settingator-0.3.28.tar.gz",
+     "https://dl.registry.platformio.org/download/cyril-musikaloid/library/Settingator/0.3.28/Settingator-0.3.28.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cyril-musikaloid/library/Settingator/0.3.29/Settingator-0.3.29.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Settingator-0.3.29.tar.gz",
+    "size_bytes": 95383,
+    "sha256": "465c350948e9219d31c5ab5e234f41402a5832400824386323380bff6bbf76f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cyril-musikaloid/library/Settingator/0.3.29/Settingator-0.3.29.tar.gz",
+     "https://dl.registry.platformio.org/download/cyril-musikaloid/library/Settingator/0.3.29/Settingator-0.3.29.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cyril-musikaloid/library/Settingator/0.3.30/Settingator-0.3.30.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Settingator-0.3.30.tar.gz",
+    "size_bytes": 95387,
+    "sha256": "a23f6f323e4592f277b0eb42d152f8ad69eae633391adec8c0ea17d2831ce84a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cyril-musikaloid/library/Settingator/0.3.30/Settingator-0.3.30.tar.gz",
+     "https://dl.registry.platformio.org/download/cyril-musikaloid/library/Settingator/0.3.30/Settingator-0.3.30.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cyril-musikaloid/library/Settingator/0.3.31/Settingator-0.3.31.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Settingator-0.3.31.tar.gz",
+    "size_bytes": 109460,
+    "sha256": "6a079f1109c97143b2aa0e6ffc0a53bf374f5a985b33ea37fa1f4cda9e8aafb6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cyril-musikaloid/library/Settingator/0.3.31/Settingator-0.3.31.tar.gz",
+     "https://dl.registry.platformio.org/download/cyril-musikaloid/library/Settingator/0.3.31/Settingator-0.3.31.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cyril-musikaloid/library/Settingator/0.3.33/Settingator-0.3.33.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Settingator-0.3.33.tar.gz",
+    "size_bytes": 24380,
+    "sha256": "51d458d35ba6c72d58ce78df23cd56c489f3a1298017038dc0debd4728a87f1e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cyril-musikaloid/library/Settingator/0.3.33/Settingator-0.3.33.tar.gz",
+     "https://dl.registry.platformio.org/download/cyril-musikaloid/library/Settingator/0.3.33/Settingator-0.3.33.tar.gz"
+    ]
+   }
+  }
+ ]
+}

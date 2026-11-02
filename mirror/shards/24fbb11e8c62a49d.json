@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/wizme-m",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "wizme-m/library/ArduinoTimer/1.1.0/ArduinoTimer-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoTimer-1.1.0.tar.gz",
+    "size_bytes": 4850,
+    "sha256": "245ddd9952253c27d2652aa5dd2101323661faca173a7897eb85cbff44d6f453",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wizme-m/library/ArduinoTimer/1.1.0/ArduinoTimer-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/wizme-m/library/ArduinoTimer/1.1.0/ArduinoTimer-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wizme-m/library/WizardTimer/1.1.0/WizardTimer-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WizardTimer-1.1.0.tar.gz",
+    "size_bytes": 1620,
+    "sha256": "4b7a6fd478681ed1b4688f1455f42545de4b19655b3339843e3496fce0d0c6ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wizme-m/library/WizardTimer/1.1.0/WizardTimer-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/wizme-m/library/WizardTimer/1.1.0/WizardTimer-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

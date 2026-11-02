@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tkhoi0821-svg",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tkhoi0821-svg/library/CasioST75256/0.6.0/CasioST75256-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CasioST75256-0.6.0.tar.gz",
+    "size_bytes": 352891,
+    "sha256": "f01f577054228a1e9f085422f9efe9baf01c5a470e65f1bb909149610484a763",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tkhoi0821-svg/library/CasioST75256/0.6.0/CasioST75256-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tkhoi0821-svg/library/CasioST75256/0.6.0/CasioST75256-0.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tkhoi0821-svg/library/CasioST75256/1.0.0/CasioST75256-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CasioST75256-1.0.0.tar.gz",
+    "size_bytes": 951316,
+    "sha256": "d491f5db0eabf37696bf2f9fa067dc8a4f7fdcd2550a64426c1a90e7c44b090f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tkhoi0821-svg/library/CasioST75256/1.0.0/CasioST75256-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tkhoi0821-svg/library/CasioST75256/1.0.0/CasioST75256-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tkhoi0821-svg/library/CasioST75256/1.1.0/CasioST75256-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CasioST75256-1.1.0.tar.gz",
+    "size_bytes": 997728,
+    "sha256": "4d5274aa4072c83cce876f0ca32449a75359621a850af0be41cad0ca00bf6f2d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tkhoi0821-svg/library/CasioST75256/1.1.0/CasioST75256-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tkhoi0821-svg/library/CasioST75256/1.1.0/CasioST75256-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tkhoi0821-svg/library/CasioST75256/1.2.0/CasioST75256-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CasioST75256-1.2.0.tar.gz",
+    "size_bytes": 1013825,
+    "sha256": "831b2749e9f640774ee58385fb6295152c9191a09ab7a86fac94fdd470b988b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tkhoi0821-svg/library/CasioST75256/1.2.0/CasioST75256-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tkhoi0821-svg/library/CasioST75256/1.2.0/CasioST75256-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tkhoi0821-svg/library/GrayKazu/1.2.0/GrayKazu-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GrayKazu-1.2.0.tar.gz",
+    "size_bytes": 22363,
+    "sha256": "8a1d9f9e52344a48d69e8dd6aa16d15c0ab5e9551b620fd726f6bbb2135da355",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tkhoi0821-svg/library/GrayKazu/1.2.0/GrayKazu-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tkhoi0821-svg/library/GrayKazu/1.2.0/GrayKazu-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tkhoi0821-svg/library/GrayKazu/1.4.0/GrayKazu-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GrayKazu-1.4.0.tar.gz",
+    "size_bytes": 3371521,
+    "sha256": "bd2369df9a9c0d14d33fd2c5a4baa0bc40adee3ff29ff19f2692496d5f56f2a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tkhoi0821-svg/library/GrayKazu/1.4.0/GrayKazu-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tkhoi0821-svg/library/GrayKazu/1.4.0/GrayKazu-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tkhoi0821-svg/library/GrayKazu/1.4.1/GrayKazu-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GrayKazu-1.4.1.tar.gz",
+    "size_bytes": 3937427,
+    "sha256": "0de716576eebdbc1d986b2c3f49b30c6835147597cfa8cac895c24df37b37855",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tkhoi0821-svg/library/GrayKazu/1.4.1/GrayKazu-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tkhoi0821-svg/library/GrayKazu/1.4.1/GrayKazu-1.4.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

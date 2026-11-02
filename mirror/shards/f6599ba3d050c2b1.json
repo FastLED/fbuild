@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lildev1979",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lildev1979/library/AFS01Sensor/1.0.1/AFS01Sensor-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AFS01Sensor-1.0.1.tar.gz",
+    "size_bytes": 6196,
+    "sha256": "e90bf64f845d26c06f0773eb3d9a34b7a80b04b3c7e424b2d78e21e89e1b6c80",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lildev1979/library/AFS01Sensor/1.0.1/AFS01Sensor-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lildev1979/library/AFS01Sensor/1.0.1/AFS01Sensor-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

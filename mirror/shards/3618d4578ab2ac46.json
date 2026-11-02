@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gmarty2000",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gmarty2000/library/Buzzer/1.0.0/Buzzer-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Buzzer-1.0.0.tar.gz",
+    "size_bytes": 15843,
+    "sha256": "94ed1e16a8f7a32e08d37b0f8b961e3dac8974f510c78c08ddb1de9b2bcd203a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gmarty2000/library/Buzzer/1.0.0/Buzzer-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gmarty2000/library/Buzzer/1.0.0/Buzzer-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gmarty2000/library/Joystick/1.0.0/Joystick-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Joystick-1.0.0.tar.gz",
+    "size_bytes": 13923,
+    "sha256": "23c60cd966a152c246dd67877fccc5ec644efccbaedaef640a3add2b502afe39",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gmarty2000/library/Joystick/1.0.0/Joystick-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gmarty2000/library/Joystick/1.0.0/Joystick-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gmarty2000/library/LED/1.3.0/LED-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LED-1.3.0.tar.gz",
+    "size_bytes": 15367,
+    "sha256": "77377232ab502291c2e7ef71089eae454943addabe104a77354e9446439d026b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gmarty2000/library/LED/1.3.0/LED-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gmarty2000/library/LED/1.3.0/LED-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gmarty2000/library/SoilHygrometer/1.0.0/SoilHygrometer-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SoilHygrometer-1.0.0.tar.gz",
+    "size_bytes": 13757,
+    "sha256": "ee13b946a1c5e7f8082835011d226e08b539990ce1016223aa8625e848476c57",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gmarty2000/library/SoilHygrometer/1.0.0/SoilHygrometer-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gmarty2000/library/SoilHygrometer/1.0.0/SoilHygrometer-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gmarty2000/library/UltrasonicSensor/1.1.0/UltrasonicSensor-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UltrasonicSensor-1.1.0.tar.gz",
+    "size_bytes": 14325,
+    "sha256": "ac5e4dbd2aeea1d55fc525d47007596da620b853e0f4cf05fba857ef15f2fc47",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gmarty2000/library/UltrasonicSensor/1.1.0/UltrasonicSensor-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gmarty2000/library/UltrasonicSensor/1.1.0/UltrasonicSensor-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

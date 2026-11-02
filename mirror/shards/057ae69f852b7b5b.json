@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/simplehacks",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "simplehacks/library/EzDmaHelper/0.2.0-alpha/EzDmaHelper-0.2.0-alpha.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EzDmaHelper-0.2.0-alpha.tar.gz",
+    "size_bytes": 12610,
+    "sha256": "a8dd77d6f84f7754a47cfad211fb7c738febbc5d8347b6f7e6d24a206ca655f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/simplehacks/library/EzDmaHelper/0.2.0-alpha/EzDmaHelper-0.2.0-alpha.tar.gz",
+     "https://dl.registry.platformio.org/download/simplehacks/library/EzDmaHelper/0.2.0-alpha/EzDmaHelper-0.2.0-alpha.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "simplehacks/library/QDEC/2.1.0/QDEC-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QDEC-2.1.0.tar.gz",
+    "size_bytes": 23494,
+    "sha256": "b115e6dba74eb76a34d33f889b27c68f559e52406c82b0b531ef710422d30d85",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/simplehacks/library/QDEC/2.1.0/QDEC-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/simplehacks/library/QDEC/2.1.0/QDEC-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "simplehacks/library/nrf_rng/1.1.0/nrf_rng-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nrf_rng-1.1.0.tar.gz",
+    "size_bytes": 4750,
+    "sha256": "811bf05a618ace8b4e3af97d7c8046201ca374810bec8c92e3911435662bc6a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/simplehacks/library/nrf_rng/1.1.0/nrf_rng-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/simplehacks/library/nrf_rng/1.1.0/nrf_rng-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

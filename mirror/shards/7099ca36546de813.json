@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ericlew",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ericlew/library/STM32L4xx_HAL_Driver/0.0.0+sha.7aef7655b0a8/STM32L4xx_HAL_Driver-0.0.0+sha.7aef7655b0a8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32L4xx_HAL_Driver-0.0.0+sha.7aef7655b0a8.tar.gz",
+    "size_bytes": 534434,
+    "sha256": "c8120b5f76830b22fd7c29bc4f3308c49377a204028a2df63f34c06391d4c8b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ericlew/library/STM32L4xx_HAL_Driver/0.0.0%2Bsha.7aef7655b0a8/STM32L4xx_HAL_Driver-0.0.0%2Bsha.7aef7655b0a8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ericlew/library/STM32L4xx_HAL_Driver/0.0.0%2Bsha.7aef7655b0a8/STM32L4xx_HAL_Driver-0.0.0%2Bsha.7aef7655b0a8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

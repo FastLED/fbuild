@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/byronholldorf",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "byronholldorf/library/uMulti/0.1.1/uMulti-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uMulti-0.1.1.tar.gz",
+    "size_bytes": 6117,
+    "sha256": "e3441398292821922118362fac52ebc6bb8ba7bf3ad6b97a20114be3f277a843",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/byronholldorf/library/uMulti/0.1.1/uMulti-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/byronholldorf/library/uMulti/0.1.1/uMulti-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

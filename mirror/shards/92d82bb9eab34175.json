@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/maarten-pennings",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "maarten-pennings/library/CCS811/12.0.0/CCS811-12.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CCS811-12.0.0.tar.gz",
+    "size_bytes": 305765,
+    "sha256": "d0cb6fcb7dc6d37a5f2eed2dab57c7bc433795851b7de9dd677154968cc94bdb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maarten-pennings/library/CCS811/12.0.0/CCS811-12.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/maarten-pennings/library/CCS811/12.0.0/CCS811-12.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "maarten-pennings/library/ENS210/1.0.0/ENS210-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ENS210-1.0.0.tar.gz",
+    "size_bytes": 13965,
+    "sha256": "33f68425ef21348df6d75bed48a4f446fecd718a7da3d499735ba42671be9aa1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maarten-pennings/library/ENS210/1.0.0/ENS210-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/maarten-pennings/library/ENS210/1.0.0/ENS210-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

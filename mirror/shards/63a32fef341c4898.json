@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pocketbaseextended",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pocketbaseextended/library/PocketbaseExtended/1.0.0/PocketbaseExtended-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PocketbaseExtended-1.0.0.tar.gz",
+    "size_bytes": 24370,
+    "sha256": "c7c5dad4475b0105b4ff634fe478127ee0567941345a5de381ccba959d3dcdc3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pocketbaseextended/library/PocketbaseExtended/1.0.0/PocketbaseExtended-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pocketbaseextended/library/PocketbaseExtended/1.0.0/PocketbaseExtended-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-pennelectric",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-pennelectric/library/LinearAnalogSensor/0.0.0+sha.78eeca1c1944/LinearAnalogSensor-0.0.0+sha.78eeca1c1944.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LinearAnalogSensor-0.0.0+sha.78eeca1c1944.tar.gz",
+    "size_bytes": 3123,
+    "sha256": "d4fdfc2cb73e4a64698870f6ee42e7070271155fa6c244f4743dbe9c104b14f9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pennelectric/library/LinearAnalogSensor/0.0.0%2Bsha.78eeca1c1944/LinearAnalogSensor-0.0.0%2Bsha.78eeca1c1944.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pennelectric/library/LinearAnalogSensor/0.0.0%2Bsha.78eeca1c1944/LinearAnalogSensor-0.0.0%2Bsha.78eeca1c1944.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-pennelectric/library/LinearAnalogSensors/0.0.0+sha.989048937c77/LinearAnalogSensors-0.0.0+sha.989048937c77.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LinearAnalogSensors-0.0.0+sha.989048937c77.tar.gz",
+    "size_bytes": 3008,
+    "sha256": "4a68a22d25ee0287f3e13c28f2887866f2f2a7d016f29c2cffb763e33d8a37c9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pennelectric/library/LinearAnalogSensors/0.0.0%2Bsha.989048937c77/LinearAnalogSensors-0.0.0%2Bsha.989048937c77.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pennelectric/library/LinearAnalogSensors/0.0.0%2Bsha.989048937c77/LinearAnalogSensors-0.0.0%2Bsha.989048937c77.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-pennelectric/library/MAX518/0.0.0+sha.8857ccc9323d/MAX518-0.0.0+sha.8857ccc9323d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX518-0.0.0+sha.8857ccc9323d.tar.gz",
+    "size_bytes": 3001,
+    "sha256": "d7372b8f19ac62c8df421427aad101b1ec30726e3659a961b8f1f1569d215076",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pennelectric/library/MAX518/0.0.0%2Bsha.8857ccc9323d/MAX518-0.0.0%2Bsha.8857ccc9323d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pennelectric/library/MAX518/0.0.0%2Bsha.8857ccc9323d/MAX518-0.0.0%2Bsha.8857ccc9323d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-pennelectric/library/ToggleFlash/0.0.0+sha.dbd7ab16f171/ToggleFlash-0.0.0+sha.dbd7ab16f171.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ToggleFlash-0.0.0+sha.dbd7ab16f171.tar.gz",
+    "size_bytes": 2839,
+    "sha256": "6cc0933d2813e08caa2ece754456eb33ea611af9fae969c08619a14a5ddc10dc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pennelectric/library/ToggleFlash/0.0.0%2Bsha.dbd7ab16f171/ToggleFlash-0.0.0%2Bsha.dbd7ab16f171.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pennelectric/library/ToggleFlash/0.0.0%2Bsha.dbd7ab16f171/ToggleFlash-0.0.0%2Bsha.dbd7ab16f171.tar.gz"
+    ]
+   }
+  }
+ ]
+}

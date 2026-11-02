@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lopfi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lopfi/library/INA780x/1.0.1/INA780x-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "INA780x-1.0.1.tar.gz",
+    "size_bytes": 5045,
+    "sha256": "7f59c383837da48e3dfab08e8748efae153344497522bbfa83d4c0c341d7d40a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lopfi/library/INA780x/1.0.1/INA780x-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lopfi/library/INA780x/1.0.1/INA780x-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

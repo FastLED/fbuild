@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/forntoh",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "forntoh/library/LcdMenu/5.12.1/LcdMenu-5.12.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LcdMenu-5.12.1.tar.gz",
+    "size_bytes": 47698,
+    "sha256": "7999faf461dbf9f1576d8a60fabd7d273dcdefdadf3293ee77d43332f0fa6c97",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/forntoh/library/LcdMenu/5.12.1/LcdMenu-5.12.1.tar.gz",
+     "https://dl.registry.platformio.org/download/forntoh/library/LcdMenu/5.12.1/LcdMenu-5.12.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "forntoh/library/LcdMenu/5.12.2/LcdMenu-5.12.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LcdMenu-5.12.2.tar.gz",
+    "size_bytes": 48925,
+    "sha256": "c112aac4fd8f2c46edb6003b56da7be9aa28fa39352292f1d19ea3dbafa774d2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/forntoh/library/LcdMenu/5.12.2/LcdMenu-5.12.2.tar.gz",
+     "https://dl.registry.platformio.org/download/forntoh/library/LcdMenu/5.12.2/LcdMenu-5.12.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "forntoh/library/LcdMenu/5.13.0/LcdMenu-5.13.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LcdMenu-5.13.0.tar.gz",
+    "size_bytes": 62528,
+    "sha256": "a7d4ac9cff9f31a17b6825b19e8e29d0191368d3b7faf543a21d7d8871d50f06",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/forntoh/library/LcdMenu/5.13.0/LcdMenu-5.13.0.tar.gz",
+     "https://dl.registry.platformio.org/download/forntoh/library/LcdMenu/5.13.0/LcdMenu-5.13.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "forntoh/library/LcdMenu/5.13.1/LcdMenu-5.13.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LcdMenu-5.13.1.tar.gz",
+    "size_bytes": 62696,
+    "sha256": "a04f0b279970543718b2c08879c4e9c045b81009db216bad2e708a557ea96a3f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/forntoh/library/LcdMenu/5.13.1/LcdMenu-5.13.1.tar.gz",
+     "https://dl.registry.platformio.org/download/forntoh/library/LcdMenu/5.13.1/LcdMenu-5.13.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/soryone1",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "soryone1/library/fog/1.0.1/fog-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "fog-1.0.1.tar.gz",
+    "size_bytes": 2352,
+    "sha256": "bc38ecdaa2db0c6ae66ec3e0e91b61bbdb9323acd315dc303b5f3f4da866bcad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soryone1/library/fog/1.0.1/fog-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/soryone1/library/fog/1.0.1/fog-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

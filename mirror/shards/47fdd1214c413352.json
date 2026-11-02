@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/richardlangner",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "richardlangner/library/BlinkDigits/1.0.0/BlinkDigits-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BlinkDigits-1.0.0.tar.gz",
+    "size_bytes": 5293,
+    "sha256": "51945dc9e9cf56a281ab201ac8a30acf79aad591c13cbba208e7984a42f75542",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/richardlangner/library/BlinkDigits/1.0.0/BlinkDigits-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/richardlangner/library/BlinkDigits/1.0.0/BlinkDigits-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "richardlangner/library/MultiTapButton/1.0.4/MultiTapButton-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MultiTapButton-1.0.4.tar.gz",
+    "size_bytes": 7153,
+    "sha256": "589e37f9b5c7f605587056e30a9c3e93d0c7b7ac82e8a343b5605b8623540dae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/richardlangner/library/MultiTapButton/1.0.4/MultiTapButton-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/richardlangner/library/MultiTapButton/1.0.4/MultiTapButton-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

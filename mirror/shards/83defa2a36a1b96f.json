@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pwhite-eng",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pwhite-eng/library/SimpleNetManager/1.1.0/SimpleNetManager-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleNetManager-1.1.0.tar.gz",
+    "size_bytes": 6997,
+    "sha256": "a94e78f15b45cb0cdf9e6b91ce3c4a5feeef28fc997ab1132ac8ad1f80cfa9d9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pwhite-eng/library/SimpleNetManager/1.1.0/SimpleNetManager-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pwhite-eng/library/SimpleNetManager/1.1.0/SimpleNetManager-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pwhite-eng/library/SimpleNetManager/1.2.0/SimpleNetManager-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleNetManager-1.2.0.tar.gz",
+    "size_bytes": 7055,
+    "sha256": "e1fa45c6cf64b04ea1b8116305aa0d9d2a40cefd5cfaf3d7efd095e9996cd83e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pwhite-eng/library/SimpleNetManager/1.2.0/SimpleNetManager-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pwhite-eng/library/SimpleNetManager/1.2.0/SimpleNetManager-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

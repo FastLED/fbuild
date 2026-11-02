@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/andreadv01",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "andreadv01/library/ESPfuscate/0.4.1/ESPfuscate-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPfuscate-0.4.1.tar.gz",
+    "size_bytes": 17573,
+    "sha256": "b8d1b5b8e4aeb77062cb0cf0eb874c714c97baddfb8e058a3a06e51038c3dd72",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/andreadv01/library/ESPfuscate/0.4.1/ESPfuscate-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/andreadv01/library/ESPfuscate/0.4.1/ESPfuscate-0.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "andreadv01/library/ESPfuscate/0.4.2/ESPfuscate-0.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPfuscate-0.4.2.tar.gz",
+    "size_bytes": 17589,
+    "sha256": "1e2d292fa9f9babe870d0657527af7d5a8eea6a9398f0376a053f8bffd707890",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/andreadv01/library/ESPfuscate/0.4.2/ESPfuscate-0.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/andreadv01/library/ESPfuscate/0.4.2/ESPfuscate-0.4.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

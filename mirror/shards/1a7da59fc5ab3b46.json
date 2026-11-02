@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jasper",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jasper/library/Tiny-HTTPD/0.0.0+sha.145c65ab9805/Tiny-HTTPD-0.0.0+sha.145c65ab9805.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Tiny-HTTPD-0.0.0+sha.145c65ab9805.tar.gz",
+    "size_bytes": 11092,
+    "sha256": "7d01c6b0b6ff6878f3db4b0fbd6dcacd5c8dc1a1f5ee963568df928a478c30e1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jasper/library/Tiny-HTTPD/0.0.0%2Bsha.145c65ab9805/Tiny-HTTPD-0.0.0%2Bsha.145c65ab9805.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jasper/library/Tiny-HTTPD/0.0.0%2Bsha.145c65ab9805/Tiny-HTTPD-0.0.0%2Bsha.145c65ab9805.tar.gz"
+    ]
+   }
+  }
+ ]
+}

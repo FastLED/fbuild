@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-sethnuon",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-sethnuon/library/FSLP_Controls_RGB_LEDs/0.0.0+sha.d56a10dcfd53/FSLP_Controls_RGB_LEDs-0.0.0+sha.d56a10dcfd53.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FSLP_Controls_RGB_LEDs-0.0.0+sha.d56a10dcfd53.tar.gz",
+    "size_bytes": 1135,
+    "sha256": "24dd72952ac2299c45ca7f065817f0dad9564f070cc26c32cda29874c8b94855",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sethnuon/library/FSLP_Controls_RGB_LEDs/0.0.0%2Bsha.d56a10dcfd53/FSLP_Controls_RGB_LEDs-0.0.0%2Bsha.d56a10dcfd53.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sethnuon/library/FSLP_Controls_RGB_LEDs/0.0.0%2Bsha.d56a10dcfd53/FSLP_Controls_RGB_LEDs-0.0.0%2Bsha.d56a10dcfd53.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sethnuon/library/FSLP_Serial_Output/0.0.0+sha.7d0912a942ad/FSLP_Serial_Output-0.0.0+sha.7d0912a942ad.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FSLP_Serial_Output-0.0.0+sha.7d0912a942ad.tar.gz",
+    "size_bytes": 933,
+    "sha256": "aee85e86f33d1bb925c6ff1e09e2d2f1a729921e13adaf7685440e7daad4a69c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sethnuon/library/FSLP_Serial_Output/0.0.0%2Bsha.7d0912a942ad/FSLP_Serial_Output-0.0.0%2Bsha.7d0912a942ad.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sethnuon/library/FSLP_Serial_Output/0.0.0%2Bsha.7d0912a942ad/FSLP_Serial_Output-0.0.0%2Bsha.7d0912a942ad.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sethnuon/library/FSLP_Serial_Outputx/0.0.0+sha.3d977c006001/FSLP_Serial_Outputx-0.0.0+sha.3d977c006001.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FSLP_Serial_Outputx-0.0.0+sha.3d977c006001.tar.gz",
+    "size_bytes": 871,
+    "sha256": "5d616a967a31fbd923a595c4353c65333d7cfc7e7f262d078b2269819e0fd185",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sethnuon/library/FSLP_Serial_Outputx/0.0.0%2Bsha.3d977c006001/FSLP_Serial_Outputx-0.0.0%2Bsha.3d977c006001.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sethnuon/library/FSLP_Serial_Outputx/0.0.0%2Bsha.3d977c006001/FSLP_Serial_Outputx-0.0.0%2Bsha.3d977c006001.tar.gz"
+    ]
+   }
+  }
+ ]
+}

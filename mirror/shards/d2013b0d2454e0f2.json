@@ -1,0 +1,607 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/braydenanderson2014",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "braydenanderson2014/library/AVL%20Tree/1.0.3-ALPHA/AVLTree-1.0.3-ALPHA.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AVLTree-1.0.3-ALPHA.tar.gz",
+    "size_bytes": 7570,
+    "sha256": "b458f818c048c6af617290c5373bcfccf01807dec72a1e77fdd788984404bf91",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/braydenanderson2014/library/AVL%2520Tree/1.0.3-ALPHA/AVLTree-1.0.3-ALPHA.tar.gz",
+     "https://dl.registry.platformio.org/download/braydenanderson2014/library/AVL%20Tree/1.0.3-ALPHA/AVLTree-1.0.3-ALPHA.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "braydenanderson2014/library/ArrayList/1.0.6-BETA/ArrayList-1.0.6-BETA.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArrayList-1.0.6-BETA.tar.gz",
+    "size_bytes": 20322,
+    "sha256": "baa6aa0e9a8ca58fbcb161b2156f9a375e8143fab1e71b3c2bf3e4f40e333a32",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/braydenanderson2014/library/ArrayList/1.0.6-BETA/ArrayList-1.0.6-BETA.tar.gz",
+     "https://dl.registry.platformio.org/download/braydenanderson2014/library/ArrayList/1.0.6-BETA/ArrayList-1.0.6-BETA.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "braydenanderson2014/library/ArrayList/1.0.8/ArrayList-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArrayList-1.0.8.tar.gz",
+    "size_bytes": 16698,
+    "sha256": "11397e1cc64562295b12e4a223d8b5ea2c677c33682920787ed299962eb76955",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/braydenanderson2014/library/ArrayList/1.0.8/ArrayList-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/braydenanderson2014/library/ArrayList/1.0.8/ArrayList-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "braydenanderson2014/library/BPlusTree/1.0.0-ALPHA/BPlusTree-1.0.0-ALPHA.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BPlusTree-1.0.0-ALPHA.tar.gz",
+    "size_bytes": 8235,
+    "sha256": "0ed35bc53a5fcb8f3a9b98c12b562db9ce444da469ce4b8c0f8634209103d5e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/braydenanderson2014/library/BPlusTree/1.0.0-ALPHA/BPlusTree-1.0.0-ALPHA.tar.gz",
+     "https://dl.registry.platformio.org/download/braydenanderson2014/library/BPlusTree/1.0.0-ALPHA/BPlusTree-1.0.0-ALPHA.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "braydenanderson2014/library/BTree/1.0.0-ALPHA/BTree-1.0.0-ALPHA.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BTree-1.0.0-ALPHA.tar.gz",
+    "size_bytes": 10947,
+    "sha256": "cc529968bdd731c16196677445e51d6013e7525a6de9e79269feb34017f99e68",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/braydenanderson2014/library/BTree/1.0.0-ALPHA/BTree-1.0.0-ALPHA.tar.gz",
+     "https://dl.registry.platformio.org/download/braydenanderson2014/library/BTree/1.0.0-ALPHA/BTree-1.0.0-ALPHA.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "braydenanderson2014/library/BasicIOStream/1.0.1/BasicIOStream-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BasicIOStream-1.0.1.tar.gz",
+    "size_bytes": 3006,
+    "sha256": "24c8578ad611f2b0902676fdc5fe77f154fe38650c25910260f1c3e7f216548e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/braydenanderson2014/library/BasicIOStream/1.0.1/BasicIOStream-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/braydenanderson2014/library/BasicIOStream/1.0.1/BasicIOStream-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "braydenanderson2014/library/BasicLinkedList/1.0.7/BasicLinkedList-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BasicLinkedList-1.0.7.tar.gz",
+    "size_bytes": 10071,
+    "sha256": "905504dbf626625c4d66e16f795b88ee38f9f946cd5646e71ae1763f79ad4916",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/braydenanderson2014/library/BasicLinkedList/1.0.7/BasicLinkedList-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/braydenanderson2014/library/BasicLinkedList/1.0.7/BasicLinkedList-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "braydenanderson2014/library/BinarySearchTree/1.0.0-ALPHA/BinarySearchTree-1.0.0-ALPHA.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BinarySearchTree-1.0.0-ALPHA.tar.gz",
+    "size_bytes": 6181,
+    "sha256": "2c5efe9ca1496b6f682cad534dbd2b70692f2f40c796c9382ab9fc20e92a190a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/braydenanderson2014/library/BinarySearchTree/1.0.0-ALPHA/BinarySearchTree-1.0.0-ALPHA.tar.gz",
+     "https://dl.registry.platformio.org/download/braydenanderson2014/library/BinarySearchTree/1.0.0-ALPHA/BinarySearchTree-1.0.0-ALPHA.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "braydenanderson2014/library/BinaryTree/1.0.0-ALPHA/BinaryTree-1.0.0-ALPHA.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BinaryTree-1.0.0-ALPHA.tar.gz",
+    "size_bytes": 7938,
+    "sha256": "4a49daa8cfdda9af7473e186cf1e56237d98c6073e75594cb3955922f129e4f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/braydenanderson2014/library/BinaryTree/1.0.0-ALPHA/BinaryTree-1.0.0-ALPHA.tar.gz",
+     "https://dl.registry.platformio.org/download/braydenanderson2014/library/BinaryTree/1.0.0-ALPHA/BinaryTree-1.0.0-ALPHA.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "braydenanderson2014/library/ColorManager/1.0.0-ALPHA/ColorManager-1.0.0-ALPHA.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ColorManager-1.0.0-ALPHA.tar.gz",
+    "size_bytes": 7107,
+    "sha256": "bc2df5c225f71a20e3a26687626077171ca7dd0dd724ed432428045c0ab30c30",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/braydenanderson2014/library/ColorManager/1.0.0-ALPHA/ColorManager-1.0.0-ALPHA.tar.gz",
+     "https://dl.registry.platformio.org/download/braydenanderson2014/library/ColorManager/1.0.0-ALPHA/ColorManager-1.0.0-ALPHA.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "braydenanderson2014/library/Dictionary/1.0.2/Dictionary-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Dictionary-1.0.2.tar.gz",
+    "size_bytes": 4055,
+    "sha256": "4362bc355b1005ebf6609d7468f5b597e652b7b97530096303b23b077e9df572",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/braydenanderson2014/library/Dictionary/1.0.2/Dictionary-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/braydenanderson2014/library/Dictionary/1.0.2/Dictionary-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "braydenanderson2014/library/DoubleLinkedList/1.0.6/DoubleLinkedList-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DoubleLinkedList-1.0.6.tar.gz",
+    "size_bytes": 10624,
+    "sha256": "e9837a2ec059178c34566c5da55a1608bf0a53648b50ccdf55be6b56edc3ad2a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/braydenanderson2014/library/DoubleLinkedList/1.0.6/DoubleLinkedList-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/braydenanderson2014/library/DoubleLinkedList/1.0.6/DoubleLinkedList-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "braydenanderson2014/library/FenwickTree/1.0.0-ALPHA/FenwickTree-1.0.0-ALPHA.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FenwickTree-1.0.0-ALPHA.tar.gz",
+    "size_bytes": 7696,
+    "sha256": "9a0e6b76982fb831b2ad8abc6d19405be81c5b48a98b9b9b21eb7ba2a719b52f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/braydenanderson2014/library/FenwickTree/1.0.0-ALPHA/FenwickTree-1.0.0-ALPHA.tar.gz",
+     "https://dl.registry.platformio.org/download/braydenanderson2014/library/FenwickTree/1.0.0-ALPHA/FenwickTree-1.0.0-ALPHA.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "braydenanderson2014/library/Hashtable/1.1.3/Hashtable-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Hashtable-1.1.3.tar.gz",
+    "size_bytes": 14813,
+    "sha256": "322163e9b8c318ecc067c30c780a4a2237402b007b72d3e2da76d77e1085b386",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/braydenanderson2014/library/Hashtable/1.1.3/Hashtable-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/braydenanderson2014/library/Hashtable/1.1.3/Hashtable-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "braydenanderson2014/library/Hashtable/1.1.5/Hashtable-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Hashtable-1.1.5.tar.gz",
+    "size_bytes": 15458,
+    "sha256": "e4b279f8274b521592c838a94be5ec9b2b5c4db065ba1cf74db4a81d40e77aa2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/braydenanderson2014/library/Hashtable/1.1.5/Hashtable-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/braydenanderson2014/library/Hashtable/1.1.5/Hashtable-1.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "braydenanderson2014/library/HeapTree/1.0.0-ALPHA/HeapTree-1.0.0-ALPHA.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HeapTree-1.0.0-ALPHA.tar.gz",
+    "size_bytes": 7235,
+    "sha256": "d799890dc4d2c7475faa05aeec94ba28c54f0b00049b14ed743858c3d1c7ab3e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/braydenanderson2014/library/HeapTree/1.0.0-ALPHA/HeapTree-1.0.0-ALPHA.tar.gz",
+     "https://dl.registry.platformio.org/download/braydenanderson2014/library/HeapTree/1.0.0-ALPHA/HeapTree-1.0.0-ALPHA.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "braydenanderson2014/library/Initializer_List/1.0.0-ALPHA/Initializer_List-1.0.0-ALPHA.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Initializer_List-1.0.0-ALPHA.tar.gz",
+    "size_bytes": 6802,
+    "sha256": "c3f9aae71259c23b384044653c0073b93c9e83367550723fd86c63069be93aa4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/braydenanderson2014/library/Initializer_List/1.0.0-ALPHA/Initializer_List-1.0.0-ALPHA.tar.gz",
+     "https://dl.registry.platformio.org/download/braydenanderson2014/library/Initializer_List/1.0.0-ALPHA/Initializer_List-1.0.0-ALPHA.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "braydenanderson2014/library/IntervalTree/1.0.0-ALPHA/IntervalTree-1.0.0-ALPHA.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IntervalTree-1.0.0-ALPHA.tar.gz",
+    "size_bytes": 8152,
+    "sha256": "512b7e3ad327b8bfc55a3d6cf4fa2037d62d3dcdeeb2461d75fa02f875e0cade",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/braydenanderson2014/library/IntervalTree/1.0.0-ALPHA/IntervalTree-1.0.0-ALPHA.tar.gz",
+     "https://dl.registry.platformio.org/download/braydenanderson2014/library/IntervalTree/1.0.0-ALPHA/IntervalTree-1.0.0-ALPHA.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "braydenanderson2014/library/Iterator/1.0.0/Iterator-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Iterator-1.0.0.tar.gz",
+    "size_bytes": 1330,
+    "sha256": "bc8486530c4f44729fd77cbb7911ac71ebbeed6b28acbe71bc71750878e1845b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/braydenanderson2014/library/Iterator/1.0.0/Iterator-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/braydenanderson2014/library/Iterator/1.0.0/Iterator-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "braydenanderson2014/library/KDimensonalTree/1.0.0/KDimensonalTree-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KDimensonalTree-1.0.0.tar.gz",
+    "size_bytes": 8832,
+    "sha256": "e663dd45d168d2f7e35c5accec2998b6ac69f5179c714b34e70eb0b3fadfd786",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/braydenanderson2014/library/KDimensonalTree/1.0.0/KDimensonalTree-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/braydenanderson2014/library/KDimensonalTree/1.0.0/KDimensonalTree-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "braydenanderson2014/library/Map/1.0.0-BETA/Map-1.0.0-BETA.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Map-1.0.0-BETA.tar.gz",
+    "size_bytes": 9979,
+    "sha256": "31b3507f2c072a14a314fe8dccbe7e7351066091138ba3735fc447e7b6869de3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/braydenanderson2014/library/Map/1.0.0-BETA/Map-1.0.0-BETA.tar.gz",
+     "https://dl.registry.platformio.org/download/braydenanderson2014/library/Map/1.0.0-BETA/Map-1.0.0-BETA.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "braydenanderson2014/library/MathLib/1.0.0-ALPHA/MathLib-1.0.0-ALPHA.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MathLib-1.0.0-ALPHA.tar.gz",
+    "size_bytes": 7422,
+    "sha256": "b1c1ff68f4b13a2b07a93db42233c002388e7b7836313c08e5c4492bb8f54d79",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/braydenanderson2014/library/MathLib/1.0.0-ALPHA/MathLib-1.0.0-ALPHA.tar.gz",
+     "https://dl.registry.platformio.org/download/braydenanderson2014/library/MathLib/1.0.0-ALPHA/MathLib-1.0.0-ALPHA.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "braydenanderson2014/library/MatrixMath/1.0.0-ALPHA/MatrixMath-1.0.0-ALPHA.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MatrixMath-1.0.0-ALPHA.tar.gz",
+    "size_bytes": 7769,
+    "sha256": "e932b7db6a001e4e5ea11734bdf9e820622bdaf57a7854ffee0c182277c06061",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/braydenanderson2014/library/MatrixMath/1.0.0-ALPHA/MatrixMath-1.0.0-ALPHA.tar.gz",
+     "https://dl.registry.platformio.org/download/braydenanderson2014/library/MatrixMath/1.0.0-ALPHA/MatrixMath-1.0.0-ALPHA.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "braydenanderson2014/library/MyDictionary/1.0.4/MyDictionary-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MyDictionary-1.0.4.tar.gz",
+    "size_bytes": 3044,
+    "sha256": "ccda4b7f8083e1ceb41ee037d7249e37e5d56af571df678b4483ec49070043f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/braydenanderson2014/library/MyDictionary/1.0.4/MyDictionary-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/braydenanderson2014/library/MyDictionary/1.0.4/MyDictionary-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "braydenanderson2014/library/Numeric_Limits/1.0.0-ALPHA/Numeric_Limits-1.0.0-ALPHA.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Numeric_Limits-1.0.0-ALPHA.tar.gz",
+    "size_bytes": 7106,
+    "sha256": "e5f21c711a501f813ba50fe69082da786da1f3192cab13dc7164b142037e9225",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/braydenanderson2014/library/Numeric_Limits/1.0.0-ALPHA/Numeric_Limits-1.0.0-ALPHA.tar.gz",
+     "https://dl.registry.platformio.org/download/braydenanderson2014/library/Numeric_Limits/1.0.0-ALPHA/Numeric_Limits-1.0.0-ALPHA.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "braydenanderson2014/library/OcTree/1.0.0-ALPHA/OcTree-1.0.0-ALPHA.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OcTree-1.0.0-ALPHA.tar.gz",
+    "size_bytes": 6460,
+    "sha256": "778e121eccfd43100c7172f37e8f8e38f06f3a11915586658c15f71bfb949158",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/braydenanderson2014/library/OcTree/1.0.0-ALPHA/OcTree-1.0.0-ALPHA.tar.gz",
+     "https://dl.registry.platformio.org/download/braydenanderson2014/library/OcTree/1.0.0-ALPHA/OcTree-1.0.0-ALPHA.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "braydenanderson2014/library/Operators/1.0.1/Operators-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Operators-1.0.1.tar.gz",
+    "size_bytes": 2640,
+    "sha256": "636deaade52c4f35a70fa24a46c7e0fa4bc17946c7b3fd79295ca009b69699f9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/braydenanderson2014/library/Operators/1.0.1/Operators-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/braydenanderson2014/library/Operators/1.0.1/Operators-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "braydenanderson2014/library/Optional/1.0.1/Optional-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Optional-1.0.1.tar.gz",
+    "size_bytes": 8915,
+    "sha256": "d7698c9bc93c2aa49fd4e8645564d8fe2476d3b9d4d60c896576c5c13dcd08ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/braydenanderson2014/library/Optional/1.0.1/Optional-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/braydenanderson2014/library/Optional/1.0.1/Optional-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "braydenanderson2014/library/Predicates/1.0.2/Predicates-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Predicates-1.0.2.tar.gz",
+    "size_bytes": 2399,
+    "sha256": "e89096fde9528f485c9bb68f2641da0ff9df8c345ed5cbe68afee552c05b9205",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/braydenanderson2014/library/Predicates/1.0.2/Predicates-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/braydenanderson2014/library/Predicates/1.0.2/Predicates-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "braydenanderson2014/library/QuadTree/1.0.0-ALPHA/QuadTree-1.0.0-ALPHA.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QuadTree-1.0.0-ALPHA.tar.gz",
+    "size_bytes": 6220,
+    "sha256": "d9eb92013dcd547b3906d5d36509543b1b949c4d2e0b1a1599c32366a6f3b887",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/braydenanderson2014/library/QuadTree/1.0.0-ALPHA/QuadTree-1.0.0-ALPHA.tar.gz",
+     "https://dl.registry.platformio.org/download/braydenanderson2014/library/QuadTree/1.0.0-ALPHA/QuadTree-1.0.0-ALPHA.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "braydenanderson2014/library/RTree/1.0.0-ALPHA/RTree-1.0.0-ALPHA.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RTree-1.0.0-ALPHA.tar.gz",
+    "size_bytes": 6265,
+    "sha256": "1fbd35201415727d3a5f152e748a9b39c741b7912e81d7220e6b9c071ae52871",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/braydenanderson2014/library/RTree/1.0.0-ALPHA/RTree-1.0.0-ALPHA.tar.gz",
+     "https://dl.registry.platformio.org/download/braydenanderson2014/library/RTree/1.0.0-ALPHA/RTree-1.0.0-ALPHA.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "braydenanderson2014/library/RedBlackTree/1.0.0-ALPHA/RedBlackTree-1.0.0-ALPHA.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RedBlackTree-1.0.0-ALPHA.tar.gz",
+    "size_bytes": 6096,
+    "sha256": "5a4a9a27b7e53855fd431e4cc0b090edf081b6a10be9dee7976a734c977379e3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/braydenanderson2014/library/RedBlackTree/1.0.0-ALPHA/RedBlackTree-1.0.0-ALPHA.tar.gz",
+     "https://dl.registry.platformio.org/download/braydenanderson2014/library/RedBlackTree/1.0.0-ALPHA/RedBlackTree-1.0.0-ALPHA.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "braydenanderson2014/library/SDList/2.0.0/SDList-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SDList-2.0.0.tar.gz",
+    "size_bytes": 14132,
+    "sha256": "ddd959f2a46949131020db25aa24e0df0de05110e9b086564a300b7598ebd0b2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/braydenanderson2014/library/SDList/2.0.0/SDList-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/braydenanderson2014/library/SDList/2.0.0/SDList-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "braydenanderson2014/library/SegmentTree/1.0.0-ALPHA/SegmentTree-1.0.0-ALPHA.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SegmentTree-1.0.0-ALPHA.tar.gz",
+    "size_bytes": 6203,
+    "sha256": "2b7fba859d8f4c76eab4e426d6ab6ace9eea81a0556abd319671dceb9f7e4c55",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/braydenanderson2014/library/SegmentTree/1.0.0-ALPHA/SegmentTree-1.0.0-ALPHA.tar.gz",
+     "https://dl.registry.platformio.org/download/braydenanderson2014/library/SegmentTree/1.0.0-ALPHA/SegmentTree-1.0.0-ALPHA.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "braydenanderson2014/library/SimpleArduinoTimer/1.0.7/SimpleArduinoTimer-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleArduinoTimer-1.0.7.tar.gz",
+    "size_bytes": 10539,
+    "sha256": "af44e23688c3f3975a8941926836965c5afe34bd9ea06b0b874d62ab9c97a1d2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/braydenanderson2014/library/SimpleArduinoTimer/1.0.7/SimpleArduinoTimer-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/braydenanderson2014/library/SimpleArduinoTimer/1.0.7/SimpleArduinoTimer-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "braydenanderson2014/library/SimpleProperties/1.2.0/SimpleProperties-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleProperties-1.2.0.tar.gz",
+    "size_bytes": 14222,
+    "sha256": "47e0de47d22513f396700f523f6250f5d4b555b08ea5f1a4f69f2bf84ef3be8e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/braydenanderson2014/library/SimpleProperties/1.2.0/SimpleProperties-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/braydenanderson2014/library/SimpleProperties/1.2.0/SimpleProperties-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "braydenanderson2014/library/SimpleQueue/1.0.1/SimpleQueue-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleQueue-1.0.1.tar.gz",
+    "size_bytes": 6350,
+    "sha256": "51392da1485c680f01aa2c7435ef0c57dcf92e3d3cbccefe1c6be09446acbdd1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/braydenanderson2014/library/SimpleQueue/1.0.1/SimpleQueue-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/braydenanderson2014/library/SimpleQueue/1.0.1/SimpleQueue-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "braydenanderson2014/library/SimpleStack/1.0.1/SimpleStack-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleStack-1.0.1.tar.gz",
+    "size_bytes": 7831,
+    "sha256": "05e1420c9d199430ae259516265d9909cb524b23575830a8e505fb7dba6ef2fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/braydenanderson2014/library/SimpleStack/1.0.1/SimpleStack-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/braydenanderson2014/library/SimpleStack/1.0.1/SimpleStack-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "braydenanderson2014/library/SimpleVector/1.0.11/SimpleVector-1.0.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleVector-1.0.11.tar.gz",
+    "size_bytes": 11756,
+    "sha256": "fb51aeb90f159c1a68fe2dbad9391b59cee0aade436b891805b6fc36abbc5162",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/braydenanderson2014/library/SimpleVector/1.0.11/SimpleVector-1.0.11.tar.gz",
+     "https://dl.registry.platformio.org/download/braydenanderson2014/library/SimpleVector/1.0.11/SimpleVector-1.0.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "braydenanderson2014/library/SimpleVector/1.0.9/SimpleVector-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleVector-1.0.9.tar.gz",
+    "size_bytes": 11180,
+    "sha256": "76aa42d2e5f7dc54f4d07249af86993cd17c9db7b23b6c38879c16e025c8bb48",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/braydenanderson2014/library/SimpleVector/1.0.9/SimpleVector-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/braydenanderson2014/library/SimpleVector/1.0.9/SimpleVector-1.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "braydenanderson2014/library/SuffixTree/1.0.0-ALPHA/SuffixTree-1.0.0-ALPHA.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuffixTree-1.0.0-ALPHA.tar.gz",
+    "size_bytes": 8954,
+    "sha256": "dd9b04b06ab08a2fa6082cb5319bc5f602ec311f4aaa60471683a080f2e23e81",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/braydenanderson2014/library/SuffixTree/1.0.0-ALPHA/SuffixTree-1.0.0-ALPHA.tar.gz",
+     "https://dl.registry.platformio.org/download/braydenanderson2014/library/SuffixTree/1.0.0-ALPHA/SuffixTree-1.0.0-ALPHA.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "braydenanderson2014/library/TrieTree/1.0.0-ALPHA/TrieTree-1.0.0-ALPHA.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TrieTree-1.0.0-ALPHA.tar.gz",
+    "size_bytes": 7530,
+    "sha256": "7db42a7992512b4c96d91f0723ac50b048f0c00a7a794fb463b7c3e713aed992",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/braydenanderson2014/library/TrieTree/1.0.0-ALPHA/TrieTree-1.0.0-ALPHA.tar.gz",
+     "https://dl.registry.platformio.org/download/braydenanderson2014/library/TrieTree/1.0.0-ALPHA/TrieTree-1.0.0-ALPHA.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "braydenanderson2014/library/TypeTraits/1.0.0-ALPHA/TypeTraits-1.0.0-ALPHA.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TypeTraits-1.0.0-ALPHA.tar.gz",
+    "size_bytes": 7233,
+    "sha256": "9ec2439765a80d6b4f3cb8e3656d9cec7132aedf54f47ea72e800dc7d5b82630",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/braydenanderson2014/library/TypeTraits/1.0.0-ALPHA/TypeTraits-1.0.0-ALPHA.tar.gz",
+     "https://dl.registry.platformio.org/download/braydenanderson2014/library/TypeTraits/1.0.0-ALPHA/TypeTraits-1.0.0-ALPHA.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "braydenanderson2014/library/UnorderedMap/1.0.5/UnorderedMap-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UnorderedMap-1.0.5.tar.gz",
+    "size_bytes": 9188,
+    "sha256": "90803c17f2f7a892a2c7ab4072f29b171d093b974fa9541047ea71de1f6e2c2a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/braydenanderson2014/library/UnorderedMap/1.0.5/UnorderedMap-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/braydenanderson2014/library/UnorderedMap/1.0.5/UnorderedMap-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "braydenanderson2014/library/Variant/1.0.1/Variant-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Variant-1.0.1.tar.gz",
+    "size_bytes": 8472,
+    "sha256": "28ddde29d8ace66c6fb8a8d9db16b0959ca260dbc9fb1e250441df8336b11437",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/braydenanderson2014/library/Variant/1.0.1/Variant-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/braydenanderson2014/library/Variant/1.0.1/Variant-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "braydenanderson2014/library/Variant/1.0.2/Variant-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Variant-1.0.2.tar.gz",
+    "size_bytes": 8606,
+    "sha256": "2c1512f3a314cc2009b6bd364380534fa7107d40b09ad41a3a92da8b84ead527",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/braydenanderson2014/library/Variant/1.0.2/Variant-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/braydenanderson2014/library/Variant/1.0.2/Variant-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

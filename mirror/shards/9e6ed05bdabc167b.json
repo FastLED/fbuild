@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/danny24",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "danny24/library/Smart%20Motor%20Driver%20-%20SAMI/1.0.3/SmartMotorDriver-SAMI-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartMotorDriver-SAMI-1.0.3.tar.gz",
+    "size_bytes": 7768,
+    "sha256": "8e0d49f00eb4452c01f3f76cf479dac06168a43cd49074e1ac73d54975337334",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/danny24/library/Smart%2520Motor%2520Driver%2520-%2520SAMI/1.0.3/SmartMotorDriver-SAMI-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/danny24/library/Smart%20Motor%20Driver%20-%20SAMI/1.0.3/SmartMotorDriver-SAMI-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

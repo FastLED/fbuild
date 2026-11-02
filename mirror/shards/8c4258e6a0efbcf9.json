@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/forgevolt",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "forgevolt/library/ESPNowUtilities/1.0.0/ESPNowUtilities-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPNowUtilities-1.0.0.tar.gz",
+    "size_bytes": 17553,
+    "sha256": "c907c33e22b4e0da5f3b1e695d9fbe4428c9e8961e29bdce5b527b8b76955a11",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/forgevolt/library/ESPNowUtilities/1.0.0/ESPNowUtilities-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/forgevolt/library/ESPNowUtilities/1.0.0/ESPNowUtilities-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "forgevolt/library/ESPNowUtilities/1.0.1/ESPNowUtilities-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPNowUtilities-1.0.1.tar.gz",
+    "size_bytes": 18162,
+    "sha256": "727e541e0d8b62961ca36a0b32dd8a37c3a96254330966ecf2c4248a1a93d635",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/forgevolt/library/ESPNowUtilities/1.0.1/ESPNowUtilities-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/forgevolt/library/ESPNowUtilities/1.0.1/ESPNowUtilities-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "forgevolt/library/JoystickUtilities/1.0.0/JoystickUtilities-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JoystickUtilities-1.0.0.tar.gz",
+    "size_bytes": 13885,
+    "sha256": "2c57212ffe3e52eb4136ca2afb77285013922ab6b5abf574dae3f7e6cf5077e3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/forgevolt/library/JoystickUtilities/1.0.0/JoystickUtilities-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/forgevolt/library/JoystickUtilities/1.0.0/JoystickUtilities-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "forgevolt/library/SoundEngine/1.0.0/SoundEngine-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SoundEngine-1.0.0.tar.gz",
+    "size_bytes": 236849,
+    "sha256": "d85aef21e4596da7138e457a0ee8bfccd92c3982aeca4e5729e5410f8b6dae3d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/forgevolt/library/SoundEngine/1.0.0/SoundEngine-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/forgevolt/library/SoundEngine/1.0.0/SoundEngine-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "forgevolt/library/SoundEngine/1.0.1/SoundEngine-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SoundEngine-1.0.1.tar.gz",
+    "size_bytes": 522595,
+    "sha256": "534d4e52f165d9baa2c8bc2c92e986aae6d6bf783f05b6bad5b4b9fd2198bbb0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/forgevolt/library/SoundEngine/1.0.1/SoundEngine-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/forgevolt/library/SoundEngine/1.0.1/SoundEngine-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "forgevolt/library/SoundEngine/1.1.0/SoundEngine-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SoundEngine-1.1.0.tar.gz",
+    "size_bytes": 526215,
+    "sha256": "b52a108ea6ccd9cdfea98ad0da1044971d8ffd60bae3bfc5dac9beef7d5626c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/forgevolt/library/SoundEngine/1.1.0/SoundEngine-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/forgevolt/library/SoundEngine/1.1.0/SoundEngine-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "forgevolt/library/SoundEngine/1.1.1/SoundEngine-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SoundEngine-1.1.1.tar.gz",
+    "size_bytes": 526476,
+    "sha256": "047f47be2fb558201af0c976969de2d3b8e0f27dd4c2bdd1c23204195ed65220",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/forgevolt/library/SoundEngine/1.1.1/SoundEngine-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/forgevolt/library/SoundEngine/1.1.1/SoundEngine-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "forgevolt/library/VectorUtilities/1.0.0/VectorUtilities-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VectorUtilities-1.0.0.tar.gz",
+    "size_bytes": 15293,
+    "sha256": "31784d69001feb8f64b62bd2f5f307b9142fdbe196da7bee872f163299522987",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/forgevolt/library/VectorUtilities/1.0.0/VectorUtilities-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/forgevolt/library/VectorUtilities/1.0.0/VectorUtilities-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

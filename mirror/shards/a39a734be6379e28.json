@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kyolem",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kyolem/library/HUMID_AHT20/1.1.1/HUMID_AHT20-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HUMID_AHT20-1.1.1.tar.gz",
+    "size_bytes": 2585,
+    "sha256": "ed970156a28761acfc21ecf67a3abfe9e03478e818d5762c9f3f510e8f10884b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kyolem/library/HUMID_AHT20/1.1.1/HUMID_AHT20-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/kyolem/library/HUMID_AHT20/1.1.1/HUMID_AHT20-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kyolem/library/LUX_BH1750/1.1.1/LUX_BH1750-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LUX_BH1750-1.1.1.tar.gz",
+    "size_bytes": 2810,
+    "sha256": "8d8913e7d4111f6a4deb2e515d0ba739101e30bfcc9921bd8a3a903e467a0b37",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kyolem/library/LUX_BH1750/1.1.1/LUX_BH1750-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/kyolem/library/LUX_BH1750/1.1.1/LUX_BH1750-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kyolem/library/RTC_DS3231/1.2.8/RTC_DS3231-1.2.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RTC_DS3231-1.2.8.tar.gz",
+    "size_bytes": 4880,
+    "sha256": "2b9762f629f6038e2073c381c92d1e0ef4a2ffb8422ab18ddbb468eaef517ec2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kyolem/library/RTC_DS3231/1.2.8/RTC_DS3231-1.2.8.tar.gz",
+     "https://dl.registry.platformio.org/download/kyolem/library/RTC_DS3231/1.2.8/RTC_DS3231-1.2.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kyolem/library/TEMP_TMP102/1.1.1/TEMP_TMP102-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TEMP_TMP102-1.1.1.tar.gz",
+    "size_bytes": 2018,
+    "sha256": "23ee86d3b1dae443985fb6ab8bac0d0d006aea4eaf43e88204a3755f454e4368",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kyolem/library/TEMP_TMP102/1.1.1/TEMP_TMP102-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/kyolem/library/TEMP_TMP102/1.1.1/TEMP_TMP102-1.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

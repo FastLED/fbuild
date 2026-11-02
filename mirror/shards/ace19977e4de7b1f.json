@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/harishfaqot",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "harishfaqot/library/Atlas_EC/1.0.0/Atlas_EC-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Atlas_EC-1.0.0.tar.gz",
+    "size_bytes": 6864,
+    "sha256": "74ae4cc087e70d39f91ba5ec6b5bf20b03e4d1f81548b81d398d63b9c55c261a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/harishfaqot/library/Atlas_EC/1.0.0/Atlas_EC-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/harishfaqot/library/Atlas_EC/1.0.0/Atlas_EC-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "harishfaqot/library/TF-LC02/1.0.0/TF-LC02-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TF-LC02-1.0.0.tar.gz",
+    "size_bytes": 2795,
+    "sha256": "e626487e2dab68ca2a4df4bbdd6f44ed1634cb826506b8c514bc83b6a2637e3b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/harishfaqot/library/TF-LC02/1.0.0/TF-LC02-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/harishfaqot/library/TF-LC02/1.0.0/TF-LC02-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/x0x0200",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "x0x0200/library/HCSR04%20ultrasonic%20distance%20sensor/1.0.1/HCSR04ultrasonicdistancesensor-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HCSR04ultrasonicdistancesensor-1.0.1.tar.gz",
+    "size_bytes": 1067,
+    "sha256": "e2cab532b5d6749acfe1a9fe3ca6caaa69d8c61778a72e43d5032a9fb139a12e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/x0x0200/library/HCSR04%2520ultrasonic%2520distance%2520sensor/1.0.1/HCSR04ultrasonicdistancesensor-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/x0x0200/library/HCSR04%20ultrasonic%20distance%20sensor/1.0.1/HCSR04ultrasonicdistancesensor-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

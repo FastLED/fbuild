@@ -1,0 +1,139 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/roboticsbrno",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "roboticsbrno/library/ArduinoLearningKitStarter/1.2.1/ArduinoLearningKitStarter-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoLearningKitStarter-1.2.1.tar.gz",
+    "size_bytes": 5026,
+    "sha256": "f22fec5735cf0aac437bc17c762cfe7a4bb1faba85fd506ff0b43845bdab3ade",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/roboticsbrno/library/ArduinoLearningKitStarter/1.2.1/ArduinoLearningKitStarter-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/roboticsbrno/library/ArduinoLearningKitStarter/1.2.1/ArduinoLearningKitStarter-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "roboticsbrno/library/Esp32-Mcp3008-LineSensor/2.0.3/Esp32-Mcp3008-LineSensor-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Esp32-Mcp3008-LineSensor-2.0.3.tar.gz",
+    "size_bytes": 30117,
+    "sha256": "8caf622ccfb61258e961191cb210a385411aa79673372c6111ee2e5743a974da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/roboticsbrno/library/Esp32-Mcp3008-LineSensor/2.0.3/Esp32-Mcp3008-LineSensor-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/roboticsbrno/library/Esp32-Mcp3008-LineSensor/2.0.3/Esp32-Mcp3008-LineSensor-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "roboticsbrno/library/RB3201-RBControl-Roboruka-library/2.2.0/RB3201-RBControl-Roboruka-library-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RB3201-RBControl-Roboruka-library-2.2.0.tar.gz",
+    "size_bytes": 102850,
+    "sha256": "f0dca42b096adb46699978eb586fe3e729a444ddb2b956cef15aff259e05702a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/roboticsbrno/library/RB3201-RBControl-Roboruka-library/2.2.0/RB3201-RBControl-Roboruka-library-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/roboticsbrno/library/RB3201-RBControl-Roboruka-library/2.2.0/RB3201-RBControl-Roboruka-library-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "roboticsbrno/library/RB3201-RBControl/7.1.2/RB3201-RBControl-7.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RB3201-RBControl-7.1.2.tar.gz",
+    "size_bytes": 84422,
+    "sha256": "554c17c7d27cbe8131a0102ef514ec33044d42764823dbbc2f7049ce11fbfbd2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/roboticsbrno/library/RB3201-RBControl/7.1.2/RB3201-RBControl-7.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/roboticsbrno/library/RB3201-RBControl/7.1.2/RB3201-RBControl-7.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "roboticsbrno/library/RB3201-RBProtocol/14.0.4/RB3201-RBProtocol-14.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RB3201-RBProtocol-14.0.4.tar.gz",
+    "size_bytes": 62797,
+    "sha256": "85b86b3b9de2810ffee6a0044763d117d5587d97c1411e831584dbdc4594ee2b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/roboticsbrno/library/RB3201-RBProtocol/14.0.4/RB3201-RBProtocol-14.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/roboticsbrno/library/RB3201-RBProtocol/14.0.4/RB3201-RBProtocol-14.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "roboticsbrno/library/ServoESP32/1.0.3/ServoESP32-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ServoESP32-1.0.3.tar.gz",
+    "size_bytes": 5774,
+    "sha256": "4658401f613b45b24bc75972341c2d329c732f0c0444c49549729c7ee121f566",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/roboticsbrno/library/ServoESP32/1.0.3/ServoESP32-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/roboticsbrno/library/ServoESP32/1.0.3/ServoESP32-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "roboticsbrno/library/ServoESP32/1.1.1/ServoESP32-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ServoESP32-1.1.1.tar.gz",
+    "size_bytes": 7727,
+    "sha256": "752c38ca2684e00e330bb22b8535cbbbee171c689bc6d7081dc0515a1dcd36a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/roboticsbrno/library/ServoESP32/1.1.1/ServoESP32-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/roboticsbrno/library/ServoESP32/1.1.1/ServoESP32-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "roboticsbrno/library/SmartLeds/3.1.5/SmartLeds-3.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartLeds-3.1.5.tar.gz",
+    "size_bytes": 13949,
+    "sha256": "c7981ad0336c18a717bc27ec79e0a7340424785eb6a14c007a0d3206ec5001a7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/roboticsbrno/library/SmartLeds/3.1.5/SmartLeds-3.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/roboticsbrno/library/SmartLeds/3.1.5/SmartLeds-3.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "roboticsbrno/library/SmartLeds/3.2.0/SmartLeds-3.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartLeds-3.2.0.tar.gz",
+    "size_bytes": 14450,
+    "sha256": "57a43069da27060df565b39ef743d95465975f38250fe0ccccd959c813bf2aa5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/roboticsbrno/library/SmartLeds/3.2.0/SmartLeds-3.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/roboticsbrno/library/SmartLeds/3.2.0/SmartLeds-3.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "roboticsbrno/library/blufi-basic/1.0.1/blufi-basic-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "blufi-basic-1.0.1.tar.gz",
+    "size_bytes": 9931,
+    "sha256": "5c17543e80435070e80272cb7a7b277f52ac3026b8751714346ac1bcfecefd87",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/roboticsbrno/library/blufi-basic/1.0.1/blufi-basic-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/roboticsbrno/library/blufi-basic/1.0.1/blufi-basic-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

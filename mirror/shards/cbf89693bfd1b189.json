@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-c0ax",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-c0ax/library/reScale/0.0.0+sha.ebb951147122/reScale-0.0.0+sha.ebb951147122.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "reScale-0.0.0+sha.ebb951147122.tar.gz",
+    "size_bytes": 1070,
+    "sha256": "d8cb3515d0eefed1e632da38d57f77baad321cd973f5b0489521ebc3926d5a45",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-c0ax/library/reScale/0.0.0%2Bsha.ebb951147122/reScale-0.0.0%2Bsha.ebb951147122.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-c0ax/library/reScale/0.0.0%2Bsha.ebb951147122/reScale-0.0.0%2Bsha.ebb951147122.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/elc0mpa",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "elc0mpa/library/EnergyMeter/1.0.0/EnergyMeter-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EnergyMeter-1.0.0.tar.gz",
+    "size_bytes": 4820,
+    "sha256": "e74beb2f026d92b7ffe8ad2ebb4ac4e057a768d68b409d18630bc9f8fac6997f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/elc0mpa/library/EnergyMeter/1.0.0/EnergyMeter-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/elc0mpa/library/EnergyMeter/1.0.0/EnergyMeter-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "elc0mpa/library/OLED_SSD1306_Chart/1.3.2/OLED_SSD1306_Chart-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OLED_SSD1306_Chart-1.3.2.tar.gz",
+    "size_bytes": 6810,
+    "sha256": "708666b458abb1e5f6a1cd9875ef7c468bba6349a12c143c64e2910309a5da9e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/elc0mpa/library/OLED_SSD1306_Chart/1.3.2/OLED_SSD1306_Chart-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/elc0mpa/library/OLED_SSD1306_Chart/1.3.2/OLED_SSD1306_Chart-1.3.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

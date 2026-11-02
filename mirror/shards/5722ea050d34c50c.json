@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-gesotec",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-gesotec/library/Watchdog/0.0.0+sha.a6655a236a10/Watchdog-0.0.0+sha.a6655a236a10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Watchdog-0.0.0+sha.a6655a236a10.tar.gz",
+    "size_bytes": 2415,
+    "sha256": "594ee4424408b2378d4cb906f9455d9ba88f2315c8ed978ef6a8803995364892",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-gesotec/library/Watchdog/0.0.0%2Bsha.a6655a236a10/Watchdog-0.0.0%2Bsha.a6655a236a10.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-gesotec/library/Watchdog/0.0.0%2Bsha.a6655a236a10/Watchdog-0.0.0%2Bsha.a6655a236a10.tar.gz"
+    ]
+   }
+  }
+ ]
+}

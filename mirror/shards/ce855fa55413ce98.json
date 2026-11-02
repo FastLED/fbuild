@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/chibiegg",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "chibiegg/library/esp-echonet-lite/0.0.2/esp-echonet-lite-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-echonet-lite-0.0.2.tar.gz",
+    "size_bytes": 27334,
+    "sha256": "c5e6f4347c0d358737dee9e84af184d03a5930d0ad15c681279e8203570c4a1a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chibiegg/library/esp-echonet-lite/0.0.2/esp-echonet-lite-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/chibiegg/library/esp-echonet-lite/0.0.2/esp-echonet-lite-0.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

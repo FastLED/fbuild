@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-pe313imperial",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-pe313imperial/library/ICRS_101_API/0.0.0+sha.95d7769ce820/ICRS_101_API-0.0.0+sha.95d7769ce820.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICRS_101_API-0.0.0+sha.95d7769ce820.tar.gz",
+    "size_bytes": 2640,
+    "sha256": "90c04f85db530301fcb6c231a8b9e6f253da6283b1d26a8bdf8aef7caa3908ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pe313imperial/library/ICRS_101_API/0.0.0%2Bsha.95d7769ce820/ICRS_101_API-0.0.0%2Bsha.95d7769ce820.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pe313imperial/library/ICRS_101_API/0.0.0%2Bsha.95d7769ce820/ICRS_101_API-0.0.0%2Bsha.95d7769ce820.tar.gz"
+    ]
+   }
+  }
+ ]
+}

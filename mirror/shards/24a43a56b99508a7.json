@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-adanolachea",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-adanolachea/library/LCD_KL46Z/0.0.0+sha.c5967cf4fbff/LCD_KL46Z-0.0.0+sha.c5967cf4fbff.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCD_KL46Z-0.0.0+sha.c5967cf4fbff.tar.gz",
+    "size_bytes": 1664,
+    "sha256": "6b741c039478b19829d3166e32ac192f31380e67436312224d1d0994c1e5f0e1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-adanolachea/library/LCD_KL46Z/0.0.0%2Bsha.c5967cf4fbff/LCD_KL46Z-0.0.0%2Bsha.c5967cf4fbff.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-adanolachea/library/LCD_KL46Z/0.0.0%2Bsha.c5967cf4fbff/LCD_KL46Z-0.0.0%2Bsha.c5967cf4fbff.tar.gz"
+    ]
+   }
+  }
+ ]
+}

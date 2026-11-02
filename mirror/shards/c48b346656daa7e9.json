@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/inamata",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "inamata/library/ArduinoHttpClient/0.6.2/ArduinoHttpClient-0.6.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoHttpClient-0.6.2.tar.gz",
+    "size_bytes": 33817,
+    "sha256": "e09bb454053369658d5405080a1a0bf1f4190224ddea01859591838cf280c7c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inamata/library/ArduinoHttpClient/0.6.2/ArduinoHttpClient-0.6.2.tar.gz",
+     "https://dl.registry.platformio.org/download/inamata/library/ArduinoHttpClient/0.6.2/ArduinoHttpClient-0.6.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "inamata/library/PCA9539/1.1.1/PCA9539-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCA9539-1.1.1.tar.gz",
+    "size_bytes": 4477,
+    "sha256": "c494a400e38f054b8baa8480caa78d209a39d03709981c136ce9af9b6e6e77e2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inamata/library/PCA9539/1.1.1/PCA9539-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/inamata/library/PCA9539/1.1.1/PCA9539-1.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

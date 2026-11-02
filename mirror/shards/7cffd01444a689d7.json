@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/beakes",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "beakes/library/TeenyKVS/1.0.1/TeenyKVS-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TeenyKVS-1.0.1.tar.gz",
+    "size_bytes": 4354,
+    "sha256": "ae3871ab9f5ab94edf7a9871d620933bb8dff914c04c1dc6ebc0d7d995c62794",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beakes/library/TeenyKVS/1.0.1/TeenyKVS-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/beakes/library/TeenyKVS/1.0.1/TeenyKVS-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beakes/library/TeenyUbloxConnect/1.0.36/TeenyUbloxConnect-1.0.36.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TeenyUbloxConnect-1.0.36.tar.gz",
+    "size_bytes": 17076,
+    "sha256": "a39c4634bf1c55bf2fba359744d4a5ce71f3399f6aad95e873a9cf7987577cc4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beakes/library/TeenyUbloxConnect/1.0.36/TeenyUbloxConnect-1.0.36.tar.gz",
+     "https://dl.registry.platformio.org/download/beakes/library/TeenyUbloxConnect/1.0.36/TeenyUbloxConnect-1.0.36.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nikolairadke",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nikolairadke/library/TinyRTOS/1.1.0/TinyRTOS-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyRTOS-1.1.0.tar.gz",
+    "size_bytes": 11114,
+    "sha256": "b624204341f98db3731e7e7b55426a1db9794f8496684c96a25680930e381d77",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nikolairadke/library/TinyRTOS/1.1.0/TinyRTOS-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nikolairadke/library/TinyRTOS/1.1.0/TinyRTOS-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nikolairadke/library/TinyRTOS/1.2.0/TinyRTOS-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyRTOS-1.2.0.tar.gz",
+    "size_bytes": 11419,
+    "sha256": "70cca93a477c6027ade8c44d738bd5180876894a2b637d34b6e46d8403ec6ed7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nikolairadke/library/TinyRTOS/1.2.0/TinyRTOS-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nikolairadke/library/TinyRTOS/1.2.0/TinyRTOS-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nikolairadke/library/TinyRTOS/1.4.0/TinyRTOS-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyRTOS-1.4.0.tar.gz",
+    "size_bytes": 12227,
+    "sha256": "1260f53fb88b33ae2905b7e4abcfa2f675cd14616206e750d16a83bdacb572dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nikolairadke/library/TinyRTOS/1.4.0/TinyRTOS-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nikolairadke/library/TinyRTOS/1.4.0/TinyRTOS-1.4.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

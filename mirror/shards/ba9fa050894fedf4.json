@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/baghayi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "baghayi/library/Nokia%205110/1.0.4/Nokia5110-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Nokia5110-1.0.4.tar.gz",
+    "size_bytes": 9078,
+    "sha256": "0f315b44121c6a81a6f738c63bdbd128ed2c301ce1edf29988b92b0abaa25cc7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/baghayi/library/Nokia%25205110/1.0.4/Nokia5110-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/baghayi/library/Nokia%205110/1.0.4/Nokia5110-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cujomalainey",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cujomalainey/library/ANT%2B/1.2.0/ANT+-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ANT+-1.2.0.tar.gz",
+    "size_bytes": 89066,
+    "sha256": "0910ead959ee80fbaa48aae1d0a325b4d027cf210990dc17a65960826395e1c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cujomalainey/library/ANT%252B/1.2.0/ANT%2B-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cujomalainey/library/ANT%2B/1.2.0/ANT%2B-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cujomalainey/library/ANT/2.0.3/ANT-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ANT-2.0.3.tar.gz",
+    "size_bytes": 67269,
+    "sha256": "cfceefbbe96602d07d6eed6e383d82f6027855f28e138a55f13858fe04a81766",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cujomalainey/library/ANT/2.0.3/ANT-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/cujomalainey/library/ANT/2.0.3/ANT-2.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

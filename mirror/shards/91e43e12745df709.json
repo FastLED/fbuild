@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/crack-byte",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "crack-byte/library/ESP32%20Log/1.2.1/ESP32Log-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Log-1.2.1.tar.gz",
+    "size_bytes": 3818,
+    "sha256": "a4b1f744d5925c37ef5b3c0e4827dd1753f7cf49e066d84779e620b7c5f651b4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/crack-byte/library/ESP32%2520Log/1.2.1/ESP32Log-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/crack-byte/library/ESP32%20Log/1.2.1/ESP32Log-1.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

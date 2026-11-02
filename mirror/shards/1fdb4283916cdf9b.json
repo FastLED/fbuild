@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-nucho",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-nucho/library/AD128160/0.0.0+sha.d15cda2a5e91/AD128160-0.0.0+sha.d15cda2a5e91.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AD128160-0.0.0+sha.d15cda2a5e91.tar.gz",
+    "size_bytes": 3353,
+    "sha256": "5250052c0c7f9591bbad696ea866c63f90c04a0c81614f317b324824581e4352",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nucho/library/AD128160/0.0.0%2Bsha.d15cda2a5e91/AD128160-0.0.0%2Bsha.d15cda2a5e91.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nucho/library/AD128160/0.0.0%2Bsha.d15cda2a5e91/AD128160-0.0.0%2Bsha.d15cda2a5e91.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nucho/library/ADNS6010/0.0.0+sha.ac87e825b0d7/ADNS6010-0.0.0+sha.ac87e825b0d7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADNS6010-0.0.0+sha.ac87e825b0d7.tar.gz",
+    "size_bytes": 2561,
+    "sha256": "19509edad8132f13013bddf53eaf3350449c29e130a93c734d83a75db31c8034",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nucho/library/ADNS6010/0.0.0%2Bsha.ac87e825b0d7/ADNS6010-0.0.0%2Bsha.ac87e825b0d7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nucho/library/ADNS6010/0.0.0%2Bsha.ac87e825b0d7/ADNS6010-0.0.0%2Bsha.ac87e825b0d7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nucho/library/Sabertooth2x25/0.0.0+sha.482383d9a5de/Sabertooth2x25-0.0.0+sha.482383d9a5de.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sabertooth2x25-0.0.0+sha.482383d9a5de.tar.gz",
+    "size_bytes": 2673,
+    "sha256": "23493f75de1bfa16838e395c1051487a56eb13affefbefc9401deb91f0c097e3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nucho/library/Sabertooth2x25/0.0.0%2Bsha.482383d9a5de/Sabertooth2x25-0.0.0%2Bsha.482383d9a5de.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nucho/library/Sabertooth2x25/0.0.0%2Bsha.482383d9a5de/Sabertooth2x25-0.0.0%2Bsha.482383d9a5de.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nucho/library/rosserial_mbed_lib/0.0.0+sha.684f39d0c346/rosserial_mbed_lib-0.0.0+sha.684f39d0c346.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "rosserial_mbed_lib-0.0.0+sha.684f39d0c346.tar.gz",
+    "size_bytes": 37295,
+    "sha256": "f764baca52048c832a9e2adcbdf6f8ab44653bbc2a080e65383d7bd6e93cb4d4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nucho/library/rosserial_mbed_lib/0.0.0%2Bsha.684f39d0c346/rosserial_mbed_lib-0.0.0%2Bsha.684f39d0c346.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nucho/library/rosserial_mbed_lib/0.0.0%2Bsha.684f39d0c346/rosserial_mbed_lib-0.0.0%2Bsha.684f39d0c346.tar.gz"
+    ]
+   }
+  }
+ ]
+}

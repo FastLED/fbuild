@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-r113330akki",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-r113330akki/library/AT24C1024B/0.0.0+sha.8957e88b3334/AT24C1024B-0.0.0+sha.8957e88b3334.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AT24C1024B-0.0.0+sha.8957e88b3334.tar.gz",
+    "size_bytes": 1981,
+    "sha256": "85ded67037aa4e821cb07dd7f5773cab7732dbb07f2f74f6be1cc21921eb18fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-r113330akki/library/AT24C1024B/0.0.0%2Bsha.8957e88b3334/AT24C1024B-0.0.0%2Bsha.8957e88b3334.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-r113330akki/library/AT24C1024B/0.0.0%2Bsha.8957e88b3334/AT24C1024B-0.0.0%2Bsha.8957e88b3334.tar.gz"
+    ]
+   }
+  }
+ ]
+}

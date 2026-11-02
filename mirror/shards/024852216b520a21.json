@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hnrobotica",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hnrobotica/library/LineTracker5%20Library/1.0.5/LineTracker5Library-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LineTracker5Library-1.0.5.tar.gz",
+    "size_bytes": 13733,
+    "sha256": "0eeffdaa7b7d75ac9706ab25b947a55c19a6ae31b1baeda22529ba01219233ab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hnrobotica/library/LineTracker5%2520Library/1.0.5/LineTracker5Library-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/hnrobotica/library/LineTracker5%20Library/1.0.5/LineTracker5Library-1.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

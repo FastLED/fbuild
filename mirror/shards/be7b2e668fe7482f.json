@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mathieu52",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mathieu52/library/GPSP/2.1.3/GPSP-2.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GPSP-2.1.3.tar.gz",
+    "size_bytes": 4724,
+    "sha256": "c42e6da76e970011436352d4c6ab4de4aa5e4c5a6f65382788cc991d39f49f89",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieu52/library/GPSP/2.1.3/GPSP-2.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieu52/library/GPSP/2.1.3/GPSP-2.1.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

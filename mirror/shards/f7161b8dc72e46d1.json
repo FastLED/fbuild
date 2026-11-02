@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/meerzafarnoohani",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "meerzafarnoohani/library/KISS_FFT/1.0.0/KISS_FFT-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KISS_FFT-1.0.0.tar.gz",
+    "size_bytes": 11504,
+    "sha256": "d2e14f8263e49a051ee87b547a1d029b2db287f4e1730d5294148966a3d46085",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/meerzafarnoohani/library/KISS_FFT/1.0.0/KISS_FFT-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/meerzafarnoohani/library/KISS_FFT/1.0.0/KISS_FFT-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "meerzafarnoohani/library/MathParser/1.0.0/MathParser-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MathParser-1.0.0.tar.gz",
+    "size_bytes": 10395,
+    "sha256": "2f73e59bfe93f861402a4946839e32502d99e1148edd710eebe2c2be60c6fc3d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/meerzafarnoohani/library/MathParser/1.0.0/MathParser-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/meerzafarnoohani/library/MathParser/1.0.0/MathParser-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

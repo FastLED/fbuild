@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/syk01",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "syk01/library/TM1628/1.0.0/TM1628-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TM1628-1.0.0.tar.gz",
+    "size_bytes": 6696,
+    "sha256": "560b8e5688f736fcd3b99fc4f60a99a238208e535b00253e2c07fff93827e47b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/syk01/library/TM1628/1.0.0/TM1628-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/syk01/library/TM1628/1.0.0/TM1628-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

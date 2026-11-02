@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bricofoy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bricofoy/library/YASM/1.0.5/YASM-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YASM-1.0.5.tar.gz",
+    "size_bytes": 21277,
+    "sha256": "33f32af10917cd8504b5c851538ffb2387f6b95f016aae8d0c2afd46fdba3fe7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bricofoy/library/YASM/1.0.5/YASM-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/bricofoy/library/YASM/1.0.5/YASM-1.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gyebro",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gyebro/library/ros_lib_melodic/0.0.0-alpha+sha.b831106092/ros_lib_melodic-0.0.0-alphasha.b831106092.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ros_lib_melodic-0.0.0-alphasha.b831106092.tar.gz",
+    "size_bytes": 164835,
+    "sha256": "bbf166fde51fbd5910bc8c604da1fbd24cd46ce4e4869daabf0e84908976ed41",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyebro/library/ros_lib_melodic/0.0.0-alpha%2Bsha.b831106092/ros_lib_melodic-0.0.0-alphasha.b831106092.tar.gz",
+     "https://dl.registry.platformio.org/download/gyebro/library/ros_lib_melodic/0.0.0-alpha%2Bsha.b831106092/ros_lib_melodic-0.0.0-alphasha.b831106092.tar.gz"
+    ]
+   }
+  }
+ ]
+}

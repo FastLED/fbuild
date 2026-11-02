@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cocoisarobo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cocoisarobo/library/skytraq/1.0.1/skytraq-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "skytraq-1.0.1.tar.gz",
+    "size_bytes": 3911,
+    "sha256": "599854fb47e3a97a4f4656842faad747bf1e6fb0efeb08d5597d9c7113aefe81",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cocoisarobo/library/skytraq/1.0.1/skytraq-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cocoisarobo/library/skytraq/1.0.1/skytraq-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cocoisarobo/library/skytraq/1.0.5/skytraq-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "skytraq-1.0.5.tar.gz",
+    "size_bytes": 6404,
+    "sha256": "45513560259a0c10f971c7f0ecc94bad249b1213bbe4a3a819e74f2ea4012722",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cocoisarobo/library/skytraq/1.0.5/skytraq-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/cocoisarobo/library/skytraq/1.0.5/skytraq-1.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

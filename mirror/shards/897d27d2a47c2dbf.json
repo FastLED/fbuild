@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-us191",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-us191/library/Display/0.0.0+sha.424dd7f7b12c/Display-0.0.0+sha.424dd7f7b12c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Display-0.0.0+sha.424dd7f7b12c.tar.gz",
+    "size_bytes": 3492,
+    "sha256": "8be0717313510f0ac7e3451b8ef530410ed278523037d40de11ebcde51387832",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-us191/library/Display/0.0.0%2Bsha.424dd7f7b12c/Display-0.0.0%2Bsha.424dd7f7b12c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-us191/library/Display/0.0.0%2Bsha.424dd7f7b12c/Display-0.0.0%2Bsha.424dd7f7b12c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-us191/library/Led/0.0.0+sha.77714f74d105/Led-0.0.0+sha.77714f74d105.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Led-0.0.0+sha.77714f74d105.tar.gz",
+    "size_bytes": 1846,
+    "sha256": "4076b7e3ba8aa9c350def9d5a2a7b1ffe3dcf84fe22d7cca6014c5ab5544f837",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-us191/library/Led/0.0.0%2Bsha.77714f74d105/Led-0.0.0%2Bsha.77714f74d105.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-us191/library/Led/0.0.0%2Bsha.77714f74d105/Led-0.0.0%2Bsha.77714f74d105.tar.gz"
+    ]
+   }
+  }
+ ]
+}

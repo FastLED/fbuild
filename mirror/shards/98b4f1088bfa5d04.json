@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-cqpub0mikami",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-cqpub0mikami/library/ACM1602NI_NucleoF4/0.0.0+sha.8e405cedea99/ACM1602NI_NucleoF4-0.0.0+sha.8e405cedea99.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ACM1602NI_NucleoF4-0.0.0+sha.8e405cedea99.tar.gz",
+    "size_bytes": 2960,
+    "sha256": "a50e03ffd1ad819560403186e6c254312d40783978a53d60969396f342bb6100",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-cqpub0mikami/library/ACM1602NI_NucleoF4/0.0.0%2Bsha.8e405cedea99/ACM1602NI_NucleoF4-0.0.0%2Bsha.8e405cedea99.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-cqpub0mikami/library/ACM1602NI_NucleoF4/0.0.0%2Bsha.8e405cedea99/ACM1602NI_NucleoF4-0.0.0%2Bsha.8e405cedea99.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-cqpub0mikami/library/DSProcessingIO/0.0.0+sha.2a8a3dc3da8e/DSProcessingIO-0.0.0+sha.2a8a3dc3da8e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DSProcessingIO-0.0.0+sha.2a8a3dc3da8e.tar.gz",
+    "size_bytes": 2434,
+    "sha256": "29a5644da031b0ba0c81f20b724f48e6aeaa959377a0a64b28d5e59b3bb34d65",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-cqpub0mikami/library/DSProcessingIO/0.0.0%2Bsha.2a8a3dc3da8e/DSProcessingIO-0.0.0%2Bsha.2a8a3dc3da8e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-cqpub0mikami/library/DSProcessingIO/0.0.0%2Bsha.2a8a3dc3da8e/DSProcessingIO-0.0.0%2Bsha.2a8a3dc3da8e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

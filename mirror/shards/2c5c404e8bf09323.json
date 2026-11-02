@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jwhiddon",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jwhiddon/library/EDB/2.0.0/EDB-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EDB-2.0.0.tar.gz",
+    "size_bytes": 105610,
+    "sha256": "6a1b14161b912419f79706ce5ec6135389d8d014811000060ef107d8dcd95f60",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jwhiddon/library/EDB/2.0.0/EDB-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jwhiddon/library/EDB/2.0.0/EDB-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

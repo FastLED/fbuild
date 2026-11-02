@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/duff2013",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "duff2013/library/AudioTuner/3.3/AudioTuner-3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AudioTuner-3.3.tar.gz",
+    "size_bytes": 1562077,
+    "sha256": "ed4e33ba2868798847214938ab8541ca1a935e66227bf31465549c2794647a5f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/duff2013/library/AudioTuner/3.3/AudioTuner-3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/duff2013/library/AudioTuner/3.3/AudioTuner-3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "duff2013/library/SDI12_T3/3.1.0/SDI12_T3-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SDI12_T3-3.1.0.tar.gz",
+    "size_bytes": 13202,
+    "sha256": "b94c8fb2dbdf7042eb41ad24d54443202965420051192668af10526fdb76bc17",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/duff2013/library/SDI12_T3/3.1.0/SDI12_T3-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/duff2013/library/SDI12_T3/3.1.0/SDI12_T3-3.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "duff2013/library/Snooze/6.3.9/Snooze-6.3.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Snooze-6.3.9.tar.gz",
+    "size_bytes": 113138,
+    "sha256": "d97185bac6a8c73fffd9946799efe5c26f61d5f4dadc8c733ad3da57954dd46d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/duff2013/library/Snooze/6.3.9/Snooze-6.3.9.tar.gz",
+     "https://dl.registry.platformio.org/download/duff2013/library/Snooze/6.3.9/Snooze-6.3.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "duff2013/library/Zilch/3.6/Zilch-3.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Zilch-3.6.tar.gz",
+    "size_bytes": 12187,
+    "sha256": "736b8174fcffe0f36766caa60861c4ed858b9a7d7fdc53ff3706c4591d9e8ab4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/duff2013/library/Zilch/3.6/Zilch-3.6.tar.gz",
+     "https://dl.registry.platformio.org/download/duff2013/library/Zilch/3.6/Zilch-3.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

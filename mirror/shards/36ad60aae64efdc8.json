@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-thassyo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-thassyo/library/m3pi/0.0.0+sha.d9682f35e58a/m3pi-0.0.0+sha.d9682f35e58a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "m3pi-0.0.0+sha.d9682f35e58a.tar.gz",
+    "size_bytes": 3984,
+    "sha256": "2f01084d4fe085ca58d183c0e643e496a825e78ca73ba9d10b0174c64e8b4a39",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-thassyo/library/m3pi/0.0.0%2Bsha.d9682f35e58a/m3pi-0.0.0%2Bsha.d9682f35e58a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-thassyo/library/m3pi/0.0.0%2Bsha.d9682f35e58a/m3pi-0.0.0%2Bsha.d9682f35e58a.tar.gz"
+    ]
+   }
+  }
+ ]
+}

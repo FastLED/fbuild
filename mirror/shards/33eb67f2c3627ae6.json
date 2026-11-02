@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pchwalek",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pchwalek/library/Air%20Commander%20Entire%20Control/1.0.1/AirCommanderEntireControl-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AirCommanderEntireControl-1.0.1.tar.gz",
+    "size_bytes": 3752,
+    "sha256": "0f48b46ac9224405d8b37b3b30febca90acf0b28881d48ec7e6c04d53f0ef820",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pchwalek/library/Air%2520Commander%2520Entire%2520Control/1.0.1/AirCommanderEntireControl-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pchwalek/library/Air%20Commander%20Entire%20Control/1.0.1/AirCommanderEntireControl-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

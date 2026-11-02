@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jefersonla",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jefersonla/library/ArduinoLang/0.1/ArduinoLang-0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoLang-0.1.tar.gz",
+    "size_bytes": 12783,
+    "sha256": "59bd3888d5f5ef38b290f2882ad81a200026f576c5f0592b4b18e0976da32ab7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jefersonla/library/ArduinoLang/0.1/ArduinoLang-0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jefersonla/library/ArduinoLang/0.1/ArduinoLang-0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

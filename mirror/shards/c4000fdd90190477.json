@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hamid9",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hamid9/library/SEFR/1.0.0/SEFR-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SEFR-1.0.0.tar.gz",
+    "size_bytes": 11432,
+    "sha256": "6aad67695152fbb2b8612817e538ae68d7ccc8abde5f82531a6e65aa0e4422cd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hamid9/library/SEFR/1.0.0/SEFR-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hamid9/library/SEFR/1.0.0/SEFR-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hamid9/library/SEFR/1.0.1/SEFR-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SEFR-1.0.1.tar.gz",
+    "size_bytes": 11664,
+    "sha256": "18f4d562f3240a1104a94f5f1ed630c292bc980dc13912f16834bfa08ec7f270",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hamid9/library/SEFR/1.0.1/SEFR-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/hamid9/library/SEFR/1.0.1/SEFR-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

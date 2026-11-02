@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/skoumalcz",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "skoumalcz/library/IdGuard/1.0.0/IdGuard-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IdGuard-1.0.0.tar.gz",
+    "size_bytes": 5798,
+    "sha256": "afe571c48a462dd6e8eacceea6aa4477ea436f481896d2680dbe74346a2d9134",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/skoumalcz/library/IdGuard/1.0.0/IdGuard-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/skoumalcz/library/IdGuard/1.0.0/IdGuard-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

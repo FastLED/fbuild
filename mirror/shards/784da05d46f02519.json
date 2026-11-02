@@ -1,0 +1,178 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fliuzzi02",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fliuzzi02/library/nmealib/0.0.1/nmealib-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nmealib-0.0.1.tar.gz",
+    "size_bytes": 78228,
+    "sha256": "581bd08a41e60edfb4f25087aae1134b196f974e2f0a95145a8467cd8260b1ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fliuzzi02/library/nmealib/0.0.1/nmealib-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fliuzzi02/library/nmealib/0.0.1/nmealib-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fliuzzi02/library/nmealib/0.0.2/nmealib-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nmealib-0.0.2.tar.gz",
+    "size_bytes": 78218,
+    "sha256": "a465216a4535a168440892dada4ddaa13ed98458d8d7eb1f4e2503fe47e7b803",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fliuzzi02/library/nmealib/0.0.2/nmealib-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/fliuzzi02/library/nmealib/0.0.2/nmealib-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fliuzzi02/library/nmealib/0.3.1/nmealib-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nmealib-0.3.1.tar.gz",
+    "size_bytes": 118615,
+    "sha256": "30374978cd3c2d5ea04fc34d36c87c808edea80d0670d9e1a7f7d5d1215c1c19",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fliuzzi02/library/nmealib/0.3.1/nmealib-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fliuzzi02/library/nmealib/0.3.1/nmealib-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fliuzzi02/library/nmealib/0.3.2/nmealib-0.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nmealib-0.3.2.tar.gz",
+    "size_bytes": 183291,
+    "sha256": "0c764467ca60266c00a00eca146e29cda799c4b299f9f87bb63afa1f2dc0fca2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fliuzzi02/library/nmealib/0.3.2/nmealib-0.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/fliuzzi02/library/nmealib/0.3.2/nmealib-0.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fliuzzi02/library/nmealib/0.3.3/nmealib-0.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nmealib-0.3.3.tar.gz",
+    "size_bytes": 93242,
+    "sha256": "069be1a228f6c113cd16a150bf16b719cbb14c141bdd07ab0de724afb98484f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fliuzzi02/library/nmealib/0.3.3/nmealib-0.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/fliuzzi02/library/nmealib/0.3.3/nmealib-0.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fliuzzi02/library/nmealib/0.3.4/nmealib-0.3.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nmealib-0.3.4.tar.gz",
+    "size_bytes": 93498,
+    "sha256": "a285cee3d22fe91e45211150bd2808649d6d94790dcd7973332ea071f248ba77",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fliuzzi02/library/nmealib/0.3.4/nmealib-0.3.4.tar.gz",
+     "https://dl.registry.platformio.org/download/fliuzzi02/library/nmealib/0.3.4/nmealib-0.3.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fliuzzi02/library/nmealib/0.3.5/nmealib-0.3.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nmealib-0.3.5.tar.gz",
+    "size_bytes": 93317,
+    "sha256": "ad2fac8c2a1348fe75e2a9b99e215c178b679434126aa7f0506777094e88ade8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fliuzzi02/library/nmealib/0.3.5/nmealib-0.3.5.tar.gz",
+     "https://dl.registry.platformio.org/download/fliuzzi02/library/nmealib/0.3.5/nmealib-0.3.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fliuzzi02/library/nmealib/0.4.0/nmealib-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nmealib-0.4.0.tar.gz",
+    "size_bytes": 94083,
+    "sha256": "d48f8978cf7c6e4a7f84d1eb0a9249653d48b2656b0f1e1ec02faa61d0d3a2d9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fliuzzi02/library/nmealib/0.4.0/nmealib-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fliuzzi02/library/nmealib/0.4.0/nmealib-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fliuzzi02/library/nmealib/0.5.0/nmealib-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nmealib-0.5.0.tar.gz",
+    "size_bytes": 63362,
+    "sha256": "c5b77ee480e23055fccf6dfd2f842587ad2405f940c360528610c4b982abbff6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fliuzzi02/library/nmealib/0.5.0/nmealib-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fliuzzi02/library/nmealib/0.5.0/nmealib-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fliuzzi02/library/nmealib/0.6.1/nmealib-0.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nmealib-0.6.1.tar.gz",
+    "size_bytes": 69699,
+    "sha256": "d8669e1be7078a58465622e79e903c0064f37b6afb08347fe14abf82a01722cd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fliuzzi02/library/nmealib/0.6.1/nmealib-0.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fliuzzi02/library/nmealib/0.6.1/nmealib-0.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fliuzzi02/library/nmealib/0.7.0/nmealib-0.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nmealib-0.7.0.tar.gz",
+    "size_bytes": 72528,
+    "sha256": "827ac9a80366d8dc89d36932219f13c74f8ba9247a44a8e4c2efdd81285b857c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fliuzzi02/library/nmealib/0.7.0/nmealib-0.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fliuzzi02/library/nmealib/0.7.0/nmealib-0.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fliuzzi02/library/nmealib/0.7.1/nmealib-0.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nmealib-0.7.1.tar.gz",
+    "size_bytes": 78226,
+    "sha256": "9bef37b78a9dd7ddf9bef880604da9be657dd7523d1e6784c08dd659822670d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fliuzzi02/library/nmealib/0.7.1/nmealib-0.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fliuzzi02/library/nmealib/0.7.1/nmealib-0.7.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fliuzzi02/library/nmealib/0.7.2/nmealib-0.7.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nmealib-0.7.2.tar.gz",
+    "size_bytes": 78776,
+    "sha256": "7eab70eda3164be02de8df58e9416e17ef3602e745a2603c87fced28131cb77f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fliuzzi02/library/nmealib/0.7.2/nmealib-0.7.2.tar.gz",
+     "https://dl.registry.platformio.org/download/fliuzzi02/library/nmealib/0.7.2/nmealib-0.7.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

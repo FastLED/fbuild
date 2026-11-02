@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gabrielnotman",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gabrielnotman/library/CryptoAuthLib/1.0.1/CryptoAuthLib-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CryptoAuthLib-1.0.1.tar.gz",
+    "size_bytes": 251767,
+    "sha256": "089706491b1ffa2e00a5792609a1baef33eb9bbafcd9115e02f5a9650a02f6b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gabrielnotman/library/CryptoAuthLib/1.0.1/CryptoAuthLib-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gabrielnotman/library/CryptoAuthLib/1.0.1/CryptoAuthLib-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gabrielnotman/library/RTCCounter/1.0.1/RTCCounter-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RTCCounter-1.0.1.tar.gz",
+    "size_bytes": 4603,
+    "sha256": "c3c3a5b419125291ecfbd1b9247994897ba991a0976a707c286245b37bec8971",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gabrielnotman/library/RTCCounter/1.0.1/RTCCounter-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gabrielnotman/library/RTCCounter/1.0.1/RTCCounter-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

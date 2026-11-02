@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-lonesometraveler",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-lonesometraveler/library/BlinkingLED/0.0.0+sha.6d4514c5b852/BlinkingLED-0.0.0+sha.6d4514c5b852.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BlinkingLED-0.0.0+sha.6d4514c5b852.tar.gz",
+    "size_bytes": 1020,
+    "sha256": "4d185dd4d8e7a0b2e1c0f0c913f8531c71b4ddbcb9f7bd0c5d8a38337f8664e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-lonesometraveler/library/BlinkingLED/0.0.0%2Bsha.6d4514c5b852/BlinkingLED-0.0.0%2Bsha.6d4514c5b852.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-lonesometraveler/library/BlinkingLED/0.0.0%2Bsha.6d4514c5b852/BlinkingLED-0.0.0%2Bsha.6d4514c5b852.tar.gz"
+    ]
+   }
+  }
+ ]
+}

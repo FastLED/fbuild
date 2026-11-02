@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/johnosbb",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "johnosbb/library/MicroTFLite/1.0.4/MicroTFLite-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MicroTFLite-1.0.4.tar.gz",
+    "size_bytes": 1223685,
+    "sha256": "de197b9c5b73201a2605d2fb8c97c549d4e7bbfb88ca74caf8e25bd7aabfec40",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/johnosbb/library/MicroTFLite/1.0.4/MicroTFLite-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/johnosbb/library/MicroTFLite/1.0.4/MicroTFLite-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "johnosbb/library/hx1838decoder/1.0.0/hx1838decoder-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "hx1838decoder-1.0.0.tar.gz",
+    "size_bytes": 9589,
+    "sha256": "30ea09b75b03f61d16757c2b7da6632c4defddcc844ed45ce766016fbfff6291",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/johnosbb/library/hx1838decoder/1.0.0/hx1838decoder-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/johnosbb/library/hx1838decoder/1.0.0/hx1838decoder-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

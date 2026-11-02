@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/vdeconinck",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "vdeconinck/library/QC3Control/1.4.1/QC3Control-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QC3Control-1.4.1.tar.gz",
+    "size_bytes": 248599,
+    "sha256": "6f493330722a904dc07f4364e70ff168de799af969f3aaffd5114c7db6b38359",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vdeconinck/library/QC3Control/1.4.1/QC3Control-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vdeconinck/library/QC3Control/1.4.1/QC3Control-1.4.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

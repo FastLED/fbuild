@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/milad-nikpendar",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "milad-nikpendar/library/IP5108/1.0.0/IP5108-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IP5108-1.0.0.tar.gz",
+    "size_bytes": 10010,
+    "sha256": "274c7edc30987a28c01d420e5f1086a9a8d830a7fb38ba14dddce5c501c2f0b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/milad-nikpendar/library/IP5108/1.0.0/IP5108-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/milad-nikpendar/library/IP5108/1.0.0/IP5108-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "milad-nikpendar/library/IP5108/1.2.0/IP5108-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IP5108-1.2.0.tar.gz",
+    "size_bytes": 15842,
+    "sha256": "a98540be83451ca2d64f6c07b7aea8a9b6dafe8d64fb1a671e8559c5618de3df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/milad-nikpendar/library/IP5108/1.2.0/IP5108-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/milad-nikpendar/library/IP5108/1.2.0/IP5108-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "milad-nikpendar/library/initAuthorization/1.0.0/initAuthorization-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "initAuthorization-1.0.0.tar.gz",
+    "size_bytes": 3321,
+    "sha256": "310c446e88f312f63b932ec6041388f1331104c9d4d5322016356b0835e8147c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/milad-nikpendar/library/initAuthorization/1.0.0/initAuthorization-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/milad-nikpendar/library/initAuthorization/1.0.0/initAuthorization-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "milad-nikpendar/library/initAuthorization/1.0.1/initAuthorization-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "initAuthorization-1.0.1.tar.gz",
+    "size_bytes": 3279,
+    "sha256": "096d4f5a9dd17af61652f48f69897d9585a99d3b8d8f88f0b8a92cccc293c48d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/milad-nikpendar/library/initAuthorization/1.0.1/initAuthorization-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/milad-nikpendar/library/initAuthorization/1.0.1/initAuthorization-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "milad-nikpendar/library/initBuzzer/1.0.0/initBuzzer-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "initBuzzer-1.0.0.tar.gz",
+    "size_bytes": 3850,
+    "sha256": "02944037952a84d0ad6bc32b5f1000816c3d4272fd8913bbf4b55bd2a603b95c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/milad-nikpendar/library/initBuzzer/1.0.0/initBuzzer-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/milad-nikpendar/library/initBuzzer/1.0.0/initBuzzer-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "milad-nikpendar/library/initGT911/1.0.0/initGT911-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "initGT911-1.0.0.tar.gz",
+    "size_bytes": 7256,
+    "sha256": "c7a7744df8e84e30f3d7d95876c4335d9270eaa2c15e56edb0e54229c9f0658a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/milad-nikpendar/library/initGT911/1.0.0/initGT911-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/milad-nikpendar/library/initGT911/1.0.0/initGT911-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "milad-nikpendar/library/initMemory/3.0.0/initMemory-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "initMemory-3.0.0.tar.gz",
+    "size_bytes": 12131,
+    "sha256": "6e0cf847fb3b21da8ed40b17429d792b4a61a2e4af0d6052a0f01426780087bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/milad-nikpendar/library/initMemory/3.0.0/initMemory-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/milad-nikpendar/library/initMemory/3.0.0/initMemory-3.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

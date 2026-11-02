@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nor24o",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nor24o/library/Nju6432Display/5.1.1/Nju6432Display-5.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Nju6432Display-5.1.1.tar.gz",
+    "size_bytes": 14408,
+    "sha256": "f91b9b4c89d63b3aefaf2607573f08d1d2c270e955babc324f3b12cff5a40447",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nor24o/library/Nju6432Display/5.1.1/Nju6432Display-5.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nor24o/library/Nju6432Display/5.1.1/Nju6432Display-5.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nor24o/library/ST7567_FB_I2C/1.0.0/ST7567_FB_I2C-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ST7567_FB_I2C-1.0.0.tar.gz",
+    "size_bytes": 11723,
+    "sha256": "ee8762ea922eb992d32bf775b8bb5c0cfa1f18980d05efe60d54283e3ae9edc7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nor24o/library/ST7567_FB_I2C/1.0.0/ST7567_FB_I2C-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nor24o/library/ST7567_FB_I2C/1.0.0/ST7567_FB_I2C-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

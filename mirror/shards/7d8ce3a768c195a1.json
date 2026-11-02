@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ft-tele",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ft-tele/library/IT7259_Touch/1.0.0/IT7259_Touch-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IT7259_Touch-1.0.0.tar.gz",
+    "size_bytes": 8593,
+    "sha256": "62992568353dfd9d25f58e7cf7a129db5886dc2bfe2b0d07b6943d0f9619b168",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ft-tele/library/IT7259_Touch/1.0.0/IT7259_Touch-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ft-tele/library/IT7259_Touch/1.0.0/IT7259_Touch-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ft-tele/library/ST7305_MonoTFT_Library/1.0.1/ST7305_MonoTFT_Library-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ST7305_MonoTFT_Library-1.0.1.tar.gz",
+    "size_bytes": 9561250,
+    "sha256": "06d1ba8cbe71786d7f457352ffd5f4f3bc9efe7b67495a54d225ced7537f5971",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ft-tele/library/ST7305_MonoTFT_Library/1.0.1/ST7305_MonoTFT_Library-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ft-tele/library/ST7305_MonoTFT_Library/1.0.1/ST7305_MonoTFT_Library-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ft-tele/library/ST7305_MonoTFT_Library/1.2.1/ST7305_MonoTFT_Library-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ST7305_MonoTFT_Library-1.2.1.tar.gz",
+    "size_bytes": 9564833,
+    "sha256": "5d2a3f72498916b067efc3cc0055e20d20d2758ace53ae89a6b79695103cbb99",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ft-tele/library/ST7305_MonoTFT_Library/1.2.1/ST7305_MonoTFT_Library-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ft-tele/library/ST7305_MonoTFT_Library/1.2.1/ST7305_MonoTFT_Library-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ft-tele/library/ST7306_LCD/1.0.0/ST7306_LCD-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ST7306_LCD-1.0.0.tar.gz",
+    "size_bytes": 1909311,
+    "sha256": "8189d801e1f820c75ade1ee1d7d0d87b003bd63b9e0aa60e4f4f7ad57546bc2c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ft-tele/library/ST7306_LCD/1.0.0/ST7306_LCD-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ft-tele/library/ST7306_LCD/1.0.0/ST7306_LCD-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/easyiot-br",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "easyiot-br/library/Easyiot-Esp8266/1.0/Easyiot-Esp8266-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Easyiot-Esp8266-1.0.tar.gz",
+    "size_bytes": 5126,
+    "sha256": "bb7197117964bf53fe5c08cda0e90a7232b07a5bb619c340a65c3e3d94919e1d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/easyiot-br/library/Easyiot-Esp8266/1.0/Easyiot-Esp8266-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/easyiot-br/library/Easyiot-Esp8266/1.0/Easyiot-Esp8266-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

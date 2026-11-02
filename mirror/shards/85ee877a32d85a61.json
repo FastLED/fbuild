@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/timo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "timo/library/WiFiSetupEsp32/1.0.0/WiFiSetupEsp32-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFiSetupEsp32-1.0.0.tar.gz",
+    "size_bytes": 2112,
+    "sha256": "a9f0bcca56d1524a21cfce4a8d3528b039102797b29b69efaa5dec252c512061",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/timo/library/WiFiSetupEsp32/1.0.0/WiFiSetupEsp32-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/timo/library/WiFiSetupEsp32/1.0.0/WiFiSetupEsp32-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

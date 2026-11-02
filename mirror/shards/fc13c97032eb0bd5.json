@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-tylermuch",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-tylermuch/library/music/0.0.0+sha.57ff1b17134b/music-0.0.0+sha.57ff1b17134b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "music-0.0.0+sha.57ff1b17134b.tar.gz",
+    "size_bytes": 1275,
+    "sha256": "265e9be81d9b9c95e2f9f20446a9cbf4344928e5b5f71d06a16b2314b87e265c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tylermuch/library/music/0.0.0%2Bsha.57ff1b17134b/music-0.0.0%2Bsha.57ff1b17134b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tylermuch/library/music/0.0.0%2Bsha.57ff1b17134b/music-0.0.0%2Bsha.57ff1b17134b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

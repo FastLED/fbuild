@@ -1,0 +1,165 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ronny-antoon",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ronny-antoon/library/AccessoryModules/7.10.0/AccessoryModules-7.10.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AccessoryModules-7.10.0.tar.gz",
+    "size_bytes": 13357,
+    "sha256": "d5fb670d69c2500a8c05ee4a7696cab38a0259050f83df20bf667616387b7031",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ronny-antoon/library/AccessoryModules/7.10.0/AccessoryModules-7.10.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ronny-antoon/library/AccessoryModules/7.10.0/AccessoryModules-7.10.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ronny-antoon/library/AccessoryModules/7.10.1/AccessoryModules-7.10.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AccessoryModules-7.10.1.tar.gz",
+    "size_bytes": 13163,
+    "sha256": "553c9f42a12adb197d23995524ee7674fd41173e0e7b0a734913c19118555c14",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ronny-antoon/library/AccessoryModules/7.10.1/AccessoryModules-7.10.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ronny-antoon/library/AccessoryModules/7.10.1/AccessoryModules-7.10.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ronny-antoon/library/AccessoryModules/7.11.1/AccessoryModules-7.11.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AccessoryModules-7.11.1.tar.gz",
+    "size_bytes": 13163,
+    "sha256": "ad6cbc10b37820eca3f336879e11d2b3fe78568661e1e31bd69f70c2e98c75d5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ronny-antoon/library/AccessoryModules/7.11.1/AccessoryModules-7.11.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ronny-antoon/library/AccessoryModules/7.11.1/AccessoryModules-7.11.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ronny-antoon/library/ButtonModule/9.0.0/ButtonModule-9.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ButtonModule-9.0.0.tar.gz",
+    "size_bytes": 3616,
+    "sha256": "adf92f7983a3817c28d49c2f36a3b07395edab9c6370031d121c14b4f6a5253a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ronny-antoon/library/ButtonModule/9.0.0/ButtonModule-9.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ronny-antoon/library/ButtonModule/9.0.0/ButtonModule-9.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ronny-antoon/library/DatabaseAPI/7.7.8/DatabaseAPI-7.7.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DatabaseAPI-7.7.8.tar.gz",
+    "size_bytes": 5626,
+    "sha256": "097563acf1bf3b7c61003e5602ea3063cab6050de8584d934d48b96b1b40aecd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ronny-antoon/library/DatabaseAPI/7.7.8/DatabaseAPI-7.7.8.tar.gz",
+     "https://dl.registry.platformio.org/download/ronny-antoon/library/DatabaseAPI/7.7.8/DatabaseAPI-7.7.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ronny-antoon/library/Logger_M/2.1.1/Logger_M-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Logger_M-2.1.1.tar.gz",
+    "size_bytes": 5500,
+    "sha256": "3d7b8b5520f7e8d8f44c14cc2734d768665206145f77c876e6761f7824f46889",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ronny-antoon/library/Logger_M/2.1.1/Logger_M-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ronny-antoon/library/Logger_M/2.1.1/Logger_M-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ronny-antoon/library/MultiPrinterLogger/7.9.1/MultiPrinterLogger-7.9.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MultiPrinterLogger-7.9.1.tar.gz",
+    "size_bytes": 2936,
+    "sha256": "55ad59e908d5b0a756a5944fd18fd13f7701f2d41615ae2f9e8a9891df9f1be3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ronny-antoon/library/MultiPrinterLogger/7.9.1/MultiPrinterLogger-7.9.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ronny-antoon/library/MultiPrinterLogger/7.9.1/MultiPrinterLogger-7.9.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ronny-antoon/library/NVSDatabase/2.0.0/NVSDatabase-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NVSDatabase-2.0.0.tar.gz",
+    "size_bytes": 7213,
+    "sha256": "62414543a1f4408af03f149d699edee7065cf28b54850742a009ecf8f3d15285",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ronny-antoon/library/NVSDatabase/2.0.0/NVSDatabase-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ronny-antoon/library/NVSDatabase/2.0.0/NVSDatabase-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ronny-antoon/library/RelayModule/9.0.1/RelayModule-9.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RelayModule-9.0.1.tar.gz",
+    "size_bytes": 1901,
+    "sha256": "604e869e9a26f664427980b0c371248fb9f8d7463a043167bcbe629de4f2d633",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ronny-antoon/library/RelayModule/9.0.1/RelayModule-9.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ronny-antoon/library/RelayModule/9.0.1/RelayModule-9.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ronny-antoon/library/TaskTracker/2.0.0/TaskTracker-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TaskTracker-2.0.0.tar.gz",
+    "size_bytes": 2169,
+    "sha256": "5b9c3b048bc3af20739e369504797bbd92ff8c425caad020c55e02144b4346a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ronny-antoon/library/TaskTracker/2.0.0/TaskTracker-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ronny-antoon/library/TaskTracker/2.0.0/TaskTracker-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ronny-antoon/library/UpdateOTA/7.2.0/UpdateOTA-7.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UpdateOTA-7.2.0.tar.gz",
+    "size_bytes": 7014,
+    "sha256": "68f4221c18321ffd5386128ded32677fee1c5da819501488576225c96bd2e62a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ronny-antoon/library/UpdateOTA/7.2.0/UpdateOTA-7.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ronny-antoon/library/UpdateOTA/7.2.0/UpdateOTA-7.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ronny-antoon/library/UpdateOTA_M/1.1.5/UpdateOTA_M-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UpdateOTA_M-1.1.5.tar.gz",
+    "size_bytes": 10291,
+    "sha256": "87b6c8412087ba07ee856948720e7f88eafb5794a6727006ca8fc506c6a462a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ronny-antoon/library/UpdateOTA_M/1.1.5/UpdateOTA_M-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/ronny-antoon/library/UpdateOTA_M/1.1.5/UpdateOTA_M-1.1.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

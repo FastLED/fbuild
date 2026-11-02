@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-shinji111",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-shinji111/library/SPISlave_Kinetis/0.0.0+sha.f4bfdd8caf05/SPISlave_Kinetis-0.0.0+sha.f4bfdd8caf05.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SPISlave_Kinetis-0.0.0+sha.f4bfdd8caf05.tar.gz",
+    "size_bytes": 2088,
+    "sha256": "5eb894689166d9e2a1b5a4b49f9018d891cbb4b86abd9ebb7dbfccc99fea55f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-shinji111/library/SPISlave_Kinetis/0.0.0%2Bsha.f4bfdd8caf05/SPISlave_Kinetis-0.0.0%2Bsha.f4bfdd8caf05.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-shinji111/library/SPISlave_Kinetis/0.0.0%2Bsha.f4bfdd8caf05/SPISlave_Kinetis-0.0.0%2Bsha.f4bfdd8caf05.tar.gz"
+    ]
+   }
+  }
+ ]
+}

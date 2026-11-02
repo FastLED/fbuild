@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/junzzhu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "junzzhu/library/esp-mqtt-arduino/1.0.1/esp-mqtt-arduino-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-mqtt-arduino-1.0.1.tar.gz",
+    "size_bytes": 10300,
+    "sha256": "d63b4168bf6eb69a5ecf8cedc57c1f9f885bad1549aa556f62d194c380db41e2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/junzzhu/library/esp-mqtt-arduino/1.0.1/esp-mqtt-arduino-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/junzzhu/library/esp-mqtt-arduino/1.0.1/esp-mqtt-arduino-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

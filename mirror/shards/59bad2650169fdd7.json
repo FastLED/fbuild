@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jmparatte",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jmparatte/library/jm_CPPM/1.0.1/jm_CPPM-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "jm_CPPM-1.0.1.tar.gz",
+    "size_bytes": 41449,
+    "sha256": "dd2a84d7ac6f53808bca15d27352daf71c51f35d0947cca902c2487c2e913e2a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jmparatte/library/jm_CPPM/1.0.1/jm_CPPM-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jmparatte/library/jm_CPPM/1.0.1/jm_CPPM-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jmparatte/library/jm_LCM2004A_I2C/2.0.0/jm_LCM2004A_I2C-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "jm_LCM2004A_I2C-2.0.0.tar.gz",
+    "size_bytes": 19929,
+    "sha256": "b8e384f125985a6a19e36b747eb42667ed108e06d416326716417d8c129bbe62",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jmparatte/library/jm_LCM2004A_I2C/2.0.0/jm_LCM2004A_I2C-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jmparatte/library/jm_LCM2004A_I2C/2.0.0/jm_LCM2004A_I2C-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jmparatte/library/jm_LiquidCrystal_I2C/1.0.2/jm_LiquidCrystal_I2C-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "jm_LiquidCrystal_I2C-1.0.2.tar.gz",
+    "size_bytes": 18763,
+    "sha256": "35ab9f2dd36a12c4d5d0b8691bfeb2faefe8312812c855540b66d22578d59180",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jmparatte/library/jm_LiquidCrystal_I2C/1.0.2/jm_LiquidCrystal_I2C-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jmparatte/library/jm_LiquidCrystal_I2C/1.0.2/jm_LiquidCrystal_I2C-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jmparatte/library/jm_PCF8574/2.0.0/jm_PCF8574-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "jm_PCF8574-2.0.0.tar.gz",
+    "size_bytes": 14619,
+    "sha256": "e666dfbd343723ad4777b4528b0de99c1f09eba4b8403cbc4a168e1932c8953c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jmparatte/library/jm_PCF8574/2.0.0/jm_PCF8574-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jmparatte/library/jm_PCF8574/2.0.0/jm_PCF8574-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jmparatte/library/jm_Pin/1.0.3/jm_Pin-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "jm_Pin-1.0.3.tar.gz",
+    "size_bytes": 11552,
+    "sha256": "1a3e0c10edaf27349be795cb0b2e5fadcc60ca3881302838546454205491954f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jmparatte/library/jm_Pin/1.0.3/jm_Pin-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/jmparatte/library/jm_Pin/1.0.3/jm_Pin-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jmparatte/library/jm_Scheduler/1.1.0/jm_Scheduler-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "jm_Scheduler-1.1.0.tar.gz",
+    "size_bytes": 14097,
+    "sha256": "c78b4d774d4706b0aeebfcd35254a990cb2b8a053db1f94a2ffb68cf6cec4f73",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jmparatte/library/jm_Scheduler/1.1.0/jm_Scheduler-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jmparatte/library/jm_Scheduler/1.1.0/jm_Scheduler-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jmparatte/library/jm_Wire/1.0.1/jm_Wire-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "jm_Wire-1.0.1.tar.gz",
+    "size_bytes": 25995,
+    "sha256": "b31a00f42b49e1303fe263d12ad363f0a69d13b2bebaf5261da041154ea92a27",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jmparatte/library/jm_Wire/1.0.1/jm_Wire-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jmparatte/library/jm_Wire/1.0.1/jm_Wire-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jmparatte/library/jm_crc-ccitt/1.0.0/jm_crc-ccitt-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "jm_crc-ccitt-1.0.0.tar.gz",
+    "size_bytes": 7654,
+    "sha256": "07705d1d0b6d03a8a9b2bbfb4afaa95a86209ce8cc23999aebd02da3666d7fe6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jmparatte/library/jm_crc-ccitt/1.0.0/jm_crc-ccitt-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jmparatte/library/jm_crc-ccitt/1.0.0/jm_crc-ccitt-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

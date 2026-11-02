@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tonywestonuk",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tonywestonuk/library/GT911%20Lite/1.0.2/GT911Lite-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GT911Lite-1.0.2.tar.gz",
+    "size_bytes": 7501,
+    "sha256": "8cd24dac5f67b9e8c90bac0fe7dd030cc605f3c070ad851dee8b27bf5f35a74b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tonywestonuk/library/GT911%2520Lite/1.0.2/GT911Lite-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tonywestonuk/library/GT911%20Lite/1.0.2/GT911Lite-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tonywestonuk/library/GT911%20Lite/1.0.3/GT911Lite-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GT911Lite-1.0.3.tar.gz",
+    "size_bytes": 8602,
+    "sha256": "a8944d6bf3abacfd65f5e2f22b67fe989a1692de8d49c5e59d6ae4be84fc42b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tonywestonuk/library/GT911%2520Lite/1.0.3/GT911Lite-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tonywestonuk/library/GT911%20Lite/1.0.3/GT911Lite-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

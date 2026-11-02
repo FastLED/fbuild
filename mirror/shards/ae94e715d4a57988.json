@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nolven",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nolven/library/ftp32/1.0.0/ftp32-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ftp32-1.0.0.tar.gz",
+    "size_bytes": 20639,
+    "sha256": "0a1c3ed6394c6d828687f9940ec85ed20db48c2181ed4f0f5f9818bc1a46f620",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nolven/library/ftp32/1.0.0/ftp32-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nolven/library/ftp32/1.0.0/ftp32-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

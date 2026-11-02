@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/uniot-io",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "uniot-io/library/Uniot/0.3.4/Uniot-0.3.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Uniot-0.3.4.tar.gz",
+    "size_bytes": 18650,
+    "sha256": "edff7c27c45466e3ed580a9919d0284b804024ddbb9dbe077313ec8daf23e4d7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/uniot-io/library/Uniot/0.3.4/Uniot-0.3.4.tar.gz",
+     "https://dl.registry.platformio.org/download/uniot-io/library/Uniot/0.3.4/Uniot-0.3.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "uniot-io/library/Uniot/0.3.5/Uniot-0.3.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Uniot-0.3.5.tar.gz",
+    "size_bytes": 14081,
+    "sha256": "706ec0297e2e339f0cd888dfd5fc7bfcce0c952d4bb70979ee3c4e7b0ddd08fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/uniot-io/library/Uniot/0.3.5/Uniot-0.3.5.tar.gz",
+     "https://dl.registry.platformio.org/download/uniot-io/library/Uniot/0.3.5/Uniot-0.3.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "uniot-io/library/uniot-core/0.8.1/uniot-core-0.8.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uniot-core-0.8.1.tar.gz",
+    "size_bytes": 8019432,
+    "sha256": "0748fe8f2a99532513ffc3c01c9f3d2f6ca5c138bbe761590f05b79c57128983",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/uniot-io/library/uniot-core/0.8.1/uniot-core-0.8.1.tar.gz",
+     "https://dl.registry.platformio.org/download/uniot-io/library/uniot-core/0.8.1/uniot-core-0.8.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "uniot-io/library/uniot-core/0.9.0/uniot-core-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uniot-core-0.9.0.tar.gz",
+    "size_bytes": 185808,
+    "sha256": "30ac06fc6c95d5f7f76f83c135888520aeeca04b2cb68513c5e876ca1e3e2594",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/uniot-io/library/uniot-core/0.9.0/uniot-core-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/uniot-io/library/uniot-core/0.9.0/uniot-core-0.9.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

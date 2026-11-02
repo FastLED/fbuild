@@ -1,0 +1,724 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bonezegei",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bonezegei/library/Bonezegei%20ILI9341/1.1.2/BonezegeiILI9341-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BonezegeiILI9341-1.1.2.tar.gz",
+    "size_bytes": 32881,
+    "sha256": "8a2149d9ed8fe898b73927787130db0b4824e7f70c66f22b0ca87f770f4129a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/Bonezegei%2520ILI9341/1.1.2/BonezegeiILI9341-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/Bonezegei%20ILI9341/1.1.2/BonezegeiILI9341-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bonezegei/library/Bonezegei%20Keypad/1.0.0/BonezegeiKeypad-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BonezegeiKeypad-1.0.0.tar.gz",
+    "size_bytes": 14643,
+    "sha256": "dc1675bb13cc5501b71031d51913d42818de0e08cfac49219af204a18f54b080",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/Bonezegei%2520Keypad/1.0.0/BonezegeiKeypad-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/Bonezegei%20Keypad/1.0.0/BonezegeiKeypad-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bonezegei/library/Bonezegei%20LCD1602%20I2C/1.0.4/BonezegeiLCD1602I2C-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BonezegeiLCD1602I2C-1.0.4.tar.gz",
+    "size_bytes": 14531,
+    "sha256": "7b8d3bbf1dca59aca9e3872411180de600669e9109981ada820dc6b2cbd31c69",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/Bonezegei%2520LCD1602%2520I2C/1.0.4/BonezegeiLCD1602I2C-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/Bonezegei%20LCD1602%20I2C/1.0.4/BonezegeiLCD1602I2C-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bonezegei/library/Bonezegei%20SHT31/1.0.0/BonezegeiSHT31-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BonezegeiSHT31-1.0.0.tar.gz",
+    "size_bytes": 2625,
+    "sha256": "ce1b3aef40f7c9c355fd3b9fd90485e16c937188950d9c862ccd5bf15c2ea11c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/Bonezegei%2520SHT31/1.0.0/BonezegeiSHT31-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/Bonezegei%20SHT31/1.0.0/BonezegeiSHT31-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bonezegei/library/BonezegeiIoT/1.0.2/BonezegeiIoT-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BonezegeiIoT-1.0.2.tar.gz",
+    "size_bytes": 5133,
+    "sha256": "f27daed1e56455bf027f3fa6e1d0babf7ee2a5d307fca93e692643dabc5a1a45",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/BonezegeiIoT/1.0.2/BonezegeiIoT-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/BonezegeiIoT/1.0.2/BonezegeiIoT-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bonezegei/library/BonezegeiIoT/1.0.3/BonezegeiIoT-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BonezegeiIoT-1.0.3.tar.gz",
+    "size_bytes": 5253,
+    "sha256": "bcf32194f4e03cf6ea6111b32e03179381cf61c9d81f24a1b8e0548906f0a0e8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/BonezegeiIoT/1.0.3/BonezegeiIoT-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/BonezegeiIoT/1.0.3/BonezegeiIoT-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bonezegei/library/Bonezegei_74HC595/1.0.0/Bonezegei_74HC595-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bonezegei_74HC595-1.0.0.tar.gz",
+    "size_bytes": 2676,
+    "sha256": "2bc59aa693be0a1ef7252a8186dbd3bc9f701998b42cc8dcbde42ff61ba3d390",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/Bonezegei_74HC595/1.0.0/Bonezegei_74HC595-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/Bonezegei_74HC595/1.0.0/Bonezegei_74HC595-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bonezegei/library/Bonezegei_A4988/1.0.0/Bonezegei_A4988-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bonezegei_A4988-1.0.0.tar.gz",
+    "size_bytes": 2215,
+    "sha256": "a95d3b68bcfb6917b4478da7f2a72b9d004b3c8f281fe5c43002e8b665ca4955",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/Bonezegei_A4988/1.0.0/Bonezegei_A4988-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/Bonezegei_A4988/1.0.0/Bonezegei_A4988-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bonezegei/library/Bonezegei_BME280/1.0.0/Bonezegei_BME280-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bonezegei_BME280-1.0.0.tar.gz",
+    "size_bytes": 3810,
+    "sha256": "40d6d81d7c0074d011f4eb7f4affab5b12669659c59038a31a1872bccd3d09f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/Bonezegei_BME280/1.0.0/Bonezegei_BME280-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/Bonezegei_BME280/1.0.0/Bonezegei_BME280-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bonezegei/library/Bonezegei_BMP180/1.0.0/Bonezegei_BMP180-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bonezegei_BMP180-1.0.0.tar.gz",
+    "size_bytes": 3695,
+    "sha256": "82fb6b2f94e146cd6cf9bbd4c9b516861a18032430a9354c6f7468ab2f8c7c68",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/Bonezegei_BMP180/1.0.0/Bonezegei_BMP180-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/Bonezegei_BMP180/1.0.0/Bonezegei_BMP180-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bonezegei/library/Bonezegei_Compute/1.0.0/Bonezegei_Compute-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bonezegei_Compute-1.0.0.tar.gz",
+    "size_bytes": 13359,
+    "sha256": "0b539150c73b6eba133a833150e4172ed24fcdbfcb8465ab745ea005a0b3a065",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/Bonezegei_Compute/1.0.0/Bonezegei_Compute-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/Bonezegei_Compute/1.0.0/Bonezegei_Compute-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bonezegei/library/Bonezegei_DHT11/1.0.1/Bonezegei_DHT11-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bonezegei_DHT11-1.0.1.tar.gz",
+    "size_bytes": 14417,
+    "sha256": "62e46cd66c1b417ea36a0a2cb6b8c6d84d8730a9403da57e7c9a61be1e92bd8d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/Bonezegei_DHT11/1.0.1/Bonezegei_DHT11-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/Bonezegei_DHT11/1.0.1/Bonezegei_DHT11-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bonezegei/library/Bonezegei_DHT22/1.0.0/Bonezegei_DHT22-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bonezegei_DHT22-1.0.0.tar.gz",
+    "size_bytes": 14053,
+    "sha256": "4824802a1b414db836bdfb4375b9066b906054e8f530e0a022709f01338c4391",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/Bonezegei_DHT22/1.0.0/Bonezegei_DHT22-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/Bonezegei_DHT22/1.0.0/Bonezegei_DHT22-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bonezegei/library/Bonezegei_DHT22/1.0.2/Bonezegei_DHT22-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bonezegei_DHT22-1.0.2.tar.gz",
+    "size_bytes": 14507,
+    "sha256": "616f820b12a0d2977e761943c999d27033425c2d7866ad26f4263806db64b55b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/Bonezegei_DHT22/1.0.2/Bonezegei_DHT22-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/Bonezegei_DHT22/1.0.2/Bonezegei_DHT22-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bonezegei/library/Bonezegei_DRV8825/1.0.0/Bonezegei_DRV8825-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bonezegei_DRV8825-1.0.0.tar.gz",
+    "size_bytes": 2179,
+    "sha256": "fa9e65e642bc03a16565480158d4a031482e4814e885be095509f8fa624bedc0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/Bonezegei_DRV8825/1.0.0/Bonezegei_DRV8825-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/Bonezegei_DRV8825/1.0.0/Bonezegei_DRV8825-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bonezegei/library/Bonezegei_DS1302/1.0.0/Bonezegei_DS1302-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bonezegei_DS1302-1.0.0.tar.gz",
+    "size_bytes": 15159,
+    "sha256": "7c7b5e30a9d56a9042f33992387124b9fb6ada7ac9a1955db9930450d237a647",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/Bonezegei_DS1302/1.0.0/Bonezegei_DS1302-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/Bonezegei_DS1302/1.0.0/Bonezegei_DS1302-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bonezegei/library/Bonezegei_DS1307/1.0.4/Bonezegei_DS1307-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bonezegei_DS1307-1.0.4.tar.gz",
+    "size_bytes": 15336,
+    "sha256": "3b8a38d059289654803a719bfd0c8ef6b46b3de471c2b8264a5feb592b6f9813",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/Bonezegei_DS1307/1.0.4/Bonezegei_DS1307-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/Bonezegei_DS1307/1.0.4/Bonezegei_DS1307-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bonezegei/library/Bonezegei_DS18B20/1.0.0/Bonezegei_DS18B20-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bonezegei_DS18B20-1.0.0.tar.gz",
+    "size_bytes": 14371,
+    "sha256": "2c576a75012a5c204a62ee4d0daed4fdfed455f83f04e8457fc51a4a2a5ab534",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/Bonezegei_DS18B20/1.0.0/Bonezegei_DS18B20-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/Bonezegei_DS18B20/1.0.0/Bonezegei_DS18B20-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bonezegei/library/Bonezegei_DS3231/1.0.2/Bonezegei_DS3231-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bonezegei_DS3231-1.0.2.tar.gz",
+    "size_bytes": 15264,
+    "sha256": "0afe156719cbc7dd1e6ff35061c1e79ff80a48de54dc4a86e9b5d59b92bdca40",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/Bonezegei_DS3231/1.0.2/Bonezegei_DS3231-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/Bonezegei_DS3231/1.0.2/Bonezegei_DS3231-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bonezegei/library/Bonezegei_GL/1.0.3/Bonezegei_GL-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bonezegei_GL-1.0.3.tar.gz",
+    "size_bytes": 18428,
+    "sha256": "2b5aa1b4ed443fed854976c623ed27d2c977e7389a84305d2ee2eadb5d6600a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/Bonezegei_GL/1.0.3/Bonezegei_GL-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/Bonezegei_GL/1.0.3/Bonezegei_GL-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bonezegei/library/Bonezegei_GPS/1.0.1/Bonezegei_GPS-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bonezegei_GPS-1.0.1.tar.gz",
+    "size_bytes": 14110,
+    "sha256": "9c450e14e736f779e1ca53f730f57dbc1dca17e813eb25ac91f0fce53b34144d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/Bonezegei_GPS/1.0.1/Bonezegei_GPS-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/Bonezegei_GPS/1.0.1/Bonezegei_GPS-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bonezegei/library/Bonezegei_GSM/1.0.3/Bonezegei_GSM-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bonezegei_GSM-1.0.3.tar.gz",
+    "size_bytes": 14266,
+    "sha256": "e7427acd685f186bb4e06c1d528f0bd5011d5fc1f00cd900838540ec94c81fdd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/Bonezegei_GSM/1.0.3/Bonezegei_GSM-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/Bonezegei_GSM/1.0.3/Bonezegei_GSM-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bonezegei/library/Bonezegei_HCSR04/1.0.1/Bonezegei_HCSR04-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bonezegei_HCSR04-1.0.1.tar.gz",
+    "size_bytes": 14004,
+    "sha256": "e82125f886d365f67240d22b1e79151913b5cc77a20ee8b7de82cfaa64e37935",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/Bonezegei_HCSR04/1.0.1/Bonezegei_HCSR04-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/Bonezegei_HCSR04/1.0.1/Bonezegei_HCSR04-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bonezegei/library/Bonezegei_HD44780/1.0.2/Bonezegei_HD44780-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bonezegei_HD44780-1.0.2.tar.gz",
+    "size_bytes": 14757,
+    "sha256": "679c1f577249dfb45ea342bde9199095b440139b9dc7e9189813a2b0de1c1cd0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/Bonezegei_HD44780/1.0.2/Bonezegei_HD44780-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/Bonezegei_HD44780/1.0.2/Bonezegei_HD44780-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bonezegei/library/Bonezegei_HMC5883L/1.0.0/Bonezegei_HMC5883L-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bonezegei_HMC5883L-1.0.0.tar.gz",
+    "size_bytes": 15040,
+    "sha256": "114cb464cbbe50a7b39cde81b27ce9d86bb81655958b8b27d7760b05abbcec25",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/Bonezegei_HMC5883L/1.0.0/Bonezegei_HMC5883L-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/Bonezegei_HMC5883L/1.0.0/Bonezegei_HMC5883L-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bonezegei/library/Bonezegei_I2CScan/1.0.5/Bonezegei_I2CScan-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bonezegei_I2CScan-1.0.5.tar.gz",
+    "size_bytes": 13926,
+    "sha256": "ef6187047ade407d552cf4be3ceefa1d265a6ef0c98e8093d8916b9178fecf7e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/Bonezegei_I2CScan/1.0.5/Bonezegei_I2CScan-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/Bonezegei_I2CScan/1.0.5/Bonezegei_I2CScan-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bonezegei/library/Bonezegei_ILI9341v2/1.0.6/Bonezegei_ILI9341v2-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bonezegei_ILI9341v2-1.0.6.tar.gz",
+    "size_bytes": 17244,
+    "sha256": "b2448ca833d91325b142c5a10dbf32db0d5696caa1ae151ab8370700c9bfdd49",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/Bonezegei_ILI9341v2/1.0.6/Bonezegei_ILI9341v2-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/Bonezegei_ILI9341v2/1.0.6/Bonezegei_ILI9341v2-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bonezegei/library/Bonezegei_JSON/1.0.0/Bonezegei_JSON-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bonezegei_JSON-1.0.0.tar.gz",
+    "size_bytes": 14311,
+    "sha256": "718da7c23704446ea650d3743d205be5b323c4a6fbdf79289a4f72501e899a6f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/Bonezegei_JSON/1.0.0/Bonezegei_JSON-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/Bonezegei_JSON/1.0.0/Bonezegei_JSON-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bonezegei/library/Bonezegei_LCD2004_I2C/1.0.4/Bonezegei_LCD2004_I2C-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bonezegei_LCD2004_I2C-1.0.4.tar.gz",
+    "size_bytes": 14015,
+    "sha256": "61deeb280603a72be3466d34fcb01b5c198b921f88706e1bcddc0f5448d64a98",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/Bonezegei_LCD2004_I2C/1.0.4/Bonezegei_LCD2004_I2C-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/Bonezegei_LCD2004_I2C/1.0.4/Bonezegei_LCD2004_I2C-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bonezegei/library/Bonezegei_List/1.0.0/Bonezegei_List-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bonezegei_List-1.0.0.tar.gz",
+    "size_bytes": 13997,
+    "sha256": "71b72d65094bee0cbd68f336886e1e706dd863fb457ab326b24f1d5ff214a322",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/Bonezegei_List/1.0.0/Bonezegei_List-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/Bonezegei_List/1.0.0/Bonezegei_List-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bonezegei/library/Bonezegei_MAX7219/1.0.0/Bonezegei_MAX7219-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bonezegei_MAX7219-1.0.0.tar.gz",
+    "size_bytes": 5388,
+    "sha256": "204a0e8846cd1e60b265fbbaf59ec1593062aed20eb5e8bec03fb99efda42f96",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/Bonezegei_MAX7219/1.0.0/Bonezegei_MAX7219-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/Bonezegei_MAX7219/1.0.0/Bonezegei_MAX7219-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bonezegei/library/Bonezegei_MLX90614/1.0.0/Bonezegei_MLX90614-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bonezegei_MLX90614-1.0.0.tar.gz",
+    "size_bytes": 2547,
+    "sha256": "64915fe031c00a68c596bbbd66a93e9b4967d890bca23cabd3d4c3ce783ccec2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/Bonezegei_MLX90614/1.0.0/Bonezegei_MLX90614-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/Bonezegei_MLX90614/1.0.0/Bonezegei_MLX90614-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bonezegei/library/Bonezegei_Max30105/1.0.0/Bonezegei_Max30105-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bonezegei_Max30105-1.0.0.tar.gz",
+    "size_bytes": 5117,
+    "sha256": "2f33af137c83a0d6c466de7c12b8b5582a7b6f46ccbe4a04a0df71e8380ca9f5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/Bonezegei_Max30105/1.0.0/Bonezegei_Max30105-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/Bonezegei_Max30105/1.0.0/Bonezegei_Max30105-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bonezegei/library/Bonezegei_NeuralNet/0.1.0/Bonezegei_NeuralNet-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bonezegei_NeuralNet-0.1.0.tar.gz",
+    "size_bytes": 15026,
+    "sha256": "d8f96e54d534dd8286e94f8571ce96a5a4d291f8908a8c5bb6ff5c22b7e69a70",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/Bonezegei_NeuralNet/0.1.0/Bonezegei_NeuralNet-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/Bonezegei_NeuralNet/0.1.0/Bonezegei_NeuralNet-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bonezegei/library/Bonezegei_OneWire/1.0.0/Bonezegei_OneWire-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bonezegei_OneWire-1.0.0.tar.gz",
+    "size_bytes": 14989,
+    "sha256": "a2f0c82bd0ab0114f1a034a3d449dfc2e27911822af8d0e5bf3a71fee8e1a6dc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/Bonezegei_OneWire/1.0.0/Bonezegei_OneWire-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/Bonezegei_OneWire/1.0.0/Bonezegei_OneWire-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bonezegei/library/Bonezegei_PCA9685/1.0.0/Bonezegei_PCA9685-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bonezegei_PCA9685-1.0.0.tar.gz",
+    "size_bytes": 2558,
+    "sha256": "bfbd0f1f7158d2b96382d425a93c3145c4521037c6a6de3d3ba2b9749ee94246",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/Bonezegei_PCA9685/1.0.0/Bonezegei_PCA9685-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/Bonezegei_PCA9685/1.0.0/Bonezegei_PCA9685-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bonezegei/library/Bonezegei_PCF8574/1.0.1/Bonezegei_PCF8574-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bonezegei_PCF8574-1.0.1.tar.gz",
+    "size_bytes": 14175,
+    "sha256": "713920e8ef31c4b21efa389eac02751b673051d690edec5c73a00ff2359b5598",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/Bonezegei_PCF8574/1.0.1/Bonezegei_PCF8574-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/Bonezegei_PCF8574/1.0.1/Bonezegei_PCF8574-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bonezegei/library/Bonezegei_PN5180/1.0.0/Bonezegei_PN5180-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bonezegei_PN5180-1.0.0.tar.gz",
+    "size_bytes": 4413,
+    "sha256": "236a4b977b068762d440b4d0a682a6d43872eb6af847115be846aab5e8f74f54",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/Bonezegei_PN5180/1.0.0/Bonezegei_PN5180-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/Bonezegei_PN5180/1.0.0/Bonezegei_PN5180-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bonezegei/library/Bonezegei_PZEM004T/1.0.0/Bonezegei_PZEM004T-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bonezegei_PZEM004T-1.0.0.tar.gz",
+    "size_bytes": 14900,
+    "sha256": "226c02e1aa69ef51b001b65d5e0da5a0aa0b27c4d6c8c5c436d7ab63bc237d3b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/Bonezegei_PZEM004T/1.0.0/Bonezegei_PZEM004T-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/Bonezegei_PZEM004T/1.0.0/Bonezegei_PZEM004T-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bonezegei/library/Bonezegei_Printf/1.0.1/Bonezegei_Printf-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bonezegei_Printf-1.0.1.tar.gz",
+    "size_bytes": 1834,
+    "sha256": "2f44f76c12d67bb3fffcc4705ec9af4f3f35e1d09bdca0bf241228529f183b19",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/Bonezegei_Printf/1.0.1/Bonezegei_Printf-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/Bonezegei_Printf/1.0.1/Bonezegei_Printf-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bonezegei/library/Bonezegei_Protocol/1.0.2/Bonezegei_Protocol-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bonezegei_Protocol-1.0.2.tar.gz",
+    "size_bytes": 15294,
+    "sha256": "270e446b3ea0fb0419f7d77a508d2fb10d4528c38084e6377bc7d1f0e968701c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/Bonezegei_Protocol/1.0.2/Bonezegei_Protocol-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/Bonezegei_Protocol/1.0.2/Bonezegei_Protocol-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bonezegei/library/Bonezegei_RC522/1.0.0/Bonezegei_RC522-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bonezegei_RC522-1.0.0.tar.gz",
+    "size_bytes": 5656,
+    "sha256": "f3c7ee8c381ca604517315f495b981ec789145b0f216c9b51c904264b8460080",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/Bonezegei_RC522/1.0.0/Bonezegei_RC522-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/Bonezegei_RC522/1.0.0/Bonezegei_RC522-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bonezegei/library/Bonezegei_RS485/1.0.0/Bonezegei_RS485-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bonezegei_RS485-1.0.0.tar.gz",
+    "size_bytes": 13799,
+    "sha256": "543fe358656c6ca18b772cab87df588e91c49ede3badd0e96d08cc9c13d1858e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/Bonezegei_RS485/1.0.0/Bonezegei_RS485-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/Bonezegei_RS485/1.0.0/Bonezegei_RS485-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bonezegei/library/Bonezegei_SSD1306/1.0.1/Bonezegei_SSD1306-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bonezegei_SSD1306-1.0.1.tar.gz",
+    "size_bytes": 16951,
+    "sha256": "6595c314448277f4b0557e95e0de6eaf0aaa40c57e19886b54afc54b2ed1c5aa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/Bonezegei_SSD1306/1.0.1/Bonezegei_SSD1306-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/Bonezegei_SSD1306/1.0.1/Bonezegei_SSD1306-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bonezegei/library/Bonezegei_SX1278/1.0.0/Bonezegei_SX1278-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bonezegei_SX1278-1.0.0.tar.gz",
+    "size_bytes": 8485,
+    "sha256": "657f373d7a170f7bccae49cab57031c017cd917940b65e4e4a0105ad004a4259",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/Bonezegei_SX1278/1.0.0/Bonezegei_SX1278-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/Bonezegei_SX1278/1.0.0/Bonezegei_SX1278-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bonezegei/library/Bonezegei_Search/1.0.6/Bonezegei_Search-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bonezegei_Search-1.0.6.tar.gz",
+    "size_bytes": 2246,
+    "sha256": "e21e8322b8362805e7f6f52363651bc27026e91aa00c3447b0004a87ea18a6e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/Bonezegei_Search/1.0.6/Bonezegei_Search-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/Bonezegei_Search/1.0.6/Bonezegei_Search-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bonezegei/library/Bonezegei_SoftSerial/1.0.4/Bonezegei_SoftSerial-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bonezegei_SoftSerial-1.0.4.tar.gz",
+    "size_bytes": 14350,
+    "sha256": "85c0e8ab3d56838da27941f1ccac3cb01ac838a16fa16642c36127d3b116876c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/Bonezegei_SoftSerial/1.0.4/Bonezegei_SoftSerial-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/Bonezegei_SoftSerial/1.0.4/Bonezegei_SoftSerial-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bonezegei/library/Bonezegei_TM1638/1.0.0/Bonezegei_TM1638-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bonezegei_TM1638-1.0.0.tar.gz",
+    "size_bytes": 14639,
+    "sha256": "8e9262802d1d35619d2aa77abdcbec142218e5fbbeccd5922e74de856191468f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/Bonezegei_TM1638/1.0.0/Bonezegei_TM1638-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/Bonezegei_TM1638/1.0.0/Bonezegei_TM1638-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bonezegei/library/Bonezegei_ULN2003_Stepper/1.0.1/Bonezegei_ULN2003_Stepper-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bonezegei_ULN2003_Stepper-1.0.1.tar.gz",
+    "size_bytes": 2677,
+    "sha256": "34cce46636807ac62f5468e45159739afed0d0d94ffd5bdcbad03dc7e557b881",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/Bonezegei_ULN2003_Stepper/1.0.1/Bonezegei_ULN2003_Stepper-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/Bonezegei_ULN2003_Stepper/1.0.1/Bonezegei_ULN2003_Stepper-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bonezegei/library/Bonezegei_Utility/1.1.8/Bonezegei_Utility-1.1.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bonezegei_Utility-1.1.8.tar.gz",
+    "size_bytes": 67086,
+    "sha256": "4c54a7dc2abcaf9d542dfdc1c4b324a851f8debc846b83f16d3174bd3ad130d3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/Bonezegei_Utility/1.1.8/Bonezegei_Utility-1.1.8.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/Bonezegei_Utility/1.1.8/Bonezegei_Utility-1.1.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bonezegei/library/Bonezegei_VL53L0/1.0.0/Bonezegei_VL53L0-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bonezegei_VL53L0-1.0.0.tar.gz",
+    "size_bytes": 2909,
+    "sha256": "c0742d60344a04f58eb868e090da7152789e318ad4c35036d677bfe09829dc06",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/Bonezegei_VL53L0/1.0.0/Bonezegei_VL53L0-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/Bonezegei_VL53L0/1.0.0/Bonezegei_VL53L0-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bonezegei/library/Bonezegei_WS2812/1.0.4/Bonezegei_WS2812-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bonezegei_WS2812-1.0.4.tar.gz",
+    "size_bytes": 15403,
+    "sha256": "63ca72906d2f746282c7d551a03ad94af9f808721bb7c3a222a223a5c474004c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/Bonezegei_WS2812/1.0.4/Bonezegei_WS2812-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/Bonezegei_WS2812/1.0.4/Bonezegei_WS2812-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bonezegei/library/Bonezegei_WifiManager/1.0.0/Bonezegei_WifiManager-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bonezegei_WifiManager-1.0.0.tar.gz",
+    "size_bytes": 20090,
+    "sha256": "f817129dd3718535b3acca57a606ff0e332717aff9920cc79fc903d83a139646",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/Bonezegei_WifiManager/1.0.0/Bonezegei_WifiManager-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/Bonezegei_WifiManager/1.0.0/Bonezegei_WifiManager-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bonezegei/library/Bonezegei_XPT2046/1.0.0/Bonezegei_XPT2046-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bonezegei_XPT2046-1.0.0.tar.gz",
+    "size_bytes": 13805,
+    "sha256": "3f16f7e8920f18349136f45cb4df53bce6415f14a263551bef60e55478681cd7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/Bonezegei_XPT2046/1.0.0/Bonezegei_XPT2046-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/Bonezegei_XPT2046/1.0.0/Bonezegei_XPT2046-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bonezegei/library/Bonezegei_XPT2046v2/1.0.0/Bonezegei_XPT2046v2-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bonezegei_XPT2046v2-1.0.0.tar.gz",
+    "size_bytes": 13724,
+    "sha256": "e82c07e84f86a47674ae0702cefacbfb253bf3e5e22274a6d1c4d7115071a334",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonezegei/library/Bonezegei_XPT2046v2/1.0.0/Bonezegei_XPT2046v2-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bonezegei/library/Bonezegei_XPT2046v2/1.0.0/Bonezegei_XPT2046v2-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/skhcrusher",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "skhcrusher/library/TinyButton/1.0.0/TinyButton-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyButton-1.0.0.tar.gz",
+    "size_bytes": 4299,
+    "sha256": "6c3850be9c0731712e563ff2b2653f6e2cc56aea2636af8b15fdd68b9679f256",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/skhcrusher/library/TinyButton/1.0.0/TinyButton-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/skhcrusher/library/TinyButton/1.0.0/TinyButton-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

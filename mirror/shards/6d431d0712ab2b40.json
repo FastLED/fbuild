@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mchwalfajar",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mchwalfajar/library/jeager-one/1.0/jeager-one-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "jeager-one-1.0.tar.gz",
+    "size_bytes": 3728,
+    "sha256": "f38b78a171009ae957c1e7290cccf120e9a632892b222f61ec5af7a223871931",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mchwalfajar/library/jeager-one/1.0/jeager-one-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mchwalfajar/library/jeager-one/1.0/jeager-one-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

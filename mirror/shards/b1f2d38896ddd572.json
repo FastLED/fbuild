@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ipu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ipu/library/Terminal/0.0.0+sha.a3bd01d498a9/Terminal-0.0.0+sha.a3bd01d498a9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Terminal-0.0.0+sha.a3bd01d498a9.tar.gz",
+    "size_bytes": 2381,
+    "sha256": "8187c0eacb947a4eefb39314e70723f0f096c8a38cc516f27f2eb118f3149955",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ipu/library/Terminal/0.0.0%2Bsha.a3bd01d498a9/Terminal-0.0.0%2Bsha.a3bd01d498a9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ipu/library/Terminal/0.0.0%2Bsha.a3bd01d498a9/Terminal-0.0.0%2Bsha.a3bd01d498a9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

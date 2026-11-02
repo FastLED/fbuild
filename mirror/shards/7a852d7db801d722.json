@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/koinslot-inc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "koinslot-inc/library/Kywy/1.16.0/Kywy-1.16.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Kywy-1.16.0.tar.gz",
+    "size_bytes": 279406,
+    "sha256": "1dc993add843abcc3689760fcf5ec0a2a224d5f18b27f60c5f23548009c9d792",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/koinslot-inc/library/Kywy/1.16.0/Kywy-1.16.0.tar.gz",
+     "https://dl.registry.platformio.org/download/koinslot-inc/library/Kywy/1.16.0/Kywy-1.16.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "koinslot-inc/library/Kywy/1.17.0/Kywy-1.17.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Kywy-1.17.0.tar.gz",
+    "size_bytes": 293736,
+    "sha256": "0e81c3d3e2a56e6bc3c97833632e45695ddec4b88bdfbdf0210e620ab9e0cb45",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/koinslot-inc/library/Kywy/1.17.0/Kywy-1.17.0.tar.gz",
+     "https://dl.registry.platformio.org/download/koinslot-inc/library/Kywy/1.17.0/Kywy-1.17.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "koinslot-inc/library/Kywy/1.18.0/Kywy-1.18.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Kywy-1.18.0.tar.gz",
+    "size_bytes": 303261,
+    "sha256": "721007271aeceefa26dc3233bd77d94b1d792e7d5a022fa60686b89785cb3dca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/koinslot-inc/library/Kywy/1.18.0/Kywy-1.18.0.tar.gz",
+     "https://dl.registry.platformio.org/download/koinslot-inc/library/Kywy/1.18.0/Kywy-1.18.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "koinslot-inc/library/Kywy/1.19.0/Kywy-1.19.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Kywy-1.19.0.tar.gz",
+    "size_bytes": 305253,
+    "sha256": "8b24afb4d7af0ef0cb8f8a4bae5021a28c36fd078dbb391514c6ddf7dce6acef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/koinslot-inc/library/Kywy/1.19.0/Kywy-1.19.0.tar.gz",
+     "https://dl.registry.platformio.org/download/koinslot-inc/library/Kywy/1.19.0/Kywy-1.19.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

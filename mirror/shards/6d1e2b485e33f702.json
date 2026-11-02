@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-javiergc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-javiergc/library/MODSERIAL_uVision/0.0.0+sha.08f29af7bb0f/MODSERIAL_uVision-0.0.0+sha.08f29af7bb0f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MODSERIAL_uVision-0.0.0+sha.08f29af7bb0f.tar.gz",
+    "size_bytes": 14850,
+    "sha256": "0bf1ee48703f4334f6e6bfdd9eeeace1979bd092d5599c5579e3c4ba8e8c447d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-javiergc/library/MODSERIAL_uVision/0.0.0%2Bsha.08f29af7bb0f/MODSERIAL_uVision-0.0.0%2Bsha.08f29af7bb0f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-javiergc/library/MODSERIAL_uVision/0.0.0%2Bsha.08f29af7bb0f/MODSERIAL_uVision-0.0.0%2Bsha.08f29af7bb0f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

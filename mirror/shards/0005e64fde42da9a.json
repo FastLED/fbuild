@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/micromouseonline",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "micromouseonline/library/BasicEncoder/1.1.1/BasicEncoder-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BasicEncoder-1.1.1.tar.gz",
+    "size_bytes": 9925,
+    "sha256": "a77d49732568e9dd87a0c963c925102c4a75e874fbd040ef62ca229ec55bdc18",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/micromouseonline/library/BasicEncoder/1.1.1/BasicEncoder-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/micromouseonline/library/BasicEncoder/1.1.1/BasicEncoder-1.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

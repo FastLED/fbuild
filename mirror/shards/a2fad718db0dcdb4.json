@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/apsol",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "apsol/library/LittleFSMock/0.2.2/LittleFSMock-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LittleFSMock-0.2.2.tar.gz",
+    "size_bytes": 31055,
+    "sha256": "a9b550e60fad4d867d954dcff536f69699a8c46c9ae4ac85f9c339cd41562f81",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/apsol/library/LittleFSMock/0.2.2/LittleFSMock-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/apsol/library/LittleFSMock/0.2.2/LittleFSMock-0.2.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

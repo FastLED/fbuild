@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-nestordp",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-nestordp/library/HC-SR04/0.0.0+sha.be89035b2c42/HC-SR04-0.0.0+sha.be89035b2c42.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HC-SR04-0.0.0+sha.be89035b2c42.tar.gz",
+    "size_bytes": 2625,
+    "sha256": "eca53d7785121d92f1a58d3b00e5cd939cc44eada22afc6c1505f32c7331e23f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nestordp/library/HC-SR04/0.0.0%2Bsha.be89035b2c42/HC-SR04-0.0.0%2Bsha.be89035b2c42.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nestordp/library/HC-SR04/0.0.0%2Bsha.be89035b2c42/HC-SR04-0.0.0%2Bsha.be89035b2c42.tar.gz"
+    ]
+   }
+  }
+ ]
+}

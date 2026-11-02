@@ -1,0 +1,139 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dmadison",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dmadison/library/AnalogSelector/1.0.0/AnalogSelector-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AnalogSelector-1.0.0.tar.gz",
+    "size_bytes": 9281,
+    "sha256": "cce28899d23beac6c7a859a35562b079c7312d3550132b98ab1e28b712b27789",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dmadison/library/AnalogSelector/1.0.0/AnalogSelector-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dmadison/library/AnalogSelector/1.0.0/AnalogSelector-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dmadison/library/Controller%20Utilities/1.1.1/ControllerUtilities-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ControllerUtilities-1.1.1.tar.gz",
+    "size_bytes": 8314,
+    "sha256": "bc890cd7a46b730b32da61c8c4843a1e11df2f66c3d5c422998f0bc5b37858d4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dmadison/library/Controller%2520Utilities/1.1.1/ControllerUtilities-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dmadison/library/Controller%20Utilities/1.1.1/ControllerUtilities-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dmadison/library/FastLED%20NeoPixel/1.0.3/FastLEDNeoPixel-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastLEDNeoPixel-1.0.3.tar.gz",
+    "size_bytes": 14850,
+    "sha256": "0a0882a206961d5936b5ed5a9b8d1c0cd9c43f40272e23a5e1681d8559927737",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dmadison/library/FastLED%2520NeoPixel/1.0.3/FastLEDNeoPixel-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dmadison/library/FastLED%20NeoPixel/1.0.3/FastLEDNeoPixel-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dmadison/library/HID%20Buttons/1.0.1/HIDButtons-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HIDButtons-1.0.1.tar.gz",
+    "size_bytes": 9977,
+    "sha256": "4213cffb2b0021902ea1b3040f5959195e038a477c42b3ad6ce48e259fd27a1e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dmadison/library/HID%2520Buttons/1.0.1/HIDButtons-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dmadison/library/HID%20Buttons/1.0.1/HIDButtons-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dmadison/library/Nintendo%20Extension%20Ctrl/0.8.3/NintendoExtensionCtrl-0.8.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NintendoExtensionCtrl-0.8.3.tar.gz",
+    "size_bytes": 34327,
+    "sha256": "7397f0f2084c2286252e86298e46f7e968b303fa8cce97311906cdb039cc8284",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dmadison/library/Nintendo%2520Extension%2520Ctrl/0.8.3/NintendoExtensionCtrl-0.8.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dmadison/library/Nintendo%20Extension%20Ctrl/0.8.3/NintendoExtensionCtrl-0.8.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dmadison/library/ServoInput/2.1.0/ServoInput-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ServoInput-2.1.0.tar.gz",
+    "size_bytes": 17908,
+    "sha256": "a0ddbd4a2c76575bc735f6b5106c64d8d25bd436b0111a3b0dd1fbf86db4a4fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dmadison/library/ServoInput/2.1.0/ServoInput-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dmadison/library/ServoInput/2.1.0/ServoInput-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dmadison/library/Sim%20Racing%20Library/2.0.1/SimRacingLibrary-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimRacingLibrary-2.0.1.tar.gz",
+    "size_bytes": 35601,
+    "sha256": "1248d5fa6f0e62b68d343a6aed3b234c2d9ce58571f076a7dcfd5087578742a0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dmadison/library/Sim%2520Racing%2520Library/2.0.1/SimRacingLibrary-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dmadison/library/Sim%20Racing%20Library/2.0.1/SimRacingLibrary-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dmadison/library/Sim%20Racing%20Library/2.0.2/SimRacingLibrary-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimRacingLibrary-2.0.2.tar.gz",
+    "size_bytes": 35998,
+    "sha256": "5038c9d4e21257ca884373495c0e14738a7b0cc79cac4615119541bb235bd38a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dmadison/library/Sim%2520Racing%2520Library/2.0.2/SimRacingLibrary-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dmadison/library/Sim%20Racing%20Library/2.0.2/SimRacingLibrary-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dmadison/library/XInput/1.2.6/XInput-1.2.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XInput-1.2.6.tar.gz",
+    "size_bytes": 16915,
+    "sha256": "a61b82e90d478be972c5c1cdfad0b7452f14ddf828496e96bb668f925b4e1522",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dmadison/library/XInput/1.2.6/XInput-1.2.6.tar.gz",
+     "https://dl.registry.platformio.org/download/dmadison/library/XInput/1.2.6/XInput-1.2.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dmadison/library/Xbox%20360%20Controller%20LEDs/1.1.2/Xbox360ControllerLEDs-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Xbox360ControllerLEDs-1.1.2.tar.gz",
+    "size_bytes": 13288,
+    "sha256": "8354828936c7d93440c5c7ccc37ef7a87aa81c752d7ec9e5619be3470e8b084c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dmadison/library/Xbox%2520360%2520Controller%2520LEDs/1.1.2/Xbox360ControllerLEDs-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dmadison/library/Xbox%20360%20Controller%20LEDs/1.1.2/Xbox360ControllerLEDs-1.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

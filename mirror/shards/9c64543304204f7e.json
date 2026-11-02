@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/aneesharnavch",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "aneesharnavch/library/microInput/1.0.0/microInput-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "microInput-1.0.0.tar.gz",
+    "size_bytes": 21168,
+    "sha256": "89011d4e4b27d52d7576f34db6726f956d49d252f1154a9ffdeeed7449036bd0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aneesharnavch/library/microInput/1.0.0/microInput-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aneesharnavch/library/microInput/1.0.0/microInput-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aneesharnavch/library/microdsp/2.0.0/microdsp-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "microdsp-2.0.0.tar.gz",
+    "size_bytes": 61449,
+    "sha256": "81e239e2e16ebd5383611e79f1008171fde4338ee4266e02227db52d7b15e81c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aneesharnavch/library/microdsp/2.0.0/microdsp-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aneesharnavch/library/microdsp/2.0.0/microdsp-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

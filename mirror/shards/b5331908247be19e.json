@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-erik-kedo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-erik-kedo/library/NewTextLCD/0.0.0+sha.fb402d95983d/NewTextLCD-0.0.0+sha.fb402d95983d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NewTextLCD-0.0.0+sha.fb402d95983d.tar.gz",
+    "size_bytes": 4168,
+    "sha256": "64cb6ad4b4b2bbb6826a85c21a358adb58ab6c013244a88b06170140d4aea411",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-erik-kedo/library/NewTextLCD/0.0.0%2Bsha.fb402d95983d/NewTextLCD-0.0.0%2Bsha.fb402d95983d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-erik-kedo/library/NewTextLCD/0.0.0%2Bsha.fb402d95983d/NewTextLCD-0.0.0%2Bsha.fb402d95983d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

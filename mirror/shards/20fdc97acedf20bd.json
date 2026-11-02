@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/miko007",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "miko007/library/SerialTerminalPRO/1.1.1/SerialTerminalPRO-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialTerminalPRO-1.1.1.tar.gz",
+    "size_bytes": 2911,
+    "sha256": "7ad283c821bef27fab69f925b1c5cf2ca6b23324cb6e1d76b0bcf544cc68ee16",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/miko007/library/SerialTerminalPRO/1.1.1/SerialTerminalPRO-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/miko007/library/SerialTerminalPRO/1.1.1/SerialTerminalPRO-1.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

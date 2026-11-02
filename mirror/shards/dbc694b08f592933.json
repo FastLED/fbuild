@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cpldcpu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cpldcpu/library/LightWS2812/0.0.0-broken/LightWS2812-0.0.0-alphasha.5210d1fab6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LightWS2812-0.0.0-alphasha.5210d1fab6.tar.gz",
+    "size_bytes": 464,
+    "sha256": "bb5ea0d04114d8d2c0f48103695f1dfcc5f1604dbc0881f47a5c59855c80eddb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cpldcpu/library/LightWS2812/0.0.0-broken/LightWS2812-0.0.0-alphasha.5210d1fab6.tar.gz",
+     "https://dl.registry.platformio.org/download/cpldcpu/library/LightWS2812/0.0.0-broken/LightWS2812-0.0.0-alphasha.5210d1fab6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

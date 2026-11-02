@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-synvox",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-synvox/library/SFE_APDS9960/0.0.0+sha.c04b49e0a678/SFE_APDS9960-0.0.0+sha.c04b49e0a678.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SFE_APDS9960-0.0.0+sha.c04b49e0a678.tar.gz",
+    "size_bytes": 10703,
+    "sha256": "ebd78bee5fd42ddf825e1ad59e69ea9d63bb1d61442ef9552b0f755f7b657a21",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-synvox/library/SFE_APDS9960/0.0.0%2Bsha.c04b49e0a678/SFE_APDS9960-0.0.0%2Bsha.c04b49e0a678.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-synvox/library/SFE_APDS9960/0.0.0%2Bsha.c04b49e0a678/SFE_APDS9960-0.0.0%2Bsha.c04b49e0a678.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-synvox/library/SFE_MicroOLED/0.0.0+sha.b7fc78d2b795/SFE_MicroOLED-0.0.0+sha.b7fc78d2b795.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SFE_MicroOLED-0.0.0+sha.b7fc78d2b795.tar.gz",
+    "size_bytes": 12561,
+    "sha256": "c1c22d68d354dece159d952af1e314a80440f2710db7dcbdab06b7db7b6249f9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-synvox/library/SFE_MicroOLED/0.0.0%2Bsha.b7fc78d2b795/SFE_MicroOLED-0.0.0%2Bsha.b7fc78d2b795.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-synvox/library/SFE_MicroOLED/0.0.0%2Bsha.b7fc78d2b795/SFE_MicroOLED-0.0.0%2Bsha.b7fc78d2b795.tar.gz"
+    ]
+   }
+  }
+ ]
+}

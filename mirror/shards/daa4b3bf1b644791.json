@@ -1,0 +1,360 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/powerbroker2",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "powerbroker2/library/ArdUAV/1.4.2/ArdUAV-1.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArdUAV-1.4.2.tar.gz",
+    "size_bytes": 22851,
+    "sha256": "8d170a06c5ce525410abc511b55ba2fd25c1a31b213078f0d2673714ac6d21ab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/powerbroker2/library/ArdUAV/1.4.2/ArdUAV-1.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/powerbroker2/library/ArdUAV/1.4.2/ArdUAV-1.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "powerbroker2/library/ArduHelpers/0.0.1/ArduHelpers-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduHelpers-0.0.1.tar.gz",
+    "size_bytes": 2774,
+    "sha256": "c7fa7564c88fabdb80a20e08012253b2895402db15557b5d0d2fff59a0c30a5a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/powerbroker2/library/ArduHelpers/0.0.1/ArduHelpers-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/powerbroker2/library/ArduHelpers/0.0.1/ArduHelpers-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "powerbroker2/library/ArduPID/0.2.1/ArduPID-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduPID-0.2.1.tar.gz",
+    "size_bytes": 4926,
+    "sha256": "bbf1e77563f1c4948193baf0ed6f9dea765b4ab4c9d51d2be21d8ffaf2ee5c82",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/powerbroker2/library/ArduPID/0.2.1/ArduPID-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/powerbroker2/library/ArduPID/0.2.1/ArduPID-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "powerbroker2/library/ArduPID/1.0.0/ArduPID-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduPID-1.0.0.tar.gz",
+    "size_bytes": 7506,
+    "sha256": "63eb008813bbc1e4f9d8f920ad0e89e7bd4170def71dd0b631c9c9bb7fe2f8be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/powerbroker2/library/ArduPID/1.0.0/ArduPID-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/powerbroker2/library/ArduPID/1.0.0/ArduPID-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "powerbroker2/library/ArduPID/1.0.1/ArduPID-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduPID-1.0.1.tar.gz",
+    "size_bytes": 7505,
+    "sha256": "34d0b99d6172206f841810f9728dca1ca4c3b3408922062bd41eff93fbd6e258",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/powerbroker2/library/ArduPID/1.0.1/ArduPID-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/powerbroker2/library/ArduPID/1.0.1/ArduPID-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "powerbroker2/library/Autopilot/0.2.1/Autopilot-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Autopilot-0.2.1.tar.gz",
+    "size_bytes": 6240,
+    "sha256": "5a0db4de2dd7d436d1d0eda7502c621194410142c551493d97af3a7a247c1ad8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/powerbroker2/library/Autopilot/0.2.1/Autopilot-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/powerbroker2/library/Autopilot/0.2.1/Autopilot-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "powerbroker2/library/DFPlayerMini_Fast/1.2.4/DFPlayerMini_Fast-1.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFPlayerMini_Fast-1.2.4.tar.gz",
+    "size_bytes": 35821,
+    "sha256": "cb53bdf5763569dfd859236792d699de991f589775c363638fd1ff2890af9715",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/powerbroker2/library/DFPlayerMini_Fast/1.2.4/DFPlayerMini_Fast-1.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/powerbroker2/library/DFPlayerMini_Fast/1.2.4/DFPlayerMini_Fast-1.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "powerbroker2/library/DSPFilters/0.2.2/DSPFilters-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DSPFilters-0.2.2.tar.gz",
+    "size_bytes": 16054,
+    "sha256": "b6ad9e1785c7a0a5a7475c7f7e45e5a742ebab8189eff45414d587c08f440514",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/powerbroker2/library/DSPFilters/0.2.2/DSPFilters-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/powerbroker2/library/DSPFilters/0.2.2/DSPFilters-0.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "powerbroker2/library/DataLogger/0.0.3/DataLogger-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DataLogger-0.0.3.tar.gz",
+    "size_bytes": 5140,
+    "sha256": "7ccb180db8c132f023c3f3201d6dab8ef6e99602fe5de40a9b7cea3b9082a81d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/powerbroker2/library/DataLogger/0.0.3/DataLogger-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/powerbroker2/library/DataLogger/0.0.3/DataLogger-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "powerbroker2/library/ELMDuino/3.4.1/ELMDuino-3.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ELMDuino-3.4.1.tar.gz",
+    "size_bytes": 33204,
+    "sha256": "636514cc6497d632b38d2ff4e26f2e58e924e980db188498cef661742993a35c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/powerbroker2/library/ELMDuino/3.4.1/ELMDuino-3.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/powerbroker2/library/ELMDuino/3.4.1/ELMDuino-3.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "powerbroker2/library/FireTimer/1.0.5/FireTimer-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FireTimer-1.0.5.tar.gz",
+    "size_bytes": 1658,
+    "sha256": "ef1b479f54a52ec69e5a94a088f5ef3c9d27e51e7253d63d03d6fbb810b7efdb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/powerbroker2/library/FireTimer/1.0.5/FireTimer-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/powerbroker2/library/FireTimer/1.0.5/FireTimer-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "powerbroker2/library/MotorController/1.2.1/MotorController-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MotorController-1.2.1.tar.gz",
+    "size_bytes": 2985,
+    "sha256": "73807b8dc2f3d73f2afb87a0a99928c6a3cd9ca26cbfc4f772ee65fe59bf5d0d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/powerbroker2/library/MotorController/1.2.1/MotorController-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/powerbroker2/library/MotorController/1.2.1/MotorController-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "powerbroker2/library/MultivariateNormal/0.3.0/MultivariateNormal-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MultivariateNormal-0.3.0.tar.gz",
+    "size_bytes": 5828,
+    "sha256": "0f2d0408ce311b8e9fbdb59f98c1c1a72c800771771c8a7e0aa4b3bc0a987f06",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/powerbroker2/library/MultivariateNormal/0.3.0/MultivariateNormal-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/powerbroker2/library/MultivariateNormal/0.3.0/MultivariateNormal-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "powerbroker2/library/NEO-6M_GPS/1.0.2/NEO-6M_GPS-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NEO-6M_GPS-1.0.2.tar.gz",
+    "size_bytes": 3757,
+    "sha256": "5e3727b600094360a62756370a117e81f4df1ab0cb3d7a2f55a400f53dd770e3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/powerbroker2/library/NEO-6M_GPS/1.0.2/NEO-6M_GPS-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/powerbroker2/library/NEO-6M_GPS/1.0.2/NEO-6M_GPS-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "powerbroker2/library/Optimization/0.0.1/Optimization-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Optimization-0.0.1.tar.gz",
+    "size_bytes": 4646,
+    "sha256": "1f60ad23037f5a175924ac23f4b514579e5d4a072c774004689deea76cc692dc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/powerbroker2/library/Optimization/0.0.1/Optimization-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/powerbroker2/library/Optimization/0.0.1/Optimization-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "powerbroker2/library/SafeString/4.1.34/SafeString-4.1.34.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SafeString-4.1.34.tar.gz",
+    "size_bytes": 124813,
+    "sha256": "c4cf9c968356ad69f21b0df5a7ea1ec60f33e8ede6ff496cc7aa11995260e1d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/powerbroker2/library/SafeString/4.1.34/SafeString-4.1.34.tar.gz",
+     "https://dl.registry.platformio.org/download/powerbroker2/library/SafeString/4.1.34/SafeString-4.1.34.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "powerbroker2/library/SafeString/4.1.42/SafeString-4.1.42.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SafeString-4.1.42.tar.gz",
+    "size_bytes": 132890,
+    "sha256": "6a359cb63d094615f29eaaa07128b12811491dd34688a095281030a7e5d9922f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/powerbroker2/library/SafeString/4.1.42/SafeString-4.1.42.tar.gz",
+     "https://dl.registry.platformio.org/download/powerbroker2/library/SafeString/4.1.42/SafeString-4.1.42.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "powerbroker2/library/SafeString/4.1.43/SafeString-4.1.43.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SafeString-4.1.43.tar.gz",
+    "size_bytes": 134579,
+    "sha256": "9eb0cce7a0093d3c7bc30d59cb0313a1341f48400fc9960d42465aa3030140bf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/powerbroker2/library/SafeString/4.1.43/SafeString-4.1.43.tar.gz",
+     "https://dl.registry.platformio.org/download/powerbroker2/library/SafeString/4.1.43/SafeString-4.1.43.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "powerbroker2/library/SafeString/4.1.44/SafeString-4.1.44.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SafeString-4.1.44.tar.gz",
+    "size_bytes": 178623,
+    "sha256": "84a067df092831f4bb5a3ad66de22c629835ed1e6eece63294a5558e734b49e2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/powerbroker2/library/SafeString/4.1.44/SafeString-4.1.44.tar.gz",
+     "https://dl.registry.platformio.org/download/powerbroker2/library/SafeString/4.1.44/SafeString-4.1.44.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "powerbroker2/library/SafeString/4.1.45/SafeString-4.1.45.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SafeString-4.1.45.tar.gz",
+    "size_bytes": 193226,
+    "sha256": "ba98672466014f56c564d0bd71db60b94e8c67ca346e1ba1ddc596dd5021830f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/powerbroker2/library/SafeString/4.1.45/SafeString-4.1.45.tar.gz",
+     "https://dl.registry.platformio.org/download/powerbroker2/library/SafeString/4.1.45/SafeString-4.1.45.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "powerbroker2/library/SdTerminal/2.0.0/SdTerminal-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SdTerminal-2.0.0.tar.gz",
+    "size_bytes": 5408,
+    "sha256": "d25e029b75f890388fa4f766878b3eb6fe88e1a3f379a8870d3b1f8789b1ccdd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/powerbroker2/library/SdTerminal/2.0.0/SdTerminal-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/powerbroker2/library/SdTerminal/2.0.0/SdTerminal-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "powerbroker2/library/SerialTransfer/3.1.5/SerialTransfer-3.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialTransfer-3.1.5.tar.gz",
+    "size_bytes": 14422,
+    "sha256": "67f236cdddf7d81b7807a9b032e6777a29d1bae83e864293fd12478e1dd68131",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/powerbroker2/library/SerialTransfer/3.1.5/SerialTransfer-3.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/powerbroker2/library/SerialTransfer/3.1.5/SerialTransfer-3.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "powerbroker2/library/Teensy_3X_Multipurpose_Board/1.2.0/Teensy_3X_Multipurpose_Board-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Teensy_3X_Multipurpose_Board-1.2.0.tar.gz",
+    "size_bytes": 3809,
+    "sha256": "7e3514e11b788eaa2ee0a4b12e1ca00af64c44d6767cbe1f24896e5439661183",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/powerbroker2/library/Teensy_3X_Multipurpose_Board/1.2.0/Teensy_3X_Multipurpose_Board-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/powerbroker2/library/Teensy_3X_Multipurpose_Board/1.2.0/Teensy_3X_Multipurpose_Board-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "powerbroker2/library/UM7/0.0.1/UM7-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UM7-0.0.1.tar.gz",
+    "size_bytes": 10155,
+    "sha256": "6eaba42b8aa5fd2c74c84ce8d93e427f2b04f77dd6932436fe0a820dbfddf99c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/powerbroker2/library/UM7/0.0.1/UM7-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/powerbroker2/library/UM7/0.0.1/UM7-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "powerbroker2/library/Units/0.0.1/Units-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Units-0.0.1.tar.gz",
+    "size_bytes": 9360,
+    "sha256": "13ee7b7bc600009b167d332e73a6325b2bde5c662bc3abadcf2754ecc4b6b0e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/powerbroker2/library/Units/0.0.1/Units-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/powerbroker2/library/Units/0.0.1/Units-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "powerbroker2/library/UniversalTransmitter/0.0.1/UniversalTransmitter-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UniversalTransmitter-0.0.1.tar.gz",
+    "size_bytes": 38869,
+    "sha256": "73fecfae08c63159bb8142f83ea7234e20ac23f0d58acdbba285bba4e5c17174",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/powerbroker2/library/UniversalTransmitter/0.0.1/UniversalTransmitter-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/powerbroker2/library/UniversalTransmitter/0.0.1/UniversalTransmitter-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "powerbroker2/library/navduino/0.5.1/navduino-0.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "navduino-0.5.1.tar.gz",
+    "size_bytes": 16420,
+    "sha256": "c0a02a4c5f9b92325536e5cf76ffa04fe1ff9ce680257add87238d09d2e61433",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/powerbroker2/library/navduino/0.5.1/navduino-0.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/powerbroker2/library/navduino/0.5.1/navduino-0.5.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

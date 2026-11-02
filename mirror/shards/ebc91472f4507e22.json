@@ -1,0 +1,503 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ania-7abc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ania-7abc/library/Lcd2004/1.0.0/Lcd2004-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lcd2004-1.0.0.tar.gz",
+    "size_bytes": 4243,
+    "sha256": "148d47c47fbb53c3f1f2133cac06f8f8ab28b16514ae2951be29488ea9b6dde2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ania-7abc/library/Lcd2004/1.0.0/Lcd2004-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ania-7abc/library/Lcd2004/1.0.0/Lcd2004-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ania-7abc/library/Lcd2004/1.0.1/Lcd2004-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lcd2004-1.0.1.tar.gz",
+    "size_bytes": 5730,
+    "sha256": "0a53308441133e22aff1215ca799c61422d1ac1f346d98ebb9291635e159cb93",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ania-7abc/library/Lcd2004/1.0.1/Lcd2004-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ania-7abc/library/Lcd2004/1.0.1/Lcd2004-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ania-7abc/library/Lcd2004/1.1.0/Lcd2004-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lcd2004-1.1.0.tar.gz",
+    "size_bytes": 5899,
+    "sha256": "58ee13adc632165eaf7f9ae9b49fdd77d01f5dc80826b0c60581cc09d2295c2a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ania-7abc/library/Lcd2004/1.1.0/Lcd2004-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ania-7abc/library/Lcd2004/1.1.0/Lcd2004-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ania-7abc/library/Lcd2004/1.10.0/Lcd2004-1.10.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lcd2004-1.10.0.tar.gz",
+    "size_bytes": 15366,
+    "sha256": "c17363dc35e5c6cfb5d1c2e847b8180c828c20980659cbe019b0b74532c7a757",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ania-7abc/library/Lcd2004/1.10.0/Lcd2004-1.10.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ania-7abc/library/Lcd2004/1.10.0/Lcd2004-1.10.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ania-7abc/library/Lcd2004/1.10.1/Lcd2004-1.10.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lcd2004-1.10.1.tar.gz",
+    "size_bytes": 16960,
+    "sha256": "84a17098ffa10f7f63b2b23a808034cfc64194321836f1394eab2b6bf85c9141",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ania-7abc/library/Lcd2004/1.10.1/Lcd2004-1.10.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ania-7abc/library/Lcd2004/1.10.1/Lcd2004-1.10.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ania-7abc/library/Lcd2004/1.2.0/Lcd2004-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lcd2004-1.2.0.tar.gz",
+    "size_bytes": 5874,
+    "sha256": "a4236f1b208772b469bfb6e202b2daaf6ac3775261eadd2f46547fa4dd5c829c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ania-7abc/library/Lcd2004/1.2.0/Lcd2004-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ania-7abc/library/Lcd2004/1.2.0/Lcd2004-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ania-7abc/library/Lcd2004/1.2.1/Lcd2004-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lcd2004-1.2.1.tar.gz",
+    "size_bytes": 6460,
+    "sha256": "078f7730454908737ea45d6695bcf51c3406f2d74158fbcc67c91be9fee06e5a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ania-7abc/library/Lcd2004/1.2.1/Lcd2004-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ania-7abc/library/Lcd2004/1.2.1/Lcd2004-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ania-7abc/library/Lcd2004/1.2.2/Lcd2004-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lcd2004-1.2.2.tar.gz",
+    "size_bytes": 7015,
+    "sha256": "13d8c52eb5c7ddd05ce274fb4d1a47e508480107937dfc6a9acbcdb687f8942b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ania-7abc/library/Lcd2004/1.2.2/Lcd2004-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ania-7abc/library/Lcd2004/1.2.2/Lcd2004-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ania-7abc/library/Lcd2004/1.3.0/Lcd2004-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lcd2004-1.3.0.tar.gz",
+    "size_bytes": 7075,
+    "sha256": "461a076b834e4ebac076862e4a2e9cac34d54e39125904531362826ffd13cb9e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ania-7abc/library/Lcd2004/1.3.0/Lcd2004-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ania-7abc/library/Lcd2004/1.3.0/Lcd2004-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ania-7abc/library/Lcd2004/1.3.1/Lcd2004-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lcd2004-1.3.1.tar.gz",
+    "size_bytes": 7080,
+    "sha256": "3fb45586f95cdf782989654f03379d9035c9a8a14fbb18230aefd28277df15a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ania-7abc/library/Lcd2004/1.3.1/Lcd2004-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ania-7abc/library/Lcd2004/1.3.1/Lcd2004-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ania-7abc/library/Lcd2004/1.3.11/Lcd2004-1.3.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lcd2004-1.3.11.tar.gz",
+    "size_bytes": 7988,
+    "sha256": "0afe26d8959710e372ed158429baa5ce763cc34ceffbc772513e4d85425b5981",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ania-7abc/library/Lcd2004/1.3.11/Lcd2004-1.3.11.tar.gz",
+     "https://dl.registry.platformio.org/download/ania-7abc/library/Lcd2004/1.3.11/Lcd2004-1.3.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ania-7abc/library/Lcd2004/1.3.12/Lcd2004-1.3.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lcd2004-1.3.12.tar.gz",
+    "size_bytes": 7989,
+    "sha256": "4e02eb45fe33943005ab0f27fb1009121af4aa9f3719ffde1bf3820c86a794af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ania-7abc/library/Lcd2004/1.3.12/Lcd2004-1.3.12.tar.gz",
+     "https://dl.registry.platformio.org/download/ania-7abc/library/Lcd2004/1.3.12/Lcd2004-1.3.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ania-7abc/library/Lcd2004/1.3.2/Lcd2004-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lcd2004-1.3.2.tar.gz",
+    "size_bytes": 6416,
+    "sha256": "888377cfcf3c241766ea4d79bd8cc2521961a5f9653a34c836643bd9528913e1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ania-7abc/library/Lcd2004/1.3.2/Lcd2004-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ania-7abc/library/Lcd2004/1.3.2/Lcd2004-1.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ania-7abc/library/Lcd2004/1.3.3/Lcd2004-1.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lcd2004-1.3.3.tar.gz",
+    "size_bytes": 6266,
+    "sha256": "8a00000cc88831a5e7ecdfe4c1fe937d739d28d7db7aabff782578f52073d240",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ania-7abc/library/Lcd2004/1.3.3/Lcd2004-1.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/ania-7abc/library/Lcd2004/1.3.3/Lcd2004-1.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ania-7abc/library/Lcd2004/1.3.4/Lcd2004-1.3.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lcd2004-1.3.4.tar.gz",
+    "size_bytes": 6793,
+    "sha256": "284648231669e2a5d9ad52b934cd0f70cc1b864dda771513d80b6b7b0777311d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ania-7abc/library/Lcd2004/1.3.4/Lcd2004-1.3.4.tar.gz",
+     "https://dl.registry.platformio.org/download/ania-7abc/library/Lcd2004/1.3.4/Lcd2004-1.3.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ania-7abc/library/Lcd2004/1.3.5/Lcd2004-1.3.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lcd2004-1.3.5.tar.gz",
+    "size_bytes": 6768,
+    "sha256": "41d9c425f52a9b05e101e69d458446de62f3b5b6bc67a5f32963f72d83aac175",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ania-7abc/library/Lcd2004/1.3.5/Lcd2004-1.3.5.tar.gz",
+     "https://dl.registry.platformio.org/download/ania-7abc/library/Lcd2004/1.3.5/Lcd2004-1.3.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ania-7abc/library/Lcd2004/1.3.6/Lcd2004-1.3.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lcd2004-1.3.6.tar.gz",
+    "size_bytes": 6819,
+    "sha256": "016a72bb780700c770973177feccadbbdaa1e25d20403913cf2cd00196197de0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ania-7abc/library/Lcd2004/1.3.6/Lcd2004-1.3.6.tar.gz",
+     "https://dl.registry.platformio.org/download/ania-7abc/library/Lcd2004/1.3.6/Lcd2004-1.3.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ania-7abc/library/Lcd2004/1.3.7/Lcd2004-1.3.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lcd2004-1.3.7.tar.gz",
+    "size_bytes": 7965,
+    "sha256": "aa7fe3c80708fd1e7696e2e72585881ba99a0ca8b06be966a5d021ab2ff912e3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ania-7abc/library/Lcd2004/1.3.7/Lcd2004-1.3.7.tar.gz",
+     "https://dl.registry.platformio.org/download/ania-7abc/library/Lcd2004/1.3.7/Lcd2004-1.3.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ania-7abc/library/Lcd2004/1.4.0/Lcd2004-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lcd2004-1.4.0.tar.gz",
+    "size_bytes": 9706,
+    "sha256": "c48b7f8d303793cb4b15c9fe52008ac53d6eeef43f0b2bdb75d0caeffca7a2a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ania-7abc/library/Lcd2004/1.4.0/Lcd2004-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ania-7abc/library/Lcd2004/1.4.0/Lcd2004-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ania-7abc/library/Lcd2004/1.4.1/Lcd2004-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lcd2004-1.4.1.tar.gz",
+    "size_bytes": 9407,
+    "sha256": "9364b88a83e76ebf3678c17f4ae9c261332ad60fd95b21f9cc77b539b0be73ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ania-7abc/library/Lcd2004/1.4.1/Lcd2004-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ania-7abc/library/Lcd2004/1.4.1/Lcd2004-1.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ania-7abc/library/Lcd2004/1.4.2/Lcd2004-1.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lcd2004-1.4.2.tar.gz",
+    "size_bytes": 9413,
+    "sha256": "b607f3bd1f8e7e882b9cf7b77e48ded8c98e9ef18614cf77682ea7e92ab51d7c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ania-7abc/library/Lcd2004/1.4.2/Lcd2004-1.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ania-7abc/library/Lcd2004/1.4.2/Lcd2004-1.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ania-7abc/library/Lcd2004/1.5.0/Lcd2004-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lcd2004-1.5.0.tar.gz",
+    "size_bytes": 9522,
+    "sha256": "3a5152542672f4e41e06cd88948befcbefe2420823b4932d6c0a18665e3057a0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ania-7abc/library/Lcd2004/1.5.0/Lcd2004-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ania-7abc/library/Lcd2004/1.5.0/Lcd2004-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ania-7abc/library/Lcd2004/1.6.0/Lcd2004-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lcd2004-1.6.0.tar.gz",
+    "size_bytes": 9539,
+    "sha256": "28ca021e33c971e66d0ed9d49d240df101b31f39fc03939241f9dde4cb4839f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ania-7abc/library/Lcd2004/1.6.0/Lcd2004-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ania-7abc/library/Lcd2004/1.6.0/Lcd2004-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ania-7abc/library/Lcd2004/1.7.0/Lcd2004-1.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lcd2004-1.7.0.tar.gz",
+    "size_bytes": 9531,
+    "sha256": "650529f8eac25845060d810d43a2952af6dc07043932320764cd2e60a3cf061e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ania-7abc/library/Lcd2004/1.7.0/Lcd2004-1.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ania-7abc/library/Lcd2004/1.7.0/Lcd2004-1.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ania-7abc/library/Lcd2004/1.8.0/Lcd2004-1.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lcd2004-1.8.0.tar.gz",
+    "size_bytes": 14269,
+    "sha256": "2b8ca8c87bbb760e27601f47768ede23f8c2e29d6ec88978932884920bcaefef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ania-7abc/library/Lcd2004/1.8.0/Lcd2004-1.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ania-7abc/library/Lcd2004/1.8.0/Lcd2004-1.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ania-7abc/library/Lcd2004/1.9.0/Lcd2004-1.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lcd2004-1.9.0.tar.gz",
+    "size_bytes": 14282,
+    "sha256": "1cc435f73ae19021d7eb6aa38b0f9db33f7dc7a52fc288fae24be04ead9e2993",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ania-7abc/library/Lcd2004/1.9.0/Lcd2004-1.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ania-7abc/library/Lcd2004/1.9.0/Lcd2004-1.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ania-7abc/library/Lcd2004/1.9.1/Lcd2004-1.9.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lcd2004-1.9.1.tar.gz",
+    "size_bytes": 14389,
+    "sha256": "ff0cfae54ae24c18e604bd3fe908b5a863b6a35d9843d0b2363970394705cea6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ania-7abc/library/Lcd2004/1.9.1/Lcd2004-1.9.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ania-7abc/library/Lcd2004/1.9.1/Lcd2004-1.9.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ania-7abc/library/Lcd2004/2.0.0/Lcd2004-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lcd2004-2.0.0.tar.gz",
+    "size_bytes": 18592253,
+    "sha256": "0510a6ee76c2a90fb3f63775c6ce67cad40cadc9edf3e12f16ab6b5d537c126c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ania-7abc/library/Lcd2004/2.0.0/Lcd2004-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ania-7abc/library/Lcd2004/2.0.0/Lcd2004-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ania-7abc/library/Lcd2004/2.0.1/Lcd2004-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lcd2004-2.0.1.tar.gz",
+    "size_bytes": 18592156,
+    "sha256": "a238d30a148ff99cd237504db88e712a3ba4e82a41312ca077d7505d60f54fc4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ania-7abc/library/Lcd2004/2.0.1/Lcd2004-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ania-7abc/library/Lcd2004/2.0.1/Lcd2004-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ania-7abc/library/Lcd2004/2.1.0/Lcd2004-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lcd2004-2.1.0.tar.gz",
+    "size_bytes": 23774357,
+    "sha256": "7a651c9212ff0754a603ee9cebfee0b3f1dfd73b9f2f559117a4f9301ad50678",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ania-7abc/library/Lcd2004/2.1.0/Lcd2004-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ania-7abc/library/Lcd2004/2.1.0/Lcd2004-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ania-7abc/library/Lcd2004/2.1.1/Lcd2004-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lcd2004-2.1.1.tar.gz",
+    "size_bytes": 23775257,
+    "sha256": "9f4d641d69dc185813901bfc3468fcdb35ab9e31660a5d3fe1b42b9022593284",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ania-7abc/library/Lcd2004/2.1.1/Lcd2004-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ania-7abc/library/Lcd2004/2.1.1/Lcd2004-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ania-7abc/library/Lcd2004/2.2.0/Lcd2004-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lcd2004-2.2.0.tar.gz",
+    "size_bytes": 23775257,
+    "sha256": "8b9bb292335549af638f5242a36a88c348a5a004df383d2f48b33648566c35cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ania-7abc/library/Lcd2004/2.2.0/Lcd2004-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ania-7abc/library/Lcd2004/2.2.0/Lcd2004-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ania-7abc/library/Lcd2004/2.3.0/Lcd2004-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lcd2004-2.3.0.tar.gz",
+    "size_bytes": 23774671,
+    "sha256": "2335e22b1118df8732cecd304226876b137184cdb0e7842df7f1b82a9b325b9d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ania-7abc/library/Lcd2004/2.3.0/Lcd2004-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ania-7abc/library/Lcd2004/2.3.0/Lcd2004-2.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ania-7abc/library/Lcd2004/2.3.1/Lcd2004-2.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lcd2004-2.3.1.tar.gz",
+    "size_bytes": 23774667,
+    "sha256": "36176ef675445f85929af0a7ec5f2ffc2160c3a27297c17cda31d83bdc805b42",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ania-7abc/library/Lcd2004/2.3.1/Lcd2004-2.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ania-7abc/library/Lcd2004/2.3.1/Lcd2004-2.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ania-7abc/library/Lcd2004/2.3.2/Lcd2004-2.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lcd2004-2.3.2.tar.gz",
+    "size_bytes": 23774675,
+    "sha256": "2ce52d532c808b8802a04d04c864a69321412056b3e87a8d170a89a702e187ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ania-7abc/library/Lcd2004/2.3.2/Lcd2004-2.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ania-7abc/library/Lcd2004/2.3.2/Lcd2004-2.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ania-7abc/library/Lcd2004/2.3.3/Lcd2004-2.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lcd2004-2.3.3.tar.gz",
+    "size_bytes": 16121,
+    "sha256": "ab6b481fc0e3a7b7be5fce8c170d3a19301288755a3779fd146e0026c53de2cd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ania-7abc/library/Lcd2004/2.3.3/Lcd2004-2.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/ania-7abc/library/Lcd2004/2.3.3/Lcd2004-2.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ania-7abc/library/Lcd2004/2.3.4/Lcd2004-2.3.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lcd2004-2.3.4.tar.gz",
+    "size_bytes": 16167,
+    "sha256": "a10c48116ce72e5ca1e1f430b9c03fc4ce0dd4a2ee00499e2d4c2414fee9347b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ania-7abc/library/Lcd2004/2.3.4/Lcd2004-2.3.4.tar.gz",
+     "https://dl.registry.platformio.org/download/ania-7abc/library/Lcd2004/2.3.4/Lcd2004-2.3.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ania-7abc/library/Lcd2004/2.3.5/Lcd2004-2.3.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lcd2004-2.3.5.tar.gz",
+    "size_bytes": 16256,
+    "sha256": "69a3b2f151cdf3ef5b71f4fd3fde59153678b4af7182732a96ab5efb7314cf8c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ania-7abc/library/Lcd2004/2.3.5/Lcd2004-2.3.5.tar.gz",
+     "https://dl.registry.platformio.org/download/ania-7abc/library/Lcd2004/2.3.5/Lcd2004-2.3.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

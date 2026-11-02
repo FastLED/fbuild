@@ -1,0 +1,152 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/levkovigor",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "levkovigor/library/ADF7023/1.0.3/ADF7023-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADF7023-1.0.3.tar.gz",
+    "size_bytes": 14673,
+    "sha256": "93016bde7acfeaffd3af06f71d9b60b605a421bea72338391e9f44dcfbc58735",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/levkovigor/library/ADF7023/1.0.3/ADF7023-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/levkovigor/library/ADF7023/1.0.3/ADF7023-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "levkovigor/library/ADF7023/1.0.4/ADF7023-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADF7023-1.0.4.tar.gz",
+    "size_bytes": 14804,
+    "sha256": "4803250e9129f646db47a41f8ab8f95416286bb4d31fd419d4a500b5b0472bce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/levkovigor/library/ADF7023/1.0.4/ADF7023-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/levkovigor/library/ADF7023/1.0.4/ADF7023-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "levkovigor/library/AODV/1.0.1/AODV-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AODV-1.0.1.tar.gz",
+    "size_bytes": 375458,
+    "sha256": "f995308f4c2046dfc51f8504ca86d5718b3caaf4727157e68f94fb5b914178d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/levkovigor/library/AODV/1.0.1/AODV-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/levkovigor/library/AODV/1.0.1/AODV-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "levkovigor/library/DDSM115/1.0.0/DDSM115-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DDSM115-1.0.0.tar.gz",
+    "size_bytes": 4215,
+    "sha256": "8ec60d0db5253ea705a7f19bd2f6b15b0d8dfb30974a33bbe07d06aba05a3700",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/levkovigor/library/DDSM115/1.0.0/DDSM115-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/levkovigor/library/DDSM115/1.0.0/DDSM115-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "levkovigor/library/FastInterruptEncoder/1.0.1/FastInterruptEncoder-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastInterruptEncoder-1.0.1.tar.gz",
+    "size_bytes": 3905,
+    "sha256": "70c62d508f2029577e5a833715fbfc315f9844f9e741bc47a73b416ec7d3b16f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/levkovigor/library/FastInterruptEncoder/1.0.1/FastInterruptEncoder-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/levkovigor/library/FastInterruptEncoder/1.0.1/FastInterruptEncoder-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "levkovigor/library/GT811%20Library/1.0.1/GT811Library-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GT811Library-1.0.1.tar.gz",
+    "size_bytes": 3935,
+    "sha256": "6a806ead5ca13080a86e63b67c52353ee383507f2bb5976bec2770e1f4290748",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/levkovigor/library/GT811%2520Library/1.0.1/GT811Library-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/levkovigor/library/GT811%20Library/1.0.1/GT811Library-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "levkovigor/library/LTR390/1.0.9/LTR390-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LTR390-1.0.9.tar.gz",
+    "size_bytes": 9923,
+    "sha256": "cc5f6b39d2eb770984468b1c4b225a5815396612f08bab7315e95637e1868735",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/levkovigor/library/LTR390/1.0.9/LTR390-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/levkovigor/library/LTR390/1.0.9/LTR390-1.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "levkovigor/library/MMC34160PJ/1.0.3/MMC34160PJ-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MMC34160PJ-1.0.3.tar.gz",
+    "size_bytes": 3258,
+    "sha256": "c3e611ec078c67fc31d7fdcfa19bdc737c7a5421f9a371618a2987dffe09e239",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/levkovigor/library/MMC34160PJ/1.0.3/MMC34160PJ-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/levkovigor/library/MMC34160PJ/1.0.3/MMC34160PJ-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "levkovigor/library/PPPOSClient/1.0/PPPOSClient-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PPPOSClient-1.0.tar.gz",
+    "size_bytes": 7407,
+    "sha256": "a949c58c9f5a72ec17f3538b0d28f4a68bd572abe21f023879d3c31f34132918",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/levkovigor/library/PPPOSClient/1.0/PPPOSClient-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/levkovigor/library/PPPOSClient/1.0/PPPOSClient-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "levkovigor/library/PTZProtocolHandler/1.0.1/PTZProtocolHandler-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PTZProtocolHandler-1.0.1.tar.gz",
+    "size_bytes": 2787,
+    "sha256": "6b51177feb798108a42b7040ef13f6b2db829c2f55619367a5eb28c6937306a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/levkovigor/library/PTZProtocolHandler/1.0.1/PTZProtocolHandler-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/levkovigor/library/PTZProtocolHandler/1.0.1/PTZProtocolHandler-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "levkovigor/library/UWB_DW1000_DW3000/1.0.1/UWB_DW1000_DW3000-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UWB_DW1000_DW3000-1.0.1.tar.gz",
+    "size_bytes": 148251,
+    "sha256": "0646a28f995fefe94360c7e7233f190e18a0c2158c2805f0aeb6f35058969046",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/levkovigor/library/UWB_DW1000_DW3000/1.0.1/UWB_DW1000_DW3000-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/levkovigor/library/UWB_DW1000_DW3000/1.0.1/UWB_DW1000_DW3000-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

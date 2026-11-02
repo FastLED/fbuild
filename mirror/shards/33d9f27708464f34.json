@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sensomy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sensomy/library/sensomy-log/1.0.1/sensomy-log-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "sensomy-log-1.0.1.tar.gz",
+    "size_bytes": 2485,
+    "sha256": "55f401c9bc76b4aedb1744280c10f9dc6a346a9dd6b84c4d9fb85d198b17ef81",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensomy/library/sensomy-log/1.0.1/sensomy-log-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sensomy/library/sensomy-log/1.0.1/sensomy-log-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

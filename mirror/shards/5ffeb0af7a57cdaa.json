@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/salterm27",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "salterm27/library/Watch/1.0.0/Watch-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Watch-1.0.0.tar.gz",
+    "size_bytes": 2334,
+    "sha256": "1be6dcc24c9d3832f76cbea22a13df62b0ec70f78c4a0fefb206173edee95d03",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/salterm27/library/Watch/1.0.0/Watch-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/salterm27/library/Watch/1.0.0/Watch-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

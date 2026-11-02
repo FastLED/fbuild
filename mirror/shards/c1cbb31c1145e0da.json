@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/electrocoder",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "electrocoder/library/MBModbusRTUSlave/1.1.0/MBModbusRTUSlave-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MBModbusRTUSlave-1.1.0.tar.gz",
+    "size_bytes": 5535,
+    "sha256": "292d26a44b8afd0af6f654f74bcef4b66173e04d0c3c82721a2e9c4160497c7d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/electrocoder/library/MBModbusRTUSlave/1.1.0/MBModbusRTUSlave-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/electrocoder/library/MBModbusRTUSlave/1.1.0/MBModbusRTUSlave-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

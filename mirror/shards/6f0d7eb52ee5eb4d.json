@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ankur608",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ankur608/library/UnoQ_AdafruitTouch/1.0.0/UnoQ_AdafruitTouch-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UnoQ_AdafruitTouch-1.0.0.tar.gz",
+    "size_bytes": 86682,
+    "sha256": "b8d42c2492e69623a486892e9a990d84f6760333ee9cc38121e59d620f0f68a6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ankur608/library/UnoQ_AdafruitTouch/1.0.0/UnoQ_AdafruitTouch-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ankur608/library/UnoQ_AdafruitTouch/1.0.0/UnoQ_AdafruitTouch-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jaikulk14",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jaikulk14/library/AdvancedOximeter/1.0.0/AdvancedOximeter-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AdvancedOximeter-1.0.0.tar.gz",
+    "size_bytes": 3579,
+    "sha256": "508556695ab225a54d65e6621575b4724f185a45189381062fdbc62a4c75da08",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jaikulk14/library/AdvancedOximeter/1.0.0/AdvancedOximeter-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jaikulk14/library/AdvancedOximeter/1.0.0/AdvancedOximeter-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jaikulk14/library/DataLinkSerial/1.0.0/DataLinkSerial-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DataLinkSerial-1.0.0.tar.gz",
+    "size_bytes": 2615,
+    "sha256": "c582bad6456b2924711ef5f2b2a03cdecaaa845f92545dab84ca4d4f78d2c218",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jaikulk14/library/DataLinkSerial/1.0.0/DataLinkSerial-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jaikulk14/library/DataLinkSerial/1.0.0/DataLinkSerial-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jaikulk14/library/MQGasKit/1.0.0/MQGasKit-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQGasKit-1.0.0.tar.gz",
+    "size_bytes": 2604,
+    "sha256": "f035f64598ee8269d644c495250cd193963efe0677787978ee94dc1531af6d2b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jaikulk14/library/MQGasKit/1.0.0/MQGasKit-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jaikulk14/library/MQGasKit/1.0.0/MQGasKit-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jaikulk14/library/QuickAPConnect/1.0.0/QuickAPConnect-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QuickAPConnect-1.0.0.tar.gz",
+    "size_bytes": 1957,
+    "sha256": "2cceca362d3b611cbc21146abdcbd679cef82d2a40c75b80d7991e9cebd99ace",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jaikulk14/library/QuickAPConnect/1.0.0/QuickAPConnect-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jaikulk14/library/QuickAPConnect/1.0.0/QuickAPConnect-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

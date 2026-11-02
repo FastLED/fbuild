@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/deafloo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "deafloo/library/ODriveArduino/0.0.0-broken/ODriveArduino-0.0.0-alphasha.306000f46e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ODriveArduino-0.0.0-alphasha.306000f46e.tar.gz",
+    "size_bytes": 514,
+    "sha256": "3ef447a31b0c88f6c164b218daec2affe52bda5854c008a2efcef6964264a15b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deafloo/library/ODriveArduino/0.0.0-broken/ODriveArduino-0.0.0-alphasha.306000f46e.tar.gz",
+     "https://dl.registry.platformio.org/download/deafloo/library/ODriveArduino/0.0.0-broken/ODriveArduino-0.0.0-alphasha.306000f46e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/black.ghost.off",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "black.ghost.off/library/ESP32-BLE-Controller/0.0.2/ESP32-BLE-Controller-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-BLE-Controller-0.0.2.tar.gz",
+    "size_bytes": 45098,
+    "sha256": "88b8a3bf156e41fa2d6ec75284eb561c0d6c638d950b6d49e801f299b664170b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/black.ghost.off/library/ESP32-BLE-Controller/0.0.2/ESP32-BLE-Controller-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/black.ghost.off/library/ESP32-BLE-Controller/0.0.2/ESP32-BLE-Controller-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "black.ghost.off/library/ESP32-BLE-Controller/0.0.3/ESP32-BLE-Controller-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-BLE-Controller-0.0.3.tar.gz",
+    "size_bytes": 45107,
+    "sha256": "08caed98403ea47a9f886075cd00c296d23e16d4394ec3e6451214cf4519819c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/black.ghost.off/library/ESP32-BLE-Controller/0.0.3/ESP32-BLE-Controller-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/black.ghost.off/library/ESP32-BLE-Controller/0.0.3/ESP32-BLE-Controller-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "black.ghost.off/library/ESP32-BLE-Controller/0.0.4/ESP32-BLE-Controller-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-BLE-Controller-0.0.4.tar.gz",
+    "size_bytes": 46164,
+    "sha256": "94b770441d98778c58a97caac75051aa25d5e8c8b46a925c9ee5e70a8c130524",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/black.ghost.off/library/ESP32-BLE-Controller/0.0.4/ESP32-BLE-Controller-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/black.ghost.off/library/ESP32-BLE-Controller/0.0.4/ESP32-BLE-Controller-0.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "black.ghost.off/library/Lilka/2.4.0/Lilka-2.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lilka-2.4.0.tar.gz",
+    "size_bytes": 316687,
+    "sha256": "85e17f42677f588f83a7431ae925e685ca31eb9a6a2e47487a0efa925c93fe43",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/black.ghost.off/library/Lilka/2.4.0/Lilka-2.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/black.ghost.off/library/Lilka/2.4.0/Lilka-2.4.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,231 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tasmota",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tasmota/tool/framework-arduinoespressif8266/2.7.4.9/framework-arduinoespressif8266-2.7.4.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "framework-arduinoespressif8266-2.7.4.9.tar.gz",
+    "size_bytes": 30117470,
+    "sha256": "bcc46f97a8f470ec0bdf71246153d305758a50e1242b4bbdcc158496c6478529",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tasmota/tool/framework-arduinoespressif8266/2.7.4.9/framework-arduinoespressif8266-2.7.4.9.tar.gz",
+     "https://dl.registry.platformio.org/download/tasmota/tool/framework-arduinoespressif8266/2.7.4.9/framework-arduinoespressif8266-2.7.4.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tasmota/tool/framework-arduinoespressif8266/3.20704.7/framework-arduinoespressif8266-3.20704.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "framework-arduinoespressif8266-3.20704.7.tar.gz",
+    "size_bytes": 28820394,
+    "sha256": "d3587ec5f5964ec12e7870d7aa1fdae2844d4d5f9054b8b0ff7d702938fa5f13",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tasmota/tool/framework-arduinoespressif8266/3.20704.7/framework-arduinoespressif8266-3.20704.7.tar.gz",
+     "https://dl.registry.platformio.org/download/tasmota/tool/framework-arduinoespressif8266/3.20704.7/framework-arduinoespressif8266-3.20704.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tasmota/tool/tool-mklittlefs/3.2.0/tool-mklittlefs-darwin_x86_64-3.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-mklittlefs-darwin_x86_64-3.2.0.tar.gz",
+    "size_bytes": 363042,
+    "sha256": "3daf49432978486c6135eecc486904ae049d26ad8b0ba8b6368969f8565ebe37",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tasmota/tool/tool-mklittlefs/3.2.0/tool-mklittlefs-darwin_x86_64-3.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tasmota/tool/tool-mklittlefs/3.2.0/tool-mklittlefs-darwin_x86_64-3.2.0.tar.gz"
+    ],
+    "provides": [
+     "darwin_x86_64",
+     "darwin_arm64"
+    ]
+   }
+  },
+  {
+   "id": "tasmota/tool/tool-mklittlefs/3.2.0/tool-mklittlefs-linux_aarch64-3.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-mklittlefs-linux_aarch64-3.2.0.tar.gz",
+    "size_bytes": 49766,
+    "sha256": "6199b7b20ae0c97118037dd9dd78b5b688bc458e60aa5a913e5830824b4ac755",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tasmota/tool/tool-mklittlefs/3.2.0/tool-mklittlefs-linux_aarch64-3.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tasmota/tool/tool-mklittlefs/3.2.0/tool-mklittlefs-linux_aarch64-3.2.0.tar.gz"
+    ],
+    "provides": [
+     "linux_aarch64"
+    ]
+   }
+  },
+  {
+   "id": "tasmota/tool/tool-mklittlefs/3.2.0/tool-mklittlefs-linux_armv6l-3.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-mklittlefs-linux_armv6l-3.2.0.tar.gz",
+    "size_bytes": 41979,
+    "sha256": "64adf176ac85e90713fa6b9c43be9672e9fb3b2786af23b94106bc8683c149b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tasmota/tool/tool-mklittlefs/3.2.0/tool-mklittlefs-linux_armv6l-3.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tasmota/tool/tool-mklittlefs/3.2.0/tool-mklittlefs-linux_armv6l-3.2.0.tar.gz"
+    ],
+    "provides": [
+     "linux_armv6l"
+    ]
+   }
+  },
+  {
+   "id": "tasmota/tool/tool-mklittlefs/3.2.0/tool-mklittlefs-linux_x86_64-3.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-mklittlefs-linux_x86_64-3.2.0.tar.gz",
+    "size_bytes": 52057,
+    "sha256": "1e7e2c931ffa1b6dd7fd2f4dd78a7a4df6e8470bef43086a8b9e0e9230f617a0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tasmota/tool/tool-mklittlefs/3.2.0/tool-mklittlefs-linux_x86_64-3.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tasmota/tool/tool-mklittlefs/3.2.0/tool-mklittlefs-linux_x86_64-3.2.0.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
+    ]
+   }
+  },
+  {
+   "id": "tasmota/tool/tool-mklittlefs/3.2.0/tool-mklittlefs-windows_amd64-3.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-mklittlefs-windows_amd64-3.2.0.tar.gz",
+    "size_bytes": 347057,
+    "sha256": "bb25fd9909b79b4f243150e0dfc82c94065cc8faa45b98bb31ada57d7fc0b74b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tasmota/tool/tool-mklittlefs/3.2.0/tool-mklittlefs-windows_amd64-3.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tasmota/tool/tool-mklittlefs/3.2.0/tool-mklittlefs-windows_amd64-3.2.0.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_arm64"
+    ]
+   }
+  },
+  {
+   "id": "tasmota/tool/tool-mklittlefs/3.2.0/tool-mklittlefs-windows_x86-3.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-mklittlefs-windows_x86-3.2.0.tar.gz",
+    "size_bytes": 334455,
+    "sha256": "3fa6eda10ba771da0d5537436066957ab08431315294e576412cda291250c9e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tasmota/tool/tool-mklittlefs/3.2.0/tool-mklittlefs-windows_x86-3.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tasmota/tool/tool-mklittlefs/3.2.0/tool-mklittlefs-windows_x86-3.2.0.tar.gz"
+    ],
+    "provides": [
+     "windows_x86"
+    ]
+   }
+  },
+  {
+   "id": "tasmota/tool/tool-mklittlefs/4.0.0/tool-mklittlefs-darwin_x86_64-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-mklittlefs-darwin_x86_64-4.0.0.tar.gz",
+    "size_bytes": 364476,
+    "sha256": "43ff038c5e2c6e1634a6741a3598d6d02ae30be365afae1fe50ea4a02e7412f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tasmota/tool/tool-mklittlefs/4.0.0/tool-mklittlefs-darwin_x86_64-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tasmota/tool/tool-mklittlefs/4.0.0/tool-mklittlefs-darwin_x86_64-4.0.0.tar.gz"
+    ],
+    "provides": [
+     "darwin_x86_64",
+     "darwin_arm64"
+    ]
+   }
+  },
+  {
+   "id": "tasmota/tool/tool-mklittlefs/4.0.0/tool-mklittlefs-linux_aarch64-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-mklittlefs-linux_aarch64-4.0.0.tar.gz",
+    "size_bytes": 50949,
+    "sha256": "e9044925ed113c6748978f146121526c06099ad75da9ebf41031fac48bde94f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tasmota/tool/tool-mklittlefs/4.0.0/tool-mklittlefs-linux_aarch64-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tasmota/tool/tool-mklittlefs/4.0.0/tool-mklittlefs-linux_aarch64-4.0.0.tar.gz"
+    ],
+    "provides": [
+     "linux_aarch64"
+    ]
+   }
+  },
+  {
+   "id": "tasmota/tool/tool-mklittlefs/4.0.0/tool-mklittlefs-linux_armv6l-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-mklittlefs-linux_armv6l-4.0.0.tar.gz",
+    "size_bytes": 43173,
+    "sha256": "f06e0e9c3914176f0207f147bf63da14e4c6f97edfd2d2900581f0659806e3d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tasmota/tool/tool-mklittlefs/4.0.0/tool-mklittlefs-linux_armv6l-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tasmota/tool/tool-mklittlefs/4.0.0/tool-mklittlefs-linux_armv6l-4.0.0.tar.gz"
+    ],
+    "provides": [
+     "linux_armv6l"
+    ]
+   }
+  },
+  {
+   "id": "tasmota/tool/tool-mklittlefs/4.0.0/tool-mklittlefs-linux_x86_64-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-mklittlefs-linux_x86_64-4.0.0.tar.gz",
+    "size_bytes": 53449,
+    "sha256": "25e34740566e2f677975654452ddb9250e09e1df0b9a7a4c9c4190f7c2f9c161",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tasmota/tool/tool-mklittlefs/4.0.0/tool-mklittlefs-linux_x86_64-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tasmota/tool/tool-mklittlefs/4.0.0/tool-mklittlefs-linux_x86_64-4.0.0.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
+    ]
+   }
+  },
+  {
+   "id": "tasmota/tool/tool-mklittlefs/4.0.0/tool-mklittlefs-windows_amd64-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-mklittlefs-windows_amd64-4.0.0.tar.gz",
+    "size_bytes": 347933,
+    "sha256": "2ca1d03d0ddd352fd8cc26bcb0187dccf327aa56244fcd7c31d7f0b81523e2fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tasmota/tool/tool-mklittlefs/4.0.0/tool-mklittlefs-windows_amd64-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tasmota/tool/tool-mklittlefs/4.0.0/tool-mklittlefs-windows_amd64-4.0.0.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_arm64"
+    ]
+   }
+  },
+  {
+   "id": "tasmota/tool/tool-mklittlefs/4.0.0/tool-mklittlefs-windows_x86-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-mklittlefs-windows_x86-4.0.0.tar.gz",
+    "size_bytes": 335470,
+    "sha256": "048ad7cb665c27ee4c9a282c08674f546bc08dc8fa60fa1943c8f862c3288169",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tasmota/tool/tool-mklittlefs/4.0.0/tool-mklittlefs-windows_x86-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tasmota/tool/tool-mklittlefs/4.0.0/tool-mklittlefs-windows_x86-4.0.0.tar.gz"
+    ],
+    "provides": [
+     "windows_x86"
+    ]
+   }
+  }
+ ]
+}

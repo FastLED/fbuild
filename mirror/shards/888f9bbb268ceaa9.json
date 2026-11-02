@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/seanboe",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "seanboe/library/SimpleFusion/1.0.6/SimpleFusion-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleFusion-1.0.6.tar.gz",
+    "size_bytes": 3837,
+    "sha256": "36df333ca3d4ae351a05ad5f68f39baf31eda99510f5cfb630cdb5b7e0d0abf2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seanboe/library/SimpleFusion/1.0.6/SimpleFusion-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/seanboe/library/SimpleFusion/1.0.6/SimpleFusion-1.0.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/celclow",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "celclow/library/SwitchControlLibrary/1.0.0/SwitchControlLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SwitchControlLibrary-1.0.0.tar.gz",
+    "size_bytes": 3933,
+    "sha256": "a10350b4ce8092ea322207fd51bd8d53c138345012d95d525be11c6d769f5451",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/celclow/library/SwitchControlLibrary/1.0.0/SwitchControlLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/celclow/library/SwitchControlLibrary/1.0.0/SwitchControlLibrary-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

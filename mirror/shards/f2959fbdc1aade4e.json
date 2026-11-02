@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/viziot-com",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "viziot-com/library/VizIoTMqttClient/1.0/VizIoTMqttClient-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VizIoTMqttClient-1.0.tar.gz",
+    "size_bytes": 5331,
+    "sha256": "7db65279d2ad5f2590da0811915f892fc7b21435df3b898a033512fa2b58f595",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/viziot-com/library/VizIoTMqttClient/1.0/VizIoTMqttClient-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/viziot-com/library/VizIoTMqttClient/1.0/VizIoTMqttClient-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gogicool-geek",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gogicool-geek/library/ArduinoTaskManager/0.1.2/ArduinoTaskManager-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoTaskManager-0.1.2.tar.gz",
+    "size_bytes": 7465,
+    "sha256": "0962c00ba678b9fb114e7c5279b9ae2e44860c6d1fe135d990fbfcb41ea3509d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gogicool-geek/library/ArduinoTaskManager/0.1.2/ArduinoTaskManager-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gogicool-geek/library/ArduinoTaskManager/0.1.2/ArduinoTaskManager-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gogicool-geek/library/Sim800nb/0.1.0/Sim800nb-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sim800nb-0.1.0.tar.gz",
+    "size_bytes": 7263,
+    "sha256": "d5bc80e75156f784ac2e866f1c0ddde51a16bfbe966283e85a4badefa4b94b33",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gogicool-geek/library/Sim800nb/0.1.0/Sim800nb-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gogicool-geek/library/Sim800nb/0.1.0/Sim800nb-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

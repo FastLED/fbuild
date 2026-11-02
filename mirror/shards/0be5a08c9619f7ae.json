@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ewpa",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ewpa/library/LibSSH-ESP32/3.1.0/LibSSH-ESP32-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LibSSH-ESP32-3.1.0.tar.gz",
+    "size_bytes": 411009,
+    "sha256": "66a2614552faed99e16fe91a9d7e85fef3891567a7bb92896cd4a64d10b71faa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ewpa/library/LibSSH-ESP32/3.1.0/LibSSH-ESP32-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ewpa/library/LibSSH-ESP32/3.1.0/LibSSH-ESP32-3.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ewpa/library/LibSSH-ESP32/5.10.0/LibSSH-ESP32-5.10.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LibSSH-ESP32-5.10.0.tar.gz",
+    "size_bytes": 485518,
+    "sha256": "5c09f29f469d17073afe6b804c5006304ed90465752e2f3c7289562152b78dbe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ewpa/library/LibSSH-ESP32/5.10.0/LibSSH-ESP32-5.10.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ewpa/library/LibSSH-ESP32/5.10.0/LibSSH-ESP32-5.10.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ewpa/library/LibSSH-ESP32/5.6.0/LibSSH-ESP32-5.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LibSSH-ESP32-5.6.0.tar.gz",
+    "size_bytes": 483141,
+    "sha256": "d2b2260be8e0aa6868afcec237b6b2c1e7f1e901b19ef218e9b74ab1ec7b390e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ewpa/library/LibSSH-ESP32/5.6.0/LibSSH-ESP32-5.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ewpa/library/LibSSH-ESP32/5.6.0/LibSSH-ESP32-5.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ewpa/library/LibSSH-ESP32/5.7.0/LibSSH-ESP32-5.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LibSSH-ESP32-5.7.0.tar.gz",
+    "size_bytes": 483339,
+    "sha256": "c355364ffbdaee8945aa9eda6b7e99db04713a054a849a4cebc3854fd958867e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ewpa/library/LibSSH-ESP32/5.7.0/LibSSH-ESP32-5.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ewpa/library/LibSSH-ESP32/5.7.0/LibSSH-ESP32-5.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ewpa/library/LibSSH-ESP32/5.8.0/LibSSH-ESP32-5.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LibSSH-ESP32-5.8.0.tar.gz",
+    "size_bytes": 484830,
+    "sha256": "e28ef16e925f3cab765247ccf9ee3e47fb92a9581d810df7618725402b2671f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ewpa/library/LibSSH-ESP32/5.8.0/LibSSH-ESP32-5.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ewpa/library/LibSSH-ESP32/5.8.0/LibSSH-ESP32-5.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ewpa/library/LibSSH-ESP32/5.9.0/LibSSH-ESP32-5.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LibSSH-ESP32-5.9.0.tar.gz",
+    "size_bytes": 485301,
+    "sha256": "ed3ee14f5f780a6cb567522cf1942117e68eaa47025985bca5c79a76fc9d67c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ewpa/library/LibSSH-ESP32/5.9.0/LibSSH-ESP32-5.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ewpa/library/LibSSH-ESP32/5.9.0/LibSSH-ESP32-5.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ewpa/library/MAX3100%20Serial/1.1.0/MAX3100Serial-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX3100Serial-1.1.0.tar.gz",
+    "size_bytes": 16256,
+    "sha256": "cd97a9444ff00a4012130db145a32d5dc1949562e17a4458c5f33f542a9a3b1e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ewpa/library/MAX3100%2520Serial/1.1.0/MAX3100Serial-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ewpa/library/MAX3100%20Serial/1.1.0/MAX3100Serial-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

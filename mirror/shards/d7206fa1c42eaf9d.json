@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-wliu88",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-wliu88/library/Adafruit_Trellis/0.0.0+sha.3a43c8b959d8/Adafruit_Trellis-0.0.0+sha.3a43c8b959d8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Adafruit_Trellis-0.0.0+sha.3a43c8b959d8.tar.gz",
+    "size_bytes": 2563,
+    "sha256": "1c23a7d6592a26a81b5f3f7a221b7c8a6c0d831de3180f7b117ed58228c85283",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wliu88/library/Adafruit_Trellis/0.0.0%2Bsha.3a43c8b959d8/Adafruit_Trellis-0.0.0%2Bsha.3a43c8b959d8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wliu88/library/Adafruit_Trellis/0.0.0%2Bsha.3a43c8b959d8/Adafruit_Trellis-0.0.0%2Bsha.3a43c8b959d8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

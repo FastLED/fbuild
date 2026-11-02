@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/witsanup",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "witsanup/library/WitsanuDotH/1.0.0/WitsanuDotH-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WitsanuDotH-1.0.0.tar.gz",
+    "size_bytes": 6455,
+    "sha256": "ce59b173a0beda8ba0f76cfc1ab58f286139772a868bd9fb8100083b328970cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/witsanup/library/WitsanuDotH/1.0.0/WitsanuDotH-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/witsanup/library/WitsanuDotH/1.0.0/WitsanuDotH-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

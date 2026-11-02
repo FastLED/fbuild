@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-gulchi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-gulchi/library/ModBusTCP/0.0.0+sha.41ee166a0e6c/ModBusTCP-0.0.0+sha.41ee166a0e6c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ModBusTCP-0.0.0+sha.41ee166a0e6c.tar.gz",
+    "size_bytes": 8056,
+    "sha256": "c6ca2726a674d3d54b848aaef0cef6fdc2bed2b10740449b3bac1ed06ed00501",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-gulchi/library/ModBusTCP/0.0.0%2Bsha.41ee166a0e6c/ModBusTCP-0.0.0%2Bsha.41ee166a0e6c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-gulchi/library/ModBusTCP/0.0.0%2Bsha.41ee166a0e6c/ModBusTCP-0.0.0%2Bsha.41ee166a0e6c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

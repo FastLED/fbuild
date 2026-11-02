@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/openlcb",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "openlcb/library/OpenLCB_Single_Thread/0.1.16/OpenLCB_Single_Thread-0.1.16.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OpenLCB_Single_Thread-0.1.16.tar.gz",
+    "size_bytes": 293418,
+    "sha256": "94eadf513fb5c415bf19f780d68f0bbb41bf796bfd6d951f925ef2d3e9267256",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/openlcb/library/OpenLCB_Single_Thread/0.1.16/OpenLCB_Single_Thread-0.1.16.tar.gz",
+     "https://dl.registry.platformio.org/download/openlcb/library/OpenLCB_Single_Thread/0.1.16/OpenLCB_Single_Thread-0.1.16.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "openlcb/library/OpenLCB_Single_Thread/0.1.17/OpenLCB_Single_Thread-0.1.17.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OpenLCB_Single_Thread-0.1.17.tar.gz",
+    "size_bytes": 293442,
+    "sha256": "ec72dd3d369343c9e1ecca6db8c0469d1f2411b9e3f44b4468262e7245147be4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/openlcb/library/OpenLCB_Single_Thread/0.1.17/OpenLCB_Single_Thread-0.1.17.tar.gz",
+     "https://dl.registry.platformio.org/download/openlcb/library/OpenLCB_Single_Thread/0.1.17/OpenLCB_Single_Thread-0.1.17.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "openlcb/library/OpenLCB_Single_Thread/0.1.19/OpenLCB_Single_Thread-0.1.19.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OpenLCB_Single_Thread-0.1.19.tar.gz",
+    "size_bytes": 293452,
+    "sha256": "8d4bf2405e05984dca5d63329a07783982ad00b93a708d443bedc942bdebda74",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/openlcb/library/OpenLCB_Single_Thread/0.1.19/OpenLCB_Single_Thread-0.1.19.tar.gz",
+     "https://dl.registry.platformio.org/download/openlcb/library/OpenLCB_Single_Thread/0.1.19/OpenLCB_Single_Thread-0.1.19.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "openlcb/library/OpenLCB_Single_Thread/0.1.20/OpenLCB_Single_Thread-0.1.20.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OpenLCB_Single_Thread-0.1.20.tar.gz",
+    "size_bytes": 293466,
+    "sha256": "0ba4424a69dcffadf1dd854a2cead9ef5d8ac4cf0df339f572729655b0b80e1e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/openlcb/library/OpenLCB_Single_Thread/0.1.20/OpenLCB_Single_Thread-0.1.20.tar.gz",
+     "https://dl.registry.platformio.org/download/openlcb/library/OpenLCB_Single_Thread/0.1.20/OpenLCB_Single_Thread-0.1.20.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "openlcb/library/OpenLCB_Single_Thread/0.1.22/OpenLCB_Single_Thread-0.1.22.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OpenLCB_Single_Thread-0.1.22.tar.gz",
+    "size_bytes": 293577,
+    "sha256": "11d2d84ea69a607b982ff5f345fe93838b495abf37456c5be8e5e268fd4a3a34",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/openlcb/library/OpenLCB_Single_Thread/0.1.22/OpenLCB_Single_Thread-0.1.22.tar.gz",
+     "https://dl.registry.platformio.org/download/openlcb/library/OpenLCB_Single_Thread/0.1.22/OpenLCB_Single_Thread-0.1.22.tar.gz"
+    ]
+   }
+  }
+ ]
+}

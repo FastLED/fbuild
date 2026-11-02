@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-andcor02",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-andcor02/library/CCS811/0.0.0+sha.64a96d555ef0/CCS811-0.0.0+sha.64a96d555ef0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CCS811-0.0.0+sha.64a96d555ef0.tar.gz",
+    "size_bytes": 3058,
+    "sha256": "62b06dda966769c8ca631c396c7530d2298faec2592db515880f795565fe6aa3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-andcor02/library/CCS811/0.0.0%2Bsha.64a96d555ef0/CCS811-0.0.0%2Bsha.64a96d555ef0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-andcor02/library/CCS811/0.0.0%2Bsha.64a96d555ef0/CCS811-0.0.0%2Bsha.64a96d555ef0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-andcor02/library/HTU21D_TEMP_HUMID_SENSOR_SAMPLE/0.0.0+sha.396c0b63392e/HTU21D_TEMP_HUMID_SENSOR_SAMPLE-0.0.0+sha.396c0b63392e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HTU21D_TEMP_HUMID_SENSOR_SAMPLE-0.0.0+sha.396c0b63392e.tar.gz",
+    "size_bytes": 3906,
+    "sha256": "171a554455584c314f4c80779e2092fa24b0e3b452fa71406f0c011dde6cea9d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-andcor02/library/HTU21D_TEMP_HUMID_SENSOR_SAMPLE/0.0.0%2Bsha.396c0b63392e/HTU21D_TEMP_HUMID_SENSOR_SAMPLE-0.0.0%2Bsha.396c0b63392e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-andcor02/library/HTU21D_TEMP_HUMID_SENSOR_SAMPLE/0.0.0%2Bsha.396c0b63392e/HTU21D_TEMP_HUMID_SENSOR_SAMPLE-0.0.0%2Bsha.396c0b63392e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-andcor02/library/MAX9814_Electret_Microphone_LED_Volume_Indicator/0.0.0+sha.1a773fb0d7e7/MAX9814_Electret_Microphone_LED_Volume_Indicator-0.0.0+sha.1a773fb0d7e7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX9814_Electret_Microphone_LED_Volume_Indicator-0.0.0+sha.1a773fb0d7e7.tar.gz",
+    "size_bytes": 1759,
+    "sha256": "8866b899dd06c306622aab77a5ef3838ee05879505081387c4dbd1ce0b058bbf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-andcor02/library/MAX9814_Electret_Microphone_LED_Volume_Indicator/0.0.0%2Bsha.1a773fb0d7e7/MAX9814_Electret_Microphone_LED_Volume_Indicator-0.0.0%2Bsha.1a773fb0d7e7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-andcor02/library/MAX9814_Electret_Microphone_LED_Volume_Indicator/0.0.0%2Bsha.1a773fb0d7e7/MAX9814_Electret_Microphone_LED_Volume_Indicator-0.0.0%2Bsha.1a773fb0d7e7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-andcor02/library/Sht31/0.0.0+sha.c84a60326ecf/Sht31-0.0.0+sha.c84a60326ecf.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sht31-0.0.0+sha.c84a60326ecf.tar.gz",
+    "size_bytes": 2169,
+    "sha256": "120e5d75148a0525c680510902ae99e72be90bc1f0e06967705d059533216438",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-andcor02/library/Sht31/0.0.0%2Bsha.c84a60326ecf/Sht31-0.0.0%2Bsha.c84a60326ecf.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-andcor02/library/Sht31/0.0.0%2Bsha.c84a60326ecf/Sht31-0.0.0%2Bsha.c84a60326ecf.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-andcor02/library/TSL2561/0.0.0+sha.8146a28a20cc/TSL2561-0.0.0+sha.8146a28a20cc.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TSL2561-0.0.0+sha.8146a28a20cc.tar.gz",
+    "size_bytes": 3275,
+    "sha256": "b543d9d5c4eb0be348366ca9d506fef600959c01cd364955c408d5775e7815eb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-andcor02/library/TSL2561/0.0.0%2Bsha.8146a28a20cc/TSL2561-0.0.0%2Bsha.8146a28a20cc.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-andcor02/library/TSL2561/0.0.0%2Bsha.8146a28a20cc/TSL2561-0.0.0%2Bsha.8146a28a20cc.tar.gz"
+    ]
+   }
+  }
+ ]
+}

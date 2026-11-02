@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jackjansen",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jackjansen/library/cmArduinoJWT/1.0.2/cmArduinoJWT-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cmArduinoJWT-1.0.2.tar.gz",
+    "size_bytes": 7400,
+    "sha256": "7eea7b8c9735330276b394078557e00d68b464bcfbc0c376bd967441a0bc547e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jackjansen/library/cmArduinoJWT/1.0.2/cmArduinoJWT-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jackjansen/library/cmArduinoJWT/1.0.2/cmArduinoJWT-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jackjansen/library/esp32_idf5_https_server/1.1.1/esp32_idf5_https_server-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32_idf5_https_server-1.1.1.tar.gz",
+    "size_bytes": 83647,
+    "sha256": "15d4060822e8288a2ab7021e7f199c6de8e635a151b929e3c8b159e1bef333d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jackjansen/library/esp32_idf5_https_server/1.1.1/esp32_idf5_https_server-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jackjansen/library/esp32_idf5_https_server/1.1.1/esp32_idf5_https_server-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jackjansen/library/esp32_idf5_https_server_compat/1.1.2/esp32_idf5_https_server_compat-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32_idf5_https_server_compat-1.1.2.tar.gz",
+    "size_bytes": 26044,
+    "sha256": "91b1af53025a548973f25c1e13cb1dbf72a02ee7b4bb0766dfc735037f9fb8ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jackjansen/library/esp32_idf5_https_server_compat/1.1.2/esp32_idf5_https_server_compat-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jackjansen/library/esp32_idf5_https_server_compat/1.1.2/esp32_idf5_https_server_compat-1.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/functionpointer",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "functionpointer/library/arduino-MLX90393/1.0.0/arduino-MLX90393-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arduino-MLX90393-1.0.0.tar.gz",
+    "size_bytes": 27969,
+    "sha256": "9901346e36d2ad71c69535f73fc6bed0c2d61fba1ee891b9e4efd3ecd86d74c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/functionpointer/library/arduino-MLX90393/1.0.0/arduino-MLX90393-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/functionpointer/library/arduino-MLX90393/1.0.0/arduino-MLX90393-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "functionpointer/library/arduino-MLX90393/1.0.2/arduino-MLX90393-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arduino-MLX90393-1.0.2.tar.gz",
+    "size_bytes": 27999,
+    "sha256": "30386b648d258f981fca3fdcce0872d1416f24287c2a25ee4c9581bf045041a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/functionpointer/library/arduino-MLX90393/1.0.2/arduino-MLX90393-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/functionpointer/library/arduino-MLX90393/1.0.2/arduino-MLX90393-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "functionpointer/library/lwip-ppp-esphome/0.0.2/lwip-ppp-esphome-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lwip-ppp-esphome-0.0.2.tar.gz",
+    "size_bytes": 457585,
+    "sha256": "ba4c99081b568a7ee6061face7dc770182d64523c29355d260c264340106c35c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/functionpointer/library/lwip-ppp-esphome/0.0.2/lwip-ppp-esphome-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/functionpointer/library/lwip-ppp-esphome/0.0.2/lwip-ppp-esphome-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "functionpointer/library/picoasyncstepper/0.0.4/picoasyncstepper-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "picoasyncstepper-0.0.4.tar.gz",
+    "size_bytes": 7050,
+    "sha256": "c9797d2d570315473c0b492abda269e167f2d2e088cbf4b3cd8028c057f610ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/functionpointer/library/picoasyncstepper/0.0.4/picoasyncstepper-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/functionpointer/library/picoasyncstepper/0.0.4/picoasyncstepper-0.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

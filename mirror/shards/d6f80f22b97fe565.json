@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/eccentricorange",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "eccentricorange/library/BIDFestTools/1.2.0/BIDFestTools-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BIDFestTools-1.2.0.tar.gz",
+    "size_bytes": 136852,
+    "sha256": "9e6c308796739dc207f5d88134b2aa0eecdc13d16e50d10c6242073261405ec3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eccentricorange/library/BIDFestTools/1.2.0/BIDFestTools-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/eccentricorange/library/BIDFestTools/1.2.0/BIDFestTools-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "eccentricorange/library/DDBot/1.1.3/DDBot-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DDBot-1.1.3.tar.gz",
+    "size_bytes": 10374,
+    "sha256": "2ce89761df36cefe7afbd261345ab3ec8fc7730ef27910cb00323bd03f411921",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eccentricorange/library/DDBot/1.1.3/DDBot-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/eccentricorange/library/DDBot/1.1.3/DDBot-1.1.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

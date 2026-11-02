@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-bridadan",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-bridadan/library/ISD1820P/0.0.0+sha.19584eb1fdf7/ISD1820P-0.0.0+sha.19584eb1fdf7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ISD1820P-0.0.0+sha.19584eb1fdf7.tar.gz",
+    "size_bytes": 1560,
+    "sha256": "9ddaa5630d598bb24733b291cf118031b59f48a30cf5a3ed5f633b767f240c1a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bridadan/library/ISD1820P/0.0.0%2Bsha.19584eb1fdf7/ISD1820P-0.0.0%2Bsha.19584eb1fdf7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bridadan/library/ISD1820P/0.0.0%2Bsha.19584eb1fdf7/ISD1820P-0.0.0%2Bsha.19584eb1fdf7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-bridadan/library/WS2812/0.0.0+sha.6e647820f587/WS2812-0.0.0+sha.6e647820f587.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WS2812-0.0.0+sha.6e647820f587.tar.gz",
+    "size_bytes": 3531,
+    "sha256": "227de7120cad1307d96a18aa5778f35aa3acbcf8f8b92c3099a132e40b45bc73",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bridadan/library/WS2812/0.0.0%2Bsha.6e647820f587/WS2812-0.0.0%2Bsha.6e647820f587.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bridadan/library/WS2812/0.0.0%2Bsha.6e647820f587/WS2812-0.0.0%2Bsha.6e647820f587.tar.gz"
+    ]
+   }
+  }
+ ]
+}

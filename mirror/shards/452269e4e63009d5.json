@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-mbed-example",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-mbed-example/library/QSPIFBlockDevice_example/0.0.0+sha.5608693b47aa/QSPIFBlockDevice_example-0.0.0+sha.5608693b47aa.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QSPIFBlockDevice_example-0.0.0+sha.5608693b47aa.tar.gz",
+    "size_bytes": 2003,
+    "sha256": "dd144af4513a26fbb5aadf8a247fa4ffe35ab9f156dc76050d27672f72f07ceb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mbed-example/library/QSPIFBlockDevice_example/0.0.0%2Bsha.5608693b47aa/QSPIFBlockDevice_example-0.0.0%2Bsha.5608693b47aa.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mbed-example/library/QSPIFBlockDevice_example/0.0.0%2Bsha.5608693b47aa/QSPIFBlockDevice_example-0.0.0%2Bsha.5608693b47aa.tar.gz"
+    ]
+   }
+  }
+ ]
+}

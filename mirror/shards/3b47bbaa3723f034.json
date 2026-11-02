@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-kodaws",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-kodaws/library/tsi_sensor/0.0.0+sha.c1877e6c512c/tsi_sensor-0.0.0+sha.c1877e6c512c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tsi_sensor-0.0.0+sha.c1877e6c512c.tar.gz",
+    "size_bytes": 4214,
+    "sha256": "c49930883e3e0ac55533bcdc6ab749f97c1d4b6b10b4afc490ac9ea311d90be9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kodaws/library/tsi_sensor/0.0.0%2Bsha.c1877e6c512c/tsi_sensor-0.0.0%2Bsha.c1877e6c512c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kodaws/library/tsi_sensor/0.0.0%2Bsha.c1877e6c512c/tsi_sensor-0.0.0%2Bsha.c1877e6c512c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

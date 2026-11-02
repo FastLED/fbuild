@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/h1jam",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "h1jam/library/Bind/0.2.6/Bind-0.2.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bind-0.2.6.tar.gz",
+    "size_bytes": 102448,
+    "sha256": "c6758350a51a0f0dd42e616cf0ce05cc20442280d61a9bec07bea459a61b9727",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/h1jam/library/Bind/0.2.6/Bind-0.2.6.tar.gz",
+     "https://dl.registry.platformio.org/download/h1jam/library/Bind/0.2.6/Bind-0.2.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

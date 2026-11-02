@@ -1,0 +1,126 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mvoss96",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mvoss96/library/SimpleWifiManager/0.2.0/SimpleWifiManager-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleWifiManager-0.2.0.tar.gz",
+    "size_bytes": 40362,
+    "sha256": "00f6321289dc7b0479078c2dca546c7cd36ff7ceb18fb80fdbcf5a223e341700",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mvoss96/library/SimpleWifiManager/0.2.0/SimpleWifiManager-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mvoss96/library/SimpleWifiManager/0.2.0/SimpleWifiManager-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mvoss96/library/bthome-cpp/0.3.0/bthome-cpp-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bthome-cpp-0.3.0.tar.gz",
+    "size_bytes": 24134,
+    "sha256": "0a1506d37fc640d5277ff8a8a5aa6559fcc6eaa763adc2f9a32663cc907cfcf1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mvoss96/library/bthome-cpp/0.3.0/bthome-cpp-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mvoss96/library/bthome-cpp/0.3.0/bthome-cpp-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mvoss96/library/bthome-cpp/0.3.1/bthome-cpp-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bthome-cpp-0.3.1.tar.gz",
+    "size_bytes": 25003,
+    "sha256": "67ef690fb5f146681919635e1a8325aa77a2f35086a349b3862ebf2d55221fc6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mvoss96/library/bthome-cpp/0.3.1/bthome-cpp-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mvoss96/library/bthome-cpp/0.3.1/bthome-cpp-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mvoss96/library/bthome-cpp/0.3.2/bthome-cpp-0.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bthome-cpp-0.3.2.tar.gz",
+    "size_bytes": 25126,
+    "sha256": "d21c6f09007cebb4906db57805482f3e0d3abfa6c1ff1036c013a7a68b5126e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mvoss96/library/bthome-cpp/0.3.2/bthome-cpp-0.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mvoss96/library/bthome-cpp/0.3.2/bthome-cpp-0.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mvoss96/library/bthome-cpp/0.4.0/bthome-cpp-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bthome-cpp-0.4.0.tar.gz",
+    "size_bytes": 39703,
+    "sha256": "00fba7cb5d35553c911bca65cd109394c4adfd63ab2f6a9e215406c4ab5d459c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mvoss96/library/bthome-cpp/0.4.0/bthome-cpp-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mvoss96/library/bthome-cpp/0.4.0/bthome-cpp-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mvoss96/library/bthome-cpp/0.4.1/bthome-cpp-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bthome-cpp-0.4.1.tar.gz",
+    "size_bytes": 39817,
+    "sha256": "d3dd44d2fd7cbb0aaa102facea955a502c6822e9e8a3a25094b1f2e32906d58e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mvoss96/library/bthome-cpp/0.4.1/bthome-cpp-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mvoss96/library/bthome-cpp/0.4.1/bthome-cpp-0.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mvoss96/library/bthome-cpp/0.4.2/bthome-cpp-0.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bthome-cpp-0.4.2.tar.gz",
+    "size_bytes": 40670,
+    "sha256": "13b01b4dd600fb102a24c7923663e59fbc53ed6a068cce6e257e7a91ee9b177a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mvoss96/library/bthome-cpp/0.4.2/bthome-cpp-0.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mvoss96/library/bthome-cpp/0.4.2/bthome-cpp-0.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mvoss96/library/bthome-cpp/0.5.0/bthome-cpp-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bthome-cpp-0.5.0.tar.gz",
+    "size_bytes": 41616,
+    "sha256": "ec1893ca0c04052f71cafa2d9c5301ec6bb54b198d50b3834fb92d9ae9082897",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mvoss96/library/bthome-cpp/0.5.0/bthome-cpp-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mvoss96/library/bthome-cpp/0.5.0/bthome-cpp-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mvoss96/library/bthome-cpp/0.5.1/bthome-cpp-0.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bthome-cpp-0.5.1.tar.gz",
+    "size_bytes": 43192,
+    "sha256": "b41dc36e0bc47de6f4bbd59a780e0987b719ed3de93b9c7f285857f3be1909bf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mvoss96/library/bthome-cpp/0.5.1/bthome-cpp-0.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mvoss96/library/bthome-cpp/0.5.1/bthome-cpp-0.5.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

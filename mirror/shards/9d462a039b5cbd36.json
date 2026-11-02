@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-madcowswe",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-madcowswe/library/Kalman/0.0.0+sha.a0285293f6a6/Kalman-0.0.0+sha.a0285293f6a6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Kalman-0.0.0+sha.a0285293f6a6.tar.gz",
+    "size_bytes": 20016,
+    "sha256": "6d121ec1c72a704c523e7bc8e9b0d4f1591d60b2cee97bdde800147a46fc94b0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-madcowswe/library/Kalman/0.0.0%2Bsha.a0285293f6a6/Kalman-0.0.0%2Bsha.a0285293f6a6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-madcowswe/library/Kalman/0.0.0%2Bsha.a0285293f6a6/Kalman-0.0.0%2Bsha.a0285293f6a6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-madcowswe/library/RF12B/0.0.0+sha.09e016eea608/RF12B-0.0.0+sha.09e016eea608.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RF12B-0.0.0+sha.09e016eea608.tar.gz",
+    "size_bytes": 8878,
+    "sha256": "d76d8a450deaa8463c9fa4fd94332aad5eff08c70fa10ac171944a59074c6429",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-madcowswe/library/RF12B/0.0.0%2Bsha.09e016eea608/RF12B-0.0.0%2Bsha.09e016eea608.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-madcowswe/library/RF12B/0.0.0%2Bsha.09e016eea608/RF12B-0.0.0%2Bsha.09e016eea608.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-madcowswe/library/fixedpoint/0.0.0+sha.ac99b6f474a0/fixedpoint-0.0.0+sha.ac99b6f474a0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "fixedpoint-0.0.0+sha.ac99b6f474a0.tar.gz",
+    "size_bytes": 18785,
+    "sha256": "71bb6335a272d4fcec273e49aa0e874f98d3790d20eba81e2456bfca1706c6af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-madcowswe/library/fixedpoint/0.0.0%2Bsha.ac99b6f474a0/fixedpoint-0.0.0%2Bsha.ac99b6f474a0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-madcowswe/library/fixedpoint/0.0.0%2Bsha.ac99b6f474a0/fixedpoint-0.0.0%2Bsha.ac99b6f474a0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/maartenvanschagen",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "maartenvanschagen/library/gyroLib/0.2/gyroLib-0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "gyroLib-0.2.tar.gz",
+    "size_bytes": 19368,
+    "sha256": "2e3481b978e48091335cd8f9802493b4a960b231f024e9d44f943f995873c6b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maartenvanschagen/library/gyroLib/0.2/gyroLib-0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/maartenvanschagen/library/gyroLib/0.2/gyroLib-0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/heliosproj",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "heliosproj/library/HeliOS/0.4.1/HeliOS-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HeliOS-0.4.1.tar.gz",
+    "size_bytes": 557389,
+    "sha256": "eba3ee14ffca5681c450594e1c71935d2d4cc69d772b933848132de7e0204fe7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/heliosproj/library/HeliOS/0.4.1/HeliOS-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/heliosproj/library/HeliOS/0.4.1/HeliOS-0.4.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

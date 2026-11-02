@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ysuga",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ysuga/library/RTnoV3/0.0.0+sha.9fac71a0bff3/RTnoV3-0.0.0+sha.9fac71a0bff3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RTnoV3-0.0.0+sha.9fac71a0bff3.tar.gz",
+    "size_bytes": 10991,
+    "sha256": "628e9398ed25716409b1c66ac72041751b1e7153682330ce99256987edcf02ff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ysuga/library/RTnoV3/0.0.0%2Bsha.9fac71a0bff3/RTnoV3-0.0.0%2Bsha.9fac71a0bff3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ysuga/library/RTnoV3/0.0.0%2Bsha.9fac71a0bff3/RTnoV3-0.0.0%2Bsha.9fac71a0bff3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ysuga/library/RTnoV4/0.0.0+sha.6c7af1d50fb3/RTnoV4-0.0.0+sha.6c7af1d50fb3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RTnoV4-0.0.0+sha.6c7af1d50fb3.tar.gz",
+    "size_bytes": 13580,
+    "sha256": "c39ca693d4ef632ba55c7b60835d8f5a30cc8d7e2e3a5e4a8ca1f7cb3f5caded",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ysuga/library/RTnoV4/0.0.0%2Bsha.6c7af1d50fb3/RTnoV4-0.0.0%2Bsha.6c7af1d50fb3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ysuga/library/RTnoV4/0.0.0%2Bsha.6c7af1d50fb3/RTnoV4-0.0.0%2Bsha.6c7af1d50fb3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

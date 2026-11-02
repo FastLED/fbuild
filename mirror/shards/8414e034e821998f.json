@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mrmx",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mrmx/library/MrMx%20-%20AW9523B/0.9.0/MrMx-AW9523B-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MrMx-AW9523B-0.9.0.tar.gz",
+    "size_bytes": 4269,
+    "sha256": "7d8825b4150a1e617e7c626f842f1cad3e44bb68b22565bd2801b8ff31c2cbcb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mrmx/library/MrMx%2520-%2520AW9523B/0.9.0/MrMx-AW9523B-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mrmx/library/MrMx%20-%20AW9523B/0.9.0/MrMx-AW9523B-0.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mrmx/library/MrMx%20-%20Arduino%20SI4012/1.0.0/MrMx-ArduinoSI4012-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MrMx-ArduinoSI4012-1.0.0.tar.gz",
+    "size_bytes": 4361,
+    "sha256": "6d44f058b0a5a10deed007010973790d6ef8288e3d30391a1784334423b8629c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mrmx/library/MrMx%2520-%2520Arduino%2520SI4012/1.0.0/MrMx-ArduinoSI4012-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mrmx/library/MrMx%20-%20Arduino%20SI4012/1.0.0/MrMx-ArduinoSI4012-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

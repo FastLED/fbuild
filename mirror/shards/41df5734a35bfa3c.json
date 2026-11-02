@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/designer2k2",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "designer2k2/library/EMUcan/2.0.4/EMUcan-2.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EMUcan-2.0.4.tar.gz",
+    "size_bytes": 26153,
+    "sha256": "a1fd45c9ac3d77f5093321f9cf1931556ee561fdfc218965ee4827f4b193a94d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/designer2k2/library/EMUcan/2.0.4/EMUcan-2.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/designer2k2/library/EMUcan/2.0.4/EMUcan-2.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "designer2k2/library/EMUcan/2.1.0/EMUcan-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EMUcan-2.1.0.tar.gz",
+    "size_bytes": 29891,
+    "sha256": "feae3623188c484580d4fea26eb02d451ae7f301c012d61f87e19e502366aa43",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/designer2k2/library/EMUcan/2.1.0/EMUcan-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/designer2k2/library/EMUcan/2.1.0/EMUcan-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "designer2k2/library/EMUcanT4/1.0.3/EMUcanT4-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EMUcanT4-1.0.3.tar.gz",
+    "size_bytes": 19750,
+    "sha256": "8e7b68f28ec197fd5935b817334a3c4d2a72ca79d856180ead11e99f09515e21",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/designer2k2/library/EMUcanT4/1.0.3/EMUcanT4-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/designer2k2/library/EMUcanT4/1.0.3/EMUcanT4-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

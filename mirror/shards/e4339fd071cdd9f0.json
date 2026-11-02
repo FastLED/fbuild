@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ktgilliam",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ktgilliam/library/LFAST_Device/0.1.0/LFAST_Device-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LFAST_Device-0.1.0.tar.gz",
+    "size_bytes": 20656,
+    "sha256": "8e4c551a1cdd02030095c817f79c597db88c021d797e6f81216f574d269b507b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ktgilliam/library/LFAST_Device/0.1.0/LFAST_Device-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ktgilliam/library/LFAST_Device/0.1.0/LFAST_Device-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

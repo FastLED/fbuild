@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/soft-collection",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "soft-collection/library/SCButton/1.0.7/SCButton-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SCButton-1.0.7.tar.gz",
+    "size_bytes": 1872,
+    "sha256": "3ae4c6d400331938b8259fcfafef0f6328f5ad7d5bb42d11f7475ebc640d8b2b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soft-collection/library/SCButton/1.0.7/SCButton-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/soft-collection/library/SCButton/1.0.7/SCButton-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soft-collection/library/SCConfig/1.0.16/SCConfig-1.0.16.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SCConfig-1.0.16.tar.gz",
+    "size_bytes": 3827,
+    "sha256": "20f149bcfdc6727c9ce2f6c93300d26e7ba2cb6f093bcbe5e2e57812c22b48dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soft-collection/library/SCConfig/1.0.16/SCConfig-1.0.16.tar.gz",
+     "https://dl.registry.platformio.org/download/soft-collection/library/SCConfig/1.0.16/SCConfig-1.0.16.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soft-collection/library/SCPeriod/1.0.11/SCPeriod-1.0.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SCPeriod-1.0.11.tar.gz",
+    "size_bytes": 1401,
+    "sha256": "df2d7e592c799256ae39440587874d3d017dcd82e0ac0932416b051aad040494",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soft-collection/library/SCPeriod/1.0.11/SCPeriod-1.0.11.tar.gz",
+     "https://dl.registry.platformio.org/download/soft-collection/library/SCPeriod/1.0.11/SCPeriod-1.0.11.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/oldhag",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "oldhag/library/HostCommand/1.0.31/HostCommand-1.0.31.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HostCommand-1.0.31.tar.gz",
+    "size_bytes": 258702,
+    "sha256": "01a6f7583de9fef126f4e1dc8f48ac66185ce51d7806e337189b7cff0604cc88",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/oldhag/library/HostCommand/1.0.31/HostCommand-1.0.31.tar.gz",
+     "https://dl.registry.platformio.org/download/oldhag/library/HostCommand/1.0.31/HostCommand-1.0.31.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "oldhag/library/HostCommand/1.0.4/HostCommand-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HostCommand-1.0.4.tar.gz",
+    "size_bytes": 258958,
+    "sha256": "d170c72ad4505707f7b34e6a305f627260640ba2e3456824a8f244ccf83f2bee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/oldhag/library/HostCommand/1.0.4/HostCommand-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/oldhag/library/HostCommand/1.0.4/HostCommand-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

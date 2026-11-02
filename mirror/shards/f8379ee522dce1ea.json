@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pozyxlabs",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pozyxlabs/library/Pozyx/1.2.2/Pozyx-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pozyx-1.2.2.tar.gz",
+    "size_bytes": 79268,
+    "sha256": "30bc2934757ca7c62cd60a069302ecd38133dfc15aaaaca0e951931ca8b93e2c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pozyxlabs/library/Pozyx/1.2.2/Pozyx-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/pozyxlabs/library/Pozyx/1.2.2/Pozyx-1.2.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

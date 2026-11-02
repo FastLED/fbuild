@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/aikopras",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "aikopras/library/AP_DCC_Decoder_Core/1.5.2/AP_DCC_Decoder_Core-1.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AP_DCC_Decoder_Core-1.5.2.tar.gz",
+    "size_bytes": 1117900,
+    "sha256": "09bbcb0fec8cef07b0e2dc0cc470bb938f94c2df7993f3deafc5555321f0a995",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aikopras/library/AP_DCC_Decoder_Core/1.5.2/AP_DCC_Decoder_Core-1.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/aikopras/library/AP_DCC_Decoder_Core/1.5.2/AP_DCC_Decoder_Core-1.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aikopras/library/AP_DCC_Library/2.0.1/AP_DCC_Library-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AP_DCC_Library-2.0.1.tar.gz",
+    "size_bytes": 59433,
+    "sha256": "df76ff6554c588930ba6f079ca3c8aa3c530e9f62715145284d68454a1c0ca52",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aikopras/library/AP_DCC_Library/2.0.1/AP_DCC_Library-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/aikopras/library/AP_DCC_Library/2.0.1/AP_DCC_Library-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aikopras/library/RSbus/2.4.7/RSbus-2.4.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RSbus-2.4.7.tar.gz",
+    "size_bytes": 49541,
+    "sha256": "d17af025c4fde959f2ea5f9a9f8e71b4c75069d5584bd765c9849ce70637eea6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aikopras/library/RSbus/2.4.7/RSbus-2.4.7.tar.gz",
+     "https://dl.registry.platformio.org/download/aikopras/library/RSbus/2.4.7/RSbus-2.4.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aikopras/library/Servo_TCA/1.0.0/Servo_TCA-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Servo_TCA-1.0.0.tar.gz",
+    "size_bytes": 46216,
+    "sha256": "659fb4c64d9913c253376338e38aac749fe44dc4387037a58e4a7f6c07e29671",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aikopras/library/Servo_TCA/1.0.0/Servo_TCA-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aikopras/library/Servo_TCA/1.0.0/Servo_TCA-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

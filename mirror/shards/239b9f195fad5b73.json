@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/zander22091988",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "zander22091988/library/U8glib-HAL/0.5.2/U8glib-HAL-0.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "U8glib-HAL-0.5.2.tar.gz",
+    "size_bytes": 867375,
+    "sha256": "9a8896bbb9cf6f55ed3f509d23515989b2026a6a27079c91684717fb1f672b15",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zander22091988/library/U8glib-HAL/0.5.2/U8glib-HAL-0.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/zander22091988/library/U8glib-HAL/0.5.2/U8glib-HAL-0.5.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

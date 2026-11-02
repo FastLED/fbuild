@@ -1,0 +1,204 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dndubins",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dndubins/library/EEPROMsimple/1.0.0/EEPROMsimple-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EEPROMsimple-1.0.0.tar.gz",
+    "size_bytes": 19031,
+    "sha256": "1deca3b6ca2ee867d1a4f0c04af74775e80d95af8c1c3c1d5d9b59c3762cf413",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dndubins/library/EEPROMsimple/1.0.0/EEPROMsimple-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dndubins/library/EEPROMsimple/1.0.0/EEPROMsimple-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dndubins/library/MLX90641/1.0.1/MLX90641-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MLX90641-1.0.1.tar.gz",
+    "size_bytes": 42038,
+    "sha256": "355f76869de4bd932ca44bd79373d30d58ee716125454e98e9a267e38b1eca19",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dndubins/library/MLX90641/1.0.1/MLX90641-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dndubins/library/MLX90641/1.0.1/MLX90641-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dndubins/library/MLX90641/1.0.3/MLX90641-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MLX90641-1.0.3.tar.gz",
+    "size_bytes": 39160,
+    "sha256": "e0d0dd54209c83c0c2d6a98dc867e82685099c06cb8dce0dcd729ae9007d0df2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dndubins/library/MLX90641/1.0.3/MLX90641-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dndubins/library/MLX90641/1.0.3/MLX90641-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dndubins/library/MLX90641/1.0.4/MLX90641-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MLX90641-1.0.4.tar.gz",
+    "size_bytes": 40182,
+    "sha256": "1fd39c87b8628bb823b948d2ed3f270f46d45e0241a2ad4caf09ef45f63c84f9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dndubins/library/MLX90641/1.0.4/MLX90641-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/dndubins/library/MLX90641/1.0.4/MLX90641-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dndubins/library/MLX90641/1.0.6/MLX90641-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MLX90641-1.0.6.tar.gz",
+    "size_bytes": 42537,
+    "sha256": "02c631dac4e2aad681bb6637f0dd620a94fbf156b9cd23bb21441d8e53cd7a0d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dndubins/library/MLX90641/1.0.6/MLX90641-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/dndubins/library/MLX90641/1.0.6/MLX90641-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dndubins/library/MLX90642/1.0.0/MLX90642-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MLX90642-1.0.0.tar.gz",
+    "size_bytes": 17502,
+    "sha256": "b6e4bf321fb97d6ef31f78e099a6984a9637758c9694ad2bd7cd419122037be8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dndubins/library/MLX90642/1.0.0/MLX90642-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dndubins/library/MLX90642/1.0.0/MLX90642-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dndubins/library/MLX90642/1.0.3/MLX90642-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MLX90642-1.0.3.tar.gz",
+    "size_bytes": 17735,
+    "sha256": "5111ec4a349710b8ec17901a6dbd6787e0b90c7657208b7b39d043bd2dfa27f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dndubins/library/MLX90642/1.0.3/MLX90642-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dndubins/library/MLX90642/1.0.3/MLX90642-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dndubins/library/QuickStats/1.2.5/QuickStats-1.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QuickStats-1.2.5.tar.gz",
+    "size_bytes": 22197,
+    "sha256": "48dd43cac10dea425a60e84eeb5b525e8b113141c9814e921cb1d484de61632b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dndubins/library/QuickStats/1.2.5/QuickStats-1.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/dndubins/library/QuickStats/1.2.5/QuickStats-1.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dndubins/library/SRAMsimple/1.0.0/SRAMsimple-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SRAMsimple-1.0.0.tar.gz",
+    "size_bytes": 19209,
+    "sha256": "ca4bbf8e7224107ec1ff0aa3129e299d2f0107b87377c0664a2e8d0a62b69222",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dndubins/library/SRAMsimple/1.0.0/SRAMsimple-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dndubins/library/SRAMsimple/1.0.0/SRAMsimple-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dndubins/library/tinyServo84/1.0.2/tinyServo84-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tinyServo84-1.0.2.tar.gz",
+    "size_bytes": 21640,
+    "sha256": "b906431a0a1ba53cb6c59119f7ba701fe0b22ec2d82c761e13d598e345812e5f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dndubins/library/tinyServo84/1.0.2/tinyServo84-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dndubins/library/tinyServo84/1.0.2/tinyServo84-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dndubins/library/tinyServo84/1.0.3/tinyServo84-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tinyServo84-1.0.3.tar.gz",
+    "size_bytes": 21975,
+    "sha256": "e2edbb88d06a5704c1661fd19f82ee191dccd5a3fff8121d208635b5e3584bcb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dndubins/library/tinyServo84/1.0.3/tinyServo84-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dndubins/library/tinyServo84/1.0.3/tinyServo84-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dndubins/library/tinyServo84/1.0.4/tinyServo84-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tinyServo84-1.0.4.tar.gz",
+    "size_bytes": 27200,
+    "sha256": "27473370e416492cc531d20218f0bb7cd6bd651404c704b690989531ea7d15d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dndubins/library/tinyServo84/1.0.4/tinyServo84-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/dndubins/library/tinyServo84/1.0.4/tinyServo84-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dndubins/library/tinyServo84/1.0.5/tinyServo84-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tinyServo84-1.0.5.tar.gz",
+    "size_bytes": 27606,
+    "sha256": "c0e417c6c3ac923ae81aa45f46904922c9751880cef793939a8605bc154dccbd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dndubins/library/tinyServo84/1.0.5/tinyServo84-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/dndubins/library/tinyServo84/1.0.5/tinyServo84-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dndubins/library/tinyServo84/1.0.6/tinyServo84-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tinyServo84-1.0.6.tar.gz",
+    "size_bytes": 27710,
+    "sha256": "077933573c2354fa7f2236cb89a4423a0e14b5bb9a654cb27f553c27e941b5a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dndubins/library/tinyServo84/1.0.6/tinyServo84-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/dndubins/library/tinyServo84/1.0.6/tinyServo84-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dndubins/library/tinyServo85/1.0.2/tinyServo85-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tinyServo85-1.0.2.tar.gz",
+    "size_bytes": 22049,
+    "sha256": "154a08274d6c476551ab769d37b623bf97f19f7a479f25698641da4c75aa4b65",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dndubins/library/tinyServo85/1.0.2/tinyServo85-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dndubins/library/tinyServo85/1.0.2/tinyServo85-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

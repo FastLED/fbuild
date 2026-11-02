@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rodan",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rodan/library/ds3231/1.0/ds3231-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ds3231-1.0.tar.gz",
+    "size_bytes": 7416,
+    "sha256": "400403e6165428c9e627c2ede51e8f7603a4d288890e865e6f6f361912b5efdd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rodan/library/ds3231/1.0/ds3231-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rodan/library/ds3231/1.0/ds3231-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rodan/library/ds3234/1.0/ds3234-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ds3234-1.0.tar.gz",
+    "size_bytes": 6795,
+    "sha256": "30d1e57d9d89e7b981da11bd9af6603c236dbb61cd5f8f34c182da1f3660be5c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rodan/library/ds3234/1.0/ds3234-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rodan/library/ds3234/1.0/ds3234-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

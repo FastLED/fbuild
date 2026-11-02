@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-shorie",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-shorie/library/amakusa/0.0.0+sha.1fa224c83cfa/amakusa-0.0.0+sha.1fa224c83cfa.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "amakusa-0.0.0+sha.1fa224c83cfa.tar.gz",
+    "size_bytes": 4497,
+    "sha256": "1cb2c9cb5813b9b5fb0ea221f0e3bb0b494a20c9731ba67634eeec87c0ea35f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-shorie/library/amakusa/0.0.0%2Bsha.1fa224c83cfa/amakusa-0.0.0%2Bsha.1fa224c83cfa.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-shorie/library/amakusa/0.0.0%2Bsha.1fa224c83cfa/amakusa-0.0.0%2Bsha.1fa224c83cfa.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-shorie/library/shimabara/0.0.0+sha.6d921f8c38d6/shimabara-0.0.0+sha.6d921f8c38d6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "shimabara-0.0.0+sha.6d921f8c38d6.tar.gz",
+    "size_bytes": 6879,
+    "sha256": "72464a8bb1c5a7cfa5629e92ae487a07ec8bf79bdaf2e6aad0eb558529dfcf71",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-shorie/library/shimabara/0.0.0%2Bsha.6d921f8c38d6/shimabara-0.0.0%2Bsha.6d921f8c38d6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-shorie/library/shimabara/0.0.0%2Bsha.6d921f8c38d6/shimabara-0.0.0%2Bsha.6d921f8c38d6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

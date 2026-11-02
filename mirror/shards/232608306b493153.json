@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/caveman99",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "caveman99/library/ESP32%20Codec2/1.0.1/ESP32Codec2-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Codec2-1.0.1.tar.gz",
+    "size_bytes": 255380,
+    "sha256": "f932b56127b518a661c30b7276e4f2171e9696d6e1e045cd768a6e71f60c7512",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/caveman99/library/ESP32%2520Codec2/1.0.1/ESP32Codec2-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/caveman99/library/ESP32%20Codec2/1.0.1/ESP32Codec2-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

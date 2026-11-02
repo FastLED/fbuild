@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/aster94",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "aster94/library/GoProControl/1.3.2/GoProControl-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GoProControl-1.3.2.tar.gz",
+    "size_bytes": 27002,
+    "sha256": "3c2c0b03d68b3d1c2236bfb30c7bb82b5885101993ee85cfd4883fed8bd67861",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aster94/library/GoProControl/1.3.2/GoProControl-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/aster94/library/GoProControl/1.3.2/GoProControl-1.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aster94/library/KWP2000/1.3.0/KWP2000-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KWP2000-1.3.0.tar.gz",
+    "size_bytes": 32885,
+    "sha256": "677f6bbe0fb76d303e57b8d2693403dff22fd968561a0f1c1945ba0d23c3c14f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aster94/library/KWP2000/1.3.0/KWP2000-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aster94/library/KWP2000/1.3.0/KWP2000-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aster94/library/SensorFusion/1.0.6/SensorFusion-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensorFusion-1.0.6.tar.gz",
+    "size_bytes": 19292,
+    "sha256": "669abec85d07e86035e2677360b07416501c90fd6b3a27e2d8572f54b0438af4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aster94/library/SensorFusion/1.0.6/SensorFusion-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/aster94/library/SensorFusion/1.0.6/SensorFusion-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aster94/library/Utilities/0.4.6/Utilities-0.4.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Utilities-0.4.6.tar.gz",
+    "size_bytes": 17173,
+    "sha256": "549d392cd3d41bfb3b18b95f5fe87cfd33eae42e22258fd16af48eb450be2266",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aster94/library/Utilities/0.4.6/Utilities-0.4.6.tar.gz",
+     "https://dl.registry.platformio.org/download/aster94/library/Utilities/0.4.6/Utilities-0.4.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

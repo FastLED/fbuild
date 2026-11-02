@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jaredliw",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jaredliw/library/Pikabot/1.0.1/Pikabot-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pikabot-1.0.1.tar.gz",
+    "size_bytes": 17291,
+    "sha256": "d2b222c9c60cf21b8414c40c2de1f7556df8b2beea66eb98ce8d4620d5bc154f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jaredliw/library/Pikabot/1.0.1/Pikabot-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jaredliw/library/Pikabot/1.0.1/Pikabot-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

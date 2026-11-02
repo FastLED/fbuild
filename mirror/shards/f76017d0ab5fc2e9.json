@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rtnate",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rtnate/library/BasicTimer/1.0.2/BasicTimer-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BasicTimer-1.0.2.tar.gz",
+    "size_bytes": 8992,
+    "sha256": "01ae2e78c546ec9f8810c5cd0a848004e591b42b1726e6e2255422ec2ec9d710",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rtnate/library/BasicTimer/1.0.2/BasicTimer-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/rtnate/library/BasicTimer/1.0.2/BasicTimer-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rtnate/library/DS1881_2/1.0.2/DS1881_2-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS1881_2-1.0.2.tar.gz",
+    "size_bytes": 4995,
+    "sha256": "e3d3a0301f40cf1ec57f55ebb474f4a3e93f82a08758e77cb395575f257d3513",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rtnate/library/DS1881_2/1.0.2/DS1881_2-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/rtnate/library/DS1881_2/1.0.2/DS1881_2-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

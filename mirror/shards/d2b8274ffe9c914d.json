@@ -1,0 +1,178 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pierremolinaro",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pierremolinaro/library/ACAN/2.0.4/ACAN-2.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ACAN-2.0.4.tar.gz",
+    "size_bytes": 17466,
+    "sha256": "b4dd981035400550a3d1401cc5ec0d026a63ffb8265851a96f313554474e600f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pierremolinaro/library/ACAN/2.0.4/ACAN-2.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/pierremolinaro/library/ACAN/2.0.4/ACAN-2.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pierremolinaro/library/ACAN2515/2.1.5/ACAN2515-2.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ACAN2515-2.1.5.tar.gz",
+    "size_bytes": 24090,
+    "sha256": "6bbbc6a666df58d81f438bef538f0e9e566c58607ca557883b2e10c9095b7a02",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pierremolinaro/library/ACAN2515/2.1.5/ACAN2515-2.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/pierremolinaro/library/ACAN2515/2.1.5/ACAN2515-2.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pierremolinaro/library/ACAN2515Tiny/1.0.6/ACAN2515Tiny-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ACAN2515Tiny-1.0.6.tar.gz",
+    "size_bytes": 18172,
+    "sha256": "af4874b2e685ef41b6999ccfbd881a1dbb3a599902f328e24bf2e1efeb283c1c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pierremolinaro/library/ACAN2515Tiny/1.0.6/ACAN2515Tiny-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/pierremolinaro/library/ACAN2515Tiny/1.0.6/ACAN2515Tiny-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pierremolinaro/library/ACAN2517/1.1.16/ACAN2517-1.1.16.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ACAN2517-1.1.16.tar.gz",
+    "size_bytes": 25900,
+    "sha256": "7c961c02e88df89ab4c0e9edbf4e6dc5b2c613ce88370066ec3059b2045553bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pierremolinaro/library/ACAN2517/1.1.16/ACAN2517-1.1.16.tar.gz",
+     "https://dl.registry.platformio.org/download/pierremolinaro/library/ACAN2517/1.1.16/ACAN2517-1.1.16.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pierremolinaro/library/ACAN2517FD/2.1.16/ACAN2517FD-2.1.16.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ACAN2517FD-2.1.16.tar.gz",
+    "size_bytes": 31095,
+    "sha256": "d977989a36996304028651502442c94ded06ec6e9cf3d71f05bbba52f7eed56b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pierremolinaro/library/ACAN2517FD/2.1.16/ACAN2517FD-2.1.16.tar.gz",
+     "https://dl.registry.platformio.org/download/pierremolinaro/library/ACAN2517FD/2.1.16/ACAN2517FD-2.1.16.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pierremolinaro/library/ACANFD_FeatherM4CAN/2.0.0/ACANFD_FeatherM4CAN-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ACANFD_FeatherM4CAN-2.0.0.tar.gz",
+    "size_bytes": 23692,
+    "sha256": "882bc6a48fa0a31445465433d1f0e5715c5f0acc542dd84f3fb40e219053bed4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pierremolinaro/library/ACANFD_FeatherM4CAN/2.0.0/ACANFD_FeatherM4CAN-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pierremolinaro/library/ACANFD_FeatherM4CAN/2.0.0/ACANFD_FeatherM4CAN-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pierremolinaro/library/ACANFD_GIGA_R1/1.0.0/ACANFD_GIGA_R1-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ACANFD_GIGA_R1-1.0.0.tar.gz",
+    "size_bytes": 22190,
+    "sha256": "ac327877e35b77de6207269e8debcff14417497ccc3a52afa7a7ff4b3d67bc82",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pierremolinaro/library/ACANFD_GIGA_R1/1.0.0/ACANFD_GIGA_R1-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pierremolinaro/library/ACANFD_GIGA_R1/1.0.0/ACANFD_GIGA_R1-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pierremolinaro/library/ACANFD_STM32/1.1.2-rc1/ACANFD_STM32-1.1.2-rc1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ACANFD_STM32-1.1.2-rc1.tar.gz",
+    "size_bytes": 36892,
+    "sha256": "3a07c5628faf4454fb2eba8867442b5eb04d15b9c580fcd1d1c07dbefe520e51",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pierremolinaro/library/ACANFD_STM32/1.1.2-rc1/ACANFD_STM32-1.1.2-rc1.tar.gz",
+     "https://dl.registry.platformio.org/download/pierremolinaro/library/ACANFD_STM32/1.1.2-rc1/ACANFD_STM32-1.1.2-rc1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pierremolinaro/library/ACAN_ESP32/1.1.2/ACAN_ESP32-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ACAN_ESP32-1.1.2.tar.gz",
+    "size_bytes": 17948,
+    "sha256": "afffd3a056e139799190ca35234a6e23af5ae36a923d8e53240bae4f6daa82b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pierremolinaro/library/ACAN_ESP32/1.1.2/ACAN_ESP32-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/pierremolinaro/library/ACAN_ESP32/1.1.2/ACAN_ESP32-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pierremolinaro/library/ACAN_ESP32/3.0.3/ACAN_ESP32-3.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ACAN_ESP32-3.0.3.tar.gz",
+    "size_bytes": 18826,
+    "sha256": "56eb407fce92285e2da6ef267cf42db0cf4e10154a7279245108345e275f08de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pierremolinaro/library/ACAN_ESP32/3.0.3/ACAN_ESP32-3.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/pierremolinaro/library/ACAN_ESP32/3.0.3/ACAN_ESP32-3.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pierremolinaro/library/ACAN_STM32/1.0.2/ACAN_STM32-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ACAN_STM32-1.0.2.tar.gz",
+    "size_bytes": 16254,
+    "sha256": "261fd31ff3d74b3dfd71801aa823c01c7a158061009f4ed0ecb3aeb6c7e5d880",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pierremolinaro/library/ACAN_STM32/1.0.2/ACAN_STM32-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/pierremolinaro/library/ACAN_STM32/1.0.2/ACAN_STM32-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pierremolinaro/library/ACAN_T4/1.1.8/ACAN_T4-1.1.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ACAN_T4-1.1.8.tar.gz",
+    "size_bytes": 34826,
+    "sha256": "fdb92809091d9d00923ba304b5418d255cb83de1d73231f0047589fc97c9ea70",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pierremolinaro/library/ACAN_T4/1.1.8/ACAN_T4-1.1.8.tar.gz",
+     "https://dl.registry.platformio.org/download/pierremolinaro/library/ACAN_T4/1.1.8/ACAN_T4-1.1.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pierremolinaro/library/RP2040_PIO_Charlieplexing/1.0.1/RP2040_PIO_Charlieplexing-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RP2040_PIO_Charlieplexing-1.0.1.tar.gz",
+    "size_bytes": 6996,
+    "sha256": "a667f6f11db0445f8ea8151b4f7fbd01688955f6df356b7457a632b4968328d7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pierremolinaro/library/RP2040_PIO_Charlieplexing/1.0.1/RP2040_PIO_Charlieplexing-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pierremolinaro/library/RP2040_PIO_Charlieplexing/1.0.1/RP2040_PIO_Charlieplexing-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

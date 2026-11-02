@@ -1,0 +1,347 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/thevizwiz",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "thevizwiz/library/Controller%20Packet/0.0.1/ControllerPacket-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ControllerPacket-0.0.1.tar.gz",
+    "size_bytes": 931,
+    "sha256": "1714fe3c874e0118ea5560e4200600206721062dcf4ce6b6cab272e500688900",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thevizwiz/library/Controller%2520Packet/0.0.1/ControllerPacket-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/thevizwiz/library/Controller%20Packet/0.0.1/ControllerPacket-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thevizwiz/library/LedPipelines/0.0.22/LedPipelines-0.0.22.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LedPipelines-0.0.22.tar.gz",
+    "size_bytes": 22603,
+    "sha256": "2d6114357c3cf1b3bb04cc13a3f44bb86231a774787a36fb97e90670e1bc5907",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thevizwiz/library/LedPipelines/0.0.22/LedPipelines-0.0.22.tar.gz",
+     "https://dl.registry.platformio.org/download/thevizwiz/library/LedPipelines/0.0.22/LedPipelines-0.0.22.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thevizwiz/library/LedPipelines/0.0.23/LedPipelines-0.0.23.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LedPipelines-0.0.23.tar.gz",
+    "size_bytes": 22610,
+    "sha256": "c4dfb228d098d2d2de2c2eb7e8acd0abbf86b85e660f9f89bb8a12e2002f7754",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thevizwiz/library/LedPipelines/0.0.23/LedPipelines-0.0.23.tar.gz",
+     "https://dl.registry.platformio.org/download/thevizwiz/library/LedPipelines/0.0.23/LedPipelines-0.0.23.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thevizwiz/library/LedPipelines/0.0.24/LedPipelines-0.0.24.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LedPipelines-0.0.24.tar.gz",
+    "size_bytes": 22202,
+    "sha256": "8e1ad2f0055db66ed718e548ecad00ef2466d5b67d1d991a732f9fdcbc3e73f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thevizwiz/library/LedPipelines/0.0.24/LedPipelines-0.0.24.tar.gz",
+     "https://dl.registry.platformio.org/download/thevizwiz/library/LedPipelines/0.0.24/LedPipelines-0.0.24.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thevizwiz/library/LedPipelines/0.0.25/LedPipelines-0.0.25.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LedPipelines-0.0.25.tar.gz",
+    "size_bytes": 22491,
+    "sha256": "1de83805a41eeebf943a83463fc485f5825c1d5d2588d28136eba045ea00a551",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thevizwiz/library/LedPipelines/0.0.25/LedPipelines-0.0.25.tar.gz",
+     "https://dl.registry.platformio.org/download/thevizwiz/library/LedPipelines/0.0.25/LedPipelines-0.0.25.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thevizwiz/library/LedPipelines/0.0.26/LedPipelines-0.0.26.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LedPipelines-0.0.26.tar.gz",
+    "size_bytes": 22586,
+    "sha256": "2a8acbd3608123f510a6c85f26ed131068a7597dcbdcd5132f3e684ba204396c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thevizwiz/library/LedPipelines/0.0.26/LedPipelines-0.0.26.tar.gz",
+     "https://dl.registry.platformio.org/download/thevizwiz/library/LedPipelines/0.0.26/LedPipelines-0.0.26.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thevizwiz/library/LedPipelines/0.0.27/LedPipelines-0.0.27.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LedPipelines-0.0.27.tar.gz",
+    "size_bytes": 22588,
+    "sha256": "1161a548ec2946a1c0842ce21bb648907249c76e64d7a2b0d39aa9318db1dc80",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thevizwiz/library/LedPipelines/0.0.27/LedPipelines-0.0.27.tar.gz",
+     "https://dl.registry.platformio.org/download/thevizwiz/library/LedPipelines/0.0.27/LedPipelines-0.0.27.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thevizwiz/library/LedPipelines/0.0.28/LedPipelines-0.0.28.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LedPipelines-0.0.28.tar.gz",
+    "size_bytes": 22640,
+    "sha256": "c9ac9c528cd65d23a2624c04a696ba346707f316292dac0790ad588c8fbd6097",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thevizwiz/library/LedPipelines/0.0.28/LedPipelines-0.0.28.tar.gz",
+     "https://dl.registry.platformio.org/download/thevizwiz/library/LedPipelines/0.0.28/LedPipelines-0.0.28.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thevizwiz/library/LedPipelines/0.1.0/LedPipelines-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LedPipelines-0.1.0.tar.gz",
+    "size_bytes": 28844,
+    "sha256": "ccf072ef42eb28b0a4ef39b63f549d003de417466d7a49b13d534f489307ea07",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thevizwiz/library/LedPipelines/0.1.0/LedPipelines-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/thevizwiz/library/LedPipelines/0.1.0/LedPipelines-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thevizwiz/library/LedPipelines/0.1.1/LedPipelines-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LedPipelines-0.1.1.tar.gz",
+    "size_bytes": 29523,
+    "sha256": "b21e1c2e37a685ca35c80a14ea990c77c0ca4d44f4fceb6ea69897cde319f9ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thevizwiz/library/LedPipelines/0.1.1/LedPipelines-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/thevizwiz/library/LedPipelines/0.1.1/LedPipelines-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thevizwiz/library/LedPipelines/0.1.2/LedPipelines-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LedPipelines-0.1.2.tar.gz",
+    "size_bytes": 30791,
+    "sha256": "084c342a512c252a537bdd02871405c95272f254ddec00f5ba8637e179f5c515",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thevizwiz/library/LedPipelines/0.1.2/LedPipelines-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/thevizwiz/library/LedPipelines/0.1.2/LedPipelines-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thevizwiz/library/LedPipelines/0.1.3/LedPipelines-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LedPipelines-0.1.3.tar.gz",
+    "size_bytes": 33372,
+    "sha256": "ce4558618bf35e0cb6a2502c1122f6c7c03ae39bdddc0973c7a9e40e829f3216",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thevizwiz/library/LedPipelines/0.1.3/LedPipelines-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/thevizwiz/library/LedPipelines/0.1.3/LedPipelines-0.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thevizwiz/library/LedPipelines/0.1.5/LedPipelines-0.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LedPipelines-0.1.5.tar.gz",
+    "size_bytes": 48493,
+    "sha256": "e7b8c1d4cf117f2d9954f60f08febf367f3499a8d5436689bf0aa2e5875f0bfe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thevizwiz/library/LedPipelines/0.1.5/LedPipelines-0.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/thevizwiz/library/LedPipelines/0.1.5/LedPipelines-0.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thevizwiz/library/LedPipelines/0.1.6/LedPipelines-0.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LedPipelines-0.1.6.tar.gz",
+    "size_bytes": 53810,
+    "sha256": "8c76322ef21036910a5d80eb41ca65329b7220799541fcf0ab4be240f1d2b26b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thevizwiz/library/LedPipelines/0.1.6/LedPipelines-0.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/thevizwiz/library/LedPipelines/0.1.6/LedPipelines-0.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thevizwiz/library/LedPipelines/0.1.7/LedPipelines-0.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LedPipelines-0.1.7.tar.gz",
+    "size_bytes": 56212,
+    "sha256": "015cee05debd7515ff39e95045a514cffb466d5cb641bd154bde2e2ff25bd47f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thevizwiz/library/LedPipelines/0.1.7/LedPipelines-0.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/thevizwiz/library/LedPipelines/0.1.7/LedPipelines-0.1.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thevizwiz/library/LedPipelines/0.2.0/LedPipelines-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LedPipelines-0.2.0.tar.gz",
+    "size_bytes": 63632,
+    "sha256": "9af1fe1f08e9c62a1912d14ae00ac4ec819bcec89c6de514bbad3c2d39d32837",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thevizwiz/library/LedPipelines/0.2.0/LedPipelines-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/thevizwiz/library/LedPipelines/0.2.0/LedPipelines-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thevizwiz/library/LedPipelines/0.2.1/LedPipelines-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LedPipelines-0.2.1.tar.gz",
+    "size_bytes": 74623,
+    "sha256": "35ed71bffaafb769d9a5f297fc05cd8ecc95726e08f7ba7f053ac454f55441d5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thevizwiz/library/LedPipelines/0.2.1/LedPipelines-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/thevizwiz/library/LedPipelines/0.2.1/LedPipelines-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thevizwiz/library/LedPipelines/0.3.0/LedPipelines-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LedPipelines-0.3.0.tar.gz",
+    "size_bytes": 84820,
+    "sha256": "3d50c6c92f4f1de73db62ea9cea101ce2d182792ab549948f0e85f9789c70a0e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thevizwiz/library/LedPipelines/0.3.0/LedPipelines-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/thevizwiz/library/LedPipelines/0.3.0/LedPipelines-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thevizwiz/library/LedPipelines/0.4.0/LedPipelines-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LedPipelines-0.4.0.tar.gz",
+    "size_bytes": 87623,
+    "sha256": "3ef0691642de9df11a98d75241dc8f42d22e133be65d29bbfbd24175c9351709",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thevizwiz/library/LedPipelines/0.4.0/LedPipelines-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/thevizwiz/library/LedPipelines/0.4.0/LedPipelines-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thevizwiz/library/LedPipelines/0.4.1/LedPipelines-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LedPipelines-0.4.1.tar.gz",
+    "size_bytes": 56477,
+    "sha256": "c429ad802c8c8994478a33baca3b52ac0763c1cda0e74b7e0dcc5e7a01c63c01",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thevizwiz/library/LedPipelines/0.4.1/LedPipelines-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/thevizwiz/library/LedPipelines/0.4.1/LedPipelines-0.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thevizwiz/library/LedPipelines/0.5.0/LedPipelines-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LedPipelines-0.5.0.tar.gz",
+    "size_bytes": 57600,
+    "sha256": "d73654e4344935e88b5ca43ec858723761bfe8f1d48850ae37bf422ca686ebe7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thevizwiz/library/LedPipelines/0.5.0/LedPipelines-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/thevizwiz/library/LedPipelines/0.5.0/LedPipelines-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thevizwiz/library/LedPipelines/0.5.1/LedPipelines-0.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LedPipelines-0.5.1.tar.gz",
+    "size_bytes": 60029,
+    "sha256": "17122bde96d277f09e837f814c41040db43df2192473948d4242760333d2a2b4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thevizwiz/library/LedPipelines/0.5.1/LedPipelines-0.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/thevizwiz/library/LedPipelines/0.5.1/LedPipelines-0.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thevizwiz/library/LedPipelines/0.6.0/LedPipelines-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LedPipelines-0.6.0.tar.gz",
+    "size_bytes": 60511,
+    "sha256": "f7b8a3ba712c86654efc5c3423551b873394bede80f5c1e252b23d0b195641d3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thevizwiz/library/LedPipelines/0.6.0/LedPipelines-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/thevizwiz/library/LedPipelines/0.6.0/LedPipelines-0.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thevizwiz/library/TinyStateMachine/0.0.12/TinyStateMachine-0.0.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyStateMachine-0.0.12.tar.gz",
+    "size_bytes": 17813,
+    "sha256": "7f23b1334ceaf90876052e7210662b9e331853f70bcc1af03e498de28ddeed8b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thevizwiz/library/TinyStateMachine/0.0.12/TinyStateMachine-0.0.12.tar.gz",
+     "https://dl.registry.platformio.org/download/thevizwiz/library/TinyStateMachine/0.0.12/TinyStateMachine-0.0.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thevizwiz/library/TinyStateMachine/0.0.13/TinyStateMachine-0.0.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyStateMachine-0.0.13.tar.gz",
+    "size_bytes": 17766,
+    "sha256": "4bfdc0f9ba049e3ddd4b3641927126139611999a3fc78843dc9c96527ab0b280",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thevizwiz/library/TinyStateMachine/0.0.13/TinyStateMachine-0.0.13.tar.gz",
+     "https://dl.registry.platformio.org/download/thevizwiz/library/TinyStateMachine/0.0.13/TinyStateMachine-0.0.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thevizwiz/library/TinyStateMachine/0.0.14/TinyStateMachine-0.0.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyStateMachine-0.0.14.tar.gz",
+    "size_bytes": 17668,
+    "sha256": "57224e65e5d303f036bf458dca93056262dd1197c9df86fa4be4291b21465e1a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thevizwiz/library/TinyStateMachine/0.0.14/TinyStateMachine-0.0.14.tar.gz",
+     "https://dl.registry.platformio.org/download/thevizwiz/library/TinyStateMachine/0.0.14/TinyStateMachine-0.0.14.tar.gz"
+    ]
+   }
+  }
+ ]
+}

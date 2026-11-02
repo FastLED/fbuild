@@ -1,0 +1,243 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-maximintegrated",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-maximintegrated/library/BMI160/0.0.0+sha.a521606048bb/BMI160-0.0.0+sha.a521606048bb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMI160-0.0.0+sha.a521606048bb.tar.gz",
+    "size_bytes": 9046,
+    "sha256": "2685fa1123247acc0355d513e04a4f2faa607751b38b36a3fbb95754d399c02b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-maximintegrated/library/BMI160/0.0.0%2Bsha.a521606048bb/BMI160-0.0.0%2Bsha.a521606048bb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-maximintegrated/library/BMI160/0.0.0%2Bsha.a521606048bb/BMI160-0.0.0%2Bsha.a521606048bb.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-maximintegrated/library/DS1775_Digitial_Thermometer_Thermostat/0.0.0+sha.cf75ff9e5560/DS1775_Digitial_Thermometer_Thermostat-0.0.0+sha.cf75ff9e5560.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS1775_Digitial_Thermometer_Thermostat-0.0.0+sha.cf75ff9e5560.tar.gz",
+    "size_bytes": 5110,
+    "sha256": "6d36352c36e122cd051bce2932ff3ac6f1812ac1760257e4c6bf4ad052362d65",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-maximintegrated/library/DS1775_Digitial_Thermometer_Thermostat/0.0.0%2Bsha.cf75ff9e5560/DS1775_Digitial_Thermometer_Thermostat-0.0.0%2Bsha.cf75ff9e5560.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-maximintegrated/library/DS1775_Digitial_Thermometer_Thermostat/0.0.0%2Bsha.cf75ff9e5560/DS1775_Digitial_Thermometer_Thermostat-0.0.0%2Bsha.cf75ff9e5560.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-maximintegrated/library/DS4424_SINK_SOURCE_CURRENT_DAC_INPUT_OUTPUT_DAC/0.0.0+sha.fc75fced724f/DS4424_SINK_SOURCE_CURRENT_DAC_INPUT_OUTPUT_DAC-0.0.0+sha.fc75fced724f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS4424_SINK_SOURCE_CURRENT_DAC_INPUT_OUTPUT_DAC-0.0.0+sha.fc75fced724f.tar.gz",
+    "size_bytes": 4918,
+    "sha256": "32bdb9a0da82ab89a2b549d01c341786f419675b586de45779cfe6900049cb28",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-maximintegrated/library/DS4424_SINK_SOURCE_CURRENT_DAC_INPUT_OUTPUT_DAC/0.0.0%2Bsha.fc75fced724f/DS4424_SINK_SOURCE_CURRENT_DAC_INPUT_OUTPUT_DAC-0.0.0%2Bsha.fc75fced724f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-maximintegrated/library/DS4424_SINK_SOURCE_CURRENT_DAC_INPUT_OUTPUT_DAC/0.0.0%2Bsha.fc75fced724f/DS4424_SINK_SOURCE_CURRENT_DAC_INPUT_OUTPUT_DAC-0.0.0%2Bsha.fc75fced724f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-maximintegrated/library/MAX14690/0.0.0+sha.264f38840873/MAX14690-0.0.0+sha.264f38840873.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX14690-0.0.0+sha.264f38840873.tar.gz",
+    "size_bytes": 7522,
+    "sha256": "d4104561c6713b624216583f87808f57bc921c8494d60da8696c8519d3df6d62",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-maximintegrated/library/MAX14690/0.0.0%2Bsha.264f38840873/MAX14690-0.0.0%2Bsha.264f38840873.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-maximintegrated/library/MAX14690/0.0.0%2Bsha.264f38840873/MAX14690-0.0.0%2Bsha.264f38840873.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-maximintegrated/library/MAX14720/0.0.0+sha.2c3f2da51c5d/MAX14720-0.0.0+sha.2c3f2da51c5d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX14720-0.0.0+sha.2c3f2da51c5d.tar.gz",
+    "size_bytes": 5711,
+    "sha256": "f90768a253db0358e140728228205eab3bf4463977955f4c8d55f9663b071306",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-maximintegrated/library/MAX14720/0.0.0%2Bsha.2c3f2da51c5d/MAX14720-0.0.0%2Bsha.2c3f2da51c5d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-maximintegrated/library/MAX14720/0.0.0%2Bsha.2c3f2da51c5d/MAX14720-0.0.0%2Bsha.2c3f2da51c5d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-maximintegrated/library/MAX17055/0.0.0+sha.1520ede29bc1/MAX17055-0.0.0+sha.1520ede29bc1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX17055-0.0.0+sha.1520ede29bc1.tar.gz",
+    "size_bytes": 4808,
+    "sha256": "3a2320da314c66741891e83b8eb7a6bf923b596ce5583b9a4b0cecc78876a8ca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-maximintegrated/library/MAX17055/0.0.0%2Bsha.1520ede29bc1/MAX17055-0.0.0%2Bsha.1520ede29bc1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-maximintegrated/library/MAX17055/0.0.0%2Bsha.1520ede29bc1/MAX17055-0.0.0%2Bsha.1520ede29bc1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-maximintegrated/library/MAX17055_EZconfig/0.0.0+sha.2ec07d0239be/MAX17055_EZconfig-0.0.0+sha.2ec07d0239be.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX17055_EZconfig-0.0.0+sha.2ec07d0239be.tar.gz",
+    "size_bytes": 11697,
+    "sha256": "2bff6938f9421cdf1af2cfe4fb60c1deba92ea2313ad204aafbfb7da05da84b6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-maximintegrated/library/MAX17055_EZconfig/0.0.0%2Bsha.2ec07d0239be/MAX17055_EZconfig-0.0.0%2Bsha.2ec07d0239be.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-maximintegrated/library/MAX17055_EZconfig/0.0.0%2Bsha.2ec07d0239be/MAX17055_EZconfig-0.0.0%2Bsha.2ec07d0239be.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-maximintegrated/library/MAX30003/0.0.0+sha.313e09ea1738/MAX30003-0.0.0+sha.313e09ea1738.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX30003-0.0.0+sha.313e09ea1738.tar.gz",
+    "size_bytes": 3489,
+    "sha256": "03185c5d3f5aa38ddcc60ce8af3c1fb7038a0ff0a600ec890032142aa3c446ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-maximintegrated/library/MAX30003/0.0.0%2Bsha.313e09ea1738/MAX30003-0.0.0%2Bsha.313e09ea1738.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-maximintegrated/library/MAX30003/0.0.0%2Bsha.313e09ea1738/MAX30003-0.0.0%2Bsha.313e09ea1738.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-maximintegrated/library/MAX30101/0.0.0+sha.85513b7480f5/MAX30101-0.0.0+sha.85513b7480f5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX30101-0.0.0+sha.85513b7480f5.tar.gz",
+    "size_bytes": 5554,
+    "sha256": "a817f2876c194f835795286effdac08ec190350ae5e484da5f2f4b511b9aeda5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-maximintegrated/library/MAX30101/0.0.0%2Bsha.85513b7480f5/MAX30101-0.0.0%2Bsha.85513b7480f5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-maximintegrated/library/MAX30101/0.0.0%2Bsha.85513b7480f5/MAX30101-0.0.0%2Bsha.85513b7480f5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-maximintegrated/library/MAX30101_Finger_Heart_Rate_SpO2_Monitor_Driver_Source_Code/0.0.0+sha.b0addee6d8d1/MAX30101_Finger_Heart_Rate_SpO2_Monitor_Driver_Source_Code-0.0.0+sha.b0addee6d8d1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX30101_Finger_Heart_Rate_SpO2_Monitor_Driver_Source_Code-0.0.0+sha.b0addee6d8d1.tar.gz",
+    "size_bytes": 9327,
+    "sha256": "e00a53dc273c6e59473024059115372a21c0fe7345c6e5b9bbcbb75310f65fc1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-maximintegrated/library/MAX30101_Finger_Heart_Rate_SpO2_Monitor_Driver_Source_Code/0.0.0%2Bsha.b0addee6d8d1/MAX30101_Finger_Heart_Rate_SpO2_Monitor_Driver_Source_Code-0.0.0%2Bsha.b0addee6d8d1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-maximintegrated/library/MAX30101_Finger_Heart_Rate_SpO2_Monitor_Driver_Source_Code/0.0.0%2Bsha.b0addee6d8d1/MAX30101_Finger_Heart_Rate_SpO2_Monitor_Driver_Source_Code-0.0.0%2Bsha.b0addee6d8d1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-maximintegrated/library/MAX30205/0.0.0+sha.2aeb45dd2bb9/MAX30205-0.0.0+sha.2aeb45dd2bb9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX30205-0.0.0+sha.2aeb45dd2bb9.tar.gz",
+    "size_bytes": 3622,
+    "sha256": "7663cc19ea3282fc7dec67ee1ab3ac64844fdeaa9f25b138a5283f74b128ce6d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-maximintegrated/library/MAX30205/0.0.0%2Bsha.2aeb45dd2bb9/MAX30205-0.0.0%2Bsha.2aeb45dd2bb9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-maximintegrated/library/MAX30205/0.0.0%2Bsha.2aeb45dd2bb9/MAX30205-0.0.0%2Bsha.2aeb45dd2bb9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-maximintegrated/library/MAX30205_Clinical_Temperature_Sensor/0.0.0+sha.9c5dc1393570/MAX30205_Clinical_Temperature_Sensor-0.0.0+sha.9c5dc1393570.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX30205_Clinical_Temperature_Sensor-0.0.0+sha.9c5dc1393570.tar.gz",
+    "size_bytes": 5757,
+    "sha256": "20abd90adae7677623ebc53a0aee89df8a16661c5ec69d24456507ff24fcf824",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-maximintegrated/library/MAX30205_Clinical_Temperature_Sensor/0.0.0%2Bsha.9c5dc1393570/MAX30205_Clinical_Temperature_Sensor-0.0.0%2Bsha.9c5dc1393570.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-maximintegrated/library/MAX30205_Clinical_Temperature_Sensor/0.0.0%2Bsha.9c5dc1393570/MAX30205_Clinical_Temperature_Sensor-0.0.0%2Bsha.9c5dc1393570.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-maximintegrated/library/MAX31875_Temperature_Sensor_Low_Power/0.0.0+sha.61f3693edd6c/MAX31875_Temperature_Sensor_Low_Power-0.0.0+sha.61f3693edd6c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX31875_Temperature_Sensor_Low_Power-0.0.0+sha.61f3693edd6c.tar.gz",
+    "size_bytes": 5308,
+    "sha256": "54aee89f9ee7fe87a254b615bb818e239d3cee808726b16861339157517e0595",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-maximintegrated/library/MAX31875_Temperature_Sensor_Low_Power/0.0.0%2Bsha.61f3693edd6c/MAX31875_Temperature_Sensor_Low_Power-0.0.0%2Bsha.61f3693edd6c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-maximintegrated/library/MAX31875_Temperature_Sensor_Low_Power/0.0.0%2Bsha.61f3693edd6c/MAX31875_Temperature_Sensor_Low_Power-0.0.0%2Bsha.61f3693edd6c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-maximintegrated/library/MAX326XXFTHR_PwmOut/0.0.0+sha.bb005bb0a24c/MAX326XXFTHR_PwmOut-0.0.0+sha.bb005bb0a24c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX326XXFTHR_PwmOut-0.0.0+sha.bb005bb0a24c.tar.gz",
+    "size_bytes": 6556,
+    "sha256": "5f23156c1a9dffd9b3bc41a9475b066631fd8dce9eba37e331d37d002822bfc5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-maximintegrated/library/MAX326XXFTHR_PwmOut/0.0.0%2Bsha.bb005bb0a24c/MAX326XXFTHR_PwmOut-0.0.0%2Bsha.bb005bb0a24c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-maximintegrated/library/MAX326XXFTHR_PwmOut/0.0.0%2Bsha.bb005bb0a24c/MAX326XXFTHR_PwmOut-0.0.0%2Bsha.bb005bb0a24c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-maximintegrated/library/MAX5715/0.0.0+sha.3c45adf3efe8/MAX5715-0.0.0+sha.3c45adf3efe8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX5715-0.0.0+sha.3c45adf3efe8.tar.gz",
+    "size_bytes": 12672,
+    "sha256": "8050673efc629822d80faedd211e8e0f795d5b1b079d3813ce99688d0b95532a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-maximintegrated/library/MAX5715/0.0.0%2Bsha.3c45adf3efe8/MAX5715-0.0.0%2Bsha.3c45adf3efe8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-maximintegrated/library/MAX5715/0.0.0%2Bsha.3c45adf3efe8/MAX5715-0.0.0%2Bsha.3c45adf3efe8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-maximintegrated/library/MAX77734/0.0.0+sha.2726f8e71192/MAX77734-0.0.0+sha.2726f8e71192.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX77734-0.0.0+sha.2726f8e71192.tar.gz",
+    "size_bytes": 4453,
+    "sha256": "ff549e2668edca853691476ad650006e5bd6a5ea95ef71f4662f9dfaf8a0fc3b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-maximintegrated/library/MAX77734/0.0.0%2Bsha.2726f8e71192/MAX77734-0.0.0%2Bsha.2726f8e71192.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-maximintegrated/library/MAX77734/0.0.0%2Bsha.2726f8e71192/MAX77734-0.0.0%2Bsha.2726f8e71192.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-maximintegrated/library/Maxim_Sensor_Hub_Communications/0.0.0+sha.23dade9a66bf/Maxim_Sensor_Hub_Communications-0.0.0+sha.23dade9a66bf.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Maxim_Sensor_Hub_Communications-0.0.0+sha.23dade9a66bf.tar.gz",
+    "size_bytes": 10857,
+    "sha256": "badb7c311e381612f30eba1ad0e5f4fabf4d4f74ded5e20711300a3ccbab05a0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-maximintegrated/library/Maxim_Sensor_Hub_Communications/0.0.0%2Bsha.23dade9a66bf/Maxim_Sensor_Hub_Communications-0.0.0%2Bsha.23dade9a66bf.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-maximintegrated/library/Maxim_Sensor_Hub_Communications/0.0.0%2Bsha.23dade9a66bf/Maxim_Sensor_Hub_Communications-0.0.0%2Bsha.23dade9a66bf.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-maximintegrated/library/max32630fthr/0.0.0+sha.8f6e6a800f2f/max32630fthr-0.0.0+sha.8f6e6a800f2f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "max32630fthr-0.0.0+sha.8f6e6a800f2f.tar.gz",
+    "size_bytes": 3568,
+    "sha256": "f70667e615c004ccefd3b62defd3935b4036c2dfd8f53e7c72351f4e82b6091e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-maximintegrated/library/max32630fthr/0.0.0%2Bsha.8f6e6a800f2f/max32630fthr-0.0.0%2Bsha.8f6e6a800f2f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-maximintegrated/library/max32630fthr/0.0.0%2Bsha.8f6e6a800f2f/max32630fthr-0.0.0%2Bsha.8f6e6a800f2f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

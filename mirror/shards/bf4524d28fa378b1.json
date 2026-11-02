@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/windywanderer",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "windywanderer/library/CSWBattery/0.1.0/CSWBattery-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CSWBattery-0.1.0.tar.gz",
+    "size_bytes": 21326,
+    "sha256": "29cd20efda07f2f15623e4f1abdceea0bec030313edae39aa102702480f5536d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/windywanderer/library/CSWBattery/0.1.0/CSWBattery-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/windywanderer/library/CSWBattery/0.1.0/CSWBattery-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "windywanderer/library/CSWButtons/0.2.0/CSWButtons-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CSWButtons-0.2.0.tar.gz",
+    "size_bytes": 21178,
+    "sha256": "af95be69e1f80c562a41e96ba37afec9ba9c6a75dafc33ebd8e20477f769a4e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/windywanderer/library/CSWButtons/0.2.0/CSWButtons-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/windywanderer/library/CSWButtons/0.2.0/CSWButtons-0.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

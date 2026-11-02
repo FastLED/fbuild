@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dalib666",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dalib666/library/hamqtt/2.2.0/hamqtt-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "hamqtt-2.2.0.tar.gz",
+    "size_bytes": 12083,
+    "sha256": "a132d85eb1f83255abfd1c3fc79136db00d6a4104f081cb7492cc30511a04191",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dalib666/library/hamqtt/2.2.0/hamqtt-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dalib666/library/hamqtt/2.2.0/hamqtt-2.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

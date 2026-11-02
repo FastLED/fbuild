@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/feanor-anglin",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "feanor-anglin/library/PCF8575-lib/1.0.0/PCF8575-lib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCF8575-lib-1.0.0.tar.gz",
+    "size_bytes": 20205,
+    "sha256": "8bcb80999df0429ab2f72677ff2078d0f78d0badc2930ae95a1fb86178254451",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/feanor-anglin/library/PCF8575-lib/1.0.0/PCF8575-lib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/feanor-anglin/library/PCF8575-lib/1.0.0/PCF8575-lib-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

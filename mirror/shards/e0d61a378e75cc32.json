@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/zulns",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "zulns/library/LCD_HD44780/1.0.0/LCD_HD44780-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCD_HD44780-1.0.0.tar.gz",
+    "size_bytes": 10263,
+    "sha256": "49a09cab9047be776a720df98e970bfc2fb2d0b9ee30cdd87e4c6c9a0bdf15cf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zulns/library/LCD_HD44780/1.0.0/LCD_HD44780-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/zulns/library/LCD_HD44780/1.0.0/LCD_HD44780-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zulns/library/MultitapKeypad/1.1.0/MultitapKeypad-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MultitapKeypad-1.1.0.tar.gz",
+    "size_bytes": 9681,
+    "sha256": "a7b219971d14f0868796ed26da9ec7e1774f4a6e298e15a9a5c836239ecef19d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zulns/library/MultitapKeypad/1.1.0/MultitapKeypad-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/zulns/library/MultitapKeypad/1.1.0/MultitapKeypad-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zulns/library/STM32F1_RTC/1.0.0/STM32F1_RTC-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32F1_RTC-1.0.0.tar.gz",
+    "size_bytes": 74049,
+    "sha256": "e201a136f4c0a1e972c1150ad3d82a6b041f61b9951d6428a68f1839303491ef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zulns/library/STM32F1_RTC/1.0.0/STM32F1_RTC-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/zulns/library/STM32F1_RTC/1.0.0/STM32F1_RTC-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

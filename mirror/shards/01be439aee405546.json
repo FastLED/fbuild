@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-chrissnow",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-chrissnow/library/MCP3424/0.0.0+sha.a6ef27377050/MCP3424-0.0.0+sha.a6ef27377050.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP3424-0.0.0+sha.a6ef27377050.tar.gz",
+    "size_bytes": 2108,
+    "sha256": "d62a1c0fbd28850f9128489e69a7cd242ad65e8fc8d8987ca3ad3785902140ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-chrissnow/library/MCP3424/0.0.0%2Bsha.a6ef27377050/MCP3424-0.0.0%2Bsha.a6ef27377050.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-chrissnow/library/MCP3424/0.0.0%2Bsha.a6ef27377050/MCP3424-0.0.0%2Bsha.a6ef27377050.tar.gz"
+    ]
+   }
+  }
+ ]
+}

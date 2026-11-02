@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-bant62",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-bant62/library/GyroSensor/0.0.0+sha.da10b9c9db7a/GyroSensor-0.0.0+sha.da10b9c9db7a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyroSensor-0.0.0+sha.da10b9c9db7a.tar.gz",
+    "size_bytes": 3609,
+    "sha256": "7dbdface96d12caeb6be03c9a6184154da32c9fd718e6d2f1e495169d8e63431",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bant62/library/GyroSensor/0.0.0%2Bsha.da10b9c9db7a/GyroSensor-0.0.0%2Bsha.da10b9c9db7a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bant62/library/GyroSensor/0.0.0%2Bsha.da10b9c9db7a/GyroSensor-0.0.0%2Bsha.da10b9c9db7a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-bant62/library/My7SEG/0.0.0+sha.e7362bcb9e1f/My7SEG-0.0.0+sha.e7362bcb9e1f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "My7SEG-0.0.0+sha.e7362bcb9e1f.tar.gz",
+    "size_bytes": 2504,
+    "sha256": "21d4c060a3164a5fefac24349c3a4457af2f1b16dedf907ac0a89a1d6b99c262",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bant62/library/My7SEG/0.0.0%2Bsha.e7362bcb9e1f/My7SEG-0.0.0%2Bsha.e7362bcb9e1f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bant62/library/My7SEG/0.0.0%2Bsha.e7362bcb9e1f/My7SEG-0.0.0%2Bsha.e7362bcb9e1f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-bant62/library/MyLCD/0.0.0+sha.794acd9a0b9c/MyLCD-0.0.0+sha.794acd9a0b9c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MyLCD-0.0.0+sha.794acd9a0b9c.tar.gz",
+    "size_bytes": 2935,
+    "sha256": "62f987213126af8ac114bd8f0438b9725392d9183d04bd162dd4cd218c66a84b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bant62/library/MyLCD/0.0.0%2Bsha.794acd9a0b9c/MyLCD-0.0.0%2Bsha.794acd9a0b9c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bant62/library/MyLCD/0.0.0%2Bsha.794acd9a0b9c/MyLCD-0.0.0%2Bsha.794acd9a0b9c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-bant62/library/UniStepperMotor/0.0.0+sha.abb7425e1a5b/UniStepperMotor-0.0.0+sha.abb7425e1a5b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UniStepperMotor-0.0.0+sha.abb7425e1a5b.tar.gz",
+    "size_bytes": 4031,
+    "sha256": "e0282bfb0c6a409657f8ac19056638174f64525d3238a7313def59ded3e91038",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bant62/library/UniStepperMotor/0.0.0%2Bsha.abb7425e1a5b/UniStepperMotor-0.0.0%2Bsha.abb7425e1a5b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bant62/library/UniStepperMotor/0.0.0%2Bsha.abb7425e1a5b/UniStepperMotor-0.0.0%2Bsha.abb7425e1a5b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-bant62/library/_24LCXXX/0.0.0+sha.859387a87312/_24LCXXX-0.0.0+sha.859387a87312.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "_24LCXXX-0.0.0+sha.859387a87312.tar.gz",
+    "size_bytes": 2689,
+    "sha256": "9b8914ec5f6eeb93199b29d492835efbf6874f7edd8464937467c75792a491f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bant62/library/_24LCXXX/0.0.0%2Bsha.859387a87312/_24LCXXX-0.0.0%2Bsha.859387a87312.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bant62/library/_24LCXXX/0.0.0%2Bsha.859387a87312/_24LCXXX-0.0.0%2Bsha.859387a87312.tar.gz"
+    ]
+   }
+  }
+ ]
+}

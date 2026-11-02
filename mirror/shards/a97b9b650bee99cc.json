@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-aktk",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-aktk/library/HTTP_SERVER/0.0.0+sha.b6dd6ed0060b/HTTP_SERVER-0.0.0+sha.b6dd6ed0060b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HTTP_SERVER-0.0.0+sha.b6dd6ed0060b.tar.gz",
+    "size_bytes": 5662,
+    "sha256": "d34738a3e6bee1228e3e942496fa5011ee28d4cbf2b7d93f38933f68eef864c3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-aktk/library/HTTP_SERVER/0.0.0%2Bsha.b6dd6ed0060b/HTTP_SERVER-0.0.0%2Bsha.b6dd6ed0060b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-aktk/library/HTTP_SERVER/0.0.0%2Bsha.b6dd6ed0060b/HTTP_SERVER-0.0.0%2Bsha.b6dd6ed0060b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-aktk/library/WS_SERVER/0.0.0+sha.ccaae77f91b8/WS_SERVER-0.0.0+sha.ccaae77f91b8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WS_SERVER-0.0.0+sha.ccaae77f91b8.tar.gz",
+    "size_bytes": 8568,
+    "sha256": "d313041a3b311f2cc5ec40d75fce5bbb0cf66c24abe290e0179a2570f3933317",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-aktk/library/WS_SERVER/0.0.0%2Bsha.ccaae77f91b8/WS_SERVER-0.0.0%2Bsha.ccaae77f91b8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-aktk/library/WS_SERVER/0.0.0%2Bsha.ccaae77f91b8/WS_SERVER-0.0.0%2Bsha.ccaae77f91b8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

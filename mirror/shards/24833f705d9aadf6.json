@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/antcolag",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "antcolag/library/runner/0.2.0/runner-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "runner-0.2.0.tar.gz",
+    "size_bytes": 10171,
+    "sha256": "266021d4f1c67a051a815fb8ba530a9515591393ed413d1e0262e5e3b771704a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/antcolag/library/runner/0.2.0/runner-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/antcolag/library/runner/0.2.0/runner-0.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

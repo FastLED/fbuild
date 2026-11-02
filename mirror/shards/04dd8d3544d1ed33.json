@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pstolarz",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pstolarz/library/CoopThreads/0.3.1/CoopThreads-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CoopThreads-0.3.1.tar.gz",
+    "size_bytes": 17656,
+    "sha256": "9adfec8aa76aa0c5e5b2c0cf9f4b96ff12979fae6b2e8857e2b518805827d3b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pstolarz/library/CoopThreads/0.3.1/CoopThreads-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pstolarz/library/CoopThreads/0.3.1/CoopThreads-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pstolarz/library/NRF_HAL/1.0.3/NRF_HAL-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NRF_HAL-1.0.3.tar.gz",
+    "size_bytes": 19781,
+    "sha256": "b8c7b718c3433e3fe8ec5d29ce7858a29180dd90ba13183282e55cedd5b3728b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pstolarz/library/NRF_HAL/1.0.3/NRF_HAL-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/pstolarz/library/NRF_HAL/1.0.3/NRF_HAL-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pstolarz/library/OneWireNg/0.10.3/OneWireNg-0.10.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OneWireNg-0.10.3.tar.gz",
+    "size_bytes": 68284,
+    "sha256": "14d06b77964e87e025e928ae60e3cdcc019182303712e33d780d2f595be78073",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pstolarz/library/OneWireNg/0.10.3/OneWireNg-0.10.3.tar.gz",
+     "https://dl.registry.platformio.org/download/pstolarz/library/OneWireNg/0.10.3/OneWireNg-0.10.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pstolarz/library/OneWireNg/0.13.3/OneWireNg-0.13.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OneWireNg-0.13.3.tar.gz",
+    "size_bytes": 94893,
+    "sha256": "51e9315e54415cf56077bd7704c901eb5731a8e1d1cfa273e2e2aece365313d3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pstolarz/library/OneWireNg/0.13.3/OneWireNg-0.13.3.tar.gz",
+     "https://dl.registry.platformio.org/download/pstolarz/library/OneWireNg/0.13.3/OneWireNg-0.13.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pstolarz/library/OneWireNg/0.14.0/OneWireNg-0.14.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OneWireNg-0.14.0.tar.gz",
+    "size_bytes": 96385,
+    "sha256": "f0266d3b78eca449da47f48891798796134943a48b12c687fa10a9dd06a7507f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pstolarz/library/OneWireNg/0.14.0/OneWireNg-0.14.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pstolarz/library/OneWireNg/0.14.0/OneWireNg-0.14.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pstolarz/library/OneWireNg/0.14.1/OneWireNg-0.14.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OneWireNg-0.14.1.tar.gz",
+    "size_bytes": 95561,
+    "sha256": "0ddda2ee853a31186b9fa3a058446ab88400b28a2a4ab3147888c1324afa0f0b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pstolarz/library/OneWireNg/0.14.1/OneWireNg-0.14.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pstolarz/library/OneWireNg/0.14.1/OneWireNg-0.14.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

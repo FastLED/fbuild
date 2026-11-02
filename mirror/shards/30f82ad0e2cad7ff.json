@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-fossum-13",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-fossum-13/library/DHT11/0.0.0+sha.5da6f6de3e42/DHT11-0.0.0+sha.5da6f6de3e42.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DHT11-0.0.0+sha.5da6f6de3e42.tar.gz",
+    "size_bytes": 2342,
+    "sha256": "e91237ec39d79ef85c48df2c3d55b4d466ad3a8d414f834c939345fa9db6545c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-fossum-13/library/DHT11/0.0.0%2Bsha.5da6f6de3e42/DHT11-0.0.0%2Bsha.5da6f6de3e42.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-fossum-13/library/DHT11/0.0.0%2Bsha.5da6f6de3e42/DHT11-0.0.0%2Bsha.5da6f6de3e42.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-fossum-13/library/SerialLCD/0.0.0+sha.96f055419f71/SerialLCD-0.0.0+sha.96f055419f71.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialLCD-0.0.0+sha.96f055419f71.tar.gz",
+    "size_bytes": 3625,
+    "sha256": "d7a75d45696bb1e056ee04125909ea323695c394ef208481575c326134e5691d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-fossum-13/library/SerialLCD/0.0.0%2Bsha.96f055419f71/SerialLCD-0.0.0%2Bsha.96f055419f71.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-fossum-13/library/SerialLCD/0.0.0%2Bsha.96f055419f71/SerialLCD-0.0.0%2Bsha.96f055419f71.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-fossum-13/library/TriLED/0.0.0+sha.80ebb233e295/TriLED-0.0.0+sha.80ebb233e295.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TriLED-0.0.0+sha.80ebb233e295.tar.gz",
+    "size_bytes": 1654,
+    "sha256": "c50f3827f7d10d9403cb17f8e47ad621b78a8c785f313c34e5eb12419606e4b0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-fossum-13/library/TriLED/0.0.0%2Bsha.80ebb233e295/TriLED-0.0.0%2Bsha.80ebb233e295.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-fossum-13/library/TriLED/0.0.0%2Bsha.80ebb233e295/TriLED-0.0.0%2Bsha.80ebb233e295.tar.gz"
+    ]
+   }
+  }
+ ]
+}

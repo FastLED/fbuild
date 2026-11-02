@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/md-levitan",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "md-levitan/library/ESP32-BMP180/1.0.2/ESP32-BMP180-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-BMP180-1.0.2.tar.gz",
+    "size_bytes": 11722,
+    "sha256": "d845e8ce43fc099c5ef40ddf7ba17d1b7906eac24996e3c6c77690ef9764c8e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/md-levitan/library/ESP32-BMP180/1.0.2/ESP32-BMP180-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/md-levitan/library/ESP32-BMP180/1.0.2/ESP32-BMP180-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

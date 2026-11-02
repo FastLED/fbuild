@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-hi1000",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-hi1000/library/SB1602E/0.0.0+sha.0bfd3db543a1/SB1602E-0.0.0+sha.0bfd3db543a1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SB1602E-0.0.0+sha.0bfd3db543a1.tar.gz",
+    "size_bytes": 4548,
+    "sha256": "e3ac0d1a63bcb69510f37d2b9d1bb6195156eb420e9914906e8d53159ea83ac3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hi1000/library/SB1602E/0.0.0%2Bsha.0bfd3db543a1/SB1602E-0.0.0%2Bsha.0bfd3db543a1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hi1000/library/SB1602E/0.0.0%2Bsha.0bfd3db543a1/SB1602E-0.0.0%2Bsha.0bfd3db543a1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

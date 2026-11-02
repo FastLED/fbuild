@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-benkatz",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-benkatz/library/FastPWM/0.0.0+sha.f1eef5be0b5d/FastPWM-0.0.0+sha.f1eef5be0b5d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastPWM-0.0.0+sha.f1eef5be0b5d.tar.gz",
+    "size_bytes": 5517,
+    "sha256": "5a881636df5de576fef9bb1103c3cfeae17d7971ce1334d83c3034b2f33e5eaa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-benkatz/library/FastPWM/0.0.0%2Bsha.f1eef5be0b5d/FastPWM-0.0.0%2Bsha.f1eef5be0b5d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-benkatz/library/FastPWM/0.0.0%2Bsha.f1eef5be0b5d/FastPWM-0.0.0%2Bsha.f1eef5be0b5d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-benkatz/library/FastPWM3/0.0.0+sha.51c979bca21e/FastPWM3-0.0.0+sha.51c979bca21e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastPWM3-0.0.0+sha.51c979bca21e.tar.gz",
+    "size_bytes": 5609,
+    "sha256": "eb0f8de22d661b73fc9087f06b42270383edb6f555583085b02ba6a07b7a450e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-benkatz/library/FastPWM3/0.0.0%2Bsha.51c979bca21e/FastPWM3-0.0.0%2Bsha.51c979bca21e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-benkatz/library/FastPWM3/0.0.0%2Bsha.51c979bca21e/FastPWM3-0.0.0%2Bsha.51c979bca21e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

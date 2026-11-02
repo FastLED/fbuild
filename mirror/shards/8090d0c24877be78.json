@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/moarbue",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "moarbue/library/FIR-Filter/1.0.0/FIR-Filter-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FIR-Filter-1.0.0.tar.gz",
+    "size_bytes": 3188,
+    "sha256": "97078a7c41528e486a3253ce28269f0649e8fd68a83989dee26bb31c7d62fafe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moarbue/library/FIR-Filter/1.0.0/FIR-Filter-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/moarbue/library/FIR-Filter/1.0.0/FIR-Filter-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moarbue/library/MAX31855-Library/1.1/MAX31855-Library-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX31855-Library-1.1.tar.gz",
+    "size_bytes": 3723,
+    "sha256": "c1ba3be0cde9a7c29f8b29fd780754c5ab56b79483929459b5d6e27af73aebbd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moarbue/library/MAX31855-Library/1.1/MAX31855-Library-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/moarbue/library/MAX31855-Library/1.1/MAX31855-Library-1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moarbue/library/button_moarbue/1.0.0/button_moarbue-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "button_moarbue-1.0.0.tar.gz",
+    "size_bytes": 4289,
+    "sha256": "7cdd73af5d2c42bb6a8e0e037e7bdcf0c034b78a1085b422f39470bb6397cdd8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moarbue/library/button_moarbue/1.0.0/button_moarbue-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/moarbue/library/button_moarbue/1.0.0/button_moarbue-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

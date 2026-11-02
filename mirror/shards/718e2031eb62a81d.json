@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-germaint",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-germaint/library/ssd1306_library/0.0.0+sha.e5341e7eb825/ssd1306_library-0.0.0+sha.e5341e7eb825.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ssd1306_library-0.0.0+sha.e5341e7eb825.tar.gz",
+    "size_bytes": 9085,
+    "sha256": "6a3fa779b3353a1d10fac545a5a870b1de09bf2b7879dc5b990c626f99348f4c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-germaint/library/ssd1306_library/0.0.0%2Bsha.e5341e7eb825/ssd1306_library-0.0.0%2Bsha.e5341e7eb825.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-germaint/library/ssd1306_library/0.0.0%2Bsha.e5341e7eb825/ssd1306_library-0.0.0%2Bsha.e5341e7eb825.tar.gz"
+    ]
+   }
+  }
+ ]
+}

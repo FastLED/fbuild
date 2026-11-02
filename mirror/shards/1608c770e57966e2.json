@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-hexley",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-hexley/library/CaptureT0_11U24/0.0.0+sha.22c6b94e7da6/CaptureT0_11U24-0.0.0+sha.22c6b94e7da6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CaptureT0_11U24-0.0.0+sha.22c6b94e7da6.tar.gz",
+    "size_bytes": 3097,
+    "sha256": "7fdcefae584b64a105e07c3f2acbc90c5f2abfb6b65f9407a14b8dfe285ea370",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hexley/library/CaptureT0_11U24/0.0.0%2Bsha.22c6b94e7da6/CaptureT0_11U24-0.0.0%2Bsha.22c6b94e7da6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hexley/library/CaptureT0_11U24/0.0.0%2Bsha.22c6b94e7da6/CaptureT0_11U24-0.0.0%2Bsha.22c6b94e7da6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hexley/library/QEI_hw/0.0.0+sha.53f8ae2cf502/QEI_hw-0.0.0+sha.53f8ae2cf502.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QEI_hw-0.0.0+sha.53f8ae2cf502.tar.gz",
+    "size_bytes": 8387,
+    "sha256": "e4178c03a915c531b54cafccdd0524797351916343010dd4e489313a1b72367b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hexley/library/QEI_hw/0.0.0%2Bsha.53f8ae2cf502/QEI_hw-0.0.0%2Bsha.53f8ae2cf502.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hexley/library/QEI_hw/0.0.0%2Bsha.53f8ae2cf502/QEI_hw-0.0.0%2Bsha.53f8ae2cf502.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hexley/library/RA8875_TP/0.0.0+sha.e117ad10fba6/RA8875_TP-0.0.0+sha.e117ad10fba6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RA8875_TP-0.0.0+sha.e117ad10fba6.tar.gz",
+    "size_bytes": 39140,
+    "sha256": "27d971cd6724a3b39f75e4df0cf03152466dccec0920850947527fe64125d500",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hexley/library/RA8875_TP/0.0.0%2Bsha.e117ad10fba6/RA8875_TP-0.0.0%2Bsha.e117ad10fba6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hexley/library/RA8875_TP/0.0.0%2Bsha.e117ad10fba6/RA8875_TP-0.0.0%2Bsha.e117ad10fba6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hexley/library/RA8875_fork/0.0.0+sha.1321832f11d8/RA8875_fork-0.0.0+sha.1321832f11d8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RA8875_fork-0.0.0+sha.1321832f11d8.tar.gz",
+    "size_bytes": 35522,
+    "sha256": "d896081adc2d78f2def457f815a5148a247dc65c272a0e9cd96179c54ffe9078",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hexley/library/RA8875_fork/0.0.0%2Bsha.1321832f11d8/RA8875_fork-0.0.0%2Bsha.1321832f11d8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hexley/library/RA8875_fork/0.0.0%2Bsha.1321832f11d8/RA8875_fork-0.0.0%2Bsha.1321832f11d8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hexley/library/RPCInterface/0.0.0+sha.1c61049a0349/RPCInterface-0.0.0+sha.1c61049a0349.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RPCInterface-0.0.0+sha.1c61049a0349.tar.gz",
+    "size_bytes": 5038,
+    "sha256": "57dd60140f6fb49090a1e609a46b17d9b923c1b20bca13c03787ab340eab12b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hexley/library/RPCInterface/0.0.0%2Bsha.1c61049a0349/RPCInterface-0.0.0%2Bsha.1c61049a0349.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hexley/library/RPCInterface/0.0.0%2Bsha.1c61049a0349/RPCInterface-0.0.0%2Bsha.1c61049a0349.tar.gz"
+    ]
+   }
+  }
+ ]
+}

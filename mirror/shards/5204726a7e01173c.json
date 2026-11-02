@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/adias",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "adias/library/PI4IOE5V9554/0.1.2/PI4IOE5V9554-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PI4IOE5V9554-0.1.2.tar.gz",
+    "size_bytes": 3643,
+    "sha256": "dec6e6338fb4ee6cf6365e85c2aae37ce6fb4f61f888053673e1603c1daf8289",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/adias/library/PI4IOE5V9554/0.1.2/PI4IOE5V9554-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/adias/library/PI4IOE5V9554/0.1.2/PI4IOE5V9554-0.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

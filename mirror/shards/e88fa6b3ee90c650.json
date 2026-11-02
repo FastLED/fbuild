@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/laxilef",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "laxilef/library/ESP32Scheduler/1.0.1/ESP32Scheduler-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Scheduler-1.0.1.tar.gz",
+    "size_bytes": 2395,
+    "sha256": "d6f31bf12cdc483d827170c24bcc69a8ae6e645fb1f08617aef475af4f7e8495",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/laxilef/library/ESP32Scheduler/1.0.1/ESP32Scheduler-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/laxilef/library/ESP32Scheduler/1.0.1/ESP32Scheduler-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "laxilef/library/TinyLogger/1.1.1/TinyLogger-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyLogger-1.1.1.tar.gz",
+    "size_bytes": 3898,
+    "sha256": "3ef94eeae10e4384972ba37bb77183c392ec12c95e51b187abd90d9b47c129ac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/laxilef/library/TinyLogger/1.1.1/TinyLogger-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/laxilef/library/TinyLogger/1.1.1/TinyLogger-1.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

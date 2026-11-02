@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-bluefish",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-bluefish/library/Lib_DFPlayerMini/0.0.0+sha.e64636383d8c/Lib_DFPlayerMini-0.0.0+sha.e64636383d8c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lib_DFPlayerMini-0.0.0+sha.e64636383d8c.tar.gz",
+    "size_bytes": 1988,
+    "sha256": "fab42bd5d55da1549e88ca214330608480a15d3c8ea12e2987963c0d4d088536",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bluefish/library/Lib_DFPlayerMini/0.0.0%2Bsha.e64636383d8c/Lib_DFPlayerMini-0.0.0%2Bsha.e64636383d8c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bluefish/library/Lib_DFPlayerMini/0.0.0%2Bsha.e64636383d8c/Lib_DFPlayerMini-0.0.0%2Bsha.e64636383d8c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-bluefish/library/Lib_MPU9250_SPI/0.0.0+sha.c142d5a352c5/Lib_MPU9250_SPI-0.0.0+sha.c142d5a352c5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lib_MPU9250_SPI-0.0.0+sha.c142d5a352c5.tar.gz",
+    "size_bytes": 4892,
+    "sha256": "38c57ce4542450087c67b9d020a5d7b952b8deb0499b2d3727af8d50da9b6557",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bluefish/library/Lib_MPU9250_SPI/0.0.0%2Bsha.c142d5a352c5/Lib_MPU9250_SPI-0.0.0%2Bsha.c142d5a352c5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bluefish/library/Lib_MPU9250_SPI/0.0.0%2Bsha.c142d5a352c5/Lib_MPU9250_SPI-0.0.0%2Bsha.c142d5a352c5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

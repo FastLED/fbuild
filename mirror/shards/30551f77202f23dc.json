@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-being24",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-being24/library/mylib/0.0.0+sha.5379ca8b2e4b/mylib-0.0.0+sha.5379ca8b2e4b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mylib-0.0.0+sha.5379ca8b2e4b.tar.gz",
+    "size_bytes": 1051,
+    "sha256": "e31852fcc445b3f85728aa1e191cf51cd120d35743e18b76e3e4cd364e3f18d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-being24/library/mylib/0.0.0%2Bsha.5379ca8b2e4b/mylib-0.0.0%2Bsha.5379ca8b2e4b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-being24/library/mylib/0.0.0%2Bsha.5379ca8b2e4b/mylib-0.0.0%2Bsha.5379ca8b2e4b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

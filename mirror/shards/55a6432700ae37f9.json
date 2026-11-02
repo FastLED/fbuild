@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-drohne",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-drohne/library/PWM/0.0.0+sha.a30a502e0c75/PWM-0.0.0+sha.a30a502e0c75.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PWM-0.0.0+sha.a30a502e0c75.tar.gz",
+    "size_bytes": 836,
+    "sha256": "f20c3e7f25b4e4bb6de6b43f9aff93800238f440f16de19683fd51a05c90f6ba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-drohne/library/PWM/0.0.0%2Bsha.a30a502e0c75/PWM-0.0.0%2Bsha.a30a502e0c75.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-drohne/library/PWM/0.0.0%2Bsha.a30a502e0c75/PWM-0.0.0%2Bsha.a30a502e0c75.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-drohne/library/WS2811/0.0.0+sha.2fbb2f0e79fb/WS2811-0.0.0+sha.2fbb2f0e79fb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WS2811-0.0.0+sha.2fbb2f0e79fb.tar.gz",
+    "size_bytes": 1618,
+    "sha256": "84abde2f04309962b0950a82d50d37657a1721e74cbe8b95eca9b5b7552c4952",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-drohne/library/WS2811/0.0.0%2Bsha.2fbb2f0e79fb/WS2811-0.0.0%2Bsha.2fbb2f0e79fb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-drohne/library/WS2811/0.0.0%2Bsha.2fbb2f0e79fb/WS2811-0.0.0%2Bsha.2fbb2f0e79fb.tar.gz"
+    ]
+   }
+  }
+ ]
+}

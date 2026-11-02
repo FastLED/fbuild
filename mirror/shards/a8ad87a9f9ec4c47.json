@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-wrecky",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-wrecky/library/OV7670/0.0.0+sha.2e57ba7138b9/OV7670-0.0.0+sha.2e57ba7138b9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OV7670-0.0.0+sha.2e57ba7138b9.tar.gz",
+    "size_bytes": 6687,
+    "sha256": "0312128a2046928a127577d11df0abbe192a3d461e326cfa718a9f9d682180e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wrecky/library/OV7670/0.0.0%2Bsha.2e57ba7138b9/OV7670-0.0.0%2Bsha.2e57ba7138b9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wrecky/library/OV7670/0.0.0%2Bsha.2e57ba7138b9/OV7670-0.0.0%2Bsha.2e57ba7138b9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

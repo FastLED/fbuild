@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-fangoman91",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-fangoman91/library/Keypad3x4polling/0.0.0+sha.7082c7132e50/Keypad3x4polling-0.0.0+sha.7082c7132e50.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Keypad3x4polling-0.0.0+sha.7082c7132e50.tar.gz",
+    "size_bytes": 1356,
+    "sha256": "d0b28b6fb9a20e5cd1302e546adc95b3c1496f2abc8365664333ce9f536863b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-fangoman91/library/Keypad3x4polling/0.0.0%2Bsha.7082c7132e50/Keypad3x4polling-0.0.0%2Bsha.7082c7132e50.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-fangoman91/library/Keypad3x4polling/0.0.0%2Bsha.7082c7132e50/Keypad3x4polling-0.0.0%2Bsha.7082c7132e50.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-fangoman91/library/MDSMC/0.0.0+sha.e869912db757/MDSMC-0.0.0+sha.e869912db757.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MDSMC-0.0.0+sha.e869912db757.tar.gz",
+    "size_bytes": 1621,
+    "sha256": "d8c515d86a2d93defdef131fd826e6dfb2834448fad63354eb0c429d6c2c0643",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-fangoman91/library/MDSMC/0.0.0%2Bsha.e869912db757/MDSMC-0.0.0%2Bsha.e869912db757.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-fangoman91/library/MDSMC/0.0.0%2Bsha.e869912db757/MDSMC-0.0.0%2Bsha.e869912db757.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-fangoman91/library/WaveGen_v4/0.0.0+sha.cb84b066ab29/WaveGen_v4-0.0.0+sha.cb84b066ab29.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WaveGen_v4-0.0.0+sha.cb84b066ab29.tar.gz",
+    "size_bytes": 1921,
+    "sha256": "4a34e4024e7f05510c387d314d9be34e8bc347e5236644dc51c81ce4d29ffc54",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-fangoman91/library/WaveGen_v4/0.0.0%2Bsha.cb84b066ab29/WaveGen_v4-0.0.0%2Bsha.cb84b066ab29.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-fangoman91/library/WaveGen_v4/0.0.0%2Bsha.cb84b066ab29/WaveGen_v4-0.0.0%2Bsha.cb84b066ab29.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-fangoman91/library/keypad3x4/0.0.0+sha.b8305e120e11/keypad3x4-0.0.0+sha.b8305e120e11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "keypad3x4-0.0.0+sha.b8305e120e11.tar.gz",
+    "size_bytes": 2144,
+    "sha256": "e52d2acee49901d8ae093ae1cc9e8e86a63620a2255aa1ea4010d81509bb9b63",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-fangoman91/library/keypad3x4/0.0.0%2Bsha.b8305e120e11/keypad3x4-0.0.0%2Bsha.b8305e120e11.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-fangoman91/library/keypad3x4/0.0.0%2Bsha.b8305e120e11/keypad3x4-0.0.0%2Bsha.b8305e120e11.tar.gz"
+    ]
+   }
+  }
+ ]
+}

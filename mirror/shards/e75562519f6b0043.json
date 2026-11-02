@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mahdi-misk",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mahdi-misk/library/EasyWiFiMDNS/1.0.0/EasyWiFiMDNS-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyWiFiMDNS-1.0.0.tar.gz",
+    "size_bytes": 6550,
+    "sha256": "8790fc49a053bc1d2378c8745a0ccbf28b47e9a6acbfb9b17e56134c3c329f9f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mahdi-misk/library/EasyWiFiMDNS/1.0.0/EasyWiFiMDNS-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mahdi-misk/library/EasyWiFiMDNS/1.0.0/EasyWiFiMDNS-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

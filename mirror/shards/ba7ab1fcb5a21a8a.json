@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-basvuyk",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-basvuyk/library/buzzer/0.0.0+sha.9133a863f1dd/buzzer-0.0.0+sha.9133a863f1dd.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "buzzer-0.0.0+sha.9133a863f1dd.tar.gz",
+    "size_bytes": 1622,
+    "sha256": "6934568b8fa5711f005d89011d42fc0d92aa89deac34e2ca484b61ea4108e9dc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-basvuyk/library/buzzer/0.0.0%2Bsha.9133a863f1dd/buzzer-0.0.0%2Bsha.9133a863f1dd.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-basvuyk/library/buzzer/0.0.0%2Bsha.9133a863f1dd/buzzer-0.0.0%2Bsha.9133a863f1dd.tar.gz"
+    ]
+   }
+  }
+ ]
+}

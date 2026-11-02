@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hologrameducation",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hologrameducation/library/Hologram%20SIMCOM/0.5.0/HologramSIMCOM-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HologramSIMCOM-0.5.0.tar.gz",
+    "size_bytes": 9728,
+    "sha256": "2de5b618acd4f7f21d85d68bf1dca7bdede5cdc9412b8495fc2d24051bac158e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hologrameducation/library/Hologram%2520SIMCOM/0.5.0/HologramSIMCOM-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hologrameducation/library/Hologram%20SIMCOM/0.5.0/HologramSIMCOM-0.5.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

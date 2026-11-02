@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-trevieze",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-trevieze/library/BNO055_Adafruit/0.0.0+sha.59ad1c98647c/BNO055_Adafruit-0.0.0+sha.59ad1c98647c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BNO055_Adafruit-0.0.0+sha.59ad1c98647c.tar.gz",
+    "size_bytes": 4877,
+    "sha256": "a3409fee24b162f780f210e5fbf5913e3702e874a426a8109f0850aa920ab4b6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-trevieze/library/BNO055_Adafruit/0.0.0%2Bsha.59ad1c98647c/BNO055_Adafruit-0.0.0%2Bsha.59ad1c98647c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-trevieze/library/BNO055_Adafruit/0.0.0%2Bsha.59ad1c98647c/BNO055_Adafruit-0.0.0%2Bsha.59ad1c98647c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fullstackelectron",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fullstackelectron/library/FSEDTH11/1.0.0/FSEDTH11-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FSEDTH11-1.0.0.tar.gz",
+    "size_bytes": 44733,
+    "sha256": "96e15320d0914ae63a0e32bb8b859ada1c6773ba6c2ec1028431ef1b014e4d33",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fullstackelectron/library/FSEDTH11/1.0.0/FSEDTH11-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fullstackelectron/library/FSEDTH11/1.0.0/FSEDTH11-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fullstackelectron/library/FSEOTA/1.0.1/FSEOTA-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FSEOTA-1.0.1.tar.gz",
+    "size_bytes": 2434,
+    "sha256": "5410e713b82f9ff432f2aa9bd87bd06e157b73045cf36be42cca10a998e8ad43",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fullstackelectron/library/FSEOTA/1.0.1/FSEOTA-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fullstackelectron/library/FSEOTA/1.0.1/FSEOTA-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fullstackelectron/library/FSERestAPI/1.0.2/FSERestAPI-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FSERestAPI-1.0.2.tar.gz",
+    "size_bytes": 1489,
+    "sha256": "192f1d4a8f543655d631023a4cf141e506d1eea65fcc64f204166ad1336f5f92",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fullstackelectron/library/FSERestAPI/1.0.2/FSERestAPI-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/fullstackelectron/library/FSERestAPI/1.0.2/FSERestAPI-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fullstackelectron/library/FSESPIFFS/1.0.0/FSESPIFFS-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FSESPIFFS-1.0.0.tar.gz",
+    "size_bytes": 3385,
+    "sha256": "f99c92d60e0d7f8ab888d452455ebd1e4ef68ffe5d6eace746243ddda23f7083",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fullstackelectron/library/FSESPIFFS/1.0.0/FSESPIFFS-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fullstackelectron/library/FSESPIFFS/1.0.0/FSESPIFFS-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fullstackelectron/library/FSEThingSpeak/1.0.0/FSEThingSpeak-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FSEThingSpeak-1.0.0.tar.gz",
+    "size_bytes": 2652,
+    "sha256": "db9e6f9c300734a2bcbea83673520f3bca5e82284801185a2310a319fb29610d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fullstackelectron/library/FSEThingSpeak/1.0.0/FSEThingSpeak-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fullstackelectron/library/FSEThingSpeak/1.0.0/FSEThingSpeak-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fullstackelectron/library/FSEWifiManager/1.0.5/FSEWifiManager-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FSEWifiManager-1.0.5.tar.gz",
+    "size_bytes": 19526,
+    "sha256": "3a5bd3fbad140406a73a521b8b397344b5fa15635f4d1b5491d3a5173f311f02",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fullstackelectron/library/FSEWifiManager/1.0.5/FSEWifiManager-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/fullstackelectron/library/FSEWifiManager/1.0.5/FSEWifiManager-1.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

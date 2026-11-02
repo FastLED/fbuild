@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/devrim-oguz",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "devrim-oguz/library/Arduino-MultiTasking/1.0.9/Arduino-MultiTasking-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino-MultiTasking-1.0.9.tar.gz",
+    "size_bytes": 21932,
+    "sha256": "ab962a5e04f6a984d440833157c7d60034b7be9a5fa6be5a854fc95811a8bbb8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/devrim-oguz/library/Arduino-MultiTasking/1.0.9/Arduino-MultiTasking-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/devrim-oguz/library/Arduino-MultiTasking/1.0.9/Arduino-MultiTasking-1.0.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

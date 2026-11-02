@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/teeminus",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "teeminus/library/ST7920Emulator/1.1/ST7920Emulator-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ST7920Emulator-1.1.tar.gz",
+    "size_bytes": 19737,
+    "sha256": "54f7a7e5dfbb69cdd3dae2717311e82280b23b790b7c387529ff7b5e9bc4332e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teeminus/library/ST7920Emulator/1.1/ST7920Emulator-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/teeminus/library/ST7920Emulator/1.1/ST7920Emulator-1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

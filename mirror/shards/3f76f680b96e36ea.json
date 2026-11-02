@@ -1,0 +1,321 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/olikraus",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "olikraus/library/U8g2/2.28.8/U8g2-2.28.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "U8g2-2.28.8.tar.gz",
+    "size_bytes": 10078001,
+    "sha256": "387ad317466d8605c6486a8ced97963402bb6f417e1765481a87aa57966cce9d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/olikraus/library/U8g2/2.28.8/U8g2-2.28.8.tar.gz",
+     "https://dl.registry.platformio.org/download/olikraus/library/U8g2/2.28.8/U8g2-2.28.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "olikraus/library/U8g2/2.32.10/U8g2-2.32.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "U8g2-2.32.10.tar.gz",
+    "size_bytes": 10358125,
+    "sha256": "b4d54cbfedd486768146506f00b348711586b6d1ae80c0a8253cd0d50919b977",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/olikraus/library/U8g2/2.32.10/U8g2-2.32.10.tar.gz",
+     "https://dl.registry.platformio.org/download/olikraus/library/U8g2/2.32.10/U8g2-2.32.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "olikraus/library/U8g2/2.34.18/U8g2-2.34.18.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "U8g2-2.34.18.tar.gz",
+    "size_bytes": 10650613,
+    "sha256": "46324cd49872c2f22540eea5926e12dfdfea27c7fc435b219d033655e3646ff1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/olikraus/library/U8g2/2.34.18/U8g2-2.34.18.tar.gz",
+     "https://dl.registry.platformio.org/download/olikraus/library/U8g2/2.34.18/U8g2-2.34.18.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "olikraus/library/U8g2/2.34.22/U8g2-2.34.22.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "U8g2-2.34.22.tar.gz",
+    "size_bytes": 10708240,
+    "sha256": "d4aecadebf2180b3058f729668ffc2586a8a0602e1e492879653c33b231a907d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/olikraus/library/U8g2/2.34.22/U8g2-2.34.22.tar.gz",
+     "https://dl.registry.platformio.org/download/olikraus/library/U8g2/2.34.22/U8g2-2.34.22.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "olikraus/library/U8g2/2.34.4/U8g2-2.34.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "U8g2-2.34.4.tar.gz",
+    "size_bytes": 10566146,
+    "sha256": "acfeeaa9178d110cb6c49a2b255382055f05be1c6389adf2caf34d8d766d4e68",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/olikraus/library/U8g2/2.34.4/U8g2-2.34.4.tar.gz",
+     "https://dl.registry.platformio.org/download/olikraus/library/U8g2/2.34.4/U8g2-2.34.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "olikraus/library/U8g2/2.34.5/U8g2-2.34.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "U8g2-2.34.5.tar.gz",
+    "size_bytes": 10567003,
+    "sha256": "00130c10a0e803653fd3b28f2c414f1308f90857ec3ef4aa793866f26a8c790a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/olikraus/library/U8g2/2.34.5/U8g2-2.34.5.tar.gz",
+     "https://dl.registry.platformio.org/download/olikraus/library/U8g2/2.34.5/U8g2-2.34.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "olikraus/library/U8g2/2.35.15/U8g2-2.35.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "U8g2-2.35.15.tar.gz",
+    "size_bytes": 10730305,
+    "sha256": "49cdf9f947bec2322e777c6bd8a3c9dc3e38d2dd182f0fcc39676cce4716ebfc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/olikraus/library/U8g2/2.35.15/U8g2-2.35.15.tar.gz",
+     "https://dl.registry.platformio.org/download/olikraus/library/U8g2/2.35.15/U8g2-2.35.15.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "olikraus/library/U8g2/2.35.19/U8g2-2.35.19.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "U8g2-2.35.19.tar.gz",
+    "size_bytes": 10734123,
+    "sha256": "5eef5571e4167f6150ef2e0334151d6d61eacd0fa4b267d02fa09ccf534a078b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/olikraus/library/U8g2/2.35.19/U8g2-2.35.19.tar.gz",
+     "https://dl.registry.platformio.org/download/olikraus/library/U8g2/2.35.19/U8g2-2.35.19.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "olikraus/library/U8g2/2.35.30/U8g2-2.35.30.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "U8g2-2.35.30.tar.gz",
+    "size_bytes": 13004359,
+    "sha256": "4e758bbb6e287a9b42c9f746aa5149b1c7bc3449bd01463218303ce0fcd87619",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/olikraus/library/U8g2/2.35.30/U8g2-2.35.30.tar.gz",
+     "https://dl.registry.platformio.org/download/olikraus/library/U8g2/2.35.30/U8g2-2.35.30.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "olikraus/library/U8g2/2.35.7/U8g2-2.35.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "U8g2-2.35.7.tar.gz",
+    "size_bytes": 10720179,
+    "sha256": "5c7a0cc36b0444a5917493de56efe91e126892dfffd3761719da7e7ce5570403",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/olikraus/library/U8g2/2.35.7/U8g2-2.35.7.tar.gz",
+     "https://dl.registry.platformio.org/download/olikraus/library/U8g2/2.35.7/U8g2-2.35.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "olikraus/library/U8g2/2.35.9/U8g2-2.35.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "U8g2-2.35.9.tar.gz",
+    "size_bytes": 10727129,
+    "sha256": "77bd90bdcefc827e46a87e4d82b409e96ba87bc9e271ae2c8c5a2b12363ff7c5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/olikraus/library/U8g2/2.35.9/U8g2-2.35.9.tar.gz",
+     "https://dl.registry.platformio.org/download/olikraus/library/U8g2/2.35.9/U8g2-2.35.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "olikraus/library/U8g2/2.36.10/U8g2-2.36.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "U8g2-2.36.10.tar.gz",
+    "size_bytes": 13241566,
+    "sha256": "bd17793653b0515506fb7f8ef5b270b387f7cf82840f3b9e0d81019cddb5e6ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/olikraus/library/U8g2/2.36.10/U8g2-2.36.10.tar.gz",
+     "https://dl.registry.platformio.org/download/olikraus/library/U8g2/2.36.10/U8g2-2.36.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "olikraus/library/U8g2/2.36.12/U8g2-2.36.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "U8g2-2.36.12.tar.gz",
+    "size_bytes": 13241844,
+    "sha256": "77aee4da06582359c9256cf70fe59cb8d63f61310a1186bd8f128748921539f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/olikraus/library/U8g2/2.36.12/U8g2-2.36.12.tar.gz",
+     "https://dl.registry.platformio.org/download/olikraus/library/U8g2/2.36.12/U8g2-2.36.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "olikraus/library/U8g2/2.36.14/U8g2-2.36.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "U8g2-2.36.14.tar.gz",
+    "size_bytes": 13524648,
+    "sha256": "3da61ebe5cb71369f47ab7156786e52aa51e10fada4167a3724af0affb2d6cb0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/olikraus/library/U8g2/2.36.14/U8g2-2.36.14.tar.gz",
+     "https://dl.registry.platformio.org/download/olikraus/library/U8g2/2.36.14/U8g2-2.36.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "olikraus/library/U8g2/2.36.15/U8g2-2.36.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "U8g2-2.36.15.tar.gz",
+    "size_bytes": 13525312,
+    "sha256": "901fb26d5a51f9dbd7f9b48b84015578d19f3ecaa74b0ccc119c2c277230d292",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/olikraus/library/U8g2/2.36.15/U8g2-2.36.15.tar.gz",
+     "https://dl.registry.platformio.org/download/olikraus/library/U8g2/2.36.15/U8g2-2.36.15.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "olikraus/library/U8g2/2.36.16/U8g2-2.36.16.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "U8g2-2.36.16.tar.gz",
+    "size_bytes": 13526245,
+    "sha256": "ec974c970c7ae7bc28c5b4d2a2be733b865851d73f52bf5e13193fb58835a966",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/olikraus/library/U8g2/2.36.16/U8g2-2.36.16.tar.gz",
+     "https://dl.registry.platformio.org/download/olikraus/library/U8g2/2.36.16/U8g2-2.36.16.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "olikraus/library/U8g2/2.36.17/U8g2-2.36.17.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "U8g2-2.36.17.tar.gz",
+    "size_bytes": 13529136,
+    "sha256": "f2b853ef8076e30721826daaf72bd78589a236ce9da1a53eccb57f3ce3f2db96",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/olikraus/library/U8g2/2.36.17/U8g2-2.36.17.tar.gz",
+     "https://dl.registry.platformio.org/download/olikraus/library/U8g2/2.36.17/U8g2-2.36.17.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "olikraus/library/U8g2/2.36.18/U8g2-2.36.18.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "U8g2-2.36.18.tar.gz",
+    "size_bytes": 13531448,
+    "sha256": "c85275467656b300f16a16e91e1cee18eacec125cd320024cf7f2eb164d963a1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/olikraus/library/U8g2/2.36.18/U8g2-2.36.18.tar.gz",
+     "https://dl.registry.platformio.org/download/olikraus/library/U8g2/2.36.18/U8g2-2.36.18.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "olikraus/library/U8g2/2.36.2/U8g2-2.36.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "U8g2-2.36.2.tar.gz",
+    "size_bytes": 13005235,
+    "sha256": "712dc777e16dff733f7045cf44181eb99437544625f055f52ee6a41fb825f8c4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/olikraus/library/U8g2/2.36.2/U8g2-2.36.2.tar.gz",
+     "https://dl.registry.platformio.org/download/olikraus/library/U8g2/2.36.2/U8g2-2.36.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "olikraus/library/U8g2/2.36.5/U8g2-2.36.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "U8g2-2.36.5.tar.gz",
+    "size_bytes": 13020575,
+    "sha256": "02133bc3c7194b76a8aa8d6bbc540c01b2c43a17cb3706a366b81326689a5b36",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/olikraus/library/U8g2/2.36.5/U8g2-2.36.5.tar.gz",
+     "https://dl.registry.platformio.org/download/olikraus/library/U8g2/2.36.5/U8g2-2.36.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "olikraus/library/U8g2/2.36.9/U8g2-2.36.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "U8g2-2.36.9.tar.gz",
+    "size_bytes": 13241547,
+    "sha256": "6f3c52915a1bdcadf9e485afb06c86d5a31a5b7b5241a088b3a68026850a655c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/olikraus/library/U8g2/2.36.9/U8g2-2.36.9.tar.gz",
+     "https://dl.registry.platformio.org/download/olikraus/library/U8g2/2.36.9/U8g2-2.36.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "olikraus/library/U8g2_for_Adafruit_GFX/1.8.0/U8g2_for_Adafruit_GFX-1.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "U8g2_for_Adafruit_GFX-1.8.0.tar.gz",
+    "size_bytes": 9550183,
+    "sha256": "0aac8c7c85865a35fb70f4534ba00e70ba9acda3c7b0bf713b4387dfc91c8ca2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/olikraus/library/U8g2_for_Adafruit_GFX/1.8.0/U8g2_for_Adafruit_GFX-1.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/olikraus/library/U8g2_for_Adafruit_GFX/1.8.0/U8g2_for_Adafruit_GFX-1.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "olikraus/library/U8glib/1.19.1/U8glib-1.19.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "U8glib-1.19.1.tar.gz",
+    "size_bytes": 885289,
+    "sha256": "650bd2a709f5a9b78792f917860c8bbeaa4b9e2209ab0ee17dba6cdac92eb48e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/olikraus/library/U8glib/1.19.1/U8glib-1.19.1.tar.gz",
+     "https://dl.registry.platformio.org/download/olikraus/library/U8glib/1.19.1/U8glib-1.19.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "olikraus/library/Ucglib/1.5.2/Ucglib-1.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ucglib-1.5.2.tar.gz",
+    "size_bytes": 3224245,
+    "sha256": "3210d178dd939402ea5e8184365d8b14facd859807b9f0ee7237c5fa83f3ee0f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/olikraus/library/Ucglib/1.5.2/Ucglib-1.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/olikraus/library/Ucglib/1.5.2/Ucglib-1.5.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

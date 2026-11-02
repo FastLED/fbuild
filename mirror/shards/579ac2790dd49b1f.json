@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/parvaz-jamei",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "parvaz-jamei/library/CodonTraceSwarm/0.12.11/CodonTraceSwarm-0.12.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CodonTraceSwarm-0.12.11.tar.gz",
+    "size_bytes": 133909,
+    "sha256": "7da64123383e7b54f4e3837c4fd03b7acead0fcce1c02d32e3faf1f6797816d5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/parvaz-jamei/library/CodonTraceSwarm/0.12.11/CodonTraceSwarm-0.12.11.tar.gz",
+     "https://dl.registry.platformio.org/download/parvaz-jamei/library/CodonTraceSwarm/0.12.11/CodonTraceSwarm-0.12.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "parvaz-jamei/library/CodonTraceSwarm/0.12.9/CodonTraceSwarm-0.12.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CodonTraceSwarm-0.12.9.tar.gz",
+    "size_bytes": 128339,
+    "sha256": "0d4f5822c90895363e1386887f04fd2f7efeac55edd41f168c368ad4ae790a79",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/parvaz-jamei/library/CodonTraceSwarm/0.12.9/CodonTraceSwarm-0.12.9.tar.gz",
+     "https://dl.registry.platformio.org/download/parvaz-jamei/library/CodonTraceSwarm/0.12.9/CodonTraceSwarm-0.12.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "parvaz-jamei/library/CrashHive32/1.1.2/CrashHive32-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CrashHive32-1.1.2.tar.gz",
+    "size_bytes": 24987,
+    "sha256": "f155a097f81fd1f11270afd292211a686b16c289752575ed6a17df6cd1d44fee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/parvaz-jamei/library/CrashHive32/1.1.2/CrashHive32-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/parvaz-jamei/library/CrashHive32/1.1.2/CrashHive32-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "parvaz-jamei/library/CrashHive32/1.1.3/CrashHive32-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CrashHive32-1.1.3.tar.gz",
+    "size_bytes": 24986,
+    "sha256": "54e7f99036ad5ae3ea4c81f3857f27091e9755e5aa2f336413b7e4d7d475d5a6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/parvaz-jamei/library/CrashHive32/1.1.3/CrashHive32-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/parvaz-jamei/library/CrashHive32/1.1.3/CrashHive32-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "parvaz-jamei/library/EcoSensePower/0.9.10/EcoSensePower-0.9.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EcoSensePower-0.9.10.tar.gz",
+    "size_bytes": 87553,
+    "sha256": "18f4fe63a431e4c17df1e6686f3e2b38195e27f4dc28d2e872cf1ccb48bf0b1f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/parvaz-jamei/library/EcoSensePower/0.9.10/EcoSensePower-0.9.10.tar.gz",
+     "https://dl.registry.platformio.org/download/parvaz-jamei/library/EcoSensePower/0.9.10/EcoSensePower-0.9.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "parvaz-jamei/library/FDCxCapSense/0.6.13/FDCxCapSense-0.6.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FDCxCapSense-0.6.13.tar.gz",
+    "size_bytes": 51787,
+    "sha256": "1122771bb95568bb815fe3ddcbb06a05f195b1f46d88281f401f715510444d37",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/parvaz-jamei/library/FDCxCapSense/0.6.13/FDCxCapSense-0.6.13.tar.gz",
+     "https://dl.registry.platformio.org/download/parvaz-jamei/library/FDCxCapSense/0.6.13/FDCxCapSense-0.6.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "parvaz-jamei/library/PulseWetProbe/0.3.7/PulseWetProbe-0.3.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PulseWetProbe-0.3.7.tar.gz",
+    "size_bytes": 198309,
+    "sha256": "b5520d9240291d9a644ff5697435d06cdeba3e72d45381e54489966e16120396",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/parvaz-jamei/library/PulseWetProbe/0.3.7/PulseWetProbe-0.3.7.tar.gz",
+     "https://dl.registry.platformio.org/download/parvaz-jamei/library/PulseWetProbe/0.3.7/PulseWetProbe-0.3.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

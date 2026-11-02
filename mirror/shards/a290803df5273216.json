@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jhoselinram",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jhoselinram/library/gButton/1.0.0/gButton-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "gButton-1.0.0.tar.gz",
+    "size_bytes": 6689,
+    "sha256": "d714fc63aed2892d8dfd6d1fd4fd93f8deb2d1bdfbb674eee715bfa212d1bda8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jhoselinram/library/gButton/1.0.0/gButton-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jhoselinram/library/gButton/1.0.0/gButton-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

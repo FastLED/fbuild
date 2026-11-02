@@ -1,0 +1,139 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-k4zuki",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-k4zuki/library/AkiSpiLcd/0.0.0+sha.7e37fd2ddaa4/AkiSpiLcd-0.0.0+sha.7e37fd2ddaa4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AkiSpiLcd-0.0.0+sha.7e37fd2ddaa4.tar.gz",
+    "size_bytes": 5413,
+    "sha256": "fbcb87e93216863b211c06341609b2ad91cc41583503fe469c66b942a9a275e0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-k4zuki/library/AkiSpiLcd/0.0.0%2Bsha.7e37fd2ddaa4/AkiSpiLcd-0.0.0%2Bsha.7e37fd2ddaa4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-k4zuki/library/AkiSpiLcd/0.0.0%2Bsha.7e37fd2ddaa4/AkiSpiLcd-0.0.0%2Bsha.7e37fd2ddaa4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-k4zuki/library/AkiSpiLcd_lib/0.0.0+sha.03519229f093/AkiSpiLcd_lib-0.0.0+sha.03519229f093.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AkiSpiLcd_lib-0.0.0+sha.03519229f093.tar.gz",
+    "size_bytes": 1700,
+    "sha256": "e23b7fe9acc773e8adfe4a41bbde4a3facebd60c0cb7fcedfe7ba8084a46efcb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-k4zuki/library/AkiSpiLcd_lib/0.0.0%2Bsha.03519229f093/AkiSpiLcd_lib-0.0.0%2Bsha.03519229f093.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-k4zuki/library/AkiSpiLcd_lib/0.0.0%2Bsha.03519229f093/AkiSpiLcd_lib-0.0.0%2Bsha.03519229f093.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-k4zuki/library/DA14580/0.0.0+sha.e2e84de053fc/DA14580-0.0.0+sha.e2e84de053fc.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DA14580-0.0.0+sha.e2e84de053fc.tar.gz",
+    "size_bytes": 3023,
+    "sha256": "c3ef4ce9bc6c1132a46e15fbc8b105bf8cb0c7c0c8ff8f77ddd6eb8c07f21b9a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-k4zuki/library/DA14580/0.0.0%2Bsha.e2e84de053fc/DA14580-0.0.0%2Bsha.e2e84de053fc.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-k4zuki/library/DA14580/0.0.0%2Bsha.e2e84de053fc/DA14580-0.0.0%2Bsha.e2e84de053fc.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-k4zuki/library/DA7212/0.0.0+sha.7e76c6f56169/DA7212-0.0.0+sha.7e76c6f56169.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DA7212-0.0.0+sha.7e76c6f56169.tar.gz",
+    "size_bytes": 5410,
+    "sha256": "7e688e474e3af949b5162860c2c59b2a499b0bffe57076630961e67f5a4c313a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-k4zuki/library/DA7212/0.0.0%2Bsha.7e76c6f56169/DA7212-0.0.0%2Bsha.7e76c6f56169.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-k4zuki/library/DA7212/0.0.0%2Bsha.7e76c6f56169/DA7212-0.0.0%2Bsha.7e76c6f56169.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-k4zuki/library/I2S/0.0.0+sha.94430ea76fc4/I2S-0.0.0+sha.94430ea76fc4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2S-0.0.0+sha.94430ea76fc4.tar.gz",
+    "size_bytes": 7569,
+    "sha256": "5eec7a3068658e64bfb91be957349a538d86bee0c8739e13716fb21c5bed571a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-k4zuki/library/I2S/0.0.0%2Bsha.94430ea76fc4/I2S-0.0.0%2Bsha.94430ea76fc4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-k4zuki/library/I2S/0.0.0%2Bsha.94430ea76fc4/I2S-0.0.0%2Bsha.94430ea76fc4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-k4zuki/library/TriPinLcd/0.0.0+sha.9cf8e8a3a8d6/TriPinLcd-0.0.0+sha.9cf8e8a3a8d6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TriPinLcd-0.0.0+sha.9cf8e8a3a8d6.tar.gz",
+    "size_bytes": 3896,
+    "sha256": "02b7290400491e3b723ab0fdb371ae02b6ff755e6bab6dcbc0779a574f23be5d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-k4zuki/library/TriPinLcd/0.0.0%2Bsha.9cf8e8a3a8d6/TriPinLcd-0.0.0%2Bsha.9cf8e8a3a8d6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-k4zuki/library/TriPinLcd/0.0.0%2Bsha.9cf8e8a3a8d6/TriPinLcd-0.0.0%2Bsha.9cf8e8a3a8d6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-k4zuki/library/USBCDCMSC/0.0.0+sha.178491b4d4f3/USBCDCMSC-0.0.0+sha.178491b4d4f3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "USBCDCMSC-0.0.0+sha.178491b4d4f3.tar.gz",
+    "size_bytes": 8665,
+    "sha256": "b44ca4ea68348a48b08169fd1cf5fc38621f63d994b46b01da99d1f1065bf8ec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-k4zuki/library/USBCDCMSC/0.0.0%2Bsha.178491b4d4f3/USBCDCMSC-0.0.0%2Bsha.178491b4d4f3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-k4zuki/library/USBCDCMSC/0.0.0%2Bsha.178491b4d4f3/USBCDCMSC-0.0.0%2Bsha.178491b4d4f3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-k4zuki/library/USBSDFileSystem/0.0.0+sha.b2034ad4951b/USBSDFileSystem-0.0.0+sha.b2034ad4951b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "USBSDFileSystem-0.0.0+sha.b2034ad4951b.tar.gz",
+    "size_bytes": 5219,
+    "sha256": "a451c86d47b64130b91b86372ff36dd7b6fe3c1eda5d0ef513c808e797332e59",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-k4zuki/library/USBSDFileSystem/0.0.0%2Bsha.b2034ad4951b/USBSDFileSystem-0.0.0%2Bsha.b2034ad4951b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-k4zuki/library/USBSDFileSystem/0.0.0%2Bsha.b2034ad4951b/USBSDFileSystem-0.0.0%2Bsha.b2034ad4951b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-k4zuki/library/USBSPIFileSystem/0.0.0+sha.a9a9a3faeb4e/USBSPIFileSystem-0.0.0+sha.a9a9a3faeb4e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "USBSPIFileSystem-0.0.0+sha.a9a9a3faeb4e.tar.gz",
+    "size_bytes": 2166,
+    "sha256": "d969c87917fe81fdafa8da4999db8b446d545993d98ef0aadcc17ebf7ed0e17d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-k4zuki/library/USBSPIFileSystem/0.0.0%2Bsha.a9a9a3faeb4e/USBSPIFileSystem-0.0.0%2Bsha.a9a9a3faeb4e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-k4zuki/library/USBSPIFileSystem/0.0.0%2Bsha.a9a9a3faeb4e/USBSPIFileSystem-0.0.0%2Bsha.a9a9a3faeb4e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-k4zuki/library/W25X40BV/0.0.0+sha.f14f239ae400/W25X40BV-0.0.0+sha.f14f239ae400.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "W25X40BV-0.0.0+sha.f14f239ae400.tar.gz",
+    "size_bytes": 2407,
+    "sha256": "1320cdbec09d983627a8ecdb9d542bd86cfc014e8f1e0a527cfccfd09118d526",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-k4zuki/library/W25X40BV/0.0.0%2Bsha.f14f239ae400/W25X40BV-0.0.0%2Bsha.f14f239ae400.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-k4zuki/library/W25X40BV/0.0.0%2Bsha.f14f239ae400/W25X40BV-0.0.0%2Bsha.f14f239ae400.tar.gz"
+    ]
+   }
+  }
+ ]
+}

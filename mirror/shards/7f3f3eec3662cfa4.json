@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tejashwikalptaru",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tejashwikalptaru/library/ssd1306xled/0.0.1/ssd1306xled-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ssd1306xled-0.0.1.tar.gz",
+    "size_bytes": 9524,
+    "sha256": "59ee72685718401847c1b8eacb07d29f0d66f9d8edea37788aec897c6b2cedb6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tejashwikalptaru/library/ssd1306xled/0.0.1/ssd1306xled-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tejashwikalptaru/library/ssd1306xled/0.0.1/ssd1306xled-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tejashwikalptaru/library/ssd1306xled/0.0.3/ssd1306xled-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ssd1306xled-0.0.3.tar.gz",
+    "size_bytes": 15800,
+    "sha256": "814505d19bb52d16c986631ac16983d9aa551a3edc716cec5443ac1951781111",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tejashwikalptaru/library/ssd1306xled/0.0.3/ssd1306xled-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tejashwikalptaru/library/ssd1306xled/0.0.3/ssd1306xled-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tejashwikalptaru/library/ssd1306xled/0.0.4/ssd1306xled-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ssd1306xled-0.0.4.tar.gz",
+    "size_bytes": 16572,
+    "sha256": "16ecb4d9ffaabc0f52cd35753da243a14d9e267eb888e638c93f6a44e2be1d53",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tejashwikalptaru/library/ssd1306xled/0.0.4/ssd1306xled-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/tejashwikalptaru/library/ssd1306xled/0.0.4/ssd1306xled-0.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tejashwikalptaru/library/ssd1306xled/1.0.0/ssd1306xled-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ssd1306xled-1.0.0.tar.gz",
+    "size_bytes": 86244,
+    "sha256": "73f171d40a2445d27dfeec6c7cd59cb190eba2b93dc9d3f32cb2672ee2f2c83a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tejashwikalptaru/library/ssd1306xled/1.0.0/ssd1306xled-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tejashwikalptaru/library/ssd1306xled/1.0.0/ssd1306xled-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

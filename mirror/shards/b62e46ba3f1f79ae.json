@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-tesis-saturometrica",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-tesis-saturometrica/library/PROCESAMIENTO_DATOS_SP02/0.0.0+sha.ce356ed18c86/PROCESAMIENTO_DATOS_SP02-0.0.0+sha.ce356ed18c86.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PROCESAMIENTO_DATOS_SP02-0.0.0+sha.ce356ed18c86.tar.gz",
+    "size_bytes": 2345,
+    "sha256": "e741be9e35ee723bce2d44314acce0f2c761349cee4c701dc4a70beed3eb36f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tesis-saturometrica/library/PROCESAMIENTO_DATOS_SP02/0.0.0%2Bsha.ce356ed18c86/PROCESAMIENTO_DATOS_SP02-0.0.0%2Bsha.ce356ed18c86.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tesis-saturometrica/library/PROCESAMIENTO_DATOS_SP02/0.0.0%2Bsha.ce356ed18c86/PROCESAMIENTO_DATOS_SP02-0.0.0%2Bsha.ce356ed18c86.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-davidr99",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-davidr99/library/LedMatrix-PWM/0.0.0+sha.e37a437cf602/LedMatrix-PWM-0.0.0+sha.e37a437cf602.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LedMatrix-PWM-0.0.0+sha.e37a437cf602.tar.gz",
+    "size_bytes": 3924,
+    "sha256": "0c531fb5ecb195e29bbba94a205636e2d6da4314d6b44b0513d77291821eca46",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-davidr99/library/LedMatrix-PWM/0.0.0%2Bsha.e37a437cf602/LedMatrix-PWM-0.0.0%2Bsha.e37a437cf602.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-davidr99/library/LedMatrix-PWM/0.0.0%2Bsha.e37a437cf602/LedMatrix-PWM-0.0.0%2Bsha.e37a437cf602.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-davidr99/library/MCP23016/0.0.0+sha.133b7e09bbe7/MCP23016-0.0.0+sha.133b7e09bbe7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP23016-0.0.0+sha.133b7e09bbe7.tar.gz",
+    "size_bytes": 3424,
+    "sha256": "3533c8920d889b1731ec0a25171f1c406beae77ae46d201b1d855dfbe67548a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-davidr99/library/MCP23016/0.0.0%2Bsha.133b7e09bbe7/MCP23016-0.0.0%2Bsha.133b7e09bbe7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-davidr99/library/MCP23016/0.0.0%2Bsha.133b7e09bbe7/MCP23016-0.0.0%2Bsha.133b7e09bbe7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-davidr99/library/RadioHead-148/0.0.0+sha.ab4e012489ef/RadioHead-148-0.0.0+sha.ab4e012489ef.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RadioHead-148-0.0.0+sha.ab4e012489ef.tar.gz",
+    "size_bytes": 151171,
+    "sha256": "04ba50bcc836d67e926a0b924cbea4f3a009365446f7dfb4a09a5e59e990b027",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-davidr99/library/RadioHead-148/0.0.0%2Bsha.ab4e012489ef/RadioHead-148-0.0.0%2Bsha.ab4e012489ef.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-davidr99/library/RadioHead-148/0.0.0%2Bsha.ab4e012489ef/RadioHead-148-0.0.0%2Bsha.ab4e012489ef.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-davidr99/library/VC0706CameraShield/0.0.0+sha.5cff9e627e06/VC0706CameraShield-0.0.0+sha.5cff9e627e06.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VC0706CameraShield-0.0.0+sha.5cff9e627e06.tar.gz",
+    "size_bytes": 4242,
+    "sha256": "30534c0afbd5a14d1f44be11a569630ad56bda5c97da13f65b96f91d21b766f5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-davidr99/library/VC0706CameraShield/0.0.0%2Bsha.5cff9e627e06/VC0706CameraShield-0.0.0%2Bsha.5cff9e627e06.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-davidr99/library/VC0706CameraShield/0.0.0%2Bsha.5cff9e627e06/VC0706CameraShield-0.0.0%2Bsha.5cff9e627e06.tar.gz"
+    ]
+   }
+  }
+ ]
+}

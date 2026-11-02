@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/siara-cc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "siara-cc/library/Marisa%20large%20dictionary%20lookup%20-%20ESP32%20Wrapper/0.2.6/Marisalargedictionarylookup-ESP32Wrapper-0.2.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Marisalargedictionarylookup-ESP32Wrapper-0.2.6.tar.gz",
+    "size_bytes": 604320,
+    "sha256": "d604c150b18226c646b6306d37b003531e3ce0d96d6c5defaad999c3d2f47481",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/siara-cc/library/Marisa%2520large%2520dictionary%2520lookup%2520-%2520ESP32%2520Wrapper/0.2.6/Marisalargedictionarylookup-ESP32Wrapper-0.2.6.tar.gz",
+     "https://dl.registry.platformio.org/download/siara-cc/library/Marisa%20large%20dictionary%20lookup%20-%20ESP32%20Wrapper/0.2.6/Marisalargedictionarylookup-ESP32Wrapper-0.2.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "siara-cc/library/Shox96%20Progmem%20Compression/1.1/Shox96ProgmemCompression-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Shox96ProgmemCompression-1.1.tar.gz",
+    "size_bytes": 64601,
+    "sha256": "14507d84783e5d9d996720d09bdca798f8a844e05599f55f1b6d2dbf0bfca4f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/siara-cc/library/Shox96%2520Progmem%2520Compression/1.1/Shox96ProgmemCompression-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/siara-cc/library/Shox96%20Progmem%20Compression/1.1/Shox96ProgmemCompression-1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "siara-cc/library/Sqlite%20Micro%20Logger/1.2/SqliteMicroLogger-1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SqliteMicroLogger-1.2.tar.gz",
+    "size_bytes": 24417,
+    "sha256": "f1009ed66be2ba02a575721cb8afc9e626f367e79d01ca893049cf304859a5ef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/siara-cc/library/Sqlite%2520Micro%2520Logger/1.2/SqliteMicroLogger-1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/siara-cc/library/Sqlite%20Micro%20Logger/1.2/SqliteMicroLogger-1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "siara-cc/library/Sqlite3%20for%20ESP8266/1.2/Sqlite3forESP8266-1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sqlite3forESP8266-1.2.tar.gz",
+    "size_bytes": 1993286,
+    "sha256": "5303eec9860d6c746b4e09d5d3b6be332723b7b8aa774d38f4d7e1e0e9e20604",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/siara-cc/library/Sqlite3%2520for%2520ESP8266/1.2/Sqlite3forESP8266-1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/siara-cc/library/Sqlite3%20for%20ESP8266/1.2/Sqlite3forESP8266-1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "siara-cc/library/Sqlite3Esp32/2.5/Sqlite3Esp32-2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sqlite3Esp32-2.5.tar.gz",
+    "size_bytes": 2465151,
+    "sha256": "b1bd0b924478c6d4f1b44e521b9f103e3d76816645a67b23016335f0da1fdaec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/siara-cc/library/Sqlite3Esp32/2.5/Sqlite3Esp32-2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/siara-cc/library/Sqlite3Esp32/2.5/Sqlite3Esp32-2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "siara-cc/library/Unishox%20Progmem%20Decompressor/1.0/UnishoxProgmemDecompressor-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UnishoxProgmemDecompressor-1.0.tar.gz",
+    "size_bytes": 14140,
+    "sha256": "80fdda0038021c16c4fa10d74293345d736a2190e0ddad797a532e3ba8ee84bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/siara-cc/library/Unishox%2520Progmem%2520Decompressor/1.0/UnishoxProgmemDecompressor-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/siara-cc/library/Unishox%20Progmem%20Decompressor/1.0/UnishoxProgmemDecompressor-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

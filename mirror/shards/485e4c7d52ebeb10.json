@@ -1,0 +1,152 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tgtakaoka",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tgtakaoka/library/libasm/1.6.63/libasm-1.6.63.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libasm-1.6.63.tar.gz",
+    "size_bytes": 501992,
+    "sha256": "28737bf6c04fd198afa291f7c502fbbaadd404012a3d610e8d75e90103c2d3db",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tgtakaoka/library/libasm/1.6.63/libasm-1.6.63.tar.gz",
+     "https://dl.registry.platformio.org/download/tgtakaoka/library/libasm/1.6.63/libasm-1.6.63.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tgtakaoka/library/libasm/1.6.64/libasm-1.6.64.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libasm-1.6.64.tar.gz",
+    "size_bytes": 698975,
+    "sha256": "533488648f58c5a9d7f1b0981b3cecf1a3aad2b0afb110991467aba0955be563",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tgtakaoka/library/libasm/1.6.64/libasm-1.6.64.tar.gz",
+     "https://dl.registry.platformio.org/download/tgtakaoka/library/libasm/1.6.64/libasm-1.6.64.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tgtakaoka/library/libasm/1.6.65/libasm-1.6.65.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libasm-1.6.65.tar.gz",
+    "size_bytes": 719407,
+    "sha256": "e1248178976fe4cf2eb866fa1edafb63f46abec501ce5d7cb436ac0b5445207f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tgtakaoka/library/libasm/1.6.65/libasm-1.6.65.tar.gz",
+     "https://dl.registry.platformio.org/download/tgtakaoka/library/libasm/1.6.65/libasm-1.6.65.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tgtakaoka/library/libasm/1.6.66/libasm-1.6.66.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libasm-1.6.66.tar.gz",
+    "size_bytes": 736622,
+    "sha256": "fa880e1b7e16d3de4d00e52e42eb2c1bfd58b491fe538abdbc30e67e127f56ec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tgtakaoka/library/libasm/1.6.66/libasm-1.6.66.tar.gz",
+     "https://dl.registry.platformio.org/download/tgtakaoka/library/libasm/1.6.66/libasm-1.6.66.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tgtakaoka/library/libasm/1.6.67/libasm-1.6.67.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libasm-1.6.67.tar.gz",
+    "size_bytes": 743697,
+    "sha256": "721dbb88379ff66458d21bd4be71a2e91e10eebac1f04a77b254c0d154b757c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tgtakaoka/library/libasm/1.6.67/libasm-1.6.67.tar.gz",
+     "https://dl.registry.platformio.org/download/tgtakaoka/library/libasm/1.6.67/libasm-1.6.67.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tgtakaoka/library/libasm/1.6.68/libasm-1.6.68.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libasm-1.6.68.tar.gz",
+    "size_bytes": 754398,
+    "sha256": "45b6e302985cb2d4cec0681fc8280d56d9333525c35b7714e76a71b09f05d68d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tgtakaoka/library/libasm/1.6.68/libasm-1.6.68.tar.gz",
+     "https://dl.registry.platformio.org/download/tgtakaoka/library/libasm/1.6.68/libasm-1.6.68.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tgtakaoka/library/libasm/1.6.69/libasm-1.6.69.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libasm-1.6.69.tar.gz",
+    "size_bytes": 754412,
+    "sha256": "e94b780ed13a517f1f6697b1b1acb757f7b99c5af1eea47977f3acee0dde90d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tgtakaoka/library/libasm/1.6.69/libasm-1.6.69.tar.gz",
+     "https://dl.registry.platformio.org/download/tgtakaoka/library/libasm/1.6.69/libasm-1.6.69.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tgtakaoka/library/libasm/1.6.70/libasm-1.6.70.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libasm-1.6.70.tar.gz",
+    "size_bytes": 781078,
+    "sha256": "5409a1c0123d1c5344d8b1ba85888c87244ebae182d83daabce71276af308a55",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tgtakaoka/library/libasm/1.6.70/libasm-1.6.70.tar.gz",
+     "https://dl.registry.platformio.org/download/tgtakaoka/library/libasm/1.6.70/libasm-1.6.70.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tgtakaoka/library/libasm/2.0.0/libasm-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libasm-2.0.0.tar.gz",
+    "size_bytes": 770786,
+    "sha256": "de34b4c39e050129adec7f8c008a7350e26c0e3e3f991fd7d96112c2269dbff4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tgtakaoka/library/libasm/2.0.0/libasm-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tgtakaoka/library/libasm/2.0.0/libasm-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tgtakaoka/library/libcli/1.4.2/libcli-1.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libcli-1.4.2.tar.gz",
+    "size_bytes": 13187,
+    "sha256": "2b06b9b92357cb0e3042c96a6cfcc68e76cdf4a71989ca9b5cbfa8bdd31cc2f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tgtakaoka/library/libcli/1.4.2/libcli-1.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tgtakaoka/library/libcli/1.4.2/libcli-1.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tgtakaoka/library/libcli/1.5.1/libcli-1.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libcli-1.5.1.tar.gz",
+    "size_bytes": 13705,
+    "sha256": "3bb7e6d5776af426bd27104d20941723cdd9ccc527e5807514c48d5da3c3eeb7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tgtakaoka/library/libcli/1.5.1/libcli-1.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tgtakaoka/library/libcli/1.5.1/libcli-1.5.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

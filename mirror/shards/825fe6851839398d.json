@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rweather",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rweather/library/Crypto/0.2.0/Crypto-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Crypto-0.2.0.tar.gz",
+    "size_bytes": 169194,
+    "sha256": "0e2c0c6171d3f5232a417996a1846b7549b7dd2488b2594b802ee5c3377ad211",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rweather/library/Crypto/0.2.0/Crypto-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rweather/library/Crypto/0.2.0/Crypto-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rweather/library/Crypto/0.4.0/Crypto-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Crypto-0.4.0.tar.gz",
+    "size_bytes": 162696,
+    "sha256": "1867740aad0d61bdcbac25f6dbc8eefe6eed9e7b37f48d9d0b9d80500ad431e0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rweather/library/Crypto/0.4.0/Crypto-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rweather/library/Crypto/0.4.0/Crypto-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rweather/library/CryptoLW/0.4.0/CryptoLW-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CryptoLW-0.4.0.tar.gz",
+    "size_bytes": 21050,
+    "sha256": "a0886d28d5afb272bfe658eb2ec0d5a7fc2a2a83c9f91d912e5120f1b0d23063",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rweather/library/CryptoLW/0.4.0/CryptoLW-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rweather/library/CryptoLW/0.4.0/CryptoLW-0.4.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

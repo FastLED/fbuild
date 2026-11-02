@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-lucoby",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-lucoby/library/4DGL/0.0.0+sha.4b25d5413a06/4DGL-0.0.0+sha.4b25d5413a06.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "4DGL-0.0.0+sha.4b25d5413a06.tar.gz",
+    "size_bytes": 7231,
+    "sha256": "1e63fc40fdcc7bff6ea8f4f3826d04ca41dab9150242b13b66696ff3b218e8fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-lucoby/library/4DGL/0.0.0%2Bsha.4b25d5413a06/4DGL-0.0.0%2Bsha.4b25d5413a06.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-lucoby/library/4DGL/0.0.0%2Bsha.4b25d5413a06/4DGL-0.0.0%2Bsha.4b25d5413a06.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-lucoby/library/direction/0.0.0+sha.d8f0c4ba09cc/direction-0.0.0+sha.d8f0c4ba09cc.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "direction-0.0.0+sha.d8f0c4ba09cc.tar.gz",
+    "size_bytes": 893,
+    "sha256": "04dcaf866e4eb7b2fbaac45ed6bba934d49dd4f37cbe6c901146d9c75b88e264",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-lucoby/library/direction/0.0.0%2Bsha.d8f0c4ba09cc/direction-0.0.0%2Bsha.d8f0c4ba09cc.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-lucoby/library/direction/0.0.0%2Bsha.d8f0c4ba09cc/direction-0.0.0%2Bsha.d8f0c4ba09cc.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-lucoby/library/draw/0.0.0+sha.2e528b145987/draw-0.0.0+sha.2e528b145987.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "draw-0.0.0+sha.2e528b145987.tar.gz",
+    "size_bytes": 1249,
+    "sha256": "19595d76f2c5379fd6febb72d7281780b5d28aa874ffc311fb6aa24c9f785b79",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-lucoby/library/draw/0.0.0%2Bsha.2e528b145987/draw-0.0.0%2Bsha.2e528b145987.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-lucoby/library/draw/0.0.0%2Bsha.2e528b145987/draw-0.0.0%2Bsha.2e528b145987.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-lucoby/library/list/0.0.0+sha.4212f9128c1b/list-0.0.0+sha.4212f9128c1b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "list-0.0.0+sha.4212f9128c1b.tar.gz",
+    "size_bytes": 1047,
+    "sha256": "d7aba24d4e82e85155e3cac7099c76714505bd5846337a25a992cc7d1a003800",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-lucoby/library/list/0.0.0%2Bsha.4212f9128c1b/list-0.0.0%2Bsha.4212f9128c1b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-lucoby/library/list/0.0.0%2Bsha.4212f9128c1b/list-0.0.0%2Bsha.4212f9128c1b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

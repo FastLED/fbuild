@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/farossco",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "farossco/library/ArduinoLogger/1.2.4/ArduinoLogger-1.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoLogger-1.2.4.tar.gz",
+    "size_bytes": 11543,
+    "sha256": "a11c123c18b62b14eafef4681b8fb2cb9eb05e56fb8582786c5d821d2280fc1f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/farossco/library/ArduinoLogger/1.2.4/ArduinoLogger-1.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/farossco/library/ArduinoLogger/1.2.4/ArduinoLogger-1.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "farossco/library/BM70/0.0.1/BM70-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BM70-0.0.1.tar.gz",
+    "size_bytes": 13178,
+    "sha256": "ab65f139769fe055b1eb33c9292ad94975c902aafaa619a2d354cdef63b94812",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/farossco/library/BM70/0.0.1/BM70-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/farossco/library/BM70/0.0.1/BM70-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

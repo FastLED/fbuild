@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ramo828",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ramo828/library/TinyPrinter/1.0.1/TinyPrinter-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyPrinter-1.0.1.tar.gz",
+    "size_bytes": 30232,
+    "sha256": "1ceab6a75c22781ed9d0dcdca543aee5c2f69520f8a1113a20006cb4090a03f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ramo828/library/TinyPrinter/1.0.1/TinyPrinter-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ramo828/library/TinyPrinter/1.0.1/TinyPrinter-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

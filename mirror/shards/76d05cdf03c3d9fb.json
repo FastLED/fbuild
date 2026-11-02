@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/spirik",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "spirik/library/GEM/1.6.5/GEM-1.6.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GEM-1.6.5.tar.gz",
+    "size_bytes": 140745,
+    "sha256": "78af2765a621f479c2763c267a34d7f4732fb2d5bd7d8a088c7d8b73952b4f5b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/spirik/library/GEM/1.6.5/GEM-1.6.5.tar.gz",
+     "https://dl.registry.platformio.org/download/spirik/library/GEM/1.6.5/GEM-1.6.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "spirik/library/GEM/1.7.0/GEM-1.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GEM-1.7.0.tar.gz",
+    "size_bytes": 144731,
+    "sha256": "3b71d6732e167643281217cb261871f26ad1d73ac883fbbf081c4c7f35c05378",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/spirik/library/GEM/1.7.0/GEM-1.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/spirik/library/GEM/1.7.0/GEM-1.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "spirik/library/GEM/1.7.1/GEM-1.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GEM-1.7.1.tar.gz",
+    "size_bytes": 145033,
+    "sha256": "74d7f1d7417c96dac13cb4b2914745da1b17326fe6d167038d053e858596b2eb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/spirik/library/GEM/1.7.1/GEM-1.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/spirik/library/GEM/1.7.1/GEM-1.7.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "spirik/library/GEM/1.8.0/GEM-1.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GEM-1.8.0.tar.gz",
+    "size_bytes": 150067,
+    "sha256": "7c890d473d24797b2f088a027ab0b9e353e6f6d94a519f9ab661558f596cba57",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/spirik/library/GEM/1.8.0/GEM-1.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/spirik/library/GEM/1.8.0/GEM-1.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "spirik/library/GEM/1.8.1/GEM-1.8.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GEM-1.8.1.tar.gz",
+    "size_bytes": 151879,
+    "sha256": "5f6774494c04dd4c856bfd9d7339bfaf7efaa6ee8cb85cb3414904c6bcec89aa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/spirik/library/GEM/1.8.1/GEM-1.8.1.tar.gz",
+     "https://dl.registry.platformio.org/download/spirik/library/GEM/1.8.1/GEM-1.8.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "spirik/library/GEM/1.8.2/GEM-1.8.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GEM-1.8.2.tar.gz",
+    "size_bytes": 151980,
+    "sha256": "6e4f3168c8982a0db7954e754ac69603c7c7e4d4872bdd182c85f8b99e13da70",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/spirik/library/GEM/1.8.2/GEM-1.8.2.tar.gz",
+     "https://dl.registry.platformio.org/download/spirik/library/GEM/1.8.2/GEM-1.8.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "spirik/library/KeyDetector/1.2.1/KeyDetector-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KeyDetector-1.2.1.tar.gz",
+    "size_bytes": 27501,
+    "sha256": "079f3ed5e5ce46258682b99ae48f14f8d922ba93e1337dae623f640221599967",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/spirik/library/KeyDetector/1.2.1/KeyDetector-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/spirik/library/KeyDetector/1.2.1/KeyDetector-1.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

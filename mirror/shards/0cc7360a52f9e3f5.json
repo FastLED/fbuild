@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-paradigma",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-paradigma/library/SCA100T/0.0.0+sha.2c27a938e61f/SCA100T-0.0.0+sha.2c27a938e61f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SCA100T-0.0.0+sha.2c27a938e61f.tar.gz",
+    "size_bytes": 2709,
+    "sha256": "b20c8a7703620d5b612cc00a4e20dbac14f86d95c334e18f534d2c23d97f86e3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-paradigma/library/SCA100T/0.0.0%2Bsha.2c27a938e61f/SCA100T-0.0.0%2Bsha.2c27a938e61f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-paradigma/library/SCA100T/0.0.0%2Bsha.2c27a938e61f/SCA100T-0.0.0%2Bsha.2c27a938e61f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

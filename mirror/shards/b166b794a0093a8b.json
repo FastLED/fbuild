@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/phuongnam720",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "phuongnam720/library/HLK-LD6002/1.0.15/HLK-LD6002-1.0.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HLK-LD6002-1.0.15.tar.gz",
+    "size_bytes": 5079,
+    "sha256": "01a20f3b2497e8d6f188e1c9c2880ed852795c5706836ca37560fd94fe483e11",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/phuongnam720/library/HLK-LD6002/1.0.15/HLK-LD6002-1.0.15.tar.gz",
+     "https://dl.registry.platformio.org/download/phuongnam720/library/HLK-LD6002/1.0.15/HLK-LD6002-1.0.15.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/thingface",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "thingface/library/ThingfaceClient/0.0.2/ThingfaceClient-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ThingfaceClient-0.0.2.tar.gz",
+    "size_bytes": 4778,
+    "sha256": "9b02da589531c9bc34a08a5d131c149e67c0c68703a2f1f7ae46070c4c9ca38e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thingface/library/ThingfaceClient/0.0.2/ThingfaceClient-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/thingface/library/ThingfaceClient/0.0.2/ThingfaceClient-0.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

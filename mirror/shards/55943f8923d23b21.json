@@ -1,0 +1,269 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ayushsharma82",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ayushsharma82/library/ESP-DASH/4.0.9/ESP-DASH-4.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-DASH-4.0.9.tar.gz",
+    "size_bytes": 159862,
+    "sha256": "2fa938548c0c13845f7dfd546055e3d85957d731133d9e0a5bf9e743a2a83600",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ayushsharma82/library/ESP-DASH/4.0.9/ESP-DASH-4.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/ayushsharma82/library/ESP-DASH/4.0.9/ESP-DASH-4.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ayushsharma82/library/ESP-DASH/5.0.2/ESP-DASH-5.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-DASH-5.0.2.tar.gz",
+    "size_bytes": 1571451,
+    "sha256": "d3222efc6f5db6dd12ea6c6c6323d8e649aacee143fad12039063ed0cdd448c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ayushsharma82/library/ESP-DASH/5.0.2/ESP-DASH-5.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ayushsharma82/library/ESP-DASH/5.0.2/ESP-DASH-5.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ayushsharma82/library/ESPConnect/1.0.6/ESPConnect-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPConnect-1.0.6.tar.gz",
+    "size_bytes": 64127,
+    "sha256": "b32ee9c82c43939e422a4b153bfa8c7a66536de44c79da1ce6c2b3bbab436131",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ayushsharma82/library/ESPConnect/1.0.6/ESPConnect-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/ayushsharma82/library/ESPConnect/1.0.6/ESPConnect-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ayushsharma82/library/EasyDDNS/1.8.0/EasyDDNS-1.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyDDNS-1.8.0.tar.gz",
+    "size_bytes": 4933,
+    "sha256": "4006f6be8908ae8d74ee61749fa2606e0405b26b71fab9b0cd46af56abfa443f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ayushsharma82/library/EasyDDNS/1.8.0/EasyDDNS-1.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ayushsharma82/library/EasyDDNS/1.8.0/EasyDDNS-1.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ayushsharma82/library/EasyUI/0.6/EasyUI-0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyUI-0.6.tar.gz",
+    "size_bytes": 42240,
+    "sha256": "82e94122570a125b88ce161131579c3ac022f8cf3b1c7338534f4bd4951bd6c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ayushsharma82/library/EasyUI/0.6/EasyUI-0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/ayushsharma82/library/EasyUI/0.6/EasyUI-0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ayushsharma82/library/ElegantOTA/2.2.9/ElegantOTA-2.2.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ElegantOTA-2.2.9.tar.gz",
+    "size_bytes": 202694,
+    "sha256": "11e45c2a2560a90f422f1a17d8cd6fa13153cd8488b9de7bf8170b900dd8907f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ayushsharma82/library/ElegantOTA/2.2.9/ElegantOTA-2.2.9.tar.gz",
+     "https://dl.registry.platformio.org/download/ayushsharma82/library/ElegantOTA/2.2.9/ElegantOTA-2.2.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ayushsharma82/library/ElegantOTA/3.1.0/ElegantOTA-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ElegantOTA-3.1.0.tar.gz",
+    "size_bytes": 34742,
+    "sha256": "5e1722bc0da630e9d1a2299c45ad23b61eef955345649eb6b4e97ac104a95561",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ayushsharma82/library/ElegantOTA/3.1.0/ElegantOTA-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ayushsharma82/library/ElegantOTA/3.1.0/ElegantOTA-3.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ayushsharma82/library/ElegantOTA/3.1.1/ElegantOTA-3.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ElegantOTA-3.1.1.tar.gz",
+    "size_bytes": 35474,
+    "sha256": "06e7cee85981c1cb58ce4270ec7deca396a9e1f36abf7829ed1d58531489f917",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ayushsharma82/library/ElegantOTA/3.1.1/ElegantOTA-3.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ayushsharma82/library/ElegantOTA/3.1.1/ElegantOTA-3.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ayushsharma82/library/ElegantOTA/3.1.4/ElegantOTA-3.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ElegantOTA-3.1.4.tar.gz",
+    "size_bytes": 37775,
+    "sha256": "367ba61a1dc7b306ed3e2b2d11ac49d86a53b1ca2da256b8b73a0477c390bbd4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ayushsharma82/library/ElegantOTA/3.1.4/ElegantOTA-3.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/ayushsharma82/library/ElegantOTA/3.1.4/ElegantOTA-3.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ayushsharma82/library/ElegantOTA/3.1.5/ElegantOTA-3.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ElegantOTA-3.1.5.tar.gz",
+    "size_bytes": 37772,
+    "sha256": "e592c5382f7966bfcdad59c29c0d393b6e6fd239bfb3d1bcf29268556ad88039",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ayushsharma82/library/ElegantOTA/3.1.5/ElegantOTA-3.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/ayushsharma82/library/ElegantOTA/3.1.5/ElegantOTA-3.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ayushsharma82/library/ElegantOTA/3.1.6/ElegantOTA-3.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ElegantOTA-3.1.6.tar.gz",
+    "size_bytes": 37780,
+    "sha256": "7137aef91de5503c58c8182588b57f22282b3ed67718905a4e1cfb3f33aae8b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ayushsharma82/library/ElegantOTA/3.1.6/ElegantOTA-3.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/ayushsharma82/library/ElegantOTA/3.1.6/ElegantOTA-3.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ayushsharma82/library/ElegantOTA/3.1.7/ElegantOTA-3.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ElegantOTA-3.1.7.tar.gz",
+    "size_bytes": 43503,
+    "sha256": "2cfc08987ea9e750af189ffc4a6e4b41766deda91999055434beb3458759d765",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ayushsharma82/library/ElegantOTA/3.1.7/ElegantOTA-3.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/ayushsharma82/library/ElegantOTA/3.1.7/ElegantOTA-3.1.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ayushsharma82/library/ElegantOTA/4.0.0/ElegantOTA-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ElegantOTA-4.0.0.tar.gz",
+    "size_bytes": 45671,
+    "sha256": "dd2c3f658f4eb221392ef1f66abbe489c09307c4aaa54de80dff3fd10a01d7ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ayushsharma82/library/ElegantOTA/4.0.0/ElegantOTA-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ayushsharma82/library/ElegantOTA/4.0.0/ElegantOTA-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ayushsharma82/library/NetWizard/1.2.1/NetWizard-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NetWizard-1.2.1.tar.gz",
+    "size_bytes": 69506,
+    "sha256": "fa76d8afe3826879692e7c4de3272265e2ab79a0aafd80c1b22d787bfddb5a09",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ayushsharma82/library/NetWizard/1.2.1/NetWizard-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ayushsharma82/library/NetWizard/1.2.1/NetWizard-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ayushsharma82/library/NetWizard/1.2.2/NetWizard-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NetWizard-1.2.2.tar.gz",
+    "size_bytes": 70113,
+    "sha256": "bbf679cdb4c32b2751ddd9fd38e134423ab83d4ec8fc3eb7b9c5b83cbe17d24c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ayushsharma82/library/NetWizard/1.2.2/NetWizard-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ayushsharma82/library/NetWizard/1.2.2/NetWizard-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ayushsharma82/library/NetWizard/2.0.0/NetWizard-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NetWizard-2.0.0.tar.gz",
+    "size_bytes": 91326,
+    "sha256": "56220c7c714085815e7bc746166d543251ac8349dd74f9a4a6d2a5d9c70482b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ayushsharma82/library/NetWizard/2.0.0/NetWizard-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ayushsharma82/library/NetWizard/2.0.0/NetWizard-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ayushsharma82/library/RPAsyncTCP/1.3.2/RPAsyncTCP-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RPAsyncTCP-1.3.2.tar.gz",
+    "size_bytes": 52775,
+    "sha256": "8a50e5ff89d38ab8fd7f9e8224f40e6e8ad91d395b28ec9bd3d20b8163fe47a7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ayushsharma82/library/RPAsyncTCP/1.3.2/RPAsyncTCP-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ayushsharma82/library/RPAsyncTCP/1.3.2/RPAsyncTCP-1.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ayushsharma82/library/WebSerial/1.4.0/WebSerial-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WebSerial-1.4.0.tar.gz",
+    "size_bytes": 226051,
+    "sha256": "36b138c2009f7411d2227b714625a5c31ac1a8cb8a626275cd9f8417198a5c8d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ayushsharma82/library/WebSerial/1.4.0/WebSerial-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ayushsharma82/library/WebSerial/1.4.0/WebSerial-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ayushsharma82/library/WebSerial/2.1.1/WebSerial-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WebSerial-2.1.1.tar.gz",
+    "size_bytes": 83982,
+    "sha256": "b558c2d4f4e2239e107ac74775db3598b8f70aecdad375f7d65d1e9a013cfc48",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ayushsharma82/library/WebSerial/2.1.1/WebSerial-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ayushsharma82/library/WebSerial/2.1.1/WebSerial-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ayushsharma82/library/WebSerial/2.1.2/WebSerial-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WebSerial-2.1.2.tar.gz",
+    "size_bytes": 88510,
+    "sha256": "df2908b7d0e0adca5af3ac7f9fc9ad9fd5086ccd35adcfdc00453bcea8809077",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ayushsharma82/library/WebSerial/2.1.2/WebSerial-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ayushsharma82/library/WebSerial/2.1.2/WebSerial-2.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

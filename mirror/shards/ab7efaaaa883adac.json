@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hayasita",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hayasita/library/InputTerminal/1.0.1/InputTerminal-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "InputTerminal-1.0.1.tar.gz",
+    "size_bytes": 6856,
+    "sha256": "bca53cdefab3d23299d7de8285b7beea251f6ef45e17e27b300808b5ef61778c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hayasita/library/InputTerminal/1.0.1/InputTerminal-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/hayasita/library/InputTerminal/1.0.1/InputTerminal-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

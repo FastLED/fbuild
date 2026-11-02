@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/toblum",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "toblum/library/ArduinoMSGraph/0.2.0/ArduinoMSGraph-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoMSGraph-0.2.0.tar.gz",
+    "size_bytes": 14572,
+    "sha256": "4bca5198e446b1c0603ed64088753e1f402abbbebf87446a939e60d486ef2704",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/toblum/library/ArduinoMSGraph/0.2.0/ArduinoMSGraph-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/toblum/library/ArduinoMSGraph/0.2.0/ArduinoMSGraph-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "toblum/library/TetrisAnimation/1.1.0/TetrisAnimation-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TetrisAnimation-1.1.0.tar.gz",
+    "size_bytes": 27487,
+    "sha256": "209146b4b2f25e7d6075b0227d2321636ece5252360f993c9bdc657d0d48b8c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/toblum/library/TetrisAnimation/1.1.0/TetrisAnimation-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/toblum/library/TetrisAnimation/1.1.0/TetrisAnimation-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mdaskalov",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mdaskalov/library/SpectrumAnalyzer/0.1.0/SpectrumAnalyzer-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SpectrumAnalyzer-0.1.0.tar.gz",
+    "size_bytes": 3688,
+    "sha256": "f5c10970cfac29297884906e525c2796d9946c831b6095c9817d3dd28af0eb11",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mdaskalov/library/SpectrumAnalyzer/0.1.0/SpectrumAnalyzer-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mdaskalov/library/SpectrumAnalyzer/0.1.0/SpectrumAnalyzer-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

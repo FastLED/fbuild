@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/iotfiy-solutions",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "iotfiy-solutions/library/IOTFIY/1.0.0/IOTFIY-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IOTFIY-1.0.0.tar.gz",
+    "size_bytes": 8066,
+    "sha256": "8a5c4b8e4996170e65d0fd5f7ed2c7957ef99131eae097d81ee936cb89353c6c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iotfiy-solutions/library/IOTFIY/1.0.0/IOTFIY-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/iotfiy-solutions/library/IOTFIY/1.0.0/IOTFIY-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "iotfiy-solutions/library/IOTFIY/1.0.1/IOTFIY-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IOTFIY-1.0.1.tar.gz",
+    "size_bytes": 9383,
+    "sha256": "dc2cbdf052195126abd8f44989dbdea46ab394526ace60f83174cd2a3c815a62",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iotfiy-solutions/library/IOTFIY/1.0.1/IOTFIY-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/iotfiy-solutions/library/IOTFIY/1.0.1/IOTFIY-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

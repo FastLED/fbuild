@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/soyantonio",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "soyantonio/library/SimpleBox/0.2.1/SimpleBox-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleBox-0.2.1.tar.gz",
+    "size_bytes": 44201,
+    "sha256": "d68de6001b4f586c0cc411425626a0aaa1f9c53488064f9dba3f8d8260c9d800",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soyantonio/library/SimpleBox/0.2.1/SimpleBox-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/soyantonio/library/SimpleBox/0.2.1/SimpleBox-0.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

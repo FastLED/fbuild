@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rocketscream",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rocketscream/library/Low-Power/1.6/Low-Power-1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Low-Power-1.6.tar.gz",
+    "size_bytes": 7520,
+    "sha256": "ce2765c3259aaee9a6cda11119d7a55d10064c9ebf29412b6f27ffa481b62822",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rocketscream/library/Low-Power/1.6/Low-Power-1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/rocketscream/library/Low-Power/1.6/Low-Power-1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rocketscream/library/Low-Power/1.81/Low-Power-1.81.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Low-Power-1.81.tar.gz",
+    "size_bytes": 7553,
+    "sha256": "52af9883a61beac7ee53d29cb947551a1371dbf3571cddf5f373550621969e3d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rocketscream/library/Low-Power/1.81/Low-Power-1.81.tar.gz",
+     "https://dl.registry.platformio.org/download/rocketscream/library/Low-Power/1.81/Low-Power-1.81.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rocketscream/library/Rocket%20Scream%20LowPowerAVRZero/1.0.0/RocketScreamLowPowerAVRZero-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RocketScreamLowPowerAVRZero-1.0.0.tar.gz",
+    "size_bytes": 2857,
+    "sha256": "e2b207e35017141ffc6fd0b71c5f60141bb57a2d869e3aa9132c51fbfdc39b50",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rocketscream/library/Rocket%2520Scream%2520LowPowerAVRZero/1.0.0/RocketScreamLowPowerAVRZero-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rocketscream/library/Rocket%20Scream%20LowPowerAVRZero/1.0.0/RocketScreamLowPowerAVRZero-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rocketscream/library/Rocket%20Scream%20RTCAVRZero/1.0.0/RocketScreamRTCAVRZero-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RocketScreamRTCAVRZero-1.0.0.tar.gz",
+    "size_bytes": 3206,
+    "sha256": "2ade557088716b219b050fc0475197c85d55bc0c07b4be41b3e8359982ed1007",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rocketscream/library/Rocket%2520Scream%2520RTCAVRZero/1.0.0/RocketScreamRTCAVRZero-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rocketscream/library/Rocket%20Scream%20RTCAVRZero/1.0.0/RocketScreamRTCAVRZero-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

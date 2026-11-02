@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-hwing91",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-hwing91/library/HTU21D/0.0.0+sha.db86ad1b4459/HTU21D-0.0.0+sha.db86ad1b4459.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HTU21D-0.0.0+sha.db86ad1b4459.tar.gz",
+    "size_bytes": 2434,
+    "sha256": "df56a9734ce25dc215ec3ca2f19518e4926868032ca969d2ad159c1b608cbff1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hwing91/library/HTU21D/0.0.0%2Bsha.db86ad1b4459/HTU21D-0.0.0%2Bsha.db86ad1b4459.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hwing91/library/HTU21D/0.0.0%2Bsha.db86ad1b4459/HTU21D-0.0.0%2Bsha.db86ad1b4459.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hwing91/library/HTU21D_HELLOWORLD/0.0.0+sha.a9b5d6b21f96/HTU21D_HELLOWORLD-0.0.0+sha.a9b5d6b21f96.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HTU21D_HELLOWORLD-0.0.0+sha.a9b5d6b21f96.tar.gz",
+    "size_bytes": 1565,
+    "sha256": "066553102411e90841fd46947ac73e00c16e0e04632ef7f155e3bb4570405eed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hwing91/library/HTU21D_HELLOWORLD/0.0.0%2Bsha.a9b5d6b21f96/HTU21D_HELLOWORLD-0.0.0%2Bsha.a9b5d6b21f96.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hwing91/library/HTU21D_HELLOWORLD/0.0.0%2Bsha.a9b5d6b21f96/HTU21D_HELLOWORLD-0.0.0%2Bsha.a9b5d6b21f96.tar.gz"
+    ]
+   }
+  }
+ ]
+}

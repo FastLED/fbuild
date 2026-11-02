@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/onelife",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "onelife/library/RT-Thread/1.0.0/RT-Thread-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RT-Thread-1.0.0.tar.gz",
+    "size_bytes": 944749,
+    "sha256": "c716a5b7ae8dde4cd6c633e2f822c4d003860cef264c9243963b7a91932a18b0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/onelife/library/RT-Thread/1.0.0/RT-Thread-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/onelife/library/RT-Thread/1.0.0/RT-Thread-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "onelife/library/RTT%20QRCode/0.1.0/RTTQRCode-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RTTQRCode-0.1.0.tar.gz",
+    "size_bytes": 13424,
+    "sha256": "02489539a2b197ef28ec16e166a77c46cfdd246ca69a1507e0ef5b9028e7286e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/onelife/library/RTT%2520QRCode/0.1.0/RTTQRCode-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/onelife/library/RTT%20QRCode/0.1.0/RTTQRCode-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "onelife/library/RTT-CMSIS-OS/1.0.0/RTT-CMSIS-OS-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RTT-CMSIS-OS-1.0.0.tar.gz",
+    "size_bytes": 27815,
+    "sha256": "f870b5cccf056cad89ecb3cd7b2d2380e5fe09306f843a742176eb1c5bdf4cbe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/onelife/library/RTT-CMSIS-OS/1.0.0/RTT-CMSIS-OS-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/onelife/library/RTT-CMSIS-OS/1.0.0/RTT-CMSIS-OS-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "onelife/library/RTT-GUI/0.9.1/RTT-GUI-0.9.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RTT-GUI-0.9.1.tar.gz",
+    "size_bytes": 1197207,
+    "sha256": "a509f85345fc953623d06e8891e05d87580a58500026827de805c0971f369ccd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/onelife/library/RTT-GUI/0.9.1/RTT-GUI-0.9.1.tar.gz",
+     "https://dl.registry.platformio.org/download/onelife/library/RTT-GUI/0.9.1/RTT-GUI-0.9.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/phoenix1747",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "phoenix1747/library/MQ135/1.1.1/MQ135-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQ135-1.1.1.tar.gz",
+    "size_bytes": 16243,
+    "sha256": "06cdad60de4dd16badc2d05691b95c3df5cd31b9f87eb7f094981cd8821ce828",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/phoenix1747/library/MQ135/1.1.1/MQ135-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/phoenix1747/library/MQ135/1.1.1/MQ135-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "phoenix1747/library/PicoAnalogCorrection/1.4.0/PicoAnalogCorrection-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PicoAnalogCorrection-1.4.0.tar.gz",
+    "size_bytes": 4885,
+    "sha256": "3dfdf6d116db696b24151da56c9e98c0a808861f745fd542bb9a731cb9bfe127",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/phoenix1747/library/PicoAnalogCorrection/1.4.0/PicoAnalogCorrection-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/phoenix1747/library/PicoAnalogCorrection/1.4.0/PicoAnalogCorrection-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "phoenix1747/library/SimpleShell%20Enhanced/1.0.5/SimpleShellEnhanced-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleShellEnhanced-1.0.5.tar.gz",
+    "size_bytes": 5567,
+    "sha256": "971458367cb80f40df05b69bc1f778a7756729c89b095c246c134ff610ca5f4a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/phoenix1747/library/SimpleShell%2520Enhanced/1.0.5/SimpleShellEnhanced-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/phoenix1747/library/SimpleShell%20Enhanced/1.0.5/SimpleShellEnhanced-1.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

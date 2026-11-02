@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-station-meteo-laos",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-station-meteo-laos/library/meteoCAN/0.0.0+sha.a90b50a19ae4/meteoCAN-0.0.0+sha.a90b50a19ae4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "meteoCAN-0.0.0+sha.a90b50a19ae4.tar.gz",
+    "size_bytes": 1873,
+    "sha256": "e80563291b680e32235f2262a89ef3e0fd2df55fc834e1ca49e8a7001aa84d79",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-station-meteo-laos/library/meteoCAN/0.0.0%2Bsha.a90b50a19ae4/meteoCAN-0.0.0%2Bsha.a90b50a19ae4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-station-meteo-laos/library/meteoCAN/0.0.0%2Bsha.a90b50a19ae4/meteoCAN-0.0.0%2Bsha.a90b50a19ae4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

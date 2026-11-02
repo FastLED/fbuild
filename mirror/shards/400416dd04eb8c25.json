@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mcenkcavusoglu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mcenkcavusoglu/library/Melexis%20MLX90392%20I2C%20Library/1.0.0/MelexisMLX90392I2CLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MelexisMLX90392I2CLibrary-1.0.0.tar.gz",
+    "size_bytes": 5163,
+    "sha256": "c12f0aaf203860595fb36f41cd76c3f206b511f83b0ff650a29eb6e90fbaee2d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mcenkcavusoglu/library/Melexis%2520MLX90392%2520I2C%2520Library/1.0.0/MelexisMLX90392I2CLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mcenkcavusoglu/library/Melexis%20MLX90392%20I2C%20Library/1.0.0/MelexisMLX90392I2CLibrary-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

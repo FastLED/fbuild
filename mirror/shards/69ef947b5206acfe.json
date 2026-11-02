@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-chris",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-chris/library/AX12/0.0.0+sha.ced71d1b2558/AX12-0.0.0+sha.ced71d1b2558.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AX12-0.0.0+sha.ced71d1b2558.tar.gz",
+    "size_bytes": 5243,
+    "sha256": "fb3552d0056f809229f2eed8f09ec462a13d5194a66eeef2cef7734e635e0a3a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-chris/library/AX12/0.0.0%2Bsha.ced71d1b2558/AX12-0.0.0%2Bsha.ced71d1b2558.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-chris/library/AX12/0.0.0%2Bsha.ced71d1b2558/AX12-0.0.0%2Bsha.ced71d1b2558.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-chris/library/LM75B/0.0.0+sha.6a70c9303bbe/LM75B-0.0.0+sha.6a70c9303bbe.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LM75B-0.0.0+sha.6a70c9303bbe.tar.gz",
+    "size_bytes": 2094,
+    "sha256": "fed50bd0c6e6a38c5c6820baf639d7e4908afef82986ee0c1f1e1c5ff86b1ca7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-chris/library/LM75B/0.0.0%2Bsha.6a70c9303bbe/LM75B-0.0.0%2Bsha.6a70c9303bbe.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-chris/library/LM75B/0.0.0%2Bsha.6a70c9303bbe/LM75B-0.0.0%2Bsha.6a70c9303bbe.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-chris/library/MSCFileSystem/0.0.0+sha.f80d1f58be90/MSCFileSystem-0.0.0+sha.f80d1f58be90.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MSCFileSystem-0.0.0+sha.f80d1f58be90.tar.gz",
+    "size_bytes": 12550,
+    "sha256": "9eccd1eec0b3a7b09504a7590509b2ecca2bc146655ad9380e545352a1a1c6e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-chris/library/MSCFileSystem/0.0.0%2Bsha.f80d1f58be90/MSCFileSystem-0.0.0%2Bsha.f80d1f58be90.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-chris/library/MSCFileSystem/0.0.0%2Bsha.f80d1f58be90/MSCFileSystem-0.0.0%2Bsha.f80d1f58be90.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-chris/library/SRF08/0.0.0+sha.aeec981d1d2a/SRF08-0.0.0+sha.aeec981d1d2a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SRF08-0.0.0+sha.aeec981d1d2a.tar.gz",
+    "size_bytes": 2298,
+    "sha256": "bf6fa15628cf27a81dde392445f03d9a9c9ceac6bac1fbd6b37c1d177d6bf6a1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-chris/library/SRF08/0.0.0%2Bsha.aeec981d1d2a/SRF08-0.0.0%2Bsha.aeec981d1d2a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-chris/library/SRF08/0.0.0%2Bsha.aeec981d1d2a/SRF08-0.0.0%2Bsha.aeec981d1d2a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-chris/library/TMP102/0.0.0+sha.694792b93731/TMP102-0.0.0+sha.694792b93731.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TMP102-0.0.0+sha.694792b93731.tar.gz",
+    "size_bytes": 2277,
+    "sha256": "a2560d845b6894cdf7a2658be06d1202459f0672ac6c6e17c4e51271b08a8365",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-chris/library/TMP102/0.0.0%2Bsha.694792b93731/TMP102-0.0.0%2Bsha.694792b93731.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-chris/library/TMP102/0.0.0%2Bsha.694792b93731/TMP102-0.0.0%2Bsha.694792b93731.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-chris/library/m3pi/0.0.0+sha.4b7d6ea9b35b/m3pi-0.0.0+sha.4b7d6ea9b35b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "m3pi-0.0.0+sha.4b7d6ea9b35b.tar.gz",
+    "size_bytes": 4039,
+    "sha256": "ad49866084321780bf033d65a7b0ecff00a8681449d1ddc8b23ce1ccded9f35b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-chris/library/m3pi/0.0.0%2Bsha.4b7d6ea9b35b/m3pi-0.0.0%2Bsha.4b7d6ea9b35b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-chris/library/m3pi/0.0.0%2Bsha.4b7d6ea9b35b/m3pi-0.0.0%2Bsha.4b7d6ea9b35b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

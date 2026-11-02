@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-dimavb",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-dimavb/library/DFPlayerMini/0.0.0+sha.a637be95c1ea/DFPlayerMini-0.0.0+sha.a637be95c1ea.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFPlayerMini-0.0.0+sha.a637be95c1ea.tar.gz",
+    "size_bytes": 2596,
+    "sha256": "2cdc3cb78274da6eded6133bc17a938aeaf839f46ad1ca59d8cc2155a10a4d76",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dimavb/library/DFPlayerMini/0.0.0%2Bsha.a637be95c1ea/DFPlayerMini-0.0.0%2Bsha.a637be95c1ea.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dimavb/library/DFPlayerMini/0.0.0%2Bsha.a637be95c1ea/DFPlayerMini-0.0.0%2Bsha.a637be95c1ea.tar.gz"
+    ]
+   }
+  }
+ ]
+}

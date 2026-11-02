@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-vladounet",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-vladounet/library/EvrythngApi/0.0.0+sha.7162d0e030f5/EvrythngApi-0.0.0+sha.7162d0e030f5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EvrythngApi-0.0.0+sha.7162d0e030f5.tar.gz",
+    "size_bytes": 7312,
+    "sha256": "0f2252530137bed7e1e8d09a3fbad9f9f140d74bb5bfdde88473053e2497cead",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-vladounet/library/EvrythngApi/0.0.0%2Bsha.7162d0e030f5/EvrythngApi-0.0.0%2Bsha.7162d0e030f5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-vladounet/library/EvrythngApi/0.0.0%2Bsha.7162d0e030f5/EvrythngApi-0.0.0%2Bsha.7162d0e030f5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

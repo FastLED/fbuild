@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/zukardex",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "zukardex/library/DigiPIN/1.0.0/DigiPIN-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DigiPIN-1.0.0.tar.gz",
+    "size_bytes": 2214,
+    "sha256": "2828ee34242185e4c6090a1a94a1b0a0b1cbed3eb5fdf67ed1a9527060fadfa8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zukardex/library/DigiPIN/1.0.0/DigiPIN-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/zukardex/library/DigiPIN/1.0.0/DigiPIN-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

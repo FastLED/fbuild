@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-andrewboyson",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-andrewboyson/library/1-wire/0.0.0+sha.b4e0b4c4e045/1-wire-0.0.0+sha.b4e0b4c4e045.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "1-wire-0.0.0+sha.b4e0b4c4e045.tar.gz",
+    "size_bytes": 9872,
+    "sha256": "f6be96fa98f9e51ecc5723c63aca0454aad5f399ce281bc43637119ed6f87fad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-andrewboyson/library/1-wire/0.0.0%2Bsha.b4e0b4c4e045/1-wire-0.0.0%2Bsha.b4e0b4c4e045.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-andrewboyson/library/1-wire/0.0.0%2Bsha.b4e0b4c4e045/1-wire-0.0.0%2Bsha.b4e0b4c4e045.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-andrewboyson/library/clock/0.0.0+sha.c2035b7754fe/clock-0.0.0+sha.c2035b7754fe.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "clock-0.0.0+sha.c2035b7754fe.tar.gz",
+    "size_bytes": 5820,
+    "sha256": "13522c79f6e6c9dee46a7394f00ba8a88ed236477aa18f4525b3d08a9d5224bf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-andrewboyson/library/clock/0.0.0%2Bsha.c2035b7754fe/clock-0.0.0%2Bsha.c2035b7754fe.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-andrewboyson/library/clock/0.0.0%2Bsha.c2035b7754fe/clock-0.0.0%2Bsha.c2035b7754fe.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-andrewboyson/library/log/0.0.0+sha.5b5284c60d3c/log-0.0.0+sha.5b5284c60d3c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "log-0.0.0+sha.5b5284c60d3c.tar.gz",
+    "size_bytes": 2673,
+    "sha256": "f68b66c5494312332a8aec2af24b82fa1d79442c1f6382fdb3081b14277e30ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-andrewboyson/library/log/0.0.0%2Bsha.5b5284c60d3c/log-0.0.0%2Bsha.5b5284c60d3c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-andrewboyson/library/log/0.0.0%2Bsha.5b5284c60d3c/log-0.0.0%2Bsha.5b5284c60d3c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-andrewboyson/library/lpc1768/0.0.0+sha.b6f11687f0dd/lpc1768-0.0.0+sha.b6f11687f0dd.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lpc1768-0.0.0+sha.b6f11687f0dd.tar.gz",
+    "size_bytes": 19125,
+    "sha256": "f0ced0d1149cf3b1a5c04214050ebf49dc6f3a6dab542a192003ab22f5966b8b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-andrewboyson/library/lpc1768/0.0.0%2Bsha.b6f11687f0dd/lpc1768-0.0.0%2Bsha.b6f11687f0dd.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-andrewboyson/library/lpc1768/0.0.0%2Bsha.b6f11687f0dd/lpc1768-0.0.0%2Bsha.b6f11687f0dd.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-andrewboyson/library/net/0.0.0+sha.59d286f933a0/net-0.0.0+sha.59d286f933a0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "net-0.0.0+sha.59d286f933a0.tar.gz",
+    "size_bytes": 64796,
+    "sha256": "df542e2ba85e4c4e27305c53e41c84e8f8f85e919e5dbeeac516bfa3eaa0e05d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-andrewboyson/library/net/0.0.0%2Bsha.59d286f933a0/net-0.0.0%2Bsha.59d286f933a0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-andrewboyson/library/net/0.0.0%2Bsha.59d286f933a0/net-0.0.0%2Bsha.59d286f933a0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-andrewboyson/library/web/0.0.0+sha.1dac268a197d/web-0.0.0+sha.1dac268a197d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "web-0.0.0+sha.1dac268a197d.tar.gz",
+    "size_bytes": 30559,
+    "sha256": "bc64f8f0c6a6934086583a1027ec9d120932ad66163f4d868e1a3daeb0817b83",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-andrewboyson/library/web/0.0.0%2Bsha.1dac268a197d/web-0.0.0%2Bsha.1dac268a197d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-andrewboyson/library/web/0.0.0%2Bsha.1dac268a197d/web-0.0.0%2Bsha.1dac268a197d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-11ee111",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-11ee111/library/pwm/0.0.0+sha.75de86f370c3/pwm-0.0.0+sha.75de86f370c3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pwm-0.0.0+sha.75de86f370c3.tar.gz",
+    "size_bytes": 831,
+    "sha256": "71b9de85bd07e88acf80e7ce1617e9a0fc397db4301bd4231c3d5768477c9692",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-11ee111/library/pwm/0.0.0%2Bsha.75de86f370c3/pwm-0.0.0%2Bsha.75de86f370c3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-11ee111/library/pwm/0.0.0%2Bsha.75de86f370c3/pwm-0.0.0%2Bsha.75de86f370c3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

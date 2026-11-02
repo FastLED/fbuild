@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-floatlei",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-floatlei/library/SX1276Lib/0.0.0+sha.7e14d7c443f1/SX1276Lib-0.0.0+sha.7e14d7c443f1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SX1276Lib-0.0.0+sha.7e14d7c443f1.tar.gz",
+    "size_bytes": 29129,
+    "sha256": "790000050cd12a711e19a6d9a8bbe1cbd160e3241bfe564346578606cdf111fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-floatlei/library/SX1276Lib/0.0.0%2Bsha.7e14d7c443f1/SX1276Lib-0.0.0%2Bsha.7e14d7c443f1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-floatlei/library/SX1276Lib/0.0.0%2Bsha.7e14d7c443f1/SX1276Lib-0.0.0%2Bsha.7e14d7c443f1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-floatlei/library/eeprom/0.0.0+sha.b71fbcf5b8e4/eeprom-0.0.0+sha.b71fbcf5b8e4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "eeprom-0.0.0+sha.b71fbcf5b8e4.tar.gz",
+    "size_bytes": 1913,
+    "sha256": "112b12547d448914a14f481f1c9fe0b85055af3b525acb174c9b3b48caaeaf91",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-floatlei/library/eeprom/0.0.0%2Bsha.b71fbcf5b8e4/eeprom-0.0.0%2Bsha.b71fbcf5b8e4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-floatlei/library/eeprom/0.0.0%2Bsha.b71fbcf5b8e4/eeprom-0.0.0%2Bsha.b71fbcf5b8e4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

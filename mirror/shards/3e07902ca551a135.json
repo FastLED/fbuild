@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/matusm",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "matusm/library/DataSeriesPod/1.0.0/DataSeriesPod-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DataSeriesPod-1.0.0.tar.gz",
+    "size_bytes": 3803,
+    "sha256": "d526bee5c2fc12f8b17ece1943561382f2e6cdef277e46bc2ee453189ed75ca7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matusm/library/DataSeriesPod/1.0.0/DataSeriesPod-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/matusm/library/DataSeriesPod/1.0.0/DataSeriesPod-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "matusm/library/aE2/1.0.0/aE2-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "aE2-1.0.0.tar.gz",
+    "size_bytes": 4379,
+    "sha256": "786989fa2042dca7826eea4574c8a31ca8cae8084a2f46560108a4e5b4e98fbb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matusm/library/aE2/1.0.0/aE2-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/matusm/library/aE2/1.0.0/aE2-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-stjo2809",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-stjo2809/library/AT45/0.0.0+sha.2e9d45485414/AT45-0.0.0+sha.2e9d45485414.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AT45-0.0.0+sha.2e9d45485414.tar.gz",
+    "size_bytes": 7538,
+    "sha256": "115081d633f65943ba0e772ae340ea56fea51635f2766d5c023ad2c0674a9be0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-stjo2809/library/AT45/0.0.0%2Bsha.2e9d45485414/AT45-0.0.0%2Bsha.2e9d45485414.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-stjo2809/library/AT45/0.0.0%2Bsha.2e9d45485414/AT45-0.0.0%2Bsha.2e9d45485414.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-stjo2809/library/MCP23S17/0.0.0+sha.b2a44e1e54b8/MCP23S17-0.0.0+sha.b2a44e1e54b8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP23S17-0.0.0+sha.b2a44e1e54b8.tar.gz",
+    "size_bytes": 5393,
+    "sha256": "2fdbff3f4cdb037e0344e9f875326c3d012f93c775a284b5389278308e999929",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-stjo2809/library/MCP23S17/0.0.0%2Bsha.b2a44e1e54b8/MCP23S17-0.0.0%2Bsha.b2a44e1e54b8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-stjo2809/library/MCP23S17/0.0.0%2Bsha.b2a44e1e54b8/MCP23S17-0.0.0%2Bsha.b2a44e1e54b8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-stjo2809/library/MCP3204/0.0.0+sha.cf7328552994/MCP3204-0.0.0+sha.cf7328552994.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP3204-0.0.0+sha.cf7328552994.tar.gz",
+    "size_bytes": 2409,
+    "sha256": "c7543d09d4bdd904a4e08c1420b853489d3ce14329efa72901ce101306ab536d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-stjo2809/library/MCP3204/0.0.0%2Bsha.cf7328552994/MCP3204-0.0.0%2Bsha.cf7328552994.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-stjo2809/library/MCP3204/0.0.0%2Bsha.cf7328552994/MCP3204-0.0.0%2Bsha.cf7328552994.tar.gz"
+    ]
+   }
+  }
+ ]
+}

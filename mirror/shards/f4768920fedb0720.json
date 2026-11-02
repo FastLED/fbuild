@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-alancorcoran",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-alancorcoran/library/MMA7660/0.0.0+sha.36a163511e34/MMA7660-0.0.0+sha.36a163511e34.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MMA7660-0.0.0+sha.36a163511e34.tar.gz",
+    "size_bytes": 4045,
+    "sha256": "dfb90d5c5f59e492b956a8fa44ef4c63eb3deab690cac73b7d45e6232d4f9dce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-alancorcoran/library/MMA7660/0.0.0%2Bsha.36a163511e34/MMA7660-0.0.0%2Bsha.36a163511e34.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-alancorcoran/library/MMA7660/0.0.0%2Bsha.36a163511e34/MMA7660-0.0.0%2Bsha.36a163511e34.tar.gz"
+    ]
+   }
+  }
+ ]
+}

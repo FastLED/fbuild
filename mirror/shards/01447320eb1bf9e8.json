@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/chipkit32-libraries",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "chipkit32-libraries/library/PICxel/2.0.0/PICxel-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PICxel-2.0.0.tar.gz",
+    "size_bytes": 30515,
+    "sha256": "ad9d47677dd73e7cbdae3d97d3285af0e0a95b0b38c7992d16a8f3ad3cb40b71",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chipkit32-libraries/library/PICxel/2.0.0/PICxel-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chipkit32-libraries/library/PICxel/2.0.0/PICxel-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chipkit32-libraries/library/RN487x/1.2.0/RN487x-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RN487x-1.2.0.tar.gz",
+    "size_bytes": 22252,
+    "sha256": "73841194722bdd6573a6011011cabd2649b499d13eee2106f89ce909761af46f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chipkit32-libraries/library/RN487x/1.2.0/RN487x-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chipkit32-libraries/library/RN487x/1.2.0/RN487x-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/grovety",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "grovety/library/GRC_AI/0.0.2/GRC_AI-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GRC_AI-0.0.2.tar.gz",
+    "size_bytes": 7144,
+    "sha256": "ddf7c2c8207216355552aca15d2dc8fa51ad70178c83f8061b263e9f0145d0cd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/grovety/library/GRC_AI/0.0.2/GRC_AI-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/grovety/library/GRC_AI/0.0.2/GRC_AI-0.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

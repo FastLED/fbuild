@@ -1,0 +1,321 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/naguissa",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "naguissa/library/uCRC16BPBLib/2.0.0/uCRC16BPBLib-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uCRC16BPBLib-2.0.0.tar.gz",
+    "size_bytes": 5306,
+    "sha256": "bed3480e1901348a2c4ec02a45a2b337b002b278c0361ff2c7bac0628560af65",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/naguissa/library/uCRC16BPBLib/2.0.0/uCRC16BPBLib-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/naguissa/library/uCRC16BPBLib/2.0.0/uCRC16BPBLib-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "naguissa/library/uCRC16Lib/2.0.0/uCRC16Lib-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uCRC16Lib-2.0.0.tar.gz",
+    "size_bytes": 4942,
+    "sha256": "d8d0225d720d335f1ec41e22225f88e5cf56e0e9f551c22988bf2ad54d61f1e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/naguissa/library/uCRC16Lib/2.0.0/uCRC16Lib-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/naguissa/library/uCRC16Lib/2.0.0/uCRC16Lib-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "naguissa/library/uCRC16XModemLib/1.0.0/uCRC16XModemLib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uCRC16XModemLib-1.0.0.tar.gz",
+    "size_bytes": 5766,
+    "sha256": "5ea872339211687aae590cdb3535c7533ee9be0d1dc43605efc8574ae305b586",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/naguissa/library/uCRC16XModemLib/1.0.0/uCRC16XModemLib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/naguissa/library/uCRC16XModemLib/1.0.0/uCRC16XModemLib-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "naguissa/library/uConfigLib/1.0.0/uConfigLib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uConfigLib-1.0.0.tar.gz",
+    "size_bytes": 5941,
+    "sha256": "944d69859603568572e5fd43e6574a76d529fba2accdfda38b9fc5360ae62370",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/naguissa/library/uConfigLib/1.0.0/uConfigLib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/naguissa/library/uConfigLib/1.0.0/uConfigLib-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "naguissa/library/uDebugLib/1.0.2/uDebugLib-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uDebugLib-1.0.2.tar.gz",
+    "size_bytes": 5450,
+    "sha256": "2e6512e93caa1cb2f21ed1426fc8be0e82ff68c929c094528fbdaf4d4a99c42f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/naguissa/library/uDebugLib/1.0.2/uDebugLib-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/naguissa/library/uDebugLib/1.0.2/uDebugLib-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "naguissa/library/uEEPROMLib/1.2.2/uEEPROMLib-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uEEPROMLib-1.2.2.tar.gz",
+    "size_bytes": 10045,
+    "sha256": "25438f0675e845939f5db0fea33232dfc37c93710621f8f5e0c3eb2016097d6b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/naguissa/library/uEEPROMLib/1.2.2/uEEPROMLib-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/naguissa/library/uEEPROMLib/1.2.2/uEEPROMLib-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "naguissa/library/uEspConfigLib/1.2.0/uEspConfigLib-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uEspConfigLib-1.2.0.tar.gz",
+    "size_bytes": 14459,
+    "sha256": "89b9ac2ae857e7d1d6eec9cb7986c075f4f6859a0248cade76cdb4d6dceaaad0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/naguissa/library/uEspConfigLib/1.2.0/uEspConfigLib-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/naguissa/library/uEspConfigLib/1.2.0/uEspConfigLib-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "naguissa/library/uEspConfigLib/1.2.1/uEspConfigLib-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uEspConfigLib-1.2.1.tar.gz",
+    "size_bytes": 14493,
+    "sha256": "d4ba8d0836e0d9ea7ea19bb74143bd0de22cf07c82cdd6c34ad979466bf4d2f9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/naguissa/library/uEspConfigLib/1.2.1/uEspConfigLib-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/naguissa/library/uEspConfigLib/1.2.1/uEspConfigLib-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "naguissa/library/uEspConfigLib/1.2.2/uEspConfigLib-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uEspConfigLib-1.2.2.tar.gz",
+    "size_bytes": 14555,
+    "sha256": "f0ac785728acd10da7eb33b8c2cfaa9909341b0d4f7106b9661d166515842e59",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/naguissa/library/uEspConfigLib/1.2.2/uEspConfigLib-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/naguissa/library/uEspConfigLib/1.2.2/uEspConfigLib-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "naguissa/library/uEspConfigLib/1.2.3/uEspConfigLib-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uEspConfigLib-1.2.3.tar.gz",
+    "size_bytes": 14630,
+    "sha256": "7d2b603bf3cd8eee50bb85a3326c5a73db5d9b598b1e1ab3f9b0eeb2b3fb7da7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/naguissa/library/uEspConfigLib/1.2.3/uEspConfigLib-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/naguissa/library/uEspConfigLib/1.2.3/uEspConfigLib-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "naguissa/library/uHexLib/2.2.0/uHexLib-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uHexLib-2.2.0.tar.gz",
+    "size_bytes": 5653,
+    "sha256": "21dd95cd068d889d916a490760fe72a491dd76215b949f6629fd3bed7f11574d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/naguissa/library/uHexLib/2.2.0/uHexLib-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/naguissa/library/uHexLib/2.2.0/uHexLib-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "naguissa/library/uHexLib/2.2.1/uHexLib-2.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uHexLib-2.2.1.tar.gz",
+    "size_bytes": 5779,
+    "sha256": "9f2a1b3136df44cdbcf53bcc4d1c754de3ebbb273244a8cbc4e2e401e6ae79d4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/naguissa/library/uHexLib/2.2.1/uHexLib-2.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/naguissa/library/uHexLib/2.2.1/uHexLib-2.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "naguissa/library/uMFMLib/0.2.0/uMFMLib-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uMFMLib-0.2.0.tar.gz",
+    "size_bytes": 6236,
+    "sha256": "75e365f8f0d93d45e83f3f478cd026691040e797688e91fb903ad50351176ad4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/naguissa/library/uMFMLib/0.2.0/uMFMLib-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/naguissa/library/uMFMLib/0.2.0/uMFMLib-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "naguissa/library/uMessagesBrokerLib/1.2.0/uMessagesBrokerLib-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uMessagesBrokerLib-1.2.0.tar.gz",
+    "size_bytes": 6605,
+    "sha256": "0d8ecbd7ea1401250f3b3a107b00c4f3d06dc37436b1d25cc8b3fe2497b093b6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/naguissa/library/uMessagesBrokerLib/1.2.0/uMessagesBrokerLib-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/naguissa/library/uMessagesBrokerLib/1.2.0/uMessagesBrokerLib-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "naguissa/library/uMuxOutputLib/1.0.3/uMuxOutputLib-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uMuxOutputLib-1.0.3.tar.gz",
+    "size_bytes": 7194,
+    "sha256": "1c3767e9e6e887621b460dcfe0c0ab019252643fa1666bbb851c7f59f6cb1d06",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/naguissa/library/uMuxOutputLib/1.0.3/uMuxOutputLib-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/naguissa/library/uMuxOutputLib/1.0.3/uMuxOutputLib-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "naguissa/library/uRTCLib/6.9.6/uRTCLib-6.9.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uRTCLib-6.9.6.tar.gz",
+    "size_bytes": 26106,
+    "sha256": "ddd4c5d8678248a8438b376800857dd78cc66399a2977f9df18455fc9095fb00",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/naguissa/library/uRTCLib/6.9.6/uRTCLib-6.9.6.tar.gz",
+     "https://dl.registry.platformio.org/download/naguissa/library/uRTCLib/6.9.6/uRTCLib-6.9.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "naguissa/library/uRTCLib/6.9.7/uRTCLib-6.9.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uRTCLib-6.9.7.tar.gz",
+    "size_bytes": 26131,
+    "sha256": "9e2f513fbb06a8ba59527bfa90f04f03ef3528c0a05bf8e212496f07a1b6c2f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/naguissa/library/uRTCLib/6.9.7/uRTCLib-6.9.7.tar.gz",
+     "https://dl.registry.platformio.org/download/naguissa/library/uRTCLib/6.9.7/uRTCLib-6.9.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "naguissa/library/uRTCLib/6.9.8/uRTCLib-6.9.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uRTCLib-6.9.8.tar.gz",
+    "size_bytes": 26215,
+    "sha256": "fdbef4dbabe981236c3ac4ffbfe35d842551148baf3873c7997d30952fb004e0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/naguissa/library/uRTCLib/6.9.8/uRTCLib-6.9.8.tar.gz",
+     "https://dl.registry.platformio.org/download/naguissa/library/uRTCLib/6.9.8/uRTCLib-6.9.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "naguissa/library/uRTCLib/6.9.9/uRTCLib-6.9.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uRTCLib-6.9.9.tar.gz",
+    "size_bytes": 26214,
+    "sha256": "083d0196edbc72f9b81c483d0a09643e817a77f6532076ecdd3a3c128f9e88a0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/naguissa/library/uRTCLib/6.9.9/uRTCLib-6.9.9.tar.gz",
+     "https://dl.registry.platformio.org/download/naguissa/library/uRTCLib/6.9.9/uRTCLib-6.9.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "naguissa/library/uSevenSegmentLib/2.0.0/uSevenSegmentLib-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uSevenSegmentLib-2.0.0.tar.gz",
+    "size_bytes": 9620,
+    "sha256": "a634923577a7f415ecafb956d20f804d709f0a7df2d1815bb2d6488c949065fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/naguissa/library/uSevenSegmentLib/2.0.0/uSevenSegmentLib-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/naguissa/library/uSevenSegmentLib/2.0.0/uSevenSegmentLib-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "naguissa/library/uSevenSegmentLib/2.0.1/uSevenSegmentLib-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uSevenSegmentLib-2.0.1.tar.gz",
+    "size_bytes": 12381,
+    "sha256": "d06f3a5620cb6224f9c3a1125ef9c13b544e9a27018b646ea5e8dd5353579323",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/naguissa/library/uSevenSegmentLib/2.0.1/uSevenSegmentLib-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/naguissa/library/uSevenSegmentLib/2.0.1/uSevenSegmentLib-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "naguissa/library/uTimerBrokerLib/1.0.1/uTimerBrokerLib-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uTimerBrokerLib-1.0.1.tar.gz",
+    "size_bytes": 5698,
+    "sha256": "c4ff8b2fa61360bcb5a29ab334ddad96e605f68e1ace94d157fe901797e25f28",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/naguissa/library/uTimerBrokerLib/1.0.1/uTimerBrokerLib-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/naguissa/library/uTimerBrokerLib/1.0.1/uTimerBrokerLib-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "naguissa/library/uTimerLib/1.7.5/uTimerLib-1.7.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uTimerLib-1.7.5.tar.gz",
+    "size_bytes": 16655,
+    "sha256": "914456e408ef1d291da260d26a93591287d340c45a5085b40e6df503f0bc0549",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/naguissa/library/uTimerLib/1.7.5/uTimerLib-1.7.5.tar.gz",
+     "https://dl.registry.platformio.org/download/naguissa/library/uTimerLib/1.7.5/uTimerLib-1.7.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "naguissa/library/uUnixDate/1.2.0/uUnixDate-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uUnixDate-1.2.0.tar.gz",
+    "size_bytes": 6869,
+    "sha256": "e48f83c1601109c3417c265b76149973a3a2993a78bb2af8a5f6c4a6acde1d3a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/naguissa/library/uUnixDate/1.2.0/uUnixDate-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/naguissa/library/uUnixDate/1.2.0/uUnixDate-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

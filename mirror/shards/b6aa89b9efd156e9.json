@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/keimochizuki",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "keimochizuki/library/cgnuino/1.0.4/cgnuino-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cgnuino-1.0.4.tar.gz",
+    "size_bytes": 20074,
+    "sha256": "26c6f66475d6f534676c41a29f432b2ce162f8dad6f6bcb4671a33ff805d2d69",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/keimochizuki/library/cgnuino/1.0.4/cgnuino-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/keimochizuki/library/cgnuino/1.0.4/cgnuino-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

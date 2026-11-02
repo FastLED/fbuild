@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/0verflux",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "0verflux/library/StateMachine/2.2.0/StateMachine-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StateMachine-2.2.0.tar.gz",
+    "size_bytes": 16617,
+    "sha256": "cbe01c8e27ffb625dad442527fcdeccd0cb92db27bb81d6b3e6b0eee92acab0c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/0verflux/library/StateMachine/2.2.0/StateMachine-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/0verflux/library/StateMachine/2.2.0/StateMachine-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "0verflux/library/StateMachineLib/3.0.2/StateMachineLib-3.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StateMachineLib-3.0.2.tar.gz",
+    "size_bytes": 16987,
+    "sha256": "85c29a7860ec290bb0ef83ee675d37fb97b0f01f734ab7ccdd0070daa0b20ff5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/0verflux/library/StateMachineLib/3.0.2/StateMachineLib-3.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/0verflux/library/StateMachineLib/3.0.2/StateMachineLib-3.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

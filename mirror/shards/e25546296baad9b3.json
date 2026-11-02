@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/devyte",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "devyte/library/ESPAsyncDNSServer/1.0.0/ESPAsyncDNSServer-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncDNSServer-1.0.0.tar.gz",
+    "size_bytes": 3526,
+    "sha256": "46188e295c42b4359c38fb1bbd58e2da6658b9d5631f66c9b22de0f246698320",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/devyte/library/ESPAsyncDNSServer/1.0.0/ESPAsyncDNSServer-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/devyte/library/ESPAsyncDNSServer/1.0.0/ESPAsyncDNSServer-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

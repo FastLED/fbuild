@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tridenttd",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tridenttd/library/TridentTD_ESP32NVS/1.4/TridentTD_ESP32NVS-1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TridentTD_ESP32NVS-1.4.tar.gz",
+    "size_bytes": 7511,
+    "sha256": "fcbde79e592677737d43782717e2e7fff579a5c80b2857a5fe091da49c570c85",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tridenttd/library/TridentTD_ESP32NVS/1.4/TridentTD_ESP32NVS-1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/tridenttd/library/TridentTD_ESP32NVS/1.4/TridentTD_ESP32NVS-1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tridenttd/library/TridentTD_EasyFreeRTOS32/1.9/TridentTD_EasyFreeRTOS32-1.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TridentTD_EasyFreeRTOS32-1.9.tar.gz",
+    "size_bytes": 10779,
+    "sha256": "584dc5b3b47ac6313f9b013600c94bdc367ce623bd3d0ff6627f83308702db07",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tridenttd/library/TridentTD_EasyFreeRTOS32/1.9/TridentTD_EasyFreeRTOS32-1.9.tar.gz",
+     "https://dl.registry.platformio.org/download/tridenttd/library/TridentTD_EasyFreeRTOS32/1.9/TridentTD_EasyFreeRTOS32-1.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tridenttd/library/TridentTD_LineNotify/3.0.6/TridentTD_LineNotify-3.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TridentTD_LineNotify-3.0.6.tar.gz",
+    "size_bytes": 519500,
+    "sha256": "f72481992885fde21025400105bd09a6d9c3f1f96d545ae0eec20696b578fb9e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tridenttd/library/TridentTD_LineNotify/3.0.6/TridentTD_LineNotify-3.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/tridenttd/library/TridentTD_LineNotify/3.0.6/TridentTD_LineNotify-3.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tridenttd/library/TridentTD_SimplePair/1.1/TridentTD_SimplePair-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TridentTD_SimplePair-1.1.tar.gz",
+    "size_bytes": 10819,
+    "sha256": "9f3b752036cd845e326aec1a4ae0e104f2b4cd418ad1d8d0e1dabf69926b2364",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tridenttd/library/TridentTD_SimplePair/1.1/TridentTD_SimplePair-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tridenttd/library/TridentTD_SimplePair/1.1/TridentTD_SimplePair-1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

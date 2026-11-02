@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gitlab-rhombio",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gitlab-rhombio/library/rhio-LIS2HH12/0.1.2/rhio-LIS2HH12-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "rhio-LIS2HH12-0.1.2.tar.gz",
+    "size_bytes": 26549,
+    "sha256": "d47466254ea9f9842a3c85c853b07ce547bd3f03108a6a9c86ca1fd7a750089d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gitlab-rhombio/library/rhio-LIS2HH12/0.1.2/rhio-LIS2HH12-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gitlab-rhombio/library/rhio-LIS2HH12/0.1.2/rhio-LIS2HH12-0.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

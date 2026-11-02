@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-noliver92",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-noliver92/library/RN41/0.0.0+sha.796e127c0dd1/RN41-0.0.0+sha.796e127c0dd1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RN41-0.0.0+sha.796e127c0dd1.tar.gz",
+    "size_bytes": 2053,
+    "sha256": "474790306475a0cbd412045a48eedb048d353535747349cce9bbaff8f21503d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-noliver92/library/RN41/0.0.0%2Bsha.796e127c0dd1/RN41-0.0.0%2Bsha.796e127c0dd1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-noliver92/library/RN41/0.0.0%2Bsha.796e127c0dd1/RN41-0.0.0%2Bsha.796e127c0dd1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

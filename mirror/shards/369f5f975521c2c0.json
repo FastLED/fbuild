@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/linoop",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "linoop/library/MagicHomeClient/0.1.0/MagicHomeClient-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MagicHomeClient-0.1.0.tar.gz",
+    "size_bytes": 8671,
+    "sha256": "12560c54b7f3e37e0d46e3b0c2947c90d65fa69362ed6844ad3002b6eabd66e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/linoop/library/MagicHomeClient/0.1.0/MagicHomeClient-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/linoop/library/MagicHomeClient/0.1.0/MagicHomeClient-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "linoop/library/MagicHomeClient/0.1.1/MagicHomeClient-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MagicHomeClient-0.1.1.tar.gz",
+    "size_bytes": 13829,
+    "sha256": "995751c1d2f25a681c1655a91b83f5ec864221351f308e97072f073d28e82e27",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/linoop/library/MagicHomeClient/0.1.1/MagicHomeClient-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/linoop/library/MagicHomeClient/0.1.1/MagicHomeClient-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "linoop/library/MagicHomeClient/0.1.2/MagicHomeClient-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MagicHomeClient-0.1.2.tar.gz",
+    "size_bytes": 13841,
+    "sha256": "2ca322dab63b5cb8117b6e386d21caf5623c01c45285b370cca72ea91d6f2067",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/linoop/library/MagicHomeClient/0.1.2/MagicHomeClient-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/linoop/library/MagicHomeClient/0.1.2/MagicHomeClient-0.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

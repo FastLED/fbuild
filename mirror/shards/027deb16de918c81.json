@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/namnamiot",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "namnamiot/library/ArduLora/1.0.0/ArduLora-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduLora-1.0.0.tar.gz",
+    "size_bytes": 2740940,
+    "sha256": "83dd49fd5aaba4f032d2eb00fe5e3570b9abb9755737c7b877dd0f6940a91a3a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/namnamiot/library/ArduLora/1.0.0/ArduLora-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/namnamiot/library/ArduLora/1.0.0/ArduLora-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "namnamiot/library/ArduLora/1.1.0/ArduLora-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduLora-1.1.0.tar.gz",
+    "size_bytes": 2349378,
+    "sha256": "9ca1df51a3000dfc5b16bc4c697b313a6ea38c6d8fb3e3e5bdaef4358b8c1b88",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/namnamiot/library/ArduLora/1.1.0/ArduLora-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/namnamiot/library/ArduLora/1.1.0/ArduLora-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "namnamiot/library/ArduLora/1.2.0/ArduLora-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduLora-1.2.0.tar.gz",
+    "size_bytes": 2350844,
+    "sha256": "d7fd8d69a3589bfc006dfdcf4cd35cb8b9d8e43d0bba874e9cf14c4f4b424919",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/namnamiot/library/ArduLora/1.2.0/ArduLora-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/namnamiot/library/ArduLora/1.2.0/ArduLora-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

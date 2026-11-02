@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-yaolu23",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-yaolu23/library/PS2/0.0.0+sha.33c8907eb27a/PS2-0.0.0+sha.33c8907eb27a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PS2-0.0.0+sha.33c8907eb27a.tar.gz",
+    "size_bytes": 3747,
+    "sha256": "41d746314994d62e40aeeeb074c03609f786cf12e913ebaa3b70b4e51671d705",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yaolu23/library/PS2/0.0.0%2Bsha.33c8907eb27a/PS2-0.0.0%2Bsha.33c8907eb27a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yaolu23/library/PS2/0.0.0%2Bsha.33c8907eb27a/PS2-0.0.0%2Bsha.33c8907eb27a.tar.gz"
+    ]
+   }
+  }
+ ]
+}

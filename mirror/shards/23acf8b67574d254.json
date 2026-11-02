@@ -1,0 +1,126 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fmazz97",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fmazz97/library/cs123x/1.0.0/CS123x-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CS123x-1.0.0.tar.gz",
+    "size_bytes": 24076,
+    "sha256": "5d7751b4358b508e58c71bfa5d968e102a209d8a84899053f5506111a998c6a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fmazz97/library/cs123x/1.0.0/CS123x-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fmazz97/library/cs123x/1.0.0/CS123x-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fmazz97/library/cs123x/1.0.1/CS123x-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CS123x-1.0.1.tar.gz",
+    "size_bytes": 24642,
+    "sha256": "1fb14b96fadef3fea916855ff50679cfd546fbf64cc6bba69d3cb2d10730e4ba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fmazz97/library/cs123x/1.0.1/CS123x-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fmazz97/library/cs123x/1.0.1/CS123x-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fmazz97/library/cs123x/1.0.2/CS123x-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CS123x-1.0.2.tar.gz",
+    "size_bytes": 24951,
+    "sha256": "f2394504dbb981df750b7614355a8cb68b61ad11299faf41809dd2aeb3000f6c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fmazz97/library/cs123x/1.0.2/CS123x-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/fmazz97/library/cs123x/1.0.2/CS123x-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fmazz97/library/cs123x/1.0.3/CS123x-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CS123x-1.0.3.tar.gz",
+    "size_bytes": 25823,
+    "sha256": "5d9075647e662c49f35c2561c177cac1d86c6a379d4235496f859a7d63bfbaca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fmazz97/library/cs123x/1.0.3/CS123x-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/fmazz97/library/cs123x/1.0.3/CS123x-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fmazz97/library/cs123x/1.1.0/CS123x-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CS123x-1.1.0.tar.gz",
+    "size_bytes": 29574,
+    "sha256": "d1f6ce9670410f0597ce459134224cd581d9bb50ac4ddaba3e0a024ed2172862",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fmazz97/library/cs123x/1.1.0/CS123x-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fmazz97/library/cs123x/1.1.0/CS123x-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fmazz97/library/cs123x/2.0.0/CS123x-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CS123x-2.0.0.tar.gz",
+    "size_bytes": 51363,
+    "sha256": "6c94013977946fecd3aa9e725f52cd73ab5e8726c13a971f8963b34c87df4b01",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fmazz97/library/cs123x/2.0.0/CS123x-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fmazz97/library/cs123x/2.0.0/CS123x-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fmazz97/library/cs123x/2.0.1/cs123x-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cs123x-2.0.1.tar.gz",
+    "size_bytes": 113250,
+    "sha256": "700e890690711435d2f243e37156729fe01b85969354a5ab93cf241a56a09f87",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fmazz97/library/cs123x/2.0.1/cs123x-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fmazz97/library/cs123x/2.0.1/cs123x-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fmazz97/library/cs123x/2.0.2/cs123x-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cs123x-2.0.2.tar.gz",
+    "size_bytes": 43648,
+    "sha256": "d582218939244e011cb95cb4ffe3f54da13de2f7c4641332cd650f787cad8840",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fmazz97/library/cs123x/2.0.2/cs123x-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/fmazz97/library/cs123x/2.0.2/cs123x-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fmazz97/library/cs123x/2.0.3/cs123x-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cs123x-2.0.3.tar.gz",
+    "size_bytes": 43775,
+    "sha256": "e09ddbf283b5311f4c42a0fab0ff8a02161a2e0d8fb1a911eaa6e132c442d8a1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fmazz97/library/cs123x/2.0.3/cs123x-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/fmazz97/library/cs123x/2.0.3/cs123x-2.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

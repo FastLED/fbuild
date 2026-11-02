@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sblantipodi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sblantipodi/library/ArduinoBootstrapper/1.13.5/ArduinoBootstrapper-1.13.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBootstrapper-1.13.5.tar.gz",
+    "size_bytes": 304059,
+    "sha256": "6bfe21ed42e41f952f4a6532d9a7db3b68a02c76b5ee92f6eecd79a6a53e1be4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sblantipodi/library/ArduinoBootstrapper/1.13.5/ArduinoBootstrapper-1.13.5.tar.gz",
+     "https://dl.registry.platformio.org/download/sblantipodi/library/ArduinoBootstrapper/1.13.5/ArduinoBootstrapper-1.13.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

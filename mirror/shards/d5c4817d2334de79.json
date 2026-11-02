@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rafeul1997",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rafeul1997/library/AutoLCD/1.0.0/AutoLCD-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AutoLCD-1.0.0.tar.gz",
+    "size_bytes": 2282,
+    "sha256": "58caddfba126e99779bfc5118cfb3319c168d213cb497179ee843b28f97fbd31",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rafeul1997/library/AutoLCD/1.0.0/AutoLCD-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rafeul1997/library/AutoLCD/1.0.0/AutoLCD-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rafeul1997/library/ESP-CAR/1.0.0/ESP-CAR-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-CAR-1.0.0.tar.gz",
+    "size_bytes": 3703,
+    "sha256": "30031657c9e483bb56062ec3e1c3d1ef2abe3be080ffec60657be16710f33479",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rafeul1997/library/ESP-CAR/1.0.0/ESP-CAR-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rafeul1997/library/ESP-CAR/1.0.0/ESP-CAR-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rafeul1997/library/NTCTemp/1.0.0/NTCTemp-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NTCTemp-1.0.0.tar.gz",
+    "size_bytes": 3348,
+    "sha256": "7ef6d6ee9d67f7f1586902a560ff0bc911c8488271b17dda36ad7e98db9f3ed2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rafeul1997/library/NTCTemp/1.0.0/NTCTemp-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rafeul1997/library/NTCTemp/1.0.0/NTCTemp-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rafeul1997/library/Universal%20Blink/2.0.1/UniversalBlink-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UniversalBlink-2.0.1.tar.gz",
+    "size_bytes": 3517,
+    "sha256": "141041069ff96ea95f6a2dcb9df1030af3428ddfd4282c319b8972153b43c898",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rafeul1997/library/Universal%2520Blink/2.0.1/UniversalBlink-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/rafeul1997/library/Universal%20Blink/2.0.1/UniversalBlink-2.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-spencer",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-spencer/library/TLC5940/0.0.0+sha.e5ed5650eb15/TLC5940-0.0.0+sha.e5ed5650eb15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TLC5940-0.0.0+sha.e5ed5650eb15.tar.gz",
+    "size_bytes": 5198,
+    "sha256": "879c25553161f1a30da8cfe3efde17a491eda82093c22db3971800c479d93a36",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-spencer/library/TLC5940/0.0.0%2Bsha.e5ed5650eb15/TLC5940-0.0.0%2Bsha.e5ed5650eb15.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-spencer/library/TLC5940/0.0.0%2Bsha.e5ed5650eb15/TLC5940-0.0.0%2Bsha.e5ed5650eb15.tar.gz"
+    ]
+   }
+  }
+ ]
+}

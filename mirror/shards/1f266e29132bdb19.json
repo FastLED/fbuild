@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-dudakp97",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-dudakp97/library/MPU9150Lib/0.0.0+sha.d9728138f055/MPU9150Lib-0.0.0+sha.d9728138f055.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPU9150Lib-0.0.0+sha.d9728138f055.tar.gz",
+    "size_bytes": 2753,
+    "sha256": "18e2e648b563c5c6b8a64648735332982e963a5dbd877063b796a9d7f4ae8006",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dudakp97/library/MPU9150Lib/0.0.0%2Bsha.d9728138f055/MPU9150Lib-0.0.0%2Bsha.d9728138f055.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dudakp97/library/MPU9150Lib/0.0.0%2Bsha.d9728138f055/MPU9150Lib-0.0.0%2Bsha.d9728138f055.tar.gz"
+    ]
+   }
+  }
+ ]
+}

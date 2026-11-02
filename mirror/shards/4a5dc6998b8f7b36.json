@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/evgenymyasishchev",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "evgenymyasishchev/library/AT-Engine/0.0.3/AT-Engine-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AT-Engine-0.0.3.tar.gz",
+    "size_bytes": 5380,
+    "sha256": "57304b65e2b1a11354bf62852d36d583b16ca55230972a29e4efc0f2c1c89509",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/evgenymyasishchev/library/AT-Engine/0.0.3/AT-Engine-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/evgenymyasishchev/library/AT-Engine/0.0.3/AT-Engine-0.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

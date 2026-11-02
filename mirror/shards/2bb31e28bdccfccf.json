@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/drhahnchenflugel",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "drhahnchenflugel/library/ServoTimer2Plus/1.0.0/ServoTimer2Plus-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ServoTimer2Plus-1.0.0.tar.gz",
+    "size_bytes": 15949,
+    "sha256": "d6971b61bb498b98635e1d26f48c21115b132f65844a192938d04c148db0dbb9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/drhahnchenflugel/library/ServoTimer2Plus/1.0.0/ServoTimer2Plus-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/drhahnchenflugel/library/ServoTimer2Plus/1.0.0/ServoTimer2Plus-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

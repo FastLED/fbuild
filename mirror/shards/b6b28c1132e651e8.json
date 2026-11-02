@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/juerd",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "juerd/library/ESP-WiFiSettings/3.10.1/ESP-WiFiSettings-3.10.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-WiFiSettings-3.10.1.tar.gz",
+    "size_bytes": 14505,
+    "sha256": "a8e43d91208fadfad133232bc1b193612f66d8bc3dc79304a1212431a45e9608",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/juerd/library/ESP-WiFiSettings/3.10.1/ESP-WiFiSettings-3.10.1.tar.gz",
+     "https://dl.registry.platformio.org/download/juerd/library/ESP-WiFiSettings/3.10.1/ESP-WiFiSettings-3.10.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "juerd/library/ESP-WiFiSettings/3.9.2/ESP-WiFiSettings-3.9.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-WiFiSettings-3.9.2.tar.gz",
+    "size_bytes": 13719,
+    "sha256": "b565d501809f36e221876e494dff089f5a1a43d3c4e6a90a5f6b923f31d2d4fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/juerd/library/ESP-WiFiSettings/3.9.2/ESP-WiFiSettings-3.9.2.tar.gz",
+     "https://dl.registry.platformio.org/download/juerd/library/ESP-WiFiSettings/3.9.2/ESP-WiFiSettings-3.9.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

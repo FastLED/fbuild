@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-fin4478",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-fin4478/library/LSM303DM/0.0.0+sha.22556393747b/LSM303DM-0.0.0+sha.22556393747b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LSM303DM-0.0.0+sha.22556393747b.tar.gz",
+    "size_bytes": 3655,
+    "sha256": "db53e067c62a129d1ff5d455406ffaf9b6132b5e450643996f200ed38da98e6f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-fin4478/library/LSM303DM/0.0.0%2Bsha.22556393747b/LSM303DM-0.0.0%2Bsha.22556393747b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-fin4478/library/LSM303DM/0.0.0%2Bsha.22556393747b/LSM303DM-0.0.0%2Bsha.22556393747b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-fin4478/library/Yamartino/0.0.0+sha.726c69fad7d8/Yamartino-0.0.0+sha.726c69fad7d8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Yamartino-0.0.0+sha.726c69fad7d8.tar.gz",
+    "size_bytes": 1561,
+    "sha256": "465b8018452654e027c7b443c420ff923a9713f7c7717df9e42d35f25cc03df8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-fin4478/library/Yamartino/0.0.0%2Bsha.726c69fad7d8/Yamartino-0.0.0%2Bsha.726c69fad7d8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-fin4478/library/Yamartino/0.0.0%2Bsha.726c69fad7d8/Yamartino-0.0.0%2Bsha.726c69fad7d8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

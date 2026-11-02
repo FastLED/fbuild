@@ -1,0 +1,165 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/playingwithfusion",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "playingwithfusion/library/PWFusion_MAX31856/1.4.0/PWFusion_MAX31856-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PWFusion_MAX31856-1.4.0.tar.gz",
+    "size_bytes": 16357,
+    "sha256": "8c102cd089d3dabde0b4d2de6eea04efc78e07b73acb93fffe332d655e07df10",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/playingwithfusion/library/PWFusion_MAX31856/1.4.0/PWFusion_MAX31856-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/playingwithfusion/library/PWFusion_MAX31856/1.4.0/PWFusion_MAX31856-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "playingwithfusion/library/PWFusion_Max31865/2.1.0/PWFusion_Max31865-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PWFusion_Max31865-2.1.0.tar.gz",
+    "size_bytes": 8804,
+    "sha256": "34181bbb8484e6af3703af8481073910f4dc77cf50d3119ea2e2cce16674a9d3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/playingwithfusion/library/PWFusion_Max31865/2.1.0/PWFusion_Max31865-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/playingwithfusion/library/PWFusion_Max31865/2.1.0/PWFusion_Max31865-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "playingwithfusion/library/PWFusion_Mcp2515/1.0.1/PWFusion_Mcp2515-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PWFusion_Mcp2515-1.0.1.tar.gz",
+    "size_bytes": 11183,
+    "sha256": "c2b3b0a54ce8f66ff029eacbdc9cefaf9f6746320e3e83865b4a1cdcd3e28ff8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/playingwithfusion/library/PWFusion_Mcp2515/1.0.1/PWFusion_Mcp2515-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/playingwithfusion/library/PWFusion_Mcp2515/1.0.1/PWFusion_Mcp2515-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "playingwithfusion/library/PWFusion_Mcp960x/1.1.0/PWFusion_Mcp960x-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PWFusion_Mcp960x-1.1.0.tar.gz",
+    "size_bytes": 5894,
+    "sha256": "6f2315320465927d97cc4045fe13d0fe47f66e80567d5d3728aac124bb32147b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/playingwithfusion/library/PWFusion_Mcp960x/1.1.0/PWFusion_Mcp960x-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/playingwithfusion/library/PWFusion_Mcp960x/1.1.0/PWFusion_Mcp960x-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "playingwithfusion/library/PWFusion_SHT3X/2.0.0/PWFusion_SHT3X-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PWFusion_SHT3X-2.0.0.tar.gz",
+    "size_bytes": 41478,
+    "sha256": "c759a0ae77a829c058509803868f87d32baabc9592f4cf0212948fb05b9ed170",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/playingwithfusion/library/PWFusion_SHT3X/2.0.0/PWFusion_SHT3X-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/playingwithfusion/library/PWFusion_SHT3X/2.0.0/PWFusion_SHT3X-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "playingwithfusion/library/PWFusion_TCA9548A/1.0.1/PWFusion_TCA9548A-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PWFusion_TCA9548A-1.0.1.tar.gz",
+    "size_bytes": 3269,
+    "sha256": "ef8e0d4934dcc019608f8a8a94b7bce26f8e4e175e32ccfe38e71c1b710b7947",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/playingwithfusion/library/PWFusion_TCA9548A/1.0.1/PWFusion_TCA9548A-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/playingwithfusion/library/PWFusion_TCA9548A/1.0.1/PWFusion_TCA9548A-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "playingwithfusion/library/PWFusion_VL53L3C/1.0.0/PWFusion_VL53L3C-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PWFusion_VL53L3C-1.0.0.tar.gz",
+    "size_bytes": 182900,
+    "sha256": "744bfb83bdad873f687d8776e7ee07f2106858e89fd305cd6fcb3b44f0f99225",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/playingwithfusion/library/PWFusion_VL53L3C/1.0.0/PWFusion_VL53L3C-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/playingwithfusion/library/PWFusion_VL53L3C/1.0.0/PWFusion_VL53L3C-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "playingwithfusion/library/PwFusion_Data_Transfer/1.0.2/PwFusion_Data_Transfer-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PwFusion_Data_Transfer-1.0.2.tar.gz",
+    "size_bytes": 3106,
+    "sha256": "738d1f776ba487f4df3b53b18fb87cbed96a82d5cf574c5f0ca87c8102997fe9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/playingwithfusion/library/PwFusion_Data_Transfer/1.0.2/PwFusion_Data_Transfer-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/playingwithfusion/library/PwFusion_Data_Transfer/1.0.2/PwFusion_Data_Transfer-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "playingwithfusion/library/PwFusion_I2C_Buttons_Arduino_Library/1.0.0/PwFusion_I2C_Buttons_Arduino_Library-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PwFusion_I2C_Buttons_Arduino_Library-1.0.0.tar.gz",
+    "size_bytes": 3228,
+    "sha256": "b15bbb4d20643d4e03537370959f0efed9ddd853c1018a356b46b26093b10c32",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/playingwithfusion/library/PwFusion_I2C_Buttons_Arduino_Library/1.0.0/PwFusion_I2C_Buttons_Arduino_Library-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/playingwithfusion/library/PwFusion_I2C_Buttons_Arduino_Library/1.0.0/PwFusion_I2C_Buttons_Arduino_Library-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "playingwithfusion/library/PwFusion_I2C_Encoder_Arduino_Library/1.0.0/PwFusion_I2C_Encoder_Arduino_Library-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PwFusion_I2C_Encoder_Arduino_Library-1.0.0.tar.gz",
+    "size_bytes": 4045,
+    "sha256": "611c4ceb061a649aeb0621b96e1d483a9bfc76fb254635e8bf55ee49c263629d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/playingwithfusion/library/PwFusion_I2C_Encoder_Arduino_Library/1.0.0/PwFusion_I2C_Encoder_Arduino_Library-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/playingwithfusion/library/PwFusion_I2C_Encoder_Arduino_Library/1.0.0/PwFusion_I2C_Encoder_Arduino_Library-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "playingwithfusion/library/PwFusion_I2C_Joystick_Arduino_Library/1.0.0/PwFusion_I2C_Joystick_Arduino_Library-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PwFusion_I2C_Joystick_Arduino_Library-1.0.0.tar.gz",
+    "size_bytes": 3241,
+    "sha256": "cea05d6aeb8fdc4af290f506cd47fb1ed35e412dd67d8aa3fdf4c6328860087c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/playingwithfusion/library/PwFusion_I2C_Joystick_Arduino_Library/1.0.0/PwFusion_I2C_Joystick_Arduino_Library-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/playingwithfusion/library/PwFusion_I2C_Joystick_Arduino_Library/1.0.0/PwFusion_I2C_Joystick_Arduino_Library-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "playingwithfusion/library/PwFusion_I2C_Toggle_Arduino_Library/1.0.0/PwFusion_I2C_Toggle_Arduino_Library-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PwFusion_I2C_Toggle_Arduino_Library-1.0.0.tar.gz",
+    "size_bytes": 3079,
+    "sha256": "8fba950914edde196a8aaf317474191221efbb7dcf5bd1bd848520c9d99e6d25",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/playingwithfusion/library/PwFusion_I2C_Toggle_Arduino_Library/1.0.0/PwFusion_I2C_Toggle_Arduino_Library-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/playingwithfusion/library/PwFusion_I2C_Toggle_Arduino_Library/1.0.0/PwFusion_I2C_Toggle_Arduino_Library-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

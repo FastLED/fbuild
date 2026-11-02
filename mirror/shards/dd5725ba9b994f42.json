@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-oscarvzfz",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-oscarvzfz/library/stepper/0.0.0+sha.9c7a33b8a771/stepper-0.0.0+sha.9c7a33b8a771.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "stepper-0.0.0+sha.9c7a33b8a771.tar.gz",
+    "size_bytes": 2279,
+    "sha256": "38119ddb16129829cbaa1777825cdc5cd05255217bf7a94ba8e738cbbced2ac5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-oscarvzfz/library/stepper/0.0.0%2Bsha.9c7a33b8a771/stepper-0.0.0%2Bsha.9c7a33b8a771.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-oscarvzfz/library/stepper/0.0.0%2Bsha.9c7a33b8a771/stepper-0.0.0%2Bsha.9c7a33b8a771.tar.gz"
+    ]
+   }
+  }
+ ]
+}

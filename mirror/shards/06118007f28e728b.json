@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/reefpom",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "reefpom/library/Ospom/0.1.32/Ospom-0.1.32.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ospom-0.1.32.tar.gz",
+    "size_bytes": 12839,
+    "sha256": "0b2bef06b1db65e88329a4b18e9e9af1064b213eed681f0d4b1077907c006850",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/reefpom/library/Ospom/0.1.32/Ospom-0.1.32.tar.gz",
+     "https://dl.registry.platformio.org/download/reefpom/library/Ospom/0.1.32/Ospom-0.1.32.tar.gz"
+    ]
+   }
+  }
+ ]
+}

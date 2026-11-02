@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-orangeway",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-orangeway/library/LMiC_CFG_eu868/0.0.0+sha.fdc0318ba13e/LMiC_CFG_eu868-0.0.0+sha.fdc0318ba13e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LMiC_CFG_eu868-0.0.0+sha.fdc0318ba13e.tar.gz",
+    "size_bytes": 47769,
+    "sha256": "052d514b5322305e931f4c58759c5ae44f4442d473c030557ae9d03ac7c29c24",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-orangeway/library/LMiC_CFG_eu868/0.0.0%2Bsha.fdc0318ba13e/LMiC_CFG_eu868-0.0.0%2Bsha.fdc0318ba13e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-orangeway/library/LMiC_CFG_eu868/0.0.0%2Bsha.fdc0318ba13e/LMiC_CFG_eu868-0.0.0%2Bsha.fdc0318ba13e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,152 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/eloquentarduino",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "eloquentarduino/library/EloquentRTLS/1.0.0/EloquentRTLS-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EloquentRTLS-1.0.0.tar.gz",
+    "size_bytes": 5830,
+    "sha256": "81bb93197e2ca7b50f58539f52c7cfbebd42df88311c4f6b925953370dbf55e3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eloquentarduino/library/EloquentRTLS/1.0.0/EloquentRTLS-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/eloquentarduino/library/EloquentRTLS/1.0.0/EloquentRTLS-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "eloquentarduino/library/EloquentTensorFlow32/1.0.1/EloquentTensorFlow32-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EloquentTensorFlow32-1.0.1.tar.gz",
+    "size_bytes": 4738,
+    "sha256": "9dc1cd04501034d268045f19d20586d2c34d68cd95bf219dfbf5d57f14c859c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eloquentarduino/library/EloquentTensorFlow32/1.0.1/EloquentTensorFlow32-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/eloquentarduino/library/EloquentTensorFlow32/1.0.1/EloquentTensorFlow32-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "eloquentarduino/library/EloquentTensorFlowCortexM/1.0/EloquentTensorFlowCortexM-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EloquentTensorFlowCortexM-1.0.tar.gz",
+    "size_bytes": 991825,
+    "sha256": "688253dfcf6f9e56be6d4bddb9c2b46a45a554235f8efcb51b0af75286908019",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eloquentarduino/library/EloquentTensorFlowCortexM/1.0/EloquentTensorFlowCortexM-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/eloquentarduino/library/EloquentTensorFlowCortexM/1.0/EloquentTensorFlowCortexM-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "eloquentarduino/library/EloquentTinyML/0.0.3/EloquentTinyML-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EloquentTinyML-0.0.3.tar.gz",
+    "size_bytes": 533343,
+    "sha256": "cceda1f5562f327a8a79dfd35f605b60eacc879f628c48b8b906ae5d99222ac8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eloquentarduino/library/EloquentTinyML/0.0.3/EloquentTinyML-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/eloquentarduino/library/EloquentTinyML/0.0.3/EloquentTinyML-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "eloquentarduino/library/EloquentVision/0.0.5/EloquentVision-0.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EloquentVision-0.0.5.tar.gz",
+    "size_bytes": 20694,
+    "sha256": "38dceb9d82139f3d0ae8acff0f37656132736731f9ffbd86fb164b5e88b486fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eloquentarduino/library/EloquentVision/0.0.5/EloquentVision-0.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/eloquentarduino/library/EloquentVision/0.0.5/EloquentVision-0.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "eloquentarduino/library/Eloquent_EdgeImpulse/1.0.0/Eloquent_EdgeImpulse-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Eloquent_EdgeImpulse-1.0.0.tar.gz",
+    "size_bytes": 5879,
+    "sha256": "c476a4faf8927f1f181a0525e733db17c924b00fa6593ca257751b4fd816669a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eloquentarduino/library/Eloquent_EdgeImpulse/1.0.0/Eloquent_EdgeImpulse-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/eloquentarduino/library/Eloquent_EdgeImpulse/1.0.0/Eloquent_EdgeImpulse-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "eloquentarduino/library/WebTerminal/1.0.2/WebTerminal-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WebTerminal-1.0.2.tar.gz",
+    "size_bytes": 3511,
+    "sha256": "b4fe10dfdb34b6b4cca95b7d87a210f9aa6081f2d5d62a4e11c141b0f185d777",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eloquentarduino/library/WebTerminal/1.0.2/WebTerminal-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/eloquentarduino/library/WebTerminal/1.0.2/WebTerminal-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "eloquentarduino/library/eloquent_remote/0.0.2/eloquent_remote-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "eloquent_remote-0.0.2.tar.gz",
+    "size_bytes": 170084,
+    "sha256": "52a6ec2ea734f1e09d90c238e744f015fa5b94e9f48b4b8168f1a6d5e8665177",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eloquentarduino/library/eloquent_remote/0.0.2/eloquent_remote-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/eloquentarduino/library/eloquent_remote/0.0.2/eloquent_remote-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "eloquentarduino/library/tflm_cortexm/1.0.0/tflm_cortexm-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tflm_cortexm-1.0.0.tar.gz",
+    "size_bytes": 1349297,
+    "sha256": "264298ba24b53681c8608c8e69e45d73ae2dfe98398ca43ab5f143ce1a5690e0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eloquentarduino/library/tflm_cortexm/1.0.0/tflm_cortexm-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/eloquentarduino/library/tflm_cortexm/1.0.0/tflm_cortexm-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "eloquentarduino/library/tflm_esp32/2.0.0/tflm_esp32-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tflm_esp32-2.0.0.tar.gz",
+    "size_bytes": 9530284,
+    "sha256": "768712c1c9fe49c72285d68f1c2c55012dddbce5ea552735ee4c23181c20302f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eloquentarduino/library/tflm_esp32/2.0.0/tflm_esp32-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/eloquentarduino/library/tflm_esp32/2.0.0/tflm_esp32-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "eloquentarduino/library/tinyml4all/0.0.1/tinyml4all-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tinyml4all-0.0.1.tar.gz",
+    "size_bytes": 1196,
+    "sha256": "c0d5ba5d3f0ead57827f0a814b49292cd978922ceb478ef968e1d1b18b9cc2b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eloquentarduino/library/tinyml4all/0.0.1/tinyml4all-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/eloquentarduino/library/tinyml4all/0.0.1/tinyml4all-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

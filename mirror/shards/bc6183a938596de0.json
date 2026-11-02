@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/circuitar",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "circuitar/library/Dimmer/1.0/Dimmer-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Dimmer-1.0.tar.gz",
+    "size_bytes": 7160,
+    "sha256": "ef19db8976b88ef1b861fc92db73b8e8830999183ed32f2a6804bf4e5a92290e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/circuitar/library/Dimmer/1.0/Dimmer-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/circuitar/library/Dimmer/1.0/Dimmer-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

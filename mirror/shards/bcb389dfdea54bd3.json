@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sensslen",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sensslen/library/LibLanc/3.0.2/LibLanc-3.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LibLanc-3.0.2.tar.gz",
+    "size_bytes": 10047,
+    "sha256": "211424507d9120f62f6111b1e8216b476a0d11c0a2fe3b407a4a757c0ea3fb22",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensslen/library/LibLanc/3.0.2/LibLanc-3.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sensslen/library/LibLanc/3.0.2/LibLanc-3.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

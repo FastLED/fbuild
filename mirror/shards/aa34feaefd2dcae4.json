@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rodgon81",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rodgon81/library/JSmartMeter238/1.0.0-beta1/JSmartMeter238-1.0.0-beta1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JSmartMeter238-1.0.0-beta1.tar.gz",
+    "size_bytes": 8256,
+    "sha256": "6d1fcc92ad63d335e69ad77c93b8ebec25e3d3738693b040552fef5619493675",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rodgon81/library/JSmartMeter238/1.0.0-beta1/JSmartMeter238-1.0.0-beta1.tar.gz",
+     "https://dl.registry.platformio.org/download/rodgon81/library/JSmartMeter238/1.0.0-beta1/JSmartMeter238-1.0.0-beta1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rodgon81/library/SmartMeter238/1.0.0-beta1/SmartMeter238-1.0.0-beta1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartMeter238-1.0.0-beta1.tar.gz",
+    "size_bytes": 11567,
+    "sha256": "5c95cee9dd7025af823fa058337ae6aa60139d927cf7b33b8e54800770497670",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rodgon81/library/SmartMeter238/1.0.0-beta1/SmartMeter238-1.0.0-beta1.tar.gz",
+     "https://dl.registry.platformio.org/download/rodgon81/library/SmartMeter238/1.0.0-beta1/SmartMeter238-1.0.0-beta1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/qwety",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "qwety/library/RadioHeadTeensy/1.112/RadioHeadTeensy-1.112.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RadioHeadTeensy-1.112.tar.gz",
+    "size_bytes": 337194,
+    "sha256": "d55b55366d15be3ce591e4013bcb29ddc1eb18c8fc7c88017e61a971a9419858",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/qwety/library/RadioHeadTeensy/1.112/RadioHeadTeensy-1.112.tar.gz",
+     "https://dl.registry.platformio.org/download/qwety/library/RadioHeadTeensy/1.112/RadioHeadTeensy-1.112.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "qwety/library/SparkFun%20LIS331%20Accelerometers/1.0.1/SparkFunLIS331Accelerometers-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunLIS331Accelerometers-1.0.1.tar.gz",
+    "size_bytes": 7034,
+    "sha256": "cb767f993719f617a74a640a417b30161e1082b448eebca0d49e3b47a62cf716",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/qwety/library/SparkFun%2520LIS331%2520Accelerometers/1.0.1/SparkFunLIS331Accelerometers-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/qwety/library/SparkFun%20LIS331%20Accelerometers/1.0.1/SparkFunLIS331Accelerometers-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

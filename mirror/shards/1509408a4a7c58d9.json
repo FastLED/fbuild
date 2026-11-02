@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/askinkeles",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "askinkeles/library/DWIN_UNI_HMI/1.0.0/DWIN_UNI_HMI-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DWIN_UNI_HMI-1.0.0.tar.gz",
+    "size_bytes": 7376,
+    "sha256": "66fcaf3f7f5db081b19b9690e9fd2d1f75f270222026bdc77594650b316d68bd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/askinkeles/library/DWIN_UNI_HMI/1.0.0/DWIN_UNI_HMI-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/askinkeles/library/DWIN_UNI_HMI/1.0.0/DWIN_UNI_HMI-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "askinkeles/library/DWIN_UNI_HMI/1.2.0/DWIN_UNI_HMI-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DWIN_UNI_HMI-1.2.0.tar.gz",
+    "size_bytes": 13538,
+    "sha256": "9bb5ee43893ce8c4a37c7fe6e33aed0183df455c5f49286e553715f9facc439e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/askinkeles/library/DWIN_UNI_HMI/1.2.0/DWIN_UNI_HMI-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/askinkeles/library/DWIN_UNI_HMI/1.2.0/DWIN_UNI_HMI-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

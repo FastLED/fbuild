@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-cooler64",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-cooler64/library/MCP4261/0.0.0+sha.cca94c1eb21a/MCP4261-0.0.0+sha.cca94c1eb21a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP4261-0.0.0+sha.cca94c1eb21a.tar.gz",
+    "size_bytes": 1744,
+    "sha256": "73651e4ea3ddb06cd16ee53ca592f026b0a8b0e1ee5323289fc090231babbe8c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-cooler64/library/MCP4261/0.0.0%2Bsha.cca94c1eb21a/MCP4261-0.0.0%2Bsha.cca94c1eb21a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-cooler64/library/MCP4261/0.0.0%2Bsha.cca94c1eb21a/MCP4261-0.0.0%2Bsha.cca94c1eb21a.tar.gz"
+    ]
+   }
+  }
+ ]
+}

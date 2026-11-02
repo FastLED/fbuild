@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/derekcurry",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "derekcurry/library/super_easing/1.0.0/super_easing-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "super_easing-1.0.0.tar.gz",
+    "size_bytes": 19210,
+    "sha256": "b68b7abe2fb1dd03af187383dc3224f887752bc0e46e7fb8ac265acf89d86060",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/derekcurry/library/super_easing/1.0.0/super_easing-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/derekcurry/library/super_easing/1.0.0/super_easing-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

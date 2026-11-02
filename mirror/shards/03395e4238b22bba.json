@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-briareos",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-briareos/library/libLcd/0.0.0+sha.4aa053ea4210/libLcd-0.0.0+sha.4aa053ea4210.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libLcd-0.0.0+sha.4aa053ea4210.tar.gz",
+    "size_bytes": 2008,
+    "sha256": "fb49d142f2385a1eb8cfc9550d81797e84bdf56c83e20b15a29f71eef09a0715",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-briareos/library/libLcd/0.0.0%2Bsha.4aa053ea4210/libLcd-0.0.0%2Bsha.4aa053ea4210.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-briareos/library/libLcd/0.0.0%2Bsha.4aa053ea4210/libLcd-0.0.0%2Bsha.4aa053ea4210.tar.gz"
+    ]
+   }
+  }
+ ]
+}

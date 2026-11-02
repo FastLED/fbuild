@@ -1,0 +1,412 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mishamyrt",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mishamyrt/library/CArduinoOTA/1.0.0/CArduinoOTA-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CArduinoOTA-1.0.0.tar.gz",
+    "size_bytes": 1653,
+    "sha256": "373eff4b017886299c255a79a7875af349942621c4502e2280e1729f5934fce2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mishamyrt/library/CArduinoOTA/1.0.0/CArduinoOTA-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mishamyrt/library/CArduinoOTA/1.0.0/CArduinoOTA-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mishamyrt/library/CPreferences/1.0.0/CPreferences-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CPreferences-1.0.0.tar.gz",
+    "size_bytes": 2209,
+    "sha256": "84ed3bc0ecb217944706015938959871425310395e911b8d578349dd715e3de7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mishamyrt/library/CPreferences/1.0.0/CPreferences-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mishamyrt/library/CPreferences/1.0.0/CPreferences-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mishamyrt/library/CPreferences/1.1.0/CPreferences-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CPreferences-1.1.0.tar.gz",
+    "size_bytes": 2246,
+    "sha256": "1cf7f91e50dd199e906183e52193d9b1c07fe7f75c07d5353a19743caa960fed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mishamyrt/library/CPreferences/1.1.0/CPreferences-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mishamyrt/library/CPreferences/1.1.0/CPreferences-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mishamyrt/library/CPreferences/1.2.0/CPreferences-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CPreferences-1.2.0.tar.gz",
+    "size_bytes": 2279,
+    "sha256": "e0907e09f54d89e16d77879eca6505ef9b856bc82f5d1b440c00c25755e320c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mishamyrt/library/CPreferences/1.2.0/CPreferences-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mishamyrt/library/CPreferences/1.2.0/CPreferences-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mishamyrt/library/CPubSub/1.0.0/CPubSub-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CPubSub-1.0.0.tar.gz",
+    "size_bytes": 1598,
+    "sha256": "c17dc6efb32122cdb6315ce9e19290e18d067486cd7b93379784939b3ab25054",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mishamyrt/library/CPubSub/1.0.0/CPubSub-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mishamyrt/library/CPubSub/1.0.0/CPubSub-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mishamyrt/library/CPubSub/1.1.0/CPubSub-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CPubSub-1.1.0.tar.gz",
+    "size_bytes": 1621,
+    "sha256": "b3c94db1780e18d4de80789e3b6465fffb8f1054053d6e9a18ef10c1a04b01e2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mishamyrt/library/CPubSub/1.1.0/CPubSub-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mishamyrt/library/CPubSub/1.1.0/CPubSub-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mishamyrt/library/CPubSub/1.1.1/CPubSub-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CPubSub-1.1.1.tar.gz",
+    "size_bytes": 1633,
+    "sha256": "ed6bf79b03bee1d4ff0838199c7f0b82959736d0d20c1419b41148d3d641d8ba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mishamyrt/library/CPubSub/1.1.1/CPubSub-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mishamyrt/library/CPubSub/1.1.1/CPubSub-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mishamyrt/library/CPubSub/1.1.2/CPubSub-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CPubSub-1.1.2.tar.gz",
+    "size_bytes": 2359,
+    "sha256": "5019bded86385af824f93a832711cdca96f85722154805308f46eb9360bcfa4c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mishamyrt/library/CPubSub/1.1.2/CPubSub-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mishamyrt/library/CPubSub/1.1.2/CPubSub-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mishamyrt/library/CUpdate/1.0.0/CUpdate-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CUpdate-1.0.0.tar.gz",
+    "size_bytes": 1066,
+    "sha256": "85055ce2e46e32ba98eb4891b849d036cf1f49af1eb9946f21fb7d526bbd609b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mishamyrt/library/CUpdate/1.0.0/CUpdate-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mishamyrt/library/CUpdate/1.0.0/CUpdate-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mishamyrt/library/CUpdate/1.1.0/CUpdate-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CUpdate-1.1.0.tar.gz",
+    "size_bytes": 2461,
+    "sha256": "011c47cdbe6cfa2efa137a74c30dc89695ccf166f3b62b08e5ba640325c7a331",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mishamyrt/library/CUpdate/1.1.0/CUpdate-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mishamyrt/library/CUpdate/1.1.0/CUpdate-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mishamyrt/library/CWebServer/1.0.0/CWebServer-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CWebServer-1.0.0.tar.gz",
+    "size_bytes": 1894,
+    "sha256": "8c4fe10be22a429bfed929521c83dc3564a4e758a50ace48b010cfccdd1d80a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mishamyrt/library/CWebServer/1.0.0/CWebServer-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mishamyrt/library/CWebServer/1.0.0/CWebServer-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mishamyrt/library/CWebServer/1.1.0/CWebServer-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CWebServer-1.1.0.tar.gz",
+    "size_bytes": 2512,
+    "sha256": "a6dcac75552bf2a0a5e6a07d6535be41a276f2b88218a773774f70dd03c58ce0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mishamyrt/library/CWebServer/1.1.0/CWebServer-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mishamyrt/library/CWebServer/1.1.0/CWebServer-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mishamyrt/library/CWiFiManager/1.0.0/CWiFiManager-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CWiFiManager-1.0.0.tar.gz",
+    "size_bytes": 1689,
+    "sha256": "203303c4c86344f1b6b688408bc350156e596871453d3eeb6c0a23bc87b2df5f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mishamyrt/library/CWiFiManager/1.0.0/CWiFiManager-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mishamyrt/library/CWiFiManager/1.0.0/CWiFiManager-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mishamyrt/library/CWiFiManager/1.0.1/CWiFiManager-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CWiFiManager-1.0.1.tar.gz",
+    "size_bytes": 1746,
+    "sha256": "08d263e32ee26a161b38d9b9c76c1f9769528889ac2080443afb155da006a4b6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mishamyrt/library/CWiFiManager/1.0.1/CWiFiManager-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mishamyrt/library/CWiFiManager/1.0.1/CWiFiManager-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mishamyrt/library/CWiFiManager/1.0.2/CWiFiManager-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CWiFiManager-1.0.2.tar.gz",
+    "size_bytes": 1731,
+    "sha256": "5365b0ce8804cc6647dcc2484634a0badddea329767ece414d638c4c8e924fca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mishamyrt/library/CWiFiManager/1.0.2/CWiFiManager-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mishamyrt/library/CWiFiManager/1.0.2/CWiFiManager-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mishamyrt/library/CWiFiManager/1.0.3/CWiFiManager-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CWiFiManager-1.0.3.tar.gz",
+    "size_bytes": 1900,
+    "sha256": "d60ec866561f4f8f4e7dfdb194221254d4717fe6dd508adb9beaa14c43204256",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mishamyrt/library/CWiFiManager/1.0.3/CWiFiManager-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mishamyrt/library/CWiFiManager/1.0.3/CWiFiManager-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mishamyrt/library/CWiFiManager/1.0.4/CWiFiManager-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CWiFiManager-1.0.4.tar.gz",
+    "size_bytes": 1900,
+    "sha256": "a73f74cfc27e76857c44a5c84558b388db377eb4a2b54270611069a377360787",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mishamyrt/library/CWiFiManager/1.0.4/CWiFiManager-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/mishamyrt/library/CWiFiManager/1.0.4/CWiFiManager-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mishamyrt/library/CWiFiManager/1.0.5/CWiFiManager-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CWiFiManager-1.0.5.tar.gz",
+    "size_bytes": 2993,
+    "sha256": "593c9f7f0353edcbf97837379dd7d37945cf01fc097f88024d66c088f75c119b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mishamyrt/library/CWiFiManager/1.0.5/CWiFiManager-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/mishamyrt/library/CWiFiManager/1.0.5/CWiFiManager-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mishamyrt/library/FastLED-IO/1.0.3/FastLED-IO-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastLED-IO-1.0.3.tar.gz",
+    "size_bytes": 4653,
+    "sha256": "5f8d157ac033348f84adb1930a6096895c2f73675f38a6a31976f23871978734",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mishamyrt/library/FastLED-IO/1.0.3/FastLED-IO-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mishamyrt/library/FastLED-IO/1.0.3/FastLED-IO-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mishamyrt/library/HomeAssistantJSON/2.0.0/HomeAssistantJSON-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HomeAssistantJSON-2.0.0.tar.gz",
+    "size_bytes": 4831,
+    "sha256": "5526ad9ba39919d6e0c8191c140e6d8c8282976c73f17c863f9cd2286923bb82",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mishamyrt/library/HomeAssistantJSON/2.0.0/HomeAssistantJSON-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mishamyrt/library/HomeAssistantJSON/2.0.0/HomeAssistantJSON-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mishamyrt/library/LEDCoordinator/1.0.0/LEDCoordinator-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LEDCoordinator-1.0.0.tar.gz",
+    "size_bytes": 3893,
+    "sha256": "8aa4a69aba433809c7b97e9725999686328290eb6b5f4321051d7a4d0eaef8a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mishamyrt/library/LEDCoordinator/1.0.0/LEDCoordinator-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mishamyrt/library/LEDCoordinator/1.0.0/LEDCoordinator-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mishamyrt/library/LightComposer/2.0.0/LightComposer-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LightComposer-2.0.0.tar.gz",
+    "size_bytes": 18511,
+    "sha256": "57182a25465f88a7bfd3097255c24530d9708db3e477c9c89e20649b58a5b507",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mishamyrt/library/LightComposer/2.0.0/LightComposer-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mishamyrt/library/LightComposer/2.0.0/LightComposer-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mishamyrt/library/LightComposer/2.0.1/LightComposer-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LightComposer-2.0.1.tar.gz",
+    "size_bytes": 18603,
+    "sha256": "5c2e2f3ac69381ac4b703e02d715a57144ed57ff0f02399c9fc9e6762d82e218",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mishamyrt/library/LightComposer/2.0.1/LightComposer-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mishamyrt/library/LightComposer/2.0.1/LightComposer-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mishamyrt/library/LightComposer/2.0.2/LightComposer-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LightComposer-2.0.2.tar.gz",
+    "size_bytes": 18681,
+    "sha256": "23b0967b87d46606ab1c475eb475336089db398d2107f5a3fb7307bcbcafba60",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mishamyrt/library/LightComposer/2.0.2/LightComposer-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mishamyrt/library/LightComposer/2.0.2/LightComposer-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mishamyrt/library/MyrtIO-WiFi/1.0.0/MyrtIO-WiFi-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MyrtIO-WiFi-1.0.0.tar.gz",
+    "size_bytes": 2072,
+    "sha256": "a307b79a4702a8e8b8906485588c4de3972dde833cced7f910bf1235037d2e7b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mishamyrt/library/MyrtIO-WiFi/1.0.0/MyrtIO-WiFi-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mishamyrt/library/MyrtIO-WiFi/1.0.0/MyrtIO-WiFi-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mishamyrt/library/MyrtIO/1.4.0/MyrtIO-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MyrtIO-1.4.0.tar.gz",
+    "size_bytes": 8335,
+    "sha256": "7656dbd48fde1707fa86517aba122582b9e078cd3ab62f8d7812cc1a7c520a00",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mishamyrt/library/MyrtIO/1.4.0/MyrtIO-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mishamyrt/library/MyrtIO/1.4.0/MyrtIO-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mishamyrt/library/PubSubServer/1.0.1/PubSubServer-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PubSubServer-1.0.1.tar.gz",
+    "size_bytes": 2579,
+    "sha256": "c6652e9b9023a04fde2ce424ff0cef154ed5408c8e712be8e6bfa7c1e2fcf976",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mishamyrt/library/PubSubServer/1.0.1/PubSubServer-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mishamyrt/library/PubSubServer/1.0.1/PubSubServer-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mishamyrt/library/RingBuffer/1.0.1/RingBuffer-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RingBuffer-1.0.1.tar.gz",
+    "size_bytes": 2444,
+    "sha256": "b844b4c53e9e4159a773584246e222e11f63f476b0a349aa0d6debe4c923ff8c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mishamyrt/library/RingBuffer/1.0.1/RingBuffer-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mishamyrt/library/RingBuffer/1.0.1/RingBuffer-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mishamyrt/library/TinyADT/2.1.1/TinyADT-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyADT-2.1.1.tar.gz",
+    "size_bytes": 4986,
+    "sha256": "78685d90306f4c8e8f870414928165dd1ff43c62ea4ff75b80ab62f14cbd6656",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mishamyrt/library/TinyADT/2.1.1/TinyADT-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mishamyrt/library/TinyADT/2.1.1/TinyADT-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mishamyrt/library/attotime/2.0.0/attotime-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "attotime-2.0.0.tar.gz",
+    "size_bytes": 3944,
+    "sha256": "1080a0811bb31cbc498171c307398802249c27802362d995082f7c68254da7dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mishamyrt/library/attotime/2.0.0/attotime-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mishamyrt/library/attotime/2.0.0/attotime-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mishamyrt/library/io_di/1.0.0/io_di-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "io_di-1.0.0.tar.gz",
+    "size_bytes": 3402,
+    "sha256": "ec7e0017fb6b7247cc3981af46df83178f138561a9736dcfa710a93519592da8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mishamyrt/library/io_di/1.0.0/io_di-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mishamyrt/library/io_di/1.0.0/io_di-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

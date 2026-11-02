@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gbrd",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gbrd/library/Teleinfo/0.0.2/Teleinfo-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Teleinfo-0.0.2.tar.gz",
+    "size_bytes": 4104,
+    "sha256": "8b3a1f6d02fe774bd92b87726d6acdac1c05dffd260c91ca6ff3813dc6a6421c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gbrd/library/Teleinfo/0.0.2/Teleinfo-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gbrd/library/Teleinfo/0.0.2/Teleinfo-0.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

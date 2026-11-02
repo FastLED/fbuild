@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/claypuppet",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "claypuppet/library/SensorReporter/0.6.2/SensorReporter-0.6.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensorReporter-0.6.2.tar.gz",
+    "size_bytes": 9114,
+    "sha256": "bcb44c7b191f53eaf38d9d29fac6b4dedc6406fab5a6c9f20e99eca7bbf58b15",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/claypuppet/library/SensorReporter/0.6.2/SensorReporter-0.6.2.tar.gz",
+     "https://dl.registry.platformio.org/download/claypuppet/library/SensorReporter/0.6.2/SensorReporter-0.6.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

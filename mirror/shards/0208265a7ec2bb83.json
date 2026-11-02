@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-innocopter",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-innocopter/library/USBHID/0.0.0+sha.237d5ef643e9/USBHID-0.0.0+sha.237d5ef643e9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "USBHID-0.0.0+sha.237d5ef643e9.tar.gz",
+    "size_bytes": 12938,
+    "sha256": "65c82cc4d98dabd3162a206ba614d95bef1b9d931fb23c5706b1862fe443a76f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-innocopter/library/USBHID/0.0.0%2Bsha.237d5ef643e9/USBHID-0.0.0%2Bsha.237d5ef643e9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-innocopter/library/USBHID/0.0.0%2Bsha.237d5ef643e9/USBHID-0.0.0%2Bsha.237d5ef643e9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

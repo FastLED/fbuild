@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/oshima-shosen-robotics-research-club",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "oshima-shosen-robotics-research-club/library/liboshima/5.4.8/liboshima-5.4.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "liboshima-5.4.8.tar.gz",
+    "size_bytes": 28545,
+    "sha256": "3a74391b3aac4be2c057304e5aa6eb21565e6bc96c5866e281530d2793f8e906",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/oshima-shosen-robotics-research-club/library/liboshima/5.4.8/liboshima-5.4.8.tar.gz",
+     "https://dl.registry.platformio.org/download/oshima-shosen-robotics-research-club/library/liboshima/5.4.8/liboshima-5.4.8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

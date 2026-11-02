@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dmack",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dmack/library/EEPROMReadWrite/1.0.5/EEPROMReadWrite-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EEPROMReadWrite-1.0.5.tar.gz",
+    "size_bytes": 1754,
+    "sha256": "4b8a1ef05ae3941924c4baeb94fa8058304fbb463ab55a0c215842f7bc158ea5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dmack/library/EEPROMReadWrite/1.0.5/EEPROMReadWrite-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/dmack/library/EEPROMReadWrite/1.0.5/EEPROMReadWrite-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dmack/library/MyCustomInlineLibrary/1.0.1/MyCustomInlineLibrary-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MyCustomInlineLibrary-1.0.1.tar.gz",
+    "size_bytes": 1220,
+    "sha256": "58263ae4b8da2419316a3c75384bc90b6e6ba7d8394b0dfdbca2fcf0b4408b5e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dmack/library/MyCustomInlineLibrary/1.0.1/MyCustomInlineLibrary-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dmack/library/MyCustomInlineLibrary/1.0.1/MyCustomInlineLibrary-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dmack/library/NO_BLOCK_BLINK/1.0.1/NO_BLOCK_BLINK-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NO_BLOCK_BLINK-1.0.1.tar.gz",
+    "size_bytes": 1486,
+    "sha256": "384ce2e00659c1b6b910bcd5db725f38c213497ebdcc229cb290655b3148775d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dmack/library/NO_BLOCK_BLINK/1.0.1/NO_BLOCK_BLINK-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dmack/library/NO_BLOCK_BLINK/1.0.1/NO_BLOCK_BLINK-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dmack/library/SPIFFSutils/1.1.2/SPIFFSutils-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SPIFFSutils-1.1.2.tar.gz",
+    "size_bytes": 2548,
+    "sha256": "240be8697b22f103ff96981e604b7ef2b91384d82212722a2cb3f39fb6de9821",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dmack/library/SPIFFSutils/1.1.2/SPIFFSutils-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dmack/library/SPIFFSutils/1.1.2/SPIFFSutils-1.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

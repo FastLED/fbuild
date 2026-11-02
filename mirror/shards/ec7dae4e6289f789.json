@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gi0rg0spapamichail",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gi0rg0spapamichail/library/YDLidar/3.0.0/YDLidar-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YDLidar-3.0.0.tar.gz",
+    "size_bytes": 12762,
+    "sha256": "2134848455e626799c11bf48efdeab37c881609fb91624992eeb13f0b797438d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gi0rg0spapamichail/library/YDLidar/3.0.0/YDLidar-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gi0rg0spapamichail/library/YDLidar/3.0.0/YDLidar-3.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

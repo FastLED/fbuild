@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gamegine",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gamegine/library/HCSR04%20ultrasonic%20sensor/2.0.3/HCSR04ultrasonicsensor-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HCSR04ultrasonicsensor-2.0.3.tar.gz",
+    "size_bytes": 538253,
+    "sha256": "e2ccb04d6771a6832f9529e77ba15dce77e1451dac515d1d8189664db1c55365",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gamegine/library/HCSR04%2520ultrasonic%2520sensor/2.0.3/HCSR04ultrasonicsensor-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/gamegine/library/HCSR04%20ultrasonic%20sensor/2.0.3/HCSR04ultrasonicsensor-2.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

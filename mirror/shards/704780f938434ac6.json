@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-glx",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-glx/library/RFD77402/0.0.0+sha.661414c07859/RFD77402-0.0.0+sha.661414c07859.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RFD77402-0.0.0+sha.661414c07859.tar.gz",
+    "size_bytes": 5723,
+    "sha256": "263d84dc01aa05426e2dae01ccdc80c245bde354133abba1b56f64530cb32b8d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-glx/library/RFD77402/0.0.0%2Bsha.661414c07859/RFD77402-0.0.0%2Bsha.661414c07859.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-glx/library/RFD77402/0.0.0%2Bsha.661414c07859/RFD77402-0.0.0%2Bsha.661414c07859.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-glx/library/TinyBitmap/0.0.0+sha.c558f38d07ca/TinyBitmap-0.0.0+sha.c558f38d07ca.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyBitmap-0.0.0+sha.c558f38d07ca.tar.gz",
+    "size_bytes": 5998,
+    "sha256": "15773207bd280ed0b09fc036b1c4dbbc695fd6c8a88200b79c74e38b2131efbc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-glx/library/TinyBitmap/0.0.0%2Bsha.c558f38d07ca/TinyBitmap-0.0.0%2Bsha.c558f38d07ca.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-glx/library/TinyBitmap/0.0.0%2Bsha.c558f38d07ca/TinyBitmap-0.0.0%2Bsha.c558f38d07ca.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/beelanmx",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "beelanmx/library/Beelan%20LoRaWAN/2.5.1/BeelanLoRaWAN-2.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BeelanLoRaWAN-2.5.1.tar.gz",
+    "size_bytes": 35365,
+    "sha256": "d46635edddb288843ab31e609368ca05229e456ed9b323d60cf874dbea24ea54",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beelanmx/library/Beelan%2520LoRaWAN/2.5.1/BeelanLoRaWAN-2.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/beelanmx/library/Beelan%20LoRaWAN/2.5.1/BeelanLoRaWAN-2.5.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

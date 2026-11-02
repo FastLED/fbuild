@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/vodacode",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "vodacode/library/PowMrInvertor/0.1.3/PowMrInvertor-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PowMrInvertor-0.1.3.tar.gz",
+    "size_bytes": 5768,
+    "sha256": "54eb633ab6a75c7a661fad6afbfd996f041e3f2b456cec7f4de2b21b8e0a6d13",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vodacode/library/PowMrInvertor/0.1.3/PowMrInvertor-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/vodacode/library/PowMrInvertor/0.1.3/PowMrInvertor-0.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vodacode/library/WebPortal/1.4.2/WebPortal-1.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WebPortal-1.4.2.tar.gz",
+    "size_bytes": 31066,
+    "sha256": "8d07ca66c40cb6750da7baee35521e335bc1c892cb980d4371356e250a7999bd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vodacode/library/WebPortal/1.4.2/WebPortal-1.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/vodacode/library/WebPortal/1.4.2/WebPortal-1.4.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

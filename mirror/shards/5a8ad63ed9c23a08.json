@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/arts37",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "arts37/library/SerialMenuCmd/1.1.2/SerialMenuCmd-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialMenuCmd-1.1.2.tar.gz",
+    "size_bytes": 19247,
+    "sha256": "17fc4311beb54a64c98d21c5e3804ed9702a37896e7d6a66b0284a969392d24b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arts37/library/SerialMenuCmd/1.1.2/SerialMenuCmd-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/arts37/library/SerialMenuCmd/1.1.2/SerialMenuCmd-1.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

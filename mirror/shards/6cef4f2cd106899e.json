@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-goeltanu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-goeltanu/library/HCSR-04/0.0.0+sha.45864bd4599b/HCSR-04-0.0.0+sha.45864bd4599b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HCSR-04-0.0.0+sha.45864bd4599b.tar.gz",
+    "size_bytes": 2439,
+    "sha256": "ad104f6b151c521fd085bcb5fc0f8a1c4f459973ca360c4eec4a48305f9ad4e1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-goeltanu/library/HCSR-04/0.0.0%2Bsha.45864bd4599b/HCSR-04-0.0.0%2Bsha.45864bd4599b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-goeltanu/library/HCSR-04/0.0.0%2Bsha.45864bd4599b/HCSR-04-0.0.0%2Bsha.45864bd4599b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-mirkow",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-mirkow/library/KITT/0.0.0+sha.e9ccfe9117f8/KITT-0.0.0+sha.e9ccfe9117f8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KITT-0.0.0+sha.e9ccfe9117f8.tar.gz",
+    "size_bytes": 1065,
+    "sha256": "2869924e0b950c167f2f41a3ba44c8ab3afdc44dac6a0de6cebd3724e4e40537",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mirkow/library/KITT/0.0.0%2Bsha.e9ccfe9117f8/KITT-0.0.0%2Bsha.e9ccfe9117f8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mirkow/library/KITT/0.0.0%2Bsha.e9ccfe9117f8/KITT-0.0.0%2Bsha.e9ccfe9117f8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

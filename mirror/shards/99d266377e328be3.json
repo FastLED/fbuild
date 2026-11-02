@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/softplus",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "softplus/library/GoogleFormPost/0.1.1/GoogleFormPost-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GoogleFormPost-0.1.1.tar.gz",
+    "size_bytes": 8740,
+    "sha256": "9e284298aee0adddd226eb1b1c69a089e71ffd1910ccbcfea6e3a69705a69e50",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/softplus/library/GoogleFormPost/0.1.1/GoogleFormPost-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/softplus/library/GoogleFormPost/0.1.1/GoogleFormPost-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

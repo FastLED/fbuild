@@ -1,0 +1,997 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/vovagorodok",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "vovagorodok/library/ArduinoBleBattery/0.1.0/ArduinoBleBattery-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBleBattery-0.1.0.tar.gz",
+    "size_bytes": 7646,
+    "sha256": "f25be194af35e7857904b7b9056ff92ae2c80d0fd1a0d3b4af1927fef2eea143",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoBleBattery/0.1.0/ArduinoBleBattery-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoBleBattery/0.1.0/ArduinoBleBattery-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoBleBattery/0.2.0/ArduinoBleBattery-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBleBattery-0.2.0.tar.gz",
+    "size_bytes": 7658,
+    "sha256": "d0e10ae11f7467f733149496a03bdb473809939b80726ba589345834971f516a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoBleBattery/0.2.0/ArduinoBleBattery-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoBleBattery/0.2.0/ArduinoBleBattery-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoBleBattery/1.0.0/ArduinoBleBattery-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBleBattery-1.0.0.tar.gz",
+    "size_bytes": 7674,
+    "sha256": "36a32da20a4f0cbc94303cf355accad5b72fa1380d559fa1c299e901d797f0b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoBleBattery/1.0.0/ArduinoBleBattery-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoBleBattery/1.0.0/ArduinoBleBattery-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoBleBattery/1.0.1/ArduinoBleBattery-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBleBattery-1.0.1.tar.gz",
+    "size_bytes": 8151,
+    "sha256": "97d82b44c49ccb9127dd532a2ff018b8f62e6f7bee8669fe9d36d935f8613723",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoBleBattery/1.0.1/ArduinoBleBattery-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoBleBattery/1.0.1/ArduinoBleBattery-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoBleBattery/1.0.2/ArduinoBleBattery-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBleBattery-1.0.2.tar.gz",
+    "size_bytes": 7807,
+    "sha256": "957f14167b305ea55f543c9150619a728aa1d32350c7daadbe37fc873013332d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoBleBattery/1.0.2/ArduinoBleBattery-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoBleBattery/1.0.2/ArduinoBleBattery-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoBleBattery/1.0.3/ArduinoBleBattery-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBleBattery-1.0.3.tar.gz",
+    "size_bytes": 8248,
+    "sha256": "9e7f9ef46f1a3d8abca433bd316f15308618ccc59cc69b7aaa366ff1ef553e82",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoBleBattery/1.0.3/ArduinoBleBattery-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoBleBattery/1.0.3/ArduinoBleBattery-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoBleBattery/1.0.4/ArduinoBleBattery-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBleBattery-1.0.4.tar.gz",
+    "size_bytes": 10936,
+    "sha256": "734bdb436cb84458f939a670616aaebb5512e039fe29e1b84ed4ec01487526a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoBleBattery/1.0.4/ArduinoBleBattery-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoBleBattery/1.0.4/ArduinoBleBattery-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoBleBattery/1.0.5/ArduinoBleBattery-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBleBattery-1.0.5.tar.gz",
+    "size_bytes": 10732,
+    "sha256": "a4fa1443ac4e742f63a9267dddbc0e60be3a764cd47d99c8cc16e1f6dd996e92",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoBleBattery/1.0.5/ArduinoBleBattery-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoBleBattery/1.0.5/ArduinoBleBattery-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoBleBattery/1.0.6/ArduinoBleBattery-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBleBattery-1.0.6.tar.gz",
+    "size_bytes": 10753,
+    "sha256": "ba873653970045d0e3be3967699e80876846b6409fc3e1568d68ee9af0698946",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoBleBattery/1.0.6/ArduinoBleBattery-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoBleBattery/1.0.6/ArduinoBleBattery-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoBleChess/0.5.0/ArduinoBleChess-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBleChess-0.5.0.tar.gz",
+    "size_bytes": 11946,
+    "sha256": "bdc028cae41a3575766bdb52c555d45a6e2265fce73945e272fcd68c9c81baaa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoBleChess/0.5.0/ArduinoBleChess-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoBleChess/0.5.0/ArduinoBleChess-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoBleChess/0.6.0/ArduinoBleChess-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBleChess-0.6.0.tar.gz",
+    "size_bytes": 13777,
+    "sha256": "a33a11464f88ebce6daf93a0b151157a81e917442ab6d8117c7505128597be98",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoBleChess/0.6.0/ArduinoBleChess-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoBleChess/0.6.0/ArduinoBleChess-0.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoBleChess/0.6.1/ArduinoBleChess-0.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBleChess-0.6.1.tar.gz",
+    "size_bytes": 13839,
+    "sha256": "d2a4320e0189578c74ccc79afe396fa0e4b3bbfceffbc09eb8eb06617017cd68",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoBleChess/0.6.1/ArduinoBleChess-0.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoBleChess/0.6.1/ArduinoBleChess-0.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoBleChess/0.6.2/ArduinoBleChess-0.6.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBleChess-0.6.2.tar.gz",
+    "size_bytes": 13862,
+    "sha256": "e818a6e500ab92249b32f2b24385697355b204b3559a36e8c7cb6acfb2fd2eb2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoBleChess/0.6.2/ArduinoBleChess-0.6.2.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoBleChess/0.6.2/ArduinoBleChess-0.6.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoBleChess/0.6.3/ArduinoBleChess-0.6.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBleChess-0.6.3.tar.gz",
+    "size_bytes": 13862,
+    "sha256": "35cb136fd501948f763ecd0b7c02435f16a5a916e2fac973b7c79fef2997278f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoBleChess/0.6.3/ArduinoBleChess-0.6.3.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoBleChess/0.6.3/ArduinoBleChess-0.6.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoBleChess/0.6.4/ArduinoBleChess-0.6.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBleChess-0.6.4.tar.gz",
+    "size_bytes": 14011,
+    "sha256": "92a46baf43f11a496d02a30a5905aa50c3fc78e84516a71e54e4efd2ae6820d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoBleChess/0.6.4/ArduinoBleChess-0.6.4.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoBleChess/0.6.4/ArduinoBleChess-0.6.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoBleChess/0.6.5/ArduinoBleChess-0.6.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBleChess-0.6.5.tar.gz",
+    "size_bytes": 14059,
+    "sha256": "315d4af948fe561c48712a685f0ce1395247ad0aa942afa3f383f2df3707b532",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoBleChess/0.6.5/ArduinoBleChess-0.6.5.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoBleChess/0.6.5/ArduinoBleChess-0.6.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoBleChess/0.7.0/ArduinoBleChess-0.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBleChess-0.7.0.tar.gz",
+    "size_bytes": 14057,
+    "sha256": "f6ba38dbcea7b62481b0c4fc9e416b572587093bd88576febdfa05be5840c8e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoBleChess/0.7.0/ArduinoBleChess-0.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoBleChess/0.7.0/ArduinoBleChess-0.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoBleChess/0.7.1/ArduinoBleChess-0.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBleChess-0.7.1.tar.gz",
+    "size_bytes": 14224,
+    "sha256": "20ab3ef015f54b4c89b7955bf9e5820e1ff261ecade8608bc281805a101dce46",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoBleChess/0.7.1/ArduinoBleChess-0.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoBleChess/0.7.1/ArduinoBleChess-0.7.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoBleChess/0.7.2/ArduinoBleChess-0.7.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBleChess-0.7.2.tar.gz",
+    "size_bytes": 14992,
+    "sha256": "78531f1782e1f0972bf456d70c7437175febf5935b4df7b56d45471508674c99",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoBleChess/0.7.2/ArduinoBleChess-0.7.2.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoBleChess/0.7.2/ArduinoBleChess-0.7.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoBleChess/0.7.3/ArduinoBleChess-0.7.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBleChess-0.7.3.tar.gz",
+    "size_bytes": 15045,
+    "sha256": "f316dc1847f1a837f3a6a38e4ade1e8c9dba6ca75a59e45a7ed6116ef5f3168a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoBleChess/0.7.3/ArduinoBleChess-0.7.3.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoBleChess/0.7.3/ArduinoBleChess-0.7.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoBleChess/0.7.4/ArduinoBleChess-0.7.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBleChess-0.7.4.tar.gz",
+    "size_bytes": 14534,
+    "sha256": "8017809ec424572c94ea19c44b6a3c4a87abcb430e638bd7390a2f25dc6e3c8e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoBleChess/0.7.4/ArduinoBleChess-0.7.4.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoBleChess/0.7.4/ArduinoBleChess-0.7.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoBleChess/0.7.5/ArduinoBleChess-0.7.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBleChess-0.7.5.tar.gz",
+    "size_bytes": 15171,
+    "sha256": "40ad69efe18cc5cb3329ce2a4289ef447b1afef8eeee0485632d724f3cb1e9b6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoBleChess/0.7.5/ArduinoBleChess-0.7.5.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoBleChess/0.7.5/ArduinoBleChess-0.7.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoBleChess/0.7.6/ArduinoBleChess-0.7.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBleChess-0.7.6.tar.gz",
+    "size_bytes": 15712,
+    "sha256": "3dcdd4dffec7802f9269fe3090c160b04f6aeac656c014a13d16b1142a1bde31",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoBleChess/0.7.6/ArduinoBleChess-0.7.6.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoBleChess/0.7.6/ArduinoBleChess-0.7.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoBleChess/0.7.7/ArduinoBleChess-0.7.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBleChess-0.7.7.tar.gz",
+    "size_bytes": 15756,
+    "sha256": "78484106f2a4757c58bdc706b91501322edbb5dc8f9ce6d1e2142d88e2c21af0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoBleChess/0.7.7/ArduinoBleChess-0.7.7.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoBleChess/0.7.7/ArduinoBleChess-0.7.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoBleChess/0.7.8/ArduinoBleChess-0.7.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBleChess-0.7.8.tar.gz",
+    "size_bytes": 18326,
+    "sha256": "e9391f5a416ad072d47f5989abaf711aebd414b390007be0772610c56bd457d9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoBleChess/0.7.8/ArduinoBleChess-0.7.8.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoBleChess/0.7.8/ArduinoBleChess-0.7.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoBleChess/0.7.9/ArduinoBleChess-0.7.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBleChess-0.7.9.tar.gz",
+    "size_bytes": 18098,
+    "sha256": "a0d0de8587914b149f1787081c644e1dd7ddfe6482b4dbfd47d1087c35c23a5e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoBleChess/0.7.9/ArduinoBleChess-0.7.9.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoBleChess/0.7.9/ArduinoBleChess-0.7.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoBleOTA/2.0.0/ArduinoBleOTA-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBleOTA-2.0.0.tar.gz",
+    "size_bytes": 29936,
+    "sha256": "41291ffc0e59e22368b853c15ae498d5133679383c0d2df6e9fc23197a491954",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoBleOTA/2.0.0/ArduinoBleOTA-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoBleOTA/2.0.0/ArduinoBleOTA-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoBleOTA/2.0.1/ArduinoBleOTA-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBleOTA-2.0.1.tar.gz",
+    "size_bytes": 30216,
+    "sha256": "b13c9b7d63e11171698c2b98802706dd5bea10d0ca3e1c9da9cdf83976da21af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoBleOTA/2.0.1/ArduinoBleOTA-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoBleOTA/2.0.1/ArduinoBleOTA-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoBleOTA/2.0.10/ArduinoBleOTA-2.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBleOTA-2.0.10.tar.gz",
+    "size_bytes": 34352,
+    "sha256": "561f1f1318fd6c99e1c37b5b8b128dd1f874930b2b2004ec3b81108bb1e1703f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoBleOTA/2.0.10/ArduinoBleOTA-2.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoBleOTA/2.0.10/ArduinoBleOTA-2.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoBleOTA/2.0.11/ArduinoBleOTA-2.0.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBleOTA-2.0.11.tar.gz",
+    "size_bytes": 34045,
+    "sha256": "1fe0db879cbfa6e73da8f4fe2e4ed2e1b051e1e5806f981076c24a0836097265",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoBleOTA/2.0.11/ArduinoBleOTA-2.0.11.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoBleOTA/2.0.11/ArduinoBleOTA-2.0.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoBleOTA/2.0.2/ArduinoBleOTA-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBleOTA-2.0.2.tar.gz",
+    "size_bytes": 30301,
+    "sha256": "a13c31b9247963f0bd672b6efb8a60428a5e726b1b4d0f382c49fb58ca692235",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoBleOTA/2.0.2/ArduinoBleOTA-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoBleOTA/2.0.2/ArduinoBleOTA-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoBleOTA/2.0.3/ArduinoBleOTA-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBleOTA-2.0.3.tar.gz",
+    "size_bytes": 30281,
+    "sha256": "30ad445e75c1fc5c539a439950b75817bdfb1c07c6776eca2709c814480248a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoBleOTA/2.0.3/ArduinoBleOTA-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoBleOTA/2.0.3/ArduinoBleOTA-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoBleOTA/2.0.4/ArduinoBleOTA-2.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBleOTA-2.0.4.tar.gz",
+    "size_bytes": 30381,
+    "sha256": "7c44e7e0be0c34a6b82c398024a92c4364f09a4c8bf29017b9ea5b8c5dee72da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoBleOTA/2.0.4/ArduinoBleOTA-2.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoBleOTA/2.0.4/ArduinoBleOTA-2.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoBleOTA/2.0.5/ArduinoBleOTA-2.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBleOTA-2.0.5.tar.gz",
+    "size_bytes": 30445,
+    "sha256": "275e40aaae134041e4b38dfa64d2ff16223ec298d2852c4c17606b402fb3700b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoBleOTA/2.0.5/ArduinoBleOTA-2.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoBleOTA/2.0.5/ArduinoBleOTA-2.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoBleOTA/2.0.6/ArduinoBleOTA-2.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBleOTA-2.0.6.tar.gz",
+    "size_bytes": 31350,
+    "sha256": "e5e7d53d09b54aaeffe7f713b00043922c7e3c0346407108a3818151e06cdd93",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoBleOTA/2.0.6/ArduinoBleOTA-2.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoBleOTA/2.0.6/ArduinoBleOTA-2.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoBleOTA/2.0.7/ArduinoBleOTA-2.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBleOTA-2.0.7.tar.gz",
+    "size_bytes": 30731,
+    "sha256": "c408dcafa2c08314729865b28108b2038dadd511a5c6a549db11d8329df6c9b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoBleOTA/2.0.7/ArduinoBleOTA-2.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoBleOTA/2.0.7/ArduinoBleOTA-2.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoBleOTA/2.0.8/ArduinoBleOTA-2.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBleOTA-2.0.8.tar.gz",
+    "size_bytes": 30778,
+    "sha256": "ca18a43ef7ad619e6ed91bbdb93e6a55957e585262c382d262cbdf081166254b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoBleOTA/2.0.8/ArduinoBleOTA-2.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoBleOTA/2.0.8/ArduinoBleOTA-2.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoBleOTA/2.0.9/ArduinoBleOTA-2.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBleOTA-2.0.9.tar.gz",
+    "size_bytes": 31394,
+    "sha256": "c5e8cce52edae523fca3c66cd0f07355a05ac02b625ea250bf98924a7a6e32b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoBleOTA/2.0.9/ArduinoBleOTA-2.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoBleOTA/2.0.9/ArduinoBleOTA-2.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoBleOTA/2.1.0/ArduinoBleOTA-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBleOTA-2.1.0.tar.gz",
+    "size_bytes": 33919,
+    "sha256": "dd3c4c52d491a11f61697d5cbf8349bb96895acc57ab220856d42797ada3df9b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoBleOTA/2.1.0/ArduinoBleOTA-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoBleOTA/2.1.0/ArduinoBleOTA-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoBleOTA/2.1.1/ArduinoBleOTA-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBleOTA-2.1.1.tar.gz",
+    "size_bytes": 33969,
+    "sha256": "6b6b38d663ff0d2cb7d35d0ba5c8061b6ac249e462ffc66a0442d89b5d9ff7f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoBleOTA/2.1.1/ArduinoBleOTA-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoBleOTA/2.1.1/ArduinoBleOTA-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoBleSerial/0.0.1/ArduinoBleSerial-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBleSerial-0.0.1.tar.gz",
+    "size_bytes": 9096,
+    "sha256": "fce0b3a139c801dc5956a09052b676306ac3985d0589a2ce08d874d3e7c71338",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoBleSerial/0.0.1/ArduinoBleSerial-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoBleSerial/0.0.1/ArduinoBleSerial-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoBleSerial/0.0.2/ArduinoBleSerial-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBleSerial-0.0.2.tar.gz",
+    "size_bytes": 9142,
+    "sha256": "c36af12b0a4c73d34ebb200fd3b9e57105c03b6177e0d7c5b1f3be1dc1903b01",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoBleSerial/0.0.2/ArduinoBleSerial-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoBleSerial/0.0.2/ArduinoBleSerial-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoBleSerial/0.0.3/ArduinoBleSerial-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBleSerial-0.0.3.tar.gz",
+    "size_bytes": 10089,
+    "sha256": "094461c42c8c37d223fa4cb876211abff12532a941d27a132db3fc060795ab4f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoBleSerial/0.0.3/ArduinoBleSerial-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoBleSerial/0.0.3/ArduinoBleSerial-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoBleSerial/0.0.4/ArduinoBleSerial-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBleSerial-0.0.4.tar.gz",
+    "size_bytes": 10066,
+    "sha256": "13635862ceb2c809b430bce922545b00addba4fa7664d48435837a24a372db76",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoBleSerial/0.0.4/ArduinoBleSerial-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoBleSerial/0.0.4/ArduinoBleSerial-0.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoBleSerial/0.0.5/ArduinoBleSerial-0.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBleSerial-0.0.5.tar.gz",
+    "size_bytes": 10109,
+    "sha256": "4f81c2b0c76e4664839953e97506fb87291f792c2c5563bc7b606a284bf1a249",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoBleSerial/0.0.5/ArduinoBleSerial-0.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoBleSerial/0.0.5/ArduinoBleSerial-0.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoBleSerial/1.0.0/ArduinoBleSerial-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBleSerial-1.0.0.tar.gz",
+    "size_bytes": 10117,
+    "sha256": "291f72293d8ea9ed4868c2c144a625941df29a3611a922b9e7712b0aad510ec8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoBleSerial/1.0.0/ArduinoBleSerial-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoBleSerial/1.0.0/ArduinoBleSerial-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoBleSerial/1.0.1/ArduinoBleSerial-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBleSerial-1.0.1.tar.gz",
+    "size_bytes": 12641,
+    "sha256": "5008f0f9422cf373230ace5f841ef497864070b1c4f2159533d6a4ada7ae7b43",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoBleSerial/1.0.1/ArduinoBleSerial-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoBleSerial/1.0.1/ArduinoBleSerial-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoBleSerial/1.0.2/ArduinoBleSerial-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBleSerial-1.0.2.tar.gz",
+    "size_bytes": 12575,
+    "sha256": "53369668152738e3be3a3a6a354108c83d1253c1af686d7d6a02ff6c1da4d055",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoBleSerial/1.0.2/ArduinoBleSerial-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoBleSerial/1.0.2/ArduinoBleSerial-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoBuzzer/1.0.0/ArduinoBuzzer-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBuzzer-1.0.0.tar.gz",
+    "size_bytes": 3907,
+    "sha256": "c3ea0bc523a5929ba5291b4ed69a0da00dff12ae38dddd4140e763204ebc2a04",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoBuzzer/1.0.0/ArduinoBuzzer-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoBuzzer/1.0.0/ArduinoBuzzer-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoBuzzer/1.0.1/ArduinoBuzzer-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBuzzer-1.0.1.tar.gz",
+    "size_bytes": 3852,
+    "sha256": "ff0fb337ef6240ca5bc2539c2a9ceebd7c6a9de00df41d68fbf4f4afc21d8d57",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoBuzzer/1.0.1/ArduinoBuzzer-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoBuzzer/1.0.1/ArduinoBuzzer-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoBuzzer/1.0.2/ArduinoBuzzer-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBuzzer-1.0.2.tar.gz",
+    "size_bytes": 3927,
+    "sha256": "9ff4df8e46a00ba72b8c69510b53b0098cfde1ae52964d362a8f9214873c3221",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoBuzzer/1.0.2/ArduinoBuzzer-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoBuzzer/1.0.2/ArduinoBuzzer-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoBuzzer/1.0.3/ArduinoBuzzer-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBuzzer-1.0.3.tar.gz",
+    "size_bytes": 6553,
+    "sha256": "afe38d06c2897aefc2d88787a4606156a9a31bcfa3040876fe9fe33f786e5acd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoBuzzer/1.0.3/ArduinoBuzzer-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoBuzzer/1.0.3/ArduinoBuzzer-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoBuzzer/1.0.4/ArduinoBuzzer-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBuzzer-1.0.4.tar.gz",
+    "size_bytes": 6636,
+    "sha256": "3794bacb579de8624ace780ac59d2887bc5f302e465732594e71bcd503d0569e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoBuzzer/1.0.4/ArduinoBuzzer-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoBuzzer/1.0.4/ArduinoBuzzer-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoPin/1.1.1/ArduinoPin-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoPin-1.1.1.tar.gz",
+    "size_bytes": 3956,
+    "sha256": "8156e1d1f0042c5a034b0bbf7fb0e468212727301d6b8ffb09f0e2c027bd7f92",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoPin/1.1.1/ArduinoPin-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoPin/1.1.1/ArduinoPin-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoPin/1.1.2/ArduinoPin-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoPin-1.1.2.tar.gz",
+    "size_bytes": 3946,
+    "sha256": "3352d7e6f3a065056b3ae10a8f208cd3b68a42c870b7c21b1958541c4b542a3c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoPin/1.1.2/ArduinoPin-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoPin/1.1.2/ArduinoPin-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoPin/1.2.0/ArduinoPin-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoPin-1.2.0.tar.gz",
+    "size_bytes": 3992,
+    "sha256": "8cbc992fe0d891348251dcdde3859a7ab8f6b75e3546c50fe6ebf4ee2b8e7f67",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoPin/1.2.0/ArduinoPin-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoPin/1.2.0/ArduinoPin-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoPin/1.2.1/ArduinoPin-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoPin-1.2.1.tar.gz",
+    "size_bytes": 4005,
+    "sha256": "2e61b6ccb6ec29ad2435094d834e62a58ad91b0bbab5602bfe8734476bb3f41f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoPin/1.2.1/ArduinoPin-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoPin/1.2.1/ArduinoPin-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoPin/1.2.2/ArduinoPin-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoPin-1.2.2.tar.gz",
+    "size_bytes": 4080,
+    "sha256": "daaab491411e5dde2445dc1023cbbe39164ff5550ef17041e9401f93f007e7ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoPin/1.2.2/ArduinoPin-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoPin/1.2.2/ArduinoPin-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoPin/1.2.3/ArduinoPin-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoPin-1.2.3.tar.gz",
+    "size_bytes": 6794,
+    "sha256": "69a4c8ee25f8948acbb357b11e55d61718cae528b2818195cbe5c03c84811155",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoPin/1.2.3/ArduinoPin-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoPin/1.2.3/ArduinoPin-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoStreamLogger/1.1.10/ArduinoStreamLogger-1.1.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoStreamLogger-1.1.10.tar.gz",
+    "size_bytes": 11796,
+    "sha256": "84252670596e9f3bb591250db1a2969c38092b5db1bd19726b73fc99a632c249",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoStreamLogger/1.1.10/ArduinoStreamLogger-1.1.10.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoStreamLogger/1.1.10/ArduinoStreamLogger-1.1.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoStreamLogger/1.2.0/ArduinoStreamLogger-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoStreamLogger-1.2.0.tar.gz",
+    "size_bytes": 12581,
+    "sha256": "c05018eb248126d46efdfb71e6f1cdac881b8ecf9f50b0ace762d6b2692466a6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoStreamLogger/1.2.0/ArduinoStreamLogger-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoStreamLogger/1.2.0/ArduinoStreamLogger-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoStreamLogger/1.2.1/ArduinoStreamLogger-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoStreamLogger-1.2.1.tar.gz",
+    "size_bytes": 12601,
+    "sha256": "14b85ace50e8acdc903c573db945883b90b391065a3a3486505abb32f1ac5da8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoStreamLogger/1.2.1/ArduinoStreamLogger-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoStreamLogger/1.2.1/ArduinoStreamLogger-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoStreamLogger/1.2.2/ArduinoStreamLogger-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoStreamLogger-1.2.2.tar.gz",
+    "size_bytes": 14781,
+    "sha256": "2e11532aa919858eb6de6338e68d7a97cd7903b6a6be5ff15e9460e31c63588b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoStreamLogger/1.2.2/ArduinoStreamLogger-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoStreamLogger/1.2.2/ArduinoStreamLogger-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoStreamLogger/1.2.3/ArduinoStreamLogger-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoStreamLogger-1.2.3.tar.gz",
+    "size_bytes": 14853,
+    "sha256": "0df8a0fe8ad9fe969a57b6e07cacf018086bece731d86312e0da4459ac4bb1d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoStreamLogger/1.2.3/ArduinoStreamLogger-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoStreamLogger/1.2.3/ArduinoStreamLogger-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoStreamLogger/1.2.4/ArduinoStreamLogger-1.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoStreamLogger-1.2.4.tar.gz",
+    "size_bytes": 14847,
+    "sha256": "8eb8f5e2bae5ff302048007ae4f97191e28fd1abc2203c51e318b2890e37d6b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoStreamLogger/1.2.4/ArduinoStreamLogger-1.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoStreamLogger/1.2.4/ArduinoStreamLogger-1.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoStreamLogger/1.3.0/ArduinoStreamLogger-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoStreamLogger-1.3.0.tar.gz",
+    "size_bytes": 15231,
+    "sha256": "5137c59818761987ab2a9244c8b1e26bf78bf608edef804d86f2e1914baf32c9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoStreamLogger/1.3.0/ArduinoStreamLogger-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoStreamLogger/1.3.0/ArduinoStreamLogger-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoStreamLogger/1.3.1/ArduinoStreamLogger-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoStreamLogger-1.3.1.tar.gz",
+    "size_bytes": 15248,
+    "sha256": "4003831aabed5c1dc8fb868c31fd9d1374d7eecbf33a4b1c593d7105cbe29cd4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoStreamLogger/1.3.1/ArduinoStreamLogger-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoStreamLogger/1.3.1/ArduinoStreamLogger-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoStreamLogger/1.3.2/ArduinoStreamLogger-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoStreamLogger-1.3.2.tar.gz",
+    "size_bytes": 15261,
+    "sha256": "5d9673ed6f52b1389bfeb0d4f593a7eecdc7c197c7f6fa4514bb244e046e312b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoStreamLogger/1.3.2/ArduinoStreamLogger-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoStreamLogger/1.3.2/ArduinoStreamLogger-1.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArduinoStreamLogger/1.3.3/ArduinoStreamLogger-1.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoStreamLogger-1.3.3.tar.gz",
+    "size_bytes": 17627,
+    "sha256": "5b402e89ae2a9ff80059cb55df596c37bb8e975cff3c23030b79ad6c4ae5a019",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArduinoStreamLogger/1.3.3/ArduinoStreamLogger-1.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArduinoStreamLogger/1.3.3/ArduinoStreamLogger-1.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArrayUtils/1.3.10/ArrayUtils-1.3.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArrayUtils-1.3.10.tar.gz",
+    "size_bytes": 7891,
+    "sha256": "c204d0f5d6176f17ab364f0c8c252c98054a83e0ae98da65ae5b1f88ede84ec6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArrayUtils/1.3.10/ArrayUtils-1.3.10.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArrayUtils/1.3.10/ArrayUtils-1.3.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArrayUtils/1.3.7/ArrayUtils-1.3.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArrayUtils-1.3.7.tar.gz",
+    "size_bytes": 5057,
+    "sha256": "ecaa33fa63603e8abd83a5641be82b1bf6d4c44d9337dd18d5a927bf5245dd41",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArrayUtils/1.3.7/ArrayUtils-1.3.7.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArrayUtils/1.3.7/ArrayUtils-1.3.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArrayUtils/1.3.8/ArrayUtils-1.3.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArrayUtils-1.3.8.tar.gz",
+    "size_bytes": 5127,
+    "sha256": "5d632f95f5b04c187ff2f08ade42112661636257cc6f8b6d78acc07302deaae1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArrayUtils/1.3.8/ArrayUtils-1.3.8.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArrayUtils/1.3.8/ArrayUtils-1.3.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/ArrayUtils/1.3.9/ArrayUtils-1.3.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArrayUtils-1.3.9.tar.gz",
+    "size_bytes": 5152,
+    "sha256": "8989d9a9a2492ecaea50cc9308721c8e4405129df4ee07b8024de11a6212f667",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/ArrayUtils/1.3.9/ArrayUtils-1.3.9.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/ArrayUtils/1.3.9/ArrayUtils-1.3.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/PicChess/0.9.1/PicChess-0.9.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PicChess-0.9.1.tar.gz",
+    "size_bytes": 27271,
+    "sha256": "8d874c17dea461f4dc6f289a4bc575335c2e0a7ee5bc60e43db768b1931a99b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/PicChess/0.9.1/PicChess-0.9.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/PicChess/0.9.1/PicChess-0.9.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/PicChess/0.9.2/PicChess-0.9.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PicChess-0.9.2.tar.gz",
+    "size_bytes": 29926,
+    "sha256": "11f87cd57d0827adc5e5e5550fc7d7a4ff1e46f8affe88376ab001a7e56f2708",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/PicChess/0.9.2/PicChess-0.9.2.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/PicChess/0.9.2/PicChess-0.9.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vovagorodok/library/Servo/1.0.1/Servo-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Servo-1.0.1.tar.gz",
+    "size_bytes": 5553,
+    "sha256": "e15b4223d7e297e39a8c45a6b8d325c0ac6ae738eb7598b1f6135b8c020316ba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vovagorodok/library/Servo/1.0.1/Servo-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vovagorodok/library/Servo/1.0.1/Servo-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

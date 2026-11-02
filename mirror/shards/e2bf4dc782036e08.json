@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/wearyhacker",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "wearyhacker/library/json2asw/1.0.3/json2asw-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "json2asw-1.0.3.tar.gz",
+    "size_bytes": 14796,
+    "sha256": "d74a8a760f25b1d858383e0a21e4c12929251b0c79540ee21eeb70afa7d6b801",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wearyhacker/library/json2asw/1.0.3/json2asw-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/wearyhacker/library/json2asw/1.0.3/json2asw-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

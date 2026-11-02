@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/baspaap",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "baspaap/library/Bas.Button/1.2.0/Bas.Button-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bas.Button-1.2.0.tar.gz",
+    "size_bytes": 4209,
+    "sha256": "03611d128fb89d954335411f44f65a6a04ba111cf147db0f865b204b89e75a6b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/baspaap/library/Bas.Button/1.2.0/Bas.Button-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/baspaap/library/Bas.Button/1.2.0/Bas.Button-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "baspaap/library/Bas.CallbackCaller/1.1.0/Bas.CallbackCaller-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bas.CallbackCaller-1.1.0.tar.gz",
+    "size_bytes": 3602,
+    "sha256": "d04504e4014bb7ef9f0da874a7bcf37d4acb4a97c5bd6a73e9d280a774265b76",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/baspaap/library/Bas.CallbackCaller/1.1.0/Bas.CallbackCaller-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/baspaap/library/Bas.CallbackCaller/1.1.0/Bas.CallbackCaller-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "baspaap/library/Bas.SinglePinDevice/1.0.0/Bas.SinglePinDevice-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bas.SinglePinDevice-1.0.0.tar.gz",
+    "size_bytes": 5577,
+    "sha256": "8a865f2f83a4acc42dab2e6bab35cf2fd8d8751859aa8556641aae5e39d38085",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/baspaap/library/Bas.SinglePinDevice/1.0.0/Bas.SinglePinDevice-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/baspaap/library/Bas.SinglePinDevice/1.0.0/Bas.SinglePinDevice-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

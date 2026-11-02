@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/p3p",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "p3p/library/U8glib-ARM/1.18.1/U8glib-ARM-1.18.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "U8glib-ARM-1.18.1.tar.gz",
+    "size_bytes": 859162,
+    "sha256": "f05d7ca972fcc76591ae53d8ccbb6e2a4b8076e973d4f195e10533d1a90d9769",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/p3p/library/U8glib-ARM/1.18.1/U8glib-ARM-1.18.1.tar.gz",
+     "https://dl.registry.platformio.org/download/p3p/library/U8glib-ARM/1.18.1/U8glib-ARM-1.18.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "p3p/tool/framework-arduino-lpc176x/0.2.9/framework-arduino-lpc176x-0.2.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "framework-arduino-lpc176x-0.2.9.tar.gz",
+    "size_bytes": 1035230,
+    "sha256": "8de582387caf6e0f798277528d4058ce4d0afe155152d6e2bfe7ce3fa6230ea9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/p3p/tool/framework-arduino-lpc176x/0.2.9/framework-arduino-lpc176x-0.2.9.tar.gz",
+     "https://dl.registry.platformio.org/download/p3p/tool/framework-arduino-lpc176x/0.2.9/framework-arduino-lpc176x-0.2.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

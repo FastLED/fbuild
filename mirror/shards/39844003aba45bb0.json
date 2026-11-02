@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hunsalz",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hunsalz/library/log4Esp/1.0.2/log4Esp-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "log4Esp-1.0.2.tar.gz",
+    "size_bytes": 10655,
+    "sha256": "5dfa2686d677344d56f5038f59a5527529918ff58c1391e1c1b4e2f6a7749068",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hunsalz/library/log4Esp/1.0.2/log4Esp-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/hunsalz/library/log4Esp/1.0.2/log4Esp-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

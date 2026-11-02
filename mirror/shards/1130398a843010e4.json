@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ismailcanernaz",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ismailcanernaz/library/Radio_GemTek/1.0.0/Radio_GemTek-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Radio_GemTek-1.0.0.tar.gz",
+    "size_bytes": 5684,
+    "sha256": "13234d2cdbc71d3fdb5a88d96552fa3f10ac866a93ecfdf7f74e76b328eee7b4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ismailcanernaz/library/Radio_GemTek/1.0.0/Radio_GemTek-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ismailcanernaz/library/Radio_GemTek/1.0.0/Radio_GemTek-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ismailcanernaz/library/TDQ6A/0.9.0/TDQ6A-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TDQ6A-0.9.0.tar.gz",
+    "size_bytes": 17481,
+    "sha256": "94f4cea8f4be7605f1a077d3c45cdbfb73f30f4e40bd7c67481da310ae647d6c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ismailcanernaz/library/TDQ6A/0.9.0/TDQ6A-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ismailcanernaz/library/TDQ6A/0.9.0/TDQ6A-0.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ismailcanernaz/library/TM1637binaryLed/1.0.0/TM1637binaryLed-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TM1637binaryLed-1.0.0.tar.gz",
+    "size_bytes": 14786,
+    "sha256": "8316a925da6f40c3b1920377dcd78fca674df8cb44e6be5fc80346d22207a07d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ismailcanernaz/library/TM1637binaryLed/1.0.0/TM1637binaryLed-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ismailcanernaz/library/TM1637binaryLed/1.0.0/TM1637binaryLed-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

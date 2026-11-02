@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-rahulsitaram",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-rahulsitaram/library/Arduino/0.0.0+sha.d0b32a4209f0/Arduino-0.0.0+sha.d0b32a4209f0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino-0.0.0+sha.d0b32a4209f0.tar.gz",
+    "size_bytes": 3259,
+    "sha256": "728bb9f768d08bb058737af7958101f8a32b73a2093699ca9dd16130c0411e10",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rahulsitaram/library/Arduino/0.0.0%2Bsha.d0b32a4209f0/Arduino-0.0.0%2Bsha.d0b32a4209f0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rahulsitaram/library/Arduino/0.0.0%2Bsha.d0b32a4209f0/Arduino-0.0.0%2Bsha.d0b32a4209f0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

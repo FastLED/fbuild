@@ -1,0 +1,568 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dunknowcoding",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dunknowcoding/library/DiFinders/0.1.0/DiFinders-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DiFinders-0.1.0.tar.gz",
+    "size_bytes": 87149,
+    "sha256": "a871c8d29b67eb429c71e810d9d393ad3dcd76ac4fdaeed230eb5e8d7f2655c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dunknowcoding/library/DiFinders/0.1.0/DiFinders-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dunknowcoding/library/DiFinders/0.1.0/DiFinders-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dunknowcoding/library/DiFinders/0.1.1/DiFinders-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DiFinders-0.1.1.tar.gz",
+    "size_bytes": 88302,
+    "sha256": "9b10272c70305f05d4c7e640e8e2d77a3201149c7e4ec161516ef585aea4d2c4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dunknowcoding/library/DiFinders/0.1.1/DiFinders-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dunknowcoding/library/DiFinders/0.1.1/DiFinders-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dunknowcoding/library/DiFinders/0.1.2/DiFinders-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DiFinders-0.1.2.tar.gz",
+    "size_bytes": 88298,
+    "sha256": "efe342c8b28faea9753365fe116af0f87af4235cb1b8f1700250b568b0042bb0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dunknowcoding/library/DiFinders/0.1.2/DiFinders-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dunknowcoding/library/DiFinders/0.1.2/DiFinders-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dunknowcoding/library/INA%20Series%20Sensor/0.2.1/INASeriesSensor-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "INASeriesSensor-0.2.1.tar.gz",
+    "size_bytes": 14458,
+    "sha256": "094a96d835f74a44e118fc1c8f35fa6183303e2239da6b95100ec1fc85e5e36b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dunknowcoding/library/INA%2520Series%2520Sensor/0.2.1/INASeriesSensor-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dunknowcoding/library/INA%20Series%20Sensor/0.2.1/INASeriesSensor-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dunknowcoding/library/INA%20Series%20Sensor/0.2.5/INASeriesSensor-0.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "INASeriesSensor-0.2.5.tar.gz",
+    "size_bytes": 16952,
+    "sha256": "e3715fd543555217d63278d699d274caf6ae386e4733a4302935da5ea807df2c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dunknowcoding/library/INA%2520Series%2520Sensor/0.2.5/INASeriesSensor-0.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/dunknowcoding/library/INA%20Series%20Sensor/0.2.5/INASeriesSensor-0.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dunknowcoding/library/INA%20Series%20Sensor/0.5.0/INASeriesSensor-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "INASeriesSensor-0.5.0.tar.gz",
+    "size_bytes": 47902,
+    "sha256": "bbfd7bc753fe066c84b98383b5f3f3f6ca8a3cb5b7eeaf96576a4064084ef374",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dunknowcoding/library/INA%2520Series%2520Sensor/0.5.0/INASeriesSensor-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dunknowcoding/library/INA%20Series%20Sensor/0.5.0/INASeriesSensor-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dunknowcoding/library/INA%20Series%20Sensor/0.5.2/INASeriesSensor-0.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "INASeriesSensor-0.5.2.tar.gz",
+    "size_bytes": 48116,
+    "sha256": "0a10977044e36d04aaa0be894c58ea4e48253b26703846fef24343edcbc5ed29",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dunknowcoding/library/INA%2520Series%2520Sensor/0.5.2/INASeriesSensor-0.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dunknowcoding/library/INA%20Series%20Sensor/0.5.2/INASeriesSensor-0.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dunknowcoding/library/INA%20Series%20Sensor/0.5.3/INASeriesSensor-0.5.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "INASeriesSensor-0.5.3.tar.gz",
+    "size_bytes": 48340,
+    "sha256": "4c93e2c0e7196f3acc36b92120d622c57b03f7f5cf1745d0c93073c012f30779",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dunknowcoding/library/INA%2520Series%2520Sensor/0.5.3/INASeriesSensor-0.5.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dunknowcoding/library/INA%20Series%20Sensor/0.5.3/INASeriesSensor-0.5.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dunknowcoding/library/INA%20Series%20Sensor/0.5.4/INASeriesSensor-0.5.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "INASeriesSensor-0.5.4.tar.gz",
+    "size_bytes": 49658,
+    "sha256": "24b108607a0deae19380f1236aa23d4adaf1fae3a73ebe9f936d347442a0528b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dunknowcoding/library/INA%2520Series%2520Sensor/0.5.4/INASeriesSensor-0.5.4.tar.gz",
+     "https://dl.registry.platformio.org/download/dunknowcoding/library/INA%20Series%20Sensor/0.5.4/INASeriesSensor-0.5.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dunknowcoding/library/NiusAudio/0.3.1/NiusAudio-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NiusAudio-0.3.1.tar.gz",
+    "size_bytes": 49613,
+    "sha256": "c7cd261281fa6682686d85b84d8f83c27f648369f3156e0563c8ded8bb748763",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dunknowcoding/library/NiusAudio/0.3.1/NiusAudio-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dunknowcoding/library/NiusAudio/0.3.1/NiusAudio-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dunknowcoding/library/NiusAudio/0.3.2/NiusAudio-0.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NiusAudio-0.3.2.tar.gz",
+    "size_bytes": 49948,
+    "sha256": "77e41d359c5fdef5bcfc1b8f6958faaf1b28f0df82957ae0691597f25c93c735",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dunknowcoding/library/NiusAudio/0.3.2/NiusAudio-0.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dunknowcoding/library/NiusAudio/0.3.2/NiusAudio-0.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dunknowcoding/library/NiusAudio/0.3.3/NiusAudio-0.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NiusAudio-0.3.3.tar.gz",
+    "size_bytes": 50706,
+    "sha256": "47d6687c6f94ab6ddaee6fce4b4fe4e80b2cf34366c8ecc7ac8d5c07ec3ada18",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dunknowcoding/library/NiusAudio/0.3.3/NiusAudio-0.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dunknowcoding/library/NiusAudio/0.3.3/NiusAudio-0.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dunknowcoding/library/NiusBus/0.1.0/NiusBus-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NiusBus-0.1.0.tar.gz",
+    "size_bytes": 130657,
+    "sha256": "ade34b8c3673587c64ac844da1b99bafd28876318dbd18154ba9c75fa9284930",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dunknowcoding/library/NiusBus/0.1.0/NiusBus-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dunknowcoding/library/NiusBus/0.1.0/NiusBus-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dunknowcoding/library/NiusBus/0.2.0/NiusBus-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NiusBus-0.2.0.tar.gz",
+    "size_bytes": 137701,
+    "sha256": "629a1964b6839c3ac6ab02551ccdab5261b8852f59b3563568e5dbdd2de8b51e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dunknowcoding/library/NiusBus/0.2.0/NiusBus-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dunknowcoding/library/NiusBus/0.2.0/NiusBus-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dunknowcoding/library/NiusCam/0.1.0/NiusCam-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NiusCam-0.1.0.tar.gz",
+    "size_bytes": 22839,
+    "sha256": "d6def9d4723e578c7f437cb34803c83d6f331461574987ce460c25a468fe295a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dunknowcoding/library/NiusCam/0.1.0/NiusCam-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dunknowcoding/library/NiusCam/0.1.0/NiusCam-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dunknowcoding/library/NiusCrypto/0.3.1/NiusCrypto-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NiusCrypto-0.3.1.tar.gz",
+    "size_bytes": 35646,
+    "sha256": "b1451325f8e9443bfb126eda6a39e19ac435de3ff81cfbce7beeea58a846bbe6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dunknowcoding/library/NiusCrypto/0.3.1/NiusCrypto-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dunknowcoding/library/NiusCrypto/0.3.1/NiusCrypto-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dunknowcoding/library/NiusIMU/0.2.1/NiusIMU-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NiusIMU-0.2.1.tar.gz",
+    "size_bytes": 40585,
+    "sha256": "7767bc8aba6df98cc913a62219b9baa5ca2a221d1b8a80abcb0540f8fb0f7244",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dunknowcoding/library/NiusIMU/0.2.1/NiusIMU-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dunknowcoding/library/NiusIMU/0.2.1/NiusIMU-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dunknowcoding/library/NiusIMU/0.3.0/NiusIMU-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NiusIMU-0.3.0.tar.gz",
+    "size_bytes": 183597,
+    "sha256": "6b6f329f84dab74688346924be0e36a47a4a4bb9f36994666ed35c680f8c6d0a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dunknowcoding/library/NiusIMU/0.3.0/NiusIMU-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dunknowcoding/library/NiusIMU/0.3.0/NiusIMU-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dunknowcoding/library/NiusIMU/0.4.0/NiusIMU-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NiusIMU-0.4.0.tar.gz",
+    "size_bytes": 185469,
+    "sha256": "5aa8dfc0e6ee0247683cabc4afa7f1ee61e58cc239a7040b255ea76716133bbc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dunknowcoding/library/NiusIMU/0.4.0/NiusIMU-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dunknowcoding/library/NiusIMU/0.4.0/NiusIMU-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dunknowcoding/library/NiusIMU/0.4.1/NiusIMU-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NiusIMU-0.4.1.tar.gz",
+    "size_bytes": 185644,
+    "sha256": "0ac388bef65f5937b80bdb9bec92691b2acfcbc7a01abe9e676cb7bfe0f305fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dunknowcoding/library/NiusIMU/0.4.1/NiusIMU-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dunknowcoding/library/NiusIMU/0.4.1/NiusIMU-0.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dunknowcoding/library/NiusThread/0.1.1/NiusThread-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NiusThread-0.1.1.tar.gz",
+    "size_bytes": 3238217,
+    "sha256": "e49a9fa7d6cf75f0bdb0bbbf388794e98bee580c93bd3c6669c22ad24b71e3eb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dunknowcoding/library/NiusThread/0.1.1/NiusThread-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dunknowcoding/library/NiusThread/0.1.1/NiusThread-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dunknowcoding/library/NiusWireless/0.1.0/NiusWireless-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NiusWireless-0.1.0.tar.gz",
+    "size_bytes": 59940,
+    "sha256": "bfbc6da26ad37a6a61ee715bd96a6c45568b6ea0faf71a2fa46a455446d07d14",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dunknowcoding/library/NiusWireless/0.1.0/NiusWireless-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dunknowcoding/library/NiusWireless/0.1.0/NiusWireless-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dunknowcoding/library/NiusWireless/0.2.0/NiusWireless-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NiusWireless-0.2.0.tar.gz",
+    "size_bytes": 83640,
+    "sha256": "7d6bd54e5a7d72d617fabf107ef67717facbed047f55cd57f38116a6572a513e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dunknowcoding/library/NiusWireless/0.2.0/NiusWireless-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dunknowcoding/library/NiusWireless/0.2.0/NiusWireless-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dunknowcoding/library/NiusWireless/0.2.1/NiusWireless-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NiusWireless-0.2.1.tar.gz",
+    "size_bytes": 83893,
+    "sha256": "e03a6cbe15dcc938f16f745c8b0ff39670fefc009917a1c61bad037a6652a2bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dunknowcoding/library/NiusWireless/0.2.1/NiusWireless-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dunknowcoding/library/NiusWireless/0.2.1/NiusWireless-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dunknowcoding/library/NiusWireless/0.3.0/NiusWireless-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NiusWireless-0.3.0.tar.gz",
+    "size_bytes": 85208,
+    "sha256": "485ef7410610f2e25d83dcce63988e004070343194bd0e9f9ba6b77cc5c9ee24",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dunknowcoding/library/NiusWireless/0.3.0/NiusWireless-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dunknowcoding/library/NiusWireless/0.3.0/NiusWireless-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dunknowcoding/library/NiusWireless/0.4.0/NiusWireless-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NiusWireless-0.4.0.tar.gz",
+    "size_bytes": 87186,
+    "sha256": "3634f30b7b3509128fd90213f294a3c010c4478d23a0cba28c2a3ac2edc0c466",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dunknowcoding/library/NiusWireless/0.4.0/NiusWireless-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dunknowcoding/library/NiusWireless/0.4.0/NiusWireless-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dunknowcoding/library/NiusZigbee/0.1.2/NiusZigbee-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NiusZigbee-0.1.2.tar.gz",
+    "size_bytes": 15690,
+    "sha256": "eb5a80e3eed19a7b1729b693f435f3461d863d1533e61c1479293a4c23bdbf07",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dunknowcoding/library/NiusZigbee/0.1.2/NiusZigbee-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dunknowcoding/library/NiusZigbee/0.1.2/NiusZigbee-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dunknowcoding/library/NiusZigbee/0.10.0/NiusZigbee-0.10.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NiusZigbee-0.10.0.tar.gz",
+    "size_bytes": 210449,
+    "sha256": "9495ef7747de01bb34899ce4a3ecc45cfed9ab833ed7bbcb8c803d3e44caa89d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dunknowcoding/library/NiusZigbee/0.10.0/NiusZigbee-0.10.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dunknowcoding/library/NiusZigbee/0.10.0/NiusZigbee-0.10.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dunknowcoding/library/NiusZigbee/0.7.1/NiusZigbee-0.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NiusZigbee-0.7.1.tar.gz",
+    "size_bytes": 175656,
+    "sha256": "671587bbda6ecdf51aca95ac0c93a87d4700be872c086eb758a7efd58b8a17be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dunknowcoding/library/NiusZigbee/0.7.1/NiusZigbee-0.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dunknowcoding/library/NiusZigbee/0.7.1/NiusZigbee-0.7.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dunknowcoding/library/NiusZigbee/0.7.9/NiusZigbee-0.7.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NiusZigbee-0.7.9.tar.gz",
+    "size_bytes": 185033,
+    "sha256": "a3070fa83aaa1421f7fff4b24369bd19366b939542d8c10ef06810502506aab3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dunknowcoding/library/NiusZigbee/0.7.9/NiusZigbee-0.7.9.tar.gz",
+     "https://dl.registry.platformio.org/download/dunknowcoding/library/NiusZigbee/0.7.9/NiusZigbee-0.7.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dunknowcoding/library/NiusZigbee/0.8.0/NiusZigbee-0.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NiusZigbee-0.8.0.tar.gz",
+    "size_bytes": 198522,
+    "sha256": "af90862a9d472620492603658f79d147555080e9ce817aa1217f0ef2b44cdf12",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dunknowcoding/library/NiusZigbee/0.8.0/NiusZigbee-0.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dunknowcoding/library/NiusZigbee/0.8.0/NiusZigbee-0.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dunknowcoding/library/NiusZigbee/0.9.0/NiusZigbee-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NiusZigbee-0.9.0.tar.gz",
+    "size_bytes": 201676,
+    "sha256": "75f9d26db3e0a226d2c76987b84f328d1f72c98983e9baced4bc6a980e969882",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dunknowcoding/library/NiusZigbee/0.9.0/NiusZigbee-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dunknowcoding/library/NiusZigbee/0.9.0/NiusZigbee-0.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dunknowcoding/library/NiusZigbee/1.0.0/NiusZigbee-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NiusZigbee-1.0.0.tar.gz",
+    "size_bytes": 212411,
+    "sha256": "e5bb95d0f1504c1c2b01d85b17cc6cade5b88a6f1cf5142550f165edd748fa70",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dunknowcoding/library/NiusZigbee/1.0.0/NiusZigbee-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dunknowcoding/library/NiusZigbee/1.0.0/NiusZigbee-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dunknowcoding/library/NiusZigbee/1.0.1/NiusZigbee-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NiusZigbee-1.0.1.tar.gz",
+    "size_bytes": 222797,
+    "sha256": "cb60c1503c109bb650b6dbf30314d3203046e641d04316336dde57082f951abb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dunknowcoding/library/NiusZigbee/1.0.1/NiusZigbee-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dunknowcoding/library/NiusZigbee/1.0.1/NiusZigbee-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dunknowcoding/library/NobroRTOS-Core/1.0.0/NobroRTOS-Core-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NobroRTOS-Core-1.0.0.tar.gz",
+    "size_bytes": 41095,
+    "sha256": "30d56e3f20a48caa804ff3c55bc7da46d6064a74d49dcd5940b34697378ee969",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dunknowcoding/library/NobroRTOS-Core/1.0.0/NobroRTOS-Core-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dunknowcoding/library/NobroRTOS-Core/1.0.0/NobroRTOS-Core-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dunknowcoding/library/NobroRTOS-Core/1.0.1/NobroRTOS-Core-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NobroRTOS-Core-1.0.1.tar.gz",
+    "size_bytes": 60822,
+    "sha256": "6c1b1a8fc5ca7feee87fc598f7ddb8ece75d85e5406a657ddbbdd62242738bf5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dunknowcoding/library/NobroRTOS-Core/1.0.1/NobroRTOS-Core-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dunknowcoding/library/NobroRTOS-Core/1.0.1/NobroRTOS-Core-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dunknowcoding/library/NobroRTOS/0.3.1/NobroRTOS-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NobroRTOS-0.3.1.tar.gz",
+    "size_bytes": 20658,
+    "sha256": "dd25823563df54720a5c19acd188f1f59d4ccba1ade53413a171a4d89db7475b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dunknowcoding/library/NobroRTOS/0.3.1/NobroRTOS-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dunknowcoding/library/NobroRTOS/0.3.1/NobroRTOS-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dunknowcoding/library/NobroRTOS/0.3.2/NobroRTOS-0.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NobroRTOS-0.3.2.tar.gz",
+    "size_bytes": 20566,
+    "sha256": "eae3e77cf7a89a668af1a5292387ddda922cbb59c32e3b9a31cac1b28abfc123",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dunknowcoding/library/NobroRTOS/0.3.2/NobroRTOS-0.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dunknowcoding/library/NobroRTOS/0.3.2/NobroRTOS-0.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dunknowcoding/library/NobroRTOS/0.3.3/NobroRTOS-0.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NobroRTOS-0.3.3.tar.gz",
+    "size_bytes": 54513,
+    "sha256": "dff3088ecce32bfd95d6c998bce484aa44a01f2d08fe77cded2dee76b83b28af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dunknowcoding/library/NobroRTOS/0.3.3/NobroRTOS-0.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dunknowcoding/library/NobroRTOS/0.3.3/NobroRTOS-0.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dunknowcoding/library/RoboServo/0.2.0/RoboServo-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RoboServo-0.2.0.tar.gz",
+    "size_bytes": 19603,
+    "sha256": "df3f46c257098bdd83655a1c0441779470f3fab0264402e3e380c3f89d06588f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dunknowcoding/library/RoboServo/0.2.0/RoboServo-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dunknowcoding/library/RoboServo/0.2.0/RoboServo-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dunknowcoding/library/RoboServo/0.5.0/RoboServo-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RoboServo-0.5.0.tar.gz",
+    "size_bytes": 26385,
+    "sha256": "c3a2e063edf1ff30beb50ddfd3c96f2e2fb6711e1a987ca11e8a77c662bd8894",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dunknowcoding/library/RoboServo/0.5.0/RoboServo-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dunknowcoding/library/RoboServo/0.5.0/RoboServo-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dunknowcoding/library/RoboServo/1.1.0/RoboServo-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RoboServo-1.1.0.tar.gz",
+    "size_bytes": 12967,
+    "sha256": "e32aaa33bd8fff3b401d60e6f160018692d3bf2ad992271d19c670109c290dac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dunknowcoding/library/RoboServo/1.1.0/RoboServo-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dunknowcoding/library/RoboServo/1.1.0/RoboServo-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dunknowcoding/library/RoboServo/1.2.0/RoboServo-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RoboServo-1.2.0.tar.gz",
+    "size_bytes": 34351,
+    "sha256": "6a16241f425f1d68c995c69891b87c0c73d282364799eede83a09ea2d8c1dd67",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dunknowcoding/library/RoboServo/1.2.0/RoboServo-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dunknowcoding/library/RoboServo/1.2.0/RoboServo-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

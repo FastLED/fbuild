@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/haklein",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "haklein/library/tlv320aic31xx/1.0.5/tlv320aic31xx-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tlv320aic31xx-1.0.5.tar.gz",
+    "size_bytes": 39747,
+    "sha256": "fc53b6ca538e23badc7d74a6a0e6e1fa62809b1de85294647ffeb7c394facd70",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/haklein/library/tlv320aic31xx/1.0.5/tlv320aic31xx-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/haklein/library/tlv320aic31xx/1.0.5/tlv320aic31xx-1.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

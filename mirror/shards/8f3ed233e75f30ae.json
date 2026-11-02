@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-maiorfi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-maiorfi/library/XBeeLib_Fixed/0.0.0+sha.09e0b4f5a9e1/XBeeLib_Fixed-0.0.0+sha.09e0b4f5a9e1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XBeeLib_Fixed-0.0.0+sha.09e0b4f5a9e1.tar.gz",
+    "size_bytes": 49636,
+    "sha256": "50656031ff6b188740764ac851f3ad2a489f429c2e2ddcff15bb7b3b2ed80c70",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-maiorfi/library/XBeeLib_Fixed/0.0.0%2Bsha.09e0b4f5a9e1/XBeeLib_Fixed-0.0.0%2Bsha.09e0b4f5a9e1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-maiorfi/library/XBeeLib_Fixed/0.0.0%2Bsha.09e0b4f5a9e1/XBeeLib_Fixed-0.0.0%2Bsha.09e0b4f5a9e1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

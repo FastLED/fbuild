@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fmalekpour",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fmalekpour/library/IoTStorageClient/1.0.0/IoTStorageClient-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTStorageClient-1.0.0.tar.gz",
+    "size_bytes": 13530,
+    "sha256": "74f50ffa1c15ce98ae8d76f12aff8332d86fde771a7d4548377433e6f33bfd24",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fmalekpour/library/IoTStorageClient/1.0.0/IoTStorageClient-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fmalekpour/library/IoTStorageClient/1.0.0/IoTStorageClient-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fmalekpour/library/IoTStorageClient/1.0.1/IoTStorageClient-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTStorageClient-1.0.1.tar.gz",
+    "size_bytes": 17466,
+    "sha256": "a94e5a3feaf1367133a1a8d2dbd1251bbf4b35eeedd6284ccb974a14d8534871",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fmalekpour/library/IoTStorageClient/1.0.1/IoTStorageClient-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fmalekpour/library/IoTStorageClient/1.0.1/IoTStorageClient-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fmalekpour/library/IoTStorageClient/1.0.2/IoTStorageClient-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTStorageClient-1.0.2.tar.gz",
+    "size_bytes": 17663,
+    "sha256": "b2a84b449caa4955faa6a2ffdc249b3fa9e97c22e2cc8b36a9ac58908fe98561",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fmalekpour/library/IoTStorageClient/1.0.2/IoTStorageClient-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/fmalekpour/library/IoTStorageClient/1.0.2/IoTStorageClient-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,243 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/egnor",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "egnor/library/Everyday%20Pixel%20Fonts/0.1/EverydayPixelFonts-0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EverydayPixelFonts-0.1.tar.gz",
+    "size_bytes": 165739,
+    "sha256": "5dbe161cb22c9cc5ff2d9ccd8f545aed683f7d00803bb729a79e050a15460435",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/egnor/library/Everyday%2520Pixel%2520Fonts/0.1/EverydayPixelFonts-0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/egnor/library/Everyday%20Pixel%20Fonts/0.1/EverydayPixelFonts-0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "egnor/library/OK%20Clock64/0.1/OKClock64-0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OKClock64-0.1.tar.gz",
+    "size_bytes": 5328,
+    "sha256": "a247e4edf98d4ae679b54f733fe012e97e376ad271e81df1f7a22390566d7409",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/egnor/library/OK%2520Clock64/0.1/OKClock64-0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/egnor/library/OK%20Clock64/0.1/OKClock64-0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "egnor/library/OK%20Little%20Layout/0.1/OKLittleLayout-0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OKLittleLayout-0.1.tar.gz",
+    "size_bytes": 6730,
+    "sha256": "bc2185f2f314d0118813d5b534aff96703b9d022c83d5d678213e0011d6c1efb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/egnor/library/OK%2520Little%2520Layout/0.1/OKLittleLayout-0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/egnor/library/OK%20Little%20Layout/0.1/OKLittleLayout-0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "egnor/library/OK%20Little%20Layout/0.2/OKLittleLayout-0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OKLittleLayout-0.2.tar.gz",
+    "size_bytes": 7177,
+    "sha256": "01eb6c59f7bd601606332fb5209ceb06b3bf036d13a3a6200ebf30f35ccb5c93",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/egnor/library/OK%2520Little%2520Layout/0.2/OKLittleLayout-0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/egnor/library/OK%20Little%20Layout/0.2/OKLittleLayout-0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "egnor/library/OK%20Little%20Layout/0.3/OKLittleLayout-0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OKLittleLayout-0.3.tar.gz",
+    "size_bytes": 7181,
+    "sha256": "27516da0f1759e010f100c19fa8164d11a853e06bc314ddcb185427cbc9b7b90",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/egnor/library/OK%2520Little%2520Layout/0.3/OKLittleLayout-0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/egnor/library/OK%20Little%20Layout/0.3/OKLittleLayout-0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "egnor/library/OK%20Little%20Layout/0.4/OKLittleLayout-0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OKLittleLayout-0.4.tar.gz",
+    "size_bytes": 7333,
+    "sha256": "dfab8231530d68148ea6c134c36011171db7b375081e177bd8fcafb9b9b8af7e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/egnor/library/OK%2520Little%2520Layout/0.4/OKLittleLayout-0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/egnor/library/OK%20Little%20Layout/0.4/OKLittleLayout-0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "egnor/library/OK%20Little%20Layout/0.5/OKLittleLayout-0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OKLittleLayout-0.5.tar.gz",
+    "size_bytes": 7365,
+    "sha256": "f4ca393994340e68a6b91caaf7d7a6c35fa27d2d8a799eb40db2952a7a7fb37b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/egnor/library/OK%2520Little%2520Layout/0.5/OKLittleLayout-0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/egnor/library/OK%20Little%20Layout/0.5/OKLittleLayout-0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "egnor/library/OK%20Little%20Layout/0.6/OKLittleLayout-0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OKLittleLayout-0.6.tar.gz",
+    "size_bytes": 7870,
+    "sha256": "25add731982694d748fce5f5d500df820deb42b7f6aedf2ea7a70fb37ced32c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/egnor/library/OK%2520Little%2520Layout/0.6/OKLittleLayout-0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/egnor/library/OK%20Little%20Layout/0.6/OKLittleLayout-0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "egnor/library/OK%20Logging/0.1/OKArduinoLogging-0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OKArduinoLogging-0.1.tar.gz",
+    "size_bytes": 6233,
+    "sha256": "0048cbeebfcdb42dc1a24a3b0115ff1c7d37c04f0543099baaa14e9f83a2cfd8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/egnor/library/OK%2520Logging/0.1/OKArduinoLogging-0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/egnor/library/OK%20Logging/0.1/OKArduinoLogging-0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "egnor/library/OK%20Logging/0.2/OKLogging-0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OKLogging-0.2.tar.gz",
+    "size_bytes": 6803,
+    "sha256": "0acc616ddd93f2dfae959de8b2d559aa758f3104ba99fe7305071cbfda73089b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/egnor/library/OK%2520Logging/0.2/OKLogging-0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/egnor/library/OK%20Logging/0.2/OKLogging-0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "egnor/library/OK%20Logging/0.3/OKLogging-0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OKLogging-0.3.tar.gz",
+    "size_bytes": 8069,
+    "sha256": "e6b35e96d082a7906315225af82993b1b373a58e00884a83365b17cfc0a8241b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/egnor/library/OK%2520Logging/0.3/OKLogging-0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/egnor/library/OK%20Logging/0.3/OKLogging-0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "egnor/library/OK%20Logging/0.4/OKLogging-0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OKLogging-0.4.tar.gz",
+    "size_bytes": 11784,
+    "sha256": "ec01c3855731bfb8db2b3d98057282f979a34c8795e365b503a109e0207c5599",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/egnor/library/OK%2520Logging/0.4/OKLogging-0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/egnor/library/OK%20Logging/0.4/OKLogging-0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "egnor/library/OK%20Logging/0.5/OKLogging-0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OKLogging-0.5.tar.gz",
+    "size_bytes": 11754,
+    "sha256": "e65a7316aff1ed8033295ba05bff9eb2f0f92048a16e9f21262ebe6ba61f7b19",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/egnor/library/OK%2520Logging/0.5/OKLogging-0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/egnor/library/OK%20Logging/0.5/OKLogging-0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "egnor/library/OK%20Logging/0.8/OKLogging-0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OKLogging-0.8.tar.gz",
+    "size_bytes": 11798,
+    "sha256": "25afccb063fe19b1c30c1d5f7c8484bf6f029502f399ca211697d666d5729b50",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/egnor/library/OK%2520Logging/0.8/OKLogging-0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/egnor/library/OK%20Logging/0.8/OKLogging-0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "egnor/library/OK%20Logging/0.9/OKLogging-0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OKLogging-0.9.tar.gz",
+    "size_bytes": 11812,
+    "sha256": "754b232076ac131244b2e87a2e4dd9d4cba12c1132cd12be0a15ad988ed31a2f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/egnor/library/OK%2520Logging/0.9/OKLogging-0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/egnor/library/OK%20Logging/0.9/OKLogging-0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "egnor/library/OK%20Micro%20Dock/0.1/OKMicroDock-0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OKMicroDock-0.1.tar.gz",
+    "size_bytes": 8151,
+    "sha256": "b95e719032c6066996467f2a3a32281844ac9b9c1ef03ed6c1f043ef64682c6f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/egnor/library/OK%2520Micro%2520Dock/0.1/OKMicroDock-0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/egnor/library/OK%20Micro%20Dock/0.1/OKMicroDock-0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "egnor/library/OK%20Micro%20Dock/0.2/OKMicroDock-0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OKMicroDock-0.2.tar.gz",
+    "size_bytes": 8304,
+    "sha256": "5dfbfadf463a8ece1a65d548f44649747dd7058eb2983651112eaee78be03dd1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/egnor/library/OK%2520Micro%2520Dock/0.2/OKMicroDock-0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/egnor/library/OK%20Micro%20Dock/0.2/OKMicroDock-0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "egnor/library/OK%20Micro%20Dock/0.3/OKMicroDock-0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OKMicroDock-0.3.tar.gz",
+    "size_bytes": 8182,
+    "sha256": "db7bdda4276c90c8ff5df36c041b6a59aa1b18ace1a6656c679251759a512601",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/egnor/library/OK%2520Micro%2520Dock/0.3/OKMicroDock-0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/egnor/library/OK%20Micro%20Dock/0.3/OKMicroDock-0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

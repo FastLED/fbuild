@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/wmxz-eu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "wmxz-eu/library/uSDFS/1.1.2/uSDFS-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uSDFS-1.1.2.tar.gz",
+    "size_bytes": 3142803,
+    "sha256": "f1441b53f98bdeee0a76d387610fc9a2991d47905fcbe49ad2ae18036ad9e2c3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wmxz-eu/library/uSDFS/1.1.2/uSDFS-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/wmxz-eu/library/uSDFS/1.1.2/uSDFS-1.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

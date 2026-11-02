@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rumicar-group",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rumicar-group/library/RumiCar/0.1.0/RumiCar-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RumiCar-0.1.0.tar.gz",
+    "size_bytes": 5757,
+    "sha256": "9fbf3a703b44cb3376876855f4dae549d28bdc68b8f0088b46e73b83d329daf0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rumicar-group/library/RumiCar/0.1.0/RumiCar-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rumicar-group/library/RumiCar/0.1.0/RumiCar-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rumicar-group/library/RumiCar/0.1.1/RumiCar-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RumiCar-0.1.1.tar.gz",
+    "size_bytes": 8167,
+    "sha256": "15463bf87eaa3fce16122da2d2ca2b888680601b64171e01c94d72c044086745",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rumicar-group/library/RumiCar/0.1.1/RumiCar-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/rumicar-group/library/RumiCar/0.1.1/RumiCar-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rumicar-group/library/RumiCar/0.2.0/RumiCar-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RumiCar-0.2.0.tar.gz",
+    "size_bytes": 9032,
+    "sha256": "6318eb7e17b3aee1e8104da8efbeb610d19376145bcaf7262f23f8cf951b7355",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rumicar-group/library/RumiCar/0.2.0/RumiCar-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rumicar-group/library/RumiCar/0.2.0/RumiCar-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rumicar-group/library/RumiCar/0.3.0/RumiCar-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RumiCar-0.3.0.tar.gz",
+    "size_bytes": 11241,
+    "sha256": "b45fab4267e443c0a5bf6dd17cee94e6acb73f354201a4504d552327c5f3eaf8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rumicar-group/library/RumiCar/0.3.0/RumiCar-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rumicar-group/library/RumiCar/0.3.0/RumiCar-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rumicar-group/library/RumiCar/0.4.0/RumiCar-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RumiCar-0.4.0.tar.gz",
+    "size_bytes": 11615,
+    "sha256": "34d9012f7343827b490b04e564d9e65cb61cb2ec0e532340827a70c0975f5b85",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rumicar-group/library/RumiCar/0.4.0/RumiCar-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rumicar-group/library/RumiCar/0.4.0/RumiCar-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rumicar-group/library/RumiCar/0.5.0/RumiCar-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RumiCar-0.5.0.tar.gz",
+    "size_bytes": 19848,
+    "sha256": "c29c74b3b9727c8868396bafc0e0bd0dc9be8eb3c4644f7d875808bfcc71403f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rumicar-group/library/RumiCar/0.5.0/RumiCar-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rumicar-group/library/RumiCar/0.5.0/RumiCar-0.5.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-thiagotra",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-thiagotra/library/MFRC522/0.0.0+sha.63d729186747/MFRC522-0.0.0+sha.63d729186747.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MFRC522-0.0.0+sha.63d729186747.tar.gz",
+    "size_bytes": 19941,
+    "sha256": "f9fe8124f677db035599d014a4da7bf458e75a3cd4c566786970fc2480429b79",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-thiagotra/library/MFRC522/0.0.0%2Bsha.63d729186747/MFRC522-0.0.0%2Bsha.63d729186747.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-thiagotra/library/MFRC522/0.0.0%2Bsha.63d729186747/MFRC522-0.0.0%2Bsha.63d729186747.tar.gz"
+    ]
+   }
+  }
+ ]
+}

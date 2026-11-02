@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/udoklein",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "udoklein/library/MLX90393_raw/1.0.2/MLX90393_raw-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MLX90393_raw-1.0.2.tar.gz",
+    "size_bytes": 24571,
+    "sha256": "d865fbda60c92b830ae4a938af95bf394b7c01475fcd97a5575fb2f7bf95f5a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/udoklein/library/MLX90393_raw/1.0.2/MLX90393_raw-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/udoklein/library/MLX90393_raw/1.0.2/MLX90393_raw-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "udoklein/library/dcf77_xtal/3.3.7/dcf77_xtal-3.3.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "dcf77_xtal-3.3.7.tar.gz",
+    "size_bytes": 99885,
+    "sha256": "c5ef0f4a117811e3f14de36312e3523de48f3a3fb5077bc2688685f23eaa6bad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/udoklein/library/dcf77_xtal/3.3.7/dcf77_xtal-3.3.7.tar.gz",
+     "https://dl.registry.platformio.org/download/udoklein/library/dcf77_xtal/3.3.7/dcf77_xtal-3.3.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

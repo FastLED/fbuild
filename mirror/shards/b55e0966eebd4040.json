@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/paramoshkina",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "paramoshkina/library/BME280_Arduino_I2C/1.1.1/BME280_Arduino_I2C-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BME280_Arduino_I2C-1.1.1.tar.gz",
+    "size_bytes": 6925,
+    "sha256": "9ea175fe9cb5e9b0fe08d96197918e46af841c823f715246d3875ede9391f130",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paramoshkina/library/BME280_Arduino_I2C/1.1.1/BME280_Arduino_I2C-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/paramoshkina/library/BME280_Arduino_I2C/1.1.1/BME280_Arduino_I2C-1.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

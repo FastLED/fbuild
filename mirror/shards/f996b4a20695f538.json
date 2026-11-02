@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/roman-gobrei",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "roman-gobrei/library/HttpServer/1.0.17/HttpServer-1.0.17.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HttpServer-1.0.17.tar.gz",
+    "size_bytes": 10210,
+    "sha256": "9c052616c0c2a36b648db10005724ec7c36b8760adb69b4d9a2b75a09a8bf376",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/roman-gobrei/library/HttpServer/1.0.17/HttpServer-1.0.17.tar.gz",
+     "https://dl.registry.platformio.org/download/roman-gobrei/library/HttpServer/1.0.17/HttpServer-1.0.17.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "roman-gobrei/library/HttpServer/1.0.18/HttpServer-1.0.18.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HttpServer-1.0.18.tar.gz",
+    "size_bytes": 10256,
+    "sha256": "db27399a8acd0bad7931cb070af6b4e2a1edd0f8267a88b51c9e76e8e69567aa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/roman-gobrei/library/HttpServer/1.0.18/HttpServer-1.0.18.tar.gz",
+     "https://dl.registry.platformio.org/download/roman-gobrei/library/HttpServer/1.0.18/HttpServer-1.0.18.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "roman-gobrei/library/HttpServer/1.1.0/HttpServer-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HttpServer-1.1.0.tar.gz",
+    "size_bytes": 10759,
+    "sha256": "7a159113e0d60dd318244c9e2e971da30963a90d7d4b4e36745bc88e55acea0e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/roman-gobrei/library/HttpServer/1.1.0/HttpServer-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/roman-gobrei/library/HttpServer/1.1.0/HttpServer-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

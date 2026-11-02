@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/filoconnesso",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "filoconnesso/library/Tweakly/1.0.3/Tweakly-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Tweakly-1.0.3.tar.gz",
+    "size_bytes": 38142,
+    "sha256": "4b2eeaf49414cc318adfcc5b323c3bcc5d3a3ad21159fdfba3cc3b78b588dceb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/filoconnesso/library/Tweakly/1.0.3/Tweakly-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/filoconnesso/library/Tweakly/1.0.3/Tweakly-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mrdev-5000",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mrdev-5000/library/PhotonCore/2.0.1/PhotonCore-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PhotonCore-2.0.1.tar.gz",
+    "size_bytes": 6057,
+    "sha256": "2b4adbb2e065c676b5b778f9b5c0921b98dfcff92ad0128305303fb70acc155a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mrdev-5000/library/PhotonCore/2.0.1/PhotonCore-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mrdev-5000/library/PhotonCore/2.0.1/PhotonCore-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mrdev-5000/library/PhotonCore/2.0.2/PhotonCore-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PhotonCore-2.0.2.tar.gz",
+    "size_bytes": 6067,
+    "sha256": "1d015794bd27feccbe62b7f124dfadca759c8c97faee7f718bf56469f8c9da03",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mrdev-5000/library/PhotonCore/2.0.2/PhotonCore-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mrdev-5000/library/PhotonCore/2.0.2/PhotonCore-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mrdev-5000/library/PhotonCore/2.0.3/PhotonCore-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PhotonCore-2.0.3.tar.gz",
+    "size_bytes": 6177,
+    "sha256": "02177c7f55ed2e12bef9b874466c426cbcb6185c22179795711d13432d9196d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mrdev-5000/library/PhotonCore/2.0.3/PhotonCore-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mrdev-5000/library/PhotonCore/2.0.3/PhotonCore-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mrdev-5000/library/TimerKernel/1.0.3/TimerKernel-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TimerKernel-1.0.3.tar.gz",
+    "size_bytes": 4415,
+    "sha256": "d3d9bcbcf8100cf6d910d2bc9d63d83d5081b496ac191f8c601200bd77837d3e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mrdev-5000/library/TimerKernel/1.0.3/TimerKernel-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mrdev-5000/library/TimerKernel/1.0.3/TimerKernel-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mrdev-5000/library/TimerKernel/1.1.3/TimerKernel-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TimerKernel-1.1.3.tar.gz",
+    "size_bytes": 4621,
+    "sha256": "ef694801efc8b57135f516d96e50ccecf9694c37adf48f6b918055546390b9e7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mrdev-5000/library/TimerKernel/1.1.3/TimerKernel-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mrdev-5000/library/TimerKernel/1.1.3/TimerKernel-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mrdev-5000/library/TimerKernel/1.2.3/TimerKernel-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TimerKernel-1.2.3.tar.gz",
+    "size_bytes": 4947,
+    "sha256": "a371fe8e92f6d6bf25439bb5c0482489c3b356c1d0619299d9bd07b556c149d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mrdev-5000/library/TimerKernel/1.2.3/TimerKernel-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mrdev-5000/library/TimerKernel/1.2.3/TimerKernel-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mrdev-5000/library/TimerKernel/1.2.4/TimerKernel-1.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TimerKernel-1.2.4.tar.gz",
+    "size_bytes": 5183,
+    "sha256": "fb2b79d7e0e09d9afa262988a27803c08784367fe4a208b2181ba62fab44a430",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mrdev-5000/library/TimerKernel/1.2.4/TimerKernel-1.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/mrdev-5000/library/TimerKernel/1.2.4/TimerKernel-1.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mrdev-5000/library/TimerKernel/1.3.4/TimerKernel-1.3.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TimerKernel-1.3.4.tar.gz",
+    "size_bytes": 6395,
+    "sha256": "eb7e207291a46360e76aba70d7bbc58b058e25bcf7d9c59579dca29796f8974c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mrdev-5000/library/TimerKernel/1.3.4/TimerKernel-1.3.4.tar.gz",
+     "https://dl.registry.platformio.org/download/mrdev-5000/library/TimerKernel/1.3.4/TimerKernel-1.3.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

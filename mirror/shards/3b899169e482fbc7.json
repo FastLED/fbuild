@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/crudlabs",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "crudlabs/library/StevesAwesomeButton/1.0.0/StevesAwesomeButton-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StevesAwesomeButton-1.0.0.tar.gz",
+    "size_bytes": 1626,
+    "sha256": "0930ebe1d034d6ec4d671992acc4a903b50e17463e706c0d381e1b01da398b88",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/crudlabs/library/StevesAwesomeButton/1.0.0/StevesAwesomeButton-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/crudlabs/library/StevesAwesomeButton/1.0.0/StevesAwesomeButton-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

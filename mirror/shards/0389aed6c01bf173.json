@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-senior-design-sound-monitor",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-senior-design-sound-monitor/library/BSP/0.0.0+sha.a1219ef3537f/BSP-0.0.0+sha.a1219ef3537f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BSP-0.0.0+sha.a1219ef3537f.tar.gz",
+    "size_bytes": 54610,
+    "sha256": "10e4ead1a249af5d85b19f5e57f83bfa6c99896360d3126a78adc6602069c95f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-senior-design-sound-monitor/library/BSP/0.0.0%2Bsha.a1219ef3537f/BSP-0.0.0%2Bsha.a1219ef3537f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-senior-design-sound-monitor/library/BSP/0.0.0%2Bsha.a1219ef3537f/BSP-0.0.0%2Bsha.a1219ef3537f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-senior-design-sound-monitor/library/CMSIS_STM32L4xx/0.0.0+sha.c991e443f67c/CMSIS_STM32L4xx-0.0.0+sha.c991e443f67c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CMSIS_STM32L4xx-0.0.0+sha.c991e443f67c.tar.gz",
+    "size_bytes": 87887,
+    "sha256": "ea1b05dd8037c1a10bb26844c8adbf352fe8a49b54b9d30eb1090541ef255bbd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-senior-design-sound-monitor/library/CMSIS_STM32L4xx/0.0.0%2Bsha.c991e443f67c/CMSIS_STM32L4xx-0.0.0%2Bsha.c991e443f67c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-senior-design-sound-monitor/library/CMSIS_STM32L4xx/0.0.0%2Bsha.c991e443f67c/CMSIS_STM32L4xx-0.0.0%2Bsha.c991e443f67c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-senior-design-sound-monitor/library/STM32L4xx_HAL_Driver/0.0.0+sha.80ee8f3b695e/STM32L4xx_HAL_Driver-0.0.0+sha.80ee8f3b695e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32L4xx_HAL_Driver-0.0.0+sha.80ee8f3b695e.tar.gz",
+    "size_bytes": 857435,
+    "sha256": "2b5e5d3891e9c110448afa4fb501c7db6a0318222418151a00dae5f785bd272f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-senior-design-sound-monitor/library/STM32L4xx_HAL_Driver/0.0.0%2Bsha.80ee8f3b695e/STM32L4xx_HAL_Driver-0.0.0%2Bsha.80ee8f3b695e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-senior-design-sound-monitor/library/STM32L4xx_HAL_Driver/0.0.0%2Bsha.80ee8f3b695e/STM32L4xx_HAL_Driver-0.0.0%2Bsha.80ee8f3b695e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-senior-design-sound-monitor/library/Utilities/0.0.0+sha.7302ca0d6488/Utilities-0.0.0+sha.7302ca0d6488.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Utilities-0.0.0+sha.7302ca0d6488.tar.gz",
+    "size_bytes": 19868,
+    "sha256": "582ba0dbaae0ce64a283abb2bcb76c821df849fa870db513da9d18f2f41c52a0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-senior-design-sound-monitor/library/Utilities/0.0.0%2Bsha.7302ca0d6488/Utilities-0.0.0%2Bsha.7302ca0d6488.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-senior-design-sound-monitor/library/Utilities/0.0.0%2Bsha.7302ca0d6488/Utilities-0.0.0%2Bsha.7302ca0d6488.tar.gz"
+    ]
+   }
+  }
+ ]
+}

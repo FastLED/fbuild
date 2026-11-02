@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/d-a-v",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "d-a-v/library/ESPWebDAV/2.0.0/ESPWebDAV-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPWebDAV-2.0.0.tar.gz",
+    "size_bytes": 18007,
+    "sha256": "d3a04771c7529b796974eafae0551653d6ce9044cd9f484ece74c2cb3b595c19",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/d-a-v/library/ESPWebDAV/2.0.0/ESPWebDAV-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/d-a-v/library/ESPWebDAV/2.0.0/ESPWebDAV-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ioakeimsogiakas",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ioakeimsogiakas/library/LiquidCrystal_I2C_Greek_Characters/3.2.0/LiquidCrystal_I2C_Greek_Characters-3.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LiquidCrystal_I2C_Greek_Characters-3.2.0.tar.gz",
+    "size_bytes": 6643,
+    "sha256": "cc80fe3780effd09c2d6dd57510963ad8d64ca95db85d90c5387b7909b477a39",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ioakeimsogiakas/library/LiquidCrystal_I2C_Greek_Characters/3.2.0/LiquidCrystal_I2C_Greek_Characters-3.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ioakeimsogiakas/library/LiquidCrystal_I2C_Greek_Characters/3.2.0/LiquidCrystal_I2C_Greek_Characters-3.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

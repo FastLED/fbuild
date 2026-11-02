@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/open-agriculture",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "open-agriculture/library/AgIsoStack/0.1.0/AgIsoStack-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AgIsoStack-0.1.0.tar.gz",
+    "size_bytes": 296755,
+    "sha256": "03e67ce055136399af5cadc4fd5d5991cc921a5aacb93cc1caebfc05b56ef12f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/open-agriculture/library/AgIsoStack/0.1.0/AgIsoStack-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/open-agriculture/library/AgIsoStack/0.1.0/AgIsoStack-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

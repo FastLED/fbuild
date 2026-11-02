@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/xs1nus",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "xs1nus/library/GEngine/0.0.2/GEngine-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GEngine-0.0.2.tar.gz",
+    "size_bytes": 2311,
+    "sha256": "cc30303b7b767f493a5783a1746a16ef96715db61d1014ad4424bbf5e3297e99",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xs1nus/library/GEngine/0.0.2/GEngine-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/xs1nus/library/GEngine/0.0.2/GEngine-0.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

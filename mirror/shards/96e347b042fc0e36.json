@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/akosmenyhert",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "akosmenyhert/library/Sim800l/1.6.1/Sim800l-1.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sim800l-1.6.1.tar.gz",
+    "size_bytes": 6866,
+    "sha256": "09b92bbe8e78f382ccaf2896563f6ee615e854b88a27863a9bc5ec01f461ee31",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/akosmenyhert/library/Sim800l/1.6.1/Sim800l-1.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/akosmenyhert/library/Sim800l/1.6.1/Sim800l-1.6.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

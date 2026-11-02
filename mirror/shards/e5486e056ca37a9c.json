@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ne4d",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ne4d/library/HX711/0.4.1/HX711-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HX711-0.4.1.tar.gz",
+    "size_bytes": 17316,
+    "sha256": "7783098874248fbf7ab1cd13287c8502876f1d3fc37300b95c5ee1e0059e23d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ne4d/library/HX711/0.4.1/HX711-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ne4d/library/HX711/0.4.1/HX711-0.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ne4d/library/QueueArray/0.1.0/QueueArray-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QueueArray-0.1.0.tar.gz",
+    "size_bytes": 15242,
+    "sha256": "5bf50de98c5456adcde3b293f36317ff02f3800e3a763883788f40a0e52101c5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ne4d/library/QueueArray/0.1.0/QueueArray-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ne4d/library/QueueArray/0.1.0/QueueArray-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ne4d/library/Wiegand%20Protocol%20ESP8266/1.0.3/WiegandProtocolESP8266-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiegandProtocolESP8266-1.0.3.tar.gz",
+    "size_bytes": 3126,
+    "sha256": "575914f1775abdc0f253821b122faef0b1ce9aac194f58278e29c634242507a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ne4d/library/Wiegand%2520Protocol%2520ESP8266/1.0.3/WiegandProtocolESP8266-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/ne4d/library/Wiegand%20Protocol%20ESP8266/1.0.3/WiegandProtocolESP8266-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

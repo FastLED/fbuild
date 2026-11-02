@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bayeggex",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bayeggex/library/AIChatBot/1.4.0/AIChatBot-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AIChatBot-1.4.0.tar.gz",
+    "size_bytes": 10292,
+    "sha256": "20eba340b3fb8eb6645914e69b75f39afc21a4651365702686f563f703ee4cc1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bayeggex/library/AIChatBot/1.4.0/AIChatBot-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bayeggex/library/AIChatBot/1.4.0/AIChatBot-1.4.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

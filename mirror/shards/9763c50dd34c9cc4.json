@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/oggysaud245",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "oggysaud245/library/haversine/1.0.0/haversine-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "haversine-1.0.0.tar.gz",
+    "size_bytes": 3582,
+    "sha256": "66b71cd56c4df5058b12a565f11aa457ba19de24b1fe98429199a86cc8d63799",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/oggysaud245/library/haversine/1.0.0/haversine-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/oggysaud245/library/haversine/1.0.0/haversine-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

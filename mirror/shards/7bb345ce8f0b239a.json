@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-kayekss",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-kayekss/library/ACM1602/0.0.0+sha.f81621685b23/ACM1602-0.0.0+sha.f81621685b23.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ACM1602-0.0.0+sha.f81621685b23.tar.gz",
+    "size_bytes": 1715,
+    "sha256": "b2e3b8e71a99b278cd888928bb05261e7bbd67330a4355ee0b57a383325bb9e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kayekss/library/ACM1602/0.0.0%2Bsha.f81621685b23/ACM1602-0.0.0%2Bsha.f81621685b23.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kayekss/library/ACM1602/0.0.0%2Bsha.f81621685b23/ACM1602-0.0.0%2Bsha.f81621685b23.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-kayekss/library/BMPFile/0.0.0+sha.be3e831a86c1/BMPFile-0.0.0+sha.be3e831a86c1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMPFile-0.0.0+sha.be3e831a86c1.tar.gz",
+    "size_bytes": 3462,
+    "sha256": "6570c10cb761360953bbd4b9edbc42b952d113044e5e954989832e3013d30dee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kayekss/library/BMPFile/0.0.0%2Bsha.be3e831a86c1/BMPFile-0.0.0%2Bsha.be3e831a86c1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kayekss/library/BMPFile/0.0.0%2Bsha.be3e831a86c1/BMPFile-0.0.0%2Bsha.be3e831a86c1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-kayekss/library/ColorLCDShield/0.0.0+sha.f4f7b91314a0/ColorLCDShield-0.0.0+sha.f4f7b91314a0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ColorLCDShield-0.0.0+sha.f4f7b91314a0.tar.gz",
+    "size_bytes": 8533,
+    "sha256": "422b3f09f39cde5df82cfab3fa4cad1e1965ed0711e548408cc7aa235f5a4654",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kayekss/library/ColorLCDShield/0.0.0%2Bsha.f4f7b91314a0/ColorLCDShield-0.0.0%2Bsha.f4f7b91314a0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kayekss/library/ColorLCDShield/0.0.0%2Bsha.f4f7b91314a0/ColorLCDShield-0.0.0%2Bsha.f4f7b91314a0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-kayekss/library/HT1621/0.0.0+sha.3001ada71ba5/HT1621-0.0.0+sha.3001ada71ba5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HT1621-0.0.0+sha.3001ada71ba5.tar.gz",
+    "size_bytes": 1507,
+    "sha256": "9ef78c481e1463a5d41c784b565129512312701dd1f3471e1b7d24e053d22d93",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kayekss/library/HT1621/0.0.0%2Bsha.3001ada71ba5/HT1621-0.0.0%2Bsha.3001ada71ba5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kayekss/library/HT1621/0.0.0%2Bsha.3001ada71ba5/HT1621-0.0.0%2Bsha.3001ada71ba5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-kayekss/library/HysteresisIn/0.0.0+sha.fe43537bd3d6/HysteresisIn-0.0.0+sha.fe43537bd3d6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HysteresisIn-0.0.0+sha.fe43537bd3d6.tar.gz",
+    "size_bytes": 1250,
+    "sha256": "62a6494b9cf7a5e2dee4d4a11da3cb70eba09161c6df9587c297fc307182b485",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kayekss/library/HysteresisIn/0.0.0%2Bsha.fe43537bd3d6/HysteresisIn-0.0.0%2Bsha.fe43537bd3d6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kayekss/library/HysteresisIn/0.0.0%2Bsha.fe43537bd3d6/HysteresisIn-0.0.0%2Bsha.fe43537bd3d6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-kayekss/library/ST7565SPI/0.0.0+sha.86209398c73b/ST7565SPI-0.0.0+sha.86209398c73b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ST7565SPI-0.0.0+sha.86209398c73b.tar.gz",
+    "size_bytes": 2676,
+    "sha256": "d9057e68c4a5982fdc17bc2c030d296083b32a88c39411ec2d3515360cdf377a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kayekss/library/ST7565SPI/0.0.0%2Bsha.86209398c73b/ST7565SPI-0.0.0%2Bsha.86209398c73b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kayekss/library/ST7565SPI/0.0.0%2Bsha.86209398c73b/ST7565SPI-0.0.0%2Bsha.86209398c73b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-kayekss/library/VS1053/0.0.0+sha.1f57fbd3aeb5/VS1053-0.0.0+sha.1f57fbd3aeb5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VS1053-0.0.0+sha.1f57fbd3aeb5.tar.gz",
+    "size_bytes": 2565,
+    "sha256": "c58460ef6e9c43e680dedf8972a40c80b60798dc63f54a34c6a0f22aff47678e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kayekss/library/VS1053/0.0.0%2Bsha.1f57fbd3aeb5/VS1053-0.0.0%2Bsha.1f57fbd3aeb5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kayekss/library/VS1053/0.0.0%2Bsha.1f57fbd3aeb5/VS1053-0.0.0%2Bsha.1f57fbd3aeb5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

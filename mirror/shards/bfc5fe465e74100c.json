@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ohmboyz-capstone",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ohmboyz-capstone/library/Current%20Controller/0.0.0+sha.d53b7f599ede/CurrentController-0.0.0+sha.d53b7f599ede.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CurrentController-0.0.0+sha.d53b7f599ede.tar.gz",
+    "size_bytes": 1220,
+    "sha256": "24166ebf6ef8503e496750312281dc7fb247d65ba8a6efd565b53e2c62ab02cd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ohmboyz-capstone/library/Current%2520Controller/0.0.0%2Bsha.d53b7f599ede/CurrentController-0.0.0%2Bsha.d53b7f599ede.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ohmboyz-capstone/library/Current%20Controller/0.0.0%2Bsha.d53b7f599ede/CurrentController-0.0.0%2Bsha.d53b7f599ede.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ohmboyz-capstone/library/MagneticRead/0.0.0+sha.9af7969cd74e/MagneticRead-0.0.0+sha.9af7969cd74e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MagneticRead-0.0.0+sha.9af7969cd74e.tar.gz",
+    "size_bytes": 1410,
+    "sha256": "ca52716af40499f9c7e3e1f95316c176ec783c8326d029aee0ce0f0bd353c0cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ohmboyz-capstone/library/MagneticRead/0.0.0%2Bsha.9af7969cd74e/MagneticRead-0.0.0%2Bsha.9af7969cd74e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ohmboyz-capstone/library/MagneticRead/0.0.0%2Bsha.9af7969cd74e/MagneticRead-0.0.0%2Bsha.9af7969cd74e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

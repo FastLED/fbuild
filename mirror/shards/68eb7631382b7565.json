@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/davinderhanda",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "davinderhanda/library/HandaDigitalSpeaker/1.1.0/HandaDigitalSpeaker-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HandaDigitalSpeaker-1.1.0.tar.gz",
+    "size_bytes": 5639,
+    "sha256": "d09e7d14392a9e47edd3e54b26c530e3c45ea28bf0d982ca829feeb19962a658",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/davinderhanda/library/HandaDigitalSpeaker/1.1.0/HandaDigitalSpeaker-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/davinderhanda/library/HandaDigitalSpeaker/1.1.0/HandaDigitalSpeaker-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "davinderhanda/library/HandaDigitalSpeaker/1.2.0/HandaDigitalSpeaker-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HandaDigitalSpeaker-1.2.0.tar.gz",
+    "size_bytes": 7344,
+    "sha256": "aeab85e8c43c716865bce7e17820d2fc01847532ac1cb1b4f23a2bed291f29c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/davinderhanda/library/HandaDigitalSpeaker/1.2.0/HandaDigitalSpeaker-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/davinderhanda/library/HandaDigitalSpeaker/1.2.0/HandaDigitalSpeaker-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

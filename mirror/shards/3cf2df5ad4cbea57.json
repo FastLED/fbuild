@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/zanduino",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "zanduino/library/Cubigel/1.0.3/Cubigel-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Cubigel-1.0.3.tar.gz",
+    "size_bytes": 28289,
+    "sha256": "f8ea47e14ed9744b05185a07a1302b402e3ecdd2923ce69d4bcedb486c97fe70",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zanduino/library/Cubigel/1.0.3/Cubigel-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/zanduino/library/Cubigel/1.0.3/Cubigel-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zanduino/library/MCP7940/1.2.0/MCP7940-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP7940-1.2.0.tar.gz",
+    "size_bytes": 51891,
+    "sha256": "343610adb6de86203425f2c769c0c18cefe7c93f93216a93cafa1bc00945e1ab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zanduino/library/MCP7940/1.2.0/MCP7940-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/zanduino/library/MCP7940/1.2.0/MCP7940-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zanduino/library/RotaryEncoder_Zanduino/1.0.6/RotaryEncoder_Zanduino-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RotaryEncoder_Zanduino-1.0.6.tar.gz",
+    "size_bytes": 32418,
+    "sha256": "788d16fcee50209e74cfe2b131d9fbb344a98f10efd962f47d7fa2974f912427",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zanduino/library/RotaryEncoder_Zanduino/1.0.6/RotaryEncoder_Zanduino-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/zanduino/library/RotaryEncoder_Zanduino/1.0.6/RotaryEncoder_Zanduino-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zanduino/library/Zanduino%20SmoothLED%20Library%2010-bit/1.0.0/ZanduinoSmoothLEDLibrary10-bit-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ZanduinoSmoothLEDLibrary10-bit-1.0.0.tar.gz",
+    "size_bytes": 37879,
+    "sha256": "c452022c1ba06238743ff853876a659c1c4f54d47953b088e6815629fb8101bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zanduino/library/Zanduino%2520SmoothLED%2520Library%252010-bit/1.0.0/ZanduinoSmoothLEDLibrary10-bit-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/zanduino/library/Zanduino%20SmoothLED%20Library%2010-bit/1.0.0/ZanduinoSmoothLEDLibrary10-bit-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zanduino/library/Zanduino%20SmoothLED%20Library%208-bit/1.0.0/ZanduinoSmoothLEDLibrary8-bit-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ZanduinoSmoothLEDLibrary8-bit-1.0.0.tar.gz",
+    "size_bytes": 35471,
+    "sha256": "6f69ef2744d508aef24bd7317d98c60944ab55c6f162a9e5f8fc5c5fe7203f95",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zanduino/library/Zanduino%2520SmoothLED%2520Library%25208-bit/1.0.0/ZanduinoSmoothLEDLibrary8-bit-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/zanduino/library/Zanduino%20SmoothLED%20Library%208-bit/1.0.0/ZanduinoSmoothLEDLibrary8-bit-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

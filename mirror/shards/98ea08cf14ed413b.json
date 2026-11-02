@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jackmax",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jackmax/library/ILI9163LCD/0.0.0+sha.06faf770a0c7/ILI9163LCD-0.0.0+sha.06faf770a0c7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ILI9163LCD-0.0.0+sha.06faf770a0c7.tar.gz",
+    "size_bytes": 7833,
+    "sha256": "7e134643ba5817b3b842d31fcc767ea3d0aaa1d413eefcb0ed9287e248a66a9d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jackmax/library/ILI9163LCD/0.0.0%2Bsha.06faf770a0c7/ILI9163LCD-0.0.0%2Bsha.06faf770a0c7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jackmax/library/ILI9163LCD/0.0.0%2Bsha.06faf770a0c7/ILI9163LCD-0.0.0%2Bsha.06faf770a0c7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

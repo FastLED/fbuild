@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ondrejh",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ondrejh/library/SHT11/0.0.0-alpha+sha.d9fd0415ef/SHT11-0.0.0-alphasha.d9fd0415ef.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SHT11-0.0.0-alphasha.d9fd0415ef.tar.gz",
+    "size_bytes": 7497,
+    "sha256": "133d95c0a12378197d07fe84406f547a9304bc01e98a523dbc5d32b954f219d5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ondrejh/library/SHT11/0.0.0-alpha%2Bsha.d9fd0415ef/SHT11-0.0.0-alphasha.d9fd0415ef.tar.gz",
+     "https://dl.registry.platformio.org/download/ondrejh/library/SHT11/0.0.0-alpha%2Bsha.d9fd0415ef/SHT11-0.0.0-alphasha.d9fd0415ef.tar.gz"
+    ]
+   }
+  }
+ ]
+}

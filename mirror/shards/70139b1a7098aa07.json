@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/roseleblood",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "roseleblood/library/OpenESS/0.86.0/OpenESS-0.86.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OpenESS-0.86.0.tar.gz",
+    "size_bytes": 70460,
+    "sha256": "eeccdfa248871883748d95b416f843f939586c37ccb823bdd53317c0aad7c5be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/roseleblood/library/OpenESS/0.86.0/OpenESS-0.86.0.tar.gz",
+     "https://dl.registry.platformio.org/download/roseleblood/library/OpenESS/0.86.0/OpenESS-0.86.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "roseleblood/library/libcos/0.3.0/libcos-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libcos-0.3.0.tar.gz",
+    "size_bytes": 65660,
+    "sha256": "605803ed71680401c6fa7d30d1ebd9db4ccf599488192e499619c7c72beb80c5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/roseleblood/library/libcos/0.3.0/libcos-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/roseleblood/library/libcos/0.3.0/libcos-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "roseleblood/library/mini%20Thread/2.29.8995.57/miniThread-2.29.8995.57.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "miniThread-2.29.8995.57.tar.gz",
+    "size_bytes": 377475,
+    "sha256": "0bc6f492b42f469530f02693dc3695c41ca8b7ed45d2468f9fd91bb57abc6e4d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/roseleblood/library/mini%2520Thread/2.29.8995.57/miniThread-2.29.8995.57.tar.gz",
+     "https://dl.registry.platformio.org/download/roseleblood/library/mini%20Thread/2.29.8995.57/miniThread-2.29.8995.57.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "roseleblood/library/mnthread/1.52/mnthread-1.52.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mnthread-1.52.tar.gz",
+    "size_bytes": 31565,
+    "sha256": "cafa7ea2ac585bcdd364caf12690efc7dd4c9558cb0ed12640a6add87f7d443a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/roseleblood/library/mnthread/1.52/mnthread-1.52.tar.gz",
+     "https://dl.registry.platformio.org/download/roseleblood/library/mnthread/1.52/mnthread-1.52.tar.gz"
+    ]
+   }
+  }
+ ]
+}

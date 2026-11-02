@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rstephan",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rstephan/library/ArtnetWifi/1.6.1/ArtnetWifi-1.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArtnetWifi-1.6.1.tar.gz",
+    "size_bytes": 7589,
+    "sha256": "4161ca10d5f7766fe8e76484a018ae50850fce95dd98d1747ace565c1c04d9f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rstephan/library/ArtnetWifi/1.6.1/ArtnetWifi-1.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/rstephan/library/ArtnetWifi/1.6.1/ArtnetWifi-1.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rstephan/library/ArtnetWifi/1.6.2/ArtnetWifi-1.6.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArtnetWifi-1.6.2.tar.gz",
+    "size_bytes": 7618,
+    "sha256": "74fe63fadc7495979e71a080c5df21aa647ccac2d6ddff509954ce60c145dd4c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rstephan/library/ArtnetWifi/1.6.2/ArtnetWifi-1.6.2.tar.gz",
+     "https://dl.registry.platformio.org/download/rstephan/library/ArtnetWifi/1.6.2/ArtnetWifi-1.6.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rstephan/library/ArtnetnodeWifi/1.2.1/ArtnetnodeWifi-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArtnetnodeWifi-1.2.1.tar.gz",
+    "size_bytes": 17303,
+    "sha256": "40daba222045b34268c2a6d3ec590258a4a79251890c402e6d81acefccb9fb95",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rstephan/library/ArtnetnodeWifi/1.2.1/ArtnetnodeWifi-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/rstephan/library/ArtnetnodeWifi/1.2.1/ArtnetnodeWifi-1.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

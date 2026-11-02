@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nabontra",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nabontra/library/ServoTimer2/0.0.0-alpha+sha.2bf7fb3c17/ServoTimer2-0.0.0-alphasha.2bf7fb3c17.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ServoTimer2-0.0.0-alphasha.2bf7fb3c17.tar.gz",
+    "size_bytes": 8591,
+    "sha256": "f12901e2eef46dff9f22ea1b4e6c10cb7fd24c51dfbeed7a8027904ca1357c7d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nabontra/library/ServoTimer2/0.0.0-alpha%2Bsha.2bf7fb3c17/ServoTimer2-0.0.0-alphasha.2bf7fb3c17.tar.gz",
+     "https://dl.registry.platformio.org/download/nabontra/library/ServoTimer2/0.0.0-alpha%2Bsha.2bf7fb3c17/ServoTimer2-0.0.0-alphasha.2bf7fb3c17.tar.gz"
+    ]
+   }
+  }
+ ]
+}

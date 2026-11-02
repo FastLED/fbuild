@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/i-am-engineer",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "i-am-engineer/library/MT6701-arduino/1.0.4/MT6701-arduino-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MT6701-arduino-1.0.4.tar.gz",
+    "size_bytes": 10086,
+    "sha256": "8567417adbb550e7051ca6031c3092444f9bc817c01f44d77fec2d9b050f60f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/i-am-engineer/library/MT6701-arduino/1.0.4/MT6701-arduino-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/i-am-engineer/library/MT6701-arduino/1.0.4/MT6701-arduino-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "i-am-engineer/library/MT6701-arduino/1.2.0/MT6701-arduino-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MT6701-arduino-1.2.0.tar.gz",
+    "size_bytes": 11925,
+    "sha256": "e4c2ff168324e84fb3a1d3bbf3059a418084552a704d16e259f4ec9205b17257",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/i-am-engineer/library/MT6701-arduino/1.2.0/MT6701-arduino-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/i-am-engineer/library/MT6701-arduino/1.2.0/MT6701-arduino-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "i-am-engineer/library/MT6701-arduino/1.2.1/MT6701-arduino-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MT6701-arduino-1.2.1.tar.gz",
+    "size_bytes": 11969,
+    "sha256": "8590f893032b32e5f9b36a3d031d501efc778f80423afb96f4f42b500501fbbc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/i-am-engineer/library/MT6701-arduino/1.2.1/MT6701-arduino-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/i-am-engineer/library/MT6701-arduino/1.2.1/MT6701-arduino-1.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

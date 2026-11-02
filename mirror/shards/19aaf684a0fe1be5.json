@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-xeta05",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-xeta05/library/DRV8833/0.0.0+sha.0aa2cdeb2e2b/DRV8833-0.0.0+sha.0aa2cdeb2e2b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DRV8833-0.0.0+sha.0aa2cdeb2e2b.tar.gz",
+    "size_bytes": 2293,
+    "sha256": "701c2f072a799951feb1a2d8c51f9b0bced199a816179da183257f0e5ec7b2b0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-xeta05/library/DRV8833/0.0.0%2Bsha.0aa2cdeb2e2b/DRV8833-0.0.0%2Bsha.0aa2cdeb2e2b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-xeta05/library/DRV8833/0.0.0%2Bsha.0aa2cdeb2e2b/DRV8833-0.0.0%2Bsha.0aa2cdeb2e2b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-xeta05/library/HMC5883L/0.0.0+sha.c9ce1eeaf001/HMC5883L-0.0.0+sha.c9ce1eeaf001.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HMC5883L-0.0.0+sha.c9ce1eeaf001.tar.gz",
+    "size_bytes": 4378,
+    "sha256": "cc9d350a59d3757003e615a59a7ae8307c0dcaf703632742c9f3f3fe01401af2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-xeta05/library/HMC5883L/0.0.0%2Bsha.c9ce1eeaf001/HMC5883L-0.0.0%2Bsha.c9ce1eeaf001.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-xeta05/library/HMC5883L/0.0.0%2Bsha.c9ce1eeaf001/HMC5883L-0.0.0%2Bsha.c9ce1eeaf001.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-xeta05/library/PinDetect/0.0.0+sha.cb6051b90a52/PinDetect-0.0.0+sha.cb6051b90a52.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PinDetect-0.0.0+sha.cb6051b90a52.tar.gz",
+    "size_bytes": 5261,
+    "sha256": "54dfadb3a08498e825e04b354e704df39db24dfdb440d043a8ea473d31e3e221",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-xeta05/library/PinDetect/0.0.0%2Bsha.cb6051b90a52/PinDetect-0.0.0%2Bsha.cb6051b90a52.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-xeta05/library/PinDetect/0.0.0%2Bsha.cb6051b90a52/PinDetect-0.0.0%2Bsha.cb6051b90a52.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-xeta05/library/RTC_BQ32000/0.0.0+sha.17f606b5b59b/RTC_BQ32000-0.0.0+sha.17f606b5b59b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RTC_BQ32000-0.0.0+sha.17f606b5b59b.tar.gz",
+    "size_bytes": 5118,
+    "sha256": "1fa1d3f0c846c1a20c19a01886c2fe2d8fdeac2adbbd975332954d8a7ddc604b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-xeta05/library/RTC_BQ32000/0.0.0%2Bsha.17f606b5b59b/RTC_BQ32000-0.0.0%2Bsha.17f606b5b59b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-xeta05/library/RTC_BQ32000/0.0.0%2Bsha.17f606b5b59b/RTC_BQ32000-0.0.0%2Bsha.17f606b5b59b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

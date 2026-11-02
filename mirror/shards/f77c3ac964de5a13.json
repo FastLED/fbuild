@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/agdl",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "agdl/library/Base64/1.0.2/Base64-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Base64-1.0.2.tar.gz",
+    "size_bytes": 11766,
+    "sha256": "92b396a2891ee598dd585ff6fb86888b65f7b95e1ca0b6de9795bcd01442848e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/agdl/library/Base64/1.0.2/Base64-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/agdl/library/Base64/1.0.2/Base64-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "agdl/library/GoPRO/1.0.0/GoPRO-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GoPRO-1.0.0.tar.gz",
+    "size_bytes": 13289,
+    "sha256": "715af17cb37ba04aa47ccf14b7dd40775bebed185db5f37e381db711840bd2a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/agdl/library/GoPRO/1.0.0/GoPRO-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/agdl/library/GoPRO/1.0.0/GoPRO-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "agdl/library/WireUpdate/1.2.0/WireUpdate-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WireUpdate-1.2.0.tar.gz",
+    "size_bytes": 3414,
+    "sha256": "59044eb948d3d414505e26e0bd04fa604d47efa283d48cc8d34d735baedc5f7f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/agdl/library/WireUpdate/1.2.0/WireUpdate-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/agdl/library/WireUpdate/1.2.0/WireUpdate-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "agdl/library/multiplePinOps/0.2.1/multiplePinOps-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "multiplePinOps-0.2.1.tar.gz",
+    "size_bytes": 10995,
+    "sha256": "ee9d62b3ed6e2bfafccffbc385fecc6824a728ccef9d4302d4fa096f979e2c39",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/agdl/library/multiplePinOps/0.2.1/multiplePinOps-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/agdl/library/multiplePinOps/0.2.1/multiplePinOps-0.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

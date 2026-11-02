@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gilesp1729",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gilesp1729/library/FontCollection/0.9.0/FontCollection-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FontCollection-0.9.0.tar.gz",
+    "size_bytes": 22975,
+    "sha256": "31b51cb2e806e56f3a2480abe741c47131f6dd303656f9a9aebec7842f620058",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gilesp1729/library/FontCollection/0.9.0/FontCollection-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gilesp1729/library/FontCollection/0.9.0/FontCollection-0.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gilesp1729/library/GU_Elements/0.9.0/GU_Elements-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GU_Elements-0.9.0.tar.gz",
+    "size_bytes": 18058,
+    "sha256": "97d9c39d88eb9b9e3dce7e3be006bcc52b9a93c3cda531f46f55b9decb01672b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gilesp1729/library/GU_Elements/0.9.0/GU_Elements-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gilesp1729/library/GU_Elements/0.9.0/GU_Elements-0.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gilesp1729/library/GestureDetector/0.9.0/GestureDetector-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GestureDetector-0.9.0.tar.gz",
+    "size_bytes": 15707,
+    "sha256": "8c5fdc4766fa3dddc118ced1c00c1b103b5dd0b52b191b0dd91271dabcab6a10",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gilesp1729/library/GestureDetector/0.9.0/GestureDetector-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gilesp1729/library/GestureDetector/0.9.0/GestureDetector-0.9.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

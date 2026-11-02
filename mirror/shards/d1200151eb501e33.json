@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ollie8",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ollie8/library/CD22M3494Matrix/0.0.0+sha.29b83f5c042b/CD22M3494Matrix-0.0.0+sha.29b83f5c042b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CD22M3494Matrix-0.0.0+sha.29b83f5c042b.tar.gz",
+    "size_bytes": 2481,
+    "sha256": "1ef91b434b05ba0dafe16f071e6100c1e7e82c54c510aafffd4f658feaf38bbc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ollie8/library/CD22M3494Matrix/0.0.0%2Bsha.29b83f5c042b/CD22M3494Matrix-0.0.0%2Bsha.29b83f5c042b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ollie8/library/CD22M3494Matrix/0.0.0%2Bsha.29b83f5c042b/CD22M3494Matrix-0.0.0%2Bsha.29b83f5c042b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ollie8/library/DigiPot/0.0.0+sha.54e9d9ddc350/DigiPot-0.0.0+sha.54e9d9ddc350.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DigiPot-0.0.0+sha.54e9d9ddc350.tar.gz",
+    "size_bytes": 1383,
+    "sha256": "1f682837b7b26c5bbff9f02b29188cc3b9ea32ce862e0cdac8ee51e557fed080",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ollie8/library/DigiPot/0.0.0%2Bsha.54e9d9ddc350/DigiPot-0.0.0%2Bsha.54e9d9ddc350.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ollie8/library/DigiPot/0.0.0%2Bsha.54e9d9ddc350/DigiPot-0.0.0%2Bsha.54e9d9ddc350.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ollie8/library/FileUtils/0.0.0+sha.361360b2f1c5/FileUtils-0.0.0+sha.361360b2f1c5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FileUtils-0.0.0+sha.361360b2f1c5.tar.gz",
+    "size_bytes": 1118,
+    "sha256": "d28f875643edcd3e354dd01d085e12fc01480dd6ba7fc19b300e7af6b3c65459",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ollie8/library/FileUtils/0.0.0%2Bsha.361360b2f1c5/FileUtils-0.0.0%2Bsha.361360b2f1c5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ollie8/library/FileUtils/0.0.0%2Bsha.361360b2f1c5/FileUtils-0.0.0%2Bsha.361360b2f1c5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ollie8/library/LibMenu/0.0.0+sha.af54763d3d21/LibMenu-0.0.0+sha.af54763d3d21.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LibMenu-0.0.0+sha.af54763d3d21.tar.gz",
+    "size_bytes": 2506,
+    "sha256": "c6523838fc30c8e15b65531b7b93415ec7bdce9e4d8dee2b55b8f2995ce89606",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ollie8/library/LibMenu/0.0.0%2Bsha.af54763d3d21/LibMenu-0.0.0%2Bsha.af54763d3d21.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ollie8/library/LibMenu/0.0.0%2Bsha.af54763d3d21/LibMenu-0.0.0%2Bsha.af54763d3d21.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ollie8/library/Logger/0.0.0+sha.aa7033f339e1/Logger-0.0.0+sha.aa7033f339e1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Logger-0.0.0+sha.aa7033f339e1.tar.gz",
+    "size_bytes": 1011,
+    "sha256": "4f1acc8379bb2eefffac348875252161e5015f66df1b58e16a66522ecf15ce52",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ollie8/library/Logger/0.0.0%2Bsha.aa7033f339e1/Logger-0.0.0%2Bsha.aa7033f339e1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ollie8/library/Logger/0.0.0%2Bsha.aa7033f339e1/Logger-0.0.0%2Bsha.aa7033f339e1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ollie8/library/ShiftOut/0.0.0+sha.7333dc6fca5c/ShiftOut-0.0.0+sha.7333dc6fca5c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ShiftOut-0.0.0+sha.7333dc6fca5c.tar.gz",
+    "size_bytes": 1246,
+    "sha256": "3ce12fdcdc05b5fe40b72d866fb36d930a51b1d6ba3f6e9ff4b999559c5227c4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ollie8/library/ShiftOut/0.0.0%2Bsha.7333dc6fca5c/ShiftOut-0.0.0%2Bsha.7333dc6fca5c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ollie8/library/ShiftOut/0.0.0%2Bsha.7333dc6fca5c/ShiftOut-0.0.0%2Bsha.7333dc6fca5c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

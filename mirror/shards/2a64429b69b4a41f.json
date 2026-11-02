@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/polygondoor",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "polygondoor/library/Pablo/1.1.7/Pablo-1.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pablo-1.1.7.tar.gz",
+    "size_bytes": 25719,
+    "sha256": "80e54a81de6f6edab52067ced8d3a9d4080478baa67edcd4cc245200494a5a05",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/polygondoor/library/Pablo/1.1.7/Pablo-1.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/polygondoor/library/Pablo/1.1.7/Pablo-1.1.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

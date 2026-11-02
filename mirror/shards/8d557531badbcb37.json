@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/johnnyb",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "johnnyb/library/Eventually/0.1.5/Eventually-0.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Eventually-0.1.5.tar.gz",
+    "size_bytes": 7529,
+    "sha256": "c3ae85aa62c04f4e9348b84c1ffa82a0747506bc99628335d45d7dade14ecf94",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/johnnyb/library/Eventually/0.1.5/Eventually-0.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/johnnyb/library/Eventually/0.1.5/Eventually-0.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "johnnyb/library/Shifty/0.1.5/Shifty-0.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Shifty-0.1.5.tar.gz",
+    "size_bytes": 4243,
+    "sha256": "d8f2dc1c3c5863b58757d181f0abc07da23b94a4807ffbe3970f706698dc45e7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/johnnyb/library/Shifty/0.1.5/Shifty-0.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/johnnyb/library/Shifty/0.1.5/Shifty-0.1.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-berg-cloud",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-berg-cloud/library/BERGCloud/0.0.0+sha.79100379d4b4/BERGCloud-0.0.0+sha.79100379d4b4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BERGCloud-0.0.0+sha.79100379d4b4.tar.gz",
+    "size_bytes": 14206,
+    "sha256": "cda5bd16fc8c1ac79bb4598f02fb3d37860575c3496018a832e9bf255b49f931",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-berg-cloud/library/BERGCloud/0.0.0%2Bsha.79100379d4b4/BERGCloud-0.0.0%2Bsha.79100379d4b4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-berg-cloud/library/BERGCloud/0.0.0%2Bsha.79100379d4b4/BERGCloud-0.0.0%2Bsha.79100379d4b4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

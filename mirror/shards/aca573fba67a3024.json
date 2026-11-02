@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pratuldeshpande",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pratuldeshpande/library/PQCMicro/1.1.0/PQCMicro-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PQCMicro-1.1.0.tar.gz",
+    "size_bytes": 60225,
+    "sha256": "e40cbd5ccd8b7a6188492a4e424b9ede534a5ea1c019bb8112268718472e3708",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pratuldeshpande/library/PQCMicro/1.1.0/PQCMicro-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pratuldeshpande/library/PQCMicro/1.1.0/PQCMicro-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

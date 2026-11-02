@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-pb",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-pb/library/DOGL128/0.0.0+sha.23a26a1668cf/DOGL128-0.0.0+sha.23a26a1668cf.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DOGL128-0.0.0+sha.23a26a1668cf.tar.gz",
+    "size_bytes": 10635,
+    "sha256": "ae5dea25cbf9672cc2fa338d1d310e49597a425d99f723528a3866781d78ce71",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pb/library/DOGL128/0.0.0%2Bsha.23a26a1668cf/DOGL128-0.0.0%2Bsha.23a26a1668cf.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pb/library/DOGL128/0.0.0%2Bsha.23a26a1668cf/DOGL128-0.0.0%2Bsha.23a26a1668cf.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-pb/library/RotaryEncoder/0.0.0+sha.db7f371c8530/RotaryEncoder-0.0.0+sha.db7f371c8530.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RotaryEncoder-0.0.0+sha.db7f371c8530.tar.gz",
+    "size_bytes": 1305,
+    "sha256": "819f19120c65d12c6f272ee9b54dd79adcc7e8c46e908ac201dc76f3c5169a9a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pb/library/RotaryEncoder/0.0.0%2Bsha.db7f371c8530/RotaryEncoder-0.0.0%2Bsha.db7f371c8530.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pb/library/RotaryEncoder/0.0.0%2Bsha.db7f371c8530/RotaryEncoder-0.0.0%2Bsha.db7f371c8530.tar.gz"
+    ]
+   }
+  }
+ ]
+}

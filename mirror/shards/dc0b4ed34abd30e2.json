@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jst2011",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jst2011/library/ClockControl/0.0.0+sha.a6d100de3aee/ClockControl-0.0.0+sha.a6d100de3aee.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ClockControl-0.0.0+sha.a6d100de3aee.tar.gz",
+    "size_bytes": 1306,
+    "sha256": "2754d8e35491d95e83622a1e5e0e8842a00cda97f150394819d22343c008c212",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jst2011/library/ClockControl/0.0.0%2Bsha.a6d100de3aee/ClockControl-0.0.0%2Bsha.a6d100de3aee.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jst2011/library/ClockControl/0.0.0%2Bsha.a6d100de3aee/ClockControl-0.0.0%2Bsha.a6d100de3aee.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jst2011/library/GPS_CanSat/0.0.0+sha.94c22ada3c5a/GPS_CanSat-0.0.0+sha.94c22ada3c5a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GPS_CanSat-0.0.0+sha.94c22ada3c5a.tar.gz",
+    "size_bytes": 1437,
+    "sha256": "d20a3a3930cbf13c1497dc04183ebb348db4487978905c33955c17a264d79e36",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jst2011/library/GPS_CanSat/0.0.0%2Bsha.94c22ada3c5a/GPS_CanSat-0.0.0%2Bsha.94c22ada3c5a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jst2011/library/GPS_CanSat/0.0.0%2Bsha.94c22ada3c5a/GPS_CanSat-0.0.0%2Bsha.94c22ada3c5a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jst2011/library/MMA7361L/0.0.0+sha.8bdd5a9f289e/MMA7361L-0.0.0+sha.8bdd5a9f289e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MMA7361L-0.0.0+sha.8bdd5a9f289e.tar.gz",
+    "size_bytes": 1651,
+    "sha256": "580424a3bd71d4f3f0282aaa57077d98dead9391fae6fc97be365af0cf8cbec9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jst2011/library/MMA7361L/0.0.0%2Bsha.8bdd5a9f289e/MMA7361L-0.0.0%2Bsha.8bdd5a9f289e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jst2011/library/MMA7361L/0.0.0%2Bsha.8bdd5a9f289e/MMA7361L-0.0.0%2Bsha.8bdd5a9f289e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jst2011/library/PowerControl/0.0.0+sha.d0fa2aeb02a4/PowerControl-0.0.0+sha.d0fa2aeb02a4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PowerControl-0.0.0+sha.d0fa2aeb02a4.tar.gz",
+    "size_bytes": 7548,
+    "sha256": "94674d3f164e0cad259519d85e1078aceb0f65622df31f0468deb27ff81e22a3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jst2011/library/PowerControl/0.0.0%2Bsha.d0fa2aeb02a4/PowerControl-0.0.0%2Bsha.d0fa2aeb02a4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jst2011/library/PowerControl/0.0.0%2Bsha.d0fa2aeb02a4/PowerControl-0.0.0%2Bsha.d0fa2aeb02a4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

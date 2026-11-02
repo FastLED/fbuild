@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/andreatondelli",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "andreatondelli/library/ht16k33/1.0.1/ht16k33-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ht16k33-1.0.1.tar.gz",
+    "size_bytes": 17778,
+    "sha256": "db195904ef2bdda666e0bf0f067de514674fb2c7dc0b0325c7b716a9ae3d3a86",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/andreatondelli/library/ht16k33/1.0.1/ht16k33-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/andreatondelli/library/ht16k33/1.0.1/ht16k33-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

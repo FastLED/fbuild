@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/arastaskiran",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "arastaskiran/library/RustyKeypad/1.0.5/RustyKeypad-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RustyKeypad-1.0.5.tar.gz",
+    "size_bytes": 14114263,
+    "sha256": "dbade1a147450063d0395355c6f6e9b739490f549be0d508f4e412a116ad8efa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arastaskiran/library/RustyKeypad/1.0.5/RustyKeypad-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/arastaskiran/library/RustyKeypad/1.0.5/RustyKeypad-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arastaskiran/library/RustyVoltmeter/1.0.6/RustyVoltmeter-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RustyVoltmeter-1.0.6.tar.gz",
+    "size_bytes": 7111,
+    "sha256": "5e1bcde3af666e94ab922f8db15ed661ade990a59454b42e216e588f13072b98",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arastaskiran/library/RustyVoltmeter/1.0.6/RustyVoltmeter-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/arastaskiran/library/RustyVoltmeter/1.0.6/RustyVoltmeter-1.0.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

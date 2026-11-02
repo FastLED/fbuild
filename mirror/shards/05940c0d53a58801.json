@@ -1,0 +1,230 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/agusevtec",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "agusevtec/library/eva-boxy/1.0.0/eva-boxy-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "eva-boxy-1.0.0.tar.gz",
+    "size_bytes": 871293,
+    "sha256": "7d01d8ff74202b9d2d12ef49b31b3d5207d1a2c2726ab9902cb902c0fac8cbd5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/agusevtec/library/eva-boxy/1.0.0/eva-boxy-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/agusevtec/library/eva-boxy/1.0.0/eva-boxy-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "agusevtec/library/eva-boxy/1.0.1/eva-boxy-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "eva-boxy-1.0.1.tar.gz",
+    "size_bytes": 871430,
+    "sha256": "b7acc8312c0ca36293fe96ab2a9944770d40073bc4414b81a116a736202539fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/agusevtec/library/eva-boxy/1.0.1/eva-boxy-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/agusevtec/library/eva-boxy/1.0.1/eva-boxy-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "agusevtec/library/eva-boxy/1.0.2/eva-boxy-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "eva-boxy-1.0.2.tar.gz",
+    "size_bytes": 1423959,
+    "sha256": "923aca777865a01618efb0858629edc1232c4fa4169576bd098dde5121908351",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/agusevtec/library/eva-boxy/1.0.2/eva-boxy-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/agusevtec/library/eva-boxy/1.0.2/eva-boxy-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "agusevtec/library/eva-core-sk/1.0.0/eva-core-sk-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "eva-core-sk-1.0.0.tar.gz",
+    "size_bytes": 36601,
+    "sha256": "100139f3d6ba0a8675464937479b242bf60863eb0e3175e315a1868ebcecd07e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/agusevtec/library/eva-core-sk/1.0.0/eva-core-sk-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/agusevtec/library/eva-core-sk/1.0.0/eva-core-sk-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "agusevtec/library/eva-core-sk/1.1.0/eva-core-sk-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "eva-core-sk-1.1.0.tar.gz",
+    "size_bytes": 21100,
+    "sha256": "48d2ee693d212f5ee87dba0f58e284015cbf650ab98c2ff240a5e67cf0ba650e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/agusevtec/library/eva-core-sk/1.1.0/eva-core-sk-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/agusevtec/library/eva-core-sk/1.1.0/eva-core-sk-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "agusevtec/library/eva-core-sk/1.3.4/eva-core-sk-1.3.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "eva-core-sk-1.3.4.tar.gz",
+    "size_bytes": 125541,
+    "sha256": "c490e5feb80f0587eb82a0a7dc0efb0ef7b02c12198a40f812f31f0cd471d48f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/agusevtec/library/eva-core-sk/1.3.4/eva-core-sk-1.3.4.tar.gz",
+     "https://dl.registry.platformio.org/download/agusevtec/library/eva-core-sk/1.3.4/eva-core-sk-1.3.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "agusevtec/library/eva-filters/0.0.1/eva-filters-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "eva-filters-0.0.1.tar.gz",
+    "size_bytes": 12609,
+    "sha256": "d2f7d3736c821cb09c07693f2a796305e56b1986ecac26e9d5996cf84afee7cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/agusevtec/library/eva-filters/0.0.1/eva-filters-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/agusevtec/library/eva-filters/0.0.1/eva-filters-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "agusevtec/library/eva-filters/1.0.0/eva-filters-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "eva-filters-1.0.0.tar.gz",
+    "size_bytes": 17601,
+    "sha256": "da19f8ac2001c9dd88298ec462a1051e4d5ff1ecd6b5c51b2a46d096f65e94ac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/agusevtec/library/eva-filters/1.0.0/eva-filters-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/agusevtec/library/eva-filters/1.0.0/eva-filters-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "agusevtec/library/eva-filters/1.0.1/eva-filters-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "eva-filters-1.0.1.tar.gz",
+    "size_bytes": 69850,
+    "sha256": "8692a4955bd0662eb91a8b9d00affd7be468a606583d28a8721d2eec8a2d0924",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/agusevtec/library/eva-filters/1.0.1/eva-filters-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/agusevtec/library/eva-filters/1.0.1/eva-filters-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "agusevtec/library/eva-motors/1.0.0/eva-motors-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "eva-motors-1.0.0.tar.gz",
+    "size_bytes": 28841,
+    "sha256": "6b6413e4023a4cae1e37d7af6541877a05d990a35e2b80c94d3653bd927b95d5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/agusevtec/library/eva-motors/1.0.0/eva-motors-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/agusevtec/library/eva-motors/1.0.0/eva-motors-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "agusevtec/library/eva-motors/1.1.0/eva-motors-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "eva-motors-1.1.0.tar.gz",
+    "size_bytes": 31225,
+    "sha256": "60c22e0c667eb266963147b7548608d4f02516ef18b723af6b61ab4391453cac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/agusevtec/library/eva-motors/1.1.0/eva-motors-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/agusevtec/library/eva-motors/1.1.0/eva-motors-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "agusevtec/library/eva-motors/1.1.1/eva-motors-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "eva-motors-1.1.1.tar.gz",
+    "size_bytes": 31759,
+    "sha256": "2b4dd48260a9224815f75b4ab5011d82c7989990ec908266dfa6587cd0dd9c01",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/agusevtec/library/eva-motors/1.1.1/eva-motors-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/agusevtec/library/eva-motors/1.1.1/eva-motors-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "agusevtec/library/eva-motors/1.1.2/eva-motors-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "eva-motors-1.1.2.tar.gz",
+    "size_bytes": 31766,
+    "sha256": "87a3cc1658ba98190e5d4df8c6214f45aad286a04bb6185148b0a4db89138157",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/agusevtec/library/eva-motors/1.1.2/eva-motors-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/agusevtec/library/eva-motors/1.1.2/eva-motors-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "agusevtec/library/eva-motors/1.1.3/eva-motors-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "eva-motors-1.1.3.tar.gz",
+    "size_bytes": 31734,
+    "sha256": "5e4c512808b3789ab5fb0d8838a58db1475726133dca49e35da8248fa27969e5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/agusevtec/library/eva-motors/1.1.3/eva-motors-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/agusevtec/library/eva-motors/1.1.3/eva-motors-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "agusevtec/library/eva-motors/1.2.0/eva-motors-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "eva-motors-1.2.0.tar.gz",
+    "size_bytes": 30803,
+    "sha256": "407b59fd76cd6746b6fdf403db931d1e909ee721086602d205e394ca46d867e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/agusevtec/library/eva-motors/1.2.0/eva-motors-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/agusevtec/library/eva-motors/1.2.0/eva-motors-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "agusevtec/library/eva-motors/1.2.2/eva-motors-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "eva-motors-1.2.2.tar.gz",
+    "size_bytes": 30790,
+    "sha256": "93d4039f88fea3feef1131b957d9ffc21c734f0aea7ea1ca36996b04b60f707c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/agusevtec/library/eva-motors/1.2.2/eva-motors-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/agusevtec/library/eva-motors/1.2.2/eva-motors-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "agusevtec/library/eva-motors/1.2.3/eva-motors-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "eva-motors-1.2.3.tar.gz",
+    "size_bytes": 30909,
+    "sha256": "b0cf77ae0f2b4307eef7396d922b6de43240fa5876d8998e3244e59f2ce1f540",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/agusevtec/library/eva-motors/1.2.3/eva-motors-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/agusevtec/library/eva-motors/1.2.3/eva-motors-1.2.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

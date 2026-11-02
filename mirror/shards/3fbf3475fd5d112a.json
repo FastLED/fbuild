@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dev-board-tech",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dev-board-tech/library/arduFPGA-app-common-arduino/0.1.2/arduFPGA-app-common-arduino-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arduFPGA-app-common-arduino-0.1.2.tar.gz",
+    "size_bytes": 751037,
+    "sha256": "f8f521d365c502091a2fe93582baca0eca9dfc0f54adba0b6c00954d5559286a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dev-board-tech/library/arduFPGA-app-common-arduino/0.1.2/arduFPGA-app-common-arduino-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dev-board-tech/library/arduFPGA-app-common-arduino/0.1.2/arduFPGA-app-common-arduino-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dev-board-tech/library/lvglCpp/0.1.4/lvglCpp-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lvglCpp-0.1.4.tar.gz",
+    "size_bytes": 229497,
+    "sha256": "3cd9a09db13577d52ce3b43bf14d27de21991425f7e89bddd3ca7841ff2119fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dev-board-tech/library/lvglCpp/0.1.4/lvglCpp-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/dev-board-tech/library/lvglCpp/0.1.4/lvglCpp-0.1.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

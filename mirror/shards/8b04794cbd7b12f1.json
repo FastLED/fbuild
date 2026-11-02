@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/glinnes",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "glinnes/library/NMEAParser/1.1/NMEAParser-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NMEAParser-1.1.tar.gz",
+    "size_bytes": 10466,
+    "sha256": "00b8d832235d4d789c5910cf19d0afbc9bb60375b704f707f82080dfbf503fc3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/glinnes/library/NMEAParser/1.1/NMEAParser-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/glinnes/library/NMEAParser/1.1/NMEAParser-1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

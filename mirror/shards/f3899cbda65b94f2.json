@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/chochain",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "chochain/library/eForth1/2.6.0/eForth1-2.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "eForth1-2.6.0.tar.gz",
+    "size_bytes": 76429,
+    "sha256": "da3237990fb40ccf95a2231235c250a2568fd6144bdbcc6a24b2e49a70769767",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chochain/library/eForth1/2.6.0/eForth1-2.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chochain/library/eForth1/2.6.0/eForth1-2.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chochain/library/nanoFORTH/1.4.0/nanoFORTH-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nanoFORTH-1.4.0.tar.gz",
+    "size_bytes": 49905,
+    "sha256": "e2d90b6fd8bd37bc9bbd7f8b23b6e4fa5c2d2439758132a5881956820f421297",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chochain/library/nanoFORTH/1.4.0/nanoFORTH-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chochain/library/nanoFORTH/1.4.0/nanoFORTH-1.4.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

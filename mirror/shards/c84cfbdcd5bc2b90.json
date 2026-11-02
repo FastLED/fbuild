@@ -1,0 +1,178 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mathertel",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mathertel/library/DMXSerial/1.5.3/DMXSerial-1.5.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DMXSerial-1.5.3.tar.gz",
+    "size_bytes": 17689,
+    "sha256": "4b082cf1c1a0aac70bd5fb8ad388d49ac4d907b6b99d145a8d34beffdb465426",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathertel/library/DMXSerial/1.5.3/DMXSerial-1.5.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mathertel/library/DMXSerial/1.5.3/DMXSerial-1.5.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathertel/library/DMXSerial2/1.4.2/DMXSerial2-1.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DMXSerial2-1.4.2.tar.gz",
+    "size_bytes": 28214,
+    "sha256": "a6e79b54bc8189c27784aaa84248748885d70e139218703a69c82d7a995dc452",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathertel/library/DMXSerial2/1.4.2/DMXSerial2-1.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mathertel/library/DMXSerial2/1.4.2/DMXSerial2-1.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathertel/library/LiquidCrystal_PCF8574/2.2.0/LiquidCrystal_PCF8574-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LiquidCrystal_PCF8574-2.2.0.tar.gz",
+    "size_bytes": 8734,
+    "sha256": "6743b60cd2cc041f85c7bcc1ddbad9fcad96804285e7b664e6d5e72b8e690fd5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathertel/library/LiquidCrystal_PCF8574/2.2.0/LiquidCrystal_PCF8574-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mathertel/library/LiquidCrystal_PCF8574/2.2.0/LiquidCrystal_PCF8574-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathertel/library/LiquidCrystal_PCF8574/2.3.0/LiquidCrystal_PCF8574-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LiquidCrystal_PCF8574-2.3.0.tar.gz",
+    "size_bytes": 13560,
+    "sha256": "33b1809f32fc86b124bf760a1aa9e93ed37d4a3c8584b0a9d15c2e2afe4c4b6d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathertel/library/LiquidCrystal_PCF8574/2.3.0/LiquidCrystal_PCF8574-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mathertel/library/LiquidCrystal_PCF8574/2.3.0/LiquidCrystal_PCF8574-2.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathertel/library/OneButton/2.0.3/OneButton-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OneButton-2.0.3.tar.gz",
+    "size_bytes": 13371,
+    "sha256": "f4c68ee45956cbc4ad35bb343ad58eeca6e062bf4ae378ce68307d39ebfd64c4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathertel/library/OneButton/2.0.3/OneButton-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mathertel/library/OneButton/2.0.3/OneButton-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathertel/library/OneButton/2.5.0/OneButton-2.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OneButton-2.5.0.tar.gz",
+    "size_bytes": 19780,
+    "sha256": "5d6d80066b74cd3640c44d9824e7486a6b08e26c52dd302df31e3017b664dfbb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathertel/library/OneButton/2.5.0/OneButton-2.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mathertel/library/OneButton/2.5.0/OneButton-2.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathertel/library/OneButton/2.6.1/OneButton-2.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OneButton-2.6.1.tar.gz",
+    "size_bytes": 20670,
+    "sha256": "008ddda7b69e784189674c18c2df30a696c7e5ed407d80a168f4a00b60645f88",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathertel/library/OneButton/2.6.1/OneButton-2.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mathertel/library/OneButton/2.6.1/OneButton-2.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathertel/library/OneButton/2.6.2/OneButton-2.6.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OneButton-2.6.2.tar.gz",
+    "size_bytes": 23588,
+    "sha256": "5c8f53c4b26c2986200fc8085480401d22513338e1833de9eb3e49be77825cd0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathertel/library/OneButton/2.6.2/OneButton-2.6.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mathertel/library/OneButton/2.6.2/OneButton-2.6.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathertel/library/RFCodes/0.9.3/RFCodes-0.9.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RFCodes-0.9.3.tar.gz",
+    "size_bytes": 22401,
+    "sha256": "bc1d8d3e65551f99bb438a23bdca9eedd04e813e0606e3eb05df3cb6d1a8d5a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathertel/library/RFCodes/0.9.3/RFCodes-0.9.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mathertel/library/RFCodes/0.9.3/RFCodes-0.9.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathertel/library/Radio/3.0.1/Radio-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Radio-3.0.1.tar.gz",
+    "size_bytes": 102671,
+    "sha256": "0c4ce92dd28abf75233510f83ade0b55197b92bf213dac9ff2435d5d6d53aa2f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathertel/library/Radio/3.0.1/Radio-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mathertel/library/Radio/3.0.1/Radio-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathertel/library/RotaryEncoder/1.5.3/RotaryEncoder-1.5.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RotaryEncoder-1.5.3.tar.gz",
+    "size_bytes": 7975,
+    "sha256": "779691dff62f7695c3c4e4a5fbac283500f5cbb8ab53b2973ed9088d010fb93f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathertel/library/RotaryEncoder/1.5.3/RotaryEncoder-1.5.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mathertel/library/RotaryEncoder/1.5.3/RotaryEncoder-1.5.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathertel/library/RotaryEncoder/1.6.0/RotaryEncoder-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RotaryEncoder-1.6.0.tar.gz",
+    "size_bytes": 10510,
+    "sha256": "e8568f4d78bbdc5f756b12429bc5b89233c8cd0a3af18f54b4777b7c39e35fae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathertel/library/RotaryEncoder/1.6.0/RotaryEncoder-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mathertel/library/RotaryEncoder/1.6.0/RotaryEncoder-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathertel/library/gfxDraw/0.4.0/gfxDraw-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "gfxDraw-0.4.0.tar.gz",
+    "size_bytes": 174090,
+    "sha256": "0434e0ffacd5f48b3305c56ad39ae58047b1f5f7170f895021ec1f55c49fa531",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathertel/library/gfxDraw/0.4.0/gfxDraw-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mathertel/library/gfxDraw/0.4.0/gfxDraw-0.4.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tute-avalos",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tute-avalos/library/SDTasks-libOpenCM3/0.1.1/SDTasks-libOpenCM3-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SDTasks-libOpenCM3-0.1.1.tar.gz",
+    "size_bytes": 38323,
+    "sha256": "145911b901b82583b64bbf4c9d5e85eb4a0cfcdf974dad2b654517af88a8f45d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tute-avalos/library/SDTasks-libOpenCM3/0.1.1/SDTasks-libOpenCM3-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tute-avalos/library/SDTasks-libOpenCM3/0.1.1/SDTasks-libOpenCM3-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tute-avalos/library/Serial-libOpenCM3/0.4.9/Serial-libOpenCM3-0.4.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Serial-libOpenCM3-0.4.9.tar.gz",
+    "size_bytes": 137332,
+    "sha256": "3503b65c540b5ec7bb1d5ad69fd65b6bca07d2f1da8936b3bb4064e0db6a0d36",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tute-avalos/library/Serial-libOpenCM3/0.4.9/Serial-libOpenCM3-0.4.9.tar.gz",
+     "https://dl.registry.platformio.org/download/tute-avalos/library/Serial-libOpenCM3/0.4.9/Serial-libOpenCM3-0.4.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

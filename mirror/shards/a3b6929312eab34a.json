@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mkrasselt1",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mkrasselt1/library/VEBus/1.0.0/VEBus-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VEBus-1.0.0.tar.gz",
+    "size_bytes": 55832,
+    "sha256": "008bbf495d4edce19f1f4d277dc48bf14a1e7b864b85d80b59d07e42be6e6e4a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mkrasselt1/library/VEBus/1.0.0/VEBus-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mkrasselt1/library/VEBus/1.0.0/VEBus-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

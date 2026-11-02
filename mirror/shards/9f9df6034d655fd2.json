@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-david8251",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-david8251/library/DHT/0.0.0+sha.1e78a462b211/DHT-0.0.0+sha.1e78a462b211.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DHT-0.0.0+sha.1e78a462b211.tar.gz",
+    "size_bytes": 3622,
+    "sha256": "fb258e338f78c84cdac6e6463d3f2d6412e785c49aa701e7ae2dfeaf3ad629a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-david8251/library/DHT/0.0.0%2Bsha.1e78a462b211/DHT-0.0.0%2Bsha.1e78a462b211.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-david8251/library/DHT/0.0.0%2Bsha.1e78a462b211/DHT-0.0.0%2Bsha.1e78a462b211.tar.gz"
+    ]
+   }
+  }
+ ]
+}

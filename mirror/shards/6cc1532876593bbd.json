@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/finndersen",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "finndersen/library/LEDuino/0.2.2/LEDuino-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LEDuino-0.2.2.tar.gz",
+    "size_bytes": 26714,
+    "sha256": "76a36a0e16adf003d680bf169901c1a141816e11797c9419b7955cba0002cdb3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/finndersen/library/LEDuino/0.2.2/LEDuino-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/finndersen/library/LEDuino/0.2.2/LEDuino-0.2.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

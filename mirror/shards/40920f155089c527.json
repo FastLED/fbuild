@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/robotman2412",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "robotman2412/library/PAX%20Graphics/1.1.0/PAXGraphics-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PAXGraphics-1.1.0.tar.gz",
+    "size_bytes": 206147,
+    "sha256": "ed413d8a1f6155ed6be601c91199f3c2a7a924d7e6b33751660e4bca81fbe1f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robotman2412/library/PAX%2520Graphics/1.1.0/PAXGraphics-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/robotman2412/library/PAX%20Graphics/1.1.0/PAXGraphics-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

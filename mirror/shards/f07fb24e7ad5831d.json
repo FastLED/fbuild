@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-kabukistarship",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-kabukistarship/library/mbedBug/0.0.0+sha.02df5c1108f1/mbedBug-0.0.0+sha.02df5c1108f1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mbedBug-0.0.0+sha.02df5c1108f1.tar.gz",
+    "size_bytes": 6854,
+    "sha256": "2ba042695aca33c42437adac7af70f29134793fd097823a1d7c3ee590e80a6d3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kabukistarship/library/mbedBug/0.0.0%2Bsha.02df5c1108f1/mbedBug-0.0.0%2Bsha.02df5c1108f1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kabukistarship/library/mbedBug/0.0.0%2Bsha.02df5c1108f1/mbedBug-0.0.0%2Bsha.02df5c1108f1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

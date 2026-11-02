@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pixelmatix",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pixelmatix/library/GifDecoder/1.1.0/GifDecoder-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GifDecoder-1.1.0.tar.gz",
+    "size_bytes": 120020,
+    "sha256": "00946a1003419a980eb4e5b3d36861d4903ff91ff20ed6b5ea534b7fe0db5b2b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pixelmatix/library/GifDecoder/1.1.0/GifDecoder-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pixelmatix/library/GifDecoder/1.1.0/GifDecoder-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pixelmatix/library/SmartMatrix/4.0.3/SmartMatrix-4.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartMatrix-4.0.3.tar.gz",
+    "size_bytes": 393661,
+    "sha256": "5aee7450864977ea62ed08a7357e9e015e4ab3652ab71279dd2a932373711090",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pixelmatix/library/SmartMatrix/4.0.3/SmartMatrix-4.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/pixelmatix/library/SmartMatrix/4.0.3/SmartMatrix-4.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

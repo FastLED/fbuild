@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-hazanjon",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-hazanjon/library/PulseLibrary/0.0.0+sha.083159111741/PulseLibrary-0.0.0+sha.083159111741.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PulseLibrary-0.0.0+sha.083159111741.tar.gz",
+    "size_bytes": 1403,
+    "sha256": "e24d768b587ce057ffb81b4262e8fa14c069786d3af662db062261da429db5df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hazanjon/library/PulseLibrary/0.0.0%2Bsha.083159111741/PulseLibrary-0.0.0%2Bsha.083159111741.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hazanjon/library/PulseLibrary/0.0.0%2Bsha.083159111741/PulseLibrary-0.0.0%2Bsha.083159111741.tar.gz"
+    ]
+   }
+  }
+ ]
+}

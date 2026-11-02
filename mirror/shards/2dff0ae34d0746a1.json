@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gerdmuller",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gerdmuller/library/PushButton/0.1.2/PushButton-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PushButton-0.1.2.tar.gz",
+    "size_bytes": 3754,
+    "sha256": "0add92e1bb43c87174c5bbf0230c7ae389f00132f1dfce484c31a9e95c50365e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gerdmuller/library/PushButton/0.1.2/PushButton-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gerdmuller/library/PushButton/0.1.2/PushButton-0.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

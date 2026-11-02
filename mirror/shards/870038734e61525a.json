@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-imachooon",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-imachooon/library/epd1in54/0.0.0+sha.ac97d71fe296/epd1in54-0.0.0+sha.ac97d71fe296.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "epd1in54-0.0.0+sha.ac97d71fe296.tar.gz",
+    "size_bytes": 28864,
+    "sha256": "2421b792210e2a6d1b122ea40d9c5d06ad0a2af7c9e1889e11b92ed749cbb51a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-imachooon/library/epd1in54/0.0.0%2Bsha.ac97d71fe296/epd1in54-0.0.0%2Bsha.ac97d71fe296.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-imachooon/library/epd1in54/0.0.0%2Bsha.ac97d71fe296/epd1in54-0.0.0%2Bsha.ac97d71fe296.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-imachooon/library/epd1in54b/0.0.0+sha.cba3c1061231/epd1in54b-0.0.0+sha.cba3c1061231.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "epd1in54b-0.0.0+sha.cba3c1061231.tar.gz",
+    "size_bytes": 30283,
+    "sha256": "5053188b4d42d23d41d41de76709a09f8c2f7f38c249d184e4bf0786c099d9d3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-imachooon/library/epd1in54b/0.0.0%2Bsha.cba3c1061231/epd1in54b-0.0.0%2Bsha.cba3c1061231.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-imachooon/library/epd1in54b/0.0.0%2Bsha.cba3c1061231/epd1in54b-0.0.0%2Bsha.cba3c1061231.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-imachooon/library/st7565LCD/0.0.0+sha.f2eba6cbd093/st7565LCD-0.0.0+sha.f2eba6cbd093.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "st7565LCD-0.0.0+sha.f2eba6cbd093.tar.gz",
+    "size_bytes": 7170,
+    "sha256": "ff6d2acfdaa07541cbc0f9cdc213377844de34c1431a9719433dfcfef4b8cf1c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-imachooon/library/st7565LCD/0.0.0%2Bsha.f2eba6cbd093/st7565LCD-0.0.0%2Bsha.f2eba6cbd093.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-imachooon/library/st7565LCD/0.0.0%2Bsha.f2eba6cbd093/st7565LCD-0.0.0%2Bsha.f2eba6cbd093.tar.gz"
+    ]
+   }
+  }
+ ]
+}

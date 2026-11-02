@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ece-2035-ta",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ece-2035-ta/library/wave_player/0.0.0+sha.910a7c3c9b24/wave_player-0.0.0+sha.910a7c3c9b24.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "wave_player-0.0.0+sha.910a7c3c9b24.tar.gz",
+    "size_bytes": 3755,
+    "sha256": "70af44ad9b1f158cdfb167b15f25bf98b66aedfc81b0641c99c5d7df1501641c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ece-2035-ta/library/wave_player/0.0.0%2Bsha.910a7c3c9b24/wave_player-0.0.0%2Bsha.910a7c3c9b24.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ece-2035-ta/library/wave_player/0.0.0%2Bsha.910a7c3c9b24/wave_player-0.0.0%2Bsha.910a7c3c9b24.tar.gz"
+    ]
+   }
+  }
+ ]
+}

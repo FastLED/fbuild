@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-tbronez",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-tbronez/library/MTK3339/0.0.0+sha.c9861b0d3219/MTK3339-0.0.0+sha.c9861b0d3219.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MTK3339-0.0.0+sha.c9861b0d3219.tar.gz",
+    "size_bytes": 4280,
+    "sha256": "7a3fe877d5711f8cd2a86eaed7cd32f2b8d1be19cd74c973c57e875b2e1530f3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tbronez/library/MTK3339/0.0.0%2Bsha.c9861b0d3219/MTK3339-0.0.0%2Bsha.c9861b0d3219.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tbronez/library/MTK3339/0.0.0%2Bsha.c9861b0d3219/MTK3339-0.0.0%2Bsha.c9861b0d3219.tar.gz"
+    ]
+   }
+  }
+ ]
+}

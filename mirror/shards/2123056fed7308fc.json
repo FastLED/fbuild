@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/3dmakergarage",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "3dmakergarage/library/Lion%20IoT%20Core/2.0.0/LionIoTCore-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LionIoTCore-2.0.0.tar.gz",
+    "size_bytes": 5410,
+    "sha256": "293d6b4a75d29da22409f03373aec6ac911a53a29d678f14885354b99cb613fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/3dmakergarage/library/Lion%2520IoT%2520Core/2.0.0/LionIoTCore-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/3dmakergarage/library/Lion%20IoT%20Core/2.0.0/LionIoTCore-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "3dmakergarage/library/Lion%20IoT%20Motion%20Sensor/2.0.0/LionIoTMotionSensor-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LionIoTMotionSensor-2.0.0.tar.gz",
+    "size_bytes": 3188,
+    "sha256": "3ddaca636a8fc070f42cf0d34d0d37fae9d3bf2cf4b725ed9f90a4355bb2e39f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/3dmakergarage/library/Lion%2520IoT%2520Motion%2520Sensor/2.0.0/LionIoTMotionSensor-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/3dmakergarage/library/Lion%20IoT%20Motion%20Sensor/2.0.0/LionIoTMotionSensor-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "3dmakergarage/library/Lion%20IoT%20Range%20Sensor/2.0.0/LionIoTRangeSensor-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LionIoTRangeSensor-2.0.0.tar.gz",
+    "size_bytes": 2998,
+    "sha256": "cc92aa5ed4fc780016136d4956f233086e130ec70ad8e7d319a65f21b83e47de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/3dmakergarage/library/Lion%2520IoT%2520Range%2520Sensor/2.0.0/LionIoTRangeSensor-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/3dmakergarage/library/Lion%20IoT%20Range%20Sensor/2.0.0/LionIoTRangeSensor-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

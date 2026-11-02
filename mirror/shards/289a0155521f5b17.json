@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/aasim-a",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "aasim-a/library/AsyncTimer/2.4.0/AsyncTimer-2.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncTimer-2.4.0.tar.gz",
+    "size_bytes": 6833,
+    "sha256": "f1597d8975fcc3a7acebb370d62311831a6b31ead60e4f5da450245de19e9c77",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aasim-a/library/AsyncTimer/2.4.0/AsyncTimer-2.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aasim-a/library/AsyncTimer/2.4.0/AsyncTimer-2.4.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

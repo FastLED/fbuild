@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/alauchner",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "alauchner/library/AlaToolsLib/0.0.2/AlaToolsLib-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlaToolsLib-0.0.2.tar.gz",
+    "size_bytes": 4624,
+    "sha256": "d4e24eba4b407ca9f7758e83d39883b31d3ef97ed2cbd46c43bd4f6ef8f778ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alauchner/library/AlaToolsLib/0.0.2/AlaToolsLib-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/alauchner/library/AlaToolsLib/0.0.2/AlaToolsLib-0.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

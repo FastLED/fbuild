@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/junan8733",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "junan8733/library/RamjiButton/1.0.4/RamjiButton-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RamjiButton-1.0.4.tar.gz",
+    "size_bytes": 37720,
+    "sha256": "c3eb25ac0d44a1c77b4659e24db0153015b5c8c6054ecc17a9323548fecd70c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/junan8733/library/RamjiButton/1.0.4/RamjiButton-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/junan8733/library/RamjiButton/1.0.4/RamjiButton-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

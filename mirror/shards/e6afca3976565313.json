@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/deepanshu-deshwal",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "deepanshu-deshwal/library/SL001_Deepanshu/1.0.1/SL001_Deepanshu-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SL001_Deepanshu-1.0.1.tar.gz",
+    "size_bytes": 2445,
+    "sha256": "40bc247bf06ab285cd692c0eda79c22761ed788e97842c78ac9db918fb0a379a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deepanshu-deshwal/library/SL001_Deepanshu/1.0.1/SL001_Deepanshu-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/deepanshu-deshwal/library/SL001_Deepanshu/1.0.1/SL001_Deepanshu-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "deepanshu-deshwal/library/SL002_DHT11/1.0.0/SL002_DHT11-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SL002_DHT11-1.0.0.tar.gz",
+    "size_bytes": 2319,
+    "sha256": "10b98e807960dec42a1e6d89941ec1a9708e0647c73f8751d615ad608e141bb7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deepanshu-deshwal/library/SL002_DHT11/1.0.0/SL002_DHT11-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/deepanshu-deshwal/library/SL002_DHT11/1.0.0/SL002_DHT11-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

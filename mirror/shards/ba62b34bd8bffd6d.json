@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ifrn-robotica-cm",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ifrn-robotica-cm/library/CosmosNV2/1.2/CosmosNV2-1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CosmosNV2-1.2.tar.gz",
+    "size_bytes": 19610,
+    "sha256": "e482cc9fd31540f2c5e22438d8e22d06545d6d38a5623832175584891a95bf09",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ifrn-robotica-cm/library/CosmosNV2/1.2/CosmosNV2-1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ifrn-robotica-cm/library/CosmosNV2/1.2/CosmosNV2-1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

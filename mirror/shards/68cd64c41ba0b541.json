@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tomsuch",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tomsuch/library/M5StackSAM/0.0.2/M5StackSAM-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5StackSAM-0.0.2.tar.gz",
+    "size_bytes": 18778,
+    "sha256": "36e60d8997dc8dad66df8b4865df9592ee45876f895d807651ed420302a93e46",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tomsuch/library/M5StackSAM/0.0.2/M5StackSAM-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tomsuch/library/M5StackSAM/0.0.2/M5StackSAM-0.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

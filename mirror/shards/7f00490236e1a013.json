@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/e-radionicacom",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "e-radionicacom/library/InkplateLibrary/11.1.4/InkplateLibrary-11.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "InkplateLibrary-11.1.4.tar.gz",
+    "size_bytes": 35639336,
+    "sha256": "e651759a919f7fb162b626979a48e554fa223159255eccc0ce3e6e8e828d0dd2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/e-radionicacom/library/InkplateLibrary/11.1.4/InkplateLibrary-11.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/e-radionicacom/library/InkplateLibrary/11.1.4/InkplateLibrary-11.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "e-radionicacom/library/InkplateLibrary/11.1.5/InkplateLibrary-11.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "InkplateLibrary-11.1.5.tar.gz",
+    "size_bytes": 35986122,
+    "sha256": "d903b8f80fa0cabe8a76f5a310ca226310110a8b279d4bffb2023b9b0f581b13",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/e-radionicacom/library/InkplateLibrary/11.1.5/InkplateLibrary-11.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/e-radionicacom/library/InkplateLibrary/11.1.5/InkplateLibrary-11.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "e-radionicacom/library/InkplateLibrary/11.2.0/InkplateLibrary-11.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "InkplateLibrary-11.2.0.tar.gz",
+    "size_bytes": 35998377,
+    "sha256": "aee6413ad86b04e59e157282d2401f4287fa81ad76a37449664e53c92a9d5a3b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/e-radionicacom/library/InkplateLibrary/11.2.0/InkplateLibrary-11.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/e-radionicacom/library/InkplateLibrary/11.2.0/InkplateLibrary-11.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "e-radionicacom/library/InkplateLibrary/11.2.1/InkplateLibrary-11.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "InkplateLibrary-11.2.1.tar.gz",
+    "size_bytes": 36807076,
+    "sha256": "34188ee34bc581f09ae86a128dc619906ca42373aa42862eaa10c8af8257a7bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/e-radionicacom/library/InkplateLibrary/11.2.1/InkplateLibrary-11.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/e-radionicacom/library/InkplateLibrary/11.2.1/InkplateLibrary-11.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

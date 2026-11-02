@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/matthewgream",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "matthewgream/library/BluetoothTPMS/1.0.1/BluetoothTPMS-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BluetoothTPMS-1.0.1.tar.gz",
+    "size_bytes": 4070,
+    "sha256": "ed838fd35a6eb58f03fca13eaa66c042c265c69773eb9f425f2036bf50369ca7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matthewgream/library/BluetoothTPMS/1.0.1/BluetoothTPMS-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/matthewgream/library/BluetoothTPMS/1.0.1/BluetoothTPMS-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "matthewgream/library/DalyBMSInterface/1.0.1/DalyBMSInterface-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DalyBMSInterface-1.0.1.tar.gz",
+    "size_bytes": 18676,
+    "sha256": "6e9ea7083047dfad589c01e671dab4de2a063dbdfad30c92bd1884ffccb9626e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matthewgream/library/DalyBMSInterface/1.0.1/DalyBMSInterface-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/matthewgream/library/DalyBMSInterface/1.0.1/DalyBMSInterface-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "matthewgream/library/LightMDNS/1.0.5/LightMDNS-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LightMDNS-1.0.5.tar.gz",
+    "size_bytes": 23792,
+    "sha256": "47f8bc083e5cb2212c46a60597e8cd6a6036a084b0bf41705a467314894aeddd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matthewgream/library/LightMDNS/1.0.5/LightMDNS-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/matthewgream/library/LightMDNS/1.0.5/LightMDNS-1.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

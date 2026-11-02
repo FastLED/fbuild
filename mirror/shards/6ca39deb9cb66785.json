@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/neocat",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "neocat/library/TwitterPost/1.3.1/TwitterPost-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TwitterPost-1.3.1.tar.gz",
+    "size_bytes": 4186,
+    "sha256": "a5b352ecbb81fa10195d6762cfbf5437b090545de831bfd13a0b83709b326297",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/neocat/library/TwitterPost/1.3.1/TwitterPost-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/neocat/library/TwitterPost/1.3.1/TwitterPost-1.3.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

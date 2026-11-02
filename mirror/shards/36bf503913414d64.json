@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/marcogallotta",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "marcogallotta/library/pqueue/1.0.0/pqueue-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pqueue-1.0.0.tar.gz",
+    "size_bytes": 414341,
+    "sha256": "077eeaccee50b3d361815bc6f24cf2e53203611a8ab79992b91d8a3b3ef3b0fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marcogallotta/library/pqueue/1.0.0/pqueue-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/marcogallotta/library/pqueue/1.0.0/pqueue-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-labmrd",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-labmrd/library/MX12/0.0.0+sha.4c118a827f11/MX12-0.0.0+sha.4c118a827f11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MX12-0.0.0+sha.4c118a827f11.tar.gz",
+    "size_bytes": 10363,
+    "sha256": "9dd45c66602637405b1c086e9cd0210f1df87cdb1e35903d075041c3147bc8f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-labmrd/library/MX12/0.0.0%2Bsha.4c118a827f11/MX12-0.0.0%2Bsha.4c118a827f11.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-labmrd/library/MX12/0.0.0%2Bsha.4c118a827f11/MX12-0.0.0%2Bsha.4c118a827f11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-labmrd/library/ServoRingBuffer/0.0.0+sha.da00ed8a1cd5/ServoRingBuffer-0.0.0+sha.da00ed8a1cd5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ServoRingBuffer-0.0.0+sha.da00ed8a1cd5.tar.gz",
+    "size_bytes": 2946,
+    "sha256": "34c672baa30f27aabe6247be60e906681bf940fd43ce439cd18c844bc53b0330",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-labmrd/library/ServoRingBuffer/0.0.0%2Bsha.da00ed8a1cd5/ServoRingBuffer-0.0.0%2Bsha.da00ed8a1cd5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-labmrd/library/ServoRingBuffer/0.0.0%2Bsha.da00ed8a1cd5/ServoRingBuffer-0.0.0%2Bsha.da00ed8a1cd5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

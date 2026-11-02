@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mochoy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mochoy/library/smart-blaster/0.8.0/smart-blaster-0.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "smart-blaster-0.8.0.tar.gz",
+    "size_bytes": 9639,
+    "sha256": "a3ab6ab85808ee4bac04d5b4bd9efb72e63d630f4791a2b8e81ef79f4c3da74c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mochoy/library/smart-blaster/0.8.0/smart-blaster-0.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mochoy/library/smart-blaster/0.8.0/smart-blaster-0.8.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

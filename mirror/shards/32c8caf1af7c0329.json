@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hmueller01",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hmueller01/library/PubSubClient3/3.1.0/PubSubClient3-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PubSubClient3-3.1.0.tar.gz",
+    "size_bytes": 20616,
+    "sha256": "44537539b0f63d8eab5306c431e204f63ac71bf561d467f4db0bf3485baee42d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hmueller01/library/PubSubClient3/3.1.0/PubSubClient3-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hmueller01/library/PubSubClient3/3.1.0/PubSubClient3-3.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hmueller01/library/PubSubClient3/3.2.0/PubSubClient3-3.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PubSubClient3-3.2.0.tar.gz",
+    "size_bytes": 25113,
+    "sha256": "0dcbe7b9fc0fdbd42b7e20dee3415ed1d11b2db8b0b0834c21564538d4efe5e0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hmueller01/library/PubSubClient3/3.2.0/PubSubClient3-3.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hmueller01/library/PubSubClient3/3.2.0/PubSubClient3-3.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hmueller01/library/PubSubClient3/3.2.1/PubSubClient3-3.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PubSubClient3-3.2.1.tar.gz",
+    "size_bytes": 25002,
+    "sha256": "73540a6ecc475d0f45e69135bea2b65a39c5733e93a41dac7a6e558f9c5578a3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hmueller01/library/PubSubClient3/3.2.1/PubSubClient3-3.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/hmueller01/library/PubSubClient3/3.2.1/PubSubClient3-3.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hmueller01/library/PubSubClient3/3.3.0/PubSubClient3-3.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PubSubClient3-3.3.0.tar.gz",
+    "size_bytes": 30139,
+    "sha256": "ada911edd6dfb917f038daac5d2a30dae6b0914b43a86dacc1d0eb608ee9cc39",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hmueller01/library/PubSubClient3/3.3.0/PubSubClient3-3.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hmueller01/library/PubSubClient3/3.3.0/PubSubClient3-3.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hmueller01/library/PubSubClient3/3.3.1/PubSubClient3-3.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PubSubClient3-3.3.1.tar.gz",
+    "size_bytes": 31696,
+    "sha256": "dfd766934db069335eed3713ed0098b42f1d42aac04798de796d8ec903098fdc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hmueller01/library/PubSubClient3/3.3.1/PubSubClient3-3.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/hmueller01/library/PubSubClient3/3.3.1/PubSubClient3-3.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hmueller01/library/PubSubClient3/3.3.2/PubSubClient3-3.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PubSubClient3-3.3.2.tar.gz",
+    "size_bytes": 31915,
+    "sha256": "94e7a45fe10d089ef0fc7b089cd210200e1c4e7e7955bec0fee19f93e09e3b8a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hmueller01/library/PubSubClient3/3.3.2/PubSubClient3-3.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/hmueller01/library/PubSubClient3/3.3.2/PubSubClient3-3.3.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

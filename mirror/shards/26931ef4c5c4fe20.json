@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gigix74",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gigix74/library/CalibratedSpeed/1.0.0/CalibratedSpeed-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CalibratedSpeed-1.0.0.tar.gz",
+    "size_bytes": 12074,
+    "sha256": "8758772853a19a0a6b0cd93d38ba320d8efa8b551011e146bd3bcf7d3e12f5e7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gigix74/library/CalibratedSpeed/1.0.0/CalibratedSpeed-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gigix74/library/CalibratedSpeed/1.0.0/CalibratedSpeed-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

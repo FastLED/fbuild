@@ -1,0 +1,217 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/acornelissen",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "acornelissen/library/DTS6012M_UART/2.1.1/DTS6012M_UART-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DTS6012M_UART-2.1.1.tar.gz",
+    "size_bytes": 23542,
+    "sha256": "27049844cba3578e874fae1b2e4e1554b74abec7c18b453443fedce5f9b3cddc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/acornelissen/library/DTS6012M_UART/2.1.1/DTS6012M_UART-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/acornelissen/library/DTS6012M_UART/2.1.1/DTS6012M_UART-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "acornelissen/library/DTS6012M_UART/2.1.2/DTS6012M_UART-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DTS6012M_UART-2.1.2.tar.gz",
+    "size_bytes": 24022,
+    "sha256": "27a498bdf1318157d6e0fb076eda15bd469cf266cbf4b5bae8d0eb68e2202a58",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/acornelissen/library/DTS6012M_UART/2.1.2/DTS6012M_UART-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/acornelissen/library/DTS6012M_UART/2.1.2/DTS6012M_UART-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "acornelissen/library/DTS6012M_UART/2.2.0/DTS6012M_UART-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DTS6012M_UART-2.2.0.tar.gz",
+    "size_bytes": 25364,
+    "sha256": "ded1eec5783b8ac444e8343d98afc5563cae871c0597700ba2a64106e4708fc7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/acornelissen/library/DTS6012M_UART/2.2.0/DTS6012M_UART-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/acornelissen/library/DTS6012M_UART/2.2.0/DTS6012M_UART-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "acornelissen/library/DTS6012M_UART/2.2.1/DTS6012M_UART-2.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DTS6012M_UART-2.2.1.tar.gz",
+    "size_bytes": 25457,
+    "sha256": "fd303683c98213ab1d9ad5d307c93af9759b9a39ef687ecdc7c9b0d914302abb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/acornelissen/library/DTS6012M_UART/2.2.1/DTS6012M_UART-2.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/acornelissen/library/DTS6012M_UART/2.2.1/DTS6012M_UART-2.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "acornelissen/library/DTS6012M_UART/2.3.1/DTS6012M_UART-2.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DTS6012M_UART-2.3.1.tar.gz",
+    "size_bytes": 26531,
+    "sha256": "6eae8404147934a89e23334f98acf38991092d6d4c6a17c71581455222a6ec6e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/acornelissen/library/DTS6012M_UART/2.3.1/DTS6012M_UART-2.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/acornelissen/library/DTS6012M_UART/2.3.1/DTS6012M_UART-2.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "acornelissen/library/DTS6012M_UART/2.4.0/DTS6012M_UART-2.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DTS6012M_UART-2.4.0.tar.gz",
+    "size_bytes": 27463,
+    "sha256": "c3de4ee9233bd0acd9a4a1b6b633018a4a0e54ed4a08aaa0739b1301ac4bd909",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/acornelissen/library/DTS6012M_UART/2.4.0/DTS6012M_UART-2.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/acornelissen/library/DTS6012M_UART/2.4.0/DTS6012M_UART-2.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "acornelissen/library/DTS6012M_UART/2.4.1/DTS6012M_UART-2.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DTS6012M_UART-2.4.1.tar.gz",
+    "size_bytes": 27394,
+    "sha256": "f4dc7515b73bef26695e122b2f9b22e1e4e54cfdb5bd20e9c47b422c8550c4fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/acornelissen/library/DTS6012M_UART/2.4.1/DTS6012M_UART-2.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/acornelissen/library/DTS6012M_UART/2.4.1/DTS6012M_UART-2.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "acornelissen/library/DTS6012M_UART/2.5.0/DTS6012M_UART-2.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DTS6012M_UART-2.5.0.tar.gz",
+    "size_bytes": 28698,
+    "sha256": "74554bce0da8a36c8408d1712ff951916c9b5109c923ae4d16271c107ae1a7f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/acornelissen/library/DTS6012M_UART/2.5.0/DTS6012M_UART-2.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/acornelissen/library/DTS6012M_UART/2.5.0/DTS6012M_UART-2.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "acornelissen/library/DTS6012M_UART/2.5.1/DTS6012M_UART-2.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DTS6012M_UART-2.5.1.tar.gz",
+    "size_bytes": 29032,
+    "sha256": "5a4146c057f0445a1d9c77d0b4dca7473b902f24a43c81a43b289a3bc25222e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/acornelissen/library/DTS6012M_UART/2.5.1/DTS6012M_UART-2.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/acornelissen/library/DTS6012M_UART/2.5.1/DTS6012M_UART-2.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "acornelissen/library/DTS6012M_UART/2.5.2/DTS6012M_UART-2.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DTS6012M_UART-2.5.2.tar.gz",
+    "size_bytes": 29174,
+    "sha256": "510861abe405b8fa8409fa621e16181c5c04255bbc80f77d97083d3fe11628b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/acornelissen/library/DTS6012M_UART/2.5.2/DTS6012M_UART-2.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/acornelissen/library/DTS6012M_UART/2.5.2/DTS6012M_UART-2.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "acornelissen/library/DTS6012M_UART/2.5.3/DTS6012M_UART-2.5.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DTS6012M_UART-2.5.3.tar.gz",
+    "size_bytes": 29269,
+    "sha256": "96e5c688af1d8312dd34b2b2eeabb97cc7c29682b45f87586293208194a385d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/acornelissen/library/DTS6012M_UART/2.5.3/DTS6012M_UART-2.5.3.tar.gz",
+     "https://dl.registry.platformio.org/download/acornelissen/library/DTS6012M_UART/2.5.3/DTS6012M_UART-2.5.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "acornelissen/library/DTS6012M_UART/2.5.4/DTS6012M_UART-2.5.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DTS6012M_UART-2.5.4.tar.gz",
+    "size_bytes": 29370,
+    "sha256": "1ae1d2e9ab00b6d786ad5720a726023359b39d1771cfefc1374fde87a67a3384",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/acornelissen/library/DTS6012M_UART/2.5.4/DTS6012M_UART-2.5.4.tar.gz",
+     "https://dl.registry.platformio.org/download/acornelissen/library/DTS6012M_UART/2.5.4/DTS6012M_UART-2.5.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "acornelissen/library/DTS6012M_UART/2.6.0/DTS6012M_UART-2.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DTS6012M_UART-2.6.0.tar.gz",
+    "size_bytes": 32176,
+    "sha256": "628b26ba0e8cc037b758ef8e1028cdbeec0286b85217c1e54418133e339ea531",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/acornelissen/library/DTS6012M_UART/2.6.0/DTS6012M_UART-2.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/acornelissen/library/DTS6012M_UART/2.6.0/DTS6012M_UART-2.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "acornelissen/library/DTS6012M_UART/2.7.0/DTS6012M_UART-2.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DTS6012M_UART-2.7.0.tar.gz",
+    "size_bytes": 32633,
+    "sha256": "5e74867d4af707c63fa67fff4557d4ddd36ab9606ecb1ea7a79d251ac94c2164",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/acornelissen/library/DTS6012M_UART/2.7.0/DTS6012M_UART-2.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/acornelissen/library/DTS6012M_UART/2.7.0/DTS6012M_UART-2.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "acornelissen/library/DTS6012M_UART/2.8.0/DTS6012M_UART-2.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DTS6012M_UART-2.8.0.tar.gz",
+    "size_bytes": 964056,
+    "sha256": "4f03cf29d3f6b60485715937be88fbb646f827fcb2b280df168a1bef5262efc2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/acornelissen/library/DTS6012M_UART/2.8.0/DTS6012M_UART-2.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/acornelissen/library/DTS6012M_UART/2.8.0/DTS6012M_UART-2.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "acornelissen/library/DTS6012M_UART/3.0.0/DTS6012M_UART-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DTS6012M_UART-3.0.0.tar.gz",
+    "size_bytes": 42600,
+    "sha256": "97ed2d830fd971f9fd476cb25152eac1873a4ce1cc3b8a1e84f3fbee9dd01d4a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/acornelissen/library/DTS6012M_UART/3.0.0/DTS6012M_UART-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/acornelissen/library/DTS6012M_UART/3.0.0/DTS6012M_UART-3.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

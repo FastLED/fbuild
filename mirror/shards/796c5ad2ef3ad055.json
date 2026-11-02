@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/achirawareelectronics",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "achirawareelectronics/library/AchiraWareMotor_DRV8830/1.0.0/AchiraWareMotor_DRV8830-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AchiraWareMotor_DRV8830-1.0.0.tar.gz",
+    "size_bytes": 6015,
+    "sha256": "a618b81d799cb744ec86a15b4aae42b9f6edcf190487f7746596a9492d6c2dfb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/achirawareelectronics/library/AchiraWareMotor_DRV8830/1.0.0/AchiraWareMotor_DRV8830-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/achirawareelectronics/library/AchiraWareMotor_DRV8830/1.0.0/AchiraWareMotor_DRV8830-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "achirawareelectronics/library/AchiraWareMotor_DRV8830/1.1.0/AchiraWareMotor_DRV8830-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AchiraWareMotor_DRV8830-1.1.0.tar.gz",
+    "size_bytes": 6251,
+    "sha256": "54ff1f473bdb6bd22bb7178036bc79c2bff5235856935727d4a6eb1a01f02519",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/achirawareelectronics/library/AchiraWareMotor_DRV8830/1.1.0/AchiraWareMotor_DRV8830-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/achirawareelectronics/library/AchiraWareMotor_DRV8830/1.1.0/AchiraWareMotor_DRV8830-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "achirawareelectronics/library/SimpleRGBLed/1.0.0/SimpleRGBLed-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleRGBLed-1.0.0.tar.gz",
+    "size_bytes": 6980,
+    "sha256": "99a9794cdf7ccfc6c2a3ce0d9cae56dfc863970fac81a13c1fbf5620edc6897e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/achirawareelectronics/library/SimpleRGBLed/1.0.0/SimpleRGBLed-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/achirawareelectronics/library/SimpleRGBLed/1.0.0/SimpleRGBLed-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "achirawareelectronics/library/SimpleRGBLed/2.0.0/SimpleRGBLed-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleRGBLed-2.0.0.tar.gz",
+    "size_bytes": 8639,
+    "sha256": "c3a5688ffbf1523eee76d9c461cb31aa6dc62a0bfeef50ffa6af00ee3f28b06f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/achirawareelectronics/library/SimpleRGBLed/2.0.0/SimpleRGBLed-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/achirawareelectronics/library/SimpleRGBLed/2.0.0/SimpleRGBLed-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

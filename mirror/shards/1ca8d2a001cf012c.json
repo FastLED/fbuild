@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/superdmz",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "superdmz/library/SuperDMZ/1.1.0/SuperDMZ-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperDMZ-1.1.0.tar.gz",
+    "size_bytes": 20085,
+    "sha256": "01d96fb356e304251bfb3d2f85255c74ea5ab12f85e1c15a432a7ea47988c7cf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/superdmz/library/SuperDMZ/1.1.0/SuperDMZ-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/superdmz/library/SuperDMZ/1.1.0/SuperDMZ-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "superdmz/library/SuperDMZ/1.1.14/SuperDMZ-1.1.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperDMZ-1.1.14.tar.gz",
+    "size_bytes": 45390,
+    "sha256": "6913c36b20baf78f2142fc44087a065edef5e1cbbda3a751557f3512e0997776",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/superdmz/library/SuperDMZ/1.1.14/SuperDMZ-1.1.14.tar.gz",
+     "https://dl.registry.platformio.org/download/superdmz/library/SuperDMZ/1.1.14/SuperDMZ-1.1.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "superdmz/library/SuperDMZ/1.1.4/SuperDMZ-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperDMZ-1.1.4.tar.gz",
+    "size_bytes": 35978,
+    "sha256": "acf66b816bbe4819f56faeb5d17530e2d4ce3c990a3f44de7130b0760490eb5a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/superdmz/library/SuperDMZ/1.1.4/SuperDMZ-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/superdmz/library/SuperDMZ/1.1.4/SuperDMZ-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "superdmz/library/SuperDMZ/1.2.0/SuperDMZ-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperDMZ-1.2.0.tar.gz",
+    "size_bytes": 46161,
+    "sha256": "8ed5d2327d1c1f21c60699c021220109edbc92de9ec7dedf2271839b9bfc87a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/superdmz/library/SuperDMZ/1.2.0/SuperDMZ-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/superdmz/library/SuperDMZ/1.2.0/SuperDMZ-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "superdmz/library/SuperDMZ/1.2.1/SuperDMZ-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperDMZ-1.2.1.tar.gz",
+    "size_bytes": 49434,
+    "sha256": "a78a448fd9daa2adda8e815c56b9c144554e579f0c372b3a444d6f468699b77f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/superdmz/library/SuperDMZ/1.2.1/SuperDMZ-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/superdmz/library/SuperDMZ/1.2.1/SuperDMZ-1.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

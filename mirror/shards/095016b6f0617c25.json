@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-me",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-me/library/NHD_SPI_LCD_LIB/0.0.0+sha.bf98376a4718/NHD_SPI_LCD_LIB-0.0.0+sha.bf98376a4718.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NHD_SPI_LCD_LIB-0.0.0+sha.bf98376a4718.tar.gz",
+    "size_bytes": 1088,
+    "sha256": "38e2c3b2652159161b7df374acd23db6b0acfa449f54f6b03dac74faf515a94c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-me/library/NHD_SPI_LCD_LIB/0.0.0%2Bsha.bf98376a4718/NHD_SPI_LCD_LIB-0.0.0%2Bsha.bf98376a4718.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-me/library/NHD_SPI_LCD_LIB/0.0.0%2Bsha.bf98376a4718/NHD_SPI_LCD_LIB-0.0.0%2Bsha.bf98376a4718.tar.gz"
+    ]
+   }
+  }
+ ]
+}

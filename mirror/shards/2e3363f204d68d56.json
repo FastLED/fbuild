@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/circuitstate",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "circuitstate/library/CSE_ArduinoRS485/1.0.14/CSE_ArduinoRS485-1.0.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CSE_ArduinoRS485-1.0.14.tar.gz",
+    "size_bytes": 21226,
+    "sha256": "75004a6cfba26441c08c3d65c892cc818e081157ea3a9532ec92e15a1ade3601",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/circuitstate/library/CSE_ArduinoRS485/1.0.14/CSE_ArduinoRS485-1.0.14.tar.gz",
+     "https://dl.registry.platformio.org/download/circuitstate/library/CSE_ArduinoRS485/1.0.14/CSE_ArduinoRS485-1.0.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "circuitstate/library/CSE_CST328/0.0.5/CSE_CST328-0.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CSE_CST328-0.0.5.tar.gz",
+    "size_bytes": 10978,
+    "sha256": "c59bf617d17defe5f77dba29f7d3623aef746b742fa1a9e8cef2972a83e05a88",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/circuitstate/library/CSE_CST328/0.0.5/CSE_CST328-0.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/circuitstate/library/CSE_CST328/0.0.5/CSE_CST328-0.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "circuitstate/library/CSE_CircularBuffer/0.0.2/CSE_CircularBuffer-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CSE_CircularBuffer-0.0.2.tar.gz",
+    "size_bytes": 6884,
+    "sha256": "53bf3888740915bbc2d60f5cfa6bb2a471871f9a9567793877f4c508102cb536",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/circuitstate/library/CSE_CircularBuffer/0.0.2/CSE_CircularBuffer-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/circuitstate/library/CSE_CircularBuffer/0.0.2/CSE_CircularBuffer-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "circuitstate/library/CSE_ESPMutex/0.0.6/CSE_ESPMutex-0.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CSE_ESPMutex-0.0.6.tar.gz",
+    "size_bytes": 6497,
+    "sha256": "6128001c6668f6e87f60e3d6da881d5301174ef63a6e8ba4e1c35da0fad82e39",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/circuitstate/library/CSE_ESPMutex/0.0.6/CSE_ESPMutex-0.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/circuitstate/library/CSE_ESPMutex/0.0.6/CSE_ESPMutex-0.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "circuitstate/library/CSE_GNSS/1.0.1/CSE_GNSS-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CSE_GNSS-1.0.1.tar.gz",
+    "size_bytes": 11146,
+    "sha256": "8cd1b98ea9b87ec62865bb1c81b5552a6516edfa79c717c924052e33ab05ee72",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/circuitstate/library/CSE_GNSS/1.0.1/CSE_GNSS-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/circuitstate/library/CSE_GNSS/1.0.1/CSE_GNSS-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "circuitstate/library/CSE_MillisTimer/0.0.1/CSE_MillisTimer-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CSE_MillisTimer-0.0.1.tar.gz",
+    "size_bytes": 4128,
+    "sha256": "071aef759cf3094808d0387f8ffb6e5b86e72b90881032021be3baf9d369e309",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/circuitstate/library/CSE_MillisTimer/0.0.1/CSE_MillisTimer-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/circuitstate/library/CSE_MillisTimer/0.0.1/CSE_MillisTimer-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "circuitstate/library/CSE_ModbusRTU/0.0.10/CSE_ModbusRTU-0.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CSE_ModbusRTU-0.0.10.tar.gz",
+    "size_bytes": 36360,
+    "sha256": "6763eeabab30a1541f4153b3aa27a11a13bd8552d6475283f382fdbb5d50bbc1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/circuitstate/library/CSE_ModbusRTU/0.0.10/CSE_ModbusRTU-0.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/circuitstate/library/CSE_ModbusRTU/0.0.10/CSE_ModbusRTU-0.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "circuitstate/library/CSE_ZH06/0.0.1/CSE_ZH06-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CSE_ZH06-0.0.1.tar.gz",
+    "size_bytes": 6668,
+    "sha256": "e1be2c39243e02e5d0588192f264a56bc1ba641ebbda706fc021f35f0548a836",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/circuitstate/library/CSE_ZH06/0.0.1/CSE_ZH06-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/circuitstate/library/CSE_ZH06/0.0.1/CSE_ZH06-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

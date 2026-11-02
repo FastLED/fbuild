@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/felikslv",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "felikslv/library/mini_shell/1.0.3/mini_shell-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mini_shell-1.0.3.tar.gz",
+    "size_bytes": 11746,
+    "sha256": "b4253799d990ce6a0ea81fcddbbfe61361a08ce3418c4c3d886b44d1f5d0f8d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/felikslv/library/mini_shell/1.0.3/mini_shell-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/felikslv/library/mini_shell/1.0.3/mini_shell-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jphollanti",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jphollanti/library/ArduinoDcMotor/0.0.0-alpha+sha.v0.0.1/ArduinoDcMotor-0.0.0-alphasha.v0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoDcMotor-0.0.0-alphasha.v0.0.1.tar.gz",
+    "size_bytes": 747,
+    "sha256": "51e36f89eff5cab4df580a4d9062fc7408370e6fa61cc595022be02a41e3cd4e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jphollanti/library/ArduinoDcMotor/0.0.0-alpha%2Bsha.v0.0.1/ArduinoDcMotor-0.0.0-alphasha.v0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jphollanti/library/ArduinoDcMotor/0.0.0-alpha%2Bsha.v0.0.1/ArduinoDcMotor-0.0.0-alphasha.v0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

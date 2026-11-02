@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mt-caret",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mt-caret/library/arduino-l6470-driver/0.0.1/arduino-l6470-driver-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arduino-l6470-driver-0.0.1.tar.gz",
+    "size_bytes": 6843,
+    "sha256": "5b1e11afb32e5962b9f6538feab8e56075a41d3a8e7eed5f148b65a52d09cff5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mt-caret/library/arduino-l6470-driver/0.0.1/arduino-l6470-driver-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mt-caret/library/arduino-l6470-driver/0.0.1/arduino-l6470-driver-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

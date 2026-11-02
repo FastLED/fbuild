@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/humacompany",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "humacompany/library/Huma%20Buttons/0.0.4/HumaButtons-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HumaButtons-0.0.4.tar.gz",
+    "size_bytes": 16607,
+    "sha256": "4f1809d77e203d0b3251103e569d5583f2573346f0fd8db7487ddb7549497091",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/humacompany/library/Huma%2520Buttons/0.0.4/HumaButtons-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/humacompany/library/Huma%20Buttons/0.0.4/HumaButtons-0.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

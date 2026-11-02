@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-stevep",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-stevep/library/HTTPClientWithPUT/0.0.0+sha.0463c8425d73/HTTPClientWithPUT-0.0.0+sha.0463c8425d73.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HTTPClientWithPUT-0.0.0+sha.0463c8425d73.tar.gz",
+    "size_bytes": 8389,
+    "sha256": "e92829785d2b3c5bee743fe42872c961fa22ade3e6bb15139dcc62bc6322827d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-stevep/library/HTTPClientWithPUT/0.0.0%2Bsha.0463c8425d73/HTTPClientWithPUT-0.0.0%2Bsha.0463c8425d73.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-stevep/library/HTTPClientWithPUT/0.0.0%2Bsha.0463c8425d73/HTTPClientWithPUT-0.0.0%2Bsha.0463c8425d73.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-stevep/library/MorseGenerator/0.0.0+sha.c37175de8627/MorseGenerator-0.0.0+sha.c37175de8627.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MorseGenerator-0.0.0+sha.c37175de8627.tar.gz",
+    "size_bytes": 1685,
+    "sha256": "f83c3466b140afdc49ca4810e0e81b09c2bc1cf760e6d3592ccda8df64fac5fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-stevep/library/MorseGenerator/0.0.0%2Bsha.c37175de8627/MorseGenerator-0.0.0%2Bsha.c37175de8627.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-stevep/library/MorseGenerator/0.0.0%2Bsha.c37175de8627/MorseGenerator-0.0.0%2Bsha.c37175de8627.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-stevep/library/ttmath/0.0.0+sha.04a9f72bbca7/ttmath-0.0.0+sha.04a9f72bbca7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ttmath-0.0.0+sha.04a9f72bbca7.tar.gz",
+    "size_bytes": 111281,
+    "sha256": "33060815dc88de4c3d2e2c34576a52c783ccf5083f2c54bbbe0683abce7cb038",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-stevep/library/ttmath/0.0.0%2Bsha.04a9f72bbca7/ttmath-0.0.0%2Bsha.04a9f72bbca7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-stevep/library/ttmath/0.0.0%2Bsha.04a9f72bbca7/ttmath-0.0.0%2Bsha.04a9f72bbca7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

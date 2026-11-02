@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/adityasharma-tech",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "adityasharma-tech/library/GrafikLogger/1.0.0/GrafikLogger-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GrafikLogger-1.0.0.tar.gz",
+    "size_bytes": 2913,
+    "sha256": "f08954f898ab0a2901bf5db5c6ec43f022ffc41f39ad814b386b18770a370ffe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/adityasharma-tech/library/GrafikLogger/1.0.0/GrafikLogger-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/adityasharma-tech/library/GrafikLogger/1.0.0/GrafikLogger-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

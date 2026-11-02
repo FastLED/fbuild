@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/trebledj",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "trebledj/library/Serial-Tuning/1.2.2/Serial-Tuning-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Serial-Tuning-1.2.2.tar.gz",
+    "size_bytes": 16321,
+    "sha256": "24b22f4577d5228c5f5955bd3752d8f7c34e9398f4d6995bf3f4a9db0a969af7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/trebledj/library/Serial-Tuning/1.2.2/Serial-Tuning-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/trebledj/library/Serial-Tuning/1.2.2/Serial-Tuning-1.2.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jacobbramley",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jacobbramley/library/PixelArray/0.0.0+sha.47802e75974e/PixelArray-0.0.0+sha.47802e75974e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PixelArray-0.0.0+sha.47802e75974e.tar.gz",
+    "size_bytes": 4789,
+    "sha256": "2b374885a11f2ea239b61af4c3f0ad0493f0284909c821932bd8b68c2f22b441",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jacobbramley/library/PixelArray/0.0.0%2Bsha.47802e75974e/PixelArray-0.0.0%2Bsha.47802e75974e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jacobbramley/library/PixelArray/0.0.0%2Bsha.47802e75974e/PixelArray-0.0.0%2Bsha.47802e75974e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jacobbramley/library/sht7x/0.0.0+sha.f1a93e55feb5/sht7x-0.0.0+sha.f1a93e55feb5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "sht7x-0.0.0+sha.f1a93e55feb5.tar.gz",
+    "size_bytes": 9797,
+    "sha256": "dd395df0ac88671408c4ac0409c5d7a9acf50f9ad467a41b54e1d14fb8a35d71",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jacobbramley/library/sht7x/0.0.0%2Bsha.f1a93e55feb5/sht7x-0.0.0%2Bsha.f1a93e55feb5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jacobbramley/library/sht7x/0.0.0%2Bsha.f1a93e55feb5/sht7x-0.0.0%2Bsha.f1a93e55feb5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

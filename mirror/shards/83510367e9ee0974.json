@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/yukai",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "yukai/library/MakerBoard/1.0.4/MakerBoard-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MakerBoard-1.0.4.tar.gz",
+    "size_bytes": 5030,
+    "sha256": "57993b367a969a0d1d836cdc45e7e661181496f7095f50e34037f02ec9c6aafc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yukai/library/MakerBoard/1.0.4/MakerBoard-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/yukai/library/MakerBoard/1.0.4/MakerBoard-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

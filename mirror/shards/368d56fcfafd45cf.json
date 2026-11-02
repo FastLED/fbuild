@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/felias-fogg",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "felias-fogg/library/DotMatrix5x7/1.5.2/DotMatrix5x7-1.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DotMatrix5x7-1.5.2.tar.gz",
+    "size_bytes": 16520,
+    "sha256": "05b72a0c6455048f087587182baf89644336cf18153daecfa02271783da233b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/felias-fogg/library/DotMatrix5x7/1.5.2/DotMatrix5x7-1.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/felias-fogg/library/DotMatrix5x7/1.5.2/DotMatrix5x7-1.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "felias-fogg/library/FlexWire/1.2.1/FlexWire-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FlexWire-1.2.1.tar.gz",
+    "size_bytes": 18493,
+    "sha256": "f65d095a19bffd6a6f108eedc4be7e48d3563c6c27d38b61deaa363b60e991e1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/felias-fogg/library/FlexWire/1.2.1/FlexWire-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/felias-fogg/library/FlexWire/1.2.1/FlexWire-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "felias-fogg/library/SlowSoftI2CMaster/1.0.0/SlowSoftI2CMaster-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SlowSoftI2CMaster-1.0.0.tar.gz",
+    "size_bytes": 6366,
+    "sha256": "0d53e56403ad01dd3fccc8222a4efa034a46c88d8c1c649b66c82f2408edfdb6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/felias-fogg/library/SlowSoftI2CMaster/1.0.0/SlowSoftI2CMaster-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/felias-fogg/library/SlowSoftI2CMaster/1.0.0/SlowSoftI2CMaster-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "felias-fogg/library/SoftI2CMaster/2.1.3/SoftI2CMaster-2.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SoftI2CMaster-2.1.3.tar.gz",
+    "size_bytes": 47013,
+    "sha256": "2250ea05aaa47f1507f48790211b865cc641b0e52c82bd3447ef8ef13f49ad5e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/felias-fogg/library/SoftI2CMaster/2.1.3/SoftI2CMaster-2.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/felias-fogg/library/SoftI2CMaster/2.1.3/SoftI2CMaster-2.1.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

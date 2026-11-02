@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pbudel",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pbudel/library/QuarkX/1.0.0/QuarkX-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QuarkX-1.0.0.tar.gz",
+    "size_bytes": 12046,
+    "sha256": "89315b81304fddbc6c204b97fc14a8ba0f8217861cedf2f309996eaf0277f2a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pbudel/library/QuarkX/1.0.0/QuarkX-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pbudel/library/QuarkX/1.0.0/QuarkX-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pbudel/library/QuarkX/1.0.1/QuarkX-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QuarkX-1.0.1.tar.gz",
+    "size_bytes": 13528,
+    "sha256": "5011cd769cc73694f230f7cfc512fc1cc06d9165e96bc57a2aa14b34e50ff096",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pbudel/library/QuarkX/1.0.1/QuarkX-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pbudel/library/QuarkX/1.0.1/QuarkX-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pbudel/library/QuarkX/1.0.2/QuarkX-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QuarkX-1.0.2.tar.gz",
+    "size_bytes": 13539,
+    "sha256": "b76c795758d1707513d7d124f128101b23699ea1180d23db06fe09d08a3c611d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pbudel/library/QuarkX/1.0.2/QuarkX-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/pbudel/library/QuarkX/1.0.2/QuarkX-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

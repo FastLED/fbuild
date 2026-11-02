@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mkeras",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mkeras/library/BasicTag/1.3.3/BasicTag-1.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BasicTag-1.3.3.tar.gz",
+    "size_bytes": 18040,
+    "sha256": "c09c4c284242b3e853ffed98e6b041c7c773add582805271136dcf699023b1d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mkeras/library/BasicTag/1.3.3/BasicTag-1.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mkeras/library/BasicTag/1.3.3/BasicTag-1.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mkeras/library/EmbeddedSparkplugNode/0.2.5/EmbeddedSparkplugNode-0.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmbeddedSparkplugNode-0.2.5.tar.gz",
+    "size_bytes": 54376,
+    "sha256": "0bc6fa970cc1189fdadb39dab4a4897f0b8d0e6b0fedf265a6b1b9535d390704",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mkeras/library/EmbeddedSparkplugNode/0.2.5/EmbeddedSparkplugNode-0.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/mkeras/library/EmbeddedSparkplugNode/0.2.5/EmbeddedSparkplugNode-0.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mkeras/library/PubSubClient_for_protobuf/2.8/PubSubClient_for_protobuf-2.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PubSubClient_for_protobuf-2.8.tar.gz",
+    "size_bytes": 13972,
+    "sha256": "d7548106f8527934b418b518f67292b6455deaf338cd18013ee32b820b43f162",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mkeras/library/PubSubClient_for_protobuf/2.8/PubSubClient_for_protobuf-2.8.tar.gz",
+     "https://dl.registry.platformio.org/download/mkeras/library/PubSubClient_for_protobuf/2.8/PubSubClient_for_protobuf-2.8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

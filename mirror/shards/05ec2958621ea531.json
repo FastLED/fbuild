@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-stm32f031",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-stm32f031/library/simple-mbed-cloud-client/0.0.0+sha.d193d40d4fa1/simple-mbed-cloud-client-0.0.0+sha.d193d40d4fa1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "simple-mbed-cloud-client-0.0.0+sha.d193d40d4fa1.tar.gz",
+    "size_bytes": 7303,
+    "sha256": "6efb38644f3aa0ee951e451e2e3c4b250e21170c18d20d55b01045cdf3019552",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-stm32f031/library/simple-mbed-cloud-client/0.0.0%2Bsha.d193d40d4fa1/simple-mbed-cloud-client-0.0.0%2Bsha.d193d40d4fa1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-stm32f031/library/simple-mbed-cloud-client/0.0.0%2Bsha.d193d40d4fa1/simple-mbed-cloud-client-0.0.0%2Bsha.d193d40d4fa1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

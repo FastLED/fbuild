@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sunjunkim",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sunjunkim/library/PMW3360%20Module/1.1.0/PMW3360Module-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PMW3360Module-1.1.0.tar.gz",
+    "size_bytes": 16912,
+    "sha256": "437f0af257e0b49ddfdbab34139a4c835f9ee53e720f7bfc3c3fbacfd7cdc0bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sunjunkim/library/PMW3360%2520Module/1.1.0/PMW3360Module-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sunjunkim/library/PMW3360%20Module/1.1.0/PMW3360Module-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

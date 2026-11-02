@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mmunoz",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mmunoz/library/RemoticProto/1.0.0/RemoticProto-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RemoticProto-1.0.0.tar.gz",
+    "size_bytes": 107420,
+    "sha256": "758a8d60662cad3e2093dc6414458a7a3a0c6581f45263df7441daaf2c1822a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mmunoz/library/RemoticProto/1.0.0/RemoticProto-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mmunoz/library/RemoticProto/1.0.0/RemoticProto-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/programmingelectronicsacademy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "programmingelectronicsacademy/library/ChatGPTuino/0.1.0/ChatGPTuino-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ChatGPTuino-0.1.0.tar.gz",
+    "size_bytes": 17610,
+    "sha256": "16e62cf32d603dc41105a40a85df2368300511e24658676286bb7cf5981a4a49",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/programmingelectronicsacademy/library/ChatGPTuino/0.1.0/ChatGPTuino-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/programmingelectronicsacademy/library/ChatGPTuino/0.1.0/ChatGPTuino-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

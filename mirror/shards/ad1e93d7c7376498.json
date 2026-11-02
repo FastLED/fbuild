@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/upartech",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "upartech/library/RCSwitchRmt/1.0.0/RCSwitchRmt-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RCSwitchRmt-1.0.0.tar.gz",
+    "size_bytes": 25544,
+    "sha256": "595b312c78289096f00ea16bd8d393ffb0fc5f56ac752af8003112dbdc3141d4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/upartech/library/RCSwitchRmt/1.0.0/RCSwitchRmt-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/upartech/library/RCSwitchRmt/1.0.0/RCSwitchRmt-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

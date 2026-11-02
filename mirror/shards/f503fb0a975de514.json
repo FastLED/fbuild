@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/roseledark",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "roseledark/library/MiniThread/2.30.1/MiniThread-2.30.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniThread-2.30.1.tar.gz",
+    "size_bytes": 212070,
+    "sha256": "9fa74bc3cdaf0c278d7eceb3f2e415049a05de67b3913af16698e3b4a4b832ef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/roseledark/library/MiniThread/2.30.1/MiniThread-2.30.1.tar.gz",
+     "https://dl.registry.platformio.org/download/roseledark/library/MiniThread/2.30.1/MiniThread-2.30.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "roseledark/library/mini%20Thread/2.30.1/miniThread-2.30.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "miniThread-2.30.1.tar.gz",
+    "size_bytes": 212068,
+    "sha256": "c494769d7593a37f393b1e47cc0d460ec9a55238951b836313b491d1828b7473",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/roseledark/library/mini%2520Thread/2.30.1/miniThread-2.30.1.tar.gz",
+     "https://dl.registry.platformio.org/download/roseledark/library/mini%20Thread/2.30.1/miniThread-2.30.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

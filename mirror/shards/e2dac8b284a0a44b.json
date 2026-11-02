@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fabionmi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fabionmi/library/FancyTerminal/1.0.4/FancyTerminal-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FancyTerminal-1.0.4.tar.gz",
+    "size_bytes": 11827,
+    "sha256": "83425087f35bd3c273bb31eac6538377be66264da025d2ea8d51585ef1487b82",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fabionmi/library/FancyTerminal/1.0.4/FancyTerminal-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/fabionmi/library/FancyTerminal/1.0.4/FancyTerminal-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

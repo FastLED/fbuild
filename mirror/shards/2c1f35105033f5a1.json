@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-duckietownhs-perlatecnica",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-duckietownhs-perlatecnica/library/RGB_Matrix/0.0.0+sha.0a1a89c55c7c/RGB_Matrix-0.0.0+sha.0a1a89c55c7c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RGB_Matrix-0.0.0+sha.0a1a89c55c7c.tar.gz",
+    "size_bytes": 11007,
+    "sha256": "28424464dd5e3b4a9d1b97f6e8a561a60daec52a506357fe79f4f5f252329d30",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-duckietownhs-perlatecnica/library/RGB_Matrix/0.0.0%2Bsha.0a1a89c55c7c/RGB_Matrix-0.0.0%2Bsha.0a1a89c55c7c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-duckietownhs-perlatecnica/library/RGB_Matrix/0.0.0%2Bsha.0a1a89c55c7c/RGB_Matrix-0.0.0%2Bsha.0a1a89c55c7c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

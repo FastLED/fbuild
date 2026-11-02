@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gitlab-xoan",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gitlab-xoan/library/EscornabotEXT/0.7.1/EscornabotEXT-0.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EscornabotEXT-0.7.1.tar.gz",
+    "size_bytes": 18191,
+    "sha256": "a8e20377f376b3793396466ebc283274cdd073e710e6d092ff739e9384fdd046",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gitlab-xoan/library/EscornabotEXT/0.7.1/EscornabotEXT-0.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gitlab-xoan/library/EscornabotEXT/0.7.1/EscornabotEXT-0.7.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

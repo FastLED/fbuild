@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jont",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jont/library/BME280/0.0.0+sha.691e06db489f/BME280-0.0.0+sha.691e06db489f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BME280-0.0.0+sha.691e06db489f.tar.gz",
+    "size_bytes": 3388,
+    "sha256": "2d729368821d87d9545038ee8950b24748847f1b0ba563a79037b4b5cda24016",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jont/library/BME280/0.0.0%2Bsha.691e06db489f/BME280-0.0.0%2Bsha.691e06db489f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jont/library/BME280/0.0.0%2Bsha.691e06db489f/BME280-0.0.0%2Bsha.691e06db489f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jont/library/BMP280/0.0.0+sha.b1fcd102ff93/BMP280-0.0.0+sha.b1fcd102ff93.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMP280-0.0.0+sha.b1fcd102ff93.tar.gz",
+    "size_bytes": 3212,
+    "sha256": "caa425f637c67d6af6db80af9ef212c9b8d9c00cd4de59d81ee33c3fb51a14b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jont/library/BMP280/0.0.0%2Bsha.b1fcd102ff93/BMP280-0.0.0%2Bsha.b1fcd102ff93.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jont/library/BMP280/0.0.0%2Bsha.b1fcd102ff93/BMP280-0.0.0%2Bsha.b1fcd102ff93.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jont/library/jtlcd/0.0.0+sha.5b0b6167b507/jtlcd-0.0.0+sha.5b0b6167b507.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "jtlcd-0.0.0+sha.5b0b6167b507.tar.gz",
+    "size_bytes": 2533,
+    "sha256": "1383b65895b73a44e0ba679bc687dca83a03e4f396ab9eb216e2ebf484ef1150",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jont/library/jtlcd/0.0.0%2Bsha.5b0b6167b507/jtlcd-0.0.0%2Bsha.5b0b6167b507.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jont/library/jtlcd/0.0.0%2Bsha.5b0b6167b507/jtlcd-0.0.0%2Bsha.5b0b6167b507.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jont/library/nl_ring_buffer/0.0.0+sha.c050eb7b0c10/nl_ring_buffer-0.0.0+sha.c050eb7b0c10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nl_ring_buffer-0.0.0+sha.c050eb7b0c10.tar.gz",
+    "size_bytes": 2524,
+    "sha256": "c9fe1ca913d2970bdba71bf8a0bc9bf775e3bf31269239fd7b0ca7c14e65a533",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jont/library/nl_ring_buffer/0.0.0%2Bsha.c050eb7b0c10/nl_ring_buffer-0.0.0%2Bsha.c050eb7b0c10.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jont/library/nl_ring_buffer/0.0.0%2Bsha.c050eb7b0c10/nl_ring_buffer-0.0.0%2Bsha.c050eb7b0c10.tar.gz"
+    ]
+   }
+  }
+ ]
+}

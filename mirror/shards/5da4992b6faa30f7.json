@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/robotis-git",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "robotis-git/library/Dynamixel2Arduino/0.7.0/Dynamixel2Arduino-0.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Dynamixel2Arduino-0.7.0.tar.gz",
+    "size_bytes": 73945,
+    "sha256": "ff81e6888e602481d676c198249c802924ba5ff202eab4810f5975c142e36ea9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robotis-git/library/Dynamixel2Arduino/0.7.0/Dynamixel2Arduino-0.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/robotis-git/library/Dynamixel2Arduino/0.7.0/Dynamixel2Arduino-0.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robotis-git/library/Dynamixel2Arduino/0.8.1/Dynamixel2Arduino-0.8.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Dynamixel2Arduino-0.8.1.tar.gz",
+    "size_bytes": 75695,
+    "sha256": "c95ef07350dcddd6ca427044639a50a820858ee9077194a3c6651ec349920c14",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robotis-git/library/Dynamixel2Arduino/0.8.1/Dynamixel2Arduino-0.8.1.tar.gz",
+     "https://dl.registry.platformio.org/download/robotis-git/library/Dynamixel2Arduino/0.8.1/Dynamixel2Arduino-0.8.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robotis-git/library/Dynamixel2Arduino/0.8.2/Dynamixel2Arduino-0.8.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Dynamixel2Arduino-0.8.2.tar.gz",
+    "size_bytes": 75813,
+    "sha256": "b18cf277851ec2d49cc0dab558c318c9921a0823cb4c96df45bacf4bb999fba4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robotis-git/library/Dynamixel2Arduino/0.8.2/Dynamixel2Arduino-0.8.2.tar.gz",
+     "https://dl.registry.platformio.org/download/robotis-git/library/Dynamixel2Arduino/0.8.2/Dynamixel2Arduino-0.8.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robotis-git/library/DynamixelShield/0.2.6/DynamixelShield-0.2.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DynamixelShield-0.2.6.tar.gz",
+    "size_bytes": 35137,
+    "sha256": "9da34349722e272e470bf2b73f35e8eee786f08014d013ac1b28215052df9262",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robotis-git/library/DynamixelShield/0.2.6/DynamixelShield-0.2.6.tar.gz",
+     "https://dl.registry.platformio.org/download/robotis-git/library/DynamixelShield/0.2.6/DynamixelShield-0.2.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robotis-git/library/ros2arduino/0.2.1/ros2arduino-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ros2arduino-0.2.1.tar.gz",
+    "size_bytes": 113612,
+    "sha256": "d16e8eb205a5be93a7fddf445f0b6cfdaea704c7f47637049d79092d624d1bfd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robotis-git/library/ros2arduino/0.2.1/ros2arduino-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/robotis-git/library/ros2arduino/0.2.1/ros2arduino-0.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

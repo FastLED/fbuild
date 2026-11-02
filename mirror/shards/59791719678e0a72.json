@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/roboticist-blip",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "roboticist-blip/library/LoRa32T/1.0.0/LoRa32T-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LoRa32T-1.0.0.tar.gz",
+    "size_bytes": 11115,
+    "sha256": "2f517315d33e4116ed62049343f0cb49307ab534f55383044e0e7741a561d609",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/roboticist-blip/library/LoRa32T/1.0.0/LoRa32T-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/roboticist-blip/library/LoRa32T/1.0.0/LoRa32T-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "roboticist-blip/library/LoRa32T/1.0.1/LoRa32T-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LoRa32T-1.0.1.tar.gz",
+    "size_bytes": 9419,
+    "sha256": "5c1584c8f7b1b2f4e7c5daaace0f3a316a2f12970d4d2a3d101b0ef5f89e4690",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/roboticist-blip/library/LoRa32T/1.0.1/LoRa32T-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/roboticist-blip/library/LoRa32T/1.0.1/LoRa32T-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "roboticist-blip/library/uMotion/1.0.0/uMotion-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uMotion-1.0.0.tar.gz",
+    "size_bytes": 65919,
+    "sha256": "3b42cb97d0549ebcde4dfcf63683f51fe048823e5901e68c7261472cca7b2490",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/roboticist-blip/library/uMotion/1.0.0/uMotion-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/roboticist-blip/library/uMotion/1.0.0/uMotion-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jonavarro22",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jonavarro22/library/MAX7SegmentDisplay/1.0.0/MAX7SegmentDisplay-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX7SegmentDisplay-1.0.0.tar.gz",
+    "size_bytes": 3623,
+    "sha256": "49542d88a7178f7f040dd7c9f9bf1cf432654ead6222de043c67cbce5e6a038f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jonavarro22/library/MAX7SegmentDisplay/1.0.0/MAX7SegmentDisplay-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jonavarro22/library/MAX7SegmentDisplay/1.0.0/MAX7SegmentDisplay-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

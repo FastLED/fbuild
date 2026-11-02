@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/markyue",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "markyue/library/Panda_SoftMasterI2C/1.0.3/Panda_SoftMasterI2C-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Panda_SoftMasterI2C-1.0.3.tar.gz",
+    "size_bytes": 3196,
+    "sha256": "8024de55ecf05982877f8a9a2702d2ca52c5e9d76b539f50e872cb007d51c519",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/markyue/library/Panda_SoftMasterI2C/1.0.3/Panda_SoftMasterI2C-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/markyue/library/Panda_SoftMasterI2C/1.0.3/Panda_SoftMasterI2C-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "markyue/library/Panda_SoftMasterI2C/1.0.7/Panda_SoftMasterI2C-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Panda_SoftMasterI2C-1.0.7.tar.gz",
+    "size_bytes": 3209,
+    "sha256": "ead1d356aeb6c7a8bca289e50ebfa2b7eb67d13f8478974c4baf8ebf7ea124e5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/markyue/library/Panda_SoftMasterI2C/1.0.7/Panda_SoftMasterI2C-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/markyue/library/Panda_SoftMasterI2C/1.0.7/Panda_SoftMasterI2C-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "markyue/library/Panda_segmentBed_I2C/1.0.2/Panda_segmentBed_I2C-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Panda_segmentBed_I2C-1.0.2.tar.gz",
+    "size_bytes": 3109,
+    "sha256": "1bf136ffafd581b79472eda953ea6173f319a59bcb5c88228163eef9bac5cf34",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/markyue/library/Panda_segmentBed_I2C/1.0.2/Panda_segmentBed_I2C-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/markyue/library/Panda_segmentBed_I2C/1.0.2/Panda_segmentBed_I2C-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

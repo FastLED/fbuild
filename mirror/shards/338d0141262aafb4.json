@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/elvandry13",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "elvandry13/library/UltrasonicA02YYUW/1.0.0/UltrasonicA02YYUW-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UltrasonicA02YYUW-1.0.0.tar.gz",
+    "size_bytes": 2881,
+    "sha256": "3fb4ad7f0f9eae279484f8bed730de3f72f8e8440e4aeba36786aa7cf06742f5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/elvandry13/library/UltrasonicA02YYUW/1.0.0/UltrasonicA02YYUW-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/elvandry13/library/UltrasonicA02YYUW/1.0.0/UltrasonicA02YYUW-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

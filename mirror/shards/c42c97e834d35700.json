@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-hilgo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-hilgo/library/LcdKs0723/0.0.0+sha.6c80c61bbc6a/LcdKs0723-0.0.0+sha.6c80c61bbc6a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LcdKs0723-0.0.0+sha.6c80c61bbc6a.tar.gz",
+    "size_bytes": 4088,
+    "sha256": "26d1a80b055e53e08171493099141dcbd27ed11d2b60540bd1a66f29d421d3e7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hilgo/library/LcdKs0723/0.0.0%2Bsha.6c80c61bbc6a/LcdKs0723-0.0.0%2Bsha.6c80c61bbc6a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hilgo/library/LcdKs0723/0.0.0%2Bsha.6c80c61bbc6a/LcdKs0723-0.0.0%2Bsha.6c80c61bbc6a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hilgo/library/MRF24J40/0.0.0+sha.55d2672c4708/MRF24J40-0.0.0+sha.55d2672c4708.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MRF24J40-0.0.0+sha.55d2672c4708.tar.gz",
+    "size_bytes": 4547,
+    "sha256": "5ff7ab333fc51ba663b3ed1e08b48f352e8e5dad07536c42f37a15c34fdbc013",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hilgo/library/MRF24J40/0.0.0%2Bsha.55d2672c4708/MRF24J40-0.0.0%2Bsha.55d2672c4708.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hilgo/library/MRF24J40/0.0.0%2Bsha.55d2672c4708/MRF24J40-0.0.0%2Bsha.55d2672c4708.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hilgo/library/Rc6/0.0.0+sha.f8e2ed766064/Rc6-0.0.0+sha.f8e2ed766064.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Rc6-0.0.0+sha.f8e2ed766064.tar.gz",
+    "size_bytes": 3868,
+    "sha256": "6a6f704aa9a56f16ed2fa1ef6c2080de26ec6e802fd69cb09decf74df42cc9ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hilgo/library/Rc6/0.0.0%2Bsha.f8e2ed766064/Rc6-0.0.0%2Bsha.f8e2ed766064.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hilgo/library/Rc6/0.0.0%2Bsha.f8e2ed766064/Rc6-0.0.0%2Bsha.f8e2ed766064.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hilgo/library/RepeatButton/0.0.0+sha.8be79829ce90/RepeatButton-0.0.0+sha.8be79829ce90.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RepeatButton-0.0.0+sha.8be79829ce90.tar.gz",
+    "size_bytes": 3492,
+    "sha256": "a3d37bf768c3bbdb3e20f4b9309ad0dc8b4de874ffd9d9e6f853c2aea878276f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hilgo/library/RepeatButton/0.0.0%2Bsha.8be79829ce90/RepeatButton-0.0.0%2Bsha.8be79829ce90.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hilgo/library/RepeatButton/0.0.0%2Bsha.8be79829ce90/RepeatButton-0.0.0%2Bsha.8be79829ce90.tar.gz"
+    ]
+   }
+  }
+ ]
+}

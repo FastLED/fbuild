@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/1nce-gmbh",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "1nce-gmbh/library/1NCE%20Arduino%20Blueprint/1.0.0/1NCEArduinoBlueprint-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "1NCEArduinoBlueprint-1.0.0.tar.gz",
+    "size_bytes": 160513,
+    "sha256": "0684ce2f154fb9d510dbbf742a9dd221c37fc67d978e93e36d29ce9d4f6d3882",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/1nce-gmbh/library/1NCE%2520Arduino%2520Blueprint/1.0.0/1NCEArduinoBlueprint-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/1nce-gmbh/library/1NCE%20Arduino%20Blueprint/1.0.0/1NCEArduinoBlueprint-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

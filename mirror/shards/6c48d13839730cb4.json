@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-olympux",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-olympux/library/HTTPClient-Xively/0.0.0+sha.81d38e7522ca/HTTPClient-Xively-0.0.0+sha.81d38e7522ca.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HTTPClient-Xively-0.0.0+sha.81d38e7522ca.tar.gz",
+    "size_bytes": 8782,
+    "sha256": "aafb4b50fae00ee706cc3f9d165039c6952144a420b7d367ba60782f328377e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-olympux/library/HTTPClient-Xively/0.0.0%2Bsha.81d38e7522ca/HTTPClient-Xively-0.0.0%2Bsha.81d38e7522ca.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-olympux/library/HTTPClient-Xively/0.0.0%2Bsha.81d38e7522ca/HTTPClient-Xively-0.0.0%2Bsha.81d38e7522ca.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-olympux/library/RF24/0.0.0+sha.aaff7f374e2b/RF24-0.0.0+sha.aaff7f374e2b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RF24-0.0.0+sha.aaff7f374e2b.tar.gz",
+    "size_bytes": 16456,
+    "sha256": "f27336b1e87cdb78949776b031e7fa1bb359a8626bc05a77349600ce35298508",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-olympux/library/RF24/0.0.0%2Bsha.aaff7f374e2b/RF24-0.0.0%2Bsha.aaff7f374e2b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-olympux/library/RF24/0.0.0%2Bsha.aaff7f374e2b/RF24-0.0.0%2Bsha.aaff7f374e2b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-olympux/library/Watchdog/0.0.0+sha.38379e44fae3/Watchdog-0.0.0+sha.38379e44fae3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Watchdog-0.0.0+sha.38379e44fae3.tar.gz",
+    "size_bytes": 2370,
+    "sha256": "727d629b0faaec3e76132f641eca84d4e75dc095eb0477628318928880d0eed5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-olympux/library/Watchdog/0.0.0%2Bsha.38379e44fae3/Watchdog-0.0.0%2Bsha.38379e44fae3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-olympux/library/Watchdog/0.0.0%2Bsha.38379e44fae3/Watchdog-0.0.0%2Bsha.38379e44fae3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-olympux/library/device_configuration/0.0.0+sha.0e1d8a9e8f54/device_configuration-0.0.0+sha.0e1d8a9e8f54.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "device_configuration-0.0.0+sha.0e1d8a9e8f54.tar.gz",
+    "size_bytes": 5058,
+    "sha256": "856d591b582e847b049ac570165851f9a4d222e041f99574164f3c3199776d38",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-olympux/library/device_configuration/0.0.0%2Bsha.0e1d8a9e8f54/device_configuration-0.0.0%2Bsha.0e1d8a9e8f54.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-olympux/library/device_configuration/0.0.0%2Bsha.0e1d8a9e8f54/device_configuration-0.0.0%2Bsha.0e1d8a9e8f54.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-olympux/library/eeprom/0.0.0+sha.34cb334d111b/eeprom-0.0.0+sha.34cb334d111b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "eeprom-0.0.0+sha.34cb334d111b.tar.gz",
+    "size_bytes": 4900,
+    "sha256": "40efdf0c9b48dff1de8303c39e442f7141d239e67175789c60c9384e1fa71f3d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-olympux/library/eeprom/0.0.0%2Bsha.34cb334d111b/eeprom-0.0.0%2Bsha.34cb334d111b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-olympux/library/eeprom/0.0.0%2Bsha.34cb334d111b/eeprom-0.0.0%2Bsha.34cb334d111b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-olympux/library/eeprom_flash/0.0.0+sha.e593ae8ff81d/eeprom_flash-0.0.0+sha.e593ae8ff81d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "eeprom_flash-0.0.0+sha.e593ae8ff81d.tar.gz",
+    "size_bytes": 1506,
+    "sha256": "0ffbfa7536eb10697c6e47928717a3d887909156f26952ee907bbb0d671d85e5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-olympux/library/eeprom_flash/0.0.0%2Bsha.e593ae8ff81d/eeprom_flash-0.0.0%2Bsha.e593ae8ff81d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-olympux/library/eeprom_flash/0.0.0%2Bsha.e593ae8ff81d/eeprom_flash-0.0.0%2Bsha.e593ae8ff81d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-olympux/library/nnio_stm32f10x_rtc/0.0.0+sha.f0b4e50e55a6/nnio_stm32f10x_rtc-0.0.0+sha.f0b4e50e55a6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nnio_stm32f10x_rtc-0.0.0+sha.f0b4e50e55a6.tar.gz",
+    "size_bytes": 1570,
+    "sha256": "c501b11f34db541fe5d1058e99a69dff0cbac7349cd683ce9105c4c5845a96f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-olympux/library/nnio_stm32f10x_rtc/0.0.0%2Bsha.f0b4e50e55a6/nnio_stm32f10x_rtc-0.0.0%2Bsha.f0b4e50e55a6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-olympux/library/nnio_stm32f10x_rtc/0.0.0%2Bsha.f0b4e50e55a6/nnio_stm32f10x_rtc-0.0.0%2Bsha.f0b4e50e55a6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/t-arg",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "t-arg/library/ATMlib/1.2.7/ATMlib-1.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ATMlib-1.2.7.tar.gz",
+    "size_bytes": 23910,
+    "sha256": "5c5439e06b2821ab2ed02c0890f3f0c6d0d73aae7bea767e2fe9d55bba1e4753",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/t-arg/library/ATMlib/1.2.7/ATMlib-1.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/t-arg/library/ATMlib/1.2.7/ATMlib-1.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "t-arg/library/ATMlib/1.2.8/ATMlib-1.2.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ATMlib-1.2.8.tar.gz",
+    "size_bytes": 23900,
+    "sha256": "97ba753eacf6ed06c98f06b58a6f73afe721ec87334bb96b97325c11eaf48ac3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/t-arg/library/ATMlib/1.2.8/ATMlib-1.2.8.tar.gz",
+     "https://dl.registry.platformio.org/download/t-arg/library/ATMlib/1.2.8/ATMlib-1.2.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "t-arg/library/ATMlib/2.0.0/ATMlib-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ATMlib-2.0.0.tar.gz",
+    "size_bytes": 33495,
+    "sha256": "e2328c40fc536d0cac0d91ba85e4f579b403b02e16b32b1049015f463d1940ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/t-arg/library/ATMlib/2.0.0/ATMlib-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/t-arg/library/ATMlib/2.0.0/ATMlib-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "t-arg/library/ATMlib/2.0.1/ATMlib-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ATMlib-2.0.1.tar.gz",
+    "size_bytes": 33604,
+    "sha256": "b49c9a714027259abaf2c03f5a2d9461163d4a34b25aaa4580abf3a5570601e7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/t-arg/library/ATMlib/2.0.1/ATMlib-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/t-arg/library/ATMlib/2.0.1/ATMlib-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "t-arg/library/ATMlib/2.1.0/ATMlib-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ATMlib-2.1.0.tar.gz",
+    "size_bytes": 35807,
+    "sha256": "59eca5ec5b7c29b4a2b220126c8406cbd5805c52899d14ce4a8fddb0acd698f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/t-arg/library/ATMlib/2.1.0/ATMlib-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/t-arg/library/ATMlib/2.1.0/ATMlib-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "t-arg/library/ATMlib/2.1.2/ATMlib-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ATMlib-2.1.2.tar.gz",
+    "size_bytes": 210136,
+    "sha256": "43881682d16bd908054456f4811604720ee8083032aa946df8b9109674eb9a2b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/t-arg/library/ATMlib/2.1.2/ATMlib-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/t-arg/library/ATMlib/2.1.2/ATMlib-2.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

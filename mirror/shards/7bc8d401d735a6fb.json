@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ece4180final",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ece4180final/library/NeoStrip/0.0.0+sha.2afb4da99560/NeoStrip-0.0.0+sha.2afb4da99560.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeoStrip-0.0.0+sha.2afb4da99560.tar.gz",
+    "size_bytes": 3852,
+    "sha256": "b12ad9b2a114cf3df9fdef505e48cc58343a43e3fd660f6d66aa7079241a554b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ece4180final/library/NeoStrip/0.0.0%2Bsha.2afb4da99560/NeoStrip-0.0.0%2Bsha.2afb4da99560.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ece4180final/library/NeoStrip/0.0.0%2Bsha.2afb4da99560/NeoStrip-0.0.0%2Bsha.2afb4da99560.tar.gz"
+    ]
+   }
+  }
+ ]
+}

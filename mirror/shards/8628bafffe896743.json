@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nailujx86",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nailujx86/library/ESP8266_multipart/1.1.0/ESP8266_multipart-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266_multipart-1.1.0.tar.gz",
+    "size_bytes": 3325,
+    "sha256": "f3f7997f20b798fdfe1b42bc7c640b6a971e274115fda7af2aad79325d85903a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nailujx86/library/ESP8266_multipart/1.1.0/ESP8266_multipart-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nailujx86/library/ESP8266_multipart/1.1.0/ESP8266_multipart-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

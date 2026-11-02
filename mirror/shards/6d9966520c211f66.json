@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/zhentao-lin",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "zhentao-lin/library/ESP32_WS2812_Lib/2.0.1/ESP32_WS2812_Lib-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_WS2812_Lib-2.0.1.tar.gz",
+    "size_bytes": 6520,
+    "sha256": "1a852c498c45cfab6320681d371f08cdaf69bc1f533c757413dd6b2a9572bc14",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zhentao-lin/library/ESP32_WS2812_Lib/2.0.1/ESP32_WS2812_Lib-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/zhentao-lin/library/ESP32_WS2812_Lib/2.0.1/ESP32_WS2812_Lib-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zhentao-lin/library/WS2812%20Lib%20for%20Air001/1.0.0/WS2812LibforAir001-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WS2812LibforAir001-1.0.0.tar.gz",
+    "size_bytes": 6549,
+    "sha256": "bc8049965025346c3a21147e14a7b31493fe2ad99ded7251229b8ae50c06d236",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zhentao-lin/library/WS2812%2520Lib%2520for%2520Air001/1.0.0/WS2812LibforAir001-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/zhentao-lin/library/WS2812%20Lib%20for%20Air001/1.0.0/WS2812LibforAir001-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

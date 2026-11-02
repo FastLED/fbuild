@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-feunoir",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-feunoir/library/LPS22HB/0.0.0+sha.c97ae96fea8f/LPS22HB-0.0.0+sha.c97ae96fea8f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LPS22HB-0.0.0+sha.c97ae96fea8f.tar.gz",
+    "size_bytes": 3583,
+    "sha256": "7e95c30b00b7729a9024a0dfba91c93823a0ed3fcdd2438eb6ad7664d3f27946",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-feunoir/library/LPS22HB/0.0.0%2Bsha.c97ae96fea8f/LPS22HB-0.0.0%2Bsha.c97ae96fea8f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-feunoir/library/LPS22HB/0.0.0%2Bsha.c97ae96fea8f/LPS22HB-0.0.0%2Bsha.c97ae96fea8f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dejanmeznarc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dejanmeznarc/library/Simple%20ESC/2.0.0/SimpleESC-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleESC-2.0.0.tar.gz",
+    "size_bytes": 5489,
+    "sha256": "678c846f8cf56bd1a7d25df94e35340a5090e4a30f92f453353cc3664547f11b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejanmeznarc/library/Simple%2520ESC/2.0.0/SimpleESC-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejanmeznarc/library/Simple%20ESC/2.0.0/SimpleESC-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

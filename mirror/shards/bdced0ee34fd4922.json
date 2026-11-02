@@ -1,0 +1,230 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/deftio",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "deftio/library/FR_Math/2.0.2/FR_Math-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FR_Math-2.0.2.tar.gz",
+    "size_bytes": 42567,
+    "sha256": "b4d69afed0c4489b10bd1879370318c410efb30392e337a6b6feb0c9f4241e77",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deftio/library/FR_Math/2.0.2/FR_Math-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/deftio/library/FR_Math/2.0.2/FR_Math-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "deftio/library/FR_Math/2.0.4/FR_Math-2.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FR_Math-2.0.4.tar.gz",
+    "size_bytes": 42575,
+    "sha256": "4ed3ab5602978384fe9200b77b6016a8dc1d9bc3c4f446fb584d78b73cd6b216",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deftio/library/FR_Math/2.0.4/FR_Math-2.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/deftio/library/FR_Math/2.0.4/FR_Math-2.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "deftio/library/FR_Math/2.0.5/FR_Math-2.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FR_Math-2.0.5.tar.gz",
+    "size_bytes": 42555,
+    "sha256": "30f1843c9e364af4b045b0cab3f9ee45874109112ccbdbd49c32778ea13afb12",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deftio/library/FR_Math/2.0.5/FR_Math-2.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/deftio/library/FR_Math/2.0.5/FR_Math-2.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "deftio/library/FR_Math/2.0.6/FR_Math-2.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FR_Math-2.0.6.tar.gz",
+    "size_bytes": 45615,
+    "sha256": "82bb4c9acabc6aad49c890dcc6a14e7b1ee98bd3abf7ffcbd70c3fb2980cd1c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deftio/library/FR_Math/2.0.6/FR_Math-2.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/deftio/library/FR_Math/2.0.6/FR_Math-2.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "deftio/library/FR_Math/2.0.7/FR_Math-2.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FR_Math-2.0.7.tar.gz",
+    "size_bytes": 45624,
+    "sha256": "4b0f42f4627e6cbd89d486f36d064300fd0b3b0466b02493cd5dd71a3b975528",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deftio/library/FR_Math/2.0.7/FR_Math-2.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/deftio/library/FR_Math/2.0.7/FR_Math-2.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "deftio/library/FR_Math/2.0.8/FR_Math-2.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FR_Math-2.0.8.tar.gz",
+    "size_bytes": 108799,
+    "sha256": "c59cdbf2d6f0acee289d8a8194a01b94bb2da0dc884de907e6743d5549038821",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deftio/library/FR_Math/2.0.8/FR_Math-2.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/deftio/library/FR_Math/2.0.8/FR_Math-2.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "deftio/library/FR_Math/2.0.9/FR_Math-2.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FR_Math-2.0.9.tar.gz",
+    "size_bytes": 106680,
+    "sha256": "b5703edc094a3000ea7edb366cca3f2431242b1a910d359cecb313c832e62550",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deftio/library/FR_Math/2.0.9/FR_Math-2.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/deftio/library/FR_Math/2.0.9/FR_Math-2.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "deftio/library/qf_math/1.0.0/qf_math-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "qf_math-1.0.0.tar.gz",
+    "size_bytes": 35686,
+    "sha256": "2487df5e24dd61f83db4923b71cd89a77877d64f2668bc7e17f2c7e1164db72b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deftio/library/qf_math/1.0.0/qf_math-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/deftio/library/qf_math/1.0.0/qf_math-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "deftio/library/qf_math/1.0.1/qf_math-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "qf_math-1.0.1.tar.gz",
+    "size_bytes": 416015,
+    "sha256": "0fc0c87e06a32e7df46720499845d0db60b655a9765950c2a1f8956d9728dc13",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deftio/library/qf_math/1.0.1/qf_math-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/deftio/library/qf_math/1.0.1/qf_math-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "deftio/library/xelp/0.2.6/xelp-0.2.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "xelp-0.2.6.tar.gz",
+    "size_bytes": 46989,
+    "sha256": "2fd27f99fa9ab57d70b36d8b12026020e272f6ac4a10806670485ad40a7e184e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deftio/library/xelp/0.2.6/xelp-0.2.6.tar.gz",
+     "https://dl.registry.platformio.org/download/deftio/library/xelp/0.2.6/xelp-0.2.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "deftio/library/xelp/0.3.0/xelp-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "xelp-0.3.0.tar.gz",
+    "size_bytes": 48314,
+    "sha256": "e7a6ab6419e2e96fbd3ad929f40a143b8cb1de5da27f6afcb10bb2aeb2d541ac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deftio/library/xelp/0.3.0/xelp-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/deftio/library/xelp/0.3.0/xelp-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "deftio/library/xelp/0.3.1/xelp-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "xelp-0.3.1.tar.gz",
+    "size_bytes": 86487,
+    "sha256": "010c8d0c090c8a0caaf39b8ff88c3d30222c5f031b8d42ca368e5f709b2d2926",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deftio/library/xelp/0.3.1/xelp-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/deftio/library/xelp/0.3.1/xelp-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "deftio/library/xelp/0.3.2/xelp-0.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "xelp-0.3.2.tar.gz",
+    "size_bytes": 72646,
+    "sha256": "9543d83448c052affe5c0408e65f95b6f8929754fdf0ae15b209cb7eeba64d98",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deftio/library/xelp/0.3.2/xelp-0.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/deftio/library/xelp/0.3.2/xelp-0.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "deftio/library/xelp/0.3.3/xelp-0.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "xelp-0.3.3.tar.gz",
+    "size_bytes": 75990,
+    "sha256": "6db742da7e9ef2c91c4ff14cdb1abb759b56129c299c5b613d52853407e1eec4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deftio/library/xelp/0.3.3/xelp-0.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/deftio/library/xelp/0.3.3/xelp-0.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "deftio/library/xelp/0.3.4/xelp-0.3.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "xelp-0.3.4.tar.gz",
+    "size_bytes": 76484,
+    "sha256": "1409ce2aefaa4ea538bdaca3c2f830394b0aac3ed24c812fb525af42af0832ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deftio/library/xelp/0.3.4/xelp-0.3.4.tar.gz",
+     "https://dl.registry.platformio.org/download/deftio/library/xelp/0.3.4/xelp-0.3.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "deftio/library/xelp/0.3.5/xelp-0.3.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "xelp-0.3.5.tar.gz",
+    "size_bytes": 76462,
+    "sha256": "5870bb7a26d8bd072ec30373339629b40db6274a3375586e110051dd26bd59e8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deftio/library/xelp/0.3.5/xelp-0.3.5.tar.gz",
+     "https://dl.registry.platformio.org/download/deftio/library/xelp/0.3.5/xelp-0.3.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "deftio/library/xelp/0.3/xelp-0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "xelp-0.3.tar.gz",
+    "size_bytes": 47356,
+    "sha256": "f4750cc804dca4a416bc12b5dd165e7cca522bbf8425577a5e37584a20cc37e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deftio/library/xelp/0.3/xelp-0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/deftio/library/xelp/0.3/xelp-0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

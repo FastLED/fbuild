@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-willybayot",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-willybayot/library/anaDMA/0.0.0+sha.2844a210bd46/anaDMA-0.0.0+sha.2844a210bd46.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "anaDMA-0.0.0+sha.2844a210bd46.tar.gz",
+    "size_bytes": 3540,
+    "sha256": "8f7c47f95b21b77013d9b4436182f3e76ee00047e5f1fd9e33b90f7140f4924f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-willybayot/library/anaDMA/0.0.0%2Bsha.2844a210bd46/anaDMA-0.0.0%2Bsha.2844a210bd46.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-willybayot/library/anaDMA/0.0.0%2Bsha.2844a210bd46/anaDMA-0.0.0%2Bsha.2844a210bd46.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-willybayot/library/stm32_adafruit/0.0.0+sha.d685bfd3ba5f/stm32_adafruit-0.0.0+sha.d685bfd3ba5f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "stm32_adafruit-0.0.0+sha.d685bfd3ba5f.tar.gz",
+    "size_bytes": 92561,
+    "sha256": "bedd1d51afd46220d3db7d936fdbb43b7496a772c7fb238147730eb229ad8218",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-willybayot/library/stm32_adafruit/0.0.0%2Bsha.d685bfd3ba5f/stm32_adafruit-0.0.0%2Bsha.d685bfd3ba5f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-willybayot/library/stm32_adafruit/0.0.0%2Bsha.d685bfd3ba5f/stm32_adafruit-0.0.0%2Bsha.d685bfd3ba5f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

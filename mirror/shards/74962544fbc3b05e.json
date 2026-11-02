@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/paulo-raca",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "paulo-raca/library/AsyncLiquidCrystal/1.0.1/AsyncLiquidCrystal-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncLiquidCrystal-1.0.1.tar.gz",
+    "size_bytes": 6262,
+    "sha256": "0ed0ea4ce3faeabfeba5bd1001a0ae9b0f23a1ca234e9697f1ada4ef3985c645",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paulo-raca/library/AsyncLiquidCrystal/1.0.1/AsyncLiquidCrystal-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/paulo-raca/library/AsyncLiquidCrystal/1.0.1/AsyncLiquidCrystal-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "paulo-raca/library/Buffered%20Streams/1.0.8/BufferedStreams-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BufferedStreams-1.0.8.tar.gz",
+    "size_bytes": 4545,
+    "sha256": "09c8bcba99f508ed138d52de478d30a358d40132b783c057b9bcbca701512a27",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paulo-raca/library/Buffered%2520Streams/1.0.8/BufferedStreams-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/paulo-raca/library/Buffered%20Streams/1.0.8/BufferedStreams-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "paulo-raca/library/LED%20Dithering/1.0.0/LEDDithering-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LEDDithering-1.0.0.tar.gz",
+    "size_bytes": 4195,
+    "sha256": "f1482410b44877d8b5806c3abe439cb8940782943813004c4f4be9720b1b42d3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paulo-raca/library/LED%2520Dithering/1.0.0/LEDDithering-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/paulo-raca/library/LED%20Dithering/1.0.0/LEDDithering-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "paulo-raca/library/Yet%20Another%20Arduino%20Debounce%20Library/1.0.0/YetAnotherArduinoDebounceLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YetAnotherArduinoDebounceLibrary-1.0.0.tar.gz",
+    "size_bytes": 5241,
+    "sha256": "3f1f40307dd8b682b8b349bb9b9f1916bfd0b096f32ec7db6ac4096ecd5153cf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paulo-raca/library/Yet%2520Another%2520Arduino%2520Debounce%2520Library/1.0.0/YetAnotherArduinoDebounceLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/paulo-raca/library/Yet%20Another%20Arduino%20Debounce%20Library/1.0.0/YetAnotherArduinoDebounceLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "paulo-raca/library/Yet%20Another%20Arduino%20PcInt%20Library/2.1.0/YetAnotherArduinoPcIntLibrary-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YetAnotherArduinoPcIntLibrary-2.1.0.tar.gz",
+    "size_bytes": 6085,
+    "sha256": "8526e9324324943b6b45ccf2dfb2b720329a91a417e2c1a76f5ddf5a84d1b6f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paulo-raca/library/Yet%2520Another%2520Arduino%2520PcInt%2520Library/2.1.0/YetAnotherArduinoPcIntLibrary-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/paulo-raca/library/Yet%20Another%20Arduino%20PcInt%20Library/2.1.0/YetAnotherArduinoPcIntLibrary-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "paulo-raca/library/Yet%20Another%20Arduino%20Wiegand%20Library/2.0.0/YetAnotherArduinoWiegandLibrary-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YetAnotherArduinoWiegandLibrary-2.0.0.tar.gz",
+    "size_bytes": 8393,
+    "sha256": "cc550f761e0900886072e8d744a8ce6482a41d184c265b648db1afc50c23f282",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paulo-raca/library/Yet%2520Another%2520Arduino%2520Wiegand%2520Library/2.0.0/YetAnotherArduinoWiegandLibrary-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/paulo-raca/library/Yet%20Another%20Arduino%20Wiegand%20Library/2.0.0/YetAnotherArduinoWiegandLibrary-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

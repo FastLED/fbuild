@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/filipporaciti",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "filipporaciti/library/TS_lib/1.8.4/TS_lib-1.8.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TS_lib-1.8.4.tar.gz",
+    "size_bytes": 8688,
+    "sha256": "163865ebf0a0b88fc6971af0ee6cf7a9b28239a86088241b49508ef9a83c102c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/filipporaciti/library/TS_lib/1.8.4/TS_lib-1.8.4.tar.gz",
+     "https://dl.registry.platformio.org/download/filipporaciti/library/TS_lib/1.8.4/TS_lib-1.8.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "filipporaciti/library/TS_lib/2.0.0/TS_lib-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TS_lib-2.0.0.tar.gz",
+    "size_bytes": 9650,
+    "sha256": "b090a01b28e354b9e6cec3b632ac0aa2c72f9b03ae4ee128e11a5cb29ed479df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/filipporaciti/library/TS_lib/2.0.0/TS_lib-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/filipporaciti/library/TS_lib/2.0.0/TS_lib-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

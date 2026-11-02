@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/makerspaceleiden",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "makerspaceleiden/library/ACNode/2.0.6/ACNode-2.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ACNode-2.0.6.tar.gz",
+    "size_bytes": 187257,
+    "sha256": "f344a2450d7c371723293ff1712d67ef6211fc82efd1e3dceaf4d4d834cd2e9c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/makerspaceleiden/library/ACNode/2.0.6/ACNode-2.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/makerspaceleiden/library/ACNode/2.0.6/ACNode-2.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "makerspaceleiden/library/MFRC522-spi-i2c-uart-async/1.5.1/MFRC522-spi-i2c-uart-async-1.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MFRC522-spi-i2c-uart-async-1.5.1.tar.gz",
+    "size_bytes": 70803,
+    "sha256": "215ab29d3c738bb7c8fbfedeedba50e9d353600abb0644889c048895ef41092e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/makerspaceleiden/library/MFRC522-spi-i2c-uart-async/1.5.1/MFRC522-spi-i2c-uart-async-1.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/makerspaceleiden/library/MFRC522-spi-i2c-uart-async/1.5.1/MFRC522-spi-i2c-uart-async-1.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "makerspaceleiden/library/TLog/1.0.6/TLog-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TLog-1.0.6.tar.gz",
+    "size_bytes": 14854,
+    "sha256": "f2737743ba6d6c34dd792d7077f9a25c44dcb1d4391c0fcbc75af854c728632a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/makerspaceleiden/library/TLog/1.0.6/TLog-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/makerspaceleiden/library/TLog/1.0.6/TLog-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "makerspaceleiden/library/TLog/1.0.8/TLog-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TLog-1.0.8.tar.gz",
+    "size_bytes": 18570,
+    "sha256": "4566299a404c652f6b09532c72cd61dba832b17248148c80ee7d3cccbbde51b2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/makerspaceleiden/library/TLog/1.0.8/TLog-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/makerspaceleiden/library/TLog/1.0.8/TLog-1.0.8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

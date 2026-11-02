@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-homayoun",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-homayoun/library/SimpleModbus/0.0.0+sha.7a9f746fb93e/SimpleModbus-0.0.0+sha.7a9f746fb93e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleModbus-0.0.0+sha.7a9f746fb93e.tar.gz",
+    "size_bytes": 6345,
+    "sha256": "ec251432146e1a73a06c76ae6120fd0ce28fc60f768ee9d20e52f830c33f7ea5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-homayoun/library/SimpleModbus/0.0.0%2Bsha.7a9f746fb93e/SimpleModbus-0.0.0%2Bsha.7a9f746fb93e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-homayoun/library/SimpleModbus/0.0.0%2Bsha.7a9f746fb93e/SimpleModbus-0.0.0%2Bsha.7a9f746fb93e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

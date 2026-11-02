@@ -1,0 +1,126 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-rohm",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-rohm/library/BM1383GLV/0.0.0+sha.6e1c9edabeee/BM1383GLV-0.0.0+sha.6e1c9edabeee.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BM1383GLV-0.0.0+sha.6e1c9edabeee.tar.gz",
+    "size_bytes": 2779,
+    "sha256": "ead2f98e39f24882c7e3f19608013df2fcab11980d9fd5d178e1e19171f2fa04",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rohm/library/BM1383GLV/0.0.0%2Bsha.6e1c9edabeee/BM1383GLV-0.0.0%2Bsha.6e1c9edabeee.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rohm/library/BM1383GLV/0.0.0%2Bsha.6e1c9edabeee/BM1383GLV-0.0.0%2Bsha.6e1c9edabeee.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-rohm/library/GR-PEACH_WlanBP3595/0.0.0+sha.41941ba775eb/GR-PEACH_WlanBP3595-0.0.0+sha.41941ba775eb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GR-PEACH_WlanBP3595-0.0.0+sha.41941ba775eb.tar.gz",
+    "size_bytes": 5683,
+    "sha256": "1c360763e3ee0898b203e6d0c4eb5c7ee6f9894ad86009e1ea48046f37b8f831",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rohm/library/GR-PEACH_WlanBP3595/0.0.0%2Bsha.41941ba775eb/GR-PEACH_WlanBP3595-0.0.0%2Bsha.41941ba775eb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rohm/library/GR-PEACH_WlanBP3595/0.0.0%2Bsha.41941ba775eb/GR-PEACH_WlanBP3595-0.0.0%2Bsha.41941ba775eb.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-rohm/library/KX022/0.0.0+sha.e2d1659fe67e/KX022-0.0.0+sha.e2d1659fe67e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KX022-0.0.0+sha.e2d1659fe67e.tar.gz",
+    "size_bytes": 2927,
+    "sha256": "65b910382c89b7cf2c2cd1ea0a4f6fbd120d8540fd322044819f1414e62d147f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rohm/library/KX022/0.0.0%2Bsha.e2d1659fe67e/KX022-0.0.0%2Bsha.e2d1659fe67e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rohm/library/KX022/0.0.0%2Bsha.e2d1659fe67e/KX022-0.0.0%2Bsha.e2d1659fe67e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-rohm/library/RegisterWriter/0.1.0/RegisterWriter-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RegisterWriter-0.1.0.tar.gz",
+    "size_bytes": 7757,
+    "sha256": "c890f90f2b5581d84f440db19605b77777e216c3fe1bb88235d8bd043e71d76e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rohm/library/RegisterWriter/0.1.0/RegisterWriter-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rohm/library/RegisterWriter/0.1.0/RegisterWriter-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-rohm/library/kionix-kx123-driver/0.0.0+sha.4fd5361ed180/kionix-kx123-driver-0.0.0+sha.4fd5361ed180.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "kionix-kx123-driver-0.0.0+sha.4fd5361ed180.tar.gz",
+    "size_bytes": 9971,
+    "sha256": "1e83cb87c34d0266d46e6e1f999047240990da41fd18a44160c1e1132c563dbf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rohm/library/kionix-kx123-driver/0.0.0%2Bsha.4fd5361ed180/kionix-kx123-driver-0.0.0%2Bsha.4fd5361ed180.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rohm/library/kionix-kx123-driver/0.0.0%2Bsha.4fd5361ed180/kionix-kx123-driver-0.0.0%2Bsha.4fd5361ed180.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-rohm/library/rohm-bh1790glc-driver/0.0.0+sha.4446bf1de21b/rohm-bh1790glc-driver-0.0.0+sha.4446bf1de21b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "rohm-bh1790glc-driver-0.0.0+sha.4446bf1de21b.tar.gz",
+    "size_bytes": 3692,
+    "sha256": "4c613f079a002aeb2f9a555ef614eca6cf7ca7e257cc27d2aecd556582b46455",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rohm/library/rohm-bh1790glc-driver/0.0.0%2Bsha.4446bf1de21b/rohm-bh1790glc-driver-0.0.0%2Bsha.4446bf1de21b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rohm/library/rohm-bh1790glc-driver/0.0.0%2Bsha.4446bf1de21b/rohm-bh1790glc-driver-0.0.0%2Bsha.4446bf1de21b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-rohm/library/rohm-bm1383-glv/0.1.0/rohm-bm1383-glv-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "rohm-bm1383-glv-0.1.0.tar.gz",
+    "size_bytes": 7909,
+    "sha256": "19297f470eb139a992e60a21b22af346a282ebed569b831a15c738909d945321",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rohm/library/rohm-bm1383-glv/0.1.0/rohm-bm1383-glv-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rohm/library/rohm-bm1383-glv/0.1.0/rohm-bm1383-glv-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-rohm/library/rohm-rpr0521/0.0.0+sha.56d144605997/rohm-rpr0521-0.0.0+sha.56d144605997.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "rohm-rpr0521-0.0.0+sha.56d144605997.tar.gz",
+    "size_bytes": 3218,
+    "sha256": "dce56ef4cf39efced365de56e179fcac2fe711d52d1000a9eb5e6d88bb07d1d7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rohm/library/rohm-rpr0521/0.0.0%2Bsha.56d144605997/rohm-rpr0521-0.0.0%2Bsha.56d144605997.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rohm/library/rohm-rpr0521/0.0.0%2Bsha.56d144605997/rohm-rpr0521-0.0.0%2Bsha.56d144605997.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-rohm/library/rohm-sensor-hal/0.1.0/rohm-sensor-hal-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "rohm-sensor-hal-0.1.0.tar.gz",
+    "size_bytes": 6668,
+    "sha256": "0160d82ce9866a9e8d521c46c8560e76bd528af1a322f7d5afc1726676b19110",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rohm/library/rohm-sensor-hal/0.1.0/rohm-sensor-hal-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rohm/library/rohm-sensor-hal/0.1.0/rohm-sensor-hal-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

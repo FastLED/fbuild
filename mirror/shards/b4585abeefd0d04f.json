@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-samchoy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-samchoy/library/Oled_display_128x64/0.0.0+sha.817a1ef89756/Oled_display_128x64-0.0.0+sha.817a1ef89756.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Oled_display_128x64-0.0.0+sha.817a1ef89756.tar.gz",
+    "size_bytes": 6419,
+    "sha256": "c14fdd71bcfe8009bc0b1be6f1cfe8e1fa328f519e6d673e9bb9cbadd39ea93c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-samchoy/library/Oled_display_128x64/0.0.0%2Bsha.817a1ef89756/Oled_display_128x64-0.0.0%2Bsha.817a1ef89756.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-samchoy/library/Oled_display_128x64/0.0.0%2Bsha.817a1ef89756/Oled_display_128x64-0.0.0%2Bsha.817a1ef89756.tar.gz"
+    ]
+   }
+  }
+ ]
+}

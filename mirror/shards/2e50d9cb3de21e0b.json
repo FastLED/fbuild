@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-igbt6",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-igbt6/library/ADT7410/0.0.0+sha.d003a86ca20e/ADT7410-0.0.0+sha.d003a86ca20e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADT7410-0.0.0+sha.d003a86ca20e.tar.gz",
+    "size_bytes": 2676,
+    "sha256": "13cbb16644a8a6ca119054a6d26a2f72771c19cfff41c1a183712aa18df1dac2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-igbt6/library/ADT7410/0.0.0%2Bsha.d003a86ca20e/ADT7410-0.0.0%2Bsha.d003a86ca20e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-igbt6/library/ADT7410/0.0.0%2Bsha.d003a86ca20e/ADT7410-0.0.0%2Bsha.d003a86ca20e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-igbt6/library/GPS_GTS-4E-60/0.0.0+sha.b876c6606429/GPS_GTS-4E-60-0.0.0+sha.b876c6606429.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GPS_GTS-4E-60-0.0.0+sha.b876c6606429.tar.gz",
+    "size_bytes": 4509,
+    "sha256": "6b9dde0a6677a2583db775f0e970d7a5b948a639e64b57d33fdaf06dc7ebcdca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-igbt6/library/GPS_GTS-4E-60/0.0.0%2Bsha.b876c6606429/GPS_GTS-4E-60-0.0.0%2Bsha.b876c6606429.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-igbt6/library/GPS_GTS-4E-60/0.0.0%2Bsha.b876c6606429/GPS_GTS-4E-60-0.0.0%2Bsha.b876c6606429.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-igbt6/library/HM-11/0.0.0+sha.aa4675590203/HM-11-0.0.0+sha.aa4675590203.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HM-11-0.0.0+sha.aa4675590203.tar.gz",
+    "size_bytes": 15844,
+    "sha256": "09e9a19fa45623f497f051d6170876878946992cbafd90d65ee333481dd8395c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-igbt6/library/HM-11/0.0.0%2Bsha.aa4675590203/HM-11-0.0.0%2Bsha.aa4675590203.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-igbt6/library/HM-11/0.0.0%2Bsha.aa4675590203/HM-11-0.0.0%2Bsha.aa4675590203.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-igbt6/library/LTC2460/0.0.0+sha.7f26ce7f8ff5/LTC2460-0.0.0+sha.7f26ce7f8ff5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LTC2460-0.0.0+sha.7f26ce7f8ff5.tar.gz",
+    "size_bytes": 1925,
+    "sha256": "558de86304aed64dcec87ec77cbd9c883b9ee290219ba6b52f521fabfc5e1425",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-igbt6/library/LTC2460/0.0.0%2Bsha.7f26ce7f8ff5/LTC2460-0.0.0%2Bsha.7f26ce7f8ff5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-igbt6/library/LTC2460/0.0.0%2Bsha.7f26ce7f8ff5/LTC2460-0.0.0%2Bsha.7f26ce7f8ff5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-igbt6/library/SX1278/0.0.0+sha.4e8ef5758455/SX1278-0.0.0+sha.4e8ef5758455.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SX1278-0.0.0+sha.4e8ef5758455.tar.gz",
+    "size_bytes": 28740,
+    "sha256": "bb346767f40724e3e86eee03156c493cefd2fca69124e01f8652c0b5fec98aa1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-igbt6/library/SX1278/0.0.0%2Bsha.4e8ef5758455/SX1278-0.0.0%2Bsha.4e8ef5758455.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-igbt6/library/SX1278/0.0.0%2Bsha.4e8ef5758455/SX1278-0.0.0%2Bsha.4e8ef5758455.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-igbt6/library/TFT_Touch_WaveShare/0.0.0+sha.b036dfb76a75/TFT_Touch_WaveShare-0.0.0+sha.b036dfb76a75.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFT_Touch_WaveShare-0.0.0+sha.b036dfb76a75.tar.gz",
+    "size_bytes": 10362,
+    "sha256": "1efc8a977fd1b631e8dae52f37797e12d46d2cb3f98baacb14dbd82e000726f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-igbt6/library/TFT_Touch_WaveShare/0.0.0%2Bsha.b036dfb76a75/TFT_Touch_WaveShare-0.0.0%2Bsha.b036dfb76a75.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-igbt6/library/TFT_Touch_WaveShare/0.0.0%2Bsha.b036dfb76a75/TFT_Touch_WaveShare-0.0.0%2Bsha.b036dfb76a75.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-igbt6/library/US-015/0.0.0+sha.7163b97ee5f1/US-015-0.0.0+sha.7163b97ee5f1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "US-015-0.0.0+sha.7163b97ee5f1.tar.gz",
+    "size_bytes": 2172,
+    "sha256": "d16a8966b3a5637447bfc781cbf2557022564054e77076444d75c4d5e691f510",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-igbt6/library/US-015/0.0.0%2Bsha.7163b97ee5f1/US-015-0.0.0%2Bsha.7163b97ee5f1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-igbt6/library/US-015/0.0.0%2Bsha.7163b97ee5f1/US-015-0.0.0%2Bsha.7163b97ee5f1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

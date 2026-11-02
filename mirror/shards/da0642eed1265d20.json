@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-wbeaumont",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-wbeaumont/library/AT30TSE75x/0.0.0+sha.cc295531021e/AT30TSE75x-0.0.0+sha.cc295531021e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AT30TSE75x-0.0.0+sha.cc295531021e.tar.gz",
+    "size_bytes": 6661,
+    "sha256": "40eb6a760055d895e8686d32761c6fdda65b4aec9cb204dcd9a3619da10eb89b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wbeaumont/library/AT30TSE75x/0.0.0%2Bsha.cc295531021e/AT30TSE75x-0.0.0%2Bsha.cc295531021e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wbeaumont/library/AT30TSE75x/0.0.0%2Bsha.cc295531021e/AT30TSE75x-0.0.0%2Bsha.cc295531021e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wbeaumont/library/DevInterfaces/0.0.0+sha.b091a268b726/DevInterfaces-0.0.0+sha.b091a268b726.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevInterfaces-0.0.0+sha.b091a268b726.tar.gz",
+    "size_bytes": 4392,
+    "sha256": "f690619fe0952b8625885190dd012c6f9e019811593c1e280c0fc84ae5241680",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wbeaumont/library/DevInterfaces/0.0.0%2Bsha.b091a268b726/DevInterfaces-0.0.0%2Bsha.b091a268b726.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wbeaumont/library/DevInterfaces/0.0.0%2Bsha.b091a268b726/DevInterfaces-0.0.0%2Bsha.b091a268b726.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wbeaumont/library/I2Cinterfaces/0.0.0+sha.06e9e208a2b0/I2Cinterfaces-0.0.0+sha.06e9e208a2b0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2Cinterfaces-0.0.0+sha.06e9e208a2b0.tar.gz",
+    "size_bytes": 2313,
+    "sha256": "7bba7b258d3e4572afbc5fa0b3f3ca5493bcb0fa30de7738bbfd3984f34e3b9b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wbeaumont/library/I2Cinterfaces/0.0.0%2Bsha.06e9e208a2b0/I2Cinterfaces-0.0.0%2Bsha.06e9e208a2b0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wbeaumont/library/I2Cinterfaces/0.0.0%2Bsha.06e9e208a2b0/I2Cinterfaces-0.0.0%2Bsha.06e9e208a2b0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wbeaumont/library/MCP23009/0.0.0+sha.9146d773a5a3/MCP23009-0.0.0+sha.9146d773a5a3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP23009-0.0.0+sha.9146d773a5a3.tar.gz",
+    "size_bytes": 2975,
+    "sha256": "8e3172597e0f6a649fa9af4736337977c2d83a944d75c25e94ae8278cb6f2bdd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wbeaumont/library/MCP23009/0.0.0%2Bsha.9146d773a5a3/MCP23009-0.0.0%2Bsha.9146d773a5a3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wbeaumont/library/MCP23009/0.0.0%2Bsha.9146d773a5a3/MCP23009-0.0.0%2Bsha.9146d773a5a3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wbeaumont/library/MCP4728/0.0.0+sha.164362cf5836/MCP4728-0.0.0+sha.164362cf5836.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP4728-0.0.0+sha.164362cf5836.tar.gz",
+    "size_bytes": 5789,
+    "sha256": "02ea6f7ccd58235bee7a88173db492e3b0c9374572bb12f09f8f273dfb319b5f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wbeaumont/library/MCP4728/0.0.0%2Bsha.164362cf5836/MCP4728-0.0.0%2Bsha.164362cf5836.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wbeaumont/library/MCP4728/0.0.0%2Bsha.164362cf5836/MCP4728-0.0.0%2Bsha.164362cf5836.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wbeaumont/library/T_adt7320/0.0.0+sha.ee71e7bca786/T_adt7320-0.0.0+sha.ee71e7bca786.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "T_adt7320-0.0.0+sha.ee71e7bca786.tar.gz",
+    "size_bytes": 1994,
+    "sha256": "8cab09c7d4c875a0cce93d0e313f4df463b668ed93b1ac8ac417d1d5a831b7a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wbeaumont/library/T_adt7320/0.0.0%2Bsha.ee71e7bca786/T_adt7320-0.0.0%2Bsha.ee71e7bca786.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wbeaumont/library/T_adt7320/0.0.0%2Bsha.ee71e7bca786/T_adt7320-0.0.0%2Bsha.ee71e7bca786.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wbeaumont/library/sscm_comm/0.0.0+sha.cf007e9619e1/sscm_comm-0.0.0+sha.cf007e9619e1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "sscm_comm-0.0.0+sha.cf007e9619e1.tar.gz",
+    "size_bytes": 4208,
+    "sha256": "e287ca25cb123cca74c9f702db14a5f2858ebc047a4c3ff76bea943453e7771d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wbeaumont/library/sscm_comm/0.0.0%2Bsha.cf007e9619e1/sscm_comm-0.0.0%2Bsha.cf007e9619e1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wbeaumont/library/sscm_comm/0.0.0%2Bsha.cf007e9619e1/sscm_comm-0.0.0%2Bsha.cf007e9619e1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

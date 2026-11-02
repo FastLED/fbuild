@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/harry-obrien",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "harry-obrien/library/Callback/1.0.0/Callback-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Callback-1.0.0.tar.gz",
+    "size_bytes": 2988,
+    "sha256": "14e013a62b43a0fd15936984a784ac14286fda0c0f11a1548bbe1826100d6d64",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/harry-obrien/library/Callback/1.0.0/Callback-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/harry-obrien/library/Callback/1.0.0/Callback-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

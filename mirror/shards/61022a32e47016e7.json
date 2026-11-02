@@ -1,0 +1,126 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jesdev-io",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jesdev-io/library/jescore/2.1.0/jescore-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "jescore-2.1.0.tar.gz",
+    "size_bytes": 37998,
+    "sha256": "1306a854bf68518fb8653d0ecdf15efac02f440670d6bc8718ecd2cff4011d94",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jesdev-io/library/jescore/2.1.0/jescore-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jesdev-io/library/jescore/2.1.0/jescore-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jesdev-io/library/jescore/2.2.0/jescore-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "jescore-2.2.0.tar.gz",
+    "size_bytes": 39168,
+    "sha256": "463e75e1096c25d0f500d81a4b2aa7e5f42d67bb623c35f104b0b6f1d31ebaa2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jesdev-io/library/jescore/2.2.0/jescore-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jesdev-io/library/jescore/2.2.0/jescore-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jesdev-io/library/jescore/2.2.1/jescore-2.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "jescore-2.2.1.tar.gz",
+    "size_bytes": 39999,
+    "sha256": "1766f70a5d7a3d3ad17dc61e70649716ae441477958db0bb7a7d48095220c6ba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jesdev-io/library/jescore/2.2.1/jescore-2.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jesdev-io/library/jescore/2.2.1/jescore-2.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jesdev-io/library/jescore/2.2.2/jescore-2.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "jescore-2.2.2.tar.gz",
+    "size_bytes": 55444,
+    "sha256": "8b0ee41d8569420b3adf21ec8b9678a7ec80b6e2463689ae849d1e39306ecc55",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jesdev-io/library/jescore/2.2.2/jescore-2.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jesdev-io/library/jescore/2.2.2/jescore-2.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jesdev-io/library/jescore/2.2.3/jescore-2.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "jescore-2.2.3.tar.gz",
+    "size_bytes": 36265,
+    "sha256": "3c9127868088e5726aedb21fda2b6ed21b1c2c4a2f0e831ad2bcd170c1376710",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jesdev-io/library/jescore/2.2.3/jescore-2.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/jesdev-io/library/jescore/2.2.3/jescore-2.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jesdev-io/library/jescore/2.3.0/jescore-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "jescore-2.3.0.tar.gz",
+    "size_bytes": 37330,
+    "sha256": "47187274d524ef96023621f16b6662075fd72fe7d0d9a308ca29606af7e40804",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jesdev-io/library/jescore/2.3.0/jescore-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jesdev-io/library/jescore/2.3.0/jescore-2.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jesdev-io/library/jescore/2.3.1/jescore-2.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "jescore-2.3.1.tar.gz",
+    "size_bytes": 39125,
+    "sha256": "d33909c22dd35dfb728d348e6fb07a3b7d5406d9f4e318fd0e38909444840a75",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jesdev-io/library/jescore/2.3.1/jescore-2.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jesdev-io/library/jescore/2.3.1/jescore-2.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jesdev-io/library/jescore/2.3.2-post.1/jescore-2.3.2-post.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "jescore-2.3.2-post.1.tar.gz",
+    "size_bytes": 43694,
+    "sha256": "bf08609b061146cdf2bdd4d9a373739b77de5c873c4738ba2cebd6025b43a7e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jesdev-io/library/jescore/2.3.2-post.1/jescore-2.3.2-post.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jesdev-io/library/jescore/2.3.2-post.1/jescore-2.3.2-post.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jesdev-io/library/jescore/2.3.2-post.2/jescore-2.3.2-post.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "jescore-2.3.2-post.2.tar.gz",
+    "size_bytes": 43827,
+    "sha256": "71e1856d346404cfc6f1f738d1583cc984ce493bb48169d4ae2d3528631aa867",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jesdev-io/library/jescore/2.3.2-post.2/jescore-2.3.2-post.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jesdev-io/library/jescore/2.3.2-post.2/jescore-2.3.2-post.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

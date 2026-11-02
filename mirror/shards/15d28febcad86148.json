@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-timm",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-timm/library/BMP085/0.0.0+sha.e8f53e502a4c/BMP085-0.0.0+sha.e8f53e502a4c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMP085-0.0.0+sha.e8f53e502a4c.tar.gz",
+    "size_bytes": 2359,
+    "sha256": "01c895b76a79ee5bc12c1fbb9e25d057f65698e0c8caa7017f5d0b26f98975df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-timm/library/BMP085/0.0.0%2Bsha.e8f53e502a4c/BMP085-0.0.0%2Bsha.e8f53e502a4c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-timm/library/BMP085/0.0.0%2Bsha.e8f53e502a4c/BMP085-0.0.0%2Bsha.e8f53e502a4c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-timm/library/SHT11/0.0.0+sha.56bbfad2d592/SHT11-0.0.0+sha.56bbfad2d592.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SHT11-0.0.0+sha.56bbfad2d592.tar.gz",
+    "size_bytes": 2981,
+    "sha256": "946addb32cb562bed064c2c0eb5650211cfd5726cdb5296f90e56cf224056e0a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-timm/library/SHT11/0.0.0%2Bsha.56bbfad2d592/SHT11-0.0.0%2Bsha.56bbfad2d592.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-timm/library/SHT11/0.0.0%2Bsha.56bbfad2d592/SHT11-0.0.0%2Bsha.56bbfad2d592.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-vasanth",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-vasanth/library/RAPIDMP3/0.0.0+sha.3f15219e6084/RAPIDMP3-0.0.0+sha.3f15219e6084.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RAPIDMP3-0.0.0+sha.3f15219e6084.tar.gz",
+    "size_bytes": 3109,
+    "sha256": "c4c27d5f4be08a927ff352ef61401cc9074d8f70932287db892ad34236f09460",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-vasanth/library/RAPIDMP3/0.0.0%2Bsha.3f15219e6084/RAPIDMP3-0.0.0%2Bsha.3f15219e6084.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-vasanth/library/RAPIDMP3/0.0.0%2Bsha.3f15219e6084/RAPIDMP3-0.0.0%2Bsha.3f15219e6084.tar.gz"
+    ]
+   }
+  }
+ ]
+}

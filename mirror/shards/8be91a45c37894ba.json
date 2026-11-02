@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/soracom-labs",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "soracom-labs/library/SoracomArcESP32/0.0.1/SoracomArcESP32-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SoracomArcESP32-0.0.1.tar.gz",
+    "size_bytes": 6895,
+    "sha256": "238796c0547a953a638c147294ac4117b141b887dee8f0e4b7598fca248e1fd5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soracom-labs/library/SoracomArcESP32/0.0.1/SoracomArcESP32-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/soracom-labs/library/SoracomArcESP32/0.0.1/SoracomArcESP32-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soracom-labs/library/SoracomArcESP32/0.0.2/SoracomArcESP32-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SoracomArcESP32-0.0.2.tar.gz",
+    "size_bytes": 8058,
+    "sha256": "401ec58024111ff77b72ee0e31fe643a3c02ace0328d15948d03ca80ddb0df1e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soracom-labs/library/SoracomArcESP32/0.0.2/SoracomArcESP32-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/soracom-labs/library/SoracomArcESP32/0.0.2/SoracomArcESP32-0.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

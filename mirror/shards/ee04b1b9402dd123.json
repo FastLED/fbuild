@@ -1,0 +1,464 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/xreef",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "xreef/library/ABB%20PowerOne%20Aurora%20inverter%20communication%20protocol/1.0.3/ABBPowerOneAurorainvertercommunicationprotocol-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ABBPowerOneAurorainvertercommunicationprotocol-1.0.3.tar.gz",
+    "size_bytes": 18811,
+    "sha256": "71e607859caa5dcd5099057241d652d7c489bfaaa631fb14e9dfdccb19b52e40",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xreef/library/ABB%2520PowerOne%2520Aurora%2520inverter%2520communication%2520protocol/1.0.3/ABBPowerOneAurorainvertercommunicationprotocol-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/xreef/library/ABB%20PowerOne%20Aurora%20inverter%20communication%20protocol/1.0.3/ABBPowerOneAurorainvertercommunicationprotocol-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xreef/library/DHT12%20sensor%20library/1.0.2/DHT12sensorlibrary-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DHT12sensorlibrary-1.0.2.tar.gz",
+    "size_bytes": 373693,
+    "sha256": "43d9b72958c93acfa916ff8214db71c3a3b54d99522e34a9f22af793dfa14739",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xreef/library/DHT12%2520sensor%2520library/1.0.2/DHT12sensorlibrary-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/xreef/library/DHT12%20sensor%20library/1.0.2/DHT12sensorlibrary-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xreef/library/EByte%20LoRa%20E22%20library/1.0.9/EByteLoRaE22library-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EByteLoRaE22library-1.0.9.tar.gz",
+    "size_bytes": 37937,
+    "sha256": "b7e88654b8554d942b45af153e254b0fc15f81231a415db8ba63d3c8438c8151",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xreef/library/EByte%2520LoRa%2520E22%2520library/1.0.9/EByteLoRaE22library-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/xreef/library/EByte%20LoRa%20E22%20library/1.0.9/EByteLoRaE22library-1.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xreef/library/EByte%20LoRa%20E220%20library/1.0.8/EByteLoRaE220library-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EByteLoRaE220library-1.0.8.tar.gz",
+    "size_bytes": 30977,
+    "sha256": "c91fde009121377787dcecabc59654f26e9361f234d47cd7f3379272949c9ef4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xreef/library/EByte%2520LoRa%2520E220%2520library/1.0.8/EByteLoRaE220library-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/xreef/library/EByte%20LoRa%20E220%20library/1.0.8/EByteLoRaE220library-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xreef/library/EByte%20LoRa%20E32%20library/1.5.13/EByteLoRaE32library-1.5.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EByteLoRaE32library-1.5.13.tar.gz",
+    "size_bytes": 40927,
+    "sha256": "b312af1b7a338f56ed595ee6b310eb505a6cca82adf68f5393c70c7ff503970c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xreef/library/EByte%2520LoRa%2520E32%2520library/1.5.13/EByteLoRaE32library-1.5.13.tar.gz",
+     "https://dl.registry.platformio.org/download/xreef/library/EByte%20LoRa%20E32%20library/1.5.13/EByteLoRaE32library-1.5.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xreef/library/EByte%20RF%20E70%20library/0.0.11/EByteRFE70library-0.0.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EByteRFE70library-0.0.11.tar.gz",
+    "size_bytes": 29133,
+    "sha256": "042619c5a5c6e9f8125e59386388379fc26883fa4e2abb0515ad0339eeaae49c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xreef/library/EByte%2520RF%2520E70%2520library/0.0.11/EByteRFE70library-0.0.11.tar.gz",
+     "https://dl.registry.platformio.org/download/xreef/library/EByte%20RF%20E70%20library/0.0.11/EByteRFE70library-0.0.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xreef/library/EMailSender/3.0.14/EMailSender-3.0.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EMailSender-3.0.14.tar.gz",
+    "size_bytes": 22987,
+    "sha256": "1e12d5b84c0a104d068a52f880f8431b0062993691293db40f694d4ce9ce6fa3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xreef/library/EMailSender/3.0.14/EMailSender-3.0.14.tar.gz",
+     "https://dl.registry.platformio.org/download/xreef/library/EMailSender/3.0.14/EMailSender-3.0.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xreef/library/EMailSender/4.0.0/EMailSender-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EMailSender-4.0.0.tar.gz",
+    "size_bytes": 570256,
+    "sha256": "0c38bf9f0502a1e8d569faf10d0a3a82e7a2f9e514e320248154dee77befd1c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xreef/library/EMailSender/4.0.0/EMailSender-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xreef/library/EMailSender/4.0.0/EMailSender-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xreef/library/EMailSender/4.0.1/EMailSender-4.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EMailSender-4.0.1.tar.gz",
+    "size_bytes": 570592,
+    "sha256": "140cf28731473a57bbc1d93e4101c42ca2bddb4a911d936e671c0290d15184e8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xreef/library/EMailSender/4.0.1/EMailSender-4.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/xreef/library/EMailSender/4.0.1/EMailSender-4.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xreef/library/EMailSender/4.1.0/EMailSender-4.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EMailSender-4.1.0.tar.gz",
+    "size_bytes": 577204,
+    "sha256": "a8fdc2f9cc8216b6b77b69e93265c4dff3052fef0d83c184a4efe0955601f0ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xreef/library/EMailSender/4.1.0/EMailSender-4.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xreef/library/EMailSender/4.1.0/EMailSender-4.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xreef/library/EMailSender/4.1.1/EMailSender-4.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EMailSender-4.1.1.tar.gz",
+    "size_bytes": 577351,
+    "sha256": "8dc77814d0f5636d74eb1ac650991e73594c2bd1729a0631a09eb877d1afd51d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xreef/library/EMailSender/4.1.1/EMailSender-4.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/xreef/library/EMailSender/4.1.1/EMailSender-4.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xreef/library/EMailSender/4.1.2/EMailSender-4.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EMailSender-4.1.2.tar.gz",
+    "size_bytes": 579160,
+    "sha256": "6d3d4af3d1a470df40bdffcb7bc053150debda869c56428db33ce14db5a7c3ef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xreef/library/EMailSender/4.1.2/EMailSender-4.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/xreef/library/EMailSender/4.1.2/EMailSender-4.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xreef/library/EMailSender/4.1.3/EMailSender-4.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EMailSender-4.1.3.tar.gz",
+    "size_bytes": 581033,
+    "sha256": "405b226357304db3f938fd7033882cba5e3859cd3e047ee16ade1077ca2d6862",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xreef/library/EMailSender/4.1.3/EMailSender-4.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/xreef/library/EMailSender/4.1.3/EMailSender-4.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xreef/library/EMailSender/4.1.4/EMailSender-4.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EMailSender-4.1.4.tar.gz",
+    "size_bytes": 581446,
+    "sha256": "bdcc9b6bc602194974316a1d882a383a87bf2c5a4785aea62aefb8888b38cee2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xreef/library/EMailSender/4.1.4/EMailSender-4.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/xreef/library/EMailSender/4.1.4/EMailSender-4.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xreef/library/MPU6500-DMP/1.0.0/MPU6500-DMP-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPU6500-DMP-1.0.0.tar.gz",
+    "size_bytes": 62836,
+    "sha256": "7445dbbb01f7de5bd5732295109a3690b6f57f3f8cc313f154828b28c589e0b0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xreef/library/MPU6500-DMP/1.0.0/MPU6500-DMP-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xreef/library/MPU6500-DMP/1.0.0/MPU6500-DMP-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xreef/library/MPU9250-DMP/1.0.0/MPU9250-DMP-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPU9250-DMP-1.0.0.tar.gz",
+    "size_bytes": 82029,
+    "sha256": "55497ec6d4a59165b07f580e71c24fbde2487e4a4717034b8481448db0995ceb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xreef/library/MPU9250-DMP/1.0.0/MPU9250-DMP-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xreef/library/MPU9250-DMP/1.0.0/MPU9250-DMP-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xreef/library/MPU9250-DMP/1.0.1/MPU9250-DMP-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPU9250-DMP-1.0.1.tar.gz",
+    "size_bytes": 65122,
+    "sha256": "ee5e809a97c420bed1ae819e38c10ddeca4f2a6ae21338238c20b9aeb8f8c545",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xreef/library/MPU9250-DMP/1.0.1/MPU9250-DMP-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/xreef/library/MPU9250-DMP/1.0.1/MPU9250-DMP-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xreef/library/MPU9250-DMP/1.0.2/MPU9250-DMP-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPU9250-DMP-1.0.2.tar.gz",
+    "size_bytes": 70669,
+    "sha256": "66fd628f6f620ed3665bfb646adbf9712081d08c0c28cd889f2041994dca8aba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xreef/library/MPU9250-DMP/1.0.2/MPU9250-DMP-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/xreef/library/MPU9250-DMP/1.0.2/MPU9250-DMP-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xreef/library/MultiFTPServer/3.0.0/MultiFTPServer-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MultiFTPServer-3.0.0.tar.gz",
+    "size_bytes": 44574,
+    "sha256": "588810ca445a14a2e496f0b73baf036bcf1ff993f8578ba13bef8815b8f82d6b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xreef/library/MultiFTPServer/3.0.0/MultiFTPServer-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xreef/library/MultiFTPServer/3.0.0/MultiFTPServer-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xreef/library/MultiFTPServer/3.0.1/MultiFTPServer-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MultiFTPServer-3.0.1.tar.gz",
+    "size_bytes": 45514,
+    "sha256": "6e18b5bb1c2655e05e7507892ce69b707696fe661236c5f39f4c59c70ea4a9f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xreef/library/MultiFTPServer/3.0.1/MultiFTPServer-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/xreef/library/MultiFTPServer/3.0.1/MultiFTPServer-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xreef/library/MultiFTPServer/3.0.2/MultiFTPServer-3.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MultiFTPServer-3.0.2.tar.gz",
+    "size_bytes": 45946,
+    "sha256": "3182521902ee4a62e836833b2589121f45a3fb1843a4d9cc3af5104642d6d37b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xreef/library/MultiFTPServer/3.0.2/MultiFTPServer-3.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/xreef/library/MultiFTPServer/3.0.2/MultiFTPServer-3.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xreef/library/MultiFTPServer/3.0.3/MultiFTPServer-3.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MultiFTPServer-3.0.3.tar.gz",
+    "size_bytes": 62289,
+    "sha256": "b1ffd6ae5a56de60ce02cb632dfe6551ca4af2808b075487eac3f3eb64e5fcf7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xreef/library/MultiFTPServer/3.0.3/MultiFTPServer-3.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/xreef/library/MultiFTPServer/3.0.3/MultiFTPServer-3.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xreef/library/MultiFTPServer/3.0.4/MultiFTPServer-3.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MultiFTPServer-3.0.4.tar.gz",
+    "size_bytes": 64491,
+    "sha256": "581d7a02df0ec48ab51b6a8a4b544958cd0b6f375eea4034679e69b0838e0eed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xreef/library/MultiFTPServer/3.0.4/MultiFTPServer-3.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/xreef/library/MultiFTPServer/3.0.4/MultiFTPServer-3.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xreef/library/PCF8574%20library/2.3.7/PCF8574library-2.3.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCF8574library-2.3.7.tar.gz",
+    "size_bytes": 16006,
+    "sha256": "d9762c278b6cb9f162a1776948b4c6a891ae871e4b5720a48ca0fd6cf448bdc9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xreef/library/PCF8574%2520library/2.3.7/PCF8574library-2.3.7.tar.gz",
+     "https://dl.registry.platformio.org/download/xreef/library/PCF8574%20library/2.3.7/PCF8574library-2.3.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xreef/library/PCF8574%20library/2.3.8/PCF8574library-2.3.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCF8574library-2.3.8.tar.gz",
+    "size_bytes": 20156,
+    "sha256": "87c5ec9ec905fb40ea77454130c665de2220f33026af7d91b0fb27232e350dd4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xreef/library/PCF8574%2520library/2.3.8/PCF8574library-2.3.8.tar.gz",
+     "https://dl.registry.platformio.org/download/xreef/library/PCF8574%20library/2.3.8/PCF8574library-2.3.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xreef/library/PCF8574%20library/2.4.0/PCF8574library-2.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCF8574library-2.4.0.tar.gz",
+    "size_bytes": 30571,
+    "sha256": "4737fe96115f22b624fa242e67de6720ba02724c245c98d39e56f8b9648a9d4f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xreef/library/PCF8574%2520library/2.4.0/PCF8574library-2.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xreef/library/PCF8574%20library/2.4.0/PCF8574library-2.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xreef/library/PCF8575%20library/1.1.2/PCF8575library-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCF8575library-1.1.2.tar.gz",
+    "size_bytes": 9980,
+    "sha256": "4ba86b6675a327b0f4e854dc0cc674f4482bb5eaf80a2a2cc094c56b2ba39ce2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xreef/library/PCF8575%2520library/1.1.2/PCF8575library-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/xreef/library/PCF8575%20library/1.1.2/PCF8575library-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xreef/library/PCF8575%20library/2.0.0/PCF8575library-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCF8575library-2.0.0.tar.gz",
+    "size_bytes": 11082,
+    "sha256": "e7575abfe6e4c916cba6d5996a8ef5f3246657a514843ad9273235a4e8aa3bb1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xreef/library/PCF8575%2520library/2.0.0/PCF8575library-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xreef/library/PCF8575%20library/2.0.0/PCF8575library-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xreef/library/PCF8575%20library/2.0.1/PCF8575library-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCF8575library-2.0.1.tar.gz",
+    "size_bytes": 14383,
+    "sha256": "64f8d095f198c090678f4768ef3f9ffc233d5fd8414102a6400e6df1a2b6e082",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xreef/library/PCF8575%2520library/2.0.1/PCF8575library-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/xreef/library/PCF8575%20library/2.0.1/PCF8575library-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xreef/library/PCF8591%20library/1.1.3/PCF8591library-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCF8591library-1.1.3.tar.gz",
+    "size_bytes": 8816,
+    "sha256": "fe214f3ca4c24ccd4949072641dcae46977155f0f368397d44745378f9e78698",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xreef/library/PCF8591%2520library/1.1.3/PCF8591library-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/xreef/library/PCF8591%20library/1.1.3/PCF8591library-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xreef/library/RYUW122/1.0.0/RYUW122-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RYUW122-1.0.0.tar.gz",
+    "size_bytes": 29362,
+    "sha256": "2849e5330a0a6eb15068e689e39830ec585de5693fcddb8be9e14e01870eb742",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xreef/library/RYUW122/1.0.0/RYUW122-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xreef/library/RYUW122/1.0.0/RYUW122-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xreef/library/RYUW122/1.0.1/RYUW122-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RYUW122-1.0.1.tar.gz",
+    "size_bytes": 29441,
+    "sha256": "60fcea7c14b87d5e89addbc5c0bcaaa85b7b9eb321a4e693a0f2358a796b7489",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xreef/library/RYUW122/1.0.1/RYUW122-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/xreef/library/RYUW122/1.0.1/RYUW122-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xreef/library/SimpleFTPServer/2.1.11/SimpleFTPServer-2.1.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleFTPServer-2.1.11.tar.gz",
+    "size_bytes": 36325,
+    "sha256": "6a99d95fd5a9c313cd64a4b70d6e822a2495522ddc0bf48d46e112c353c1087a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xreef/library/SimpleFTPServer/2.1.11/SimpleFTPServer-2.1.11.tar.gz",
+     "https://dl.registry.platformio.org/download/xreef/library/SimpleFTPServer/2.1.11/SimpleFTPServer-2.1.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xreef/library/SimpleFTPServer/3.0.0/SimpleFTPServer-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleFTPServer-3.0.0.tar.gz",
+    "size_bytes": 45243,
+    "sha256": "116994534475a8bfd4d5c52cf47fb50b3907fdcb346c3331d05372c11b346559",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xreef/library/SimpleFTPServer/3.0.0/SimpleFTPServer-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xreef/library/SimpleFTPServer/3.0.0/SimpleFTPServer-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xreef/library/SimpleFTPServer/3.0.1/SimpleFTPServer-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleFTPServer-3.0.1.tar.gz",
+    "size_bytes": 46317,
+    "sha256": "a9e8d3762ced53ec46bbc00bb9ea976f5badd6a21639b9b43565cb96713ce96e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xreef/library/SimpleFTPServer/3.0.1/SimpleFTPServer-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/xreef/library/SimpleFTPServer/3.0.1/SimpleFTPServer-3.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

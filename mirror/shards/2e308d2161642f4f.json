@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/null0",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "null0/library/TTGO%20TWatch%20Library%20V8/1.4.2/TTGOTWatchLibraryV8-1.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TTGOTWatchLibraryV8-1.4.2.tar.gz",
+    "size_bytes": 40819297,
+    "sha256": "36eb3e054fe7e7a1d35f8a2089efe0c05670d3c17d348470f0a84ca2d931303a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/null0/library/TTGO%2520TWatch%2520Library%2520V8/1.4.2/TTGOTWatchLibraryV8-1.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/null0/library/TTGO%20TWatch%20Library%20V8/1.4.2/TTGOTWatchLibraryV8-1.4.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

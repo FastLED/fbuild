@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-lammers",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-lammers/library/ledarray/0.0.0+sha.962377390118/ledarray-0.0.0+sha.962377390118.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ledarray-0.0.0+sha.962377390118.tar.gz",
+    "size_bytes": 1019,
+    "sha256": "0b1752c09a4ca4998c30cbd1803ec5b56f97fd9d185361f2db095f828c2820f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-lammers/library/ledarray/0.0.0%2Bsha.962377390118/ledarray-0.0.0%2Bsha.962377390118.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-lammers/library/ledarray/0.0.0%2Bsha.962377390118/ledarray-0.0.0%2Bsha.962377390118.tar.gz"
+    ]
+   }
+  }
+ ]
+}

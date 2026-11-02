@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jasonlzt",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jasonlzt/library/ACAN_ESP32/1.1.2/ACAN_ESP32-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ACAN_ESP32-1.1.2.tar.gz",
+    "size_bytes": 17976,
+    "sha256": "260f42d1c7b29e47e7490bd657fcbedd6020f0a42996f4facc1ea282b91be3cf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jasonlzt/library/ACAN_ESP32/1.1.2/ACAN_ESP32-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jasonlzt/library/ACAN_ESP32/1.1.2/ACAN_ESP32-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jasonlzt/library/FastLED/3.5.0/FastLED-3.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastLED-3.5.0.tar.gz",
+    "size_bytes": 256614,
+    "sha256": "2b963b22452352101225ef37e120bbb99260c75693c6fe05f6eb8d94558e6b70",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jasonlzt/library/FastLED/3.5.0/FastLED-3.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jasonlzt/library/FastLED/3.5.0/FastLED-3.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jasonlzt/library/ja_tools/1.0/ja_tools-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ja_tools-1.0.tar.gz",
+    "size_bytes": 514,
+    "sha256": "f9b88fe40c5ef6c9ec25cc7eef53dc4f78df706fc5655c411d55091be4e38deb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jasonlzt/library/ja_tools/1.0/ja_tools-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jasonlzt/library/ja_tools/1.0/ja_tools-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jasonlzt/library/jalib_Boom/1.0.20/jalib_Boom-1.0.20.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "jalib_Boom-1.0.20.tar.gz",
+    "size_bytes": 13457,
+    "sha256": "2bef6c37a2eabc210adbe28661b284724fc26a363b97c5b9fd8c1a4e8f6cca69",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jasonlzt/library/jalib_Boom/1.0.20/jalib_Boom-1.0.20.tar.gz",
+     "https://dl.registry.platformio.org/download/jasonlzt/library/jalib_Boom/1.0.20/jalib_Boom-1.0.20.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jasonlzt/library/jalib_ESPNow/1.0.2/jalib_ESPNow-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "jalib_ESPNow-1.0.2.tar.gz",
+    "size_bytes": 603,
+    "sha256": "0ce6050c39bb22189471adb6d899d833da7f8e2fbb51a03eee9b273644aa3c4c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jasonlzt/library/jalib_ESPNow/1.0.2/jalib_ESPNow-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jasonlzt/library/jalib_ESPNow/1.0.2/jalib_ESPNow-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jasonlzt/library/jalib_pub/1.2.0/jalib_pub-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "jalib_pub-1.2.0.tar.gz",
+    "size_bytes": 2834,
+    "sha256": "66ef2c82f7613f98d6596e8365adc00f8f2b71f8741a5e3782e92f2d76102cf4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jasonlzt/library/jalib_pub/1.2.0/jalib_pub-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jasonlzt/library/jalib_pub/1.2.0/jalib_pub-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

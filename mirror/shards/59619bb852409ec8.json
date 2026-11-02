@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/themladypan",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "themladypan/library/UAV_utils/0.0.8/UAV_utils-0.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UAV_utils-0.0.8.tar.gz",
+    "size_bytes": 11190,
+    "sha256": "cae4c2778ea18c7793e0dd81e42639d41f6aed5b3bcc777c538701b3b787a9de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/themladypan/library/UAV_utils/0.0.8/UAV_utils-0.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/themladypan/library/UAV_utils/0.0.8/UAV_utils-0.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "themladypan/library/XLog/0.0.2/XLog-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XLog-0.0.2.tar.gz",
+    "size_bytes": 2851,
+    "sha256": "61c11561482a61ac9ff61e27ba5c6dadd10c8723df4950dcb1d87145d2d7103f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/themladypan/library/XLog/0.0.2/XLog-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/themladypan/library/XLog/0.0.2/XLog-0.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

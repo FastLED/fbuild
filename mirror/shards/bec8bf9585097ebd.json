@@ -1,0 +1,191 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-yamaguch",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-yamaguch/library/JPEGCamera/0.0.0+sha.27417b6a951d/JPEGCamera-0.0.0+sha.27417b6a951d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JPEGCamera-0.0.0+sha.27417b6a951d.tar.gz",
+    "size_bytes": 2734,
+    "sha256": "9c6cbb6beb1690b262c50055a6a71d1e63dc12525ad8497542fdcde7d099885d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yamaguch/library/JPEGCamera/0.0.0%2Bsha.27417b6a951d/JPEGCamera-0.0.0%2Bsha.27417b6a951d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yamaguch/library/JPEGCamera/0.0.0%2Bsha.27417b6a951d/JPEGCamera-0.0.0%2Bsha.27417b6a951d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-yamaguch/library/LCD/0.0.0+sha.b3def1d4f466/LCD-0.0.0+sha.b3def1d4f466.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCD-0.0.0+sha.b3def1d4f466.tar.gz",
+    "size_bytes": 2576,
+    "sha256": "c00b0f123ed70c349ffafea3c0c68301c72e534762bf87dbe0512db3dec2fc44",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yamaguch/library/LCD/0.0.0%2Bsha.b3def1d4f466/LCD-0.0.0%2Bsha.b3def1d4f466.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yamaguch/library/LCD/0.0.0%2Bsha.b3def1d4f466/LCD-0.0.0%2Bsha.b3def1d4f466.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-yamaguch/library/LSM303DLH/0.0.0+sha.9b2a0b783bfc/LSM303DLH-0.0.0+sha.9b2a0b783bfc.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LSM303DLH-0.0.0+sha.9b2a0b783bfc.tar.gz",
+    "size_bytes": 2942,
+    "sha256": "178785310b7ee10241da1f90578627a5df365a90da613b0b6b6cde12dfba8efd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yamaguch/library/LSM303DLH/0.0.0%2Bsha.9b2a0b783bfc/LSM303DLH-0.0.0%2Bsha.9b2a0b783bfc.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yamaguch/library/LSM303DLH/0.0.0%2Bsha.9b2a0b783bfc/LSM303DLH-0.0.0%2Bsha.9b2a0b783bfc.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-yamaguch/library/MMA7260Q/0.0.0+sha.e31cb4dd4aa6/MMA7260Q-0.0.0+sha.e31cb4dd4aa6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MMA7260Q-0.0.0+sha.e31cb4dd4aa6.tar.gz",
+    "size_bytes": 1701,
+    "sha256": "f56a66a65c4cfa034067ac25e47c2c93b53e62397f1bd792bfada3eb5a63eb13",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yamaguch/library/MMA7260Q/0.0.0%2Bsha.e31cb4dd4aa6/MMA7260Q-0.0.0%2Bsha.e31cb4dd4aa6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yamaguch/library/MMA7260Q/0.0.0%2Bsha.e31cb4dd4aa6/MMA7260Q-0.0.0%2Bsha.e31cb4dd4aa6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-yamaguch/library/MMA7361L/0.0.0+sha.ce1a0d55f3c9/MMA7361L-0.0.0+sha.ce1a0d55f3c9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MMA7361L-0.0.0+sha.ce1a0d55f3c9.tar.gz",
+    "size_bytes": 2923,
+    "sha256": "b54ee1b9f0b5a0e957f8d36f3576979e015ca6161c13975b0aa9f706e62fa112",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yamaguch/library/MMA7361L/0.0.0%2Bsha.ce1a0d55f3c9/MMA7361L-0.0.0%2Bsha.ce1a0d55f3c9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yamaguch/library/MMA7361L/0.0.0%2Bsha.ce1a0d55f3c9/MMA7361L-0.0.0%2Bsha.ce1a0d55f3c9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-yamaguch/library/MPL115A2/0.0.0+sha.d77bd4340924/MPL115A2-0.0.0+sha.d77bd4340924.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPL115A2-0.0.0+sha.d77bd4340924.tar.gz",
+    "size_bytes": 1687,
+    "sha256": "9b168bbfe18548898be33010708d38fc46a2f0ac55503dd87add0dc3830766d4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yamaguch/library/MPL115A2/0.0.0%2Bsha.d77bd4340924/MPL115A2-0.0.0%2Bsha.d77bd4340924.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yamaguch/library/MPL115A2/0.0.0%2Bsha.d77bd4340924/MPL115A2-0.0.0%2Bsha.d77bd4340924.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-yamaguch/library/MS5607/0.0.0+sha.5760862143d1/MS5607-0.0.0+sha.5760862143d1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MS5607-0.0.0+sha.5760862143d1.tar.gz",
+    "size_bytes": 3025,
+    "sha256": "fb37fcded08df7441cb20b02d193d1f563579d4352e7a517aa22e8f29ed1429e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yamaguch/library/MS5607/0.0.0%2Bsha.5760862143d1/MS5607-0.0.0%2Bsha.5760862143d1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yamaguch/library/MS5607/0.0.0%2Bsha.5760862143d1/MS5607-0.0.0%2Bsha.5760862143d1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-yamaguch/library/Player/0.0.0+sha.85d8bf9fb6fe/Player-0.0.0+sha.85d8bf9fb6fe.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Player-0.0.0+sha.85d8bf9fb6fe.tar.gz",
+    "size_bytes": 2723,
+    "sha256": "caa537298bb5ff68cce7ee4a34ce158b7b450cf1e4f0e9f7ad674b08b4de2901",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yamaguch/library/Player/0.0.0%2Bsha.85d8bf9fb6fe/Player-0.0.0%2Bsha.85d8bf9fb6fe.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yamaguch/library/Player/0.0.0%2Bsha.85d8bf9fb6fe/Player-0.0.0%2Bsha.85d8bf9fb6fe.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-yamaguch/library/SCP1000withSoftSPI/0.0.0+sha.65eccd24c242/SCP1000withSoftSPI-0.0.0+sha.65eccd24c242.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SCP1000withSoftSPI-0.0.0+sha.65eccd24c242.tar.gz",
+    "size_bytes": 3132,
+    "sha256": "67be2f60b191d491b043814efeec5efbde21221302ce5365fbf50aec0d193b71",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yamaguch/library/SCP1000withSoftSPI/0.0.0%2Bsha.65eccd24c242/SCP1000withSoftSPI-0.0.0%2Bsha.65eccd24c242.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yamaguch/library/SCP1000withSoftSPI/0.0.0%2Bsha.65eccd24c242/SCP1000withSoftSPI-0.0.0%2Bsha.65eccd24c242.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-yamaguch/library/SimpleSocket%201.0/0.0.0+sha.3eb1ce25eac4/SimpleSocket1.0-0.0.0+sha.3eb1ce25eac4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleSocket1.0-0.0.0+sha.3eb1ce25eac4.tar.gz",
+    "size_bytes": 6419,
+    "sha256": "2b244d568c6b80b59c8a7e10ab83b79bdb7cf288353520fcb3598eca435d613d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yamaguch/library/SimpleSocket%25201.0/0.0.0%2Bsha.3eb1ce25eac4/SimpleSocket1.0-0.0.0%2Bsha.3eb1ce25eac4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yamaguch/library/SimpleSocket%201.0/0.0.0%2Bsha.3eb1ce25eac4/SimpleSocket1.0-0.0.0%2Bsha.3eb1ce25eac4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-yamaguch/library/SimpleSocket/0.0.0+sha.cbc8e17f7043/SimpleSocket-0.0.0+sha.cbc8e17f7043.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleSocket-0.0.0+sha.cbc8e17f7043.tar.gz",
+    "size_bytes": 2160,
+    "sha256": "9229baa16496974a9aa8413e662d558b2992d3feb626f1044f35bf5566c321ef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yamaguch/library/SimpleSocket/0.0.0%2Bsha.cbc8e17f7043/SimpleSocket-0.0.0%2Bsha.cbc8e17f7043.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yamaguch/library/SimpleSocket/0.0.0%2Bsha.cbc8e17f7043/SimpleSocket-0.0.0%2Bsha.cbc8e17f7043.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-yamaguch/library/Station/0.0.0+sha.3df13e2e928e/Station-0.0.0+sha.3df13e2e928e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Station-0.0.0+sha.3df13e2e928e.tar.gz",
+    "size_bytes": 7333,
+    "sha256": "321c9797e2477ac9c7d7d7b20cb5d548d133c65b92d6f04594a6301664ed9b71",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yamaguch/library/Station/0.0.0%2Bsha.3df13e2e928e/Station-0.0.0%2Bsha.3df13e2e928e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yamaguch/library/Station/0.0.0%2Bsha.3df13e2e928e/Station-0.0.0%2Bsha.3df13e2e928e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-yamaguch/library/XBee%201.0/0.0.0+sha.4a11f50ffb64/XBee1.0-0.0.0+sha.4a11f50ffb64.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XBee1.0-0.0.0+sha.4a11f50ffb64.tar.gz",
+    "size_bytes": 10499,
+    "sha256": "1fc8e64e349e0d6036b7d8080f80ebaca172381dcd2088530185c06653874182",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yamaguch/library/XBee%25201.0/0.0.0%2Bsha.4a11f50ffb64/XBee1.0-0.0.0%2Bsha.4a11f50ffb64.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yamaguch/library/XBee%201.0/0.0.0%2Bsha.4a11f50ffb64/XBee1.0-0.0.0%2Bsha.4a11f50ffb64.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-yamaguch/library/XBee/0.0.0+sha.2f728fd13bc0/XBee-0.0.0+sha.2f728fd13bc0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XBee-0.0.0+sha.2f728fd13bc0.tar.gz",
+    "size_bytes": 11133,
+    "sha256": "da49513672d68dfe174115e58a3b183a2046de7dd3f51b7dfaa6e047ac277479",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yamaguch/library/XBee/0.0.0%2Bsha.2f728fd13bc0/XBee-0.0.0%2Bsha.2f728fd13bc0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yamaguch/library/XBee/0.0.0%2Bsha.2f728fd13bc0/XBee-0.0.0%2Bsha.2f728fd13bc0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

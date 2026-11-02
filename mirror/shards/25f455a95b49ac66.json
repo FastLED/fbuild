@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-waldek",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-waldek/library/Convert/0.0.0+sha.4c6a9e109cd0/Convert-0.0.0+sha.4c6a9e109cd0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Convert-0.0.0+sha.4c6a9e109cd0.tar.gz",
+    "size_bytes": 1957,
+    "sha256": "3c14a9ab117af3b8af225e1a65bebaff34d049d7f79d2c47e8ad996d6a1a168d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-waldek/library/Convert/0.0.0%2Bsha.4c6a9e109cd0/Convert-0.0.0%2Bsha.4c6a9e109cd0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-waldek/library/Convert/0.0.0%2Bsha.4c6a9e109cd0/Convert-0.0.0%2Bsha.4c6a9e109cd0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-waldek/library/DigitalInDebounced/0.0.0+sha.dabe90a0bdc1/DigitalInDebounced-0.0.0+sha.dabe90a0bdc1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DigitalInDebounced-0.0.0+sha.dabe90a0bdc1.tar.gz",
+    "size_bytes": 1718,
+    "sha256": "adf35492b01cdbec7a07f2873e52969738bff0e6b876e98a3c4b11a0cdc77191",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-waldek/library/DigitalInDebounced/0.0.0%2Bsha.dabe90a0bdc1/DigitalInDebounced-0.0.0%2Bsha.dabe90a0bdc1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-waldek/library/DigitalInDebounced/0.0.0%2Bsha.dabe90a0bdc1/DigitalInDebounced-0.0.0%2Bsha.dabe90a0bdc1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-waldek/library/TimeCounter/0.0.0+sha.49c28e93d358/TimeCounter-0.0.0+sha.49c28e93d358.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TimeCounter-0.0.0+sha.49c28e93d358.tar.gz",
+    "size_bytes": 1115,
+    "sha256": "45bac65f6a9745b19bb0fe06e5df128f44b8f1ae7dd73ecf4042131c69c7f8e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-waldek/library/TimeCounter/0.0.0%2Bsha.49c28e93d358/TimeCounter-0.0.0%2Bsha.49c28e93d358.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-waldek/library/TimeCounter/0.0.0%2Bsha.49c28e93d358/TimeCounter-0.0.0%2Bsha.49c28e93d358.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-waldek/library/TimerSubscriber/0.0.0+sha.4d91c430ba00/TimerSubscriber-0.0.0+sha.4d91c430ba00.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TimerSubscriber-0.0.0+sha.4d91c430ba00.tar.gz",
+    "size_bytes": 1710,
+    "sha256": "93dd8e4d06db4b287e5c1b39577068f4ae047efeb048debb4998466b456a8fc4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-waldek/library/TimerSubscriber/0.0.0%2Bsha.4d91c430ba00/TimerSubscriber-0.0.0%2Bsha.4d91c430ba00.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-waldek/library/TimerSubscriber/0.0.0%2Bsha.4d91c430ba00/TimerSubscriber-0.0.0%2Bsha.4d91c430ba00.tar.gz"
+    ]
+   }
+  }
+ ]
+}

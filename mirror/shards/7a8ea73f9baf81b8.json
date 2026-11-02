@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-misodengaku",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-misodengaku/library/KXP84/0.0.0+sha.af16997a2d22/KXP84-0.0.0+sha.af16997a2d22.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KXP84-0.0.0+sha.af16997a2d22.tar.gz",
+    "size_bytes": 1162,
+    "sha256": "9f6fed4bc11d627ac620f0dd16b9438bfe0d35ed974f4aa77be41c520648a7ab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-misodengaku/library/KXP84/0.0.0%2Bsha.af16997a2d22/KXP84-0.0.0%2Bsha.af16997a2d22.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-misodengaku/library/KXP84/0.0.0%2Bsha.af16997a2d22/KXP84-0.0.0%2Bsha.af16997a2d22.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-misodengaku/library/RTC8564/0.0.0+sha.ed1f619f1794/RTC8564-0.0.0+sha.ed1f619f1794.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RTC8564-0.0.0+sha.ed1f619f1794.tar.gz",
+    "size_bytes": 1419,
+    "sha256": "d080667a8f4583ec539278e397fa898f27e86356feb91e1b4fc64c0755131df2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-misodengaku/library/RTC8564/0.0.0%2Bsha.ed1f619f1794/RTC8564-0.0.0%2Bsha.ed1f619f1794.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-misodengaku/library/RTC8564/0.0.0%2Bsha.ed1f619f1794/RTC8564-0.0.0%2Bsha.ed1f619f1794.tar.gz"
+    ]
+   }
+  }
+ ]
+}

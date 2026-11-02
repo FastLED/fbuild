@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ysb",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ysb/library/IMU_I2C/0.0.0+sha.7b3acf8e2a6f/IMU_I2C-0.0.0+sha.7b3acf8e2a6f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IMU_I2C-0.0.0+sha.7b3acf8e2a6f.tar.gz",
+    "size_bytes": 5429,
+    "sha256": "af0210b71d2546b8cb98a53a963842f6340e92eddb74bd6101a3328ab7addcf0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ysb/library/IMU_I2C/0.0.0%2Bsha.7b3acf8e2a6f/IMU_I2C-0.0.0%2Bsha.7b3acf8e2a6f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ysb/library/IMU_I2C/0.0.0%2Bsha.7b3acf8e2a6f/IMU_I2C-0.0.0%2Bsha.7b3acf8e2a6f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ysb/library/RS405cb/0.0.0+sha.4f4b999b4939/RS405cb-0.0.0+sha.4f4b999b4939.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RS405cb-0.0.0+sha.4f4b999b4939.tar.gz",
+    "size_bytes": 2324,
+    "sha256": "ab80a0a7030dec4c074d5e8df9ca234e08dad98c4577ef02458a652726da6a39",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ysb/library/RS405cb/0.0.0%2Bsha.4f4b999b4939/RS405cb-0.0.0%2Bsha.4f4b999b4939.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ysb/library/RS405cb/0.0.0%2Bsha.4f4b999b4939/RS405cb-0.0.0%2Bsha.4f4b999b4939.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ysb/library/SCP1000/0.0.0+sha.53f432e521a4/SCP1000-0.0.0+sha.53f432e521a4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SCP1000-0.0.0+sha.53f432e521a4.tar.gz",
+    "size_bytes": 1613,
+    "sha256": "0e0ef817cc52dfc5332cc2c517e5fbb156b3ab851996f0b319ee6ea19df4fc14",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ysb/library/SCP1000/0.0.0%2Bsha.53f432e521a4/SCP1000-0.0.0%2Bsha.53f432e521a4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ysb/library/SCP1000/0.0.0%2Bsha.53f432e521a4/SCP1000-0.0.0%2Bsha.53f432e521a4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ysb/library/myCAN/0.0.0+sha.6e7d11ed7dc8/myCAN-0.0.0+sha.6e7d11ed7dc8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "myCAN-0.0.0+sha.6e7d11ed7dc8.tar.gz",
+    "size_bytes": 1923,
+    "sha256": "b50b34c1c32b786f9e78f56439e84c98a2381a94c99036d39e2084a2bc2c02ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ysb/library/myCAN/0.0.0%2Bsha.6e7d11ed7dc8/myCAN-0.0.0%2Bsha.6e7d11ed7dc8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ysb/library/myCAN/0.0.0%2Bsha.6e7d11ed7dc8/myCAN-0.0.0%2Bsha.6e7d11ed7dc8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ysb/library/myCAN_logger/0.0.0+sha.ef1cc9f2945e/myCAN_logger-0.0.0+sha.ef1cc9f2945e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "myCAN_logger-0.0.0+sha.ef1cc9f2945e.tar.gz",
+    "size_bytes": 2125,
+    "sha256": "47bc0b31ea3088523abe864c8b2e787efc69b9876a45a65d0dd51a28e71ae10a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ysb/library/myCAN_logger/0.0.0%2Bsha.ef1cc9f2945e/myCAN_logger-0.0.0%2Bsha.ef1cc9f2945e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ysb/library/myCAN_logger/0.0.0%2Bsha.ef1cc9f2945e/myCAN_logger-0.0.0%2Bsha.ef1cc9f2945e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tricky",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tricky/library/USB-Host-Shield-20/1.6.2/USB-Host-Shield-20-1.6.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "USB-Host-Shield-20-1.6.2.tar.gz",
+    "size_bytes": 143664,
+    "sha256": "e7a03014e535b35430cab29832636a91c8fdcba17dcaaf1f6c62253b7138af65",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tricky/library/USB-Host-Shield-20/1.6.2/USB-Host-Shield-20-1.6.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tricky/library/USB-Host-Shield-20/1.6.2/USB-Host-Shield-20-1.6.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

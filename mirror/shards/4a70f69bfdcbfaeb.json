@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tvidal-net",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tvidal-net/library/arduino-mbed-encoder/1.0.2/arduino-mbed-encoder-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arduino-mbed-encoder-1.0.2.tar.gz",
+    "size_bytes": 3223,
+    "sha256": "d4fdd744598a15ecb3dae642a039b56456822dbd0497f053af2e5446bdd1da87",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tvidal-net/library/arduino-mbed-encoder/1.0.2/arduino-mbed-encoder-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tvidal-net/library/arduino-mbed-encoder/1.0.2/arduino-mbed-encoder-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

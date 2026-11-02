@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/apbokkasa",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "apbokkasa/library/AutoPack/1.0.0/AutoPack-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AutoPack-1.0.0.tar.gz",
+    "size_bytes": 3063,
+    "sha256": "24020a82288c3fc34f7fe3770e2373611fb9908ec09b37fb661ce9cfae710314",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/apbokkasa/library/AutoPack/1.0.0/AutoPack-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/apbokkasa/library/AutoPack/1.0.0/AutoPack-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "apbokkasa/library/BlueCrypt/2.0.0/BlueCrypt-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BlueCrypt-2.0.0.tar.gz",
+    "size_bytes": 5322,
+    "sha256": "ffe63782f7008f12e7046dece2cca4389d5255f4b72bb3c6e519dd1c78e95a78",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/apbokkasa/library/BlueCrypt/2.0.0/BlueCrypt-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/apbokkasa/library/BlueCrypt/2.0.0/BlueCrypt-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "apbokkasa/library/BlueCrypt/2.0.1/BlueCrypt-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BlueCrypt-2.0.1.tar.gz",
+    "size_bytes": 8322,
+    "sha256": "9186bee875606bd5c6ea4179b3206abb04a6907b4df0c12857425d4e3a38ff2c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/apbokkasa/library/BlueCrypt/2.0.1/BlueCrypt-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/apbokkasa/library/BlueCrypt/2.0.1/BlueCrypt-2.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

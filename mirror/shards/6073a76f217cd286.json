@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/flamethr0wer",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "flamethr0wer/library/PS4Arduino/1.0.0/PS4Arduino-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PS4Arduino-1.0.0.tar.gz",
+    "size_bytes": 15742,
+    "sha256": "3eda72046990f43ef075686683503cffc7a9aaedbf3be1d8c70690b0bb5b7674",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/flamethr0wer/library/PS4Arduino/1.0.0/PS4Arduino-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/flamethr0wer/library/PS4Arduino/1.0.0/PS4Arduino-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "flamethr0wer/library/PS4Arduino/1.0.1/PS4Arduino-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PS4Arduino-1.0.1.tar.gz",
+    "size_bytes": 15769,
+    "sha256": "3668f11bfba2f1eb9448c973ad5939cd783282184eb0d1fd5bb37893c483025b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/flamethr0wer/library/PS4Arduino/1.0.1/PS4Arduino-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/flamethr0wer/library/PS4Arduino/1.0.1/PS4Arduino-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-leihen",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-leihen/library/RTC-DS1307/0.0.0+sha.5627b407e097/RTC-DS1307-0.0.0+sha.5627b407e097.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RTC-DS1307-0.0.0+sha.5627b407e097.tar.gz",
+    "size_bytes": 5331,
+    "sha256": "61b1e231f1f76db1ab551be494e64f8fccf4bd376560bc66c87b85889f797cac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-leihen/library/RTC-DS1307/0.0.0%2Bsha.5627b407e097/RTC-DS1307-0.0.0%2Bsha.5627b407e097.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-leihen/library/RTC-DS1307/0.0.0%2Bsha.5627b407e097/RTC-DS1307-0.0.0%2Bsha.5627b407e097.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-leihen/library/USBHost_ParadigmaSerialDevice/0.0.0+sha.ee5bb3a6193f/USBHost_ParadigmaSerialDevice-0.0.0+sha.ee5bb3a6193f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "USBHost_ParadigmaSerialDevice-0.0.0+sha.ee5bb3a6193f.tar.gz",
+    "size_bytes": 30741,
+    "sha256": "d5078a1b083d8a2457c6476794f7c72e97ade0603b6c9dc17eb73c92416070da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-leihen/library/USBHost_ParadigmaSerialDevice/0.0.0%2Bsha.ee5bb3a6193f/USBHost_ParadigmaSerialDevice-0.0.0%2Bsha.ee5bb3a6193f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-leihen/library/USBHost_ParadigmaSerialDevice/0.0.0%2Bsha.ee5bb3a6193f/USBHost_ParadigmaSerialDevice-0.0.0%2Bsha.ee5bb3a6193f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-leihen/library/WiFlyHTTPServer/0.0.0+sha.7f9fbfc18623/WiFlyHTTPServer-0.0.0+sha.7f9fbfc18623.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFlyHTTPServer-0.0.0+sha.7f9fbfc18623.tar.gz",
+    "size_bytes": 14206,
+    "sha256": "a1eaca6691aa20c24bc5da7103aea3e90806163809dbd78ebcafbe9f58a1523a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-leihen/library/WiFlyHTTPServer/0.0.0%2Bsha.7f9fbfc18623/WiFlyHTTPServer-0.0.0%2Bsha.7f9fbfc18623.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-leihen/library/WiFlyHTTPServer/0.0.0%2Bsha.7f9fbfc18623/WiFlyHTTPServer-0.0.0%2Bsha.7f9fbfc18623.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-leihen/library/WifiPlusClick/0.0.0+sha.2a179bd4cc02/WifiPlusClick-0.0.0+sha.2a179bd4cc02.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WifiPlusClick-0.0.0+sha.2a179bd4cc02.tar.gz",
+    "size_bytes": 20533,
+    "sha256": "3648313e78f8da1f6c6e7b3737692051233f66680b8b140e78b570a6ace1add0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-leihen/library/WifiPlusClick/0.0.0%2Bsha.2a179bd4cc02/WifiPlusClick-0.0.0%2Bsha.2a179bd4cc02.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-leihen/library/WifiPlusClick/0.0.0%2Bsha.2a179bd4cc02/WifiPlusClick-0.0.0%2Bsha.2a179bd4cc02.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-leihen/library/WiflyInterface/0.0.0+sha.4f95e6a365db/WiflyInterface-0.0.0+sha.4f95e6a365db.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiflyInterface-0.0.0+sha.4f95e6a365db.tar.gz",
+    "size_bytes": 7444,
+    "sha256": "8ba6c374ec8694797d24e63264d66d30fd7193fdf4b5910662a317bff659ec6f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-leihen/library/WiflyInterface/0.0.0%2Bsha.4f95e6a365db/WiflyInterface-0.0.0%2Bsha.4f95e6a365db.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-leihen/library/WiflyInterface/0.0.0%2Bsha.4f95e6a365db/WiflyInterface-0.0.0%2Bsha.4f95e6a365db.tar.gz"
+    ]
+   }
+  }
+ ]
+}

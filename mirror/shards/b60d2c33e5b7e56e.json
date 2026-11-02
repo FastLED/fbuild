@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rossc012",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rossc012/library/WiFi_OTA/1.0.0/WiFi_OTA-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFi_OTA-1.0.0.tar.gz",
+    "size_bytes": 4139,
+    "sha256": "a71625c7f547bed63ca89b4e13e82ad906e713dd8bc9b5743200a429d0fb47e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rossc012/library/WiFi_OTA/1.0.0/WiFi_OTA-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rossc012/library/WiFi_OTA/1.0.0/WiFi_OTA-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

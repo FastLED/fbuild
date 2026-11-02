@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/aruncs31s",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "aruncs31s/library/Robo%20Initial%20Postions/0.0.5/RoboInitialPostions-0.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RoboInitialPostions-0.0.5.tar.gz",
+    "size_bytes": 1408,
+    "sha256": "850fa1f13c782caeab3a10e89db3f2d0c44c1e54142b13948307233f92dbc69a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aruncs31s/library/Robo%2520Initial%2520Postions/0.0.5/RoboInitialPostions-0.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/aruncs31s/library/Robo%20Initial%20Postions/0.0.5/RoboInitialPostions-0.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aruncs31s/library/Robo%20Movements/0.0.3/RoboMovements-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RoboMovements-0.0.3.tar.gz",
+    "size_bytes": 6045,
+    "sha256": "f4b77ec9ff9cdd6adf332fa2633c9b0bc0554ca21110667c3d879a62f3867f2f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aruncs31s/library/Robo%2520Movements/0.0.3/RoboMovements-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/aruncs31s/library/Robo%20Movements/0.0.3/RoboMovements-0.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

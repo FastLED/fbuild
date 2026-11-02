@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-pom911",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-pom911/library/TexLCDP/0.0.0+sha.cb784b022ec8/TexLCDP-0.0.0+sha.cb784b022ec8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TexLCDP-0.0.0+sha.cb784b022ec8.tar.gz",
+    "size_bytes": 3092,
+    "sha256": "b9af1c77f144543f283df5b73f594fd7d82c4975d977730678e012b1fb129a94",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pom911/library/TexLCDP/0.0.0%2Bsha.cb784b022ec8/TexLCDP-0.0.0%2Bsha.cb784b022ec8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pom911/library/TexLCDP/0.0.0%2Bsha.cb784b022ec8/TexLCDP-0.0.0%2Bsha.cb784b022ec8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

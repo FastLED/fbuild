@@ -1,0 +1,178 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/matrix-robotics",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "matrix-robotics/library/Matrix%20Color%20Sensor/1.0.3/MatrixColorSensor-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MatrixColorSensor-1.0.3.tar.gz",
+    "size_bytes": 3220,
+    "sha256": "87ca52f198afa5c9f1f8e685c728e800408f7349b50e0fe0336ca4ea2fbd7f40",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matrix-robotics/library/Matrix%2520Color%2520Sensor/1.0.3/MatrixColorSensor-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/matrix-robotics/library/Matrix%20Color%20Sensor/1.0.3/MatrixColorSensor-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "matrix-robotics/library/Matrix%20Controller/1.0.0/MatrixController-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MatrixController-1.0.0.tar.gz",
+    "size_bytes": 3586,
+    "sha256": "c5fad4d6ce39c29ec91cd5512781949124f7869e5bbc73ff6230bdfa9c2db82f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matrix-robotics/library/Matrix%2520Controller/1.0.0/MatrixController-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/matrix-robotics/library/Matrix%20Controller/1.0.0/MatrixController-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "matrix-robotics/library/Matrix%20Laser%20Sensor/1.0.1/MatrixLaserSensor-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MatrixLaserSensor-1.0.1.tar.gz",
+    "size_bytes": 2522,
+    "sha256": "d03730a0badba721bd9a6f9b99b05b35edf1dab569b9386c66483f38de4085ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matrix-robotics/library/Matrix%2520Laser%2520Sensor/1.0.1/MatrixLaserSensor-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/matrix-robotics/library/Matrix%20Laser%20Sensor/1.0.1/MatrixLaserSensor-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "matrix-robotics/library/Matrix%20Mini%20Library/2.4.7/MatrixMiniLibrary-2.4.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MatrixMiniLibrary-2.4.7.tar.gz",
+    "size_bytes": 40544,
+    "sha256": "6de0c8099c03ff5ae8113c812118482e298ca781c61b8ec19cedd62045c936e0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matrix-robotics/library/Matrix%2520Mini%2520Library/2.4.7/MatrixMiniLibrary-2.4.7.tar.gz",
+     "https://dl.registry.platformio.org/download/matrix-robotics/library/Matrix%20Mini%20Library/2.4.7/MatrixMiniLibrary-2.4.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "matrix-robotics/library/Matrix%20Motion%20Sensor/1.0.3/MatrixMotionSensor-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MatrixMotionSensor-1.0.3.tar.gz",
+    "size_bytes": 3034,
+    "sha256": "e37714c83d395a7a900c8069a9e9d5620d42afe94fb3fbb9b798ff2145c6b6e3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matrix-robotics/library/Matrix%2520Motion%2520Sensor/1.0.3/MatrixMotionSensor-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/matrix-robotics/library/Matrix%20Motion%20Sensor/1.0.3/MatrixMotionSensor-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "matrix-robotics/library/Matrix%20Motor%20Extension/1.0.3/MatrixMotorExtension-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MatrixMotorExtension-1.0.3.tar.gz",
+    "size_bytes": 2816,
+    "sha256": "3ed20cc8aab5f6103b1d0f5e34787c678ddb7d4c5e5c900c9ba9b34eab44f99b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matrix-robotics/library/Matrix%2520Motor%2520Extension/1.0.3/MatrixMotorExtension-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/matrix-robotics/library/Matrix%20Motor%20Extension/1.0.3/MatrixMotorExtension-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "matrix-robotics/library/Matrix%20Servo%20Extension/1.0.2/MatrixServoExtension-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MatrixServoExtension-1.0.2.tar.gz",
+    "size_bytes": 2951,
+    "sha256": "56359f5509a9f6d0731a19cc34ab219576d1bb25b6c4006cb0cfe1b8ec6299ec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matrix-robotics/library/Matrix%2520Servo%2520Extension/1.0.2/MatrixServoExtension-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/matrix-robotics/library/Matrix%20Servo%20Extension/1.0.2/MatrixServoExtension-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "matrix-robotics/library/Matrix%20Ultrasonic%20Sensor/1.0.0/MatrixUltrasonicSensor-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MatrixUltrasonicSensor-1.0.0.tar.gz",
+    "size_bytes": 2417,
+    "sha256": "d9505322adee9fb4dcacfd2756164a35cef5803865a37bc89482d6eb91b2b392",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matrix-robotics/library/Matrix%2520Ultrasonic%2520Sensor/1.0.0/MatrixUltrasonicSensor-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/matrix-robotics/library/Matrix%20Ultrasonic%20Sensor/1.0.0/MatrixUltrasonicSensor-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "matrix-robotics/library/MatrixMiniR4/1.1.9/MatrixMiniR4-1.1.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MatrixMiniR4-1.1.9.tar.gz",
+    "size_bytes": 127724,
+    "sha256": "68380c89a4726585fb1f66d00e38b8ea0336e3fd7cc92810a3d540318186a5f9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matrix-robotics/library/MatrixMiniR4/1.1.9/MatrixMiniR4-1.1.9.tar.gz",
+     "https://dl.registry.platformio.org/download/matrix-robotics/library/MatrixMiniR4/1.1.9/MatrixMiniR4-1.1.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "matrix-robotics/library/MatrixMiniR4/1.2.2/MatrixMiniR4-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MatrixMiniR4-1.2.2.tar.gz",
+    "size_bytes": 130832,
+    "sha256": "e6ccf56f0d7439792c9b79169ccfda2f549ad5da128cf2c5220e03aca1d5c8a7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matrix-robotics/library/MatrixMiniR4/1.2.2/MatrixMiniR4-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/matrix-robotics/library/MatrixMiniR4/1.2.2/MatrixMiniR4-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "matrix-robotics/library/MatrixMiniR4/1.2.4/MatrixMiniR4-1.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MatrixMiniR4-1.2.4.tar.gz",
+    "size_bytes": 138121,
+    "sha256": "4fc45edf80a02e67d95a648b6523f14fcf67e8f3f3973c3aa6eb2fa01ecc0757",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matrix-robotics/library/MatrixMiniR4/1.2.4/MatrixMiniR4-1.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/matrix-robotics/library/MatrixMiniR4/1.2.4/MatrixMiniR4-1.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "matrix-robotics/library/MatrixMiniR4/1.2.5/MatrixMiniR4-1.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MatrixMiniR4-1.2.5.tar.gz",
+    "size_bytes": 138107,
+    "sha256": "8c9354bb00573a204cca00383b5e788c2362f6de14ae358ffb3da7ef38f1dd1a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matrix-robotics/library/MatrixMiniR4/1.2.5/MatrixMiniR4-1.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/matrix-robotics/library/MatrixMiniR4/1.2.5/MatrixMiniR4-1.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "matrix-robotics/library/MatrixMiniR4/1.2.6/MatrixMiniR4-1.2.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MatrixMiniR4-1.2.6.tar.gz",
+    "size_bytes": 139957,
+    "sha256": "be30c506550e4e94c64aa059b75e1b3733aab3b4df48aaf826e9a2322f9e87ca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matrix-robotics/library/MatrixMiniR4/1.2.6/MatrixMiniR4-1.2.6.tar.gz",
+     "https://dl.registry.platformio.org/download/matrix-robotics/library/MatrixMiniR4/1.2.6/MatrixMiniR4-1.2.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

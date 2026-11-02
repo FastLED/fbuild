@@ -1,0 +1,386 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/shorepine",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "shorepine/library/AMY%20Synthesizer/1.2.155/AMYSynthesizer-1.2.155.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AMYSynthesizer-1.2.155.tar.gz",
+    "size_bytes": 25298548,
+    "sha256": "e34dfbbfdba34d013abf76ace7b0483038b72155bbd65baf4b078adc848c105a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shorepine/library/AMY%2520Synthesizer/1.2.155/AMYSynthesizer-1.2.155.tar.gz",
+     "https://dl.registry.platformio.org/download/shorepine/library/AMY%20Synthesizer/1.2.155/AMYSynthesizer-1.2.155.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shorepine/library/AMY%20Synthesizer/1.2.157/AMYSynthesizer-1.2.157.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AMYSynthesizer-1.2.157.tar.gz",
+    "size_bytes": 25304165,
+    "sha256": "4337d2fb1d40839db7c21483f5b1be7381a2616f2c86727a3e2e31d3bbd27522",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shorepine/library/AMY%2520Synthesizer/1.2.157/AMYSynthesizer-1.2.157.tar.gz",
+     "https://dl.registry.platformio.org/download/shorepine/library/AMY%20Synthesizer/1.2.157/AMYSynthesizer-1.2.157.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shorepine/library/AMY%20Synthesizer/1.2.158/AMYSynthesizer-1.2.158.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AMYSynthesizer-1.2.158.tar.gz",
+    "size_bytes": 25305333,
+    "sha256": "0ccc69a563bb76adf12026685b9d51685880f80f86620995204f195a7e0bd291",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shorepine/library/AMY%2520Synthesizer/1.2.158/AMYSynthesizer-1.2.158.tar.gz",
+     "https://dl.registry.platformio.org/download/shorepine/library/AMY%20Synthesizer/1.2.158/AMYSynthesizer-1.2.158.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shorepine/library/AMY%20Synthesizer/1.2.159/AMYSynthesizer-1.2.159.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AMYSynthesizer-1.2.159.tar.gz",
+    "size_bytes": 25304795,
+    "sha256": "c654ec8ca8b137583d97636abe3e8fc2e41cad110684fa66441a5728b65bf1f5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shorepine/library/AMY%2520Synthesizer/1.2.159/AMYSynthesizer-1.2.159.tar.gz",
+     "https://dl.registry.platformio.org/download/shorepine/library/AMY%20Synthesizer/1.2.159/AMYSynthesizer-1.2.159.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shorepine/library/AMY%20Synthesizer/1.2.160/AMYSynthesizer-1.2.160.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AMYSynthesizer-1.2.160.tar.gz",
+    "size_bytes": 25309834,
+    "sha256": "b8d7601feb66abef5674c225769b414451a2d1f5c96b47ea328168d286880d3f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shorepine/library/AMY%2520Synthesizer/1.2.160/AMYSynthesizer-1.2.160.tar.gz",
+     "https://dl.registry.platformio.org/download/shorepine/library/AMY%20Synthesizer/1.2.160/AMYSynthesizer-1.2.160.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shorepine/library/AMY%20Synthesizer/1.2.162/AMYSynthesizer-1.2.162.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AMYSynthesizer-1.2.162.tar.gz",
+    "size_bytes": 25310554,
+    "sha256": "03706c2145effd051f1edaf094f00a13ee4f44cfd04279751d1bd1a41b3de9ab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shorepine/library/AMY%2520Synthesizer/1.2.162/AMYSynthesizer-1.2.162.tar.gz",
+     "https://dl.registry.platformio.org/download/shorepine/library/AMY%20Synthesizer/1.2.162/AMYSynthesizer-1.2.162.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shorepine/library/AMY%20Synthesizer/1.2.163/AMYSynthesizer-1.2.163.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AMYSynthesizer-1.2.163.tar.gz",
+    "size_bytes": 25310686,
+    "sha256": "0e87f050c2d3908b8b272a6e9258176f5ec31979049e7253a8a4c3afc54d8d34",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shorepine/library/AMY%2520Synthesizer/1.2.163/AMYSynthesizer-1.2.163.tar.gz",
+     "https://dl.registry.platformio.org/download/shorepine/library/AMY%20Synthesizer/1.2.163/AMYSynthesizer-1.2.163.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shorepine/library/AMY%20Synthesizer/1.2.164/AMYSynthesizer-1.2.164.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AMYSynthesizer-1.2.164.tar.gz",
+    "size_bytes": 25311274,
+    "sha256": "790e166aa9d4859251ab0dac76da94ca6d6df8fe97d209d92d764ac9f68dc3b4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shorepine/library/AMY%2520Synthesizer/1.2.164/AMYSynthesizer-1.2.164.tar.gz",
+     "https://dl.registry.platformio.org/download/shorepine/library/AMY%20Synthesizer/1.2.164/AMYSynthesizer-1.2.164.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shorepine/library/AMY%20Synthesizer/1.2.165/AMYSynthesizer-1.2.165.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AMYSynthesizer-1.2.165.tar.gz",
+    "size_bytes": 25311470,
+    "sha256": "8be626399755fd77ef657bea1b7793ee7c9ec415e0dcd38f51266105c8a32d7e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shorepine/library/AMY%2520Synthesizer/1.2.165/AMYSynthesizer-1.2.165.tar.gz",
+     "https://dl.registry.platformio.org/download/shorepine/library/AMY%20Synthesizer/1.2.165/AMYSynthesizer-1.2.165.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shorepine/library/AMY%20Synthesizer/1.2.166/AMYSynthesizer-1.2.166.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AMYSynthesizer-1.2.166.tar.gz",
+    "size_bytes": 25313663,
+    "sha256": "2ddafccd3ca0a89000d05806313122587a31511c858c3d92fae19b46d78e41f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shorepine/library/AMY%2520Synthesizer/1.2.166/AMYSynthesizer-1.2.166.tar.gz",
+     "https://dl.registry.platformio.org/download/shorepine/library/AMY%20Synthesizer/1.2.166/AMYSynthesizer-1.2.166.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shorepine/library/AMY%20Synthesizer/1.2.167/AMYSynthesizer-1.2.167.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AMYSynthesizer-1.2.167.tar.gz",
+    "size_bytes": 25313393,
+    "sha256": "af00422e3c7a3778bcc82ac040ae33e7a8b5bf77606718042387c9073e50ca41",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shorepine/library/AMY%2520Synthesizer/1.2.167/AMYSynthesizer-1.2.167.tar.gz",
+     "https://dl.registry.platformio.org/download/shorepine/library/AMY%20Synthesizer/1.2.167/AMYSynthesizer-1.2.167.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shorepine/library/AMY%20Synthesizer/1.2.171/AMYSynthesizer-1.2.171.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AMYSynthesizer-1.2.171.tar.gz",
+    "size_bytes": 25314153,
+    "sha256": "0f7d997efc92bbcdfd94754064637f5160b28d1baf67b453a43b90e772f3fcd3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shorepine/library/AMY%2520Synthesizer/1.2.171/AMYSynthesizer-1.2.171.tar.gz",
+     "https://dl.registry.platformio.org/download/shorepine/library/AMY%20Synthesizer/1.2.171/AMYSynthesizer-1.2.171.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shorepine/library/AMY%20Synthesizer/1.2.172/AMYSynthesizer-1.2.172.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AMYSynthesizer-1.2.172.tar.gz",
+    "size_bytes": 25314623,
+    "sha256": "0d77f7321e5d75768dd7b67da8d42a1b7ae01ed1158a701645bb83c97657db93",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shorepine/library/AMY%2520Synthesizer/1.2.172/AMYSynthesizer-1.2.172.tar.gz",
+     "https://dl.registry.platformio.org/download/shorepine/library/AMY%20Synthesizer/1.2.172/AMYSynthesizer-1.2.172.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shorepine/library/AMY%20Synthesizer/1.2.176/AMYSynthesizer-1.2.176.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AMYSynthesizer-1.2.176.tar.gz",
+    "size_bytes": 25323424,
+    "sha256": "8339f94cb1d51004d13a645f039833777e971630513d47efff74a8a612e1184c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shorepine/library/AMY%2520Synthesizer/1.2.176/AMYSynthesizer-1.2.176.tar.gz",
+     "https://dl.registry.platformio.org/download/shorepine/library/AMY%20Synthesizer/1.2.176/AMYSynthesizer-1.2.176.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shorepine/library/AMY%20Synthesizer/1.2.178/AMYSynthesizer-1.2.178.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AMYSynthesizer-1.2.178.tar.gz",
+    "size_bytes": 25324033,
+    "sha256": "05e36b4908b3fdf080cb875a243fc8f02aff68e985a0beded461f1120a71fe50",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shorepine/library/AMY%2520Synthesizer/1.2.178/AMYSynthesizer-1.2.178.tar.gz",
+     "https://dl.registry.platformio.org/download/shorepine/library/AMY%20Synthesizer/1.2.178/AMYSynthesizer-1.2.178.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shorepine/library/AMY%20Synthesizer/1.2.180/AMYSynthesizer-1.2.180.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AMYSynthesizer-1.2.180.tar.gz",
+    "size_bytes": 25324216,
+    "sha256": "00ba10fc1ef4c230140b41294b79197cb5fba916f6787858a2bd789423ecc48e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shorepine/library/AMY%2520Synthesizer/1.2.180/AMYSynthesizer-1.2.180.tar.gz",
+     "https://dl.registry.platformio.org/download/shorepine/library/AMY%20Synthesizer/1.2.180/AMYSynthesizer-1.2.180.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shorepine/library/AMY%20Synthesizer/1.2.182/AMYSynthesizer-1.2.182.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AMYSynthesizer-1.2.182.tar.gz",
+    "size_bytes": 25329088,
+    "sha256": "028d784693125c5784c406837a88d0d48bd9ea4da2b93b6536b57833846d1241",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shorepine/library/AMY%2520Synthesizer/1.2.182/AMYSynthesizer-1.2.182.tar.gz",
+     "https://dl.registry.platformio.org/download/shorepine/library/AMY%20Synthesizer/1.2.182/AMYSynthesizer-1.2.182.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shorepine/library/AMY%20Synthesizer/1.2.185/AMYSynthesizer-1.2.185.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AMYSynthesizer-1.2.185.tar.gz",
+    "size_bytes": 25331437,
+    "sha256": "ecc2e08d14944edee89873f898341015e29d907dae6a34706689aa7deb036984",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shorepine/library/AMY%2520Synthesizer/1.2.185/AMYSynthesizer-1.2.185.tar.gz",
+     "https://dl.registry.platformio.org/download/shorepine/library/AMY%20Synthesizer/1.2.185/AMYSynthesizer-1.2.185.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shorepine/library/AMY%20Synthesizer/1.2.187/AMYSynthesizer-1.2.187.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AMYSynthesizer-1.2.187.tar.gz",
+    "size_bytes": 25331306,
+    "sha256": "f0c21144f745b20062bce851678d0d8b0cda363f58a550de08f56ea67743d87d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shorepine/library/AMY%2520Synthesizer/1.2.187/AMYSynthesizer-1.2.187.tar.gz",
+     "https://dl.registry.platformio.org/download/shorepine/library/AMY%20Synthesizer/1.2.187/AMYSynthesizer-1.2.187.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shorepine/library/AMY%20Synthesizer/1.2.188/AMYSynthesizer-1.2.188.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AMYSynthesizer-1.2.188.tar.gz",
+    "size_bytes": 25333034,
+    "sha256": "d612d3c045a21f78ca7b26f27ce49eec6d55547980e6db379e3a61c12aa1985a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shorepine/library/AMY%2520Synthesizer/1.2.188/AMYSynthesizer-1.2.188.tar.gz",
+     "https://dl.registry.platformio.org/download/shorepine/library/AMY%20Synthesizer/1.2.188/AMYSynthesizer-1.2.188.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shorepine/library/AMY%20Synthesizer/1.2.190/AMYSynthesizer-1.2.190.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AMYSynthesizer-1.2.190.tar.gz",
+    "size_bytes": 25334664,
+    "sha256": "c3790d163bd94c3d6b53dc561b69cd4e596e5c0bd2355166c8120c26a93d6de5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shorepine/library/AMY%2520Synthesizer/1.2.190/AMYSynthesizer-1.2.190.tar.gz",
+     "https://dl.registry.platformio.org/download/shorepine/library/AMY%20Synthesizer/1.2.190/AMYSynthesizer-1.2.190.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shorepine/library/AMY%20Synthesizer/1.2.191/AMYSynthesizer-1.2.191.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AMYSynthesizer-1.2.191.tar.gz",
+    "size_bytes": 25336367,
+    "sha256": "e6a59793561359a8e2da5a7345f789e6ac3d4433532a482945e1fc8acd1a0dcc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shorepine/library/AMY%2520Synthesizer/1.2.191/AMYSynthesizer-1.2.191.tar.gz",
+     "https://dl.registry.platformio.org/download/shorepine/library/AMY%20Synthesizer/1.2.191/AMYSynthesizer-1.2.191.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shorepine/library/AMY%20Synthesizer/1.2.192/AMYSynthesizer-1.2.192.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AMYSynthesizer-1.2.192.tar.gz",
+    "size_bytes": 25336491,
+    "sha256": "8fc0502e8753f91682f73a5426252216f8891994e767bbc8234e38da8d805bc7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shorepine/library/AMY%2520Synthesizer/1.2.192/AMYSynthesizer-1.2.192.tar.gz",
+     "https://dl.registry.platformio.org/download/shorepine/library/AMY%20Synthesizer/1.2.192/AMYSynthesizer-1.2.192.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shorepine/library/AMY%20Synthesizer/1.2.196/AMYSynthesizer-1.2.196.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AMYSynthesizer-1.2.196.tar.gz",
+    "size_bytes": 25337956,
+    "sha256": "2d1a3eb53b2b765526dc2aa990e50e2773539d243c35a9a0b5879360b60a0e2f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shorepine/library/AMY%2520Synthesizer/1.2.196/AMYSynthesizer-1.2.196.tar.gz",
+     "https://dl.registry.platformio.org/download/shorepine/library/AMY%20Synthesizer/1.2.196/AMYSynthesizer-1.2.196.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shorepine/library/AMY%20Synthesizer/1.2.197/AMYSynthesizer-1.2.197.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AMYSynthesizer-1.2.197.tar.gz",
+    "size_bytes": 25338589,
+    "sha256": "07fbc884f20b08ce8310bd86275d255db90bb9c10b6b0f380d6b78454b9c390b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shorepine/library/AMY%2520Synthesizer/1.2.197/AMYSynthesizer-1.2.197.tar.gz",
+     "https://dl.registry.platformio.org/download/shorepine/library/AMY%20Synthesizer/1.2.197/AMYSynthesizer-1.2.197.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shorepine/library/AMY%20Synthesizer/1.2.200/AMYSynthesizer-1.2.200.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AMYSynthesizer-1.2.200.tar.gz",
+    "size_bytes": 25342463,
+    "sha256": "3933a91e682fa69aaa58f1367b8c54d18bc760f79debe29ced5e55fc47882213",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shorepine/library/AMY%2520Synthesizer/1.2.200/AMYSynthesizer-1.2.200.tar.gz",
+     "https://dl.registry.platformio.org/download/shorepine/library/AMY%20Synthesizer/1.2.200/AMYSynthesizer-1.2.200.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shorepine/library/AMY%20Synthesizer/1.2.204/AMYSynthesizer-1.2.204.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AMYSynthesizer-1.2.204.tar.gz",
+    "size_bytes": 25349601,
+    "sha256": "5a5e72509fcf441bdc7dd54953aaf73e3754afe4b57861ce578c62b7b7ea61b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shorepine/library/AMY%2520Synthesizer/1.2.204/AMYSynthesizer-1.2.204.tar.gz",
+     "https://dl.registry.platformio.org/download/shorepine/library/AMY%20Synthesizer/1.2.204/AMYSynthesizer-1.2.204.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shorepine/library/AMY%20Synthesizer/1.2.207/AMYSynthesizer-1.2.207.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AMYSynthesizer-1.2.207.tar.gz",
+    "size_bytes": 25354518,
+    "sha256": "1b74656559b4bb46de94f547dd75849f284873bcf92cfd5f62c4623201a319fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shorepine/library/AMY%2520Synthesizer/1.2.207/AMYSynthesizer-1.2.207.tar.gz",
+     "https://dl.registry.platformio.org/download/shorepine/library/AMY%20Synthesizer/1.2.207/AMYSynthesizer-1.2.207.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shorepine/library/AMY%20Synthesizer/1.2.208/AMYSynthesizer-1.2.208.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AMYSynthesizer-1.2.208.tar.gz",
+    "size_bytes": 25354616,
+    "sha256": "6d99d95090310b994434242654c28080ee9f939afb11c4fdb31145ef53419807",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shorepine/library/AMY%2520Synthesizer/1.2.208/AMYSynthesizer-1.2.208.tar.gz",
+     "https://dl.registry.platformio.org/download/shorepine/library/AMY%20Synthesizer/1.2.208/AMYSynthesizer-1.2.208.tar.gz"
+    ]
+   }
+  }
+ ]
+}

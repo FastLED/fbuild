@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/zamanturja",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "zamanturja/library/A9Gmod/1.0.4/A9Gmod-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "A9Gmod-1.0.4.tar.gz",
+    "size_bytes": 12921,
+    "sha256": "3c1a0f5b9bf6cafc700c74ed47bfe18991b61a78c7049b70226ef709493dda72",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zamanturja/library/A9Gmod/1.0.4/A9Gmod-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/zamanturja/library/A9Gmod/1.0.4/A9Gmod-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

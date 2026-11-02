@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-piyamate",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-piyamate/library/Serial485/0.0.0+sha.b89e704da3e0/Serial485-0.0.0+sha.b89e704da3e0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Serial485-0.0.0+sha.b89e704da3e0.tar.gz",
+    "size_bytes": 1538,
+    "sha256": "171e633fb0b1125aa978d3ec1fc982b071688123c01cad7655c68b5714b84275",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-piyamate/library/Serial485/0.0.0%2Bsha.b89e704da3e0/Serial485-0.0.0%2Bsha.b89e704da3e0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-piyamate/library/Serial485/0.0.0%2Bsha.b89e704da3e0/Serial485-0.0.0%2Bsha.b89e704da3e0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

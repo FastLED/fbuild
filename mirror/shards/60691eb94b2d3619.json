@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cubicleguy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cubicleguy/library/Epson_SU_SPI/2.0.0/Epson_SU_SPI-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Epson_SU_SPI-2.0.0.tar.gz",
+    "size_bytes": 47573,
+    "sha256": "939f0c84a3c6a937b74bda281af010df7f6fa57c1a9bd4dbe679a11c6f358823",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cubicleguy/library/Epson_SU_SPI/2.0.0/Epson_SU_SPI-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cubicleguy/library/Epson_SU_SPI/2.0.0/Epson_SU_SPI-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cubicleguy/library/Epson_SU_SPI/2.0.1/Epson_SU_SPI-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Epson_SU_SPI-2.0.1.tar.gz",
+    "size_bytes": 48213,
+    "sha256": "dc2bca7c2307715584867287325a17a3bb74140d2d82a3dec704cbb863900515",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cubicleguy/library/Epson_SU_SPI/2.0.1/Epson_SU_SPI-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cubicleguy/library/Epson_SU_SPI/2.0.1/Epson_SU_SPI-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cubicleguy/library/Epson_SU_UART/2.0.0/Epson_SU_UART-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Epson_SU_UART-2.0.0.tar.gz",
+    "size_bytes": 47154,
+    "sha256": "613163a6dc47c75e0a86efaa8ff1364fa4cfd0daf9d3951584b4f7dd9ee8f776",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cubicleguy/library/Epson_SU_UART/2.0.0/Epson_SU_UART-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cubicleguy/library/Epson_SU_UART/2.0.0/Epson_SU_UART-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cubicleguy/library/Epson_SU_UART/2.0.1/Epson_SU_UART-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Epson_SU_UART-2.0.1.tar.gz",
+    "size_bytes": 47324,
+    "sha256": "7d702bfccd8d8590e553111c39171f91c403181a4e7f6348a76aab2f67459149",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cubicleguy/library/Epson_SU_UART/2.0.1/Epson_SU_UART-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cubicleguy/library/Epson_SU_UART/2.0.1/Epson_SU_UART-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cubicleguy/library/xv7021_spi/1.0.0/xv7021_spi-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "xv7021_spi-1.0.0.tar.gz",
+    "size_bytes": 13214,
+    "sha256": "1d34b257bf10bec1de701b2d184e6cf0b6fa6bc6bd5536003f8fdd089873cbd7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cubicleguy/library/xv7021_spi/1.0.0/xv7021_spi-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cubicleguy/library/xv7021_spi/1.0.0/xv7021_spi-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cubicleguy/library/xv7211_spi/1.0.0/xv7211_spi-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "xv7211_spi-1.0.0.tar.gz",
+    "size_bytes": 13057,
+    "sha256": "d15b761c81e37e71ba41febd4b9f1ba30b38db0617f71169884510f6174dc109",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cubicleguy/library/xv7211_spi/1.0.0/xv7211_spi-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cubicleguy/library/xv7211_spi/1.0.0/xv7211_spi-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

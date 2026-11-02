@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sandeepmistry",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sandeepmistry/library/BLEPeripheral/0.4.0/BLEPeripheral-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLEPeripheral-0.4.0.tar.gz",
+    "size_bytes": 145619,
+    "sha256": "92f2bcf1d6f0fc02d5a259f52ab530ea904b81dd902e2e3656493758aabbdbc6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sandeepmistry/library/BLEPeripheral/0.4.0/BLEPeripheral-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sandeepmistry/library/BLEPeripheral/0.4.0/BLEPeripheral-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sandeepmistry/library/CAN/0.3.1/CAN-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CAN-0.3.1.tar.gz",
+    "size_bytes": 12258,
+    "sha256": "5daa4ca0e71c93ce6982389804e7ebffbf9f2c0255e02b80217c5212f84e3813",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sandeepmistry/library/CAN/0.3.1/CAN-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sandeepmistry/library/CAN/0.3.1/CAN-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sandeepmistry/library/LoRa/0.7.2/LoRa-0.7.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LoRa-0.7.2.tar.gz",
+    "size_bytes": 15042,
+    "sha256": "6bf4f765f46c62054941b2aa7a36ea07d48ac37d81781ff9dff8a05f6ea352ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sandeepmistry/library/LoRa/0.7.2/LoRa-0.7.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sandeepmistry/library/LoRa/0.7.2/LoRa-0.7.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sandeepmistry/library/LoRa/0.8.0/LoRa-0.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LoRa-0.8.0.tar.gz",
+    "size_bytes": 15570,
+    "sha256": "72d2549692599cb05e0f5c3bfaae7e1d1a9c5216d0b195a7745d809c021ea63b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sandeepmistry/library/LoRa/0.8.0/LoRa-0.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sandeepmistry/library/LoRa/0.8.0/LoRa-0.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sandeepmistry/library/OBD2/0.0.1/OBD2-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OBD2-0.0.1.tar.gz",
+    "size_bytes": 10251,
+    "sha256": "7e439b1025d76b083b5e502ef55bb4cb5458af3434ca428e85c6c9c182b23202",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sandeepmistry/library/OBD2/0.0.1/OBD2-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sandeepmistry/library/OBD2/0.0.1/OBD2-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

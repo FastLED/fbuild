@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ultiblox",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ultiblox/library/UltiBlox%20DisplayValueCommon/1.0.0/UltiBloxDisplayValueCommon-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UltiBloxDisplayValueCommon-1.0.0.tar.gz",
+    "size_bytes": 3898,
+    "sha256": "1811ea8330befcd43225003dfb7c8df280fc4271bdb17d2d5998f51132a847d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ultiblox/library/UltiBlox%2520DisplayValueCommon/1.0.0/UltiBloxDisplayValueCommon-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ultiblox/library/UltiBlox%20DisplayValueCommon/1.0.0/UltiBloxDisplayValueCommon-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ultiblox/library/UltiBlox-DisplayValueLCD/1.1.6/UltiBlox-DisplayValueLCD-1.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UltiBlox-DisplayValueLCD-1.1.6.tar.gz",
+    "size_bytes": 8006,
+    "sha256": "eec8937f2eef770f5ee2f191a93c362309fe25aeee285637fc77263105bfdb38",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ultiblox/library/UltiBlox-DisplayValueLCD/1.1.6/UltiBlox-DisplayValueLCD-1.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/ultiblox/library/UltiBlox-DisplayValueLCD/1.1.6/UltiBlox-DisplayValueLCD-1.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ultiblox/library/UltiBlox-DisplayValueNull/1.1.4/UltiBlox-DisplayValueNull-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UltiBlox-DisplayValueNull-1.1.4.tar.gz",
+    "size_bytes": 6352,
+    "sha256": "73376f9e15f6e1dfb0bfbdf4ee48bc43c0344be246c10357e5c8ea5deeca0d2a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ultiblox/library/UltiBlox-DisplayValueNull/1.1.4/UltiBlox-DisplayValueNull-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/ultiblox/library/UltiBlox-DisplayValueNull/1.1.4/UltiBlox-DisplayValueNull-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ultiblox/library/UltiBlox-DisplayValueOLED/1.1.4/UltiBlox-DisplayValueOLED-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UltiBlox-DisplayValueOLED-1.1.4.tar.gz",
+    "size_bytes": 8308,
+    "sha256": "88331ee47d7730b59c6ea2fce7ffadabdfddfa91288eb4a5a5e53ee751d61500",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ultiblox/library/UltiBlox-DisplayValueOLED/1.1.4/UltiBlox-DisplayValueOLED-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/ultiblox/library/UltiBlox-DisplayValueOLED/1.1.4/UltiBlox-DisplayValueOLED-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ultiblox/library/UltiBlox-LCDI2C/2.0.8/UltiBlox-LCDI2C-2.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UltiBlox-LCDI2C-2.0.8.tar.gz",
+    "size_bytes": 7160,
+    "sha256": "9c4296b25f90de3c6c74279be931587e049e157db6769d36a9186ebfa847f122",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ultiblox/library/UltiBlox-LCDI2C/2.0.8/UltiBlox-LCDI2C-2.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/ultiblox/library/UltiBlox-LCDI2C/2.0.8/UltiBlox-LCDI2C-2.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ultiblox/library/UltiBlox-SensorAnalog/1.1.7/UltiBlox-SensorAnalog-1.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UltiBlox-SensorAnalog-1.1.7.tar.gz",
+    "size_bytes": 8118,
+    "sha256": "6804cf503eb4b24e80aba3b19d5f402c040bcc6594149b007eefb365c005f814",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ultiblox/library/UltiBlox-SensorAnalog/1.1.7/UltiBlox-SensorAnalog-1.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/ultiblox/library/UltiBlox-SensorAnalog/1.1.7/UltiBlox-SensorAnalog-1.1.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ultiblox/library/UltiBlox-SerialCommands/1.0.6/UltiBlox-SerialCommands-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UltiBlox-SerialCommands-1.0.6.tar.gz",
+    "size_bytes": 7264,
+    "sha256": "f2e87bbcc1b7b9f0feda5ded1c61c2d34fb4f138ad02f2b31aff93ffcf27e0ac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ultiblox/library/UltiBlox-SerialCommands/1.0.6/UltiBlox-SerialCommands-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/ultiblox/library/UltiBlox-SerialCommands/1.0.6/UltiBlox-SerialCommands-1.0.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,139 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ellafoxo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ellafoxo/library/CANlib/0.0.1/CANlib-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CANlib-0.0.1.tar.gz",
+    "size_bytes": 44996,
+    "sha256": "72cbdabe24df9708b54f6c60d957efd823f40a8a6267a106cc94aa121f9771f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ellafoxo/library/CANlib/0.0.1/CANlib-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ellafoxo/library/CANlib/0.0.1/CANlib-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ellafoxo/library/CANlib/0.0.2/CANlib-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CANlib-0.0.2.tar.gz",
+    "size_bytes": 45121,
+    "sha256": "91a92db88159b3da0aea35d72f3a94512daa81b7378dadc7076b9729c5f924bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ellafoxo/library/CANlib/0.0.2/CANlib-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ellafoxo/library/CANlib/0.0.2/CANlib-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ellafoxo/library/CoreN2G/0.0.1/CoreN2G-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CoreN2G-0.0.1.tar.gz",
+    "size_bytes": 14898912,
+    "sha256": "76b02f6ee41b0d3152065eb055a3a69c439867cf1600f30cac7fb436f2b02047",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ellafoxo/library/CoreN2G/0.0.1/CoreN2G-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ellafoxo/library/CoreN2G/0.0.1/CoreN2G-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ellafoxo/library/CoreN2G/0.0.2/CoreN2G-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CoreN2G-0.0.2.tar.gz",
+    "size_bytes": 14898921,
+    "sha256": "bf1d8b4ddc1727c30cc997e0321fae525f1e0b483c701973ce38d6e5b3c230e2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ellafoxo/library/CoreN2G/0.0.2/CoreN2G-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ellafoxo/library/CoreN2G/0.0.2/CoreN2G-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ellafoxo/library/CoreN2G/0.0.3/CoreN2G-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CoreN2G-0.0.3.tar.gz",
+    "size_bytes": 12101810,
+    "sha256": "c4f920324386b65953b7902e051a1eace2140c9cc3b3ae3f1054833b354d7a8c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ellafoxo/library/CoreN2G/0.0.3/CoreN2G-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/ellafoxo/library/CoreN2G/0.0.3/CoreN2G-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ellafoxo/library/FreeRTOS/3.6.1/FreeRTOS-3.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FreeRTOS-3.6.1.tar.gz",
+    "size_bytes": 1019476,
+    "sha256": "ddb635a1337a827664db8f7e67c81bdf5d17f2274193789cd79844603dda93ba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ellafoxo/library/FreeRTOS/3.6.1/FreeRTOS-3.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ellafoxo/library/FreeRTOS/3.6.1/FreeRTOS-3.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ellafoxo/library/FreeRTOS/3.6.2/FreeRTOS-3.6.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FreeRTOS-3.6.2.tar.gz",
+    "size_bytes": 1019479,
+    "sha256": "6b5e374b791aa28539ca3e89f0f75eef7e1b3ac0d8b3aca309833c0080c48cc7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ellafoxo/library/FreeRTOS/3.6.2/FreeRTOS-3.6.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ellafoxo/library/FreeRTOS/3.6.2/FreeRTOS-3.6.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ellafoxo/library/RRFLibraries/0.0.1/RRFLibraries-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RRFLibraries-0.0.1.tar.gz",
+    "size_bytes": 72265,
+    "sha256": "7a904f142076647f7fa305a8754cdb0a81f2a512f1ad93cbce33505300be4732",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ellafoxo/library/RRFLibraries/0.0.1/RRFLibraries-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ellafoxo/library/RRFLibraries/0.0.1/RRFLibraries-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ellafoxo/library/RRFLibraries/0.0.2/RRFLibraries-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RRFLibraries-0.0.2.tar.gz",
+    "size_bytes": 77169,
+    "sha256": "d0b7f9a472c4ef4c45a89a63cb61148fec877e7a8a3dc86b44f9f7dc92a0813c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ellafoxo/library/RRFLibraries/0.0.2/RRFLibraries-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ellafoxo/library/RRFLibraries/0.0.2/RRFLibraries-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ellafoxo/library/RRFLibraries/0.0.3/RRFLibraries-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RRFLibraries-0.0.3.tar.gz",
+    "size_bytes": 77322,
+    "sha256": "a38ed8ea429be822456af45f74321a0920dbcd5d954f5599271f6ab6f23d17c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ellafoxo/library/RRFLibraries/0.0.3/RRFLibraries-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/ellafoxo/library/RRFLibraries/0.0.3/RRFLibraries-0.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

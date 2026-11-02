@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/electric-sheep-co",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "electric-sheep-co/library/Redis%20for%20Arduino/2.6.3/RedisforArduino-2.6.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RedisforArduino-2.6.3.tar.gz",
+    "size_bytes": 24862,
+    "sha256": "56e14360931f9570c3c0c157bb508b381a14b57206bb8a4d481b0039a49a7783",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/electric-sheep-co/library/Redis%2520for%2520Arduino/2.6.3/RedisforArduino-2.6.3.tar.gz",
+     "https://dl.registry.platformio.org/download/electric-sheep-co/library/Redis%20for%20Arduino/2.6.3/RedisforArduino-2.6.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

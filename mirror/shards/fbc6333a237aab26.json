@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/calliope-edu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "calliope-edu/library/Calliope%20Arduino%20library/0.9.0/CalliopeArduinolibrary-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CalliopeArduinolibrary-0.9.0.tar.gz",
+    "size_bytes": 13106,
+    "sha256": "a41aa790bf8ae8d1f7285bf470b0a3bd07fbc5744419b7c4052c6e078dbc110d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/calliope-edu/library/Calliope%2520Arduino%2520library/0.9.0/CalliopeArduinolibrary-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/calliope-edu/library/Calliope%20Arduino%20library/0.9.0/CalliopeArduinolibrary-0.9.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

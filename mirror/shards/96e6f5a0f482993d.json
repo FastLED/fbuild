@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/zanzythebar",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "zanzythebar/library/EasyHelpers/1.9.0/EasyHelpers-1.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyHelpers-1.9.0.tar.gz",
+    "size_bytes": 11032,
+    "sha256": "8bf054c9bbd0af6f3ee88cda5f94d39cd00cb05593a1145a19796060d8924a7a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zanzythebar/library/EasyHelpers/1.9.0/EasyHelpers-1.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/zanzythebar/library/EasyHelpers/1.9.0/EasyHelpers-1.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zanzythebar/library/EasyNetworkManager/5.5.2/EasyNetworkManager-5.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyNetworkManager-5.5.2.tar.gz",
+    "size_bytes": 101803,
+    "sha256": "b0d68e59563d64cdff57135ad7236c4121863e0a9591202b0de5ba662340f399",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zanzythebar/library/EasyNetworkManager/5.5.2/EasyNetworkManager-5.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/zanzythebar/library/EasyNetworkManager/5.5.2/EasyNetworkManager-5.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zanzythebar/library/EasyNetworkManager/5.6.0/EasyNetworkManager-5.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyNetworkManager-5.6.0.tar.gz",
+    "size_bytes": 120359,
+    "sha256": "e1bf8a3121c4e0d28230287a80df5d3478c61f725899d581efa58d690911cbf9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zanzythebar/library/EasyNetworkManager/5.6.0/EasyNetworkManager-5.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/zanzythebar/library/EasyNetworkManager/5.6.0/EasyNetworkManager-5.6.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

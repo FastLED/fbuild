@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sarrighi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sarrighi/library/ACS71020/0.1.1/ACS71020-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ACS71020-0.1.1.tar.gz",
+    "size_bytes": 6891,
+    "sha256": "549ebb15a0ec519b91f6756ea2bc8ae8c26074c3f6489a1d65db989c314961a7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sarrighi/library/ACS71020/0.1.1/ACS71020-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sarrighi/library/ACS71020/0.1.1/ACS71020-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sarrighi/library/StompSubscribeClient/0.3.7/StompSubscribeClient-0.3.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StompSubscribeClient-0.3.7.tar.gz",
+    "size_bytes": 9112,
+    "sha256": "bce013cd9159136193b5437d46c409e3264b548d62d6a0e94a26a07c15488fc2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sarrighi/library/StompSubscribeClient/0.3.7/StompSubscribeClient-0.3.7.tar.gz",
+     "https://dl.registry.platformio.org/download/sarrighi/library/StompSubscribeClient/0.3.7/StompSubscribeClient-0.3.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

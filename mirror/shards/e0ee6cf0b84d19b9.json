@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/theangryraven",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "theangryraven/library/DovesLapTimer/3.1.0/DovesLapTimer-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DovesLapTimer-3.1.0.tar.gz",
+    "size_bytes": 266521,
+    "sha256": "8a513843a172349be75aa3c1008234b92291e87ce19a3ef800e89603def0de89",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/theangryraven/library/DovesLapTimer/3.1.0/DovesLapTimer-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/theangryraven/library/DovesLapTimer/3.1.0/DovesLapTimer-3.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "theangryraven/library/DovesLapTimer/3.2.0/DovesLapTimer-3.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DovesLapTimer-3.2.0.tar.gz",
+    "size_bytes": 269916,
+    "sha256": "5d45690dc442567988b830fed633877c13f871c7158c7ecd65c617c4902dbf0f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/theangryraven/library/DovesLapTimer/3.2.0/DovesLapTimer-3.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/theangryraven/library/DovesLapTimer/3.2.0/DovesLapTimer-3.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "theangryraven/library/DovesLapTimer/4.0.0/DovesLapTimer-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DovesLapTimer-4.0.0.tar.gz",
+    "size_bytes": 279081,
+    "sha256": "610c6660554e5af3fd7fed152b09074f81cf1f2f49ad5e89f2b37e63a611f538",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/theangryraven/library/DovesLapTimer/4.0.0/DovesLapTimer-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/theangryraven/library/DovesLapTimer/4.0.0/DovesLapTimer-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "theangryraven/library/DovesLapTimer/4.1.0/DovesLapTimer-4.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DovesLapTimer-4.1.0.tar.gz",
+    "size_bytes": 294263,
+    "sha256": "2ba885a04a9fbfefa814b8460c182e104ec32894564b5200ab216ff55595dfc3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/theangryraven/library/DovesLapTimer/4.1.0/DovesLapTimer-4.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/theangryraven/library/DovesLapTimer/4.1.0/DovesLapTimer-4.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "theangryraven/library/DovesLapTimer/4.2.0/DovesLapTimer-4.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DovesLapTimer-4.2.0.tar.gz",
+    "size_bytes": 318035,
+    "sha256": "6d556bb7a707bdbfec22077bcbbc4c8da27c7213d1e6b79aebece9e6ede49f24",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/theangryraven/library/DovesLapTimer/4.2.0/DovesLapTimer-4.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/theangryraven/library/DovesLapTimer/4.2.0/DovesLapTimer-4.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "theangryraven/library/DovesLapTimer/4.3.0/DovesLapTimer-4.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DovesLapTimer-4.3.0.tar.gz",
+    "size_bytes": 333252,
+    "sha256": "fdbaebd63efd7e929076f38b6697986ff3db158a665fd03ec752bca45d0c411c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/theangryraven/library/DovesLapTimer/4.3.0/DovesLapTimer-4.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/theangryraven/library/DovesLapTimer/4.3.0/DovesLapTimer-4.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sskorol",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sskorol/library/arduino-alexa-bridge/0.0.8/arduino-alexa-bridge-0.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arduino-alexa-bridge-0.0.8.tar.gz",
+    "size_bytes": 10062,
+    "sha256": "e9d661a7fd354e761fd2a01c0bf810eea5c05d449846cdde67500f1cc38f495e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sskorol/library/arduino-alexa-bridge/0.0.8/arduino-alexa-bridge-0.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/sskorol/library/arduino-alexa-bridge/0.0.8/arduino-alexa-bridge-0.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sskorol/library/arduino-network/0.0.7/arduino-network-0.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arduino-network-0.0.7.tar.gz",
+    "size_bytes": 8976,
+    "sha256": "217761e75a4d9abe81ac6bf0ebbe9ae11decaabf34adc8e850ecbb6fa493ac4b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sskorol/library/arduino-network/0.0.7/arduino-network-0.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/sskorol/library/arduino-network/0.0.7/arduino-network-0.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sskorol/library/arduino-sensors-wrappers/0.0.7/arduino-sensors-wrappers-0.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arduino-sensors-wrappers-0.0.7.tar.gz",
+    "size_bytes": 10338,
+    "sha256": "ac574b72311123dddc0cab99deb755bd6b5ce71d5f391f57f0e3798078cb009a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sskorol/library/arduino-sensors-wrappers/0.0.7/arduino-sensors-wrappers-0.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/sskorol/library/arduino-sensors-wrappers/0.0.7/arduino-sensors-wrappers-0.0.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/anome",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "anome/library/MilluminStream/0.2/MilluminStream-0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MilluminStream-0.2.tar.gz",
+    "size_bytes": 5184,
+    "sha256": "a07d58b54ae72e1e0512f859ec0188c9f6210d32ecc2bca258b91a42bf21d307",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/anome/library/MilluminStream/0.2/MilluminStream-0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/anome/library/MilluminStream/0.2/MilluminStream-0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

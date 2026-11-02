@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-domisukic",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-domisukic/library/bertl/0.0.0+sha.09cac0d76c5e/bertl-0.0.0+sha.09cac0d76c5e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bertl-0.0.0+sha.09cac0d76c5e.tar.gz",
+    "size_bytes": 2642,
+    "sha256": "76ca143bdb354ad22ac745b6590877209a8a249ea85c5e739e2ca56af96b857a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-domisukic/library/bertl/0.0.0%2Bsha.09cac0d76c5e/bertl-0.0.0%2Bsha.09cac0d76c5e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-domisukic/library/bertl/0.0.0%2Bsha.09cac0d76c5e/bertl-0.0.0%2Bsha.09cac0d76c5e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

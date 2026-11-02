@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ogata-lab",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ogata-lab/library/HSVtoRGB/0.0.0+sha.e03db9ca6144/HSVtoRGB-0.0.0+sha.e03db9ca6144.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HSVtoRGB-0.0.0+sha.e03db9ca6144.tar.gz",
+    "size_bytes": 1075,
+    "sha256": "757f2b63306d1f8650edec4133706a6e1497249ff63f0b9f2a4e7939d7aad0fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ogata-lab/library/HSVtoRGB/0.0.0%2Bsha.e03db9ca6144/HSVtoRGB-0.0.0%2Bsha.e03db9ca6144.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ogata-lab/library/HSVtoRGB/0.0.0%2Bsha.e03db9ca6144/HSVtoRGB-0.0.0%2Bsha.e03db9ca6144.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ogata-lab/library/TA8428/0.0.0+sha.655b0ede301b/TA8428-0.0.0+sha.655b0ede301b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TA8428-0.0.0+sha.655b0ede301b.tar.gz",
+    "size_bytes": 1257,
+    "sha256": "9fa473704a39c1a4172430050d6e55a17c92aa1ee0ac2fc6496e24a65cc89e39",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ogata-lab/library/TA8428/0.0.0%2Bsha.655b0ede301b/TA8428-0.0.0%2Bsha.655b0ede301b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ogata-lab/library/TA8428/0.0.0%2Bsha.655b0ede301b/TA8428-0.0.0%2Bsha.655b0ede301b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ogata-lab/library/spi7Seg/0.0.0+sha.27cc28619363/spi7Seg-0.0.0+sha.27cc28619363.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "spi7Seg-0.0.0+sha.27cc28619363.tar.gz",
+    "size_bytes": 2821,
+    "sha256": "385db54b0de938e47be8d5030f95489ec26c465dac1f8013e4f68da4a0137a50",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ogata-lab/library/spi7Seg/0.0.0%2Bsha.27cc28619363/spi7Seg-0.0.0%2Bsha.27cc28619363.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ogata-lab/library/spi7Seg/0.0.0%2Bsha.27cc28619363/spi7Seg-0.0.0%2Bsha.27cc28619363.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ogata-lab/library/sseg/0.0.0+sha.59ac7a4f3d9c/sseg-0.0.0+sha.59ac7a4f3d9c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "sseg-0.0.0+sha.59ac7a4f3d9c.tar.gz",
+    "size_bytes": 3809,
+    "sha256": "f64990b2ca95866c79afbb90fe91a01de576e69d7f2e78778045c04d2ab53eef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ogata-lab/library/sseg/0.0.0%2Bsha.59ac7a4f3d9c/sseg-0.0.0%2Bsha.59ac7a4f3d9c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ogata-lab/library/sseg/0.0.0%2Bsha.59ac7a4f3d9c/sseg-0.0.0%2Bsha.59ac7a4f3d9c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

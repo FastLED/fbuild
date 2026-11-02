@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/anto",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "anto/library/backtrace-saver-esp32/1.1.0/backtrace-saver-esp32-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "backtrace-saver-esp32-1.1.0.tar.gz",
+    "size_bytes": 3089,
+    "sha256": "21d0f475f5f881e823fad493b704723f7a1e4f248882163d05fd966f807d41a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/anto/library/backtrace-saver-esp32/1.1.0/backtrace-saver-esp32-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/anto/library/backtrace-saver-esp32/1.1.0/backtrace-saver-esp32-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "anto/library/libcurl-esp32/8.8.0-DEV-6/libcurl-esp32-8.8.0-DEV-6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libcurl-esp32-8.8.0-DEV-6.tar.gz",
+    "size_bytes": 1204443,
+    "sha256": "96a19b4b620f72defb44b94ee5ff472fc6b834684109b9ca12b8ddb43829a267",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/anto/library/libcurl-esp32/8.8.0-DEV-6/libcurl-esp32-8.8.0-DEV-6.tar.gz",
+     "https://dl.registry.platformio.org/download/anto/library/libcurl-esp32/8.8.0-DEV-6/libcurl-esp32-8.8.0-DEV-6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

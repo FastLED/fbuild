@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-stretch",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-stretch/library/CNCAirbrush/0.0.0+sha.e16f55e9dcd3/CNCAirbrush-0.0.0+sha.e16f55e9dcd3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CNCAirbrush-0.0.0+sha.e16f55e9dcd3.tar.gz",
+    "size_bytes": 6625,
+    "sha256": "c51bbcc9f3085ac13e76f378264bd4051db8c9bf861cd89e7a4bcd5bd25f742c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-stretch/library/CNCAirbrush/0.0.0%2Bsha.e16f55e9dcd3/CNCAirbrush-0.0.0%2Bsha.e16f55e9dcd3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-stretch/library/CNCAirbrush/0.0.0%2Bsha.e16f55e9dcd3/CNCAirbrush-0.0.0%2Bsha.e16f55e9dcd3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-stretch/library/StepperMotors/0.0.0+sha.cf60b60a1b5b/StepperMotors-0.0.0+sha.cf60b60a1b5b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StepperMotors-0.0.0+sha.cf60b60a1b5b.tar.gz",
+    "size_bytes": 5331,
+    "sha256": "02f0135b90c3dd60c0d448038b9d0364d5694250e381d63ff65892f0ec47589c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-stretch/library/StepperMotors/0.0.0%2Bsha.cf60b60a1b5b/StepperMotors-0.0.0%2Bsha.cf60b60a1b5b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-stretch/library/StepperMotors/0.0.0%2Bsha.cf60b60a1b5b/StepperMotors-0.0.0%2Bsha.cf60b60a1b5b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

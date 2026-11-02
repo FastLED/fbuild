@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/richcreations",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "richcreations/library/ImudClient/1.1.0/ImudClient-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ImudClient-1.1.0.tar.gz",
+    "size_bytes": 22680,
+    "sha256": "1d68a849bc0430828cdc71ed1c1aad0c77100309a4304e6557f1f06cc272ce4f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/richcreations/library/ImudClient/1.1.0/ImudClient-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/richcreations/library/ImudClient/1.1.0/ImudClient-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "richcreations/library/ImudClient/1.2.0/ImudClient-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ImudClient-1.2.0.tar.gz",
+    "size_bytes": 25572,
+    "sha256": "7fa9801def658cc9bb00c52e16c18ad17649f8fef48844da21dff75333ae856f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/richcreations/library/ImudClient/1.2.0/ImudClient-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/richcreations/library/ImudClient/1.2.0/ImudClient-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

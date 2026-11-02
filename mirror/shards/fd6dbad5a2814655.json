@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-matsu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-matsu/library/PAW_Sensor/0.0.0+sha.a58ad4e085af/PAW_Sensor-0.0.0+sha.a58ad4e085af.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PAW_Sensor-0.0.0+sha.a58ad4e085af.tar.gz",
+    "size_bytes": 2155,
+    "sha256": "dd53005307a1db0800717811183586faef7b035cd1e6dd16a7b1f25f7072178e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-matsu/library/PAW_Sensor/0.0.0%2Bsha.a58ad4e085af/PAW_Sensor-0.0.0%2Bsha.a58ad4e085af.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-matsu/library/PAW_Sensor/0.0.0%2Bsha.a58ad4e085af/PAW_Sensor-0.0.0%2Bsha.a58ad4e085af.tar.gz"
+    ]
+   }
+  }
+ ]
+}

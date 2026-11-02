@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/philj404",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "philj404/library/SimpleSerialShell/1.0.0/SimpleSerialShell-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleSerialShell-1.0.0.tar.gz",
+    "size_bytes": 20637,
+    "sha256": "7803b5a19c25992434481f2143ff8b59d491a6456079b50c9d36918633c61b68",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/philj404/library/SimpleSerialShell/1.0.0/SimpleSerialShell-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/philj404/library/SimpleSerialShell/1.0.0/SimpleSerialShell-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

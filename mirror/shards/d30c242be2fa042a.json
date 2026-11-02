@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/shchuko",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "shchuko/library/rtl_433_ESP/0.3.2/rtl_433_ESP-0.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "rtl_433_ESP-0.3.2.tar.gz",
+    "size_bytes": 532339,
+    "sha256": "9370bfada0164332cc94fbaaac44e03a9939f5bf375b0ae41f963976b1db7851",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shchuko/library/rtl_433_ESP/0.3.2/rtl_433_ESP-0.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/shchuko/library/rtl_433_ESP/0.3.2/rtl_433_ESP-0.3.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

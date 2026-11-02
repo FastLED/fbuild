@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bojit",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bojit/library/FreeRTOS-Debug/1.0.2/FreeRTOS-Debug-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FreeRTOS-Debug-1.0.2.tar.gz",
+    "size_bytes": 3866,
+    "sha256": "41c802fb97d5ecdca0496efbba0cd0af2757e00fda5980c4f193fe0d0ed0c415",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bojit/library/FreeRTOS-Debug/1.0.2/FreeRTOS-Debug-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bojit/library/FreeRTOS-Debug/1.0.2/FreeRTOS-Debug-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bojit/library/PlatformIO-FreeRTOS/2.1.4/PlatformIO-FreeRTOS-2.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PlatformIO-FreeRTOS-2.1.4.tar.gz",
+    "size_bytes": 4380,
+    "sha256": "5b0cd7cdd7259a6e8c562d939a34048c30b568702998948a0c020c0445bdbbf1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bojit/library/PlatformIO-FreeRTOS/2.1.4/PlatformIO-FreeRTOS-2.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/bojit/library/PlatformIO-FreeRTOS/2.1.4/PlatformIO-FreeRTOS-2.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bojit/library/PlatformIO-lwIP/1.0.0/PlatformIO-lwIP-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PlatformIO-lwIP-1.0.0.tar.gz",
+    "size_bytes": 1146005,
+    "sha256": "1a040d8080f7ece7f83c781a4ea7744a59e104b415736bb9f1eab7f802703dad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bojit/library/PlatformIO-lwIP/1.0.0/PlatformIO-lwIP-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bojit/library/PlatformIO-lwIP/1.0.0/PlatformIO-lwIP-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bojit/library/VCS/1.1.2/VCS-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VCS-1.1.2.tar.gz",
+    "size_bytes": 5316,
+    "sha256": "0b2f79865d75e24ce1c74e1753a73682ef99689e0ca9988fceea366e819239f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bojit/library/VCS/1.1.2/VCS-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bojit/library/VCS/1.1.2/VCS-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bojit/library/esp32serial/1.0.0/esp32serial-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32serial-1.0.0.tar.gz",
+    "size_bytes": 3105,
+    "sha256": "fa3523e0d8d3149054fd8e4cae59135e5eb7a9d651c25ec841b06b840ee269a3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bojit/library/esp32serial/1.0.0/esp32serial-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bojit/library/esp32serial/1.0.0/esp32serial-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-dtmort",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-dtmort/library/SPI_flex/0.0.0+sha.9e3e70548ec3/SPI_flex-0.0.0+sha.9e3e70548ec3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SPI_flex-0.0.0+sha.9e3e70548ec3.tar.gz",
+    "size_bytes": 4366,
+    "sha256": "b3ef2995d074ac40cf6ae4b62bba49dc552ce75fba323804f87052720a01d311",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dtmort/library/SPI_flex/0.0.0%2Bsha.9e3e70548ec3/SPI_flex-0.0.0%2Bsha.9e3e70548ec3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dtmort/library/SPI_flex/0.0.0%2Bsha.9e3e70548ec3/SPI_flex-0.0.0%2Bsha.9e3e70548ec3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dtmort/library/SSEL_spi/0.0.0+sha.9fa30f3069ae/SSEL_spi-0.0.0+sha.9fa30f3069ae.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SSEL_spi-0.0.0+sha.9fa30f3069ae.tar.gz",
+    "size_bytes": 3568,
+    "sha256": "314b66b6374a2109974063927bc748121b0b50fb676426905cf3729989bd5689",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dtmort/library/SSEL_spi/0.0.0%2Bsha.9fa30f3069ae/SSEL_spi-0.0.0%2Bsha.9fa30f3069ae.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dtmort/library/SSEL_spi/0.0.0%2Bsha.9fa30f3069ae/SSEL_spi-0.0.0%2Bsha.9fa30f3069ae.tar.gz"
+    ]
+   }
+  }
+ ]
+}

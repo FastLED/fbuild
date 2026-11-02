@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/karol-brejna-i",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "karol-brejna-i/library/RemoteDebug/4.0.1/RemoteDebug-4.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RemoteDebug-4.0.1.tar.gz",
+    "size_bytes": 38630,
+    "sha256": "9130333f6d1bd5f0a178dfc3ac44a03f1b74caa551e1ba31e5b1f34f98e6e5a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/karol-brejna-i/library/RemoteDebug/4.0.1/RemoteDebug-4.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/karol-brejna-i/library/RemoteDebug/4.0.1/RemoteDebug-4.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/geekfactory",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "geekfactory/library/Geek%20Factory%20GFDisplay7S%20Library/1.0.0/GeekFactoryGFDisplay7SLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GeekFactoryGFDisplay7SLibrary-1.0.0.tar.gz",
+    "size_bytes": 19513,
+    "sha256": "e11bd912d1720226269cda31a2b8b3a4212362122169691fbbf7db00322886f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/geekfactory/library/Geek%2520Factory%2520GFDisplay7S%2520Library/1.0.0/GeekFactoryGFDisplay7SLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/geekfactory/library/Geek%20Factory%20GFDisplay7S%20Library/1.0.0/GeekFactoryGFDisplay7SLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "geekfactory/library/Geek%20Factory%20GFLED%20Library/2.0.0/GeekFactoryGFLEDLibrary-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GeekFactoryGFLEDLibrary-2.0.0.tar.gz",
+    "size_bytes": 18988,
+    "sha256": "250dc9c4ea90876af546a9f8df8482cac37a2004eff6b220f357c9b3e939fda9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/geekfactory/library/Geek%2520Factory%2520GFLED%2520Library/2.0.0/GeekFactoryGFLEDLibrary-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/geekfactory/library/Geek%20Factory%20GFLED%20Library/2.0.0/GeekFactoryGFLEDLibrary-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "geekfactory/library/GeekFactory%20GFButton%20Library/1.0.1/GeekFactoryGFButtonLibrary-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GeekFactoryGFButtonLibrary-1.0.1.tar.gz",
+    "size_bytes": 17707,
+    "sha256": "f98a1123ba77b7886f375e3d3e8d9813601e4cd2fb78a423b6a0754955821686",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/geekfactory/library/GeekFactory%2520GFButton%2520Library/1.0.1/GeekFactoryGFButtonLibrary-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/geekfactory/library/GeekFactory%20GFButton%20Library/1.0.1/GeekFactoryGFButtonLibrary-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "geekfactory/library/GeekFactory%20Shell%20Library/1.2.0/GeekFactoryShellLibrary-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GeekFactoryShellLibrary-1.2.0.tar.gz",
+    "size_bytes": 26495,
+    "sha256": "92922eee663c1d7a0f2de541f969f25d263af1b4afd5362e170e58fdb7196b35",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/geekfactory/library/GeekFactory%2520Shell%2520Library/1.2.0/GeekFactoryShellLibrary-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/geekfactory/library/GeekFactory%20Shell%20Library/1.2.0/GeekFactoryShellLibrary-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

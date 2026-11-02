@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/zamuhrishka",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "zamuhrishka/library/ArduJtag/1.0.2/ArduJtag-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduJtag-1.0.2.tar.gz",
+    "size_bytes": 12314,
+    "sha256": "64308f5dc155d0be86fa2828b450acd2d71fd0686fe53db9675517355459a5d7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zamuhrishka/library/ArduJtag/1.0.2/ArduJtag-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/zamuhrishka/library/ArduJtag/1.0.2/ArduJtag-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zamuhrishka/library/ArduTAP/1.0.1/ArduTAP-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduTAP-1.0.1.tar.gz",
+    "size_bytes": 8377,
+    "sha256": "fd49ef5abc786243413c25b55ab99050bc166d32d757b3c4c2728b687443ce55",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zamuhrishka/library/ArduTAP/1.0.1/ArduTAP-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/zamuhrishka/library/ArduTAP/1.0.1/ArduTAP-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zamuhrishka/library/MicroToolbox/1.0.8/MicroToolbox-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MicroToolbox-1.0.8.tar.gz",
+    "size_bytes": 35402,
+    "sha256": "865e8536982ac9ebcefe26cd4d8afeaeb5f0dc238995380d7c8f41779d9764cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zamuhrishka/library/MicroToolbox/1.0.8/MicroToolbox-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/zamuhrishka/library/MicroToolbox/1.0.8/MicroToolbox-1.0.8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

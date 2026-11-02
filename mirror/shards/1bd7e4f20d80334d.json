@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/netpieio",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "netpieio/library/ESP8266%20Microgear/1.2.4/ESP8266Microgear-1.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266Microgear-1.2.4.tar.gz",
+    "size_bytes": 23819,
+    "sha256": "0b84ea0711ed03ac1b53bf6669996ce9f5570af0488d5e3663064046ce410620",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/netpieio/library/ESP8266%2520Microgear/1.2.4/ESP8266Microgear-1.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/netpieio/library/ESP8266%20Microgear/1.2.4/ESP8266Microgear-1.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "netpieio/library/microgear-nbiot/0.8.0/microgear-nbiot-0.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "microgear-nbiot-0.8.0.tar.gz",
+    "size_bytes": 18729,
+    "sha256": "8f32be620cd44150e1b904e576806f8bfdef1c3b16de50930056f5f4694b854b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/netpieio/library/microgear-nbiot/0.8.0/microgear-nbiot-0.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/netpieio/library/microgear-nbiot/0.8.0/microgear-nbiot-0.8.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

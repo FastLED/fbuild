@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/meshtastic",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "meshtastic/library/Meshtastic/0.0.7/Meshtastic-0.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Meshtastic-0.0.7.tar.gz",
+    "size_bytes": 130064,
+    "sha256": "3c2e515b0894eebdad4f6805f80bfdfea0208070d39fa9752e3a1b17abbd16d2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/meshtastic/library/Meshtastic/0.0.7/Meshtastic-0.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/meshtastic/library/Meshtastic/0.0.7/Meshtastic-0.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "meshtastic/library/Meshtastic/0.1.0/Meshtastic-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Meshtastic-0.1.0.tar.gz",
+    "size_bytes": 193654,
+    "sha256": "236a40ca47ebcf375f972fc1e716cc3210a52008143b549b0688227c98dfb429",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/meshtastic/library/Meshtastic/0.1.0/Meshtastic-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/meshtastic/library/Meshtastic/0.1.0/Meshtastic-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "meshtastic/library/json11/1.0.2/json11-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "json11-1.0.2.tar.gz",
+    "size_bytes": 13671,
+    "sha256": "e654ccdf07578c28bd33d14d311242a4c3a55b9cbf048b812138ca8a408d1c29",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/meshtastic/library/json11/1.0.2/json11-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/meshtastic/library/json11/1.0.2/json11-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

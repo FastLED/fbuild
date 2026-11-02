@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/freepoet",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "freepoet/library/LEDDriver/1.0.3/LEDDriver-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LEDDriver-1.0.3.tar.gz",
+    "size_bytes": 1838,
+    "sha256": "a39dc41e06b880f4883b18b4e6e10c21f5e95d0e3c06a4ba41ab9c90a73a3e2c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/freepoet/library/LEDDriver/1.0.3/LEDDriver-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/freepoet/library/LEDDriver/1.0.3/LEDDriver-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

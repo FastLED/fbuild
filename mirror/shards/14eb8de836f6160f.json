@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bmurzabaev",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bmurzabaev/library/MCP3201/1.0.0/MCP3201-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP3201-1.0.0.tar.gz",
+    "size_bytes": 2444,
+    "sha256": "6f8f1e81cda52b7c220b87c7ffd0241122fdb43b418a5071cc066cada4d58247",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bmurzabaev/library/MCP3201/1.0.0/MCP3201-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bmurzabaev/library/MCP3201/1.0.0/MCP3201-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

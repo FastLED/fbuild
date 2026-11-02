@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/joacomf",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "joacomf/library/Chil-plataforma-ESP/0.0.4/Chil-plataforma-ESP-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Chil-plataforma-ESP-0.0.4.tar.gz",
+    "size_bytes": 2895,
+    "sha256": "2fa4f26ccfe965be1fb715ede482c5a2a848ebc15e90f9a57a62225dcda5fcfd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joacomf/library/Chil-plataforma-ESP/0.0.4/Chil-plataforma-ESP-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/joacomf/library/Chil-plataforma-ESP/0.0.4/Chil-plataforma-ESP-0.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "joacomf/library/Chil/1.0.0/Chil-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Chil-1.0.0.tar.gz",
+    "size_bytes": 24835,
+    "sha256": "28f597cc508c7b65e743489cd90d72f1f3f877eb60fc54c83e7f6dc8f5d74aa3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joacomf/library/Chil/1.0.0/Chil-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/joacomf/library/Chil/1.0.0/Chil-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

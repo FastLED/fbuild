@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kenichi884",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kenichi884/library/M5StackToio/1.0.5/M5StackToio-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5StackToio-1.0.5.tar.gz",
+    "size_bytes": 70242,
+    "sha256": "74dfcea86c6e52d89cf87454b21a8e83c70e0ada23d0711bc5fab342c6e47221",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kenichi884/library/M5StackToio/1.0.5/M5StackToio-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/kenichi884/library/M5StackToio/1.0.5/M5StackToio-1.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-melmon",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-melmon/library/CD74HC4067/0.0.0+sha.bd14983a5156/CD74HC4067-0.0.0+sha.bd14983a5156.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CD74HC4067-0.0.0+sha.bd14983a5156.tar.gz",
+    "size_bytes": 1233,
+    "sha256": "fe52d4dbb35ff85d239e20d3032a28d4504bd79ca5d8df1af04b4cb51b57cb09",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-melmon/library/CD74HC4067/0.0.0%2Bsha.bd14983a5156/CD74HC4067-0.0.0%2Bsha.bd14983a5156.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-melmon/library/CD74HC4067/0.0.0%2Bsha.bd14983a5156/CD74HC4067-0.0.0%2Bsha.bd14983a5156.tar.gz"
+    ]
+   }
+  }
+ ]
+}

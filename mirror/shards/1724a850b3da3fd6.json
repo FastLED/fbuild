@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-allanalpha",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-allanalpha/library/touchpad/0.0.0+sha.ff5187998c84/touchpad-0.0.0+sha.ff5187998c84.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "touchpad-0.0.0+sha.ff5187998c84.tar.gz",
+    "size_bytes": 3502,
+    "sha256": "8fee808f92a581679f5ffede035189cde8b4aa09fd6ee1389d3f811675706234",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-allanalpha/library/touchpad/0.0.0%2Bsha.ff5187998c84/touchpad-0.0.0%2Bsha.ff5187998c84.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-allanalpha/library/touchpad/0.0.0%2Bsha.ff5187998c84/touchpad-0.0.0%2Bsha.ff5187998c84.tar.gz"
+    ]
+   }
+  }
+ ]
+}

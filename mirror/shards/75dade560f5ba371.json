@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mcspr",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mcspr/library/RPNlib/0.24.1/RPNlib-0.24.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RPNlib-0.24.1.tar.gz",
+    "size_bytes": 43816,
+    "sha256": "dd6d9cf58021f1480c44ccf936b5b6fc540cc5d52b56a68b082ecef0c5635171",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mcspr/library/RPNlib/0.24.1/RPNlib-0.24.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mcspr/library/RPNlib/0.24.1/RPNlib-0.24.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

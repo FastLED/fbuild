@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sensorium",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sensorium/library/Mozzi/1.1.2/Mozzi-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Mozzi-1.1.2.tar.gz",
+    "size_bytes": 714552,
+    "sha256": "98bff8e7650d2f76ec3928920cece91150fffc9b1e2d9dc995913768aa265a5d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensorium/library/Mozzi/1.1.2/Mozzi-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sensorium/library/Mozzi/1.1.2/Mozzi-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensorium/library/Mozzi/2.0.2/Mozzi-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Mozzi-2.0.2.tar.gz",
+    "size_bytes": 737564,
+    "sha256": "cd3ca85032159d959f276a22df9dbaf55a3508ec264b79633a4425728e40206a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensorium/library/Mozzi/2.0.2/Mozzi-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sensorium/library/Mozzi/2.0.2/Mozzi-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensorium/library/Mozzi/2.0.3/Mozzi-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Mozzi-2.0.3.tar.gz",
+    "size_bytes": 738961,
+    "sha256": "b47195b2cff65f2e9828e02dd204569538419846e98bc34337935b7ac3223d43",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensorium/library/Mozzi/2.0.3/Mozzi-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/sensorium/library/Mozzi/2.0.3/Mozzi-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensorium/library/Mozzi/2.0.4/Mozzi-2.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Mozzi-2.0.4.tar.gz",
+    "size_bytes": 741338,
+    "sha256": "c84f8dbee22793f15056c66e27c3d1caef54b63c053a7aad7e4cdd9ca381a6cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensorium/library/Mozzi/2.0.4/Mozzi-2.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/sensorium/library/Mozzi/2.0.4/Mozzi-2.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

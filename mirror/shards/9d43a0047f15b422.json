@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/thethingsnetwork",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "thethingsnetwork/library/TheThingsNetwork/2.7.2/TheThingsNetwork-2.7.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TheThingsNetwork-2.7.2.tar.gz",
+    "size_bytes": 42843,
+    "sha256": "ef64e923b51f8641a710f090507f072592e5247d0822ba467e7be085f820ddbb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thethingsnetwork/library/TheThingsNetwork/2.7.2/TheThingsNetwork-2.7.2.tar.gz",
+     "https://dl.registry.platformio.org/download/thethingsnetwork/library/TheThingsNetwork/2.7.2/TheThingsNetwork-2.7.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thethingsnetwork/library/TheThingsNode/2.0.9/TheThingsNode-2.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TheThingsNode-2.0.9.tar.gz",
+    "size_bytes": 25717,
+    "sha256": "7a13fbf04aeb057e6f6b22ca43134bac9c9b6cb82fb0a1c9b07a0cf3a72fc29b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thethingsnetwork/library/TheThingsNode/2.0.9/TheThingsNode-2.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/thethingsnetwork/library/TheThingsNode/2.0.9/TheThingsNode-2.0.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

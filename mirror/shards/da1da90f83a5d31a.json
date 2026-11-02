@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tktf50",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tktf50/library/DebouncedButton/1.0.0/DebouncedButton-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DebouncedButton-1.0.0.tar.gz",
+    "size_bytes": 51778,
+    "sha256": "2dff0c6dd6bfe3ed7f4920ff1f5aa3116622e36ea88403c1ea9de8ceb603fd2a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tktf50/library/DebouncedButton/1.0.0/DebouncedButton-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tktf50/library/DebouncedButton/1.0.0/DebouncedButton-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tktf50/library/RotaryEncoder/1.0.0/RotaryEncoder-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RotaryEncoder-1.0.0.tar.gz",
+    "size_bytes": 53553,
+    "sha256": "45869f3865960afd5da03c8822b58c9c27f97ecbb047772b4b7e8e048519f241",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tktf50/library/RotaryEncoder/1.0.0/RotaryEncoder-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tktf50/library/RotaryEncoder/1.0.0/RotaryEncoder-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

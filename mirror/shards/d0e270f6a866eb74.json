@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-est2fe",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-est2fe/library/fmap/0.0.0+sha.1e9eea14a6b9/fmap-0.0.0+sha.1e9eea14a6b9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "fmap-0.0.0+sha.1e9eea14a6b9.tar.gz",
+    "size_bytes": 2545,
+    "sha256": "bf769f186058dadcc48bce4a2ae8df840f4d5570ceb4dc52bafaf269c0424ff0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-est2fe/library/fmap/0.0.0%2Bsha.1e9eea14a6b9/fmap-0.0.0%2Bsha.1e9eea14a6b9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-est2fe/library/fmap/0.0.0%2Bsha.1e9eea14a6b9/fmap-0.0.0%2Bsha.1e9eea14a6b9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

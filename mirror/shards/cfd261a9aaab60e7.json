@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/semilimes",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "semilimes/library/semilimes/1.1.5/semilimes-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "semilimes-1.1.5.tar.gz",
+    "size_bytes": 51385,
+    "sha256": "d3436042eaccf7ac9d586faafd96d23fca51592747c1975e636b0e4dc4d2f55b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/semilimes/library/semilimes/1.1.5/semilimes-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/semilimes/library/semilimes/1.1.5/semilimes-1.1.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

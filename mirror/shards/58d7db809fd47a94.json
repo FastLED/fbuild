@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-rybancr",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-rybancr/library/DS1620/0.0.0+sha.35526d3a8a04/DS1620-0.0.0+sha.35526d3a8a04.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS1620-0.0.0+sha.35526d3a8a04.tar.gz",
+    "size_bytes": 3152,
+    "sha256": "0c4e99979fa72441e1300d768dffedbc608985305f3e42f3b81505058b08bdbf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rybancr/library/DS1620/0.0.0%2Bsha.35526d3a8a04/DS1620-0.0.0%2Bsha.35526d3a8a04.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rybancr/library/DS1620/0.0.0%2Bsha.35526d3a8a04/DS1620-0.0.0%2Bsha.35526d3a8a04.tar.gz"
+    ]
+   }
+  }
+ ]
+}

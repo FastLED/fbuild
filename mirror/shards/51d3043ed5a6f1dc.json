@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/facts-engineering",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "facts-engineering/library/ATMAC_EEPROM/1.0.0/ATMAC_EEPROM-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ATMAC_EEPROM-1.0.0.tar.gz",
+    "size_bytes": 5582,
+    "sha256": "1736f640ed4ee481523d4cffe3787a2fe2b47366447b61794e14c5f1e33bc5f5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/facts-engineering/library/ATMAC_EEPROM/1.0.0/ATMAC_EEPROM-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/facts-engineering/library/ATMAC_EEPROM/1.0.0/ATMAC_EEPROM-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "facts-engineering/library/P1AM/1.0.10/P1AM-1.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "P1AM-1.0.10.tar.gz",
+    "size_bytes": 37367,
+    "sha256": "f11f945052f9bea4b26cb2837b73adc2fc5c556bb7195664059781cbc95e3456",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/facts-engineering/library/P1AM/1.0.10/P1AM-1.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/facts-engineering/library/P1AM/1.0.10/P1AM-1.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "facts-engineering/library/P1AM/1.0.9/P1AM-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "P1AM-1.0.9.tar.gz",
+    "size_bytes": 37307,
+    "sha256": "9f60c1bf07cd74a69f6602fd4b2ca5c28f2868d1d41f83098450aafef8c05672",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/facts-engineering/library/P1AM/1.0.9/P1AM-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/facts-engineering/library/P1AM/1.0.9/P1AM-1.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "facts-engineering/library/P1AM_Serial/1.0.0/P1AM_Serial-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "P1AM_Serial-1.0.0.tar.gz",
+    "size_bytes": 7870,
+    "sha256": "cea20b87a53fa6767d29d34bb2fbbcc53a3ec534485a088b17ca3963cf6c8a9b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/facts-engineering/library/P1AM_Serial/1.0.0/P1AM_Serial-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/facts-engineering/library/P1AM_Serial/1.0.0/P1AM_Serial-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "facts-engineering/library/PCF8563_RTC/1.0.0/PCF8563_RTC-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCF8563_RTC-1.0.0.tar.gz",
+    "size_bytes": 5927,
+    "sha256": "d55217d4127ee42aa7358d79c1b11005cb99fc1d96180b566665fd7ffa39bd7c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/facts-engineering/library/PCF8563_RTC/1.0.0/PCF8563_RTC-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/facts-engineering/library/PCF8563_RTC/1.0.0/PCF8563_RTC-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "facts-engineering/library/ViewMarq/1.0.1/ViewMarq-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ViewMarq-1.0.1.tar.gz",
+    "size_bytes": 14703,
+    "sha256": "fb7303e33d0de18eff85aa63d3e9c72cbd241544174b2e83b3198ecc4bef7adb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/facts-engineering/library/ViewMarq/1.0.1/ViewMarq-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/facts-engineering/library/ViewMarq/1.0.1/ViewMarq-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

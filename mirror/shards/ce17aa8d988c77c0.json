@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/yinkou",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "yinkou/library/Arduboy-TinyFont/3.2/Arduboy-TinyFont-3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduboy-TinyFont-3.2.tar.gz",
+    "size_bytes": 6438,
+    "sha256": "5006ece74f7bf39c36a34099e656daf34fd015725a48b710b0593aa67436128f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yinkou/library/Arduboy-TinyFont/3.2/Arduboy-TinyFont-3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/yinkou/library/Arduboy-TinyFont/3.2/Arduboy-TinyFont-3.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

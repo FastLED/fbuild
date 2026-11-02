@@ -1,0 +1,1517 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tremaru",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tremaru/library/Battery_Shield/1.0.7/Battery_Shield-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Battery_Shield-1.0.7.tar.gz",
+    "size_bytes": 22739,
+    "sha256": "cf10f74beff17aaddba655406da55b3896280006185c8f3a711a5c74f65dc324",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/Battery_Shield/1.0.7/Battery_Shield-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/Battery_Shield/1.0.7/Battery_Shield-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino%20Frequency/1.0.2/iarduinoFrequency-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduinoFrequency-1.0.2.tar.gz",
+    "size_bytes": 5378,
+    "sha256": "d655e6807e14d272796db688149f2aad143858383d3849977389a09a950543c4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino%2520Frequency/1.0.2/iarduinoFrequency-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino%20Frequency/1.0.2/iarduinoFrequency-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino%20GSM/1.1.3/iarduinoGSM-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduinoGSM-1.1.3.tar.gz",
+    "size_bytes": 88981,
+    "sha256": "befc4c96ce3eb69404441c489d2000c1678f9da4dcf59f9b119a2db6f940d69a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino%2520GSM/1.1.3/iarduinoGSM-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino%20GSM/1.1.3/iarduinoGSM-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino%20GSM/1.1.4/iarduinoGSM-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduinoGSM-1.1.4.tar.gz",
+    "size_bytes": 89277,
+    "sha256": "23baa112db71194a23da8e873a2922d92d36a1e91d1e76512ea88393a10198c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino%2520GSM/1.1.4/iarduinoGSM-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino%20GSM/1.1.4/iarduinoGSM-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_4LED/1.0.6/iarduino_4LED-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_4LED-1.0.6.tar.gz",
+    "size_bytes": 12470,
+    "sha256": "7d2ed655e377e6eb5291ef1e03a2f5f22b94e12c3559f176e985c7113f71d27f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_4LED/1.0.6/iarduino_4LED-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_4LED/1.0.6/iarduino_4LED-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_4LED/1.0.7/iarduino_4LED-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_4LED-1.0.7.tar.gz",
+    "size_bytes": 12556,
+    "sha256": "2d526c66d4952af0a4b40a34b0e2ac54bd4dfab1ec73ceef4a3a61426ff513a6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_4LED/1.0.7/iarduino_4LED-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_4LED/1.0.7/iarduino_4LED-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_4LED/1.0.8/iarduino_4LED-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_4LED-1.0.8.tar.gz",
+    "size_bytes": 12557,
+    "sha256": "441821b628b5d13d5404fbcb46c7f813fd3b1761bd12ff5258c0a2c79653832b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_4LED/1.0.8/iarduino_4LED-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_4LED/1.0.8/iarduino_4LED-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_ACS712/1.0.2/iarduino_ACS712-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_ACS712-1.0.2.tar.gz",
+    "size_bytes": 9074,
+    "sha256": "9fac3369f881ca1be18c0a7a710c277c6bf6a6e26104e8b4f5fbfad1a040e446",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_ACS712/1.0.2/iarduino_ACS712-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_ACS712/1.0.2/iarduino_ACS712-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_ADC_CS1237/1.0.4/iarduino_ADC_CS1237-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_ADC_CS1237-1.0.4.tar.gz",
+    "size_bytes": 9016,
+    "sha256": "a6d705526defefefab44792caca72dcdba18d5e5cb71e376a1e2272c5cfc59ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_ADC_CS1237/1.0.4/iarduino_ADC_CS1237-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_ADC_CS1237/1.0.4/iarduino_ADC_CS1237-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_AM2320/1.1.5/iarduino_AM2320-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_AM2320-1.1.5.tar.gz",
+    "size_bytes": 13395,
+    "sha256": "c21772500374b2c2e02fa5c3ccc134f83d84d46ae33511031b6e5d83dd2a3496",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_AM2320/1.1.5/iarduino_AM2320-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_AM2320/1.1.5/iarduino_AM2320-1.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_AM2320/1.1.6/iarduino_AM2320-1.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_AM2320-1.1.6.tar.gz",
+    "size_bytes": 13629,
+    "sha256": "37f07c1f5ef4354d3d144cf55a1a7fbac3b21e69951239e8b41ecdcd79c2f93e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_AM2320/1.1.6/iarduino_AM2320-1.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_AM2320/1.1.6/iarduino_AM2320-1.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_APDS9930/1.0.5/iarduino_APDS9930-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_APDS9930-1.0.5.tar.gz",
+    "size_bytes": 24558,
+    "sha256": "0ce728a75b77776288872159e8c2d63d4d4b71f5ffcade2a97060fba7ab36bb3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_APDS9930/1.0.5/iarduino_APDS9930-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_APDS9930/1.0.5/iarduino_APDS9930-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_APDS9930/1.0.6/iarduino_APDS9930-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_APDS9930-1.0.6.tar.gz",
+    "size_bytes": 24808,
+    "sha256": "425428100d303bb363640190ae0a6911ebd25bea0555e7271eda6676a4bfaf5b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_APDS9930/1.0.6/iarduino_APDS9930-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_APDS9930/1.0.6/iarduino_APDS9930-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_Bluetooth_HC05/1.1.4/iarduino_Bluetooth_HC05-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_Bluetooth_HC05-1.1.4.tar.gz",
+    "size_bytes": 18775,
+    "sha256": "70b85809d3c27fdb5a314c8585a230b5d013ee22c6e42c52cbf50b8d0c9c9e9e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_Bluetooth_HC05/1.1.4/iarduino_Bluetooth_HC05-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_Bluetooth_HC05/1.1.4/iarduino_Bluetooth_HC05-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_Bluetooth_HC05/1.1.5/iarduino_Bluetooth_HC05-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_Bluetooth_HC05-1.1.5.tar.gz",
+    "size_bytes": 18782,
+    "sha256": "ca27c63cd79e16e72d79996c35d2f3029202be9c63e275788336588e532592ff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_Bluetooth_HC05/1.1.5/iarduino_Bluetooth_HC05-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_Bluetooth_HC05/1.1.5/iarduino_Bluetooth_HC05-1.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_DHT/1.1.2/iarduino_DHT-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_DHT-1.1.2.tar.gz",
+    "size_bytes": 7120,
+    "sha256": "13f2b1def1bab73f7b9f8bf3272f152fd170a17a13c2d67f4ef62b673d0f7d18",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_DHT/1.1.2/iarduino_DHT-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_DHT/1.1.2/iarduino_DHT-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_DHT/1.1.3/iarduino_DHT-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_DHT-1.1.3.tar.gz",
+    "size_bytes": 7122,
+    "sha256": "c513c7c74ecc665c068b0ec78dfeb6cad18e6899958170d1b3d74c8d16cbdb2f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_DHT/1.1.3/iarduino_DHT-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_DHT/1.1.3/iarduino_DHT-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_DS18XXX/1.0.2/iarduino_DS18XXX-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_DS18XXX-1.0.2.tar.gz",
+    "size_bytes": 8267,
+    "sha256": "e8b04135d5013c80aa615bbb911c8757bb3067c4c809a24ba86b4e4b9913c7e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_DS18XXX/1.0.2/iarduino_DS18XXX-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_DS18XXX/1.0.2/iarduino_DS18XXX-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_Encoder_tmr/1.0.3/iarduino_Encoder_tmr-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_Encoder_tmr-1.0.3.tar.gz",
+    "size_bytes": 12973,
+    "sha256": "fe9d33b21511b9e01ef290c71a25ca906048832198cf624d42ba61205c7d1cf2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_Encoder_tmr/1.0.3/iarduino_Encoder_tmr-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_Encoder_tmr/1.0.3/iarduino_Encoder_tmr-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_Encoder_tmr/1.0.5/iarduino_Encoder_tmr-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_Encoder_tmr-1.0.5.tar.gz",
+    "size_bytes": 13847,
+    "sha256": "d471a3f1903199909e0e44213d727a4f12e7beb89f13f2f036938d06258abe9c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_Encoder_tmr/1.0.5/iarduino_Encoder_tmr-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_Encoder_tmr/1.0.5/iarduino_Encoder_tmr-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_GPS_ATGM336/1.1.3/iarduino_GPS_ATGM336-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_GPS_ATGM336-1.1.3.tar.gz",
+    "size_bytes": 18509,
+    "sha256": "3fbe76853c18a4493a6bf6f72d89a38a01c0532ed5e7c1970674b2700a4451ac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_GPS_ATGM336/1.1.3/iarduino_GPS_ATGM336-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_GPS_ATGM336/1.1.3/iarduino_GPS_ATGM336-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_GPS_ATGM336/1.1.4/iarduino_GPS_ATGM336-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_GPS_ATGM336-1.1.4.tar.gz",
+    "size_bytes": 18520,
+    "sha256": "6f9dc6c217563f42be4638077a9e1c74ce3a010fe96d86bca0185021df655b1a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_GPS_ATGM336/1.1.4/iarduino_GPS_ATGM336-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_GPS_ATGM336/1.1.4/iarduino_GPS_ATGM336-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_GPS_NMEA/1.1.2/iarduino_GPS_NMEA-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_GPS_NMEA-1.1.2.tar.gz",
+    "size_bytes": 22498,
+    "sha256": "4f72bd1b5fae8f370e80732c930bed8df028dacc33b0c8fb3355431013b26627",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_GPS_NMEA/1.1.2/iarduino_GPS_NMEA-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_GPS_NMEA/1.1.2/iarduino_GPS_NMEA-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_GPS_NMEA/1.1.3/iarduino_GPS_NMEA-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_GPS_NMEA-1.1.3.tar.gz",
+    "size_bytes": 22503,
+    "sha256": "063aadf3ba1f3ce9d15b92af0edfeeec4d038f457112fb10395d9ad9f3448429",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_GPS_NMEA/1.1.3/iarduino_GPS_NMEA-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_GPS_NMEA/1.1.3/iarduino_GPS_NMEA-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_HC_SR04/1.0.3/iarduino_HC_SR04-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_HC_SR04-1.0.3.tar.gz",
+    "size_bytes": 5998,
+    "sha256": "c68b5e460f90a4b1a8a358950467117b4a3bb9e59a89ae8b4c1c4088f0b53cf1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_HC_SR04/1.0.3/iarduino_HC_SR04-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_HC_SR04/1.0.3/iarduino_HC_SR04-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_HC_SR04_int/1.0.3/iarduino_HC_SR04_int-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_HC_SR04_int-1.0.3.tar.gz",
+    "size_bytes": 7331,
+    "sha256": "99e2c80193ec73761f6a8599aabe98980d9da66f8d364bec4f4272a8bbeefa65",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_HC_SR04_int/1.0.3/iarduino_HC_SR04_int-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_HC_SR04_int/1.0.3/iarduino_HC_SR04_int-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_HC_SR04_tmr/1.0.2/iarduino_HC_SR04_tmr-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_HC_SR04_tmr-1.0.2.tar.gz",
+    "size_bytes": 13833,
+    "sha256": "1f4d641bc2fd98577d8ca8028774a99da8effba76f6c409ce89ac3b6ced507e5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_HC_SR04_tmr/1.0.2/iarduino_HC_SR04_tmr-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_HC_SR04_tmr/1.0.2/iarduino_HC_SR04_tmr-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_Hexapod/1.0.2/iarduino_Hexapod-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_Hexapod-1.0.2.tar.gz",
+    "size_bytes": 14665,
+    "sha256": "928ff67cfc3809507058852550eaa897b6393923d0576a5ce9aa18192a10224a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_Hexapod/1.0.2/iarduino_Hexapod-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_Hexapod/1.0.2/iarduino_Hexapod-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_Hexapod/1.0.3/iarduino_Hexapod-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_Hexapod-1.0.3.tar.gz",
+    "size_bytes": 14670,
+    "sha256": "77c37936d04fd80a0a098ad8304228a9b34ce398286fd41b8ce6a9a0df8ad3e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_Hexapod/1.0.3/iarduino_Hexapod-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_Hexapod/1.0.3/iarduino_Hexapod-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_I2C_4LED/1.0.6/iarduino_I2C_4LED-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_I2C_4LED-1.0.6.tar.gz",
+    "size_bytes": 43334,
+    "sha256": "a2ac3f2bedc53985be43f8a4b10b7eb88dc5030982a83efe0e4859ac7341b38c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_I2C_4LED/1.0.6/iarduino_I2C_4LED-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_I2C_4LED/1.0.6/iarduino_I2C_4LED-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_I2C_4LED/1.0.7/iarduino_I2C_4LED-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_I2C_4LED-1.0.7.tar.gz",
+    "size_bytes": 43540,
+    "sha256": "c61725bdab6a5fc016c1df6a61d1acb2f9e278088dc62a790592eaa26bac3882",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_I2C_4LED/1.0.7/iarduino_I2C_4LED-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_I2C_4LED/1.0.7/iarduino_I2C_4LED-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_I2C_4LED/1.0.8/iarduino_I2C_4LED-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_I2C_4LED-1.0.8.tar.gz",
+    "size_bytes": 43550,
+    "sha256": "477e13e487d08386bdc47bed176e376f53e79c2ae6716136bab41a1f3e6de81f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_I2C_4LED/1.0.8/iarduino_I2C_4LED-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_I2C_4LED/1.0.8/iarduino_I2C_4LED-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_I2C_4LED/1.0.9/iarduino_I2C_4LED-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_I2C_4LED-1.0.9.tar.gz",
+    "size_bytes": 43793,
+    "sha256": "f8de1f81a30ddcb29b5d9d14eab6dcf40519e0b84a7616b99e29bb0d57395735",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_I2C_4LED/1.0.9/iarduino_I2C_4LED-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_I2C_4LED/1.0.9/iarduino_I2C_4LED-1.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_I2C_Address/1.0.5/iarduino_I2C_Address-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_I2C_Address-1.0.5.tar.gz",
+    "size_bytes": 31477,
+    "sha256": "8751a21692e4ed847bb9a3177dba810478d0a17595efc34a8f2b36871063b7dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_I2C_Address/1.0.5/iarduino_I2C_Address-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_I2C_Address/1.0.5/iarduino_I2C_Address-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_I2C_Address/1.0.6/iarduino_I2C_Address-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_I2C_Address-1.0.6.tar.gz",
+    "size_bytes": 31731,
+    "sha256": "82506743f6c456c641336894f84b910117c9bebf434777f4c78ccbb08e17d03d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_I2C_Address/1.0.6/iarduino_I2C_Address-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_I2C_Address/1.0.6/iarduino_I2C_Address-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_I2C_Bumper/1.1.0/iarduino_I2C_Bumper-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_I2C_Bumper-1.1.0.tar.gz",
+    "size_bytes": 60418,
+    "sha256": "84875855efd6e232450878851b4f79a3d46b80c7c440d28f97e2389dea529130",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_I2C_Bumper/1.1.0/iarduino_I2C_Bumper-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_I2C_Bumper/1.1.0/iarduino_I2C_Bumper-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_I2C_Bumper/1.1.1/iarduino_I2C_Bumper-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_I2C_Bumper-1.1.1.tar.gz",
+    "size_bytes": 60678,
+    "sha256": "b76fe6c2135f516e2867abcf4cc0500999b9892f7fb2ef06f9ddac5b38e21c6e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_I2C_Bumper/1.1.1/iarduino_I2C_Bumper-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_I2C_Bumper/1.1.1/iarduino_I2C_Bumper-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_I2C_DSL/1.0.6/iarduino_I2C_DSL-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_I2C_DSL-1.0.6.tar.gz",
+    "size_bytes": 33116,
+    "sha256": "91fc1340bdec5bdae17cbf0cb99ab8ee21ec05817d46f185e4686e7d49cd300c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_I2C_DSL/1.0.6/iarduino_I2C_DSL-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_I2C_DSL/1.0.6/iarduino_I2C_DSL-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_I2C_DSL/1.0.7/iarduino_I2C_DSL-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_I2C_DSL-1.0.7.tar.gz",
+    "size_bytes": 33377,
+    "sha256": "46b61bd080f5d8b2576611a43d9dee6f25335b22bc8e8317f8170570d41ba27e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_I2C_DSL/1.0.7/iarduino_I2C_DSL-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_I2C_DSL/1.0.7/iarduino_I2C_DSL-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_I2C_Encoder/1.1.5/iarduino_I2C_Encoder-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_I2C_Encoder-1.1.5.tar.gz",
+    "size_bytes": 44977,
+    "sha256": "c80eb4e0bf6a74c7f0b6a0f56c2088a8b472055535e86aa0950c1e3c5ce2f268",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_I2C_Encoder/1.1.5/iarduino_I2C_Encoder-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_I2C_Encoder/1.1.5/iarduino_I2C_Encoder-1.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_I2C_Encoder/1.1.7/iarduino_I2C_Encoder-1.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_I2C_Encoder-1.1.7.tar.gz",
+    "size_bytes": 45833,
+    "sha256": "9ffca9a36cdd02e87b58663d20d8d9009fb4dcfa915bee9ae849fcdeddfc7077",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_I2C_Encoder/1.1.7/iarduino_I2C_Encoder-1.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_I2C_Encoder/1.1.7/iarduino_I2C_Encoder-1.1.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_I2C_Expander/1.1.1/iarduino_I2C_Expander-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_I2C_Expander-1.1.1.tar.gz",
+    "size_bytes": 52858,
+    "sha256": "7659cdafb50b48f9cd8de5f749dbc6a78f6d6879707d024c2b31dbc068192d83",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_I2C_Expander/1.1.1/iarduino_I2C_Expander-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_I2C_Expander/1.1.1/iarduino_I2C_Expander-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_I2C_Expander/1.1.2/iarduino_I2C_Expander-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_I2C_Expander-1.1.2.tar.gz",
+    "size_bytes": 53174,
+    "sha256": "69647d0066660e1a7dce9f9121e9f60d0c53955d4a9db9b2f22d4dc3d8a2abfb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_I2C_Expander/1.1.2/iarduino_I2C_Expander-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_I2C_Expander/1.1.2/iarduino_I2C_Expander-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_I2C_IO/1.1.5/iarduino_I2C_IO-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_I2C_IO-1.1.5.tar.gz",
+    "size_bytes": 15317,
+    "sha256": "6b868ba4ad2766fd6ac92ff402022e5f2b71d5981b26b7a5634aaa5ce5520a69",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_I2C_IO/1.1.5/iarduino_I2C_IO-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_I2C_IO/1.1.5/iarduino_I2C_IO-1.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_I2C_IO/1.1.6/iarduino_I2C_IO-1.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_I2C_IO-1.1.6.tar.gz",
+    "size_bytes": 15568,
+    "sha256": "af80fc9eb0cce8eeedb95872e2527a0956ef9632d13eb65f84af1b652ce41d70",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_I2C_IO/1.1.6/iarduino_I2C_IO-1.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_I2C_IO/1.1.6/iarduino_I2C_IO-1.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_I2C_IR/1.0.5/iarduino_I2C_IR-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_I2C_IR-1.0.5.tar.gz",
+    "size_bytes": 49489,
+    "sha256": "3f9c2c3b7b529c687ad7668393853fb3981193e45032a83f03f2c8860b1920c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_I2C_IR/1.0.5/iarduino_I2C_IR-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_I2C_IR/1.0.5/iarduino_I2C_IR-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_I2C_IR/1.0.6/iarduino_I2C_IR-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_I2C_IR-1.0.6.tar.gz",
+    "size_bytes": 49856,
+    "sha256": "20c05084f25e884a1b00fa5d286a79262abdb10196092108517398b2bc28253b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_I2C_IR/1.0.6/iarduino_I2C_IR-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_I2C_IR/1.0.6/iarduino_I2C_IR-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_I2C_Joystick/1.0.5/iarduino_I2C_Joystick-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_I2C_Joystick-1.0.5.tar.gz",
+    "size_bytes": 65645,
+    "sha256": "12ee3a98934e88e1dd4af2029c3008dfaaa4d343066c8fc4b85970568b902805",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_I2C_Joystick/1.0.5/iarduino_I2C_Joystick-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_I2C_Joystick/1.0.5/iarduino_I2C_Joystick-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_I2C_Joystick/1.0.7/iarduino_I2C_Joystick-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_I2C_Joystick-1.0.7.tar.gz",
+    "size_bytes": 53709,
+    "sha256": "b3448f8739814dc52834334a5d14ddf975f2fe958f2f7bf3aa9781ad1354f8ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_I2C_Joystick/1.0.7/iarduino_I2C_Joystick-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_I2C_Joystick/1.0.7/iarduino_I2C_Joystick-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_I2C_Keyboard/1.0.5/iarduino_I2C_Keyboard-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_I2C_Keyboard-1.0.5.tar.gz",
+    "size_bytes": 64605,
+    "sha256": "b571a3ad91c0fb5cdec70f9ece64114cdf4b2dbe638e584c7f3491ed7bbf358f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_I2C_Keyboard/1.0.5/iarduino_I2C_Keyboard-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_I2C_Keyboard/1.0.5/iarduino_I2C_Keyboard-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_I2C_Keyboard/1.0.6/iarduino_I2C_Keyboard-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_I2C_Keyboard-1.0.6.tar.gz",
+    "size_bytes": 64860,
+    "sha256": "14aeca61b46a564588b15ad3612c307e1146d46b82b461963f7013e0dc22049b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_I2C_Keyboard/1.0.6/iarduino_I2C_Keyboard-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_I2C_Keyboard/1.0.6/iarduino_I2C_Keyboard-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_I2C_Matrix_8x8/1.0.9/iarduino_I2C_Matrix_8x8-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_I2C_Matrix_8x8-1.0.9.tar.gz",
+    "size_bytes": 56176,
+    "sha256": "29b9cbcc7246d2fd804b9900f99293de3d597eba6b08f0a622ceb9b3bd85f0ba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_I2C_Matrix_8x8/1.0.9/iarduino_I2C_Matrix_8x8-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_I2C_Matrix_8x8/1.0.9/iarduino_I2C_Matrix_8x8-1.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_I2C_Matrix_8x8/1.1.0/iarduino_I2C_Matrix_8x8-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_I2C_Matrix_8x8-1.1.0.tar.gz",
+    "size_bytes": 56441,
+    "sha256": "26f31b79c0e6d1924b0af4a12d08a3ad5dc8dff36df51b9cc897d08a7b400478",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_I2C_Matrix_8x8/1.1.0/iarduino_I2C_Matrix_8x8-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_I2C_Matrix_8x8/1.1.0/iarduino_I2C_Matrix_8x8-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_I2C_Motor/1.1.7/iarduino_I2C_Motor-1.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_I2C_Motor-1.1.7.tar.gz",
+    "size_bytes": 57376,
+    "sha256": "3308fbb8f71c06e11d68e84334dfbef30487dc838a601d18a517e34372ab27c3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_I2C_Motor/1.1.7/iarduino_I2C_Motor-1.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_I2C_Motor/1.1.7/iarduino_I2C_Motor-1.1.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_I2C_Motor/1.1.8/iarduino_I2C_Motor-1.1.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_I2C_Motor-1.1.8.tar.gz",
+    "size_bytes": 57773,
+    "sha256": "f61ed16f4980f1bf485d3d7fb82f04a31d4e5215754fcc6aa23d3110e6a32315",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_I2C_Motor/1.1.8/iarduino_I2C_Motor-1.1.8.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_I2C_Motor/1.1.8/iarduino_I2C_Motor-1.1.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_I2C_ORP/1.0.5/iarduino_I2C_ORP-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_I2C_ORP-1.0.5.tar.gz",
+    "size_bytes": 33159,
+    "sha256": "ed3dc345b3653a3dfbddb9fe8e9ee44dc51193e0da9a5e3c698370afe01f006f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_I2C_ORP/1.0.5/iarduino_I2C_ORP-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_I2C_ORP/1.0.5/iarduino_I2C_ORP-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_I2C_ORP/1.0.6/iarduino_I2C_ORP-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_I2C_ORP-1.0.6.tar.gz",
+    "size_bytes": 33461,
+    "sha256": "18dbb908b86d8fd7132f7189096cc0a7519dfdac8c2a5162733339d7e228da59",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_I2C_ORP/1.0.6/iarduino_I2C_ORP-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_I2C_ORP/1.0.6/iarduino_I2C_ORP-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_I2C_Relay/1.1.8/iarduino_I2C_Relay-1.1.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_I2C_Relay-1.1.8.tar.gz",
+    "size_bytes": 64807,
+    "sha256": "3d273c438506d32a29979600b489f903fbea65b3403bc65193fc5f40332b3072",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_I2C_Relay/1.1.8/iarduino_I2C_Relay-1.1.8.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_I2C_Relay/1.1.8/iarduino_I2C_Relay-1.1.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_I2C_Relay/1.1.9/iarduino_I2C_Relay-1.1.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_I2C_Relay-1.1.9.tar.gz",
+    "size_bytes": 65047,
+    "sha256": "953a2978fbef63f3f81027b5c33b7267b186e0dbbb96f435e53a4d4b249ab7eb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_I2C_Relay/1.1.9/iarduino_I2C_Relay-1.1.9.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_I2C_Relay/1.1.9/iarduino_I2C_Relay-1.1.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_I2C_SHT/1.0.8/iarduino_I2C_SHT-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_I2C_SHT-1.0.8.tar.gz",
+    "size_bytes": 34311,
+    "sha256": "c20228274b6e479cd1bb7dcfb3b12e7a5fd646b416df9781622dc87891c2a64d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_I2C_SHT/1.0.8/iarduino_I2C_SHT-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_I2C_SHT/1.0.8/iarduino_I2C_SHT-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_I2C_SHT/1.0.9/iarduino_I2C_SHT-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_I2C_SHT-1.0.9.tar.gz",
+    "size_bytes": 34616,
+    "sha256": "252b2a85e373ba74692a578a25888fa1fd6134e9a1d09d805176dd4110722edb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_I2C_SHT/1.0.9/iarduino_I2C_SHT-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_I2C_SHT/1.0.9/iarduino_I2C_SHT-1.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_I2C_Software/1.0.5/iarduino_I2C_Software-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_I2C_Software-1.0.5.tar.gz",
+    "size_bytes": 31139,
+    "sha256": "ed379497dc766986ab74dfd101605a99aa7b7a8c615823473939398e76532efe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_I2C_Software/1.0.5/iarduino_I2C_Software-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_I2C_Software/1.0.5/iarduino_I2C_Software-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_I2C_Software/1.0.6/iarduino_I2C_Software-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_I2C_Software-1.0.6.tar.gz",
+    "size_bytes": 31125,
+    "sha256": "e5a573c1e7fbb2df4a75f26599aca2397ec86b5a6fa57ce3fcdeedfa0f79a1be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_I2C_Software/1.0.6/iarduino_I2C_Software-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_I2C_Software/1.0.6/iarduino_I2C_Software-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_I2C_Software/1.0.7/iarduino_I2C_Software-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_I2C_Software-1.0.7.tar.gz",
+    "size_bytes": 31197,
+    "sha256": "83edbf9dcff8e23cc4a21f2afe8bf71a84372a5b96fb055a55e0232478f4fa6c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_I2C_Software/1.0.7/iarduino_I2C_Software-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_I2C_Software/1.0.7/iarduino_I2C_Software-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_I2C_TDS/1.3.4/iarduino_I2C_TDS-1.3.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_I2C_TDS-1.3.4.tar.gz",
+    "size_bytes": 43176,
+    "sha256": "cd02f427319c038cd394a2adfce54223f261f3da3d3045295f2addf2996092a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_I2C_TDS/1.3.4/iarduino_I2C_TDS-1.3.4.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_I2C_TDS/1.3.4/iarduino_I2C_TDS-1.3.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_I2C_TDS/1.3.5/iarduino_I2C_TDS-1.3.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_I2C_TDS-1.3.5.tar.gz",
+    "size_bytes": 43490,
+    "sha256": "9c30c003ca2f25665809a50133b47e5f036ddca655da424a8f80fd967687fa49",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_I2C_TDS/1.3.5/iarduino_I2C_TDS-1.3.5.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_I2C_TDS/1.3.5/iarduino_I2C_TDS-1.3.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_I2C_Track/1.0.7/iarduino_I2C_Track-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_I2C_Track-1.0.7.tar.gz",
+    "size_bytes": 50151,
+    "sha256": "fd549ebfc7436cbf9cb5f99b65d9e927ff865dd0c50f1151e8a967d7c12f9021",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_I2C_Track/1.0.7/iarduino_I2C_Track-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_I2C_Track/1.0.7/iarduino_I2C_Track-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_I2C_Track/1.0.8/iarduino_I2C_Track-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_I2C_Track-1.0.8.tar.gz",
+    "size_bytes": 50398,
+    "sha256": "67721af5d3c6c96b1d2d0b19992bb0c1e89f8affd62a4315c7648985828f760c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_I2C_Track/1.0.8/iarduino_I2C_Track-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_I2C_Track/1.0.8/iarduino_I2C_Track-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_I2C_connect/1.1.4/iarduino_I2C_connect-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_I2C_connect-1.1.4.tar.gz",
+    "size_bytes": 22652,
+    "sha256": "824416c5e24569988014cf8a6032331eab4f974a9022bb20ad36d209bb9d7426",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_I2C_connect/1.1.4/iarduino_I2C_connect-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_I2C_connect/1.1.4/iarduino_I2C_connect-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_I2C_connect/1.1.5/iarduino_I2C_connect-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_I2C_connect-1.1.5.tar.gz",
+    "size_bytes": 22895,
+    "sha256": "3e536583a4155057a23a773a3bf637c02c5a4467b11e48d0433a4763734f3bc5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_I2C_connect/1.1.5/iarduino_I2C_connect-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_I2C_connect/1.1.5/iarduino_I2C_connect-1.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_I2C_pH/1.2.4/iarduino_I2C_pH-1.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_I2C_pH-1.2.4.tar.gz",
+    "size_bytes": 35720,
+    "sha256": "36ea37ec6cae9c2b91ccfa1b6f0763e1f3018c5bc7e04b4893938d400af67bc6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_I2C_pH/1.2.4/iarduino_I2C_pH-1.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_I2C_pH/1.2.4/iarduino_I2C_pH-1.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_I2C_pH/1.2.5/iarduino_I2C_pH-1.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_I2C_pH-1.2.5.tar.gz",
+    "size_bytes": 36024,
+    "sha256": "386f0df1573b3bb7401beede8c358b5b4eceddebd57989c6a9cd84d55918660a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_I2C_pH/1.2.5/iarduino_I2C_pH-1.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_I2C_pH/1.2.5/iarduino_I2C_pH-1.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_IR/1.0.3/iarduino_IR-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_IR-1.0.3.tar.gz",
+    "size_bytes": 25024,
+    "sha256": "77490e6d1c27d5c1e2aba2e69c9a64a7ffaa426d34c6ab6db7c14bf8a4a6b4ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_IR/1.0.3/iarduino_IR-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_IR/1.0.3/iarduino_IR-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_IR/1.0.4/iarduino_IR-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_IR-1.0.4.tar.gz",
+    "size_bytes": 25039,
+    "sha256": "e49258daa58c1cdc10ba6da125451a1244c631399c763d25e5cf1e7559520302",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_IR/1.0.4/iarduino_IR-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_IR/1.0.4/iarduino_IR-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_IR_Thermometer/1.0.2/iarduino_IR_Thermometer-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_IR_Thermometer-1.0.2.tar.gz",
+    "size_bytes": 15171,
+    "sha256": "fd227a2792f7983c951355cfb765d2aca6de6b20f4649d329c40ae44954fef41",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_IR_Thermometer/1.0.2/iarduino_IR_Thermometer-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_IR_Thermometer/1.0.2/iarduino_IR_Thermometer-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_IR_Thermometer/1.0.3/iarduino_IR_Thermometer-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_IR_Thermometer-1.0.3.tar.gz",
+    "size_bytes": 15492,
+    "sha256": "f4b0d643b252f7b55ca5160607d0b3e9279498b47a23f9e44a0de1502d6799b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_IR_Thermometer/1.0.3/iarduino_IR_Thermometer-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_IR_Thermometer/1.0.3/iarduino_IR_Thermometer-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_KB/1.0.2/iarduino_KB-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_KB-1.0.2.tar.gz",
+    "size_bytes": 7621,
+    "sha256": "d90a0d48fabdb8b81cd1b4b0620e65f4a3347a911538ddc79163194435a30c2c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_KB/1.0.2/iarduino_KB-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_KB/1.0.2/iarduino_KB-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_KB/1.0.3/iarduino_KB-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_KB-1.0.3.tar.gz",
+    "size_bytes": 8148,
+    "sha256": "7ebfc56fb361876958bf4c84721988883f8e57cfe4f04f011abdc690aee4d5b2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_KB/1.0.3/iarduino_KB-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_KB/1.0.3/iarduino_KB-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_MB_HTL/1.0.4/iarduino_MB_HTL-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_MB_HTL-1.0.4.tar.gz",
+    "size_bytes": 24906,
+    "sha256": "b783a020f381bb01d7bb50751a629c2df011bab4df2910672af3e4ff6f16bf2e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_MB_HTL/1.0.4/iarduino_MB_HTL-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_MB_HTL/1.0.4/iarduino_MB_HTL-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_MB_Pump/1.0.5/iarduino_MB_Pump-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_MB_Pump-1.0.5.tar.gz",
+    "size_bytes": 33865,
+    "sha256": "10af4f81f2f107bd185e8d564732543424d20fefc92605c2040f49a78decf6c5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_MB_Pump/1.0.5/iarduino_MB_Pump-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_MB_Pump/1.0.5/iarduino_MB_Pump-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_MB_ShtSgpLtr/1.0.4/iarduino_MB_ShtSgpLtr-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_MB_ShtSgpLtr-1.0.4.tar.gz",
+    "size_bytes": 26143,
+    "sha256": "fff2a56a832ea59f1aaf659907154dcf2aeb9427f11bb00868d571a3daca1df7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_MB_ShtSgpLtr/1.0.4/iarduino_MB_ShtSgpLtr-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_MB_ShtSgpLtr/1.0.4/iarduino_MB_ShtSgpLtr-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_MB_Socket/1.0.4/iarduino_MB_Socket-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_MB_Socket-1.0.4.tar.gz",
+    "size_bytes": 25771,
+    "sha256": "41dfe4235b583f4860210e27832b32d7404a7335ddab154c93e8178af39e5e9c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_MB_Socket/1.0.4/iarduino_MB_Socket-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_MB_Socket/1.0.4/iarduino_MB_Socket-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_MB_TDS/1.1.5/iarduino_MB_TDS-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_MB_TDS-1.1.5.tar.gz",
+    "size_bytes": 43164,
+    "sha256": "06c4a3835198d3292f39ef4e4ef9049884e89da87b53f250685e0597d03d3177",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_MB_TDS/1.1.5/iarduino_MB_TDS-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_MB_TDS/1.1.5/iarduino_MB_TDS-1.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_MB_TDS/1.1.6/iarduino_MB_TDS-1.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_MB_TDS-1.1.6.tar.gz",
+    "size_bytes": 43159,
+    "sha256": "7fa5c6a06dc81b7e3ecff6ef691666a2194c38ab0227e27ebd8cf64d0fb85292",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_MB_TDS/1.1.6/iarduino_MB_TDS-1.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_MB_TDS/1.1.6/iarduino_MB_TDS-1.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_MB_eCO2/1.0.4/iarduino_MB_eCO2-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_MB_eCO2-1.0.4.tar.gz",
+    "size_bytes": 25231,
+    "sha256": "333576208dd7c0e6e9a69b2a2eb2d2947f108224dd046b80463830a4436dd2a6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_MB_eCO2/1.0.4/iarduino_MB_eCO2-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_MB_eCO2/1.0.4/iarduino_MB_eCO2-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_MB_pH/1.2.5/iarduino_MB_pH-1.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_MB_pH-1.2.5.tar.gz",
+    "size_bytes": 35325,
+    "sha256": "98456696987840a9802c9b88c08f88f2cb263a1615ec71b9fd8df7870b51105e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_MB_pH/1.2.5/iarduino_MB_pH-1.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_MB_pH/1.2.5/iarduino_MB_pH-1.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_Metro/1.3.5/iarduino_Metro-1.3.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_Metro-1.3.5.tar.gz",
+    "size_bytes": 107958,
+    "sha256": "2444005441cc822af2b37c11a1670548f48a3d17d5fe32881018352aedbed698",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_Metro/1.3.5/iarduino_Metro-1.3.5.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_Metro/1.3.5/iarduino_Metro-1.3.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_Modbus/1.0.3/iarduino_Modbus-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_Modbus-1.0.3.tar.gz",
+    "size_bytes": 33067,
+    "sha256": "0aadda0a4ed4ac3af0fd3abc8205c06bec345431f000a6067e3a968cf8c813fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_Modbus/1.0.3/iarduino_Modbus-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_Modbus/1.0.3/iarduino_Modbus-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_Modbus/1.0.4/iarduino_Modbus-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_Modbus-1.0.4.tar.gz",
+    "size_bytes": 33194,
+    "sha256": "5149b3873645f45cd29c90fc79e5a8b072f5f8f19787f0cbf86f872aeba91bcb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_Modbus/1.0.4/iarduino_Modbus-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_Modbus/1.0.4/iarduino_Modbus-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_MultiServo/1.1.6/iarduino_MultiServo-1.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_MultiServo-1.1.6.tar.gz",
+    "size_bytes": 16646,
+    "sha256": "2e1a6c48f783c16c1e3ae02704464c3459d60d6dfe7910deeba9338de24f6c34",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_MultiServo/1.1.6/iarduino_MultiServo-1.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_MultiServo/1.1.6/iarduino_MultiServo-1.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_MultiServo/1.1.7/iarduino_MultiServo-1.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_MultiServo-1.1.7.tar.gz",
+    "size_bytes": 16914,
+    "sha256": "d4debd7a5f66f702a591873f73d09ad30cbc404aa6e2b79796d8e058d59c8b09",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_MultiServo/1.1.7/iarduino_MultiServo-1.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_MultiServo/1.1.7/iarduino_MultiServo-1.1.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_NeoPixel/1.0.2/iarduino_NeoPixel-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_NeoPixel-1.0.2.tar.gz",
+    "size_bytes": 14950,
+    "sha256": "1f9eebeaee16b18655ff5b3f10e59ceb631e625afba560e10d8d06086e2a96d7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_NeoPixel/1.0.2/iarduino_NeoPixel-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_NeoPixel/1.0.2/iarduino_NeoPixel-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_NeoPixel/1.1.7/iarduino_NeoPixel-1.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_NeoPixel-1.1.7.tar.gz",
+    "size_bytes": 14990,
+    "sha256": "da52af660f1f439c22accda2daf8ddf968ec98793a444bd2d1e7005df4cc28e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_NeoPixel/1.1.7/iarduino_NeoPixel-1.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_NeoPixel/1.1.7/iarduino_NeoPixel-1.1.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_OLED/1.2.5/iarduino_OLED-1.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_OLED-1.2.5.tar.gz",
+    "size_bytes": 55514,
+    "sha256": "ef93c0b521ae0e00acbd8ff9f7d6e6c631499e4d854c61a168d9320f4ffb055e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_OLED/1.2.5/iarduino_OLED-1.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_OLED/1.2.5/iarduino_OLED-1.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_OLED/1.2.6/iarduino_OLED-1.2.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_OLED-1.2.6.tar.gz",
+    "size_bytes": 55835,
+    "sha256": "594bacfddfc0166b9ccfc04e418c8c88dbbaceb88465f1aaa56a2becc9bd029e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_OLED/1.2.6/iarduino_OLED-1.2.6.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_OLED/1.2.6/iarduino_OLED-1.2.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_OLED_txt/1.2.5/iarduino_OLED_txt-1.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_OLED_txt-1.2.5.tar.gz",
+    "size_bytes": 40823,
+    "sha256": "31ba233fdc38f92ee596d8fd81cbeb46c46767086d0c70d5a6e991c24ab14b8f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_OLED_txt/1.2.5/iarduino_OLED_txt-1.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_OLED_txt/1.2.5/iarduino_OLED_txt-1.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_OLED_txt/1.2.6/iarduino_OLED_txt-1.2.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_OLED_txt-1.2.6.tar.gz",
+    "size_bytes": 41062,
+    "sha256": "8f27e17725e10289ea15f9ae7c77722015039a3dcbb06bf5be6287878face869",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_OLED_txt/1.2.6/iarduino_OLED_txt-1.2.6.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_OLED_txt/1.2.6/iarduino_OLED_txt-1.2.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_PCA9555/1.0.4/iarduino_PCA9555-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_PCA9555-1.0.4.tar.gz",
+    "size_bytes": 15277,
+    "sha256": "2e2faf8759bbf04acd2f7da726f7680b39542d3999552ebdd2c7eb006f2c0dd1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_PCA9555/1.0.4/iarduino_PCA9555-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_PCA9555/1.0.4/iarduino_PCA9555-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_PCA9555/1.0.5/iarduino_PCA9555-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_PCA9555-1.0.5.tar.gz",
+    "size_bytes": 15539,
+    "sha256": "74481e0128c6d79d7057b2b6fef35ab096691cea87fdf67ec1deb953d629b2fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_PCA9555/1.0.5/iarduino_PCA9555-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_PCA9555/1.0.5/iarduino_PCA9555-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_Position_BMX055/1.2.7/iarduino_Position_BMX055-1.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_Position_BMX055-1.2.7.tar.gz",
+    "size_bytes": 84600,
+    "sha256": "8ede1b1974ada3c2e0adcdc61d5cd49e62928e1fc402e8525b709fb59789924a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_Position_BMX055/1.2.7/iarduino_Position_BMX055-1.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_Position_BMX055/1.2.7/iarduino_Position_BMX055-1.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_Position_BMX055/1.2.8/iarduino_Position_BMX055-1.2.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_Position_BMX055-1.2.8.tar.gz",
+    "size_bytes": 85176,
+    "sha256": "419074f92a6e4140bac3370ee96863f5b389d25b152af65359cdabd80040637b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_Position_BMX055/1.2.8/iarduino_Position_BMX055-1.2.8.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_Position_BMX055/1.2.8/iarduino_Position_BMX055-1.2.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_Pressure_BMP/2.0.6/iarduino_Pressure_BMP-2.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_Pressure_BMP-2.0.6.tar.gz",
+    "size_bytes": 17655,
+    "sha256": "aab451f8bac5d7c9525b50137606ff5a1d44ea8455ba06d099f1984fd1989b85",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_Pressure_BMP/2.0.6/iarduino_Pressure_BMP-2.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_Pressure_BMP/2.0.6/iarduino_Pressure_BMP-2.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_Pressure_BMP/2.0.7/iarduino_Pressure_BMP-2.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_Pressure_BMP-2.0.7.tar.gz",
+    "size_bytes": 17905,
+    "sha256": "098c3d11e46be7cb8650df4d2b35764ef9735c175ae45f0163b649783f79a714",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_Pressure_BMP/2.0.7/iarduino_Pressure_BMP-2.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_Pressure_BMP/2.0.7/iarduino_Pressure_BMP-2.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_REG_595/1.0.3/iarduino_REG_595-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_REG_595-1.0.3.tar.gz",
+    "size_bytes": 10230,
+    "sha256": "8b1b9c0ddbe9175f5f75ac7eaaaa69c3498a29558364f8fa9ff1588f11c13ffe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_REG_595/1.0.3/iarduino_REG_595-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_REG_595/1.0.3/iarduino_REG_595-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_RF433/1.0.2/iarduino_RF433-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_RF433-1.0.2.tar.gz",
+    "size_bytes": 13315,
+    "sha256": "0cfdb874933dc606dc7f096bcf4f21f674720e25733a824acf7c148042367bd4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_RF433/1.0.2/iarduino_RF433-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_RF433/1.0.2/iarduino_RF433-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_RF433/1.0.3/iarduino_RF433-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_RF433-1.0.3.tar.gz",
+    "size_bytes": 13506,
+    "sha256": "9ae4ac8c754bc56b32c0639d519b00be7d17c021d53c33c5fb8ccb0cd6444836",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_RF433/1.0.3/iarduino_RF433-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_RF433/1.0.3/iarduino_RF433-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_RTC/2.0.7/iarduino_RTC-2.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_RTC-2.0.7.tar.gz",
+    "size_bytes": 31436,
+    "sha256": "652fdc6b1faefecc63550b80af8682d53f4ddec764b9f90c6e857643e1e2d78a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_RTC/2.0.7/iarduino_RTC-2.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_RTC/2.0.7/iarduino_RTC-2.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_RTC/2.0.8/iarduino_RTC-2.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_RTC-2.0.8.tar.gz",
+    "size_bytes": 31437,
+    "sha256": "4a33c4ad818182cfa8a572d7b309ee141cbe69b9ec2da22b7731a8581de86e42",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_RTC/2.0.8/iarduino_RTC-2.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_RTC/2.0.8/iarduino_RTC-2.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_RTC/2.0.9/iarduino_RTC-2.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_RTC-2.0.9.tar.gz",
+    "size_bytes": 31724,
+    "sha256": "373dd1b4a5fc3096e873507003ab17f9b0d898e704d78e5579ff991d71b32577",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_RTC/2.0.9/iarduino_RTC-2.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_RTC/2.0.9/iarduino_RTC-2.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_SensorPulse/1.0.3/iarduino_SensorPulse-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_SensorPulse-1.0.3.tar.gz",
+    "size_bytes": 13938,
+    "sha256": "319249e82fd3ca2f16c708739b0fee045d7a3ee9314c9bb82d0824b0aba1e804",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_SensorPulse/1.0.3/iarduino_SensorPulse-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_SensorPulse/1.0.3/iarduino_SensorPulse-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_SensorPulse/1.0.5/iarduino_SensorPulse-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_SensorPulse-1.0.5.tar.gz",
+    "size_bytes": 14028,
+    "sha256": "d3db094a0cd68282769d06cddaa4b17f7c5efd72a5f3340acc086ecb3ace040b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_SensorPulse/1.0.5/iarduino_SensorPulse-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_SensorPulse/1.0.5/iarduino_SensorPulse-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_VCC/1.0.2/iarduino_VCC-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_VCC-1.0.2.tar.gz",
+    "size_bytes": 18431,
+    "sha256": "2ee7d3c5d87d46ecf4449aa9ac9862b1f4be2061a59d894dbe56895b7f08e24b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_VCC/1.0.2/iarduino_VCC-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_VCC/1.0.2/iarduino_VCC-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_VpH/1.0.1/iarduino_VpH-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_VpH-1.0.1.tar.gz",
+    "size_bytes": 7456,
+    "sha256": "201785ae260c7dbd2b70f174d887438c7551b4f6b05915318cb1a980bbf043c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_VpH/1.0.1/iarduino_VpH-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_VpH/1.0.1/iarduino_VpH-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_Wattmeter/1.0.1/iarduino_Wattmeter-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_Wattmeter-1.0.1.tar.gz",
+    "size_bytes": 6902,
+    "sha256": "237fce700ba4e39aa2358b38bb490dd91cdc7ed2e37d98ecb79a3158675fd827",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_Wattmeter/1.0.1/iarduino_Wattmeter-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_Wattmeter/1.0.1/iarduino_Wattmeter-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_nLED/1.0.3/iarduino_nLED-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_nLED-1.0.3.tar.gz",
+    "size_bytes": 11088,
+    "sha256": "c0a9148abd96d273cf65da6b45377181a9789a9ba298f50b359bba3853715545",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_nLED/1.0.3/iarduino_nLED-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_nLED/1.0.3/iarduino_nLED-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tremaru/library/iarduino_nLED/1.0.4/iarduino_nLED-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iarduino_nLED-1.0.4.tar.gz",
+    "size_bytes": 11119,
+    "sha256": "ad811de9bf33ccbd360ede88dd6bedc48a1f63a2d71cb1a52055214196351dc5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tremaru/library/iarduino_nLED/1.0.4/iarduino_nLED-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/tremaru/library/iarduino_nLED/1.0.4/iarduino_nLED-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,399 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/matthias-bs",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "matthias-bs/library/ATC%20MiThermometer%20Library/0.0.1/ATCMiThermometerLibrary-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ATCMiThermometerLibrary-0.0.1.tar.gz",
+    "size_bytes": 4521,
+    "sha256": "8b5216847a5f8b9c5dac63154c79267df3ef9730cf4cbb6079171eaf1ccff707",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matthias-bs/library/ATC%2520MiThermometer%2520Library/0.0.1/ATCMiThermometerLibrary-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/matthias-bs/library/ATC%20MiThermometer%20Library/0.0.1/ATCMiThermometerLibrary-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "matthias-bs/library/ATC_MiThermometer/0.5.1/ATC_MiThermometer-0.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ATC_MiThermometer-0.5.1.tar.gz",
+    "size_bytes": 39307,
+    "sha256": "18f8de0f2b0561b97f8f25ad4f4c5f2177dee23b9df31af847d000b7e875daab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matthias-bs/library/ATC_MiThermometer/0.5.1/ATC_MiThermometer-0.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/matthias-bs/library/ATC_MiThermometer/0.5.1/ATC_MiThermometer-0.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "matthias-bs/library/ATC_MiThermometer/0.5.2/ATC_MiThermometer-0.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ATC_MiThermometer-0.5.2.tar.gz",
+    "size_bytes": 39295,
+    "sha256": "eded2308d251fce4d8f3be898839fde7ba6d5ab29b47c5ee2ea4fc05e467a93e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matthias-bs/library/ATC_MiThermometer/0.5.2/ATC_MiThermometer-0.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/matthias-bs/library/ATC_MiThermometer/0.5.2/ATC_MiThermometer-0.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "matthias-bs/library/BresserWeatherSensorReceiver/0.34.0/BresserWeatherSensorReceiver-0.34.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BresserWeatherSensorReceiver-0.34.0.tar.gz",
+    "size_bytes": 1231756,
+    "sha256": "22914bc1363669b0175808b2f697421842238033a8b29b1c39de87c90b232fd9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matthias-bs/library/BresserWeatherSensorReceiver/0.34.0/BresserWeatherSensorReceiver-0.34.0.tar.gz",
+     "https://dl.registry.platformio.org/download/matthias-bs/library/BresserWeatherSensorReceiver/0.34.0/BresserWeatherSensorReceiver-0.34.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "matthias-bs/library/BresserWeatherSensorReceiver/0.35.0/BresserWeatherSensorReceiver-0.35.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BresserWeatherSensorReceiver-0.35.0.tar.gz",
+    "size_bytes": 1236641,
+    "sha256": "38fdaaf3d7d2409eb2a2b3f822191dfebbc684853999386888b5d2d3c76b6885",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matthias-bs/library/BresserWeatherSensorReceiver/0.35.0/BresserWeatherSensorReceiver-0.35.0.tar.gz",
+     "https://dl.registry.platformio.org/download/matthias-bs/library/BresserWeatherSensorReceiver/0.35.0/BresserWeatherSensorReceiver-0.35.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "matthias-bs/library/BresserWeatherSensorReceiver/0.36.0/BresserWeatherSensorReceiver-0.36.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BresserWeatherSensorReceiver-0.36.0.tar.gz",
+    "size_bytes": 1244111,
+    "sha256": "9c26c0d745ac846782ca3693fe0cc61e2d154a804c57ecc289fc957418b32d93",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matthias-bs/library/BresserWeatherSensorReceiver/0.36.0/BresserWeatherSensorReceiver-0.36.0.tar.gz",
+     "https://dl.registry.platformio.org/download/matthias-bs/library/BresserWeatherSensorReceiver/0.36.0/BresserWeatherSensorReceiver-0.36.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "matthias-bs/library/BresserWeatherSensorReceiver/0.36.1/BresserWeatherSensorReceiver-0.36.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BresserWeatherSensorReceiver-0.36.1.tar.gz",
+    "size_bytes": 1244112,
+    "sha256": "0e19440987eeb80aa14928d9e2aa85b71458209028fb7b06af94e39b198fbc4a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matthias-bs/library/BresserWeatherSensorReceiver/0.36.1/BresserWeatherSensorReceiver-0.36.1.tar.gz",
+     "https://dl.registry.platformio.org/download/matthias-bs/library/BresserWeatherSensorReceiver/0.36.1/BresserWeatherSensorReceiver-0.36.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "matthias-bs/library/BresserWeatherSensorReceiver/0.36.2/BresserWeatherSensorReceiver-0.36.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BresserWeatherSensorReceiver-0.36.2.tar.gz",
+    "size_bytes": 1244111,
+    "sha256": "8551d06818d037b60c88caeb85af0edde28a3eea6c65f6c7e7718a24a1e27d9c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matthias-bs/library/BresserWeatherSensorReceiver/0.36.2/BresserWeatherSensorReceiver-0.36.2.tar.gz",
+     "https://dl.registry.platformio.org/download/matthias-bs/library/BresserWeatherSensorReceiver/0.36.2/BresserWeatherSensorReceiver-0.36.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "matthias-bs/library/BresserWeatherSensorReceiver/0.36.3/BresserWeatherSensorReceiver-0.36.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BresserWeatherSensorReceiver-0.36.3.tar.gz",
+    "size_bytes": 1247428,
+    "sha256": "7ec50973a9a6a6d83dcc3f00f638fb0db6b5d501b483569f6018f08c5be8d764",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matthias-bs/library/BresserWeatherSensorReceiver/0.36.3/BresserWeatherSensorReceiver-0.36.3.tar.gz",
+     "https://dl.registry.platformio.org/download/matthias-bs/library/BresserWeatherSensorReceiver/0.36.3/BresserWeatherSensorReceiver-0.36.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "matthias-bs/library/BresserWeatherSensorReceiver/0.37.0/BresserWeatherSensorReceiver-0.37.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BresserWeatherSensorReceiver-0.37.0.tar.gz",
+    "size_bytes": 1247781,
+    "sha256": "cdcdb9b8990c20fc771adf13728a4ca02878689b7300b287c04bea39ff49e793",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matthias-bs/library/BresserWeatherSensorReceiver/0.37.0/BresserWeatherSensorReceiver-0.37.0.tar.gz",
+     "https://dl.registry.platformio.org/download/matthias-bs/library/BresserWeatherSensorReceiver/0.37.0/BresserWeatherSensorReceiver-0.37.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "matthias-bs/library/BresserWeatherSensorReceiver/0.37.1/BresserWeatherSensorReceiver-0.37.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BresserWeatherSensorReceiver-0.37.1.tar.gz",
+    "size_bytes": 1248289,
+    "sha256": "7902741c4c0549a0ea985c66e57be3666e525e70af8cd7b471965921d7bf7113",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matthias-bs/library/BresserWeatherSensorReceiver/0.37.1/BresserWeatherSensorReceiver-0.37.1.tar.gz",
+     "https://dl.registry.platformio.org/download/matthias-bs/library/BresserWeatherSensorReceiver/0.37.1/BresserWeatherSensorReceiver-0.37.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "matthias-bs/library/BresserWeatherSensorReceiver/0.38.0/BresserWeatherSensorReceiver-0.38.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BresserWeatherSensorReceiver-0.38.0.tar.gz",
+    "size_bytes": 1249039,
+    "sha256": "00ac33554897630d97b579c50c0e2ef6565c88ce19b9c1e632543a42267b6b79",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matthias-bs/library/BresserWeatherSensorReceiver/0.38.0/BresserWeatherSensorReceiver-0.38.0.tar.gz",
+     "https://dl.registry.platformio.org/download/matthias-bs/library/BresserWeatherSensorReceiver/0.38.0/BresserWeatherSensorReceiver-0.38.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "matthias-bs/library/BresserWeatherSensorReceiver/0.38.2/BresserWeatherSensorReceiver-0.38.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BresserWeatherSensorReceiver-0.38.2.tar.gz",
+    "size_bytes": 1248887,
+    "sha256": "bf2f941aa4a3657dafaeb045db545c0cb8f58dea615d6ae9bd54c7cb2a27646f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matthias-bs/library/BresserWeatherSensorReceiver/0.38.2/BresserWeatherSensorReceiver-0.38.2.tar.gz",
+     "https://dl.registry.platformio.org/download/matthias-bs/library/BresserWeatherSensorReceiver/0.38.2/BresserWeatherSensorReceiver-0.38.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "matthias-bs/library/BresserWeatherSensorReceiver/0.38.3/BresserWeatherSensorReceiver-0.38.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BresserWeatherSensorReceiver-0.38.3.tar.gz",
+    "size_bytes": 1249044,
+    "sha256": "d61d11bd93b981dcb6e6b34e3bfb1c322140783c60ea842ea3253b3434e1d9c9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matthias-bs/library/BresserWeatherSensorReceiver/0.38.3/BresserWeatherSensorReceiver-0.38.3.tar.gz",
+     "https://dl.registry.platformio.org/download/matthias-bs/library/BresserWeatherSensorReceiver/0.38.3/BresserWeatherSensorReceiver-0.38.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "matthias-bs/library/BresserWeatherSensorReceiver/0.39.0/BresserWeatherSensorReceiver-0.39.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BresserWeatherSensorReceiver-0.39.0.tar.gz",
+    "size_bytes": 1267263,
+    "sha256": "f76ac8957a4bc8c09f56276f10a488ab8c261838c80cf841667f0fc8ce77ea39",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matthias-bs/library/BresserWeatherSensorReceiver/0.39.0/BresserWeatherSensorReceiver-0.39.0.tar.gz",
+     "https://dl.registry.platformio.org/download/matthias-bs/library/BresserWeatherSensorReceiver/0.39.0/BresserWeatherSensorReceiver-0.39.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "matthias-bs/library/BresserWeatherSensorReceiver/0.39.1/BresserWeatherSensorReceiver-0.39.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BresserWeatherSensorReceiver-0.39.1.tar.gz",
+    "size_bytes": 1267737,
+    "sha256": "c21456d04071bb6bc1c3ce2ed6e43596462da5cdd2e44364cc804c02509cf09c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matthias-bs/library/BresserWeatherSensorReceiver/0.39.1/BresserWeatherSensorReceiver-0.39.1.tar.gz",
+     "https://dl.registry.platformio.org/download/matthias-bs/library/BresserWeatherSensorReceiver/0.39.1/BresserWeatherSensorReceiver-0.39.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "matthias-bs/library/BresserWeatherSensorReceiver/0.39.3/BresserWeatherSensorReceiver-0.39.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BresserWeatherSensorReceiver-0.39.3.tar.gz",
+    "size_bytes": 227825,
+    "sha256": "5c88cb638471064a141012ce1c344568b3a23aa8f1db6f4524805ff87bac66ec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matthias-bs/library/BresserWeatherSensorReceiver/0.39.3/BresserWeatherSensorReceiver-0.39.3.tar.gz",
+     "https://dl.registry.platformio.org/download/matthias-bs/library/BresserWeatherSensorReceiver/0.39.3/BresserWeatherSensorReceiver-0.39.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "matthias-bs/library/BresserWeatherSensorReceiver/0.40.0/BresserWeatherSensorReceiver-0.40.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BresserWeatherSensorReceiver-0.40.0.tar.gz",
+    "size_bytes": 228045,
+    "sha256": "ed1f302614d05d7f31e7ba4b00f62401eab1ea63a833c4efaedb725702f6b0a7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matthias-bs/library/BresserWeatherSensorReceiver/0.40.0/BresserWeatherSensorReceiver-0.40.0.tar.gz",
+     "https://dl.registry.platformio.org/download/matthias-bs/library/BresserWeatherSensorReceiver/0.40.0/BresserWeatherSensorReceiver-0.40.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "matthias-bs/library/BresserWeatherSensorReceiver/0.41.0/BresserWeatherSensorReceiver-0.41.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BresserWeatherSensorReceiver-0.41.0.tar.gz",
+    "size_bytes": 230366,
+    "sha256": "6229d26e9c18f7aae85c57457c5de50b0aafbd28be483080d567b35c2dee8b4e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matthias-bs/library/BresserWeatherSensorReceiver/0.41.0/BresserWeatherSensorReceiver-0.41.0.tar.gz",
+     "https://dl.registry.platformio.org/download/matthias-bs/library/BresserWeatherSensorReceiver/0.41.0/BresserWeatherSensorReceiver-0.41.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "matthias-bs/library/BresserWeatherSensorReceiver/0.41.1/BresserWeatherSensorReceiver-0.41.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BresserWeatherSensorReceiver-0.41.1.tar.gz",
+    "size_bytes": 231058,
+    "sha256": "31180d6548fd5a609d1666bc5d13ac3a3341cc5fc0ef76e07bc0f394d0c03383",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matthias-bs/library/BresserWeatherSensorReceiver/0.41.1/BresserWeatherSensorReceiver-0.41.1.tar.gz",
+     "https://dl.registry.platformio.org/download/matthias-bs/library/BresserWeatherSensorReceiver/0.41.1/BresserWeatherSensorReceiver-0.41.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "matthias-bs/library/BresserWeatherSensorReceiver/0.42.0/BresserWeatherSensorReceiver-0.42.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BresserWeatherSensorReceiver-0.42.0.tar.gz",
+    "size_bytes": 231148,
+    "sha256": "43913ded31eb0cf9eb71ba9661869579bdd29705b358e7956415b1191a86ab4f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matthias-bs/library/BresserWeatherSensorReceiver/0.42.0/BresserWeatherSensorReceiver-0.42.0.tar.gz",
+     "https://dl.registry.platformio.org/download/matthias-bs/library/BresserWeatherSensorReceiver/0.42.0/BresserWeatherSensorReceiver-0.42.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "matthias-bs/library/BresserWeatherSensorReceiver/0.43.0/BresserWeatherSensorReceiver-0.43.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BresserWeatherSensorReceiver-0.43.0.tar.gz",
+    "size_bytes": 231403,
+    "sha256": "4a1459d72e6d32886ad7ce6ec143a277ae8ae88670e8fb1f80251829f93021ff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matthias-bs/library/BresserWeatherSensorReceiver/0.43.0/BresserWeatherSensorReceiver-0.43.0.tar.gz",
+     "https://dl.registry.platformio.org/download/matthias-bs/library/BresserWeatherSensorReceiver/0.43.0/BresserWeatherSensorReceiver-0.43.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "matthias-bs/library/DYP-R01CW/0.1.1/DYP-R01CW-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DYP-R01CW-0.1.1.tar.gz",
+    "size_bytes": 11789,
+    "sha256": "dbdcc9b9fe4eaa4663f641ed5e3edf4b44632165e836149eb34baee6803b84a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matthias-bs/library/DYP-R01CW/0.1.1/DYP-R01CW-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/matthias-bs/library/DYP-R01CW/0.1.1/DYP-R01CW-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "matthias-bs/library/M5SerialPngCapture/1.0.0/M5SerialPngCapture-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5SerialPngCapture-1.0.0.tar.gz",
+    "size_bytes": 4745,
+    "sha256": "58095dc42f2876eed4735951d477c380b7fe06271e6bba89b01ce7f19c7c4c47",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matthias-bs/library/M5SerialPngCapture/1.0.0/M5SerialPngCapture-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/matthias-bs/library/M5SerialPngCapture/1.0.0/M5SerialPngCapture-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "matthias-bs/library/SX1276_Radio_Lite/0.1.0/SX1276_Radio_Lite-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SX1276_Radio_Lite-0.1.0.tar.gz",
+    "size_bytes": 58591,
+    "sha256": "c044f0a2a6a3232ddf050244dd03c7fabae3f4fb52989f0ce267b96f736301dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matthias-bs/library/SX1276_Radio_Lite/0.1.0/SX1276_Radio_Lite-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/matthias-bs/library/SX1276_Radio_Lite/0.1.0/SX1276_Radio_Lite-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "matthias-bs/library/esp32-rfid-switch/0.1.0/esp32-rfid-switch-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32-rfid-switch-0.1.0.tar.gz",
+    "size_bytes": 32630,
+    "sha256": "a32a676c581a30f186697b924bc984e98272f89ca45724f860759f25a1f8f5a1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matthias-bs/library/esp32-rfid-switch/0.1.0/esp32-rfid-switch-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/matthias-bs/library/esp32-rfid-switch/0.1.0/esp32-rfid-switch-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "matthias-bs/library/esp32-rfid-switch/0.2.0/esp32-rfid-switch-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32-rfid-switch-0.2.0.tar.gz",
+    "size_bytes": 35012,
+    "sha256": "cbd3cf0d4fe2cf2e00446aabd20ca11ae0f316b647623326c76fb9649448a0a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matthias-bs/library/esp32-rfid-switch/0.2.0/esp32-rfid-switch-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/matthias-bs/library/esp32-rfid-switch/0.2.0/esp32-rfid-switch-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "matthias-bs/library/esp32-shelly-ble-rpc/1.0.0/esp32-shelly-ble-rpc-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32-shelly-ble-rpc-1.0.0.tar.gz",
+    "size_bytes": 22658,
+    "sha256": "6d9e880d2ac7959cf7463a4235c06e41447a5d6029e3acbb052906d588047f23",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matthias-bs/library/esp32-shelly-ble-rpc/1.0.0/esp32-shelly-ble-rpc-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/matthias-bs/library/esp32-shelly-ble-rpc/1.0.0/esp32-shelly-ble-rpc-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "matthias-bs/library/esp32-shelly-ble-rpc/1.1.0/esp32-shelly-ble-rpc-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32-shelly-ble-rpc-1.1.0.tar.gz",
+    "size_bytes": 27916,
+    "sha256": "4c05a26416610d732531036789754a7089a9855bb38dd447ab0df3a6a05de03d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matthias-bs/library/esp32-shelly-ble-rpc/1.1.0/esp32-shelly-ble-rpc-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/matthias-bs/library/esp32-shelly-ble-rpc/1.1.0/esp32-shelly-ble-rpc-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "matthias-bs/library/esp32-shelly-ble-rpc/1.1.2/esp32-shelly-ble-rpc-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32-shelly-ble-rpc-1.1.2.tar.gz",
+    "size_bytes": 28043,
+    "sha256": "06e6922778df3e775c86c896003082f0c1c737a6f020bd99b7f250b1793b2ca4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matthias-bs/library/esp32-shelly-ble-rpc/1.1.2/esp32-shelly-ble-rpc-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/matthias-bs/library/esp32-shelly-ble-rpc/1.1.2/esp32-shelly-ble-rpc-1.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

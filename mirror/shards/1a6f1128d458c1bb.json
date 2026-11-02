@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ajmansfield",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ajmansfield/library/LcdEffects/1.0.0/LcdEffects-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LcdEffects-1.0.0.tar.gz",
+    "size_bytes": 10430,
+    "sha256": "f658088e890030e3ea02ecf912974779168bad84b895e1fcbff820844e40506f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ajmansfield/library/LcdEffects/1.0.0/LcdEffects-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ajmansfield/library/LcdEffects/1.0.0/LcdEffects-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ajmansfield/library/TriacDimmer/1.1.0/TriacDimmer-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TriacDimmer-1.1.0.tar.gz",
+    "size_bytes": 16343,
+    "sha256": "ba83cc966af64c0daedf10a8a172affc932b0bc0c84a3138d5f7478c3a2609b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ajmansfield/library/TriacDimmer/1.1.0/TriacDimmer-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ajmansfield/library/TriacDimmer/1.1.0/TriacDimmer-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tyhenry",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tyhenry/library/CheapStepper/0.2.1/CheapStepper-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CheapStepper-0.2.1.tar.gz",
+    "size_bytes": 19060,
+    "sha256": "48e57d30f4fec1a145924c8eba7c66c750cdfcabd717f9170ee969d0bf748ac8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tyhenry/library/CheapStepper/0.2.1/CheapStepper-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tyhenry/library/CheapStepper/0.2.1/CheapStepper-0.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-soldeerridder",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-soldeerridder/library/SI570/0.0.0+sha.dae1bf95c49e/SI570-0.0.0+sha.dae1bf95c49e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SI570-0.0.0+sha.dae1bf95c49e.tar.gz",
+    "size_bytes": 4895,
+    "sha256": "d2f827e8c37eb4dfa35cf5a09d1d3532c3496df270eb62e400fb4b006201b74f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-soldeerridder/library/SI570/0.0.0%2Bsha.dae1bf95c49e/SI570-0.0.0%2Bsha.dae1bf95c49e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-soldeerridder/library/SI570/0.0.0%2Bsha.dae1bf95c49e/SI570-0.0.0%2Bsha.dae1bf95c49e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

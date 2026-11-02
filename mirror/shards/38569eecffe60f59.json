@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jo-seph",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jo-seph/library/SDS011_vers/0.1.1/SDS011_vers-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SDS011_vers-0.1.1.tar.gz",
+    "size_bytes": 8913,
+    "sha256": "668d79c8152ecf3cff740a680054dc59950175db2a9654fdbd22aaac23dff24f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jo-seph/library/SDS011_vers/0.1.1/SDS011_vers-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jo-seph/library/SDS011_vers/0.1.1/SDS011_vers-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

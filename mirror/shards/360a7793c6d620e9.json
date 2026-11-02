@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/xiloxl",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "xiloxl/library/Powerbaas/1.3.14/Powerbaas-1.3.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Powerbaas-1.3.14.tar.gz",
+    "size_bytes": 26028,
+    "sha256": "d29821f8455a5088a610e86c94ca445f6320b7fb239ebe02cb5645bfe9faa89f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xiloxl/library/Powerbaas/1.3.14/Powerbaas-1.3.14.tar.gz",
+     "https://dl.registry.platformio.org/download/xiloxl/library/Powerbaas/1.3.14/Powerbaas-1.3.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xiloxl/library/Powerbaas/1.3.15/Powerbaas-1.3.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Powerbaas-1.3.15.tar.gz",
+    "size_bytes": 26043,
+    "sha256": "bd1e88cd5174922c410a62b2befad0e6038260594ca4ca12e92f8ae31d562551",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xiloxl/library/Powerbaas/1.3.15/Powerbaas-1.3.15.tar.gz",
+     "https://dl.registry.platformio.org/download/xiloxl/library/Powerbaas/1.3.15/Powerbaas-1.3.15.tar.gz"
+    ]
+   }
+  }
+ ]
+}

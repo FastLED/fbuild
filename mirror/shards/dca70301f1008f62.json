@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sethsenpai",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sethsenpai/library/Single%20LED%20Library/1.0.2/SingleLEDLibrary-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SingleLEDLibrary-1.0.2.tar.gz",
+    "size_bytes": 3779,
+    "sha256": "ee6f27894add19ebb4061a639c8be4ba6691921bc7d3a1accfa2cd9bdb9e21ab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sethsenpai/library/Single%2520LED%2520Library/1.0.2/SingleLEDLibrary-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sethsenpai/library/Single%20LED%20Library/1.0.2/SingleLEDLibrary-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

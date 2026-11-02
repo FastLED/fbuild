@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mingyu-kim",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mingyu-kim/library/SerialCommandExtended/0.0.0-alpha+sha.e5cf87e861/SerialCommandExtended-0.0.0-alphasha.e5cf87e861.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialCommandExtended-0.0.0-alphasha.e5cf87e861.tar.gz",
+    "size_bytes": 4450,
+    "sha256": "ab2e1e2f8c48e6b729fd05f0ebd8ebc8d7d9ba871c56fb686b28bbe449ae4723",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mingyu-kim/library/SerialCommandExtended/0.0.0-alpha%2Bsha.e5cf87e861/SerialCommandExtended-0.0.0-alphasha.e5cf87e861.tar.gz",
+     "https://dl.registry.platformio.org/download/mingyu-kim/library/SerialCommandExtended/0.0.0-alpha%2Bsha.e5cf87e861/SerialCommandExtended-0.0.0-alphasha.e5cf87e861.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mingyu-kim/library/Solarized%20Dark%20RGB565/0.0.1/SolarizedDarkRGB565-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolarizedDarkRGB565-0.0.1.tar.gz",
+    "size_bytes": 1774,
+    "sha256": "fefde8443ff30321aabfe38fad2a099833bac5894e56c232cc8be26def0ee0ca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mingyu-kim/library/Solarized%2520Dark%2520RGB565/0.0.1/SolarizedDarkRGB565-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mingyu-kim/library/Solarized%20Dark%20RGB565/0.0.1/SolarizedDarkRGB565-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

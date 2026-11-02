@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/siktec-lab",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "siktec-lab/library/SIKTEC%20Keys/1.0.2/SIKTECKeys-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SIKTECKeys-1.0.2.tar.gz",
+    "size_bytes": 8866,
+    "sha256": "8ed62a64db66d0b317051d80255eb0ff8bb334c7756b3cfe43b5b34348f262eb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/siktec-lab/library/SIKTEC%2520Keys/1.0.2/SIKTECKeys-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/siktec-lab/library/SIKTEC%20Keys/1.0.2/SIKTECKeys-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "siktec-lab/library/SIKTEC_AVR_Controller/1.0.6/SIKTEC_AVR_Controller-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SIKTEC_AVR_Controller-1.0.6.tar.gz",
+    "size_bytes": 434622,
+    "sha256": "eb1eb734216b7fc918c193ebbb8bd01ba3b66ee9775d63014be8036ecefdff0a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/siktec-lab/library/SIKTEC_AVR_Controller/1.0.6/SIKTEC_AVR_Controller-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/siktec-lab/library/SIKTEC_AVR_Controller/1.0.6/SIKTEC_AVR_Controller-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "siktec-lab/library/SIKTEC_EPD/1.0.5/SIKTEC_EPD-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SIKTEC_EPD-1.0.5.tar.gz",
+    "size_bytes": 46999,
+    "sha256": "d43b62dd1839839e31e401aae47bc535e892a30d079b726f3a7b7f382d23f565",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/siktec-lab/library/SIKTEC_EPD/1.0.5/SIKTEC_EPD-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/siktec-lab/library/SIKTEC_EPD/1.0.5/SIKTEC_EPD-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "siktec-lab/library/SIKTEC_MDSwitch/1.0.1/SIKTEC_MDSwitch-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SIKTEC_MDSwitch-1.0.1.tar.gz",
+    "size_bytes": 9090,
+    "sha256": "3380162de111a008a5b0b2cece8153dca95b1afcb3eea8d9c339a50645f1c92d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/siktec-lab/library/SIKTEC_MDSwitch/1.0.1/SIKTEC_MDSwitch-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/siktec-lab/library/SIKTEC_MDSwitch/1.0.1/SIKTEC_MDSwitch-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "siktec-lab/library/SIKTEC_Rotary/1.0.2/SIKTEC_Rotary-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SIKTEC_Rotary-1.0.2.tar.gz",
+    "size_bytes": 6318,
+    "sha256": "1f5b1f50f595ef889fc5124747df0bf9104dbcf811d73df372b81feb40bef512",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/siktec-lab/library/SIKTEC_Rotary/1.0.2/SIKTEC_Rotary-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/siktec-lab/library/SIKTEC_Rotary/1.0.2/SIKTEC_Rotary-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "siktec-lab/library/SIKTEC_SPI/1.0.2/SIKTEC_SPI-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SIKTEC_SPI-1.0.2.tar.gz",
+    "size_bytes": 5712,
+    "sha256": "104bc6b82ffee637ff75f23b50c2c17e19bf00b51ab03af65311201b535c59bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/siktec-lab/library/SIKTEC_SPI/1.0.2/SIKTEC_SPI-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/siktec-lab/library/SIKTEC_SPI/1.0.2/SIKTEC_SPI-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "siktec-lab/library/SIKTEC_SRAM/1.0.2/SIKTEC_SRAM-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SIKTEC_SRAM-1.0.2.tar.gz",
+    "size_bytes": 7838,
+    "sha256": "67ef1cdcc61c1d11fc977e5a14943921d21e34475760f0a32fee64cca31a57fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/siktec-lab/library/SIKTEC_SRAM/1.0.2/SIKTEC_SRAM-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/siktec-lab/library/SIKTEC_SRAM/1.0.2/SIKTEC_SRAM-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "siktec-lab/library/SIKTEC_SdExplore/1.0.3/SIKTEC_SdExplore-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SIKTEC_SdExplore-1.0.3.tar.gz",
+    "size_bytes": 6609,
+    "sha256": "649b58abe8b7eee959b1c1ff586179d958f80d9f9858d9832665843faceb91b6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/siktec-lab/library/SIKTEC_SdExplore/1.0.3/SIKTEC_SdExplore-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/siktec-lab/library/SIKTEC_SdExplore/1.0.3/SIKTEC_SdExplore-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jonnybergdahl",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jonnybergdahl/library/JBLogger/1.0.6/JBLogger-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JBLogger-1.0.6.tar.gz",
+    "size_bytes": 41782,
+    "sha256": "f93ba3f6ef57461fbbe05dbc65ccd4259f8bacea834949f58cea37f6851bcb9b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jonnybergdahl/library/JBLogger/1.0.6/JBLogger-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/jonnybergdahl/library/JBLogger/1.0.6/JBLogger-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jonnybergdahl/library/JBWopr/1.1.2/JBWopr-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JBWopr-1.1.2.tar.gz",
+    "size_bytes": 81939,
+    "sha256": "fbe07e02635b66c268c414ddaf9016e8881739bb5a440f0455fbb9a25f20d22f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jonnybergdahl/library/JBWopr/1.1.2/JBWopr-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jonnybergdahl/library/JBWopr/1.1.2/JBWopr-1.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

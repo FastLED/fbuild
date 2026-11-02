@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/martin1802",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "martin1802/library/CalcLibrary/0.1.0/CalcLibrary-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CalcLibrary-0.1.0.tar.gz",
+    "size_bytes": 11053,
+    "sha256": "3d9981661748768ad3aeaf7fbef68e126f5f5a2782ead5d2892af990997429bd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martin1802/library/CalcLibrary/0.1.0/CalcLibrary-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/martin1802/library/CalcLibrary/0.1.0/CalcLibrary-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

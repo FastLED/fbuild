@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-wat34",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-wat34/library/MPU-9250_nnct/0.0.0+sha.73ca792a77af/MPU-9250_nnct-0.0.0+sha.73ca792a77af.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPU-9250_nnct-0.0.0+sha.73ca792a77af.tar.gz",
+    "size_bytes": 1491,
+    "sha256": "5126ff27fc7eb7623c63dc9edfeb9ab0c36efb1c595a45b7d7e125e2dd335746",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wat34/library/MPU-9250_nnct/0.0.0%2Bsha.73ca792a77af/MPU-9250_nnct-0.0.0%2Bsha.73ca792a77af.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wat34/library/MPU-9250_nnct/0.0.0%2Bsha.73ca792a77af/MPU-9250_nnct-0.0.0%2Bsha.73ca792a77af.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wat34/library/UART_multiData/0.0.0+sha.3314f526a5f1/UART_multiData-0.0.0+sha.3314f526a5f1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UART_multiData-0.0.0+sha.3314f526a5f1.tar.gz",
+    "size_bytes": 1437,
+    "sha256": "52739abe3cfc711263c0067513b32a8aff5c678b6b642c39746bc4eec95dbb04",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wat34/library/UART_multiData/0.0.0%2Bsha.3314f526a5f1/UART_multiData-0.0.0%2Bsha.3314f526a5f1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wat34/library/UART_multiData/0.0.0%2Bsha.3314f526a5f1/UART_multiData-0.0.0%2Bsha.3314f526a5f1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jojos",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jojos/library/ArduinoAPI/0.0.0+sha.c62910a9e405/ArduinoAPI-0.0.0+sha.c62910a9e405.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoAPI-0.0.0+sha.c62910a9e405.tar.gz",
+    "size_bytes": 9560,
+    "sha256": "0529f10d0b8582f66f9e151d5d5f74dff268bb8c2bd482f243b190b1d48d3889",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jojos/library/ArduinoAPI/0.0.0%2Bsha.c62910a9e405/ArduinoAPI-0.0.0%2Bsha.c62910a9e405.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jojos/library/ArduinoAPI/0.0.0%2Bsha.c62910a9e405/ArduinoAPI-0.0.0%2Bsha.c62910a9e405.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jojos/library/IRMP/0.0.0+sha.a0715ea739cb/IRMP-0.0.0+sha.a0715ea739cb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IRMP-0.0.0+sha.a0715ea739cb.tar.gz",
+    "size_bytes": 49759,
+    "sha256": "f1d70c1039b43f9af53b93f94a5b25315e9ae630e169a6cd2f67d3c719a4a966",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jojos/library/IRMP/0.0.0%2Bsha.a0715ea739cb/IRMP-0.0.0%2Bsha.a0715ea739cb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jojos/library/IRMP/0.0.0%2Bsha.a0715ea739cb/IRMP-0.0.0%2Bsha.a0715ea739cb.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jojos/library/MPU9150/0.0.0-alpha+sha.ab00d9bcd0/MPU9150-0.0.0-alphasha.ab00d9bcd0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPU9150-0.0.0-alphasha.ab00d9bcd0.tar.gz",
+    "size_bytes": 41896,
+    "sha256": "b3c913a100bf666e65aee9c56bdc7e54833f632ebdaabdc6018ea79edf58acb7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jojos/library/MPU9150/0.0.0-alpha%2Bsha.ab00d9bcd0/MPU9150-0.0.0-alphasha.ab00d9bcd0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jojos/library/MPU9150/0.0.0-alpha%2Bsha.ab00d9bcd0/MPU9150-0.0.0-alphasha.ab00d9bcd0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jojos/library/OneButton/0.0.0+sha.48a593e2d4cf/OneButton-0.0.0+sha.48a593e2d4cf.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OneButton-0.0.0+sha.48a593e2d4cf.tar.gz",
+    "size_bytes": 3457,
+    "sha256": "70fcc6bef120210e61bbd0138fd28808313413a13212825343019501fa95547f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jojos/library/OneButton/0.0.0%2Bsha.48a593e2d4cf/OneButton-0.0.0%2Bsha.48a593e2d4cf.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jojos/library/OneButton/0.0.0%2Bsha.48a593e2d4cf/OneButton-0.0.0%2Bsha.48a593e2d4cf.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jojos/library/QEI_hw/0.0.0+sha.9279a8f154c8/QEI_hw-0.0.0+sha.9279a8f154c8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QEI_hw-0.0.0+sha.9279a8f154c8.tar.gz",
+    "size_bytes": 9570,
+    "sha256": "1a9bf249e6c5f1c72d437cc245414a678ff4618d3d0487878ba8203cfbdb4b40",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jojos/library/QEI_hw/0.0.0%2Bsha.9279a8f154c8/QEI_hw-0.0.0%2Bsha.9279a8f154c8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jojos/library/QEI_hw/0.0.0%2Bsha.9279a8f154c8/QEI_hw-0.0.0%2Bsha.9279a8f154c8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jojos/library/SmallGUI/0.0.0+sha.ccdf1edcbba6/SmallGUI-0.0.0+sha.ccdf1edcbba6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmallGUI-0.0.0+sha.ccdf1edcbba6.tar.gz",
+    "size_bytes": 1707,
+    "sha256": "b452d564fb68e7d30548d03374ec364d42a25b08a225b3d3a8ec60f4e3912dd6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jojos/library/SmallGUI/0.0.0%2Bsha.ccdf1edcbba6/SmallGUI-0.0.0%2Bsha.ccdf1edcbba6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jojos/library/SmallGUI/0.0.0%2Bsha.ccdf1edcbba6/SmallGUI-0.0.0%2Bsha.ccdf1edcbba6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

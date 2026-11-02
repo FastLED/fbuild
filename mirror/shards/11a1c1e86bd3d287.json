@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-maggie17",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-maggie17/library/ATParser/0.0.0+sha.47dd607c7707/ATParser-0.0.0+sha.47dd607c7707.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ATParser-0.0.0+sha.47dd607c7707.tar.gz",
+    "size_bytes": 8344,
+    "sha256": "d8fc5e1f984765b26af37971a882097f26ea92e4c5e17bdb4b10dc522b60584b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-maggie17/library/ATParser/0.0.0%2Bsha.47dd607c7707/ATParser-0.0.0%2Bsha.47dd607c7707.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-maggie17/library/ATParser/0.0.0%2Bsha.47dd607c7707/ATParser-0.0.0%2Bsha.47dd607c7707.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-maggie17/library/emw3162-driver-mbed-os-5/0.0.0+sha.a6f80a95b039/emw3162-driver-mbed-os-5-0.0.0+sha.a6f80a95b039.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "emw3162-driver-mbed-os-5-0.0.0+sha.a6f80a95b039.tar.gz",
+    "size_bytes": 13853,
+    "sha256": "51e54bcdc2b0e358d2901db4dad591218873daf71071663ba848e9a7d7f682c9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-maggie17/library/emw3162-driver-mbed-os-5/0.0.0%2Bsha.a6f80a95b039/emw3162-driver-mbed-os-5-0.0.0%2Bsha.a6f80a95b039.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-maggie17/library/emw3162-driver-mbed-os-5/0.0.0%2Bsha.a6f80a95b039/emw3162-driver-mbed-os-5-0.0.0%2Bsha.a6f80a95b039.tar.gz"
+    ]
+   }
+  }
+ ]
+}

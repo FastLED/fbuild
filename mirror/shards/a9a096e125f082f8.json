@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/annabel369",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "annabel369/library/2FATouchCore/1.1.0/2FATouchCore-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "2FATouchCore-1.1.0.tar.gz",
+    "size_bytes": 51835,
+    "sha256": "1cc04854137ccbde2bef02667702a561c7eb6efb0706ddb417d2b614cc55bdf2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/annabel369/library/2FATouchCore/1.1.0/2FATouchCore-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/annabel369/library/2FATouchCore/1.1.0/2FATouchCore-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

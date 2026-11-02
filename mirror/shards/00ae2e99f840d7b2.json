@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-pes-4-spleisser",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-pes-4-spleisser/library/X_NUCLEO_IHM02A1/0.0.0+sha.4a1a82428d3e/X_NUCLEO_IHM02A1-0.0.0+sha.4a1a82428d3e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "X_NUCLEO_IHM02A1-0.0.0+sha.4a1a82428d3e.tar.gz",
+    "size_bytes": 29520,
+    "sha256": "8992db4708e1eedfb9b50144c64a8f993b5d1de024d2e77d2dac99bf036c1069",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pes-4-spleisser/library/X_NUCLEO_IHM02A1/0.0.0%2Bsha.4a1a82428d3e/X_NUCLEO_IHM02A1-0.0.0%2Bsha.4a1a82428d3e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pes-4-spleisser/library/X_NUCLEO_IHM02A1/0.0.0%2Bsha.4a1a82428d3e/X_NUCLEO_IHM02A1-0.0.0%2Bsha.4a1a82428d3e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

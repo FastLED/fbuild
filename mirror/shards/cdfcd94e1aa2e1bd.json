@@ -1,0 +1,152 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/liviobellini",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "liviobellini/library/AmiraEncoder/1.0.2/AmiraEncoder-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AmiraEncoder-1.0.2.tar.gz",
+    "size_bytes": 4406,
+    "sha256": "5c30bf274d464dfcfe24bf3a78bb08b50baac2fd97adcef3c0f083c7b1cfc960",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/liviobellini/library/AmiraEncoder/1.0.2/AmiraEncoder-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/liviobellini/library/AmiraEncoder/1.0.2/AmiraEncoder-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "liviobellini/library/AmiraEncoder/1.0.9/AmiraEncoder-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AmiraEncoder-1.0.9.tar.gz",
+    "size_bytes": 4861,
+    "sha256": "44edc69a81fd4aad9479d6bad0e385c8f0bc5eb12a3a4c3d368a795130881798",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/liviobellini/library/AmiraEncoder/1.0.9/AmiraEncoder-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/liviobellini/library/AmiraEncoder/1.0.9/AmiraEncoder-1.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "liviobellini/library/AmiraEncoder/1.1.0/AmiraEncoder-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AmiraEncoder-1.1.0.tar.gz",
+    "size_bytes": 4926,
+    "sha256": "81ce4f3471deff8cc6e8ff6431696df20a2cc49159d1db933504aedc240ede47",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/liviobellini/library/AmiraEncoder/1.1.0/AmiraEncoder-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/liviobellini/library/AmiraEncoder/1.1.0/AmiraEncoder-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "liviobellini/library/AmiraEncoder/1.1.1/AmiraEncoder-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AmiraEncoder-1.1.1.tar.gz",
+    "size_bytes": 4903,
+    "sha256": "77da3882c523f1948113fa98b0a2941c7330053453f0c14079cd59397b49cb7c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/liviobellini/library/AmiraEncoder/1.1.1/AmiraEncoder-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/liviobellini/library/AmiraEncoder/1.1.1/AmiraEncoder-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "liviobellini/library/AmiraEncoder/1.3.4/AmiraEncoder-1.3.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AmiraEncoder-1.3.4.tar.gz",
+    "size_bytes": 5097,
+    "sha256": "3d2ceeb10a3eec3871abe3ee645677ca56f9e65b68e11738b2bb0d4d641fc9fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/liviobellini/library/AmiraEncoder/1.3.4/AmiraEncoder-1.3.4.tar.gz",
+     "https://dl.registry.platformio.org/download/liviobellini/library/AmiraEncoder/1.3.4/AmiraEncoder-1.3.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "liviobellini/library/KaitMenu/1.0.1/KaitMenu-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KaitMenu-1.0.1.tar.gz",
+    "size_bytes": 4279,
+    "sha256": "108fb4bbf9373d0bd9962787b0113196fc821f2a3284c07e107909ce1b7831ea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/liviobellini/library/KaitMenu/1.0.1/KaitMenu-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/liviobellini/library/KaitMenu/1.0.1/KaitMenu-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "liviobellini/library/KaitMenu/1.0.5/KaitMenu-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KaitMenu-1.0.5.tar.gz",
+    "size_bytes": 4374,
+    "sha256": "9c6faa2e3fe3b0c23ec8ef51bc9be05639027951a0c2dabc6b8b631d15479e41",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/liviobellini/library/KaitMenu/1.0.5/KaitMenu-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/liviobellini/library/KaitMenu/1.0.5/KaitMenu-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "liviobellini/library/KaitMenu/1.0.8/KaitMenu-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KaitMenu-1.0.8.tar.gz",
+    "size_bytes": 4306,
+    "sha256": "11fb2eda213eda62e65b0c4766e53f1993b18af0d7c7ffd690e39707fdd182f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/liviobellini/library/KaitMenu/1.0.8/KaitMenu-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/liviobellini/library/KaitMenu/1.0.8/KaitMenu-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "liviobellini/library/KaitMenu/1.0.9/KaitMenu-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KaitMenu-1.0.9.tar.gz",
+    "size_bytes": 4309,
+    "sha256": "7c68fd986442152806959294733ef5e0fa124e47da11a4c180fd562f18f664c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/liviobellini/library/KaitMenu/1.0.9/KaitMenu-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/liviobellini/library/KaitMenu/1.0.9/KaitMenu-1.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "liviobellini/library/KaitMenu/1.1.0/KaitMenu-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KaitMenu-1.1.0.tar.gz",
+    "size_bytes": 4322,
+    "sha256": "0c3d5346d28125e1cd9a00bc7956d0a8593fd1aa5602c08917c0a12833818077",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/liviobellini/library/KaitMenu/1.1.0/KaitMenu-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/liviobellini/library/KaitMenu/1.1.0/KaitMenu-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "liviobellini/library/KaitMenu/1.1.1/KaitMenu-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KaitMenu-1.1.1.tar.gz",
+    "size_bytes": 4348,
+    "sha256": "7fd7dfbcaf68dfb96eaf657fd3cd1d0e64b71d62fac91301f09248904f81028e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/liviobellini/library/KaitMenu/1.1.1/KaitMenu-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/liviobellini/library/KaitMenu/1.1.1/KaitMenu-1.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

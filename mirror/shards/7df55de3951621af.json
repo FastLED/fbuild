@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/douglasflores-fun",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "douglasflores-fun/library/SimpleLogger/1.1.0/SimpleLogger-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleLogger-1.1.0.tar.gz",
+    "size_bytes": 2858,
+    "sha256": "d3e2b18269b20a9a570b3fc7b71033b10085f4cdb9a54cbcd38fab0e2f8b4c7c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/douglasflores-fun/library/SimpleLogger/1.1.0/SimpleLogger-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/douglasflores-fun/library/SimpleLogger/1.1.0/SimpleLogger-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-lordtek",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-lordtek/library/SP_FP/0.0.0+sha.f99d1aa55201/SP_FP-0.0.0+sha.f99d1aa55201.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SP_FP-0.0.0+sha.f99d1aa55201.tar.gz",
+    "size_bytes": 1135,
+    "sha256": "d6409a895840be80739f0f39d90543dec2fa888ba231967d5cc1c53695be9f73",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-lordtek/library/SP_FP/0.0.0%2Bsha.f99d1aa55201/SP_FP-0.0.0%2Bsha.f99d1aa55201.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-lordtek/library/SP_FP/0.0.0%2Bsha.f99d1aa55201/SP_FP-0.0.0%2Bsha.f99d1aa55201.tar.gz"
+    ]
+   }
+  }
+ ]
+}

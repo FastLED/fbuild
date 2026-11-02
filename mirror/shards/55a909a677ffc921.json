@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dmachinewhisperer",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dmachinewhisperer/library/micro-prompts/1.0.0/micro-prompts-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "micro-prompts-1.0.0.tar.gz",
+    "size_bytes": 33230,
+    "sha256": "b28b6e8beedd95e522521f2c0d4f7fd711698d7d46cdb09cb2f1b0f12a447b99",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dmachinewhisperer/library/micro-prompts/1.0.0/micro-prompts-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dmachinewhisperer/library/micro-prompts/1.0.0/micro-prompts-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

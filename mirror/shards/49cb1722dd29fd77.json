@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/segertongh",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "segertongh/library/CreativeRobotix/2.1.0/CreativeRobotix-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CreativeRobotix-2.1.0.tar.gz",
+    "size_bytes": 53293,
+    "sha256": "e7dd298caa7ddaa9a26132ff7b7e1624c9a085ee639b993165c8772f44a50787",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/segertongh/library/CreativeRobotix/2.1.0/CreativeRobotix-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/segertongh/library/CreativeRobotix/2.1.0/CreativeRobotix-2.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

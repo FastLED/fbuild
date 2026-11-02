@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lime-labs",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lime-labs/library/Lime%20Labs%20HDC2080/1.1.2/LimeLabsHDC2080-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LimeLabsHDC2080-1.1.2.tar.gz",
+    "size_bytes": 6582,
+    "sha256": "e1abee9451356043b3517ee761a3317f445ff302a73ce085a0b89464afee765d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lime-labs/library/Lime%2520Labs%2520HDC2080/1.1.2/LimeLabsHDC2080-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lime-labs/library/Lime%20Labs%20HDC2080/1.1.2/LimeLabsHDC2080-1.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

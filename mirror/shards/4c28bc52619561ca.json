@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mirs240x",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mirs240x/library/micro_ros_arduino/2.0.7-humble/micro_ros_arduino-2.0.7-humble.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "micro_ros_arduino-2.0.7-humble.tar.gz",
+    "size_bytes": 15189960,
+    "sha256": "f841bf44cef3ec0134c69d5d4dffc12fe03a1ed72f06b3164842a11986244f48",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mirs240x/library/micro_ros_arduino/2.0.7-humble/micro_ros_arduino-2.0.7-humble.tar.gz",
+     "https://dl.registry.platformio.org/download/mirs240x/library/micro_ros_arduino/2.0.7-humble/micro_ros_arduino-2.0.7-humble.tar.gz"
+    ]
+   }
+  }
+ ]
+}

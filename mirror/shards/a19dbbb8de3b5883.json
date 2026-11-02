@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kdhooper",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kdhooper/library/CheapLCD/0.9.1/CheapLCD-0.9.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CheapLCD-0.9.1.tar.gz",
+    "size_bytes": 6233,
+    "sha256": "021b432d3a0a787ef757e67da928ec9264eaf28f834f489b7e59ec7f3c229e5e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kdhooper/library/CheapLCD/0.9.1/CheapLCD-0.9.1.tar.gz",
+     "https://dl.registry.platformio.org/download/kdhooper/library/CheapLCD/0.9.1/CheapLCD-0.9.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

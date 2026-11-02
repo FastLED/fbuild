@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mindaugasz",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mindaugasz/library/Attiny85%20FasterPin/0.2.3/Attiny85FasterPin-0.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Attiny85FasterPin-0.2.3.tar.gz",
+    "size_bytes": 6532,
+    "sha256": "02e48daf452f38258a40730ff76e81fd3a50cc3e0bedb7f1b57948980568cc5e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mindaugasz/library/Attiny85%2520FasterPin/0.2.3/Attiny85FasterPin-0.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mindaugasz/library/Attiny85%20FasterPin/0.2.3/Attiny85FasterPin-0.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mindaugasz/library/Button/0.1/Button-0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Button-0.1.tar.gz",
+    "size_bytes": 5494,
+    "sha256": "63071c795998a563583c2d16281e03e7a412559ae0a2bf3ae159c2c412a0dbfc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mindaugasz/library/Button/0.1/Button-0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mindaugasz/library/Button/0.1/Button-0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mindaugasz/library/FastButton/0.1/FastButton-0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastButton-0.1.tar.gz",
+    "size_bytes": 5664,
+    "sha256": "df5937609418d8e27210e83e5e1c0b1590a9644241c871f1fd4cc1522f13d483",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mindaugasz/library/FastButton/0.1/FastButton-0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mindaugasz/library/FastButton/0.1/FastButton-0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mindaugasz/library/MCP23017%20library%20for%20Attiny85/0.1.0/MCP23017libraryforAttiny85-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP23017libraryforAttiny85-0.1.0.tar.gz",
+    "size_bytes": 6459,
+    "sha256": "3eeb1cefdf560c7fdb667f36cfe91babc8a39a8a85bf18836a18169eb19202b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mindaugasz/library/MCP23017%2520library%2520for%2520Attiny85/0.1.0/MCP23017libraryforAttiny85-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mindaugasz/library/MCP23017%20library%20for%20Attiny85/0.1.0/MCP23017libraryforAttiny85-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

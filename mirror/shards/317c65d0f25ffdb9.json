@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-2018us-midhathodo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-2018us-midhathodo/library/SPI_TFT_ILI9341/0.0.0+sha.b633b9a36f84/SPI_TFT_ILI9341-0.0.0+sha.b633b9a36f84.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SPI_TFT_ILI9341-0.0.0+sha.b633b9a36f84.tar.gz",
+    "size_bytes": 18535,
+    "sha256": "dab9750cb28318a2f39719b41cf84752f50ac765bbd96a2ccfd2f2f9155211c1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-2018us-midhathodo/library/SPI_TFT_ILI9341/0.0.0%2Bsha.b633b9a36f84/SPI_TFT_ILI9341-0.0.0%2Bsha.b633b9a36f84.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-2018us-midhathodo/library/SPI_TFT_ILI9341/0.0.0%2Bsha.b633b9a36f84/SPI_TFT_ILI9341-0.0.0%2Bsha.b633b9a36f84.tar.gz"
+    ]
+   }
+  }
+ ]
+}

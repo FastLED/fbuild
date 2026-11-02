@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-digi-international-inc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-digi-international-inc/library/DigiLogger/0.0.0+sha.58c5158b5120/DigiLogger-0.0.0+sha.58c5158b5120.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DigiLogger-0.0.0+sha.58c5158b5120.tar.gz",
+    "size_bytes": 2267,
+    "sha256": "878d9f9fbf18952a7696bd2c4e7a33e15d77e9c46d5f201a31a58c9349c9b596",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-digi-international-inc/library/DigiLogger/0.0.0%2Bsha.58c5158b5120/DigiLogger-0.0.0%2Bsha.58c5158b5120.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-digi-international-inc/library/DigiLogger/0.0.0%2Bsha.58c5158b5120/DigiLogger-0.0.0%2Bsha.58c5158b5120.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-digi-international-inc/library/XBeeLib/0.0.0+sha.780db84ce891/XBeeLib-0.0.0+sha.780db84ce891.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XBeeLib-0.0.0+sha.780db84ce891.tar.gz",
+    "size_bytes": 48665,
+    "sha256": "57771d0db25b970bad363d930cf27e685b5d4c9f6d7bfd74764df0f357c98b36",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-digi-international-inc/library/XBeeLib/0.0.0%2Bsha.780db84ce891/XBeeLib-0.0.0%2Bsha.780db84ce891.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-digi-international-inc/library/XBeeLib/0.0.0%2Bsha.780db84ce891/XBeeLib-0.0.0%2Bsha.780db84ce891.tar.gz"
+    ]
+   }
+  }
+ ]
+}

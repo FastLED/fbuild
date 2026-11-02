@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/leomil72",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "leomil72/library/analogComp/1.2.4/analogComp-1.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "analogComp-1.2.4.tar.gz",
+    "size_bytes": 18715,
+    "sha256": "824edff26f32b37948d34801fa5077db051b9071a73d7c3ad61f30902dc4710c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leomil72/library/analogComp/1.2.4/analogComp-1.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/leomil72/library/analogComp/1.2.4/analogComp-1.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leomil72/library/leOS/1.2.2/leOS-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "leOS-1.2.2.tar.gz",
+    "size_bytes": 23356,
+    "sha256": "1924e4175d7a9e5aa3e858760574ac8093104252989bb22ef3319a0206619ff9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leomil72/library/leOS/1.2.2/leOS-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/leomil72/library/leOS/1.2.2/leOS-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leomil72/library/leOS2/2.3.3/leOS2-2.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "leOS2-2.3.3.tar.gz",
+    "size_bytes": 23524,
+    "sha256": "0269c43f2b101a321df309fee79e7c2fa97d7daed016367aa0e192a970b118ef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leomil72/library/leOS2/2.3.3/leOS2-2.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/leomil72/library/leOS2/2.3.3/leOS2-2.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leomil72/library/looper/1.1.2/looper-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "looper-1.1.2.tar.gz",
+    "size_bytes": 18477,
+    "sha256": "61242849b8743152289ade63be24850ebd8fa17e5e9b12dfe4b60b3c136b9558",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leomil72/library/looper/1.1.2/looper-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/leomil72/library/looper/1.1.2/looper-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leomil72/library/pRNG/1.2.3/pRNG-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pRNG-1.2.3.tar.gz",
+    "size_bytes": 18239,
+    "sha256": "7cf3f849cd379b7c3bb968c72bfb75b055b765f314b9d09ad2dafa885324f05e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leomil72/library/pRNG/1.2.3/pRNG-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/leomil72/library/pRNG/1.2.3/pRNG-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leomil72/library/secTimer/1.0.0/secTimer-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "secTimer-1.0.0.tar.gz",
+    "size_bytes": 18986,
+    "sha256": "f6190e7d7964dfe68d41ca32319cbda70a124bb9bcdeee0985d4b9ce037c80f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leomil72/library/secTimer/1.0.0/secTimer-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leomil72/library/secTimer/1.0.0/secTimer-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leomil72/library/swRTC/1.2.9/swRTC-1.2.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "swRTC-1.2.9.tar.gz",
+    "size_bytes": 25131,
+    "sha256": "9ab501a709abd82daf0d1266ecf591b7ff3a9f2ac1c7a0a4f0fdf1d7baf54029",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leomil72/library/swRTC/1.2.9/swRTC-1.2.9.tar.gz",
+     "https://dl.registry.platformio.org/download/leomil72/library/swRTC/1.2.9/swRTC-1.2.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

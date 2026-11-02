@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/moddoio",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "moddoio/library/moddoMOUSE/0.1.0/moddoMOUSE-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "moddoMOUSE-0.1.0.tar.gz",
+    "size_bytes": 10960,
+    "sha256": "9b6310f9a169cca62589ec4bc2599957396e6fa5cbeb78cda973b7c87e4d85f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moddoio/library/moddoMOUSE/0.1.0/moddoMOUSE-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/moddoio/library/moddoMOUSE/0.1.0/moddoMOUSE-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moddoio/library/moddoMOUSE/0.2.0/moddoMOUSE-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "moddoMOUSE-0.2.0.tar.gz",
+    "size_bytes": 11922,
+    "sha256": "2fcb136f87054a517bdeee8364b7863534d9d9e710e761522fac591c5d206e97",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moddoio/library/moddoMOUSE/0.2.0/moddoMOUSE-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/moddoio/library/moddoMOUSE/0.2.0/moddoMOUSE-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moddoio/library/moddoMOUSE/1.0.0/moddoMOUSE-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "moddoMOUSE-1.0.0.tar.gz",
+    "size_bytes": 13295,
+    "sha256": "694b8e5872f15a0a31e92041428723081d03dd40cf5bc093bced975540bd9cbb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moddoio/library/moddoMOUSE/1.0.0/moddoMOUSE-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/moddoio/library/moddoMOUSE/1.0.0/moddoMOUSE-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moddoio/library/moddoMOUSE/1.1.0/moddoMOUSE-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "moddoMOUSE-1.1.0.tar.gz",
+    "size_bytes": 13596,
+    "sha256": "835592c39dce7dc00f4e9bc0c232107c44fa4860b54bfb70df86f222dd3b7182",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moddoio/library/moddoMOUSE/1.1.0/moddoMOUSE-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/moddoio/library/moddoMOUSE/1.1.0/moddoMOUSE-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moddoio/library/moddoMOUSE/1.2.0/moddoMOUSE-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "moddoMOUSE-1.2.0.tar.gz",
+    "size_bytes": 14466,
+    "sha256": "fe5a1fec81891d60d29f7e78e4c670e6ea2ae865b17c4d759d58e3b04ae8b25f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moddoio/library/moddoMOUSE/1.2.0/moddoMOUSE-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/moddoio/library/moddoMOUSE/1.2.0/moddoMOUSE-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/joy-it",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "joy-it/library/Joy-IT%20Robot%20Arm%20Arduino/1.0.0/Joy-ITRobotArmArduino-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Joy-ITRobotArmArduino-1.0.0.tar.gz",
+    "size_bytes": 8928,
+    "sha256": "a59033d4ada53af896ccebcfffed897d91807591031fc67cdbaf0cc614473c1a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joy-it/library/Joy-IT%2520Robot%2520Arm%2520Arduino/1.0.0/Joy-ITRobotArmArduino-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/joy-it/library/Joy-IT%20Robot%20Arm%20Arduino/1.0.0/Joy-ITRobotArmArduino-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "joy-it/library/JoyIT_LSM6DS3TR-C/1.0.0/JoyIT_LSM6DS3TR-C-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JoyIT_LSM6DS3TR-C-1.0.0.tar.gz",
+    "size_bytes": 4355,
+    "sha256": "2346af139b610cf2fa3139efa23c480157990932144170d94a237ed92590fb23",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joy-it/library/JoyIT_LSM6DS3TR-C/1.0.0/JoyIT_LSM6DS3TR-C-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/joy-it/library/JoyIT_LSM6DS3TR-C/1.0.0/JoyIT_LSM6DS3TR-C-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "joy-it/library/JoyPi_Advanced_Nano-ESP32/1.0.0/JoyPi_Advanced_Nano-ESP32-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JoyPi_Advanced_Nano-ESP32-1.0.0.tar.gz",
+    "size_bytes": 35795,
+    "sha256": "83066f42a9640598c9761cbea5fec98e5a86db66c535f800b62c107f22d91881",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joy-it/library/JoyPi_Advanced_Nano-ESP32/1.0.0/JoyPi_Advanced_Nano-ESP32-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/joy-it/library/JoyPi_Advanced_Nano-ESP32/1.0.0/JoyPi_Advanced_Nano-ESP32-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

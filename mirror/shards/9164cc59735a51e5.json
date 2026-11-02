@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/usk-johnny-s",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "usk-johnny-s/library/UTF8%20Print%20AdaGfx/1.0.2/UTF8PrintAdaGfx-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UTF8PrintAdaGfx-1.0.2.tar.gz",
+    "size_bytes": 801735,
+    "sha256": "a2b7b88fe658b1eb27d5e7ccfdcc6b831301402aea8e5fa1a7d121539436e703",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/usk-johnny-s/library/UTF8%2520Print%2520AdaGfx/1.0.2/UTF8PrintAdaGfx-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/usk-johnny-s/library/UTF8%20Print%20AdaGfx/1.0.2/UTF8PrintAdaGfx-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

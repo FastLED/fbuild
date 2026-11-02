@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/quotschmacher",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "quotschmacher/library/TouchButton/1.1.0/TouchButton-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TouchButton-1.1.0.tar.gz",
+    "size_bytes": 2390,
+    "sha256": "5be637dc406f27e6f9ffedad304c0b12f43dac334215a6dc7826365cc4c50d7a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/quotschmacher/library/TouchButton/1.1.0/TouchButton-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/quotschmacher/library/TouchButton/1.1.0/TouchButton-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

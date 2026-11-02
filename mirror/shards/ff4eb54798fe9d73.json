@@ -1,0 +1,464 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/alteriom",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "alteriom/library/AlteriomPainlessMesh/1.10.0/AlteriomPainlessMesh-1.10.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlteriomPainlessMesh-1.10.0.tar.gz",
+    "size_bytes": 280551,
+    "sha256": "d4d3496e36296c44e35ae07a0c7454888151cbf0bf1128ddb15f4816ced4298b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alteriom/library/AlteriomPainlessMesh/1.10.0/AlteriomPainlessMesh-1.10.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alteriom/library/AlteriomPainlessMesh/1.10.0/AlteriomPainlessMesh-1.10.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alteriom/library/AlteriomPainlessMesh/1.6.1/painlessMesh-1.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "painlessMesh-1.6.1.tar.gz",
+    "size_bytes": 129000,
+    "sha256": "f253b530956cc356be13e80f94e64d412c5aad37019b62bf7737e622e7cf4447",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alteriom/library/AlteriomPainlessMesh/1.6.1/painlessMesh-1.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/alteriom/library/AlteriomPainlessMesh/1.6.1/painlessMesh-1.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alteriom/library/AlteriomPainlessMesh/1.7.6/AlteriomPainlessMesh-1.7.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlteriomPainlessMesh-1.7.6.tar.gz",
+    "size_bytes": 431379,
+    "sha256": "cd12aeb1f2037607c03a0d13431b68a3838f7090deb55d5bc96e5c581fc78609",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alteriom/library/AlteriomPainlessMesh/1.7.6/AlteriomPainlessMesh-1.7.6.tar.gz",
+     "https://dl.registry.platformio.org/download/alteriom/library/AlteriomPainlessMesh/1.7.6/AlteriomPainlessMesh-1.7.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alteriom/library/AlteriomPainlessMesh/1.7.7/AlteriomPainlessMesh-1.7.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlteriomPainlessMesh-1.7.7.tar.gz",
+    "size_bytes": 457303,
+    "sha256": "94192e231e8b81c58f706ca2aadcb75924d4d9e26d9630de1f2c23a2f3924023",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alteriom/library/AlteriomPainlessMesh/1.7.7/AlteriomPainlessMesh-1.7.7.tar.gz",
+     "https://dl.registry.platformio.org/download/alteriom/library/AlteriomPainlessMesh/1.7.7/AlteriomPainlessMesh-1.7.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alteriom/library/AlteriomPainlessMesh/1.7.8/AlteriomPainlessMesh-1.7.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlteriomPainlessMesh-1.7.8.tar.gz",
+    "size_bytes": 1398713,
+    "sha256": "c9c23279ddd720cc864a02016a3d232bb10bc0a2a9c9fb7bc057eccc4d8d0035",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alteriom/library/AlteriomPainlessMesh/1.7.8/AlteriomPainlessMesh-1.7.8.tar.gz",
+     "https://dl.registry.platformio.org/download/alteriom/library/AlteriomPainlessMesh/1.7.8/AlteriomPainlessMesh-1.7.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alteriom/library/AlteriomPainlessMesh/1.7.9/AlteriomPainlessMesh-1.7.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlteriomPainlessMesh-1.7.9.tar.gz",
+    "size_bytes": 1425628,
+    "sha256": "eaccdde8b124a440a574ed75e4d3520ca55693ba9a1b3a77fa432afcaf3a272a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alteriom/library/AlteriomPainlessMesh/1.7.9/AlteriomPainlessMesh-1.7.9.tar.gz",
+     "https://dl.registry.platformio.org/download/alteriom/library/AlteriomPainlessMesh/1.7.9/AlteriomPainlessMesh-1.7.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alteriom/library/AlteriomPainlessMesh/1.8.0/AlteriomPainlessMesh-1.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlteriomPainlessMesh-1.8.0.tar.gz",
+    "size_bytes": 1729922,
+    "sha256": "8f94ae1cb0ba4bdec1f97ae18d055655028ba5707bdff2bc66a04debd49835b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alteriom/library/AlteriomPainlessMesh/1.8.0/AlteriomPainlessMesh-1.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alteriom/library/AlteriomPainlessMesh/1.8.0/AlteriomPainlessMesh-1.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alteriom/library/AlteriomPainlessMesh/1.8.10/AlteriomPainlessMesh-1.8.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlteriomPainlessMesh-1.8.10.tar.gz",
+    "size_bytes": 336280,
+    "sha256": "c2d68ad7c1af990246b7a059ce2f19f28501e2dd5541bb38bbad792251a5d859",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alteriom/library/AlteriomPainlessMesh/1.8.10/AlteriomPainlessMesh-1.8.10.tar.gz",
+     "https://dl.registry.platformio.org/download/alteriom/library/AlteriomPainlessMesh/1.8.10/AlteriomPainlessMesh-1.8.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alteriom/library/AlteriomPainlessMesh/1.8.11/AlteriomPainlessMesh-1.8.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlteriomPainlessMesh-1.8.11.tar.gz",
+    "size_bytes": 334519,
+    "sha256": "3ae8bd15e694cfb607b1b295b274c7c7710f1970c4e053a5b4baf095ea78a6ec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alteriom/library/AlteriomPainlessMesh/1.8.11/AlteriomPainlessMesh-1.8.11.tar.gz",
+     "https://dl.registry.platformio.org/download/alteriom/library/AlteriomPainlessMesh/1.8.11/AlteriomPainlessMesh-1.8.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alteriom/library/AlteriomPainlessMesh/1.8.13/AlteriomPainlessMesh-1.8.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlteriomPainlessMesh-1.8.13.tar.gz",
+    "size_bytes": 355425,
+    "sha256": "571e8b8c1d7b109aa58f4fdd11da5c9ffb5ca21c061c02f83246ef2abb191867",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alteriom/library/AlteriomPainlessMesh/1.8.13/AlteriomPainlessMesh-1.8.13.tar.gz",
+     "https://dl.registry.platformio.org/download/alteriom/library/AlteriomPainlessMesh/1.8.13/AlteriomPainlessMesh-1.8.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alteriom/library/AlteriomPainlessMesh/1.8.14/AlteriomPainlessMesh-1.8.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlteriomPainlessMesh-1.8.14.tar.gz",
+    "size_bytes": 355808,
+    "sha256": "4a8e1d07deb25c0a85bc6f7e3e7026193258fec3a701f55d51ecd618dce4e269",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alteriom/library/AlteriomPainlessMesh/1.8.14/AlteriomPainlessMesh-1.8.14.tar.gz",
+     "https://dl.registry.platformio.org/download/alteriom/library/AlteriomPainlessMesh/1.8.14/AlteriomPainlessMesh-1.8.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alteriom/library/AlteriomPainlessMesh/1.8.15/AlteriomPainlessMesh-1.8.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlteriomPainlessMesh-1.8.15.tar.gz",
+    "size_bytes": 373376,
+    "sha256": "097813a4a0b69ebc5b7e2d424fa5883f054377c3e0f21fee7a3b11d3dda0f670",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alteriom/library/AlteriomPainlessMesh/1.8.15/AlteriomPainlessMesh-1.8.15.tar.gz",
+     "https://dl.registry.platformio.org/download/alteriom/library/AlteriomPainlessMesh/1.8.15/AlteriomPainlessMesh-1.8.15.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alteriom/library/AlteriomPainlessMesh/1.8.2/AlteriomPainlessMesh-1.8.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlteriomPainlessMesh-1.8.2.tar.gz",
+    "size_bytes": 1886555,
+    "sha256": "617d526d4a22d223f480ff3f5ec1a3f03426b5e8d974342512cf4c2e6a574e34",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alteriom/library/AlteriomPainlessMesh/1.8.2/AlteriomPainlessMesh-1.8.2.tar.gz",
+     "https://dl.registry.platformio.org/download/alteriom/library/AlteriomPainlessMesh/1.8.2/AlteriomPainlessMesh-1.8.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alteriom/library/AlteriomPainlessMesh/1.8.4/AlteriomPainlessMesh-1.8.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlteriomPainlessMesh-1.8.4.tar.gz",
+    "size_bytes": 310366,
+    "sha256": "330a5f25d7e571ef8565937e13eafbe27d069320e3eb494f43b8da22be0609a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alteriom/library/AlteriomPainlessMesh/1.8.4/AlteriomPainlessMesh-1.8.4.tar.gz",
+     "https://dl.registry.platformio.org/download/alteriom/library/AlteriomPainlessMesh/1.8.4/AlteriomPainlessMesh-1.8.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alteriom/library/AlteriomPainlessMesh/1.8.9/AlteriomPainlessMesh-1.8.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlteriomPainlessMesh-1.8.9.tar.gz",
+    "size_bytes": 328044,
+    "sha256": "e4afc29a74d9283049e71ef38e4f43738bd58af4fa070b7147b5d0b7765e3b9c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alteriom/library/AlteriomPainlessMesh/1.8.9/AlteriomPainlessMesh-1.8.9.tar.gz",
+     "https://dl.registry.platformio.org/download/alteriom/library/AlteriomPainlessMesh/1.8.9/AlteriomPainlessMesh-1.8.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alteriom/library/AlteriomPainlessMesh/1.9.0/AlteriomPainlessMesh-1.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlteriomPainlessMesh-1.9.0.tar.gz",
+    "size_bytes": 210645,
+    "sha256": "c7166cbe6ab16674c372d27e2f1598bd69cfea343d10162d404851314585bc20",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alteriom/library/AlteriomPainlessMesh/1.9.0/AlteriomPainlessMesh-1.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alteriom/library/AlteriomPainlessMesh/1.9.0/AlteriomPainlessMesh-1.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alteriom/library/AlteriomPainlessMesh/1.9.10/AlteriomPainlessMesh-1.9.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlteriomPainlessMesh-1.9.10.tar.gz",
+    "size_bytes": 260588,
+    "sha256": "e5884b6b49acebca7fa49fe2a8d30669605bb8da292ebd9068672eaa18b434e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alteriom/library/AlteriomPainlessMesh/1.9.10/AlteriomPainlessMesh-1.9.10.tar.gz",
+     "https://dl.registry.platformio.org/download/alteriom/library/AlteriomPainlessMesh/1.9.10/AlteriomPainlessMesh-1.9.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alteriom/library/AlteriomPainlessMesh/1.9.13/AlteriomPainlessMesh-1.9.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlteriomPainlessMesh-1.9.13.tar.gz",
+    "size_bytes": 300716,
+    "sha256": "8314ca0ce93e28c88999fd614b58c9572c95658d7772dea84c9de1016dc11ea7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alteriom/library/AlteriomPainlessMesh/1.9.13/AlteriomPainlessMesh-1.9.13.tar.gz",
+     "https://dl.registry.platformio.org/download/alteriom/library/AlteriomPainlessMesh/1.9.13/AlteriomPainlessMesh-1.9.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alteriom/library/AlteriomPainlessMesh/1.9.15/AlteriomPainlessMesh-1.9.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlteriomPainlessMesh-1.9.15.tar.gz",
+    "size_bytes": 318235,
+    "sha256": "2d209ad1becc99593e67110927e4d96be359dca93bd74cbe5e24aa10c7b698cd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alteriom/library/AlteriomPainlessMesh/1.9.15/AlteriomPainlessMesh-1.9.15.tar.gz",
+     "https://dl.registry.platformio.org/download/alteriom/library/AlteriomPainlessMesh/1.9.15/AlteriomPainlessMesh-1.9.15.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alteriom/library/AlteriomPainlessMesh/1.9.17/AlteriomPainlessMesh-1.9.17.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlteriomPainlessMesh-1.9.17.tar.gz",
+    "size_bytes": 328804,
+    "sha256": "1347e1036c73b04af272e9df90e2387cd992cf6a29d854655fd5c7f237b8559c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alteriom/library/AlteriomPainlessMesh/1.9.17/AlteriomPainlessMesh-1.9.17.tar.gz",
+     "https://dl.registry.platformio.org/download/alteriom/library/AlteriomPainlessMesh/1.9.17/AlteriomPainlessMesh-1.9.17.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alteriom/library/AlteriomPainlessMesh/1.9.19/AlteriomPainlessMesh-1.9.19.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlteriomPainlessMesh-1.9.19.tar.gz",
+    "size_bytes": 343835,
+    "sha256": "db87d28e865fa4be216421de88ff742bfeae6a3332aa0998b755dec0879b9d0d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alteriom/library/AlteriomPainlessMesh/1.9.19/AlteriomPainlessMesh-1.9.19.tar.gz",
+     "https://dl.registry.platformio.org/download/alteriom/library/AlteriomPainlessMesh/1.9.19/AlteriomPainlessMesh-1.9.19.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alteriom/library/AlteriomPainlessMesh/1.9.2/AlteriomPainlessMesh-1.9.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlteriomPainlessMesh-1.9.2.tar.gz",
+    "size_bytes": 219710,
+    "sha256": "58429677638f30d47413d9a407ccd448446c67e37aeeb365df0db97129d6ec58",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alteriom/library/AlteriomPainlessMesh/1.9.2/AlteriomPainlessMesh-1.9.2.tar.gz",
+     "https://dl.registry.platformio.org/download/alteriom/library/AlteriomPainlessMesh/1.9.2/AlteriomPainlessMesh-1.9.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alteriom/library/AlteriomPainlessMesh/1.9.20/AlteriomPainlessMesh-1.9.20.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlteriomPainlessMesh-1.9.20.tar.gz",
+    "size_bytes": 262974,
+    "sha256": "72dc6d6a9984306a12dc079dd4476175bbbee67e68f2e526f3e64bbdfae0a622",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alteriom/library/AlteriomPainlessMesh/1.9.20/AlteriomPainlessMesh-1.9.20.tar.gz",
+     "https://dl.registry.platformio.org/download/alteriom/library/AlteriomPainlessMesh/1.9.20/AlteriomPainlessMesh-1.9.20.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alteriom/library/AlteriomPainlessMesh/1.9.21/AlteriomPainlessMesh-1.9.21.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlteriomPainlessMesh-1.9.21.tar.gz",
+    "size_bytes": 268190,
+    "sha256": "587143ad9ca560f56520b0dc000112a6fb8bed2268703badbc191dea77b04da4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alteriom/library/AlteriomPainlessMesh/1.9.21/AlteriomPainlessMesh-1.9.21.tar.gz",
+     "https://dl.registry.platformio.org/download/alteriom/library/AlteriomPainlessMesh/1.9.21/AlteriomPainlessMesh-1.9.21.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alteriom/library/AlteriomPainlessMesh/1.9.3/AlteriomPainlessMesh-1.9.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlteriomPainlessMesh-1.9.3.tar.gz",
+    "size_bytes": 220015,
+    "sha256": "9a5915775d05b2210bb0fddc197b56739e5383ad74783e15d4acef57583aebea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alteriom/library/AlteriomPainlessMesh/1.9.3/AlteriomPainlessMesh-1.9.3.tar.gz",
+     "https://dl.registry.platformio.org/download/alteriom/library/AlteriomPainlessMesh/1.9.3/AlteriomPainlessMesh-1.9.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alteriom/library/AlteriomPainlessMesh/1.9.5/AlteriomPainlessMesh-1.9.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlteriomPainlessMesh-1.9.5.tar.gz",
+    "size_bytes": 221218,
+    "sha256": "9012f408ce66b18030db7940ad8c97184c9a14c453b726579575fe1470cfa75b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alteriom/library/AlteriomPainlessMesh/1.9.5/AlteriomPainlessMesh-1.9.5.tar.gz",
+     "https://dl.registry.platformio.org/download/alteriom/library/AlteriomPainlessMesh/1.9.5/AlteriomPainlessMesh-1.9.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alteriom/library/AlteriomPainlessMesh/1.9.6/AlteriomPainlessMesh-1.9.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlteriomPainlessMesh-1.9.6.tar.gz",
+    "size_bytes": 224891,
+    "sha256": "a87a07f4372905c4bbd04c2a92f7efcd66bcb6dbaf2149ed833aac9bc9079561",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alteriom/library/AlteriomPainlessMesh/1.9.6/AlteriomPainlessMesh-1.9.6.tar.gz",
+     "https://dl.registry.platformio.org/download/alteriom/library/AlteriomPainlessMesh/1.9.6/AlteriomPainlessMesh-1.9.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alteriom/library/AlteriomPainlessMesh/1.9.8/AlteriomPainlessMesh-1.9.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlteriomPainlessMesh-1.9.8.tar.gz",
+    "size_bytes": 245847,
+    "sha256": "f2b0b0f72167213e16bbcbb434574455bf41fc2940a7e47345d915e417c1dc25",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alteriom/library/AlteriomPainlessMesh/1.9.8/AlteriomPainlessMesh-1.9.8.tar.gz",
+     "https://dl.registry.platformio.org/download/alteriom/library/AlteriomPainlessMesh/1.9.8/AlteriomPainlessMesh-1.9.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alteriom/library/AlteriomPainlessMesh/1.9.9/AlteriomPainlessMesh-1.9.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlteriomPainlessMesh-1.9.9.tar.gz",
+    "size_bytes": 257287,
+    "sha256": "326d9968205563df3a788fa779fddab5ac2300e1ccbc752e1e968d93bd7b0fec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alteriom/library/AlteriomPainlessMesh/1.9.9/AlteriomPainlessMesh-1.9.9.tar.gz",
+     "https://dl.registry.platformio.org/download/alteriom/library/AlteriomPainlessMesh/1.9.9/AlteriomPainlessMesh-1.9.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alteriom/library/AlteriomPainlessMesh/2.0.1/AlteriomPainlessMesh-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlteriomPainlessMesh-2.0.1.tar.gz",
+    "size_bytes": 348969,
+    "sha256": "1e91fee65e6120b546de87635843845377ab620b3885868bdf3bb4a7e9d059d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alteriom/library/AlteriomPainlessMesh/2.0.1/AlteriomPainlessMesh-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/alteriom/library/AlteriomPainlessMesh/2.0.1/AlteriomPainlessMesh-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alteriom/library/AlteriomPainlessMesh/2.0.2/AlteriomPainlessMesh-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlteriomPainlessMesh-2.0.2.tar.gz",
+    "size_bytes": 352572,
+    "sha256": "7dff483e3f91465fd5b24728f34af7f5efcb294a99c9dfe36f28ee059df0fadc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alteriom/library/AlteriomPainlessMesh/2.0.2/AlteriomPainlessMesh-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/alteriom/library/AlteriomPainlessMesh/2.0.2/AlteriomPainlessMesh-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alteriom/library/AlteriomPainlessMesh/2.0.3/AlteriomPainlessMesh-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlteriomPainlessMesh-2.0.3.tar.gz",
+    "size_bytes": 364362,
+    "sha256": "773cfaa4b36e78003d722513183123a96fb1ce8b98d99863b6d0014013b2061a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alteriom/library/AlteriomPainlessMesh/2.0.3/AlteriomPainlessMesh-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/alteriom/library/AlteriomPainlessMesh/2.0.3/AlteriomPainlessMesh-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alteriom/library/AlteriomPainlessMesh/2.1.0/AlteriomPainlessMesh-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlteriomPainlessMesh-2.1.0.tar.gz",
+    "size_bytes": 380098,
+    "sha256": "3c0e9865f6b943a4da1a4462a17970968ffdaf4b5348a0e4918468e1e1617c56",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alteriom/library/AlteriomPainlessMesh/2.1.0/AlteriomPainlessMesh-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alteriom/library/AlteriomPainlessMesh/2.1.0/AlteriomPainlessMesh-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alteriom/library/AlteriomPainlessMesh/2.1.1/AlteriomPainlessMesh-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlteriomPainlessMesh-2.1.1.tar.gz",
+    "size_bytes": 383860,
+    "sha256": "a0a0d8e1b97f16b5682962631ca8fbd5fa1921e0f6fd8bf43f8bb13731e8a3cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alteriom/library/AlteriomPainlessMesh/2.1.1/AlteriomPainlessMesh-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/alteriom/library/AlteriomPainlessMesh/2.1.1/AlteriomPainlessMesh-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alteriom/library/Alteriom_EByte_LoRa_E220/1.1.6/Alteriom_EByte_LoRa_E220-1.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Alteriom_EByte_LoRa_E220-1.1.6.tar.gz",
+    "size_bytes": 5414,
+    "sha256": "2c5ef0691a4729dc251a7d200ed5aaf247ebc92feb0cfa3f5a5e6d7e2e1ec04b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alteriom/library/Alteriom_EByte_LoRa_E220/1.1.6/Alteriom_EByte_LoRa_E220-1.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/alteriom/library/Alteriom_EByte_LoRa_E220/1.1.6/Alteriom_EByte_LoRa_E220-1.1.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

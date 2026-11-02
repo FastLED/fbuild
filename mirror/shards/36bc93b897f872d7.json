@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dmitry-krtadze",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dmitry-krtadze/library/GameBoyFix/1.0.0/GameBoyFix-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GameBoyFix-1.0.0.tar.gz",
+    "size_bytes": 6738,
+    "sha256": "3da55d1d61118da91418863cb775306333b751a1a2b5a3dabd2afcb11bd272ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dmitry-krtadze/library/GameBoyFix/1.0.0/GameBoyFix-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dmitry-krtadze/library/GameBoyFix/1.0.0/GameBoyFix-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

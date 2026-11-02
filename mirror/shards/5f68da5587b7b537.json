@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/davylandman",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "davylandman/library/AESLib/0.0.0-alpha+sha.445cfed9c9/AESLib-0.0.0-alphasha.445cfed9c9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AESLib-0.0.0-alphasha.445cfed9c9.tar.gz",
+    "size_bytes": 28398,
+    "sha256": "3073fec38c185f922a1d72cdb3073b14b504964b312b43ecdca7399cb6d6ea9c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/davylandman/library/AESLib/0.0.0-alpha%2Bsha.445cfed9c9/AESLib-0.0.0-alphasha.445cfed9c9.tar.gz",
+     "https://dl.registry.platformio.org/download/davylandman/library/AESLib/0.0.0-alpha%2Bsha.445cfed9c9/AESLib-0.0.0-alphasha.445cfed9c9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "davylandman/library/Monocypher/2.0.6/Monocypher-2.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Monocypher-2.0.6.tar.gz",
+    "size_bytes": 141086,
+    "sha256": "531488923e4cf0dad3a8d47099351ecc58296e0bb7c01469633716442275b392",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/davylandman/library/Monocypher/2.0.6/Monocypher-2.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/davylandman/library/Monocypher/2.0.6/Monocypher-2.0.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

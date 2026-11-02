@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-nliu96",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-nliu96/library/GPS%20Library/0.0.0+sha.120983998da2/GPSLibrary-0.0.0+sha.120983998da2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GPSLibrary-0.0.0+sha.120983998da2.tar.gz",
+    "size_bytes": 2929,
+    "sha256": "e81e8f826f75e3b494d90ede79126a009669423b5b483aa58e3e058f44000d1b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nliu96/library/GPS%2520Library/0.0.0%2Bsha.120983998da2/GPSLibrary-0.0.0%2Bsha.120983998da2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nliu96/library/GPS%20Library/0.0.0%2Bsha.120983998da2/GPSLibrary-0.0.0%2Bsha.120983998da2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

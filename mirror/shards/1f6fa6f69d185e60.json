@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/min",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "min/library/SerialServo/0.0.0.23/SerialServo-0.0.0.23.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialServo-0.0.0.23.tar.gz",
+    "size_bytes": 31066,
+    "sha256": "063f696e5e81b7bf785f5956ed5b1241ede4c7066a269fdfa1e026b7a79066f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/min/library/SerialServo/0.0.0.23/SerialServo-0.0.0.23.tar.gz",
+     "https://dl.registry.platformio.org/download/min/library/SerialServo/0.0.0.23/SerialServo-0.0.0.23.tar.gz"
+    ]
+   }
+  }
+ ]
+}

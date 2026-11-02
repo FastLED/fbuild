@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-dogcatfee",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-dogcatfee/library/SLCD/0.0.0+sha.61a420af8109/SLCD-0.0.0+sha.61a420af8109.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SLCD-0.0.0+sha.61a420af8109.tar.gz",
+    "size_bytes": 6462,
+    "sha256": "357b3f48f4376368be61b0a8ae44cfd11184591017ceb7658f545f9d856a753c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dogcatfee/library/SLCD/0.0.0%2Bsha.61a420af8109/SLCD-0.0.0%2Bsha.61a420af8109.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dogcatfee/library/SLCD/0.0.0%2Bsha.61a420af8109/SLCD-0.0.0%2Bsha.61a420af8109.tar.gz"
+    ]
+   }
+  }
+ ]
+}

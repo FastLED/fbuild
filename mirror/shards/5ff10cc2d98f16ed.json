@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-buyukesmeli",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-buyukesmeli/library/BSP_DISCO_F746NG/0.0.0+sha.57139c9032e5/BSP_DISCO_F746NG-0.0.0+sha.57139c9032e5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BSP_DISCO_F746NG-0.0.0+sha.57139c9032e5.tar.gz",
+    "size_bytes": 96042,
+    "sha256": "a62fd368bba5065620a1b803306cc64cda7aa137cc367a786bbf37a5aff529cf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-buyukesmeli/library/BSP_DISCO_F746NG/0.0.0%2Bsha.57139c9032e5/BSP_DISCO_F746NG-0.0.0%2Bsha.57139c9032e5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-buyukesmeli/library/BSP_DISCO_F746NG/0.0.0%2Bsha.57139c9032e5/BSP_DISCO_F746NG-0.0.0%2Bsha.57139c9032e5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-buyukesmeli/library/FatFS/0.0.0+sha.3a2f06aeceaf/FatFS-0.0.0+sha.3a2f06aeceaf.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FatFS-0.0.0+sha.3a2f06aeceaf.tar.gz",
+    "size_bytes": 53700,
+    "sha256": "a515361734bc5744c2dc62eb24438ac815b5dd825782a13283914368947fe50f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-buyukesmeli/library/FatFS/0.0.0%2Bsha.3a2f06aeceaf/FatFS-0.0.0%2Bsha.3a2f06aeceaf.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-buyukesmeli/library/FatFS/0.0.0%2Bsha.3a2f06aeceaf/FatFS-0.0.0%2Bsha.3a2f06aeceaf.tar.gz"
+    ]
+   }
+  }
+ ]
+}

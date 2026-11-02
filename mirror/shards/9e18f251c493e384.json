@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/adrianaxente",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "adrianaxente/library/ArduinoInterpolator/1.0.0/ArduinoInterpolator-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoInterpolator-1.0.0.tar.gz",
+    "size_bytes": 4468,
+    "sha256": "3997620639663e3b41786d32fc6cbddb778df0b644d0bffd6a5b11e8b7eb17e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/adrianaxente/library/ArduinoInterpolator/1.0.0/ArduinoInterpolator-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/adrianaxente/library/ArduinoInterpolator/1.0.0/ArduinoInterpolator-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "adrianaxente/library/ArduinoInterpolator/1.0.1/ArduinoInterpolator-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoInterpolator-1.0.1.tar.gz",
+    "size_bytes": 5023,
+    "sha256": "10dea3e0c6c641ff961998f4fb51fcb493aef211aa1a78d4e0e92ce7c75d1575",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/adrianaxente/library/ArduinoInterpolator/1.0.1/ArduinoInterpolator-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/adrianaxente/library/ArduinoInterpolator/1.0.1/ArduinoInterpolator-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "adrianaxente/library/LCD812L-B/1.1.0/LCD812L-B-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCD812L-B-1.1.0.tar.gz",
+    "size_bytes": 5511,
+    "sha256": "fb90fc5ce4bbffbc6d0c64d95229acd736a2013beaa683dc14b3347dca681fce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/adrianaxente/library/LCD812L-B/1.1.0/LCD812L-B-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/adrianaxente/library/LCD812L-B/1.1.0/LCD812L-B-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "adrianaxente/library/arduino-mock/1.0.0/arduino-mock-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arduino-mock-1.0.0.tar.gz",
+    "size_bytes": 12657,
+    "sha256": "98a49c2eed1c773d84a50afaa48834bb8e7e101bb7e5c7d1a8225292053bff8c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/adrianaxente/library/arduino-mock/1.0.0/arduino-mock-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/adrianaxente/library/arduino-mock/1.0.0/arduino-mock-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "adrianaxente/library/arduino-mock/1.1.0/arduino-mock-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arduino-mock-1.1.0.tar.gz",
+    "size_bytes": 12814,
+    "sha256": "212e0d08a2b628dbe7b707ab85e057617066dc9ef18a082a3b43fbcab3e66fad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/adrianaxente/library/arduino-mock/1.1.0/arduino-mock-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/adrianaxente/library/arduino-mock/1.1.0/arduino-mock-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,282 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/consentiumiot",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "consentiumiot/library/ConsentiumNow/0.0.1/ConsentiumNow-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ConsentiumNow-0.0.1.tar.gz",
+    "size_bytes": 5201,
+    "sha256": "7fd97212d73cb1fdc589f1ea3870814020debe02e900f2bebde370beda5439af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/consentiumiot/library/ConsentiumNow/0.0.1/ConsentiumNow-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/consentiumiot/library/ConsentiumNow/0.0.1/ConsentiumNow-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "consentiumiot/library/ConsentiumStarterKit/0.0.3/ConsentiumStarterKit-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ConsentiumStarterKit-0.0.3.tar.gz",
+    "size_bytes": 4834,
+    "sha256": "320513ede24d34fa0030c15e87dfb13370b9098d4ac8e63a2ef6338e07fcb8c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/consentiumiot/library/ConsentiumStarterKit/0.0.3/ConsentiumStarterKit-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/consentiumiot/library/ConsentiumStarterKit/0.0.3/ConsentiumStarterKit-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "consentiumiot/library/ConsentiumThings/2.2.7/ConsentiumThings-2.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ConsentiumThings-2.2.7.tar.gz",
+    "size_bytes": 11022,
+    "sha256": "75b1b964a3c53cd37123c8e8a032fb4df54fd840e96ab74e2b6858d2a2aa9cff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/consentiumiot/library/ConsentiumThings/2.2.7/ConsentiumThings-2.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/consentiumiot/library/ConsentiumThings/2.2.7/ConsentiumThings-2.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "consentiumiot/library/ConsentiumThings/2.3.0/ConsentiumThings-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ConsentiumThings-2.3.0.tar.gz",
+    "size_bytes": 12875,
+    "sha256": "ff035bbfd37f4bcc66e251eea642e3781c993705184523d571ff8f410a225e59",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/consentiumiot/library/ConsentiumThings/2.3.0/ConsentiumThings-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/consentiumiot/library/ConsentiumThings/2.3.0/ConsentiumThings-2.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "consentiumiot/library/ConsentiumThings/2.3.1/ConsentiumThings-2.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ConsentiumThings-2.3.1.tar.gz",
+    "size_bytes": 13687,
+    "sha256": "8afdb831a9de37dae36359f3f8a333436ddac2643a6805343345c3ea84320c92",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/consentiumiot/library/ConsentiumThings/2.3.1/ConsentiumThings-2.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/consentiumiot/library/ConsentiumThings/2.3.1/ConsentiumThings-2.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "consentiumiot/library/ConsentiumThings/2.3.3/ConsentiumThings-2.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ConsentiumThings-2.3.3.tar.gz",
+    "size_bytes": 14645,
+    "sha256": "c10be878816e502d963c148a37e8720e007d1ab9e975c78eb395119062a7a75d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/consentiumiot/library/ConsentiumThings/2.3.3/ConsentiumThings-2.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/consentiumiot/library/ConsentiumThings/2.3.3/ConsentiumThings-2.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "consentiumiot/library/ConsentiumThings/2.3.4/ConsentiumThings-2.3.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ConsentiumThings-2.3.4.tar.gz",
+    "size_bytes": 14746,
+    "sha256": "82994d3b42f9db2bae020b17f9ec175e8f4ff1626865bf40523c6735dd839204",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/consentiumiot/library/ConsentiumThings/2.3.4/ConsentiumThings-2.3.4.tar.gz",
+     "https://dl.registry.platformio.org/download/consentiumiot/library/ConsentiumThings/2.3.4/ConsentiumThings-2.3.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "consentiumiot/library/ConsentiumThings/2.3.5/ConsentiumThings-2.3.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ConsentiumThings-2.3.5.tar.gz",
+    "size_bytes": 14749,
+    "sha256": "59c192143f5a75b526b6466ead05e5ae545215364e903bf569bc2a8b8728426e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/consentiumiot/library/ConsentiumThings/2.3.5/ConsentiumThings-2.3.5.tar.gz",
+     "https://dl.registry.platformio.org/download/consentiumiot/library/ConsentiumThings/2.3.5/ConsentiumThings-2.3.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "consentiumiot/library/ConsentiumThings/2.3.6/ConsentiumThings-2.3.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ConsentiumThings-2.3.6.tar.gz",
+    "size_bytes": 14770,
+    "sha256": "74e6e65834e67799ebb0b6af8ee3817b39e9c09f4e1f7c907a495f5b68b6fb39",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/consentiumiot/library/ConsentiumThings/2.3.6/ConsentiumThings-2.3.6.tar.gz",
+     "https://dl.registry.platformio.org/download/consentiumiot/library/ConsentiumThings/2.3.6/ConsentiumThings-2.3.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "consentiumiot/library/ConsentiumThings/2.3.7/ConsentiumThings-2.3.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ConsentiumThings-2.3.7.tar.gz",
+    "size_bytes": 14769,
+    "sha256": "ebd4135cf8afe9f18b23c050271846187209653edc09ed97f4a02d0c1053a648",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/consentiumiot/library/ConsentiumThings/2.3.7/ConsentiumThings-2.3.7.tar.gz",
+     "https://dl.registry.platformio.org/download/consentiumiot/library/ConsentiumThings/2.3.7/ConsentiumThings-2.3.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "consentiumiot/library/ConsentiumThings/2.3.8/ConsentiumThings-2.3.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ConsentiumThings-2.3.8.tar.gz",
+    "size_bytes": 14768,
+    "sha256": "86fbbcb4b9072185f72cb5e04ae53862f8a867c155ccbb5242c58c65fd37184c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/consentiumiot/library/ConsentiumThings/2.3.8/ConsentiumThings-2.3.8.tar.gz",
+     "https://dl.registry.platformio.org/download/consentiumiot/library/ConsentiumThings/2.3.8/ConsentiumThings-2.3.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "consentiumiot/library/ConsentiumThings/2.3.9/ConsentiumThings-2.3.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ConsentiumThings-2.3.9.tar.gz",
+    "size_bytes": 14946,
+    "sha256": "ecda30116c7d42a57ff74fe309ced58fa3746393edf010c8071e07a2ab794064",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/consentiumiot/library/ConsentiumThings/2.3.9/ConsentiumThings-2.3.9.tar.gz",
+     "https://dl.registry.platformio.org/download/consentiumiot/library/ConsentiumThings/2.3.9/ConsentiumThings-2.3.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "consentiumiot/library/ConsentiumThings/2.4.0/ConsentiumThings-2.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ConsentiumThings-2.4.0.tar.gz",
+    "size_bytes": 14898,
+    "sha256": "1afc19f2baf298b7123c7e8fa47c43b3edff4d6d3422de022580d8c8d787689e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/consentiumiot/library/ConsentiumThings/2.4.0/ConsentiumThings-2.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/consentiumiot/library/ConsentiumThings/2.4.0/ConsentiumThings-2.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "consentiumiot/library/ConsentiumThings/2.4.1/ConsentiumThings-2.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ConsentiumThings-2.4.1.tar.gz",
+    "size_bytes": 15011,
+    "sha256": "5f676145ad32f9762b9dfd5857981d40547ef87c21d2638f8b82a9687bbae334",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/consentiumiot/library/ConsentiumThings/2.4.1/ConsentiumThings-2.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/consentiumiot/library/ConsentiumThings/2.4.1/ConsentiumThings-2.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "consentiumiot/library/ConsentiumThings/3.0.0/ConsentiumThings-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ConsentiumThings-3.0.0.tar.gz",
+    "size_bytes": 15756,
+    "sha256": "540e1a6710411f06ac0955cfe21f8785ac96ed1c31d20fae209c4790e57cd5d7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/consentiumiot/library/ConsentiumThings/3.0.0/ConsentiumThings-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/consentiumiot/library/ConsentiumThings/3.0.0/ConsentiumThings-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "consentiumiot/library/ConsentiumThings/3.0.1/ConsentiumThings-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ConsentiumThings-3.0.1.tar.gz",
+    "size_bytes": 15885,
+    "sha256": "c93016a7404a4578b22e900caceb524c336eaaade0275378336f963c70b9a75c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/consentiumiot/library/ConsentiumThings/3.0.1/ConsentiumThings-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/consentiumiot/library/ConsentiumThings/3.0.1/ConsentiumThings-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "consentiumiot/library/ConsentiumThings/3.0.2/ConsentiumThings-3.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ConsentiumThings-3.0.2.tar.gz",
+    "size_bytes": 16511,
+    "sha256": "bc6728a9d6c366c2a1415c834f9d0ba9338bb41a1879ee1d1d1b0d01b998efe4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/consentiumiot/library/ConsentiumThings/3.0.2/ConsentiumThings-3.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/consentiumiot/library/ConsentiumThings/3.0.2/ConsentiumThings-3.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "consentiumiot/library/ConsentiumThingsDalton/0.9.4/ConsentiumThingsDalton-0.9.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ConsentiumThingsDalton-0.9.4.tar.gz",
+    "size_bytes": 8943,
+    "sha256": "31ca63fed6f64be3a3615063515bb51fce5b8ddb993fc9bd7e041a3454a0ed55",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/consentiumiot/library/ConsentiumThingsDalton/0.9.4/ConsentiumThingsDalton-0.9.4.tar.gz",
+     "https://dl.registry.platformio.org/download/consentiumiot/library/ConsentiumThingsDalton/0.9.4/ConsentiumThingsDalton-0.9.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "consentiumiot/library/EdgeNeuron/1.2.3/EdgeNeuron-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EdgeNeuron-1.2.3.tar.gz",
+    "size_bytes": 1105436,
+    "sha256": "9e7ce05c45328ae77e4d778fb800f601140b0c18984bb44464ffb82a92f869f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/consentiumiot/library/EdgeNeuron/1.2.3/EdgeNeuron-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/consentiumiot/library/EdgeNeuron/1.2.3/EdgeNeuron-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "consentiumiot/library/EdgeSense/1.0.6/EdgeSense-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EdgeSense-1.0.6.tar.gz",
+    "size_bytes": 5884,
+    "sha256": "2b1d2982c940c1f13ae688a536803eb597b57b10efe4acef42ba3b507fc56be4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/consentiumiot/library/EdgeSense/1.0.6/EdgeSense-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/consentiumiot/library/EdgeSense/1.0.6/EdgeSense-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "consentiumiot/library/EdgeVision/1.0.0/EdgeVision-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EdgeVision-1.0.0.tar.gz",
+    "size_bytes": 7281,
+    "sha256": "0b6a9f7ed36a4982ce16e1a382ecc5545b32c527b6d3ec9d88488d30d3ad928f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/consentiumiot/library/EdgeVision/1.0.0/EdgeVision-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/consentiumiot/library/EdgeVision/1.0.0/EdgeVision-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

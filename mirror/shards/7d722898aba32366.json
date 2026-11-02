@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/raschiapedane",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "raschiapedane/library/SimpleAWSIoT/1.0.0/SimpleAWSIoT-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleAWSIoT-1.0.0.tar.gz",
+    "size_bytes": 13262,
+    "sha256": "d022e7d141f31697877e29fc9684b8307f9112629dbed8c08ae0e0087b15ed13",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/raschiapedane/library/SimpleAWSIoT/1.0.0/SimpleAWSIoT-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/raschiapedane/library/SimpleAWSIoT/1.0.0/SimpleAWSIoT-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

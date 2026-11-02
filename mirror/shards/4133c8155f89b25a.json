@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rakwireless",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rakwireless/library/RAKwireless%20ADS7830%20library/1.0.0/RAKwirelessADS7830library-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RAKwirelessADS7830library-1.0.0.tar.gz",
+    "size_bytes": 6753,
+    "sha256": "19913aea89b19082ac983be46044b863a01feb10f26b21f64ced07ceffa97d4d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rakwireless/library/RAKwireless%2520ADS7830%2520library/1.0.0/RAKwirelessADS7830library-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rakwireless/library/RAKwireless%20ADS7830%20library/1.0.0/RAKwirelessADS7830library-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rakwireless/library/RAKwireless%20MQx%20library/1.0.0/RAKwirelessMQxlibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RAKwirelessMQxlibrary-1.0.0.tar.gz",
+    "size_bytes": 13309,
+    "sha256": "090427fba0dcb3934e8ef8013409cb36049c199cccf97be92810ef160d747327",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rakwireless/library/RAKwireless%2520MQx%2520library/1.0.0/RAKwirelessMQxlibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rakwireless/library/RAKwireless%20MQx%20library/1.0.0/RAKwirelessMQxlibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rakwireless/library/RAKwireless%20NCP5623%20RGB%20LED%20library/1.0.3/RAKwirelessNCP5623RGBLEDlibrary-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RAKwirelessNCP5623RGBLEDlibrary-1.0.3.tar.gz",
+    "size_bytes": 5489,
+    "sha256": "ffd436697b28456b726f4a20332be450b985cade816f3570e77edfc1975d004e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rakwireless/library/RAKwireless%2520NCP5623%2520RGB%2520LED%2520library/1.0.3/RAKwirelessNCP5623RGBLEDlibrary-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/rakwireless/library/RAKwireless%20NCP5623%20RGB%20LED%20library/1.0.3/RAKwirelessNCP5623RGBLEDlibrary-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rakwireless/library/RAKwireless%20TLE7259%20LIN%20Bus%20library/1.0.3/RAKwirelessTLE7259LINBuslibrary-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RAKwirelessTLE7259LINBuslibrary-1.0.3.tar.gz",
+    "size_bytes": 10087,
+    "sha256": "f0df6789ac0394e8b159f565b6741635914c4eb228de8f8fe8fd52a8d8b5e521",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rakwireless/library/RAKwireless%2520TLE7259%2520LIN%2520Bus%2520library/1.0.3/RAKwirelessTLE7259LINBuslibrary-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/rakwireless/library/RAKwireless%20TLE7259%20LIN%20Bus%20library/1.0.3/RAKwirelessTLE7259LINBuslibrary-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rakwireless/library/RAKwireless%20VEML%20Light%20Sensor/1.0.2/RAKwirelessVEMLLightSensor-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RAKwirelessVEMLLightSensor-1.0.2.tar.gz",
+    "size_bytes": 15934,
+    "sha256": "e3d1cb1691bc874b25e1f6bdb131274496abebeb6ed1063541b6116b751bb77f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rakwireless/library/RAKwireless%2520VEML%2520Light%2520Sensor/1.0.2/RAKwirelessVEMLLightSensor-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/rakwireless/library/RAKwireless%20VEML%20Light%20Sensor/1.0.2/RAKwirelessVEMLLightSensor-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rakwireless/library/RAKwireless-Audio-library/1.0.9/RAKwireless-Audio-library-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RAKwireless-Audio-library-1.0.9.tar.gz",
+    "size_bytes": 130986981,
+    "sha256": "657545b6caf0b87ee9bb2511a507f26146f14eb3d64de9554a6697b954fe3f63",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rakwireless/library/RAKwireless-Audio-library/1.0.9/RAKwireless-Audio-library-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/rakwireless/library/RAKwireless-Audio-library/1.0.9/RAKwireless-Audio-library-1.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rakwireless/library/RAKwireless-Audio-library/2.0.0/RAKwireless-Audio-library-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RAKwireless-Audio-library-2.0.0.tar.gz",
+    "size_bytes": 130710773,
+    "sha256": "213b33e26103a2c5420842b2744c3900ad2352a31ebe13b9fd248833b39faf01",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rakwireless/library/RAKwireless-Audio-library/2.0.0/RAKwireless-Audio-library-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rakwireless/library/RAKwireless-Audio-library/2.0.0/RAKwireless-Audio-library-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

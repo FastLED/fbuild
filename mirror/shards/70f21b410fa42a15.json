@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-davidh123",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-davidh123/library/MMA7660/0.0.0+sha.0a66d3684638/MMA7660-0.0.0+sha.0a66d3684638.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MMA7660-0.0.0+sha.0a66d3684638.tar.gz",
+    "size_bytes": 4048,
+    "sha256": "079456db969dd8741d17032b4d58806a7db325bea544be58fa27ec8f3df6877d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-davidh123/library/MMA7660/0.0.0%2Bsha.0a66d3684638/MMA7660-0.0.0%2Bsha.0a66d3684638.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-davidh123/library/MMA7660/0.0.0%2Bsha.0a66d3684638/MMA7660-0.0.0%2Bsha.0a66d3684638.tar.gz"
+    ]
+   }
+  }
+ ]
+}

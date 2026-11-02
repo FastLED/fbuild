@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lucalas",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lucalas/library/StreamlabsArduinoAlerts/1.0.0/StreamlabsArduinoAlerts-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StreamlabsArduinoAlerts-1.0.0.tar.gz",
+    "size_bytes": 4023,
+    "sha256": "53fe73dd0915b4dbf67a5231eb050da6bed9d22329ca774e0a6f18e3f42d2878",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lucalas/library/StreamlabsArduinoAlerts/1.0.0/StreamlabsArduinoAlerts-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lucalas/library/StreamlabsArduinoAlerts/1.0.0/StreamlabsArduinoAlerts-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ilikechooros",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ilikechooros/library/EEPROMReader/1.0.0/EEPROMReader-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EEPROMReader-1.0.0.tar.gz",
+    "size_bytes": 8016,
+    "sha256": "38b56b35b33e4e73310a73c56a5dd02b92a2ddac69d4543e6dbb475f317cffb3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ilikechooros/library/EEPROMReader/1.0.0/EEPROMReader-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ilikechooros/library/EEPROMReader/1.0.0/EEPROMReader-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ilikechooros/library/lazyjson/1.0.0/lazyjson-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lazyjson-1.0.0.tar.gz",
+    "size_bytes": 13974,
+    "sha256": "963d67ff80aa69138dc30d758dd112de71feeeafaee8076d9e44d1505f0006a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ilikechooros/library/lazyjson/1.0.0/lazyjson-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ilikechooros/library/lazyjson/1.0.0/lazyjson-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

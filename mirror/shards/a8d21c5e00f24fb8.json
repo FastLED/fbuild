@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/witty-wizard",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "witty-wizard/library/DriveMaster/0.0.2/DriveMaster-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DriveMaster-0.0.2.tar.gz",
+    "size_bytes": 51774,
+    "sha256": "df7599fdd0564a4562c898fe60ed204deb0ad9a82ba14833b76096203972fd93",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/witty-wizard/library/DriveMaster/0.0.2/DriveMaster-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/witty-wizard/library/DriveMaster/0.0.2/DriveMaster-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "witty-wizard/library/InertialIO/0.0.1/InertialIO-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "InertialIO-0.0.1.tar.gz",
+    "size_bytes": 70681,
+    "sha256": "cd5ccf6f09ac295bc102599035a9465d51d0d1fe772f86b08e13ad7d038928e2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/witty-wizard/library/InertialIO/0.0.1/InertialIO-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/witty-wizard/library/InertialIO/0.0.1/InertialIO-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "witty-wizard/library/InertialIO/0.0.2/InertialIO-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "InertialIO-0.0.2.tar.gz",
+    "size_bytes": 71852,
+    "sha256": "270f89d8dc9aa7d099a8b812d40c984da3e69069a04ff45bffcab567fc4e5b14",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/witty-wizard/library/InertialIO/0.0.2/InertialIO-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/witty-wizard/library/InertialIO/0.0.2/InertialIO-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "witty-wizard/library/serialIO/0.3.0/serialIO-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "serialIO-0.3.0.tar.gz",
+    "size_bytes": 65405,
+    "sha256": "c90e4eed37eed8e4a4464b2ed465be889746f37ba1d604754748192b472bf493",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/witty-wizard/library/serialIO/0.3.0/serialIO-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/witty-wizard/library/serialIO/0.3.0/serialIO-0.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

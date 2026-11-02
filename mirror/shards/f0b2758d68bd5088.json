@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/stefanherold",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "stefanherold/library/PinControl/1.1.0/PinControl-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PinControl-1.1.0.tar.gz",
+    "size_bytes": 6470,
+    "sha256": "26490dfc2352bce5a12df8513988bc9a5ff25450ea1f37410d239a8dafd5975a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stefanherold/library/PinControl/1.1.0/PinControl-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stefanherold/library/PinControl/1.1.0/PinControl-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stefanherold/library/Teleplot/0.2.0/Teleplot-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Teleplot-0.2.0.tar.gz",
+    "size_bytes": 4988,
+    "sha256": "814661b6cc1f045f5e9aa4b730c4e1cbc6a2ab2c46576125844064ad5352471c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stefanherold/library/Teleplot/0.2.0/Teleplot-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stefanherold/library/Teleplot/0.2.0/Teleplot-0.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

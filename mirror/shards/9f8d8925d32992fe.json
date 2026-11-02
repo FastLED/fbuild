@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-doommaster",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-doommaster/library/TFTLCD/0.0.0+sha.89a1399409ff/TFTLCD-0.0.0+sha.89a1399409ff.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFTLCD-0.0.0+sha.89a1399409ff.tar.gz",
+    "size_bytes": 28641,
+    "sha256": "77ffe8353e2d9412261488d7c24ed0c0402749d31e3920b430481c196b8e467a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-doommaster/library/TFTLCD/0.0.0%2Bsha.89a1399409ff/TFTLCD-0.0.0%2Bsha.89a1399409ff.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-doommaster/library/TFTLCD/0.0.0%2Bsha.89a1399409ff/TFTLCD-0.0.0%2Bsha.89a1399409ff.tar.gz"
+    ]
+   }
+  }
+ ]
+}

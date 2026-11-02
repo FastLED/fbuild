@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-lenhardt",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-lenhardt/library/wave_player_pwm_and_dac/0.0.0+sha.da5d90e12f27/wave_player_pwm_and_dac-0.0.0+sha.da5d90e12f27.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "wave_player_pwm_and_dac-0.0.0+sha.da5d90e12f27.tar.gz",
+    "size_bytes": 3815,
+    "sha256": "5a7a7969a46dceac80745f1f7885be7f2e09edfa1a3e94d1708e794279766dcd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-lenhardt/library/wave_player_pwm_and_dac/0.0.0%2Bsha.da5d90e12f27/wave_player_pwm_and_dac-0.0.0%2Bsha.da5d90e12f27.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-lenhardt/library/wave_player_pwm_and_dac/0.0.0%2Bsha.da5d90e12f27/wave_player_pwm_and_dac-0.0.0%2Bsha.da5d90e12f27.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/miguelloureiro98",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "miguelloureiro98/library/LM35IC/1.0.0/LM35IC-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LM35IC-1.0.0.tar.gz",
+    "size_bytes": 10139,
+    "sha256": "cc38897d4f368dd15d449b225aa3134a3077035f7e18aed8b08cefa4a51705e7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/miguelloureiro98/library/LM35IC/1.0.0/LM35IC-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/miguelloureiro98/library/LM35IC/1.0.0/LM35IC-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "miguelloureiro98/library/TimeSeries/1.0.0/TimeSeries-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TimeSeries-1.0.0.tar.gz",
+    "size_bytes": 13285,
+    "sha256": "f4c620ecee9e7f7d22513ce67ebbe916e4b62a5a79f6c904387ca1e1a65a6d89",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/miguelloureiro98/library/TimeSeries/1.0.0/TimeSeries-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/miguelloureiro98/library/TimeSeries/1.0.0/TimeSeries-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

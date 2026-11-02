@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-yamato-iplab",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-yamato-iplab/library/AD9833/0.0.0+sha.a7b4c7a1615b/AD9833-0.0.0+sha.a7b4c7a1615b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AD9833-0.0.0+sha.a7b4c7a1615b.tar.gz",
+    "size_bytes": 1212,
+    "sha256": "4bf311d52253601390c96ce1f5353fa6cb55e2461031dac483aa308cacac8c6f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yamato-iplab/library/AD9833/0.0.0%2Bsha.a7b4c7a1615b/AD9833-0.0.0%2Bsha.a7b4c7a1615b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yamato-iplab/library/AD9833/0.0.0%2Bsha.a7b4c7a1615b/AD9833-0.0.0%2Bsha.a7b4c7a1615b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rar",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rar/library/esp_tsdb/2.4.2/esp_tsdb-2.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_tsdb-2.4.2.tar.gz",
+    "size_bytes": 208317,
+    "sha256": "6473b1969919606363fd5c456c1c435955b8a33040d23b2ffacf032ad6149f3a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rar/library/esp_tsdb/2.4.2/esp_tsdb-2.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/rar/library/esp_tsdb/2.4.2/esp_tsdb-2.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rar/library/esp_tsdb/2.4.3/esp_tsdb-2.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_tsdb-2.4.3.tar.gz",
+    "size_bytes": 60393,
+    "sha256": "6ad27bfa56e3408f389c07069a855db3092f231bb151c9f6861859e71a7dadd2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rar/library/esp_tsdb/2.4.3/esp_tsdb-2.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/rar/library/esp_tsdb/2.4.3/esp_tsdb-2.4.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rar/library/esp_tsdb/2.4.4/esp_tsdb-2.4.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_tsdb-2.4.4.tar.gz",
+    "size_bytes": 66698,
+    "sha256": "25006c9798af443f021e60952d1e3c35d40d2441d218137b8baa35f649c5e1de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rar/library/esp_tsdb/2.4.4/esp_tsdb-2.4.4.tar.gz",
+     "https://dl.registry.platformio.org/download/rar/library/esp_tsdb/2.4.4/esp_tsdb-2.4.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rar/library/esp_tsdb/3.0.0-beta.1/esp_tsdb-3.0.0-beta.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_tsdb-3.0.0-beta.1.tar.gz",
+    "size_bytes": 57254,
+    "sha256": "90456ccf2a8b5b351b4887d24b2fea93eff29dfd5b73fce7db3618dcbace9e54",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rar/library/esp_tsdb/3.0.0-beta.1/esp_tsdb-3.0.0-beta.1.tar.gz",
+     "https://dl.registry.platformio.org/download/rar/library/esp_tsdb/3.0.0-beta.1/esp_tsdb-3.0.0-beta.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rar/library/esp_tsdb/3.0.0-beta.2/esp_tsdb-3.0.0-beta.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_tsdb-3.0.0-beta.2.tar.gz",
+    "size_bytes": 58520,
+    "sha256": "2172db8917db54f6f04f89496c14404d28812f789e548a519c7632e2ed3eb7b0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rar/library/esp_tsdb/3.0.0-beta.2/esp_tsdb-3.0.0-beta.2.tar.gz",
+     "https://dl.registry.platformio.org/download/rar/library/esp_tsdb/3.0.0-beta.2/esp_tsdb-3.0.0-beta.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rar/library/esp_tsdb/3.0.0-beta.3/esp_tsdb-3.0.0-beta.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_tsdb-3.0.0-beta.3.tar.gz",
+    "size_bytes": 59401,
+    "sha256": "d31a989348d26c8c3bd1b3a3c31927c938da3e5be5a06e29706f2226498f4fa3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rar/library/esp_tsdb/3.0.0-beta.3/esp_tsdb-3.0.0-beta.3.tar.gz",
+     "https://dl.registry.platformio.org/download/rar/library/esp_tsdb/3.0.0-beta.3/esp_tsdb-3.0.0-beta.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

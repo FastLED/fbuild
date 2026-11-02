@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/douglaslyon",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "douglaslyon/library/AudioShieldDTMF/1.0.0/AudioShieldDTMF-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AudioShieldDTMF-1.0.0.tar.gz",
+    "size_bytes": 5031,
+    "sha256": "773850f74b810ea77eb5022af4747e0239e4d543c47d6759d5a41b0bc68c0edb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/douglaslyon/library/AudioShieldDTMF/1.0.0/AudioShieldDTMF-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/douglaslyon/library/AudioShieldDTMF/1.0.0/AudioShieldDTMF-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

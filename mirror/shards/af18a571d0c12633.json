@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/vitcon-iot",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "vitcon-iot/library/VitconCommon/1.0.4/VitconCommon-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VitconCommon-1.0.4.tar.gz",
+    "size_bytes": 19994,
+    "sha256": "fe58a44eb48d65e15b234948cd7146231723386792a93b3bfcfaff7015d9f237",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vitcon-iot/library/VitconCommon/1.0.4/VitconCommon-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/vitcon-iot/library/VitconCommon/1.0.4/VitconCommon-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vitcon-iot/library/VitconIOT/1.1.2/VitconIOT-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VitconIOT-1.1.2.tar.gz",
+    "size_bytes": 18466,
+    "sha256": "af28a075ab66993aee682e414c96f8227598950f06dac673550be2dda4bc0060",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vitcon-iot/library/VitconIOT/1.1.2/VitconIOT-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/vitcon-iot/library/VitconIOT/1.1.2/VitconIOT-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vitcon-iot/library/VitconLink/1.0.1/VitconLink-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VitconLink-1.0.1.tar.gz",
+    "size_bytes": 15510,
+    "sha256": "f7b1dbe8588d4b0c2b927b7d1bf4d85c9f6ab171a74fdf7107289d201fe943dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vitcon-iot/library/VitconLink/1.0.1/VitconLink-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vitcon-iot/library/VitconLink/1.0.1/VitconLink-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vitcon-iot/library/VitconMQTT/1.0.1/VitconMQTT-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VitconMQTT-1.0.1.tar.gz",
+    "size_bytes": 15291,
+    "sha256": "08023519c7bfe645d42b7b0bcf18ee9b374d3ccfd5afa3266d56904fedd30c54",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vitcon-iot/library/VitconMQTT/1.0.1/VitconMQTT-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vitcon-iot/library/VitconMQTT/1.0.1/VitconMQTT-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

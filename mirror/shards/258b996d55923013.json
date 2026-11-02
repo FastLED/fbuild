@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hexfab",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hexfab/library/HexFabQuadroMotorShield/1.0/HexFabQuadroMotorShield-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HexFabQuadroMotorShield-1.0.tar.gz",
+    "size_bytes": 3341,
+    "sha256": "ad787a028e742bb4498adb175955b2a65fe24e2d962c4bfc18e09f257c83da52",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hexfab/library/HexFabQuadroMotorShield/1.0/HexFabQuadroMotorShield-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hexfab/library/HexFabQuadroMotorShield/1.0/HexFabQuadroMotorShield-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

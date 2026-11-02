@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/julioterra",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "julioterra/library/SpacebrewYun/1.0/SpacebrewYun-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SpacebrewYun-1.0.tar.gz",
+    "size_bytes": 6261,
+    "sha256": "cc45a92bdd89c7c36d08db81875dac8518abae15f04eb74b012b105c3c2a6b99",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/julioterra/library/SpacebrewYun/1.0/SpacebrewYun-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/julioterra/library/SpacebrewYun/1.0/SpacebrewYun-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

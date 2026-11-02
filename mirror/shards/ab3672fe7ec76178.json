@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jcardoen",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jcardoen/library/ATmega32U4%20Grove%20Air%20quality%20sensor/0.0.1/ATmega32U4GroveAirqualitysensor-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ATmega32U4GroveAirqualitysensor-0.0.1.tar.gz",
+    "size_bytes": 3327,
+    "sha256": "4c0fb8c766d31e6cf81674fd2675a15fc42deda4c971ba14de3bddf8c6393cea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jcardoen/library/ATmega32U4%2520Grove%2520Air%2520quality%2520sensor/0.0.1/ATmega32U4GroveAirqualitysensor-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jcardoen/library/ATmega32U4%20Grove%20Air%20quality%20sensor/0.0.1/ATmega32U4GroveAirqualitysensor-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

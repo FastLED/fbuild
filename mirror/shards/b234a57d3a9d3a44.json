@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/koeglike",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "koeglike/library/AsyncButton/1.0.0/AsyncButton-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncButton-1.0.0.tar.gz",
+    "size_bytes": 3917,
+    "sha256": "a33af16782fdc2b3705224c996f9292ede58fa31af2fd3b60e2ea82449d75256",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/koeglike/library/AsyncButton/1.0.0/AsyncButton-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/koeglike/library/AsyncButton/1.0.0/AsyncButton-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

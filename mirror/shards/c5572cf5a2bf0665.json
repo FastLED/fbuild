@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ban4jp",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ban4jp/library/DOG-S_GraphicLCD/0.0.0+sha.2145a74df666/DOG-S_GraphicLCD-0.0.0+sha.2145a74df666.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DOG-S_GraphicLCD-0.0.0+sha.2145a74df666.tar.gz",
+    "size_bytes": 7991,
+    "sha256": "69fd6611c43f20b68e0722c871148159abe2b64fbe8d03548b93fde343dd542f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ban4jp/library/DOG-S_GraphicLCD/0.0.0%2Bsha.2145a74df666/DOG-S_GraphicLCD-0.0.0%2Bsha.2145a74df666.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ban4jp/library/DOG-S_GraphicLCD/0.0.0%2Bsha.2145a74df666/DOG-S_GraphicLCD-0.0.0%2Bsha.2145a74df666.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ban4jp/library/Tiny-HTTPD/0.0.0+sha.905fe8dfebd6/Tiny-HTTPD-0.0.0+sha.905fe8dfebd6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Tiny-HTTPD-0.0.0+sha.905fe8dfebd6.tar.gz",
+    "size_bytes": 11070,
+    "sha256": "061e1996641bad271e9b702edf98db3be9ef90e4fd79cde2950c33b1bbc2f0b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ban4jp/library/Tiny-HTTPD/0.0.0%2Bsha.905fe8dfebd6/Tiny-HTTPD-0.0.0%2Bsha.905fe8dfebd6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ban4jp/library/Tiny-HTTPD/0.0.0%2Bsha.905fe8dfebd6/Tiny-HTTPD-0.0.0%2Bsha.905fe8dfebd6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ban4jp/library/WIZ550ioInterface/0.0.0+sha.615198a7b82b/WIZ550ioInterface-0.0.0+sha.615198a7b82b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WIZ550ioInterface-0.0.0+sha.615198a7b82b.tar.gz",
+    "size_bytes": 13158,
+    "sha256": "cd1296f0015a628b7b555bed5f2ec584d05a5355b22ef5e75944e926c46cbc57",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ban4jp/library/WIZ550ioInterface/0.0.0%2Bsha.615198a7b82b/WIZ550ioInterface-0.0.0%2Bsha.615198a7b82b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ban4jp/library/WIZ550ioInterface/0.0.0%2Bsha.615198a7b82b/WIZ550ioInterface-0.0.0%2Bsha.615198a7b82b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ban4jp/library/WIZ820ioInterface/0.0.0+sha.6ff41cd782f5/WIZ820ioInterface-0.0.0+sha.6ff41cd782f5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WIZ820ioInterface-0.0.0+sha.6ff41cd782f5.tar.gz",
+    "size_bytes": 13214,
+    "sha256": "da6bab814d5e2c3f9af5a2441e8c4bf173f5183f5124cf7ed4797190243a0112",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ban4jp/library/WIZ820ioInterface/0.0.0%2Bsha.6ff41cd782f5/WIZ820ioInterface-0.0.0%2Bsha.6ff41cd782f5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ban4jp/library/WIZ820ioInterface/0.0.0%2Bsha.6ff41cd782f5/WIZ820ioInterface-0.0.0%2Bsha.6ff41cd782f5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ban4jp/library/XBee_with_SPI/0.0.0+sha.eb70be6ceb6d/XBee_with_SPI-0.0.0+sha.eb70be6ceb6d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XBee_with_SPI-0.0.0+sha.eb70be6ceb6d.tar.gz",
+    "size_bytes": 20289,
+    "sha256": "898482ce7c101bff47d6730b5a08b8659cc5158bb3e8e79332dfe829b995521f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ban4jp/library/XBee_with_SPI/0.0.0%2Bsha.eb70be6ceb6d/XBee_with_SPI-0.0.0%2Bsha.eb70be6ceb6d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ban4jp/library/XBee_with_SPI/0.0.0%2Bsha.eb70be6ceb6d/XBee_with_SPI-0.0.0%2Bsha.eb70be6ceb6d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ban4jp/library/iSDIO/0.0.0+sha.51abf34bcc06/iSDIO-0.0.0+sha.51abf34bcc06.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iSDIO-0.0.0+sha.51abf34bcc06.tar.gz",
+    "size_bytes": 13255,
+    "sha256": "79f161b53f1b59a78e4a3e913d32f8cd4308c916fe6aee37920fd36f1272a203",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ban4jp/library/iSDIO/0.0.0%2Bsha.51abf34bcc06/iSDIO-0.0.0%2Bsha.51abf34bcc06.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ban4jp/library/iSDIO/0.0.0%2Bsha.51abf34bcc06/iSDIO-0.0.0%2Bsha.51abf34bcc06.tar.gz"
+    ]
+   }
+  }
+ ]
+}

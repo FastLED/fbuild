@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sebyone",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sebyone/library/DaaSIoT-ESP32/0.0.1/DaaSIoT-ESP32-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DaaSIoT-ESP32-0.0.1.tar.gz",
+    "size_bytes": 1825838,
+    "sha256": "9ba92d0a778cd1aa50c175103453a82019350472186932f3464971975f6aef69",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sebyone/library/DaaSIoT-ESP32/0.0.1/DaaSIoT-ESP32-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sebyone/library/DaaSIoT-ESP32/0.0.1/DaaSIoT-ESP32-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sebyone/library/DaaSIoT-ESP32/0.1.0/DaaSIoT-ESP32-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DaaSIoT-ESP32-0.1.0.tar.gz",
+    "size_bytes": 3678493,
+    "sha256": "eeff004061ae44acf9275f305285125cc21549ab1d79f52b7a153001368d5e45",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sebyone/library/DaaSIoT-ESP32/0.1.0/DaaSIoT-ESP32-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sebyone/library/DaaSIoT-ESP32/0.1.0/DaaSIoT-ESP32-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sebyone/library/DaaSIoT-ESP32/0.2.10/DaaSIoT-ESP32-0.2.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DaaSIoT-ESP32-0.2.10.tar.gz",
+    "size_bytes": 3875679,
+    "sha256": "c5c1ada6246748c1052adbc1efdb8e7d6930679aee01870c961b292808fbf835",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sebyone/library/DaaSIoT-ESP32/0.2.10/DaaSIoT-ESP32-0.2.10.tar.gz",
+     "https://dl.registry.platformio.org/download/sebyone/library/DaaSIoT-ESP32/0.2.10/DaaSIoT-ESP32-0.2.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sebyone/library/DaaSIoT-ESP32/0.3.1/DaaSIoT-ESP32-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DaaSIoT-ESP32-0.3.1.tar.gz",
+    "size_bytes": 10005018,
+    "sha256": "4c3f084aa3b868b5c05cc019c05199952e859440eca6d0f03fc8b37426cef218",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sebyone/library/DaaSIoT-ESP32/0.3.1/DaaSIoT-ESP32-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sebyone/library/DaaSIoT-ESP32/0.3.1/DaaSIoT-ESP32-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sebyone/library/DaaSIoT-ESP32/0.3.2/DaaSIoT-ESP32-0.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DaaSIoT-ESP32-0.3.2.tar.gz",
+    "size_bytes": 10397473,
+    "sha256": "9cb7b45ce7597ee141d4f30ac179687831f069a23604cc6f372843119dc54832",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sebyone/library/DaaSIoT-ESP32/0.3.2/DaaSIoT-ESP32-0.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sebyone/library/DaaSIoT-ESP32/0.3.2/DaaSIoT-ESP32-0.3.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

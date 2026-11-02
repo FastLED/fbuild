@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-melangeaddict",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-melangeaddict/library/FrequencyFinder/0.0.0+sha.78c2ee8ea962/FrequencyFinder-0.0.0+sha.78c2ee8ea962.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FrequencyFinder-0.0.0+sha.78c2ee8ea962.tar.gz",
+    "size_bytes": 1591,
+    "sha256": "251157d9d5965f20fa29acb45995f784e45000924079bfcd9fc7e3d14f258a63",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-melangeaddict/library/FrequencyFinder/0.0.0%2Bsha.78c2ee8ea962/FrequencyFinder-0.0.0%2Bsha.78c2ee8ea962.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-melangeaddict/library/FrequencyFinder/0.0.0%2Bsha.78c2ee8ea962/FrequencyFinder-0.0.0%2Bsha.78c2ee8ea962.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-melangeaddict/library/Motor/0.0.0+sha.278f07b2be46/Motor-0.0.0+sha.278f07b2be46.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Motor-0.0.0+sha.278f07b2be46.tar.gz",
+    "size_bytes": 987,
+    "sha256": "f3cdd8d08ea2feb6ec6d9103bcb3fd15771d8c7e3e9969c030281d3b9abe6083",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-melangeaddict/library/Motor/0.0.0%2Bsha.278f07b2be46/Motor-0.0.0%2Bsha.278f07b2be46.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-melangeaddict/library/Motor/0.0.0%2Bsha.278f07b2be46/Motor-0.0.0%2Bsha.278f07b2be46.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-melangeaddict/library/strings/0.0.0+sha.ed8fce1752f7/strings-0.0.0+sha.ed8fce1752f7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "strings-0.0.0+sha.ed8fce1752f7.tar.gz",
+    "size_bytes": 1570,
+    "sha256": "8d9cb4debb6bdd0c5b45045099a2a3417f5e187456a8535677834efe96e1519a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-melangeaddict/library/strings/0.0.0%2Bsha.ed8fce1752f7/strings-0.0.0%2Bsha.ed8fce1752f7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-melangeaddict/library/strings/0.0.0%2Bsha.ed8fce1752f7/strings-0.0.0%2Bsha.ed8fce1752f7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

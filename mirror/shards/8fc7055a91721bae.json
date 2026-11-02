@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-rb62680",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-rb62680/library/Sigfox_Com/0.0.0+sha.975b82a3cde0/Sigfox_Com-0.0.0+sha.975b82a3cde0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sigfox_Com-0.0.0+sha.975b82a3cde0.tar.gz",
+    "size_bytes": 2508,
+    "sha256": "63bbdc1e4a15adb564709d6e2c5d6bb6c27f54798f26ce43180893b0ac62cf7d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rb62680/library/Sigfox_Com/0.0.0%2Bsha.975b82a3cde0/Sigfox_Com-0.0.0%2Bsha.975b82a3cde0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rb62680/library/Sigfox_Com/0.0.0%2Bsha.975b82a3cde0/Sigfox_Com-0.0.0%2Bsha.975b82a3cde0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

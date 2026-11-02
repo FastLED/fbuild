@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-pfountas",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-pfountas/library/DSP/0.0.0+sha.aa434caf49e0/DSP-0.0.0+sha.aa434caf49e0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DSP-0.0.0+sha.aa434caf49e0.tar.gz",
+    "size_bytes": 5806,
+    "sha256": "b6b896716e9e62b25b2a181015bcb31990c160454d3a0d095bbcb70d2ae60d08",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pfountas/library/DSP/0.0.0%2Bsha.aa434caf49e0/DSP-0.0.0%2Bsha.aa434caf49e0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pfountas/library/DSP/0.0.0%2Bsha.aa434caf49e0/DSP-0.0.0%2Bsha.aa434caf49e0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

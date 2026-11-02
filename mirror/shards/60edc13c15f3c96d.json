@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-johnb",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-johnb/library/ArduinoMotorShield/0.0.0+sha.b6bd7c434ab5/ArduinoMotorShield-0.0.0+sha.b6bd7c434ab5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoMotorShield-0.0.0+sha.b6bd7c434ab5.tar.gz",
+    "size_bytes": 3240,
+    "sha256": "22d85d30c1292ea5ba8b0cf2401cce8997c4fdb680679a8383e228c7c61251ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-johnb/library/ArduinoMotorShield/0.0.0%2Bsha.b6bd7c434ab5/ArduinoMotorShield-0.0.0%2Bsha.b6bd7c434ab5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-johnb/library/ArduinoMotorShield/0.0.0%2Bsha.b6bd7c434ab5/ArduinoMotorShield-0.0.0%2Bsha.b6bd7c434ab5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-johnb/library/CircularBuffer/0.0.0+sha.d318a6948091/CircularBuffer-0.0.0+sha.d318a6948091.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CircularBuffer-0.0.0+sha.d318a6948091.tar.gz",
+    "size_bytes": 2210,
+    "sha256": "5ae301d856810daf9fd9b24fee8c6d963f8f5a8eca15fd483557fe47ae5a62a0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-johnb/library/CircularBuffer/0.0.0%2Bsha.d318a6948091/CircularBuffer-0.0.0%2Bsha.d318a6948091.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-johnb/library/CircularBuffer/0.0.0%2Bsha.d318a6948091/CircularBuffer-0.0.0%2Bsha.d318a6948091.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-johnb/library/RoundRobin/0.0.0+sha.549bc1cd1f3d/RoundRobin-0.0.0+sha.549bc1cd1f3d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RoundRobin-0.0.0+sha.549bc1cd1f3d.tar.gz",
+    "size_bytes": 1884,
+    "sha256": "5ae4cd790b6a8377c64ef7268d9952ca7bcd013ec8a78329e300908102d781cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-johnb/library/RoundRobin/0.0.0%2Bsha.549bc1cd1f3d/RoundRobin-0.0.0%2Bsha.549bc1cd1f3d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-johnb/library/RoundRobin/0.0.0%2Bsha.549bc1cd1f3d/RoundRobin-0.0.0%2Bsha.549bc1cd1f3d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-johnb/library/XBee/0.0.0+sha.9d8397c69167/XBee-0.0.0+sha.9d8397c69167.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XBee-0.0.0+sha.9d8397c69167.tar.gz",
+    "size_bytes": 19752,
+    "sha256": "f63ad7acc98f53ad042d5c565cce3756dff8711bef7cfb4bea22b90d90c101c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-johnb/library/XBee/0.0.0%2Bsha.9d8397c69167/XBee-0.0.0%2Bsha.9d8397c69167.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-johnb/library/XBee/0.0.0%2Bsha.9d8397c69167/XBee-0.0.0%2Bsha.9d8397c69167.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-johnb/library/XBeeApi/0.0.0+sha.7fe74b03e6b1/XBeeApi-0.0.0+sha.7fe74b03e6b1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XBeeApi-0.0.0+sha.7fe74b03e6b1.tar.gz",
+    "size_bytes": 31413,
+    "sha256": "e867de355a512eb7f909b6fd97e15745a12d4ef2d62a31e7680d3643f4df3480",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-johnb/library/XBeeApi/0.0.0%2Bsha.7fe74b03e6b1/XBeeApi-0.0.0%2Bsha.7fe74b03e6b1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-johnb/library/XBeeApi/0.0.0%2Bsha.7fe74b03e6b1/XBeeApi-0.0.0%2Bsha.7fe74b03e6b1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

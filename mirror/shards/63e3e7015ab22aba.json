@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/finitespace",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "finitespace/library/BME280/3.0.0/BME280-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BME280-3.0.0.tar.gz",
+    "size_bytes": 25686,
+    "sha256": "65f5a6b3ffa6a007095be29827ee86f7f96460657f95b586221af8409abce584",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/finitespace/library/BME280/3.0.0/BME280-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/finitespace/library/BME280/3.0.0/BME280-3.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

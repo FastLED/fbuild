@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bkolicoski",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bkolicoski/library/YouTube%20Sight/1.0.3/YouTubeSight-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YouTubeSight-1.0.3.tar.gz",
+    "size_bytes": 16616,
+    "sha256": "cbc4354d6b177bb928061d9d1ac8de8da973a2e131aeedbacc79b2dde996b44c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bkolicoski/library/YouTube%2520Sight/1.0.3/YouTubeSight-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/bkolicoski/library/YouTube%20Sight/1.0.3/YouTubeSight-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

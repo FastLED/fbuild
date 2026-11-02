@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-shuhei1128",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-shuhei1128/library/RTC4543/0.0.0+sha.7e9ec7a2f6da/RTC4543-0.0.0+sha.7e9ec7a2f6da.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RTC4543-0.0.0+sha.7e9ec7a2f6da.tar.gz",
+    "size_bytes": 1607,
+    "sha256": "7c6a484c5a03c94ceed5a782d1e6513f8d83857ae72e9c2e2d8da64a5ee9f449",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-shuhei1128/library/RTC4543/0.0.0%2Bsha.7e9ec7a2f6da/RTC4543-0.0.0%2Bsha.7e9ec7a2f6da.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-shuhei1128/library/RTC4543/0.0.0%2Bsha.7e9ec7a2f6da/RTC4543-0.0.0%2Bsha.7e9ec7a2f6da.tar.gz"
+    ]
+   }
+  }
+ ]
+}

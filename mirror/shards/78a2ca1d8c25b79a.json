@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/elkrem",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "elkrem/library/Koyn/0.2.0/Koyn-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Koyn-0.2.0.tar.gz",
+    "size_bytes": 226039,
+    "sha256": "0c4b15e68baedb487c3f57022da6dd6cf0d6a7fa0e2c889f2b42e0a793b12698",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/elkrem/library/Koyn/0.2.0/Koyn-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/elkrem/library/Koyn/0.2.0/Koyn-0.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

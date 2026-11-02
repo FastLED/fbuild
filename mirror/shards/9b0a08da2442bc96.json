@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nrwiersma",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nrwiersma/library/ConfigManager/2.2.0/ConfigManager-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ConfigManager-2.2.0.tar.gz",
+    "size_bytes": 14018,
+    "sha256": "db808343bd3645191b90ad0379e0340eb277af3c325b8571d9ab61d6519d3ac4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nrwiersma/library/ConfigManager/2.2.0/ConfigManager-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nrwiersma/library/ConfigManager/2.2.0/ConfigManager-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nrwiersma/library/ESP8266Scheduler/1.2/ESP8266Scheduler-1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266Scheduler-1.2.tar.gz",
+    "size_bytes": 9716,
+    "sha256": "10f65e4d6e66d87a5515e440603c92df6e92a4f28a4717bb5cddaa49415bbc3f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nrwiersma/library/ESP8266Scheduler/1.2/ESP8266Scheduler-1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nrwiersma/library/ESP8266Scheduler/1.2/ESP8266Scheduler-1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

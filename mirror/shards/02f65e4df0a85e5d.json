@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-adrienpps",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-adrienpps/library/m3pi_pops/0.0.0+sha.192ada9c140c/m3pi_pops-0.0.0+sha.192ada9c140c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "m3pi_pops-0.0.0+sha.192ada9c140c.tar.gz",
+    "size_bytes": 4064,
+    "sha256": "8ddf055bdb936fc323c0f0c1b25f6e35a257ea067d811631db4ba760cc5c8c43",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-adrienpps/library/m3pi_pops/0.0.0%2Bsha.192ada9c140c/m3pi_pops-0.0.0%2Bsha.192ada9c140c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-adrienpps/library/m3pi_pops/0.0.0%2Bsha.192ada9c140c/m3pi_pops-0.0.0%2Bsha.192ada9c140c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-nameceasar",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-nameceasar/library/NCDInterfaces/0.0.0+sha.008a40792e5d/NCDInterfaces-0.0.0+sha.008a40792e5d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NCDInterfaces-0.0.0+sha.008a40792e5d.tar.gz",
+    "size_bytes": 9339,
+    "sha256": "06069af57867c776b64625e10aad2aea4e883c2394fcd6ff41aec2c4f3239d07",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nameceasar/library/NCDInterfaces/0.0.0%2Bsha.008a40792e5d/NCDInterfaces-0.0.0%2Bsha.008a40792e5d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nameceasar/library/NCDInterfaces/0.0.0%2Bsha.008a40792e5d/NCDInterfaces-0.0.0%2Bsha.008a40792e5d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nameceasar/library/NCD_Interfaces/0.0.0+sha.2feaff0e1ab1/NCD_Interfaces-0.0.0+sha.2feaff0e1ab1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NCD_Interfaces-0.0.0+sha.2feaff0e1ab1.tar.gz",
+    "size_bytes": 2949,
+    "sha256": "49e30ed4f349fbf6971f3c6ee34f0c52e43ba5622aae18e50c187edbabc16223",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nameceasar/library/NCD_Interfaces/0.0.0%2Bsha.2feaff0e1ab1/NCD_Interfaces-0.0.0%2Bsha.2feaff0e1ab1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nameceasar/library/NCD_Interfaces/0.0.0%2Bsha.2feaff0e1ab1/NCD_Interfaces-0.0.0%2Bsha.2feaff0e1ab1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

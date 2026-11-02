@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-cities-unlocked-phase-ii",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-cities-unlocked-phase-ii/library/BluetoothInterface/0.0.0+sha.a9ace7addc19/BluetoothInterface-0.0.0+sha.a9ace7addc19.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BluetoothInterface-0.0.0+sha.a9ace7addc19.tar.gz",
+    "size_bytes": 3952,
+    "sha256": "38b15e0d49d42a63ffd1a9de3cf1637e751639d2bcb8c094e236184cb3553afc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-cities-unlocked-phase-ii/library/BluetoothInterface/0.0.0%2Bsha.a9ace7addc19/BluetoothInterface-0.0.0%2Bsha.a9ace7addc19.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-cities-unlocked-phase-ii/library/BluetoothInterface/0.0.0%2Bsha.a9ace7addc19/BluetoothInterface-0.0.0%2Bsha.a9ace7addc19.tar.gz"
+    ]
+   }
+  }
+ ]
+}

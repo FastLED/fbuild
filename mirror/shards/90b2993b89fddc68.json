@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/eoh-ltd",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "eoh-ltd/library/ERa/1.6.3/ERa-1.6.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ERa-1.6.3.tar.gz",
+    "size_bytes": 515215,
+    "sha256": "4a588ddad97997d747dc387dc0164e74b8ad8cb57aadc4015c8ce615d04bf290",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eoh-ltd/library/ERa/1.6.3/ERa-1.6.3.tar.gz",
+     "https://dl.registry.platformio.org/download/eoh-ltd/library/ERa/1.6.3/ERa-1.6.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "eoh-ltd/library/ERa/1.6.4/ERa-1.6.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ERa-1.6.4.tar.gz",
+    "size_bytes": 515380,
+    "sha256": "7ef355f9f8fcd1f2ae2fab25296a54b0c4535ad3e0065315030c3600c1c2e06c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eoh-ltd/library/ERa/1.6.4/ERa-1.6.4.tar.gz",
+     "https://dl.registry.platformio.org/download/eoh-ltd/library/ERa/1.6.4/ERa-1.6.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "eoh-ltd/library/EoH%20Platform/0.3.0/EoHPlatform-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EoHPlatform-0.3.0.tar.gz",
+    "size_bytes": 86228,
+    "sha256": "bd332b779b5230320510d32d920d866f1882f5867ce85c0950ff7a9eb4a6edb6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eoh-ltd/library/EoH%2520Platform/0.3.0/EoHPlatform-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/eoh-ltd/library/EoH%20Platform/0.3.0/EoHPlatform-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "eoh-ltd/library/MVP/0.2.1/MVP-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MVP-0.2.1.tar.gz",
+    "size_bytes": 77132,
+    "sha256": "2e55f57f304da6dbfb06bbbfa9af9d7c91c8c9492cc23c861dddf06d13790a9e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eoh-ltd/library/MVP/0.2.1/MVP-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/eoh-ltd/library/MVP/0.2.1/MVP-0.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

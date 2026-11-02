@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/airngin",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "airngin/library/AirNgin%20ESP32%20MQTT%20Client/0.1.11/AirNginESP32MQTTClient-0.1.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AirNginESP32MQTTClient-0.1.11.tar.gz",
+    "size_bytes": 87100,
+    "sha256": "d1c4351835f6665f883c05d7dfcbde6f026b8b7cdadab839712ee426375c21c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/airngin/library/AirNgin%2520ESP32%2520MQTT%2520Client/0.1.11/AirNginESP32MQTTClient-0.1.11.tar.gz",
+     "https://dl.registry.platformio.org/download/airngin/library/AirNgin%20ESP32%20MQTT%20Client/0.1.11/AirNginESP32MQTTClient-0.1.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "airngin/library/AirNgin_STM32_MQTT_Client/0.1.0/AirNgin_STM32_MQTT_Client-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AirNgin_STM32_MQTT_Client-0.1.0.tar.gz",
+    "size_bytes": 16662,
+    "sha256": "115cff4d1f8156835f46a8fb2b0aaacd88609e2719b972866da045c51a0404c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/airngin/library/AirNgin_STM32_MQTT_Client/0.1.0/AirNgin_STM32_MQTT_Client-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/airngin/library/AirNgin_STM32_MQTT_Client/0.1.0/AirNgin_STM32_MQTT_Client-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "airngin/library/AirNgin_STM32_MQTT_Client/0.1.1/AirNgin_STM32_MQTT_Client-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AirNgin_STM32_MQTT_Client-0.1.1.tar.gz",
+    "size_bytes": 16509,
+    "sha256": "5ef63a9f82cd81496840932a9f26dc71db1ab925ca4b2799242e2b39cdfe2f08",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/airngin/library/AirNgin_STM32_MQTT_Client/0.1.1/AirNgin_STM32_MQTT_Client-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/airngin/library/AirNgin_STM32_MQTT_Client/0.1.1/AirNgin_STM32_MQTT_Client-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-idt-optical-sensors",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-idt-optical-sensors/library/ADS1256/0.0.0+sha.897d3bb0accd/ADS1256-0.0.0+sha.897d3bb0accd.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADS1256-0.0.0+sha.897d3bb0accd.tar.gz",
+    "size_bytes": 5706,
+    "sha256": "950aaa05c33f67aa25da2c1e3f1a0a365734ce83f09695b21d07a75392676f27",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-idt-optical-sensors/library/ADS1256/0.0.0%2Bsha.897d3bb0accd/ADS1256-0.0.0%2Bsha.897d3bb0accd.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-idt-optical-sensors/library/ADS1256/0.0.0%2Bsha.897d3bb0accd/ADS1256-0.0.0%2Bsha.897d3bb0accd.tar.gz"
+    ]
+   }
+  }
+ ]
+}

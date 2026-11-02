@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/deric-03",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "deric-03/library/Control_Led_Bus/1.0.1/Control_Led_Bus-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Control_Led_Bus-1.0.1.tar.gz",
+    "size_bytes": 101167,
+    "sha256": "dbb5bd9edb5a6273664db1f8496329cb44ff73637013968f075836b95ebb42fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deric-03/library/Control_Led_Bus/1.0.1/Control_Led_Bus-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/deric-03/library/Control_Led_Bus/1.0.1/Control_Led_Bus-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "deric-03/library/Esp_Lite_Core/1.0.0/Esp_Lite_Core-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Esp_Lite_Core-1.0.0.tar.gz",
+    "size_bytes": 3614,
+    "sha256": "19a578c9744806c2f70739f3633210457440df2e0ea0079072769f6fa16df359",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deric-03/library/Esp_Lite_Core/1.0.0/Esp_Lite_Core-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/deric-03/library/Esp_Lite_Core/1.0.0/Esp_Lite_Core-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/arielzw",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "arielzw/library/DpsPowerSupply/1.0.0/DpsPowerSupply-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DpsPowerSupply-1.0.0.tar.gz",
+    "size_bytes": 10531,
+    "sha256": "c55dbf449830f5564e541f52042c52eea0f305d9bee31bb1465b90b2efe6643c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arielzw/library/DpsPowerSupply/1.0.0/DpsPowerSupply-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arielzw/library/DpsPowerSupply/1.0.0/DpsPowerSupply-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

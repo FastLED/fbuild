@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/drewfish",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "drewfish/library/FourRegs/0.4.5/FourRegs-0.4.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FourRegs-0.4.5.tar.gz",
+    "size_bytes": 32374,
+    "sha256": "fa443f42da9a1bce7c4a3d022506a9a88a6be96e9dc5d38daa310623fe96fb7a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/drewfish/library/FourRegs/0.4.5/FourRegs-0.4.5.tar.gz",
+     "https://dl.registry.platformio.org/download/drewfish/library/FourRegs/0.4.5/FourRegs-0.4.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "drewfish/library/TrimWright/0.10.0/TrimWright-0.10.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TrimWright-0.10.0.tar.gz",
+    "size_bytes": 11446,
+    "sha256": "a0e5cc3d974ec3331b233d36f0a0c88c853f4b706bb53f1db7c07629d7e11f28",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/drewfish/library/TrimWright/0.10.0/TrimWright-0.10.0.tar.gz",
+     "https://dl.registry.platformio.org/download/drewfish/library/TrimWright/0.10.0/TrimWright-0.10.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "drewfish/library/ZeroRegs/0.3.4/ZeroRegs-0.3.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ZeroRegs-0.3.4.tar.gz",
+    "size_bytes": 23686,
+    "sha256": "36f2bc69dfcaab8e9a199f989263aba5e4aeb386a3d447f5cfa87bc94056687e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/drewfish/library/ZeroRegs/0.3.4/ZeroRegs-0.3.4.tar.gz",
+     "https://dl.registry.platformio.org/download/drewfish/library/ZeroRegs/0.3.4/ZeroRegs-0.3.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

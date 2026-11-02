@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ezz-30",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ezz-30/library/tinkeriot/1.0.0/tinkeriot-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tinkeriot-1.0.0.tar.gz",
+    "size_bytes": 9553,
+    "sha256": "84c1ffc075586a913e4fda0f309879e719d980daab59fbdc6fa724bee727ff40",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ezz-30/library/tinkeriot/1.0.0/tinkeriot-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ezz-30/library/tinkeriot/1.0.0/tinkeriot-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ezz-30/library/tinkeriot/1.0.10/tinkeriot-1.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tinkeriot-1.0.10.tar.gz",
+    "size_bytes": 10640,
+    "sha256": "d173f47e19fbf72a815e8e1423a84966c650dabcff2c5a79afdb4e3cdf20fa7d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ezz-30/library/tinkeriot/1.0.10/tinkeriot-1.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/ezz-30/library/tinkeriot/1.0.10/tinkeriot-1.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ezz-30/library/tinkeriot/1.0.5/tinkeriot-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tinkeriot-1.0.5.tar.gz",
+    "size_bytes": 10139,
+    "sha256": "f21ff139092ae77b760b21af814c633e4b07a69f32e7c66236f351bd9448ebc6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ezz-30/library/tinkeriot/1.0.5/tinkeriot-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/ezz-30/library/tinkeriot/1.0.5/tinkeriot-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ezz-30/library/tinkeriot/1.0.7/tinkeriot-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tinkeriot-1.0.7.tar.gz",
+    "size_bytes": 10029,
+    "sha256": "e51c06d4e741c44db8573e180139516adaa05f57a4f4bf9e37f9a5b1401e6e05",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ezz-30/library/tinkeriot/1.0.7/tinkeriot-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/ezz-30/library/tinkeriot/1.0.7/tinkeriot-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ezz-30/library/tinkeriot/1.0.8/tinkeriot-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tinkeriot-1.0.8.tar.gz",
+    "size_bytes": 10023,
+    "sha256": "5acfa57a1f21682a34b19068a2260c500d701ce601e63a826c27d54edce2ea66",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ezz-30/library/tinkeriot/1.0.8/tinkeriot-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/ezz-30/library/tinkeriot/1.0.8/tinkeriot-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ezz-30/library/tinkeriot/1.0.9/tinkeriot-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tinkeriot-1.0.9.tar.gz",
+    "size_bytes": 10065,
+    "sha256": "b1e40eac8a76b7fc96c3136c68d25afd7525e8a43298f41a3af0e9a5c8447647",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ezz-30/library/tinkeriot/1.0.9/tinkeriot-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/ezz-30/library/tinkeriot/1.0.9/tinkeriot-1.0.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

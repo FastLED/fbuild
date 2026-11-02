@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/thexeno",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "thexeno/library/DS1307%20Emulator/1.0/DS1307Emulator-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS1307Emulator-1.0.tar.gz",
+    "size_bytes": 11626,
+    "sha256": "3821d42300b154b76e3f98075000a5fe42a60ed5f522e8a3c7b9f7ef17e0a0e8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thexeno/library/DS1307%2520Emulator/1.0/DS1307Emulator-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/thexeno/library/DS1307%20Emulator/1.0/DS1307Emulator-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thexeno/library/HardWire/2.0/HardWire-2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HardWire-2.0.tar.gz",
+    "size_bytes": 13285,
+    "sha256": "8726a6101bd7f9b5a7052d1b17a9a29e0c48e2be4088384e1b8331753fecfa6d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thexeno/library/HardWire/2.0/HardWire-2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/thexeno/library/HardWire/2.0/HardWire-2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

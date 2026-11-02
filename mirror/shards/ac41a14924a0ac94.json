@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/japs35",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "japs35/library/NTC_Temp/1.0.1/NTC_Temp-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NTC_Temp-1.0.1.tar.gz",
+    "size_bytes": 2081,
+    "sha256": "ca3a9b947c19a67f6d18fa8371a33eedd3b803f5621f6555555991c70a60a610",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/japs35/library/NTC_Temp/1.0.1/NTC_Temp-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/japs35/library/NTC_Temp/1.0.1/NTC_Temp-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

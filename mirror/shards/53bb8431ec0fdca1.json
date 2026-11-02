@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/throwtheswitch",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "throwtheswitch/library/Unity/2.5.2/Unity-2.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Unity-2.5.2.tar.gz",
+    "size_bytes": 66366,
+    "sha256": "b4f2dfba77b1d338af3fc6aba1f031e7ec7aed913f8f821e6c82994e9b668f92",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/throwtheswitch/library/Unity/2.5.2/Unity-2.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/throwtheswitch/library/Unity/2.5.2/Unity-2.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "throwtheswitch/library/Unity/2.6.0/Unity-2.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Unity-2.6.0.tar.gz",
+    "size_bytes": 73521,
+    "sha256": "ebf44dc8d88a3bc97cb0f3d90fcfdec9315490ae882af63cb906e87ee713d5a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/throwtheswitch/library/Unity/2.6.0/Unity-2.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/throwtheswitch/library/Unity/2.6.0/Unity-2.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "throwtheswitch/library/Unity/2.6.1/Unity-2.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Unity-2.6.1.tar.gz",
+    "size_bytes": 73574,
+    "sha256": "d74dc46682a2a9d6fd7295905e6511dce1777141636f3b3b422e5e3958d2d610",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/throwtheswitch/library/Unity/2.6.1/Unity-2.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/throwtheswitch/library/Unity/2.6.1/Unity-2.6.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

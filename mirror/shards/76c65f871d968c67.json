@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-mqtt",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-mqtt/library/MQTT/0.0.0+sha.9cff7b6bbd01/MQTT-0.0.0+sha.9cff7b6bbd01.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQTT-0.0.0+sha.9cff7b6bbd01.tar.gz",
+    "size_bytes": 12045,
+    "sha256": "a513cb3f831d625187a6d5f64363bb5d8fd5c60a360cc9f15edee99a4a2cef2b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mqtt/library/MQTT/0.0.0%2Bsha.9cff7b6bbd01/MQTT-0.0.0%2Bsha.9cff7b6bbd01.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mqtt/library/MQTT/0.0.0%2Bsha.9cff7b6bbd01/MQTT-0.0.0%2Bsha.9cff7b6bbd01.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-mqtt/library/MQTTPacket/0.0.0+sha.aedcaf7984d5/MQTTPacket-0.0.0+sha.aedcaf7984d5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQTTPacket-0.0.0+sha.aedcaf7984d5.tar.gz",
+    "size_bytes": 17191,
+    "sha256": "f38fa2ca04711023b8a212ba1e64e85371784854c6cd8f47b5024155aa162811",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mqtt/library/MQTTPacket/0.0.0%2Bsha.aedcaf7984d5/MQTTPacket-0.0.0%2Bsha.aedcaf7984d5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mqtt/library/MQTTPacket/0.0.0%2Bsha.aedcaf7984d5/MQTTPacket-0.0.0%2Bsha.aedcaf7984d5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

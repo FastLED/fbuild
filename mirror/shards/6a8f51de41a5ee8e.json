@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-mightypork",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-mightypork/library/ESPTerm/0.0.0+sha.63d903b6ca9b/ESPTerm-0.0.0+sha.63d903b6ca9b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPTerm-0.0.0+sha.63d903b6ca9b.tar.gz",
+    "size_bytes": 7109,
+    "sha256": "7939c4b89fd562c075ec69a59a3107216d78e4e9c5b032fca8d364de271ae5b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mightypork/library/ESPTerm/0.0.0%2Bsha.63d903b6ca9b/ESPTerm-0.0.0%2Bsha.63d903b6ca9b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mightypork/library/ESPTerm/0.0.0%2Bsha.63d903b6ca9b/ESPTerm-0.0.0%2Bsha.63d903b6ca9b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-mightypork/library/NeoPixel/0.0.0+sha.a81364d9a67b/NeoPixel-0.0.0+sha.a81364d9a67b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeoPixel-0.0.0+sha.a81364d9a67b.tar.gz",
+    "size_bytes": 3428,
+    "sha256": "e82f62308b115b7a3608ef9466a59042fcf7082eb662397ff164653957db18ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mightypork/library/NeoPixel/0.0.0%2Bsha.a81364d9a67b/NeoPixel-0.0.0%2Bsha.a81364d9a67b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mightypork/library/NeoPixel/0.0.0%2Bsha.a81364d9a67b/NeoPixel-0.0.0%2Bsha.a81364d9a67b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

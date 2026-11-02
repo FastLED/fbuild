@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rgot-org",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rgot-org/library/CoVACIEL-ESP32/0.0.3/CoVACIEL-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CoVACIEL-0.0.3.tar.gz",
+    "size_bytes": 28204,
+    "sha256": "8866918850441eba4a5bd84febaa3494eeebab05012696216e8a6e1ee5982fe4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rgot-org/library/CoVACIEL-ESP32/0.0.3/CoVACIEL-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/rgot-org/library/CoVACIEL-ESP32/0.0.3/CoVACIEL-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rgot-org/library/CoVACIEL-ESP32/0.0.4/CoVACIEL-ESP32-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CoVACIEL-ESP32-0.0.4.tar.gz",
+    "size_bytes": 28952,
+    "sha256": "a0793983b18499edf9e4806c8fefdfccbc249bb5fa5fd519acf9de84afc5cf04",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rgot-org/library/CoVACIEL-ESP32/0.0.4/CoVACIEL-ESP32-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/rgot-org/library/CoVACIEL-ESP32/0.0.4/CoVACIEL-ESP32-0.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rgot-org/library/CoVACIEL-ESP32/1.0.3/CoVACIEL-ESP32-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CoVACIEL-ESP32-1.0.3.tar.gz",
+    "size_bytes": 29095,
+    "sha256": "78b816a3fe0aad6c701b58e70eb846df5ab036c49c000775e2a1ed26351c1ef4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rgot-org/library/CoVACIEL-ESP32/1.0.3/CoVACIEL-ESP32-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/rgot-org/library/CoVACIEL-ESP32/1.0.3/CoVACIEL-ESP32-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rgot-org/library/EzLoRaWAN/1.0.1/EzLoRaWAN-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EzLoRaWAN-1.0.1.tar.gz",
+    "size_bytes": 115184,
+    "sha256": "92e4a204011887a17b8b2c2522ecd4f4f534b071e812f4b9bc3784bcf3633dab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rgot-org/library/EzLoRaWAN/1.0.1/EzLoRaWAN-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/rgot-org/library/EzLoRaWAN/1.0.1/EzLoRaWAN-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rgot-org/library/EzLoRaWAN_BLE/1.0.0/EzLoRaWAN_BLE-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EzLoRaWAN_BLE-1.0.0.tar.gz",
+    "size_bytes": 7731,
+    "sha256": "76e02ffc78416f9957d3e15b71a1b93043a2ae00a57c0de10215ee80327d8ed8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rgot-org/library/EzLoRaWAN_BLE/1.0.0/EzLoRaWAN_BLE-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rgot-org/library/EzLoRaWAN_BLE/1.0.0/EzLoRaWAN_BLE-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rgot-org/library/TTN_M5Stack/0.0.2/TTN_M5Stack-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TTN_M5Stack-0.0.2.tar.gz",
+    "size_bytes": 9571,
+    "sha256": "c68e7144d32fbdb5b98fc071abb4300f5f037ea588dcd4ffb1df2e6b1c7fe997",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rgot-org/library/TTN_M5Stack/0.0.2/TTN_M5Stack-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/rgot-org/library/TTN_M5Stack/0.0.2/TTN_M5Stack-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rgot-org/library/TTN_esp32/0.1.7/TTN_esp32-0.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TTN_esp32-0.1.7.tar.gz",
+    "size_bytes": 156763,
+    "sha256": "8663bc783137fcac198d363b487d32daeacd0245665c574957137cb361eb074f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rgot-org/library/TTN_esp32/0.1.7/TTN_esp32-0.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/rgot-org/library/TTN_esp32/0.1.7/TTN_esp32-0.1.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

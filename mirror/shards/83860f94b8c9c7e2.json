@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/vaelen",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "vaelen/library/libkiss/1.1.0/libkiss-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libkiss-1.1.0.tar.gz",
+    "size_bytes": 28063,
+    "sha256": "889eee59dbf15cb9578ac5fdc08dedd120abfa4fa817997c194c89893c7f30f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vaelen/library/libkiss/1.1.0/libkiss-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vaelen/library/libkiss/1.1.0/libkiss-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

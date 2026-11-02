@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-anhquan",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-anhquan/library/DHT11/0.0.0+sha.7056c0ba31c8/DHT11-0.0.0+sha.7056c0ba31c8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DHT11-0.0.0+sha.7056c0ba31c8.tar.gz",
+    "size_bytes": 2066,
+    "sha256": "572809c341088ec069fbcfe10b8df82d83ffed875632037a487483451026d179",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-anhquan/library/DHT11/0.0.0%2Bsha.7056c0ba31c8/DHT11-0.0.0%2Bsha.7056c0ba31c8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-anhquan/library/DHT11/0.0.0%2Bsha.7056c0ba31c8/DHT11-0.0.0%2Bsha.7056c0ba31c8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

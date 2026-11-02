@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fcrins",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fcrins/library/Weathercall/1.0.10/Weathercall-1.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Weathercall-1.0.10.tar.gz",
+    "size_bytes": 7611,
+    "sha256": "b5beb51b90f2c56b20cf449337d60723f4d56003eeaeec0964b7f9101f95b987",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fcrins/library/Weathercall/1.0.10/Weathercall-1.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/fcrins/library/Weathercall/1.0.10/Weathercall-1.0.10.tar.gz"
+    ]
+   }
+  }
+ ]
+}

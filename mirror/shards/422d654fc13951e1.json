@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ryanplusplus",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ryanplusplus/library/arduino-tiny/5.0.0/arduino-tiny-5.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arduino-tiny-5.0.0.tar.gz",
+    "size_bytes": 4406,
+    "sha256": "932262024f4a2069ee1288af2e0c5575558f858b5d80606a7296d9149551152f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ryanplusplus/library/arduino-tiny/5.0.0/arduino-tiny-5.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ryanplusplus/library/arduino-tiny/5.0.0/arduino-tiny-5.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ryanplusplus/library/tiny-cpp/3.0.1/tiny-cpp-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tiny-cpp-3.0.1.tar.gz",
+    "size_bytes": 20796,
+    "sha256": "b072eb56823f4100f4c26c70db4354ba871108570d221b36dbc9589b742bbcbb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ryanplusplus/library/tiny-cpp/3.0.1/tiny-cpp-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ryanplusplus/library/tiny-cpp/3.0.1/tiny-cpp-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ryanplusplus/library/tiny-cpp/3.0.2/tiny-cpp-3.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tiny-cpp-3.0.2.tar.gz",
+    "size_bytes": 20821,
+    "sha256": "93ff88eeeb875b3ee93d35d8c0b0f24c9892059520c38b3cbfb97d1046c73bd3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ryanplusplus/library/tiny-cpp/3.0.2/tiny-cpp-3.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ryanplusplus/library/tiny-cpp/3.0.2/tiny-cpp-3.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ryanplusplus/library/tiny-devices/3.0.0/tiny-devices-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tiny-devices-3.0.0.tar.gz",
+    "size_bytes": 2122,
+    "sha256": "4f836606e01f07a32dd24dbe4881e2b8972ec095715dff377522a42de632b004",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ryanplusplus/library/tiny-devices/3.0.0/tiny-devices-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ryanplusplus/library/tiny-devices/3.0.0/tiny-devices-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ryanplusplus/library/tiny/6.4.7/tiny-6.4.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tiny-6.4.7.tar.gz",
+    "size_bytes": 22184,
+    "sha256": "2f615b7580365f4661800fb17d6991edb5b43f0f432e8a129a2f1483bf3d7a80",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ryanplusplus/library/tiny/6.4.7/tiny-6.4.7.tar.gz",
+     "https://dl.registry.platformio.org/download/ryanplusplus/library/tiny/6.4.7/tiny-6.4.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ryanplusplus/library/tiny/7.3.0/tiny-7.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tiny-7.3.0.tar.gz",
+    "size_bytes": 22726,
+    "sha256": "1d85b56131e775b227e39b72ba2c3900bf29aab8cd9b38af340e66461946fd7f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ryanplusplus/library/tiny/7.3.0/tiny-7.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ryanplusplus/library/tiny/7.3.0/tiny-7.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ryanplusplus/library/zephyr-tiny/0.0.2/zephyr-tiny-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "zephyr-tiny-0.0.2.tar.gz",
+    "size_bytes": 1296,
+    "sha256": "00b4b44683952f99f312f9e7f91088080f9c9b12e48311bb3afe7216252b413b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ryanplusplus/library/zephyr-tiny/0.0.2/zephyr-tiny-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ryanplusplus/library/zephyr-tiny/0.0.2/zephyr-tiny-0.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

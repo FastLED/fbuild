@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-oliverfang",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-oliverfang/library/MAG3110/0.0.0+sha.b81ec73cd601/MAG3110-0.0.0+sha.b81ec73cd601.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAG3110-0.0.0+sha.b81ec73cd601.tar.gz",
+    "size_bytes": 2639,
+    "sha256": "d543efd651f5d092b56e090047454f21cf082742ad8b0b5f30450d74f5a1eabd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-oliverfang/library/MAG3110/0.0.0%2Bsha.b81ec73cd601/MAG3110-0.0.0%2Bsha.b81ec73cd601.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-oliverfang/library/MAG3110/0.0.0%2Bsha.b81ec73cd601/MAG3110-0.0.0%2Bsha.b81ec73cd601.tar.gz"
+    ]
+   }
+  }
+ ]
+}

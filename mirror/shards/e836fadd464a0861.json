@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/spellfoundry",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "spellfoundry/library/PCF8523/1.0.0/PCF8523-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCF8523-1.0.0.tar.gz",
+    "size_bytes": 15900,
+    "sha256": "037fb959f1d991d8c102b10081e2fc4cf9a4ada1d43a46a1f82d92f0aab63484",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/spellfoundry/library/PCF8523/1.0.0/PCF8523-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/spellfoundry/library/PCF8523/1.0.0/PCF8523-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "spellfoundry/library/Sleepy%20Pi%202/1.0.1/SleepyPi2-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SleepyPi2-1.0.1.tar.gz",
+    "size_bytes": 23467,
+    "sha256": "1452df9f86e3a1e32d02acbcb2fd15065fa7f7ff70c58a79c7c77ee1e8e805ef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/spellfoundry/library/Sleepy%2520Pi%25202/1.0.1/SleepyPi2-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/spellfoundry/library/Sleepy%20Pi%202/1.0.1/SleepyPi2-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

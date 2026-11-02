@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ssaattww",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ssaattww/library/table/0.0.0+sha.c0175d45d388/table-0.0.0+sha.c0175d45d388.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "table-0.0.0+sha.c0175d45d388.tar.gz",
+    "size_bytes": 2142,
+    "sha256": "65ec8f81dbfbfe34043ff1fcd299868562efe290cba600425cd156100b98d5de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ssaattww/library/table/0.0.0%2Bsha.c0175d45d388/table-0.0.0%2Bsha.c0175d45d388.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ssaattww/library/table/0.0.0%2Bsha.c0175d45d388/table-0.0.0%2Bsha.c0175d45d388.tar.gz"
+    ]
+   }
+  }
+ ]
+}

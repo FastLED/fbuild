@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/straverk",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "straverk/library/Display%20SSD1306/0.0.3/DisplaySSD1306-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DisplaySSD1306-0.0.3.tar.gz",
+    "size_bytes": 7932,
+    "sha256": "f849d82558c065907fa99021eae3458acc5a74fdabb003a617f56f568ebf2146",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/straverk/library/Display%2520SSD1306/0.0.3/DisplaySSD1306-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/straverk/library/Display%20SSD1306/0.0.3/DisplaySSD1306-0.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

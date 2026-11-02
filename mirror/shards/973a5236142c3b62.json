@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gypsy-server",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gypsy-server/library/Gypsy/1.0.0/Gypsy-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Gypsy-1.0.0.tar.gz",
+    "size_bytes": 488854,
+    "sha256": "f668ab0ae7611a19fd0bdd03e0aac23e6aef60a5f296904ded77418b3fc53260",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gypsy-server/library/Gypsy/1.0.0/Gypsy-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gypsy-server/library/Gypsy/1.0.0/Gypsy-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

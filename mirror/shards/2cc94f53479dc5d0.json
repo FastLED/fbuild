@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/haukex",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "haukex/library/Ascon128/1.0.0/Ascon128-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ascon128-1.0.0.tar.gz",
+    "size_bytes": 24995,
+    "sha256": "b304fd921379fb7d33a045d019daff906b61602dfbf3c78d1a28a970213bf025",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/haukex/library/Ascon128/1.0.0/Ascon128-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/haukex/library/Ascon128/1.0.0/Ascon128-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "haukex/library/Ascon128/1.1.0/Ascon128-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ascon128-1.1.0.tar.gz",
+    "size_bytes": 26638,
+    "sha256": "70ca41e01277f5b90eb1a6cff1ba464605ed8323a50134b3aaebe380353d36d3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/haukex/library/Ascon128/1.1.0/Ascon128-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/haukex/library/Ascon128/1.1.0/Ascon128-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

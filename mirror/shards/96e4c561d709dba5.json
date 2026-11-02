@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/intuition-rt",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "intuition-rt/library/ilo/0.1/ilo-0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ilo-0.1.tar.gz",
+    "size_bytes": 6057,
+    "sha256": "4282a5cd412d27ea4a89a0546443e789f132fe2adc9d8fe564bda5b4419654c5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/intuition-rt/library/ilo/0.1/ilo-0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/intuition-rt/library/ilo/0.1/ilo-0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

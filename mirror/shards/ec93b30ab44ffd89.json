@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/irmp-org",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "irmp-org/library/IRMP/3.6.4/IRMP-3.6.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IRMP-3.6.4.tar.gz",
+    "size_bytes": 401311,
+    "sha256": "73f8e57281a2f461b0438443841c87cdd55d7dafd2c0c5c2733724e2f643ba95",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/irmp-org/library/IRMP/3.6.4/IRMP-3.6.4.tar.gz",
+     "https://dl.registry.platformio.org/download/irmp-org/library/IRMP/3.6.4/IRMP-3.6.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

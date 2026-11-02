@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-akafugu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-akafugu/library/RTC/0.0.0+sha.6119507e6713/RTC-0.0.0+sha.6119507e6713.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RTC-0.0.0+sha.6119507e6713.tar.gz",
+    "size_bytes": 4409,
+    "sha256": "fc6e92e20f6fa2aca5209404b2048062f68130bc427f5d6dc7465ddd4c7e1751",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-akafugu/library/RTC/0.0.0%2Bsha.6119507e6713/RTC-0.0.0%2Bsha.6119507e6713.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-akafugu/library/RTC/0.0.0%2Bsha.6119507e6713/RTC-0.0.0%2Bsha.6119507e6713.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-akafugu/library/_24LCXXX/0.0.0+sha.245ed08d3297/_24LCXXX-0.0.0+sha.245ed08d3297.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "_24LCXXX-0.0.0+sha.245ed08d3297.tar.gz",
+    "size_bytes": 2882,
+    "sha256": "a3481e79a34e84f9fa39c8e4c7663798b73aa22d851e6cda7892ad6a9c6a4541",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-akafugu/library/_24LCXXX/0.0.0%2Bsha.245ed08d3297/_24LCXXX-0.0.0%2Bsha.245ed08d3297.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-akafugu/library/_24LCXXX/0.0.0%2Bsha.245ed08d3297/_24LCXXX-0.0.0%2Bsha.245ed08d3297.tar.gz"
+    ]
+   }
+  }
+ ]
+}

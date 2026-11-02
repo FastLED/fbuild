@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/vladislave",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "vladislave/library/FlowSensorWater/1.0.0/FlowSensorWater-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FlowSensorWater-1.0.0.tar.gz",
+    "size_bytes": 2064,
+    "sha256": "045b74aba864dc5a64d79940f8cfa237417b492143bf60cd81ded3761af29656",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vladislave/library/FlowSensorWater/1.0.0/FlowSensorWater-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vladislave/library/FlowSensorWater/1.0.0/FlowSensorWater-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,191 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/the78mole",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "the78mole/library/BThomeV2/0.0.15/BThomeV2-0.0.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BThomeV2-0.0.15.tar.gz",
+    "size_bytes": 22233,
+    "sha256": "b187366dbffd655083db50ca59156c1583ad977e11fa343c67b51593c83d1136",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/the78mole/library/BThomeV2/0.0.15/BThomeV2-0.0.15.tar.gz",
+     "https://dl.registry.platformio.org/download/the78mole/library/BThomeV2/0.0.15/BThomeV2-0.0.15.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "the78mole/library/BThomeV2/0.1.0/BThomeV2-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BThomeV2-0.1.0.tar.gz",
+    "size_bytes": 22640,
+    "sha256": "9db7b9d40f2c08861da9206c12180e07e4e60e259a2b7e606edc2e38fe584f1a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/the78mole/library/BThomeV2/0.1.0/BThomeV2-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/the78mole/library/BThomeV2/0.1.0/BThomeV2-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "the78mole/library/BThomeV2/0.1.3/BThomeV2-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BThomeV2-0.1.3.tar.gz",
+    "size_bytes": 22645,
+    "sha256": "ed1a6259feccc745b802939e502bd40efce85902137ebc7aeccaa97cd26c05f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/the78mole/library/BThomeV2/0.1.3/BThomeV2-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/the78mole/library/BThomeV2/0.1.3/BThomeV2-0.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "the78mole/library/BThomeV2/0.1.4/BThomeV2-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BThomeV2-0.1.4.tar.gz",
+    "size_bytes": 22640,
+    "sha256": "ddf871006b17e19156f6c82e8fcac256771c734007df20bb2158c76995ff8322",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/the78mole/library/BThomeV2/0.1.4/BThomeV2-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/the78mole/library/BThomeV2/0.1.4/BThomeV2-0.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "the78mole/library/BThomeV2/0.1.5/BThomeV2-0.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BThomeV2-0.1.5.tar.gz",
+    "size_bytes": 23055,
+    "sha256": "23447b4fb5c8aa7628be957389fbd6185d304dbb9eb76caf5869be869f4175bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/the78mole/library/BThomeV2/0.1.5/BThomeV2-0.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/the78mole/library/BThomeV2/0.1.5/BThomeV2-0.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "the78mole/library/BThomeV2/0.1.6/BThomeV2-0.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BThomeV2-0.1.6.tar.gz",
+    "size_bytes": 23041,
+    "sha256": "22b8da7bc6ba83cb0d1045bdb9e219c05d9541d6bc0b361fd1e3b257a27bfcb2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/the78mole/library/BThomeV2/0.1.6/BThomeV2-0.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/the78mole/library/BThomeV2/0.1.6/BThomeV2-0.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "the78mole/library/BThomeV2/0.1.7/BThomeV2-0.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BThomeV2-0.1.7.tar.gz",
+    "size_bytes": 23062,
+    "sha256": "23894a7a592e566ac8de3a27235981fb8ec93599b6f8ebf8e1c50090c7617161",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/the78mole/library/BThomeV2/0.1.7/BThomeV2-0.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/the78mole/library/BThomeV2/0.1.7/BThomeV2-0.1.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "the78mole/library/BThomeV2/0.1.8/BThomeV2-0.1.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BThomeV2-0.1.8.tar.gz",
+    "size_bytes": 23077,
+    "sha256": "9b632a798cc5539bb8087f1801d580ecddaa9e6b6ec51fc57de8e20eb05e9091",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/the78mole/library/BThomeV2/0.1.8/BThomeV2-0.1.8.tar.gz",
+     "https://dl.registry.platformio.org/download/the78mole/library/BThomeV2/0.1.8/BThomeV2-0.1.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "the78mole/library/BThomeV2/0.1.9/BThomeV2-0.1.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BThomeV2-0.1.9.tar.gz",
+    "size_bytes": 23069,
+    "sha256": "8191460e479c9372a6af85dad549c2bd9c138a01556fce2c0292c10128c3e122",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/the78mole/library/BThomeV2/0.1.9/BThomeV2-0.1.9.tar.gz",
+     "https://dl.registry.platformio.org/download/the78mole/library/BThomeV2/0.1.9/BThomeV2-0.1.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "the78mole/library/BThomeV2/0.4.2/BThomeV2-0.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BThomeV2-0.4.2.tar.gz",
+    "size_bytes": 26246,
+    "sha256": "253de4848d546cbc6cc3bce66cdfb568b891106111990e0958320ef7b070ca16",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/the78mole/library/BThomeV2/0.4.2/BThomeV2-0.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/the78mole/library/BThomeV2/0.4.2/BThomeV2-0.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "the78mole/library/BThomeV2/0.5.0/BThomeV2-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BThomeV2-0.5.0.tar.gz",
+    "size_bytes": 26240,
+    "sha256": "6f698f5e4db95c264472ad5b467618b6ca3df01e03677c7f6bdcff86221df4c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/the78mole/library/BThomeV2/0.5.0/BThomeV2-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/the78mole/library/BThomeV2/0.5.0/BThomeV2-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "the78mole/library/BThomeV2/0.5.1/BThomeV2-0.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BThomeV2-0.5.1.tar.gz",
+    "size_bytes": 26262,
+    "sha256": "d90ba1ff88e0dc5f27c918a660f906fa80d611a9e7fc76d99245e1db8841ed73",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/the78mole/library/BThomeV2/0.5.1/BThomeV2-0.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/the78mole/library/BThomeV2/0.5.1/BThomeV2-0.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "the78mole/library/BThomeV2/0.6.0/BThomeV2-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BThomeV2-0.6.0.tar.gz",
+    "size_bytes": 26256,
+    "sha256": "fe56e6c892c39d6b62d3d2b025729929001e7c059fbd790600b2f7e1c7f7e812",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/the78mole/library/BThomeV2/0.6.0/BThomeV2-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/the78mole/library/BThomeV2/0.6.0/BThomeV2-0.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "the78mole/library/BThomeV2/0.7.0/BThomeV2-0.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BThomeV2-0.7.0.tar.gz",
+    "size_bytes": 26246,
+    "sha256": "4c5227c092817d8074c17191467be12aeff07cb9d9837aaa8ea944aabebc4b53",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/the78mole/library/BThomeV2/0.7.0/BThomeV2-0.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/the78mole/library/BThomeV2/0.7.0/BThomeV2-0.7.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

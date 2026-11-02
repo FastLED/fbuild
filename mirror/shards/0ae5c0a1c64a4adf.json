@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/joaoaugustocz",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "joaoaugustocz/library/LidarArray/1.1.0/LidarArray-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LidarArray-1.1.0.tar.gz",
+    "size_bytes": 13290,
+    "sha256": "16b8444e88ad9f4f6fcb05560eeaf7431bfe53071cffe43de196defaa9218ce9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joaoaugustocz/library/LidarArray/1.1.0/LidarArray-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/joaoaugustocz/library/LidarArray/1.1.0/LidarArray-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "joaoaugustocz/library/LidarArray/1.3.0/LidarArray-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LidarArray-1.3.0.tar.gz",
+    "size_bytes": 23444,
+    "sha256": "b93dbf03c75846993b31c3f2376392a9cef3f597aa788156b3ca89a8ff66379c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joaoaugustocz/library/LidarArray/1.3.0/LidarArray-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/joaoaugustocz/library/LidarArray/1.3.0/LidarArray-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "joaoaugustocz/library/LidarArray/1.4.0/LidarArray-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LidarArray-1.4.0.tar.gz",
+    "size_bytes": 25495,
+    "sha256": "8c40c0198dcffe7bb2c205ecda9a9d4f65afbacb854599c45c4d4bb9bf059cdc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joaoaugustocz/library/LidarArray/1.4.0/LidarArray-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/joaoaugustocz/library/LidarArray/1.4.0/LidarArray-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "joaoaugustocz/library/RoboS3/0.2.0/RoboS3-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RoboS3-0.2.0.tar.gz",
+    "size_bytes": 44526,
+    "sha256": "f71d8e29e004095c0b42dec6496079ad5c0804b5c66a4c6e4aa9e46b4c8a3fbd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joaoaugustocz/library/RoboS3/0.2.0/RoboS3-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/joaoaugustocz/library/RoboS3/0.2.0/RoboS3-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "joaoaugustocz/library/RoboS3/0.4.2/RoboS3-0.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RoboS3-0.4.2.tar.gz",
+    "size_bytes": 78218,
+    "sha256": "8088176893fd3bbf77d1dd84b1d03a31765192d935aec865f49a219f2d19b31d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joaoaugustocz/library/RoboS3/0.4.2/RoboS3-0.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/joaoaugustocz/library/RoboS3/0.4.2/RoboS3-0.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "joaoaugustocz/library/SuperOTA/1.2.1/SuperOTA-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperOTA-1.2.1.tar.gz",
+    "size_bytes": 28459,
+    "sha256": "ff0e3c3489a63a43ebdda0d6e2491f5202c28396c923239877d44bb711c1d1b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joaoaugustocz/library/SuperOTA/1.2.1/SuperOTA-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/joaoaugustocz/library/SuperOTA/1.2.1/SuperOTA-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "joaoaugustocz/library/SuperOTA/1.3.0/SuperOTA-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperOTA-1.3.0.tar.gz",
+    "size_bytes": 31571,
+    "sha256": "55ac62811abbc0ea26730fc6a171fd6b4e38702dff2c0281894f4c2067558f1d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joaoaugustocz/library/SuperOTA/1.3.0/SuperOTA-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/joaoaugustocz/library/SuperOTA/1.3.0/SuperOTA-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "joaoaugustocz/library/mpu6050_FastAngles/1.0.3/mpu6050_FastAngles-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mpu6050_FastAngles-1.0.3.tar.gz",
+    "size_bytes": 8784,
+    "sha256": "46f2b843197870d29388eda6ff07af42a17afab8523c15a9467f5344b91b993a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joaoaugustocz/library/mpu6050_FastAngles/1.0.3/mpu6050_FastAngles-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/joaoaugustocz/library/mpu6050_FastAngles/1.0.3/mpu6050_FastAngles-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

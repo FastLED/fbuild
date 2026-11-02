@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/noelbadwolf",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "noelbadwolf/library/SimpleAwait/1.0.1/SimpleAwait-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleAwait-1.0.1.tar.gz",
+    "size_bytes": 87072,
+    "sha256": "b4c1490b5279ecc02e298dcff8a8c9c082188ee9e5b6f9102bac07e87e3f8461",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/noelbadwolf/library/SimpleAwait/1.0.1/SimpleAwait-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/noelbadwolf/library/SimpleAwait/1.0.1/SimpleAwait-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

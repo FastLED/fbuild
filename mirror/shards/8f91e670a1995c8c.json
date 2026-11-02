@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bportaluri",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bportaluri/library/ALA/2.3.8/ALA-2.3.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ALA-2.3.8.tar.gz",
+    "size_bytes": 95067,
+    "sha256": "079ccf4b40946b01b7d0eaeb15f526684d056f3807a6d21d356237d4b8c03c72",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bportaluri/library/ALA/2.3.8/ALA-2.3.8.tar.gz",
+     "https://dl.registry.platformio.org/download/bportaluri/library/ALA/2.3.8/ALA-2.3.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bportaluri/library/WiFiEsp/2.2.2/WiFiEsp-2.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFiEsp-2.2.2.tar.gz",
+    "size_bytes": 36639,
+    "sha256": "0f301194cd4e8fc623d869fb923d56643d9796f251b25b136c717c798d08623c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bportaluri/library/WiFiEsp/2.2.2/WiFiEsp-2.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bportaluri/library/WiFiEsp/2.2.2/WiFiEsp-2.2.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

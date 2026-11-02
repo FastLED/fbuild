@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-easycat",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-easycat/library/EasyCAT_lib/0.0.0+sha.47eefd835111/EasyCAT_lib-0.0.0+sha.47eefd835111.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyCAT_lib-0.0.0+sha.47eefd835111.tar.gz",
+    "size_bytes": 15069,
+    "sha256": "165fac1aca9da522bb8ed92854b378631583e2606e21ed25664f9e4137108e8e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-easycat/library/EasyCAT_lib/0.0.0%2Bsha.47eefd835111/EasyCAT_lib-0.0.0%2Bsha.47eefd835111.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-easycat/library/EasyCAT_lib/0.0.0%2Bsha.47eefd835111/EasyCAT_lib-0.0.0%2Bsha.47eefd835111.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-easycat/library/SOEM/0.0.0+sha.543d6784d4cc/SOEM-0.0.0+sha.543d6784d4cc.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SOEM-0.0.0+sha.543d6784d4cc.tar.gz",
+    "size_bytes": 70442,
+    "sha256": "70124ef4c0bfcf79f86092c69c905753765d24636fd5b80c9a71a76efb01ccb1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-easycat/library/SOEM/0.0.0%2Bsha.543d6784d4cc/SOEM-0.0.0%2Bsha.543d6784d4cc.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-easycat/library/SOEM/0.0.0%2Bsha.543d6784d4cc/SOEM-0.0.0%2Bsha.543d6784d4cc.tar.gz"
+    ]
+   }
+  }
+ ]
+}

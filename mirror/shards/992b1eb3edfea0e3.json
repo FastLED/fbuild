@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nexbyteio",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nexbyteio/library/ZenLib/1.0.0/ZenLib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ZenLib-1.0.0.tar.gz",
+    "size_bytes": 3305,
+    "sha256": "c601d4ebf92d87453da29ca9bc2d0caeb10864af79f81f5a6e7e556ebf93ddc2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nexbyteio/library/ZenLib/1.0.0/ZenLib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nexbyteio/library/ZenLib/1.0.0/ZenLib-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nexbyteio/library/ZenRTC/1.0.0/ZenRTC-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ZenRTC-1.0.0.tar.gz",
+    "size_bytes": 4804,
+    "sha256": "5a6a05319db28a5d0bc6ddc836fd613e2ea3edebd88e14ba2273b80d4bb34f4d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nexbyteio/library/ZenRTC/1.0.0/ZenRTC-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nexbyteio/library/ZenRTC/1.0.0/ZenRTC-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

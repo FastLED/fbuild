@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hedrickbt",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hedrickbt/library/MillaMilla%20DS7505%20Library/1.0.0/MillaMillaDS7505Library-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MillaMillaDS7505Library-1.0.0.tar.gz",
+    "size_bytes": 3938,
+    "sha256": "cfbd3eef7a11d3d5d1fad4baf4d2da87996b9ce154aaf5e7d71315349ca9f9ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hedrickbt/library/MillaMilla%2520DS7505%2520Library/1.0.0/MillaMillaDS7505Library-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hedrickbt/library/MillaMilla%20DS7505%20Library/1.0.0/MillaMillaDS7505Library-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

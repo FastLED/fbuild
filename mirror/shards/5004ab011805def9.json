@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sakamoto-q",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sakamoto-q/library/openai-c/0.0.5/openai-c-0.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "openai-c-0.0.5.tar.gz",
+    "size_bytes": 8439,
+    "sha256": "6a6a928ff418a3e5b316e37ec18ff3ccae6ea2d02c043321343d697d52851391",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sakamoto-q/library/openai-c/0.0.5/openai-c-0.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/sakamoto-q/library/openai-c/0.0.5/openai-c-0.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sakamoto-q/library/openai-c/0.0.6/openai-c-0.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "openai-c-0.0.6.tar.gz",
+    "size_bytes": 9144,
+    "sha256": "835296510972cb320ca485d37746c93969c44f294365ee9cfad0ec6bf9ecdb16",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sakamoto-q/library/openai-c/0.0.6/openai-c-0.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/sakamoto-q/library/openai-c/0.0.6/openai-c-0.0.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

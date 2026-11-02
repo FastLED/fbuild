@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/davidwhitney",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "davidwhitney/library/snakelights/0.0.3/snakelights-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "snakelights-0.0.3.tar.gz",
+    "size_bytes": 4294,
+    "sha256": "757f1b9fb5741ff05d69d9aa6d545849615f88d27cc87ba79bb430c8eb48fa58",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/davidwhitney/library/snakelights/0.0.3/snakelights-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/davidwhitney/library/snakelights/0.0.3/snakelights-0.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

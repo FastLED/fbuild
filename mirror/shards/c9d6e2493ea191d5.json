@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-zero515",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-zero515/library/53L0A1/0.0.0+sha.294485283baf/53L0A1-0.0.0+sha.294485283baf.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "53L0A1-0.0.0+sha.294485283baf.tar.gz",
+    "size_bytes": 62156,
+    "sha256": "d871742ad8a64bee57cdce6fd233cd0bd0d6c4673306889b9f8dfc1aae4234c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-zero515/library/53L0A1/0.0.0%2Bsha.294485283baf/53L0A1-0.0.0%2Bsha.294485283baf.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-zero515/library/53L0A1/0.0.0%2Bsha.294485283baf/53L0A1-0.0.0%2Bsha.294485283baf.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/amaxilat",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "amaxilat/library/ble_definitions/0.0.4/ble_definitions-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ble_definitions-0.0.4.tar.gz",
+    "size_bytes": 5690,
+    "sha256": "616d757e96e6bbc94fab16281ec776ee9157579d7f0880eb553305d60ebc7528",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/amaxilat/library/ble_definitions/0.0.4/ble_definitions-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/amaxilat/library/ble_definitions/0.0.4/ble_definitions-0.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

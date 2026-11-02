@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-richnash",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-richnash/library/xpl/0.0.0+sha.23c0d0e1c31d/xpl-0.0.0+sha.23c0d0e1c31d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "xpl-0.0.0+sha.23c0d0e1c31d.tar.gz",
+    "size_bytes": 6569,
+    "sha256": "e380f3994385d3416e5cf22b5a3464d20bb1bc1a4df9e23a40d59e1e0dbcdec5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-richnash/library/xpl/0.0.0%2Bsha.23c0d0e1c31d/xpl-0.0.0%2Bsha.23c0d0e1c31d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-richnash/library/xpl/0.0.0%2Bsha.23c0d0e1c31d/xpl-0.0.0%2Bsha.23c0d0e1c31d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kdi6033",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kdi6033/library/OttoI2R/1.0.0/OttoI2R-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OttoI2R-1.0.0.tar.gz",
+    "size_bytes": 15809,
+    "sha256": "eee74b0e8254b829e7f2a2f05bf5da15d026833e50a494b14f37d00f1357a1c3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kdi6033/library/OttoI2R/1.0.0/OttoI2R-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kdi6033/library/OttoI2R/1.0.0/OttoI2R-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

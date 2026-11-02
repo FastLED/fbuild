@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/shigobu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "shigobu/library/CH9329_Keyboard/1.0.2/CH9329_Keyboard-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CH9329_Keyboard-1.0.2.tar.gz",
+    "size_bytes": 16353,
+    "sha256": "854a8d329187448e31836655073324334caa0231144de3c6d0967d9e90e63288",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shigobu/library/CH9329_Keyboard/1.0.2/CH9329_Keyboard-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/shigobu/library/CH9329_Keyboard/1.0.2/CH9329_Keyboard-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

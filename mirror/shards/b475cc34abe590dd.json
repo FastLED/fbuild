@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-tylerwilson",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-tylerwilson/library/Pawn4/0.0.0+sha.185fdbb7ccf0/Pawn4-0.0.0+sha.185fdbb7ccf0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pawn4-0.0.0+sha.185fdbb7ccf0.tar.gz",
+    "size_bytes": 49230,
+    "sha256": "9f4c1bfa0e920ae7748ac6060570e38634f0b7d6142994581c6cca35cd3bae40",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tylerwilson/library/Pawn4/0.0.0%2Bsha.185fdbb7ccf0/Pawn4-0.0.0%2Bsha.185fdbb7ccf0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tylerwilson/library/Pawn4/0.0.0%2Bsha.185fdbb7ccf0/Pawn4-0.0.0%2Bsha.185fdbb7ccf0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-tylerwilson/library/wifly/0.0.0+sha.b5ee41a1ca65/wifly-0.0.0+sha.b5ee41a1ca65.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "wifly-0.0.0+sha.b5ee41a1ca65.tar.gz",
+    "size_bytes": 1380,
+    "sha256": "84edc459300c93faec53ac5085933796a46ed848601cdedbc267f37ea794f8a1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tylerwilson/library/wifly/0.0.0%2Bsha.b5ee41a1ca65/wifly-0.0.0%2Bsha.b5ee41a1ca65.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tylerwilson/library/wifly/0.0.0%2Bsha.b5ee41a1ca65/wifly-0.0.0%2Bsha.b5ee41a1ca65.tar.gz"
+    ]
+   }
+  }
+ ]
+}

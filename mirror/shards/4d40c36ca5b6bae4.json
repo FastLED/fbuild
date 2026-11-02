@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-y-notsu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-y-notsu/library/myLEDcube/0.0.0+sha.808f7981f647/myLEDcube-0.0.0+sha.808f7981f647.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "myLEDcube-0.0.0+sha.808f7981f647.tar.gz",
+    "size_bytes": 3591,
+    "sha256": "bc821fc4958b6eef8f17f32d938939ba9f030c6c8ad3ae52458c3cf79d978033",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-y-notsu/library/myLEDcube/0.0.0%2Bsha.808f7981f647/myLEDcube-0.0.0%2Bsha.808f7981f647.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-y-notsu/library/myLEDcube/0.0.0%2Bsha.808f7981f647/myLEDcube-0.0.0%2Bsha.808f7981f647.tar.gz"
+    ]
+   }
+  }
+ ]
+}

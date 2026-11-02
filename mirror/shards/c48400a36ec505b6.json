@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dimensionengineering",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dimensionengineering/library/Kangaroo%20Motion%20Controller/1.0.6/KangarooMotionController-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KangarooMotionController-1.0.6.tar.gz",
+    "size_bytes": 18183,
+    "sha256": "2c28cbee8dc5bc9456d267659edd868cc5533d2588daa39d48a87313b9c4d261",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dimensionengineering/library/Kangaroo%2520Motion%2520Controller/1.0.6/KangarooMotionController-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/dimensionengineering/library/Kangaroo%20Motion%20Controller/1.0.6/KangarooMotionController-1.0.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

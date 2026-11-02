@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/danja",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "danja/library/TM1638lite/1.1/TM1638lite-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TM1638lite-1.1.tar.gz",
+    "size_bytes": 6940,
+    "sha256": "a186fe1cb104a6af4d8f3012e22cd6e91d97064526a3f004d625780484e3a0aa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/danja/library/TM1638lite/1.1/TM1638lite-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/danja/library/TM1638lite/1.1/TM1638lite-1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

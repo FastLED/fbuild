@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kcl93",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kcl93/library/FUSB302%20PD%20UFP%20sink/0.1/FUSB302PDUFPsink-0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FUSB302PDUFPsink-0.1.tar.gz",
+    "size_bytes": 17859,
+    "sha256": "4b677bcc08ae378a99cca800ede94f06f94f4abf66b31d5a8edbc320652009cf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kcl93/library/FUSB302%2520PD%2520UFP%2520sink/0.1/FUSB302PDUFPsink-0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/kcl93/library/FUSB302%20PD%20UFP%20sink/0.1/FUSB302PDUFPsink-0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kcl93/library/Task%20Scheduler/1.4/TaskScheduler-1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TaskScheduler-1.4.tar.gz",
+    "size_bytes": 11468,
+    "sha256": "713f0b954285b8c30cf2d4023f64a640a3bebd073ef5638caa55a59b3edf38ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kcl93/library/Task%2520Scheduler/1.4/TaskScheduler-1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/kcl93/library/Task%20Scheduler/1.4/TaskScheduler-1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kcl93/library/VT100/1.0/VT100-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VT100-1.0.tar.gz",
+    "size_bytes": 4034,
+    "sha256": "5aa3d16246783d8feb6ed8537f4f96049295a3228cc2a15644e43a5070d99c46",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kcl93/library/VT100/1.0/VT100-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kcl93/library/VT100/1.0/VT100-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kcl93/library/muCom/2.0/muCom-2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "muCom-2.0.tar.gz",
+    "size_bytes": 9101,
+    "sha256": "14e166d44eb9ee925fd6e6805b4492c288678c27bbbb2dbe2fba93ebd3ece5ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kcl93/library/muCom/2.0/muCom-2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kcl93/library/muCom/2.0/muCom-2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-indraastra",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-indraastra/library/mbipanel/0.0.0+sha.c25833f8da58/mbipanel-0.0.0+sha.c25833f8da58.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mbipanel-0.0.0+sha.c25833f8da58.tar.gz",
+    "size_bytes": 2740,
+    "sha256": "18fcb6608a311726a7db75396645497218027f91a5aab4e81d85a33cfc5c40b4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-indraastra/library/mbipanel/0.0.0%2Bsha.c25833f8da58/mbipanel-0.0.0%2Bsha.c25833f8da58.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-indraastra/library/mbipanel/0.0.0%2Bsha.c25833f8da58/mbipanel-0.0.0%2Bsha.c25833f8da58.tar.gz"
+    ]
+   }
+  }
+ ]
+}

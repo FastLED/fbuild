@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-docent",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-docent/library/IRremouteAndButton/0.0.0+sha.94d6bf511846/IRremouteAndButton-0.0.0+sha.94d6bf511846.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IRremouteAndButton-0.0.0+sha.94d6bf511846.tar.gz",
+    "size_bytes": 2123,
+    "sha256": "e4898eb6efb97ae5b814e1a823edd3e6e225e14ad3767220c70b4967d4da7da4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-docent/library/IRremouteAndButton/0.0.0%2Bsha.94d6bf511846/IRremouteAndButton-0.0.0%2Bsha.94d6bf511846.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-docent/library/IRremouteAndButton/0.0.0%2Bsha.94d6bf511846/IRremouteAndButton-0.0.0%2Bsha.94d6bf511846.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-docent/library/LIS3MDL_my/0.0.0+sha.fa19aa1a666d/LIS3MDL_my-0.0.0+sha.fa19aa1a666d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LIS3MDL_my-0.0.0+sha.fa19aa1a666d.tar.gz",
+    "size_bytes": 7926,
+    "sha256": "0d8f96728eb176ed3df707a8da8a80c2845045d5015bea2fa80298de615f2a38",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-docent/library/LIS3MDL_my/0.0.0%2Bsha.fa19aa1a666d/LIS3MDL_my-0.0.0%2Bsha.fa19aa1a666d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-docent/library/LIS3MDL_my/0.0.0%2Bsha.fa19aa1a666d/LIS3MDL_my-0.0.0%2Bsha.fa19aa1a666d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-docent/library/QuadDisplayMy/0.0.0+sha.f8d176816ac2/QuadDisplayMy-0.0.0+sha.f8d176816ac2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QuadDisplayMy-0.0.0+sha.f8d176816ac2.tar.gz",
+    "size_bytes": 1692,
+    "sha256": "3eacf44138bdee1c437c6d0275af1d939795409bc44e6e1e94bd7e928e2fdeb0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-docent/library/QuadDisplayMy/0.0.0%2Bsha.f8d176816ac2/QuadDisplayMy-0.0.0%2Bsha.f8d176816ac2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-docent/library/QuadDisplayMy/0.0.0%2Bsha.f8d176816ac2/QuadDisplayMy-0.0.0%2Bsha.f8d176816ac2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-docent/library/WiFi_modem_8266/0.0.0+sha.0b46638559b3/WiFi_modem_8266-0.0.0+sha.0b46638559b3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFi_modem_8266-0.0.0+sha.0b46638559b3.tar.gz",
+    "size_bytes": 2717,
+    "sha256": "3d41b581b7855e224e5819ed904c54507004ae5b664d8efcd5cb52ac321ef3b2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-docent/library/WiFi_modem_8266/0.0.0%2Bsha.0b46638559b3/WiFi_modem_8266-0.0.0%2Bsha.0b46638559b3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-docent/library/WiFi_modem_8266/0.0.0%2Bsha.0b46638559b3/WiFi_modem_8266-0.0.0%2Bsha.0b46638559b3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

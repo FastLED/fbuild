@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-weston-and-ivan",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-weston-and-ivan/library/ContinuousServo/0.0.0+sha.f1fc02b6744f/ContinuousServo-0.0.0+sha.f1fc02b6744f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ContinuousServo-0.0.0+sha.f1fc02b6744f.tar.gz",
+    "size_bytes": 1331,
+    "sha256": "7faa5d43a364eeb87ba7f0d88ced14a045e9466690a728cb4674812ae848225d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-weston-and-ivan/library/ContinuousServo/0.0.0%2Bsha.f1fc02b6744f/ContinuousServo-0.0.0%2Bsha.f1fc02b6744f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-weston-and-ivan/library/ContinuousServo/0.0.0%2Bsha.f1fc02b6744f/ContinuousServo-0.0.0%2Bsha.f1fc02b6744f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

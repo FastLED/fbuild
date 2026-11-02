@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/todd-herbert",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "todd-herbert/library/AbsoluteMouse/0.1.0/AbsoluteMouse-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AbsoluteMouse-0.1.0.tar.gz",
+    "size_bytes": 78106,
+    "sha256": "14871f6642e7c38e3572435d31b9bf98e93d974b4a1743f3731f04e6bb7399de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/todd-herbert/library/AbsoluteMouse/0.1.0/AbsoluteMouse-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/todd-herbert/library/AbsoluteMouse/0.1.0/AbsoluteMouse-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "todd-herbert/library/Heltec-213R-V2/0.1/Heltec-213R-V2-0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Heltec-213R-V2-0.1.tar.gz",
+    "size_bytes": 280189,
+    "sha256": "f73f38ec340eb167011fc03673de140f2b06a44df14a519c7cdfb8a0d703de4f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/todd-herbert/library/Heltec-213R-V2/0.1/Heltec-213R-V2-0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/todd-herbert/library/Heltec-213R-V2/0.1/Heltec-213R-V2-0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "todd-herbert/library/heltec-eink-modules/4.5.0/heltec-eink-modules-4.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "heltec-eink-modules-4.5.0.tar.gz",
+    "size_bytes": 623150,
+    "sha256": "db8c227ae437149ab87b13ddd4622eefd2cf6393d2951ba5d88a4e8cb990a679",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/todd-herbert/library/heltec-eink-modules/4.5.0/heltec-eink-modules-4.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/todd-herbert/library/heltec-eink-modules/4.5.0/heltec-eink-modules-4.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "todd-herbert/library/unoHID/0.1.1/unoHID-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "unoHID-0.1.1.tar.gz",
+    "size_bytes": 93914,
+    "sha256": "b4cd6848d3728117fb601964027b088055058397f4b69bce01059d0a88083592",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/todd-herbert/library/unoHID/0.1.1/unoHID-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/todd-herbert/library/unoHID/0.1.1/unoHID-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

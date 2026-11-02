@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/aserebryakov",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "aserebryakov/library/CppComponentsLibrary/0.0.9/CppComponentsLibrary-0.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CppComponentsLibrary-0.0.9.tar.gz",
+    "size_bytes": 13750,
+    "sha256": "bb0bb671c2df13e35e198cdddfc832231061c478b2cb022b4e61cdc0110319cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aserebryakov/library/CppComponentsLibrary/0.0.9/CppComponentsLibrary-0.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/aserebryakov/library/CppComponentsLibrary/0.0.9/CppComponentsLibrary-0.0.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

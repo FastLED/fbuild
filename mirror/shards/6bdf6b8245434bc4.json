@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-andriym",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-andriym/library/PCAL6416/0.0.0+sha.035111d3d631/PCAL6416-0.0.0+sha.035111d3d631.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCAL6416-0.0.0+sha.035111d3d631.tar.gz",
+    "size_bytes": 8963,
+    "sha256": "2c12e18006a583912014fa24b743ba65699b827f703179d26bd78a3358f639a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-andriym/library/PCAL6416/0.0.0%2Bsha.035111d3d631/PCAL6416-0.0.0%2Bsha.035111d3d631.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-andriym/library/PCAL6416/0.0.0%2Bsha.035111d3d631/PCAL6416-0.0.0%2Bsha.035111d3d631.tar.gz"
+    ]
+   }
+  }
+ ]
+}

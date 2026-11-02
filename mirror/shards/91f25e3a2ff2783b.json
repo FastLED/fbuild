@@ -1,0 +1,126 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/blues",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "blues/library/Blues%20Notecard%20Environment%20Variable%20Manager/1.0.2/BluesNotecardEnvironmentVariableManager-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BluesNotecardEnvironmentVariableManager-1.0.2.tar.gz",
+    "size_bytes": 18763,
+    "sha256": "3f85095576e8ab5eba7bae7d7f18fae3260d564fc0e882ca5ecf16df0c5f37a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blues/library/Blues%2520Notecard%2520Environment%2520Variable%2520Manager/1.0.2/BluesNotecardEnvironmentVariableManager-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/blues/library/Blues%20Notecard%20Environment%20Variable%20Manager/1.0.2/BluesNotecardEnvironmentVariableManager-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "blues/library/Blues%20Wireless%20Notecard%20Auxiliary%20Wi-Fi/1.0.1/BluesWirelessNotecardAuxiliaryWi-Fi-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BluesWirelessNotecardAuxiliaryWi-Fi-1.0.1.tar.gz",
+    "size_bytes": 7177,
+    "sha256": "6bebfc1a3d5cee08622016f994f331c76a95c266b04fe6e4123f5be32d663682",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blues/library/Blues%2520Wireless%2520Notecard%2520Auxiliary%2520Wi-Fi/1.0.1/BluesWirelessNotecardAuxiliaryWi-Fi-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/blues/library/Blues%20Wireless%20Notecard%20Auxiliary%20Wi-Fi/1.0.1/BluesWirelessNotecardAuxiliaryWi-Fi-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "blues/library/Blues%20Wireless%20Notecard%20Pseudo%20Sensor/1.1.0/BluesWirelessNotecardPseudoSensor-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BluesWirelessNotecardPseudoSensor-1.1.0.tar.gz",
+    "size_bytes": 6482,
+    "sha256": "f3a7a1d1a121f4349972220caf57cead5be2c3f50414dc6aceeb34edc06f159d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blues/library/Blues%2520Wireless%2520Notecard%2520Pseudo%2520Sensor/1.1.0/BluesWirelessNotecardPseudoSensor-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/blues/library/Blues%20Wireless%20Notecard%20Pseudo%20Sensor/1.1.0/BluesWirelessNotecardPseudoSensor-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "blues/library/Blues%20Wireless%20Notecard/1.7.1/BluesWirelessNotecard-1.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BluesWirelessNotecard-1.7.1.tar.gz",
+    "size_bytes": 129171,
+    "sha256": "7f287b1236dd208543186e6d7b80832610d108c9edfcce6c534a1136ec5dca53",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blues/library/Blues%2520Wireless%2520Notecard/1.7.1/BluesWirelessNotecard-1.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/blues/library/Blues%20Wireless%20Notecard/1.7.1/BluesWirelessNotecard-1.7.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "blues/library/Blues%20Wireless%20Notecard/1.8.1/BluesWirelessNotecard-1.8.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BluesWirelessNotecard-1.8.1.tar.gz",
+    "size_bytes": 135263,
+    "sha256": "1219b0337768419e4d42c921808372ea3cd4c90beae36e8eb5b605f78bf3ea2c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blues/library/Blues%2520Wireless%2520Notecard/1.8.1/BluesWirelessNotecard-1.8.1.tar.gz",
+     "https://dl.registry.platformio.org/download/blues/library/Blues%20Wireless%20Notecard/1.8.1/BluesWirelessNotecard-1.8.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "blues/library/Blues%20Wireless%20Notecard/1.8.2/BluesWirelessNotecard-1.8.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BluesWirelessNotecard-1.8.2.tar.gz",
+    "size_bytes": 135487,
+    "sha256": "b79525d35a6d0d477ef67671e3e8e3a24194311a344eb19f1fc4dd19d0149dc1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blues/library/Blues%2520Wireless%2520Notecard/1.8.2/BluesWirelessNotecard-1.8.2.tar.gz",
+     "https://dl.registry.platformio.org/download/blues/library/Blues%20Wireless%20Notecard/1.8.2/BluesWirelessNotecard-1.8.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "blues/library/Blues%20Wireless%20Notecard/1.8.3/BluesWirelessNotecard-1.8.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BluesWirelessNotecard-1.8.3.tar.gz",
+    "size_bytes": 140032,
+    "sha256": "35db0f71f774bab3e197a8c165d58b72e95f7de15ab9d6caa3556f7cc38ce9b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blues/library/Blues%2520Wireless%2520Notecard/1.8.3/BluesWirelessNotecard-1.8.3.tar.gz",
+     "https://dl.registry.platformio.org/download/blues/library/Blues%20Wireless%20Notecard/1.8.3/BluesWirelessNotecard-1.8.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "blues/library/Blues%20Wireless%20Notecard/1.8.4/BluesWirelessNotecard-1.8.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BluesWirelessNotecard-1.8.4.tar.gz",
+    "size_bytes": 140068,
+    "sha256": "1c2b330145dafbfe83cbdf1f82d44fec1ed3e1d8df86a7da51ff36408887564c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blues/library/Blues%2520Wireless%2520Notecard/1.8.4/BluesWirelessNotecard-1.8.4.tar.gz",
+     "https://dl.registry.platformio.org/download/blues/library/Blues%20Wireless%20Notecard/1.8.4/BluesWirelessNotecard-1.8.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "blues/library/Blues%20Wireless%20Notecard/1.8.5/BluesWirelessNotecard-1.8.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BluesWirelessNotecard-1.8.5.tar.gz",
+    "size_bytes": 141913,
+    "sha256": "89c925d701a5dbf4937b9999496e374fa27b35e1ea8b586d32e62306bb559608",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blues/library/Blues%2520Wireless%2520Notecard/1.8.5/BluesWirelessNotecard-1.8.5.tar.gz",
+     "https://dl.registry.platformio.org/download/blues/library/Blues%20Wireless%20Notecard/1.8.5/BluesWirelessNotecard-1.8.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

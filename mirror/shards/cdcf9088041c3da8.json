@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kei0208",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kei0208/library/M8058/1.0.0/M8058-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M8058-1.0.0.tar.gz",
+    "size_bytes": 6996,
+    "sha256": "38fe252adfc9686126c2bbf6adebacc11c3055cb688c1d9521f3058d7802e9fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kei0208/library/M8058/1.0.0/M8058-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kei0208/library/M8058/1.0.0/M8058-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kei0208/library/RX8900/1.0.0/RX8900-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RX8900-1.0.0.tar.gz",
+    "size_bytes": 19515,
+    "sha256": "5c5f0071a727f4e8ba5a097ce496e01c2fa26dada1289369ee62c6a33d9150fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kei0208/library/RX8900/1.0.0/RX8900-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kei0208/library/RX8900/1.0.0/RX8900-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kei0208/library/SUSHI-EXP-BOARD/1.0.0/SUSHI-EXP-BOARD-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SUSHI-EXP-BOARD-1.0.0.tar.gz",
+    "size_bytes": 8072,
+    "sha256": "6eca466a49c87fbe01c582264b3ba956c01ebd308dd4ecae6e1ff46d91d49f7f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kei0208/library/SUSHI-EXP-BOARD/1.0.0/SUSHI-EXP-BOARD-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kei0208/library/SUSHI-EXP-BOARD/1.0.0/SUSHI-EXP-BOARD-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

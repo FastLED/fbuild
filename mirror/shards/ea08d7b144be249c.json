@@ -1,0 +1,438 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rll-blue-dragon",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rll-blue-dragon/library/OSS-EC%20ABLIC%20S-58LM20A%2000000057/1.0.4/OSS-ECABLICS-58LM20A00000057-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSS-ECABLICS-58LM20A00000057-1.0.4.tar.gz",
+    "size_bytes": 5128,
+    "sha256": "7d4b73c30f79953996c8c636d39aa7ffe128e5e63e7634ff6be5fcaa1dd99fc0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rll-blue-dragon/library/OSS-EC%2520ABLIC%2520S-58LM20A%252000000057/1.0.4/OSS-ECABLICS-58LM20A00000057-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/rll-blue-dragon/library/OSS-EC%20ABLIC%20S-58LM20A%2000000057/1.0.4/OSS-ECABLICS-58LM20A00000057-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rll-blue-dragon/library/OSS-EC%20NXP%20MPXA4250A%2000000057/1.0.14/OSS-ECNXPMPXA4250A00000057-1.0.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSS-ECNXPMPXA4250A00000057-1.0.14.tar.gz",
+    "size_bytes": 5042,
+    "sha256": "57db43444c4f68a2e318c4ef2ddc23440596e365f680933aa8e1c874c5737012",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rll-blue-dragon/library/OSS-EC%2520NXP%2520MPXA4250A%252000000057/1.0.14/OSS-ECNXPMPXA4250A00000057-1.0.14.tar.gz",
+     "https://dl.registry.platformio.org/download/rll-blue-dragon/library/OSS-EC%20NXP%20MPXA4250A%2000000057/1.0.14/OSS-ECNXPMPXA4250A00000057-1.0.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rll-blue-dragon/library/OSS-EC_ABLIC_S-5813A_5814A_00000057/1.0.4/OSS-EC_ABLIC_S-5813A_5814A_00000057-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSS-EC_ABLIC_S-5813A_5814A_00000057-1.0.4.tar.gz",
+    "size_bytes": 5102,
+    "sha256": "699ad76222eaa6b125909b6cf630e0a718adc0996fe990e81bac27b6a4d41f8e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rll-blue-dragon/library/OSS-EC_ABLIC_S-5813A_5814A_00000057/1.0.4/OSS-EC_ABLIC_S-5813A_5814A_00000057-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/rll-blue-dragon/library/OSS-EC_ABLIC_S-5813A_5814A_00000057/1.0.4/OSS-EC_ABLIC_S-5813A_5814A_00000057-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rll-blue-dragon/library/OSS-EC_ABLIC_S-8110C_8120C_00000057/1.0.3/OSS-EC_ABLIC_S-8110C_8120C_00000057-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSS-EC_ABLIC_S-8110C_8120C_00000057-1.0.3.tar.gz",
+    "size_bytes": 5100,
+    "sha256": "80c0848c655d2fe972384bed02b808bf45e58900e428fd35197ecac40b089169",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rll-blue-dragon/library/OSS-EC_ABLIC_S-8110C_8120C_00000057/1.0.3/OSS-EC_ABLIC_S-8110C_8120C_00000057-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/rll-blue-dragon/library/OSS-EC_ABLIC_S-8110C_8120C_00000057/1.0.3/OSS-EC_ABLIC_S-8110C_8120C_00000057-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rll-blue-dragon/library/OSS-EC_ADI_AD22100A_00000057/1.0.4/OSS-EC_ADI_AD22100A_00000057-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSS-EC_ADI_AD22100A_00000057-1.0.4.tar.gz",
+    "size_bytes": 5105,
+    "sha256": "638c4d9bab300a7c9abe771b731c976d03ee342cba6edd219ff21e89472ea26c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rll-blue-dragon/library/OSS-EC_ADI_AD22100A_00000057/1.0.4/OSS-EC_ADI_AD22100A_00000057-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/rll-blue-dragon/library/OSS-EC_ADI_AD22100A_00000057/1.0.4/OSS-EC_ADI_AD22100A_00000057-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rll-blue-dragon/library/OSS-EC_ADI_AD22100K_00000057/1.0.4/OSS-EC_ADI_AD22100K_00000057-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSS-EC_ADI_AD22100K_00000057-1.0.4.tar.gz",
+    "size_bytes": 5106,
+    "sha256": "d9d8d99583866f176fd7adb17c4039df1f53896d3b714cba3c931e84b4925a06",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rll-blue-dragon/library/OSS-EC_ADI_AD22100K_00000057/1.0.4/OSS-EC_ADI_AD22100K_00000057-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/rll-blue-dragon/library/OSS-EC_ADI_AD22100K_00000057/1.0.4/OSS-EC_ADI_AD22100K_00000057-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rll-blue-dragon/library/OSS-EC_ADI_AD22100S_00000057/1.0.4/OSS-EC_ADI_AD22100S_00000057-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSS-EC_ADI_AD22100S_00000057-1.0.4.tar.gz",
+    "size_bytes": 5104,
+    "sha256": "b7862680d18993ec58b5f7a70a3934e2ce8adbc7f118826d1104c7bb394b4fd8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rll-blue-dragon/library/OSS-EC_ADI_AD22100S_00000057/1.0.4/OSS-EC_ADI_AD22100S_00000057-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/rll-blue-dragon/library/OSS-EC_ADI_AD22100S_00000057/1.0.4/OSS-EC_ADI_AD22100S_00000057-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rll-blue-dragon/library/OSS-EC_ADI_AD22103K_00000057/1.0.0/OSS-EC_ADI_AD22103K_00000057-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSS-EC_ADI_AD22103K_00000057-1.0.0.tar.gz",
+    "size_bytes": 5097,
+    "sha256": "53dfac42987dd9f2610632c970bca43774c013c99f2323143abc9fda1f3f094c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rll-blue-dragon/library/OSS-EC_ADI_AD22103K_00000057/1.0.0/OSS-EC_ADI_AD22103K_00000057-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rll-blue-dragon/library/OSS-EC_ADI_AD22103K_00000057/1.0.0/OSS-EC_ADI_AD22103K_00000057-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rll-blue-dragon/library/OSS-EC_MAXIM_MAX6605MXKV_00000057/1.0.3/OSS-EC_MAXIM_MAX6605MXKV_00000057-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSS-EC_MAXIM_MAX6605MXKV_00000057-1.0.3.tar.gz",
+    "size_bytes": 5082,
+    "sha256": "236b05226b45d9725f4460612069e0ac300564978932ac053132a90a1300cf59",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rll-blue-dragon/library/OSS-EC_MAXIM_MAX6605MXKV_00000057/1.0.3/OSS-EC_MAXIM_MAX6605MXKV_00000057-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/rll-blue-dragon/library/OSS-EC_MAXIM_MAX6605MXKV_00000057/1.0.3/OSS-EC_MAXIM_MAX6605MXKV_00000057-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rll-blue-dragon/library/OSS-EC_MAXIM_MAX6605MXK_00000057/1.0.3/OSS-EC_MAXIM_MAX6605MXK_00000057-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSS-EC_MAXIM_MAX6605MXK_00000057-1.0.3.tar.gz",
+    "size_bytes": 5077,
+    "sha256": "b1d59db45d3af89188c3a94588a40a439fca68b7bc67563cbd590149128d7a87",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rll-blue-dragon/library/OSS-EC_MAXIM_MAX6605MXK_00000057/1.0.3/OSS-EC_MAXIM_MAX6605MXK_00000057-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/rll-blue-dragon/library/OSS-EC_MAXIM_MAX6605MXK_00000057/1.0.3/OSS-EC_MAXIM_MAX6605MXK_00000057-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rll-blue-dragon/library/OSS-EC_MAXIM_MAX6607IXK_MAX6608IUK_00000057/1.0.0/OSS-EC_MAXIM_MAX6607IXK_MAX6608IUK_00000057-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSS-EC_MAXIM_MAX6607IXK_MAX6608IUK_00000057-1.0.0.tar.gz",
+    "size_bytes": 5092,
+    "sha256": "238f35af3890509af1459160bab6a21d79e9d46b3474894752a75cbf51e1caa0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rll-blue-dragon/library/OSS-EC_MAXIM_MAX6607IXK_MAX6608IUK_00000057/1.0.0/OSS-EC_MAXIM_MAX6607IXK_MAX6608IUK_00000057-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rll-blue-dragon/library/OSS-EC_MAXIM_MAX6607IXK_MAX6608IUK_00000057/1.0.0/OSS-EC_MAXIM_MAX6607IXK_MAX6608IUK_00000057-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rll-blue-dragon/library/OSS-EC_MAXIM_MAX6613MXK_MAX6613MXKV_00000057/1.0.3/OSS-EC_MAXIM_MAX6613MXK_MAX6613MXKV_00000057-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSS-EC_MAXIM_MAX6613MXK_MAX6613MXKV_00000057-1.0.3.tar.gz",
+    "size_bytes": 5097,
+    "sha256": "ab3332a3603464893d48a5892a9c6beecd5d04c0dfa59c2479ad8a2a6400e843",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rll-blue-dragon/library/OSS-EC_MAXIM_MAX6613MXK_MAX6613MXKV_00000057/1.0.3/OSS-EC_MAXIM_MAX6613MXK_MAX6613MXKV_00000057-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/rll-blue-dragon/library/OSS-EC_MAXIM_MAX6613MXK_MAX6613MXKV_00000057/1.0.3/OSS-EC_MAXIM_MAX6613MXK_MAX6613MXKV_00000057-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rll-blue-dragon/library/OSS-EC_MICROCHIP_MCP9700_MCP9700A_00000057/1.0.0/OSS-EC_MICROCHIP_MCP9700_MCP9700A_00000057-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSS-EC_MICROCHIP_MCP9700_MCP9700A_00000057-1.0.0.tar.gz",
+    "size_bytes": 5094,
+    "sha256": "4fdc3178eeef27e6879fe37d8fd5cd9d5c94ce853b027acac2d194f2b19fcfcc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rll-blue-dragon/library/OSS-EC_MICROCHIP_MCP9700_MCP9700A_00000057/1.0.0/OSS-EC_MICROCHIP_MCP9700_MCP9700A_00000057-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rll-blue-dragon/library/OSS-EC_MICROCHIP_MCP9700_MCP9700A_00000057/1.0.0/OSS-EC_MICROCHIP_MCP9700_MCP9700A_00000057-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rll-blue-dragon/library/OSS-EC_MICROCHIP_MCP9701_MCP9701A_00000057/1.0.0/OSS-EC_MICROCHIP_MCP9701_MCP9701A_00000057-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSS-EC_MICROCHIP_MCP9701_MCP9701A_00000057-1.0.0.tar.gz",
+    "size_bytes": 5096,
+    "sha256": "bedd40eafa2af01e4bcd341b6f8dc525037d0882091bac1c5e5343faa7e97417",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rll-blue-dragon/library/OSS-EC_MICROCHIP_MCP9701_MCP9701A_00000057/1.0.0/OSS-EC_MICROCHIP_MCP9701_MCP9701A_00000057-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rll-blue-dragon/library/OSS-EC_MICROCHIP_MCP9701_MCP9701A_00000057/1.0.0/OSS-EC_MICROCHIP_MCP9701_MCP9701A_00000057-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rll-blue-dragon/library/OSS-EC_MICROCHIP_TC1046_00000057/1.0.0/OSS-EC_MICROCHIP_TC1046_00000057-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSS-EC_MICROCHIP_TC1046_00000057-1.0.0.tar.gz",
+    "size_bytes": 5104,
+    "sha256": "207f2642e55a08a9db152b5637e0ab1b1854a9e294fa44389cc76651b45b5b23",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rll-blue-dragon/library/OSS-EC_MICROCHIP_TC1046_00000057/1.0.0/OSS-EC_MICROCHIP_TC1046_00000057-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rll-blue-dragon/library/OSS-EC_MICROCHIP_TC1046_00000057/1.0.0/OSS-EC_MICROCHIP_TC1046_00000057-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rll-blue-dragon/library/OSS-EC_MICROCHIP_TC1047_TC1047A_00000057/1.0.0/OSS-EC_MICROCHIP_TC1047_TC1047A_00000057-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSS-EC_MICROCHIP_TC1047_TC1047A_00000057-1.0.0.tar.gz",
+    "size_bytes": 5110,
+    "sha256": "4158dd925fbc555c13c14e4252241831679d3b9a40ffbdc45d6bea77ec418be3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rll-blue-dragon/library/OSS-EC_MICROCHIP_TC1047_TC1047A_00000057/1.0.0/OSS-EC_MICROCHIP_TC1047_TC1047A_00000057-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rll-blue-dragon/library/OSS-EC_MICROCHIP_TC1047_TC1047A_00000057/1.0.0/OSS-EC_MICROCHIP_TC1047_TC1047A_00000057-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rll-blue-dragon/library/OSS-EC_NXP_MPX5999D_00000057/1.0.0/OSS-EC_NXP_MPX5999D_00000057-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSS-EC_NXP_MPX5999D_00000057-1.0.0.tar.gz",
+    "size_bytes": 5004,
+    "sha256": "784c8611665232c3b251d306a32353f475b2e4af811e250fbd953acfea363cb9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rll-blue-dragon/library/OSS-EC_NXP_MPX5999D_00000057/1.0.0/OSS-EC_NXP_MPX5999D_00000057-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rll-blue-dragon/library/OSS-EC_NXP_MPX5999D_00000057/1.0.0/OSS-EC_NXP_MPX5999D_00000057-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rll-blue-dragon/library/OSS-EC_NXP_MPXH6115A_00000057/1.0.0/OSS-EC_NXP_MPXH6115A_00000057-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSS-EC_NXP_MPXH6115A_00000057-1.0.0.tar.gz",
+    "size_bytes": 5011,
+    "sha256": "18307bbf9f4d4090f397bd08838a122db4fdfbb55db1150b22a6b91df0bc23be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rll-blue-dragon/library/OSS-EC_NXP_MPXH6115A_00000057/1.0.0/OSS-EC_NXP_MPXH6115A_00000057-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rll-blue-dragon/library/OSS-EC_NXP_MPXH6115A_00000057/1.0.0/OSS-EC_NXP_MPXH6115A_00000057-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rll-blue-dragon/library/OSS-EC_NXP_MPXH6400A_00000057/1.0.0/OSS-EC_NXP_MPXH6400A_00000057-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSS-EC_NXP_MPXH6400A_00000057-1.0.0.tar.gz",
+    "size_bytes": 5024,
+    "sha256": "2f0e3db45c58322a847db6eb9f765a3b5744006ea986737063689be15932d865",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rll-blue-dragon/library/OSS-EC_NXP_MPXH6400A_00000057/1.0.0/OSS-EC_NXP_MPXH6400A_00000057-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rll-blue-dragon/library/OSS-EC_NXP_MPXH6400A_00000057/1.0.0/OSS-EC_NXP_MPXH6400A_00000057-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rll-blue-dragon/library/OSS-EC_NXP_MPXHZ6250A_00000057/1.0.0/OSS-EC_NXP_MPXHZ6250A_00000057-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSS-EC_NXP_MPXHZ6250A_00000057-1.0.0.tar.gz",
+    "size_bytes": 5018,
+    "sha256": "c6cd69f88ff2abfdbf87cd7c41f4917aa114ac8d8241e9f730b8c04b02a0afc1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rll-blue-dragon/library/OSS-EC_NXP_MPXHZ6250A_00000057/1.0.0/OSS-EC_NXP_MPXHZ6250A_00000057-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rll-blue-dragon/library/OSS-EC_NXP_MPXHZ6250A_00000057/1.0.0/OSS-EC_NXP_MPXHZ6250A_00000057-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rll-blue-dragon/library/OSS-EC_ROHM_BD1020HFV_00000057/1.0.0/OSS-EC_ROHM_BD1020HFV_00000057-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSS-EC_ROHM_BD1020HFV_00000057-1.0.0.tar.gz",
+    "size_bytes": 5088,
+    "sha256": "d49e3d8284a2dc2fd3ed2d5b6419330d08f297c389fe042e0ee40316a15ea659",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rll-blue-dragon/library/OSS-EC_ROHM_BD1020HFV_00000057/1.0.0/OSS-EC_ROHM_BD1020HFV_00000057-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rll-blue-dragon/library/OSS-EC_ROHM_BD1020HFV_00000057/1.0.0/OSS-EC_ROHM_BD1020HFV_00000057-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rll-blue-dragon/library/OSS-EC_STM_STLM20DD9F_00000057/1.0.0/OSS-EC_STM_STLM20DD9F_00000057-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSS-EC_STM_STLM20DD9F_00000057-1.0.0.tar.gz",
+    "size_bytes": 5093,
+    "sha256": "8e355b6b4c36882c4801239fdfaa8e41a20fba736981d212ce20e57e56bc1c83",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rll-blue-dragon/library/OSS-EC_STM_STLM20DD9F_00000057/1.0.0/OSS-EC_STM_STLM20DD9F_00000057-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rll-blue-dragon/library/OSS-EC_STM_STLM20DD9F_00000057/1.0.0/OSS-EC_STM_STLM20DD9F_00000057-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rll-blue-dragon/library/OSS-EC_STM_STLM20W87F_00000057/1.0.0/OSS-EC_STM_STLM20W87F_00000057-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSS-EC_STM_STLM20W87F_00000057-1.0.0.tar.gz",
+    "size_bytes": 5094,
+    "sha256": "adaada8e0ea0e1fd74c1620c28ec15ee1bea7407f5448a094384cdf59e486931",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rll-blue-dragon/library/OSS-EC_STM_STLM20W87F_00000057/1.0.0/OSS-EC_STM_STLM20W87F_00000057-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rll-blue-dragon/library/OSS-EC_STM_STLM20W87F_00000057/1.0.0/OSS-EC_STM_STLM20W87F_00000057-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rll-blue-dragon/library/OSS-EC_TDK_CHS-UPS_UPR_UGS_UGR_00000057/1.0.1/OSS-EC_TDK_CHS-UPS_UPR_UGS_UGR_00000057-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSS-EC_TDK_CHS-UPS_UPR_UGS_UGR_00000057-1.0.1.tar.gz",
+    "size_bytes": 5103,
+    "sha256": "0aaff4e1ae8886cf270909a6371ef99290ec6d5af89b7ae6fabdddd785d283c9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rll-blue-dragon/library/OSS-EC_TDK_CHS-UPS_UPR_UGS_UGR_00000057/1.0.1/OSS-EC_TDK_CHS-UPS_UPR_UGS_UGR_00000057-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/rll-blue-dragon/library/OSS-EC_TDK_CHS-UPS_UPR_UGS_UGR_00000057/1.0.1/OSS-EC_TDK_CHS-UPS_UPR_UGS_UGR_00000057-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rll-blue-dragon/library/OSS-EC_TDK_CHS_MSS_00000057/1.0.0/OSS-EC_TDK_CHS_MSS_00000057-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSS-EC_TDK_CHS_MSS_00000057-1.0.0.tar.gz",
+    "size_bytes": 5024,
+    "sha256": "599d6ca32a28ffb9ba92f1ca4f2e79cfcc12793f6f15373e1fc2f564f928db88",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rll-blue-dragon/library/OSS-EC_TDK_CHS_MSS_00000057/1.0.0/OSS-EC_TDK_CHS_MSS_00000057-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rll-blue-dragon/library/OSS-EC_TDK_CHS_MSS_00000057/1.0.0/OSS-EC_TDK_CHS_MSS_00000057-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rll-blue-dragon/library/OSS-EC_TDK_CHS_UPS_UPR_UGS_UGR_00000057/1.0.0/OSS-EC_TDK_CHS_UPS_UPR_UGS_UGR_00000057-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSS-EC_TDK_CHS_UPS_UPR_UGS_UGR_00000057-1.0.0.tar.gz",
+    "size_bytes": 5104,
+    "sha256": "ea0ddf45ced263cb54fe3ad77d26c02f696205bf9020aa22fbe177a129f592c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rll-blue-dragon/library/OSS-EC_TDK_CHS_UPS_UPR_UGS_UGR_00000057/1.0.0/OSS-EC_TDK_CHS_UPS_UPR_UGS_UGR_00000057-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rll-blue-dragon/library/OSS-EC_TDK_CHS_UPS_UPR_UGS_UGR_00000057/1.0.0/OSS-EC_TDK_CHS_UPS_UPR_UGS_UGR_00000057-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rll-blue-dragon/library/OSS-EC_TI_LM35C_LM35CA_00000057/1.0.0/OSS-EC_TI_LM35C_LM35CA_00000057-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSS-EC_TI_LM35C_LM35CA_00000057-1.0.0.tar.gz",
+    "size_bytes": 5117,
+    "sha256": "9763990b6e6b9b64d6185c0d3091a20c1a50593c384271671ced63fd3cd281fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rll-blue-dragon/library/OSS-EC_TI_LM35C_LM35CA_00000057/1.0.0/OSS-EC_TI_LM35C_LM35CA_00000057-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rll-blue-dragon/library/OSS-EC_TI_LM35C_LM35CA_00000057/1.0.0/OSS-EC_TI_LM35C_LM35CA_00000057-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rll-blue-dragon/library/OSS-EC_TI_LM35D_00000057/1.0.0/OSS-EC_TI_LM35D_00000057-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSS-EC_TI_LM35D_00000057-1.0.0.tar.gz",
+    "size_bytes": 5070,
+    "sha256": "deb6be73d4791a84466a809fe328c4d066969028edf955f572d314fb8d68317a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rll-blue-dragon/library/OSS-EC_TI_LM35D_00000057/1.0.0/OSS-EC_TI_LM35D_00000057-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rll-blue-dragon/library/OSS-EC_TI_LM35D_00000057/1.0.0/OSS-EC_TI_LM35D_00000057-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rll-blue-dragon/library/OSS-EC_TI_LM35_LM35A_00000057/1.0.0/OSS-EC_TI_LM35_LM35A_00000057-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSS-EC_TI_LM35_LM35A_00000057-1.0.0.tar.gz",
+    "size_bytes": 5062,
+    "sha256": "3fca9c5a65c5669904d5bde1c331df5888335862e655774ed9b52cc2c033a5f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rll-blue-dragon/library/OSS-EC_TI_LM35_LM35A_00000057/1.0.0/OSS-EC_TI_LM35_LM35A_00000057-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rll-blue-dragon/library/OSS-EC_TI_LM35_LM35A_00000057/1.0.0/OSS-EC_TI_LM35_LM35A_00000057-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rll-blue-dragon/library/OSS-EC_TI_LM45B_LM45C_00000057/1.0.0/OSS-EC_TI_LM45B_LM45C_00000057-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSS-EC_TI_LM45B_LM45C_00000057-1.0.0.tar.gz",
+    "size_bytes": 5352,
+    "sha256": "6d0cefab0562d5d476fbe855f18f8d1319db6bd79836a35eddeb7adad225955f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rll-blue-dragon/library/OSS-EC_TI_LM45B_LM45C_00000057/1.0.0/OSS-EC_TI_LM45B_LM45C_00000057-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rll-blue-dragon/library/OSS-EC_TI_LM45B_LM45C_00000057/1.0.0/OSS-EC_TI_LM45B_LM45C_00000057-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rll-blue-dragon/library/OSS-EC_TI_LM50B_00000057/1.0.0/OSS-EC_TI_LM50B_00000057-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSS-EC_TI_LM50B_00000057-1.0.0.tar.gz",
+    "size_bytes": 5306,
+    "sha256": "9a5a1ae7c3e89fe6bd6b3ca6f14af3e0bdbbc5593f5b84ecffbd37bae6d090c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rll-blue-dragon/library/OSS-EC_TI_LM50B_00000057/1.0.0/OSS-EC_TI_LM50B_00000057-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rll-blue-dragon/library/OSS-EC_TI_LM50B_00000057/1.0.0/OSS-EC_TI_LM50B_00000057-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rll-blue-dragon/library/OSS-EC_TI_LM50C_00000057/1.0.0/OSS-EC_TI_LM50C_00000057-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSS-EC_TI_LM50C_00000057-1.0.0.tar.gz",
+    "size_bytes": 5320,
+    "sha256": "de07ada417e45cd2fd22c8df8a3fcc37f3937fd36a5989f2a01aee30eba8afb1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rll-blue-dragon/library/OSS-EC_TI_LM50C_00000057/1.0.0/OSS-EC_TI_LM50C_00000057-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rll-blue-dragon/library/OSS-EC_TI_LM50C_00000057/1.0.0/OSS-EC_TI_LM50C_00000057-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rll-blue-dragon/library/OSS-EC_TI_TMP9A00_00000057/1.0.0/OSS-EC_TI_TMP9A00_00000057-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSS-EC_TI_TMP9A00_00000057-1.0.0.tar.gz",
+    "size_bytes": 5131,
+    "sha256": "cb5c90c4d7507133a290d27cae57caac5a1684b84aeea68f6986e16f50b910b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rll-blue-dragon/library/OSS-EC_TI_TMP9A00_00000057/1.0.0/OSS-EC_TI_TMP9A00_00000057-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rll-blue-dragon/library/OSS-EC_TI_TMP9A00_00000057/1.0.0/OSS-EC_TI_TMP9A00_00000057-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

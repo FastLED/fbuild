@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bjoernboeckle",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bjoernboeckle/library/HC_SR04/1.0.1/HC_SR04-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HC_SR04-1.0.1.tar.gz",
+    "size_bytes": 6775,
+    "sha256": "7d1bd781f5183f51099b1a198f6e05ca7f80d112a0a0b13171420e1b9c8a3e3e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bjoernboeckle/library/HC_SR04/1.0.1/HC_SR04-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bjoernboeckle/library/HC_SR04/1.0.1/HC_SR04-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bjoernboeckle/library/L293D/1.0.3/L293D-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "L293D-1.0.3.tar.gz",
+    "size_bytes": 4072,
+    "sha256": "601665814aa42a824ee4c6dbc62761a77cc77a35120dd89231ef8d8e38407132",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bjoernboeckle/library/L293D/1.0.3/L293D-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/bjoernboeckle/library/L293D/1.0.3/L293D-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

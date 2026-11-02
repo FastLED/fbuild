@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mission-mangal",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mission-mangal/library/PositionControl%20/1.0.0/PositionControl-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PositionControl-1.0.0.tar.gz",
+    "size_bytes": 3718,
+    "sha256": "bd1f933e983e5d4a51a1cde37a44d6c5db2038a80b6dc00149c119635f77406f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mission-mangal/library/PositionControl%2520/1.0.0/PositionControl-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mission-mangal/library/PositionControl%20/1.0.0/PositionControl-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mission-mangal/library/Speed%20Control%20/1.0.0/SpeedControl-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SpeedControl-1.0.0.tar.gz",
+    "size_bytes": 3736,
+    "sha256": "3188e9b14d3e2bd664af21944eb95e70c1e95943e49f4cd7e4bd5840def0a4e3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mission-mangal/library/Speed%2520Control%2520/1.0.0/SpeedControl-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mission-mangal/library/Speed%20Control%20/1.0.0/SpeedControl-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

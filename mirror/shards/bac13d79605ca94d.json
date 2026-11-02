@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/abinantony01",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "abinantony01/library/ViSPE%20ADIN1110/1.0.0/ViSPEADIN1110-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ViSPEADIN1110-1.0.0.tar.gz",
+    "size_bytes": 133712,
+    "sha256": "9c28ac62567fd85d587df0d21e3b155cbb2987d437bc49c3ab74e378954263c5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/abinantony01/library/ViSPE%2520ADIN1110/1.0.0/ViSPEADIN1110-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/abinantony01/library/ViSPE%20ADIN1110/1.0.0/ViSPEADIN1110-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

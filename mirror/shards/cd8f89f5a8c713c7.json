@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/embeddip",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "embeddip/library/EmbedDIP/1.0.0/EmbedDIP-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmbedDIP-1.0.0.tar.gz",
+    "size_bytes": 93383,
+    "sha256": "426291dea513d501bbd726e97d2d9b81bfb7ec5baa8818a6bf25f1943a0b7903",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/embeddip/library/EmbedDIP/1.0.0/EmbedDIP-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/embeddip/library/EmbedDIP/1.0.0/EmbedDIP-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ricefireflighter",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ricefireflighter/library/WirelessCommTest/0.0.0+sha.d67473a71dc6/WirelessCommTest-0.0.0+sha.d67473a71dc6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WirelessCommTest-0.0.0+sha.d67473a71dc6.tar.gz",
+    "size_bytes": 1423,
+    "sha256": "e64607f848cea27dd4ba1e3af738fac7685b6ff82cad92d2be2ca87b02c71a87",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ricefireflighter/library/WirelessCommTest/0.0.0%2Bsha.d67473a71dc6/WirelessCommTest-0.0.0%2Bsha.d67473a71dc6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ricefireflighter/library/WirelessCommTest/0.0.0%2Bsha.d67473a71dc6/WirelessCommTest-0.0.0%2Bsha.d67473a71dc6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

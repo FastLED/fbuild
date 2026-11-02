@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rhrhhrhr",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rhrhhrhr/library/MPC_ruih/1.1.4/MPC_ruih-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPC_ruih-1.1.4.tar.gz",
+    "size_bytes": 15129,
+    "sha256": "75daee924c90e13ba0fab04f2482f29178955b2f69ece66a5b8f9044868a5b7c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rhrhhrhr/library/MPC_ruih/1.1.4/MPC_ruih-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/rhrhhrhr/library/MPC_ruih/1.1.4/MPC_ruih-1.1.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

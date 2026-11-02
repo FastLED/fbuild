@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-pokrovsci",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-pokrovsci/library/USBDevice_STM32F103/0.0.0+sha.796a4da744fe/USBDevice_STM32F103-0.0.0+sha.796a4da744fe.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "USBDevice_STM32F103-0.0.0+sha.796a4da744fe.tar.gz",
+    "size_bytes": 44278,
+    "sha256": "8cd1bfde657a26a9900d0755fd49b82fa347e56616bbca5dbea01d91adfbefec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pokrovsci/library/USBDevice_STM32F103/0.0.0%2Bsha.796a4da744fe/USBDevice_STM32F103-0.0.0%2Bsha.796a4da744fe.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pokrovsci/library/USBDevice_STM32F103/0.0.0%2Bsha.796a4da744fe/USBDevice_STM32F103-0.0.0%2Bsha.796a4da744fe.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kermite-org",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kermite-org/library/KermiteCore_Arduino/0.2.3/KermiteCore_Arduino-0.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KermiteCore_Arduino-0.2.3.tar.gz",
+    "size_bytes": 32948,
+    "sha256": "4bcbb6d14d9280bea5fa79f3ac39f4a404280330d69a9d626b9181c195c5b7bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kermite-org/library/KermiteCore_Arduino/0.2.3/KermiteCore_Arduino-0.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/kermite-org/library/KermiteCore_Arduino/0.2.3/KermiteCore_Arduino-0.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kermite-org/library/keyboard_peripheral_modules/0.2.1/keyboard_peripheral_modules-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "keyboard_peripheral_modules-0.2.1.tar.gz",
+    "size_bytes": 5323,
+    "sha256": "d57fb44d3ef5c03512c8fcd3e44d1367c13f54c05b13e8e77047a1ab8df03c0e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kermite-org/library/keyboard_peripheral_modules/0.2.1/keyboard_peripheral_modules-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/kermite-org/library/keyboard_peripheral_modules/0.2.1/keyboard_peripheral_modules-0.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

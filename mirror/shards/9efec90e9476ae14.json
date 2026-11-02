@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-hwracing-formula-student-team",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-hwracing-formula-student-team/library/DS3231/0.0.0+sha.4399479f355f/DS3231-0.0.0+sha.4399479f355f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS3231-0.0.0+sha.4399479f355f.tar.gz",
+    "size_bytes": 1588,
+    "sha256": "68fb2ce2876fed04038ebdf83438fdeeb0bf17003e07aab47ad267d4a0144403",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hwracing-formula-student-team/library/DS3231/0.0.0%2Bsha.4399479f355f/DS3231-0.0.0%2Bsha.4399479f355f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hwracing-formula-student-team/library/DS3231/0.0.0%2Bsha.4399479f355f/DS3231-0.0.0%2Bsha.4399479f355f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-xeon011",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-xeon011/library/SNTPClient/0.0.0+sha.137fc24033c4/SNTPClient-0.0.0+sha.137fc24033c4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SNTPClient-0.0.0+sha.137fc24033c4.tar.gz",
+    "size_bytes": 6651,
+    "sha256": "20c24dfabbfc42b268aff61940374ff02c335644e14b55066dc0d4514f2f9a8c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-xeon011/library/SNTPClient/0.0.0%2Bsha.137fc24033c4/SNTPClient-0.0.0%2Bsha.137fc24033c4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-xeon011/library/SNTPClient/0.0.0%2Bsha.137fc24033c4/SNTPClient-0.0.0%2Bsha.137fc24033c4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-xeon011/library/W5500/0.0.0+sha.4f25c0dc00f7/W5500-0.0.0+sha.4f25c0dc00f7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "W5500-0.0.0+sha.4f25c0dc00f7.tar.gz",
+    "size_bytes": 16946,
+    "sha256": "0a9906d1e2888dbdb98a7e4c2dbc5220919679d54b79ed15c4007c2aa4e14002",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-xeon011/library/W5500/0.0.0%2Bsha.4f25c0dc00f7/W5500-0.0.0%2Bsha.4f25c0dc00f7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-xeon011/library/W5500/0.0.0%2Bsha.4f25c0dc00f7/W5500-0.0.0%2Bsha.4f25c0dc00f7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

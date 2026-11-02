@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sebastian_toepfer",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sebastian_toepfer/tool/framework-cmsis-stm32c0/0.140.0/framework-cmsis-stm32c0-0.140.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "framework-cmsis-stm32c0-0.140.0.tar.gz",
+    "size_bytes": 406181,
+    "sha256": "86679f2ca381a134f40285f1cd581902e6d94be3d67285d807625501fe3f940b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sebastian_toepfer/tool/framework-cmsis-stm32c0/0.140.0/framework-cmsis-stm32c0-0.140.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sebastian_toepfer/tool/framework-cmsis-stm32c0/0.140.0/framework-cmsis-stm32c0-0.140.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sebastian_toepfer/tool/framework-cmsis-stm32c0/0.141.0/framework-cmsis-stm32c0-0.141.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "framework-cmsis-stm32c0-0.141.0.tar.gz",
+    "size_bytes": 407921,
+    "sha256": "1eb48f6ee1121c4fa56f6e449f50db014a859b27708cb95c7c188a2b03511c7b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sebastian_toepfer/tool/framework-cmsis-stm32c0/0.141.0/framework-cmsis-stm32c0-0.141.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sebastian_toepfer/tool/framework-cmsis-stm32c0/0.141.0/framework-cmsis-stm32c0-0.141.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sebastian_toepfer/tool/tool-ldscripts-ststm32/0.3.1/tool-ldscripts-ststm32-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-ldscripts-ststm32-0.3.1.tar.gz",
+    "size_bytes": 117769,
+    "sha256": "8abd55f032534df22a5e1e7f6a58efa335806140e99e8b5d1e029c974b64c396",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sebastian_toepfer/tool/tool-ldscripts-ststm32/0.3.1/tool-ldscripts-ststm32-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sebastian_toepfer/tool/tool-ldscripts-ststm32/0.3.1/tool-ldscripts-ststm32-0.3.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

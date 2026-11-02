@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lucasdietrich",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lucasdietrich/library/avrtos/2.1.0/avrtos-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "avrtos-2.1.0.tar.gz",
+    "size_bytes": 232335,
+    "sha256": "6d7591273824c62e4c0ebf5907e3ab40bf9010a6ebfab5037d45db1f398786d4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lucasdietrich/library/avrtos/2.1.0/avrtos-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lucasdietrich/library/avrtos/2.1.0/avrtos-2.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/caligari",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "caligari/library/Ds1302/1.1.1/Ds1302-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ds1302-1.1.1.tar.gz",
+    "size_bytes": 16863,
+    "sha256": "f87cbdc664ec18a10a992f66fb8118471ffeb7809ab00377fcc4e51e0b49d5fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/caligari/library/Ds1302/1.1.1/Ds1302-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/caligari/library/Ds1302/1.1.1/Ds1302-1.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

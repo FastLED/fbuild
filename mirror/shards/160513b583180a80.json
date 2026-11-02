@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ys1374",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ys1374/library/AS5600_PsW/1.1.0/AS5600_PsW-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AS5600_PsW-1.1.0.tar.gz",
+    "size_bytes": 6542,
+    "sha256": "f72cf308912d7dfa811c31535a08f233c5a086ba25c5b5b53c983e11ba37852d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ys1374/library/AS5600_PsW/1.1.0/AS5600_PsW-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ys1374/library/AS5600_PsW/1.1.0/AS5600_PsW-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

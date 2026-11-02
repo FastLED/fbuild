@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-yusuke-kyo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-yusuke-kyo/library/Dynamixel/0.0.0+sha.874b672847bc/Dynamixel-0.0.0+sha.874b672847bc.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Dynamixel-0.0.0+sha.874b672847bc.tar.gz",
+    "size_bytes": 5907,
+    "sha256": "8e135a699e5c63a6b6c33db1e3996697291113ff76049434c80e399d575ab1ff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yusuke-kyo/library/Dynamixel/0.0.0%2Bsha.874b672847bc/Dynamixel-0.0.0%2Bsha.874b672847bc.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yusuke-kyo/library/Dynamixel/0.0.0%2Bsha.874b672847bc/Dynamixel-0.0.0%2Bsha.874b672847bc.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-yusuke-kyo/library/MEMS_Thermal_Sensor/0.0.0+sha.6a5ab8af56a4/MEMS_Thermal_Sensor-0.0.0+sha.6a5ab8af56a4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MEMS_Thermal_Sensor-0.0.0+sha.6a5ab8af56a4.tar.gz",
+    "size_bytes": 1399,
+    "sha256": "58f7803162265bbe5b58b621ca6a9159fe7a5af2e114c280fecab39c2c88d953",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yusuke-kyo/library/MEMS_Thermal_Sensor/0.0.0%2Bsha.6a5ab8af56a4/MEMS_Thermal_Sensor-0.0.0%2Bsha.6a5ab8af56a4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yusuke-kyo/library/MEMS_Thermal_Sensor/0.0.0%2Bsha.6a5ab8af56a4/MEMS_Thermal_Sensor-0.0.0%2Bsha.6a5ab8af56a4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sakabug",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sakabug/library/Bugtton/1.0.6/Bugtton-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bugtton-1.0.6.tar.gz",
+    "size_bytes": 5326,
+    "sha256": "dd85cf15321a560eb80c84314bfea5eac44d527d926e4fbc46b0f9e2ad793110",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sakabug/library/Bugtton/1.0.6/Bugtton-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/sakabug/library/Bugtton/1.0.6/Bugtton-1.0.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/loopj",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "loopj/library/Open%20RTS/0.9.0/OpenRTS-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OpenRTS-0.9.0.tar.gz",
+    "size_bytes": 46655,
+    "sha256": "9fc9df1ecdcfd3727c261c1ad3525cf2e66234a86e009faa2b15fa68e7ecee80",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/loopj/library/Open%2520RTS/0.9.0/OpenRTS-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/loopj/library/Open%20RTS/0.9.0/OpenRTS-0.9.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

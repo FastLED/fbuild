@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-peterswanson87",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-peterswanson87/library/H3LIS331/0.0.0+sha.ecac7a6076f0/H3LIS331-0.0.0+sha.ecac7a6076f0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "H3LIS331-0.0.0+sha.ecac7a6076f0.tar.gz",
+    "size_bytes": 2908,
+    "sha256": "07ce4b78888f7fc524c63ec4687febc3d36df82490828327e43879ac961995a7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-peterswanson87/library/H3LIS331/0.0.0%2Bsha.ecac7a6076f0/H3LIS331-0.0.0%2Bsha.ecac7a6076f0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-peterswanson87/library/H3LIS331/0.0.0%2Bsha.ecac7a6076f0/H3LIS331-0.0.0%2Bsha.ecac7a6076f0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-victorsillerico",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-victorsillerico/library/BaseDiferencial2R/0.0.0+sha.59b0c908548b/BaseDiferencial2R-0.0.0+sha.59b0c908548b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BaseDiferencial2R-0.0.0+sha.59b0c908548b.tar.gz",
+    "size_bytes": 1242,
+    "sha256": "4148ece9ef07fc013c60e8fe8daec91e6a74cf301a44cad96bb79b0d62332de3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-victorsillerico/library/BaseDiferencial2R/0.0.0%2Bsha.59b0c908548b/BaseDiferencial2R-0.0.0%2Bsha.59b0c908548b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-victorsillerico/library/BaseDiferencial2R/0.0.0%2Bsha.59b0c908548b/BaseDiferencial2R-0.0.0%2Bsha.59b0c908548b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-victorsillerico/library/Infrarrojo/0.0.0+sha.e38bec0f7b66/Infrarrojo-0.0.0+sha.e38bec0f7b66.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Infrarrojo-0.0.0+sha.e38bec0f7b66.tar.gz",
+    "size_bytes": 908,
+    "sha256": "909d8af84b52beae953bb2f5140307f17da4ec5ef14dfe60ae96ddc903f3a007",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-victorsillerico/library/Infrarrojo/0.0.0%2Bsha.e38bec0f7b66/Infrarrojo-0.0.0%2Bsha.e38bec0f7b66.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-victorsillerico/library/Infrarrojo/0.0.0%2Bsha.e38bec0f7b66/Infrarrojo-0.0.0%2Bsha.e38bec0f7b66.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-victorsillerico/library/Motordc/0.0.0+sha.164cddb632a1/Motordc-0.0.0+sha.164cddb632a1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Motordc-0.0.0+sha.164cddb632a1.tar.gz",
+    "size_bytes": 1017,
+    "sha256": "c27961a6527008a53fdb6b0d50c8de0f2464a8169157205bb9311ee1706c008d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-victorsillerico/library/Motordc/0.0.0%2Bsha.164cddb632a1/Motordc-0.0.0%2Bsha.164cddb632a1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-victorsillerico/library/Motordc/0.0.0%2Bsha.164cddb632a1/Motordc-0.0.0%2Bsha.164cddb632a1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-victorsillerico/library/sharpGP2Y0A21YK/0.0.0+sha.28a2fdaeba5f/sharpGP2Y0A21YK-0.0.0+sha.28a2fdaeba5f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "sharpGP2Y0A21YK-0.0.0+sha.28a2fdaeba5f.tar.gz",
+    "size_bytes": 914,
+    "sha256": "f2b2a11b7b34aad803d5f79d917421ea87a573865bda21f33fa5bc6bf83fbb7d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-victorsillerico/library/sharpGP2Y0A21YK/0.0.0%2Bsha.28a2fdaeba5f/sharpGP2Y0A21YK-0.0.0%2Bsha.28a2fdaeba5f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-victorsillerico/library/sharpGP2Y0A21YK/0.0.0%2Bsha.28a2fdaeba5f/sharpGP2Y0A21YK-0.0.0%2Bsha.28a2fdaeba5f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/arriflex",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "arriflex/library/Adafruit%20Feather%20OLED/1/AdafruitFeatherOLED-1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AdafruitFeatherOLED-1.tar.gz",
+    "size_bytes": 7102,
+    "sha256": "c819581beffd765dc8dc4745f81b2a87fccec663a41697bad5f5c47788e514ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arriflex/library/Adafruit%2520Feather%2520OLED/1/AdafruitFeatherOLED-1.tar.gz",
+     "https://dl.registry.platformio.org/download/arriflex/library/Adafruit%20Feather%20OLED/1/AdafruitFeatherOLED-1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

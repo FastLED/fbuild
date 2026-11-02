@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-tlisowski3",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-tlisowski3/library/EaEpaper_EM027BS013/0.0.0+sha.672976335e80/EaEpaper_EM027BS013-0.0.0+sha.672976335e80.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EaEpaper_EM027BS013-0.0.0+sha.672976335e80.tar.gz",
+    "size_bytes": 8425,
+    "sha256": "2927db67c6ef34aeaea13900908aa7d8da5e590d2aa797445c224aa24c64f92f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tlisowski3/library/EaEpaper_EM027BS013/0.0.0%2Bsha.672976335e80/EaEpaper_EM027BS013-0.0.0%2Bsha.672976335e80.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tlisowski3/library/EaEpaper_EM027BS013/0.0.0%2Bsha.672976335e80/EaEpaper_EM027BS013-0.0.0%2Bsha.672976335e80.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-justinkim",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-justinkim/library/Adafruit_ST7735/0.0.0+sha.7d45da201480/Adafruit_ST7735-0.0.0+sha.7d45da201480.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Adafruit_ST7735-0.0.0+sha.7d45da201480.tar.gz",
+    "size_bytes": 7322,
+    "sha256": "adbcbb15a6cf015563d4baa6d48e790e2750b435ae1cd1c93fadbd820aa56564",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-justinkim/library/Adafruit_ST7735/0.0.0%2Bsha.7d45da201480/Adafruit_ST7735-0.0.0%2Bsha.7d45da201480.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-justinkim/library/Adafruit_ST7735/0.0.0%2Bsha.7d45da201480/Adafruit_ST7735-0.0.0%2Bsha.7d45da201480.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-justinkim/library/Arducam_OV5642/0.0.0+sha.ee782b77485e/Arducam_OV5642-0.0.0+sha.ee782b77485e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arducam_OV5642-0.0.0+sha.ee782b77485e.tar.gz",
+    "size_bytes": 11991,
+    "sha256": "6b55cd1da7ea3e7821bbce5c18b7ecdb0cd188c1a2513d1efa91f7680d96078d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-justinkim/library/Arducam_OV5642/0.0.0%2Bsha.ee782b77485e/Arducam_OV5642-0.0.0%2Bsha.ee782b77485e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-justinkim/library/Arducam_OV5642/0.0.0%2Bsha.ee782b77485e/Arducam_OV5642-0.0.0%2Bsha.ee782b77485e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-justinkim/library/Arducam_UTFT_SPI/0.0.0+sha.53f8d6b23687/Arducam_UTFT_SPI-0.0.0+sha.53f8d6b23687.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arducam_UTFT_SPI-0.0.0+sha.53f8d6b23687.tar.gz",
+    "size_bytes": 8289,
+    "sha256": "be31effd48993a2a84fcac70989aed60715e582f4601de1b4210e062cd7fd8f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-justinkim/library/Arducam_UTFT_SPI/0.0.0%2Bsha.53f8d6b23687/Arducam_UTFT_SPI-0.0.0%2Bsha.53f8d6b23687.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-justinkim/library/Arducam_UTFT_SPI/0.0.0%2Bsha.53f8d6b23687/Arducam_UTFT_SPI-0.0.0%2Bsha.53f8d6b23687.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-justinkim/library/PWM_Tone/0.0.0+sha.313dfeed320a/PWM_Tone-0.0.0+sha.313dfeed320a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PWM_Tone-0.0.0+sha.313dfeed320a.tar.gz",
+    "size_bytes": 1480,
+    "sha256": "a906469e36d7a8d1e888641835f9320cf5c6cd53fde482f11b85a8240199bf7f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-justinkim/library/PWM_Tone/0.0.0%2Bsha.313dfeed320a/PWM_Tone-0.0.0%2Bsha.313dfeed320a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-justinkim/library/PWM_Tone/0.0.0%2Bsha.313dfeed320a/PWM_Tone-0.0.0%2Bsha.313dfeed320a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-justinkim/library/PWM_Tone_Library/0.0.0+sha.4b841d62e529/PWM_Tone_Library-0.0.0+sha.4b841d62e529.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PWM_Tone_Library-0.0.0+sha.4b841d62e529.tar.gz",
+    "size_bytes": 1634,
+    "sha256": "e6680fab5e734daaa950c95a2da24658a5eb0a64bd8c7370a428794f182b7940",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-justinkim/library/PWM_Tone_Library/0.0.0%2Bsha.4b841d62e529/PWM_Tone_Library-0.0.0%2Bsha.4b841d62e529.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-justinkim/library/PWM_Tone_Library/0.0.0%2Bsha.4b841d62e529/PWM_Tone_Library-0.0.0%2Bsha.4b841d62e529.tar.gz"
+    ]
+   }
+  }
+ ]
+}

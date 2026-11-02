@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-godet7",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-godet7/library/DS1621/0.0.0+sha.4a5b334fc6e3/DS1621-0.0.0+sha.4a5b334fc6e3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS1621-0.0.0+sha.4a5b334fc6e3.tar.gz",
+    "size_bytes": 5453,
+    "sha256": "78b068b3ce028696eb866fa3d0f9c1a0cd73ef95d54e78d700c406b65005f6a7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-godet7/library/DS1621/0.0.0%2Bsha.4a5b334fc6e3/DS1621-0.0.0%2Bsha.4a5b334fc6e3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-godet7/library/DS1621/0.0.0%2Bsha.4a5b334fc6e3/DS1621-0.0.0%2Bsha.4a5b334fc6e3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-godet7/library/SHIELD_LCD16x2/0.0.0+sha.a7c603e5bc49/SHIELD_LCD16x2-0.0.0+sha.a7c603e5bc49.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SHIELD_LCD16x2-0.0.0+sha.a7c603e5bc49.tar.gz",
+    "size_bytes": 5732,
+    "sha256": "cd16b115857e9d9b210e86eaaee6600d010c3f3f094f74d46d7d3d912c82fb48",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-godet7/library/SHIELD_LCD16x2/0.0.0%2Bsha.a7c603e5bc49/SHIELD_LCD16x2-0.0.0%2Bsha.a7c603e5bc49.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-godet7/library/SHIELD_LCD16x2/0.0.0%2Bsha.a7c603e5bc49/SHIELD_LCD16x2-0.0.0%2Bsha.a7c603e5bc49.tar.gz"
+    ]
+   }
+  }
+ ]
+}

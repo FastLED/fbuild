@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/arduinosapienza",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "arduinosapienza/library/VibrationMotor/0.1.0/VibrationMotor-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VibrationMotor-0.1.0.tar.gz",
+    "size_bytes": 2666,
+    "sha256": "cdc4870240a9209163fcae4126000023c82dda98afd782dd724675aeca2fd3bd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduinosapienza/library/VibrationMotor/0.1.0/VibrationMotor-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduinosapienza/library/VibrationMotor/0.1.0/VibrationMotor-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

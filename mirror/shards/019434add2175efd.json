@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-csjc99",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-csjc99/library/KRGBLed/0.0.0+sha.ee2feb784400/KRGBLed-0.0.0+sha.ee2feb784400.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KRGBLed-0.0.0+sha.ee2feb784400.tar.gz",
+    "size_bytes": 1057,
+    "sha256": "f7dcf732405de578ce5cb338619a08a11a1cc6c1bdec35ee9a66607a84b875eb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-csjc99/library/KRGBLed/0.0.0%2Bsha.ee2feb784400/KRGBLed-0.0.0%2Bsha.ee2feb784400.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-csjc99/library/KRGBLed/0.0.0%2Bsha.ee2feb784400/KRGBLed-0.0.0%2Bsha.ee2feb784400.tar.gz"
+    ]
+   }
+  }
+ ]
+}

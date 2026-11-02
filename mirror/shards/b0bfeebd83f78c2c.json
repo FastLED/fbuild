@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/arnoliu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "arnoliu/library/BlinkerOfficalClone/0.3.9/BlinkerOfficalClone-0.3.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BlinkerOfficalClone-0.3.9.tar.gz",
+    "size_bytes": 509769,
+    "sha256": "2d5d7b21c6a4d749cfb3698350d2a72b1ac38b47b8f29a7c3f118f2788aefac6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arnoliu/library/BlinkerOfficalClone/0.3.9/BlinkerOfficalClone-0.3.9.tar.gz",
+     "https://dl.registry.platformio.org/download/arnoliu/library/BlinkerOfficalClone/0.3.9/BlinkerOfficalClone-0.3.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

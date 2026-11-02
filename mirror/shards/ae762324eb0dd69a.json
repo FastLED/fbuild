@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-kureta90",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-kureta90/library/ColorMemLCD/0.0.0+sha.b035a997ec3f/ColorMemLCD-0.0.0+sha.b035a997ec3f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ColorMemLCD-0.0.0+sha.b035a997ec3f.tar.gz",
+    "size_bytes": 7616,
+    "sha256": "23ee051dd02e1be7bd30e959be260103bbc42bfba3d77ac9bd8d4065203c9d36",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kureta90/library/ColorMemLCD/0.0.0%2Bsha.b035a997ec3f/ColorMemLCD-0.0.0%2Bsha.b035a997ec3f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kureta90/library/ColorMemLCD/0.0.0%2Bsha.b035a997ec3f/ColorMemLCD-0.0.0%2Bsha.b035a997ec3f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

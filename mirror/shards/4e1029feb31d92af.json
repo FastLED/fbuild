@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-co657-frmb",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-co657-frmb/library/FXOS8700CQ/0.0.0+sha.f27f2c5dc320/FXOS8700CQ-0.0.0+sha.f27f2c5dc320.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FXOS8700CQ-0.0.0+sha.f27f2c5dc320.tar.gz",
+    "size_bytes": 3775,
+    "sha256": "100ceb29d2e3338d43c2bba6c21f0ca6d6cfc5b3ac2a0afb1d18667798d4a174",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-co657-frmb/library/FXOS8700CQ/0.0.0%2Bsha.f27f2c5dc320/FXOS8700CQ-0.0.0%2Bsha.f27f2c5dc320.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-co657-frmb/library/FXOS8700CQ/0.0.0%2Bsha.f27f2c5dc320/FXOS8700CQ-0.0.0%2Bsha.f27f2c5dc320.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-co657-frmb/library/gfx3d/0.0.0+sha.db4ec6f7d8b2/gfx3d-0.0.0+sha.db4ec6f7d8b2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "gfx3d-0.0.0+sha.db4ec6f7d8b2.tar.gz",
+    "size_bytes": 13055,
+    "sha256": "5d696756335814f98fad5250dd699ce95cb04759758227bb85a33e29dfcb88d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-co657-frmb/library/gfx3d/0.0.0%2Bsha.db4ec6f7d8b2/gfx3d-0.0.0%2Bsha.db4ec6f7d8b2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-co657-frmb/library/gfx3d/0.0.0%2Bsha.db4ec6f7d8b2/gfx3d-0.0.0%2Bsha.db4ec6f7d8b2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

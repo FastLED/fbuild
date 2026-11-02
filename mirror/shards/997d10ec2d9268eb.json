@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lucas-inacio",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lucas-inacio/library/DS1624_Library/3.0.1/DS1624_Library-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS1624_Library-3.0.1.tar.gz",
+    "size_bytes": 4101,
+    "sha256": "0ce0e11456c474d9d8728f2b0fd7e3a980ce4c15e743138583840c01fd969900",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lucas-inacio/library/DS1624_Library/3.0.1/DS1624_Library-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lucas-inacio/library/DS1624_Library/3.0.1/DS1624_Library-3.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

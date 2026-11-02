@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-surpace0924",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-surpace0924/library/SBUS/0.0.0+sha.072c4589bc62/SBUS-0.0.0+sha.072c4589bc62.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SBUS-0.0.0+sha.072c4589bc62.tar.gz",
+    "size_bytes": 1990,
+    "sha256": "7e43b49a575f9867bafbb0e02eec06ea4a35b17a0cc339d301fb3632e85e9c55",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-surpace0924/library/SBUS/0.0.0%2Bsha.072c4589bc62/SBUS-0.0.0%2Bsha.072c4589bc62.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-surpace0924/library/SBUS/0.0.0%2Bsha.072c4589bc62/SBUS-0.0.0%2Bsha.072c4589bc62.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-kenny9984",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-kenny9984/library/keypadtetsesd/0.0.0+sha.17a715448b7d/keypadtetsesd-0.0.0+sha.17a715448b7d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "keypadtetsesd-0.0.0+sha.17a715448b7d.tar.gz",
+    "size_bytes": 2403,
+    "sha256": "b13798774f8cc8e7bac6ec0e1859d04569da68d8727c6651e154eee80ca6e605",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kenny9984/library/keypadtetsesd/0.0.0%2Bsha.17a715448b7d/keypadtetsesd-0.0.0%2Bsha.17a715448b7d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kenny9984/library/keypadtetsesd/0.0.0%2Bsha.17a715448b7d/keypadtetsesd-0.0.0%2Bsha.17a715448b7d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

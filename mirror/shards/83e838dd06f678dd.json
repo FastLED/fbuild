@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mydesktopwidget",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mydesktopwidget/library/MyDesktopWidget/0.3.0/MyDesktopWidget-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MyDesktopWidget-0.3.0.tar.gz",
+    "size_bytes": 24706,
+    "sha256": "116d04cb231f36bbbf6e5b868b7ac04da6bdb0146ef040047dcb5151dac7202e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mydesktopwidget/library/MyDesktopWidget/0.3.0/MyDesktopWidget-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mydesktopwidget/library/MyDesktopWidget/0.3.0/MyDesktopWidget-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mydesktopwidget/library/MyDesktopWidget/0.4.0/MyDesktopWidget-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MyDesktopWidget-0.4.0.tar.gz",
+    "size_bytes": 42839,
+    "sha256": "20d922987fb45b85b25ae896fe0bbe0030822cda79616a396581a38cdc62007e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mydesktopwidget/library/MyDesktopWidget/0.4.0/MyDesktopWidget-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mydesktopwidget/library/MyDesktopWidget/0.4.0/MyDesktopWidget-0.4.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/t-vk",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "t-vk/library/ESP32%20BLE%20Keyboard/0.3.2/ESP32BLEKeyboard-0.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32BLEKeyboard-0.3.2.tar.gz",
+    "size_bytes": 8603,
+    "sha256": "910f3c9f49e52b817d4143a32b4101ec2a5506d44a3fa956275bc8d0d9e4be44",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/t-vk/library/ESP32%2520BLE%2520Keyboard/0.3.2/ESP32BLEKeyboard-0.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/t-vk/library/ESP32%20BLE%20Keyboard/0.3.2/ESP32BLEKeyboard-0.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "t-vk/library/ESP32%20BLE%20Mouse/0.3.1/ESP32BLEMouse-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32BLEMouse-0.3.1.tar.gz",
+    "size_bytes": 4736,
+    "sha256": "3cc3f3320445802feb4b4e0a2105e51f324be246367a979154833d4c11c9100a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/t-vk/library/ESP32%2520BLE%2520Mouse/0.3.1/ESP32BLEMouse-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/t-vk/library/ESP32%20BLE%20Mouse/0.3.1/ESP32BLEMouse-0.3.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

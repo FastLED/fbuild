@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/miwagner",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "miwagner/library/ESP32CAN/0.0.1/ESP32CAN-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32CAN-0.0.1.tar.gz",
+    "size_bytes": 8600,
+    "sha256": "bae6f3a48c3acdd94b137fe30d59a3e2e1c97fbf891ede0052165214059f96fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/miwagner/library/ESP32CAN/0.0.1/ESP32CAN-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/miwagner/library/ESP32CAN/0.0.1/ESP32CAN-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

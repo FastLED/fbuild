@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/moomdate",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "moomdate/library/StripePromptPay/1.0.0/StripePromptPay-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StripePromptPay-1.0.0.tar.gz",
+    "size_bytes": 4840,
+    "sha256": "7a6a29ff8ecf105fbd71c822902a0819ccebff3bba61df7631d24fbf4d267e82",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moomdate/library/StripePromptPay/1.0.0/StripePromptPay-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/moomdate/library/StripePromptPay/1.0.0/StripePromptPay-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

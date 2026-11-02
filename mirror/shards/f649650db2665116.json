@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/metaneutrons",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "metaneutrons/library/girf/0.1.0/girf-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "girf-0.1.0.tar.gz",
+    "size_bytes": 2596024,
+    "sha256": "0cafb86dc324b8977032ffbf9dd42e8e13938af10e8487acd3cba45ae732b5f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/metaneutrons/library/girf/0.1.0/girf-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/metaneutrons/library/girf/0.1.0/girf-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "metaneutrons/library/sscp/0.1.0/sscp-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "sscp-0.1.0.tar.gz",
+    "size_bytes": 7761,
+    "sha256": "b0cc2f6dcb631c24c5002ef1714d7c8a1239c62f08903a281f4af2c9d84e7d2b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/metaneutrons/library/sscp/0.1.0/sscp-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/metaneutrons/library/sscp/0.1.0/sscp-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

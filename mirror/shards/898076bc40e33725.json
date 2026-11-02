@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nathanbak",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nathanbak/library/astra_esp8266/0.1.0/astra_esp8266-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "astra_esp8266-0.1.0.tar.gz",
+    "size_bytes": 9362,
+    "sha256": "9328843c2dae7cc9bb1c9af73cda0c2dbce510bb71f61ffdcc662d15dd4513cd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nathanbak/library/astra_esp8266/0.1.0/astra_esp8266-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nathanbak/library/astra_esp8266/0.1.0/astra_esp8266-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

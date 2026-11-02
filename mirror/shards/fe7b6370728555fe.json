@@ -1,0 +1,178 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mryslab",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mryslab/library/FirmataExpress/1.2.0/FirmataExpress-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FirmataExpress-1.2.0.tar.gz",
+    "size_bytes": 61885,
+    "sha256": "67c66b414333cca692be852f62590e23c1e6c31cb33a176f540ffc0984a5ab28",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mryslab/library/FirmataExpress/1.2.0/FirmataExpress-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mryslab/library/FirmataExpress/1.2.0/FirmataExpress-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mryslab/library/NanoConnectHcSr04/1.0.1/NanoConnectHcSr04-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NanoConnectHcSr04-1.0.1.tar.gz",
+    "size_bytes": 15389,
+    "sha256": "6f019e763fd7023f3cbcc750168db03fda2c9c546b9351f14bf11addb0dc02e8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mryslab/library/NanoConnectHcSr04/1.0.1/NanoConnectHcSr04-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mryslab/library/NanoConnectHcSr04/1.0.1/NanoConnectHcSr04-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mryslab/library/NeoPixelConnect/1.4.0/NeoPixelConnect-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeoPixelConnect-1.4.0.tar.gz",
+    "size_bytes": 16520,
+    "sha256": "faafaa00000d0c6d2664264b82a8de4af33ff022c12606a8be7c2dec2da075c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mryslab/library/NeoPixelConnect/1.4.0/NeoPixelConnect-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mryslab/library/NeoPixelConnect/1.4.0/NeoPixelConnect-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mryslab/library/Telemetrix4Arduino/5.4.4/Telemetrix4Arduino-5.4.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Telemetrix4Arduino-5.4.4.tar.gz",
+    "size_bytes": 24293,
+    "sha256": "db4f4df2c20d3efcfaf847d27ae8c41916652a604ca6344a6775c0baf9c88b51",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mryslab/library/Telemetrix4Arduino/5.4.4/Telemetrix4Arduino-5.4.4.tar.gz",
+     "https://dl.registry.platformio.org/download/mryslab/library/Telemetrix4Arduino/5.4.4/Telemetrix4Arduino-5.4.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mryslab/library/Telemetrix4Connect2040/1.0.2/Telemetrix4Connect2040-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Telemetrix4Connect2040-1.0.2.tar.gz",
+    "size_bytes": 41410,
+    "sha256": "487076774a18ae27a6244f073f618e59898586a20329e6b5491ceab418fff688",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mryslab/library/Telemetrix4Connect2040/1.0.2/Telemetrix4Connect2040-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mryslab/library/Telemetrix4Connect2040/1.0.2/Telemetrix4Connect2040-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mryslab/library/Telemetrix4Esp32/3.1.0/Telemetrix4Esp32-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Telemetrix4Esp32-3.1.0.tar.gz",
+    "size_bytes": 33224,
+    "sha256": "b4cd0417769d6889dfc6858b49ad2f53945acdaae398b8edf3b8283f28d0a897",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mryslab/library/Telemetrix4Esp32/3.1.0/Telemetrix4Esp32-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mryslab/library/Telemetrix4Esp32/3.1.0/Telemetrix4Esp32-3.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mryslab/library/Telemetrix4Esp32/3.2.0/Telemetrix4Esp32-3.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Telemetrix4Esp32-3.2.0.tar.gz",
+    "size_bytes": 36364,
+    "sha256": "5c108b27815a74aa8d4f9fd07ef0fd0d68ab6248489b690ae3ee138b87d3e665",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mryslab/library/Telemetrix4Esp32/3.2.0/Telemetrix4Esp32-3.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mryslab/library/Telemetrix4Esp32/3.2.0/Telemetrix4Esp32-3.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mryslab/library/Telemetrix4Esp8266/5.3.1/Telemetrix4Esp8266-5.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Telemetrix4Esp8266-5.3.1.tar.gz",
+    "size_bytes": 23641,
+    "sha256": "cb77f047fd1141789ae07cf4fc52e523f6c15b4adabe12ef3cea54dab09539cd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mryslab/library/Telemetrix4Esp8266/5.3.1/Telemetrix4Esp8266-5.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mryslab/library/Telemetrix4Esp8266/5.3.1/Telemetrix4Esp8266-5.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mryslab/library/Telemetrix4RPiPicoW/1.1.0/Telemetrix4RPiPicoW-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Telemetrix4RPiPicoW-1.1.0.tar.gz",
+    "size_bytes": 24474,
+    "sha256": "2b414199501ab0737dc980985d6efc7e3166eaef23ac420f824460bf3ba9a752",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mryslab/library/Telemetrix4RPiPicoW/1.1.0/Telemetrix4RPiPicoW-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mryslab/library/Telemetrix4RPiPicoW/1.1.0/Telemetrix4RPiPicoW-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mryslab/library/Telemetrix4RpiPico2w/0.9.0/Telemetrix4RpiPico2w-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Telemetrix4RpiPico2w-0.9.0.tar.gz",
+    "size_bytes": 35609,
+    "sha256": "2020c677a7a7b3173b75ac3023108bf6af046418234624f1a3c510898d01f2d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mryslab/library/Telemetrix4RpiPico2w/0.9.0/Telemetrix4RpiPico2w-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mryslab/library/Telemetrix4RpiPico2w/0.9.0/Telemetrix4RpiPico2w-0.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mryslab/library/Telemetrix4RpiPico2w/1.0.0/Telemetrix4RpiPico2w-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Telemetrix4RpiPico2w-1.0.0.tar.gz",
+    "size_bytes": 35667,
+    "sha256": "639f708c8d46bd31acd68033fb6348700ea96efa7b8d7ea9386c9495bab1af72",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mryslab/library/Telemetrix4RpiPico2w/1.0.0/Telemetrix4RpiPico2w-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mryslab/library/Telemetrix4RpiPico2w/1.0.0/Telemetrix4RpiPico2w-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mryslab/library/Telemetrix4RpiPico2w/1.1.0/Telemetrix4RpiPico2w-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Telemetrix4RpiPico2w-1.1.0.tar.gz",
+    "size_bytes": 47173,
+    "sha256": "aa56448e11f141127917c8e8f294bf708a4f34489d05b6904cd678f700255a95",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mryslab/library/Telemetrix4RpiPico2w/1.1.0/Telemetrix4RpiPico2w-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mryslab/library/Telemetrix4RpiPico2w/1.1.0/Telemetrix4RpiPico2w-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mryslab/library/Telemetrix4UnoR4/1.0.4/Telemetrix4UnoR4-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Telemetrix4UnoR4-1.0.4.tar.gz",
+    "size_bytes": 69188,
+    "sha256": "586c2b535411850d65242889e1d349a9a7efc176f7b761f9f3ea4675b2099f99",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mryslab/library/Telemetrix4UnoR4/1.0.4/Telemetrix4UnoR4-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/mryslab/library/Telemetrix4UnoR4/1.0.4/Telemetrix4UnoR4-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

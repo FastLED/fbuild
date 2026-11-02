@@ -1,0 +1,230 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ublox",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ublox/library/C027_Support/0.0.0+sha.fd9fe498f142/C027_Support-0.0.0+sha.fd9fe498f142.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "C027_Support-0.0.0+sha.fd9fe498f142.tar.gz",
+    "size_bytes": 38559,
+    "sha256": "992dc2b8cc3ca61b0066e2be2ae61ec9b3520a1b1ffeea6359de82c0af9670f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ublox/library/C027_Support/0.0.0%2Bsha.fd9fe498f142/C027_Support-0.0.0%2Bsha.fd9fe498f142.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ublox/library/C027_Support/0.0.0%2Bsha.fd9fe498f142/C027_Support-0.0.0%2Bsha.fd9fe498f142.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ublox/library/CNManager/0.0.0+sha.29ad1d1ac1f9/CNManager-0.0.0+sha.29ad1d1ac1f9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CNManager-0.0.0+sha.29ad1d1ac1f9.tar.gz",
+    "size_bytes": 10075,
+    "sha256": "8993daad26687a215918664136242e518c056840f6f86eb3784b49841d1f8a42",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ublox/library/CNManager/0.0.0%2Bsha.29ad1d1ac1f9/CNManager-0.0.0%2Bsha.29ad1d1ac1f9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ublox/library/CNManager/0.0.0%2Bsha.29ad1d1ac1f9/CNManager-0.0.0%2Bsha.29ad1d1ac1f9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ublox/library/MQTT/0.0.0+sha.f313853d22a6/MQTT-0.0.0+sha.f313853d22a6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQTT-0.0.0+sha.f313853d22a6.tar.gz",
+    "size_bytes": 10659,
+    "sha256": "370bd585727568e0fd8d9093ba00cc27b8b17c3e76582d5ea8a47345cc70d2f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ublox/library/MQTT/0.0.0%2Bsha.f313853d22a6/MQTT-0.0.0%2Bsha.f313853d22a6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ublox/library/MQTT/0.0.0%2Bsha.f313853d22a6/MQTT-0.0.0%2Bsha.f313853d22a6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ublox/library/battery-charger-bq24295/0.0.0+sha.2a758bf86bb7/battery-charger-bq24295-0.0.0+sha.2a758bf86bb7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "battery-charger-bq24295-0.0.0+sha.2a758bf86bb7.tar.gz",
+    "size_bytes": 15637,
+    "sha256": "db6b15bc7d2f3367242cb551f5207cd44b823256f07aefc3f0ef731656b9ed89",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ublox/library/battery-charger-bq24295/0.0.0%2Bsha.2a758bf86bb7/battery-charger-bq24295-0.0.0%2Bsha.2a758bf86bb7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ublox/library/battery-charger-bq24295/0.0.0%2Bsha.2a758bf86bb7/battery-charger-bq24295-0.0.0%2Bsha.2a758bf86bb7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ublox/library/battery-gauge-bq27441/0.0.0+sha.998cc334f8f2/battery-gauge-bq27441-0.0.0+sha.998cc334f8f2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "battery-gauge-bq27441-0.0.0+sha.998cc334f8f2.tar.gz",
+    "size_bytes": 15086,
+    "sha256": "4ea2d114699d61ee7e626df7fb5b6fb81d375ce73c2435344a4e72d9ddf46ca8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ublox/library/battery-gauge-bq27441/0.0.0%2Bsha.998cc334f8f2/battery-gauge-bq27441-0.0.0%2Bsha.998cc334f8f2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ublox/library/battery-gauge-bq27441/0.0.0%2Bsha.998cc334f8f2/battery-gauge-bq27441-0.0.0%2Bsha.998cc334f8f2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ublox/library/battery-gauge-bq35100/0.0.0+sha.4c699a813451/battery-gauge-bq35100-0.0.0+sha.4c699a813451.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "battery-gauge-bq35100-0.0.0+sha.4c699a813451.tar.gz",
+    "size_bytes": 12778,
+    "sha256": "669b6028a7a6d1939e4775cbd895e4284578d18c96bdb4f557e87c1596d5f7c4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ublox/library/battery-gauge-bq35100/0.0.0%2Bsha.4c699a813451/battery-gauge-bq35100-0.0.0%2Bsha.4c699a813451.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ublox/library/battery-gauge-bq35100/0.0.0%2Bsha.4c699a813451/battery-gauge-bq35100-0.0.0%2Bsha.4c699a813451.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ublox/library/easy-connect/0.0.0+sha.304d3ba87a01/easy-connect-0.0.0+sha.304d3ba87a01.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "easy-connect-0.0.0+sha.304d3ba87a01.tar.gz",
+    "size_bytes": 988907,
+    "sha256": "b8ceee78508ece4264c48d11f1ea29f273acb88773cc69f0f96284f0946287c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ublox/library/easy-connect/0.0.0%2Bsha.304d3ba87a01/easy-connect-0.0.0%2Bsha.304d3ba87a01.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ublox/library/easy-connect/0.0.0%2Bsha.304d3ba87a01/easy-connect-0.0.0%2Bsha.304d3ba87a01.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ublox/library/gnss/0.0.0+sha.d6a65d4c902a/gnss-0.0.0+sha.d6a65d4c902a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "gnss-0.0.0+sha.d6a65d4c902a.tar.gz",
+    "size_bytes": 17434,
+    "sha256": "9116a8b1e6da86211f25f38f349c729199e1349e5cddd4f3ea6b71232edbdeed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ublox/library/gnss/0.0.0%2Bsha.d6a65d4c902a/gnss-0.0.0%2Bsha.d6a65d4c902a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ublox/library/gnss/0.0.0%2Bsha.d6a65d4c902a/gnss-0.0.0%2Bsha.d6a65d4c902a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ublox/library/low-power-sleep/0.0.0+sha.691e6b38fc54/low-power-sleep-0.0.0+sha.691e6b38fc54.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "low-power-sleep-0.0.0+sha.691e6b38fc54.tar.gz",
+    "size_bytes": 35295,
+    "sha256": "3dee3709dfe5dcb0c1a2614cdaf95c02f2501700e9330f84421ea3134dca54fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ublox/library/low-power-sleep/0.0.0%2Bsha.691e6b38fc54/low-power-sleep-0.0.0%2Bsha.691e6b38fc54.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ublox/library/low-power-sleep/0.0.0%2Bsha.691e6b38fc54/low-power-sleep-0.0.0%2Bsha.691e6b38fc54.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ublox/library/mbed-cloud-example-c030/0.0.0+sha.a34e80e223c2/mbed-cloud-example-c030-0.0.0+sha.a34e80e223c2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mbed-cloud-example-c030-0.0.0+sha.a34e80e223c2.tar.gz",
+    "size_bytes": 9494,
+    "sha256": "15ac3a67b5b31e11c347244642d409108abe2f22d09519f07ba8b8c769640368",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ublox/library/mbed-cloud-example-c030/0.0.0%2Bsha.a34e80e223c2/mbed-cloud-example-c030-0.0.0%2Bsha.a34e80e223c2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ublox/library/mbed-cloud-example-c030/0.0.0%2Bsha.a34e80e223c2/mbed-cloud-example-c030-0.0.0%2Bsha.a34e80e223c2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ublox/library/ublox-at-cellular-interface-ext/0.0.0+sha.1874c0d2c70e/ublox-at-cellular-interface-ext-0.0.0+sha.1874c0d2c70e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ublox-at-cellular-interface-ext-0.0.0+sha.1874c0d2c70e.tar.gz",
+    "size_bytes": 21012,
+    "sha256": "60e7520a90a50a8b0d69fdf0b4dde38d504a35103a445d0eed0fa755bf1cb05e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ublox/library/ublox-at-cellular-interface-ext/0.0.0%2Bsha.1874c0d2c70e/ublox-at-cellular-interface-ext-0.0.0%2Bsha.1874c0d2c70e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ublox/library/ublox-at-cellular-interface-ext/0.0.0%2Bsha.1874c0d2c70e/ublox-at-cellular-interface-ext-0.0.0%2Bsha.1874c0d2c70e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ublox/library/ublox-at-cellular-interface-n2xx/0.0.0+sha.7fb0bbdc4242/ublox-at-cellular-interface-n2xx-0.0.0+sha.7fb0bbdc4242.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ublox-at-cellular-interface-n2xx-0.0.0+sha.7fb0bbdc4242.tar.gz",
+    "size_bytes": 21449,
+    "sha256": "e4c816245ceabdefd4a530e3bf332897e43ca342bd082f4381fba4a03b96cd00",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ublox/library/ublox-at-cellular-interface-n2xx/0.0.0%2Bsha.7fb0bbdc4242/ublox-at-cellular-interface-n2xx-0.0.0%2Bsha.7fb0bbdc4242.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ublox/library/ublox-at-cellular-interface-n2xx/0.0.0%2Bsha.7fb0bbdc4242/ublox-at-cellular-interface-n2xx-0.0.0%2Bsha.7fb0bbdc4242.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ublox/library/ublox-at-cellular-interface/0.0.0+sha.98808477a691/ublox-at-cellular-interface-0.0.0+sha.98808477a691.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ublox-at-cellular-interface-0.0.0+sha.98808477a691.tar.gz",
+    "size_bytes": 28172,
+    "sha256": "504f03be3a78121342ba3800e4728f642fbaf01e7fd3d870c3f627dc874691fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ublox/library/ublox-at-cellular-interface/0.0.0%2Bsha.98808477a691/ublox-at-cellular-interface-0.0.0%2Bsha.98808477a691.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ublox/library/ublox-at-cellular-interface/0.0.0%2Bsha.98808477a691/ublox-at-cellular-interface-0.0.0%2Bsha.98808477a691.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ublox/library/ublox-cellular-base-n2xx/0.0.0+sha.1afe5ed24f0c/ublox-cellular-base-n2xx-0.0.0+sha.1afe5ed24f0c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ublox-cellular-base-n2xx-0.0.0+sha.1afe5ed24f0c.tar.gz",
+    "size_bytes": 11499,
+    "sha256": "326c9f1b9bfd1dfcdc59afbc5a5122e0bc08036c2649d30dbdfc68caa5786030",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ublox/library/ublox-cellular-base-n2xx/0.0.0%2Bsha.1afe5ed24f0c/ublox-cellular-base-n2xx-0.0.0%2Bsha.1afe5ed24f0c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ublox/library/ublox-cellular-base-n2xx/0.0.0%2Bsha.1afe5ed24f0c/ublox-cellular-base-n2xx-0.0.0%2Bsha.1afe5ed24f0c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ublox/library/ublox-cellular-base/0.0.0+sha.a2466fcd63c3/ublox-cellular-base-0.0.0+sha.a2466fcd63c3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ublox-cellular-base-0.0.0+sha.a2466fcd63c3.tar.gz",
+    "size_bytes": 20560,
+    "sha256": "37063b854e0e300151ec5274f6271be02ecd92cb4d29cfdd6deb7c642a628c86",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ublox/library/ublox-cellular-base/0.0.0%2Bsha.a2466fcd63c3/ublox-cellular-base-0.0.0%2Bsha.a2466fcd63c3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ublox/library/ublox-cellular-base/0.0.0%2Bsha.a2466fcd63c3/ublox-cellular-base-0.0.0%2Bsha.a2466fcd63c3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ublox/library/ublox-cellular-driver-gen/0.0.0+sha.a5389248c8d0/ublox-cellular-driver-gen-0.0.0+sha.a5389248c8d0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ublox-cellular-driver-gen-0.0.0+sha.a5389248c8d0.tar.gz",
+    "size_bytes": 10938,
+    "sha256": "2e1c1a71771a5b809750ae9eaa7663b086661888182cba4d8f2ca6e083713be9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ublox/library/ublox-cellular-driver-gen/0.0.0%2Bsha.a5389248c8d0/ublox-cellular-driver-gen-0.0.0%2Bsha.a5389248c8d0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ublox/library/ublox-cellular-driver-gen/0.0.0%2Bsha.a5389248c8d0/ublox-cellular-driver-gen-0.0.0%2Bsha.a5389248c8d0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ublox/library/ublox-ppp-cellular-interface/0.0.0+sha.9863dcade75d/ublox-ppp-cellular-interface-0.0.0+sha.9863dcade75d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ublox-ppp-cellular-interface-0.0.0+sha.9863dcade75d.tar.gz",
+    "size_bytes": 12156,
+    "sha256": "a7a676df9c79c84009111c5a319ccadb383e3fa5d85c2fcdc6c6dd9b4581b86c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ublox/library/ublox-ppp-cellular-interface/0.0.0%2Bsha.9863dcade75d/ublox-ppp-cellular-interface-0.0.0%2Bsha.9863dcade75d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ublox/library/ublox-ppp-cellular-interface/0.0.0%2Bsha.9863dcade75d/ublox-ppp-cellular-interface-0.0.0%2Bsha.9863dcade75d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

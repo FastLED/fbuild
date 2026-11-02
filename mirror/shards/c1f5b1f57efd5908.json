@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-krissyham",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-krissyham/library/USBMIDI/0.0.0+sha.1c9f95100210/USBMIDI-0.0.0+sha.1c9f95100210.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "USBMIDI-0.0.0+sha.1c9f95100210.tar.gz",
+    "size_bytes": 6947,
+    "sha256": "468c0fc8f0309dcfd614b9892347453b4ad11c99a19dc3022f76e07e41a94871",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-krissyham/library/USBMIDI/0.0.0%2Bsha.1c9f95100210/USBMIDI-0.0.0%2Bsha.1c9f95100210.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-krissyham/library/USBMIDI/0.0.0%2Bsha.1c9f95100210/USBMIDI-0.0.0%2Bsha.1c9f95100210.tar.gz"
+    ]
+   }
+  }
+ ]
+}

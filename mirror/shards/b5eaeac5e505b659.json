@@ -1,0 +1,217 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/khuuxuanngoc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "khuuxuanngoc/library/DHT%20kxn/3.4.4/DHTkxn-3.4.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DHTkxn-3.4.4.tar.gz",
+    "size_bytes": 15633,
+    "sha256": "d8532d49ac7e7d76280fac0efddaaabde85bfd49befc5235fbd2428a14610cc5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khuuxuanngoc/library/DHT%2520kxn/3.4.4/DHTkxn-3.4.4.tar.gz",
+     "https://dl.registry.platformio.org/download/khuuxuanngoc/library/DHT%20kxn/3.4.4/DHTkxn-3.4.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khuuxuanngoc/library/MKE%20I2C%20MP3/1.0.0/MKEI2CMP3-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MKEI2CMP3-1.0.0.tar.gz",
+    "size_bytes": 17794,
+    "sha256": "2cc8930882e6da9d5df705e35257fbe1d878f50dde204a1cf0732d71729b6742",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khuuxuanngoc/library/MKE%2520I2C%2520MP3/1.0.0/MKEI2CMP3-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khuuxuanngoc/library/MKE%20I2C%20MP3/1.0.0/MKEI2CMP3-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khuuxuanngoc/library/MKE_I2C_DHT20/1.0.0/MKE_I2C_DHT20-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MKE_I2C_DHT20-1.0.0.tar.gz",
+    "size_bytes": 8483,
+    "sha256": "9bdbe4113e8f8c58d5990418b89b9efbdeb1ce4b0338beadbe5a9d667b949340",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khuuxuanngoc/library/MKE_I2C_DHT20/1.0.0/MKE_I2C_DHT20-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khuuxuanngoc/library/MKE_I2C_DHT20/1.0.0/MKE_I2C_DHT20-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khuuxuanngoc/library/MKE_I2C_Loadcell/1.0.0/MKE_I2C_Loadcell-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MKE_I2C_Loadcell-1.0.0.tar.gz",
+    "size_bytes": 19221,
+    "sha256": "939f13e1ca1cdafd6b380267f71283c985fa863c21a6d2cdebda29108c7e89b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khuuxuanngoc/library/MKE_I2C_Loadcell/1.0.0/MKE_I2C_Loadcell-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khuuxuanngoc/library/MKE_I2C_Loadcell/1.0.0/MKE_I2C_Loadcell-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khuuxuanngoc/library/MKE_I2C_RFID/1.0.0/MKE_I2C_RFID-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MKE_I2C_RFID-1.0.0.tar.gz",
+    "size_bytes": 20505,
+    "sha256": "8922ae9887b4a8af18b21f2826c0f4d1b112c45dab8a5ab8a343ef399e115450",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khuuxuanngoc/library/MKE_I2C_RFID/1.0.0/MKE_I2C_RFID-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khuuxuanngoc/library/MKE_I2C_RFID/1.0.0/MKE_I2C_RFID-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khuuxuanngoc/library/MKE_ONE/2.0.0/MKE_ONE-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MKE_ONE-2.0.0.tar.gz",
+    "size_bytes": 12173,
+    "sha256": "c5d422ae6d791ecfea35319958d7979795dbff3673caad8144ca7e380a125e9e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khuuxuanngoc/library/MKE_ONE/2.0.0/MKE_ONE-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khuuxuanngoc/library/MKE_ONE/2.0.0/MKE_ONE-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khuuxuanngoc/library/MKE_ONE/2.0.1/MKE_ONE-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MKE_ONE-2.0.1.tar.gz",
+    "size_bytes": 13936,
+    "sha256": "362e679bdb2966b5201e636086f449c12d4bc93b88bbd40596db2c54575221d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khuuxuanngoc/library/MKE_ONE/2.0.1/MKE_ONE-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khuuxuanngoc/library/MKE_ONE/2.0.1/MKE_ONE-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khuuxuanngoc/library/MKE_ONE/2.0.2/MKE_ONE-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MKE_ONE-2.0.2.tar.gz",
+    "size_bytes": 42947,
+    "sha256": "7ce98f202f703c6af48b68f2b0066533beef2e72c0a0faa6550ba82f2d003016",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khuuxuanngoc/library/MKE_ONE/2.0.2/MKE_ONE-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/khuuxuanngoc/library/MKE_ONE/2.0.2/MKE_ONE-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khuuxuanngoc/library/MKE_ONE/2.0.3/MKE_ONE-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MKE_ONE-2.0.3.tar.gz",
+    "size_bytes": 42927,
+    "sha256": "da03affb53fcc59743993997d4573866bbcbd0ffc774c629aaf5ef1e87c5ed28",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khuuxuanngoc/library/MKE_ONE/2.0.3/MKE_ONE-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/khuuxuanngoc/library/MKE_ONE/2.0.3/MKE_ONE-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khuuxuanngoc/library/MKE_ONE/2.0.4/MKE_ONE-2.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MKE_ONE-2.0.4.tar.gz",
+    "size_bytes": 66366,
+    "sha256": "ad3b0f8cb81b31d0504a434d0defd7d9cb470178362043288948a8ebb74ebdbe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khuuxuanngoc/library/MKE_ONE/2.0.4/MKE_ONE-2.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/khuuxuanngoc/library/MKE_ONE/2.0.4/MKE_ONE-2.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khuuxuanngoc/library/MKE_ONE/2.0.5/MKE_ONE-2.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MKE_ONE-2.0.5.tar.gz",
+    "size_bytes": 66362,
+    "sha256": "57829419c2a534df33c6c19f9702a681650ef1cc910d045e5b2ffff5bcf02a12",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khuuxuanngoc/library/MKE_ONE/2.0.5/MKE_ONE-2.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/khuuxuanngoc/library/MKE_ONE/2.0.5/MKE_ONE-2.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khuuxuanngoc/library/MKE_S17_AGS10/1.1.1/MKE_S17_AGS10-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MKE_S17_AGS10-1.1.1.tar.gz",
+    "size_bytes": 12799,
+    "sha256": "d0f9f0bf566459d363ccd8edaab623b8abb409d3a7ce6a7fe15c616d0e738f2b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khuuxuanngoc/library/MKE_S17_AGS10/1.1.1/MKE_S17_AGS10-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khuuxuanngoc/library/MKE_S17_AGS10/1.1.1/MKE_S17_AGS10-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khuuxuanngoc/library/MakerEdu%20I2C%20Motor%20Driver/1.0.0/MakerEduI2CMotorDriver-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MakerEduI2CMotorDriver-1.0.0.tar.gz",
+    "size_bytes": 18714,
+    "sha256": "de061f8f45484cc5d3edde35bb972fcd991df9e4a7ab1865e74f26c8b18235c3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khuuxuanngoc/library/MakerEdu%2520I2C%2520Motor%2520Driver/1.0.0/MakerEduI2CMotorDriver-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khuuxuanngoc/library/MakerEdu%20I2C%20Motor%20Driver/1.0.0/MakerEduI2CMotorDriver-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khuuxuanngoc/library/Makerlabvn_I2C_Line_Follower_Sensor/1.1.0/Makerlabvn_I2C_Line_Follower_Sensor-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Makerlabvn_I2C_Line_Follower_Sensor-1.1.0.tar.gz",
+    "size_bytes": 7089,
+    "sha256": "bd56efbf76ef5a2db129b2f37a581964a147da838b877d86865d1fd2b2718692",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khuuxuanngoc/library/Makerlabvn_I2C_Line_Follower_Sensor/1.1.0/Makerlabvn_I2C_Line_Follower_Sensor-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khuuxuanngoc/library/Makerlabvn_I2C_Line_Follower_Sensor/1.1.0/Makerlabvn_I2C_Line_Follower_Sensor-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khuuxuanngoc/library/TongHopThuVien/1.0.4/TongHopThuVien-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TongHopThuVien-1.0.4.tar.gz",
+    "size_bytes": 57474,
+    "sha256": "90f8ef2ad51fe36fe0ee74678e7a714a0bcb38516567a31fd678e9f548cca1f9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khuuxuanngoc/library/TongHopThuVien/1.0.4/TongHopThuVien-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/khuuxuanngoc/library/TongHopThuVien/1.0.4/TongHopThuVien-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khuuxuanngoc/library/TongHopThuVienCon1/1.0.0/TongHopThuVienCon1-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TongHopThuVienCon1-1.0.0.tar.gz",
+    "size_bytes": 57259,
+    "sha256": "6ed67ad7bc420b7a05eafb42d922b6dbc35f7196bfea5d8bf56a6a6476ec3e10",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khuuxuanngoc/library/TongHopThuVienCon1/1.0.0/TongHopThuVienCon1-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khuuxuanngoc/library/TongHopThuVienCon1/1.0.0/TongHopThuVienCon1-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

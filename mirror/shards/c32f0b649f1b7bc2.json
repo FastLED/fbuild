@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fanfanlatulipe26",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fanfanlatulipe26/library/ESP32_ppm/1.1.0/ESP32_ppm-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_ppm-1.1.0.tar.gz",
+    "size_bytes": 23785,
+    "sha256": "9ba366828651d12c642ff3276b7d8a004f9a8441b3dc11baccd051169d0f3f68",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fanfanlatulipe26/library/ESP32_ppm/1.1.0/ESP32_ppm-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fanfanlatulipe26/library/ESP32_ppm/1.1.0/ESP32_ppm-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fanfanlatulipe26/library/FS_MX1508/1.1.0/FS_MX1508-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FS_MX1508-1.1.0.tar.gz",
+    "size_bytes": 6399,
+    "sha256": "2f9723abadf8bbe603175ba79585166d223d7b556702bc9a0c384b0b3cd3971d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fanfanlatulipe26/library/FS_MX1508/1.1.0/FS_MX1508-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fanfanlatulipe26/library/FS_MX1508/1.1.0/FS_MX1508-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fanfanlatulipe26/library/XGZP6897D/1.0.5/XGZP6897D-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XGZP6897D-1.0.5.tar.gz",
+    "size_bytes": 16389,
+    "sha256": "5f6745476ae0239fb4efa906ad7b78c5ee2399cf718f35d13858d78d31074b0c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fanfanlatulipe26/library/XGZP6897D/1.0.5/XGZP6897D-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/fanfanlatulipe26/library/XGZP6897D/1.0.5/XGZP6897D-1.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

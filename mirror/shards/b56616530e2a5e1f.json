@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-fclabovgu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-fclabovgu/library/NeoPixel/0.0.0+sha.037882a8e193/NeoPixel-0.0.0+sha.037882a8e193.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeoPixel-0.0.0+sha.037882a8e193.tar.gz",
+    "size_bytes": 1663,
+    "sha256": "69661e9b30a9d311448c5a82788f8c4f98d8c7c13fa695f26c4f84b608c73963",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-fclabovgu/library/NeoPixel/0.0.0%2Bsha.037882a8e193/NeoPixel-0.0.0%2Bsha.037882a8e193.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-fclabovgu/library/NeoPixel/0.0.0%2Bsha.037882a8e193/NeoPixel-0.0.0%2Bsha.037882a8e193.tar.gz"
+    ]
+   }
+  }
+ ]
+}

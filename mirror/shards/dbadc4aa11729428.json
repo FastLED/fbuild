@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-111",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-111/library/AE_KXSD9/0.0.0+sha.4dc1a0ac0cf1/AE_KXSD9-0.0.0+sha.4dc1a0ac0cf1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AE_KXSD9-0.0.0+sha.4dc1a0ac0cf1.tar.gz",
+    "size_bytes": 1704,
+    "sha256": "35efc57d2571e845db9fe8b9f18d74b35dc30a7bce31506f72f53c71f3bac7b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-111/library/AE_KXSD9/0.0.0%2Bsha.4dc1a0ac0cf1/AE_KXSD9-0.0.0%2Bsha.4dc1a0ac0cf1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-111/library/AE_KXSD9/0.0.0%2Bsha.4dc1a0ac0cf1/AE_KXSD9-0.0.0%2Bsha.4dc1a0ac0cf1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

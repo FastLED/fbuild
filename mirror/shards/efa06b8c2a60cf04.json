@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-fwrawx",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-fwrawx/library/Rm3100/0.0.0+sha.8646c63a8dbe/Rm3100-0.0.0+sha.8646c63a8dbe.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Rm3100-0.0.0+sha.8646c63a8dbe.tar.gz",
+    "size_bytes": 4997,
+    "sha256": "e5da1de4747a2adba129b226eb5ca0afd3183cd37b4cc553540d06ea7415856d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-fwrawx/library/Rm3100/0.0.0%2Bsha.8646c63a8dbe/Rm3100-0.0.0%2Bsha.8646c63a8dbe.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-fwrawx/library/Rm3100/0.0.0%2Bsha.8646c63a8dbe/Rm3100-0.0.0%2Bsha.8646c63a8dbe.tar.gz"
+    ]
+   }
+  }
+ ]
+}

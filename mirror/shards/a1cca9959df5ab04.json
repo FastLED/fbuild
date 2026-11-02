@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/axxel-otl",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "axxel-otl/library/Sonic/1.2.4/Sonic-1.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sonic-1.2.4.tar.gz",
+    "size_bytes": 2485,
+    "sha256": "67ce55a6f3009c9ba0165ab4c934410a30c0040b482514f1c5ce478752027ed0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/axxel-otl/library/Sonic/1.2.4/Sonic-1.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/axxel-otl/library/Sonic/1.2.4/Sonic-1.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "axxel-otl/library/Sonic/2.0.3/Sonic-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sonic-2.0.3.tar.gz",
+    "size_bytes": 2862,
+    "sha256": "fe50c4b767a6f001dbfa7b185e5400b284d3494fd79d9fb61009c7af058c27fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/axxel-otl/library/Sonic/2.0.3/Sonic-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/axxel-otl/library/Sonic/2.0.3/Sonic-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "axxel-otl/library/Sonic/2.0.4/Sonic-2.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sonic-2.0.4.tar.gz",
+    "size_bytes": 14456,
+    "sha256": "698db89302f7d092054ceb14514828c277e50fad708bf85deb1f3555178b60f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/axxel-otl/library/Sonic/2.0.4/Sonic-2.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/axxel-otl/library/Sonic/2.0.4/Sonic-2.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "axxel-otl/library/Sonic/3.0.1/Sonic-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sonic-3.0.1.tar.gz",
+    "size_bytes": 14969,
+    "sha256": "104bc27ee6662812bc1b179d4a5002fc3c2f14799566c5435b672d01e70c1177",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/axxel-otl/library/Sonic/3.0.1/Sonic-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/axxel-otl/library/Sonic/3.0.1/Sonic-3.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

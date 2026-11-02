@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/maszyna-eu07",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "maszyna-eu07/library/MaSzyna%20Hardware%20Protocol%20v2/1.0.0/MaSzynaHardwareProtocolv2-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MaSzynaHardwareProtocolv2-1.0.0.tar.gz",
+    "size_bytes": 33225,
+    "sha256": "277d5ee3ae05e1fee7e03459e7e0fe9d27e982e57ed0d0752679f48e4143ffa6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maszyna-eu07/library/MaSzyna%2520Hardware%2520Protocol%2520v2/1.0.0/MaSzynaHardwareProtocolv2-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/maszyna-eu07/library/MaSzyna%20Hardware%20Protocol%20v2/1.0.0/MaSzynaHardwareProtocolv2-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "maszyna-eu07/library/MaSzyna%20Hardware%20Protocol%20v2/1.0.1/MaSzynaHardwareProtocolv2-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MaSzynaHardwareProtocolv2-1.0.1.tar.gz",
+    "size_bytes": 33667,
+    "sha256": "ff9d4553a1157aa2d868cc5756ea41a6841216d262f55ffc3fe96557898d4202",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maszyna-eu07/library/MaSzyna%2520Hardware%2520Protocol%2520v2/1.0.1/MaSzynaHardwareProtocolv2-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/maszyna-eu07/library/MaSzyna%20Hardware%20Protocol%20v2/1.0.1/MaSzynaHardwareProtocolv2-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

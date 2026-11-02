@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/onlinelei",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "onlinelei/library/pio-lib-blink/0.0.1/pio-lib-blink-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pio-lib-blink-0.0.1.tar.gz",
+    "size_bytes": 1401,
+    "sha256": "0d699bfaa9368b088923296f62dc0ca41e4aad684449bec29e962778b4b183db",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/onlinelei/library/pio-lib-blink/0.0.1/pio-lib-blink-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/onlinelei/library/pio-lib-blink/0.0.1/pio-lib-blink-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

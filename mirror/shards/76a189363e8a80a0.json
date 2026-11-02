@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-dacamposol",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-dacamposol/library/DHT22/0.0.0+sha.8c7fa818f329/DHT22-0.0.0+sha.8c7fa818f329.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DHT22-0.0.0+sha.8c7fa818f329.tar.gz",
+    "size_bytes": 2236,
+    "sha256": "312a5f7cabb0bd5ec3b82671d4ea50cc8ad2522b19646ccc800fa0e9989069fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dacamposol/library/DHT22/0.0.0%2Bsha.8c7fa818f329/DHT22-0.0.0%2Bsha.8c7fa818f329.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dacamposol/library/DHT22/0.0.0%2Bsha.8c7fa818f329/DHT22-0.0.0%2Bsha.8c7fa818f329.tar.gz"
+    ]
+   }
+  }
+ ]
+}

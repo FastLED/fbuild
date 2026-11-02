@@ -1,0 +1,191 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fra-c",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fra-c/library/Minimalist%20State%20Machine/1.0.0/MinimalistStateMachine-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MinimalistStateMachine-1.0.0.tar.gz",
+    "size_bytes": 4815,
+    "sha256": "b852123fcf7b539b2a283ffcc296959c81740458a394b06fc31a398224b198fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fra-c/library/Minimalist%2520State%2520Machine/1.0.0/MinimalistStateMachine-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fra-c/library/Minimalist%20State%20Machine/1.0.0/MinimalistStateMachine-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fra-c/library/Minimalist%20State%20Machine/1.1.0/MinimalistStateMachine-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MinimalistStateMachine-1.1.0.tar.gz",
+    "size_bytes": 5376,
+    "sha256": "71f9700338b07434a7632941f0cf02e5a42ec7b210054c3df1cef81356fa91d3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fra-c/library/Minimalist%2520State%2520Machine/1.1.0/MinimalistStateMachine-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fra-c/library/Minimalist%20State%20Machine/1.1.0/MinimalistStateMachine-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fra-c/library/Minimalist%20State%20Machine/1.1.1/MinimalistStateMachine-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MinimalistStateMachine-1.1.1.tar.gz",
+    "size_bytes": 5518,
+    "sha256": "9ef8581be5bf547ea4fd8f3f7738fc3d9c2f1cf16f4a2ae151ce7707bbca7b09",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fra-c/library/Minimalist%2520State%2520Machine/1.1.1/MinimalistStateMachine-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fra-c/library/Minimalist%20State%20Machine/1.1.1/MinimalistStateMachine-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fra-c/library/Minimalist%20State%20Machine/1.2.1/MinimalistStateMachine-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MinimalistStateMachine-1.2.1.tar.gz",
+    "size_bytes": 4899,
+    "sha256": "c9692808784851e9d2983aa9e1f83d9411a6100250679d2736161a4a1b7d4523",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fra-c/library/Minimalist%2520State%2520Machine/1.2.1/MinimalistStateMachine-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fra-c/library/Minimalist%20State%20Machine/1.2.1/MinimalistStateMachine-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fra-c/library/Minimalist%20State%20Machine/1.2.2/MinimalistStateMachine-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MinimalistStateMachine-1.2.2.tar.gz",
+    "size_bytes": 4909,
+    "sha256": "cf6839489e66d3efc769f325d11d1ddc93f63aa63f39ba28affbfbe4064d97dc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fra-c/library/Minimalist%2520State%2520Machine/1.2.2/MinimalistStateMachine-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/fra-c/library/Minimalist%20State%20Machine/1.2.2/MinimalistStateMachine-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fra-c/library/Minimalist%20State%20Machine/1.2.3/MinimalistStateMachine-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MinimalistStateMachine-1.2.3.tar.gz",
+    "size_bytes": 4907,
+    "sha256": "198916caeac20da8424c414d17215927c69abab8da95dbc9393bb0609bbaf952",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fra-c/library/Minimalist%2520State%2520Machine/1.2.3/MinimalistStateMachine-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/fra-c/library/Minimalist%20State%20Machine/1.2.3/MinimalistStateMachine-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fra-c/library/Minimalist%20State%20Machine/1.3.0/MinimalistStateMachine-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MinimalistStateMachine-1.3.0.tar.gz",
+    "size_bytes": 6190,
+    "sha256": "7f56397076ea1947c7b3e9318e1a6c78bd57fb5fa8cef394f4b3393d23cf22ac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fra-c/library/Minimalist%2520State%2520Machine/1.3.0/MinimalistStateMachine-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fra-c/library/Minimalist%20State%20Machine/1.3.0/MinimalistStateMachine-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fra-c/library/Minimalist%20State%20Machine/1.4.0/MinimalistStateMachine-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MinimalistStateMachine-1.4.0.tar.gz",
+    "size_bytes": 6738,
+    "sha256": "4abadda25372e5672fee1d3df818b0376be47c73d902b035f8d6d5a2e484da32",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fra-c/library/Minimalist%2520State%2520Machine/1.4.0/MinimalistStateMachine-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fra-c/library/Minimalist%20State%20Machine/1.4.0/MinimalistStateMachine-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fra-c/library/Minimalist%20State%20Machine/1.5.0/MinimalistStateMachine-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MinimalistStateMachine-1.5.0.tar.gz",
+    "size_bytes": 6634,
+    "sha256": "eac6b92b5ddeb2b44e67e3fcfb3548f367ab744c3d749502aba17a5b6631795c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fra-c/library/Minimalist%2520State%2520Machine/1.5.0/MinimalistStateMachine-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fra-c/library/Minimalist%20State%20Machine/1.5.0/MinimalistStateMachine-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fra-c/library/Minimalist%20State%20Machine/1.6.0/MinimalistStateMachine-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MinimalistStateMachine-1.6.0.tar.gz",
+    "size_bytes": 7544,
+    "sha256": "a49783de81dda38b810e0ce683a4ea1a4e8c87d288bbe63da3c5f8c22c84de9e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fra-c/library/Minimalist%2520State%2520Machine/1.6.0/MinimalistStateMachine-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fra-c/library/Minimalist%20State%20Machine/1.6.0/MinimalistStateMachine-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fra-c/library/Minimalist%20State%20Machine/1.6.1/MinimalistStateMachine-1.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MinimalistStateMachine-1.6.1.tar.gz",
+    "size_bytes": 7685,
+    "sha256": "6470eb1c58910ec019ebf0e92afa985ac5c08555c764fdee988cd00186d521a3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fra-c/library/Minimalist%2520State%2520Machine/1.6.1/MinimalistStateMachine-1.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fra-c/library/Minimalist%20State%20Machine/1.6.1/MinimalistStateMachine-1.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fra-c/library/Minimalist%20State%20Machine/1.7.0/MinimalistStateMachine-1.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MinimalistStateMachine-1.7.0.tar.gz",
+    "size_bytes": 7956,
+    "sha256": "dbb915834337b7827aedc60433406aa48ff6cd88f3794114f8b9d1c36b6d2fea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fra-c/library/Minimalist%2520State%2520Machine/1.7.0/MinimalistStateMachine-1.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fra-c/library/Minimalist%20State%20Machine/1.7.0/MinimalistStateMachine-1.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fra-c/library/Minimalist%20State%20Machine/1.8.0/MinimalistStateMachine-1.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MinimalistStateMachine-1.8.0.tar.gz",
+    "size_bytes": 8178,
+    "sha256": "33af006d524342d07c7aebc9d208d7eb951d272e84a85ae6c119feb8d8bc203f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fra-c/library/Minimalist%2520State%2520Machine/1.8.0/MinimalistStateMachine-1.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fra-c/library/Minimalist%20State%20Machine/1.8.0/MinimalistStateMachine-1.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fra-c/library/Minimalistic%20State%20Machine/0.0.2/MinimalisticStateMachine-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MinimalisticStateMachine-0.0.2.tar.gz",
+    "size_bytes": 1721,
+    "sha256": "acd6618eaae04084894d0e0944444b73ec2b835adc99e487f70f27e096373895",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fra-c/library/Minimalistic%2520State%2520Machine/0.0.2/MinimalisticStateMachine-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/fra-c/library/Minimalistic%20State%20Machine/0.0.2/MinimalisticStateMachine-0.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

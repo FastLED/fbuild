@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gitlab-communication",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gitlab-communication/library/VEGAIoT_BusIO/1.0.0/VEGAIoT_BusIO-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VEGAIoT_BusIO-1.0.0.tar.gz",
+    "size_bytes": 14452,
+    "sha256": "aa52add6182b539538b5aaae05dcbb68ff9f8d1dc3b4cd432567a78f0f78458b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gitlab-communication/library/VEGAIoT_BusIO/1.0.0/VEGAIoT_BusIO-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gitlab-communication/library/VEGAIoT_BusIO/1.0.0/VEGAIoT_BusIO-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gitlab-communication/library/VEGA_ArduinoBLE/1.0.1/VEGA_ArduinoBLE-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VEGA_ArduinoBLE-1.0.1.tar.gz",
+    "size_bytes": 78005,
+    "sha256": "5589c36fc73c363e5085e03db27917628d597788f771868f27b4169411251bc3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gitlab-communication/library/VEGA_ArduinoBLE/1.0.1/VEGA_ArduinoBLE-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gitlab-communication/library/VEGA_ArduinoBLE/1.0.1/VEGA_ArduinoBLE-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gitlab-communication/library/VEGA_FirebaseArduino/1.0.1/VEGA_FirebaseArduino-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VEGA_FirebaseArduino-1.0.1.tar.gz",
+    "size_bytes": 90488,
+    "sha256": "74d834bb73fae3a27e08784957356988267725d1bd94fb02bb1527c1129591f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gitlab-communication/library/VEGA_FirebaseArduino/1.0.1/VEGA_FirebaseArduino-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gitlab-communication/library/VEGA_FirebaseArduino/1.0.1/VEGA_FirebaseArduino-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gitlab-communication/library/VEGA_IRremote/1.0.0/VEGA_IRremote-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VEGA_IRremote-1.0.0.tar.gz",
+    "size_bytes": 224381,
+    "sha256": "e2e71bc0b8eee99dcf3587a2a27efc0ea82a30c2edc7a4435711016042d1ac4c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gitlab-communication/library/VEGA_IRremote/1.0.0/VEGA_IRremote-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gitlab-communication/library/VEGA_IRremote/1.0.0/VEGA_IRremote-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gitlab-communication/library/VEGA_SoftwareSerial/1.0.0/VEGA_SoftwareSerial-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VEGA_SoftwareSerial-1.0.0.tar.gz",
+    "size_bytes": 4652,
+    "sha256": "331bfcc43add97d15475dba19907219aeb1d12e358cda1a3e0cd8d25f41fc2ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gitlab-communication/library/VEGA_SoftwareSerial/1.0.0/VEGA_SoftwareSerial-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gitlab-communication/library/VEGA_SoftwareSerial/1.0.0/VEGA_SoftwareSerial-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gitlab-communication/library/VEGA_WiFiNINA/1.0.0/VEGA_WiFiNINA-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VEGA_WiFiNINA-1.0.0.tar.gz",
+    "size_bytes": 42059,
+    "sha256": "98782ad092f1ea11251d4fa79aa91e7b6a4d7ff06e77a2b08cb0cbbf793b21b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gitlab-communication/library/VEGA_WiFiNINA/1.0.0/VEGA_WiFiNINA-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gitlab-communication/library/VEGA_WiFiNINA/1.0.0/VEGA_WiFiNINA-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

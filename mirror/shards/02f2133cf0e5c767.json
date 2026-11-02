@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hacker-cb",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hacker-cb/library/MPark-Variant/1.4.0/MPark-Variant-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPark-Variant-1.4.0.tar.gz",
+    "size_bytes": 18121,
+    "sha256": "14d0b6b5f95b32ce3ff0b852bdef8ed1f9b47b5cfd27ec55acd5f809eaef38d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hacker-cb/library/MPark-Variant/1.4.0/MPark-Variant-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hacker-cb/library/MPark-Variant/1.4.0/MPark-Variant-1.4.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

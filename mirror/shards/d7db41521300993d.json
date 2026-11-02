@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/probonopd",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "probonopd/library/KeypadSim/1.0.0/KeypadSim-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KeypadSim-1.0.0.tar.gz",
+    "size_bytes": 5384,
+    "sha256": "fcb558315d46592b674e9a30ed962d8f23ec4a9bbc026c4c05713243096d07b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/probonopd/library/KeypadSim/1.0.0/KeypadSim-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/probonopd/library/KeypadSim/1.0.0/KeypadSim-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "probonopd/library/ProntoHex/1.0/ProntoHex-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProntoHex-1.0.tar.gz",
+    "size_bytes": 4461,
+    "sha256": "dee6932125b34cc55c693096fd1281ba5dcec6bcbd2bd46d2334edd54acbc6e3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/probonopd/library/ProntoHex/1.0/ProntoHex-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/probonopd/library/ProntoHex/1.0/ProntoHex-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

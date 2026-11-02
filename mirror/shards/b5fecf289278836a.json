@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fp64lib",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fp64lib/library/fp64lib/1.1.26/fp64lib-1.1.26.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "fp64lib-1.1.26.tar.gz",
+    "size_bytes": 114662,
+    "sha256": "b230ef43c9f83a30758928c9dc2c11c0e7b394678cefcd39fc1eab03535d00e2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fp64lib/library/fp64lib/1.1.26/fp64lib-1.1.26.tar.gz",
+     "https://dl.registry.platformio.org/download/fp64lib/library/fp64lib/1.1.26/fp64lib-1.1.26.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fp64lib/library/fp64lib/1.1.27/fp64lib-1.1.27.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "fp64lib-1.1.27.tar.gz",
+    "size_bytes": 114754,
+    "sha256": "f82b1f9c0af237ca8bc525ffaad83f6b3198f933653bc7b58e19e1ca08430132",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fp64lib/library/fp64lib/1.1.27/fp64lib-1.1.27.tar.gz",
+     "https://dl.registry.platformio.org/download/fp64lib/library/fp64lib/1.1.27/fp64lib-1.1.27.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fp64lib/library/fp64lib/1.1.28/fp64lib-1.1.28.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "fp64lib-1.1.28.tar.gz",
+    "size_bytes": 114722,
+    "sha256": "be54243d5bbc7e50910f01953539cab1649cf521153e8e69c1de5b316ca9948f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fp64lib/library/fp64lib/1.1.28/fp64lib-1.1.28.tar.gz",
+     "https://dl.registry.platformio.org/download/fp64lib/library/fp64lib/1.1.28/fp64lib-1.1.28.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fp64lib/library/fp64lib/1.1.29/fp64lib-1.1.29.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "fp64lib-1.1.29.tar.gz",
+    "size_bytes": 114743,
+    "sha256": "782c6e1ce8bdb5cd99d1d1e2b54d60f5be3ed0b04d840d782d7695525af4d755",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fp64lib/library/fp64lib/1.1.29/fp64lib-1.1.29.tar.gz",
+     "https://dl.registry.platformio.org/download/fp64lib/library/fp64lib/1.1.29/fp64lib-1.1.29.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fp64lib/library/fp64lib/1.1.32/fp64lib-1.1.32.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "fp64lib-1.1.32.tar.gz",
+    "size_bytes": 133999,
+    "sha256": "ded60abaf4c2795436f28aa646c95a31270237fc37580be0b324e19d60471293",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fp64lib/library/fp64lib/1.1.32/fp64lib-1.1.32.tar.gz",
+     "https://dl.registry.platformio.org/download/fp64lib/library/fp64lib/1.1.32/fp64lib-1.1.32.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fp64lib/library/fp64lib/1.1.33/fp64lib-1.1.33.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "fp64lib-1.1.33.tar.gz",
+    "size_bytes": 137139,
+    "sha256": "804a6364a7c66dc7c51a70e3b7c9ac8288d854752fe922bc7a40cc20d5454abe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fp64lib/library/fp64lib/1.1.33/fp64lib-1.1.33.tar.gz",
+     "https://dl.registry.platformio.org/download/fp64lib/library/fp64lib/1.1.33/fp64lib-1.1.33.tar.gz"
+    ]
+   }
+  }
+ ]
+}

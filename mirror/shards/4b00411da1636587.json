@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-phsfan",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-phsfan/library/a3gs/0.0.0+sha.ca471c239d5f/a3gs-0.0.0+sha.ca471c239d5f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "a3gs-0.0.0+sha.ca471c239d5f.tar.gz",
+    "size_bytes": 12831,
+    "sha256": "504fb95d88c0d17cf64f5445ea68c249dd946d19674766f71facec8e5c3ccfb7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-phsfan/library/a3gs/0.0.0%2Bsha.ca471c239d5f/a3gs-0.0.0%2Bsha.ca471c239d5f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-phsfan/library/a3gs/0.0.0%2Bsha.ca471c239d5f/a3gs-0.0.0%2Bsha.ca471c239d5f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

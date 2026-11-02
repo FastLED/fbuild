@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mehtajainam",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mehtajainam/library/VCNL36687/1.0.0/VCNL36687-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VCNL36687-1.0.0.tar.gz",
+    "size_bytes": 4546,
+    "sha256": "715b1c84e75a2598b57f896f7fe2d4445ea46a167e718bea63ef56f88cf677da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mehtajainam/library/VCNL36687/1.0.0/VCNL36687-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mehtajainam/library/VCNL36687/1.0.0/VCNL36687-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

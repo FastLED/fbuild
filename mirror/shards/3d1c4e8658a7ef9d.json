@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lucacalcaterra",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lucacalcaterra/library/souliss/7.4.2-beta/souliss-7.4.2-beta.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "souliss-7.4.2-beta.tar.gz",
+    "size_bytes": 361922,
+    "sha256": "496ab65b28b1e2975ad77e04547a65056a14323c3a819e70175629e497ad2422",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lucacalcaterra/library/souliss/7.4.2-beta/souliss-7.4.2-beta.tar.gz",
+     "https://dl.registry.platformio.org/download/lucacalcaterra/library/souliss/7.4.2-beta/souliss-7.4.2-beta.tar.gz"
+    ]
+   }
+  }
+ ]
+}

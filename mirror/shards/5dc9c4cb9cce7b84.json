@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/awootton",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "awootton/library/mqtt5nano/0.7.0/mqtt5nano-0.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mqtt5nano-0.7.0.tar.gz",
+    "size_bytes": 4147782,
+    "sha256": "6bfddeac738a74be6883c49de3476e2ed20b8ec31eb1cfd208e43cbde258b2bd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/awootton/library/mqtt5nano/0.7.0/mqtt5nano-0.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/awootton/library/mqtt5nano/0.7.0/mqtt5nano-0.7.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

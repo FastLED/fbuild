@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-amyrctdp",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-amyrctdp/library/MFRC522/0.0.0+sha.c735c66e37d3/MFRC522-0.0.0+sha.c735c66e37d3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MFRC522-0.0.0+sha.c735c66e37d3.tar.gz",
+    "size_bytes": 19926,
+    "sha256": "75ca8e754fb5faf1d763cf56a946b2abb2fe1bc6d470c5475d99603cf8e3971a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-amyrctdp/library/MFRC522/0.0.0%2Bsha.c735c66e37d3/MFRC522-0.0.0%2Bsha.c735c66e37d3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-amyrctdp/library/MFRC522/0.0.0%2Bsha.c735c66e37d3/MFRC522-0.0.0%2Bsha.c735c66e37d3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lonely-binary",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lonely-binary/library/Fluxgrid/0.18.0/Fluxgrid-0.18.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Fluxgrid-0.18.0.tar.gz",
+    "size_bytes": 80913,
+    "sha256": "25025e2b83cc7fb5db0e0d6b99537862711557a6e821796a0bee2c3f02f596c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lonely-binary/library/Fluxgrid/0.18.0/Fluxgrid-0.18.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lonely-binary/library/Fluxgrid/0.18.0/Fluxgrid-0.18.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lonely-binary/library/Fluxgrid/0.18.1/Fluxgrid-0.18.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Fluxgrid-0.18.1.tar.gz",
+    "size_bytes": 82172,
+    "sha256": "f69b9863600547955825891c7411473381372a18b8b058ee57cc7622ad126159",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lonely-binary/library/Fluxgrid/0.18.1/Fluxgrid-0.18.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lonely-binary/library/Fluxgrid/0.18.1/Fluxgrid-0.18.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lonely-binary/library/Fluxgrid/0.9.4/Fluxgrid-0.9.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Fluxgrid-0.9.4.tar.gz",
+    "size_bytes": 26252,
+    "sha256": "823b21fdb7c854c09297915cc35a5bf02ffd8c423acbde7772ab2c558c677547",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lonely-binary/library/Fluxgrid/0.9.4/Fluxgrid-0.9.4.tar.gz",
+     "https://dl.registry.platformio.org/download/lonely-binary/library/Fluxgrid/0.9.4/Fluxgrid-0.9.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lonely-binary/library/Lonely%20Binary%20Coin%20Acceptor/1.0.0/LonelyBinaryCoinAcceptor-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LonelyBinaryCoinAcceptor-1.0.0.tar.gz",
+    "size_bytes": 9595,
+    "sha256": "513b3b18f2b720ce8a25518492735087d6bdd77dbe5a51e167e31d8237f39d0d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lonely-binary/library/Lonely%2520Binary%2520Coin%2520Acceptor/1.0.0/LonelyBinaryCoinAcceptor-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lonely-binary/library/Lonely%20Binary%20Coin%20Acceptor/1.0.0/LonelyBinaryCoinAcceptor-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

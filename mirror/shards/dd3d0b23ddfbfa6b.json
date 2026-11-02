@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/morsisko",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "morsisko/library/EasyStringStream/1.0.1/EasyStringStream-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyStringStream-1.0.1.tar.gz",
+    "size_bytes": 4345,
+    "sha256": "01e51eef0cb804abcf91a7220bc2a750298dccf74ebcf5b2ff129cd7644bc956",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/morsisko/library/EasyStringStream/1.0.1/EasyStringStream-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/morsisko/library/EasyStringStream/1.0.1/EasyStringStream-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

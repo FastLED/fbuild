@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-uhslmarcus",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-uhslmarcus/library/I2S_Test/0.0.0+sha.bf80bb548613/I2S_Test-0.0.0+sha.bf80bb548613.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2S_Test-0.0.0+sha.bf80bb548613.tar.gz",
+    "size_bytes": 3443,
+    "sha256": "b01ad11abc74a201d965993badd012140339cea11371876f16f7e935e543e7de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-uhslmarcus/library/I2S_Test/0.0.0%2Bsha.bf80bb548613/I2S_Test-0.0.0%2Bsha.bf80bb548613.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-uhslmarcus/library/I2S_Test/0.0.0%2Bsha.bf80bb548613/I2S_Test-0.0.0%2Bsha.bf80bb548613.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-uhslmarcus/library/WAV_Reader/0.0.0+sha.18fdd269b401/WAV_Reader-0.0.0+sha.18fdd269b401.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WAV_Reader-0.0.0+sha.18fdd269b401.tar.gz",
+    "size_bytes": 2503,
+    "sha256": "d704f85694ee9daa2b48b21ab05165e55c4e78c6ec752702c8018a04c1e3721b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-uhslmarcus/library/WAV_Reader/0.0.0%2Bsha.18fdd269b401/WAV_Reader-0.0.0%2Bsha.18fdd269b401.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-uhslmarcus/library/WAV_Reader/0.0.0%2Bsha.18fdd269b401/WAV_Reader-0.0.0%2Bsha.18fdd269b401.tar.gz"
+    ]
+   }
+  }
+ ]
+}

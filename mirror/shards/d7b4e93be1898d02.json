@@ -1,0 +1,256 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/anurag3301",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "anurag3301/library/GFX-MONO/0.1.0/GFX-MONO-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GFX-MONO-0.1.0.tar.gz",
+    "size_bytes": 6908,
+    "sha256": "6f11d1858becc6ad92e77bb4d9263d2803b89509ce8ce04d92638cf05fc739b6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/anurag3301/library/GFX-MONO/0.1.0/GFX-MONO-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/anurag3301/library/GFX-MONO/0.1.0/GFX-MONO-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "anurag3301/library/I2C-LCD%20STM/1.0.1/I2C-LCDSTM-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2C-LCDSTM-1.0.1.tar.gz",
+    "size_bytes": 2187,
+    "sha256": "e9f7b0731805d7a512896e81fccbe5940bf6d58d4a9d7c5c6fd04d1432aeadbc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/anurag3301/library/I2C-LCD%2520STM/1.0.1/I2C-LCDSTM-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/anurag3301/library/I2C-LCD%20STM/1.0.1/I2C-LCDSTM-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "anurag3301/library/I2C-LCD%20STM32/1.1.0/I2C-LCDSTM32-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2C-LCDSTM32-1.1.0.tar.gz",
+    "size_bytes": 5905,
+    "sha256": "02fa3f9d65ca486dc9b6e27ee47c578fa6399f6fee50bf4951828ae2bec503ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/anurag3301/library/I2C-LCD%2520STM32/1.1.0/I2C-LCDSTM32-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/anurag3301/library/I2C-LCD%20STM32/1.1.0/I2C-LCDSTM32-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "anurag3301/library/I2C-LCD/1.1.0/I2C-LCD-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2C-LCD-1.1.0.tar.gz",
+    "size_bytes": 5899,
+    "sha256": "6ff64e3cb1e8105bf8b8f7c0950d334bcb673f5a2a979eb5461bbbb3ff9ca571",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/anurag3301/library/I2C-LCD/1.1.0/I2C-LCD-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/anurag3301/library/I2C-LCD/1.1.0/I2C-LCD-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "anurag3301/library/RTC-DS1302%20STM32/1.3.1/RTC-DS1302STM32-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RTC-DS1302STM32-1.3.1.tar.gz",
+    "size_bytes": 6537,
+    "sha256": "5109f9e111289da0f5f5bd93d3051dcef5a6b622ea3eae092eb81fd7c62d96d3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/anurag3301/library/RTC-DS1302%2520STM32/1.3.1/RTC-DS1302STM32-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/anurag3301/library/RTC-DS1302%20STM32/1.3.1/RTC-DS1302STM32-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "anurag3301/library/STM32%20Delay/0.0.1/STM32Delay-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32Delay-0.0.1.tar.gz",
+    "size_bytes": 1278,
+    "sha256": "daaef91689318c3d5facf4976feeeb56475a8e2c2b29d53912ba24bf443b54b4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/anurag3301/library/STM32%2520Delay/0.0.1/STM32Delay-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/anurag3301/library/STM32%20Delay/0.0.1/STM32Delay-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "anurag3301/library/STM32-SSD1306/0.1.0/STM32-SSD1306-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32-SSD1306-0.1.0.tar.gz",
+    "size_bytes": 7457,
+    "sha256": "6033d45fe3bf19cb0391e4d9cfbf98ecb09b69a8645f0f49d9b6512fe813f2bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/anurag3301/library/STM32-SSD1306/0.1.0/STM32-SSD1306-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/anurag3301/library/STM32-SSD1306/0.1.0/STM32-SSD1306-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "anurag3301/library/STM32-SSD1306/0.1.1/STM32-SSD1306-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32-SSD1306-0.1.1.tar.gz",
+    "size_bytes": 8236,
+    "sha256": "5383bf7beb002fa873a497ee6724e1c062efe8c3fd2fa26fd636363f5d5111e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/anurag3301/library/STM32-SSD1306/0.1.1/STM32-SSD1306-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/anurag3301/library/STM32-SSD1306/0.1.1/STM32-SSD1306-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "anurag3301/library/STM32-SSD1306/1.0.0/STM32-SSD1306-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32-SSD1306-1.0.0.tar.gz",
+    "size_bytes": 10566,
+    "sha256": "7c3d1b593e831f5c94dd0e7e09e24674b058ba00f0f0b5a1195b0fb93e55c8b6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/anurag3301/library/STM32-SSD1306/1.0.0/STM32-SSD1306-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/anurag3301/library/STM32-SSD1306/1.0.0/STM32-SSD1306-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "anurag3301/library/W25Q64-flash/1.0.0/W25Q64-flash-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "W25Q64-flash-1.0.0.tar.gz",
+    "size_bytes": 13699,
+    "sha256": "8ab71e414a70f97f5ec4e80e1c1bd0652de730f723746b9d1df87d07c5815a5a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/anurag3301/library/W25Q64-flash/1.0.0/W25Q64-flash-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/anurag3301/library/W25Q64-flash/1.0.0/W25Q64-flash-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "anurag3301/library/W25Q64-lfs/0.0.1/W25Q64-lfs-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "W25Q64-lfs-0.0.1.tar.gz",
+    "size_bytes": 2958,
+    "sha256": "bd5fe411f7a32a22aa1c47024dcf5ffbcd199db4860900d77c68e633c4dec1f5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/anurag3301/library/W25Q64-lfs/0.0.1/W25Q64-lfs-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/anurag3301/library/W25Q64-lfs/0.0.1/W25Q64-lfs-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "anurag3301/library/W25Q64-lfs/0.0.2/W25Q64-lfs-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "W25Q64-lfs-0.0.2.tar.gz",
+    "size_bytes": 2971,
+    "sha256": "37029337cd564fbed354c414867c9890adc908f421dce3edda7eeb0622146595",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/anurag3301/library/W25Q64-lfs/0.0.2/W25Q64-lfs-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/anurag3301/library/W25Q64-lfs/0.0.2/W25Q64-lfs-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "anurag3301/library/W25Q64-lfs/0.1.2/W25Q64-lfs-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "W25Q64-lfs-0.1.2.tar.gz",
+    "size_bytes": 2962,
+    "sha256": "ecd5d30fff1da8e377bbf8322d943fdb141ffe233cd4dd0a27ccedfb1c8b09fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/anurag3301/library/W25Q64-lfs/0.1.2/W25Q64-lfs-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/anurag3301/library/W25Q64-lfs/0.1.2/W25Q64-lfs-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "anurag3301/library/W25Q64-lfs/0.1.3/W25Q64-lfs-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "W25Q64-lfs-0.1.3.tar.gz",
+    "size_bytes": 2975,
+    "sha256": "6acc3de9c1b0cf22068ecacc99245bd99ca34824da3630b0883af3a61a0f44b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/anurag3301/library/W25Q64-lfs/0.1.3/W25Q64-lfs-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/anurag3301/library/W25Q64-lfs/0.1.3/W25Q64-lfs-0.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "anurag3301/library/W25Q64-lfs/0.1.4/W25Q64-lfs-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "W25Q64-lfs-0.1.4.tar.gz",
+    "size_bytes": 2981,
+    "sha256": "ae1cf374ed4f7b4d3bfa461f04d6047c9b4005d05d20c664979e7327812ecede",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/anurag3301/library/W25Q64-lfs/0.1.4/W25Q64-lfs-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/anurag3301/library/W25Q64-lfs/0.1.4/W25Q64-lfs-0.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "anurag3301/library/W25Q64-lfs/0.1.5/W25Q64-lfs-0.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "W25Q64-lfs-0.1.5.tar.gz",
+    "size_bytes": 9009,
+    "sha256": "d53005f6ce1f3f999c55604dfcd971fbde884ddcac2240b19ee2dc2a03867bd2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/anurag3301/library/W25Q64-lfs/0.1.5/W25Q64-lfs-0.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/anurag3301/library/W25Q64-lfs/0.1.5/W25Q64-lfs-0.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "anurag3301/library/littlefs/2.11.4/littlefs-2.11.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "littlefs-2.11.4.tar.gz",
+    "size_bytes": 47940,
+    "sha256": "1b970050ba1d3d611e3978d22e2e4d2ed5f45c18e7db9720de7261a0acee4350",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/anurag3301/library/littlefs/2.11.4/littlefs-2.11.4.tar.gz",
+     "https://dl.registry.platformio.org/download/anurag3301/library/littlefs/2.11.4/littlefs-2.11.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "anurag3301/library/littlefs/2.11.5/littlefs-2.11.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "littlefs-2.11.5.tar.gz",
+    "size_bytes": 47943,
+    "sha256": "6b55c019e3714ca03b53fc0f2fedd1f1884ace98718001c3a7e7b568de8b18b0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/anurag3301/library/littlefs/2.11.5/littlefs-2.11.5.tar.gz",
+     "https://dl.registry.platformio.org/download/anurag3301/library/littlefs/2.11.5/littlefs-2.11.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "anurag3301/library/littlefs/2.11.6/littlefs-2.11.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "littlefs-2.11.6.tar.gz",
+    "size_bytes": 47821,
+    "sha256": "c32e1cef4d81b6f189da480b2d87399282fedebe7fd9f940e9466cb881e1e2cf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/anurag3301/library/littlefs/2.11.6/littlefs-2.11.6.tar.gz",
+     "https://dl.registry.platformio.org/download/anurag3301/library/littlefs/2.11.6/littlefs-2.11.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

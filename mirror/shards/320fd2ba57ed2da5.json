@@ -1,0 +1,256 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/makuna",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "makuna/library/AnalogKeypad%20by%20Makuna/1.2.0/AnalogKeypadbyMakuna-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AnalogKeypadbyMakuna-1.2.0.tar.gz",
+    "size_bytes": 5845,
+    "sha256": "aad120c589fb3745b096416a00bdc8b896bb47c2b20d8180fb7cb7a96f7a4445",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/makuna/library/AnalogKeypad%2520by%2520Makuna/1.2.0/AnalogKeypadbyMakuna-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/makuna/library/AnalogKeypad%20by%20Makuna/1.2.0/AnalogKeypadbyMakuna-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "makuna/library/DFPlayer%20Mini%20Mp3%20by%20Makuna/1.2.3/DFPlayerMiniMp3byMakuna-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFPlayerMiniMp3byMakuna-1.2.3.tar.gz",
+    "size_bytes": 13758,
+    "sha256": "a4c3103b232cc33174d3dfb257a0c9cf5f49a6000f57fad1de397da4a1febf35",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/makuna/library/DFPlayer%2520Mini%2520Mp3%2520by%2520Makuna/1.2.3/DFPlayerMiniMp3byMakuna-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/makuna/library/DFPlayer%20Mini%20Mp3%20by%20Makuna/1.2.3/DFPlayerMiniMp3byMakuna-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "makuna/library/NeoPixelBus/2.5.7/NeoPixelBus-2.5.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeoPixelBus-2.5.7.tar.gz",
+    "size_bytes": 120460,
+    "sha256": "76c2596ebdd113bf83e76457f5a220782bbdd6e6e5e1a1fcac8513db1ef4e8c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/makuna/library/NeoPixelBus/2.5.7/NeoPixelBus-2.5.7.tar.gz",
+     "https://dl.registry.platformio.org/download/makuna/library/NeoPixelBus/2.5.7/NeoPixelBus-2.5.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "makuna/library/NeoPixelBus/2.6.0/NeoPixelBus-2.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeoPixelBus-2.6.0.tar.gz",
+    "size_bytes": 122856,
+    "sha256": "ffd4ac6017925b73341c3d30c6a086345cd43f9db4eef9a25fa6d7a21c7cb2d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/makuna/library/NeoPixelBus/2.6.0/NeoPixelBus-2.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/makuna/library/NeoPixelBus/2.6.0/NeoPixelBus-2.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "makuna/library/NeoPixelBus/2.6.7/NeoPixelBus-2.6.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeoPixelBus-2.6.7.tar.gz",
+    "size_bytes": 136514,
+    "sha256": "83d7ebd84cfdd53570e5e633f8198e0dfb60ed314f874467441c3ec9749b7cbb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/makuna/library/NeoPixelBus/2.6.7/NeoPixelBus-2.6.7.tar.gz",
+     "https://dl.registry.platformio.org/download/makuna/library/NeoPixelBus/2.6.7/NeoPixelBus-2.6.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "makuna/library/NeoPixelBus/2.6.9/NeoPixelBus-2.6.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeoPixelBus-2.6.9.tar.gz",
+    "size_bytes": 137908,
+    "sha256": "799298bd86431da9efcc8867f6d989decf0c08d09cad02efbff24df83ae2f64b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/makuna/library/NeoPixelBus/2.6.9/NeoPixelBus-2.6.9.tar.gz",
+     "https://dl.registry.platformio.org/download/makuna/library/NeoPixelBus/2.6.9/NeoPixelBus-2.6.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "makuna/library/NeoPixelBus/2.7.0/NeoPixelBus-2.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeoPixelBus-2.7.0.tar.gz",
+    "size_bytes": 143831,
+    "sha256": "032aa626f0d836a53bcd4a5eea0dcb5507ad50ffb96af5ce7b8e015480519ebd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/makuna/library/NeoPixelBus/2.7.0/NeoPixelBus-2.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/makuna/library/NeoPixelBus/2.7.0/NeoPixelBus-2.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "makuna/library/NeoPixelBus/2.7.1/NeoPixelBus-2.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeoPixelBus-2.7.1.tar.gz",
+    "size_bytes": 144531,
+    "sha256": "0c875505b113c34df31954aec64d844acd4a854c84b00946b1447a16b10d342d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/makuna/library/NeoPixelBus/2.7.1/NeoPixelBus-2.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/makuna/library/NeoPixelBus/2.7.1/NeoPixelBus-2.7.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "makuna/library/NeoPixelBus/2.7.3/NeoPixelBus-2.7.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeoPixelBus-2.7.3.tar.gz",
+    "size_bytes": 155424,
+    "sha256": "c116c2f721da473e62c37cc79d7f75317c2ee9ae59fd3eb78f09380c5b8818a1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/makuna/library/NeoPixelBus/2.7.3/NeoPixelBus-2.7.3.tar.gz",
+     "https://dl.registry.platformio.org/download/makuna/library/NeoPixelBus/2.7.3/NeoPixelBus-2.7.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "makuna/library/NeoPixelBus/2.7.5/NeoPixelBus-2.7.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeoPixelBus-2.7.5.tar.gz",
+    "size_bytes": 159042,
+    "sha256": "e39b12c3518a4bbd7152c24e2a8855a067af37d2888efc2d4d0da7ebebca393a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/makuna/library/NeoPixelBus/2.7.5/NeoPixelBus-2.7.5.tar.gz",
+     "https://dl.registry.platformio.org/download/makuna/library/NeoPixelBus/2.7.5/NeoPixelBus-2.7.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "makuna/library/NeoPixelBus/2.7.7/NeoPixelBus-2.7.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeoPixelBus-2.7.7.tar.gz",
+    "size_bytes": 164782,
+    "sha256": "81a3ba4e1f7c690c80e3d0f329872b94d23f622da8a86b6ff9bb6c661829dffe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/makuna/library/NeoPixelBus/2.7.7/NeoPixelBus-2.7.7.tar.gz",
+     "https://dl.registry.platformio.org/download/makuna/library/NeoPixelBus/2.7.7/NeoPixelBus-2.7.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "makuna/library/NeoPixelBus/2.7.9/NeoPixelBus-2.7.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeoPixelBus-2.7.9.tar.gz",
+    "size_bytes": 184871,
+    "sha256": "b043039ef33cacfe675448e081edc46b3de98f11de96b3c134c02eecb61cd089",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/makuna/library/NeoPixelBus/2.7.9/NeoPixelBus-2.7.9.tar.gz",
+     "https://dl.registry.platformio.org/download/makuna/library/NeoPixelBus/2.7.9/NeoPixelBus-2.7.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "makuna/library/NeoPixelBus/2.8.0/NeoPixelBus-2.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeoPixelBus-2.8.0.tar.gz",
+    "size_bytes": 189111,
+    "sha256": "2217d8bc9eec499193ab5e5d8ecbca23dc9b74cd228b86d06685a695ea7728da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/makuna/library/NeoPixelBus/2.8.0/NeoPixelBus-2.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/makuna/library/NeoPixelBus/2.8.0/NeoPixelBus-2.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "makuna/library/NeoPixelBus/2.8.3/NeoPixelBus-2.8.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeoPixelBus-2.8.3.tar.gz",
+    "size_bytes": 199586,
+    "sha256": "fb20578711382132eef57421ce618fbe4a4ba149d7c72babd9cc4667a90464de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/makuna/library/NeoPixelBus/2.8.3/NeoPixelBus-2.8.3.tar.gz",
+     "https://dl.registry.platformio.org/download/makuna/library/NeoPixelBus/2.8.3/NeoPixelBus-2.8.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "makuna/library/NeoPixelBus/2.8.4/NeoPixelBus-2.8.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeoPixelBus-2.8.4.tar.gz",
+    "size_bytes": 200678,
+    "sha256": "347c55cf8502062d82d0d83de302809b380c225ee55ed70932e2e3b35e3ca15b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/makuna/library/NeoPixelBus/2.8.4/NeoPixelBus-2.8.4.tar.gz",
+     "https://dl.registry.platformio.org/download/makuna/library/NeoPixelBus/2.8.4/NeoPixelBus-2.8.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "makuna/library/RTC/2.4.3/RTC-2.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RTC-2.4.3.tar.gz",
+    "size_bytes": 43069,
+    "sha256": "59726f729da27568ee2d76a5de441dffedf8bbe80e87e2bb8360bbf7613bd5ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/makuna/library/RTC/2.4.3/RTC-2.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/makuna/library/RTC/2.4.3/RTC-2.4.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "makuna/library/RTC/2.5.0/RTC-2.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RTC-2.5.0.tar.gz",
+    "size_bytes": 43676,
+    "sha256": "ceaca297eb7606eb541a2008cdeabdd67be2473f149d89f797eda31f06ab65c1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/makuna/library/RTC/2.5.0/RTC-2.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/makuna/library/RTC/2.5.0/RTC-2.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "makuna/library/Rfid134%20by%20Makuna/1.0.2/Rfid134byMakuna-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Rfid134byMakuna-1.0.2.tar.gz",
+    "size_bytes": 6590,
+    "sha256": "1c5198b623d21ee3677e2a9af0ea524ca3be4343d7f4fcdf4be145699149d133",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/makuna/library/Rfid134%2520by%2520Makuna/1.0.2/Rfid134byMakuna-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/makuna/library/Rfid134%20by%20Makuna/1.0.2/Rfid134byMakuna-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "makuna/library/Task/1.1.6/Task-1.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Task-1.1.6.tar.gz",
+    "size_bytes": 16356,
+    "sha256": "68cfb0ef66b187662d78ad96d6a9d2cd426ce2be3e0cd8fb48844932ea84d24d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/makuna/library/Task/1.1.6/Task-1.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/makuna/library/Task/1.1.6/Task-1.1.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

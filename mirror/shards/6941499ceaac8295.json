@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/windnerd-labs",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "windnerd-labs/library/Windnerd_Core/1.0.0/Windnerd_Core-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Windnerd_Core-1.0.0.tar.gz",
+    "size_bytes": 111826,
+    "sha256": "19e662b01cf23c99745250e83cb273a8e96a2225084ad2cae88bf67e486a9415",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/windnerd-labs/library/Windnerd_Core/1.0.0/Windnerd_Core-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/windnerd-labs/library/Windnerd_Core/1.0.0/Windnerd_Core-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "windnerd-labs/library/Windnerd_Core/1.2.0/Windnerd_Core-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Windnerd_Core-1.2.0.tar.gz",
+    "size_bytes": 112198,
+    "sha256": "0264afde261e8a991e79e8de1d912baf8a2871740f74a797d33fd0d28f44625e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/windnerd-labs/library/Windnerd_Core/1.2.0/Windnerd_Core-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/windnerd-labs/library/Windnerd_Core/1.2.0/Windnerd_Core-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "windnerd-labs/library/Windnerd_Core/1.3.1/Windnerd_Core-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Windnerd_Core-1.3.1.tar.gz",
+    "size_bytes": 115941,
+    "sha256": "9dc953af119edea2d138a5bf011566fe98580b83364274d0f5ced2c92e1af98b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/windnerd-labs/library/Windnerd_Core/1.3.1/Windnerd_Core-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/windnerd-labs/library/Windnerd_Core/1.3.1/Windnerd_Core-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "windnerd-labs/library/Windnerd_Core/1.4.0/Windnerd_Core-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Windnerd_Core-1.4.0.tar.gz",
+    "size_bytes": 119800,
+    "sha256": "089ddd72d7fb608f8005536db1f1e4f9605038b0d36688580b0d4195c4a00c58",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/windnerd-labs/library/Windnerd_Core/1.4.0/Windnerd_Core-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/windnerd-labs/library/Windnerd_Core/1.4.0/Windnerd_Core-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "windnerd-labs/library/Windnerd_Core/1.4.1/Windnerd_Core-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Windnerd_Core-1.4.1.tar.gz",
+    "size_bytes": 119925,
+    "sha256": "0fb2534b9f46609fc379470e4f70bfb2742ef9298d30052fd00216bd0f3725e8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/windnerd-labs/library/Windnerd_Core/1.4.1/Windnerd_Core-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/windnerd-labs/library/Windnerd_Core/1.4.1/Windnerd_Core-1.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "windnerd-labs/library/Windnerd_Core/1.5.0/Windnerd_Core-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Windnerd_Core-1.5.0.tar.gz",
+    "size_bytes": 120756,
+    "sha256": "56c8df5173b2996e0301bffb8834e80b9c08f175e60a1b2a4e3c2979cb1fb6d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/windnerd-labs/library/Windnerd_Core/1.5.0/Windnerd_Core-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/windnerd-labs/library/Windnerd_Core/1.5.0/Windnerd_Core-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "windnerd-labs/library/Windnerd_Core/1.6.0/Windnerd_Core-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Windnerd_Core-1.6.0.tar.gz",
+    "size_bytes": 122648,
+    "sha256": "f6502236a48c6738bbc4b42a7a2a1946736b31344cfe0fda057768f48439c65b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/windnerd-labs/library/Windnerd_Core/1.6.0/Windnerd_Core-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/windnerd-labs/library/Windnerd_Core/1.6.0/Windnerd_Core-1.6.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

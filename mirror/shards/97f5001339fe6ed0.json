@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pr-dc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pr-dc/library/PRDC_AD7193/1.1.0/PRDC_AD7193-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PRDC_AD7193-1.1.0.tar.gz",
+    "size_bytes": 10135,
+    "sha256": "8519a6bbe28d092bf3225fdd38396fe9998cbdff0a65ce2e73495ef3bd1e6515",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pr-dc/library/PRDC_AD7193/1.1.0/PRDC_AD7193-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pr-dc/library/PRDC_AD7193/1.1.0/PRDC_AD7193-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pr-dc/library/PRDC_AD7194/1.1.0/PRDC_AD7194-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PRDC_AD7194-1.1.0.tar.gz",
+    "size_bytes": 10220,
+    "sha256": "9af83cb6258a639eee7e9ba32b11900bf423656470943241d40a2c190af6cfa9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pr-dc/library/PRDC_AD7194/1.1.0/PRDC_AD7194-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pr-dc/library/PRDC_AD7194/1.1.0/PRDC_AD7194-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pr-dc/library/PRDC_AD7797/1.0.1/PRDC_AD7797-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PRDC_AD7797-1.0.1.tar.gz",
+    "size_bytes": 9218,
+    "sha256": "515be516d6ebb0e2c6effb22e607ebe68a48d64502178605422b8c524ce41421",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pr-dc/library/PRDC_AD7797/1.0.1/PRDC_AD7797-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pr-dc/library/PRDC_AD7797/1.0.1/PRDC_AD7797-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pr-dc/library/PRDC_FreePort/1.1.1/PRDC_FreePort-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PRDC_FreePort-1.1.1.tar.gz",
+    "size_bytes": 6675,
+    "sha256": "c3fb7ae0672130e3b83c48708d5228a906d0bba812044d62812828e4118dc73b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pr-dc/library/PRDC_FreePort/1.1.1/PRDC_FreePort-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pr-dc/library/PRDC_FreePort/1.1.1/PRDC_FreePort-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pr-dc/library/PRDC_FreePort/1.2.0/PRDC_FreePort-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PRDC_FreePort-1.2.0.tar.gz",
+    "size_bytes": 6680,
+    "sha256": "5e0305b4a3ef131b0b328c54d2eb202bf1bf003698236c3cdb01a6863281a282",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pr-dc/library/PRDC_FreePort/1.2.0/PRDC_FreePort-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pr-dc/library/PRDC_FreePort/1.2.0/PRDC_FreePort-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pr-dc/library/PRDC_RS485HD_STM32/1.1.0/PRDC_RS485HD_STM32-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PRDC_RS485HD_STM32-1.1.0.tar.gz",
+    "size_bytes": 9830,
+    "sha256": "3a54064299d3a8059a025625752335d702f34f309a79ae508f18a330ee700b0e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pr-dc/library/PRDC_RS485HD_STM32/1.1.0/PRDC_RS485HD_STM32-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pr-dc/library/PRDC_RS485HD_STM32/1.1.0/PRDC_RS485HD_STM32-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pr-dc/library/PRDC_ServoHT/1.0.2/PRDC_ServoHT-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PRDC_ServoHT-1.0.2.tar.gz",
+    "size_bytes": 7257,
+    "sha256": "15d56cd17015440e2e6de4e82811c7341ac9d0db8994fec6fd64ac78d54b5e97",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pr-dc/library/PRDC_ServoHT/1.0.2/PRDC_ServoHT-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/pr-dc/library/PRDC_ServoHT/1.0.2/PRDC_ServoHT-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pr-dc/library/PRDC_TMAESC/1.0.1/PRDC_TMAESC-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PRDC_TMAESC-1.0.1.tar.gz",
+    "size_bytes": 7101,
+    "sha256": "a3742b7e928cea0267a91e4e0beadd1be098b2ea2e32c1283f39952780fbd3ea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pr-dc/library/PRDC_TMAESC/1.0.1/PRDC_TMAESC-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pr-dc/library/PRDC_TMAESC/1.0.1/PRDC_TMAESC-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

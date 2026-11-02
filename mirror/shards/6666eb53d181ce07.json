@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jokerqyou",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jokerqyou/library/Adafruit%20SSD1306%20128x64/1.1.2/AdafruitSSD1306128x64-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AdafruitSSD1306128x64-1.1.2.tar.gz",
+    "size_bytes": 13298,
+    "sha256": "7a9d68b4632be26965f19e4caa87f66ec83dca829c22b38cc3953e41fd52bf55",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jokerqyou/library/Adafruit%2520SSD1306%2520128x64/1.1.2/AdafruitSSD1306128x64-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jokerqyou/library/Adafruit%20SSD1306%20128x64/1.1.2/AdafruitSSD1306128x64-1.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

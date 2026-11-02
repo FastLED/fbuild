@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ttarnowski",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ttarnowski/library/uniuno-scheduler/1.0.2/uniuno-scheduler-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uniuno-scheduler-1.0.2.tar.gz",
+    "size_bytes": 6304,
+    "sha256": "f3841d94a87dc677d954e0b8ffbd0a775252168910619713d65c8b06f865e6fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ttarnowski/library/uniuno-scheduler/1.0.2/uniuno-scheduler-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ttarnowski/library/uniuno-scheduler/1.0.2/uniuno-scheduler-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ttarnowski/library/uniuno-timer/1.0.6/uniuno-timer-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uniuno-timer-1.0.6.tar.gz",
+    "size_bytes": 5284,
+    "sha256": "1b232ef7419bd8d9d27510e5fe308f6093245cf2ef6026d386f5fb1a44b92818",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ttarnowski/library/uniuno-timer/1.0.6/uniuno-timer-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/ttarnowski/library/uniuno-timer/1.0.6/uniuno-timer-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ttarnowski/library/uniuno/1.3.1/uniuno-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uniuno-1.3.1.tar.gz",
+    "size_bytes": 12031,
+    "sha256": "7a14deec861d683b7a8a961e915b90911b42ad26bf5ffa091cc6198e029d412a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ttarnowski/library/uniuno/1.3.1/uniuno-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ttarnowski/library/uniuno/1.3.1/uniuno-1.3.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

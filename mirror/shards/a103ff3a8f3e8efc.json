@@ -1,0 +1,126 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/crankyoldgit",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "crankyoldgit/library/IRremoteESP8266/2.7.12/IRremoteESP8266-2.7.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IRremoteESP8266-2.7.12.tar.gz",
+    "size_bytes": 676153,
+    "sha256": "7a2b555e16997ce0b701f96763600746c22b8a44bf48b18053bf01b87564366c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/crankyoldgit/library/IRremoteESP8266/2.7.12/IRremoteESP8266-2.7.12.tar.gz",
+     "https://dl.registry.platformio.org/download/crankyoldgit/library/IRremoteESP8266/2.7.12/IRremoteESP8266-2.7.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "crankyoldgit/library/IRremoteESP8266/2.7.18/IRremoteESP8266-2.7.18.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IRremoteESP8266-2.7.18.tar.gz",
+    "size_bytes": 720266,
+    "sha256": "be4c7a2e1e168a6a673f65ccb5bbbaf02ba96775e939c35113c0b99e316c8483",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/crankyoldgit/library/IRremoteESP8266/2.7.18/IRremoteESP8266-2.7.18.tar.gz",
+     "https://dl.registry.platformio.org/download/crankyoldgit/library/IRremoteESP8266/2.7.18/IRremoteESP8266-2.7.18.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "crankyoldgit/library/IRremoteESP8266/2.7.20/IRremoteESP8266-2.7.20.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IRremoteESP8266-2.7.20.tar.gz",
+    "size_bytes": 754129,
+    "sha256": "8039ff0d0de87cad4c902a75a27cec62541a1f10baf661395d9a80c2b704414b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/crankyoldgit/library/IRremoteESP8266/2.7.20/IRremoteESP8266-2.7.20.tar.gz",
+     "https://dl.registry.platformio.org/download/crankyoldgit/library/IRremoteESP8266/2.7.20/IRremoteESP8266-2.7.20.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "crankyoldgit/library/IRremoteESP8266/2.7.3/IRremoteESP8266-2.7.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IRremoteESP8266-2.7.3.tar.gz",
+    "size_bytes": 501742,
+    "sha256": "8d8c8b605bf04fc2e32d149a46c891f8abcfa0dc4dd49d46e2cadc5efc6c6bd4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/crankyoldgit/library/IRremoteESP8266/2.7.3/IRremoteESP8266-2.7.3.tar.gz",
+     "https://dl.registry.platformio.org/download/crankyoldgit/library/IRremoteESP8266/2.7.3/IRremoteESP8266-2.7.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "crankyoldgit/library/IRremoteESP8266/2.8.2/IRremoteESP8266-2.8.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IRremoteESP8266-2.8.2.tar.gz",
+    "size_bytes": 821197,
+    "sha256": "63c7e25bc1259d74c398e4b2042ad3b6f56ff6dd027d239af1e0b681a87ea552",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/crankyoldgit/library/IRremoteESP8266/2.8.2/IRremoteESP8266-2.8.2.tar.gz",
+     "https://dl.registry.platformio.org/download/crankyoldgit/library/IRremoteESP8266/2.8.2/IRremoteESP8266-2.8.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "crankyoldgit/library/IRremoteESP8266/2.8.4/IRremoteESP8266-2.8.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IRremoteESP8266-2.8.4.tar.gz",
+    "size_bytes": 850735,
+    "sha256": "f9e7cde154728911f2a9bb3968720d88772c09b1a8459f490743c43bc57da2da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/crankyoldgit/library/IRremoteESP8266/2.8.4/IRremoteESP8266-2.8.4.tar.gz",
+     "https://dl.registry.platformio.org/download/crankyoldgit/library/IRremoteESP8266/2.8.4/IRremoteESP8266-2.8.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "crankyoldgit/library/IRremoteESP8266/2.8.5/IRremoteESP8266-2.8.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IRremoteESP8266-2.8.5.tar.gz",
+    "size_bytes": 897802,
+    "sha256": "b913f730d80da7f703c326ee3773a5df19382f76fe47e4c51d8548b586430880",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/crankyoldgit/library/IRremoteESP8266/2.8.5/IRremoteESP8266-2.8.5.tar.gz",
+     "https://dl.registry.platformio.org/download/crankyoldgit/library/IRremoteESP8266/2.8.5/IRremoteESP8266-2.8.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "crankyoldgit/library/IRremoteESP8266/2.8.6/IRremoteESP8266-2.8.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IRremoteESP8266-2.8.6.tar.gz",
+    "size_bytes": 898482,
+    "sha256": "e0c912f3a3f13392a6d936f783e8bbbab954170d3ee8a40d13a92bbc7cc2af31",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/crankyoldgit/library/IRremoteESP8266/2.8.6/IRremoteESP8266-2.8.6.tar.gz",
+     "https://dl.registry.platformio.org/download/crankyoldgit/library/IRremoteESP8266/2.8.6/IRremoteESP8266-2.8.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "crankyoldgit/library/IRremoteESP8266/2.9.0/IRremoteESP8266-2.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IRremoteESP8266-2.9.0.tar.gz",
+    "size_bytes": 920680,
+    "sha256": "ec95161d17a32669d80308c60d5db5a9d301e18ba09d99b010af45fbad2d763d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/crankyoldgit/library/IRremoteESP8266/2.9.0/IRremoteESP8266-2.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/crankyoldgit/library/IRremoteESP8266/2.9.0/IRremoteESP8266-2.9.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/muwerk",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "muwerk/library/mufonts/0.2.0/mufonts-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mufonts-0.2.0.tar.gz",
+    "size_bytes": 5389,
+    "sha256": "016b5b9d67e2249901bd74b55dd20948db527371acfa79055e64f6c59490e769",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/muwerk/library/mufonts/0.2.0/mufonts-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/muwerk/library/mufonts/0.2.0/mufonts-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "muwerk/library/munet/0.4.2/munet-0.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "munet-0.4.2.tar.gz",
+    "size_bytes": 33857,
+    "sha256": "9bea65e65aed2bfb02be27dc22e1cabe4dd584b602ae3e05c7d0bff4696126d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/muwerk/library/munet/0.4.2/munet-0.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/muwerk/library/munet/0.4.2/munet-0.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "muwerk/library/mupplet-core/0.5.7/mupplet-core-0.5.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mupplet-core-0.5.7.tar.gz",
+    "size_bytes": 248663,
+    "sha256": "17955e7482b14981f89846d2a7651af6dff952c077054ee23a83c5e13c93bbf3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/muwerk/library/mupplet-core/0.5.7/mupplet-core-0.5.7.tar.gz",
+     "https://dl.registry.platformio.org/download/muwerk/library/mupplet-core/0.5.7/mupplet-core-0.5.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "muwerk/library/mupplet-display/0.2.0/mupplet-display-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mupplet-display-0.2.0.tar.gz",
+    "size_bytes": 637977,
+    "sha256": "03f8a9047dd483c59c8cfad92d4c258007975b94b5750c09977d9dcd7d69fac8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/muwerk/library/mupplet-display/0.2.0/mupplet-display-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/muwerk/library/mupplet-display/0.2.0/mupplet-display-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "muwerk/library/mupplet-sensor/0.2.2/mupplet-sensor-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mupplet-sensor-0.2.2.tar.gz",
+    "size_bytes": 700697,
+    "sha256": "6e168be0a71e15eb0fc389ee05d4a612db6eafc286b33035c1b90295c8d8fc19",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/muwerk/library/mupplet-sensor/0.2.2/mupplet-sensor-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/muwerk/library/mupplet-sensor/0.2.2/mupplet-sensor-0.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "muwerk/library/muwerk/0.6.5/muwerk-0.6.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "muwerk-0.6.5.tar.gz",
+    "size_bytes": 43714,
+    "sha256": "7bf20f0c575973a696ab6fab21257358020ec7f7c9db3ae2cbd961aebc731ae4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/muwerk/library/muwerk/0.6.5/muwerk-0.6.5.tar.gz",
+     "https://dl.registry.platformio.org/download/muwerk/library/muwerk/0.6.5/muwerk-0.6.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "muwerk/library/ustd/0.7.4/ustd-0.7.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ustd-0.7.4.tar.gz",
+    "size_bytes": 37364,
+    "sha256": "5b571e5b854b88eb3312f6acb8c92a40d5826851acf506a1f3d566599872e0f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/muwerk/library/ustd/0.7.4/ustd-0.7.4.tar.gz",
+     "https://dl.registry.platformio.org/download/muwerk/library/ustd/0.7.4/ustd-0.7.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

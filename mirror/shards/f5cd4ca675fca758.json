@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/f-army",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "f-army/library/DW1000-ng/0.1.0/DW1000-ng-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DW1000-ng-0.1.0.tar.gz",
+    "size_bytes": 42837,
+    "sha256": "5a99f2b23e55e366ea5b0d14f4ad1e18c83424c0ed966e5223e1ce2adcfdd393",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/f-army/library/DW1000-ng/0.1.0/DW1000-ng-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/f-army/library/DW1000-ng/0.1.0/DW1000-ng-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-sammacjunkie",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-sammacjunkie/library/TMP006_lib/0.0.0+sha.48c0564d877a/TMP006_lib-0.0.0+sha.48c0564d877a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TMP006_lib-0.0.0+sha.48c0564d877a.tar.gz",
+    "size_bytes": 2370,
+    "sha256": "9933cf3e3aa41b42e6e5b24ebe146e8fa22aa38ce54ddded73d4015fc8711f47",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sammacjunkie/library/TMP006_lib/0.0.0%2Bsha.48c0564d877a/TMP006_lib-0.0.0%2Bsha.48c0564d877a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sammacjunkie/library/TMP006_lib/0.0.0%2Bsha.48c0564d877a/TMP006_lib-0.0.0%2Bsha.48c0564d877a.tar.gz"
+    ]
+   }
+  }
+ ]
+}

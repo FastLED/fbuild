@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dancrank",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dancrank/library/RPLidar%20%28DanCrank%20fork%29/1.0.2/RPLidarDanCrankfork-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RPLidarDanCrankfork-1.0.2.tar.gz",
+    "size_bytes": 7117,
+    "sha256": "4ac629ae5205971a7fafe56ff1cd04fbd8f62fceae77192171f70f6fe30ae1cd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dancrank/library/RPLidar%2520%2528DanCrank%2520fork%2529/1.0.2/RPLidarDanCrankfork-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dancrank/library/RPLidar%20%28DanCrank%20fork%29/1.0.2/RPLidarDanCrankfork-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

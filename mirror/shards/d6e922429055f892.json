@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ivoryrubble",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ivoryrubble/library/NesGamepad/1.0.1/NesGamepad-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NesGamepad-1.0.1.tar.gz",
+    "size_bytes": 4829,
+    "sha256": "cb422cd550370443841574f7affbfdc3ed81baad1f986400a60906f934f5eaea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ivoryrubble/library/NesGamepad/1.0.1/NesGamepad-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ivoryrubble/library/NesGamepad/1.0.1/NesGamepad-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ivoryrubble/library/SegaGamepad/1.0.4/SegaGamepad-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SegaGamepad-1.0.4.tar.gz",
+    "size_bytes": 3970,
+    "sha256": "ec6e56cb3a8acab15ef15a4990287ad70624c2228e81af6c5117267cbe46d408",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ivoryrubble/library/SegaGamepad/1.0.4/SegaGamepad-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/ivoryrubble/library/SegaGamepad/1.0.4/SegaGamepad-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

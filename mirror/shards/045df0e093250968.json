@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hal9k-dk",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hal9k-dk/library/ESP8266%20REST%20client%20SSL/2.1.0/ESP8266RESTclientSSL-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266RESTclientSSL-2.1.0.tar.gz",
+    "size_bytes": 6982,
+    "sha256": "450135e9157349c0c1ac979897f23bbe51438df56cc8b8fa35835527d125af54",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hal9k-dk/library/ESP8266%2520REST%2520client%2520SSL/2.1.0/ESP8266RESTclientSSL-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hal9k-dk/library/ESP8266%20REST%20client%20SSL/2.1.0/ESP8266RESTclientSSL-2.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

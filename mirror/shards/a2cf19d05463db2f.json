@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-inst",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-inst/library/Math/0.0.0+sha.067c036b09e0/Math-0.0.0+sha.067c036b09e0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Math-0.0.0+sha.067c036b09e0.tar.gz",
+    "size_bytes": 1166,
+    "sha256": "ea5f23e4b70160ff43cc63999fe64bcf5a8176eccf2687d8fb3668aa544318c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-inst/library/Math/0.0.0%2Bsha.067c036b09e0/Math-0.0.0%2Bsha.067c036b09e0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-inst/library/Math/0.0.0%2Bsha.067c036b09e0/Math-0.0.0%2Bsha.067c036b09e0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-inst/library/PWMOut/0.0.0+sha.f1e5739acc27/PWMOut-0.0.0+sha.f1e5739acc27.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PWMOut-0.0.0+sha.f1e5739acc27.tar.gz",
+    "size_bytes": 1082,
+    "sha256": "1dc988df387b3d698721470bba834d986a0e9f4f15419c61247f013caed43ef5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-inst/library/PWMOut/0.0.0%2Bsha.f1e5739acc27/PWMOut-0.0.0%2Bsha.f1e5739acc27.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-inst/library/PWMOut/0.0.0%2Bsha.f1e5739acc27/PWMOut-0.0.0%2Bsha.f1e5739acc27.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-inst/library/StrSerial/0.0.0+sha.656ef78b53d8/StrSerial-0.0.0+sha.656ef78b53d8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StrSerial-0.0.0+sha.656ef78b53d8.tar.gz",
+    "size_bytes": 1166,
+    "sha256": "2a173c6e811617195efe94aacbdd3a493064ec751562979782a72deab88534a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-inst/library/StrSerial/0.0.0%2Bsha.656ef78b53d8/StrSerial-0.0.0%2Bsha.656ef78b53d8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-inst/library/StrSerial/0.0.0%2Bsha.656ef78b53d8/StrSerial-0.0.0%2Bsha.656ef78b53d8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-inst/library/Ultrasonic/0.0.0+sha.89559f05b86d/Ultrasonic-0.0.0+sha.89559f05b86d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ultrasonic-0.0.0+sha.89559f05b86d.tar.gz",
+    "size_bytes": 1447,
+    "sha256": "5f644db1df8a79b136ff2acea5958a8069ae674ede8af7895b46d2402062a0fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-inst/library/Ultrasonic/0.0.0%2Bsha.89559f05b86d/Ultrasonic-0.0.0%2Bsha.89559f05b86d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-inst/library/Ultrasonic/0.0.0%2Bsha.89559f05b86d/Ultrasonic-0.0.0%2Bsha.89559f05b86d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-inst/library/serial_communication/0.0.0+sha.835d7aff5c58/serial_communication-0.0.0+sha.835d7aff5c58.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "serial_communication-0.0.0+sha.835d7aff5c58.tar.gz",
+    "size_bytes": 1522,
+    "sha256": "36fd3dd97c20b49fc7f537b82c0ee951fd71ee55b0ba1f12e10884d4e1091f1b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-inst/library/serial_communication/0.0.0%2Bsha.835d7aff5c58/serial_communication-0.0.0%2Bsha.835d7aff5c58.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-inst/library/serial_communication/0.0.0%2Bsha.835d7aff5c58/serial_communication-0.0.0%2Bsha.835d7aff5c58.tar.gz"
+    ]
+   }
+  }
+ ]
+}

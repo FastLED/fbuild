@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/limiteddata",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "limiteddata/library/SchedulerESP8266/1.1.2/SchedulerESP8266-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SchedulerESP8266-1.1.2.tar.gz",
+    "size_bytes": 3460,
+    "sha256": "7c46c83c6f32253a43149092862b7e472a76546dcab18b4f8382a562071054ef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/limiteddata/library/SchedulerESP8266/1.1.2/SchedulerESP8266-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/limiteddata/library/SchedulerESP8266/1.1.2/SchedulerESP8266-1.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

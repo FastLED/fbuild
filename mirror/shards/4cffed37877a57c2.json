@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dervomsee",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dervomsee/library/MultiLog/1.0.0/MultiLog-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MultiLog-1.0.0.tar.gz",
+    "size_bytes": 2856,
+    "sha256": "b4efbc02f541ed53815e4157a210f08d21fee83bd4a95cc1018d1875527da29c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dervomsee/library/MultiLog/1.0.0/MultiLog-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dervomsee/library/MultiLog/1.0.0/MultiLog-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

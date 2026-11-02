@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pangodream",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pangodream/library/ESP2SOTA/1.0.2/ESP2SOTA-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP2SOTA-1.0.2.tar.gz",
+    "size_bytes": 4491,
+    "sha256": "ef23f4aa36bce5deed6abd99ec54c017a9c30ef54bd689bb546a45b913a15afc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pangodream/library/ESP2SOTA/1.0.2/ESP2SOTA-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/pangodream/library/ESP2SOTA/1.0.2/ESP2SOTA-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

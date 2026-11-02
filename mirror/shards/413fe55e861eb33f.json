@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/techwillsaveus",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "techwillsaveus/library/Gamer/2.1/Gamer-2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Gamer-2.1.tar.gz",
+    "size_bytes": 25212,
+    "sha256": "ead5ff499281d2ff224df8c34ece8132610a98055ebd73ed35e213384c8e8fb8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/techwillsaveus/library/Gamer/2.1/Gamer-2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/techwillsaveus/library/Gamer/2.1/Gamer-2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "techwillsaveus/library/GamerIR/2.0/GamerIR-2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GamerIR-2.0.tar.gz",
+    "size_bytes": 2292,
+    "sha256": "9d441fecd69bc3b028079693b95b23d9fb4321369f139ed31777ef33cc95f808",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/techwillsaveus/library/GamerIR/2.0/GamerIR-2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/techwillsaveus/library/GamerIR/2.0/GamerIR-2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dayatkun01",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dayatkun01/library/ClearDS1302/1.0.1/ClearDS1302-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ClearDS1302-1.0.1.tar.gz",
+    "size_bytes": 5229,
+    "sha256": "6ea91c6d0ee4f5e7c7f4c255d1ef46e96e516a9fa60b01c1390828284b339fe3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dayatkun01/library/ClearDS1302/1.0.1/ClearDS1302-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dayatkun01/library/ClearDS1302/1.0.1/ClearDS1302-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-steeven",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-steeven/library/BreathLed/0.0.0+sha.13c83a6b336f/BreathLed-0.0.0+sha.13c83a6b336f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BreathLed-0.0.0+sha.13c83a6b336f.tar.gz",
+    "size_bytes": 1636,
+    "sha256": "0e69378ff489f0cc56a7f6bc0378eda8222b4893cb5fc938f87e94a41976b8cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-steeven/library/BreathLed/0.0.0%2Bsha.13c83a6b336f/BreathLed-0.0.0%2Bsha.13c83a6b336f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-steeven/library/BreathLed/0.0.0%2Bsha.13c83a6b336f/BreathLed-0.0.0%2Bsha.13c83a6b336f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-steeven/library/BufferedSerial/0.0.0+sha.9c34df035d99/BufferedSerial-0.0.0+sha.9c34df035d99.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BufferedSerial-0.0.0+sha.9c34df035d99.tar.gz",
+    "size_bytes": 3798,
+    "sha256": "8fcb99fffa601cda31d2d8aace8126423d2438baa7e2eef990280b831cdbd08d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-steeven/library/BufferedSerial/0.0.0%2Bsha.9c34df035d99/BufferedSerial-0.0.0%2Bsha.9c34df035d99.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-steeven/library/BufferedSerial/0.0.0%2Bsha.9c34df035d99/BufferedSerial-0.0.0%2Bsha.9c34df035d99.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-steeven/library/EPD_GDE021A1/0.0.0+sha.e7a39129f419/EPD_GDE021A1-0.0.0+sha.e7a39129f419.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EPD_GDE021A1-0.0.0+sha.e7a39129f419.tar.gz",
+    "size_bytes": 2353,
+    "sha256": "29335e51505fa7177b21b9bd5acacabc469f967fe83d370483507e851015f87f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-steeven/library/EPD_GDE021A1/0.0.0%2Bsha.e7a39129f419/EPD_GDE021A1-0.0.0%2Bsha.e7a39129f419.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-steeven/library/EPD_GDE021A1/0.0.0%2Bsha.e7a39129f419/EPD_GDE021A1-0.0.0%2Bsha.e7a39129f419.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-steeven/library/ESP8266/0.0.0+sha.ee86ca9e494d/ESP8266-0.0.0+sha.ee86ca9e494d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266-0.0.0+sha.ee86ca9e494d.tar.gz",
+    "size_bytes": 4405,
+    "sha256": "0f826d0930cceb8cdb8082c3d2481ee6810ead7f0578ad1f1d9e7b493736e92d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-steeven/library/ESP8266/0.0.0%2Bsha.ee86ca9e494d/ESP8266-0.0.0%2Bsha.ee86ca9e494d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-steeven/library/ESP8266/0.0.0%2Bsha.ee86ca9e494d/ESP8266-0.0.0%2Bsha.ee86ca9e494d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-steeven/library/GraphicUtil/0.0.0+sha.404c38e71c68/GraphicUtil-0.0.0+sha.404c38e71c68.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GraphicUtil-0.0.0+sha.404c38e71c68.tar.gz",
+    "size_bytes": 4504,
+    "sha256": "2ea42f86f15e5ba89ee4e8d39e1a2a64d221e316e8de635994bde001ab6ea172",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-steeven/library/GraphicUtil/0.0.0%2Bsha.404c38e71c68/GraphicUtil-0.0.0%2Bsha.404c38e71c68.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-steeven/library/GraphicUtil/0.0.0%2Bsha.404c38e71c68/GraphicUtil-0.0.0%2Bsha.404c38e71c68.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-steeven/library/Scope/0.0.0+sha.6c6d961dc8b3/Scope-0.0.0+sha.6c6d961dc8b3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Scope-0.0.0+sha.6c6d961dc8b3.tar.gz",
+    "size_bytes": 1691,
+    "sha256": "6ad705df95a808f08a46a362a4133b5bcfb53bc7d435f79dbc47bb70a307591f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-steeven/library/Scope/0.0.0%2Bsha.6c6d961dc8b3/Scope-0.0.0%2Bsha.6c6d961dc8b3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-steeven/library/Scope/0.0.0%2Bsha.6c6d961dc8b3/Scope-0.0.0%2Bsha.6c6d961dc8b3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-steeven/library/USBComposite/0.0.0+sha.7c559fcb1d17/USBComposite-0.0.0+sha.7c559fcb1d17.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "USBComposite-0.0.0+sha.7c559fcb1d17.tar.gz",
+    "size_bytes": 144103,
+    "sha256": "3ce650f30cf0312933680be34b6949d405d9994a7bc376a95e7c3990df35bbd8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-steeven/library/USBComposite/0.0.0%2Bsha.7c559fcb1d17/USBComposite-0.0.0%2Bsha.7c559fcb1d17.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-steeven/library/USBComposite/0.0.0%2Bsha.7c559fcb1d17/USBComposite-0.0.0%2Bsha.7c559fcb1d17.tar.gz"
+    ]
+   }
+  }
+ ]
+}

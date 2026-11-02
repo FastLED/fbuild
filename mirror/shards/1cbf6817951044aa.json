@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/adystech",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "adystech/library/PID_PWM/1.0.5/PID_PWM-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PID_PWM-1.0.5.tar.gz",
+    "size_bytes": 4563,
+    "sha256": "10943da717a45bc2322562099d9d9797ceecc86ce6329bf8479f0af120b57110",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/adystech/library/PID_PWM/1.0.5/PID_PWM-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/adystech/library/PID_PWM/1.0.5/PID_PWM-1.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

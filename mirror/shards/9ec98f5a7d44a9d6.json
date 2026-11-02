@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jesrex700",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jesrex700/library/HDrive/1.0.1/HDrive-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HDrive-1.0.1.tar.gz",
+    "size_bytes": 3856,
+    "sha256": "90c6dfb6ee1a15080a01adc16f7290ad8bba855af9b92dc1cf5811e96e1fa6bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jesrex700/library/HDrive/1.0.1/HDrive-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jesrex700/library/HDrive/1.0.1/HDrive-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jesrex700/library/HDrive/1.1.0/HDrive-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HDrive-1.1.0.tar.gz",
+    "size_bytes": 3773,
+    "sha256": "86827accec31646b3f445dfce95aa3df0286493a44cabdddb6ee10535c13b554",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jesrex700/library/HDrive/1.1.0/HDrive-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jesrex700/library/HDrive/1.1.0/HDrive-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jesrex700/library/HDrive/2.0.0/HDrive-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HDrive-2.0.0.tar.gz",
+    "size_bytes": 4697,
+    "sha256": "b3a3464a4dd19b6c56f35157b97a561299a9d9fec3c6fa8c8b45a4241e080f24",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jesrex700/library/HDrive/2.0.0/HDrive-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jesrex700/library/HDrive/2.0.0/HDrive-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jesrex700/library/HDrive/2.0.1/HDrive-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HDrive-2.0.1.tar.gz",
+    "size_bytes": 5015,
+    "sha256": "baa4594678880a531af74c496ab50b5875912ebf240e1b5167637e825f74ebc0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jesrex700/library/HDrive/2.0.1/HDrive-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jesrex700/library/HDrive/2.0.1/HDrive-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jesrex700/library/HDrive/2.0.2/HDrive-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HDrive-2.0.2.tar.gz",
+    "size_bytes": 5012,
+    "sha256": "6f9122d8dea0b37f5222d0a06bad511eb1254c7fe92e854a99437fcd15a64039",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jesrex700/library/HDrive/2.0.2/HDrive-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jesrex700/library/HDrive/2.0.2/HDrive-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jesrex700/library/HDrive/2.0.3/HDrive-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HDrive-2.0.3.tar.gz",
+    "size_bytes": 5010,
+    "sha256": "725f64ebb8594d0c5faa106ec2591782ea61075afba674d3253e6825e4afbc6b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jesrex700/library/HDrive/2.0.3/HDrive-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/jesrex700/library/HDrive/2.0.3/HDrive-2.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

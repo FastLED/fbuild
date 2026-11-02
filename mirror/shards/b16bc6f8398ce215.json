@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jamessmartcell",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jamessmartcell/library/AugustESP32/1.2/AugustESP32-1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AugustESP32-1.2.tar.gz",
+    "size_bytes": 8776,
+    "sha256": "abced3366221fb66c48a1483d52eb7009c0280ce3deb7ecde2a1ecc0ab380c2d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jamessmartcell/library/AugustESP32/1.2/AugustESP32-1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jamessmartcell/library/AugustESP32/1.2/AugustESP32-1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jamessmartcell/library/ESPUltralightTimers/0.9.1/ESPUltralightTimers-0.9.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPUltralightTimers-0.9.1.tar.gz",
+    "size_bytes": 4413,
+    "sha256": "69cece5b903945666621d1c18bf663ca272bd906b65032c52a62b9fa06538aed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jamessmartcell/library/ESPUltralightTimers/0.9.1/ESPUltralightTimers-0.9.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jamessmartcell/library/ESPUltralightTimers/0.9.1/ESPUltralightTimers-0.9.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

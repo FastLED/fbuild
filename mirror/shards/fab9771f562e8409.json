@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/caiohamamura",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "caiohamamura/library/LibreLinkUp/0.1.0/LibreLinkUp-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LibreLinkUp-0.1.0.tar.gz",
+    "size_bytes": 10160,
+    "sha256": "4e668ccc9810ce2c5d7f1d85867d9c9b5c147d698511c603294d03eef6f00a2d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/caiohamamura/library/LibreLinkUp/0.1.0/LibreLinkUp-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/caiohamamura/library/LibreLinkUp/0.1.0/LibreLinkUp-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "caiohamamura/library/LibreLinkUp/0.1.1/LibreLinkUp-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LibreLinkUp-0.1.1.tar.gz",
+    "size_bytes": 10200,
+    "sha256": "8e0c6859a4c0094d07ce6e8e9e025be2f3f8f11179ec2016f9c515442905301e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/caiohamamura/library/LibreLinkUp/0.1.1/LibreLinkUp-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/caiohamamura/library/LibreLinkUp/0.1.1/LibreLinkUp-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "caiohamamura/library/LibreLinkUp/0.2.0/LibreLinkUp-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LibreLinkUp-0.2.0.tar.gz",
+    "size_bytes": 11181,
+    "sha256": "b4d5d053cda3c33c17f0eb2016d2bc69d18844ce4d86c7d551c78978ee406583",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/caiohamamura/library/LibreLinkUp/0.2.0/LibreLinkUp-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/caiohamamura/library/LibreLinkUp/0.2.0/LibreLinkUp-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "caiohamamura/library/LibreLinkUp/0.2.1/LibreLinkUp-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LibreLinkUp-0.2.1.tar.gz",
+    "size_bytes": 12466,
+    "sha256": "8f40a4a7d64cb74677df99e831475a962d20462afadc1eb6e27a8fc1336a9713",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/caiohamamura/library/LibreLinkUp/0.2.1/LibreLinkUp-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/caiohamamura/library/LibreLinkUp/0.2.1/LibreLinkUp-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "caiohamamura/library/LibreLinkUp/0.2.2/LibreLinkUp-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LibreLinkUp-0.2.2.tar.gz",
+    "size_bytes": 12369,
+    "sha256": "70d7700d47ca291ecf934ec75b977c50307a394eef2e773607b672c2936569c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/caiohamamura/library/LibreLinkUp/0.2.2/LibreLinkUp-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/caiohamamura/library/LibreLinkUp/0.2.2/LibreLinkUp-0.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "caiohamamura/library/LibreLinkUp/0.3.1/LibreLinkUp-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LibreLinkUp-0.3.1.tar.gz",
+    "size_bytes": 15151,
+    "sha256": "6b5080ebe630a808b6bd004f92e7fffd8c4081c04a2ec5f2060ed9478d648ab8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/caiohamamura/library/LibreLinkUp/0.3.1/LibreLinkUp-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/caiohamamura/library/LibreLinkUp/0.3.1/LibreLinkUp-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "caiohamamura/library/LibreLinkUp/0.3.2/LibreLinkUp-0.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LibreLinkUp-0.3.2.tar.gz",
+    "size_bytes": 15157,
+    "sha256": "6cc76c907b9c860428c1e1e24fdb1c4cedbdf2c7156e05638e345de4f3cb1c01",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/caiohamamura/library/LibreLinkUp/0.3.2/LibreLinkUp-0.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/caiohamamura/library/LibreLinkUp/0.3.2/LibreLinkUp-0.3.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

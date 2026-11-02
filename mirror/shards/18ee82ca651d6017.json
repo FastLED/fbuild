@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pierrolefou881",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pierrolefou881/library/DuinoCollections/1.0.0/DuinoCollections-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DuinoCollections-1.0.0.tar.gz",
+    "size_bytes": 22754,
+    "sha256": "6ada13c6055e7e6b2b2404a6d6b5f26b39c031ba39e0fc4eebaf03d0631dc594",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pierrolefou881/library/DuinoCollections/1.0.0/DuinoCollections-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pierrolefou881/library/DuinoCollections/1.0.0/DuinoCollections-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pierrolefou881/library/DuinoMemory/1.0.0/DuinoMemory-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DuinoMemory-1.0.0.tar.gz",
+    "size_bytes": 6735,
+    "sha256": "4de2c10c3402216f07f41f2f9185d77283e5787599a7ff86e5a113644f8a855f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pierrolefou881/library/DuinoMemory/1.0.0/DuinoMemory-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pierrolefou881/library/DuinoMemory/1.0.0/DuinoMemory-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pierrolefou881/library/DuinoMemory/1.1.1/DuinoMemory-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DuinoMemory-1.1.1.tar.gz",
+    "size_bytes": 10330,
+    "sha256": "36e8c6e8353e8fb121dafa5f5f1a120aa820abd5f48d7c1b5853f5d28571ee2b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pierrolefou881/library/DuinoMemory/1.1.1/DuinoMemory-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pierrolefou881/library/DuinoMemory/1.1.1/DuinoMemory-1.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

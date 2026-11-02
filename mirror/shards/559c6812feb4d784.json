@@ -1,0 +1,165 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-dudmuck",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-dudmuck/library/SX1232/0.0.0+sha.8717baf6e00a/SX1232-0.0.0+sha.8717baf6e00a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SX1232-0.0.0+sha.8717baf6e00a.tar.gz",
+    "size_bytes": 8778,
+    "sha256": "e8bcc6d40b735b7d7c1dda4b2ce195ac5caaa9ea872620f1b148b7c57ed00c84",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dudmuck/library/SX1232/0.0.0%2Bsha.8717baf6e00a/SX1232-0.0.0%2Bsha.8717baf6e00a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dudmuck/library/SX1232/0.0.0%2Bsha.8717baf6e00a/SX1232-0.0.0%2Bsha.8717baf6e00a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dudmuck/library/SX127x/0.0.0+sha.af9b41b1e285/SX127x-0.0.0+sha.af9b41b1e285.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SX127x-0.0.0+sha.af9b41b1e285.tar.gz",
+    "size_bytes": 16415,
+    "sha256": "d7ffb16501b1d57f8b2ae16febeb2d728c62e108a1338e9b915fb57b334b04f9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dudmuck/library/SX127x/0.0.0%2Bsha.af9b41b1e285/SX127x-0.0.0%2Bsha.af9b41b1e285.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dudmuck/library/SX127x/0.0.0%2Bsha.af9b41b1e285/SX127x-0.0.0%2Bsha.af9b41b1e285.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dudmuck/library/lib_gps/0.0.0+sha.65fdafeb57e0/lib_gps-0.0.0+sha.65fdafeb57e0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lib_gps-0.0.0+sha.65fdafeb57e0.tar.gz",
+    "size_bytes": 4113,
+    "sha256": "56cff0f15ab69a664b5fe2b60d25e6f0670432b9c0a931af1d02486839730136",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dudmuck/library/lib_gps/0.0.0%2Bsha.65fdafeb57e0/lib_gps-0.0.0%2Bsha.65fdafeb57e0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dudmuck/library/lib_gps/0.0.0%2Bsha.65fdafeb57e0/lib_gps-0.0.0%2Bsha.65fdafeb57e0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dudmuck/library/lib_i2c_slave_block/0.0.0+sha.493e5cc9c052/lib_i2c_slave_block-0.0.0+sha.493e5cc9c052.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lib_i2c_slave_block-0.0.0+sha.493e5cc9c052.tar.gz",
+    "size_bytes": 3921,
+    "sha256": "2ecc5517dcdcb361dba29b1ae16c93f0a2a65902ec7d80dca6e344688e08bd1d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dudmuck/library/lib_i2c_slave_block/0.0.0%2Bsha.493e5cc9c052/lib_i2c_slave_block-0.0.0%2Bsha.493e5cc9c052.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dudmuck/library/lib_i2c_slave_block/0.0.0%2Bsha.493e5cc9c052/lib_i2c_slave_block-0.0.0%2Bsha.493e5cc9c052.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dudmuck/library/lib_mma8451q/0.0.0+sha.4bc96749141e/lib_mma8451q-0.0.0+sha.4bc96749141e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lib_mma8451q-0.0.0+sha.4bc96749141e.tar.gz",
+    "size_bytes": 4202,
+    "sha256": "33a9c14c27c6dd956d69e95653980830a45d3c508cdfe07bcb6fc6712015f737",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dudmuck/library/lib_mma8451q/0.0.0%2Bsha.4bc96749141e/lib_mma8451q-0.0.0%2Bsha.4bc96749141e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dudmuck/library/lib_mma8451q/0.0.0%2Bsha.4bc96749141e/lib_mma8451q-0.0.0%2Bsha.4bc96749141e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dudmuck/library/lib_mpl3115a2/0.0.0+sha.0eb8b0ad292b/lib_mpl3115a2-0.0.0+sha.0eb8b0ad292b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lib_mpl3115a2-0.0.0+sha.0eb8b0ad292b.tar.gz",
+    "size_bytes": 3818,
+    "sha256": "21ef1cdd28a7c7613db04285acc16a2a7cb461bbb1e8429be046cc59fcf0d5fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dudmuck/library/lib_mpl3115a2/0.0.0%2Bsha.0eb8b0ad292b/lib_mpl3115a2-0.0.0%2Bsha.0eb8b0ad292b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dudmuck/library/lib_mpl3115a2/0.0.0%2Bsha.0eb8b0ad292b/lib_mpl3115a2-0.0.0%2Bsha.0eb8b0ad292b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dudmuck/library/lib_sx9500/0.0.0+sha.aa30dc96dc77/lib_sx9500-0.0.0+sha.aa30dc96dc77.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lib_sx9500-0.0.0+sha.aa30dc96dc77.tar.gz",
+    "size_bytes": 2223,
+    "sha256": "8dba3b582297b3f04b21aec2c59bfb309ac85e214953ad03ef8d3f9c36ffe7ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dudmuck/library/lib_sx9500/0.0.0%2Bsha.aa30dc96dc77/lib_sx9500-0.0.0%2Bsha.aa30dc96dc77.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dudmuck/library/lib_sx9500/0.0.0%2Bsha.aa30dc96dc77/lib_sx9500-0.0.0%2Bsha.aa30dc96dc77.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dudmuck/library/libscpi/0.0.0+sha.b497f235115a/libscpi-0.0.0+sha.b497f235115a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libscpi-0.0.0+sha.b497f235115a.tar.gz",
+    "size_bytes": 26296,
+    "sha256": "25f1f4d805c0f85d6f64752d8dc50fa52c68f981b1b1ec50afabfda5192b6d69",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dudmuck/library/libscpi/0.0.0%2Bsha.b497f235115a/libscpi-0.0.0%2Bsha.b497f235115a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dudmuck/library/libscpi/0.0.0%2Bsha.b497f235115a/libscpi-0.0.0%2Bsha.b497f235115a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dudmuck/library/lorawan1v1/0.0.0+sha.0f28f2e7c35e/lorawan1v1-0.0.0+sha.0f28f2e7c35e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lorawan1v1-0.0.0+sha.0f28f2e7c35e.tar.gz",
+    "size_bytes": 35742,
+    "sha256": "3339006b2e1f49f1fae2a4dda9860f141aad7494ed38d15dfcb6ca0b44c09daf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dudmuck/library/lorawan1v1/0.0.0%2Bsha.0f28f2e7c35e/lorawan1v1-0.0.0%2Bsha.0f28f2e7c35e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dudmuck/library/lorawan1v1/0.0.0%2Bsha.0f28f2e7c35e/lorawan1v1-0.0.0%2Bsha.0f28f2e7c35e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dudmuck/library/sx126x/0.0.0+sha.5703598a88fb/sx126x-0.0.0+sha.5703598a88fb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "sx126x-0.0.0+sha.5703598a88fb.tar.gz",
+    "size_bytes": 8000,
+    "sha256": "d240fc8c824211d1387e525339a46f3683848e6c3a51ffd58814e037e24cae3e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dudmuck/library/sx126x/0.0.0%2Bsha.5703598a88fb/sx126x-0.0.0%2Bsha.5703598a88fb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dudmuck/library/sx126x/0.0.0%2Bsha.5703598a88fb/sx126x-0.0.0%2Bsha.5703598a88fb.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dudmuck/library/sx128x/0.0.0+sha.7b0b2e3ca9d2/sx128x-0.0.0+sha.7b0b2e3ca9d2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "sx128x-0.0.0+sha.7b0b2e3ca9d2.tar.gz",
+    "size_bytes": 9114,
+    "sha256": "6a82f327c320a4f377039a2ecebe109b56f3dd44f4b54e194583549c6e4c3eb0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dudmuck/library/sx128x/0.0.0%2Bsha.7b0b2e3ca9d2/sx128x-0.0.0%2Bsha.7b0b2e3ca9d2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dudmuck/library/sx128x/0.0.0%2Bsha.7b0b2e3ca9d2/sx128x-0.0.0%2Bsha.7b0b2e3ca9d2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dudmuck/library/sx12xx_hal/0.0.0+sha.75635d50262e/sx12xx_hal-0.0.0+sha.75635d50262e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "sx12xx_hal-0.0.0+sha.75635d50262e.tar.gz",
+    "size_bytes": 17081,
+    "sha256": "67ef5b51ac2eed76164d77a64e95f8b8f42ef01d8f6a054bbb52d0af4f8d309d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dudmuck/library/sx12xx_hal/0.0.0%2Bsha.75635d50262e/sx12xx_hal-0.0.0%2Bsha.75635d50262e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dudmuck/library/sx12xx_hal/0.0.0%2Bsha.75635d50262e/sx12xx_hal-0.0.0%2Bsha.75635d50262e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

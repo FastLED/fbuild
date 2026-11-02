@@ -1,0 +1,243 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/spirit1qtr",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "spirit1qtr/library/DevelDeck-API/0.0.1/DevelDeck-API-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevelDeck-API-0.0.1.tar.gz",
+    "size_bytes": 33333,
+    "sha256": "82bbe7a2fa268140a35f735688a6fc5bb7369b3be60b04f71d25b631e1078279",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/spirit1qtr/library/DevelDeck-API/0.0.1/DevelDeck-API-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/spirit1qtr/library/DevelDeck-API/0.0.1/DevelDeck-API-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "spirit1qtr/library/DevelDeck-API/0.0.2/DevelDeck-API-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevelDeck-API-0.0.2.tar.gz",
+    "size_bytes": 34707,
+    "sha256": "41a85d3de3b615a597e221100048842e299b5fe43d7a834430570d4953ae5858",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/spirit1qtr/library/DevelDeck-API/0.0.2/DevelDeck-API-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/spirit1qtr/library/DevelDeck-API/0.0.2/DevelDeck-API-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "spirit1qtr/library/DevelDeck-API/0.0.3/DevelDeck-API-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevelDeck-API-0.0.3.tar.gz",
+    "size_bytes": 34689,
+    "sha256": "674a2fb0664256dd0191ef58a3de2f314ec09ebfd6ea26a0d7bb45467a26e1a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/spirit1qtr/library/DevelDeck-API/0.0.3/DevelDeck-API-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/spirit1qtr/library/DevelDeck-API/0.0.3/DevelDeck-API-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "spirit1qtr/library/DevelDeck-API/0.0.4/DevelDeck-API-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevelDeck-API-0.0.4.tar.gz",
+    "size_bytes": 34649,
+    "sha256": "acb16ed88e72fa04e85f37c86100ecc9419eba7d5aaa6e7aa37866f7713d84c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/spirit1qtr/library/DevelDeck-API/0.0.4/DevelDeck-API-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/spirit1qtr/library/DevelDeck-API/0.0.4/DevelDeck-API-0.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "spirit1qtr/library/DevelDeck-API/0.0.5/DevelDeck-API-0.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevelDeck-API-0.0.5.tar.gz",
+    "size_bytes": 34908,
+    "sha256": "6dcbb09e1f17dcbc8818a26253ff7278d6307955ff8bed88bca4f1130e605fc1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/spirit1qtr/library/DevelDeck-API/0.0.5/DevelDeck-API-0.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/spirit1qtr/library/DevelDeck-API/0.0.5/DevelDeck-API-0.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "spirit1qtr/library/DevelDeck-API/0.0.6/DevelDeck-API-0.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevelDeck-API-0.0.6.tar.gz",
+    "size_bytes": 34909,
+    "sha256": "06a368397e6f4d73d740ea64e8558004c78ad645e67ddb40d40852db1fe061a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/spirit1qtr/library/DevelDeck-API/0.0.6/DevelDeck-API-0.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/spirit1qtr/library/DevelDeck-API/0.0.6/DevelDeck-API-0.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "spirit1qtr/library/DevelDeck-API/0.0.7/DevelDeck-API-0.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevelDeck-API-0.0.7.tar.gz",
+    "size_bytes": 34924,
+    "sha256": "80b2ed3f64f12e64e06b5ab0ead4095d2cb33e59b4e79c9b60b66ce2a752dfab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/spirit1qtr/library/DevelDeck-API/0.0.7/DevelDeck-API-0.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/spirit1qtr/library/DevelDeck-API/0.0.7/DevelDeck-API-0.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "spirit1qtr/library/DevelDeck-API/0.0.8/DevelDeck-API-0.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevelDeck-API-0.0.8.tar.gz",
+    "size_bytes": 36366,
+    "sha256": "5c60844072cdfb30c0803dd1ee2c834f38e5b0445e091d7777048900b8cc9f1c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/spirit1qtr/library/DevelDeck-API/0.0.8/DevelDeck-API-0.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/spirit1qtr/library/DevelDeck-API/0.0.8/DevelDeck-API-0.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "spirit1qtr/library/DevelDeck-API/0.1.1/DevelDeck-API-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevelDeck-API-0.1.1.tar.gz",
+    "size_bytes": 36195,
+    "sha256": "110b4c42ba71d9b6d87c983e14f4ec8e40c061ff3d9314f0063c88073e359da2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/spirit1qtr/library/DevelDeck-API/0.1.1/DevelDeck-API-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/spirit1qtr/library/DevelDeck-API/0.1.1/DevelDeck-API-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "spirit1qtr/library/DevelDeck-API/0.2.0/DevelDeck-API-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevelDeck-API-0.2.0.tar.gz",
+    "size_bytes": 37343,
+    "sha256": "5d209a0ca6e1013fc0f96ff6b999ba4b957d06a8980a31911ca785f9d9ae0693",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/spirit1qtr/library/DevelDeck-API/0.2.0/DevelDeck-API-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/spirit1qtr/library/DevelDeck-API/0.2.0/DevelDeck-API-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "spirit1qtr/library/DevelDeck-API/0.2.1/DevelDeck-API-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevelDeck-API-0.2.1.tar.gz",
+    "size_bytes": 37614,
+    "sha256": "49e2915a49ecbc85101557696044d066e5eb7caf02fa46fa8e6da1baf203b97d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/spirit1qtr/library/DevelDeck-API/0.2.1/DevelDeck-API-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/spirit1qtr/library/DevelDeck-API/0.2.1/DevelDeck-API-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "spirit1qtr/library/DevelDeck-API/0.2.2/DevelDeck-API-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevelDeck-API-0.2.2.tar.gz",
+    "size_bytes": 37561,
+    "sha256": "5c3db65ee4943746e0030e348e4455482c1efdfe12df808a5964537fd9d287a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/spirit1qtr/library/DevelDeck-API/0.2.2/DevelDeck-API-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/spirit1qtr/library/DevelDeck-API/0.2.2/DevelDeck-API-0.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "spirit1qtr/library/DevelDeck-API/0.2.4/DevelDeck-API-0.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevelDeck-API-0.2.4.tar.gz",
+    "size_bytes": 38018,
+    "sha256": "ed1279aaa187464cac2ff53e63d0d54a9d6a66099e1828465243b5aafa561d1c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/spirit1qtr/library/DevelDeck-API/0.2.4/DevelDeck-API-0.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/spirit1qtr/library/DevelDeck-API/0.2.4/DevelDeck-API-0.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "spirit1qtr/library/DevelDeck-API/0.2.5/DevelDeck-API-0.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevelDeck-API-0.2.5.tar.gz",
+    "size_bytes": 38481,
+    "sha256": "ce069f1a0cd71246a033a10bf6ae38f50321c7a196392eeaedf2ebbb6636decd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/spirit1qtr/library/DevelDeck-API/0.2.5/DevelDeck-API-0.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/spirit1qtr/library/DevelDeck-API/0.2.5/DevelDeck-API-0.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "spirit1qtr/library/DevelDeck-API/0.3.0/DevelDeck-API-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevelDeck-API-0.3.0.tar.gz",
+    "size_bytes": 39875,
+    "sha256": "c816243c6e70980687b3b51703ba69eee6dca9f845f1a4939dd489d5dfee6242",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/spirit1qtr/library/DevelDeck-API/0.3.0/DevelDeck-API-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/spirit1qtr/library/DevelDeck-API/0.3.0/DevelDeck-API-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "spirit1qtr/library/DevelDeck-API/0.3.1/DevelDeck-API-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevelDeck-API-0.3.1.tar.gz",
+    "size_bytes": 40022,
+    "sha256": "fabeb151c315c17adc2a3546d78dbf3a378f35e2885f5b60fbc3bcdc81a1566e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/spirit1qtr/library/DevelDeck-API/0.3.1/DevelDeck-API-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/spirit1qtr/library/DevelDeck-API/0.3.1/DevelDeck-API-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "spirit1qtr/library/DevelDeck-API/0.3.2/DevelDeck-API-0.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevelDeck-API-0.3.2.tar.gz",
+    "size_bytes": 40246,
+    "sha256": "0b8bed983ff933be4f898c2b61263a690060ad7c1bb8b5331e165fd95f4cd23b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/spirit1qtr/library/DevelDeck-API/0.3.2/DevelDeck-API-0.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/spirit1qtr/library/DevelDeck-API/0.3.2/DevelDeck-API-0.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "spirit1qtr/library/DevelDeck-API/0.3.3/DevelDeck-API-0.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevelDeck-API-0.3.3.tar.gz",
+    "size_bytes": 44002,
+    "sha256": "f9d206ddc8b6674c96771863bc14ca4d9e0c4af73ef4dc30daf6d5475e4ede4c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/spirit1qtr/library/DevelDeck-API/0.3.3/DevelDeck-API-0.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/spirit1qtr/library/DevelDeck-API/0.3.3/DevelDeck-API-0.3.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

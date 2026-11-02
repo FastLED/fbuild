@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-scherfa2",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-scherfa2/library/X_NUCLEO_IHM02A1/0.0.0+sha.d7771e6776b0/X_NUCLEO_IHM02A1-0.0.0+sha.d7771e6776b0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "X_NUCLEO_IHM02A1-0.0.0+sha.d7771e6776b0.tar.gz",
+    "size_bytes": 42802,
+    "sha256": "c098f82bfd612257f10672eaff6ec2bc51595d3e4f82ce3dc421bd885451276c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-scherfa2/library/X_NUCLEO_IHM02A1/0.0.0%2Bsha.d7771e6776b0/X_NUCLEO_IHM02A1-0.0.0%2Bsha.d7771e6776b0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-scherfa2/library/X_NUCLEO_IHM02A1/0.0.0%2Bsha.d7771e6776b0/X_NUCLEO_IHM02A1-0.0.0%2Bsha.d7771e6776b0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tkgktyk",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tkgktyk/library/AnalogMimic/0.1.0/AnalogMimic-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AnalogMimic-0.1.0.tar.gz",
+    "size_bytes": 25972,
+    "sha256": "6aa4c5d64662e40c9182a0226626914f3e0abede504def8034b31dbb703c74ab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tkgktyk/library/AnalogMimic/0.1.0/AnalogMimic-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tkgktyk/library/AnalogMimic/0.1.0/AnalogMimic-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/edilsonmaia",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "edilsonmaia/library/DadosCorp/1.0.0/DadosCorp-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DadosCorp-1.0.0.tar.gz",
+    "size_bytes": 13557,
+    "sha256": "3f8324a2beae90d5eabb142cb78f0e2ea6e51ca96faf4777cf9ec5882578dfcf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/edilsonmaia/library/DadosCorp/1.0.0/DadosCorp-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/edilsonmaia/library/DadosCorp/1.0.0/DadosCorp-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "edilsonmaia/library/DadosCorpCore/1.0.0/DadosCorpCore-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DadosCorpCore-1.0.0.tar.gz",
+    "size_bytes": 8649,
+    "sha256": "dd9aa5b4eaefe00d54b040808627ceaf3200f0428bc6d470da082fa57500b11b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/edilsonmaia/library/DadosCorpCore/1.0.0/DadosCorpCore-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/edilsonmaia/library/DadosCorpCore/1.0.0/DadosCorpCore-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

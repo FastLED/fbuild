@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fidoriel",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fidoriel/library/Lego9vRC/0.0.1/Lego9vRC-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lego9vRC-0.0.1.tar.gz",
+    "size_bytes": 3676,
+    "sha256": "23be6dd8aac288dd50d5ce265e9dbb2a4289b232f47bc6fc75b9078421f54993",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fidoriel/library/Lego9vRC/0.0.1/Lego9vRC-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fidoriel/library/Lego9vRC/0.0.1/Lego9vRC-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

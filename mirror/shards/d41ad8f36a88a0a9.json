@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jbtronics",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jbtronics/library/ESP32Console/1.2.2/ESP32Console-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Console-1.2.2.tar.gz",
+    "size_bytes": 48602,
+    "sha256": "652d228bdef7f7e85608baf0fcb0bee05d0e838b7f1473bdf8bd5ae9e861ddc9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jbtronics/library/ESP32Console/1.2.2/ESP32Console-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jbtronics/library/ESP32Console/1.2.2/ESP32Console-1.2.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

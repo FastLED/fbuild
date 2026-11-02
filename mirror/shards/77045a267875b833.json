@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ldebs",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ldebs/library/Adafruit%20LED%20Backpack%20Library/1.3.3/AdafruitLEDBackpackLibrary-1.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AdafruitLEDBackpackLibrary-1.3.3.tar.gz",
+    "size_bytes": 65714,
+    "sha256": "03c87ad9810e089d20046245b14c581111ffa7fdf43a51fa0ddb01eafc3052da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ldebs/library/Adafruit%2520LED%2520Backpack%2520Library/1.3.3/AdafruitLEDBackpackLibrary-1.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/ldebs/library/Adafruit%20LED%20Backpack%20Library/1.3.3/AdafruitLEDBackpackLibrary-1.3.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

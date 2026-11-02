@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/castrofernando",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "castrofernando/library/Wiegand%20Output/1.0.3/WiegandOutput-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiegandOutput-1.0.3.tar.gz",
+    "size_bytes": 3045,
+    "sha256": "0a7489aa7047fcc5c7c92b405dacd2ec27c70e7dd91f4ce5ad271bcfa5a725e0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/castrofernando/library/Wiegand%2520Output/1.0.3/WiegandOutput-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/castrofernando/library/Wiegand%20Output/1.0.3/WiegandOutput-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

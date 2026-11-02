@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-elromulous",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-elromulous/library/MARGfilter/0.0.0+sha.6259fdd04e83/MARGfilter-0.0.0+sha.6259fdd04e83.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MARGfilter-0.0.0+sha.6259fdd04e83.tar.gz",
+    "size_bytes": 4610,
+    "sha256": "7a793bfd87e322626d8b05ef99fadf5b0c8c939d382de2c95834de3777f0482b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-elromulous/library/MARGfilter/0.0.0%2Bsha.6259fdd04e83/MARGfilter-0.0.0%2Bsha.6259fdd04e83.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-elromulous/library/MARGfilter/0.0.0%2Bsha.6259fdd04e83/MARGfilter-0.0.0%2Bsha.6259fdd04e83.tar.gz"
+    ]
+   }
+  }
+ ]
+}

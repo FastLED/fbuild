@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-cuadrotor",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-cuadrotor/library/accelerometer_i2c/0.0.0+sha.85a9ed11a3d9/accelerometer_i2c-0.0.0+sha.85a9ed11a3d9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "accelerometer_i2c-0.0.0+sha.85a9ed11a3d9.tar.gz",
+    "size_bytes": 3832,
+    "sha256": "585e3281d701cb2fe72b44bf9576f2475df33748bf096d77e5b5945448a9a6a7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-cuadrotor/library/accelerometer_i2c/0.0.0%2Bsha.85a9ed11a3d9/accelerometer_i2c-0.0.0%2Bsha.85a9ed11a3d9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-cuadrotor/library/accelerometer_i2c/0.0.0%2Bsha.85a9ed11a3d9/accelerometer_i2c-0.0.0%2Bsha.85a9ed11a3d9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

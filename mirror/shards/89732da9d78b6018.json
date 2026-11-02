@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-mgolino",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-mgolino/library/MAX4466/0.0.0+sha.76c72cf9ae2b/MAX4466-0.0.0+sha.76c72cf9ae2b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX4466-0.0.0+sha.76c72cf9ae2b.tar.gz",
+    "size_bytes": 1832,
+    "sha256": "6aaa38116dd70f225b5a3cdf76744d3a9fd3175573d1db9d1a4f8f78db19be5a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mgolino/library/MAX4466/0.0.0%2Bsha.76c72cf9ae2b/MAX4466-0.0.0%2Bsha.76c72cf9ae2b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mgolino/library/MAX4466/0.0.0%2Bsha.76c72cf9ae2b/MAX4466-0.0.0%2Bsha.76c72cf9ae2b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

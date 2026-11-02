@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nicolasfavero",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nicolasfavero/library/ApplyGpsConfig/1.0.0/ApplyGpsConfig-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ApplyGpsConfig-1.0.0.tar.gz",
+    "size_bytes": 26508,
+    "sha256": "21a459bce3a1eb205eea45b43d0dfd872a1a1625302789ef8b10cdd4a576a947",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nicolasfavero/library/ApplyGpsConfig/1.0.0/ApplyGpsConfig-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nicolasfavero/library/ApplyGpsConfig/1.0.0/ApplyGpsConfig-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nicolasfavero/library/ApplyGpsConfig/2.0.0/ApplyGpsConfig-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ApplyGpsConfig-2.0.0.tar.gz",
+    "size_bytes": 15464,
+    "sha256": "e89cb06e87c42dc46a88a024e4a6ba41303aea020927d55365871e6e98f42f50",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nicolasfavero/library/ApplyGpsConfig/2.0.0/ApplyGpsConfig-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nicolasfavero/library/ApplyGpsConfig/2.0.0/ApplyGpsConfig-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

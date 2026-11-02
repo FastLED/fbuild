@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/enviromonitor",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "enviromonitor/library/BME280_Light/0.0.0-alpha+sha.600667f3a6/BME280_Light-0.0.0-alphasha.600667f3a6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BME280_Light-0.0.0-alphasha.600667f3a6.tar.gz",
+    "size_bytes": 3611,
+    "sha256": "199e629faec54e260b32a70c981495b46c3ff1d4a098468054cc5265e20acc12",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/enviromonitor/library/BME280_Light/0.0.0-alpha%2Bsha.600667f3a6/BME280_Light-0.0.0-alphasha.600667f3a6.tar.gz",
+     "https://dl.registry.platformio.org/download/enviromonitor/library/BME280_Light/0.0.0-alpha%2Bsha.600667f3a6/BME280_Light-0.0.0-alphasha.600667f3a6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

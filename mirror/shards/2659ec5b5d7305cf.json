@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-nameless129",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-nameless129/library/TouchPanel/0.0.0+sha.2fe192777f79/TouchPanel-0.0.0+sha.2fe192777f79.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TouchPanel-0.0.0+sha.2fe192777f79.tar.gz",
+    "size_bytes": 2029,
+    "sha256": "49a78e6a39cef45870980abf6b3844688dc3125fd3562272094c96cc4584eefe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nameless129/library/TouchPanel/0.0.0%2Bsha.2fe192777f79/TouchPanel-0.0.0%2Bsha.2fe192777f79.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nameless129/library/TouchPanel/0.0.0%2Bsha.2fe192777f79/TouchPanel-0.0.0%2Bsha.2fe192777f79.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nameless129/library/VS1002_controler/0.0.0+sha.9abce67c084e/VS1002_controler-0.0.0+sha.9abce67c084e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VS1002_controler-0.0.0+sha.9abce67c084e.tar.gz",
+    "size_bytes": 3074,
+    "sha256": "7647179c400d9e8f6bde359275d80b4f21e3ed6f8bb99685416f4e796a184004",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nameless129/library/VS1002_controler/0.0.0%2Bsha.9abce67c084e/VS1002_controler-0.0.0%2Bsha.9abce67c084e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nameless129/library/VS1002_controler/0.0.0%2Bsha.9abce67c084e/VS1002_controler-0.0.0%2Bsha.9abce67c084e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

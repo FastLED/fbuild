@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nospampls",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nospampls/library/SchedTask/1.1.4/SchedTask-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SchedTask-1.1.4.tar.gz",
+    "size_bytes": 25262,
+    "sha256": "080c621b328b190da7e0e4a7f32636f9d42f66d286952d7d17aae70dc9dcdab6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nospampls/library/SchedTask/1.1.4/SchedTask-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/nospampls/library/SchedTask/1.1.4/SchedTask-1.1.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

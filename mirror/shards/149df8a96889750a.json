@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nut-code-monkey",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nut-code-monkey/library/Fusion%20AHRS/1.0.1/FusionAHRS-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FusionAHRS-1.0.1.tar.gz",
+    "size_bytes": 15348,
+    "sha256": "cbe87c89cfaf4d5cf2e50551326034d21e59949596ac74cf216c636eb6145b6c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nut-code-monkey/library/Fusion%2520AHRS/1.0.1/FusionAHRS-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nut-code-monkey/library/Fusion%20AHRS/1.0.1/FusionAHRS-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nut-code-monkey/library/M5StackPowerControl/1.0.4/M5StackPowerControl-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5StackPowerControl-1.0.4.tar.gz",
+    "size_bytes": 7813,
+    "sha256": "82962782d9b5688ab7547f23162fd86209487a779fa574f5fe8be9ee8d15c53e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nut-code-monkey/library/M5StackPowerControl/1.0.4/M5StackPowerControl-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/nut-code-monkey/library/M5StackPowerControl/1.0.4/M5StackPowerControl-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

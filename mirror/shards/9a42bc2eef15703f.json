@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/highno",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "highno/library/RTCVars/0.1.1/RTCVars-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RTCVars-0.1.1.tar.gz",
+    "size_bytes": 10028,
+    "sha256": "ca4f0c44f83c2421d691d5e6adae64d9e11de3dc92b9d9d2cba4adf0932ad6b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/highno/library/RTCVars/0.1.1/RTCVars-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/highno/library/RTCVars/0.1.1/RTCVars-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

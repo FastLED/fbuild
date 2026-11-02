@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/constiko",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "constiko/library/RTC%20RV-3028-C7%20Arduino%20Library/2.1.0/RTCRV-3028-C7ArduinoLibrary-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RTCRV-3028-C7ArduinoLibrary-2.1.0.tar.gz",
+    "size_bytes": 13778,
+    "sha256": "de1bbda0ffda23d55b0bc046f0ddc8a09a80e1216e6adf4cce5bacf60e3e9a2d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/constiko/library/RTC%2520RV-3028-C7%2520Arduino%2520Library/2.1.0/RTCRV-3028-C7ArduinoLibrary-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/constiko/library/RTC%20RV-3028-C7%20Arduino%20Library/2.1.0/RTCRV-3028-C7ArduinoLibrary-2.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

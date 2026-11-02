@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-shivanandgowdakr",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-shivanandgowdakr/library/74HC595/0.0.0+sha.a8e603686790/74HC595-0.0.0+sha.a8e603686790.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "74HC595-0.0.0+sha.a8e603686790.tar.gz",
+    "size_bytes": 3659,
+    "sha256": "d0076ccf6bd47aec04a14089808221f43dfe40142643531240ad24374ed55d15",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-shivanandgowdakr/library/74HC595/0.0.0%2Bsha.a8e603686790/74HC595-0.0.0%2Bsha.a8e603686790.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-shivanandgowdakr/library/74HC595/0.0.0%2Bsha.a8e603686790/74HC595-0.0.0%2Bsha.a8e603686790.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-shivanandgowdakr/library/EE25LC1024/0.0.0+sha.156c427681f0/EE25LC1024-0.0.0+sha.156c427681f0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EE25LC1024-0.0.0+sha.156c427681f0.tar.gz",
+    "size_bytes": 3058,
+    "sha256": "d41b61af2fec2407313cffaf214a1cb7367212ae0b221ca980cc69b6a0ec5d19",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-shivanandgowdakr/library/EE25LC1024/0.0.0%2Bsha.156c427681f0/EE25LC1024-0.0.0%2Bsha.156c427681f0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-shivanandgowdakr/library/EE25LC1024/0.0.0%2Bsha.156c427681f0/EE25LC1024-0.0.0%2Bsha.156c427681f0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-shivanandgowdakr/library/EPSON/0.0.0+sha.19ca061f5bcf/EPSON-0.0.0+sha.19ca061f5bcf.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EPSON-0.0.0+sha.19ca061f5bcf.tar.gz",
+    "size_bytes": 5019,
+    "sha256": "1a624640c06735e6584baf8ef4a18d9c442b6b8a2913c355467b8c034f088452",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-shivanandgowdakr/library/EPSON/0.0.0%2Bsha.19ca061f5bcf/EPSON-0.0.0%2Bsha.19ca061f5bcf.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-shivanandgowdakr/library/EPSON/0.0.0%2Bsha.19ca061f5bcf/EPSON-0.0.0%2Bsha.19ca061f5bcf.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-shivanandgowdakr/library/HDC1080/0.0.0+sha.fdb750cc9ca8/HDC1080-0.0.0+sha.fdb750cc9ca8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HDC1080-0.0.0+sha.fdb750cc9ca8.tar.gz",
+    "size_bytes": 2025,
+    "sha256": "47745ebb1136d4a97d10799aef29507188c3f30b26568cf73772d503eefcaebb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-shivanandgowdakr/library/HDC1080/0.0.0%2Bsha.fdb750cc9ca8/HDC1080-0.0.0%2Bsha.fdb750cc9ca8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-shivanandgowdakr/library/HDC1080/0.0.0%2Bsha.fdb750cc9ca8/HDC1080-0.0.0%2Bsha.fdb750cc9ca8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-shivanandgowdakr/library/InternalRTC/0.0.0+sha.12b099f1e8da/InternalRTC-0.0.0+sha.12b099f1e8da.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "InternalRTC-0.0.0+sha.12b099f1e8da.tar.gz",
+    "size_bytes": 2661,
+    "sha256": "28e5801cf33c99c5bc8af2d70d6b7aea9d3e6ba076ec0b551d87765db42f9be3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-shivanandgowdakr/library/InternalRTC/0.0.0%2Bsha.12b099f1e8da/InternalRTC-0.0.0%2Bsha.12b099f1e8da.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-shivanandgowdakr/library/InternalRTC/0.0.0%2Bsha.12b099f1e8da/InternalRTC-0.0.0%2Bsha.12b099f1e8da.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-shivanandgowdakr/library/M95M02D/0.0.0+sha.dc56262f5ce9/M95M02D-0.0.0+sha.dc56262f5ce9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M95M02D-0.0.0+sha.dc56262f5ce9.tar.gz",
+    "size_bytes": 3110,
+    "sha256": "86f4ef0b3ae60e0fbf578c8ab99a2e1fe8b893fd3ec58f6341ce6086d2f0cea1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-shivanandgowdakr/library/M95M02D/0.0.0%2Bsha.dc56262f5ce9/M95M02D-0.0.0%2Bsha.dc56262f5ce9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-shivanandgowdakr/library/M95M02D/0.0.0%2Bsha.dc56262f5ce9/M95M02D-0.0.0%2Bsha.dc56262f5ce9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-shivanandgowdakr/library/MFRC522/0.0.0+sha.0ee2c6d9ee0d/MFRC522-0.0.0+sha.0ee2c6d9ee0d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MFRC522-0.0.0+sha.0ee2c6d9ee0d.tar.gz",
+    "size_bytes": 19939,
+    "sha256": "442c0ac0e99ea45c854cb906d4ce3eb3c13dbae4a6668722c8afa179cd2a4956",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-shivanandgowdakr/library/MFRC522/0.0.0%2Bsha.0ee2c6d9ee0d/MFRC522-0.0.0%2Bsha.0ee2c6d9ee0d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-shivanandgowdakr/library/MFRC522/0.0.0%2Bsha.0ee2c6d9ee0d/MFRC522-0.0.0%2Bsha.0ee2c6d9ee0d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-shivanandgowdakr/library/MFRC522_Updated/0.0.0+sha.f0aa9cbf7f0e/MFRC522_Updated-0.0.0+sha.f0aa9cbf7f0e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MFRC522_Updated-0.0.0+sha.f0aa9cbf7f0e.tar.gz",
+    "size_bytes": 19999,
+    "sha256": "1e76cae8f4124a7ce54b4f9083c32dd6f066aa3b9076d8f7de8fbc736c3ec681",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-shivanandgowdakr/library/MFRC522_Updated/0.0.0%2Bsha.f0aa9cbf7f0e/MFRC522_Updated-0.0.0%2Bsha.f0aa9cbf7f0e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-shivanandgowdakr/library/MFRC522_Updated/0.0.0%2Bsha.f0aa9cbf7f0e/MFRC522_Updated-0.0.0%2Bsha.f0aa9cbf7f0e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lucweb",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lucweb/library/SmartLadder/1.0.3/SmartLadder-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartLadder-1.0.3.tar.gz",
+    "size_bytes": 14504,
+    "sha256": "5bcd895057ea74724b1e7ce5873ad68d06470f82701258406735a66faa8b8cc5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lucweb/library/SmartLadder/1.0.3/SmartLadder-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/lucweb/library/SmartLadder/1.0.3/SmartLadder-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

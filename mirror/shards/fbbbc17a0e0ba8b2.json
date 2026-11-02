@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/undeploy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "undeploy/library/Aurora/0.1.1/Aurora-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Aurora-0.1.1.tar.gz",
+    "size_bytes": 16512,
+    "sha256": "f678695c586daf5f86dc05797288c00e529a42e9bdce348544d5c2cb64c90f0f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/undeploy/library/Aurora/0.1.1/Aurora-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/undeploy/library/Aurora/0.1.1/Aurora-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,178 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/aliaksandr-liapin",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "aliaksandr-liapin/library/ibattery-sdk/0.10.0/ibattery-sdk-0.10.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ibattery-sdk-0.10.0.tar.gz",
+    "size_bytes": 41784,
+    "sha256": "468186c6c8ecc1878fc4ddb2cdcec87ba6db75ed0348a7739bb57463c3e009d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aliaksandr-liapin/library/ibattery-sdk/0.10.0/ibattery-sdk-0.10.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aliaksandr-liapin/library/ibattery-sdk/0.10.0/ibattery-sdk-0.10.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aliaksandr-liapin/library/ibattery-sdk/0.10.1/ibattery-sdk-0.10.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ibattery-sdk-0.10.1.tar.gz",
+    "size_bytes": 42039,
+    "sha256": "7b3f22c17a5bb938c3523792cf7051fc8d56064985daed239feaa60929b212f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aliaksandr-liapin/library/ibattery-sdk/0.10.1/ibattery-sdk-0.10.1.tar.gz",
+     "https://dl.registry.platformio.org/download/aliaksandr-liapin/library/ibattery-sdk/0.10.1/ibattery-sdk-0.10.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aliaksandr-liapin/library/ibattery-sdk/0.10.2/ibattery-sdk-0.10.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ibattery-sdk-0.10.2.tar.gz",
+    "size_bytes": 42172,
+    "sha256": "8caf94aacabbbf95883f9054bdc109f5b814d9d4d81b21c1cde87c9e3c617799",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aliaksandr-liapin/library/ibattery-sdk/0.10.2/ibattery-sdk-0.10.2.tar.gz",
+     "https://dl.registry.platformio.org/download/aliaksandr-liapin/library/ibattery-sdk/0.10.2/ibattery-sdk-0.10.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aliaksandr-liapin/library/ibattery-sdk/0.11.0/ibattery-sdk-0.11.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ibattery-sdk-0.11.0.tar.gz",
+    "size_bytes": 44753,
+    "sha256": "ce41761c6dc8c0f0a533afabdc50f4b0b2a19c961cb39a2586d91ab882f4139e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aliaksandr-liapin/library/ibattery-sdk/0.11.0/ibattery-sdk-0.11.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aliaksandr-liapin/library/ibattery-sdk/0.11.0/ibattery-sdk-0.11.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aliaksandr-liapin/library/ibattery-sdk/0.11.1/ibattery-sdk-0.11.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ibattery-sdk-0.11.1.tar.gz",
+    "size_bytes": 44791,
+    "sha256": "9b910d1aa74899c528aa57ef1aea946d0a8a323b3ed15820c45954834ee0db52",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aliaksandr-liapin/library/ibattery-sdk/0.11.1/ibattery-sdk-0.11.1.tar.gz",
+     "https://dl.registry.platformio.org/download/aliaksandr-liapin/library/ibattery-sdk/0.11.1/ibattery-sdk-0.11.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aliaksandr-liapin/library/ibattery-sdk/0.12.0/ibattery-sdk-0.12.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ibattery-sdk-0.12.0.tar.gz",
+    "size_bytes": 45213,
+    "sha256": "f4a5af234131adf297d09201f12c9c9f9cc6a8fc9a14ae34a43ea0d712e9131b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aliaksandr-liapin/library/ibattery-sdk/0.12.0/ibattery-sdk-0.12.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aliaksandr-liapin/library/ibattery-sdk/0.12.0/ibattery-sdk-0.12.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aliaksandr-liapin/library/ibattery-sdk/0.13.0/ibattery-sdk-0.13.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ibattery-sdk-0.13.0.tar.gz",
+    "size_bytes": 46736,
+    "sha256": "c89e14359ea71971cbab22f5ae6c1cafcf3e2e4f81f75bbbbf7572c47fd1f1d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aliaksandr-liapin/library/ibattery-sdk/0.13.0/ibattery-sdk-0.13.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aliaksandr-liapin/library/ibattery-sdk/0.13.0/ibattery-sdk-0.13.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aliaksandr-liapin/library/ibattery-sdk/0.14.0/ibattery-sdk-0.14.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ibattery-sdk-0.14.0.tar.gz",
+    "size_bytes": 52698,
+    "sha256": "5c32c7f922e967965d6617f465df32201c92a70c2e64dfcbde611d0c4e7e566a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aliaksandr-liapin/library/ibattery-sdk/0.14.0/ibattery-sdk-0.14.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aliaksandr-liapin/library/ibattery-sdk/0.14.0/ibattery-sdk-0.14.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aliaksandr-liapin/library/ibattery-sdk/0.15.0/ibattery-sdk-0.15.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ibattery-sdk-0.15.0.tar.gz",
+    "size_bytes": 55698,
+    "sha256": "3d2e0b9eea4578c02072b61e6fc969e2241ea4c15a31fc38c670c8a1debaf3ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aliaksandr-liapin/library/ibattery-sdk/0.15.0/ibattery-sdk-0.15.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aliaksandr-liapin/library/ibattery-sdk/0.15.0/ibattery-sdk-0.15.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aliaksandr-liapin/library/ibattery-sdk/0.16.0/ibattery-sdk-0.16.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ibattery-sdk-0.16.0.tar.gz",
+    "size_bytes": 57527,
+    "sha256": "b219f60da3ac250fe5500e3af3f6ae8f029ee14981baa7b312f5763813ca7500",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aliaksandr-liapin/library/ibattery-sdk/0.16.0/ibattery-sdk-0.16.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aliaksandr-liapin/library/ibattery-sdk/0.16.0/ibattery-sdk-0.16.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aliaksandr-liapin/library/ibattery-sdk/0.7.0/ibattery-sdk-0.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ibattery-sdk-0.7.0.tar.gz",
+    "size_bytes": 32994,
+    "sha256": "1829cc2a1611a4ef75389bb2fa44d2333d8fde2453edffe2b298467108fc2e58",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aliaksandr-liapin/library/ibattery-sdk/0.7.0/ibattery-sdk-0.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aliaksandr-liapin/library/ibattery-sdk/0.7.0/ibattery-sdk-0.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aliaksandr-liapin/library/ibattery-sdk/0.9.0/ibattery-sdk-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ibattery-sdk-0.9.0.tar.gz",
+    "size_bytes": 38908,
+    "sha256": "6b02da6b1dc76ca826832d17712af0f5ef5031667871d63f17b17680bcc7d9fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aliaksandr-liapin/library/ibattery-sdk/0.9.0/ibattery-sdk-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aliaksandr-liapin/library/ibattery-sdk/0.9.0/ibattery-sdk-0.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aliaksandr-liapin/library/ibattery-sdk/0.9.1/ibattery-sdk-0.9.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ibattery-sdk-0.9.1.tar.gz",
+    "size_bytes": 39826,
+    "sha256": "1cb15723e9a6ea2cac6bff3192e7abcf143b7942ffe89e649616d1a3c2046a44",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aliaksandr-liapin/library/ibattery-sdk/0.9.1/ibattery-sdk-0.9.1.tar.gz",
+     "https://dl.registry.platformio.org/download/aliaksandr-liapin/library/ibattery-sdk/0.9.1/ibattery-sdk-0.9.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

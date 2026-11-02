@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/meticulouscraftman",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "meticulouscraftman/library/corelib/1.1.8/corelib-1.1.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "corelib-1.1.8.tar.gz",
+    "size_bytes": 48637,
+    "sha256": "c8c6206d218c1c54ae350bf569e1048e6b3fc6c8b39c1048fd778728a3bfe07a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/meticulouscraftman/library/corelib/1.1.8/corelib-1.1.8.tar.gz",
+     "https://dl.registry.platformio.org/download/meticulouscraftman/library/corelib/1.1.8/corelib-1.1.8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

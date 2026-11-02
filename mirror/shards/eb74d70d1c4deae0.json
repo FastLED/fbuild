@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-coisme",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-coisme/library/AK8963/0.0.0+sha.9dff393e5e86/AK8963-0.0.0+sha.9dff393e5e86.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AK8963-0.0.0+sha.9dff393e5e86.tar.gz",
+    "size_bytes": 4080,
+    "sha256": "29daf325514048ff954963cec0d0177e670376174a61a8c43cbf57fa3174250d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-coisme/library/AK8963/0.0.0%2Bsha.9dff393e5e86/AK8963-0.0.0%2Bsha.9dff393e5e86.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-coisme/library/AK8963/0.0.0%2Bsha.9dff393e5e86/AK8963-0.0.0%2Bsha.9dff393e5e86.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-coisme/library/MCP342x/0.0.0+sha.96d9bfe25b03/MCP342x-0.0.0+sha.96d9bfe25b03.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP342x-0.0.0+sha.96d9bfe25b03.tar.gz",
+    "size_bytes": 4258,
+    "sha256": "1a71e9c1a648be7dcb689010c171ba7753be73092360b63fd7e335123b595a47",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-coisme/library/MCP342x/0.0.0%2Bsha.96d9bfe25b03/MCP342x-0.0.0%2Bsha.96d9bfe25b03.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-coisme/library/MCP342x/0.0.0%2Bsha.96d9bfe25b03/MCP342x-0.0.0%2Bsha.96d9bfe25b03.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-coisme/library/SS_LCD_ST7032i/0.0.0+sha.92bfc61fb13b/SS_LCD_ST7032i-0.0.0+sha.92bfc61fb13b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SS_LCD_ST7032i-0.0.0+sha.92bfc61fb13b.tar.gz",
+    "size_bytes": 2901,
+    "sha256": "e9e52b441e7b0e3898a1959e7037a17e3ea3e4274e984588ef27ab39533b57f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-coisme/library/SS_LCD_ST7032i/0.0.0%2Bsha.92bfc61fb13b/SS_LCD_ST7032i-0.0.0%2Bsha.92bfc61fb13b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-coisme/library/SS_LCD_ST7032i/0.0.0%2Bsha.92bfc61fb13b/SS_LCD_ST7032i-0.0.0%2Bsha.92bfc61fb13b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-coisme/library/SerialNano/0.0.0+sha.312356f93678/SerialNano-0.0.0+sha.312356f93678.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialNano-0.0.0+sha.312356f93678.tar.gz",
+    "size_bytes": 1250,
+    "sha256": "5ff5804d09d976bd281a64cb597f629bfe7017313fa5b30003a6d2faa25a672d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-coisme/library/SerialNano/0.0.0%2Bsha.312356f93678/SerialNano-0.0.0%2Bsha.312356f93678.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-coisme/library/SerialNano/0.0.0%2Bsha.312356f93678/SerialNano-0.0.0%2Bsha.312356f93678.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-coisme/library/TCA9554A/0.0.0+sha.0d772298e874/TCA9554A-0.0.0+sha.0d772298e874.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TCA9554A-0.0.0+sha.0d772298e874.tar.gz",
+    "size_bytes": 3229,
+    "sha256": "eec9babaa8ccb019eb719601e3e3f07d94c937362fa830dad5a67c3d9cf639df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-coisme/library/TCA9554A/0.0.0%2Bsha.0d772298e874/TCA9554A-0.0.0%2Bsha.0d772298e874.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-coisme/library/TCA9554A/0.0.0%2Bsha.0d772298e874/TCA9554A-0.0.0%2Bsha.0d772298e874.tar.gz"
+    ]
+   }
+  }
+ ]
+}

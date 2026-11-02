@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-tyftyftyf",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-tyftyftyf/library/FreeIMU/0.0.0+sha.484a501b8674/FreeIMU-0.0.0+sha.484a501b8674.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FreeIMU-0.0.0+sha.484a501b8674.tar.gz",
+    "size_bytes": 9264,
+    "sha256": "00fcd79cb00160a007ef1a1a6c0c072d58fce6efbce53555d2f7a021b9e79dae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tyftyftyf/library/FreeIMU/0.0.0%2Bsha.484a501b8674/FreeIMU-0.0.0%2Bsha.484a501b8674.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tyftyftyf/library/FreeIMU/0.0.0%2Bsha.484a501b8674/FreeIMU-0.0.0%2Bsha.484a501b8674.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-tyftyftyf/library/HMC58X3/0.0.0+sha.ca00fa66673a/HMC58X3-0.0.0+sha.ca00fa66673a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HMC58X3-0.0.0+sha.ca00fa66673a.tar.gz",
+    "size_bytes": 6048,
+    "sha256": "06f29d128c914de540d58da66b48408f894131bbb51c47913dcec7063ffa4d53",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tyftyftyf/library/HMC58X3/0.0.0%2Bsha.ca00fa66673a/HMC58X3-0.0.0%2Bsha.ca00fa66673a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tyftyftyf/library/HMC58X3/0.0.0%2Bsha.ca00fa66673a/HMC58X3-0.0.0%2Bsha.ca00fa66673a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-tyftyftyf/library/MODI2C/0.0.0+sha.fa0cca8e28b6/MODI2C-0.0.0+sha.fa0cca8e28b6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MODI2C-0.0.0+sha.fa0cca8e28b6.tar.gz",
+    "size_bytes": 6214,
+    "sha256": "cce71c74c216fdc10852be68559e03609bd786c39a9eae8c8ab366977bcd753c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tyftyftyf/library/MODI2C/0.0.0%2Bsha.fa0cca8e28b6/MODI2C-0.0.0%2Bsha.fa0cca8e28b6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tyftyftyf/library/MODI2C/0.0.0%2Bsha.fa0cca8e28b6/MODI2C-0.0.0%2Bsha.fa0cca8e28b6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-tyftyftyf/library/MPU9250/0.0.0+sha.ec9725201195/MPU9250-0.0.0+sha.ec9725201195.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPU9250-0.0.0+sha.ec9725201195.tar.gz",
+    "size_bytes": 46824,
+    "sha256": "b86478d70f7488738b1965721203dd4e27dbe89f9ab81a47bc02a941577ff0ac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tyftyftyf/library/MPU9250/0.0.0%2Bsha.ec9725201195/MPU9250-0.0.0%2Bsha.ec9725201195.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tyftyftyf/library/MPU9250/0.0.0%2Bsha.ec9725201195/MPU9250-0.0.0%2Bsha.ec9725201195.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-tyftyftyf/library/MS561101BA/0.0.0+sha.7802dc3ef0a0/MS561101BA-0.0.0+sha.7802dc3ef0a0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MS561101BA-0.0.0+sha.7802dc3ef0a0.tar.gz",
+    "size_bytes": 3188,
+    "sha256": "6bc2e64dfe225dea012b240bdcfbea5bbcfb6f379c9e083b464e9ec0e272f3a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tyftyftyf/library/MS561101BA/0.0.0%2Bsha.7802dc3ef0a0/MS561101BA-0.0.0%2Bsha.7802dc3ef0a0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tyftyftyf/library/MS561101BA/0.0.0%2Bsha.7802dc3ef0a0/MS561101BA-0.0.0%2Bsha.7802dc3ef0a0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

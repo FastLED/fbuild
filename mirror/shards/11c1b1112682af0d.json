@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/seanzhengw",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "seanzhengw/library/ByteBuffer/0.1.2/ByteBuffer-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ByteBuffer-0.1.2.tar.gz",
+    "size_bytes": 8606,
+    "sha256": "a7911a9390b6625a819f39b5626d0fbe14c826455bed09a48421c5135c5066bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seanzhengw/library/ByteBuffer/0.1.2/ByteBuffer-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/seanzhengw/library/ByteBuffer/0.1.2/ByteBuffer-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seanzhengw/library/mmath/0.1.0/mmath-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mmath-0.1.0.tar.gz",
+    "size_bytes": 4884,
+    "sha256": "24d0e943f10d2ac3827966a524e37b5f1ff5a29c379c571a7b691c5aaa1c1329",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seanzhengw/library/mmath/0.1.0/mmath-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seanzhengw/library/mmath/0.1.0/mmath-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seanzhengw/library/simple-serializer/1.0.0/simple-serializer-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "simple-serializer-1.0.0.tar.gz",
+    "size_bytes": 1769,
+    "sha256": "e36656e756184140000c7ec24ad44050e30263f99a1116ba3200be8a0fdb1c7f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seanzhengw/library/simple-serializer/1.0.0/simple-serializer-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seanzhengw/library/simple-serializer/1.0.0/simple-serializer-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

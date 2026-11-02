@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/deangi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "deangi/library/IRProxSensor/1.1/IRProxSensor-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IRProxSensor-1.1.tar.gz",
+    "size_bytes": 2269,
+    "sha256": "8aaea18379aab666a2e5dfc6f032131aea8baa07950f9a20d5796c9ece6451cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deangi/library/IRProxSensor/1.1/IRProxSensor-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/deangi/library/IRProxSensor/1.1/IRProxSensor-1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "deangi/library/RCWL0516/1.1/RCWL0516-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RCWL0516-1.1.tar.gz",
+    "size_bytes": 2093,
+    "sha256": "ad8881829b1837fd7234379326b80c79fef663986ec2613dcf90a5c97bb89189",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deangi/library/RCWL0516/1.1/RCWL0516-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/deangi/library/RCWL0516/1.1/RCWL0516-1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "deangi/library/TiltSensor/1.1/TiltSensor-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TiltSensor-1.1.tar.gz",
+    "size_bytes": 2275,
+    "sha256": "e575877f0c8e74ee97f964149d16fe8c689b7a13dddf6b7714a4a41f784ab6d3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deangi/library/TiltSensor/1.1/TiltSensor-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/deangi/library/TiltSensor/1.1/TiltSensor-1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "deangi/library/UltrasonicHCSR04/1.0.0/UltrasonicHCSR04-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UltrasonicHCSR04-1.0.0.tar.gz",
+    "size_bytes": 1944,
+    "sha256": "27e70bbfd2875e891d91aca385fe8124c345bf847bbef28ee1d8ad8a8f536b34",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deangi/library/UltrasonicHCSR04/1.0.0/UltrasonicHCSR04-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/deangi/library/UltrasonicHCSR04/1.0.0/UltrasonicHCSR04-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

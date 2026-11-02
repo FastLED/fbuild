@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/skillcoder",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "skillcoder/library/ESPHomer/0.14.0/ESPHomer-0.14.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPHomer-0.14.0.tar.gz",
+    "size_bytes": 24107,
+    "sha256": "1f773587d765aa5dc6a6a91467270b897e6ac60b671fdf1f66c406337f9801b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/skillcoder/library/ESPHomer/0.14.0/ESPHomer-0.14.0.tar.gz",
+     "https://dl.registry.platformio.org/download/skillcoder/library/ESPHomer/0.14.0/ESPHomer-0.14.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

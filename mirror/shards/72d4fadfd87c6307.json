@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lobatolobato",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lobatolobato/library/AVRIO/2.0.7/AVRIO-2.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AVRIO-2.0.7.tar.gz",
+    "size_bytes": 12281,
+    "sha256": "49bd944bd33866102ea3f98c8d29e3fe13095c286dc9e3225bb74cf37bdfa0f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lobatolobato/library/AVRIO/2.0.7/AVRIO-2.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/lobatolobato/library/AVRIO/2.0.7/AVRIO-2.0.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

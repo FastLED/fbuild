@@ -1,0 +1,295 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fcz2",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fcz2/library/amy-synth-m5/0.1.1/amy-synth-m5-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "amy-synth-m5-0.1.1.tar.gz",
+    "size_bytes": 7169,
+    "sha256": "ba7ca373fb2535bb88f800fc1a2a83604aa8900561091e51a97a87fe8fa6cc8e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fcz2/library/amy-synth-m5/0.1.1/amy-synth-m5-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fcz2/library/amy-synth-m5/0.1.1/amy-synth-m5-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fcz2/library/amy-synth-m5/0.1.2/amy-synth-m5-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "amy-synth-m5-0.1.2.tar.gz",
+    "size_bytes": 7916,
+    "sha256": "12d1c6f1f92be6810d294e8bac3d035657e2cfba8d77d05f9d675589f02c8abb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fcz2/library/amy-synth-m5/0.1.2/amy-synth-m5-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/fcz2/library/amy-synth-m5/0.1.2/amy-synth-m5-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fcz2/library/amy-synth-m5/0.2.8/amy-synth-m5-0.2.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "amy-synth-m5-0.2.8.tar.gz",
+    "size_bytes": 10441,
+    "sha256": "056dfcbebcd7b594403297939af211fab3af2af08535efa35a49ae5d2754b0f5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fcz2/library/amy-synth-m5/0.2.8/amy-synth-m5-0.2.8.tar.gz",
+     "https://dl.registry.platformio.org/download/fcz2/library/amy-synth-m5/0.2.8/amy-synth-m5-0.2.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fcz2/library/amy-synth-m5/0.2.9/amy-synth-m5-0.2.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "amy-synth-m5-0.2.9.tar.gz",
+    "size_bytes": 11471,
+    "sha256": "60ce891f61fc8f5c362b2e5f30678203d3b32f47e7481e03cc591a999a6b382e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fcz2/library/amy-synth-m5/0.2.9/amy-synth-m5-0.2.9.tar.gz",
+     "https://dl.registry.platformio.org/download/fcz2/library/amy-synth-m5/0.2.9/amy-synth-m5-0.2.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fcz2/library/amy-synth-m5/0.3.0/amy-synth-m5-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "amy-synth-m5-0.3.0.tar.gz",
+    "size_bytes": 11879,
+    "sha256": "f3ca99a947245b54433c617e1a3edc3bda4d4c08ce0c9915bc24d3ecc819e145",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fcz2/library/amy-synth-m5/0.3.0/amy-synth-m5-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fcz2/library/amy-synth-m5/0.3.0/amy-synth-m5-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fcz2/library/amy-synth-m5/0.3.1/amy-synth-m5-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "amy-synth-m5-0.3.1.tar.gz",
+    "size_bytes": 12127,
+    "sha256": "918fbbfc6c8de7e9ee3f9b29e11af91546b2bdee3472fc4640af7dc849b19b3d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fcz2/library/amy-synth-m5/0.3.1/amy-synth-m5-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fcz2/library/amy-synth-m5/0.3.1/amy-synth-m5-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fcz2/library/amy-synth-m5/0.3.2/amy-synth-m5-0.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "amy-synth-m5-0.3.2.tar.gz",
+    "size_bytes": 13229,
+    "sha256": "06b43838de0892f7badf01e754e8eecef0a2e170009d5b8bbb1c74009ed6b1a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fcz2/library/amy-synth-m5/0.3.2/amy-synth-m5-0.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/fcz2/library/amy-synth-m5/0.3.2/amy-synth-m5-0.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fcz2/library/amy-synth-m5/0.3.3/amy-synth-m5-0.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "amy-synth-m5-0.3.3.tar.gz",
+    "size_bytes": 13597,
+    "sha256": "91cc6a94ace1cca760d3bcde2cf221beb10593ec653cd7ae1f1bad1d4afadfc0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fcz2/library/amy-synth-m5/0.3.3/amy-synth-m5-0.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/fcz2/library/amy-synth-m5/0.3.3/amy-synth-m5-0.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fcz2/library/ble-midi-input/0.3.0/ble-midi-input-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ble-midi-input-0.3.0.tar.gz",
+    "size_bytes": 6009,
+    "sha256": "78d05052cfb327a0d4cc03b2cbf9be737faf5b889aa202bc26ff5639657ee018",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fcz2/library/ble-midi-input/0.3.0/ble-midi-input-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fcz2/library/ble-midi-input/0.3.0/ble-midi-input-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fcz2/library/ble-midi-input/0.4.0/ble-midi-input-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ble-midi-input-0.4.0.tar.gz",
+    "size_bytes": 6514,
+    "sha256": "ce6809d6a776eefbcc55e82f9eb5079ee2394fafbddfdc4d4c75edfe0d822985",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fcz2/library/ble-midi-input/0.4.0/ble-midi-input-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fcz2/library/ble-midi-input/0.4.0/ble-midi-input-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fcz2/library/m5-tone-output/0.1.2/m5-tone-output-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "m5-tone-output-0.1.2.tar.gz",
+    "size_bytes": 2932,
+    "sha256": "1c1fbf947d6fd02b0f652bf72db0739f930b49aeb5b79d8fefcb0ef934d1a5ff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fcz2/library/m5-tone-output/0.1.2/m5-tone-output-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/fcz2/library/m5-tone-output/0.1.2/m5-tone-output-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fcz2/library/m5-tone-output/0.1.3/m5-tone-output-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "m5-tone-output-0.1.3.tar.gz",
+    "size_bytes": 2956,
+    "sha256": "b711108342ba569351dffa64b6edfc5805af6643628505d8b1315a069e426b3b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fcz2/library/m5-tone-output/0.1.3/m5-tone-output-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/fcz2/library/m5-tone-output/0.1.3/m5-tone-output-0.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fcz2/library/m5-tone-output/0.1.4/m5-tone-output-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "m5-tone-output-0.1.4.tar.gz",
+    "size_bytes": 3580,
+    "sha256": "3ad98c10a7313f3650bf8d6ee21dd20bfc824d1c343930c2081a944c4c65660a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fcz2/library/m5-tone-output/0.1.4/m5-tone-output-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/fcz2/library/m5-tone-output/0.1.4/m5-tone-output-0.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fcz2/library/m5-tone-output/0.1.5/m5-tone-output-0.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "m5-tone-output-0.1.5.tar.gz",
+    "size_bytes": 4372,
+    "sha256": "f5f9edaf3327d81f809e49cd9830c93f9d4f07e3e0a1c718d3ed7e4649a915ca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fcz2/library/m5-tone-output/0.1.5/m5-tone-output-0.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/fcz2/library/m5-tone-output/0.1.5/m5-tone-output-0.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fcz2/library/monophonic-instrument/0.1.2/monophonic-instrument-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "monophonic-instrument-0.1.2.tar.gz",
+    "size_bytes": 5845,
+    "sha256": "c5f2905714f11c5938149aa030982824df918bd2812911281e5fafafbc135c7e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fcz2/library/monophonic-instrument/0.1.2/monophonic-instrument-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/fcz2/library/monophonic-instrument/0.1.2/monophonic-instrument-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fcz2/library/monophonic-instrument/0.1.4/monophonic-instrument-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "monophonic-instrument-0.1.4.tar.gz",
+    "size_bytes": 1621336,
+    "sha256": "49e23875aad2cf04383b215a4013239512dcf0e6765854a2f7a2cdeb32ae5006",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fcz2/library/monophonic-instrument/0.1.4/monophonic-instrument-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/fcz2/library/monophonic-instrument/0.1.4/monophonic-instrument-0.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fcz2/library/monophonic-instrument/0.1.5/monophonic-instrument-0.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "monophonic-instrument-0.1.5.tar.gz",
+    "size_bytes": 1621382,
+    "sha256": "0ded5dc57e83611d21b6340ddbf46fa28df4210d0b117f4579dc83901f393232",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fcz2/library/monophonic-instrument/0.1.5/monophonic-instrument-0.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/fcz2/library/monophonic-instrument/0.1.5/monophonic-instrument-0.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fcz2/library/musical-clock/0.1.1/musical-clock-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "musical-clock-0.1.1.tar.gz",
+    "size_bytes": 1716598,
+    "sha256": "b976231a1b714a3a2a9cb46ccd14e81a6c6e7a655e12b136e94b2664d41d2e6f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fcz2/library/musical-clock/0.1.1/musical-clock-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fcz2/library/musical-clock/0.1.1/musical-clock-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fcz2/library/musical-clock/0.1.2/musical-clock-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "musical-clock-0.1.2.tar.gz",
+    "size_bytes": 1716564,
+    "sha256": "1c74ba6413f865de54572807f687d2bc4121c41277c2812fc52eabb89e8ab0e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fcz2/library/musical-clock/0.1.2/musical-clock-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/fcz2/library/musical-clock/0.1.2/musical-clock-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fcz2/library/musical-clock/0.2.0/musical-clock-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "musical-clock-0.2.0.tar.gz",
+    "size_bytes": 1717092,
+    "sha256": "a129ed450d828ae3615c91cbd6cd60f13d46aab45d236f4ac83a592de67fde68",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fcz2/library/musical-clock/0.2.0/musical-clock-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fcz2/library/musical-clock/0.2.0/musical-clock-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fcz2/library/step-trigger/0.1.0/step-trigger-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "step-trigger-0.1.0.tar.gz",
+    "size_bytes": 1717200,
+    "sha256": "a433a0dbfb4e7f1d5df537861a25856a5b02cd96552c1a83f7db628cc0058e6d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fcz2/library/step-trigger/0.1.0/step-trigger-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fcz2/library/step-trigger/0.1.0/step-trigger-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fcz2/library/step-trigger/0.2.0/step-trigger-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "step-trigger-0.2.0.tar.gz",
+    "size_bytes": 3436735,
+    "sha256": "f9c00bd074bd43f0b6761deeb617e4e60ddab7724aee8c3c02dfd8d8c76442b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fcz2/library/step-trigger/0.2.0/step-trigger-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fcz2/library/step-trigger/0.2.0/step-trigger-0.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-aluqard",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-aluqard/library/Gameduino2/0.0.0+sha.9c211972beb2/Gameduino2-0.0.0+sha.9c211972beb2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Gameduino2-0.0.0+sha.9c211972beb2.tar.gz",
+    "size_bytes": 15968,
+    "sha256": "17587e31a1f6f324f43edf6847b9bde3ea8985493a0340fb12b03885bececaf0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-aluqard/library/Gameduino2/0.0.0%2Bsha.9c211972beb2/Gameduino2-0.0.0%2Bsha.9c211972beb2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-aluqard/library/Gameduino2/0.0.0%2Bsha.9c211972beb2/Gameduino2-0.0.0%2Bsha.9c211972beb2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-aluqard/library/arduino/0.0.0+sha.3b83fc30bbdf/arduino-0.0.0+sha.3b83fc30bbdf.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arduino-0.0.0+sha.3b83fc30bbdf.tar.gz",
+    "size_bytes": 3494,
+    "sha256": "c52a7d5b7c96aac8967ff2f828015574e12c86ba8662140fe6b293aacabcfb78",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-aluqard/library/arduino/0.0.0%2Bsha.3b83fc30bbdf/arduino-0.0.0%2Bsha.3b83fc30bbdf.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-aluqard/library/arduino/0.0.0%2Bsha.3b83fc30bbdf/arduino-0.0.0%2Bsha.3b83fc30bbdf.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-dsmartyn",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-dsmartyn/library/M24512/0.0.0+sha.431b0b0c00d3/M24512-0.0.0+sha.431b0b0c00d3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M24512-0.0.0+sha.431b0b0c00d3.tar.gz",
+    "size_bytes": 3433,
+    "sha256": "160600d2702007e051e6a7cf8063fb8c3fd075c6d73733ec5fa8a35cd2800e2e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dsmartyn/library/M24512/0.0.0%2Bsha.431b0b0c00d3/M24512-0.0.0%2Bsha.431b0b0c00d3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dsmartyn/library/M24512/0.0.0%2Bsha.431b0b0c00d3/M24512-0.0.0%2Bsha.431b0b0c00d3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dsmartyn/library/M24SR/0.0.0+sha.11526ba25edb/M24SR-0.0.0+sha.11526ba25edb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M24SR-0.0.0+sha.11526ba25edb.tar.gz",
+    "size_bytes": 9504,
+    "sha256": "7785dcc81716489b5c44a9be0cec8baaf46d356cfa2ad8d4995886c5e8acb7f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dsmartyn/library/M24SR/0.0.0%2Bsha.11526ba25edb/M24SR-0.0.0%2Bsha.11526ba25edb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dsmartyn/library/M24SR/0.0.0%2Bsha.11526ba25edb/M24SR-0.0.0%2Bsha.11526ba25edb.tar.gz"
+    ]
+   }
+  }
+ ]
+}

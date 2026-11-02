@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/krygacz",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "krygacz/library/arduino-eiscp/0.2.5/arduino-eiscp-0.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arduino-eiscp-0.2.5.tar.gz",
+    "size_bytes": 16166,
+    "sha256": "ec169d5ab78b522f6b6d282aa49c4410ca969cba867e88dcd7ac31da4ffddc9a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/krygacz/library/arduino-eiscp/0.2.5/arduino-eiscp-0.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/krygacz/library/arduino-eiscp/0.2.5/arduino-eiscp-0.2.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

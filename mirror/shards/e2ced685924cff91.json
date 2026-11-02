@@ -1,0 +1,230 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lilka",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lilka/library/Lilka/2.4.0/Lilka-2.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lilka-2.4.0.tar.gz",
+    "size_bytes": 316687,
+    "sha256": "72672c438841eb1e41fc99aeba1cb87b45d02ca938e4f3ac5bd262a7da4972f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lilka/library/Lilka/2.4.0/Lilka-2.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lilka/library/Lilka/2.4.0/Lilka-2.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lilka/library/Lilka/2.4.1/Lilka-2.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lilka-2.4.1.tar.gz",
+    "size_bytes": 316672,
+    "sha256": "f3148d35e3df0d63da83f5663ca6a23e80828cadced9177307de4523544ef4e7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lilka/library/Lilka/2.4.1/Lilka-2.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lilka/library/Lilka/2.4.1/Lilka-2.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lilka/library/Lilka/2.4.2/Lilka-2.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lilka-2.4.2.tar.gz",
+    "size_bytes": 316610,
+    "sha256": "4788f9876ee2875c4471907a68726eaccc3c018573847996552ab52f61637ab3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lilka/library/Lilka/2.4.2/Lilka-2.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lilka/library/Lilka/2.4.2/Lilka-2.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lilka/library/Lilka/2.4.3/Lilka-2.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lilka-2.4.3.tar.gz",
+    "size_bytes": 318447,
+    "sha256": "90d1679eb33c5247f7805d9b4e7358c7a5a1b0554f6ac0328e329d816e5a20dc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lilka/library/Lilka/2.4.3/Lilka-2.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/lilka/library/Lilka/2.4.3/Lilka-2.4.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lilka/library/Lilka/2.4.4/Lilka-2.4.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lilka-2.4.4.tar.gz",
+    "size_bytes": 318438,
+    "sha256": "eaa621ec3cf75de74c97abb1dd255486686c5c8df7a864ee426cfd905eb1ba1d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lilka/library/Lilka/2.4.4/Lilka-2.4.4.tar.gz",
+     "https://dl.registry.platformio.org/download/lilka/library/Lilka/2.4.4/Lilka-2.4.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lilka/library/Lilka/2.4.5/Lilka-2.4.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lilka-2.4.5.tar.gz",
+    "size_bytes": 318426,
+    "sha256": "5d651e95c81db8effedd8f805f773cbf22cae8fc5d8f67c3115ee8e1d1932665",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lilka/library/Lilka/2.4.5/Lilka-2.4.5.tar.gz",
+     "https://dl.registry.platformio.org/download/lilka/library/Lilka/2.4.5/Lilka-2.4.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lilka/library/Lilka/2.5.10/Lilka-2.5.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lilka-2.5.10.tar.gz",
+    "size_bytes": 330604,
+    "sha256": "19807f4d2d7f69746e482cb7d9fea0168fcc079bba73608fd4ed7cf8dbb592a3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lilka/library/Lilka/2.5.10/Lilka-2.5.10.tar.gz",
+     "https://dl.registry.platformio.org/download/lilka/library/Lilka/2.5.10/Lilka-2.5.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lilka/library/Lilka/2.5.11/Lilka-2.5.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lilka-2.5.11.tar.gz",
+    "size_bytes": 330865,
+    "sha256": "9ad08d296dda4c60e4853aa20de5e856d933a4e3196a21082b4c7e0a44c3bbb6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lilka/library/Lilka/2.5.11/Lilka-2.5.11.tar.gz",
+     "https://dl.registry.platformio.org/download/lilka/library/Lilka/2.5.11/Lilka-2.5.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lilka/library/Lilka/2.5.12/Lilka-2.5.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lilka-2.5.12.tar.gz",
+    "size_bytes": 330900,
+    "sha256": "81251147841a6d1c080de056d7c13d2229bf73c42fcd03a1a41ce054c9b3353b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lilka/library/Lilka/2.5.12/Lilka-2.5.12.tar.gz",
+     "https://dl.registry.platformio.org/download/lilka/library/Lilka/2.5.12/Lilka-2.5.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lilka/library/Lilka/2.5.13/Lilka-2.5.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lilka-2.5.13.tar.gz",
+    "size_bytes": 330982,
+    "sha256": "3c5a6c524c1784614febdef7c56e161ee5d6276169d714371b47233e1adbb4b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lilka/library/Lilka/2.5.13/Lilka-2.5.13.tar.gz",
+     "https://dl.registry.platformio.org/download/lilka/library/Lilka/2.5.13/Lilka-2.5.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lilka/library/Lilka/2.5.14/Lilka-2.5.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lilka-2.5.14.tar.gz",
+    "size_bytes": 330989,
+    "sha256": "3dd82aeceae9e39ab4087e301f3282f1654f729376080f85f4d9a50c48f25eed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lilka/library/Lilka/2.5.14/Lilka-2.5.14.tar.gz",
+     "https://dl.registry.platformio.org/download/lilka/library/Lilka/2.5.14/Lilka-2.5.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lilka/library/Lilka/2.5.15/Lilka-2.5.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lilka-2.5.15.tar.gz",
+    "size_bytes": 332536,
+    "sha256": "5d158701633e5eeea883861aa6d6a845b5d9f541c4e2a8f46fb4ba357b9c37da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lilka/library/Lilka/2.5.15/Lilka-2.5.15.tar.gz",
+     "https://dl.registry.platformio.org/download/lilka/library/Lilka/2.5.15/Lilka-2.5.15.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lilka/library/Lilka/2.5.16/Lilka-2.5.16.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lilka-2.5.16.tar.gz",
+    "size_bytes": 332842,
+    "sha256": "f5004040bfb067fd6dbb733d223c16eeac9cd4a555dd43b729698589c386ce6e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lilka/library/Lilka/2.5.16/Lilka-2.5.16.tar.gz",
+     "https://dl.registry.platformio.org/download/lilka/library/Lilka/2.5.16/Lilka-2.5.16.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lilka/library/Lilka/2.5.6/Lilka-2.5.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lilka-2.5.6.tar.gz",
+    "size_bytes": 319811,
+    "sha256": "095a1e8c58a8dfa0131da0552d24c5681a2881a5c64e6f7a297ed4df92b158f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lilka/library/Lilka/2.5.6/Lilka-2.5.6.tar.gz",
+     "https://dl.registry.platformio.org/download/lilka/library/Lilka/2.5.6/Lilka-2.5.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lilka/library/Lilka/2.5.7/Lilka-2.5.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lilka-2.5.7.tar.gz",
+    "size_bytes": 320030,
+    "sha256": "7f949752797ef6cda8285ba9946a91f57a6bfe111c1c1aea966942fb62630dd6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lilka/library/Lilka/2.5.7/Lilka-2.5.7.tar.gz",
+     "https://dl.registry.platformio.org/download/lilka/library/Lilka/2.5.7/Lilka-2.5.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lilka/library/Lilka/2.5.8/Lilka-2.5.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lilka-2.5.8.tar.gz",
+    "size_bytes": 320466,
+    "sha256": "aa850e88481ec6ccae0521eee30a9c524d34ec18dfa6f22fd1411b2fcb0ff27f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lilka/library/Lilka/2.5.8/Lilka-2.5.8.tar.gz",
+     "https://dl.registry.platformio.org/download/lilka/library/Lilka/2.5.8/Lilka-2.5.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lilka/library/Lilka/2.5.9/Lilka-2.5.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lilka-2.5.9.tar.gz",
+    "size_bytes": 330560,
+    "sha256": "5b47c7cf02fb35dcfed4665f7900a39fa4ab383bd89a33f1c82de4b618480685",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lilka/library/Lilka/2.5.9/Lilka-2.5.9.tar.gz",
+     "https://dl.registry.platformio.org/download/lilka/library/Lilka/2.5.9/Lilka-2.5.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

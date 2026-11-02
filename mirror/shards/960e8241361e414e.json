@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/luismica",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "luismica/library/IRsmallDecoder/1.3.0/IRsmallDecoder-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IRsmallDecoder-1.3.0.tar.gz",
+    "size_bytes": 31437,
+    "sha256": "4d23eaeb27dcbddc35306ea6d0811c6e725c28a9f66adba8be712a8aed4c9fd3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luismica/library/IRsmallDecoder/1.3.0/IRsmallDecoder-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/luismica/library/IRsmallDecoder/1.3.0/IRsmallDecoder-1.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

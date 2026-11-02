@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/the-poom",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "the-poom/library/Poom/1.0.0/Poom-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Poom-1.0.0.tar.gz",
+    "size_bytes": 24152,
+    "sha256": "cc6846f60c119040ebe43af3930c27a7dbd768d1536973df34562b2550dd990a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/the-poom/library/Poom/1.0.0/Poom-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/the-poom/library/Poom/1.0.0/Poom-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "the-poom/library/Poom/1.0.1/Poom-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Poom-1.0.1.tar.gz",
+    "size_bytes": 26264,
+    "sha256": "3e255f3e44661e7ec4f22ea0be07c396c6a4ae4576de2b993ab960e6ce74cef8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/the-poom/library/Poom/1.0.1/Poom-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/the-poom/library/Poom/1.0.1/Poom-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "the-poom/library/Poom/1.1.0/Poom-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Poom-1.1.0.tar.gz",
+    "size_bytes": 388800,
+    "sha256": "e6fbacc52b4b4b5e48396e105df7b736ea8501fe84edbd3a25a9760cab0f96ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/the-poom/library/Poom/1.1.0/Poom-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/the-poom/library/Poom/1.1.0/Poom-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

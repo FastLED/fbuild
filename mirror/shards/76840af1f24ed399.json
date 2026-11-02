@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/felipedadison",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "felipedadison/library/CommandInterface/1.1.0/CommandInterface-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CommandInterface-1.1.0.tar.gz",
+    "size_bytes": 13487,
+    "sha256": "ed578831a95892ba69e3d3ce547fbcb06289ba971e1e3a3bbc21218fc7c0fe19",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/felipedadison/library/CommandInterface/1.1.0/CommandInterface-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/felipedadison/library/CommandInterface/1.1.0/CommandInterface-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "felipedadison/library/CommandInterface/1.1.1/CommandInterface-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CommandInterface-1.1.1.tar.gz",
+    "size_bytes": 13615,
+    "sha256": "2a74821844aba445cc65c69ffa49e74d9c771dbd69575c5c18dbd514bb2577b6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/felipedadison/library/CommandInterface/1.1.1/CommandInterface-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/felipedadison/library/CommandInterface/1.1.1/CommandInterface-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "felipedadison/library/DebugLogger/1.1.0/DebugLogger-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DebugLogger-1.1.0.tar.gz",
+    "size_bytes": 11472,
+    "sha256": "73ac830e6cd6a1f264ab4b66de093c704bd9b35766201afa0c4b14a9e221c90e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/felipedadison/library/DebugLogger/1.1.0/DebugLogger-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/felipedadison/library/DebugLogger/1.1.0/DebugLogger-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "felipedadison/library/NetSerial/1.1.0/NetSerial-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NetSerial-1.1.0.tar.gz",
+    "size_bytes": 10350,
+    "sha256": "a870c0f38b8b6b4257773d7f24cd8e18e7d488ad1d8d1958e4dd337707ce4f78",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/felipedadison/library/NetSerial/1.1.0/NetSerial-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/felipedadison/library/NetSerial/1.1.0/NetSerial-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "felipedadison/library/WireGuard-ESP32/0.2.0/WireGuard-ESP32-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WireGuard-ESP32-0.2.0.tar.gz",
+    "size_bytes": 44417,
+    "sha256": "3d3ff0c58a84f97aaa7d3ae1d33320cf88f313c01d7f29855f77f5bacc36ac92",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/felipedadison/library/WireGuard-ESP32/0.2.0/WireGuard-ESP32-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/felipedadison/library/WireGuard-ESP32/0.2.0/WireGuard-ESP32-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "felipedadison/library/WireGuard-ESP32/0.3.0/WireGuard-ESP32-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WireGuard-ESP32-0.3.0.tar.gz",
+    "size_bytes": 44679,
+    "sha256": "d36f840207508ca9cfda37727d96514d9b1099e1aaf1c0c0b9e78c3807ee9073",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/felipedadison/library/WireGuard-ESP32/0.3.0/WireGuard-ESP32-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/felipedadison/library/WireGuard-ESP32/0.3.0/WireGuard-ESP32-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "felipedadison/library/WireGuard-ESP32/0.3.1/WireGuard-ESP32-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WireGuard-ESP32-0.3.1.tar.gz",
+    "size_bytes": 44905,
+    "sha256": "23989b61f5942643129552845a82e3df8b3f63097031b9b2ffbf1b143a7a9c55",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/felipedadison/library/WireGuard-ESP32/0.3.1/WireGuard-ESP32-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/felipedadison/library/WireGuard-ESP32/0.3.1/WireGuard-ESP32-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "felipedadison/library/WireGuard-ESP32/0.3.2/WireGuard-ESP32-0.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WireGuard-ESP32-0.3.2.tar.gz",
+    "size_bytes": 44980,
+    "sha256": "5b9c546503cd7c375ec477b07baa5dbe6e725d311575c325193f848d6b64039a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/felipedadison/library/WireGuard-ESP32/0.3.2/WireGuard-ESP32-0.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/felipedadison/library/WireGuard-ESP32/0.3.2/WireGuard-ESP32-0.3.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

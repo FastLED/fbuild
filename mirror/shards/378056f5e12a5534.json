@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/silvan85",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "silvan85/library/Nova_SDS011%20Sensor%20Library/0.1.0/Nova_SDS011SensorLibrary-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Nova_SDS011SensorLibrary-0.1.0.tar.gz",
+    "size_bytes": 6959,
+    "sha256": "605b4421e66ccb0173abc6aa54902fa5c436aef8c3782e5051a1fb9063808fb8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/silvan85/library/Nova_SDS011%2520Sensor%2520Library/0.1.0/Nova_SDS011SensorLibrary-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/silvan85/library/Nova_SDS011%20Sensor%20Library/0.1.0/Nova_SDS011SensorLibrary-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

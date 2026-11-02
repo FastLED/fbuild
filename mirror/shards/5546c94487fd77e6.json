@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-nithc-systemengineers-club",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-nithc-systemengineers-club/library/ICSbus/0.0.0+sha.7c7b0148ef4d/ICSbus-0.0.0+sha.7c7b0148ef4d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICSbus-0.0.0+sha.7c7b0148ef4d.tar.gz",
+    "size_bytes": 1263,
+    "sha256": "f47203c70c8c54ce561b2bcb120127a2ef88b2019dcfaa93ad56786c733e383e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nithc-systemengineers-club/library/ICSbus/0.0.0%2Bsha.7c7b0148ef4d/ICSbus-0.0.0%2Bsha.7c7b0148ef4d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nithc-systemengineers-club/library/ICSbus/0.0.0%2Bsha.7c7b0148ef4d/ICSbus-0.0.0%2Bsha.7c7b0148ef4d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

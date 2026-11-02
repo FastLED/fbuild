@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/matt-prog",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "matt-prog/library/SerialConsole/0.0.1/SerialConsole-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialConsole-0.0.1.tar.gz",
+    "size_bytes": 29551,
+    "sha256": "4dae374080035d7037deca1cfa9db20eb6444b60f77006e6cd3285f4f0253ea4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matt-prog/library/SerialConsole/0.0.1/SerialConsole-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/matt-prog/library/SerialConsole/0.0.1/SerialConsole-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

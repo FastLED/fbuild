@@ -1,0 +1,204 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/likeanormaldude",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "likeanormaldude/library/nrf24-utils/1.0.0/nrf24-utils-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nrf24-utils-1.0.0.tar.gz",
+    "size_bytes": 4687,
+    "sha256": "ad52d277c7ede1ee01ed93c9965a022d9378908bffecf1c8f5ea87d8c0bda0ef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/likeanormaldude/library/nrf24-utils/1.0.0/nrf24-utils-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/likeanormaldude/library/nrf24-utils/1.0.0/nrf24-utils-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "likeanormaldude/library/nrf24-utils/1.1.0/nrf24-utils-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nrf24-utils-1.1.0.tar.gz",
+    "size_bytes": 5536,
+    "sha256": "935e0950c4f29cf114bfaa515cb966561778fb40d9d11b9ea768196908315ac2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/likeanormaldude/library/nrf24-utils/1.1.0/nrf24-utils-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/likeanormaldude/library/nrf24-utils/1.1.0/nrf24-utils-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "likeanormaldude/library/nrf24-utils/2.0.0/nrf24-utils-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nrf24-utils-2.0.0.tar.gz",
+    "size_bytes": 5473,
+    "sha256": "dae0bea43e3fd12b80a5699d1174488fc054fda1a013271474755750f8e750bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/likeanormaldude/library/nrf24-utils/2.0.0/nrf24-utils-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/likeanormaldude/library/nrf24-utils/2.0.0/nrf24-utils-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "likeanormaldude/library/nrf24-utils/2.0.1/nrf24-utils-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nrf24-utils-2.0.1.tar.gz",
+    "size_bytes": 6938,
+    "sha256": "132b08c556a53a45a795bebf5e9e8ab2518fc0e083c71574868810fa59506908",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/likeanormaldude/library/nrf24-utils/2.0.1/nrf24-utils-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/likeanormaldude/library/nrf24-utils/2.0.1/nrf24-utils-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "likeanormaldude/library/nrf24-utils/2.0.5/nrf24-utils-2.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nrf24-utils-2.0.5.tar.gz",
+    "size_bytes": 6939,
+    "sha256": "a0b1ddb6ef613d890dbc315d8c6c2889bd0a8b8977f3979a427b35c44e2c52a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/likeanormaldude/library/nrf24-utils/2.0.5/nrf24-utils-2.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/likeanormaldude/library/nrf24-utils/2.0.5/nrf24-utils-2.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "likeanormaldude/library/nrf24-utils/2.0.6/nrf24-utils-2.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nrf24-utils-2.0.6.tar.gz",
+    "size_bytes": 6934,
+    "sha256": "51368baa6ec1874782100efc746a209e3bcad3732e39ff176623d7f8268d5c2f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/likeanormaldude/library/nrf24-utils/2.0.6/nrf24-utils-2.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/likeanormaldude/library/nrf24-utils/2.0.6/nrf24-utils-2.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "likeanormaldude/library/nrf24-utils/2.1.0/nrf24-utils-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nrf24-utils-2.1.0.tar.gz",
+    "size_bytes": 7083,
+    "sha256": "08974aebf4cbbcb581b07a0cd4b82acc6ddb28bf35861cd997b35819222dd515",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/likeanormaldude/library/nrf24-utils/2.1.0/nrf24-utils-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/likeanormaldude/library/nrf24-utils/2.1.0/nrf24-utils-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "likeanormaldude/library/nrf24-utils/2.1.1/nrf24-utils-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nrf24-utils-2.1.1.tar.gz",
+    "size_bytes": 7114,
+    "sha256": "d5039d9eac102d4322c65544ee9f8e580bc93af98fb820bacecac0b540f5f4f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/likeanormaldude/library/nrf24-utils/2.1.1/nrf24-utils-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/likeanormaldude/library/nrf24-utils/2.1.1/nrf24-utils-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "likeanormaldude/library/nrf24-utils/2.1.2/nrf24-utils-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nrf24-utils-2.1.2.tar.gz",
+    "size_bytes": 7123,
+    "sha256": "f165f183d8e406e932f83d87b2c22f3198dce7df7af7a43b7fb3037f122b94c4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/likeanormaldude/library/nrf24-utils/2.1.2/nrf24-utils-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/likeanormaldude/library/nrf24-utils/2.1.2/nrf24-utils-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "likeanormaldude/library/nrf24-utils/2.1.3/nrf24-utils-2.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nrf24-utils-2.1.3.tar.gz",
+    "size_bytes": 7120,
+    "sha256": "c50bf87f47e5d54230499af7546b9c1e4abbba6ff213b5a5a6125f727e14f7a0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/likeanormaldude/library/nrf24-utils/2.1.3/nrf24-utils-2.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/likeanormaldude/library/nrf24-utils/2.1.3/nrf24-utils-2.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "likeanormaldude/library/nrf24-utils/2.1.4/nrf24-utils-2.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nrf24-utils-2.1.4.tar.gz",
+    "size_bytes": 7111,
+    "sha256": "379807e92524546c47b778bdf4635e84f580c2e939c7b6ca43b1061dfda0c754",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/likeanormaldude/library/nrf24-utils/2.1.4/nrf24-utils-2.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/likeanormaldude/library/nrf24-utils/2.1.4/nrf24-utils-2.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "likeanormaldude/library/nrf24-utils/2.1.5/nrf24-utils-2.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nrf24-utils-2.1.5.tar.gz",
+    "size_bytes": 7161,
+    "sha256": "a79c3f9a61c74deadfc2f866d4a1ff4a4e42c7117078f95debdbc80f6d4b8ebd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/likeanormaldude/library/nrf24-utils/2.1.5/nrf24-utils-2.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/likeanormaldude/library/nrf24-utils/2.1.5/nrf24-utils-2.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "likeanormaldude/library/nrf24-utils/2.1.6/nrf24-utils-2.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nrf24-utils-2.1.6.tar.gz",
+    "size_bytes": 7113,
+    "sha256": "6ece2b6c4b12e67700d2cb633be4aa23e5fe8f466aa57eb4c2818e04ef26812c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/likeanormaldude/library/nrf24-utils/2.1.6/nrf24-utils-2.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/likeanormaldude/library/nrf24-utils/2.1.6/nrf24-utils-2.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "likeanormaldude/library/nrf24-utils/2.1.7/nrf24-utils-2.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nrf24-utils-2.1.7.tar.gz",
+    "size_bytes": 7160,
+    "sha256": "7c9e86842344911c24777fa8b130bd796ac1ed8965527b00f0a3f061073eb601",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/likeanormaldude/library/nrf24-utils/2.1.7/nrf24-utils-2.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/likeanormaldude/library/nrf24-utils/2.1.7/nrf24-utils-2.1.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "likeanormaldude/library/nrf24-utils/2.1.8/nrf24-utils-2.1.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nrf24-utils-2.1.8.tar.gz",
+    "size_bytes": 7161,
+    "sha256": "ac5c5211bffa0ffc165b07810ec34960deefe9f56d8e808ac6db2bf73be2f857",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/likeanormaldude/library/nrf24-utils/2.1.8/nrf24-utils-2.1.8.tar.gz",
+     "https://dl.registry.platformio.org/download/likeanormaldude/library/nrf24-utils/2.1.8/nrf24-utils-2.1.8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

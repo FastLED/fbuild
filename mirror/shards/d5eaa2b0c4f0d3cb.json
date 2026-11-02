@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/you-010",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "you-010/library/GY33_Colour_Sensor/1.0.1/GY33_Colour_Sensor-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GY33_Colour_Sensor-1.0.1.tar.gz",
+    "size_bytes": 18381,
+    "sha256": "8e9f0b5248672a4e3efbb4a8e5101196eba29fa507794c039465b1eb513ddd29",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/you-010/library/GY33_Colour_Sensor/1.0.1/GY33_Colour_Sensor-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/you-010/library/GY33_Colour_Sensor/1.0.1/GY33_Colour_Sensor-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "you-010/library/GY33_Colour_Sensor/1.1.2/GY33_Colour_Sensor-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GY33_Colour_Sensor-1.1.2.tar.gz",
+    "size_bytes": 21726,
+    "sha256": "1d0fad7127f617feec0164925f72fe84d598dc9267210ab0c2c1ca0011d60be1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/you-010/library/GY33_Colour_Sensor/1.1.2/GY33_Colour_Sensor-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/you-010/library/GY33_Colour_Sensor/1.1.2/GY33_Colour_Sensor-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "you-010/library/GY33_Colour_Sensor/1.1.3/GY33_Colour_Sensor-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GY33_Colour_Sensor-1.1.3.tar.gz",
+    "size_bytes": 21971,
+    "sha256": "128b9d05613b6fc975aaed649d49c45fe2a40ca5d888d0d20a70452c82e7701b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/you-010/library/GY33_Colour_Sensor/1.1.3/GY33_Colour_Sensor-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/you-010/library/GY33_Colour_Sensor/1.1.3/GY33_Colour_Sensor-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "you-010/library/GY33_Colour_Sensor/1.2.0/GY33_Colour_Sensor-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GY33_Colour_Sensor-1.2.0.tar.gz",
+    "size_bytes": 22000,
+    "sha256": "e89183a1666cdff5f2076c84017d8904abeff278e20c9009392faf32804c4a97",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/you-010/library/GY33_Colour_Sensor/1.2.0/GY33_Colour_Sensor-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/you-010/library/GY33_Colour_Sensor/1.2.0/GY33_Colour_Sensor-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "you-010/library/GY33_Colour_Sensor/1.3.0/GY33_Colour_Sensor-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GY33_Colour_Sensor-1.3.0.tar.gz",
+    "size_bytes": 22173,
+    "sha256": "949161f0254ac4f13ed8d4b58cd023caa00c3da7f2a5cb22993b585a330ec8f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/you-010/library/GY33_Colour_Sensor/1.3.0/GY33_Colour_Sensor-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/you-010/library/GY33_Colour_Sensor/1.3.0/GY33_Colour_Sensor-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "you-010/library/HCSR04_ESP_Hardware/1.0.0/HCSR04_ESP_Hardware-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HCSR04_ESP_Hardware-1.0.0.tar.gz",
+    "size_bytes": 20976,
+    "sha256": "1d32feb2bc89e6e2b4e14c0ec3b2397fe868ebdfa2799374067a2bf33f042d61",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/you-010/library/HCSR04_ESP_Hardware/1.0.0/HCSR04_ESP_Hardware-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/you-010/library/HCSR04_ESP_Hardware/1.0.0/HCSR04_ESP_Hardware-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "you-010/library/HCSR04_ESP_Hardware/1.1.0/HCSR04_ESP_Hardware-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HCSR04_ESP_Hardware-1.1.0.tar.gz",
+    "size_bytes": 21222,
+    "sha256": "a59e3c5db90ca2dbe845a5cfcac0c378859a67d26d47aa1ae8aa918315475803",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/you-010/library/HCSR04_ESP_Hardware/1.1.0/HCSR04_ESP_Hardware-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/you-010/library/HCSR04_ESP_Hardware/1.1.0/HCSR04_ESP_Hardware-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

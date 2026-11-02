@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nullboundary",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nullboundary/library/AtTouch/1.0.4/AtTouch-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AtTouch-1.0.4.tar.gz",
+    "size_bytes": 4204,
+    "sha256": "761990d60b29b1e71918de965dff3599626338e9912ab3536e93048d6a3ecf2c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nullboundary/library/AtTouch/1.0.4/AtTouch-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/nullboundary/library/AtTouch/1.0.4/AtTouch-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nullboundary/library/SST25VF/0.1.0/SST25VF-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SST25VF-0.1.0.tar.gz",
+    "size_bytes": 2746,
+    "sha256": "dc5ce75e92aa605fbc4ec1f9dccf31cac11142ba298830c2be4213d8e8bc6d00",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nullboundary/library/SST25VF/0.1.0/SST25VF-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nullboundary/library/SST25VF/0.1.0/SST25VF-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

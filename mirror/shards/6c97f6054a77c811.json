@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/maxmacstn",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "maxmacstn/library/Canon%20BLE%20Remote/1.0.1/CanonBLERemote-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CanonBLERemote-1.0.1.tar.gz",
+    "size_bytes": 6810216,
+    "sha256": "48abb18508d0df9d12a12e52e018d3e9eecb61e8a28e71c1f218772d66822243",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maxmacstn/library/Canon%2520BLE%2520Remote/1.0.1/CanonBLERemote-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/maxmacstn/library/Canon%20BLE%20Remote/1.0.1/CanonBLERemote-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

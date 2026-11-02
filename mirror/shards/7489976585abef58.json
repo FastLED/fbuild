@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sovietmir",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sovietmir/library/IoTesp8266Framework/1.2.0/IoTesp8266Framework-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTesp8266Framework-1.2.0.tar.gz",
+    "size_bytes": 26568,
+    "sha256": "95fb9b12a5ed4e06bb8110856aa26a79dc456d33180d269d1f76aa0959404630",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sovietmir/library/IoTesp8266Framework/1.2.0/IoTesp8266Framework-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sovietmir/library/IoTesp8266Framework/1.2.0/IoTesp8266Framework-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sovietmir/library/IoTesp8266Framework/1.2.1/IoTesp8266Framework-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTesp8266Framework-1.2.1.tar.gz",
+    "size_bytes": 28986,
+    "sha256": "3162e954acfa20ccc07c19f399a30e04a67c626909c7dc8c9cbca63d346ffc8b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sovietmir/library/IoTesp8266Framework/1.2.1/IoTesp8266Framework-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sovietmir/library/IoTesp8266Framework/1.2.1/IoTesp8266Framework-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sovietmir/library/IoTesp8266Framework/1.3.0/IoTesp8266Framework-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTesp8266Framework-1.3.0.tar.gz",
+    "size_bytes": 30656,
+    "sha256": "92a162a3c62d7bf2045a94887013390f35d1828fb1da043017cf4ff5c75685e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sovietmir/library/IoTesp8266Framework/1.3.0/IoTesp8266Framework-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sovietmir/library/IoTesp8266Framework/1.3.0/IoTesp8266Framework-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sovietmir/library/IoTesp8266Framework/1.3.1/IoTesp8266Framework-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTesp8266Framework-1.3.1.tar.gz",
+    "size_bytes": 31228,
+    "sha256": "65fee00f1e4dfc7955ccd45a97650a0607bea6c77c0a97968829dca4049e8470",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sovietmir/library/IoTesp8266Framework/1.3.1/IoTesp8266Framework-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sovietmir/library/IoTesp8266Framework/1.3.1/IoTesp8266Framework-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sovietmir/library/IoTesp8266Framework/1.3.2/IoTesp8266Framework-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTesp8266Framework-1.3.2.tar.gz",
+    "size_bytes": 31237,
+    "sha256": "3e6d5f2989f4218c298bb7a431ddd8b8c5ed622b5f43b1a28ad932cb79ca3e63",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sovietmir/library/IoTesp8266Framework/1.3.2/IoTesp8266Framework-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sovietmir/library/IoTesp8266Framework/1.3.2/IoTesp8266Framework-1.3.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

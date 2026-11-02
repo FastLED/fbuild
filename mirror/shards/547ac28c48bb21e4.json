@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ingelobito",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ingelobito/library/RBDdimmer/1.0/RBDdimmer-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RBDdimmer-1.0.tar.gz",
+    "size_bytes": 13074,
+    "sha256": "291189c9bae50fcff5178968a72007b3a6b7337b3c8a2e8f5b058c8f482b22c5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ingelobito/library/RBDdimmer/1.0/RBDdimmer-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ingelobito/library/RBDdimmer/1.0/RBDdimmer-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

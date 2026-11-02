@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/robo-wunderkind",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "robo-wunderkind/library/RoboWunduino/1.0.2/RoboWunduino-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RoboWunduino-1.0.2.tar.gz",
+    "size_bytes": 394919,
+    "sha256": "cc6dd8c1215aa84c4d83d8e8753ffb6067e06200f805268e4476cf52d58005a1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robo-wunderkind/library/RoboWunduino/1.0.2/RoboWunduino-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/robo-wunderkind/library/RoboWunduino/1.0.2/RoboWunduino-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nguyendo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nguyendo/library/QPCPP_ESP32/8.0.2/QPCPP_ESP32-8.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QPCPP_ESP32-8.0.2.tar.gz",
+    "size_bytes": 63777,
+    "sha256": "e7c24ff5b7da5c06bfb644960a309ceedb4cd82b4232e44fc6a717f4691ac9a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nguyendo/library/QPCPP_ESP32/8.0.2/QPCPP_ESP32-8.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nguyendo/library/QPCPP_ESP32/8.0.2/QPCPP_ESP32-8.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/femtoduino",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "femtoduino/library/IMUduino/0.0.0-broken/IMUduino-0.0.0-alphasha.92f659f7cd.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IMUduino-0.0.0-alphasha.92f659f7cd.tar.gz",
+    "size_bytes": 553,
+    "sha256": "20b9afd8d223b0488cedadbfb071924b5ee201e899e6f9ca4b77c6f7516078f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/femtoduino/library/IMUduino/0.0.0-broken/IMUduino-0.0.0-alphasha.92f659f7cd.tar.gz",
+     "https://dl.registry.platformio.org/download/femtoduino/library/IMUduino/0.0.0-broken/IMUduino-0.0.0-alphasha.92f659f7cd.tar.gz"
+    ]
+   }
+  }
+ ]
+}

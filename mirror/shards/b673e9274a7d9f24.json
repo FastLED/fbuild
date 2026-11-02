@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/matrix-io",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "matrix-io/library/MATRIXVoiceESP32HAL/0.77.0/MATRIXVoiceESP32HAL-0.77.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MATRIXVoiceESP32HAL-0.77.0.tar.gz",
+    "size_bytes": 23144,
+    "sha256": "7d40cde7e897e124968be8576fa6fb1f94175043b4fb18f6500c1d60f4601de7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matrix-io/library/MATRIXVoiceESP32HAL/0.77.0/MATRIXVoiceESP32HAL-0.77.0.tar.gz",
+     "https://dl.registry.platformio.org/download/matrix-io/library/MATRIXVoiceESP32HAL/0.77.0/MATRIXVoiceESP32HAL-0.77.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

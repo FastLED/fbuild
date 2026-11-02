@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/workloads",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "workloads/library/SCServo/1.0.1/SCServo-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SCServo-1.0.1.tar.gz",
+    "size_bytes": 22705,
+    "sha256": "ad0c6e971717cd847639811b107c760d0cd40d40355f2da63202fb14ecf89271",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/workloads/library/SCServo/1.0.1/SCServo-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/workloads/library/SCServo/1.0.1/SCServo-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

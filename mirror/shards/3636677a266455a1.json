@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/enbewe",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "enbewe/library/MiCS6814-I2C/1.0.1/MiCS6814-I2C-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiCS6814-I2C-1.0.1.tar.gz",
+    "size_bytes": 8299,
+    "sha256": "f8be8c7ffb4ca3f1afce8eacb7e95180be5a5de554541807aefc7a8e438d1af4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/enbewe/library/MiCS6814-I2C/1.0.1/MiCS6814-I2C-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/enbewe/library/MiCS6814-I2C/1.0.1/MiCS6814-I2C-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

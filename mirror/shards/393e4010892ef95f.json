@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ynvisible-electronics",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ynvisible-electronics/library/YNV_Driver_v5/1.0.3/YNV_Driver_v5-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YNV_Driver_v5-1.0.3.tar.gz",
+    "size_bytes": 18568,
+    "sha256": "b5c05424ec67f265273edc48c15f856a1ee08fc1dcb54d1f5e8dae200d36c579",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ynvisible-electronics/library/YNV_Driver_v5/1.0.3/YNV_Driver_v5-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/ynvisible-electronics/library/YNV_Driver_v5/1.0.3/YNV_Driver_v5-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ynvisible-electronics/library/YNV_Driver_v5/1.0.4/YNV_Driver_v5-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YNV_Driver_v5-1.0.4.tar.gz",
+    "size_bytes": 17681,
+    "sha256": "aaa0c916d5f0437389ed288ea81f5050e095d7aedd52aad7f4bccdbb2a9b5e52",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ynvisible-electronics/library/YNV_Driver_v5/1.0.4/YNV_Driver_v5-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/ynvisible-electronics/library/YNV_Driver_v5/1.0.4/YNV_Driver_v5-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ynvisible-electronics/library/YNV_Driver_v5/1.0.5/YNV_Driver_v5-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YNV_Driver_v5-1.0.5.tar.gz",
+    "size_bytes": 17777,
+    "sha256": "bc616565445e3a1d6ac8a1c0f705f0d62e40a9466dbe76d8c943e118a423826b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ynvisible-electronics/library/YNV_Driver_v5/1.0.5/YNV_Driver_v5-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/ynvisible-electronics/library/YNV_Driver_v5/1.0.5/YNV_Driver_v5-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ynvisible-electronics/library/YNV_Driver_v5/1.1.0/YNV_Driver_v5-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YNV_Driver_v5-1.1.0.tar.gz",
+    "size_bytes": 24542,
+    "sha256": "b74d615b0810bf988fa0c233a12d6d0cec29582927ee3721379924cdbbe4bcc6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ynvisible-electronics/library/YNV_Driver_v5/1.1.0/YNV_Driver_v5-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ynvisible-electronics/library/YNV_Driver_v5/1.1.0/YNV_Driver_v5-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ynvisible-electronics/library/YNV_Driver_v5_Gen3/1.0.0/YNV_Driver_v5_Gen3-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YNV_Driver_v5_Gen3-1.0.0.tar.gz",
+    "size_bytes": 19050,
+    "sha256": "6607b7034f414202aee586590a05c2f48176a282c339c42e7f0964e57c5524a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ynvisible-electronics/library/YNV_Driver_v5_Gen3/1.0.0/YNV_Driver_v5_Gen3-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ynvisible-electronics/library/YNV_Driver_v5_Gen3/1.0.0/YNV_Driver_v5_Gen3-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ynvisible-electronics/library/YNV_Driver_v5_Gen3/1.1.0/YNV_Driver_v5_Gen3-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YNV_Driver_v5_Gen3-1.1.0.tar.gz",
+    "size_bytes": 24331,
+    "sha256": "f0a03c83d32eed900d89f7706100009762aff8d1ba7698a5406e89c5b6d4ae2b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ynvisible-electronics/library/YNV_Driver_v5_Gen3/1.1.0/YNV_Driver_v5_Gen3-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ynvisible-electronics/library/YNV_Driver_v5_Gen3/1.1.0/YNV_Driver_v5_Gen3-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

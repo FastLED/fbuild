@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/marcmerlin",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "marcmerlin/library/FastLED%20NeoMatrix/1.2/FastLEDNeoMatrix-1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastLEDNeoMatrix-1.2.tar.gz",
+    "size_bytes": 117559,
+    "sha256": "81e637d7072bbd2e55d75023e878dc31641c8b9bfc9487240f80ef238d3817db",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marcmerlin/library/FastLED%2520NeoMatrix/1.2/FastLEDNeoMatrix-1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/marcmerlin/library/FastLED%20NeoMatrix/1.2/FastLEDNeoMatrix-1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marcmerlin/library/FastLED_ESP32-HUB75-MatrixPanel_FrameBuffer_GFX/1.2/FastLED_ESP32-HUB75-MatrixPanel_FrameBuffer_GFX-1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastLED_ESP32-HUB75-MatrixPanel_FrameBuffer_GFX-1.2.tar.gz",
+    "size_bytes": 174813,
+    "sha256": "9025b7a387a34f66931e9ac245b7ebbaec2e32c7e7bdbba5076e8f0545ac1993",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marcmerlin/library/FastLED_ESP32-HUB75-MatrixPanel_FrameBuffer_GFX/1.2/FastLED_ESP32-HUB75-MatrixPanel_FrameBuffer_GFX-1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/marcmerlin/library/FastLED_ESP32-HUB75-MatrixPanel_FrameBuffer_GFX/1.2/FastLED_ESP32-HUB75-MatrixPanel_FrameBuffer_GFX-1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marcmerlin/library/FastLED_SPITFT_GFX/1.2/FastLED_SPITFT_GFX-1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastLED_SPITFT_GFX-1.2.tar.gz",
+    "size_bytes": 33107,
+    "sha256": "c4acb073feab6c9f7f58a31face5af9ba13e15e0d9583889bdba6970d4e3293b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marcmerlin/library/FastLED_SPITFT_GFX/1.2/FastLED_SPITFT_GFX-1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/marcmerlin/library/FastLED_SPITFT_GFX/1.2/FastLED_SPITFT_GFX-1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marcmerlin/library/FastLED_TFTWrapper_GFX/1.0/FastLED_TFTWrapper_GFX-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastLED_TFTWrapper_GFX-1.0.tar.gz",
+    "size_bytes": 14800,
+    "sha256": "79651bef3deeb00ca4f0506c9a859c5a199e767a1b632bf695934561b87827f5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marcmerlin/library/FastLED_TFTWrapper_GFX/1.0/FastLED_TFTWrapper_GFX-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/marcmerlin/library/FastLED_TFTWrapper_GFX/1.0/FastLED_TFTWrapper_GFX-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marcmerlin/library/Framebuffer%20GFX/1.1/FramebufferGFX-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FramebufferGFX-1.1.tar.gz",
+    "size_bytes": 24855,
+    "sha256": "984e6b8637c4933aef8e4dde9532c56f5499eed835d5a8ca7572b26932fc1db6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marcmerlin/library/Framebuffer%2520GFX/1.1/FramebufferGFX-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/marcmerlin/library/Framebuffer%20GFX/1.1/FramebufferGFX-1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marcmerlin/library/SmartMatrix%20GFX/1.2/SmartMatrixGFX-1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartMatrixGFX-1.2.tar.gz",
+    "size_bytes": 37112,
+    "sha256": "96fc019568db6945f964f77a481d544710c10c8222b06be13bfd0e7dcac3c13e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marcmerlin/library/SmartMatrix%2520GFX/1.2/SmartMatrixGFX-1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/marcmerlin/library/SmartMatrix%20GFX/1.2/SmartMatrixGFX-1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

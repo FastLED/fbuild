@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-lddevrie",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-lddevrie/library/EW305sbc/0.0.0+sha.19ee7eb16605/EW305sbc-0.0.0+sha.19ee7eb16605.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EW305sbc-0.0.0+sha.19ee7eb16605.tar.gz",
+    "size_bytes": 3149,
+    "sha256": "402ff99fd9fdd316f5eff98e53092ddecd8416cce7fa974bd98a4b9c0c78879b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-lddevrie/library/EW305sbc/0.0.0%2Bsha.19ee7eb16605/EW305sbc-0.0.0%2Bsha.19ee7eb16605.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-lddevrie/library/EW305sbc/0.0.0%2Bsha.19ee7eb16605/EW305sbc-0.0.0%2Bsha.19ee7eb16605.tar.gz"
+    ]
+   }
+  }
+ ]
+}

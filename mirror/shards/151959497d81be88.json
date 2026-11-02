@@ -1,0 +1,126 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-va009039",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-va009039/library/ATP3011/0.0.0+sha.afbfc810f82e/ATP3011-0.0.0+sha.afbfc810f82e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ATP3011-0.0.0+sha.afbfc810f82e.tar.gz",
+    "size_bytes": 1475,
+    "sha256": "4c21392c40de0a529bd167628e1b861947c89afb87b4b08e474b0096d17f112f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-va009039/library/ATP3011/0.0.0%2Bsha.afbfc810f82e/ATP3011-0.0.0%2Bsha.afbfc810f82e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-va009039/library/ATP3011/0.0.0%2Bsha.afbfc810f82e/ATP3011-0.0.0%2Bsha.afbfc810f82e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-va009039/library/BaseJpegDecode/0.0.0+sha.d7ee458cacd1/BaseJpegDecode-0.0.0+sha.d7ee458cacd1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BaseJpegDecode-0.0.0+sha.d7ee458cacd1.tar.gz",
+    "size_bytes": 14529,
+    "sha256": "b87b4b625ddd392631bb2f23ef4172fb1ee3f6fa5da3b850ca14142a325c2594",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-va009039/library/BaseJpegDecode/0.0.0%2Bsha.d7ee458cacd1/BaseJpegDecode-0.0.0%2Bsha.d7ee458cacd1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-va009039/library/BaseJpegDecode/0.0.0%2Bsha.d7ee458cacd1/BaseJpegDecode-0.0.0%2Bsha.d7ee458cacd1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-va009039/library/BaseUsbHost/0.0.0+sha.8a2d056e9b38/BaseUsbHost-0.0.0+sha.8a2d056e9b38.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BaseUsbHost-0.0.0+sha.8a2d056e9b38.tar.gz",
+    "size_bytes": 11961,
+    "sha256": "2d9536a45cf419ed11d8fc8f00dde529bc6e28fb4d991fb47f27798f3733beff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-va009039/library/BaseUsbHost/0.0.0%2Bsha.8a2d056e9b38/BaseUsbHost-0.0.0%2Bsha.8a2d056e9b38.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-va009039/library/BaseUsbHost/0.0.0%2Bsha.8a2d056e9b38/BaseUsbHost-0.0.0%2Bsha.8a2d056e9b38.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-va009039/library/GraphicOLED/0.0.0+sha.a6650dd2dbc8/GraphicOLED-0.0.0+sha.a6650dd2dbc8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GraphicOLED-0.0.0+sha.a6650dd2dbc8.tar.gz",
+    "size_bytes": 94497,
+    "sha256": "3c5da1c27869b168de9763127069aff50329a58c903312885bef76ae9cbac90b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-va009039/library/GraphicOLED/0.0.0%2Bsha.a6650dd2dbc8/GraphicOLED-0.0.0%2Bsha.a6650dd2dbc8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-va009039/library/GraphicOLED/0.0.0%2Bsha.a6650dd2dbc8/GraphicOLED-0.0.0%2Bsha.a6650dd2dbc8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-va009039/library/STM32_IAP/0.0.0+sha.fd6a08b46228/STM32_IAP-0.0.0+sha.fd6a08b46228.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32_IAP-0.0.0+sha.fd6a08b46228.tar.gz",
+    "size_bytes": 6442,
+    "sha256": "d4813e2196c686aaa705b96d7f1f8d72599c05ac44a8c8b34eb4cfc96f1d309b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-va009039/library/STM32_IAP/0.0.0%2Bsha.fd6a08b46228/STM32_IAP-0.0.0%2Bsha.fd6a08b46228.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-va009039/library/STM32_IAP/0.0.0%2Bsha.fd6a08b46228/STM32_IAP-0.0.0%2Bsha.fd6a08b46228.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-va009039/library/SWDSerial/0.0.0+sha.e1f35ee051ae/SWDSerial-0.0.0+sha.e1f35ee051ae.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SWDSerial-0.0.0+sha.e1f35ee051ae.tar.gz",
+    "size_bytes": 996,
+    "sha256": "194f1be9695aa5f46af9e3fdc0d7ed2c44f2c99c02a9d736ae1552d62d196bbd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-va009039/library/SWDSerial/0.0.0%2Bsha.e1f35ee051ae/SWDSerial-0.0.0%2Bsha.e1f35ee051ae.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-va009039/library/SWDSerial/0.0.0%2Bsha.e1f35ee051ae/SWDSerial-0.0.0%2Bsha.e1f35ee051ae.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-va009039/library/WIZ820ioInterface/0.0.0+sha.fb15c35d1e28/WIZ820ioInterface-0.0.0+sha.fb15c35d1e28.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WIZ820ioInterface-0.0.0+sha.fb15c35d1e28.tar.gz",
+    "size_bytes": 12894,
+    "sha256": "729d350e6cef808374a48852536c83274ed250f7433dc35d559a14b179e63601",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-va009039/library/WIZ820ioInterface/0.0.0%2Bsha.fb15c35d1e28/WIZ820ioInterface-0.0.0%2Bsha.fb15c35d1e28.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-va009039/library/WIZ820ioInterface/0.0.0%2Bsha.fb15c35d1e28/WIZ820ioInterface-0.0.0%2Bsha.fb15c35d1e28.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-va009039/library/WIZ820ioNetIf/0.0.0+sha.22b9052d864d/WIZ820ioNetIf-0.0.0+sha.22b9052d864d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WIZ820ioNetIf-0.0.0+sha.22b9052d864d.tar.gz",
+    "size_bytes": 43648,
+    "sha256": "c834d55e032c903324ef4196f3d79a51003ecf5db045213068cb1dd6e0ab18b4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-va009039/library/WIZ820ioNetIf/0.0.0%2Bsha.22b9052d864d/WIZ820ioNetIf-0.0.0%2Bsha.22b9052d864d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-va009039/library/WIZ820ioNetIf/0.0.0%2Bsha.22b9052d864d/WIZ820ioNetIf-0.0.0%2Bsha.22b9052d864d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-va009039/library/uvchost/0.0.0+sha.3eb41d749f9a/uvchost-0.0.0+sha.3eb41d749f9a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uvchost-0.0.0+sha.3eb41d749f9a.tar.gz",
+    "size_bytes": 29746,
+    "sha256": "b7724d965700251253a97960e0131b9f8cbaaf155848306b43e449dac826f367",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-va009039/library/uvchost/0.0.0%2Bsha.3eb41d749f9a/uvchost-0.0.0%2Bsha.3eb41d749f9a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-va009039/library/uvchost/0.0.0%2Bsha.3eb41d749f9a/uvchost-0.0.0%2Bsha.3eb41d749f9a.tar.gz"
+    ]
+   }
+  }
+ ]
+}

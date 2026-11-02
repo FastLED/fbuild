@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/anwarminarso",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "anwarminarso/library/ESPWiFiMqttWrapper/1.0.6/ESPWiFiMqttWrapper-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPWiFiMqttWrapper-1.0.6.tar.gz",
+    "size_bytes": 11520,
+    "sha256": "f20515b64a41a8d921da7fac1b544839bb7657ea758532e19484fd8bf20a9c08",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/anwarminarso/library/ESPWiFiMqttWrapper/1.0.6/ESPWiFiMqttWrapper-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/anwarminarso/library/ESPWiFiMqttWrapper/1.0.6/ESPWiFiMqttWrapper-1.0.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

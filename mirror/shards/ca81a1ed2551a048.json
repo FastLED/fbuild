@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/amoskeag",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "amoskeag/library/MM5451/0.9.1/MM5451-0.9.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MM5451-0.9.1.tar.gz",
+    "size_bytes": 5258,
+    "sha256": "338ef125b54d0eed4c5d4c83b3ea96a4e10dd994d2dc0d8eff0ab026fdd30e97",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/amoskeag/library/MM5451/0.9.1/MM5451-0.9.1.tar.gz",
+     "https://dl.registry.platformio.org/download/amoskeag/library/MM5451/0.9.1/MM5451-0.9.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

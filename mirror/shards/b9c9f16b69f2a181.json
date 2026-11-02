@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tectiv3",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tectiv3/library/Adafruit-SSD1331/0.0.0-alpha+sha.488737cb7a/Adafruit-SSD1331-0.0.0-alphasha.488737cb7a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Adafruit-SSD1331-0.0.0-alphasha.488737cb7a.tar.gz",
+    "size_bytes": 22822,
+    "sha256": "282d7045342d6da6e119931523ad349e20ccb427f3c2092b1365b42e7450e2fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tectiv3/library/Adafruit-SSD1331/0.0.0-alpha%2Bsha.488737cb7a/Adafruit-SSD1331-0.0.0-alphasha.488737cb7a.tar.gz",
+     "https://dl.registry.platformio.org/download/tectiv3/library/Adafruit-SSD1331/0.0.0-alpha%2Bsha.488737cb7a/Adafruit-SSD1331-0.0.0-alphasha.488737cb7a.tar.gz"
+    ]
+   }
+  }
+ ]
+}

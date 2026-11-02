@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/m2m-solutions",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "m2m-solutions/library/LM75A%20Arduino%20library/1.0.2/LM75AArduinolibrary-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LM75AArduinolibrary-1.0.2.tar.gz",
+    "size_bytes": 5436,
+    "sha256": "4fbcb4b59e2285098e399de9a7ba32bac20e0bc1ab49ebda7f0d67212ca027d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m2m-solutions/library/LM75A%2520Arduino%2520library/1.0.2/LM75AArduinolibrary-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/m2m-solutions/library/LM75A%20Arduino%20library/1.0.2/LM75AArduinolibrary-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m2m-solutions/library/M2M%20Solutions%20Logger%20Library/1.0.7/M2MSolutionsLoggerLibrary-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M2MSolutionsLoggerLibrary-1.0.7.tar.gz",
+    "size_bytes": 3957,
+    "sha256": "ac56311e07eadb8a930fb8b6e2525578127b36b6a5dbcaf11870fe3def9f3f6d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m2m-solutions/library/M2M%2520Solutions%2520Logger%2520Library/1.0.7/M2MSolutionsLoggerLibrary-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/m2m-solutions/library/M2M%20Solutions%20Logger%20Library/1.0.7/M2MSolutionsLoggerLibrary-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m2m-solutions/library/M2M%20Solutions%20MiraOne%20Library/1.0.4/M2MSolutionsMiraOneLibrary-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M2MSolutionsMiraOneLibrary-1.0.4.tar.gz",
+    "size_bytes": 7823,
+    "sha256": "8c5030031486eca889e86b4dae77734e8da574f6f6d9747d1a1cd78854a4524a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m2m-solutions/library/M2M%2520Solutions%2520MiraOne%2520Library/1.0.4/M2MSolutionsMiraOneLibrary-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/m2m-solutions/library/M2M%20Solutions%20MiraOne%20Library/1.0.4/M2MSolutionsMiraOneLibrary-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m2m-solutions/library/M2M%20Solutions%20Purplepoint%20Boards%20Library/1.0.7/M2MSolutionsPurplepointBoardsLibrary-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M2MSolutionsPurplepointBoardsLibrary-1.0.7.tar.gz",
+    "size_bytes": 6098,
+    "sha256": "9d5d39a0f8c934c7deac3ee988ad029f2e348f3283bb3251966570d793e6f406",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m2m-solutions/library/M2M%2520Solutions%2520Purplepoint%2520Boards%2520Library/1.0.7/M2MSolutionsPurplepointBoardsLibrary-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/m2m-solutions/library/M2M%20Solutions%20Purplepoint%20Boards%20Library/1.0.7/M2MSolutionsPurplepointBoardsLibrary-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m2m-solutions/library/M2M%20Solutions%20Quectel%20Library/1.2.6/M2MSolutionsQuectelLibrary-1.2.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M2MSolutionsQuectelLibrary-1.2.6.tar.gz",
+    "size_bytes": 10817,
+    "sha256": "da36d1fc6ca13512c5a0e72f4e5e88e7e1bfb15dd560df67bcedbe2806f55ebe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m2m-solutions/library/M2M%2520Solutions%2520Quectel%2520Library/1.2.6/M2MSolutionsQuectelLibrary-1.2.6.tar.gz",
+     "https://dl.registry.platformio.org/download/m2m-solutions/library/M2M%20Solutions%20Quectel%20Library/1.2.6/M2MSolutionsQuectelLibrary-1.2.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m2m-solutions/library/M2M%20Solutions%20TLV%20Library/1.0.4/M2MSolutionsTLVLibrary-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M2MSolutionsTLVLibrary-1.0.4.tar.gz",
+    "size_bytes": 6782,
+    "sha256": "ccca786e9ad7f9455bb38d9059cc7bf48500f314b962eb27649c195831cbcd7d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m2m-solutions/library/M2M%2520Solutions%2520TLV%2520Library/1.0.4/M2MSolutionsTLVLibrary-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/m2m-solutions/library/M2M%20Solutions%20TLV%20Library/1.0.4/M2MSolutionsTLVLibrary-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

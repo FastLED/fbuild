@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sunitraut",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sunitraut/library/WSN_RFM69/1.0.1/WSN_RFM69-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WSN_RFM69-1.0.1.tar.gz",
+    "size_bytes": 20354,
+    "sha256": "ed627c51857c5e6ce6919960f4a69d0a431633d02a9354a2d0a4ff2be2b86cd5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sunitraut/library/WSN_RFM69/1.0.1/WSN_RFM69-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sunitraut/library/WSN_RFM69/1.0.1/WSN_RFM69-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

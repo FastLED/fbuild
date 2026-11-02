@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-geky",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-geky/library/SimpleHTTPExample/0.0.0+sha.ca2041d3a4a6/SimpleHTTPExample-0.0.0+sha.ca2041d3a4a6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleHTTPExample-0.0.0+sha.ca2041d3a4a6.tar.gz",
+    "size_bytes": 3425,
+    "sha256": "b9200482cbc2fb0d4df716251dcc726cf7064363522dc614d813666c8565c9ac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-geky/library/SimpleHTTPExample/0.0.0%2Bsha.ca2041d3a4a6/SimpleHTTPExample-0.0.0%2Bsha.ca2041d3a4a6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-geky/library/SimpleHTTPExample/0.0.0%2Bsha.ca2041d3a4a6/SimpleHTTPExample-0.0.0%2Bsha.ca2041d3a4a6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-geky/library/events/0.0.0+sha.2f9d9c53a5af/events-0.0.0+sha.2f9d9c53a5af.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "events-0.0.0+sha.2f9d9c53a5af.tar.gz",
+    "size_bytes": 5323,
+    "sha256": "f898388170eb1ffb0ff8b01a198d605859a5779b31014a6eb3d4afa9515bde46",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-geky/library/events/0.0.0%2Bsha.2f9d9c53a5af/events-0.0.0%2Bsha.2f9d9c53a5af.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-geky/library/events/0.0.0%2Bsha.2f9d9c53a5af/events-0.0.0%2Bsha.2f9d9c53a5af.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-geky/library/funcptr/0.0.0+sha.a0fde14b6c39/funcptr-0.0.0+sha.a0fde14b6c39.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "funcptr-0.0.0+sha.a0fde14b6c39.tar.gz",
+    "size_bytes": 6376,
+    "sha256": "bf08e8741381dc91ee116c8314278946f4d75a0e1b9cda2e0bef209dcdd2614e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-geky/library/funcptr/0.0.0%2Bsha.a0fde14b6c39/funcptr-0.0.0%2Bsha.a0fde14b6c39.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-geky/library/funcptr/0.0.0%2Bsha.a0fde14b6c39/funcptr-0.0.0%2Bsha.a0fde14b6c39.tar.gz"
+    ]
+   }
+  }
+ ]
+}

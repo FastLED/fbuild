@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kurte",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kurte/library/DynamixelDevice/1.0/DynamixelDevice-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DynamixelDevice-1.0.tar.gz",
+    "size_bytes": 12027,
+    "sha256": "d29830182257207f199564b1a0a590d4d797c87f292024be6161c1649abd33a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kurte/library/DynamixelDevice/1.0/DynamixelDevice-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kurte/library/DynamixelDevice/1.0/DynamixelDevice-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kurte/library/ILI9341_t3n/0.0.0-alpha+sha.f1bfb81825/ILI9341_t3n-0.0.0-alpha+sha.f1bfb81825.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ILI9341_t3n-0.0.0-alpha+sha.f1bfb81825.tar.gz",
+    "size_bytes": 612391,
+    "sha256": "f198283614e9399467bdeb8b10fbbd52d71c200ec457663ed15022589a31251c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kurte/library/ILI9341_t3n/0.0.0-alpha%2Bsha.f1bfb81825/ILI9341_t3n-0.0.0-alpha%2Bsha.f1bfb81825.tar.gz",
+     "https://dl.registry.platformio.org/download/kurte/library/ILI9341_t3n/0.0.0-alpha%2Bsha.f1bfb81825/ILI9341_t3n-0.0.0-alpha%2Bsha.f1bfb81825.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kurte/library/MemoryHexDump/1.0.1/MemoryHexDump-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MemoryHexDump-1.0.1.tar.gz",
+    "size_bytes": 5442,
+    "sha256": "dedcf7db5eb38c74c55d1f7d8512d318d3de89b3acf2c6a10a8b24fc9fee0d65",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kurte/library/MemoryHexDump/1.0.1/MemoryHexDump-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/kurte/library/MemoryHexDump/1.0.1/MemoryHexDump-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kurte/library/UNOR4WMatrixGFX/0.0.5/UNOR4WMatrixGFX-0.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UNOR4WMatrixGFX-0.0.5.tar.gz",
+    "size_bytes": 28675,
+    "sha256": "262fbaaf3520f7ab566f3bf7ac0439b8462bfec5e784b88eb0db08d407fcb99e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kurte/library/UNOR4WMatrixGFX/0.0.5/UNOR4WMatrixGFX-0.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/kurte/library/UNOR4WMatrixGFX/0.0.5/UNOR4WMatrixGFX-0.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

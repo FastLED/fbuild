@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-duchonic",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-duchonic/library/CR95HF/0.0.0+sha.8fce71523e13/CR95HF-0.0.0+sha.8fce71523e13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CR95HF-0.0.0+sha.8fce71523e13.tar.gz",
+    "size_bytes": 1953,
+    "sha256": "31060b06d14f1432888981ec5cc5b774c6da4a57f79744c8ea61e21a465dee92",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-duchonic/library/CR95HF/0.0.0%2Bsha.8fce71523e13/CR95HF-0.0.0%2Bsha.8fce71523e13.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-duchonic/library/CR95HF/0.0.0%2Bsha.8fce71523e13/CR95HF-0.0.0%2Bsha.8fce71523e13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-duchonic/library/RC522/0.0.0+sha.332c9a37111d/RC522-0.0.0+sha.332c9a37111d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RC522-0.0.0+sha.332c9a37111d.tar.gz",
+    "size_bytes": 20054,
+    "sha256": "61980f7768ab4c0656aca0b51c2b5217268f7362a3a10eac4a055b13d5c90a5a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-duchonic/library/RC522/0.0.0%2Bsha.332c9a37111d/RC522-0.0.0%2Bsha.332c9a37111d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-duchonic/library/RC522/0.0.0%2Bsha.332c9a37111d/RC522-0.0.0%2Bsha.332c9a37111d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

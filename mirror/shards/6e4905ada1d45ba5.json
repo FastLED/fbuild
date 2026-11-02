@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/milebuurmeijer",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "milebuurmeijer/library/DS1307newAlarms/0.6.0/DS1307newAlarms-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS1307newAlarms-0.6.0.tar.gz",
+    "size_bytes": 9300,
+    "sha256": "1772fa7ea2bc8ed6c638dc764788e63798367f0d71212ce7c80208307b6780ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/milebuurmeijer/library/DS1307newAlarms/0.6.0/DS1307newAlarms-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/milebuurmeijer/library/DS1307newAlarms/0.6.0/DS1307newAlarms-0.6.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-satoyuki1111",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-satoyuki1111/library/MakeSequencer/0.0.0+sha.1e606e2301f9/MakeSequencer-0.0.0+sha.1e606e2301f9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MakeSequencer-0.0.0+sha.1e606e2301f9.tar.gz",
+    "size_bytes": 2108,
+    "sha256": "318c4204a157c82ca15f2c46f9759e6f7ea9ba514f81440c7b518f0c47ffd151",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-satoyuki1111/library/MakeSequencer/0.0.0%2Bsha.1e606e2301f9/MakeSequencer-0.0.0%2Bsha.1e606e2301f9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-satoyuki1111/library/MakeSequencer/0.0.0%2Bsha.1e606e2301f9/MakeSequencer-0.0.0%2Bsha.1e606e2301f9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hsun",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hsun/library/ESP_Git_OTA/0.0.2/ESP_Git_OTA-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP_Git_OTA-0.0.2.tar.gz",
+    "size_bytes": 7684,
+    "sha256": "a7a4da0750c6e244c875ecf4b05dd65d4228e59a24c2d8d62e1c193d56788c23",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hsun/library/ESP_Git_OTA/0.0.2/ESP_Git_OTA-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/hsun/library/ESP_Git_OTA/0.0.2/ESP_Git_OTA-0.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

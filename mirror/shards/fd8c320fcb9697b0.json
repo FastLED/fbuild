@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/matth-x",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "matth-x/library/ArduinoOcpp/0.3.0/ArduinoOcpp-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoOcpp-0.3.0.tar.gz",
+    "size_bytes": 162602,
+    "sha256": "31065793383393f2c99c814fdaef4ade5cbdb89ff0c4cc3420e9c895060ba0d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matth-x/library/ArduinoOcpp/0.3.0/ArduinoOcpp-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/matth-x/library/ArduinoOcpp/0.3.0/ArduinoOcpp-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "matth-x/library/ArduinoOcppMongoose/0.1.0/ArduinoOcppMongoose-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoOcppMongoose-0.1.0.tar.gz",
+    "size_bytes": 25253,
+    "sha256": "893951d947a0b85c89a271396ac0d52bf3df4e490f2d8ef4f5b861e9e006636c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matth-x/library/ArduinoOcppMongoose/0.1.0/ArduinoOcppMongoose-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/matth-x/library/ArduinoOcppMongoose/0.1.0/ArduinoOcppMongoose-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "matth-x/library/MicroOcpp/1.2.0/MicroOcpp-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MicroOcpp-1.2.0.tar.gz",
+    "size_bytes": 244045,
+    "sha256": "7b8735128298da685a4a6af0aacc24075e1474926322ae3217509b6f7c16dce1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matth-x/library/MicroOcpp/1.2.0/MicroOcpp-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/matth-x/library/MicroOcpp/1.2.0/MicroOcpp-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "matth-x/library/MicroOcppMongoose/1.2.0/MicroOcppMongoose-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MicroOcppMongoose-1.2.0.tar.gz",
+    "size_bytes": 22819,
+    "sha256": "56db7ffcd222f08469089aea8645d6f76cdadefa7acd2232177925868198a9e1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matth-x/library/MicroOcppMongoose/1.2.0/MicroOcppMongoose-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/matth-x/library/MicroOcppMongoose/1.2.0/MicroOcppMongoose-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

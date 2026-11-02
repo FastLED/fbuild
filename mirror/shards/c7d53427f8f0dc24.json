@@ -1,0 +1,477 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/abcdaaaaaaaaa",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "abcdaaaaaaaaa/library/MG811SpaceData/5.1.0/MG811SpaceData-5.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MG811SpaceData-5.1.0.tar.gz",
+    "size_bytes": 15556,
+    "sha256": "0acad23757874db88998a015dcdb1c1337fc4ed595eda0f226ef605619d5d1b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/abcdaaaaaaaaa/library/MG811SpaceData/5.1.0/MG811SpaceData-5.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/abcdaaaaaaaaa/library/MG811SpaceData/5.1.0/MG811SpaceData-5.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "abcdaaaaaaaaa/library/MG811SpaceData/5.1.5/MG811SpaceData-5.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MG811SpaceData-5.1.5.tar.gz",
+    "size_bytes": 18829,
+    "sha256": "32e98356b25eeb1b139be8d0c3f68a234f8ccef1651736e1a9c9ae56d4e4d570",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/abcdaaaaaaaaa/library/MG811SpaceData/5.1.5/MG811SpaceData-5.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/abcdaaaaaaaaa/library/MG811SpaceData/5.1.5/MG811SpaceData-5.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "abcdaaaaaaaaa/library/MG811SpaceData/5.5.0/MG811SpaceData-5.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MG811SpaceData-5.5.0.tar.gz",
+    "size_bytes": 19209,
+    "sha256": "6d42dac2bf46ee0360dbb7ee20e960dea9866354e9d9c2faed1b63d63847e46a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/abcdaaaaaaaaa/library/MG811SpaceData/5.5.0/MG811SpaceData-5.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/abcdaaaaaaaaa/library/MG811SpaceData/5.5.0/MG811SpaceData-5.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "abcdaaaaaaaaa/library/MG811SpaceData/5.5.1/MG811SpaceData-5.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MG811SpaceData-5.5.1.tar.gz",
+    "size_bytes": 19802,
+    "sha256": "fadbe0598859d888b1a8b95a3663e013e527409a805f6d9934e42ce626a85279",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/abcdaaaaaaaaa/library/MG811SpaceData/5.5.1/MG811SpaceData-5.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/abcdaaaaaaaaa/library/MG811SpaceData/5.5.1/MG811SpaceData-5.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "abcdaaaaaaaaa/library/MG811SpaceData/5.5.3/MG811SpaceData-5.5.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MG811SpaceData-5.5.3.tar.gz",
+    "size_bytes": 19803,
+    "sha256": "014d102ccb301e66acad33db057c377b7a781e0150ad2f30f0a2984aab66a4c4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/abcdaaaaaaaaa/library/MG811SpaceData/5.5.3/MG811SpaceData-5.5.3.tar.gz",
+     "https://dl.registry.platformio.org/download/abcdaaaaaaaaa/library/MG811SpaceData/5.5.3/MG811SpaceData-5.5.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "abcdaaaaaaaaa/library/MG811SpaceData/5.5.4/MG811SpaceData-5.5.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MG811SpaceData-5.5.4.tar.gz",
+    "size_bytes": 19721,
+    "sha256": "f5a6f8a2d5fdde65f81a0a47497c79c8c1c3b033f3a7a8a70067dc4158a2b67b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/abcdaaaaaaaaa/library/MG811SpaceData/5.5.4/MG811SpaceData-5.5.4.tar.gz",
+     "https://dl.registry.platformio.org/download/abcdaaaaaaaaa/library/MG811SpaceData/5.5.4/MG811SpaceData-5.5.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "abcdaaaaaaaaa/library/MG811SpaceData/5.5.5/MG811SpaceData-5.5.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MG811SpaceData-5.5.5.tar.gz",
+    "size_bytes": 19811,
+    "sha256": "6c4c0beb778a3a2b6b7faf8688966093987845a78e5887cbc202407c4087f919",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/abcdaaaaaaaaa/library/MG811SpaceData/5.5.5/MG811SpaceData-5.5.5.tar.gz",
+     "https://dl.registry.platformio.org/download/abcdaaaaaaaaa/library/MG811SpaceData/5.5.5/MG811SpaceData-5.5.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "abcdaaaaaaaaa/library/MG811SpaceData/5.5.6/MG811SpaceData-5.5.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MG811SpaceData-5.5.6.tar.gz",
+    "size_bytes": 19809,
+    "sha256": "f34533ab4fba2dcefc2cff831f60c9445f97ff70c2686324434c6b7b2bb1bc9e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/abcdaaaaaaaaa/library/MG811SpaceData/5.5.6/MG811SpaceData-5.5.6.tar.gz",
+     "https://dl.registry.platformio.org/download/abcdaaaaaaaaa/library/MG811SpaceData/5.5.6/MG811SpaceData-5.5.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "abcdaaaaaaaaa/library/MG811SpaceData/5.5.7/MG811SpaceData-5.5.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MG811SpaceData-5.5.7.tar.gz",
+    "size_bytes": 19808,
+    "sha256": "99566d035956ffd08499a54947db6bdef2f5cf0828c2f3f0039eff6930e5c819",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/abcdaaaaaaaaa/library/MG811SpaceData/5.5.7/MG811SpaceData-5.5.7.tar.gz",
+     "https://dl.registry.platformio.org/download/abcdaaaaaaaaa/library/MG811SpaceData/5.5.7/MG811SpaceData-5.5.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "abcdaaaaaaaaa/library/MQSpaceData/5.1.0/MQSpaceData-5.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQSpaceData-5.1.0.tar.gz",
+    "size_bytes": 38070,
+    "sha256": "cd77703ec4d6d749ce0578ef4ce97dfb798d9d43866198121d84ff4d3f1763e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/abcdaaaaaaaaa/library/MQSpaceData/5.1.0/MQSpaceData-5.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/abcdaaaaaaaaa/library/MQSpaceData/5.1.0/MQSpaceData-5.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "abcdaaaaaaaaa/library/MQSpaceData/5.1.5/MQSpaceData-5.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQSpaceData-5.1.5.tar.gz",
+    "size_bytes": 37151,
+    "sha256": "dc9cfad052b196426466b74c1c63b2ff545aafe0ffec78be625459dd759af812",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/abcdaaaaaaaaa/library/MQSpaceData/5.1.5/MQSpaceData-5.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/abcdaaaaaaaaa/library/MQSpaceData/5.1.5/MQSpaceData-5.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "abcdaaaaaaaaa/library/MQSpaceData/5.3.0/MQSpaceData-5.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQSpaceData-5.3.0.tar.gz",
+    "size_bytes": 37237,
+    "sha256": "955fc743c977601fd53ddf20d5dd6b1d9b5cfd9fbe55f6ea3162ee0e69aff80b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/abcdaaaaaaaaa/library/MQSpaceData/5.3.0/MQSpaceData-5.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/abcdaaaaaaaaa/library/MQSpaceData/5.3.0/MQSpaceData-5.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "abcdaaaaaaaaa/library/MQSpaceData/5.5.0/MQSpaceData-5.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQSpaceData-5.5.0.tar.gz",
+    "size_bytes": 37187,
+    "sha256": "ed7c84d099f604be7c519b0dc62c4e7b510d29655ae5c22135d0c2734697cc8b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/abcdaaaaaaaaa/library/MQSpaceData/5.5.0/MQSpaceData-5.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/abcdaaaaaaaaa/library/MQSpaceData/5.5.0/MQSpaceData-5.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "abcdaaaaaaaaa/library/MQSpaceData/5.5.1/MQSpaceData-5.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQSpaceData-5.5.1.tar.gz",
+    "size_bytes": 37265,
+    "sha256": "ff10087eb6975215afa3dc7bcf0c3a56a199f8abc0bfda86614bebfbdc51def7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/abcdaaaaaaaaa/library/MQSpaceData/5.5.1/MQSpaceData-5.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/abcdaaaaaaaaa/library/MQSpaceData/5.5.1/MQSpaceData-5.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "abcdaaaaaaaaa/library/MQSpaceData/5.5.2/MQSpaceData-5.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQSpaceData-5.5.2.tar.gz",
+    "size_bytes": 37267,
+    "sha256": "82cfced1312ca4c725711a7aa4f4a99a323f121fe67fbeda1070dc8cb15c2472",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/abcdaaaaaaaaa/library/MQSpaceData/5.5.2/MQSpaceData-5.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/abcdaaaaaaaaa/library/MQSpaceData/5.5.2/MQSpaceData-5.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "abcdaaaaaaaaa/library/MQSpaceData/5.5.3/MQSpaceData-5.5.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQSpaceData-5.5.3.tar.gz",
+    "size_bytes": 37263,
+    "sha256": "cc80da76b878986b1a3889afe76a1d623025d33ad4e5d06ac0ee84d1422c1ec8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/abcdaaaaaaaaa/library/MQSpaceData/5.5.3/MQSpaceData-5.5.3.tar.gz",
+     "https://dl.registry.platformio.org/download/abcdaaaaaaaaa/library/MQSpaceData/5.5.3/MQSpaceData-5.5.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "abcdaaaaaaaaa/library/MQSpaceData/5.5.4/MQSpaceData-5.5.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQSpaceData-5.5.4.tar.gz",
+    "size_bytes": 38424,
+    "sha256": "ca99974c2e80340788451c45bb683820888165b3ec4a11771b373d2bdbdae9bd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/abcdaaaaaaaaa/library/MQSpaceData/5.5.4/MQSpaceData-5.5.4.tar.gz",
+     "https://dl.registry.platformio.org/download/abcdaaaaaaaaa/library/MQSpaceData/5.5.4/MQSpaceData-5.5.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "abcdaaaaaaaaa/library/MQSpaceData/5.5.5/MQSpaceData-5.5.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQSpaceData-5.5.5.tar.gz",
+    "size_bytes": 38423,
+    "sha256": "cc43b734e6aac3ce1549f87d28adb077124029c0e4a3293fc67ff874659834ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/abcdaaaaaaaaa/library/MQSpaceData/5.5.5/MQSpaceData-5.5.5.tar.gz",
+     "https://dl.registry.platformio.org/download/abcdaaaaaaaaa/library/MQSpaceData/5.5.5/MQSpaceData-5.5.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "abcdaaaaaaaaa/library/MQSpaceData/5.5.6/MQSpaceData-5.5.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQSpaceData-5.5.6.tar.gz",
+    "size_bytes": 38426,
+    "sha256": "b5bae42dc188aad07cf89278a7546a4c34ea70821864f8bbb9d21ec3a3c68e9e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/abcdaaaaaaaaa/library/MQSpaceData/5.5.6/MQSpaceData-5.5.6.tar.gz",
+     "https://dl.registry.platformio.org/download/abcdaaaaaaaaa/library/MQSpaceData/5.5.6/MQSpaceData-5.5.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "abcdaaaaaaaaa/library/MQSpaceData/5.5.7/MQSpaceData-5.5.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQSpaceData-5.5.7.tar.gz",
+    "size_bytes": 38431,
+    "sha256": "d4e7fcb47f0644016b0d66e41975823d1a6df2818cca27817f17da1926ef323f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/abcdaaaaaaaaa/library/MQSpaceData/5.5.7/MQSpaceData-5.5.7.tar.gz",
+     "https://dl.registry.platformio.org/download/abcdaaaaaaaaa/library/MQSpaceData/5.5.7/MQSpaceData-5.5.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "abcdaaaaaaaaa/library/MQSpaceData/6.0.0/MQSpaceData-6.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQSpaceData-6.0.0.tar.gz",
+    "size_bytes": 62124,
+    "sha256": "07c36771822791bd1a4f3d1bc75a83481eeb0e7e16084895a51ca41b3f3264cd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/abcdaaaaaaaaa/library/MQSpaceData/6.0.0/MQSpaceData-6.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/abcdaaaaaaaaa/library/MQSpaceData/6.0.0/MQSpaceData-6.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "abcdaaaaaaaaa/library/MQSpaceData/7.0.0/MQSpaceData-7.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQSpaceData-7.0.0.tar.gz",
+    "size_bytes": 62853,
+    "sha256": "e238e39a09239821ef43d01833fef549941f9bdad7bd127710249da616777668",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/abcdaaaaaaaaa/library/MQSpaceData/7.0.0/MQSpaceData-7.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/abcdaaaaaaaaa/library/MQSpaceData/7.0.0/MQSpaceData-7.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "abcdaaaaaaaaa/library/RadioactiveSpaceData/5.1.0/RadioactiveSpaceData-5.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RadioactiveSpaceData-5.1.0.tar.gz",
+    "size_bytes": 6228,
+    "sha256": "51cd220d96d2e1997b748275e5a07db2d775d8fea28140add0a317210b1ceca9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/abcdaaaaaaaaa/library/RadioactiveSpaceData/5.1.0/RadioactiveSpaceData-5.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/abcdaaaaaaaaa/library/RadioactiveSpaceData/5.1.0/RadioactiveSpaceData-5.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "abcdaaaaaaaaa/library/RadioactiveSpaceData/5.1.5/RadioactiveSpaceData-5.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RadioactiveSpaceData-5.1.5.tar.gz",
+    "size_bytes": 6561,
+    "sha256": "6117fc37edaf5c7881960fa11d7d2a639a9f9349a083ee41b9d16cf16e20db70",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/abcdaaaaaaaaa/library/RadioactiveSpaceData/5.1.5/RadioactiveSpaceData-5.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/abcdaaaaaaaaa/library/RadioactiveSpaceData/5.1.5/RadioactiveSpaceData-5.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "abcdaaaaaaaaa/library/RadioactiveSpaceData/5.5.0/RadioactiveSpaceData-5.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RadioactiveSpaceData-5.5.0.tar.gz",
+    "size_bytes": 6658,
+    "sha256": "34ec01877dcd25f802668f0605ccc66b7600b551bcd00421cebede5e6dd932f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/abcdaaaaaaaaa/library/RadioactiveSpaceData/5.5.0/RadioactiveSpaceData-5.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/abcdaaaaaaaaa/library/RadioactiveSpaceData/5.5.0/RadioactiveSpaceData-5.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "abcdaaaaaaaaa/library/RadioactiveSpaceData/5.5.1/RadioactiveSpaceData-5.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RadioactiveSpaceData-5.5.1.tar.gz",
+    "size_bytes": 6658,
+    "sha256": "da3ce7afd4f6da483bf60a7327c0f269ddb64606da91cf7b35284d04e8a677f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/abcdaaaaaaaaa/library/RadioactiveSpaceData/5.5.1/RadioactiveSpaceData-5.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/abcdaaaaaaaaa/library/RadioactiveSpaceData/5.5.1/RadioactiveSpaceData-5.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "abcdaaaaaaaaa/library/RadioactiveSpaceData/5.5.3/RadioactiveSpaceData-5.5.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RadioactiveSpaceData-5.5.3.tar.gz",
+    "size_bytes": 6731,
+    "sha256": "f5db5d8d04ce80a45d23817338beba039c981717cda69429f3d5fd18ec9a420b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/abcdaaaaaaaaa/library/RadioactiveSpaceData/5.5.3/RadioactiveSpaceData-5.5.3.tar.gz",
+     "https://dl.registry.platformio.org/download/abcdaaaaaaaaa/library/RadioactiveSpaceData/5.5.3/RadioactiveSpaceData-5.5.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "abcdaaaaaaaaa/library/RadioactiveSpaceData/5.5.4/RadioactiveSpaceData-5.5.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RadioactiveSpaceData-5.5.4.tar.gz",
+    "size_bytes": 6771,
+    "sha256": "a9bd9259235e46b72fd26932cd517f3a2f5bf3bf35fc28e7c54ae81144a9ce59",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/abcdaaaaaaaaa/library/RadioactiveSpaceData/5.5.4/RadioactiveSpaceData-5.5.4.tar.gz",
+     "https://dl.registry.platformio.org/download/abcdaaaaaaaaa/library/RadioactiveSpaceData/5.5.4/RadioactiveSpaceData-5.5.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "abcdaaaaaaaaa/library/RadioactiveSpaceData/5.5.6/RadioactiveSpaceData-5.5.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RadioactiveSpaceData-5.5.6.tar.gz",
+    "size_bytes": 6768,
+    "sha256": "a6d4a65139c7984041c01e1f4630d2362a094fb8b11bbcd7660f40a085912a72",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/abcdaaaaaaaaa/library/RadioactiveSpaceData/5.5.6/RadioactiveSpaceData-5.5.6.tar.gz",
+     "https://dl.registry.platformio.org/download/abcdaaaaaaaaa/library/RadioactiveSpaceData/5.5.6/RadioactiveSpaceData-5.5.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "abcdaaaaaaaaa/library/RadioactiveSpaceData/5.5.7/RadioactiveSpaceData-5.5.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RadioactiveSpaceData-5.5.7.tar.gz",
+    "size_bytes": 6763,
+    "sha256": "0d17735a0f5a239aa94a05f8d35cc6699c3c58916fed7de99c9257dee5d80550",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/abcdaaaaaaaaa/library/RadioactiveSpaceData/5.5.7/RadioactiveSpaceData-5.5.7.tar.gz",
+     "https://dl.registry.platformio.org/download/abcdaaaaaaaaa/library/RadioactiveSpaceData/5.5.7/RadioactiveSpaceData-5.5.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "abcdaaaaaaaaa/library/SP3S-AQ2SpaceData/5.1.0/SP3S-AQ2SpaceData-5.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SP3S-AQ2SpaceData-5.1.0.tar.gz",
+    "size_bytes": 6387,
+    "sha256": "929bdc7057ff028af5c92d1571a9cb8992bcdbf104048d4984e28c1afd68b46c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/abcdaaaaaaaaa/library/SP3S-AQ2SpaceData/5.1.0/SP3S-AQ2SpaceData-5.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/abcdaaaaaaaaa/library/SP3S-AQ2SpaceData/5.1.0/SP3S-AQ2SpaceData-5.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "abcdaaaaaaaaa/library/SP3S-AQ2SpaceData/5.5.1/SP3S-AQ2SpaceData-5.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SP3S-AQ2SpaceData-5.5.1.tar.gz",
+    "size_bytes": 10646,
+    "sha256": "fa8f1d04998ac6d152d9dec6d5d90226d0dc50575dbd7965b8c6e231489eed68",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/abcdaaaaaaaaa/library/SP3S-AQ2SpaceData/5.5.1/SP3S-AQ2SpaceData-5.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/abcdaaaaaaaaa/library/SP3S-AQ2SpaceData/5.5.1/SP3S-AQ2SpaceData-5.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "abcdaaaaaaaaa/library/SP3S-AQ2SpaceData/5.5.3/SP3S-AQ2SpaceData-5.5.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SP3S-AQ2SpaceData-5.5.3.tar.gz",
+    "size_bytes": 10654,
+    "sha256": "5da57192aa4cd5b5d049b6dcac89b0548b20fa1146a513e99511a95fdf848266",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/abcdaaaaaaaaa/library/SP3S-AQ2SpaceData/5.5.3/SP3S-AQ2SpaceData-5.5.3.tar.gz",
+     "https://dl.registry.platformio.org/download/abcdaaaaaaaaa/library/SP3S-AQ2SpaceData/5.5.3/SP3S-AQ2SpaceData-5.5.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "abcdaaaaaaaaa/library/SP3S-AQ2SpaceData/5.5.4/SP3S-AQ2SpaceData-5.5.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SP3S-AQ2SpaceData-5.5.4.tar.gz",
+    "size_bytes": 10703,
+    "sha256": "0488244ddba20e16108a55e4968052bb5db1eecb562027ada33075a4eb1a6d79",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/abcdaaaaaaaaa/library/SP3S-AQ2SpaceData/5.5.4/SP3S-AQ2SpaceData-5.5.4.tar.gz",
+     "https://dl.registry.platformio.org/download/abcdaaaaaaaaa/library/SP3S-AQ2SpaceData/5.5.4/SP3S-AQ2SpaceData-5.5.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "abcdaaaaaaaaa/library/SP3S-AQ2SpaceData/5.5.6/SP3S-AQ2SpaceData-5.5.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SP3S-AQ2SpaceData-5.5.6.tar.gz",
+    "size_bytes": 10704,
+    "sha256": "0d16a6b9412c13e9f2da80ca9fdc688b01da13ad2b3fdcdccea34bc70101fccd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/abcdaaaaaaaaa/library/SP3S-AQ2SpaceData/5.5.6/SP3S-AQ2SpaceData-5.5.6.tar.gz",
+     "https://dl.registry.platformio.org/download/abcdaaaaaaaaa/library/SP3S-AQ2SpaceData/5.5.6/SP3S-AQ2SpaceData-5.5.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "abcdaaaaaaaaa/library/SP3S-AQ2SpaceData/5.5.7/SP3S-AQ2SpaceData-5.5.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SP3S-AQ2SpaceData-5.5.7.tar.gz",
+    "size_bytes": 10703,
+    "sha256": "d694933c0d13d7a20729688931ab6a00c33178af7f66b6b0841cf317f458410c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/abcdaaaaaaaaa/library/SP3S-AQ2SpaceData/5.5.7/SP3S-AQ2SpaceData-5.5.7.tar.gz",
+     "https://dl.registry.platformio.org/download/abcdaaaaaaaaa/library/SP3S-AQ2SpaceData/5.5.7/SP3S-AQ2SpaceData-5.5.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

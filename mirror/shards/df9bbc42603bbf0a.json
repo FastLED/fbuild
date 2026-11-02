@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gustavogb",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gustavogb/library/microsui-lib/0.3.2/microsui-lib-0.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "microsui-lib-0.3.2.tar.gz",
+    "size_bytes": 675414,
+    "sha256": "34620aecb00aac5b0fa69e6250ad5168f9c911629ccfed0a14a1bcfb03976108",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gustavogb/library/microsui-lib/0.3.2/microsui-lib-0.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gustavogb/library/microsui-lib/0.3.2/microsui-lib-0.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gustavogb/library/microsui-lib/0.3.3/microsui-lib-0.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "microsui-lib-0.3.3.tar.gz",
+    "size_bytes": 646280,
+    "sha256": "8f2adbde80e57b3f57e2352b8cf3bc469189d50611cfac5081151103168bff92",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gustavogb/library/microsui-lib/0.3.3/microsui-lib-0.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/gustavogb/library/microsui-lib/0.3.3/microsui-lib-0.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gustavogb/library/microsui-lib/0.3.4/microsui-lib-0.3.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "microsui-lib-0.3.4.tar.gz",
+    "size_bytes": 654418,
+    "sha256": "adbf115c0d9ef0674c884ff2ccb18114fbb29e6f30dbffc028e74d636959d939",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gustavogb/library/microsui-lib/0.3.4/microsui-lib-0.3.4.tar.gz",
+     "https://dl.registry.platformio.org/download/gustavogb/library/microsui-lib/0.3.4/microsui-lib-0.3.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

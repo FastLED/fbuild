@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-mbed-demos",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-mbed-demos/library/HTTPClient-SSL/0.0.0+sha.d9db238bb8a3/HTTPClient-SSL-0.0.0+sha.d9db238bb8a3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HTTPClient-SSL-0.0.0+sha.d9db238bb8a3.tar.gz",
+    "size_bytes": 11415,
+    "sha256": "3429ffb82fbc64d66560ae3552d11326e5b28eeb929f36ab2a525005da01b7af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mbed-demos/library/HTTPClient-SSL/0.0.0%2Bsha.d9db238bb8a3/HTTPClient-SSL-0.0.0%2Bsha.d9db238bb8a3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mbed-demos/library/HTTPClient-SSL/0.0.0%2Bsha.d9db238bb8a3/HTTPClient-SSL-0.0.0%2Bsha.d9db238bb8a3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-mbed-demos/library/SalesforceInterface/0.0.0+sha.709a9dff666c/SalesforceInterface-0.0.0+sha.709a9dff666c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SalesforceInterface-0.0.0+sha.709a9dff666c.tar.gz",
+    "size_bytes": 13451,
+    "sha256": "9b159bce25c6429a2f9b7b63624e45605cb20e3a4f45f6252bc731096b0362da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mbed-demos/library/SalesforceInterface/0.0.0%2Bsha.709a9dff666c/SalesforceInterface-0.0.0%2Bsha.709a9dff666c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mbed-demos/library/SalesforceInterface/0.0.0%2Bsha.709a9dff666c/SalesforceInterface-0.0.0%2Bsha.709a9dff666c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

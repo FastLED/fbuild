@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/worldfamouselectronics",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "worldfamouselectronics/library/PulseSensor%20Playground/2.4.0/PulseSensorPlayground-2.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PulseSensorPlayground-2.4.0.tar.gz",
+    "size_bytes": 36882,
+    "sha256": "342d94512fd29b5965cfc433be4c6539d0c2e69db7cb10e33fc1be3cc54da567",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/worldfamouselectronics/library/PulseSensor%2520Playground/2.4.0/PulseSensorPlayground-2.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/worldfamouselectronics/library/PulseSensor%20Playground/2.4.0/PulseSensorPlayground-2.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "worldfamouselectronics/library/PulseSensor%20Playground/2.5.0/PulseSensorPlayground-2.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PulseSensorPlayground-2.5.0.tar.gz",
+    "size_bytes": 43182,
+    "sha256": "1428b638b11ce2ffaf7f955fbc87c44f6f0e699f716f91c85dc39ab46c058efc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/worldfamouselectronics/library/PulseSensor%2520Playground/2.5.0/PulseSensorPlayground-2.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/worldfamouselectronics/library/PulseSensor%20Playground/2.5.0/PulseSensorPlayground-2.5.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

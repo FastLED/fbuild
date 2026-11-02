@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/yoursunny",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "yoursunny/library/WifiEspNow/0.0.20230713/WifiEspNow-0.0.20230713.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WifiEspNow-0.0.20230713.tar.gz",
+    "size_bytes": 22521,
+    "sha256": "75151f50bf54402a48f2fda7d3f3fd468652d807a89c2ed1201597294d4b714e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yoursunny/library/WifiEspNow/0.0.20230713/WifiEspNow-0.0.20230713.tar.gz",
+     "https://dl.registry.platformio.org/download/yoursunny/library/WifiEspNow/0.0.20230713/WifiEspNow-0.0.20230713.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "yoursunny/library/esp32cam/0.0.20240110/esp32cam-0.0.20240110.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32cam-0.0.20240110.tar.gz",
+    "size_bytes": 15723,
+    "sha256": "07a2d751c82280878944554e7c69188885ee5b17bb4bb240d672b4615b27abdf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yoursunny/library/esp32cam/0.0.20240110/esp32cam-0.0.20240110.tar.gz",
+     "https://dl.registry.platformio.org/download/yoursunny/library/esp32cam/0.0.20240110/esp32cam-0.0.20240110.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "yoursunny/library/esp32cam/0.0.20250112/esp32cam-0.0.20250112.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32cam-0.0.20250112.tar.gz",
+    "size_bytes": 17720,
+    "sha256": "8f9dc55e82abda52399d1dd959c9994e145442fd6e14dd2978bdc6d852e6460a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yoursunny/library/esp32cam/0.0.20250112/esp32cam-0.0.20250112.tar.gz",
+     "https://dl.registry.platformio.org/download/yoursunny/library/esp32cam/0.0.20250112/esp32cam-0.0.20250112.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "yoursunny/library/esp32cam/0.0.20260726/esp32cam-0.0.20260726.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32cam-0.0.20260726.tar.gz",
+    "size_bytes": 18748,
+    "sha256": "73dfb735d4fb8d95087172517a94800eca83fdc67f5b54b7270177259d70603a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yoursunny/library/esp32cam/0.0.20260726/esp32cam-0.0.20260726.tar.gz",
+     "https://dl.registry.platformio.org/download/yoursunny/library/esp32cam/0.0.20260726/esp32cam-0.0.20260726.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "yoursunny/library/esp8266ndn/0.0.20250625/esp8266ndn-0.0.20250625.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp8266ndn-0.0.20250625.tar.gz",
+    "size_bytes": 49192,
+    "sha256": "95033b565573e993b708f45c6fe2388c88e2d2c82c625de0769078c74759ea8d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yoursunny/library/esp8266ndn/0.0.20250625/esp8266ndn-0.0.20250625.tar.gz",
+     "https://dl.registry.platformio.org/download/yoursunny/library/esp8266ndn/0.0.20250625/esp8266ndn-0.0.20250625.tar.gz"
+    ]
+   }
+  }
+ ]
+}

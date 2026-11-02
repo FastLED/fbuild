@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gilmaimon",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gilmaimon/library/ArduinoCloudStorage/0.6.2/ArduinoCloudStorage-0.6.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoCloudStorage-0.6.2.tar.gz",
+    "size_bytes": 11008,
+    "sha256": "0c6f60ad35f61172b7b3df739e954ad0284041c75604766d0bfbe3fa90f437d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gilmaimon/library/ArduinoCloudStorage/0.6.2/ArduinoCloudStorage-0.6.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gilmaimon/library/ArduinoCloudStorage/0.6.2/ArduinoCloudStorage-0.6.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gilmaimon/library/ArduinoComponents/0.3.0/ArduinoComponents-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoComponents-0.3.0.tar.gz",
+    "size_bytes": 13228,
+    "sha256": "dbda8271c898b906a043395c70f9e2ec8383f93a5b8d052b4c73b3fe286637fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gilmaimon/library/ArduinoComponents/0.3.0/ArduinoComponents-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gilmaimon/library/ArduinoComponents/0.3.0/ArduinoComponents-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gilmaimon/library/ArduinoWebsockets/0.5.3/ArduinoWebsockets-0.5.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoWebsockets-0.5.3.tar.gz",
+    "size_bytes": 48963,
+    "sha256": "f0347303ddc6306571279519e45a7cb4d3527b555370cbdef3b0210fa144028e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gilmaimon/library/ArduinoWebsockets/0.5.3/ArduinoWebsockets-0.5.3.tar.gz",
+     "https://dl.registry.platformio.org/download/gilmaimon/library/ArduinoWebsockets/0.5.3/ArduinoWebsockets-0.5.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gilmaimon/library/ArduinoWebsockets/0.5.4/ArduinoWebsockets-0.5.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoWebsockets-0.5.4.tar.gz",
+    "size_bytes": 48972,
+    "sha256": "48b79e5dcccd91af40f71552e1adf55ce24d6c319e4f1fb5604db51eea345411",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gilmaimon/library/ArduinoWebsockets/0.5.4/ArduinoWebsockets-0.5.4.tar.gz",
+     "https://dl.registry.platformio.org/download/gilmaimon/library/ArduinoWebsockets/0.5.4/ArduinoWebsockets-0.5.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

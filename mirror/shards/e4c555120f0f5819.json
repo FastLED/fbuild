@@ -1,0 +1,230 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pulserain",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pulserain/library/M10ADC/1.0.4/M10ADC-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M10ADC-1.0.4.tar.gz",
+    "size_bytes": 6230,
+    "sha256": "ad976ad57b21acedfb27b152ec7c9d1bd357e10292bbde2cfa461deb3e1521ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pulserain/library/M10ADC/1.0.4/M10ADC-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/pulserain/library/M10ADC/1.0.4/M10ADC-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pulserain/library/M10CODEC/1.1.3/M10CODEC-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M10CODEC-1.1.3.tar.gz",
+    "size_bytes": 12736,
+    "sha256": "c58c02e82b1aea34a34d904d0e57b0a77647ab2c4f8f6299847dcc7a95958382",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pulserain/library/M10CODEC/1.1.3/M10CODEC-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/pulserain/library/M10CODEC/1.1.3/M10CODEC-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pulserain/library/M10DTMF/1.0.2/M10DTMF-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M10DTMF-1.0.2.tar.gz",
+    "size_bytes": 6695,
+    "sha256": "0dc3a5c5888cccb7cb001feb6142448e6ecf2aead107ec9f8f32703dcfb4ad1b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pulserain/library/M10DTMF/1.0.2/M10DTMF-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/pulserain/library/M10DTMF/1.0.2/M10DTMF-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pulserain/library/M10ESP8266/1.0.0/M10ESP8266-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M10ESP8266-1.0.0.tar.gz",
+    "size_bytes": 5777,
+    "sha256": "44a3bc37ac7d7124232cfae63933bf8893800ff334317a19c1145e4b90a3211c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pulserain/library/M10ESP8266/1.0.0/M10ESP8266-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pulserain/library/M10ESP8266/1.0.0/M10ESP8266-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pulserain/library/M10Examples/1.1.0/M10Examples-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M10Examples-1.1.0.tar.gz",
+    "size_bytes": 228516,
+    "sha256": "d0c619ef531dffd54208403e0d26c9a59f181e5eddcac4b0c104ee6d0bc5d082",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pulserain/library/M10Examples/1.1.0/M10Examples-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pulserain/library/M10Examples/1.1.0/M10Examples-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pulserain/library/M10I2C/1.0.1/M10I2C-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M10I2C-1.0.1.tar.gz",
+    "size_bytes": 6121,
+    "sha256": "7df23fff4631d517e6be795dc1ee9b40be03912c3093473a80f8106b1be57b1e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pulserain/library/M10I2C/1.0.1/M10I2C-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pulserain/library/M10I2C/1.0.1/M10I2C-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pulserain/library/M10JTAG/1.0.1/M10JTAG-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M10JTAG-1.0.1.tar.gz",
+    "size_bytes": 5266,
+    "sha256": "fcf40356ff630eed1eb0a5bb7eb8c59188b1d84f80a42f444fc885f200c9330b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pulserain/library/M10JTAG/1.0.1/M10JTAG-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pulserain/library/M10JTAG/1.0.1/M10JTAG-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pulserain/library/M10LCD/1.0.1/M10LCD-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M10LCD-1.0.1.tar.gz",
+    "size_bytes": 4302,
+    "sha256": "82c035cb7ec90e3deacf3412e93675b1c300046034b6b298ca6c33be207d092a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pulserain/library/M10LCD/1.0.1/M10LCD-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pulserain/library/M10LCD/1.0.1/M10LCD-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pulserain/library/M10PS2/1.0.0/M10PS2-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M10PS2-1.0.0.tar.gz",
+    "size_bytes": 4270,
+    "sha256": "e0a04bd8b3e7619f8f776f25d48882e2c6925bd4513b3f86d13d3bf2f9ce4b27",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pulserain/library/M10PS2/1.0.0/M10PS2-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pulserain/library/M10PS2/1.0.0/M10PS2-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pulserain/library/M10PWM/1.0.2/M10PWM-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M10PWM-1.0.2.tar.gz",
+    "size_bytes": 4592,
+    "sha256": "6dd87498f8d9ed269fbc65dff59d5f1489326bff9448e6384498e12ca60840a1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pulserain/library/M10PWM/1.0.2/M10PWM-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/pulserain/library/M10PWM/1.0.2/M10PWM-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pulserain/library/M10SD/1.0.2/M10SD-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M10SD-1.0.2.tar.gz",
+    "size_bytes": 20553,
+    "sha256": "a1376ab88707423eb8252babe685b9e2e8951c257cab41a641d60db2512c38cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pulserain/library/M10SD/1.0.2/M10SD-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/pulserain/library/M10SD/1.0.2/M10SD-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pulserain/library/M10SRAM/1.0.1/M10SRAM-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M10SRAM-1.0.1.tar.gz",
+    "size_bytes": 5076,
+    "sha256": "cbc974589cb12cd38f912d25d216c520ed008d47085336ae79c469294d2977d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pulserain/library/M10SRAM/1.0.1/M10SRAM-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pulserain/library/M10SRAM/1.0.1/M10SRAM-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pulserain/library/M10SerialAUX/1.0.1/M10SerialAUX-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M10SerialAUX-1.0.1.tar.gz",
+    "size_bytes": 5413,
+    "sha256": "5735a740d51565314aca055366a7ebfd1a5cc2dbde0a9bc2c12cdd2eed74c31a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pulserain/library/M10SerialAUX/1.0.1/M10SerialAUX-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pulserain/library/M10SerialAUX/1.0.1/M10SerialAUX-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pulserain/library/M10SevenSeg/1.0.2/M10SevenSeg-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M10SevenSeg-1.0.2.tar.gz",
+    "size_bytes": 4666,
+    "sha256": "15137447a32d9b15efe0eadc34335133a37e2a58eb622c6ae2c89271b0e6989c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pulserain/library/M10SevenSeg/1.0.2/M10SevenSeg-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/pulserain/library/M10SevenSeg/1.0.2/M10SevenSeg-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pulserain/library/PulseRainUARTConsole/1.0.4/PulseRainUARTConsole-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PulseRainUARTConsole-1.0.4.tar.gz",
+    "size_bytes": 6496,
+    "sha256": "a1618f58c279ea230cec96906416c6974b8e6fec1d3bde222490c7b676777cb6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pulserain/library/PulseRainUARTConsole/1.0.4/PulseRainUARTConsole-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/pulserain/library/PulseRainUARTConsole/1.0.4/PulseRainUARTConsole-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pulserain/library/Step_CYC10_I2C/1.0.2/Step_CYC10_I2C-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Step_CYC10_I2C-1.0.2.tar.gz",
+    "size_bytes": 4957,
+    "sha256": "7f8b6fe7bbc126a28c89ee49456a491d61bc54477aded5180bdbfd48bfeb1b6d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pulserain/library/Step_CYC10_I2C/1.0.2/Step_CYC10_I2C-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/pulserain/library/Step_CYC10_I2C/1.0.2/Step_CYC10_I2C-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pulserain/library/Step_CYC10_Seven_Seg_Display/1.0.5/Step_CYC10_Seven_Seg_Display-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Step_CYC10_Seven_Seg_Display-1.0.5.tar.gz",
+    "size_bytes": 5221,
+    "sha256": "bdd3e58f9a9ba35fde90b6a2316032bab8083b4ad925656fb5fcbfa0f7393662",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pulserain/library/Step_CYC10_Seven_Seg_Display/1.0.5/Step_CYC10_Seven_Seg_Display-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/pulserain/library/Step_CYC10_Seven_Seg_Display/1.0.5/Step_CYC10_Seven_Seg_Display-1.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

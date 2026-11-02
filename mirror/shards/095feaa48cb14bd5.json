@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-danjulio",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-danjulio/library/RadioHead/0.0.0+sha.e69d086cb053/RadioHead-0.0.0+sha.e69d086cb053.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RadioHead-0.0.0+sha.e69d086cb053.tar.gz",
+    "size_bytes": 21416,
+    "sha256": "7c688384118cc87a27ff03fc3df06a63507c76f9c60b66aa2b8dec86bdca07b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-danjulio/library/RadioHead/0.0.0%2Bsha.e69d086cb053/RadioHead-0.0.0%2Bsha.e69d086cb053.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-danjulio/library/RadioHead/0.0.0%2Bsha.e69d086cb053/RadioHead-0.0.0%2Bsha.e69d086cb053.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-danjulio/library/USBMSD_SD/0.0.0+sha.46888c9d5cd7/USBMSD_SD-0.0.0+sha.46888c9d5cd7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "USBMSD_SD-0.0.0+sha.46888c9d5cd7.tar.gz",
+    "size_bytes": 5931,
+    "sha256": "2b73aa6dac975f5f996785be65e518a5c2542ebd6dccdb7c8e76c9f65f49907e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-danjulio/library/USBMSD_SD/0.0.0%2Bsha.46888c9d5cd7/USBMSD_SD-0.0.0%2Bsha.46888c9d5cd7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-danjulio/library/USBMSD_SD/0.0.0%2Bsha.46888c9d5cd7/USBMSD_SD-0.0.0%2Bsha.46888c9d5cd7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-danjulio/library/max31865/0.0.0+sha.9294dd756a0c/max31865-0.0.0+sha.9294dd756a0c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "max31865-0.0.0+sha.9294dd756a0c.tar.gz",
+    "size_bytes": 2901,
+    "sha256": "1687f852f597722e2b27ebc06a5c432287904b55cf487845892507e321a726f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-danjulio/library/max31865/0.0.0%2Bsha.9294dd756a0c/max31865-0.0.0%2Bsha.9294dd756a0c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-danjulio/library/max31865/0.0.0%2Bsha.9294dd756a0c/max31865-0.0.0%2Bsha.9294dd756a0c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-danjulio/library/swspi/0.0.0+sha.8a4db0f083fc/swspi-0.0.0+sha.8a4db0f083fc.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "swspi-0.0.0+sha.8a4db0f083fc.tar.gz",
+    "size_bytes": 2323,
+    "sha256": "7fc7d3187f427372b725fd6d4aec895a49d5971f1500c864c03d9af38875e958",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-danjulio/library/swspi/0.0.0%2Bsha.8a4db0f083fc/swspi-0.0.0%2Bsha.8a4db0f083fc.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-danjulio/library/swspi/0.0.0%2Bsha.8a4db0f083fc/swspi-0.0.0%2Bsha.8a4db0f083fc.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/m1s2",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "m1s2/library/UI_LIB/2.0.3/UI_LIB-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UI_LIB-2.0.3.tar.gz",
+    "size_bytes": 91554,
+    "sha256": "b85b288700615809f5170e3d692adf04a69b1ea23d59d0ef2c22bc1dc338abb9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m1s2/library/UI_LIB/2.0.3/UI_LIB-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/m1s2/library/UI_LIB/2.0.3/UI_LIB-2.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

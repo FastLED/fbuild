@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-simonbarker",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-simonbarker/library/DS18B20/0.0.0+sha.d76559dea000/DS18B20-0.0.0+sha.d76559dea000.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS18B20-0.0.0+sha.d76559dea000.tar.gz",
+    "size_bytes": 1379,
+    "sha256": "5a21864f4879fb7366b607c773f109af8906d17876dc5c2ca4d83dcc121385d9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-simonbarker/library/DS18B20/0.0.0%2Bsha.d76559dea000/DS18B20-0.0.0%2Bsha.d76559dea000.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-simonbarker/library/DS18B20/0.0.0%2Bsha.d76559dea000/DS18B20-0.0.0%2Bsha.d76559dea000.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-simonbarker/library/HIH-4030/0.0.0+sha.114b50b41972/HIH-4030-0.0.0+sha.114b50b41972.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HIH-4030-0.0.0+sha.114b50b41972.tar.gz",
+    "size_bytes": 1096,
+    "sha256": "030896709f7d4f374a2059e8743dd327384350ed92910e1a60fb8bcce0626f57",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-simonbarker/library/HIH-4030/0.0.0%2Bsha.114b50b41972/HIH-4030-0.0.0%2Bsha.114b50b41972.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-simonbarker/library/HIH-4030/0.0.0%2Bsha.114b50b41972/HIH-4030-0.0.0%2Bsha.114b50b41972.tar.gz"
+    ]
+   }
+  }
+ ]
+}

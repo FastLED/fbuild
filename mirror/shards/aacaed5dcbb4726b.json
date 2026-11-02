@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/codewrite",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "codewrite/library/Capacitor/1.1.0/Capacitor-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Capacitor-1.1.0.tar.gz",
+    "size_bytes": 16183,
+    "sha256": "ea066b271d7d0e6c92d9a3d9d3dceb9a0f9cca7974fe4a5b3a37d28339d8f6ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewrite/library/Capacitor/1.1.0/Capacitor-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewrite/library/Capacitor/1.1.0/Capacitor-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

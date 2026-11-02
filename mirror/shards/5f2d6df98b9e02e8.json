@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sidikn",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sidikn/library/Gpio-ESP32/1.0.0/Gpio-ESP32-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Gpio-ESP32-1.0.0.tar.gz",
+    "size_bytes": 888,
+    "sha256": "503a05d5c0dfe65dd4cb67b7b900ea24b7287e1243ef399a2a7afea7334c5c7a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sidikn/library/Gpio-ESP32/1.0.0/Gpio-ESP32-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sidikn/library/Gpio-ESP32/1.0.0/Gpio-ESP32-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sidikn/library/GpioESP32/1.0.0/GpioESP32-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GpioESP32-1.0.0.tar.gz",
+    "size_bytes": 890,
+    "sha256": "b36866fd2c40435d87dea1d863f5658d837bf534517250eba0767d81ab77e090",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sidikn/library/GpioESP32/1.0.0/GpioESP32-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sidikn/library/GpioESP32/1.0.0/GpioESP32-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

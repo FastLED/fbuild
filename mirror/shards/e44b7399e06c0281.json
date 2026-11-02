@@ -1,0 +1,152 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rafaelreyescarmona",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rafaelreyescarmona/library/ACS712_Hall/0.3.2/ACS712_Hall-0.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ACS712_Hall-0.3.2.tar.gz",
+    "size_bytes": 17955,
+    "sha256": "0e6eee677ba4c301f59831b86eb967882f06ce3ff2c42fa1287d0467a4c540be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rafaelreyescarmona/library/ACS712_Hall/0.3.2/ACS712_Hall-0.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/rafaelreyescarmona/library/ACS712_Hall/0.3.2/ACS712_Hall-0.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rafaelreyescarmona/library/ADC/0.1.2/ADC-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADC-0.1.2.tar.gz",
+    "size_bytes": 3817,
+    "sha256": "94cac27047a77b7dd8d6842ae5be710b5b68cb88893728a60c89242b4705e6b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rafaelreyescarmona/library/ADC/0.1.2/ADC-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/rafaelreyescarmona/library/ADC/0.1.2/ADC-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rafaelreyescarmona/library/EMA/0.1.1/EMA-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EMA-0.1.1.tar.gz",
+    "size_bytes": 17049,
+    "sha256": "903799c143e429876286c75045fe6c5e5567fa3647da42d4f214ca68ab0c3b6a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rafaelreyescarmona/library/EMA/0.1.1/EMA-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/rafaelreyescarmona/library/EMA/0.1.1/EMA-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rafaelreyescarmona/library/Sunrise/1.1/Sunrise-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sunrise-1.1.tar.gz",
+    "size_bytes": 15454,
+    "sha256": "1cacaafa65591a36701c86b4c60eeddabb7a88a534fab56fe28a61c7ae9d583e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rafaelreyescarmona/library/Sunrise/1.1/Sunrise-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/rafaelreyescarmona/library/Sunrise/1.1/Sunrise-1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rafaelreyescarmona/library/ThermistorNTC/0.3.2/ThermistorNTC-0.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ThermistorNTC-0.3.2.tar.gz",
+    "size_bytes": 22813,
+    "sha256": "4293551846b63df4ed0ec48ad46b6ac9715047bf5de8b4be8004ee733a1044e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rafaelreyescarmona/library/ThermistorNTC/0.3.2/ThermistorNTC-0.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/rafaelreyescarmona/library/ThermistorNTC/0.3.2/ThermistorNTC-0.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rafaelreyescarmona/library/Time32/1.1.4/Time32-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Time32-1.1.4.tar.gz",
+    "size_bytes": 35572,
+    "sha256": "24565b2313d2433afd224c7b431f6b4efb851b26ee76f529d8ea2ba601eb1fc4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rafaelreyescarmona/library/Time32/1.1.4/Time32-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/rafaelreyescarmona/library/Time32/1.1.4/Time32-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rafaelreyescarmona/library/Timezone32/1.1/Timezone32-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Timezone32-1.1.tar.gz",
+    "size_bytes": 26165,
+    "sha256": "eb83b01b7bd24fbb86e9a642f1e7dfa9f7b6e84682acd8f28a053400e9c95c8c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rafaelreyescarmona/library/Timezone32/1.1/Timezone32-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/rafaelreyescarmona/library/Timezone32/1.1/Timezone32-1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rafaelreyescarmona/library/TinyBattery/0.2.2/TinyBattery-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyBattery-0.2.2.tar.gz",
+    "size_bytes": 17114,
+    "sha256": "4b44cc8cff45fb7d957e87443ffc1772f8c2ff1263cda02fad2ae9a8d48d7b80",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rafaelreyescarmona/library/TinyBattery/0.2.2/TinyBattery-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/rafaelreyescarmona/library/TinyBattery/0.2.2/TinyBattery-0.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rafaelreyescarmona/library/TinyLowPower/0.1/TinyLowPower-0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyLowPower-0.1.tar.gz",
+    "size_bytes": 15203,
+    "sha256": "87844a47b5b06c630c66599451f9f2ddb9195f9b157cb99d07dcaa685ebe4fea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rafaelreyescarmona/library/TinyLowPower/0.1/TinyLowPower-0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/rafaelreyescarmona/library/TinyLowPower/0.1/TinyLowPower-0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rafaelreyescarmona/library/UTMConversion/1.3/UTMConversion-1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UTMConversion-1.3.tar.gz",
+    "size_bytes": 1317664,
+    "sha256": "9cc7473fb133f84bdcfd2ed63f463af0ea40e584b145188c81f1fdfe5a58d5a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rafaelreyescarmona/library/UTMConversion/1.3/UTMConversion-1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/rafaelreyescarmona/library/UTMConversion/1.3/UTMConversion-1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rafaelreyescarmona/library/Vcc/0.1.5/Vcc-0.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Vcc-0.1.5.tar.gz",
+    "size_bytes": 13751,
+    "sha256": "0ea4b20496395055be162a61e9458d6977eedfe1f990604075f9c5080977bf49",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rafaelreyescarmona/library/Vcc/0.1.5/Vcc-0.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/rafaelreyescarmona/library/Vcc/0.1.5/Vcc-0.1.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/guerratron",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "guerratron/library/TouchCal/1.1/TouchCal-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TouchCal-1.1.tar.gz",
+    "size_bytes": 76263,
+    "sha256": "a8f6501421a5a7d1db8dfd8731bdf767dd8ff2f01b968377ff282a303253b8ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/guerratron/library/TouchCal/1.1/TouchCal-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/guerratron/library/TouchCal/1.1/TouchCal-1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "guerratron/library/minIniFS/1.0.1/minIniFS-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "minIniFS-1.0.1.tar.gz",
+    "size_bytes": 25773,
+    "sha256": "cc542f66a7ffff3e9aab3702970d522dd6b8c3d05db7b1d3b08b64784a21f6ba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/guerratron/library/minIniFS/1.0.1/minIniFS-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/guerratron/library/minIniFS/1.0.1/minIniFS-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

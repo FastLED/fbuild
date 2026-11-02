@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jnthas",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jnthas/library/Improv%20WiFi%20Library/0.0.2/ImprovWiFiLibrary-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ImprovWiFiLibrary-0.0.2.tar.gz",
+    "size_bytes": 7520,
+    "sha256": "f4c6017e9f0960f37921bafbf66f9353e3443d3bbd0e953b8106d2539a9c6df5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jnthas/library/Improv%2520WiFi%2520Library/0.0.2/ImprovWiFiLibrary-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jnthas/library/Improv%20WiFi%20Library/0.0.2/ImprovWiFiLibrary-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jnthas/library/Improv%20WiFi%20Library/0.0.3/ImprovWiFiLibrary-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ImprovWiFiLibrary-0.0.3.tar.gz",
+    "size_bytes": 7680,
+    "sha256": "099da8aa4224e7d2121a33745b1b3b2afb14e85e3ac87e4546b7857d4aefeef8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jnthas/library/Improv%2520WiFi%2520Library/0.0.3/ImprovWiFiLibrary-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/jnthas/library/Improv%20WiFi%20Library/0.0.3/ImprovWiFiLibrary-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jnthas/library/Improv%20WiFi%20Library/0.0.4/ImprovWiFiLibrary-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ImprovWiFiLibrary-0.0.4.tar.gz",
+    "size_bytes": 11695,
+    "sha256": "508f780aa0fa0cc2e1f9718210aaa1922d9cbdd38c530923f17871f6dd695d4b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jnthas/library/Improv%2520WiFi%2520Library/0.0.4/ImprovWiFiLibrary-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/jnthas/library/Improv%20WiFi%20Library/0.0.4/ImprovWiFiLibrary-0.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

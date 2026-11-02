@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/teenagex",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "teenagex/library/Led4/1.0.3/Led4-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Led4-1.0.3.tar.gz",
+    "size_bytes": 3414,
+    "sha256": "2ba2ab11c8945bf9af9bcd179e6b2aed175c0cca2cf0d889357046dd1f2b1db4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teenagex/library/Led4/1.0.3/Led4-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/teenagex/library/Led4/1.0.3/Led4-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "teenagex/library/ST7789/0.9.6/ST7789-0.9.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ST7789-0.9.6.tar.gz",
+    "size_bytes": 6985,
+    "sha256": "19d84d2eaec42bef2d30472c7403fa9ada438e754fb2f40918e170a86db7974d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teenagex/library/ST7789/0.9.6/ST7789-0.9.6.tar.gz",
+     "https://dl.registry.platformio.org/download/teenagex/library/ST7789/0.9.6/ST7789-0.9.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "teenagex/library/Xcache/1.0.2/Xcache-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Xcache-1.0.2.tar.gz",
+    "size_bytes": 2965,
+    "sha256": "24fca06bc7ee78aad65f27449604871608430887000412725303d5fbd8f34991",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teenagex/library/Xcache/1.0.2/Xcache-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/teenagex/library/Xcache/1.0.2/Xcache-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

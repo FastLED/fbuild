@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/whywilson",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "whywilson/library/ESP%20PN532%20UART/0.0.2/ESPPN532UART-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPPN532UART-0.0.2.tar.gz",
+    "size_bytes": 14961,
+    "sha256": "7702bd4dc9233168de086170d0b1447faf4d994236c54657cd6ecd7a8e19e3a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/whywilson/library/ESP%2520PN532%2520UART/0.0.2/ESPPN532UART-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/whywilson/library/ESP%20PN532%20UART/0.0.2/ESPPN532UART-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "whywilson/library/ESP%20PN532Killer/0.0.4/ESPPN532Killer-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPPN532Killer-0.0.4.tar.gz",
+    "size_bytes": 14551,
+    "sha256": "4fe319a34d89f5740f859ce1fd528f3e7a50e94d9e18b940ad3290b2682a36b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/whywilson/library/ESP%2520PN532Killer/0.0.4/ESPPN532Killer-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/whywilson/library/ESP%20PN532Killer/0.0.4/ESPPN532Killer-0.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

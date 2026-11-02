@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dralicimen",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dralicimen/library/dwiBus/1.0.0/dwiBus-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "dwiBus-1.0.0.tar.gz",
+    "size_bytes": 17878,
+    "sha256": "4ddfd7211c85a67ccff791e35fc7fc384ccc1129aef07ed5ff6a987d954483cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dralicimen/library/dwiBus/1.0.0/dwiBus-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dralicimen/library/dwiBus/1.0.0/dwiBus-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

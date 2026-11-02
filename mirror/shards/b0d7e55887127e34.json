@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-carlosperate",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-carlosperate/library/FXOS8700Q/0.0.0+sha.a8deb4ce9b4a/FXOS8700Q-0.0.0+sha.a8deb4ce9b4a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FXOS8700Q-0.0.0+sha.a8deb4ce9b4a.tar.gz",
+    "size_bytes": 3801,
+    "sha256": "834ae022fe6dae7216b1d1c7b6d9ddb1554345da3f221e98c99b35d8a0a40581",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-carlosperate/library/FXOS8700Q/0.0.0%2Bsha.a8deb4ce9b4a/FXOS8700Q-0.0.0%2Bsha.a8deb4ce9b4a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-carlosperate/library/FXOS8700Q/0.0.0%2Bsha.a8deb4ce9b4a/FXOS8700Q-0.0.0%2Bsha.a8deb4ce9b4a.tar.gz"
+    ]
+   }
+  }
+ ]
+}

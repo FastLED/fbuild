@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/farid1991",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "farid1991/library/DMDESP/1.1.2/DMDESP-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DMDESP-1.1.2.tar.gz",
+    "size_bytes": 45908,
+    "sha256": "1af778c5346110d44e41e549abe30e3c4c930f1a237bed99b9270bf5d8c3e4f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/farid1991/library/DMDESP/1.1.2/DMDESP-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/farid1991/library/DMDESP/1.1.2/DMDESP-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "farid1991/library/Dot%20Matrix%20Display%20P10%20library%20for%20ESP8266./1.1.1/DotMatrixDisplayP10libraryforESP8266.-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DotMatrixDisplayP10libraryforESP8266.-1.1.1.tar.gz",
+    "size_bytes": 44025,
+    "sha256": "f10bb822dd88279ad24cd1c02b01a826fcfe095eadb86c15f5b8044d5894a5e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/farid1991/library/Dot%2520Matrix%2520Display%2520P10%2520library%2520for%2520ESP8266./1.1.1/DotMatrixDisplayP10libraryforESP8266.-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/farid1991/library/Dot%20Matrix%20Display%20P10%20library%20for%20ESP8266./1.1.1/DotMatrixDisplayP10libraryforESP8266.-1.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

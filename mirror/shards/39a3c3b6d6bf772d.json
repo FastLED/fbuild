@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/traquito",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "traquito/library/WsprEncoded/4.3.2/WsprEncoded-4.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WsprEncoded-4.3.2.tar.gz",
+    "size_bytes": 27688,
+    "sha256": "d397dc2bb535739f16e976478864f3c3d250b1759432e86bf503584f5927294b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/traquito/library/WsprEncoded/4.3.2/WsprEncoded-4.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/traquito/library/WsprEncoded/4.3.2/WsprEncoded-4.3.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

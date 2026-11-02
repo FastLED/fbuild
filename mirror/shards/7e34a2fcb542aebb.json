@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dcs-skunkworks",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dcs-skunkworks/library/DCS-BIOS/0.3.10/DCS-BIOS-0.3.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DCS-BIOS-0.3.10.tar.gz",
+    "size_bytes": 291225,
+    "sha256": "455aa7fa6785ce5c3779699bab1c3ca0ae5e491b2fbe8de838eee8ff08ae6375",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dcs-skunkworks/library/DCS-BIOS/0.3.10/DCS-BIOS-0.3.10.tar.gz",
+     "https://dl.registry.platformio.org/download/dcs-skunkworks/library/DCS-BIOS/0.3.10/DCS-BIOS-0.3.10.tar.gz"
+    ]
+   }
+  }
+ ]
+}

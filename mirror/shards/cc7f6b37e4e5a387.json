@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mkopa",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mkopa/library/FixedPointBiquad/1.0.1/FixedPointBiquad-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FixedPointBiquad-1.0.1.tar.gz",
+    "size_bytes": 2140,
+    "sha256": "a36b1b29d0e0af2bbb366cc4f7a2b3c099f0a72a01684227eed48316f56668b2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mkopa/library/FixedPointBiquad/1.0.1/FixedPointBiquad-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mkopa/library/FixedPointBiquad/1.0.1/FixedPointBiquad-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/asheeshr",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "asheeshr/library/Microsmooth/0.0.0-alpha+sha.c9cf6ff69e/Microsmooth-0.0.0-alphasha.c9cf6ff69e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Microsmooth-0.0.0-alphasha.c9cf6ff69e.tar.gz",
+    "size_bytes": 11610,
+    "sha256": "cf3e708eb3791fc8693578fb3bb0c03a8c4c9fb4d3563a198dd6cbf76b822243",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/asheeshr/library/Microsmooth/0.0.0-alpha%2Bsha.c9cf6ff69e/Microsmooth-0.0.0-alphasha.c9cf6ff69e.tar.gz",
+     "https://dl.registry.platformio.org/download/asheeshr/library/Microsmooth/0.0.0-alpha%2Bsha.c9cf6ff69e/Microsmooth-0.0.0-alphasha.c9cf6ff69e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

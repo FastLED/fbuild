@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/eleboys",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "eleboys/library/LU9685/1.1.2/LU9685-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LU9685-1.1.2.tar.gz",
+    "size_bytes": 7785,
+    "sha256": "e6b82accee6a8a2b1e7a583928e5640da6b30eadff49b6f86595f28988a5e6de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eleboys/library/LU9685/1.1.2/LU9685-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/eleboys/library/LU9685/1.1.2/LU9685-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "eleboys/library/LU9685/1.1.4/LU9685-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LU9685-1.1.4.tar.gz",
+    "size_bytes": 8231,
+    "sha256": "0df32eb54093dd4ad4e8b94c59a25869d0d5b115e000b6bc0e5722fcfc49ce2b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eleboys/library/LU9685/1.1.4/LU9685-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/eleboys/library/LU9685/1.1.4/LU9685-1.1.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

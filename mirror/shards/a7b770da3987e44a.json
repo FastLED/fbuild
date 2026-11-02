@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/vedacool",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "vedacool/library/AzureIoT/1.1.1/AzureIoT-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AzureIoT-1.1.1.tar.gz",
+    "size_bytes": 69380,
+    "sha256": "d3260aa7c11a4ff902a0f17ae63ec478f8a80dc821e03b63ed7b945dec0c2dbd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vedacool/library/AzureIoT/1.1.1/AzureIoT-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vedacool/library/AzureIoT/1.1.1/AzureIoT-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vedacool/library/AzureIoT/1.2.10/AzureIoT-1.2.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AzureIoT-1.2.10.tar.gz",
+    "size_bytes": 88315,
+    "sha256": "f21bbd91b9c1e03bb9fd9e82de15cc1f7dd199ef4ba93b3046247e599b2dc8ea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vedacool/library/AzureIoT/1.2.10/AzureIoT-1.2.10.tar.gz",
+     "https://dl.registry.platformio.org/download/vedacool/library/AzureIoT/1.2.10/AzureIoT-1.2.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vedacool/library/AzureIoT/1.2.8/AzureIoT-1.2.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AzureIoT-1.2.8.tar.gz",
+    "size_bytes": 80588,
+    "sha256": "d80c437e344c7075a0601173a6b4e33124956228703dee8cc8f9991e8c29fd7e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vedacool/library/AzureIoT/1.2.8/AzureIoT-1.2.8.tar.gz",
+     "https://dl.registry.platformio.org/download/vedacool/library/AzureIoT/1.2.8/AzureIoT-1.2.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vedacool/library/AzureIoT/1.3.3/AzureIoT-1.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AzureIoT-1.3.3.tar.gz",
+    "size_bytes": 92528,
+    "sha256": "cc46cec0e5ee215ae0824f665e5ddd4b54311298ce81bedba4c5d980833cf728",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vedacool/library/AzureIoT/1.3.3/AzureIoT-1.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/vedacool/library/AzureIoT/1.3.3/AzureIoT-1.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vedacool/library/AzureIoT/1.4.0/AzureIoT-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AzureIoT-1.4.0.tar.gz",
+    "size_bytes": 95394,
+    "sha256": "698b88c20f3345a666d3295df261db4fdc1e7bb83076045fe9d1ca2def258c7d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vedacool/library/AzureIoT/1.4.0/AzureIoT-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vedacool/library/AzureIoT/1.4.0/AzureIoT-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vedacool/library/AzureIoT/1.5.1/AzureIoT-1.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AzureIoT-1.5.1.tar.gz",
+    "size_bytes": 122670,
+    "sha256": "75041bb38da09ce996d010a224e81f729de2eaad15603dbf4578c33482e15fb8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vedacool/library/AzureIoT/1.5.1/AzureIoT-1.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vedacool/library/AzureIoT/1.5.1/AzureIoT-1.5.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-zrem",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-zrem/library/WiFi/0.0.0+sha.a446a6e2d3ce/WiFi-0.0.0+sha.a446a6e2d3ce.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFi-0.0.0+sha.a446a6e2d3ce.tar.gz",
+    "size_bytes": 1939,
+    "sha256": "13f95b12fb84f93e49f2dd4007e2bba89b256d03fe55a12b2e9fd183a3b3569c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-zrem/library/WiFi/0.0.0%2Bsha.a446a6e2d3ce/WiFi-0.0.0%2Bsha.a446a6e2d3ce.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-zrem/library/WiFi/0.0.0%2Bsha.a446a6e2d3ce/WiFi-0.0.0%2Bsha.a446a6e2d3ce.tar.gz"
+    ]
+   }
+  }
+ ]
+}

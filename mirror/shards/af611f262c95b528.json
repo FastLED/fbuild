@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/wk1093",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "wk1093/library/CrossScheduler/1.0.0/CrossScheduler-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CrossScheduler-1.0.0.tar.gz",
+    "size_bytes": 4750,
+    "sha256": "a6dd5d90bd72b8e13cdb615c34f6a5f0d0428d0d9659cb161c1b98589a943268",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wk1093/library/CrossScheduler/1.0.0/CrossScheduler-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/wk1093/library/CrossScheduler/1.0.0/CrossScheduler-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

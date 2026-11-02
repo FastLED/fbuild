@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/arducam",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "arducam/library/ArduCAM/1.0.0/ArduCAM-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduCAM-1.0.0.tar.gz",
+    "size_bytes": 3345306,
+    "sha256": "e3ce8453669daca69a5748564ab6c72746f3a613a9d7000f218810292c1571ac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arducam/library/ArduCAM/1.0.0/ArduCAM-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arducam/library/ArduCAM/1.0.0/ArduCAM-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arducam/library/Arducam_Qwiic_CAM/2.0.0/Arducam_Qwiic_CAM-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arducam_Qwiic_CAM-2.0.0.tar.gz",
+    "size_bytes": 15279,
+    "sha256": "dd6966ae266654a39a58fea9865a46c5b22154271788425de0bb511e8a3bc65f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arducam/library/Arducam_Qwiic_CAM/2.0.0/Arducam_Qwiic_CAM-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arducam/library/Arducam_Qwiic_CAM/2.0.0/Arducam_Qwiic_CAM-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arducam/library/Arducam_Qwiic_CAM/2.0.1/Arducam_Qwiic_CAM-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arducam_Qwiic_CAM-2.0.1.tar.gz",
+    "size_bytes": 20432,
+    "sha256": "6a41827b84f474867dd546c43e1602357e59dba037e967b7e66138ac059ac5f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arducam/library/Arducam_Qwiic_CAM/2.0.1/Arducam_Qwiic_CAM-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arducam/library/Arducam_Qwiic_CAM/2.0.1/Arducam_Qwiic_CAM-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arducam/library/arducam_dvp/1.0.0/arducam_dvp-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arducam_dvp-1.0.0.tar.gz",
+    "size_bytes": 33353,
+    "sha256": "660a636101f2bb04ea7ac33a77627ca6ee4944e0feb7492c9774fc966301f745",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arducam/library/arducam_dvp/1.0.0/arducam_dvp-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arducam/library/arducam_dvp/1.0.0/arducam_dvp-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-mr63",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-mr63/library/DebounceIn/0.0.0+sha.323110faffe5/DebounceIn-0.0.0+sha.323110faffe5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DebounceIn-0.0.0+sha.323110faffe5.tar.gz",
+    "size_bytes": 1398,
+    "sha256": "b8d192d9d0f5f65e96c5d64d96396f55277ce741b0c74be36a04c5ecee3ec14c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mr63/library/DebounceIn/0.0.0%2Bsha.323110faffe5/DebounceIn-0.0.0%2Bsha.323110faffe5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mr63/library/DebounceIn/0.0.0%2Bsha.323110faffe5/DebounceIn-0.0.0%2Bsha.323110faffe5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-mr63/library/LCD%20TextDisplay/0.0.0+sha.0e97b0a48eb8/LCDTextDisplay-0.0.0+sha.0e97b0a48eb8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCDTextDisplay-0.0.0+sha.0e97b0a48eb8.tar.gz",
+    "size_bytes": 1970,
+    "sha256": "b8d69b98854429ac173638bf0bd3e355a742d931372ee2d3c56b54035ac83571",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mr63/library/LCD%2520TextDisplay/0.0.0%2Bsha.0e97b0a48eb8/LCDTextDisplay-0.0.0%2Bsha.0e97b0a48eb8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mr63/library/LCD%20TextDisplay/0.0.0%2Bsha.0e97b0a48eb8/LCDTextDisplay-0.0.0%2Bsha.0e97b0a48eb8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-mr63/library/LKM1638/0.0.0+sha.c05022d4f68c/LKM1638-0.0.0+sha.c05022d4f68c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LKM1638-0.0.0+sha.c05022d4f68c.tar.gz",
+    "size_bytes": 3339,
+    "sha256": "b5a723426a1b271ef1d60c854559c9a6aa20ebd53eeaf1d097956d8489ac9d09",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mr63/library/LKM1638/0.0.0%2Bsha.c05022d4f68c/LKM1638-0.0.0%2Bsha.c05022d4f68c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mr63/library/LKM1638/0.0.0%2Bsha.c05022d4f68c/LKM1638-0.0.0%2Bsha.c05022d4f68c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-mr63/library/MPL3115A2/0.0.0+sha.67dffed9369b/MPL3115A2-0.0.0+sha.67dffed9369b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPL3115A2-0.0.0+sha.67dffed9369b.tar.gz",
+    "size_bytes": 1941,
+    "sha256": "afbceb7a23cc47b0e354119fb323f4115e41d4a8436bd22d87b71ab2ed0d2c02",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mr63/library/MPL3115A2/0.0.0%2Bsha.67dffed9369b/MPL3115A2-0.0.0%2Bsha.67dffed9369b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mr63/library/MPL3115A2/0.0.0%2Bsha.67dffed9369b/MPL3115A2-0.0.0%2Bsha.67dffed9369b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-mr63/library/MorseCode/0.0.0+sha.c3c4f0cd78cd/MorseCode-0.0.0+sha.c3c4f0cd78cd.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MorseCode-0.0.0+sha.c3c4f0cd78cd.tar.gz",
+    "size_bytes": 1998,
+    "sha256": "8774002267e7b52e2806cf9acca943467691f05235d99064aa5ebd215948d598",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mr63/library/MorseCode/0.0.0%2Bsha.c3c4f0cd78cd/MorseCode-0.0.0%2Bsha.c3c4f0cd78cd.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mr63/library/MorseCode/0.0.0%2Bsha.c3c4f0cd78cd/MorseCode-0.0.0%2Bsha.c3c4f0cd78cd.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-mr63/library/PwmOutAny/0.0.0+sha.9eb94736e774/PwmOutAny-0.0.0+sha.9eb94736e774.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PwmOutAny-0.0.0+sha.9eb94736e774.tar.gz",
+    "size_bytes": 1552,
+    "sha256": "e115e2a1ea87a49a53cdec4fb159c93c7c1edac8723141cd105f6c1dac7a4236",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mr63/library/PwmOutAny/0.0.0%2Bsha.9eb94736e774/PwmOutAny-0.0.0%2Bsha.9eb94736e774.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mr63/library/PwmOutAny/0.0.0%2Bsha.9eb94736e774/PwmOutAny-0.0.0%2Bsha.9eb94736e774.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-mr63/library/Sparkfun_BMP085/0.0.0+sha.2ae3dabe45e8/Sparkfun_BMP085-0.0.0+sha.2ae3dabe45e8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sparkfun_BMP085-0.0.0+sha.2ae3dabe45e8.tar.gz",
+    "size_bytes": 2151,
+    "sha256": "1a1c173d1e693c4b79d96d55dbee43b99c043311ec20d819a01af3bc6a6fe79f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mr63/library/Sparkfun_BMP085/0.0.0%2Bsha.2ae3dabe45e8/Sparkfun_BMP085-0.0.0%2Bsha.2ae3dabe45e8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mr63/library/Sparkfun_BMP085/0.0.0%2Bsha.2ae3dabe45e8/Sparkfun_BMP085-0.0.0%2Bsha.2ae3dabe45e8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-mr63/library/TI-ADC0848/0.0.0+sha.a76d9079d07b/TI-ADC0848-0.0.0+sha.a76d9079d07b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TI-ADC0848-0.0.0+sha.a76d9079d07b.tar.gz",
+    "size_bytes": 1929,
+    "sha256": "643f7ccc3408bb0590407eca206b1548be0f3b7fa22d8a508ed6932ddeb6f018",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mr63/library/TI-ADC0848/0.0.0%2Bsha.a76d9079d07b/TI-ADC0848-0.0.0%2Bsha.a76d9079d07b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mr63/library/TI-ADC0848/0.0.0%2Bsha.a76d9079d07b/TI-ADC0848-0.0.0%2Bsha.a76d9079d07b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

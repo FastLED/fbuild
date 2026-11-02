@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gpstar81",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gpstar81/library/GPStar%20Audio%20Serial%20Library/1.3.2/GPStarAudioSerialLibrary-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GPStarAudioSerialLibrary-1.3.2.tar.gz",
+    "size_bytes": 6248158,
+    "sha256": "0f332de776eb78716e96265b6c5bca324c244adf7a1bcb604a28130427322f20",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gpstar81/library/GPStar%2520Audio%2520Serial%2520Library/1.3.2/GPStarAudioSerialLibrary-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gpstar81/library/GPStar%20Audio%20Serial%20Library/1.3.2/GPStarAudioSerialLibrary-1.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gpstar81/library/GPStar%20Audio%20Serial%20Library/1.3.4/GPStarAudioSerialLibrary-1.3.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GPStarAudioSerialLibrary-1.3.4.tar.gz",
+    "size_bytes": 6248179,
+    "sha256": "9b2e8c5920c58079da0209515fdee78f3244388552d8054c826dfa336a1858f5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gpstar81/library/GPStar%2520Audio%2520Serial%2520Library/1.3.4/GPStarAudioSerialLibrary-1.3.4.tar.gz",
+     "https://dl.registry.platformio.org/download/gpstar81/library/GPStar%20Audio%20Serial%20Library/1.3.4/GPStarAudioSerialLibrary-1.3.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gpstar81/library/GPStar%20Audio%20Serial%20Library/1.3.5/GPStarAudioSerialLibrary-1.3.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GPStarAudioSerialLibrary-1.3.5.tar.gz",
+    "size_bytes": 6248387,
+    "sha256": "425499b3d8b571a6e1f049197d88ffc971b2ba31d3c49564c8487e2da773c9e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gpstar81/library/GPStar%2520Audio%2520Serial%2520Library/1.3.5/GPStarAudioSerialLibrary-1.3.5.tar.gz",
+     "https://dl.registry.platformio.org/download/gpstar81/library/GPStar%20Audio%20Serial%20Library/1.3.5/GPStarAudioSerialLibrary-1.3.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

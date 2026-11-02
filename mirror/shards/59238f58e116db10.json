@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-pmckenna",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-pmckenna/library/MLXLINMASTER/0.0.0+sha.eb9f36871a01/MLXLINMASTER-0.0.0+sha.eb9f36871a01.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MLXLINMASTER-0.0.0+sha.eb9f36871a01.tar.gz",
+    "size_bytes": 4714,
+    "sha256": "f892e6df5cc59c27ea9d81d9154b9b3d0f6d396bdca8450e922a5f9d040834ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pmckenna/library/MLXLINMASTER/0.0.0%2Bsha.eb9f36871a01/MLXLINMASTER-0.0.0%2Bsha.eb9f36871a01.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pmckenna/library/MLXLINMASTER/0.0.0%2Bsha.eb9f36871a01/MLXLINMASTER-0.0.0%2Bsha.eb9f36871a01.tar.gz"
+    ]
+   }
+  }
+ ]
+}

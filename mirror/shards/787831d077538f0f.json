@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-gurh-an",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-gurh-an/library/FastPWM/0.0.0+sha.0014e85fe8b8/FastPWM-0.0.0+sha.0014e85fe8b8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastPWM-0.0.0+sha.0014e85fe8b8.tar.gz",
+    "size_bytes": 5347,
+    "sha256": "63924e8d33d37471535724b5c1a42b48f975ad9d6d672ad5b6891207d58663a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-gurh-an/library/FastPWM/0.0.0%2Bsha.0014e85fe8b8/FastPWM-0.0.0%2Bsha.0014e85fe8b8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-gurh-an/library/FastPWM/0.0.0%2Bsha.0014e85fe8b8/FastPWM-0.0.0%2Bsha.0014e85fe8b8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

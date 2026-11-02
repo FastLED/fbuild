@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/somhi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "somhi/library/ESP8266%20SSD1306/1.0.0/ESP8266SSD1306-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266SSD1306-1.0.0.tar.gz",
+    "size_bytes": 11965,
+    "sha256": "2a78140661551b518619317c7db8373c705cf0e7adfec3f5d33e8a7114651d01",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/somhi/library/ESP8266%2520SSD1306/1.0.0/ESP8266SSD1306-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/somhi/library/ESP8266%20SSD1306/1.0.0/ESP8266SSD1306-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

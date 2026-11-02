@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/embedded-c-lib",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "embedded-c-lib/library/TwoPtCalCurve/1.0.0/TwoPtCalCurve-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TwoPtCalCurve-1.0.0.tar.gz",
+    "size_bytes": 2896,
+    "sha256": "a1dff458fb3efdab094f7837e9284142e4a71487bac78e142ea69bbfb1e8a3c3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/embedded-c-lib/library/TwoPtCalCurve/1.0.0/TwoPtCalCurve-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/embedded-c-lib/library/TwoPtCalCurve/1.0.0/TwoPtCalCurve-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

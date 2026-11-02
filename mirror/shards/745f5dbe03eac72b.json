@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/monsieurvor",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "monsieurvor/library/HTTPClientGeneric/1.0.0/HTTPClientGeneric-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HTTPClientGeneric-1.0.0.tar.gz",
+    "size_bytes": 13792,
+    "sha256": "f2a188f71d41511d8c82b75e4e193c51f144e4e2069fc57990a4abe65f64e13f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/monsieurvor/library/HTTPClientGeneric/1.0.0/HTTPClientGeneric-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/monsieurvor/library/HTTPClientGeneric/1.0.0/HTTPClientGeneric-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

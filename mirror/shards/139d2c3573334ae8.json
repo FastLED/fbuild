@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/riffer",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "riffer/library/Bolder%20Flight%20Systems%20SBUS/2.1.2/BolderFlightSystemsSBUS-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BolderFlightSystemsSBUS-2.1.2.tar.gz",
+    "size_bytes": 6375,
+    "sha256": "554338b42fae4d5abf2808ba4dae41e97f8bffe2987686123fd9401240204546",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/riffer/library/Bolder%2520Flight%2520Systems%2520SBUS/2.1.2/BolderFlightSystemsSBUS-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/riffer/library/Bolder%20Flight%20Systems%20SBUS/2.1.2/BolderFlightSystemsSBUS-2.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

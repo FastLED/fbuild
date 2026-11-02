@@ -1,0 +1,893 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/leftcoast",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "leftcoast/library/LCP_breakout/1.0.0/LCP_breakout-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCP_breakout-1.0.0.tar.gz",
+    "size_bytes": 9975,
+    "sha256": "e4f876399f553d9de2069a4c4e095d90c3be8d022be5bc6942e06d03e635a280",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LCP_breakout/1.0.0/LCP_breakout-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LCP_breakout/1.0.0/LCP_breakout-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LCP_breakout/1.2.0/LCP_breakout-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCP_breakout-1.2.0.tar.gz",
+    "size_bytes": 9981,
+    "sha256": "d559841f9699213ae51d1d3529097845b774f25dffe323ed590f69cac030b38d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LCP_breakout/1.2.0/LCP_breakout-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LCP_breakout/1.2.0/LCP_breakout-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LCP_grenade/1.0.0/LCP_grenade-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCP_grenade-1.0.0.tar.gz",
+    "size_bytes": 19044,
+    "sha256": "83e45ee76e4510dbf282db44554ed4a482fac79fd3bdf20173da44712d7ab641",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LCP_grenade/1.0.0/LCP_grenade-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LCP_grenade/1.0.0/LCP_grenade-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LCP_iconEdit/1.0.0/LCP_iconEdit-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCP_iconEdit-1.0.0.tar.gz",
+    "size_bytes": 7879,
+    "sha256": "75066b52679e5f7ae66161708e446667b72a1ad50deb00d7bd4245400f6b45ca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LCP_iconEdit/1.0.0/LCP_iconEdit-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LCP_iconEdit/1.0.0/LCP_iconEdit-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LCP_rpnCalc/1.0.0/LCP_rpnCalc-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCP_rpnCalc-1.0.0.tar.gz",
+    "size_bytes": 8003,
+    "sha256": "be3c9f916fc0774cc57b86a1e8a1ad23a4fa3f236dd9290c97f1ee50854b1c5f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LCP_rpnCalc/1.0.0/LCP_rpnCalc-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LCP_rpnCalc/1.0.0/LCP_rpnCalc-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LCP_rpnCalc/1.0.1/LCP_rpnCalc-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCP_rpnCalc-1.0.1.tar.gz",
+    "size_bytes": 8009,
+    "sha256": "21dd835631dfb18312b961ca74db70caed1b6b0f1f358bce384fb59f65abc5f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LCP_rpnCalc/1.0.1/LCP_rpnCalc-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LCP_rpnCalc/1.0.1/LCP_rpnCalc-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LCP_rpnCalc/1.2.0/LCP_rpnCalc-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCP_rpnCalc-1.2.0.tar.gz",
+    "size_bytes": 8011,
+    "sha256": "424e2ab0f592689b780a102c3d5d358748756f3719d52777a38fcc27a96a7fc0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LCP_rpnCalc/1.2.0/LCP_rpnCalc-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LCP_rpnCalc/1.2.0/LCP_rpnCalc-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LCP_sTerm/1.0.0/LCP_sTerm-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCP_sTerm-1.0.0.tar.gz",
+    "size_bytes": 6339,
+    "sha256": "a64047e55734f35d642f9011792fe6420183989c1d5cc4d005f4ee4c0058c424",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LCP_sTerm/1.0.0/LCP_sTerm-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LCP_sTerm/1.0.0/LCP_sTerm-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LCP_sTerm/1.0.2/LCP_sTerm-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCP_sTerm-1.0.2.tar.gz",
+    "size_bytes": 6335,
+    "sha256": "ed480429267ef1a95603ea88668b8f819ca5a5697d87779588f3bfce0a10afb2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LCP_sTerm/1.0.2/LCP_sTerm-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LCP_sTerm/1.0.2/LCP_sTerm-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LCP_sett/1.0.0/LCP_sett-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCP_sett-1.0.0.tar.gz",
+    "size_bytes": 36283,
+    "sha256": "87406cadcaf2595ef71d92b77983af8b50f282edf9b2bd46fba5b92b69691d87",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LCP_sett/1.0.0/LCP_sett-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LCP_sett/1.0.0/LCP_sett-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LCP_shopList/1.1.0/LCP_shopList-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCP_shopList-1.1.0.tar.gz",
+    "size_bytes": 19839,
+    "sha256": "e1ccedbe31df5b9d3d2e4e52648d47aefa6d3f6de6839f0b407a693b6774d720",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LCP_shopList/1.1.0/LCP_shopList-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LCP_shopList/1.1.0/LCP_shopList-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LCP_sliderPz/1.0.0/LCP_sliderPz-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCP_sliderPz-1.0.0.tar.gz",
+    "size_bytes": 950740,
+    "sha256": "55eae7aad5cd3dedfca1fc1d9cfc93e36619eea2d7f55314ee5997eccf6438fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LCP_sliderPz/1.0.0/LCP_sliderPz-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LCP_sliderPz/1.0.0/LCP_sliderPz-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_Adafruit_1431/1.0.1/LC_Adafruit_1431-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_Adafruit_1431-1.0.1.tar.gz",
+    "size_bytes": 2503,
+    "sha256": "79144ae8d02f5233d2b5c5fea972b05b664112abb9b405c4cac95e8b88bc33f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_Adafruit_1431/1.0.1/LC_Adafruit_1431-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_Adafruit_1431/1.0.1/LC_Adafruit_1431-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_Adafruit_1947/1.1.1/LC_Adafruit_1947-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_Adafruit_1947-1.1.1.tar.gz",
+    "size_bytes": 4040,
+    "sha256": "35cd87c05db141e97b61fbef1af77a3858f0d3c7915558a763daf433fa17755c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_Adafruit_1947/1.1.1/LC_Adafruit_1947-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_Adafruit_1947/1.1.1/LC_Adafruit_1947-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_Adafruit_1947/1.1.2/LC_Adafruit_1947-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_Adafruit_1947-1.1.2.tar.gz",
+    "size_bytes": 4040,
+    "sha256": "68739c89912dc9c2baf628c7b6dff03c1d7db03b79aab1cbd80d78e97b86e394",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_Adafruit_1947/1.1.2/LC_Adafruit_1947-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_Adafruit_1947/1.1.2/LC_Adafruit_1947-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_Adafruit_1947/1.1/LC_Adafruit_1947-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_Adafruit_1947-1.1.tar.gz",
+    "size_bytes": 4053,
+    "sha256": "57672d369ccd707147bdec629d3f4964036088471785bcf93ed07ace4a7d29ec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_Adafruit_1947/1.1/LC_Adafruit_1947-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_Adafruit_1947/1.1/LC_Adafruit_1947-1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_Adafruit_2050/1.0/LC_Adafruit_2050-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_Adafruit_2050-1.0.tar.gz",
+    "size_bytes": 3843,
+    "sha256": "6610ebd88bccdad50eaed069c36ecaf3a8b7e43f2a028c5092b6b8412941865b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_Adafruit_2050/1.0/LC_Adafruit_2050-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_Adafruit_2050/1.0/LC_Adafruit_2050-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_Adafruit_684/1.0/LC_Adafruit_684-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_Adafruit_684-1.0.tar.gz",
+    "size_bytes": 2491,
+    "sha256": "06578e1f2ca788bd4ae7ea15a61e9784c11a0df90a96d4581d0ca36b4ee5ad05",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_Adafruit_684/1.0/LC_Adafruit_684-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_Adafruit_684/1.0/LC_Adafruit_684-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_Adafruit_GPS/1.0/LC_Adafruit_GPS-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_Adafruit_GPS-1.0.tar.gz",
+    "size_bytes": 8709,
+    "sha256": "a949c8776c452d2d687e60970e118daffd029220ece610447f155518c2a88d99",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_Adafruit_GPS/1.0/LC_Adafruit_GPS-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_Adafruit_GPS/1.0/LC_Adafruit_GPS-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_Adafruit_VS1053/1.0/LC_Adafruit_VS1053-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_Adafruit_VS1053-1.0.tar.gz",
+    "size_bytes": 4030,
+    "sha256": "d604d2c6dd2abf2937b3a1ccf1f0f0dd3922e340a9eaa3d86776410cbbab5519",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_Adafruit_VS1053/1.0/LC_Adafruit_VS1053-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_Adafruit_VS1053/1.0/LC_Adafruit_VS1053-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_DFRobot_0995/1.0/LC_DFRobot_0995-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_DFRobot_0995-1.0.tar.gz",
+    "size_bytes": 2930,
+    "sha256": "320b93b8dac2ada43454c909e691ad97554a3b7ffca19ac0369a643637bdad14",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_DFRobot_0995/1.0/LC_DFRobot_0995-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_DFRobot_0995/1.0/LC_DFRobot_0995-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_GUITools/1.0/LC_GUITools-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_GUITools-1.0.tar.gz",
+    "size_bytes": 43146,
+    "sha256": "771349926119276bb3cd123192fee0518925aa3d2e7fefab37f43c5af402dddf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_GUITools/1.0/LC_GUITools-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_GUITools/1.0/LC_GUITools-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_GUITools/1.2.0/LC_GUITools-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_GUITools-1.2.0.tar.gz",
+    "size_bytes": 43154,
+    "sha256": "640af5501437754d6426c0b405663e1067a170b53acd00ee0982cdf761b6c9b6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_GUITools/1.2.0/LC_GUITools-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_GUITools/1.2.0/LC_GUITools-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_GUITools/1.3.0/LC_GUITools-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_GUITools-1.3.0.tar.gz",
+    "size_bytes": 44032,
+    "sha256": "8ae9a0da0e27144c1352882f10003fc42f56ecbafe6f359cdc2fe383c1a5d781",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_GUITools/1.3.0/LC_GUITools-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_GUITools/1.3.0/LC_GUITools-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_MSP3526_T/1.0.0/LC_MSP3526_T-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_MSP3526_T-1.0.0.tar.gz",
+    "size_bytes": 3979,
+    "sha256": "effb7f86ef4ec232b7366319e64a6faef90304f31387aefa683baf47cb1e8b97",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_MSP3526_T/1.0.0/LC_MSP3526_T-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_MSP3526_T/1.0.0/LC_MSP3526_T-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_RPNCalculator/1.0/LC_RPNCalculator-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_RPNCalculator-1.0.tar.gz",
+    "size_bytes": 4472,
+    "sha256": "c74c8146d1016c71ab58735d15cd2845d5f6e08365e5a779f0a0ecbfa5bc70bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_RPNCalculator/1.0/LC_RPNCalculator-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_RPNCalculator/1.0/LC_RPNCalculator-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_SAE_J1939/1.0/LC_SAE_J1939-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_SAE_J1939-1.0.tar.gz",
+    "size_bytes": 46541,
+    "sha256": "4a162d5483ddefc40e7cb612d217c840373de069aeff3057257aeebd1cc41ea5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_SAE_J1939/1.0/LC_SAE_J1939-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_SAE_J1939/1.0/LC_SAE_J1939-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_SDTools/1.0/LC_SDTools-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_SDTools-1.0.tar.gz",
+    "size_bytes": 18370,
+    "sha256": "01203522ca75e8730e242cf47a4c2e32404611872f09cfd4c9cfc77478d8bf9d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_SDTools/1.0/LC_SDTools-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_SDTools/1.0/LC_SDTools-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_SDTools/1.2.0/LC_SDTools-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_SDTools-1.2.0.tar.gz",
+    "size_bytes": 18423,
+    "sha256": "b5a260dcb83f665e892fa9ce02eed990f2554d4a75deacc74915cbd529ce46b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_SDTools/1.2.0/LC_SDTools-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_SDTools/1.2.0/LC_SDTools-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_SPI/1.0/LC_SPI-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_SPI-1.0.tar.gz",
+    "size_bytes": 2096,
+    "sha256": "1cf74e7439a0f22da43de80fbdb1e9eaadbce239b5c8521395f7653b2d26212e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_SPI/1.0/LC_SPI-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_SPI/1.0/LC_SPI-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_baseTools/1.10/LC_baseTools-1.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_baseTools-1.10.tar.gz",
+    "size_bytes": 43862,
+    "sha256": "632e29066a7cb5bf6cf0a679642800808d2b3ba3a994e4c587567cd938a71e44",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_baseTools/1.10/LC_baseTools-1.10.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_baseTools/1.10/LC_baseTools-1.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_baseTools/1.11.0/LC_baseTools-1.11.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_baseTools-1.11.0.tar.gz",
+    "size_bytes": 43902,
+    "sha256": "de530c5821fa2fdc2c1ac323000aaea4549308bb6e993c5f265c76a7cd9323fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_baseTools/1.11.0/LC_baseTools-1.11.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_baseTools/1.11.0/LC_baseTools-1.11.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_baseTools/1.12.0/LC_baseTools-1.12.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_baseTools-1.12.0.tar.gz",
+    "size_bytes": 44431,
+    "sha256": "7d170ffb2abdf092ea44b668a451531d930b438cce2ba3fa3ed561671075a41b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_baseTools/1.12.0/LC_baseTools-1.12.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_baseTools/1.12.0/LC_baseTools-1.12.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_baseTools/1.9/LC_baseTools-1.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_baseTools-1.9.tar.gz",
+    "size_bytes": 45443,
+    "sha256": "db421f935107672669bfcb8376027c3e5d8813b9ba74379cb081d897f83b4970",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_baseTools/1.9/LC_baseTools-1.9.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_baseTools/1.9/LC_baseTools-1.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_blockfile/1.0/LC_blockfile-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_blockfile-1.0.tar.gz",
+    "size_bytes": 10261,
+    "sha256": "1e725dd6f7b99250d86782667638661031152119307f1d45e6a80d9985cdf585",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_blockfile/1.0/LC_blockfile-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_blockfile/1.0/LC_blockfile-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_blockfile/1.1.0/LC_blockfile-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_blockfile-1.1.0.tar.gz",
+    "size_bytes": 10332,
+    "sha256": "fa5f5754962e15ada855e50ea8b444820af41386b6b4e0d3b8824d7b47519c54",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_blockfile/1.1.0/LC_blockfile-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_blockfile/1.1.0/LC_blockfile-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_bmpTools/1.0.1/LC_bmpObj-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_bmpObj-1.0.1.tar.gz",
+    "size_bytes": 5806,
+    "sha256": "1d01df8727ff6772bac551e20f190b5a25d56d6817792c80deec0ba9fb723b40",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_bmpTools/1.0.1/LC_bmpObj-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_bmpTools/1.0.1/LC_bmpObj-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_bmpTools/1.0.2/LC_bmpTools-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_bmpTools-1.0.2.tar.gz",
+    "size_bytes": 5806,
+    "sha256": "83037aacdef0905c95ff17f55e7f16022823c75f56d1c0e544eded36b0f515e7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_bmpTools/1.0.2/LC_bmpTools-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_bmpTools/1.0.2/LC_bmpTools-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_bmpTools/1.0/LC_bmpObj-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_bmpObj-1.0.tar.gz",
+    "size_bytes": 5807,
+    "sha256": "26af6a0d759c3706ac8f89bb234796b3ecc90a3bf37eb87ee9f70ec7730d6856",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_bmpTools/1.0/LC_bmpObj-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_bmpTools/1.0/LC_bmpObj-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_bmpTools/1.2.0/LC_bmpTools-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_bmpTools-1.2.0.tar.gz",
+    "size_bytes": 5800,
+    "sha256": "31cc4db0a9196424cec8d1e2a8c216fe891c9c1d6e76172d7439be106b48b977",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_bmpTools/1.2.0/LC_bmpTools-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_bmpTools/1.2.0/LC_bmpTools-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_bmpTools/1.3.0/LC_bmpTools-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_bmpTools-1.3.0.tar.gz",
+    "size_bytes": 6023,
+    "sha256": "93a9b6451a2d3550f3096a2ec8b57c0f487a2508452e1886c30802f36b389164",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_bmpTools/1.3.0/LC_bmpTools-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_bmpTools/1.3.0/LC_bmpTools-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_bmpTools/1.3.1/LC_bmpTools-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_bmpTools-1.3.1.tar.gz",
+    "size_bytes": 6020,
+    "sha256": "57358e86cc8703837a649f672822b746d291e28be534d2f7fa5fe9ca6926d93d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_bmpTools/1.3.1/LC_bmpTools-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_bmpTools/1.3.1/LC_bmpTools-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_cardIndex/1.01/LC_cardIndex-1.01.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_cardIndex-1.01.tar.gz",
+    "size_bytes": 3453,
+    "sha256": "25c13280399a967e12ad68bbe541d1b6e59430570ec9e3343569f42b536a6d78",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_cardIndex/1.01/LC_cardIndex-1.01.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_cardIndex/1.01/LC_cardIndex-1.01.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_cardIndex/1.1/LC_cardIndex-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_cardIndex-1.1.tar.gz",
+    "size_bytes": 3449,
+    "sha256": "64c0dd5019643942e8bb1eb8a5fca87fc05f0869b730f434b15cb40e33f18db1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_cardIndex/1.1/LC_cardIndex-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_cardIndex/1.1/LC_cardIndex-1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_cardIndex/1.2/LC_cardIndex-1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_cardIndex-1.2.tar.gz",
+    "size_bytes": 3625,
+    "sha256": "7ba50aac64ad7a7c6c8c6844710e74d82c9dc01251e747b62f2e02624faa9696",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_cardIndex/1.2/LC_cardIndex-1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_cardIndex/1.2/LC_cardIndex-1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_docTools/1.0.1/LC_docTools-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_docTools-1.0.1.tar.gz",
+    "size_bytes": 9808,
+    "sha256": "7507fc00c1686fa318c8b84734b0263847217f09a28417d662a0118fa0238ba0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_docTools/1.0.1/LC_docTools-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_docTools/1.0.1/LC_docTools-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_docTools/1.0/LC_docTools-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_docTools-1.0.tar.gz",
+    "size_bytes": 9806,
+    "sha256": "9367bf13844c97718a144f5bd9e00251effba0ca3f0d1846555e2beef90e564f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_docTools/1.0/LC_docTools-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_docTools/1.0/LC_docTools-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_docTools/1.2.0/LC_docTools-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_docTools-1.2.0.tar.gz",
+    "size_bytes": 9954,
+    "sha256": "52178a32a7d53eb5b4b3939b4e33cfd8f64053f7da39425953b00c505c47e2b0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_docTools/1.2.0/LC_docTools-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_docTools/1.2.0/LC_docTools-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_docTools/1.2.1/LC_docTools-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_docTools-1.2.1.tar.gz",
+    "size_bytes": 9942,
+    "sha256": "775fe55b984639556b608fb32e176004fefc13e1bffb42959307144f5308fc79",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_docTools/1.2.1/LC_docTools-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_docTools/1.2.1/LC_docTools-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_keyboard/1.0.1/LC_keyboard-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_keyboard-1.0.1.tar.gz",
+    "size_bytes": 16501,
+    "sha256": "a6e2730dcd08db79fb12429df2a88b62b129706bef8a2db18932679cc09bb623",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_keyboard/1.0.1/LC_keyboard-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_keyboard/1.0.1/LC_keyboard-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_keyboard/1.0/LC_keyboard-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_keyboard-1.0.tar.gz",
+    "size_bytes": 16375,
+    "sha256": "ebc0d65fc221680a5b3177444a0da7426633f750f7af4eb1b235fcf94702aa60",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_keyboard/1.0/LC_keyboard-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_keyboard/1.0/LC_keyboard-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_lilOS/1.0.1/LC_lilOS-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_lilOS-1.0.1.tar.gz",
+    "size_bytes": 12314,
+    "sha256": "ca8ef897f873351fc2e377fa4c2da43842e64c02127e2047bd76359919276ef3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_lilOS/1.0.1/LC_lilOS-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_lilOS/1.0.1/LC_lilOS-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_lilOS/1.1.0/LC_lilOS-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_lilOS-1.1.0.tar.gz",
+    "size_bytes": 12789,
+    "sha256": "6d2a452b5bcfd210f59dd0afb4ab1886fc8dc8c757d399546cffe1320ffec3ca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_lilOS/1.1.0/LC_lilOS-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_lilOS/1.1.0/LC_lilOS-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_lilOS/1.2.0/LC_lilOS-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_lilOS-1.2.0.tar.gz",
+    "size_bytes": 14021,
+    "sha256": "1475e1208e24bb5bfd64aa6ce1d4efb47ec05ead89e04875c83d8ed428d2a063",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_lilOS/1.2.0/LC_lilOS-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_lilOS/1.2.0/LC_lilOS-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_lilOS/1.3.1/LC_lilOS-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_lilOS-1.3.1.tar.gz",
+    "size_bytes": 13983,
+    "sha256": "7a25360333dfb7364ac56784c9e336dcea7c121d0565197be3d883be881b8ca8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_lilOS/1.3.1/LC_lilOS-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_lilOS/1.3.1/LC_lilOS-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_lilOS/1.4.1/LC_lilOS-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_lilOS-1.4.1.tar.gz",
+    "size_bytes": 14015,
+    "sha256": "1e849fdc0b7b49c7c245d2346bde8c6f52a6f034f1adcd6d5fe4ead736c12d2d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_lilOS/1.4.1/LC_lilOS-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_lilOS/1.4.1/LC_lilOS-1.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_lilParser/2.0.2/LC_lilParser-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_lilParser-2.0.2.tar.gz",
+    "size_bytes": 10739,
+    "sha256": "bb8a25985222ff347a8d19ab533cd0742d815d0f298047bb94b997f2ce1f28a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_lilParser/2.0.2/LC_lilParser-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_lilParser/2.0.2/LC_lilParser-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_lilParser/2.0.3/LC_lilParser-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_lilParser-2.0.3.tar.gz",
+    "size_bytes": 10735,
+    "sha256": "ff7ce7f1ad682d0ccfa43dcb341f30c4e2e16563a72ede1aa7f19333aac3789c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_lilParser/2.0.3/LC_lilParser-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_lilParser/2.0.3/LC_lilParser-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_modalAlerts/1.0.2/LC_modalAlerts-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_modalAlerts-1.0.2.tar.gz",
+    "size_bytes": 18576,
+    "sha256": "217c60e58ea43b763635fb45b3bb8337143a157de40037dbff57474ff7462655",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_modalAlerts/1.0.2/LC_modalAlerts-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_modalAlerts/1.0.2/LC_modalAlerts-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_modalAlerts/1.2.0/LC_modalAlerts-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_modalAlerts-1.2.0.tar.gz",
+    "size_bytes": 18578,
+    "sha256": "ae625cfab9ae813cf02798d02e8ead93c2314f6ecbc3be4b76964732518b5346",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_modalAlerts/1.2.0/LC_modalAlerts-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_modalAlerts/1.2.0/LC_modalAlerts-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_modalAlerts/1.3.0/LC_modalAlerts-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_modalAlerts-1.3.0.tar.gz",
+    "size_bytes": 18522,
+    "sha256": "91d34dbdf564260386055c68407d50f795bbf5d709054c5c7a703474d140c420",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_modalAlerts/1.3.0/LC_modalAlerts-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_modalAlerts/1.3.0/LC_modalAlerts-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_navTools/1.0/LC_navTools-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_navTools-1.0.tar.gz",
+    "size_bytes": 6567,
+    "sha256": "1c07a8bcdaaf128922d9406d1b0d14bf707b03f4e854042c3994611902b30c27",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_navTools/1.0/LC_navTools-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_navTools/1.0/LC_navTools-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_neoPixel/1.3/LC_neoPixel-1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_neoPixel-1.3.tar.gz",
+    "size_bytes": 7631,
+    "sha256": "8e885c500f5e5882388639e7a926406c41e6fda40459ed46ef4b05dc92e2808c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_neoPixel/1.3/LC_neoPixel-1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_neoPixel/1.3/LC_neoPixel-1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_numStream/1.0.1/LC_numStream-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_numStream-1.0.1.tar.gz",
+    "size_bytes": 5386,
+    "sha256": "ae6edbc7cd2940992c8c03f89370fcb738c424486f52870635a332cc8ad2a66d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_numStream/1.0.1/LC_numStream-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_numStream/1.0.1/LC_numStream-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_piezoTunes/1.0/LC_piezoTunes-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_piezoTunes-1.0.tar.gz",
+    "size_bytes": 13935,
+    "sha256": "caa9d6fb42915ab26af7fecf8a7cc545339f20826852dabb8164a19cd710203a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_piezoTunes/1.0/LC_piezoTunes-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_piezoTunes/1.0/LC_piezoTunes-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_piezoTunes/1.2.0/LC_piezoTunes-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_piezoTunes-1.2.0.tar.gz",
+    "size_bytes": 13963,
+    "sha256": "7243bfdbb3b9f3df6146b50b0f570009e98e40b6510c83fdaff586b44c5a5e24",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_piezoTunes/1.2.0/LC_piezoTunes-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_piezoTunes/1.2.0/LC_piezoTunes-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_piezoTunes/1.2.1/LC_piezoTunes-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_piezoTunes-1.2.1.tar.gz",
+    "size_bytes": 13962,
+    "sha256": "4891962794f59229dfc0fcbea83f12238d96b2db94e7b8850f4cad7306f9cb9f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_piezoTunes/1.2.1/LC_piezoTunes-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_piezoTunes/1.2.1/LC_piezoTunes-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leftcoast/library/LC_slowServo/1.2/LC_slowServo-1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC_slowServo-1.2.tar.gz",
+    "size_bytes": 3549,
+    "sha256": "01aa229b4c8757930c00ec2cb6671a8ca3ac92336b5c0704e2b868623ab92810",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leftcoast/library/LC_slowServo/1.2/LC_slowServo-1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/leftcoast/library/LC_slowServo/1.2/LC_slowServo-1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

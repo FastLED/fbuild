@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/direcat",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "direcat/library/MFShield/1.0.0/MFShield-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MFShield-1.0.0.tar.gz",
+    "size_bytes": 5302,
+    "sha256": "f64ab02680b09fa70853ee9e20d0d396cb60fabb3004daef8f86327db4e78196",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/direcat/library/MFShield/1.0.0/MFShield-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/direcat/library/MFShield/1.0.0/MFShield-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

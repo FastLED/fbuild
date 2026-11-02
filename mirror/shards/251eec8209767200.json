@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-naegelit",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-naegelit/library/AIT_UWB_Range/0.0.0+sha.bd0f0580af5a/AIT_UWB_Range-0.0.0+sha.bd0f0580af5a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AIT_UWB_Range-0.0.0+sha.bd0f0580af5a.tar.gz",
+    "size_bytes": 15406,
+    "sha256": "75e36fd4921d1e738603e2ccd47c73e8961323ac62b90b8766c9a546e7bdbaa3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-naegelit/library/AIT_UWB_Range/0.0.0%2Bsha.bd0f0580af5a/AIT_UWB_Range-0.0.0%2Bsha.bd0f0580af5a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-naegelit/library/AIT_UWB_Range/0.0.0%2Bsha.bd0f0580af5a/AIT_UWB_Range-0.0.0%2Bsha.bd0f0580af5a.tar.gz"
+    ]
+   }
+  }
+ ]
+}

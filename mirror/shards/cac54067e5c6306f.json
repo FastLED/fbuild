@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hobbycomponents",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hobbycomponents/library/HCDisplay/1.2.2/HCDisplay-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HCDisplay-1.2.2.tar.gz",
+    "size_bytes": 371017,
+    "sha256": "cd304bd3c13d098a53557ab023346ecd3a7f1db50097c94f974c588b76c4d6b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hobbycomponents/library/HCDisplay/1.2.2/HCDisplay-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/hobbycomponents/library/HCDisplay/1.2.2/HCDisplay-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hobbycomponents/library/SmartLCD/0.4.1/SmartLCD-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartLCD-0.4.1.tar.gz",
+    "size_bytes": 23273,
+    "sha256": "ff257bccdf24cad2922ff93873b8b6f3bad8ce9441793477354acbd48f6d7ee0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hobbycomponents/library/SmartLCD/0.4.1/SmartLCD-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/hobbycomponents/library/SmartLCD/0.4.1/SmartLCD-0.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hobbycomponents/library/mlink/2.3.1/mlink-2.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mlink-2.3.1.tar.gz",
+    "size_bytes": 31227,
+    "sha256": "d739931a0e908fafdcb415e827214efac5501f6b7b156cdfd3ace80f22f6cf3e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hobbycomponents/library/mlink/2.3.1/mlink-2.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/hobbycomponents/library/mlink/2.3.1/mlink-2.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hobbycomponents/library/rLink/1.0.0/rLink-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "rLink-1.0.0.tar.gz",
+    "size_bytes": 9887,
+    "sha256": "9dd64822bfcd81563b5ef68da4c920baac3fa3e517a577862c17dd7ab5d27608",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hobbycomponents/library/rLink/1.0.0/rLink-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hobbycomponents/library/rLink/1.0.0/rLink-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

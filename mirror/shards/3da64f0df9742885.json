@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/quickspot",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "quickspot/library/WalterModem/1.4.3/WalterModem-1.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WalterModem-1.4.3.tar.gz",
+    "size_bytes": 4679231,
+    "sha256": "657814e6d73d9014dca4804e5e4f0e1f40563abef2711423b6260e233d4b972e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/quickspot/library/WalterModem/1.4.3/WalterModem-1.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/quickspot/library/WalterModem/1.4.3/WalterModem-1.4.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "quickspot/library/WalterModem/1.5.0/WalterModem-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WalterModem-1.5.0.tar.gz",
+    "size_bytes": 4687333,
+    "sha256": "d5d9273dd4034f596d5633b2e9e2449c958c3153ad38b79090485efa4b1f7495",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/quickspot/library/WalterModem/1.5.0/WalterModem-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/quickspot/library/WalterModem/1.5.0/WalterModem-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "quickspot/library/WalterModem/1.5.1/WalterModem-1.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WalterModem-1.5.1.tar.gz",
+    "size_bytes": 4688541,
+    "sha256": "3b0d6f8606d1a13678e6227ae3186ee0afb6776a30ec2cf730d9ec65b48b945e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/quickspot/library/WalterModem/1.5.1/WalterModem-1.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/quickspot/library/WalterModem/1.5.1/WalterModem-1.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "quickspot/library/WalterModem/1.6.0/WalterModem-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WalterModem-1.6.0.tar.gz",
+    "size_bytes": 4730142,
+    "sha256": "7c1f33f728507718c8d4f8dd856ff5a34fd18802818d05c793ec7543b5a555f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/quickspot/library/WalterModem/1.6.0/WalterModem-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/quickspot/library/WalterModem/1.6.0/WalterModem-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "quickspot/library/WalterModem/1.6.1/WalterModem-1.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WalterModem-1.6.1.tar.gz",
+    "size_bytes": 4731403,
+    "sha256": "6f3f5679e929d9e3676500eca331a787812d7885deb12926d0fb48271348ffe1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/quickspot/library/WalterModem/1.6.1/WalterModem-1.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/quickspot/library/WalterModem/1.6.1/WalterModem-1.6.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

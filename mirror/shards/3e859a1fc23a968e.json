@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ensmm",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ensmm/library/SimpleBLE/0.0.0+sha.e26d79727dfa/SimpleBLE-0.0.0+sha.e26d79727dfa.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleBLE-0.0.0+sha.e26d79727dfa.tar.gz",
+    "size_bytes": 4216,
+    "sha256": "75ef5bc5cb12728d4ebfdfd24923a98d4974d00211e77c312d2d57c0e4a2cdfe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ensmm/library/SimpleBLE/0.0.0%2Bsha.e26d79727dfa/SimpleBLE-0.0.0%2Bsha.e26d79727dfa.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ensmm/library/SimpleBLE/0.0.0%2Bsha.e26d79727dfa/SimpleBLE-0.0.0%2Bsha.e26d79727dfa.tar.gz"
+    ]
+   }
+  }
+ ]
+}

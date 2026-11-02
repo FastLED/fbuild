@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ocrdu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ocrdu/library/SAMD21%20Audio%20Player/0.7.2/SAMD21AudioPlayer-0.7.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SAMD21AudioPlayer-0.7.2.tar.gz",
+    "size_bytes": 254848,
+    "sha256": "95625a43247da20ab7a2e1e87866e23d1f30666d1b7c316b5aca1fc3a2c145b4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ocrdu/library/SAMD21%2520Audio%2520Player/0.7.2/SAMD21AudioPlayer-0.7.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ocrdu/library/SAMD21%20Audio%20Player/0.7.2/SAMD21AudioPlayer-0.7.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ocrdu/library/SAMD21%20turbo%20PWM/0.8.5/SAMD21turboPWM-0.8.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SAMD21turboPWM-0.8.5.tar.gz",
+    "size_bytes": 17959,
+    "sha256": "3bbb02fe5a807ca7f77150399bdd277923f3b8e28731f89ba35202d2d791efe7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ocrdu/library/SAMD21%2520turbo%2520PWM/0.8.5/SAMD21turboPWM-0.8.5.tar.gz",
+     "https://dl.registry.platformio.org/download/ocrdu/library/SAMD21%20turbo%20PWM/0.8.5/SAMD21turboPWM-0.8.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

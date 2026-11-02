@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/apexcaptain",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "apexcaptain/library/AxThread/1.0.3/AxThread-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AxThread-1.0.3.tar.gz",
+    "size_bytes": 22549,
+    "sha256": "d6bfd58979301ba999715840b0c52f64f76275e85a70b8b522050d11bee98653",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/apexcaptain/library/AxThread/1.0.3/AxThread-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/apexcaptain/library/AxThread/1.0.3/AxThread-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "apexcaptain/library/Event/1.0.0/Event-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Event-1.0.0.tar.gz",
+    "size_bytes": 3777,
+    "sha256": "0fefa852b1bb490638b2ba2b919293d331130de904221e3f40614d9a19627057",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/apexcaptain/library/Event/1.0.0/Event-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/apexcaptain/library/Event/1.0.0/Event-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "apexcaptain/library/SerialLogger/1.0.0/SerialLogger-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialLogger-1.0.0.tar.gz",
+    "size_bytes": 3496,
+    "sha256": "9d46487e843bd4072ece591ff38ffff47d26325a7fd32566044aa9b5c0a00bba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/apexcaptain/library/SerialLogger/1.0.0/SerialLogger-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/apexcaptain/library/SerialLogger/1.0.0/SerialLogger-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

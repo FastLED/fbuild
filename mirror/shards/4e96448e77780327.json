@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/iagows",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "iagows/library/Simple%20Repository%20IO/3.0.5/SimpleRepositoryIO-3.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleRepositoryIO-3.0.5.tar.gz",
+    "size_bytes": 6092,
+    "sha256": "0cd4e2af71a599731efd48b09a37710f9b9b0aab3f7edb9fc2e9c3448f7d4679",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iagows/library/Simple%2520Repository%2520IO/3.0.5/SimpleRepositoryIO-3.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/iagows/library/Simple%20Repository%20IO/3.0.5/SimpleRepositoryIO-3.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

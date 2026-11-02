@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-icserny",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-icserny/library/04_tsi_buttons/0.0.0+sha.de427e23a099/04_tsi_buttons-0.0.0+sha.de427e23a099.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "04_tsi_buttons-0.0.0+sha.de427e23a099.tar.gz",
+    "size_bytes": 2247,
+    "sha256": "c37706f3e61a84851d8a7cf4576806f6be87b18f05f278772d28f901bef841e8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-icserny/library/04_tsi_buttons/0.0.0%2Bsha.de427e23a099/04_tsi_buttons-0.0.0%2Bsha.de427e23a099.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-icserny/library/04_tsi_buttons/0.0.0%2Bsha.de427e23a099/04_tsi_buttons-0.0.0%2Bsha.de427e23a099.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-icserny/library/09_rtos_threads/0.0.0+sha.d3948113d6d9/09_rtos_threads-0.0.0+sha.d3948113d6d9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "09_rtos_threads-0.0.0+sha.d3948113d6d9.tar.gz",
+    "size_bytes": 1945,
+    "sha256": "8781540ac00c7b1b411b01c542876364ec8892ea50b4062a31496894008047ab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-icserny/library/09_rtos_threads/0.0.0%2Bsha.d3948113d6d9/09_rtos_threads-0.0.0%2Bsha.d3948113d6d9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-icserny/library/09_rtos_threads/0.0.0%2Bsha.d3948113d6d9/09_rtos_threads-0.0.0%2Bsha.d3948113d6d9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

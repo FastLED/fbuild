@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-bme-smartlab",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-bme-smartlab/library/BNO055_from_Bosch/0.0.0+sha.1f82672b8755/BNO055_from_Bosch-0.0.0+sha.1f82672b8755.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BNO055_from_Bosch-0.0.0+sha.1f82672b8755.tar.gz",
+    "size_bytes": 57350,
+    "sha256": "174037bdfba7e5bb1d49c2ddf7f58535de0be8c2e087cc700602716f31fe2822",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bme-smartlab/library/BNO055_from_Bosch/0.0.0%2Bsha.1f82672b8755/BNO055_from_Bosch-0.0.0%2Bsha.1f82672b8755.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bme-smartlab/library/BNO055_from_Bosch/0.0.0%2Bsha.1f82672b8755/BNO055_from_Bosch-0.0.0%2Bsha.1f82672b8755.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-bme-smartlab/library/ssRadio/0.0.0+sha.9f5a444886a8/ssRadio-0.0.0+sha.9f5a444886a8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ssRadio-0.0.0+sha.9f5a444886a8.tar.gz",
+    "size_bytes": 3758,
+    "sha256": "64b6b6dfd3cf706f0e81f2534359c6221d853bd8b24a6749958bdf971b57341c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bme-smartlab/library/ssRadio/0.0.0%2Bsha.9f5a444886a8/ssRadio-0.0.0%2Bsha.9f5a444886a8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bme-smartlab/library/ssRadio/0.0.0%2Bsha.9f5a444886a8/ssRadio-0.0.0%2Bsha.9f5a444886a8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

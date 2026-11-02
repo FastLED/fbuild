@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-superphil06",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-superphil06/library/bloc_io/0.0.0+sha.01a42472c867/bloc_io-0.0.0+sha.01a42472c867.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bloc_io-0.0.0+sha.01a42472c867.tar.gz",
+    "size_bytes": 1761,
+    "sha256": "35a0b107a75a297491308ef9c4e4acb8fa1f3d24fdb3eee454722f7dccc35b4b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-superphil06/library/bloc_io/0.0.0%2Bsha.01a42472c867/bloc_io-0.0.0%2Bsha.01a42472c867.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-superphil06/library/bloc_io/0.0.0%2Bsha.01a42472c867/bloc_io-0.0.0%2Bsha.01a42472c867.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-superphil06/library/html/0.0.0+sha.ba608856b208/html-0.0.0+sha.ba608856b208.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "html-0.0.0+sha.ba608856b208.tar.gz",
+    "size_bytes": 5390,
+    "sha256": "e26b303748c43d1a4888113a9d704d2309cce98c532808b27a28130cfec8e10c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-superphil06/library/html/0.0.0%2Bsha.ba608856b208/html-0.0.0%2Bsha.ba608856b208.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-superphil06/library/html/0.0.0%2Bsha.ba608856b208/html-0.0.0%2Bsha.ba608856b208.tar.gz"
+    ]
+   }
+  }
+ ]
+}

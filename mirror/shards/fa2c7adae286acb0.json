@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nkolban",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nkolban/library/ESP32%20BLE%20Arduino/1.0.1/ESP32BLEArduino-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32BLEArduino-1.0.1.tar.gz",
+    "size_bytes": 89922,
+    "sha256": "9e7598da283a4beb3748f24c74713c6b59ce0fed4eb951c09c3d24de68af3bfc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nkolban/library/ESP32%2520BLE%2520Arduino/1.0.1/ESP32BLEArduino-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nkolban/library/ESP32%20BLE%20Arduino/1.0.1/ESP32BLEArduino-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

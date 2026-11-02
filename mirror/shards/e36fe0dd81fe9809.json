@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-picard22",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-picard22/library/SX1276_L072CZ-LRWAN1lib/0.0.0+sha.53d98539c28f/SX1276_L072CZ-LRWAN1lib-0.0.0+sha.53d98539c28f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SX1276_L072CZ-LRWAN1lib-0.0.0+sha.53d98539c28f.tar.gz",
+    "size_bytes": 30126,
+    "sha256": "2447b199f542bdf29a93cf4728c6d186f3913404ad85f14fe38a59199c0d0b75",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-picard22/library/SX1276_L072CZ-LRWAN1lib/0.0.0%2Bsha.53d98539c28f/SX1276_L072CZ-LRWAN1lib-0.0.0%2Bsha.53d98539c28f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-picard22/library/SX1276_L072CZ-LRWAN1lib/0.0.0%2Bsha.53d98539c28f/SX1276_L072CZ-LRWAN1lib-0.0.0%2Bsha.53d98539c28f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

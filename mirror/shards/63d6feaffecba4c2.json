@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jcheger",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jcheger/library/FrskySP/1.0/FrskySP-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FrskySP-1.0.tar.gz",
+    "size_bytes": 55493,
+    "sha256": "85f2902b58c4467e00b35001c3a6873373bdd59c43baea8206ea61bcf73628ac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jcheger/library/FrskySP/1.0/FrskySP-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jcheger/library/FrskySP/1.0/FrskySP-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

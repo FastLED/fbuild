@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/phzi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "phzi/library/DFRobot_MultiGasSensor/2.0.0/DFRobot_MultiGasSensor-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_MultiGasSensor-2.0.0.tar.gz",
+    "size_bytes": 20992,
+    "sha256": "aba480696e2e0aa77d149faa7e9e3b9f057e988a76c5df00a9eba64240e11025",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/phzi/library/DFRobot_MultiGasSensor/2.0.0/DFRobot_MultiGasSensor-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/phzi/library/DFRobot_MultiGasSensor/2.0.0/DFRobot_MultiGasSensor-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

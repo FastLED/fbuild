@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/djuseeq",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "djuseeq/library/Ch376msc/1.4.5/Ch376msc-1.4.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ch376msc-1.4.5.tar.gz",
+    "size_bytes": 31611,
+    "sha256": "04b95a708a4154a59fa2e5b22ff428a224f5709f31acc9fe613e15b142652c46",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/djuseeq/library/Ch376msc/1.4.5/Ch376msc-1.4.5.tar.gz",
+     "https://dl.registry.platformio.org/download/djuseeq/library/Ch376msc/1.4.5/Ch376msc-1.4.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

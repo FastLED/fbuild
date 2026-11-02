@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dehne",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dehne/library/TouchSensor/2.0.1/TouchSensor-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TouchSensor-2.0.1.tar.gz",
+    "size_bytes": 19112,
+    "sha256": "4b0f19962cc0f1ffc5e6c4c56c6ccabd90f97a0876694f373998bfc8bab001aa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dehne/library/TouchSensor/2.0.1/TouchSensor-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dehne/library/TouchSensor/2.0.1/TouchSensor-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dehne/library/TouchSensor/2.0.2/TouchSensor-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TouchSensor-2.0.2.tar.gz",
+    "size_bytes": 19157,
+    "sha256": "87729dab58fb7481828b5b99010b959f34afedc66bf8e86aead46d7c20c770f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dehne/library/TouchSensor/2.0.2/TouchSensor-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dehne/library/TouchSensor/2.0.2/TouchSensor-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dehne/library/TouchSensor/2.0.3/TouchSensor-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TouchSensor-2.0.3.tar.gz",
+    "size_bytes": 16519,
+    "sha256": "6307acc2118e95594177ef92d24a96692682cd9c5618f551eacb22b959e4151b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dehne/library/TouchSensor/2.0.3/TouchSensor-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dehne/library/TouchSensor/2.0.3/TouchSensor-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dehne/library/TouchSlider/1.0.1/TouchSlider-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TouchSlider-1.0.1.tar.gz",
+    "size_bytes": 11357,
+    "sha256": "0e275bf19ee2cc1101a47da7dfd76f422911ed8bf7d55ee64458d4d2d45f6470",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dehne/library/TouchSlider/1.0.1/TouchSlider-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dehne/library/TouchSlider/1.0.1/TouchSlider-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

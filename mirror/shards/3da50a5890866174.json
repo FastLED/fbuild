@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-abotics",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-abotics/library/Apeiros/0.0.0+sha.c61c3feb0729/Apeiros-0.0.0+sha.c61c3feb0729.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Apeiros-0.0.0+sha.c61c3feb0729.tar.gz",
+    "size_bytes": 6093,
+    "sha256": "201fc0d40c6e85be82f0b1fcb83ae77b5bd29c0a0e2d222157e2f19587bb4f7e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-abotics/library/Apeiros/0.0.0%2Bsha.c61c3feb0729/Apeiros-0.0.0%2Bsha.c61c3feb0729.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-abotics/library/Apeiros/0.0.0%2Bsha.c61c3feb0729/Apeiros-0.0.0%2Bsha.c61c3feb0729.tar.gz"
+    ]
+   }
+  }
+ ]
+}

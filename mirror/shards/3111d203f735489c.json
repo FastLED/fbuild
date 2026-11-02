@@ -1,0 +1,269 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/khoek",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "khoek/library/esp-as7341/1.1.0/esp-as7341-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-as7341-1.1.0.tar.gz",
+    "size_bytes": 3596,
+    "sha256": "7a426e3a6ac796a3bb1abd52c7b06be99837f0722c6729473bf29d5b0c6d07e1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoek/library/esp-as7341/1.1.0/esp-as7341-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoek/library/esp-as7341/1.1.0/esp-as7341-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoek/library/esp-bme280/2.0.0/esp-bme280-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-bme280-2.0.0.tar.gz",
+    "size_bytes": 3662,
+    "sha256": "645f8f78e1f260f26cb175b6fa2e6c69b26bd35415e0e60853fee33f321b6019",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoek/library/esp-bme280/2.0.0/esp-bme280-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoek/library/esp-bme280/2.0.0/esp-bme280-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoek/library/esp-ccs811/4.0.0/esp-ccs811-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-ccs811-4.0.0.tar.gz",
+    "size_bytes": 2964,
+    "sha256": "ea9b2ab81461b52e2cc50b083535110df54757bdce80daacbbf6e85e4d305b38",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoek/library/esp-ccs811/4.0.0/esp-ccs811-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoek/library/esp-ccs811/4.0.0/esp-ccs811-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoek/library/esp-dps368/4.0.0/esp-dps368-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-dps368-4.0.0.tar.gz",
+    "size_bytes": 3688,
+    "sha256": "6678462d1f226e6099cbe24bd089e09412621e75b4efc33d7b89e0e3c08eeca0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoek/library/esp-dps368/4.0.0/esp-dps368-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoek/library/esp-dps368/4.0.0/esp-dps368-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoek/library/esp-rfm69hcw/3.0.0/esp-rfm69hcw-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-rfm69hcw-3.0.0.tar.gz",
+    "size_bytes": 6895,
+    "sha256": "1f9c5ac5be365b9fdd46a463bd2f326f04a5095d9ebe8de32365077d1744beda",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoek/library/esp-rfm69hcw/3.0.0/esp-rfm69hcw-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoek/library/esp-rfm69hcw/3.0.0/esp-rfm69hcw-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoek/library/esp-scd41/2.0.0/esp-scd41-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-scd41-2.0.0.tar.gz",
+    "size_bytes": 2555,
+    "sha256": "a52d7a693428e7a29fc73aaf02f1c8be53df83c926a7a6e1f73b783470e60170",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoek/library/esp-scd41/2.0.0/esp-scd41-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoek/library/esp-scd41/2.0.0/esp-scd41-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoek/library/esp-sensirion/1.0.0/esp-sensirion-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-sensirion-1.0.0.tar.gz",
+    "size_bytes": 2202,
+    "sha256": "565ea48399daa405833500ab9addff1d04d8060ac29b7d7a5fa237ef05065114",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoek/library/esp-sensirion/1.0.0/esp-sensirion-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoek/library/esp-sensirion/1.0.0/esp-sensirion-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoek/library/esp-sfa30/1.0.0/esp-sfa30-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-sfa30-1.0.0.tar.gz",
+    "size_bytes": 2339,
+    "sha256": "21fc2fd15cb3663f62e8bf37c400d5051bfa7dbcc4006f828ce1c82bd4b14676",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoek/library/esp-sfa30/1.0.0/esp-sfa30-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoek/library/esp-sfa30/1.0.0/esp-sfa30-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoek/library/esp-sgp40/1.0.0/esp-sgp40-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-sgp40-1.0.0.tar.gz",
+    "size_bytes": 11271,
+    "sha256": "8e937c6aa3778132c2cd05c27f6a355e4788dcc8616644440ae38410434fa6a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoek/library/esp-sgp40/1.0.0/esp-sgp40-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoek/library/esp-sgp40/1.0.0/esp-sgp40-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoek/library/esp-sps30/1.0.0/esp-sps30-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-sps30-1.0.0.tar.gz",
+    "size_bytes": 3464,
+    "sha256": "4c833d699b4cc0848bd48ff257b7bc2dc2ee6acee35b0b0f34b8c47f0195d484",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoek/library/esp-sps30/1.0.0/esp-sps30-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoek/library/esp-sps30/1.0.0/esp-sps30-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoek/library/esp-tmp117/3.0.0/esp-tmp117-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-tmp117-3.0.0.tar.gz",
+    "size_bytes": 2204,
+    "sha256": "edeb10dbf11cbb5aafa10da6c60b0c86d547b199a8e747ea4f1135fa37567f27",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoek/library/esp-tmp117/3.0.0/esp-tmp117-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoek/library/esp-tmp117/3.0.0/esp-tmp117-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoek/library/esp-vs1053/2.0.0/esp-vs1053-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-vs1053-2.0.0.tar.gz",
+    "size_bytes": 14348,
+    "sha256": "4d7948048094449e9297919d72dccc4b953c5f545e3840874f04e43708090d15",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoek/library/esp-vs1053/2.0.0/esp-vs1053-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoek/library/esp-vs1053/2.0.0/esp-vs1053-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoek/library/libcrc/2.0.0/libcrc-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libcrc-2.0.0.tar.gz",
+    "size_bytes": 1583,
+    "sha256": "0908d41c88f9244c61c62bcc2264ad5f484944d6bb87f65f49e9a0843bb2bde8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoek/library/libcrc/2.0.0/libcrc-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoek/library/libcrc/2.0.0/libcrc-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoek/library/libesp/2.3.0/libesp-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libesp-2.3.0.tar.gz",
+    "size_bytes": 5410,
+    "sha256": "25717039a1fcd74ad44dbef6676510c2305a62636cfb251c15e413c6e188c350",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoek/library/libesp/2.3.0/libesp-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoek/library/libesp/2.3.0/libesp-2.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoek/library/libi2c/2.0.0/libi2c-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libi2c-2.0.0.tar.gz",
+    "size_bytes": 1633,
+    "sha256": "200253b5ba576f699888041101f5cac2c5862784fc5e989e1398d45436cdef58",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoek/library/libi2c/2.0.0/libi2c-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoek/library/libi2c/2.0.0/libi2c-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoek/library/libiot/4.0.0/libiot-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libiot-4.0.0.tar.gz",
+    "size_bytes": 19511,
+    "sha256": "62766afc87247c45cc4515c1a33d821324665739b56bb63a2b8c918cc8077712",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoek/library/libiot/4.0.0/libiot-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoek/library/libiot/4.0.0/libiot-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoek/library/libirq/2.0.1/libirq-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libirq-2.0.1.tar.gz",
+    "size_bytes": 4844,
+    "sha256": "3226f81d9763c35763244289aed0c03e51e0d08862e49de89370155b48da1b04",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoek/library/libirq/2.0.1/libirq-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoek/library/libirq/2.0.1/libirq-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoek/library/libsensor-drivers/4.0.0/libsensor-drivers-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libsensor-drivers-4.0.0.tar.gz",
+    "size_bytes": 14701,
+    "sha256": "89172c43d502d4d81a14340d075ba6e7a3ec773df2786fd074144aa7405c233d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoek/library/libsensor-drivers/4.0.0/libsensor-drivers-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoek/library/libsensor-drivers/4.0.0/libsensor-drivers-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoek/library/libsensor/4.0.0/libsensor-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libsensor-4.0.0.tar.gz",
+    "size_bytes": 6544,
+    "sha256": "2fde7f0178b0cf954c385febb415db0f13dcbb4fb0ce2c501c426347515d6e54",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoek/library/libsensor/4.0.0/libsensor-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoek/library/libsensor/4.0.0/libsensor-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoek/library/libtask/1.0.0/libtask-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libtask-1.0.0.tar.gz",
+    "size_bytes": 2436,
+    "sha256": "26cc6f01a8bbd561c60ab49df512887029b168763c1c71129aec7dc874609543",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoek/library/libtask/1.0.0/libtask-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoek/library/libtask/1.0.0/libtask-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

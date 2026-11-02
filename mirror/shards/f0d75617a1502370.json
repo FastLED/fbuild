@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/welcometotheroot",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "welcometotheroot/library/BQ25890/0.2.0/BQ25890-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BQ25890-0.2.0.tar.gz",
+    "size_bytes": 15627,
+    "sha256": "8d38dff1a5beb217386da50c78d7d6a95bfbf916c984dc7a58cd08fe5e538a19",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/welcometotheroot/library/BQ25890/0.2.0/BQ25890-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/welcometotheroot/library/BQ25890/0.2.0/BQ25890-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "welcometotheroot/library/TCS3448/0.1.0/TCS3448-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TCS3448-0.1.0.tar.gz",
+    "size_bytes": 13726,
+    "sha256": "8c22f984400957d5aa89b06e0e7596a3e360c57987e24dc956af06e5dc619a6e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/welcometotheroot/library/TCS3448/0.1.0/TCS3448-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/welcometotheroot/library/TCS3448/0.1.0/TCS3448-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "welcometotheroot/library/TSL2585/0.1.0/TSL2585-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TSL2585-0.1.0.tar.gz",
+    "size_bytes": 12553,
+    "sha256": "c770d2cc03fd4a091edfc20f6e89ca9868f4d9d33d4b4152a23e81fa961b9513",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/welcometotheroot/library/TSL2585/0.1.0/TSL2585-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/welcometotheroot/library/TSL2585/0.1.0/TSL2585-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

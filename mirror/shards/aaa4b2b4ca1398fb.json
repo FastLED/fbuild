@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mataas08",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mataas08/library/ToFFilter/1.0.0/ToFFilter-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ToFFilter-1.0.0.tar.gz",
+    "size_bytes": 5503,
+    "sha256": "8ece3511591d45d591ee80c24ca8b109c79ba889e4c85af868ec617ef2f7b73e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mataas08/library/ToFFilter/1.0.0/ToFFilter-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mataas08/library/ToFFilter/1.0.0/ToFFilter-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mataas08/library/ToFFilter/1.0.2/ToFFilter-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ToFFilter-1.0.2.tar.gz",
+    "size_bytes": 7128,
+    "sha256": "43e16af9d0d68caeccdcdc10eb2a6c9236cef24503ea87ac27bd779a7059a807",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mataas08/library/ToFFilter/1.0.2/ToFFilter-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mataas08/library/ToFFilter/1.0.2/ToFFilter-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

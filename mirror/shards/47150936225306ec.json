@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/xhera83",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "xhera83/library/FreeRTOS-TransceiverV1/1.2.0/FreeRTOS-TransceiverV1-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FreeRTOS-TransceiverV1-1.2.0.tar.gz",
+    "size_bytes": 51110,
+    "sha256": "439892078bcca8abcd29db6d7e88a7ff895bdd477e2631ae95ae8933a62f970a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xhera83/library/FreeRTOS-TransceiverV1/1.2.0/FreeRTOS-TransceiverV1-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xhera83/library/FreeRTOS-TransceiverV1/1.2.0/FreeRTOS-TransceiverV1-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

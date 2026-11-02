@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/duluthmachineworks",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "duluthmachineworks/library/ArduinoSMBus/1.1.0/ArduinoSMBus-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoSMBus-1.1.0.tar.gz",
+    "size_bytes": 42606,
+    "sha256": "28cb81c1e649a55b4865ce093efefedfbd0a808dc8e5a42792f457c1daf7e709",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/duluthmachineworks/library/ArduinoSMBus/1.1.0/ArduinoSMBus-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/duluthmachineworks/library/ArduinoSMBus/1.1.0/ArduinoSMBus-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "duluthmachineworks/library/Baratron-Arduino/1.3.0/Baratron-Arduino-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Baratron-Arduino-1.3.0.tar.gz",
+    "size_bytes": 13282,
+    "sha256": "2ceb06423dd251b10fb1821e0b8ab2afffbfb5148935c7177a733a3f73e1cd3a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/duluthmachineworks/library/Baratron-Arduino/1.3.0/Baratron-Arduino-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/duluthmachineworks/library/Baratron-Arduino/1.3.0/Baratron-Arduino-1.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

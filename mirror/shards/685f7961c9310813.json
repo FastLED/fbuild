@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ajeje41",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ajeje41/library/LSM6DS0/0.0.0+sha.eb98f59de2d1/LSM6DS0-0.0.0+sha.eb98f59de2d1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LSM6DS0-0.0.0+sha.eb98f59de2d1.tar.gz",
+    "size_bytes": 5371,
+    "sha256": "607a058dd68125a33c8e5ca56f19228d1d6e0ab4335a2ed6985e41fa70df725a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ajeje41/library/LSM6DS0/0.0.0%2Bsha.eb98f59de2d1/LSM6DS0-0.0.0%2Bsha.eb98f59de2d1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ajeje41/library/LSM6DS0/0.0.0%2Bsha.eb98f59de2d1/LSM6DS0-0.0.0%2Bsha.eb98f59de2d1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

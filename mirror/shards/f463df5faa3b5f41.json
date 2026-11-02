@@ -1,0 +1,178 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/robot-dreamer",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "robot-dreamer/library/CoCube-Assets/1.0.0/CoCube-Assets-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CoCube-Assets-1.0.0.tar.gz",
+    "size_bytes": 180655,
+    "sha256": "d78fe1a02c8ca00a0dcf3e8c010edb58e7cdea3cda01ac65cbaea9ffd3d0162c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robot-dreamer/library/CoCube-Assets/1.0.0/CoCube-Assets-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/robot-dreamer/library/CoCube-Assets/1.0.0/CoCube-Assets-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robot-dreamer/library/CoCube-Assets/1.0.1/CoCube-Assets-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CoCube-Assets-1.0.1.tar.gz",
+    "size_bytes": 180654,
+    "sha256": "c857bf7f5286983c65bc7ae0f6db7e0f16858e3439f611fa2c8c3e6545650914",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robot-dreamer/library/CoCube-Assets/1.0.1/CoCube-Assets-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/robot-dreamer/library/CoCube-Assets/1.0.1/CoCube-Assets-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robot-dreamer/library/CoCube-Assets/1.0.10/CoCube-Assets-1.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CoCube-Assets-1.0.10.tar.gz",
+    "size_bytes": 462062,
+    "sha256": "8695012ccb120990bc6d3394618960fe114c0cf7988176b2ffa4ec2dcc341f4b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robot-dreamer/library/CoCube-Assets/1.0.10/CoCube-Assets-1.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/robot-dreamer/library/CoCube-Assets/1.0.10/CoCube-Assets-1.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robot-dreamer/library/CoCube-Assets/1.0.11/CoCube-Assets-1.0.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CoCube-Assets-1.0.11.tar.gz",
+    "size_bytes": 462452,
+    "sha256": "55926b2fe81690ea8eeb6ed6d2b75dcd714c4c2d004b1011a34e15009c8e1b68",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robot-dreamer/library/CoCube-Assets/1.0.11/CoCube-Assets-1.0.11.tar.gz",
+     "https://dl.registry.platformio.org/download/robot-dreamer/library/CoCube-Assets/1.0.11/CoCube-Assets-1.0.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robot-dreamer/library/CoCube-Assets/1.0.2/CoCube-Assets-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CoCube-Assets-1.0.2.tar.gz",
+    "size_bytes": 180700,
+    "sha256": "7d66b1b5970be2e7a052fa79f6e8f8ea1f57f29a7bf064d09005ae58454c93be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robot-dreamer/library/CoCube-Assets/1.0.2/CoCube-Assets-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/robot-dreamer/library/CoCube-Assets/1.0.2/CoCube-Assets-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robot-dreamer/library/CoCube-Assets/1.0.3/CoCube-Assets-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CoCube-Assets-1.0.3.tar.gz",
+    "size_bytes": 180688,
+    "sha256": "979863f85e51242c56b0b6db50fc47fe8edb851e085bdca49d1961a26ca31a0a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robot-dreamer/library/CoCube-Assets/1.0.3/CoCube-Assets-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/robot-dreamer/library/CoCube-Assets/1.0.3/CoCube-Assets-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robot-dreamer/library/CoCube-Assets/1.0.4/CoCube-Assets-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CoCube-Assets-1.0.4.tar.gz",
+    "size_bytes": 439779,
+    "sha256": "e4491f46ae64202d89e00ce84499fa9f129492f87d16338c792c9b0e884a99fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robot-dreamer/library/CoCube-Assets/1.0.4/CoCube-Assets-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/robot-dreamer/library/CoCube-Assets/1.0.4/CoCube-Assets-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robot-dreamer/library/CoCube-Assets/1.0.5/CoCube-Assets-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CoCube-Assets-1.0.5.tar.gz",
+    "size_bytes": 400007,
+    "sha256": "d1d172b3e2757e4ee17e0a562260f96a2be8e29de9f6069c0bfe06330737202f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robot-dreamer/library/CoCube-Assets/1.0.5/CoCube-Assets-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/robot-dreamer/library/CoCube-Assets/1.0.5/CoCube-Assets-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robot-dreamer/library/CoCube-Assets/1.0.6/CoCube-Assets-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CoCube-Assets-1.0.6.tar.gz",
+    "size_bytes": 402739,
+    "sha256": "9ca23a5d0f4b8919529ba4c1a66d6be03ba60f5a2266a0caa0ba7c4ab72eec8e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robot-dreamer/library/CoCube-Assets/1.0.6/CoCube-Assets-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/robot-dreamer/library/CoCube-Assets/1.0.6/CoCube-Assets-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robot-dreamer/library/CoCube-Assets/1.0.7/CoCube-Assets-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CoCube-Assets-1.0.7.tar.gz",
+    "size_bytes": 402877,
+    "sha256": "e721666b3e06e346f615da50a217b29c8d0c67599075da3e141980d5dc32eded",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robot-dreamer/library/CoCube-Assets/1.0.7/CoCube-Assets-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/robot-dreamer/library/CoCube-Assets/1.0.7/CoCube-Assets-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robot-dreamer/library/CoCube-Assets/1.0.8/CoCube-Assets-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CoCube-Assets-1.0.8.tar.gz",
+    "size_bytes": 432266,
+    "sha256": "21d6ba8cc2fd823a00e2baa76d1af0bd82361683c9d3f0c9dc246309cbc5b56c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robot-dreamer/library/CoCube-Assets/1.0.8/CoCube-Assets-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/robot-dreamer/library/CoCube-Assets/1.0.8/CoCube-Assets-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robot-dreamer/library/CoCube-Assets/1.0.9/CoCube-Assets-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CoCube-Assets-1.0.9.tar.gz",
+    "size_bytes": 451857,
+    "sha256": "7e1bb3dc104f4ae6d1a6e63907d0b042b8a8af0f4ef2e16803b85323e6aa602c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robot-dreamer/library/CoCube-Assets/1.0.9/CoCube-Assets-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/robot-dreamer/library/CoCube-Assets/1.0.9/CoCube-Assets-1.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robot-dreamer/library/CoCubeSensor/1.2.0/CoCubeSensor-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CoCubeSensor-1.2.0.tar.gz",
+    "size_bytes": 58965,
+    "sha256": "949c7f355be62e166aa271c07ad89a0fc705df258bd0880ffed0ecfdd11cefae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robot-dreamer/library/CoCubeSensor/1.2.0/CoCubeSensor-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/robot-dreamer/library/CoCubeSensor/1.2.0/CoCubeSensor-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-arturogasca",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-arturogasca/library/HeartRate/0.0.0+sha.18957c930b4c/HeartRate-0.0.0+sha.18957c930b4c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HeartRate-0.0.0+sha.18957c930b4c.tar.gz",
+    "size_bytes": 1042,
+    "sha256": "4d3033ae829419345a54e47fd77553a6c4a4ac4e6cb6559a7aec42e91fe31cb3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-arturogasca/library/HeartRate/0.0.0%2Bsha.18957c930b4c/HeartRate-0.0.0%2Bsha.18957c930b4c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-arturogasca/library/HeartRate/0.0.0%2Bsha.18957c930b4c/HeartRate-0.0.0%2Bsha.18957c930b4c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-arturogasca/library/HeartRate_/0.0.0+sha.c55e03357261/HeartRate_-0.0.0+sha.c55e03357261.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HeartRate_-0.0.0+sha.c55e03357261.tar.gz",
+    "size_bytes": 1081,
+    "sha256": "b3371a8151141ced8754710fef79273a53299681e7223a9f2c3be41626c46946",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-arturogasca/library/HeartRate_/0.0.0%2Bsha.c55e03357261/HeartRate_-0.0.0%2Bsha.c55e03357261.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-arturogasca/library/HeartRate_/0.0.0%2Bsha.c55e03357261/HeartRate_-0.0.0%2Bsha.c55e03357261.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-arturogasca/library/LM35/0.0.0+sha.08ced55ecd21/LM35-0.0.0+sha.08ced55ecd21.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LM35-0.0.0+sha.08ced55ecd21.tar.gz",
+    "size_bytes": 947,
+    "sha256": "5ea08fb7d9aa2ed346b5af4b778430b39aa51d686745af4c2b2cf1bde93f84da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-arturogasca/library/LM35/0.0.0%2Bsha.08ced55ecd21/LM35-0.0.0%2Bsha.08ced55ecd21.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-arturogasca/library/LM35/0.0.0%2Bsha.08ced55ecd21/LM35-0.0.0%2Bsha.08ced55ecd21.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-arturogasca/library/LM35_/0.0.0+sha.b83c07e29cbb/LM35_-0.0.0+sha.b83c07e29cbb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LM35_-0.0.0+sha.b83c07e29cbb.tar.gz",
+    "size_bytes": 949,
+    "sha256": "4f39b3b73d0007e19762d1b49c5d0ae160770a716b90087d98b407417ab69d10",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-arturogasca/library/LM35_/0.0.0%2Bsha.b83c07e29cbb/LM35_-0.0.0%2Bsha.b83c07e29cbb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-arturogasca/library/LM35_/0.0.0%2Bsha.b83c07e29cbb/LM35_-0.0.0%2Bsha.b83c07e29cbb.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-arturogasca/library/MAX30100/0.0.0+sha.4cce508186cf/MAX30100-0.0.0+sha.4cce508186cf.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX30100-0.0.0+sha.4cce508186cf.tar.gz",
+    "size_bytes": 7170,
+    "sha256": "b077f16df28c4fbcf51aa4a206731a60153fe65111af0641627e3285e58aa93f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-arturogasca/library/MAX30100/0.0.0%2Bsha.4cce508186cf/MAX30100-0.0.0%2Bsha.4cce508186cf.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-arturogasca/library/MAX30100/0.0.0%2Bsha.4cce508186cf/MAX30100-0.0.0%2Bsha.4cce508186cf.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-arturogasca/library/MAX_30100/0.0.0+sha.d2f34f52b229/MAX_30100-0.0.0+sha.d2f34f52b229.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX_30100-0.0.0+sha.d2f34f52b229.tar.gz",
+    "size_bytes": 7212,
+    "sha256": "b354a611c323b9901a22a3b74310bb26666c58eee1f13486869c89c4f51a3de7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-arturogasca/library/MAX_30100/0.0.0%2Bsha.d2f34f52b229/MAX_30100-0.0.0%2Bsha.d2f34f52b229.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-arturogasca/library/MAX_30100/0.0.0%2Bsha.d2f34f52b229/MAX_30100-0.0.0%2Bsha.d2f34f52b229.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-arturogasca/library/Pines/0.0.0+sha.bbc247325462/Pines-0.0.0+sha.bbc247325462.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pines-0.0.0+sha.bbc247325462.tar.gz",
+    "size_bytes": 784,
+    "sha256": "7fd8a166782ea292abc7fe49b4729827f04f9dea9cb96d20f9122178e418e56e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-arturogasca/library/Pines/0.0.0%2Bsha.bbc247325462/Pines-0.0.0%2Bsha.bbc247325462.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-arturogasca/library/Pines/0.0.0%2Bsha.bbc247325462/Pines-0.0.0%2Bsha.bbc247325462.tar.gz"
+    ]
+   }
+  }
+ ]
+}

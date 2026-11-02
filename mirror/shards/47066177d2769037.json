@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-aplatanado",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-aplatanado/library/ADNS9500/0.0.0+sha.0f8e730f3272/ADNS9500-0.0.0+sha.0f8e730f3272.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADNS9500-0.0.0+sha.0f8e730f3272.tar.gz",
+    "size_bytes": 7058,
+    "sha256": "1c5563f4dedd70c99576b3da380cb154909c67c8b6a3cc770dbdf2a5303233b4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-aplatanado/library/ADNS9500/0.0.0%2Bsha.0f8e730f3272/ADNS9500-0.0.0%2Bsha.0f8e730f3272.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-aplatanado/library/ADNS9500/0.0.0%2Bsha.0f8e730f3272/ADNS9500-0.0.0%2Bsha.0f8e730f3272.tar.gz"
+    ]
+   }
+  }
+ ]
+}

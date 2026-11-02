@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ldab",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ldab/library/KXTJ3-1057/0.1.1/KXTJ3-1057-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KXTJ3-1057-0.1.1.tar.gz",
+    "size_bytes": 14530,
+    "sha256": "3b5801c20669f4a923add5faa51b6142d42d0233754da7a55a5af654fc3b2e07",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ldab/library/KXTJ3-1057/0.1.1/KXTJ3-1057-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ldab/library/KXTJ3-1057/0.1.1/KXTJ3-1057-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ldab/library/LIS3DH%20motion%20detection/0.0.7/LIS3DHmotiondetection-0.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LIS3DHmotiondetection-0.0.7.tar.gz",
+    "size_bytes": 9302,
+    "sha256": "2bba70cfaf27f1d1cbff36f60af6f71cd3ba1afb73063363eb173fe485611e4e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ldab/library/LIS3DH%2520motion%2520detection/0.0.7/LIS3DHmotiondetection-0.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/ldab/library/LIS3DH%20motion%20detection/0.0.7/LIS3DHmotiondetection-0.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ldab/library/MMC5883_compass/0.0.1b/MMC5883_compass-0.0.1b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MMC5883_compass-0.0.1b.tar.gz",
+    "size_bytes": 6835,
+    "sha256": "993cdcf4486d33c010d6a5132cac8fc44940211130605aff87c08b6e793c9d26",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ldab/library/MMC5883_compass/0.0.1b/MMC5883_compass-0.0.1b.tar.gz",
+     "https://dl.registry.platformio.org/download/ldab/library/MMC5883_compass/0.0.1b/MMC5883_compass-0.0.1b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ldab/library/esp32_ftpclient/0.1.4/esp32_ftpclient-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32_ftpclient-0.1.4.tar.gz",
+    "size_bytes": 76650,
+    "sha256": "7bcfc453df1b26e23becd16aebe7a04677ec4df7ac3aea722d2e571ce346d144",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ldab/library/esp32_ftpclient/0.1.4/esp32_ftpclient-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/ldab/library/esp32_ftpclient/0.1.4/esp32_ftpclient-0.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ldab/library/u-blox%20GNSS/0.0.3/u-bloxGNSS-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "u-bloxGNSS-0.0.3.tar.gz",
+    "size_bytes": 7566,
+    "sha256": "df5ce4f1c3d24975f291007445656451a528fb7de27df8eca8e25a9c83bd3b0b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ldab/library/u-blox%2520GNSS/0.0.3/u-bloxGNSS-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/ldab/library/u-blox%20GNSS/0.0.3/u-bloxGNSS-0.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

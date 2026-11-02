@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/inqonthat",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "inqonthat/library/InqPortal/5.4.0/InqPortal-5.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "InqPortal-5.4.0.tar.gz",
+    "size_bytes": 617434,
+    "sha256": "95859021560952edb674d8bb3917e3a30a0ba7f13a0fd87cebc49b1a58a24af4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inqonthat/library/InqPortal/5.4.0/InqPortal-5.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/inqonthat/library/InqPortal/5.4.0/InqPortal-5.4.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,308 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lovyan03",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lovyan03/library/LovyanGFX/0.4.18/LovyanGFX-0.4.18.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LovyanGFX-0.4.18.tar.gz",
+    "size_bytes": 46596665,
+    "sha256": "396cb76e612dab397ca4d00d803ffd23791a89e21711c2df10c726543c273e57",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lovyan03/library/LovyanGFX/0.4.18/LovyanGFX-0.4.18.tar.gz",
+     "https://dl.registry.platformio.org/download/lovyan03/library/LovyanGFX/0.4.18/LovyanGFX-0.4.18.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lovyan03/library/LovyanGFX/1.1.12/LovyanGFX-1.1.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LovyanGFX-1.1.12.tar.gz",
+    "size_bytes": 46771717,
+    "sha256": "df390d25ded5451d95b83a8524128377a1ee9f88fb0a3e35fb0dd94737fe03a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lovyan03/library/LovyanGFX/1.1.12/LovyanGFX-1.1.12.tar.gz",
+     "https://dl.registry.platformio.org/download/lovyan03/library/LovyanGFX/1.1.12/LovyanGFX-1.1.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lovyan03/library/LovyanGFX/1.1.16/LovyanGFX-1.1.16.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LovyanGFX-1.1.16.tar.gz",
+    "size_bytes": 46645663,
+    "sha256": "b40191b4fa168c96535783cab9a0f76bcd268ec701eca3fafc8085ba918fb87e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lovyan03/library/LovyanGFX/1.1.16/LovyanGFX-1.1.16.tar.gz",
+     "https://dl.registry.platformio.org/download/lovyan03/library/LovyanGFX/1.1.16/LovyanGFX-1.1.16.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lovyan03/library/LovyanGFX/1.2.0/LovyanGFX-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LovyanGFX-1.2.0.tar.gz",
+    "size_bytes": 46655944,
+    "sha256": "f63a768cbbb71cb8afb73eebda4266c226ffdceb52bf1a1223a48785a1d2343f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lovyan03/library/LovyanGFX/1.2.0/LovyanGFX-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lovyan03/library/LovyanGFX/1.2.0/LovyanGFX-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lovyan03/library/LovyanGFX/1.2.19/LovyanGFX-1.2.19.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LovyanGFX-1.2.19.tar.gz",
+    "size_bytes": 46715847,
+    "sha256": "3496f27343d422009f5a684a1ddf2ef93371fbe2d2cdb9a13142750ec6145716",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lovyan03/library/LovyanGFX/1.2.19/LovyanGFX-1.2.19.tar.gz",
+     "https://dl.registry.platformio.org/download/lovyan03/library/LovyanGFX/1.2.19/LovyanGFX-1.2.19.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lovyan03/library/LovyanGFX/1.2.20/LovyanGFX-1.2.20.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LovyanGFX-1.2.20.tar.gz",
+    "size_bytes": 48341554,
+    "sha256": "3ab29d7aa56798957befb078e139bfd0406fed0e5be3c9ff94f13dd1bd958dc7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lovyan03/library/LovyanGFX/1.2.20/LovyanGFX-1.2.20.tar.gz",
+     "https://dl.registry.platformio.org/download/lovyan03/library/LovyanGFX/1.2.20/LovyanGFX-1.2.20.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lovyan03/library/LovyanGFX/1.2.21/LovyanGFX-1.2.21.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LovyanGFX-1.2.21.tar.gz",
+    "size_bytes": 47422624,
+    "sha256": "50f04a760b2e874acbac39ff9a7cddff1edb66b4fa7e421b66d6d9e1732ea9d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lovyan03/library/LovyanGFX/1.2.21/LovyanGFX-1.2.21.tar.gz",
+     "https://dl.registry.platformio.org/download/lovyan03/library/LovyanGFX/1.2.21/LovyanGFX-1.2.21.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lovyan03/library/LovyanGFX/1.2.24/LovyanGFX-1.2.24.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LovyanGFX-1.2.24.tar.gz",
+    "size_bytes": 46757314,
+    "sha256": "36a66b55ba6ed0616d56768f3996d6bd8ab34a5b0c9ca452c9a1bedecd5b914c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lovyan03/library/LovyanGFX/1.2.24/LovyanGFX-1.2.24.tar.gz",
+     "https://dl.registry.platformio.org/download/lovyan03/library/LovyanGFX/1.2.24/LovyanGFX-1.2.24.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lovyan03/library/LovyanGFX/1.2.25/LovyanGFX-1.2.25.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LovyanGFX-1.2.25.tar.gz",
+    "size_bytes": 46759729,
+    "sha256": "993fff511a1697cc108c09bdee65d2d588142a1c22d5d160b30367f0b1ed7fb7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lovyan03/library/LovyanGFX/1.2.25/LovyanGFX-1.2.25.tar.gz",
+     "https://dl.registry.platformio.org/download/lovyan03/library/LovyanGFX/1.2.25/LovyanGFX-1.2.25.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lovyan03/library/LovyanGFX/1.2.26/LovyanGFX-1.2.26.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LovyanGFX-1.2.26.tar.gz",
+    "size_bytes": 46769566,
+    "sha256": "35a7c22a69e9ba7c35d4e4a82623596ea64fa16d9a821e8a0b4dfefb64e7be7e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lovyan03/library/LovyanGFX/1.2.26/LovyanGFX-1.2.26.tar.gz",
+     "https://dl.registry.platformio.org/download/lovyan03/library/LovyanGFX/1.2.26/LovyanGFX-1.2.26.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lovyan03/library/LovyanGFX/1.2.27/LovyanGFX-1.2.27.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LovyanGFX-1.2.27.tar.gz",
+    "size_bytes": 46783323,
+    "sha256": "af64f1b968179918125debc09ea34ce70433361b88254a8fb0f550f70b41b872",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lovyan03/library/LovyanGFX/1.2.27/LovyanGFX-1.2.27.tar.gz",
+     "https://dl.registry.platformio.org/download/lovyan03/library/LovyanGFX/1.2.27/LovyanGFX-1.2.27.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lovyan03/library/LovyanGFX/1.2.28/LovyanGFX-1.2.28.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LovyanGFX-1.2.28.tar.gz",
+    "size_bytes": 46789638,
+    "sha256": "d20f45d2757f8c0c4c04f455a823cd8d048538c54cd259c25a2b7b627a555eb0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lovyan03/library/LovyanGFX/1.2.28/LovyanGFX-1.2.28.tar.gz",
+     "https://dl.registry.platformio.org/download/lovyan03/library/LovyanGFX/1.2.28/LovyanGFX-1.2.28.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lovyan03/library/LovyanGFX/1.2.29/LovyanGFX-1.2.29.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LovyanGFX-1.2.29.tar.gz",
+    "size_bytes": 46795869,
+    "sha256": "7521808c8f123d7fdd0d4fb46031d50904dc0815f796cb3b37a45d8414b73add",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lovyan03/library/LovyanGFX/1.2.29/LovyanGFX-1.2.29.tar.gz",
+     "https://dl.registry.platformio.org/download/lovyan03/library/LovyanGFX/1.2.29/LovyanGFX-1.2.29.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lovyan03/library/LovyanGFX/1.2.30/LovyanGFX-1.2.30.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LovyanGFX-1.2.30.tar.gz",
+    "size_bytes": 46802194,
+    "sha256": "eb6cdd4df41d244dc896cac987a0efdcb4cb443358b962a5a5dd9fccd64d94ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lovyan03/library/LovyanGFX/1.2.30/LovyanGFX-1.2.30.tar.gz",
+     "https://dl.registry.platformio.org/download/lovyan03/library/LovyanGFX/1.2.30/LovyanGFX-1.2.30.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lovyan03/library/LovyanGFX/1.2.31/LovyanGFX-1.2.31.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LovyanGFX-1.2.31.tar.gz",
+    "size_bytes": 46806236,
+    "sha256": "e01ba6573524d9617d2ef939683f8d31c8c38e35fdf8dbe0d74f6805aac12feb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lovyan03/library/LovyanGFX/1.2.31/LovyanGFX-1.2.31.tar.gz",
+     "https://dl.registry.platformio.org/download/lovyan03/library/LovyanGFX/1.2.31/LovyanGFX-1.2.31.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lovyan03/library/LovyanGFX/1.2.32/LovyanGFX-1.2.32.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LovyanGFX-1.2.32.tar.gz",
+    "size_bytes": 46807689,
+    "sha256": "d098d857a6d8ca7fc4f48e752b1d7e7a86f9cae2da3c023428f2c99897f15d8a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lovyan03/library/LovyanGFX/1.2.32/LovyanGFX-1.2.32.tar.gz",
+     "https://dl.registry.platformio.org/download/lovyan03/library/LovyanGFX/1.2.32/LovyanGFX-1.2.32.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lovyan03/library/LovyanGFX/1.2.33/LovyanGFX-1.2.33.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LovyanGFX-1.2.33.tar.gz",
+    "size_bytes": 46809050,
+    "sha256": "6c6c0b45494bf2f2cf399492505ea8b89a7af83c4267fecbef3b7fb4ffd29157",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lovyan03/library/LovyanGFX/1.2.33/LovyanGFX-1.2.33.tar.gz",
+     "https://dl.registry.platformio.org/download/lovyan03/library/LovyanGFX/1.2.33/LovyanGFX-1.2.33.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lovyan03/library/LovyanGFX/1.2.34/LovyanGFX-1.2.34.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LovyanGFX-1.2.34.tar.gz",
+    "size_bytes": 46810698,
+    "sha256": "c0b13296aff8db20e9fb14483c81a3e4b16a8974721448ce5a193c66ee3a112b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lovyan03/library/LovyanGFX/1.2.34/LovyanGFX-1.2.34.tar.gz",
+     "https://dl.registry.platformio.org/download/lovyan03/library/LovyanGFX/1.2.34/LovyanGFX-1.2.34.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lovyan03/library/LovyanGFX/1.2.35/LovyanGFX-1.2.35.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LovyanGFX-1.2.35.tar.gz",
+    "size_bytes": 46852679,
+    "sha256": "5d4eef7d65f0201d02c57bbad204ceac91f3e0c94d74f964fc67f1ac2b8482f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lovyan03/library/LovyanGFX/1.2.35/LovyanGFX-1.2.35.tar.gz",
+     "https://dl.registry.platformio.org/download/lovyan03/library/LovyanGFX/1.2.35/LovyanGFX-1.2.35.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lovyan03/library/LovyanGFX/1.2.36/LovyanGFX-1.2.36.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LovyanGFX-1.2.36.tar.gz",
+    "size_bytes": 46855527,
+    "sha256": "9201994467c07a62236647e23b6bc1910ec5b6703060ff8d96721d6b4f1dc4f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lovyan03/library/LovyanGFX/1.2.36/LovyanGFX-1.2.36.tar.gz",
+     "https://dl.registry.platformio.org/download/lovyan03/library/LovyanGFX/1.2.36/LovyanGFX-1.2.36.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lovyan03/library/LovyanGFX/1.2.7/LovyanGFX-1.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LovyanGFX-1.2.7.tar.gz",
+    "size_bytes": 46661160,
+    "sha256": "31c2c3da2cf6eb56403b1a2954d63c322ef7551c787cd5e114043452247b243f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lovyan03/library/LovyanGFX/1.2.7/LovyanGFX-1.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/lovyan03/library/LovyanGFX/1.2.7/LovyanGFX-1.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lovyan03/library/M5Stack_OnScreenKeyboard/0.3.4/M5Stack_OnScreenKeyboard-0.3.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Stack_OnScreenKeyboard-0.3.4.tar.gz",
+    "size_bytes": 20499,
+    "sha256": "bc32ab1ab29d0b4650b5edb2c39a9ac1abe4414a5eb419dcd8ea27ea51c85871",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lovyan03/library/M5Stack_OnScreenKeyboard/0.3.4/M5Stack_OnScreenKeyboard-0.3.4.tar.gz",
+     "https://dl.registry.platformio.org/download/lovyan03/library/M5Stack_OnScreenKeyboard/0.3.4/M5Stack_OnScreenKeyboard-0.3.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lovyan03/library/M5Stack_TreeView/0.2.14/M5Stack_TreeView-0.2.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Stack_TreeView-0.2.14.tar.gz",
+    "size_bytes": 16091,
+    "sha256": "0659d210f25cefce235373227db2eb66d662595e47fdee44c227a7c235dade84",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lovyan03/library/M5Stack_TreeView/0.2.14/M5Stack_TreeView-0.2.14.tar.gz",
+     "https://dl.registry.platformio.org/download/lovyan03/library/M5Stack_TreeView/0.2.14/M5Stack_TreeView-0.2.14.tar.gz"
+    ]
+   }
+  }
+ ]
+}

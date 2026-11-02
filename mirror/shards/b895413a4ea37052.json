@@ -1,0 +1,347 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tcmenu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tcmenu/library/Adafruit_GFX_mbed_oled/1.0.0/Adafruit_GFX_mbed_oled-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Adafruit_GFX_mbed_oled-1.0.0.tar.gz",
+    "size_bytes": 264084,
+    "sha256": "f4b66aad014d6283fafc16d093a3af8587b7131f8a08a18cc24dbd9ff3a8e2f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tcmenu/library/Adafruit_GFX_mbed_oled/1.0.0/Adafruit_GFX_mbed_oled-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tcmenu/library/Adafruit_GFX_mbed_oled/1.0.0/Adafruit_GFX_mbed_oled-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tcmenu/library/IoAbstraction/4.4.0/IoAbstraction-4.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoAbstraction-4.4.0.tar.gz",
+    "size_bytes": 133870,
+    "sha256": "a4be9756a76bc11729b2fd95ce1a0ec8f0670e002db193fa5f85c07d1d32fb9a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tcmenu/library/IoAbstraction/4.4.0/IoAbstraction-4.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tcmenu/library/IoAbstraction/4.4.0/IoAbstraction-4.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tcmenu/library/IoAbstraction/4.5.0/IoAbstraction-4.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoAbstraction-4.5.0.tar.gz",
+    "size_bytes": 134637,
+    "sha256": "659eca4a6f436c1fe255994db923ba4a5cf898b6876e5b69887f70328fe7ec4e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tcmenu/library/IoAbstraction/4.5.0/IoAbstraction-4.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tcmenu/library/IoAbstraction/4.5.0/IoAbstraction-4.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tcmenu/library/IoAbstraction/4.5.3/IoAbstraction-4.5.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoAbstraction-4.5.3.tar.gz",
+    "size_bytes": 136069,
+    "sha256": "b936878c37bbb8c0abad913ee1a9c5eb6b3d66682e9e4a5afc07b02aafbffbe5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tcmenu/library/IoAbstraction/4.5.3/IoAbstraction-4.5.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tcmenu/library/IoAbstraction/4.5.3/IoAbstraction-4.5.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tcmenu/library/IoAbstraction/5.0.0/IoAbstraction-5.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoAbstraction-5.0.0.tar.gz",
+    "size_bytes": 145183,
+    "sha256": "eb71f9ad3e8187eecafd38209b116d256459eb317728de194e70d4ec4cd7be85",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tcmenu/library/IoAbstraction/5.0.0/IoAbstraction-5.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tcmenu/library/IoAbstraction/5.0.0/IoAbstraction-5.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tcmenu/library/IoAbstraction/5.0.1/IoAbstraction-5.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoAbstraction-5.0.1.tar.gz",
+    "size_bytes": 145138,
+    "sha256": "80d0818cb747bb86e739f653dd69ebc4db87a2890341a837c686b2bfa500f637",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tcmenu/library/IoAbstraction/5.0.1/IoAbstraction-5.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tcmenu/library/IoAbstraction/5.0.1/IoAbstraction-5.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tcmenu/library/LiquidCrystalIO/1.4.3/LiquidCrystalIO-1.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LiquidCrystalIO-1.4.3.tar.gz",
+    "size_bytes": 18459,
+    "sha256": "10071e369cfede37b32265e9d31aa7062e769bdd726ffae85c72be7047c95b61",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tcmenu/library/LiquidCrystalIO/1.4.3/LiquidCrystalIO-1.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tcmenu/library/LiquidCrystalIO/1.4.3/LiquidCrystalIO-1.4.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tcmenu/library/SimpleCollections/1.2.3/SimpleCollections-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleCollections-1.2.3.tar.gz",
+    "size_bytes": 20352,
+    "sha256": "e7149b9c2ddeacf12344cf46321ef6c1c93e7cef1460406a5474657daf8d4f95",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tcmenu/library/SimpleCollections/1.2.3/SimpleCollections-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tcmenu/library/SimpleCollections/1.2.3/SimpleCollections-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tcmenu/library/SimpleCollections/1.2.5/SimpleCollections-1.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleCollections-1.2.5.tar.gz",
+    "size_bytes": 25622,
+    "sha256": "eedabf8db3ac80b0a8a754d46664b1ecc5aa884cc310e4e84ef03851f1a6c51f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tcmenu/library/SimpleCollections/1.2.5/SimpleCollections-1.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/tcmenu/library/SimpleCollections/1.2.5/SimpleCollections-1.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tcmenu/library/TaskManagerIO/1.5.1/TaskManagerIO-1.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TaskManagerIO-1.5.1.tar.gz",
+    "size_bytes": 47041,
+    "sha256": "f338eb591168cdba36dd4640ebcf14192c079dd26845a8717e8c1346d4fb85bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tcmenu/library/TaskManagerIO/1.5.1/TaskManagerIO-1.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tcmenu/library/TaskManagerIO/1.5.1/TaskManagerIO-1.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tcmenu/library/TaskManagerIO/1.5.2/TaskManagerIO-1.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TaskManagerIO-1.5.2.tar.gz",
+    "size_bytes": 47008,
+    "sha256": "b50db3b6ff0aa7b25b91a544ebe86d57360ce3a0a133cea00aa8f45aa542c1b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tcmenu/library/TaskManagerIO/1.5.2/TaskManagerIO-1.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tcmenu/library/TaskManagerIO/1.5.2/TaskManagerIO-1.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tcmenu/library/TaskManagerIO/1.5.4/TaskManagerIO-1.5.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TaskManagerIO-1.5.4.tar.gz",
+    "size_bytes": 44713,
+    "sha256": "40a21753340c1dc6ecd364340f675e8e3382f02d188fa5edf9139cd6d89446af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tcmenu/library/TaskManagerIO/1.5.4/TaskManagerIO-1.5.4.tar.gz",
+     "https://dl.registry.platformio.org/download/tcmenu/library/TaskManagerIO/1.5.4/TaskManagerIO-1.5.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tcmenu/library/TaskManagerIO/5.0.0/TaskManagerIO-5.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TaskManagerIO-5.0.0.tar.gz",
+    "size_bytes": 55262,
+    "sha256": "f5578ab46b10d02b6dd1a17a55ad6d77239c2aa53d2b635b9847658721a17c88",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tcmenu/library/TaskManagerIO/5.0.0/TaskManagerIO-5.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tcmenu/library/TaskManagerIO/5.0.0/TaskManagerIO-5.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tcmenu/library/TaskManagerIO/5.0.1/TaskManagerIO-5.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TaskManagerIO-5.0.1.tar.gz",
+    "size_bytes": 58055,
+    "sha256": "b20ae6141d8fbb635f4890632ef906dd9b51af299e95825105dd8c11eadfbd43",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tcmenu/library/TaskManagerIO/5.0.1/TaskManagerIO-5.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tcmenu/library/TaskManagerIO/5.0.1/TaskManagerIO-5.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tcmenu/library/TaskManagerIO/5.0.2/TaskManagerIO-5.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TaskManagerIO-5.0.2.tar.gz",
+    "size_bytes": 57585,
+    "sha256": "9f66dad9c9124aa2e9b2edad7323f81b6c935851a9f0d207d79c7060dc1d034b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tcmenu/library/TaskManagerIO/5.0.2/TaskManagerIO-5.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tcmenu/library/TaskManagerIO/5.0.2/TaskManagerIO-5.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tcmenu/library/TcMenuLog/1.0.4/TcMenuLog-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TcMenuLog-1.0.4.tar.gz",
+    "size_bytes": 21815,
+    "sha256": "37452a364b44325d3a8ecfc529e10f4e0b1659f53c2a89d9f224cdcf0a90276a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tcmenu/library/TcMenuLog/1.0.4/TcMenuLog-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/tcmenu/library/TcMenuLog/1.0.4/TcMenuLog-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tcmenu/library/TcMenuLog/1.0.5/TcMenuLog-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TcMenuLog-1.0.5.tar.gz",
+    "size_bytes": 21616,
+    "sha256": "12948ca228221bf7e1647cd508ec62089b22ba18d11ebd6696a7925f378ecbee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tcmenu/library/TcMenuLog/1.0.5/TcMenuLog-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/tcmenu/library/TcMenuLog/1.0.5/TcMenuLog-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tcmenu/library/TcMenuLog/5.0.0/TcMenuLog-5.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TcMenuLog-5.0.0.tar.gz",
+    "size_bytes": 21735,
+    "sha256": "538f6222b4e93404370007b2f4e0595d6c2d0ad9990cfc19d745821097f9ec37",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tcmenu/library/TcMenuLog/5.0.0/TcMenuLog-5.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tcmenu/library/TcMenuLog/5.0.0/TcMenuLog-5.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tcmenu/library/tcMenu/4.4.0/tcMenu-4.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tcMenu-4.4.0.tar.gz",
+    "size_bytes": 457958,
+    "sha256": "0ad70000e43b4fb5a1324b21402efadc5a7d8daedb436ac3fc1a9015e1aa9dd5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tcmenu/library/tcMenu/4.4.0/tcMenu-4.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tcmenu/library/tcMenu/4.4.0/tcMenu-4.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tcmenu/library/tcMenu/4.5.0/tcMenu-4.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tcMenu-4.5.0.tar.gz",
+    "size_bytes": 469539,
+    "sha256": "afea3f516c84dd73478e6fb09d3bfb5345b2573b42b34547109d261380ae520d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tcmenu/library/tcMenu/4.5.0/tcMenu-4.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tcmenu/library/tcMenu/4.5.0/tcMenu-4.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tcmenu/library/tcMenu/4.5.9/tcMenu-4.5.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tcMenu-4.5.9.tar.gz",
+    "size_bytes": 485493,
+    "sha256": "ff1e2104a779fb8a5f2d3726457eff75b168f0c7fa79b2f542f895b07467a95c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tcmenu/library/tcMenu/4.5.9/tcMenu-4.5.9.tar.gz",
+     "https://dl.registry.platformio.org/download/tcmenu/library/tcMenu/4.5.9/tcMenu-4.5.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tcmenu/library/tcMenu/5.0.0/tcMenu-5.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tcMenu-5.0.0.tar.gz",
+    "size_bytes": 492343,
+    "sha256": "8baf22c6148c86bd3b09828fdd5b0aa333c04e71ae9b45c35ecb11ec0087ee4d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tcmenu/library/tcMenu/5.0.0/tcMenu-5.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tcmenu/library/tcMenu/5.0.0/tcMenu-5.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tcmenu/library/tcMenu/5.0.1/tcMenu-5.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tcMenu-5.0.1.tar.gz",
+    "size_bytes": 508034,
+    "sha256": "c38a378ea30837ebd0454860f9e98a5aad678f4b948bc034620579645fe75f1c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tcmenu/library/tcMenu/5.0.1/tcMenu-5.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tcmenu/library/tcMenu/5.0.1/tcMenu-5.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tcmenu/library/tcUnicodeHelper/1.2.1/tcUnicodeHelper-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tcUnicodeHelper-1.2.1.tar.gz",
+    "size_bytes": 204094,
+    "sha256": "f435a65a84a2c7e0012c96ceffb5ed727394e65bb61f3ef5df128ca1309187ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tcmenu/library/tcUnicodeHelper/1.2.1/tcUnicodeHelper-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tcmenu/library/tcUnicodeHelper/1.2.1/tcUnicodeHelper-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tcmenu/library/tcUnicodeHelper/1.2.3/tcUnicodeHelper-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tcUnicodeHelper-1.2.3.tar.gz",
+    "size_bytes": 203400,
+    "sha256": "135d2ae2bd018f1337930d22cb5173e87297b48fcc53d4a052948056fe6e039c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tcmenu/library/tcUnicodeHelper/1.2.3/tcUnicodeHelper-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tcmenu/library/tcUnicodeHelper/1.2.3/tcUnicodeHelper-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tcmenu/library/tcUnicodeHelper/5.0.0/tcUnicodeHelper-5.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tcUnicodeHelper-5.0.0.tar.gz",
+    "size_bytes": 202652,
+    "sha256": "d97aaf495d77addfcee094b094ba82c86e1c3987ee4822b2b4fc7ff508e20020",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tcmenu/library/tcUnicodeHelper/5.0.0/tcUnicodeHelper-5.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tcmenu/library/tcUnicodeHelper/5.0.0/tcUnicodeHelper-5.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

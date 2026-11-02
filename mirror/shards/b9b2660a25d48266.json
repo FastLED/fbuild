@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/agmangas",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "agmangas/library/SerialRFID/0.2.0/SerialRFID-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialRFID-0.2.0.tar.gz",
+    "size_bytes": 3924,
+    "sha256": "86d80dc9eb54ad67e7b3057c1d5b3bc0aee88058182a204d845fef3b1dc851bf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/agmangas/library/SerialRFID/0.2.0/SerialRFID-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/agmangas/library/SerialRFID/0.2.0/SerialRFID-0.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

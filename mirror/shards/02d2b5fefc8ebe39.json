@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/souhardodasdps1-commits",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "souhardodasdps1-commits/library/EasyConnectevity/1.0.0/EasyConnectevity-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyConnectevity-1.0.0.tar.gz",
+    "size_bytes": 4317,
+    "sha256": "da30f056c4ac483000473a17e664aa7b13c208742b07ae8bbe607e3ec718f308",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/souhardodasdps1-commits/library/EasyConnectevity/1.0.0/EasyConnectevity-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/souhardodasdps1-commits/library/EasyConnectevity/1.0.0/EasyConnectevity-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "souhardodasdps1-commits/library/RoboFlow/1.0.1/RoboFlow-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RoboFlow-1.0.1.tar.gz",
+    "size_bytes": 3457,
+    "sha256": "0450a942ba3f4fbf6e59762cb8dfccb17a670e65c55085c73cc5ba7bf5bbdbf9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/souhardodasdps1-commits/library/RoboFlow/1.0.1/RoboFlow-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/souhardodasdps1-commits/library/RoboFlow/1.0.1/RoboFlow-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "souhardodasdps1-commits/library/RoboFlow/1.1.1/RoboFlow-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RoboFlow-1.1.1.tar.gz",
+    "size_bytes": 4015,
+    "sha256": "b18baf8024c6885d48ce00bc67cf65559911c6ac2b22bd8a6487baf21226256b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/souhardodasdps1-commits/library/RoboFlow/1.1.1/RoboFlow-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/souhardodasdps1-commits/library/RoboFlow/1.1.1/RoboFlow-1.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/multie",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "multie/library/MultiCompass/1.0.2/MultiCompass-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MultiCompass-1.0.2.tar.gz",
+    "size_bytes": 8195,
+    "sha256": "ddf9e693a690339544a6a98da83adef3d1a8cc036c6a860039897af734b21b5e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/multie/library/MultiCompass/1.0.2/MultiCompass-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/multie/library/MultiCompass/1.0.2/MultiCompass-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "multie/library/Universaltime/1.0.10/Universaltime-1.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Universaltime-1.0.10.tar.gz",
+    "size_bytes": 6557,
+    "sha256": "e55807520c6c9ca9d04b5963c35f9615c18319639cc6001646281c6d1a1b3235",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/multie/library/Universaltime/1.0.10/Universaltime-1.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/multie/library/Universaltime/1.0.10/Universaltime-1.0.10.tar.gz"
+    ]
+   }
+  }
+ ]
+}

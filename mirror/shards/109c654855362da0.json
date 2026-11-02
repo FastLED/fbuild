@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-fuzball",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-fuzball/library/DynamicArray/0.0.0+sha.537664265ba6/DynamicArray-0.0.0+sha.537664265ba6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DynamicArray-0.0.0+sha.537664265ba6.tar.gz",
+    "size_bytes": 2464,
+    "sha256": "9223eadc1a00e93ceda2cb836fa4b10e9fd1eddd5ad551ff0c915197c2f327f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-fuzball/library/DynamicArray/0.0.0%2Bsha.537664265ba6/DynamicArray-0.0.0%2Bsha.537664265ba6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-fuzball/library/DynamicArray/0.0.0%2Bsha.537664265ba6/DynamicArray-0.0.0%2Bsha.537664265ba6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-fuzball/library/NOKIA_5110/0.0.0+sha.9cfce382e741/NOKIA_5110-0.0.0+sha.9cfce382e741.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NOKIA_5110-0.0.0+sha.9cfce382e741.tar.gz",
+    "size_bytes": 4730,
+    "sha256": "c46d0522349c9e81554690f1755072277a954fab389cc1669af6a7780890c508",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-fuzball/library/NOKIA_5110/0.0.0%2Bsha.9cfce382e741/NOKIA_5110-0.0.0%2Bsha.9cfce382e741.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-fuzball/library/NOKIA_5110/0.0.0%2Bsha.9cfce382e741/NOKIA_5110-0.0.0%2Bsha.9cfce382e741.tar.gz"
+    ]
+   }
+  }
+ ]
+}

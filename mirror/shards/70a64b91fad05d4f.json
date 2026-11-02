@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-mcu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-mcu/library/ADS1015/0.0.0+sha.1ed94c2550b2/ADS1015-0.0.0+sha.1ed94c2550b2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADS1015-0.0.0+sha.1ed94c2550b2.tar.gz",
+    "size_bytes": 5184,
+    "sha256": "426da7479a2a466ad2ce58b1fc578bceaf587d1b9226f544500a244f45dec593",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mcu/library/ADS1015/0.0.0%2Bsha.1ed94c2550b2/ADS1015-0.0.0%2Bsha.1ed94c2550b2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mcu/library/ADS1015/0.0.0%2Bsha.1ed94c2550b2/ADS1015-0.0.0%2Bsha.1ed94c2550b2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-mcu/library/ADS1015_v2/0.0.0+sha.01706fdce1b8/ADS1015_v2-0.0.0+sha.01706fdce1b8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADS1015_v2-0.0.0+sha.01706fdce1b8.tar.gz",
+    "size_bytes": 1620,
+    "sha256": "0be0c26f890d93ce5c1b7668bee5be5d95d8f0158c756c7d73d422d0e47ef4ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mcu/library/ADS1015_v2/0.0.0%2Bsha.01706fdce1b8/ADS1015_v2-0.0.0%2Bsha.01706fdce1b8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mcu/library/ADS1015_v2/0.0.0%2Bsha.01706fdce1b8/ADS1015_v2-0.0.0%2Bsha.01706fdce1b8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

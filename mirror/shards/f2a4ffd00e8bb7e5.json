@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-fskorup",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-fskorup/library/CAP12xx/0.0.0+sha.8b152c72eded/CAP12xx-0.0.0+sha.8b152c72eded.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CAP12xx-0.0.0+sha.8b152c72eded.tar.gz",
+    "size_bytes": 2805,
+    "sha256": "598406a54e2e1df81b04c8b4e28173ff599abc67bfd9c2baf103c5fd2fc57b87",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-fskorup/library/CAP12xx/0.0.0%2Bsha.8b152c72eded/CAP12xx-0.0.0%2Bsha.8b152c72eded.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-fskorup/library/CAP12xx/0.0.0%2Bsha.8b152c72eded/CAP12xx-0.0.0%2Bsha.8b152c72eded.tar.gz"
+    ]
+   }
+  }
+ ]
+}

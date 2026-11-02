@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-keita712",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-keita712/library/led/0.0.0+sha.a5be9f7faff8/led-0.0.0+sha.a5be9f7faff8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "led-0.0.0+sha.a5be9f7faff8.tar.gz",
+    "size_bytes": 995,
+    "sha256": "6cf58083efaa1a344b460c07d2ba72d52f93cddf771b36b87e722b540e2ec929",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-keita712/library/led/0.0.0%2Bsha.a5be9f7faff8/led-0.0.0%2Bsha.a5be9f7faff8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-keita712/library/led/0.0.0%2Bsha.a5be9f7faff8/led-0.0.0%2Bsha.a5be9f7faff8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

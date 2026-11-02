@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cmmakerclub",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cmmakerclub/library/CMMC%20Easy/0.0.1/CMMCEasy-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CMMCEasy-0.0.1.tar.gz",
+    "size_bytes": 3657,
+    "sha256": "d790419fda538f360dbe97ec9472d863f54e1f15d0c1ab453929c4234ff45570",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cmmakerclub/library/CMMC%2520Easy/0.0.1/CMMCEasy-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cmmakerclub/library/CMMC%20Easy/0.0.1/CMMCEasy-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cmmakerclub/library/CMMC%20MQTT%20Connector/1.3.3/CMMCMQTTConnector-1.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CMMCMQTTConnector-1.3.3.tar.gz",
+    "size_bytes": 58045,
+    "sha256": "0d5fbfbd49758176932a0455445fe7e793c10ff3ac5a37ad6514f452c4fad748",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cmmakerclub/library/CMMC%2520MQTT%2520Connector/1.3.3/CMMCMQTTConnector-1.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/cmmakerclub/library/CMMC%20MQTT%20Connector/1.3.3/CMMCMQTTConnector-1.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cmmakerclub/library/CMMC%20OTA/1.0.5/CMMCOTA-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CMMCOTA-1.0.5.tar.gz",
+    "size_bytes": 3695,
+    "sha256": "f74ec8866e888aa21f3d5695cc6602f23590803154442e59dfa8c43009a2c355",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cmmakerclub/library/CMMC%2520OTA/1.0.5/CMMCOTA-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/cmmakerclub/library/CMMC%20OTA/1.0.5/CMMCOTA-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cmmakerclub/library/CMMC%20Packet/1.0.1/CMMCPacket-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CMMCPacket-1.0.1.tar.gz",
+    "size_bytes": 4656,
+    "sha256": "07805c095823ca3beb347d7be9c3eb9eb7d2eac58784db83d5163f4baa089e68",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cmmakerclub/library/CMMC%2520Packet/1.0.1/CMMCPacket-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cmmakerclub/library/CMMC%20Packet/1.0.1/CMMCPacket-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cmmakerclub/library/CMMC_Interval/0.0.1/CMMC_Interval-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CMMC_Interval-0.0.1.tar.gz",
+    "size_bytes": 2687,
+    "sha256": "6359bb952a37060eb15bf611159851af68cfc10e0bf60c0632547c2ac8a15e83",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cmmakerclub/library/CMMC_Interval/0.0.1/CMMC_Interval-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cmmakerclub/library/CMMC_Interval/0.0.1/CMMC_Interval-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cmmakerclub/library/CMMC_LED/0.0.1/CMMC_LED-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CMMC_LED-0.0.1.tar.gz",
+    "size_bytes": 4210,
+    "sha256": "933c48ff76d2eb701b236432cad9af67af4df54add0444b195d118a1bf7f3058",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cmmakerclub/library/CMMC_LED/0.0.1/CMMC_LED-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cmmakerclub/library/CMMC_LED/0.0.1/CMMC_LED-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cmmakerclub/library/CMMC_NB-IoT/0.0.4/CMMC_NB-IoT-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CMMC_NB-IoT-0.0.4.tar.gz",
+    "size_bytes": 8158,
+    "sha256": "10c49c59a1ae35336dd114f3b688e47b5100c0353de3166a8cf94ebe33606ad8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cmmakerclub/library/CMMC_NB-IoT/0.0.4/CMMC_NB-IoT-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/cmmakerclub/library/CMMC_NB-IoT/0.0.4/CMMC_NB-IoT-0.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cmmakerclub/library/WiFiConnector/0.0.0-alpha+sha.010a555538/WiFiConnector-0.0.0-alphasha.010a555538.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFiConnector-0.0.0-alphasha.010a555538.tar.gz",
+    "size_bytes": 12361,
+    "sha256": "b641b98e56eb1d2f229e57ba36c94feff5b2d8ddf683e1233ecd2f5b63c77b21",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cmmakerclub/library/WiFiConnector/0.0.0-alpha%2Bsha.010a555538/WiFiConnector-0.0.0-alphasha.010a555538.tar.gz",
+     "https://dl.registry.platformio.org/download/cmmakerclub/library/WiFiConnector/0.0.0-alpha%2Bsha.010a555538/WiFiConnector-0.0.0-alphasha.010a555538.tar.gz"
+    ]
+   }
+  }
+ ]
+}

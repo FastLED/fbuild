@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/drmpf",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "drmpf/library/ESPAutoWiFiConfig/2.2.2/ESPAutoWiFiConfig-2.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAutoWiFiConfig-2.2.2.tar.gz",
+    "size_bytes": 31536,
+    "sha256": "20e4dcc61462094d8e9e00d5e3e3f9884a05e56127fa3e0e01fdf566995ea805",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/drmpf/library/ESPAutoWiFiConfig/2.2.2/ESPAutoWiFiConfig-2.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/drmpf/library/ESPAutoWiFiConfig/2.2.2/ESPAutoWiFiConfig-2.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "drmpf/library/NonBlockingModbusMaster/1.0.2/NonBlockingModbusMaster-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NonBlockingModbusMaster-1.0.2.tar.gz",
+    "size_bytes": 19358,
+    "sha256": "4399617655fefa60544674fe447bfc58ed3ef8b65f5d6f696d95ba3bc09ec3aa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/drmpf/library/NonBlockingModbusMaster/1.0.2/NonBlockingModbusMaster-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/drmpf/library/NonBlockingModbusMaster/1.0.2/NonBlockingModbusMaster-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "drmpf/library/RTC_NTP_replacement/1.0.4/RTC_NTP_replacement-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RTC_NTP_replacement-1.0.4.tar.gz",
+    "size_bytes": 31417,
+    "sha256": "c9f1494c552cfce595fecceb56539156e38bc7e1689eac0b80df0b942260ea1d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/drmpf/library/RTC_NTP_replacement/1.0.4/RTC_NTP_replacement-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/drmpf/library/RTC_NTP_replacement/1.0.4/RTC_NTP_replacement-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "drmpf/library/pfodGUIdesigner/1.0.48/pfodGUIdesigner-1.0.48.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pfodGUIdesigner-1.0.48.tar.gz",
+    "size_bytes": 72332,
+    "sha256": "d1c106aeed7d810bc58d6072b352a29f6bcc0a3640ec94e967a327b30e980551",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/drmpf/library/pfodGUIdesigner/1.0.48/pfodGUIdesigner-1.0.48.tar.gz",
+     "https://dl.registry.platformio.org/download/drmpf/library/pfodGUIdesigner/1.0.48/pfodGUIdesigner-1.0.48.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "drmpf/library/pfodParser/3.63.10/pfodParser-3.63.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pfodParser-3.63.10.tar.gz",
+    "size_bytes": 181058,
+    "sha256": "e6b147d11acca004d949205b4c848af0163d8f14e2ac14cd45bdb563e0e5e570",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/drmpf/library/pfodParser/3.63.10/pfodParser-3.63.10.tar.gz",
+     "https://dl.registry.platformio.org/download/drmpf/library/pfodParser/3.63.10/pfodParser-3.63.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "drmpf/library/pfodParser/3.63.9/pfodParser-3.63.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pfodParser-3.63.9.tar.gz",
+    "size_bytes": 181018,
+    "sha256": "386f6490a1386a4664a645b9a7342bcd729ac8a2694d7abe639066b8250035c1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/drmpf/library/pfodParser/3.63.9/pfodParser-3.63.9.tar.gz",
+     "https://dl.registry.platformio.org/download/drmpf/library/pfodParser/3.63.9/pfodParser-3.63.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

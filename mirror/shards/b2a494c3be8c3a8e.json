@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/blairblaidd",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "blairblaidd/library/Newhaven_CharacterOLED_SPI/1.0.0/Newhaven_CharacterOLED_SPI-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Newhaven_CharacterOLED_SPI-1.0.0.tar.gz",
+    "size_bytes": 6819,
+    "sha256": "e16d874fbcaed6df1f8602391e5737d2ad65e6dc833165b86c1fb293db3ff619",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blairblaidd/library/Newhaven_CharacterOLED_SPI/1.0.0/Newhaven_CharacterOLED_SPI-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/blairblaidd/library/Newhaven_CharacterOLED_SPI/1.0.0/Newhaven_CharacterOLED_SPI-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

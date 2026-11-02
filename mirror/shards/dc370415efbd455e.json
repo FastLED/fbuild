@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pervu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pervu/library/FIFObuf/1.1.2/FIFObuf-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FIFObuf-1.1.2.tar.gz",
+    "size_bytes": 3368,
+    "sha256": "0250b00602d076613fb0062ed8b4e4c26d5c34131537a7b2d7791eae623f2981",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pervu/library/FIFObuf/1.1.2/FIFObuf-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/pervu/library/FIFObuf/1.1.2/FIFObuf-1.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

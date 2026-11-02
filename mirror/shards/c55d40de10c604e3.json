@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/burksbuilds",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "burksbuilds/library/PreferencesCLI/1.0.0/PreferencesCLI-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PreferencesCLI-1.0.0.tar.gz",
+    "size_bytes": 8821,
+    "sha256": "a7115b76d141f4d26c60a1c1f1386798dd2fd30b863e004f4ee0ed37e76eda4d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/burksbuilds/library/PreferencesCLI/1.0.0/PreferencesCLI-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/burksbuilds/library/PreferencesCLI/1.0.0/PreferencesCLI-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

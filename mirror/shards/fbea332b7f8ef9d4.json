@@ -1,0 +1,126 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/glutio",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "glutio/library/Buratino/0.1.0/Buratino-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Buratino-0.1.0.tar.gz",
+    "size_bytes": 3365,
+    "sha256": "e34f8359eaed9f1e8e6237ab44880d79ec2913dbb05cbe1afdcfb4667e3c8708",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/glutio/library/Buratino/0.1.0/Buratino-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/glutio/library/Buratino/0.1.0/Buratino-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "glutio/library/Eventfun/0.1.3/Eventfun-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Eventfun-0.1.3.tar.gz",
+    "size_bytes": 4745,
+    "sha256": "a0463fb0264a79ffd606fe80921074147f55e51f076ceadfbf85ea67dd680b2d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/glutio/library/Eventfun/0.1.3/Eventfun-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/glutio/library/Eventfun/0.1.3/Eventfun-0.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "glutio/library/Eventfun/0.1.5/Eventfun-0.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Eventfun-0.1.5.tar.gz",
+    "size_bytes": 5719,
+    "sha256": "9cde3c0516004186fb046134277e3f0564ee0f26c642cca0bffcb0900e736d23",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/glutio/library/Eventfun/0.1.5/Eventfun-0.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/glutio/library/Eventfun/0.1.5/Eventfun-0.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "glutio/library/Focuspocus/0.2.1/Focuspocus-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Focuspocus-0.2.1.tar.gz",
+    "size_bytes": 41690,
+    "sha256": "c6106fcbae408db5e10839b0b139b7cb45ad59143e5a62fb15afeb59ad7ea94c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/glutio/library/Focuspocus/0.2.1/Focuspocus-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/glutio/library/Focuspocus/0.2.1/Focuspocus-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "glutio/library/Focuspocus/0.3.0/Focuspocus-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Focuspocus-0.3.0.tar.gz",
+    "size_bytes": 42846,
+    "sha256": "90fee2660560a2502cb535359c6ff98385b710796ba30cf38129bfcc3a30c1cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/glutio/library/Focuspocus/0.3.0/Focuspocus-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/glutio/library/Focuspocus/0.3.0/Focuspocus-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "glutio/library/Focuspocus/0.4.0/Focuspocus-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Focuspocus-0.4.0.tar.gz",
+    "size_bytes": 43305,
+    "sha256": "e5977cf3c060387b635d9b25de70c89bb0107ab8672a893ef3b902e6e68c5333",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/glutio/library/Focuspocus/0.4.0/Focuspocus-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/glutio/library/Focuspocus/0.4.0/Focuspocus-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "glutio/library/Taskfun/0.1.93/Taskfun-0.1.93.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Taskfun-0.1.93.tar.gz",
+    "size_bytes": 14372,
+    "sha256": "867a179ab7425876614d3e1a111b6edb529eae80e599b19119920620eec3df0d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/glutio/library/Taskfun/0.1.93/Taskfun-0.1.93.tar.gz",
+     "https://dl.registry.platformio.org/download/glutio/library/Taskfun/0.1.93/Taskfun-0.1.93.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "glutio/library/Taskfun/0.1.95/Taskfun-0.1.95.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Taskfun-0.1.95.tar.gz",
+    "size_bytes": 19564,
+    "sha256": "8f4f4b12953a4ed5ffcc4267c809bead46780fc48b71cb5e28b836827128f80f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/glutio/library/Taskfun/0.1.95/Taskfun-0.1.95.tar.gz",
+     "https://dl.registry.platformio.org/download/glutio/library/Taskfun/0.1.95/Taskfun-0.1.95.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "glutio/library/Taskfun/0.1.96/Taskfun-0.1.96.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Taskfun-0.1.96.tar.gz",
+    "size_bytes": 19694,
+    "sha256": "c25baa2ae1a42951de5dbf9a3e8eb35625c85958961177ea0042ade2438589d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/glutio/library/Taskfun/0.1.96/Taskfun-0.1.96.tar.gz",
+     "https://dl.registry.platformio.org/download/glutio/library/Taskfun/0.1.96/Taskfun-0.1.96.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-wizzilab",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-wizzilab/library/CBuffer/0.0.0+sha.64d6dbdbc339/CBuffer-0.0.0+sha.64d6dbdbc339.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CBuffer-0.0.0+sha.64d6dbdbc339.tar.gz",
+    "size_bytes": 1286,
+    "sha256": "33265f4257e9d1cafee7980c8386c3745d7b58d7e71b09322236dcf0caf18ecb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wizzilab/library/CBuffer/0.0.0%2Bsha.64d6dbdbc339/CBuffer-0.0.0%2Bsha.64d6dbdbc339.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wizzilab/library/CBuffer/0.0.0%2Bsha.64d6dbdbc339/CBuffer-0.0.0%2Bsha.64d6dbdbc339.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wizzilab/library/CRC/0.0.0+sha.88116ae677af/CRC-0.0.0+sha.88116ae677af.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CRC-0.0.0+sha.88116ae677af.tar.gz",
+    "size_bytes": 36780,
+    "sha256": "a8dbf5592e1166facd20e75a5cdd6b88b0aec55fe216751d410b7a6ed5b9f47b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wizzilab/library/CRC/0.0.0%2Bsha.88116ae677af/CRC-0.0.0%2Bsha.88116ae677af.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wizzilab/library/CRC/0.0.0%2Bsha.88116ae677af/CRC-0.0.0%2Bsha.88116ae677af.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wizzilab/library/modem_ref/0.0.0+sha.cce5347a94af/modem_ref-0.0.0+sha.cce5347a94af.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "modem_ref-0.0.0+sha.cce5347a94af.tar.gz",
+    "size_bytes": 48495,
+    "sha256": "a0120068df17c9da5be47e3cdb53ffe70cc4f9d4544b3ab611e3750f65cf68d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wizzilab/library/modem_ref/0.0.0%2Bsha.cce5347a94af/modem_ref-0.0.0%2Bsha.cce5347a94af.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wizzilab/library/modem_ref/0.0.0%2Bsha.cce5347a94af/modem_ref-0.0.0%2Bsha.cce5347a94af.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wizzilab/library/modem_ref_helper/0.0.0+sha.243e0ef07efb/modem_ref_helper-0.0.0+sha.243e0ef07efb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "modem_ref_helper-0.0.0+sha.243e0ef07efb.tar.gz",
+    "size_bytes": 5537,
+    "sha256": "3ef6845844392865eb94097de7f70c117545bde95e9c3eb70ae85d1b82c929d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wizzilab/library/modem_ref_helper/0.0.0%2Bsha.243e0ef07efb/modem_ref_helper-0.0.0%2Bsha.243e0ef07efb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wizzilab/library/modem_ref_helper/0.0.0%2Bsha.243e0ef07efb/modem_ref_helper-0.0.0%2Bsha.243e0ef07efb.tar.gz"
+    ]
+   }
+  }
+ ]
+}

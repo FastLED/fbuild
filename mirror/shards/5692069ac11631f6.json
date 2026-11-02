@@ -1,0 +1,126 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/leeleahy2",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "leeleahy2/library/R4A_ESP32/0.7.0/R4A_ESP32-0.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "R4A_ESP32-0.7.0.tar.gz",
+    "size_bytes": 182509,
+    "sha256": "5dac0f97494181c388e17541713cc29379602df86507379031bc674fefbeaf28",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leeleahy2/library/R4A_ESP32/0.7.0/R4A_ESP32-0.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leeleahy2/library/R4A_ESP32/0.7.0/R4A_ESP32-0.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leeleahy2/library/R4A_ESP32/0.7.2/R4A_ESP32-0.7.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "R4A_ESP32-0.7.2.tar.gz",
+    "size_bytes": 185739,
+    "sha256": "6f1dcd2b2e133d0ca9deae406d993421b8ffea2a9861238000688454a9fc8f22",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leeleahy2/library/R4A_ESP32/0.7.2/R4A_ESP32-0.7.2.tar.gz",
+     "https://dl.registry.platformio.org/download/leeleahy2/library/R4A_ESP32/0.7.2/R4A_ESP32-0.7.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leeleahy2/library/R4A_ESP32/0.7.3/R4A_ESP32-0.7.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "R4A_ESP32-0.7.3.tar.gz",
+    "size_bytes": 185369,
+    "sha256": "adb52ddf23b791d91ebbfec2ec3ca7d94074c40501ff86e1ab1adcf3329f4958",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leeleahy2/library/R4A_ESP32/0.7.3/R4A_ESP32-0.7.3.tar.gz",
+     "https://dl.registry.platformio.org/download/leeleahy2/library/R4A_ESP32/0.7.3/R4A_ESP32-0.7.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leeleahy2/library/R4A_ESP32/0.7.4/R4A_ESP32-0.7.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "R4A_ESP32-0.7.4.tar.gz",
+    "size_bytes": 187012,
+    "sha256": "f3b4e0bfc5f0509dcd4d2bf3a6d3ed066b68f5212a847708a1c5aa7f1c41af85",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leeleahy2/library/R4A_ESP32/0.7.4/R4A_ESP32-0.7.4.tar.gz",
+     "https://dl.registry.platformio.org/download/leeleahy2/library/R4A_ESP32/0.7.4/R4A_ESP32-0.7.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leeleahy2/library/R4A_I2C/0.5.0/R4A_I2C-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "R4A_I2C-0.5.0.tar.gz",
+    "size_bytes": 36767,
+    "sha256": "110052edb7058451e46a512f5db9581d2ef96e89278e2aa886544d9d0a47f1e7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leeleahy2/library/R4A_I2C/0.5.0/R4A_I2C-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leeleahy2/library/R4A_I2C/0.5.0/R4A_I2C-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leeleahy2/library/R4A_Robot/0.4.0/R4A_Robot-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "R4A_Robot-0.4.0.tar.gz",
+    "size_bytes": 66192,
+    "sha256": "ef50ec76e4b47a691a1f8688368240d45c16fe5ebb3f63a14fca9cb4e43dea69",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leeleahy2/library/R4A_Robot/0.4.0/R4A_Robot-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leeleahy2/library/R4A_Robot/0.4.0/R4A_Robot-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leeleahy2/library/R4A_Robot/0.4.1/R4A_Robot-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "R4A_Robot-0.4.1.tar.gz",
+    "size_bytes": 66244,
+    "sha256": "b3c82120a85ddf3bc021691e07b748d62ea3b340436ee341ed42088924d317b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leeleahy2/library/R4A_Robot/0.4.1/R4A_Robot-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/leeleahy2/library/R4A_Robot/0.4.1/R4A_Robot-0.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leeleahy2/library/R4A_Robot/0.4.2/R4A_Robot-0.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "R4A_Robot-0.4.2.tar.gz",
+    "size_bytes": 74637,
+    "sha256": "caab6f3dfe3c57b4c982525af5982921f4a316d0f7609b4cf9e8267a9c65a048",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leeleahy2/library/R4A_Robot/0.4.2/R4A_Robot-0.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/leeleahy2/library/R4A_Robot/0.4.2/R4A_Robot-0.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leeleahy2/library/SdCardServer/1.4.1/SdCardServer-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SdCardServer-1.4.1.tar.gz",
+    "size_bytes": 22486,
+    "sha256": "b94d316db15fa0be4d32e65531781e1bb842d8ca8b9663e7d7b1871b7f33f5a1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leeleahy2/library/SdCardServer/1.4.1/SdCardServer-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/leeleahy2/library/SdCardServer/1.4.1/SdCardServer-1.4.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

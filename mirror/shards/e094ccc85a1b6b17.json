@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-amutake",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-amutake/library/fll/0.0.0+sha.905fe1a0ca5a/fll-0.0.0+sha.905fe1a0ca5a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "fll-0.0.0+sha.905fe1a0ca5a.tar.gz",
+    "size_bytes": 4358,
+    "sha256": "0e02ee6f02861c4c1e7dff50dc86336efd08608c9ba9143079eec2fcab8fe094",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-amutake/library/fll/0.0.0%2Bsha.905fe1a0ca5a/fll-0.0.0%2Bsha.905fe1a0ca5a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-amutake/library/fll/0.0.0%2Bsha.905fe1a0ca5a/fll-0.0.0%2Bsha.905fe1a0ca5a.tar.gz"
+    ]
+   }
+  }
+ ]
+}

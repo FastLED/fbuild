@@ -1,0 +1,178 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bridgetek",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bridgetek/library/Bridgetek_EVE1/1.0.0/Bridgetek_EVE1-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bridgetek_EVE1-1.0.0.tar.gz",
+    "size_bytes": 57949,
+    "sha256": "f8ae15804af47e17066e6525ed11d0672efab40e76a8f1ff8bf4a19d78c9334d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bridgetek/library/Bridgetek_EVE1/1.0.0/Bridgetek_EVE1-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bridgetek/library/Bridgetek_EVE1/1.0.0/Bridgetek_EVE1-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bridgetek/library/Bridgetek_EVE1/1.1.2/Bridgetek_EVE1-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bridgetek_EVE1-1.1.2.tar.gz",
+    "size_bytes": 78579,
+    "sha256": "e284e811fd66decbf6cef7db3d0def8538c6c3c7e08977b2968e89cc6de888ea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bridgetek/library/Bridgetek_EVE1/1.1.2/Bridgetek_EVE1-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bridgetek/library/Bridgetek_EVE1/1.1.2/Bridgetek_EVE1-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bridgetek/library/Bridgetek_EVE2/1.0.0/Bridgetek_EVE2-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bridgetek_EVE2-1.0.0.tar.gz",
+    "size_bytes": 59087,
+    "sha256": "b979afab369cd24aa75a21c845374cfb4307bc716d99abe422232a2ad8442dfc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bridgetek/library/Bridgetek_EVE2/1.0.0/Bridgetek_EVE2-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bridgetek/library/Bridgetek_EVE2/1.0.0/Bridgetek_EVE2-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bridgetek/library/Bridgetek_EVE2/1.1.2/Bridgetek_EVE2-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bridgetek_EVE2-1.1.2.tar.gz",
+    "size_bytes": 79717,
+    "sha256": "d532a9d72050f80d894be8943370ddda868264e95c42c9106bfcb3d995c76253",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bridgetek/library/Bridgetek_EVE2/1.1.2/Bridgetek_EVE2-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bridgetek/library/Bridgetek_EVE2/1.1.2/Bridgetek_EVE2-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bridgetek/library/Bridgetek_EVE2_2/1.0.0/Bridgetek_EVE2_2-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bridgetek_EVE2_2-1.0.0.tar.gz",
+    "size_bytes": 59093,
+    "sha256": "0b52ec394e6da9838b1966d42ff4fedc906faac9c83e3b6a3a47e31b32493e7e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bridgetek/library/Bridgetek_EVE2_2/1.0.0/Bridgetek_EVE2_2-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bridgetek/library/Bridgetek_EVE2_2/1.0.0/Bridgetek_EVE2_2-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bridgetek/library/Bridgetek_EVE2_2/1.1.2/Bridgetek_EVE2_2-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bridgetek_EVE2_2-1.1.2.tar.gz",
+    "size_bytes": 79738,
+    "sha256": "d66d6154b16b52fc0e5e961650c67f2d42c1f5eebea5f89afcbe2163288f9c01",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bridgetek/library/Bridgetek_EVE2_2/1.1.2/Bridgetek_EVE2_2-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bridgetek/library/Bridgetek_EVE2_2/1.1.2/Bridgetek_EVE2_2-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bridgetek/library/Bridgetek_EVE3/1.0.0/Bridgetek_EVE3-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bridgetek_EVE3-1.0.0.tar.gz",
+    "size_bytes": 63877,
+    "sha256": "5e6434acad1866d3f7c6db2ab190556445a2c1e833c1f16aafb5da860174b022",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bridgetek/library/Bridgetek_EVE3/1.0.0/Bridgetek_EVE3-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bridgetek/library/Bridgetek_EVE3/1.0.0/Bridgetek_EVE3-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bridgetek/library/Bridgetek_EVE3/1.1.2/Bridgetek_EVE3-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bridgetek_EVE3-1.1.2.tar.gz",
+    "size_bytes": 82672,
+    "sha256": "60a52d09b759d9183b3e3ce82eb930d061eca359962a730f561f9f177748709c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bridgetek/library/Bridgetek_EVE3/1.1.2/Bridgetek_EVE3-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bridgetek/library/Bridgetek_EVE3/1.1.2/Bridgetek_EVE3-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bridgetek/library/Bridgetek_EVE4/1.0.0/Bridgetek_EVE4-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bridgetek_EVE4-1.0.0.tar.gz",
+    "size_bytes": 64384,
+    "sha256": "5823bad1ddca4fbeaed5f06268e601a11ac8e7636194e6e6ae59e3815970ec51",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bridgetek/library/Bridgetek_EVE4/1.0.0/Bridgetek_EVE4-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bridgetek/library/Bridgetek_EVE4/1.0.0/Bridgetek_EVE4-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bridgetek/library/Bridgetek_EVE4/1.1.2/Bridgetek_EVE4-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bridgetek_EVE4-1.1.2.tar.gz",
+    "size_bytes": 84396,
+    "sha256": "cbc89c1674ecf5b20923cf07aed7c15d943f7d3262a904a17911f9594825ea7f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bridgetek/library/Bridgetek_EVE4/1.1.2/Bridgetek_EVE4-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bridgetek/library/Bridgetek_EVE4/1.1.2/Bridgetek_EVE4-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bridgetek/library/Bridgetek_EVE5/1.0.0/Bridgetek_EVE5-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bridgetek_EVE5-1.0.0.tar.gz",
+    "size_bytes": 71340,
+    "sha256": "fea14235c4c9933e7ecd582dafb5ebf18b4e2bc9ae6024bf940e4e6f5159ca73",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bridgetek/library/Bridgetek_EVE5/1.0.0/Bridgetek_EVE5-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bridgetek/library/Bridgetek_EVE5/1.0.0/Bridgetek_EVE5-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bridgetek/library/Bridgetek_EVE5/1.1.2/Bridgetek_EVE5-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bridgetek_EVE5-1.1.2.tar.gz",
+    "size_bytes": 93772,
+    "sha256": "f83e0c8d04b7a896f6255f925d207dd46d3de1a0f5b23f48ada51a8669c59b7b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bridgetek/library/Bridgetek_EVE5/1.1.2/Bridgetek_EVE5-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bridgetek/library/Bridgetek_EVE5/1.1.2/Bridgetek_EVE5-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bridgetek/library/RP2040-BrtEve/1.1.0/RP2040-BrtEve-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RP2040-BrtEve-1.1.0.tar.gz",
+    "size_bytes": 53964,
+    "sha256": "1c5ce9d0e160c9081286c4ccfcf804070802e02035f1376527aae2faadc137ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bridgetek/library/RP2040-BrtEve/1.1.0/RP2040-BrtEve-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bridgetek/library/RP2040-BrtEve/1.1.0/RP2040-BrtEve-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

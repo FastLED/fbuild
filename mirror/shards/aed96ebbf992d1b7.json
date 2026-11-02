@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/luseka",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "luseka/library/HX711_light/1.0.3/HX711_light-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HX711_light-1.0.3.tar.gz",
+    "size_bytes": 2349,
+    "sha256": "bd1673ae1caa410c95686302bcadbddc1fd621835529e736ffd2c633054f45d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luseka/library/HX711_light/1.0.3/HX711_light-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/luseka/library/HX711_light/1.0.3/HX711_light-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

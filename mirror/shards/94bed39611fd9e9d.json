@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/coswot",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "coswot/library/uRDFLib/0.2/uRDFLib-0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uRDFLib-0.2.tar.gz",
+    "size_bytes": 49759,
+    "sha256": "ae21b60b43c7c38e093c41773d804260efe8177023b19275e02f5269fad4b2db",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/coswot/library/uRDFLib/0.2/uRDFLib-0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/coswot/library/uRDFLib/0.2/uRDFLib-0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tobsoft",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tobsoft/library/HTL_onboard/1.1.9/HTL_onboard-1.1.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HTL_onboard-1.1.9.tar.gz",
+    "size_bytes": 21841,
+    "sha256": "d3bcd10602fccd1608e08ed75b6a4f64b5dfea032741fc36a5b7b72adc2eb04c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tobsoft/library/HTL_onboard/1.1.9/HTL_onboard-1.1.9.tar.gz",
+     "https://dl.registry.platformio.org/download/tobsoft/library/HTL_onboard/1.1.9/HTL_onboard-1.1.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

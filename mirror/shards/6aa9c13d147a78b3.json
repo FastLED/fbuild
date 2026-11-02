@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/plexus-oss",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "plexus-oss/library/plexus-c/0.1.1/plexus-c-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "plexus-c-0.1.1.tar.gz",
+    "size_bytes": 73816,
+    "sha256": "7df2d506d62f95b297fe11c4d4361ab7da44ca16f421ade2f349f4202591c6a6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/plexus-oss/library/plexus-c/0.1.1/plexus-c-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/plexus-oss/library/plexus-c/0.1.1/plexus-c-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "plexus-oss/library/plexus-c/0.5.6/PlexusSDK-0.5.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PlexusSDK-0.5.6.tar.gz",
+    "size_bytes": 42543,
+    "sha256": "6d6a89e27d832c5c200673484a4034a409f7e2c9e32ee8fba82dfca59faef045",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/plexus-oss/library/plexus-c/0.5.6/PlexusSDK-0.5.6.tar.gz",
+     "https://dl.registry.platformio.org/download/plexus-oss/library/plexus-c/0.5.6/PlexusSDK-0.5.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "plexus-oss/library/plexus-c/0.7.0/PlexusSDK-0.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PlexusSDK-0.7.0.tar.gz",
+    "size_bytes": 59015,
+    "sha256": "622bb81bf58cb65289065296adb16bd486612615bc12b8b3530a524a4082b1f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/plexus-oss/library/plexus-c/0.7.0/PlexusSDK-0.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/plexus-oss/library/plexus-c/0.7.0/PlexusSDK-0.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "plexus-oss/library/plexus-c/0.8.0/PlexusSDK-0.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PlexusSDK-0.8.0.tar.gz",
+    "size_bytes": 73560,
+    "sha256": "94a6da3829aa606cbf6abeae2ca6bb9eb50524f587882452856e42885bdfb17b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/plexus-oss/library/plexus-c/0.8.0/PlexusSDK-0.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/plexus-oss/library/plexus-c/0.8.0/PlexusSDK-0.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "plexus-oss/library/plexus-c/0.9.0/plexus-c-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "plexus-c-0.9.0.tar.gz",
+    "size_bytes": 79839,
+    "sha256": "d7837f06f2487fec034a489ce5e86fbd58060e2be8a3b596679fff4b4112fc9a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/plexus-oss/library/plexus-c/0.9.0/plexus-c-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/plexus-oss/library/plexus-c/0.9.0/plexus-c-0.9.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

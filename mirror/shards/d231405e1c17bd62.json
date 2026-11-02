@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-st-americas-mbed-team",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-st-americas-mbed-team/library/Nucleo_BLE_API/0.0.0+sha.79e5c08cbcc7/Nucleo_BLE_API-0.0.0+sha.79e5c08cbcc7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Nucleo_BLE_API-0.0.0+sha.79e5c08cbcc7.tar.gz",
+    "size_bytes": 33293,
+    "sha256": "ddfa9cabc16c72dcd78e9403b5336c15f2bd25d4c23179a49e7ad4a6cfcbf23d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st-americas-mbed-team/library/Nucleo_BLE_API/0.0.0%2Bsha.79e5c08cbcc7/Nucleo_BLE_API-0.0.0%2Bsha.79e5c08cbcc7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st-americas-mbed-team/library/Nucleo_BLE_API/0.0.0%2Bsha.79e5c08cbcc7/Nucleo_BLE_API-0.0.0%2Bsha.79e5c08cbcc7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st-americas-mbed-team/library/lib_NFC_M24SR/0.0.0+sha.ffc2448b65ef/lib_NFC_M24SR-0.0.0+sha.ffc2448b65ef.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lib_NFC_M24SR-0.0.0+sha.ffc2448b65ef.tar.gz",
+    "size_bytes": 12336,
+    "sha256": "97f3cee6633a4c8820b8d0af396566236ee8159204fcb8152bd5abff165577c4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st-americas-mbed-team/library/lib_NFC_M24SR/0.0.0%2Bsha.ffc2448b65ef/lib_NFC_M24SR-0.0.0%2Bsha.ffc2448b65ef.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st-americas-mbed-team/library/lib_NFC_M24SR/0.0.0%2Bsha.ffc2448b65ef/lib_NFC_M24SR-0.0.0%2Bsha.ffc2448b65ef.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st-americas-mbed-team/library/lib_NFC_NDEF/0.0.0+sha.3b093bd0819e/lib_NFC_NDEF-0.0.0+sha.3b093bd0819e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lib_NFC_NDEF-0.0.0+sha.3b093bd0819e.tar.gz",
+    "size_bytes": 21266,
+    "sha256": "0ecbe613b5b3d9c82d8ab7d436c53cc3591e7f9e061fac73107523b858b5702e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st-americas-mbed-team/library/lib_NFC_NDEF/0.0.0%2Bsha.3b093bd0819e/lib_NFC_NDEF-0.0.0%2Bsha.3b093bd0819e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st-americas-mbed-team/library/lib_NFC_NDEF/0.0.0%2Bsha.3b093bd0819e/lib_NFC_NDEF-0.0.0%2Bsha.3b093bd0819e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

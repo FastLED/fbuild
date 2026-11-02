@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mediocre9",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mediocre9/library/Voyager-OTA-Client/3.0.1/Voyager-OTA-Client-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Voyager-OTA-Client-3.0.1.tar.gz",
+    "size_bytes": 11133,
+    "sha256": "4810a184480e18af2b9d0d7436070cbca49760a4e14d9c1f3bc0d15ac0f583ab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mediocre9/library/Voyager-OTA-Client/3.0.1/Voyager-OTA-Client-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mediocre9/library/Voyager-OTA-Client/3.0.1/Voyager-OTA-Client-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mediocre9/library/Voyager-OTA-Client/4.0.0/VoyagerOTAClient-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VoyagerOTAClient-4.0.0.tar.gz",
+    "size_bytes": 11905,
+    "sha256": "e1db7ef3dc47eb56c37f3a9fd96eef15db249a6806dd43263f9e5855bd7ced58",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mediocre9/library/Voyager-OTA-Client/4.0.0/VoyagerOTAClient-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mediocre9/library/Voyager-OTA-Client/4.0.0/VoyagerOTAClient-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mediocre9/library/Voyager-OTA-Client/4.0.1/Voyager-OTA-Client-4.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Voyager-OTA-Client-4.0.1.tar.gz",
+    "size_bytes": 11914,
+    "sha256": "d8c09ebc110b62b004664fec5bebc5c4e7ee053a6be3d9ebbb5e980d0ec3689a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mediocre9/library/Voyager-OTA-Client/4.0.1/Voyager-OTA-Client-4.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mediocre9/library/Voyager-OTA-Client/4.0.1/Voyager-OTA-Client-4.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mediocre9/library/Voyager-OTA-Client/5.0.0/Voyager-OTA-Client-5.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Voyager-OTA-Client-5.0.0.tar.gz",
+    "size_bytes": 11921,
+    "sha256": "1c53ced9e5a1661902457b0cbd351942a28d0b107bf9ac3c0a960b53c5b13120",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mediocre9/library/Voyager-OTA-Client/5.0.0/Voyager-OTA-Client-5.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mediocre9/library/Voyager-OTA-Client/5.0.0/Voyager-OTA-Client-5.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mediocre9/library/Voyager-OTA-Client/5.1.0/Voyager-OTA-Client-5.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Voyager-OTA-Client-5.1.0.tar.gz",
+    "size_bytes": 11187,
+    "sha256": "d248f1dce7be7cdaf5a6da77b86278445853422b2fd5a52bf159fea10d38a6a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mediocre9/library/Voyager-OTA-Client/5.1.0/Voyager-OTA-Client-5.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mediocre9/library/Voyager-OTA-Client/5.1.0/Voyager-OTA-Client-5.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

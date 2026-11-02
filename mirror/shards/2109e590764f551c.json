@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/0xtj",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "0xtj/library/StringStream/1.0.0/StringStream-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StringStream-1.0.0.tar.gz",
+    "size_bytes": 1342,
+    "sha256": "3d759a897eae9df81cb0a227617b039ee15b9beb138cff5585229ae9b27c5f61",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/0xtj/library/StringStream/1.0.0/StringStream-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/0xtj/library/StringStream/1.0.0/StringStream-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

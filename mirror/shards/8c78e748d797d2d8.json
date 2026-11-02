@@ -1,0 +1,919 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kilgichris",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/2.0.1/MiniCtrlBoxLib-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-2.0.1.tar.gz",
+    "size_bytes": 12962,
+    "sha256": "eaefc51b17227bc0b82d8b4917224620a8be665f498a64b315bed6782db64b2f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/2.0.1/MiniCtrlBoxLib-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/2.0.1/MiniCtrlBoxLib-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/2.0.3/MiniCtrlBoxLib-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-2.0.3.tar.gz",
+    "size_bytes": 13126,
+    "sha256": "0264e7712c4ab7d8c9be000b5f64166759e640ec475e3ee26dbaafcb7101a0f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/2.0.3/MiniCtrlBoxLib-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/2.0.3/MiniCtrlBoxLib-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/2.0.5/MiniCtrlBoxLib-2.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-2.0.5.tar.gz",
+    "size_bytes": 13270,
+    "sha256": "f4f4f410a77b6e7147938e9de17c6424d0b2b1783e557e6c1beeee16b3846563",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/2.0.5/MiniCtrlBoxLib-2.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/2.0.5/MiniCtrlBoxLib-2.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/2.0.6/MiniCtrlBoxLib-2.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-2.0.6.tar.gz",
+    "size_bytes": 13603,
+    "sha256": "f512d32100d15fcdef36463e2a50c0310c16c896a090aa07d9df218f4c45af68",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/2.0.6/MiniCtrlBoxLib-2.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/2.0.6/MiniCtrlBoxLib-2.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/2.0.7/MiniCtrlBoxLib-2.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-2.0.7.tar.gz",
+    "size_bytes": 13769,
+    "sha256": "c0db6501f650f79a51e91dcf432fbc127d07fad0cce20a2188e870534b5d2478",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/2.0.7/MiniCtrlBoxLib-2.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/2.0.7/MiniCtrlBoxLib-2.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/2.1.0/MiniCtrlBoxLib-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-2.1.0.tar.gz",
+    "size_bytes": 14268,
+    "sha256": "abf8416747b55524e35092ff67e10d97c4b9388bb4425e5830d80fd6449113a1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/2.1.0/MiniCtrlBoxLib-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/2.1.0/MiniCtrlBoxLib-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/2.2.0/MiniCtrlBoxLib-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-2.2.0.tar.gz",
+    "size_bytes": 14688,
+    "sha256": "10c09b1bd23bb1e9878900b55f90c48d4ea3fcbdbd9612cd444d35203cb336a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/2.2.0/MiniCtrlBoxLib-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/2.2.0/MiniCtrlBoxLib-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/2.2.1/MiniCtrlBoxLib-2.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-2.2.1.tar.gz",
+    "size_bytes": 14701,
+    "sha256": "857e75085de681005f3a7de31ee0dc9315c83344b8e4cee4c0b14a95ee79fcd3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/2.2.1/MiniCtrlBoxLib-2.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/2.2.1/MiniCtrlBoxLib-2.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/3.0.0/MiniCtrlBoxLib-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-3.0.0.tar.gz",
+    "size_bytes": 14268,
+    "sha256": "dd7ae8ba9880a220948f7d6ae35092d9932466b7dfea8bdc04837cedc8d1fd08",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/3.0.0/MiniCtrlBoxLib-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/3.0.0/MiniCtrlBoxLib-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/3.0.1/MiniCtrlBoxLib-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-3.0.1.tar.gz",
+    "size_bytes": 14372,
+    "sha256": "910826c6f4652115a40429314d5ec26f6f7eee8b37ab8a4829df5bee6a67dab9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/3.0.1/MiniCtrlBoxLib-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/3.0.1/MiniCtrlBoxLib-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/3.1.0/MiniCtrlBoxLib-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-3.1.0.tar.gz",
+    "size_bytes": 14629,
+    "sha256": "45a23a9053e89e410b4b5448de8b3ba4dcd903c9121cac9c2419c85fe8b3afaa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/3.1.0/MiniCtrlBoxLib-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/3.1.0/MiniCtrlBoxLib-3.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/3.1.1/MiniCtrlBoxLib-3.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-3.1.1.tar.gz",
+    "size_bytes": 14626,
+    "sha256": "8e99cf9213b11d917cc340a4aa357443378778a6927db6fc782668887fdff1bf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/3.1.1/MiniCtrlBoxLib-3.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/3.1.1/MiniCtrlBoxLib-3.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/3.1.2/MiniCtrlBoxLib-3.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-3.1.2.tar.gz",
+    "size_bytes": 14627,
+    "sha256": "70a080fdfa04744da1c1a474921a2b1c4386b78236659971077e874e2faf92fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/3.1.2/MiniCtrlBoxLib-3.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/3.1.2/MiniCtrlBoxLib-3.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/3.1.3/MiniCtrlBoxLib-3.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-3.1.3.tar.gz",
+    "size_bytes": 14631,
+    "sha256": "3d2aee2ba0245bafca9c7340b7cb39c2d386aa1d935eefa2ab9809f04037b8fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/3.1.3/MiniCtrlBoxLib-3.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/3.1.3/MiniCtrlBoxLib-3.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/3.2.0/MiniCtrlBoxLib-3.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-3.2.0.tar.gz",
+    "size_bytes": 15112,
+    "sha256": "ef5914be2d9e4be53df5ac17359ab4296c8c3db11fef046e7888472d935d140b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/3.2.0/MiniCtrlBoxLib-3.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/3.2.0/MiniCtrlBoxLib-3.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/3.2.1/MiniCtrlBoxLib-3.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-3.2.1.tar.gz",
+    "size_bytes": 15112,
+    "sha256": "da8d33a0ef505e7deab1440a367c5072b63cc160e98bdd458947f24b322056d4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/3.2.1/MiniCtrlBoxLib-3.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/3.2.1/MiniCtrlBoxLib-3.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/3.2.2/MiniCtrlBoxLib-3.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-3.2.2.tar.gz",
+    "size_bytes": 15112,
+    "sha256": "45aec9ae61aaa75768aa978615c6a022c455046fca45449bd6c9bc2e9cc402aa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/3.2.2/MiniCtrlBoxLib-3.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/3.2.2/MiniCtrlBoxLib-3.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/3.3.0/MiniCtrlBoxLib-3.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-3.3.0.tar.gz",
+    "size_bytes": 16008,
+    "sha256": "71e2cdd8972d2afd1fe3ab8bdcc78ae9c262920af2f48631430dd3ab2eb0a9f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/3.3.0/MiniCtrlBoxLib-3.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/3.3.0/MiniCtrlBoxLib-3.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/3.3.1/MiniCtrlBoxLib-3.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-3.3.1.tar.gz",
+    "size_bytes": 16029,
+    "sha256": "01cbfbfbced203700ef378dc613f1b3a38172a3fa2b8e5ebd1f80506e887e2b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/3.3.1/MiniCtrlBoxLib-3.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/3.3.1/MiniCtrlBoxLib-3.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/3.3.2/MiniCtrlBoxLib-3.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-3.3.2.tar.gz",
+    "size_bytes": 16063,
+    "sha256": "d9e2fb50b114a514fd341e7a43a9e4c6c859cae98be35db9da98045f6a317cb2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/3.3.2/MiniCtrlBoxLib-3.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/3.3.2/MiniCtrlBoxLib-3.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/3.4.1/MiniCtrlBoxLib-3.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-3.4.1.tar.gz",
+    "size_bytes": 16330,
+    "sha256": "702e2b7f9671e59a71b4cbc75cfd9f40465eccce5fbaac801991e8933893a951",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/3.4.1/MiniCtrlBoxLib-3.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/3.4.1/MiniCtrlBoxLib-3.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/3.5.0/MiniCtrlBoxLib-3.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-3.5.0.tar.gz",
+    "size_bytes": 16607,
+    "sha256": "8694cf4f2c58e49a9223ad0bea25c07e3f61c48c838743822f918adb28c67f73",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/3.5.0/MiniCtrlBoxLib-3.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/3.5.0/MiniCtrlBoxLib-3.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/3.6.0/MiniCtrlBoxLib-3.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-3.6.0.tar.gz",
+    "size_bytes": 16842,
+    "sha256": "3b87a601163718841b880db84af24d2f3e546df41273d3118b548e5ac44017f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/3.6.0/MiniCtrlBoxLib-3.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/3.6.0/MiniCtrlBoxLib-3.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/3.6.1/MiniCtrlBoxLib-3.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-3.6.1.tar.gz",
+    "size_bytes": 16845,
+    "sha256": "99a6743f1c11afc3040e4d4978eb560db4988bb284d6a335a7b86242cad0c30d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/3.6.1/MiniCtrlBoxLib-3.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/3.6.1/MiniCtrlBoxLib-3.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/3.6.2/MiniCtrlBoxLib-3.6.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-3.6.2.tar.gz",
+    "size_bytes": 16844,
+    "sha256": "2208777af07fb1e16aa351c48178b758ef793f07c4be8852efab413a005c43a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/3.6.2/MiniCtrlBoxLib-3.6.2.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/3.6.2/MiniCtrlBoxLib-3.6.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/4.0.0/MiniCtrlBoxLib-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-4.0.0.tar.gz",
+    "size_bytes": 16731,
+    "sha256": "4c5670ed305dada1f294bcdf2ddef9562b827562213f7a118b8a5c8ca4f6d78e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/4.0.0/MiniCtrlBoxLib-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/4.0.0/MiniCtrlBoxLib-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/5.0.0/MiniCtrlBoxLib-5.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-5.0.0.tar.gz",
+    "size_bytes": 16759,
+    "sha256": "4ee1678ff424188d14bcec434e8f133ee333cda9443c910cfce1a5d6bd6d0a1c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/5.0.0/MiniCtrlBoxLib-5.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/5.0.0/MiniCtrlBoxLib-5.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/5.0.1/MiniCtrlBoxLib-5.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-5.0.1.tar.gz",
+    "size_bytes": 17009,
+    "sha256": "f0b8c36fb26051c777c41d4cd8d931589638a1e4c90c2744408065ab0903703e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/5.0.1/MiniCtrlBoxLib-5.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/5.0.1/MiniCtrlBoxLib-5.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/5.0.10/MiniCtrlBoxLib-5.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-5.0.10.tar.gz",
+    "size_bytes": 16946,
+    "sha256": "a488bf7a31bb3a21236340817701137b3183fb4962af6e11663d9234bdd2d34d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/5.0.10/MiniCtrlBoxLib-5.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/5.0.10/MiniCtrlBoxLib-5.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/5.0.11/MiniCtrlBoxLib-5.0.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-5.0.11.tar.gz",
+    "size_bytes": 16956,
+    "sha256": "150a6e7a21c129fdc2d3e898a6829678714b744ea8474fb222f95d70e8f1f7d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/5.0.11/MiniCtrlBoxLib-5.0.11.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/5.0.11/MiniCtrlBoxLib-5.0.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/5.0.2/MiniCtrlBoxLib-5.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-5.0.2.tar.gz",
+    "size_bytes": 17027,
+    "sha256": "169feea446083a78c010fb082ec351f2f2acb62a4ec428d19bef80c3b67f14c5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/5.0.2/MiniCtrlBoxLib-5.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/5.0.2/MiniCtrlBoxLib-5.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/5.0.3/MiniCtrlBoxLib-5.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-5.0.3.tar.gz",
+    "size_bytes": 17053,
+    "sha256": "4dc3b3d935651f7c9ad68c81d0ae6345428acecf65704b9bc4a977449c839fb0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/5.0.3/MiniCtrlBoxLib-5.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/5.0.3/MiniCtrlBoxLib-5.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/5.0.4/MiniCtrlBoxLib-5.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-5.0.4.tar.gz",
+    "size_bytes": 15890,
+    "sha256": "75b1da0ed3d43dabcd2be1b1c8eadc827a1c72eca752d7a9a3c527fd616c6589",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/5.0.4/MiniCtrlBoxLib-5.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/5.0.4/MiniCtrlBoxLib-5.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/5.0.5/MiniCtrlBoxLib-5.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-5.0.5.tar.gz",
+    "size_bytes": 15867,
+    "sha256": "183433468f1211111b7d771ed54852ff955d614e3958c836f960c406989bd3a1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/5.0.5/MiniCtrlBoxLib-5.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/5.0.5/MiniCtrlBoxLib-5.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/5.0.6/MiniCtrlBoxLib-5.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-5.0.6.tar.gz",
+    "size_bytes": 16929,
+    "sha256": "83f6301f81548bb42ae229927ca4f8b23f454cae523d0dde4e676c4fb3454a0f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/5.0.6/MiniCtrlBoxLib-5.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/5.0.6/MiniCtrlBoxLib-5.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/5.0.7/MiniCtrlBoxLib-5.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-5.0.7.tar.gz",
+    "size_bytes": 16948,
+    "sha256": "f15c5c1e76d0e3c92c12eff651c1242c8d26c9757c5eb7452e8b1ab21b388bf7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/5.0.7/MiniCtrlBoxLib-5.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/5.0.7/MiniCtrlBoxLib-5.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/5.0.8/MiniCtrlBoxLib-5.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-5.0.8.tar.gz",
+    "size_bytes": 17194,
+    "sha256": "a1257dc6d3c715ccc039763b8e27acbf9241b54999e355e644bd1912081d09f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/5.0.8/MiniCtrlBoxLib-5.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/5.0.8/MiniCtrlBoxLib-5.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/5.1.0/MiniCtrlBoxLib-5.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-5.1.0.tar.gz",
+    "size_bytes": 16971,
+    "sha256": "9902a44bf89b5e8987ad7e160006519c25c93b9c77652aea17b03038e09daffd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/5.1.0/MiniCtrlBoxLib-5.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/5.1.0/MiniCtrlBoxLib-5.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/6.0.0/MiniCtrlBoxLib-6.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-6.0.0.tar.gz",
+    "size_bytes": 17141,
+    "sha256": "f0c1b74b5344d34011ba47359ffe0ce809122218b19bdaa81cf6b176d62c1a32",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/6.0.0/MiniCtrlBoxLib-6.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/6.0.0/MiniCtrlBoxLib-6.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/6.0.1/MiniCtrlBoxLib-6.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-6.0.1.tar.gz",
+    "size_bytes": 18023,
+    "sha256": "b0924afe8834b26783748abdbd883748fce6e63c244555838689f5dd48bf8a3c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/6.0.1/MiniCtrlBoxLib-6.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/6.0.1/MiniCtrlBoxLib-6.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/6.1.0/MiniCtrlBoxLib-6.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-6.1.0.tar.gz",
+    "size_bytes": 18397,
+    "sha256": "ef079a97126b3934af58acc315fc3f0f1fe31337d82b93dbda4c6c28b6c6acf4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/6.1.0/MiniCtrlBoxLib-6.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/6.1.0/MiniCtrlBoxLib-6.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/6.10.0/MiniCtrlBoxLib-6.10.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-6.10.0.tar.gz",
+    "size_bytes": 24659,
+    "sha256": "3a140f448f28059744f534b0c83af3a611f258440d6a92d7b16de053662442b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/6.10.0/MiniCtrlBoxLib-6.10.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/6.10.0/MiniCtrlBoxLib-6.10.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/6.11.0/MiniCtrlBoxLib-6.11.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-6.11.0.tar.gz",
+    "size_bytes": 24782,
+    "sha256": "aff6303df3ecb23d1116e11dc48541dee5465d9364979a8b16c9f0b5c12cdf31",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/6.11.0/MiniCtrlBoxLib-6.11.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/6.11.0/MiniCtrlBoxLib-6.11.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/6.12.0/MiniCtrlBoxLib-6.12.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-6.12.0.tar.gz",
+    "size_bytes": 24912,
+    "sha256": "d1fb4de5ca74e5034a9da30e74fb7becee1dcc1890d18de5806b3906da54b7b4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/6.12.0/MiniCtrlBoxLib-6.12.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/6.12.0/MiniCtrlBoxLib-6.12.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/6.2.0/MiniCtrlBoxLib-6.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-6.2.0.tar.gz",
+    "size_bytes": 19333,
+    "sha256": "aaa4ccc14a65d75913c20e668483db4a800c183fd11c99ab0545793be100dea4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/6.2.0/MiniCtrlBoxLib-6.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/6.2.0/MiniCtrlBoxLib-6.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/6.2.1/MiniCtrlBoxLib-6.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-6.2.1.tar.gz",
+    "size_bytes": 19332,
+    "sha256": "42fed00feae6f1324b75df84d182dcdd9afe5f94987b4416b63d06e32d979a70",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/6.2.1/MiniCtrlBoxLib-6.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/6.2.1/MiniCtrlBoxLib-6.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/6.2.2/MiniCtrlBoxLib-6.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-6.2.2.tar.gz",
+    "size_bytes": 19331,
+    "sha256": "f973a7daf3448eb7f783025232104c7ae27a0576636747e96c21605c0c407762",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/6.2.2/MiniCtrlBoxLib-6.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/6.2.2/MiniCtrlBoxLib-6.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/6.2.3/MiniCtrlBoxLib-6.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-6.2.3.tar.gz",
+    "size_bytes": 19354,
+    "sha256": "0ff983dc5e11a4d7eeee51f405d7a2ff1a93eb92baec7559ea122684ebef7fdf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/6.2.3/MiniCtrlBoxLib-6.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/6.2.3/MiniCtrlBoxLib-6.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/6.2.4/MiniCtrlBoxLib-6.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-6.2.4.tar.gz",
+    "size_bytes": 19358,
+    "sha256": "5b0a3e4a1e69d1a1ea50303471e7dca351f714ed5125f729076f57243e2c987b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/6.2.4/MiniCtrlBoxLib-6.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/6.2.4/MiniCtrlBoxLib-6.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/6.2.5/MiniCtrlBoxLib-6.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-6.2.5.tar.gz",
+    "size_bytes": 19677,
+    "sha256": "42b49d80ccc54348c6927992319c098d9e9f0a0cabda1263af5cb12326008a4a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/6.2.5/MiniCtrlBoxLib-6.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/6.2.5/MiniCtrlBoxLib-6.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/6.3.0/MiniCtrlBoxLib-6.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-6.3.0.tar.gz",
+    "size_bytes": 19899,
+    "sha256": "db87179ac793fe1fdd6ca1f988a1884e4cafc1d0dd704cd134d3fbe9e6c6abad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/6.3.0/MiniCtrlBoxLib-6.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/6.3.0/MiniCtrlBoxLib-6.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/6.3.5/MiniCtrlBoxLib-6.3.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-6.3.5.tar.gz",
+    "size_bytes": 19903,
+    "sha256": "4128716111d0d21aafc972c58bfd02424665be3a114216274477c6472645359b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/6.3.5/MiniCtrlBoxLib-6.3.5.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/6.3.5/MiniCtrlBoxLib-6.3.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/6.4.0/MiniCtrlBoxLib-6.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-6.4.0.tar.gz",
+    "size_bytes": 20280,
+    "sha256": "5760cd706607e3c1cf259af1e46e89ce6fbd50509b13d49e682a7b1589d8d472",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/6.4.0/MiniCtrlBoxLib-6.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/6.4.0/MiniCtrlBoxLib-6.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/6.4.1/MiniCtrlBoxLib-6.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-6.4.1.tar.gz",
+    "size_bytes": 20260,
+    "sha256": "94e9da170928cff4d3bc5683b3d385ae765527d5f509b39f805a1c07725e4907",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/6.4.1/MiniCtrlBoxLib-6.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/6.4.1/MiniCtrlBoxLib-6.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/6.4.2/MiniCtrlBoxLib-6.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-6.4.2.tar.gz",
+    "size_bytes": 20321,
+    "sha256": "531edfbc16816e31d46d2e93a6e932b758df21efec485f411d3f51917cf944ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/6.4.2/MiniCtrlBoxLib-6.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/6.4.2/MiniCtrlBoxLib-6.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/6.4.3/MiniCtrlBoxLib-6.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-6.4.3.tar.gz",
+    "size_bytes": 20266,
+    "sha256": "312d178aaa593ca5b22834c4cf786369aee41b8cdb3bf832097ca63350d064b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/6.4.3/MiniCtrlBoxLib-6.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/6.4.3/MiniCtrlBoxLib-6.4.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/6.5.0/MiniCtrlBoxLib-6.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-6.5.0.tar.gz",
+    "size_bytes": 20553,
+    "sha256": "bf55f26a2da16924b60583da21ed45719c5d1dff80aff4adeaf7539d1297e639",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/6.5.0/MiniCtrlBoxLib-6.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/6.5.0/MiniCtrlBoxLib-6.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/6.6.0/MiniCtrlBoxLib-6.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-6.6.0.tar.gz",
+    "size_bytes": 20680,
+    "sha256": "5dd55dcf8abc6230cb682b70c74200dbb6307bbc297c6c8c46185880c3b6ab1b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/6.6.0/MiniCtrlBoxLib-6.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/6.6.0/MiniCtrlBoxLib-6.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/6.7.0/MiniCtrlBoxLib-6.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-6.7.0.tar.gz",
+    "size_bytes": 20773,
+    "sha256": "54bd40dfeb6cdafcac8531c734086fbb6f9022bd4d8a7ccb3d538a373d86e050",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/6.7.0/MiniCtrlBoxLib-6.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/6.7.0/MiniCtrlBoxLib-6.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/6.8.0/MiniCtrlBoxLib-6.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-6.8.0.tar.gz",
+    "size_bytes": 21121,
+    "sha256": "c7da1e664184b1d74d884736ab9d89b8bb0695f91455e03c42fa2c095b4242e0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/6.8.0/MiniCtrlBoxLib-6.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/6.8.0/MiniCtrlBoxLib-6.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/6.8.1/MiniCtrlBoxLib-6.8.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-6.8.1.tar.gz",
+    "size_bytes": 21140,
+    "sha256": "3080acdce5b9d02a7ad7e4274abeb54d06c108170e6c815492ab4164b6bc7fc6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/6.8.1/MiniCtrlBoxLib-6.8.1.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/6.8.1/MiniCtrlBoxLib-6.8.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/6.9.0/MiniCtrlBoxLib-6.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-6.9.0.tar.gz",
+    "size_bytes": 21669,
+    "sha256": "ec045cf4d5475cff3d9a0743e0c760c89b064864785785b6ef95bda6ed4bfed4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/6.9.0/MiniCtrlBoxLib-6.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/6.9.0/MiniCtrlBoxLib-6.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/6.9.1/MiniCtrlBoxLib-6.9.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-6.9.1.tar.gz",
+    "size_bytes": 21741,
+    "sha256": "67877a51186dea3812c25f9795fd3f5c14329a558f13647a12ffa6edba0eca75",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/6.9.1/MiniCtrlBoxLib-6.9.1.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/6.9.1/MiniCtrlBoxLib-6.9.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/6.9.2/MiniCtrlBoxLib-6.9.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-6.9.2.tar.gz",
+    "size_bytes": 21741,
+    "sha256": "beafa6c640909fe4dbb3364e637a8d4fabd494a35735230b6fa814d11bd869e0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/6.9.2/MiniCtrlBoxLib-6.9.2.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/6.9.2/MiniCtrlBoxLib-6.9.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/6.9.3/MiniCtrlBoxLib-6.9.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-6.9.3.tar.gz",
+    "size_bytes": 21901,
+    "sha256": "077c187b40a15a2c2ae66e2327ececb7a0b6e8ae371821eee4c85fe4ba7a91ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/6.9.3/MiniCtrlBoxLib-6.9.3.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/6.9.3/MiniCtrlBoxLib-6.9.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/6.9.4/MiniCtrlBoxLib-6.9.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-6.9.4.tar.gz",
+    "size_bytes": 21911,
+    "sha256": "c2ba2018a4d8b699de4053e5b11548b6656409b2f888d92705b5ac193b2779c9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/6.9.4/MiniCtrlBoxLib-6.9.4.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/6.9.4/MiniCtrlBoxLib-6.9.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/6.9.5/MiniCtrlBoxLib-6.9.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-6.9.5.tar.gz",
+    "size_bytes": 21929,
+    "sha256": "01e3478ad850367fa4de23fccf81ef4a135f1d3ec542482cc45507fb51b57307",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/6.9.5/MiniCtrlBoxLib-6.9.5.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/6.9.5/MiniCtrlBoxLib-6.9.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/6.9.6/MiniCtrlBoxLib-6.9.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-6.9.6.tar.gz",
+    "size_bytes": 21966,
+    "sha256": "5f2de4a10f3b51075fc956d317aed41a545ebc19aa99cad27a3e3453d8015aba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/6.9.6/MiniCtrlBoxLib-6.9.6.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/6.9.6/MiniCtrlBoxLib-6.9.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/6.9.7/MiniCtrlBoxLib-6.9.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-6.9.7.tar.gz",
+    "size_bytes": 21996,
+    "sha256": "03e376df4a8e2bb9f264d62e534b18ffc28ff7579d8b4b20327c78c70ab7a6cd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/6.9.7/MiniCtrlBoxLib-6.9.7.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/6.9.7/MiniCtrlBoxLib-6.9.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kilgichris/library/MiniCtrlBoxLib/6.9.8/MiniCtrlBoxLib-6.9.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniCtrlBoxLib-6.9.8.tar.gz",
+    "size_bytes": 21935,
+    "sha256": "210f0060fd3634c1cc148be7e67873282c2acdbcde85e1a8366950044fd25e50",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kilgichris/library/MiniCtrlBoxLib/6.9.8/MiniCtrlBoxLib-6.9.8.tar.gz",
+     "https://dl.registry.platformio.org/download/kilgichris/library/MiniCtrlBoxLib/6.9.8/MiniCtrlBoxLib-6.9.8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

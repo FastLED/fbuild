@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ivica3730k",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ivica3730k/library/MSF-Time-Lib/1.2.4/MSF-Time-Lib-1.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MSF-Time-Lib-1.2.4.tar.gz",
+    "size_bytes": 13396,
+    "sha256": "648e4d6ce74ef05ae96b38917ce350176c91be668751420855b7af752bd0280d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ivica3730k/library/MSF-Time-Lib/1.2.4/MSF-Time-Lib-1.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/ivica3730k/library/MSF-Time-Lib/1.2.4/MSF-Time-Lib-1.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ivica3730k/library/MSF-Time-Lib/1.2.5/MSF-Time-Lib-1.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MSF-Time-Lib-1.2.5.tar.gz",
+    "size_bytes": 13556,
+    "sha256": "3266363ad853ae8da6918bfbf722fa7a248c51095b02a055849b943544ee18aa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ivica3730k/library/MSF-Time-Lib/1.2.5/MSF-Time-Lib-1.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/ivica3730k/library/MSF-Time-Lib/1.2.5/MSF-Time-Lib-1.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ivica3730k/library/MSF-Time-Lib/1.2.6/MSF-Time-Lib-1.2.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MSF-Time-Lib-1.2.6.tar.gz",
+    "size_bytes": 14242,
+    "sha256": "93d0115db9dd70df7b1c26eb118b200dd76ac55d33301555365115c621d0b30e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ivica3730k/library/MSF-Time-Lib/1.2.6/MSF-Time-Lib-1.2.6.tar.gz",
+     "https://dl.registry.platformio.org/download/ivica3730k/library/MSF-Time-Lib/1.2.6/MSF-Time-Lib-1.2.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rohirto",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rohirto/library/Ultimate_ESP_MQTT_Ubidots/1.0.2/Ultimate_ESP_MQTT_Ubidots-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ultimate_ESP_MQTT_Ubidots-1.0.2.tar.gz",
+    "size_bytes": 6226,
+    "sha256": "70f96ece02d86971ccab641d5ea267e9901ee7c7143a6d70188198d09633c954",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rohirto/library/Ultimate_ESP_MQTT_Ubidots/1.0.2/Ultimate_ESP_MQTT_Ubidots-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/rohirto/library/Ultimate_ESP_MQTT_Ubidots/1.0.2/Ultimate_ESP_MQTT_Ubidots-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

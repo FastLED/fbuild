@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-cirrus01",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-cirrus01/library/BMP183/0.0.0+sha.3750c8d10767/BMP183-0.0.0+sha.3750c8d10767.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMP183-0.0.0+sha.3750c8d10767.tar.gz",
+    "size_bytes": 2736,
+    "sha256": "afeff42bf2e14157c42fcdea61ded83bfe6be900be5b39f08832eed108d166f5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-cirrus01/library/BMP183/0.0.0%2Bsha.3750c8d10767/BMP183-0.0.0%2Bsha.3750c8d10767.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-cirrus01/library/BMP183/0.0.0%2Bsha.3750c8d10767/BMP183-0.0.0%2Bsha.3750c8d10767.tar.gz"
+    ]
+   }
+  }
+ ]
+}

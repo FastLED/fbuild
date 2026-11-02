@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/helium",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "helium/library/Helium/1.6.5/Helium-1.6.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Helium-1.6.5.tar.gz",
+    "size_bytes": 65133,
+    "sha256": "08ce774d079b6b7e4ae2f12d032de5640315bdad5fed5b251519441d53033a55",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/helium/library/Helium/1.6.5/Helium-1.6.5.tar.gz",
+     "https://dl.registry.platformio.org/download/helium/library/Helium/1.6.5/Helium-1.6.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

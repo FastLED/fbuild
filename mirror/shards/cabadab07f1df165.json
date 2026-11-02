@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-overdrivr",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-overdrivr/library/DistantIO/0.0.0+sha.72d46dbdbe7a/DistantIO-0.0.0+sha.72d46dbdbe7a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DistantIO-0.0.0+sha.72d46dbdbe7a.tar.gz",
+    "size_bytes": 6844,
+    "sha256": "386f2b7eb442e9f92ed36ecc5c9253eb150c959f9005d9007e6b53c4f8fab766",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-overdrivr/library/DistantIO/0.0.0%2Bsha.72d46dbdbe7a/DistantIO-0.0.0%2Bsha.72d46dbdbe7a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-overdrivr/library/DistantIO/0.0.0%2Bsha.72d46dbdbe7a/DistantIO-0.0.0%2Bsha.72d46dbdbe7a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-overdrivr/library/telemetry/0.0.0+sha.d224bddd5405/telemetry-0.0.0+sha.d224bddd5405.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "telemetry-0.0.0+sha.d224bddd5405.tar.gz",
+    "size_bytes": 7089,
+    "sha256": "43d8890b53e65bff2a8092e331c84d8efebe40a699ad1319162d497a36403d78",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-overdrivr/library/telemetry/0.0.0%2Bsha.d224bddd5405/telemetry-0.0.0%2Bsha.d224bddd5405.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-overdrivr/library/telemetry/0.0.0%2Bsha.d224bddd5405/telemetry-0.0.0%2Bsha.d224bddd5405.tar.gz"
+    ]
+   }
+  }
+ ]
+}

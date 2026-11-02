@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rene-mt",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rene-mt/library/SH1106/0.0.1/SH1106-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SH1106-0.0.1.tar.gz",
+    "size_bytes": 27043,
+    "sha256": "51af001b1509329e082f5583503062f1eb42c93879a4d178083ebec052a5a439",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rene-mt/library/SH1106/0.0.1/SH1106-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/rene-mt/library/SH1106/0.0.1/SH1106-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

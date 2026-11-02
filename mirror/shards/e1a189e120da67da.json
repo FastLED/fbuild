@@ -1,0 +1,1270 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/seeed-studio",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "seeed-studio/library/Accelerometer%20ADXL335/1.0.1/AccelerometerADXL335-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AccelerometerADXL335-1.0.1.tar.gz",
+    "size_bytes": 6733,
+    "sha256": "fccf90c9505933a6f7ab248627c109b4038d5644d2042c9060d0a2ca9abaadc3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Accelerometer%2520ADXL335/1.0.1/AccelerometerADXL335-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Accelerometer%20ADXL335/1.0.1/AccelerometerADXL335-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Accelerometer%20ADXL345/1.0.0/AccelerometerADXL345-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AccelerometerADXL345-1.0.0.tar.gz",
+    "size_bytes": 11214,
+    "sha256": "753b6b41d81ad062c928b230c8a6876bfa0e129a473d492bea9e1b4b89ba487e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Accelerometer%2520ADXL345/1.0.0/AccelerometerADXL345-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Accelerometer%20ADXL345/1.0.0/AccelerometerADXL345-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Accelerometer_H3LIS331DL/1.0.2/Accelerometer_H3LIS331DL-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Accelerometer_H3LIS331DL-1.0.2.tar.gz",
+    "size_bytes": 13224,
+    "sha256": "7340c57eb9f4167733a02248967246f615277cf1f31f4b6650f7c1100a19dc68",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Accelerometer_H3LIS331DL/1.0.2/Accelerometer_H3LIS331DL-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Accelerometer_H3LIS331DL/1.0.2/Accelerometer_H3LIS331DL-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Accelerometer_MMA7660/1.0.0/Accelerometer_MMA7660-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Accelerometer_MMA7660-1.0.0.tar.gz",
+    "size_bytes": 6687,
+    "sha256": "64efc2796eaae7f4ebc60c2852ab1b19be5591345c4864093c3213beef3d8456",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Accelerometer_MMA7660/1.0.0/Accelerometer_MMA7660-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Accelerometer_MMA7660/1.0.0/Accelerometer_MMA7660-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/CAN_BUS_Shield/2.3.3/CAN_BUS_Shield-2.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CAN_BUS_Shield-2.3.3.tar.gz",
+    "size_bytes": 62036,
+    "sha256": "9a53783d77af1857fb5de2d7b327ce7ab82013ac2a579aa2299370ec8944b98f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/CAN_BUS_Shield/2.3.3/CAN_BUS_Shield-2.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/CAN_BUS_Shield/2.3.3/CAN_BUS_Shield-2.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Digital%20Infrared%20Temperature%20Sensor%20MLX90615/1.0.0/DigitalInfraredTemperatureSensorMLX90615-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DigitalInfraredTemperatureSensorMLX90615-1.0.0.tar.gz",
+    "size_bytes": 9324,
+    "sha256": "e6e02b39acae1762a5a6f8e7011b68e9bc2fb9d69136a8ff5667a6c547c05a3b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Digital%2520Infrared%2520Temperature%2520Sensor%2520MLX90615/1.0.0/DigitalInfraredTemperatureSensorMLX90615-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Digital%20Infrared%20Temperature%20Sensor%20MLX90615/1.0.0/DigitalInfraredTemperatureSensorMLX90615-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Ethernet_Shield_W5200/1.0.0/Ethernet_Shield_W5200-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ethernet_Shield_W5200-1.0.0.tar.gz",
+    "size_bytes": 39553,
+    "sha256": "7e41fa832aab7f8cdfbde75fbce601078c6e379dc08e1db963295d6fbb197d45",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Ethernet_Shield_W5200/1.0.0/Ethernet_Shield_W5200-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Ethernet_Shield_W5200/1.0.0/Ethernet_Shield_W5200-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/GPRS%20SIM900/1.0.0/GPRSSIM900-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GPRSSIM900-1.0.0.tar.gz",
+    "size_bytes": 17586,
+    "sha256": "f2f001eb4a30c1938b3fdeb59ff6b6582d376cdc813ef3f207f078f2a7ae57b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/GPRS%2520SIM900/1.0.0/GPRSSIM900-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/GPRS%20SIM900/1.0.0/GPRSSIM900-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/GPRSInterface/1.0.0/GPRSInterface-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GPRSInterface-1.0.0.tar.gz",
+    "size_bytes": 10709,
+    "sha256": "2cffbe2c1a0304da84d30b769e2ea195ff41796acc3a410a8c00ea969758a86a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/GPRSInterface/1.0.0/GPRSInterface-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/GPRSInterface/1.0.0/GPRSInterface-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Grove%20-%20125KHz%20RFID%20Reader/1.0.0/Grove-125KHzRFIDReader-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Grove-125KHzRFIDReader-1.0.0.tar.gz",
+    "size_bytes": 6025,
+    "sha256": "a73f9a7ce3fcb1d1cca6d95a1c44405760aca9764db79b9714f664cc95799262",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Grove%2520-%2520125KHz%2520RFID%2520Reader/1.0.0/Grove-125KHzRFIDReader-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Grove%20-%20125KHz%20RFID%20Reader/1.0.0/Grove-125KHzRFIDReader-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Grove%20-%202-Channel%20Inductive%20Sensor%20LDC1612/1.0.0/Grove-2-ChannelInductiveSensorLDC1612-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Grove-2-ChannelInductiveSensorLDC1612-1.0.0.tar.gz",
+    "size_bytes": 7266,
+    "sha256": "17fc25a1540e0396ff001a96fe947275841068325b719437c1c0e3902a7d16f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Grove%2520-%25202-Channel%2520Inductive%2520Sensor%2520LDC1612/1.0.0/Grove-2-ChannelInductiveSensorLDC1612-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Grove%20-%202-Channel%20Inductive%20Sensor%20LDC1612/1.0.0/Grove-2-ChannelInductiveSensorLDC1612-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Grove%20-%206Axis%20Accelerometer%20And%20Compass%20v2/1.0.1/Grove-6AxisAccelerometerAndCompassv2-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Grove-6AxisAccelerometerAndCompassv2-1.0.1.tar.gz",
+    "size_bytes": 6360,
+    "sha256": "97228583436a9beaf339571bc8914f5cf2769635148800c075d3259335e61bb6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Grove%2520-%25206Axis%2520Accelerometer%2520And%2520Compass%2520v2/1.0.1/Grove-6AxisAccelerometerAndCompassv2-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Grove%20-%206Axis%20Accelerometer%20And%20Compass%20v2/1.0.1/Grove-6AxisAccelerometerAndCompassv2-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Grove%20-%20Air%20quality%20sensor/1.0.2/Grove-Airqualitysensor-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Grove-Airqualitysensor-1.0.2.tar.gz",
+    "size_bytes": 5596,
+    "sha256": "18515c8c7efc6d1563edc9a2fe0b7299a8671adba801e50191bbcebab378f793",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Grove%2520-%2520Air%2520quality%2520sensor/1.0.2/Grove-Airqualitysensor-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Grove%20-%20Air%20quality%20sensor/1.0.2/Grove-Airqualitysensor-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Grove%20-%20Barometer%20Sensor%20BME280/1.0.2/Grove-BarometerSensorBME280-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Grove-BarometerSensorBME280-1.0.2.tar.gz",
+    "size_bytes": 5943,
+    "sha256": "6b304e93349b9003acc74caa6ea12959148f12abb40209c3a4b7493530ba0e60",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Grove%2520-%2520Barometer%2520Sensor%2520BME280/1.0.2/Grove-BarometerSensorBME280-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Grove%20-%20Barometer%20Sensor%20BME280/1.0.2/Grove-BarometerSensorBME280-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Grove%20-%20Barometer%20Sensor%20BMP280/1.0.1/Grove-BarometerSensorBMP280-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Grove-BarometerSensorBMP280-1.0.1.tar.gz",
+    "size_bytes": 5869,
+    "sha256": "285552b4f8b70ce88e9507bc07c5fabd3da46652c7645137eb083a3235ff320c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Grove%2520-%2520Barometer%2520Sensor%2520BMP280/1.0.1/Grove-BarometerSensorBMP280-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Grove%20-%20Barometer%20Sensor%20BMP280/1.0.1/Grove-BarometerSensorBMP280-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Grove%20-%20Capacitive%20Touch%20Slide%20Sensor%20CY8C40XX/1.0.0/Grove-CapacitiveTouchSlideSensorCY8C40XX-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Grove-CapacitiveTouchSlideSensorCY8C40XX-1.0.0.tar.gz",
+    "size_bytes": 3864,
+    "sha256": "75253b477acca402310a873a0795fddc2166034309e8759a68b57a9f977dbb39",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Grove%2520-%2520Capacitive%2520Touch%2520Slide%2520Sensor%2520CY8C40XX/1.0.0/Grove-CapacitiveTouchSlideSensorCY8C40XX-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Grove%20-%20Capacitive%20Touch%20Slide%20Sensor%20CY8C40XX/1.0.0/Grove-CapacitiveTouchSlideSensorCY8C40XX-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Grove%20-%20Chainable%20RGB%20LED/1.0.0/Grove-ChainableRGBLED-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Grove-ChainableRGBLED-1.0.0.tar.gz",
+    "size_bytes": 5985,
+    "sha256": "44622dee17d86af98c844675e902b87d8fed64e31208a56f2538957cea12f88a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Grove%2520-%2520Chainable%2520RGB%2520LED/1.0.0/Grove-ChainableRGBLED-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Grove%20-%20Chainable%20RGB%20LED/1.0.0/Grove-ChainableRGBLED-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Grove%20-%20Coulomb%20Counter%20for%203.3V%20to%205V%20LTC2941/1.0.0/Grove-CoulombCounterfor3.3Vto5VLTC2941-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Grove-CoulombCounterfor3.3Vto5VLTC2941-1.0.0.tar.gz",
+    "size_bytes": 4416,
+    "sha256": "8f14cfa9ca25873145fe947b2826272779e953436ded01979b91a7641a72feb4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Grove%2520-%2520Coulomb%2520Counter%2520for%25203.3V%2520to%25205V%2520LTC2941/1.0.0/Grove-CoulombCounterfor3.3Vto5VLTC2941-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Grove%20-%20Coulomb%20Counter%20for%203.3V%20to%205V%20LTC2941/1.0.0/Grove-CoulombCounterfor3.3Vto5VLTC2941-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Grove%20-%20Digital%20Light%20Sensor/2.0.0/Grove-DigitalLightSensor-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Grove-DigitalLightSensor-2.0.0.tar.gz",
+    "size_bytes": 10431,
+    "sha256": "0f9963b5f73aa8808953b6af774ed76c296217e10cdf5f0037b491555405a0f5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Grove%2520-%2520Digital%2520Light%2520Sensor/2.0.0/Grove-DigitalLightSensor-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Grove%20-%20Digital%20Light%20Sensor/2.0.0/Grove-DigitalLightSensor-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Grove%20-%20Haptic%20Motor/1.0.0/Grove-HapticMotor-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Grove-HapticMotor-1.0.0.tar.gz",
+    "size_bytes": 6536,
+    "sha256": "75a488f64cf465c8a757c4574a141126d507c4e929d8b0e8b7ff6eaf25a6cd83",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Grove%2520-%2520Haptic%2520Motor/1.0.0/Grove-HapticMotor-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Grove%20-%20Haptic%20Motor/1.0.0/Grove-HapticMotor-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Grove%20-%20High%20Precision%20RTC/1.0.0/Grove-HighPrecisionRTC-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Grove-HighPrecisionRTC-1.0.0.tar.gz",
+    "size_bytes": 6726,
+    "sha256": "39b3667b4cb4dc3554fb78d2f73c99b39f751f43a862fe1088c5d13eb995f65c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Grove%2520-%2520High%2520Precision%2520RTC/1.0.0/Grove-HighPrecisionRTC-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Grove%20-%20High%20Precision%20RTC/1.0.0/Grove-HighPrecisionRTC-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Grove%20-%20High%20Temperature%20Sensor/1.0.1/Grove-HighTemperatureSensor-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Grove-HighTemperatureSensor-1.0.1.tar.gz",
+    "size_bytes": 5422,
+    "sha256": "c0612e172d61a15098bf281465806a22b62ab07c4960ab8d3763b555999fd167",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Grove%2520-%2520High%2520Temperature%2520Sensor/1.0.1/Grove-HighTemperatureSensor-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Grove%20-%20High%20Temperature%20Sensor/1.0.1/Grove-HighTemperatureSensor-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Grove%20-%20I2C%20Color%20Sensor/1.0.0/Grove-I2CColorSensor-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Grove-I2CColorSensor-1.0.0.tar.gz",
+    "size_bytes": 7515,
+    "sha256": "159174e5d9b088e7d5d5adae4593dad0e3f2a88331fcda51cb3a01eddff29947",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Grove%2520-%2520I2C%2520Color%2520Sensor/1.0.0/Grove-I2CColorSensor-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Grove%20-%20I2C%20Color%20Sensor/1.0.0/Grove-I2CColorSensor-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Grove%20-%20I2C%20High%20Accuracy%20Temp_Humi%20Sensor%20SHT35/1.0.2/Grove-I2CHighAccuracyTemp_HumiSensorSHT35-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Grove-I2CHighAccuracyTemp_HumiSensorSHT35-1.0.2.tar.gz",
+    "size_bytes": 5759,
+    "sha256": "a46b1ae0f112dae347282bc3a70d741bca29be51c1940a8e8028df8464632a5d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Grove%2520-%2520I2C%2520High%2520Accuracy%2520Temp_Humi%2520Sensor%2520SHT35/1.0.2/Grove-I2CHighAccuracyTemp_HumiSensorSHT35-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Grove%20-%20I2C%20High%20Accuracy%20Temp_Humi%20Sensor%20SHT35/1.0.2/Grove-I2CHighAccuracyTemp_HumiSensorSHT35-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Grove%20-%20I2C%20Thermocouple%20Amplifier%20MCP9600/1.0.3/Grove-I2CThermocoupleAmplifierMCP9600-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Grove-I2CThermocoupleAmplifierMCP9600-1.0.3.tar.gz",
+    "size_bytes": 8231,
+    "sha256": "f29f23ce8eaadbb04005746641d00c980cd2e82fefb6bca632934d9c3b238fd9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Grove%2520-%2520I2C%2520Thermocouple%2520Amplifier%2520MCP9600/1.0.3/Grove-I2CThermocoupleAmplifierMCP9600-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Grove%20-%20I2C%20Thermocouple%20Amplifier%20MCP9600/1.0.3/Grove-I2CThermocoupleAmplifierMCP9600-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Grove%20-%20I2C%20UV%20Sensor%20VEML6070/1.0.0/Grove-I2CUVSensorVEML6070-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Grove-I2CUVSensorVEML6070-1.0.0.tar.gz",
+    "size_bytes": 4598,
+    "sha256": "f2a4ca90214b6a026d50b8a3c843c216464202c8d7356e083ec68a098f7c4fa6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Grove%2520-%2520I2C%2520UV%2520Sensor%2520VEML6070/1.0.0/Grove-I2CUVSensorVEML6070-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Grove%20-%20I2C%20UV%20Sensor%20VEML6070/1.0.0/Grove-I2CUVSensorVEML6070-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Grove%20-%20LCD%20RGB%20Backlight/1.0.2/Grove-LCDRGBBacklight-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Grove-LCDRGBBacklight-1.0.2.tar.gz",
+    "size_bytes": 11624,
+    "sha256": "acf099afda07a1ea7419b204903c2cc06f58018b1767e2a08c86671e30f1420c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Grove%2520-%2520LCD%2520RGB%2520Backlight/1.0.2/Grove-LCDRGBBacklight-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Grove%20-%20LCD%20RGB%20Backlight/1.0.2/Grove-LCDRGBBacklight-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Grove%20-%20LED%20Matrix%20Driver/1.0.0/Grove-LEDMatrixDriver-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Grove-LEDMatrixDriver-1.0.0.tar.gz",
+    "size_bytes": 830434,
+    "sha256": "fbf770f120f8e635cc52eb992a09551110ebf6eb6337c619dbfb9b88ca3f8696",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Grove%2520-%2520LED%2520Matrix%2520Driver/1.0.0/Grove-LEDMatrixDriver-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Grove%20-%20LED%20Matrix%20Driver/1.0.0/Grove-LEDMatrixDriver-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Grove%20-%20Laser%20PM2.5%20Sensor%20HM3301/1.0.3/Grove-LaserPM2.5SensorHM3301-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Grove-LaserPM2.5SensorHM3301-1.0.3.tar.gz",
+    "size_bytes": 5043,
+    "sha256": "dbef285f2e8ca462dbb582aed868b1135fbf92a2159be79c8a849329376ea609",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Grove%2520-%2520Laser%2520PM2.5%2520Sensor%2520HM3301/1.0.3/Grove-LaserPM2.5SensorHM3301-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Grove%20-%20Laser%20PM2.5%20Sensor%20HM3301/1.0.3/Grove-LaserPM2.5SensorHM3301-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Grove%20-%20LoRa%20Radio%20433MHz%20868MHz/2.0.0/Grove-LoRaRadio433MHz868MHz-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Grove-LoRaRadio433MHz868MHz-2.0.0.tar.gz",
+    "size_bytes": 55782,
+    "sha256": "9911b99810eb35fb4f46b644000b863f0bb0cd6705393f631e6bcb4b714d7d54",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Grove%2520-%2520LoRa%2520Radio%2520433MHz%2520868MHz/2.0.0/Grove-LoRaRadio433MHz868MHz-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Grove%20-%20LoRa%20Radio%20433MHz%20868MHz/2.0.0/Grove-LoRaRadio433MHz868MHz-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Grove%20-%20Motor%20Driver%20TB6612FNG/0.0.1/Grove-MotorDriverTB6612FNG-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Grove-MotorDriverTB6612FNG-0.0.1.tar.gz",
+    "size_bytes": 16900,
+    "sha256": "908cd27c30fea0e7cd83c460595cd263400e26e6ab4bedbad0eedd68b6f79111",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Grove%2520-%2520Motor%2520Driver%2520TB6612FNG/0.0.1/Grove-MotorDriverTB6612FNG-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Grove%20-%20Motor%20Driver%20TB6612FNG/0.0.1/Grove-MotorDriverTB6612FNG-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Grove%20-%20Multichannel%20Gas%20Sensor/1.0.0/Grove-MultichannelGasSensor-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Grove-MultichannelGasSensor-1.0.0.tar.gz",
+    "size_bytes": 32731,
+    "sha256": "a19f2b0e13f7d73a89c65e6ac0390b56a269665f65e480740c9a9b8db2a62c9b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Grove%2520-%2520Multichannel%2520Gas%2520Sensor/1.0.0/Grove-MultichannelGasSensor-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Grove%20-%20Multichannel%20Gas%20Sensor/1.0.0/Grove-MultichannelGasSensor-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Grove%20-%20OLED%20Display%200.96/1.0.0/Grove-OLEDDisplay0.96-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Grove-OLEDDisplay0.96-1.0.0.tar.gz",
+    "size_bytes": 15613,
+    "sha256": "24c0bde83ee6bc6a98f259a3fcd22bae377317eacd3ab2912197f7a7b9492ac6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Grove%2520-%2520OLED%2520Display%25200.96/1.0.0/Grove-OLEDDisplay0.96-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Grove%20-%20OLED%20Display%200.96/1.0.0/Grove-OLEDDisplay0.96-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Grove%20-%20Q%20Touch%20Sensor/1.0.0/Grove-QTouchSensor-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Grove-QTouchSensor-1.0.0.tar.gz",
+    "size_bytes": 6160,
+    "sha256": "da6777b4dcc97eaa5720be98a251a11af8c5687a5a0a70afb69302b5a4befd27",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Grove%2520-%2520Q%2520Touch%2520Sensor/1.0.0/Grove-QTouchSensor-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Grove%20-%20Q%20Touch%20Sensor/1.0.0/Grove-QTouchSensor-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Grove%20-%20RTC%20DS1307/1.0.0/Grove-RTCDS1307-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Grove-RTCDS1307-1.0.0.tar.gz",
+    "size_bytes": 6048,
+    "sha256": "1c1ee1de3d3f42dccd5b0cab77bff221d4d0c2059fa034a817c072179d24efd7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Grove%2520-%2520RTC%2520DS1307/1.0.0/Grove-RTCDS1307-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Grove%20-%20RTC%20DS1307/1.0.0/Grove-RTCDS1307-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Grove%20-%20Sunlight%20Sensor/1.1.0/Grove-SunlightSensor-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Grove-SunlightSensor-1.1.0.tar.gz",
+    "size_bytes": 9645,
+    "sha256": "657ecaf84f72762abc7a4d5cdfb4bb547db0e130b54da446ff5defd7a3f0fc79",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Grove%2520-%2520Sunlight%2520Sensor/1.1.0/Grove-SunlightSensor-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Grove%20-%20Sunlight%20Sensor/1.1.0/Grove-SunlightSensor-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Grove%20-%20Temperature%20And%20Humidity%20Sensor%20HDC1000/1.0.0/Grove-TemperatureAndHumiditySensorHDC1000-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Grove-TemperatureAndHumiditySensorHDC1000-1.0.0.tar.gz",
+    "size_bytes": 4954,
+    "sha256": "994236281c439b8d3bb3f29e940b8d5e28913ce94c3058239e962ec565cdf40d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Grove%2520-%2520Temperature%2520And%2520Humidity%2520Sensor%2520HDC1000/1.0.0/Grove-TemperatureAndHumiditySensorHDC1000-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Grove%20-%20Temperature%20And%20Humidity%20Sensor%20HDC1000/1.0.0/Grove-TemperatureAndHumiditySensorHDC1000-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Grove%203-Axis%20Digital%20Compass%20HMC5883L/1.0.1/Grove3-AxisDigitalCompassHMC5883L-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Grove3-AxisDigitalCompassHMC5883L-1.0.1.tar.gz",
+    "size_bytes": 7304,
+    "sha256": "3c24b0c77a3e93e616821bfc9ccf642c4a8d3f6e1b09632f0f5d737b42959db2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Grove%25203-Axis%2520Digital%2520Compass%2520HMC5883L/1.0.1/Grove3-AxisDigitalCompassHMC5883L-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Grove%203-Axis%20Digital%20Compass%20HMC5883L/1.0.1/Grove3-AxisDigitalCompassHMC5883L-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Grove%203-Axis%20Digital%20Gyro/1.0.0/Grove3-AxisDigitalGyro-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Grove3-AxisDigitalGyro-1.0.0.tar.gz",
+    "size_bytes": 7899,
+    "sha256": "f7a584b43e695e3b65294caf3b0cffa206fa1f0bde73f0923d59cab62382fb20",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Grove%25203-Axis%2520Digital%2520Gyro/1.0.0/Grove3-AxisDigitalGyro-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Grove%203-Axis%20Digital%20Gyro/1.0.0/Grove3-AxisDigitalGyro-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Grove%203Axis%20Compass%20V2.0%20BMM150/1.0.0/Grove3AxisCompassV2.0BMM150-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Grove3AxisCompassV2.0BMM150-1.0.0.tar.gz",
+    "size_bytes": 12713,
+    "sha256": "99033c7c7cd3553aee898f31626d1aefba724f2bfe0b28b5831203230ed37e3f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Grove%25203Axis%2520Compass%2520V2.0%2520BMM150/1.0.0/Grove3AxisCompassV2.0BMM150-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Grove%203Axis%20Compass%20V2.0%20BMM150/1.0.0/Grove3AxisCompassV2.0BMM150-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Grove%204-Digit%20Display/2.0.0/Grove4-DigitDisplay-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Grove4-DigitDisplay-2.0.0.tar.gz",
+    "size_bytes": 10322,
+    "sha256": "398f08827f353b75b7b290e594f9550e8af58565f853e9147c61705206ad42c5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Grove%25204-Digit%2520Display/2.0.0/Grove4-DigitDisplay-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Grove%204-Digit%20Display/2.0.0/Grove4-DigitDisplay-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Grove%206Axis_Digital_Accelerometer_Gyroscope4_ADIS16470/1.0.0/Grove6Axis_Digital_Accelerometer_Gyroscope4_ADIS16470-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Grove6Axis_Digital_Accelerometer_Gyroscope4_ADIS16470-1.0.0.tar.gz",
+    "size_bytes": 6675,
+    "sha256": "0a9b66176bea000db518f3fca27478fa72d5b026000ef85f7c95441606ef6456",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Grove%25206Axis_Digital_Accelerometer_Gyroscope4_ADIS16470/1.0.0/Grove6Axis_Digital_Accelerometer_Gyroscope4_ADIS16470-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Grove%206Axis_Digital_Accelerometer_Gyroscope4_ADIS16470/1.0.0/Grove6Axis_Digital_Accelerometer_Gyroscope4_ADIS16470-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Grove%20Barometer%20Sensor/2.1.0/GroveBarometerSensor-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GroveBarometerSensor-2.1.0.tar.gz",
+    "size_bytes": 6870,
+    "sha256": "7d1b9831992d22bfe03064c9c94fdcfa4650752ae2ada2db5d5a5ce59f18dcd2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Grove%2520Barometer%2520Sensor/2.1.0/GroveBarometerSensor-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Grove%20Barometer%20Sensor/2.1.0/GroveBarometerSensor-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Grove%20Gesture/2.1.0/GroveGesture-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GroveGesture-2.1.0.tar.gz",
+    "size_bytes": 8564,
+    "sha256": "7daec37abf32904f82264dce6d09fba11a3960a2821219425a98cb0282f54dab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Grove%2520Gesture/2.1.0/GroveGesture-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Grove%20Gesture/2.1.0/GroveGesture-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Grove%20Human%20Presence%20Sensor%20Library/1.0.0/GroveHumanPresenceSensorLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GroveHumanPresenceSensorLibrary-1.0.0.tar.gz",
+    "size_bytes": 9478,
+    "sha256": "ba11f66a5743a0eaf84b00b394514d483c0a3b3ff586f091ad903c86ebfd6388",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Grove%2520Human%2520Presence%2520Sensor%2520Library/1.0.0/GroveHumanPresenceSensorLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Grove%20Human%20Presence%20Sensor%20Library/1.0.0/GroveHumanPresenceSensorLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Grove%20I2C%20Motor%20Driver%20v1.3/1.0.5/GroveI2CMotorDriverv1.3-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GroveI2CMotorDriverv1.3-1.0.5.tar.gz",
+    "size_bytes": 11152,
+    "sha256": "0eda49727c0603f736497055d8709a8512ee13ba0cbf2fabbafd8c5e3b61ad1f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Grove%2520I2C%2520Motor%2520Driver%2520v1.3/1.0.5/GroveI2CMotorDriverv1.3-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Grove%20I2C%20Motor%20Driver%20v1.3/1.0.5/GroveI2CMotorDriverv1.3-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Grove%20IMU%209DOF/1.0.0/GroveIMU9DOF-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GroveIMU9DOF-1.0.0.tar.gz",
+    "size_bytes": 71837,
+    "sha256": "29f5df1d5b23606219cb5e8c63757d9c6e8c9806a6dc57146eb4a41be9fd7e3d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Grove%2520IMU%25209DOF/1.0.0/GroveIMU9DOF-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Grove%20IMU%209DOF/1.0.0/GroveIMU9DOF-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Grove%20IR%20Matrix%20Temperature%20sensor%20AMG8833/1.0.0/GroveIRMatrixTemperaturesensorAMG8833-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GroveIRMatrixTemperaturesensorAMG8833-1.0.0.tar.gz",
+    "size_bytes": 14648,
+    "sha256": "4e26cf2e4aa43a03dd87bf93040d84ccb1a16b75fca9d3dc6fa849e62153a714",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Grove%2520IR%2520Matrix%2520Temperature%2520sensor%2520AMG8833/1.0.0/GroveIRMatrixTemperaturesensorAMG8833-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Grove%20IR%20Matrix%20Temperature%20sensor%20AMG8833/1.0.0/GroveIRMatrixTemperaturesensorAMG8833-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Grove%20LED%20Bar/1.0.0/GroveLEDBar-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GroveLEDBar-1.0.0.tar.gz",
+    "size_bytes": 10883,
+    "sha256": "e11edb09b0567597af68dafc48bdf290afe16d44720eb3bbc2cac9a906607f73",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Grove%2520LED%2520Bar/1.0.0/GroveLEDBar-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Grove%20LED%20Bar/1.0.0/GroveLEDBar-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Grove%20Mini%20Track%20Ball/1.0.1/GroveMiniTrackBall-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GroveMiniTrackBall-1.0.1.tar.gz",
+    "size_bytes": 6307,
+    "sha256": "845baa3200a77b45539478b7245e2890e1a2a677200c4335372b0752a3ccfe57",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Grove%2520Mini%2520Track%2520Ball/1.0.1/GroveMiniTrackBall-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Grove%20Mini%20Track%20Ball/1.0.1/GroveMiniTrackBall-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Grove%20Ranging%20sensor%20-%20VL53L0X/1.1.1/GroveRangingsensor-VL53L0X-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GroveRangingsensor-VL53L0X-1.1.1.tar.gz",
+    "size_bytes": 69208,
+    "sha256": "3dc8d21a75d5a19faae5275c5acdd43c46231c22fcea868e92e8a13c9d0f4434",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Grove%2520Ranging%2520sensor%2520-%2520VL53L0X/1.1.1/GroveRangingsensor-VL53L0X-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Grove%20Ranging%20sensor%20-%20VL53L0X/1.1.1/GroveRangingsensor-VL53L0X-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Grove%20SGP30_Gas_Sensor/1.0.0/GroveSGP30_Gas_Sensor-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GroveSGP30_Gas_Sensor-1.0.0.tar.gz",
+    "size_bytes": 13774,
+    "sha256": "1df82c8373435b3423cc35428de0aeeb227afd0773e60ce19c1514a86444c851",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Grove%2520SGP30_Gas_Sensor/1.0.0/GroveSGP30_Gas_Sensor-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Grove%20SGP30_Gas_Sensor/1.0.0/GroveSGP30_Gas_Sensor-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Grove%20SHT31%20Temp%20Humi%20Sensor/1.0.0/GroveSHT31TempHumiSensor-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GroveSHT31TempHumiSensor-1.0.0.tar.gz",
+    "size_bytes": 5159,
+    "sha256": "dfbcb58f1a0446f3249f6578967617b44cf687facc9f17ceafc865e36267453f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Grove%2520SHT31%2520Temp%2520Humi%2520Sensor/1.0.0/GroveSHT31TempHumiSensor-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Grove%20SHT31%20Temp%20Humi%20Sensor/1.0.0/GroveSHT31TempHumiSensor-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Grove%20Temper%20Humidity%20TH02/1.0.1/GroveTemperHumidityTH02-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GroveTemperHumidityTH02-1.0.1.tar.gz",
+    "size_bytes": 5665,
+    "sha256": "101f95d6be38af32325010abd6d2ab58f2aeeda217ac6e12eb7cf2f6d5e4a4a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Grove%2520Temper%2520Humidity%2520TH02/1.0.1/GroveTemperHumidityTH02-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Grove%20Temper%20Humidity%20TH02/1.0.1/GroveTemperHumidityTH02-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Grove%20Temperature%20And%20Humidity%20Sensor/2.0.2/GroveTemperatureAndHumiditySensor-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GroveTemperatureAndHumiditySensor-2.0.2.tar.gz",
+    "size_bytes": 8420,
+    "sha256": "a689ffe1f0ffcd3eb2aa785a3c545abb0158f472a1673ed7609e222725f257f3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Grove%2520Temperature%2520And%2520Humidity%2520Sensor/2.0.2/GroveTemperatureAndHumiditySensor-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Grove%20Temperature%20And%20Humidity%20Sensor/2.0.2/GroveTemperatureAndHumiditySensor-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Grove%20Ultrasonic%20Ranger/1.0.1/GroveUltrasonicRanger-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GroveUltrasonicRanger-1.0.1.tar.gz",
+    "size_bytes": 5343,
+    "sha256": "59bde3a85efa281cc757567ae7308d81e6e0289baaede641e5b8637563065188",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Grove%2520Ultrasonic%2520Ranger/1.0.1/GroveUltrasonicRanger-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Grove%20Ultrasonic%20Ranger/1.0.1/GroveUltrasonicRanger-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Grove%20barometer%20HP20x/1.0.0/GrovebarometerHP20x-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GrovebarometerHP20x-1.0.0.tar.gz",
+    "size_bytes": 7584,
+    "sha256": "f169b38d26e28a47faf68700ac711d69cecced22141db2be7dbe0a0ba25844ea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Grove%2520barometer%2520HP20x/1.0.0/GrovebarometerHP20x-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Grove%20barometer%20HP20x/1.0.0/GrovebarometerHP20x-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Grove-3-Axis-Digital-Accelerometer-2g-to-16g-LIS3DHTR/1.2.4/Grove-3-Axis-Digital-Accelerometer-2g-to-16g-LIS3DHTR-1.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Grove-3-Axis-Digital-Accelerometer-2g-to-16g-LIS3DHTR-1.2.4.tar.gz",
+    "size_bytes": 11946,
+    "sha256": "2f322e0153c8311f0a2323f1b52e3063e0d5b5b77e0b82d6af020112bd368601",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Grove-3-Axis-Digital-Accelerometer-2g-to-16g-LIS3DHTR/1.2.4/Grove-3-Axis-Digital-Accelerometer-2g-to-16g-LIS3DHTR-1.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Grove-3-Axis-Digital-Accelerometer-2g-to-16g-LIS3DHTR/1.2.4/Grove-3-Axis-Digital-Accelerometer-2g-to-16g-LIS3DHTR-1.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Hercules%20Dual%2015A%206-20V%20Motor%20Controller/1.0.0/HerculesDual15A6-20VMotorController-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HerculesDual15A6-20VMotorController-1.0.0.tar.gz",
+    "size_bytes": 11279,
+    "sha256": "3dc7353ceb657ca0708a749025271563cf13d8b7b280b1930eb0720283026c98",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Hercules%2520Dual%252015A%25206-20V%2520Motor%2520Controller/1.0.0/HerculesDual15A6-20VMotorController-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Hercules%20Dual%2015A%206-20V%20Motor%20Controller/1.0.0/HerculesDual15A6-20VMotorController-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Motor%20Shield%20V2.0/1.0.0/MotorShieldV2.0-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MotorShieldV2.0-1.0.0.tar.gz",
+    "size_bytes": 8225,
+    "sha256": "ba7bf4eb9f8c9bfdbb98735314fc96f7f6fb11efd0f0aacadcc4ca462a17a5b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Motor%2520Shield%2520V2.0/1.0.0/MotorShieldV2.0-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Motor%20Shield%20V2.0/1.0.0/MotorShieldV2.0-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Multi%20Channel%20Relay%20Arduino%20Library/1.1.0/MultiChannelRelayArduinoLibrary-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MultiChannelRelayArduinoLibrary-1.1.0.tar.gz",
+    "size_bytes": 5596,
+    "sha256": "dd482fff905e989b1ef67c9409fe8ce9bd2363ce0c656cdf2048971e9653e5dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Multi%2520Channel%2520Relay%2520Arduino%2520Library/1.1.0/MultiChannelRelayArduinoLibrary-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Multi%20Channel%20Relay%20Arduino%20Library/1.1.0/MultiChannelRelayArduinoLibrary-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Music%20Shield/1.0.0/MusicShield-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MusicShield-1.0.0.tar.gz",
+    "size_bytes": 46880,
+    "sha256": "e620a6037c820b11f34ff80c52a53235b81fb1de167d3e76b92dc1de2ea36049",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Music%2520Shield/1.0.0/MusicShield-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Music%20Shield/1.0.0/MusicShield-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/NFC%20Tag%20M24LR6E/1.0.0/NFCTagM24LR6E-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NFCTagM24LR6E-1.0.0.tar.gz",
+    "size_bytes": 1491934,
+    "sha256": "fdb669aec253fc51efce5a150ab3927255f4684c420ede31d67062a41f275d5a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/NFC%2520Tag%2520M24LR6E/1.0.0/NFCTagM24LR6E-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/NFC%20Tag%20M24LR6E/1.0.0/NFCTagM24LR6E-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/OLED%20Display%2096x96/1.0.0/OLEDDisplay96x96-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OLEDDisplay96x96-1.0.0.tar.gz",
+    "size_bytes": 16082,
+    "sha256": "bb453e72bdfb9ffe2944e9e494e34c85226a915594f6432a7aa7d5395ab30dc7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/OLED%2520Display%252096x96/1.0.0/OLEDDisplay96x96-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/OLED%20Display%2096x96/1.0.0/OLEDDisplay96x96-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/RFbee%20V1.1%20-%20Wireless%20arduino%20compatible%20node/1.0.0/RFbeeV1.1-Wirelessarduinocompatiblenode-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RFbeeV1.1-Wirelessarduinocompatiblenode-1.0.0.tar.gz",
+    "size_bytes": 28645,
+    "sha256": "db6217a96f6018bdddbd648de395b0a0d6e8080b3f03b8343c8a5ef435fc42f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/RFbee%2520V1.1%2520-%2520Wireless%2520arduino%2520compatible%2520node/1.0.0/RFbeeV1.1-Wirelessarduinocompatiblenode-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/RFbee%20V1.1%20-%20Wireless%20arduino%20compatible%20node/1.0.0/RFbeeV1.1-Wirelessarduinocompatiblenode-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Seeed%20Arduino%2024GHz%20Radar%20Sensor/1.0.1/SeeedArduino24GHzRadarSensor-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SeeedArduino24GHzRadarSensor-1.0.1.tar.gz",
+    "size_bytes": 4887,
+    "sha256": "4947e6fd09acd9a8d77a73796ab20d14837c5085d1dbad9b88cadb76b99fbe7b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Seeed%2520Arduino%252024GHz%2520Radar%2520Sensor/1.0.1/SeeedArduino24GHzRadarSensor-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Seeed%20Arduino%2024GHz%20Radar%20Sensor/1.0.1/SeeedArduino24GHzRadarSensor-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Seeed%20Arduino%208Channel%20I2C%20Hub/1.0.1/SeeedArduino8ChannelI2CHub-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SeeedArduino8ChannelI2CHub-1.0.1.tar.gz",
+    "size_bytes": 3949,
+    "sha256": "f091b8acccc748c270b6b608c5837c8657e4d5be045d7b0eb61422929bd51683",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Seeed%2520Arduino%25208Channel%2520I2C%2520Hub/1.0.1/SeeedArduino8ChannelI2CHub-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Seeed%20Arduino%208Channel%20I2C%20Hub/1.0.1/SeeedArduino8ChannelI2CHub-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Seeed%20Arduino%20Audio/1.4.3/SeeedArduinoAudio-1.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SeeedArduinoAudio-1.4.3.tar.gz",
+    "size_bytes": 6417989,
+    "sha256": "5091107c4ebfe8781d1ec530d5f93fb9d4860eb1c1255d33c9d826c8ac0f1d58",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Seeed%2520Arduino%2520Audio/1.4.3/SeeedArduinoAudio-1.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Seeed%20Arduino%20Audio/1.4.3/SeeedArduinoAudio-1.4.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Seeed%20Arduino%20FS/2.1.3/SeeedArduinoFS-2.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SeeedArduinoFS-2.1.3.tar.gz",
+    "size_bytes": 83013,
+    "sha256": "f396e2157453b1d330e3faa11ab0a02398605587243214c77852aafc1d437b1d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Seeed%2520Arduino%2520FS/2.1.3/SeeedArduinoFS-2.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Seeed%20Arduino%20FS/2.1.3/SeeedArduinoFS-2.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Seeed%20Arduino%20FS/2.1.5/SeeedArduinoFS-2.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SeeedArduinoFS-2.1.5.tar.gz",
+    "size_bytes": 83168,
+    "sha256": "addb26341e173ce238fa89c9168c560193b97a396f403c7777233df4c724b4f3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Seeed%2520Arduino%2520FS/2.1.5/SeeedArduinoFS-2.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Seeed%20Arduino%20FS/2.1.5/SeeedArduinoFS-2.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Seeed%20Arduino%20IR/1.0.2/SeeedArduinoIR-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SeeedArduinoIR-1.0.2.tar.gz",
+    "size_bytes": 103537,
+    "sha256": "64069f0ea25c05263e2a4e1e6647369a0d308fa6b90942367b7926c5cd964fad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Seeed%2520Arduino%2520IR/1.0.2/SeeedArduinoIR-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Seeed%20Arduino%20IR/1.0.2/SeeedArduinoIR-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Seeed%20Arduino%20LSM6DS3/2.0.4/SeeedArduinoLSM6DS3-2.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SeeedArduinoLSM6DS3-2.0.4.tar.gz",
+    "size_bytes": 228422,
+    "sha256": "7a86df0220d5464848d3c79e161dec41810025a278d476e1345b96425b707118",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Seeed%2520Arduino%2520LSM6DS3/2.0.4/SeeedArduinoLSM6DS3-2.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Seeed%20Arduino%20LSM6DS3/2.0.4/SeeedArduinoLSM6DS3-2.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Seeed%20Arduino%20LSM6DS3/2.0.5/SeeedArduinoLSM6DS3-2.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SeeedArduinoLSM6DS3-2.0.5.tar.gz",
+    "size_bytes": 230966,
+    "sha256": "a72e0d22ddec9235d0edc74fca0708798c95e5ed4cf4a12cd1bfd38f794449c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Seeed%2520Arduino%2520LSM6DS3/2.0.5/SeeedArduinoLSM6DS3-2.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Seeed%20Arduino%20LSM6DS3/2.0.5/SeeedArduinoLSM6DS3-2.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Seeed%20Arduino%20LSM6DS3/2.0.6/SeeedArduinoLSM6DS3-2.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SeeedArduinoLSM6DS3-2.0.6.tar.gz",
+    "size_bytes": 231480,
+    "sha256": "aba7f970127a76d14a4513ba828514288f1444ba3b2b9209e2691e78971ed849",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Seeed%2520Arduino%2520LSM6DS3/2.0.6/SeeedArduinoLSM6DS3-2.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Seeed%20Arduino%20LSM6DS3/2.0.6/SeeedArduinoLSM6DS3-2.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Seeed%20Arduino%20LSM6DS3/2.0.7/SeeedArduinoLSM6DS3-2.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SeeedArduinoLSM6DS3-2.0.7.tar.gz",
+    "size_bytes": 232300,
+    "sha256": "b2ac79aa04a5637db3144acd8d67c9fb2b31ffcb8ebddc8a6f742a5cba5a20fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Seeed%2520Arduino%2520LSM6DS3/2.0.7/SeeedArduinoLSM6DS3-2.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Seeed%20Arduino%20LSM6DS3/2.0.7/SeeedArduinoLSM6DS3-2.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Seeed%20Arduino%20Mic/1.0/SeeedArduinoMic-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SeeedArduinoMic-1.0.tar.gz",
+    "size_bytes": 15088,
+    "sha256": "60456b1adc743a2594397957ddcddc5bf0d0aef8c9a414b7e895197f282f3265",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Seeed%2520Arduino%2520Mic/1.0/SeeedArduinoMic-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Seeed%20Arduino%20Mic/1.0/SeeedArduinoMic-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Seeed%20Arduino%20RTC/2.0.0/SeeedArduinoRTC-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SeeedArduinoRTC-2.0.0.tar.gz",
+    "size_bytes": 17149,
+    "sha256": "dc9e240248c24b3eab77cf9c6246a76aafb4de6323e2a1c000b7da13b5d73588",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Seeed%2520Arduino%2520RTC/2.0.0/SeeedArduinoRTC-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Seeed%20Arduino%20RTC/2.0.0/SeeedArduinoRTC-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Seeed%20Arduino%20SFUD/2.0.2/SeeedArduinoSFUD-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SeeedArduinoSFUD-2.0.2.tar.gz",
+    "size_bytes": 25045,
+    "sha256": "a9f97fdbe12be7a9a5f3f96d0981d9e8bff70086d7ea9514e0c4d9f41950f487",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Seeed%2520Arduino%2520SFUD/2.0.2/SeeedArduinoSFUD-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Seeed%20Arduino%20SFUD/2.0.2/SeeedArduinoSFUD-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Seeed%20Arduino%20SGP30/1.0.0/SeeedArduinoSGP30-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SeeedArduinoSGP30-1.0.0.tar.gz",
+    "size_bytes": 14642,
+    "sha256": "4079e25804d9bc8d375a06388fc950fcdcc553f62c6fce8f488d5de813a7b2c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Seeed%2520Arduino%2520SGP30/1.0.0/SeeedArduinoSGP30-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Seeed%20Arduino%20SGP30/1.0.0/SeeedArduinoSGP30-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Seeed%20Arduino%20SPA06/1.0.1/SeeedArduinoSPA06-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SeeedArduinoSPA06-1.0.1.tar.gz",
+    "size_bytes": 22744,
+    "sha256": "967b5d2ffd3e49f81723b3dd94c974cfbaef3a35eeef468c1daafe07fcf5cf71",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Seeed%2520Arduino%2520SPA06/1.0.1/SeeedArduinoSPA06-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Seeed%20Arduino%20SPA06/1.0.1/SeeedArduinoSPA06-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Seeed%20Arduino%20Sketchbook/1.0.2/SeeedArduinoSketchbook-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SeeedArduinoSketchbook-1.0.2.tar.gz",
+    "size_bytes": 2724147,
+    "sha256": "de76884425e345f8e5e84876fe7539fbf8e04b2cd0e194c71ee51f65733a7ac5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Seeed%2520Arduino%2520Sketchbook/1.0.2/SeeedArduinoSketchbook-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Seeed%20Arduino%20Sketchbook/1.0.2/SeeedArduinoSketchbook-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Seeed%20Arduino%20rpcBLE/1.0.0/SeeedArduinorpcBLE-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SeeedArduinorpcBLE-1.0.0.tar.gz",
+    "size_bytes": 65186,
+    "sha256": "288883381e95c2a99a4fe352dcc6ccbc1b47a87980af8cd66562e064382675ec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Seeed%2520Arduino%2520rpcBLE/1.0.0/SeeedArduinorpcBLE-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Seeed%20Arduino%20rpcBLE/1.0.0/SeeedArduinorpcBLE-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Seeed%20Arduino%20rpcUnified/2.1.4/SeeedArduinorpcUnified-2.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SeeedArduinorpcUnified-2.1.4.tar.gz",
+    "size_bytes": 551429,
+    "sha256": "e8f76faa9a13cb5cad36f8993f0a979ba3cc8ede2820e9794b8f91561d42444b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Seeed%2520Arduino%2520rpcUnified/2.1.4/SeeedArduinorpcUnified-2.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Seeed%20Arduino%20rpcUnified/2.1.4/SeeedArduinorpcUnified-2.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Seeed%20Arduino%20rpcWiFi/1.1.0/SeeedArduinorpcWiFi-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SeeedArduinorpcWiFi-1.1.0.tar.gz",
+    "size_bytes": 86663,
+    "sha256": "55ea7b9bda3c83afc9baf901f759657c3c91888b8c06ab0f25d3397537672ffc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Seeed%2520Arduino%2520rpcWiFi/1.1.0/SeeedArduinorpcWiFi-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Seeed%20Arduino%20rpcWiFi/1.1.0/SeeedArduinorpcWiFi-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Seeed%20Serial%20MP3%20Player/2.0.2/SeeedSerialMP3Player-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SeeedSerialMP3Player-2.0.2.tar.gz",
+    "size_bytes": 16319,
+    "sha256": "04923838ab6fe6cbd4c7540d0f4986ff8aed114466bddc1d2b65e39ad12b02cd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Seeed%2520Serial%2520MP3%2520Player/2.0.2/SeeedSerialMP3Player-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Seeed%20Serial%20MP3%20Player/2.0.2/SeeedSerialMP3Player-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Seeed%20Wio%20GPS%20Board/1.0.2/SeeedWioGPSBoard-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SeeedWioGPSBoard-1.0.2.tar.gz",
+    "size_bytes": 22326,
+    "sha256": "17a4bb297da08693165668b87e08c37818c11cf649cfe3d1c81ae47d2f932b6f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Seeed%2520Wio%2520GPS%2520Board/1.0.2/SeeedWioGPSBoard-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Seeed%20Wio%20GPS%20Board/1.0.2/SeeedWioGPSBoard-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Seeed-PCA9685/0.0.1/Seeed-PCA9685-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Seeed-PCA9685-0.0.1.tar.gz",
+    "size_bytes": 16674,
+    "sha256": "3ed702204ed93accb68a2fd290f3b51dd2d2424e28dc099da72bce10ea9870ac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Seeed-PCA9685/0.0.1/Seeed-PCA9685-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Seeed-PCA9685/0.0.1/Seeed-PCA9685-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Seeed_Arduino_LCD/2.0.3/Seeed_Arduino_LCD-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Seeed_Arduino_LCD-2.0.3.tar.gz",
+    "size_bytes": 4593060,
+    "sha256": "e36f7093412ee58a6bd2feb61ed1846aa1926c2a6ef03edfe36107091a113312",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Seeed_Arduino_LCD/2.0.3/Seeed_Arduino_LCD-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Seeed_Arduino_LCD/2.0.3/Seeed_Arduino_LCD-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Seeed_Arduino_SSCMA/1.0.0/Seeed_Arduino_SSCMA-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Seeed_Arduino_SSCMA-1.0.0.tar.gz",
+    "size_bytes": 50653,
+    "sha256": "8274b1163918b7b02b263ec23521c92e216972d3e553057fc24ec6e9e06aef38",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Seeed_Arduino_SSCMA/1.0.0/Seeed_Arduino_SSCMA-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Seeed_Arduino_SSCMA/1.0.0/Seeed_Arduino_SSCMA-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Seeed_Arduino_mbedtls/3.0.2/Seeed_Arduino_mbedtls-3.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Seeed_Arduino_mbedtls-3.0.2.tar.gz",
+    "size_bytes": 719752,
+    "sha256": "1331cb2e6bb0c7748e6af224f45549d5d83fdae98f6c028fbddca395696801ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Seeed_Arduino_mbedtls/3.0.2/Seeed_Arduino_mbedtls-3.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Seeed_Arduino_mbedtls/3.0.2/Seeed_Arduino_mbedtls-3.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Seeeduino%20GPRS/1.0.0/SeeeduinoGPRS-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SeeeduinoGPRS-1.0.0.tar.gz",
+    "size_bytes": 16302,
+    "sha256": "9e8306e6347546685be32af807b59f8f9c5ebdc8fee785e95262a385946349d3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Seeeduino%2520GPRS/1.0.0/SeeeduinoGPRS-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Seeeduino%20GPRS/1.0.0/SeeeduinoGPRS-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Small%20e-paper%20Shield%20V2/1.0.0/Smalle-paperShieldV2-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Smalle-paperShieldV2-1.0.0.tar.gz",
+    "size_bytes": 25425,
+    "sha256": "1967499c3cbcaed0233e788247fad22a02aac14f16d885cd239dce102eb876df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Small%2520e-paper%2520Shield%2520V2/1.0.0/Smalle-paperShieldV2-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Small%20e-paper%20Shield%20V2/1.0.0/Smalle-paperShieldV2-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/TFT%20Touch%20Shield%20V1.0/1.0.2/TFTTouchShieldV1.0-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFTTouchShieldV1.0-1.0.2.tar.gz",
+    "size_bytes": 604095,
+    "sha256": "5164c15ee3dd8ec5ed95d8b811d5313f51a73d9e705925b09aadbb34e3b4109e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/TFT%2520Touch%2520Shield%2520V1.0/1.0.2/TFTTouchShieldV1.0-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/TFT%20Touch%20Shield%20V1.0/1.0.2/TFTTouchShieldV1.0-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/TFT%20Touch%20Shield%20v2.0/2.0.3/TFTTouchShieldv2.0-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFTTouchShieldv2.0-2.0.3.tar.gz",
+    "size_bytes": 611460,
+    "sha256": "1d8a3cfca8811e9438181c7da14ffc7f1162817358243403a0e15b794a58bd90",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/TFT%2520Touch%2520Shield%2520v2.0/2.0.3/TFTTouchShieldv2.0-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/TFT%20Touch%20Shield%20v2.0/2.0.3/TFTTouchShieldv2.0-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Touch%20Screen%20Driver/1.0.0/TouchScreenDriver-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TouchScreenDriver-1.0.0.tar.gz",
+    "size_bytes": 6351,
+    "sha256": "9b02c231b61d44b8fb984d56d7cfa9641ce5f2c353629fa11d90d76868b491d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Touch%2520Screen%2520Driver/1.0.0/TouchScreenDriver-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Touch%20Screen%20Driver/1.0.0/TouchScreenDriver-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Ultrathin_LED_Matrix/1.0.0/Ultrathin_LED_Matrix-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ultrathin_LED_Matrix-1.0.0.tar.gz",
+    "size_bytes": 4773,
+    "sha256": "7f104e47943063361dfcf21dff617c5f98dfea68d426f459f117904229d748ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Ultrathin_LED_Matrix/1.0.0/Ultrathin_LED_Matrix-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Ultrathin_LED_Matrix/1.0.0/Ultrathin_LED_Matrix-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeed-studio/library/Wio%20LTE%20Arduino%20Library/1.0.0/WioLTEArduinoLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WioLTEArduinoLibrary-1.0.0.tar.gz",
+    "size_bytes": 23582,
+    "sha256": "4cafa15e6c18153983ca39f02bc9c988373fc7986856c78b67351632d1f981e3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeed-studio/library/Wio%2520LTE%2520Arduino%2520Library/1.0.0/WioLTEArduinoLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeed-studio/library/Wio%20LTE%20Arduino%20Library/1.0.0/WioLTEArduinoLibrary-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

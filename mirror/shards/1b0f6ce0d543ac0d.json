@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-pa",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-pa/library/FonctionLED/0.0.0+sha.e8cbefd668a4/FonctionLED-0.0.0+sha.e8cbefd668a4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FonctionLED-0.0.0+sha.e8cbefd668a4.tar.gz",
+    "size_bytes": 903,
+    "sha256": "7597cb832239d8cf7fcbe107110ab4df3ebc7ea3f45351e31456af1ace5db212",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pa/library/FonctionLED/0.0.0%2Bsha.e8cbefd668a4/FonctionLED-0.0.0%2Bsha.e8cbefd668a4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pa/library/FonctionLED/0.0.0%2Bsha.e8cbefd668a4/FonctionLED-0.0.0%2Bsha.e8cbefd668a4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-pa/library/GetTickCount/0.0.0+sha.02022f4feae7/GetTickCount-0.0.0+sha.02022f4feae7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GetTickCount-0.0.0+sha.02022f4feae7.tar.gz",
+    "size_bytes": 1082,
+    "sha256": "ffa2e37a26c21dceacc20c6530510fcfac1a70f46020f2fc7b8bcec09155b1c1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pa/library/GetTickCount/0.0.0%2Bsha.02022f4feae7/GetTickCount-0.0.0%2Bsha.02022f4feae7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pa/library/GetTickCount/0.0.0%2Bsha.02022f4feae7/GetTickCount-0.0.0%2Bsha.02022f4feae7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-pa/library/LEDFunctions/0.0.0+sha.e4f37b52019a/LEDFunctions-0.0.0+sha.e4f37b52019a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LEDFunctions-0.0.0+sha.e4f37b52019a.tar.gz",
+    "size_bytes": 2066,
+    "sha256": "fc11b7e858521618a975b95ca7f055b243406b9b7e5e0d9c431c50c552d70cf2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pa/library/LEDFunctions/0.0.0%2Bsha.e4f37b52019a/LEDFunctions-0.0.0%2Bsha.e4f37b52019a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pa/library/LEDFunctions/0.0.0%2Bsha.e4f37b52019a/LEDFunctions-0.0.0%2Bsha.e4f37b52019a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-pa/library/RPCInterface/0.0.0+sha.a7276b35b90b/RPCInterface-0.0.0+sha.a7276b35b90b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RPCInterface-0.0.0+sha.a7276b35b90b.tar.gz",
+    "size_bytes": 4916,
+    "sha256": "1bb97dc4c8312628003c5f1c878e9d1d752304b4a0919ee5e3847c1f9d3bf3ba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pa/library/RPCInterface/0.0.0%2Bsha.a7276b35b90b/RPCInterface-0.0.0%2Bsha.a7276b35b90b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pa/library/RPCInterface/0.0.0%2Bsha.a7276b35b90b/RPCInterface-0.0.0%2Bsha.a7276b35b90b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-pa/library/UniPWM/0.0.0+sha.559139f59504/UniPWM-0.0.0+sha.559139f59504.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UniPWM-0.0.0+sha.559139f59504.tar.gz",
+    "size_bytes": 1917,
+    "sha256": "d97aafa788d86593ca5af414648607ec22b65a66b8d45e7393d6e174dc6b43b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pa/library/UniPWM/0.0.0%2Bsha.559139f59504/UniPWM-0.0.0%2Bsha.559139f59504.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pa/library/UniPWM/0.0.0%2Bsha.559139f59504/UniPWM-0.0.0%2Bsha.559139f59504.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-pa/library/rtos/0.0.0+sha.7ae810ca8a42/rtos-0.0.0+sha.7ae810ca8a42.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "rtos-0.0.0+sha.7ae810ca8a42.tar.gz",
+    "size_bytes": 64629,
+    "sha256": "af866acabf387156ca69345059f13c861324f8c1897f8aee7823159d6b12ad3e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pa/library/rtos/0.0.0%2Bsha.7ae810ca8a42/rtos-0.0.0%2Bsha.7ae810ca8a42.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pa/library/rtos/0.0.0%2Bsha.7ae810ca8a42/rtos-0.0.0%2Bsha.7ae810ca8a42.tar.gz"
+    ]
+   }
+  }
+ ]
+}

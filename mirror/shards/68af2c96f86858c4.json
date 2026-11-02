@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/felis",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "felis/library/USB-Host-Shield-20/1.6.0/USB-Host-Shield-20-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "USB-Host-Shield-20-1.6.0.tar.gz",
+    "size_bytes": 315521,
+    "sha256": "ff48a348ae12b2b572bcd34526b78079bba9106f50ac4d4513367219e487453d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/felis/library/USB-Host-Shield-20/1.6.0/USB-Host-Shield-20-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/felis/library/USB-Host-Shield-20/1.6.0/USB-Host-Shield-20-1.6.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

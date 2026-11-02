@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-lfsantarelli",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-lfsantarelli/library/RadioIn/0.0.0+sha.0c22ced44247/RadioIn-0.0.0+sha.0c22ced44247.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RadioIn-0.0.0+sha.0c22ced44247.tar.gz",
+    "size_bytes": 1497,
+    "sha256": "38544d65b6ef963f15ef300ac5d3c134c5bfa872818ca3477c52b1cc99b7ad86",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-lfsantarelli/library/RadioIn/0.0.0%2Bsha.0c22ced44247/RadioIn-0.0.0%2Bsha.0c22ced44247.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-lfsantarelli/library/RadioIn/0.0.0%2Bsha.0c22ced44247/RadioIn-0.0.0%2Bsha.0c22ced44247.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,347 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/embedded-petal",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "embedded-petal/library/Petal%20IoT%20Cloud/1.1.1/PetalIoTCloud-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PetalIoTCloud-1.1.1.tar.gz",
+    "size_bytes": 35172,
+    "sha256": "e7391f6a3d7ae379991744bb6af15d707fae8d12d6b5f0870d804508912b6e88",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/embedded-petal/library/Petal%2520IoT%2520Cloud/1.1.1/PetalIoTCloud-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/embedded-petal/library/Petal%20IoT%20Cloud/1.1.1/PetalIoTCloud-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "embedded-petal/library/Petal%20IoT%20Cloud/1.1.10/PetalIoTCloud-1.1.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PetalIoTCloud-1.1.10.tar.gz",
+    "size_bytes": 45509,
+    "sha256": "c4a45398239c892bedb81060ecb727e556f8ac72d0d0656da6396029298e303c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/embedded-petal/library/Petal%2520IoT%2520Cloud/1.1.10/PetalIoTCloud-1.1.10.tar.gz",
+     "https://dl.registry.platformio.org/download/embedded-petal/library/Petal%20IoT%20Cloud/1.1.10/PetalIoTCloud-1.1.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "embedded-petal/library/Petal%20IoT%20Cloud/1.1.11/PetalIoTCloud-1.1.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PetalIoTCloud-1.1.11.tar.gz",
+    "size_bytes": 45950,
+    "sha256": "68c75c70157f61ebb9971eb71914855e6a66cc018dea6809c0c6d09a1c2e0104",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/embedded-petal/library/Petal%2520IoT%2520Cloud/1.1.11/PetalIoTCloud-1.1.11.tar.gz",
+     "https://dl.registry.platformio.org/download/embedded-petal/library/Petal%20IoT%20Cloud/1.1.11/PetalIoTCloud-1.1.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "embedded-petal/library/Petal%20IoT%20Cloud/1.1.12/PetalIoTCloud-1.1.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PetalIoTCloud-1.1.12.tar.gz",
+    "size_bytes": 45999,
+    "sha256": "90da2d2276002fef2e403ffcbf32a17b25cbfe48e894d2a8d85279b47cc92ad4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/embedded-petal/library/Petal%2520IoT%2520Cloud/1.1.12/PetalIoTCloud-1.1.12.tar.gz",
+     "https://dl.registry.platformio.org/download/embedded-petal/library/Petal%20IoT%20Cloud/1.1.12/PetalIoTCloud-1.1.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "embedded-petal/library/Petal%20IoT%20Cloud/1.1.13/PetalIoTCloud-1.1.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PetalIoTCloud-1.1.13.tar.gz",
+    "size_bytes": 46001,
+    "sha256": "9916ff7fcb18ef222043bc3b3cdd8400c52bb217c55fc433ef6e77362f476726",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/embedded-petal/library/Petal%2520IoT%2520Cloud/1.1.13/PetalIoTCloud-1.1.13.tar.gz",
+     "https://dl.registry.platformio.org/download/embedded-petal/library/Petal%20IoT%20Cloud/1.1.13/PetalIoTCloud-1.1.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "embedded-petal/library/Petal%20IoT%20Cloud/1.1.14/PetalIoTCloud-1.1.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PetalIoTCloud-1.1.14.tar.gz",
+    "size_bytes": 45989,
+    "sha256": "1f7d3416a35b0a0bbc2b75f12ffa32197d2358eacf8ff548b879fc0f7faa2d30",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/embedded-petal/library/Petal%2520IoT%2520Cloud/1.1.14/PetalIoTCloud-1.1.14.tar.gz",
+     "https://dl.registry.platformio.org/download/embedded-petal/library/Petal%20IoT%20Cloud/1.1.14/PetalIoTCloud-1.1.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "embedded-petal/library/Petal%20IoT%20Cloud/1.1.15/PetalIoTCloud-1.1.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PetalIoTCloud-1.1.15.tar.gz",
+    "size_bytes": 45994,
+    "sha256": "e1c08970f09f45d526ce270f2d3f0a8304779473f09a40189bffe16b7d3486c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/embedded-petal/library/Petal%2520IoT%2520Cloud/1.1.15/PetalIoTCloud-1.1.15.tar.gz",
+     "https://dl.registry.platformio.org/download/embedded-petal/library/Petal%20IoT%20Cloud/1.1.15/PetalIoTCloud-1.1.15.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "embedded-petal/library/Petal%20IoT%20Cloud/1.1.16/PetalIoTCloud-1.1.16.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PetalIoTCloud-1.1.16.tar.gz",
+    "size_bytes": 46009,
+    "sha256": "e534716978226fd6b3d82ce8139aa4a6347623758bf294305f4eef6ef912d9af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/embedded-petal/library/Petal%2520IoT%2520Cloud/1.1.16/PetalIoTCloud-1.1.16.tar.gz",
+     "https://dl.registry.platformio.org/download/embedded-petal/library/Petal%20IoT%20Cloud/1.1.16/PetalIoTCloud-1.1.16.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "embedded-petal/library/Petal%20IoT%20Cloud/1.1.17/PetalIoTCloud-1.1.17.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PetalIoTCloud-1.1.17.tar.gz",
+    "size_bytes": 45990,
+    "sha256": "17806aacb46604dc14ee2398c1f29248b258b8575c365055577f359542ffab6b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/embedded-petal/library/Petal%2520IoT%2520Cloud/1.1.17/PetalIoTCloud-1.1.17.tar.gz",
+     "https://dl.registry.platformio.org/download/embedded-petal/library/Petal%20IoT%20Cloud/1.1.17/PetalIoTCloud-1.1.17.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "embedded-petal/library/Petal%20IoT%20Cloud/1.1.18/PetalIoTCloud-1.1.18.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PetalIoTCloud-1.1.18.tar.gz",
+    "size_bytes": 46002,
+    "sha256": "a8d7f15859c5673a29168c556e1e4c03f55826fc17991152f804c22e5275d108",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/embedded-petal/library/Petal%2520IoT%2520Cloud/1.1.18/PetalIoTCloud-1.1.18.tar.gz",
+     "https://dl.registry.platformio.org/download/embedded-petal/library/Petal%20IoT%20Cloud/1.1.18/PetalIoTCloud-1.1.18.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "embedded-petal/library/Petal%20IoT%20Cloud/1.1.3/PetalIoTCloud-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PetalIoTCloud-1.1.3.tar.gz",
+    "size_bytes": 39048,
+    "sha256": "e9d9a209ebe38776ce3c84e02586158dc743467289ad395bfceddbae2f845b2d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/embedded-petal/library/Petal%2520IoT%2520Cloud/1.1.3/PetalIoTCloud-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/embedded-petal/library/Petal%20IoT%20Cloud/1.1.3/PetalIoTCloud-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "embedded-petal/library/Petal%20IoT%20Cloud/1.1.5/PetalIoTCloud-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PetalIoTCloud-1.1.5.tar.gz",
+    "size_bytes": 45421,
+    "sha256": "4c320032754f84c47a390ddb10bc1e8a512c457387d05d956f0c223e4439511d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/embedded-petal/library/Petal%2520IoT%2520Cloud/1.1.5/PetalIoTCloud-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/embedded-petal/library/Petal%20IoT%20Cloud/1.1.5/PetalIoTCloud-1.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "embedded-petal/library/Petal%20IoT%20Cloud/1.1.7/PetalIoTCloud-1.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PetalIoTCloud-1.1.7.tar.gz",
+    "size_bytes": 45489,
+    "sha256": "f392e7e6aaffec37a9315bcca4961d1f6eb26322a6984b38acacd81aa1d38f6d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/embedded-petal/library/Petal%2520IoT%2520Cloud/1.1.7/PetalIoTCloud-1.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/embedded-petal/library/Petal%20IoT%20Cloud/1.1.7/PetalIoTCloud-1.1.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "embedded-petal/library/Petal%20IoT%20Cloud/1.1.9/PetalIoTCloud-1.1.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PetalIoTCloud-1.1.9.tar.gz",
+    "size_bytes": 45511,
+    "sha256": "b376aaf141fa1529ed18441f85dbfb22ed73e6530e1d9a55fab40cef144eee5a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/embedded-petal/library/Petal%2520IoT%2520Cloud/1.1.9/PetalIoTCloud-1.1.9.tar.gz",
+     "https://dl.registry.platformio.org/download/embedded-petal/library/Petal%20IoT%20Cloud/1.1.9/PetalIoTCloud-1.1.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "embedded-petal/library/Spell_IoT/1.0.10/Spell_IoT-1.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Spell_IoT-1.0.10.tar.gz",
+    "size_bytes": 46458,
+    "sha256": "18d196b9f848e4ec4860e10c0afb3e9db5e5a707a9f21d778cb042b693600fb9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/embedded-petal/library/Spell_IoT/1.0.10/Spell_IoT-1.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/embedded-petal/library/Spell_IoT/1.0.10/Spell_IoT-1.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "embedded-petal/library/Spell_IoT/1.0.2/Spell_IoT-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Spell_IoT-1.0.2.tar.gz",
+    "size_bytes": 45882,
+    "sha256": "a6e9a93d1a82152278efb3ec5fa1a22bb41cbf1cfd783d95c6743d34d2e83ba7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/embedded-petal/library/Spell_IoT/1.0.2/Spell_IoT-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/embedded-petal/library/Spell_IoT/1.0.2/Spell_IoT-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "embedded-petal/library/Spell_IoT/1.0.3/Spell_IoT-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Spell_IoT-1.0.3.tar.gz",
+    "size_bytes": 49182,
+    "sha256": "1567001e0436a273f6352133853bc834818466423ff290213942379b882b9f15",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/embedded-petal/library/Spell_IoT/1.0.3/Spell_IoT-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/embedded-petal/library/Spell_IoT/1.0.3/Spell_IoT-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "embedded-petal/library/Spell_IoT/1.0.4/Spell_IoT-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Spell_IoT-1.0.4.tar.gz",
+    "size_bytes": 46171,
+    "sha256": "05f2d95aea938aa6f1684ad8501cd2c028cf73cbd4bc9c2c3b8a8f72e6955f9a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/embedded-petal/library/Spell_IoT/1.0.4/Spell_IoT-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/embedded-petal/library/Spell_IoT/1.0.4/Spell_IoT-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "embedded-petal/library/Spell_IoT/1.0.5/Spell_IoT-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Spell_IoT-1.0.5.tar.gz",
+    "size_bytes": 46249,
+    "sha256": "1abcbe4fe45b5d0ed7c53bd2a102d51614b7b5306011d2f69d1a3003e1460983",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/embedded-petal/library/Spell_IoT/1.0.5/Spell_IoT-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/embedded-petal/library/Spell_IoT/1.0.5/Spell_IoT-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "embedded-petal/library/Spell_IoT/1.0.6/Spell_IoT-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Spell_IoT-1.0.6.tar.gz",
+    "size_bytes": 46262,
+    "sha256": "9ea6cf6dce1dd786b1ba4f0bf781cb2de943528c7bc5c5556a4b2310021d5e35",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/embedded-petal/library/Spell_IoT/1.0.6/Spell_IoT-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/embedded-petal/library/Spell_IoT/1.0.6/Spell_IoT-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "embedded-petal/library/Spell_IoT/1.0.7/Spell_IoT-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Spell_IoT-1.0.7.tar.gz",
+    "size_bytes": 46345,
+    "sha256": "3dabb42c1d01ad085c62395ec3d1303311b9e70654aef7c298daaaa9b4ddd9c1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/embedded-petal/library/Spell_IoT/1.0.7/Spell_IoT-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/embedded-petal/library/Spell_IoT/1.0.7/Spell_IoT-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "embedded-petal/library/Spell_IoT/1.0.8/Spell_IoT-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Spell_IoT-1.0.8.tar.gz",
+    "size_bytes": 46348,
+    "sha256": "b5016e33d482b6ad1aff19ec2fc789a8212b8ee786de6cd9e6a1a56b22820aac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/embedded-petal/library/Spell_IoT/1.0.8/Spell_IoT-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/embedded-petal/library/Spell_IoT/1.0.8/Spell_IoT-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "embedded-petal/library/Spell_IoT/1.0.9/Spell_IoT-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Spell_IoT-1.0.9.tar.gz",
+    "size_bytes": 46341,
+    "sha256": "41f40fa509f77f969a5b01a54ba2f511aa0729fdc56b336b5eb871f80d786424",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/embedded-petal/library/Spell_IoT/1.0.9/Spell_IoT-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/embedded-petal/library/Spell_IoT/1.0.9/Spell_IoT-1.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "embedded-petal/library/Spell_IoT/1.1.12/Spell_IoT-1.1.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Spell_IoT-1.1.12.tar.gz",
+    "size_bytes": 65888,
+    "sha256": "0da4d57e95b03ae6bb18db8de3ec0215973a1f29bbda5d60a38fe4962e4f045d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/embedded-petal/library/Spell_IoT/1.1.12/Spell_IoT-1.1.12.tar.gz",
+     "https://dl.registry.platformio.org/download/embedded-petal/library/Spell_IoT/1.1.12/Spell_IoT-1.1.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "embedded-petal/library/Spell_IoT/1.1.2/Spell_IoT-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Spell_IoT-1.1.2.tar.gz",
+    "size_bytes": 51398,
+    "sha256": "9d2c6ced4ef84c899c1b2e31c1e52d805e48c4f2f8c4ae7b1d145bbed8d9c307",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/embedded-petal/library/Spell_IoT/1.1.2/Spell_IoT-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/embedded-petal/library/Spell_IoT/1.1.2/Spell_IoT-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "embedded-petal/library/Spell_IoT/1.1.3/Spell_IoT-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Spell_IoT-1.1.3.tar.gz",
+    "size_bytes": 51418,
+    "sha256": "4be6685a7c455cf7705fc8270ec629c18d4704ace9b5bab3223e60eeadc763bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/embedded-petal/library/Spell_IoT/1.1.3/Spell_IoT-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/embedded-petal/library/Spell_IoT/1.1.3/Spell_IoT-1.1.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

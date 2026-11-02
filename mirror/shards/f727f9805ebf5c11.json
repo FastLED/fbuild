@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ebuzatti",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ebuzatti/library/DataChain-Int/1.1.2/DataChain-Int-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DataChain-Int-1.1.2.tar.gz",
+    "size_bytes": 1988,
+    "sha256": "99ccbcbc4e3c0cbb01a8755ae3c21bc3b5549d1b502b8e5c82cb60266bee4fb3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ebuzatti/library/DataChain-Int/1.1.2/DataChain-Int-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ebuzatti/library/DataChain-Int/1.1.2/DataChain-Int-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ebuzatti/library/DataChain/1.1.1/DataChain-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DataChain-1.1.1.tar.gz",
+    "size_bytes": 2098,
+    "sha256": "3160634bea6e8bc021e0b7a343a017ccec9b452baac7f0e828bde57cfc859563",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ebuzatti/library/DataChain/1.1.1/DataChain-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ebuzatti/library/DataChain/1.1.1/DataChain-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ebuzatti/library/measurechain/1.0.3/measurechain-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "measurechain-1.0.3.tar.gz",
+    "size_bytes": 2925,
+    "sha256": "def3e0a60310139fdfcfba962736edfc94cbd3f0b9f5f9d40b7cc5697754f4e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ebuzatti/library/measurechain/1.0.3/measurechain-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/ebuzatti/library/measurechain/1.0.3/measurechain-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ebuzatti/library/stack/1.0.3/stack-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "stack-1.0.3.tar.gz",
+    "size_bytes": 1692,
+    "sha256": "e67c651e5d853026f18d5687db6c76061e64c39b3879482268d212dba63182f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ebuzatti/library/stack/1.0.3/stack-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/ebuzatti/library/stack/1.0.3/stack-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ebuzatti/library/stack3values/1.0.6/stack3values-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "stack3values-1.0.6.tar.gz",
+    "size_bytes": 1502,
+    "sha256": "c015a5406fdf84fb7e50830eb6aa036f121ae0de57a9977389a3dca1725a4a7a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ebuzatti/library/stack3values/1.0.6/stack3values-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/ebuzatti/library/stack3values/1.0.6/stack3values-1.0.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

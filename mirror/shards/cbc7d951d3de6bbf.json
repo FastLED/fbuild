@@ -1,0 +1,165 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-nxp-ip",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-nxp-ip/library/PCA9622_LED8x8/0.0.0+sha.fb23972da0f3/PCA9622_LED8x8-0.0.0+sha.fb23972da0f3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCA9622_LED8x8-0.0.0+sha.fb23972da0f3.tar.gz",
+    "size_bytes": 3609,
+    "sha256": "fe7c21892ff9b72c2bfa069d40a0a247b9f9327e873bbc1aef16d58e7d58cd9d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nxp-ip/library/PCA9622_LED8x8/0.0.0%2Bsha.fb23972da0f3/PCA9622_LED8x8-0.0.0%2Bsha.fb23972da0f3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nxp-ip/library/PCA9622_LED8x8/0.0.0%2Bsha.fb23972da0f3/PCA9622_LED8x8-0.0.0%2Bsha.fb23972da0f3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nxp-ip/library/PCA9629/0.0.0+sha.199f109eb0c6/PCA9629-0.0.0+sha.199f109eb0c6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCA9629-0.0.0+sha.199f109eb0c6.tar.gz",
+    "size_bytes": 5367,
+    "sha256": "3a76d4ba8c08feb737a745c540710f00e1e78fd061ae07026f23650f3101b7f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nxp-ip/library/PCA9629/0.0.0%2Bsha.199f109eb0c6/PCA9629-0.0.0%2Bsha.199f109eb0c6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nxp-ip/library/PCA9629/0.0.0%2Bsha.199f109eb0c6/PCA9629-0.0.0%2Bsha.199f109eb0c6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nxp-ip/library/PCA9629A/0.0.0+sha.0c797805233b/PCA9629A-0.0.0+sha.0c797805233b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCA9629A-0.0.0+sha.0c797805233b.tar.gz",
+    "size_bytes": 5720,
+    "sha256": "fa8246fb66b0a540174a6b0e02e0863851dba94476b072faa54744b1a95a067d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nxp-ip/library/PCA9629A/0.0.0%2Bsha.0c797805233b/PCA9629A-0.0.0%2Bsha.0c797805233b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nxp-ip/library/PCA9629A/0.0.0%2Bsha.0c797805233b/PCA9629A-0.0.0%2Bsha.0c797805233b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nxp-ip/library/PCA962x/0.0.0+sha.7ebf563f6e6c/PCA962x-0.0.0+sha.7ebf563f6e6c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCA962x-0.0.0+sha.7ebf563f6e6c.tar.gz",
+    "size_bytes": 4947,
+    "sha256": "a1da3096a1525d4803d2614914d4aafe50af7d5391352846a8c77745fcded05b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nxp-ip/library/PCA962x/0.0.0%2Bsha.7ebf563f6e6c/PCA962x-0.0.0%2Bsha.7ebf563f6e6c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nxp-ip/library/PCA962x/0.0.0%2Bsha.7ebf563f6e6c/PCA962x-0.0.0%2Bsha.7ebf563f6e6c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nxp-ip/library/PCA9632/0.0.0+sha.3574bf73abf5/PCA9632-0.0.0+sha.3574bf73abf5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCA9632-0.0.0+sha.3574bf73abf5.tar.gz",
+    "size_bytes": 3780,
+    "sha256": "4b44f3bfddf13f2d0b729230d10fb51d30b0d2c81e438c862b0b8d7325cfab77",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nxp-ip/library/PCA9632/0.0.0%2Bsha.3574bf73abf5/PCA9632-0.0.0%2Bsha.3574bf73abf5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nxp-ip/library/PCA9632/0.0.0%2Bsha.3574bf73abf5/PCA9632-0.0.0%2Bsha.3574bf73abf5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nxp-ip/library/PCA9665/0.0.0+sha.b69135913a8f/PCA9665-0.0.0+sha.b69135913a8f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCA9665-0.0.0+sha.b69135913a8f.tar.gz",
+    "size_bytes": 3538,
+    "sha256": "ecf5f05fd1dcf6c37960ecfb7f3305dc12f08e77e98d5c73b5eede42fdb45a7f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nxp-ip/library/PCA9665/0.0.0%2Bsha.b69135913a8f/PCA9665-0.0.0%2Bsha.b69135913a8f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nxp-ip/library/PCA9665/0.0.0%2Bsha.b69135913a8f/PCA9665-0.0.0%2Bsha.b69135913a8f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nxp-ip/library/PCA9955/0.0.0+sha.2e6f5ac1b29b/PCA9955-0.0.0+sha.2e6f5ac1b29b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCA9955-0.0.0+sha.2e6f5ac1b29b.tar.gz",
+    "size_bytes": 2601,
+    "sha256": "5539db0daa0bb496d9287ad516db28d5357c14ef4fb1c0388cc59606fd8ba96a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nxp-ip/library/PCA9955/0.0.0%2Bsha.2e6f5ac1b29b/PCA9955-0.0.0%2Bsha.2e6f5ac1b29b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nxp-ip/library/PCA9955/0.0.0%2Bsha.2e6f5ac1b29b/PCA9955-0.0.0%2Bsha.2e6f5ac1b29b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nxp-ip/library/PCA995xA/0.0.0+sha.1c6e1af61981/PCA995xA-0.0.0+sha.1c6e1af61981.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCA995xA-0.0.0+sha.1c6e1af61981.tar.gz",
+    "size_bytes": 7964,
+    "sha256": "97d70498400046eec1c8355d3a27722fd47aea41fb61eb05befd01f0574c275f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nxp-ip/library/PCA995xA/0.0.0%2Bsha.1c6e1af61981/PCA995xA-0.0.0%2Bsha.1c6e1af61981.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nxp-ip/library/PCA995xA/0.0.0%2Bsha.1c6e1af61981/PCA995xA-0.0.0%2Bsha.1c6e1af61981.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nxp-ip/library/PCAL955x/0.0.0+sha.fd7cfa821b6a/PCAL955x-0.0.0+sha.fd7cfa821b6a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCAL955x-0.0.0+sha.fd7cfa821b6a.tar.gz",
+    "size_bytes": 9560,
+    "sha256": "4dc6533bb3fbc88d674ca828de8e8eab45a3b72727dfa4fe17fc567fc3589272",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nxp-ip/library/PCAL955x/0.0.0%2Bsha.fd7cfa821b6a/PCAL955x-0.0.0%2Bsha.fd7cfa821b6a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nxp-ip/library/PCAL955x/0.0.0%2Bsha.fd7cfa821b6a/PCAL955x-0.0.0%2Bsha.fd7cfa821b6a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nxp-ip/library/PCF2127/0.0.0+sha.e2a6ac61fcbd/PCF2127-0.0.0+sha.e2a6ac61fcbd.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCF2127-0.0.0+sha.e2a6ac61fcbd.tar.gz",
+    "size_bytes": 3827,
+    "sha256": "f2157273ba650ee05ecbbb7665442d46ae9434d0910ea2577747226f0ecdd9bd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nxp-ip/library/PCF2127/0.0.0%2Bsha.e2a6ac61fcbd/PCF2127-0.0.0%2Bsha.e2a6ac61fcbd.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nxp-ip/library/PCF2127/0.0.0%2Bsha.e2a6ac61fcbd/PCF2127-0.0.0%2Bsha.e2a6ac61fcbd.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nxp-ip/library/parallel_bus/0.0.0+sha.3f4c439ea51b/parallel_bus-0.0.0+sha.3f4c439ea51b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "parallel_bus-0.0.0+sha.3f4c439ea51b.tar.gz",
+    "size_bytes": 4657,
+    "sha256": "a566f71dcf04cfdfc5bcefbdc352a1f3e6bcdd6002cb60edd97bf826dac30656",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nxp-ip/library/parallel_bus/0.0.0%2Bsha.3f4c439ea51b/parallel_bus-0.0.0%2Bsha.3f4c439ea51b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nxp-ip/library/parallel_bus/0.0.0%2Bsha.3f4c439ea51b/parallel_bus-0.0.0%2Bsha.3f4c439ea51b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nxp-ip/library/utility/0.0.0+sha.67eb582418f8/utility-0.0.0+sha.67eb582418f8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "utility-0.0.0+sha.67eb582418f8.tar.gz",
+    "size_bytes": 1677,
+    "sha256": "7dcd5453b35dd6632c1999051cbdb706813c8b7c839103ee834b9c0e3c53aa4c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nxp-ip/library/utility/0.0.0%2Bsha.67eb582418f8/utility-0.0.0%2Bsha.67eb582418f8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nxp-ip/library/utility/0.0.0%2Bsha.67eb582418f8/utility-0.0.0%2Bsha.67eb582418f8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

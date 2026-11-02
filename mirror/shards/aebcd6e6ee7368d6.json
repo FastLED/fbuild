@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-tristanjph",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-tristanjph/library/RHT03/0.0.0+sha.153e20f26d54/RHT03-0.0.0+sha.153e20f26d54.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RHT03-0.0.0+sha.153e20f26d54.tar.gz",
+    "size_bytes": 4544,
+    "sha256": "5b1a65908d6297636eb6c413d3330c8f8b50e56de6b32cf8acfb21dcd1d9906c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tristanjph/library/RHT03/0.0.0%2Bsha.153e20f26d54/RHT03-0.0.0%2Bsha.153e20f26d54.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tristanjph/library/RHT03/0.0.0%2Bsha.153e20f26d54/RHT03-0.0.0%2Bsha.153e20f26d54.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-tristanjph/library/xbee_lib/0.0.0+sha.6455a079bdb3/xbee_lib-0.0.0+sha.6455a079bdb3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "xbee_lib-0.0.0+sha.6455a079bdb3.tar.gz",
+    "size_bytes": 2793,
+    "sha256": "db1e06d6d23c6dfd955d6465f3056f05bac12ada8c5b508a0b023bd231aaedba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tristanjph/library/xbee_lib/0.0.0%2Bsha.6455a079bdb3/xbee_lib-0.0.0%2Bsha.6455a079bdb3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tristanjph/library/xbee_lib/0.0.0%2Bsha.6455a079bdb3/xbee_lib-0.0.0%2Bsha.6455a079bdb3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

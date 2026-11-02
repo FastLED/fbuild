@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/chipnorm",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "chipnorm/library/ChipNorm_DHT11/1.0.0/ChipNorm_DHT11-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ChipNorm_DHT11-1.0.0.tar.gz",
+    "size_bytes": 15061,
+    "sha256": "a63195d5ef603eb3edd25d469bc82b0dd30ce00dfa7f9fdadc4c63d1ad2287c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chipnorm/library/ChipNorm_DHT11/1.0.0/ChipNorm_DHT11-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chipnorm/library/ChipNorm_DHT11/1.0.0/ChipNorm_DHT11-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chipnorm/library/ChipNorm_LED_Matrix/1.0.0/ChipNorm_LED_Matrix-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ChipNorm_LED_Matrix-1.0.0.tar.gz",
+    "size_bytes": 17042,
+    "sha256": "18ffb877bcead15e3dbe993b6afac3346ee89b93fab5aadf77b0cf1f1e6165bd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chipnorm/library/ChipNorm_LED_Matrix/1.0.0/ChipNorm_LED_Matrix-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chipnorm/library/ChipNorm_LED_Matrix/1.0.0/ChipNorm_LED_Matrix-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chipnorm/library/ChipNorm_SHT21/1.0.0/ChipNorm_SHT21-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ChipNorm_SHT21-1.0.0.tar.gz",
+    "size_bytes": 14559,
+    "sha256": "8795562e8e1c39601520a6ed53b8d9a2f452a492d9a293e53ef7fd0ec356cf0a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chipnorm/library/ChipNorm_SHT21/1.0.0/ChipNorm_SHT21-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chipnorm/library/ChipNorm_SHT21/1.0.0/ChipNorm_SHT21-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chipnorm/library/ChipNorm_TM1637/1.0.0/ChipNorm_TM1637-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ChipNorm_TM1637-1.0.0.tar.gz",
+    "size_bytes": 15208,
+    "sha256": "af311809dd51456375b89929f3367b8a5d77575c6fe5c3b31f058973bd4a54ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chipnorm/library/ChipNorm_TM1637/1.0.0/ChipNorm_TM1637-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chipnorm/library/ChipNorm_TM1637/1.0.0/ChipNorm_TM1637-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chipnorm/library/ChipNorm_VL53L0X/1.0.0/ChipNorm_VL53L0X-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ChipNorm_VL53L0X-1.0.0.tar.gz",
+    "size_bytes": 15213,
+    "sha256": "4cf3cd90643d6823154d58e5702a88741c1a3eaac31c0924c49b2d0da2d89727",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chipnorm/library/ChipNorm_VL53L0X/1.0.0/ChipNorm_VL53L0X-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chipnorm/library/ChipNorm_VL53L0X/1.0.0/ChipNorm_VL53L0X-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

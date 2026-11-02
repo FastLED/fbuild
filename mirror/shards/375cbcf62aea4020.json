@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-yihui",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-yihui/library/LEDMatrix/0.0.0+sha.b528f8e32726/LEDMatrix-0.0.0+sha.b528f8e32726.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LEDMatrix-0.0.0+sha.b528f8e32726.tar.gz",
+    "size_bytes": 2555,
+    "sha256": "60272b83a0fe935a975068c657a6a06d9c3bac15938e98d8276c263a2e92e465",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yihui/library/LEDMatrix/0.0.0%2Bsha.b528f8e32726/LEDMatrix-0.0.0%2Bsha.b528f8e32726.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yihui/library/LEDMatrix/0.0.0%2Bsha.b528f8e32726/LEDMatrix-0.0.0%2Bsha.b528f8e32726.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-yihui/library/USBTinyDisk/0.0.0+sha.bc3d724e2ea5/USBTinyDisk-0.0.0+sha.bc3d724e2ea5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "USBTinyDisk-0.0.0+sha.bc3d724e2ea5.tar.gz",
+    "size_bytes": 2479,
+    "sha256": "f310d18402c8aa05e640f96f73144595fde3b7ee875102cb7d17a4f1ed1e5582",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yihui/library/USBTinyDisk/0.0.0%2Bsha.bc3d724e2ea5/USBTinyDisk-0.0.0%2Bsha.bc3d724e2ea5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yihui/library/USBTinyDisk/0.0.0%2Bsha.bc3d724e2ea5/USBTinyDisk-0.0.0%2Bsha.bc3d724e2ea5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-yihui/library/eMPL_MPU/0.0.0+sha.972f3778c19c/eMPL_MPU-0.0.0+sha.972f3778c19c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "eMPL_MPU-0.0.0+sha.972f3778c19c.tar.gz",
+    "size_bytes": 41255,
+    "sha256": "288190da3e33fd69e9c78142d770ca93d49a38249c9751f228901e2dae99b0e7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yihui/library/eMPL_MPU/0.0.0%2Bsha.972f3778c19c/eMPL_MPU-0.0.0%2Bsha.972f3778c19c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yihui/library/eMPL_MPU/0.0.0%2Bsha.972f3778c19c/eMPL_MPU-0.0.0%2Bsha.972f3778c19c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-yihui/library/msgpack/0.0.0+sha.5237a514fdab/msgpack-0.0.0+sha.5237a514fdab.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "msgpack-0.0.0+sha.5237a514fdab.tar.gz",
+    "size_bytes": 18033,
+    "sha256": "c2f7bdacdac54e04926817501ac02294fe31c540ae66d1482d537f61d1c777e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yihui/library/msgpack/0.0.0%2Bsha.5237a514fdab/msgpack-0.0.0%2Bsha.5237a514fdab.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yihui/library/msgpack/0.0.0%2Bsha.5237a514fdab/msgpack-0.0.0%2Bsha.5237a514fdab.tar.gz"
+    ]
+   }
+  }
+ ]
+}

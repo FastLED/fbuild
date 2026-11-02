@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-bonchenko",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-bonchenko/library/ADE7758/0.0.0+sha.54310bde2e53/ADE7758-0.0.0+sha.54310bde2e53.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADE7758-0.0.0+sha.54310bde2e53.tar.gz",
+    "size_bytes": 4491,
+    "sha256": "301cf514f7d511652aab9be545c2311158629ca81cd60dc3396a632633671ea3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bonchenko/library/ADE7758/0.0.0%2Bsha.54310bde2e53/ADE7758-0.0.0%2Bsha.54310bde2e53.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bonchenko/library/ADE7758/0.0.0%2Bsha.54310bde2e53/ADE7758-0.0.0%2Bsha.54310bde2e53.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/porkyneal",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "porkyneal/library/SimpleSensorAlarm/1.0.4/SimpleSensorAlarm-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleSensorAlarm-1.0.4.tar.gz",
+    "size_bytes": 3501,
+    "sha256": "d297a5fa6d122c6908b511927b750fb4c8d49678a25cc33867f6ddfe751e0c03",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/porkyneal/library/SimpleSensorAlarm/1.0.4/SimpleSensorAlarm-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/porkyneal/library/SimpleSensorAlarm/1.0.4/SimpleSensorAlarm-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ambientdatainc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ambientdatainc/library/Ambient%20ESP32%20ESP8266%20lib/1.0.5/AmbientESP32ESP8266lib-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AmbientESP32ESP8266lib-1.0.5.tar.gz",
+    "size_bytes": 37776,
+    "sha256": "bf4eaa52c845a2485b0afd84ff49db4d6ad1ee9aea4839a383ca78adb75a0cd6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ambientdatainc/library/Ambient%2520ESP32%2520ESP8266%2520lib/1.0.5/AmbientESP32ESP8266lib-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/ambientdatainc/library/Ambient%20ESP32%20ESP8266%20lib/1.0.5/AmbientESP32ESP8266lib-1.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

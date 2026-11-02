@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/schallbert",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "schallbert/library/ClickEncoder/1.1.0/ClickEncoder-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ClickEncoder-1.1.0.tar.gz",
+    "size_bytes": 12349,
+    "sha256": "cbb0644049b087115f02d3b63aa60899a1c14d54f7174fa95cb605e5682b83a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/schallbert/library/ClickEncoder/1.1.0/ClickEncoder-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/schallbert/library/ClickEncoder/1.1.0/ClickEncoder-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

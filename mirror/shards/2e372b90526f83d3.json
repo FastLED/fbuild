@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/agfy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "agfy/library/CX_Devices/1.0.0/CX_Devices-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CX_Devices-1.0.0.tar.gz",
+    "size_bytes": 3366,
+    "sha256": "e268388f7d6d0544128160e970c4b0a09d623e729c7a1d9719c5464d6c8a09e8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/agfy/library/CX_Devices/1.0.0/CX_Devices-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/agfy/library/CX_Devices/1.0.0/CX_Devices-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "agfy/library/CX_MQTT/1.0.0/CX_MQTT-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CX_MQTT-1.0.0.tar.gz",
+    "size_bytes": 3347,
+    "sha256": "416c22b589c4ce9333f7ae2e35394343d528241b495e2c649d4c22b02eb9b83b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/agfy/library/CX_MQTT/1.0.0/CX_MQTT-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/agfy/library/CX_MQTT/1.0.0/CX_MQTT-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

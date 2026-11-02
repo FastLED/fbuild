@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-julmbed",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-julmbed/library/VarStore/0.0.0+sha.8c20a558d34f/VarStore-0.0.0+sha.8c20a558d34f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VarStore-0.0.0+sha.8c20a558d34f.tar.gz",
+    "size_bytes": 4750,
+    "sha256": "25acbaa39a41a098fb93cb88c9ad9e8b1d47d759661a84266593f99f5743419b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-julmbed/library/VarStore/0.0.0%2Bsha.8c20a558d34f/VarStore-0.0.0%2Bsha.8c20a558d34f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-julmbed/library/VarStore/0.0.0%2Bsha.8c20a558d34f/VarStore-0.0.0%2Bsha.8c20a558d34f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

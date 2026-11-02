@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-stepjun",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-stepjun/library/myBMP085/0.0.0+sha.b9870f4bc956/myBMP085-0.0.0+sha.b9870f4bc956.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "myBMP085-0.0.0+sha.b9870f4bc956.tar.gz",
+    "size_bytes": 1836,
+    "sha256": "9890373bb3ab8d7e295225597d6818c53e32f3111a8b2c78042a59f160d9b08a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-stepjun/library/myBMP085/0.0.0%2Bsha.b9870f4bc956/myBMP085-0.0.0%2Bsha.b9870f4bc956.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-stepjun/library/myBMP085/0.0.0%2Bsha.b9870f4bc956/myBMP085-0.0.0%2Bsha.b9870f4bc956.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/shuvangkar",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "shuvangkar/library/RingEEPROM/0.1.0/RingEEPROM-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RingEEPROM-0.1.0.tar.gz",
+    "size_bytes": 4806,
+    "sha256": "89bb1576c47a949c7b68f31bb0a2d0c791ededf9c8ce412b5e14dec7e018f58e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shuvangkar/library/RingEEPROM/0.1.0/RingEEPROM-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/shuvangkar/library/RingEEPROM/0.1.0/RingEEPROM-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

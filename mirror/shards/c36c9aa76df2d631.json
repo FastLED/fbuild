@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-graphicsdisplay",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-graphicsdisplay/library/GraphicsDisplay/0.0.0+sha.1cb0fcbce1bf/GraphicsDisplay-0.0.0+sha.1cb0fcbce1bf.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GraphicsDisplay-0.0.0+sha.1cb0fcbce1bf.tar.gz",
+    "size_bytes": 4863,
+    "sha256": "8b3c561a0a8e5a6c1d09a4790c65efb9e561876afce168d9c676ff8e67d1d765",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-graphicsdisplay/library/GraphicsDisplay/0.0.0%2Bsha.1cb0fcbce1bf/GraphicsDisplay-0.0.0%2Bsha.1cb0fcbce1bf.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-graphicsdisplay/library/GraphicsDisplay/0.0.0%2Bsha.1cb0fcbce1bf/GraphicsDisplay-0.0.0%2Bsha.1cb0fcbce1bf.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-graphicsdisplay/library/UniGraphic/0.0.0+sha.f87f06292637/UniGraphic-0.0.0+sha.f87f06292637.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UniGraphic-0.0.0+sha.f87f06292637.tar.gz",
+    "size_bytes": 50637,
+    "sha256": "aac9b5e5ec2fc201cb916304b1593bb8f1a4c9b9eb6ed8a2bf0e9970d76b9230",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-graphicsdisplay/library/UniGraphic/0.0.0%2Bsha.f87f06292637/UniGraphic-0.0.0%2Bsha.f87f06292637.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-graphicsdisplay/library/UniGraphic/0.0.0%2Bsha.f87f06292637/UniGraphic-0.0.0%2Bsha.f87f06292637.tar.gz"
+    ]
+   }
+  }
+ ]
+}

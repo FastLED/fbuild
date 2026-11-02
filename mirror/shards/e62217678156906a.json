@@ -1,0 +1,295 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/autoconnecto",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "autoconnecto/library/AutoconnectoSDK/1.0.5/AutoconnectoSDK-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AutoconnectoSDK-1.0.5.tar.gz",
+    "size_bytes": 33332,
+    "sha256": "1ac50a7157e8a92e1ce6402e49a2d1fc89d424730a04fd101e327ed5a7117233",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/autoconnecto/library/AutoconnectoSDK/1.0.5/AutoconnectoSDK-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/autoconnecto/library/AutoconnectoSDK/1.0.5/AutoconnectoSDK-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "autoconnecto/library/AutoconnectoSDK/1.2.4/AutoconnectoSDK-1.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AutoconnectoSDK-1.2.4.tar.gz",
+    "size_bytes": 33888,
+    "sha256": "ae05f6cc93250a1a8673712868487fd768554711090a5b0145501ed7ad99d17f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/autoconnecto/library/AutoconnectoSDK/1.2.4/AutoconnectoSDK-1.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/autoconnecto/library/AutoconnectoSDK/1.2.4/AutoconnectoSDK-1.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "autoconnecto/library/AutoconnectoSDK/1.2.6/AutoconnectoSDK-1.2.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AutoconnectoSDK-1.2.6.tar.gz",
+    "size_bytes": 42507,
+    "sha256": "638cc04f4d479cd1956ee61617624ec1695f9bc6a74c677436e7cdb7f43a78d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/autoconnecto/library/AutoconnectoSDK/1.2.6/AutoconnectoSDK-1.2.6.tar.gz",
+     "https://dl.registry.platformio.org/download/autoconnecto/library/AutoconnectoSDK/1.2.6/AutoconnectoSDK-1.2.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "autoconnecto/library/AutoconnectoSDK/1.2.8/AutoconnectoSDK-1.2.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AutoconnectoSDK-1.2.8.tar.gz",
+    "size_bytes": 42500,
+    "sha256": "ba8bcf601db775ba2df6b5f5c823b59f5df6804000c844f1c440c21c694c802c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/autoconnecto/library/AutoconnectoSDK/1.2.8/AutoconnectoSDK-1.2.8.tar.gz",
+     "https://dl.registry.platformio.org/download/autoconnecto/library/AutoconnectoSDK/1.2.8/AutoconnectoSDK-1.2.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "autoconnecto/library/AutoconnectoSDK/1.3.0/AutoconnectoSDK-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AutoconnectoSDK-1.3.0.tar.gz",
+    "size_bytes": 72495,
+    "sha256": "1e0f1ec399ac1e03b1ccf339476171eab359534306e2097f5c183fb486c4c012",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/autoconnecto/library/AutoconnectoSDK/1.3.0/AutoconnectoSDK-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/autoconnecto/library/AutoconnectoSDK/1.3.0/AutoconnectoSDK-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "autoconnecto/library/AutoconnectoSDK/1.3.3/AutoconnectoSDK-1.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AutoconnectoSDK-1.3.3.tar.gz",
+    "size_bytes": 72497,
+    "sha256": "87d8a0a5baeeb42fec5753a12cf717e2a85b5415dcf522308d846dbd0495b895",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/autoconnecto/library/AutoconnectoSDK/1.3.3/AutoconnectoSDK-1.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/autoconnecto/library/AutoconnectoSDK/1.3.3/AutoconnectoSDK-1.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "autoconnecto/library/AutoconnectoSDK/1.3.5/AutoconnectoSDK-1.3.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AutoconnectoSDK-1.3.5.tar.gz",
+    "size_bytes": 92290,
+    "sha256": "d6001db25873933b250edb890188abbf7f02b57219799513646ef8dc4732bba4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/autoconnecto/library/AutoconnectoSDK/1.3.5/AutoconnectoSDK-1.3.5.tar.gz",
+     "https://dl.registry.platformio.org/download/autoconnecto/library/AutoconnectoSDK/1.3.5/AutoconnectoSDK-1.3.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "autoconnecto/library/AutoconnectoSDK/1.3.6/AutoconnectoSDK-1.3.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AutoconnectoSDK-1.3.6.tar.gz",
+    "size_bytes": 93385,
+    "sha256": "557dc32b01df6c834aca30796c124b0905cdcc158036982f3de2ffadc7b847eb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/autoconnecto/library/AutoconnectoSDK/1.3.6/AutoconnectoSDK-1.3.6.tar.gz",
+     "https://dl.registry.platformio.org/download/autoconnecto/library/AutoconnectoSDK/1.3.6/AutoconnectoSDK-1.3.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "autoconnecto/library/AutoconnectoSDK/1.3.7/AutoconnectoSDK-1.3.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AutoconnectoSDK-1.3.7.tar.gz",
+    "size_bytes": 93731,
+    "sha256": "dfa3643a8a63008596fd3d31a6ea9c55f1ea856be6fd8aef7ca31c1ecab7982e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/autoconnecto/library/AutoconnectoSDK/1.3.7/AutoconnectoSDK-1.3.7.tar.gz",
+     "https://dl.registry.platformio.org/download/autoconnecto/library/AutoconnectoSDK/1.3.7/AutoconnectoSDK-1.3.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "autoconnecto/library/AutoconnectoSDK/1.4.0/AutoconnectoSDK-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AutoconnectoSDK-1.4.0.tar.gz",
+    "size_bytes": 93726,
+    "sha256": "73bd31cab3b90b19c20f2b62fb6edc3f67f3db14a6b83c333196298b2c007601",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/autoconnecto/library/AutoconnectoSDK/1.4.0/AutoconnectoSDK-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/autoconnecto/library/AutoconnectoSDK/1.4.0/AutoconnectoSDK-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "autoconnecto/library/AutoconnectoSDK/1.6.0/AutoconnectoSDK-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AutoconnectoSDK-1.6.0.tar.gz",
+    "size_bytes": 91353,
+    "sha256": "0ed9485bc19a7817f3615d01885f7310ca8c888075cd581d44ed0860fec26efc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/autoconnecto/library/AutoconnectoSDK/1.6.0/AutoconnectoSDK-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/autoconnecto/library/AutoconnectoSDK/1.6.0/AutoconnectoSDK-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "autoconnecto/library/AutoconnectoSDK/1.6.1/AutoconnectoSDK-1.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AutoconnectoSDK-1.6.1.tar.gz",
+    "size_bytes": 92730,
+    "sha256": "0dc4022250c8628fdcfad36d946473dc27a874c01bc4590bb80da28cce2d1dee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/autoconnecto/library/AutoconnectoSDK/1.6.1/AutoconnectoSDK-1.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/autoconnecto/library/AutoconnectoSDK/1.6.1/AutoconnectoSDK-1.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "autoconnecto/library/AutoconnectoSDK/1.6.2/AutoconnectoSDK-1.6.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AutoconnectoSDK-1.6.2.tar.gz",
+    "size_bytes": 93872,
+    "sha256": "b3ac38dbf3602fbe64863aa7920fc39474b3b245efa617008660aefefadd3fb5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/autoconnecto/library/AutoconnectoSDK/1.6.2/AutoconnectoSDK-1.6.2.tar.gz",
+     "https://dl.registry.platformio.org/download/autoconnecto/library/AutoconnectoSDK/1.6.2/AutoconnectoSDK-1.6.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "autoconnecto/library/AutoconnectoSDK/1.7.32/AutoconnectoSDK-1.7.32.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AutoconnectoSDK-1.7.32.tar.gz",
+    "size_bytes": 93789,
+    "sha256": "4b7ae28daacd0bec5e28e3e6585c57bba954fe650fa18b6bb569c8652121daeb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/autoconnecto/library/AutoconnectoSDK/1.7.32/AutoconnectoSDK-1.7.32.tar.gz",
+     "https://dl.registry.platformio.org/download/autoconnecto/library/AutoconnectoSDK/1.7.32/AutoconnectoSDK-1.7.32.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "autoconnecto/library/AutoconnectoSDK/1.7.54/AutoconnectoSDK-1.7.54.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AutoconnectoSDK-1.7.54.tar.gz",
+    "size_bytes": 97376,
+    "sha256": "732cade9c47e1ab9b10ab69206c8126ba02bf5647cc0ee16d944acccb81f0ab9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/autoconnecto/library/AutoconnectoSDK/1.7.54/AutoconnectoSDK-1.7.54.tar.gz",
+     "https://dl.registry.platformio.org/download/autoconnecto/library/AutoconnectoSDK/1.7.54/AutoconnectoSDK-1.7.54.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "autoconnecto/library/AutoconnectoSDK/1.7.59/AutoconnectoSDK-1.7.59.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AutoconnectoSDK-1.7.59.tar.gz",
+    "size_bytes": 101525,
+    "sha256": "6a5809a6d8cc45b46e2c218526b3e1bb38555bf0c93e48ee4676a8f3bd85e615",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/autoconnecto/library/AutoconnectoSDK/1.7.59/AutoconnectoSDK-1.7.59.tar.gz",
+     "https://dl.registry.platformio.org/download/autoconnecto/library/AutoconnectoSDK/1.7.59/AutoconnectoSDK-1.7.59.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "autoconnecto/library/AutoconnectoSDK/1.7.67/AutoconnectoSDK-1.7.67.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AutoconnectoSDK-1.7.67.tar.gz",
+    "size_bytes": 101828,
+    "sha256": "63faa49b2cc15b74656e449af362548937b3ab11965c81c69d650d76252fe717",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/autoconnecto/library/AutoconnectoSDK/1.7.67/AutoconnectoSDK-1.7.67.tar.gz",
+     "https://dl.registry.platformio.org/download/autoconnecto/library/AutoconnectoSDK/1.7.67/AutoconnectoSDK-1.7.67.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "autoconnecto/library/AutoconnectoSDK/1.7.73/AutoconnectoSDK-1.7.73.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AutoconnectoSDK-1.7.73.tar.gz",
+    "size_bytes": 115905,
+    "sha256": "7a9259df2933b6b4513e69eb00e7a2ae6f9b71b43525300dcdef571e5ce9307d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/autoconnecto/library/AutoconnectoSDK/1.7.73/AutoconnectoSDK-1.7.73.tar.gz",
+     "https://dl.registry.platformio.org/download/autoconnecto/library/AutoconnectoSDK/1.7.73/AutoconnectoSDK-1.7.73.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "autoconnecto/library/AutoconnectoSDK/1.7.76/AutoconnectoSDK-1.7.76.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AutoconnectoSDK-1.7.76.tar.gz",
+    "size_bytes": 121183,
+    "sha256": "8a6f698f55755b0884975a057a272adb2036f22ee9e2c53f18c79cfef81338bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/autoconnecto/library/AutoconnectoSDK/1.7.76/AutoconnectoSDK-1.7.76.tar.gz",
+     "https://dl.registry.platformio.org/download/autoconnecto/library/AutoconnectoSDK/1.7.76/AutoconnectoSDK-1.7.76.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "autoconnecto/library/AutoconnectoSDK/1.7.77/AutoconnectoSDK-1.7.77.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AutoconnectoSDK-1.7.77.tar.gz",
+    "size_bytes": 123001,
+    "sha256": "b50ce6d64d858fb0909c652c2d3f888c03c7aa5c5383208d33a31b374e39b3ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/autoconnecto/library/AutoconnectoSDK/1.7.77/AutoconnectoSDK-1.7.77.tar.gz",
+     "https://dl.registry.platformio.org/download/autoconnecto/library/AutoconnectoSDK/1.7.77/AutoconnectoSDK-1.7.77.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "autoconnecto/library/AutoconnectoSDK/1.7.79/AutoconnectoSDK-1.7.79.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AutoconnectoSDK-1.7.79.tar.gz",
+    "size_bytes": 128316,
+    "sha256": "472f596ad0bb845b65eea92d8458fee8a3c65701cdb8d476a5b9c7fa27ce3540",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/autoconnecto/library/AutoconnectoSDK/1.7.79/AutoconnectoSDK-1.7.79.tar.gz",
+     "https://dl.registry.platformio.org/download/autoconnecto/library/AutoconnectoSDK/1.7.79/AutoconnectoSDK-1.7.79.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "autoconnecto/library/AutoconnectoSDK/1.7.84/AutoconnectoSDK-1.7.84.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AutoconnectoSDK-1.7.84.tar.gz",
+    "size_bytes": 129286,
+    "sha256": "88219d01d212e4833c2e3ca6a84c4fecbfd8cae482056d2c47c62f0b76bfca69",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/autoconnecto/library/AutoconnectoSDK/1.7.84/AutoconnectoSDK-1.7.84.tar.gz",
+     "https://dl.registry.platformio.org/download/autoconnecto/library/AutoconnectoSDK/1.7.84/AutoconnectoSDK-1.7.84.tar.gz"
+    ]
+   }
+  }
+ ]
+}

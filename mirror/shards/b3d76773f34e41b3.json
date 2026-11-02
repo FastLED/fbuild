@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-pyrostew",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-pyrostew/library/EquatorStrutController/0.0.0+sha.3976e3f43470/EquatorStrutController-0.0.0+sha.3976e3f43470.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EquatorStrutController-0.0.0+sha.3976e3f43470.tar.gz",
+    "size_bytes": 2212,
+    "sha256": "4486d575b6fdc906dba444eaeddb202963603de9c6351ee543140268488452bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pyrostew/library/EquatorStrutController/0.0.0%2Bsha.3976e3f43470/EquatorStrutController-0.0.0%2Bsha.3976e3f43470.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pyrostew/library/EquatorStrutController/0.0.0%2Bsha.3976e3f43470/EquatorStrutController-0.0.0%2Bsha.3976e3f43470.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-pyrostew/library/LightWeightSerialTransmit/0.0.0+sha.ff597e1c059d/LightWeightSerialTransmit-0.0.0+sha.ff597e1c059d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LightWeightSerialTransmit-0.0.0+sha.ff597e1c059d.tar.gz",
+    "size_bytes": 1295,
+    "sha256": "002d999b084a5fbc7bf44d7b8c84fdbd4d1dd5090e1ef4ed426c20c99eae2e81",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pyrostew/library/LightWeightSerialTransmit/0.0.0%2Bsha.ff597e1c059d/LightWeightSerialTransmit-0.0.0%2Bsha.ff597e1c059d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pyrostew/library/LightWeightSerialTransmit/0.0.0%2Bsha.ff597e1c059d/LightWeightSerialTransmit-0.0.0%2Bsha.ff597e1c059d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

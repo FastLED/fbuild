@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-king33jp",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-king33jp/library/EEPROM_AT93C46/0.0.0+sha.bf02c4f42b15/EEPROM_AT93C46-0.0.0+sha.bf02c4f42b15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EEPROM_AT93C46-0.0.0+sha.bf02c4f42b15.tar.gz",
+    "size_bytes": 2072,
+    "sha256": "caf21cb7223176220417c70b4902d95fe026adee274ddc10f3582cbc4d823b6a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-king33jp/library/EEPROM_AT93C46/0.0.0%2Bsha.bf02c4f42b15/EEPROM_AT93C46-0.0.0%2Bsha.bf02c4f42b15.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-king33jp/library/EEPROM_AT93C46/0.0.0%2Bsha.bf02c4f42b15/EEPROM_AT93C46-0.0.0%2Bsha.bf02c4f42b15.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-king33jp/library/LM60/0.0.0+sha.b52cd03437c2/LM60-0.0.0+sha.b52cd03437c2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LM60-0.0.0+sha.b52cd03437c2.tar.gz",
+    "size_bytes": 1195,
+    "sha256": "b7cb92acb8a9ec11f5903fd0173621142dfee6c266c4b89c197ebffb03dc8202",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-king33jp/library/LM60/0.0.0%2Bsha.b52cd03437c2/LM60-0.0.0%2Bsha.b52cd03437c2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-king33jp/library/LM60/0.0.0%2Bsha.b52cd03437c2/LM60-0.0.0%2Bsha.b52cd03437c2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-king33jp/library/PCF2129/0.0.0+sha.a2f545432493/PCF2129-0.0.0+sha.a2f545432493.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCF2129-0.0.0+sha.a2f545432493.tar.gz",
+    "size_bytes": 2534,
+    "sha256": "c4d24d17f07ffeb95af6a8c266a3cd095aa0d83aa236ccdbfeb21201ac51c130",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-king33jp/library/PCF2129/0.0.0%2Bsha.a2f545432493/PCF2129-0.0.0%2Bsha.a2f545432493.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-king33jp/library/PCF2129/0.0.0%2Bsha.a2f545432493/PCF2129-0.0.0%2Bsha.a2f545432493.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-king33jp/library/S6D0151/0.0.0+sha.18920a7a693e/S6D0151-0.0.0+sha.18920a7a693e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "S6D0151-0.0.0+sha.18920a7a693e.tar.gz",
+    "size_bytes": 13070,
+    "sha256": "6343c9d8021044027917a33bd0a28765e703a960c1fe9848787326c342b95373",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-king33jp/library/S6D0151/0.0.0%2Bsha.18920a7a693e/S6D0151-0.0.0%2Bsha.18920a7a693e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-king33jp/library/S6D0151/0.0.0%2Bsha.18920a7a693e/S6D0151-0.0.0%2Bsha.18920a7a693e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-king33jp/library/SX032QVGA008/0.0.0+sha.6304deb80cc2/SX032QVGA008-0.0.0+sha.6304deb80cc2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SX032QVGA008-0.0.0+sha.6304deb80cc2.tar.gz",
+    "size_bytes": 3164,
+    "sha256": "0b02381d5c6c831a282e9e449f8f55d1021cbfc81fdeb5684d73ba62daa72d8a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-king33jp/library/SX032QVGA008/0.0.0%2Bsha.6304deb80cc2/SX032QVGA008-0.0.0%2Bsha.6304deb80cc2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-king33jp/library/SX032QVGA008/0.0.0%2Bsha.6304deb80cc2/SX032QVGA008-0.0.0%2Bsha.6304deb80cc2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

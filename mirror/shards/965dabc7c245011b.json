@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tedlanghorst",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tedlanghorst/library/LP5562/0.0.1/LP5562-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LP5562-0.0.1.tar.gz",
+    "size_bytes": 18070,
+    "sha256": "f43c3e4c160fe5b784a38e404d36edecdc5ca413faea5c7b1281111a7ef2e33d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tedlanghorst/library/LP5562/0.0.1/LP5562-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tedlanghorst/library/LP5562/0.0.1/LP5562-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/boazf",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "boazf/library/HttpClientEx/1.0.4/HttpClientEx-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HttpClientEx-1.0.4.tar.gz",
+    "size_bytes": 8361,
+    "sha256": "a54f824129fe4c5adfb1e24d562ca38e1ad54a83929c7b3695e33db27bbaee2b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/boazf/library/HttpClientEx/1.0.4/HttpClientEx-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/boazf/library/HttpClientEx/1.0.4/HttpClientEx-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "boazf/library/HttpUpdate/1.0.4/HttpUpdate-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HttpUpdate-1.0.4.tar.gz",
+    "size_bytes": 11691,
+    "sha256": "9b391ff6880be81bebf9aa09b70ca5a0519667e5f9a78269583ac434b184457e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/boazf/library/HttpUpdate/1.0.4/HttpUpdate-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/boazf/library/HttpUpdate/1.0.4/HttpUpdate-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

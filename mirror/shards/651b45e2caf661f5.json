@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/alexagra",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "alexagra/library/sDebug/1.0.1/sDebug-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "sDebug-1.0.1.tar.gz",
+    "size_bytes": 2196,
+    "sha256": "478503603ecdc65ec0e62035bfe3ace8cbc6005f5d95e1f2d1f46208f25ce469",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alexagra/library/sDebug/1.0.1/sDebug-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/alexagra/library/sDebug/1.0.1/sDebug-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

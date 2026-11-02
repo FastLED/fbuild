@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/davisonaudio",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "davisonaudio/library/MAX98389/0.0.1/MAX98389-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX98389-0.0.1.tar.gz",
+    "size_bytes": 15270,
+    "sha256": "864d1479d1f5b5049fc2231f4adbfed2fbb5d0327539df49f9de450fdbfa7539",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/davisonaudio/library/MAX98389/0.0.1/MAX98389-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/davisonaudio/library/MAX98389/0.0.1/MAX98389-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

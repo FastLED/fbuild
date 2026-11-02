@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/iotappstory",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "iotappstory/library/IOTAppStory-ESP/2.1.0-RC5.1/IOTAppStory-ESP-2.1.0-RC5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IOTAppStory-ESP-2.1.0-RC5.1.tar.gz",
+    "size_bytes": 97381,
+    "sha256": "4f512ee2d4a06c6c621875805cc128ede103033539f96943eb749187bd6c4341",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iotappstory/library/IOTAppStory-ESP/2.1.0-RC5.1/IOTAppStory-ESP-2.1.0-RC5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/iotappstory/library/IOTAppStory-ESP/2.1.0-RC5.1/IOTAppStory-ESP-2.1.0-RC5.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

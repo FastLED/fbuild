@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/onuromer",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "onuromer/library/O3SerialWriter/1.0.1/O3SerialWriter-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "O3SerialWriter-1.0.1.tar.gz",
+    "size_bytes": 5887,
+    "sha256": "454d151145fba412231d05330a53c14b6200b16e2b944cbb9d8312dac60e2e07",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/onuromer/library/O3SerialWriter/1.0.1/O3SerialWriter-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/onuromer/library/O3SerialWriter/1.0.1/O3SerialWriter-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

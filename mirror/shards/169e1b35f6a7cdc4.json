@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/alphawallet",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "alphawallet/library/Web3E/1.44/Web3E-1.44.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Web3E-1.44.tar.gz",
+    "size_bytes": 209337,
+    "sha256": "6dee5572f15d1bba3e6cd82e54512ab96f30f902ea81951699c3cdaed3c800b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alphawallet/library/Web3E/1.44/Web3E-1.44.tar.gz",
+     "https://dl.registry.platformio.org/download/alphawallet/library/Web3E/1.44/Web3E-1.44.tar.gz"
+    ]
+   }
+  }
+ ]
+}

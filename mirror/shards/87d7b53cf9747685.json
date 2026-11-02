@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-garfunkheul",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-garfunkheul/library/literm/0.0.0+sha.ae9f1dd56e92/literm-0.0.0+sha.ae9f1dd56e92.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "literm-0.0.0+sha.ae9f1dd56e92.tar.gz",
+    "size_bytes": 3185,
+    "sha256": "d68ed7e796cbde99ffd5e960ac75ad7eaf0a1566231b90feb4f03c5b681df94b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-garfunkheul/library/literm/0.0.0%2Bsha.ae9f1dd56e92/literm-0.0.0%2Bsha.ae9f1dd56e92.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-garfunkheul/library/literm/0.0.0%2Bsha.ae9f1dd56e92/literm-0.0.0%2Bsha.ae9f1dd56e92.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-garfunkheul/library/mc33926/0.0.0+sha.217bc3688cff/mc33926-0.0.0+sha.217bc3688cff.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mc33926-0.0.0+sha.217bc3688cff.tar.gz",
+    "size_bytes": 2423,
+    "sha256": "49d55803e82c5f3caa5109773c0eca8176a83e8d5ecff2092b274488db580f21",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-garfunkheul/library/mc33926/0.0.0%2Bsha.217bc3688cff/mc33926-0.0.0%2Bsha.217bc3688cff.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-garfunkheul/library/mc33926/0.0.0%2Bsha.217bc3688cff/mc33926-0.0.0%2Bsha.217bc3688cff.tar.gz"
+    ]
+   }
+  }
+ ]
+}

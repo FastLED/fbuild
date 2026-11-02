@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/abhishektiwari7",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "abhishektiwari7/library/Nokia%201.8%20Inch%20Display%20SPFD54124B/1.0.7/Nokia1.8InchDisplaySPFD54124B-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Nokia1.8InchDisplaySPFD54124B-1.0.7.tar.gz",
+    "size_bytes": 200507,
+    "sha256": "cc79be8d1606ca1695b78726d279432a092cd81522b02e52e3031cc645e4a088",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/abhishektiwari7/library/Nokia%25201.8%2520Inch%2520Display%2520SPFD54124B/1.0.7/Nokia1.8InchDisplaySPFD54124B-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/abhishektiwari7/library/Nokia%201.8%20Inch%20Display%20SPFD54124B/1.0.7/Nokia1.8InchDisplaySPFD54124B-1.0.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

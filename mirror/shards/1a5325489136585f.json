@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-team2",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-team2/library/Arduino/0.0.0+sha.d96590319bcf/Arduino-0.0.0+sha.d96590319bcf.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino-0.0.0+sha.d96590319bcf.tar.gz",
+    "size_bytes": 1200,
+    "sha256": "fc80d09c1a26864c304b9bbdbdf80f3d27ac3ead406cca75ea30d792a39ee139",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-team2/library/Arduino/0.0.0%2Bsha.d96590319bcf/Arduino-0.0.0%2Bsha.d96590319bcf.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-team2/library/Arduino/0.0.0%2Bsha.d96590319bcf/Arduino-0.0.0%2Bsha.d96590319bcf.tar.gz"
+    ]
+   }
+  }
+ ]
+}

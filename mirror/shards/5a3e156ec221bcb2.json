@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-benrammok",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-benrammok/library/ShiftOut/0.0.0+sha.0bb6aa206b86/ShiftOut-0.0.0+sha.0bb6aa206b86.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ShiftOut-0.0.0+sha.0bb6aa206b86.tar.gz",
+    "size_bytes": 2948,
+    "sha256": "c747228c77d00f40912eb0fdc4292237dcb4c7f4a2f6f162e6ed31b792cce588",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-benrammok/library/ShiftOut/0.0.0%2Bsha.0bb6aa206b86/ShiftOut-0.0.0%2Bsha.0bb6aa206b86.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-benrammok/library/ShiftOut/0.0.0%2Bsha.0bb6aa206b86/ShiftOut-0.0.0%2Bsha.0bb6aa206b86.tar.gz"
+    ]
+   }
+  }
+ ]
+}

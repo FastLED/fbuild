@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/distrakt",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "distrakt/library/OmEspHelpers/1.9.20240227/OmEspHelpers-1.9.20240227.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OmEspHelpers-1.9.20240227.tar.gz",
+    "size_bytes": 148386,
+    "sha256": "2ee4c8021da277fc3b494efa380b2a31f3d61484c49b777f8b8b4fb86a773e75",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/distrakt/library/OmEspHelpers/1.9.20240227/OmEspHelpers-1.9.20240227.tar.gz",
+     "https://dl.registry.platformio.org/download/distrakt/library/OmEspHelpers/1.9.20240227/OmEspHelpers-1.9.20240227.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/uwewoessner",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "uwewoessner/library/debounceButton/1.0.0/debounceButton-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "debounceButton-1.0.0.tar.gz",
+    "size_bytes": 2808,
+    "sha256": "da25279ee061e01a4822e065bb075b0047d7fe72512f170454cc01e83eb65e23",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/uwewoessner/library/debounceButton/1.0.0/debounceButton-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/uwewoessner/library/debounceButton/1.0.0/debounceButton-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

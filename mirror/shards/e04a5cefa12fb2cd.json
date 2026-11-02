@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-airi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-airi/library/MPU9150/0.0.0+sha.98ba754215ad/MPU9150-0.0.0+sha.98ba754215ad.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPU9150-0.0.0+sha.98ba754215ad.tar.gz",
+    "size_bytes": 3405,
+    "sha256": "7648ebccd163aee852c977afab040901d459e91e2a417163ed4a3c6cb4e08aa8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-airi/library/MPU9150/0.0.0%2Bsha.98ba754215ad/MPU9150-0.0.0%2Bsha.98ba754215ad.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-airi/library/MPU9150/0.0.0%2Bsha.98ba754215ad/MPU9150-0.0.0%2Bsha.98ba754215ad.tar.gz"
+    ]
+   }
+  }
+ ]
+}

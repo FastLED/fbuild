@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-swe-skytem",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-swe-skytem/library/Oled_Driver/0.0.0+sha.a52630c11009/Oled_Driver-0.0.0+sha.a52630c11009.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Oled_Driver-0.0.0+sha.a52630c11009.tar.gz",
+    "size_bytes": 2565,
+    "sha256": "d050834173cc11c4bf6de0acbf7dc88855a6da3f62bdf194345940c90291f87a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-swe-skytem/library/Oled_Driver/0.0.0%2Bsha.a52630c11009/Oled_Driver-0.0.0%2Bsha.a52630c11009.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-swe-skytem/library/Oled_Driver/0.0.0%2Bsha.a52630c11009/Oled_Driver-0.0.0%2Bsha.a52630c11009.tar.gz"
+    ]
+   }
+  }
+ ]
+}

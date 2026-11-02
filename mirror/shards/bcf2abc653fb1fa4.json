@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-prodevelopteammasterrace",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-prodevelopteammasterrace/library/ArtnetDMX/0.0.0+sha.dba7a0094213/ArtnetDMX-0.0.0+sha.dba7a0094213.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArtnetDMX-0.0.0+sha.dba7a0094213.tar.gz",
+    "size_bytes": 4719,
+    "sha256": "e3f2dce8ba6b2e335b03dbfe3f577aa76deb659d89db4e11c805401f833d10c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-prodevelopteammasterrace/library/ArtnetDMX/0.0.0%2Bsha.dba7a0094213/ArtnetDMX-0.0.0%2Bsha.dba7a0094213.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-prodevelopteammasterrace/library/ArtnetDMX/0.0.0%2Bsha.dba7a0094213/ArtnetDMX-0.0.0%2Bsha.dba7a0094213.tar.gz"
+    ]
+   }
+  }
+ ]
+}

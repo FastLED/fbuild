@@ -1,0 +1,308 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-shintamainjp",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-shintamainjp/library/AitendoOLED/0.0.0+sha.74c60a959299/AitendoOLED-0.0.0+sha.74c60a959299.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AitendoOLED-0.0.0+sha.74c60a959299.tar.gz",
+    "size_bytes": 4886,
+    "sha256": "60a3e80ae5406edc68d8261ceae655f9e99b069a252ae45facff2b610c89d490",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-shintamainjp/library/AitendoOLED/0.0.0%2Bsha.74c60a959299/AitendoOLED-0.0.0%2Bsha.74c60a959299.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-shintamainjp/library/AitendoOLED/0.0.0%2Bsha.74c60a959299/AitendoOLED-0.0.0%2Bsha.74c60a959299.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-shintamainjp/library/CameraC328/0.0.0+sha.49cfda6c547f/CameraC328-0.0.0+sha.49cfda6c547f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CameraC328-0.0.0+sha.49cfda6c547f.tar.gz",
+    "size_bytes": 5660,
+    "sha256": "05f7eac5b5274bb4fb38717873fc94602c7991c2b07738b3b8a3bf8fdca04db5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-shintamainjp/library/CameraC328/0.0.0%2Bsha.49cfda6c547f/CameraC328-0.0.0%2Bsha.49cfda6c547f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-shintamainjp/library/CameraC328/0.0.0%2Bsha.49cfda6c547f/CameraC328-0.0.0%2Bsha.49cfda6c547f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-shintamainjp/library/Camera_LS_Y201/0.0.0+sha.43358d40f879/Camera_LS_Y201-0.0.0+sha.43358d40f879.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Camera_LS_Y201-0.0.0+sha.43358d40f879.tar.gz",
+    "size_bytes": 5012,
+    "sha256": "07cdc78b71177d38ed91ae62a3905b00948fe7c21cc311f021689f4c0d501c52",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-shintamainjp/library/Camera_LS_Y201/0.0.0%2Bsha.43358d40f879/Camera_LS_Y201-0.0.0%2Bsha.43358d40f879.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-shintamainjp/library/Camera_LS_Y201/0.0.0%2Bsha.43358d40f879/Camera_LS_Y201-0.0.0%2Bsha.43358d40f879.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-shintamainjp/library/ChoroQ/0.0.0+sha.97921a2adf78/ChoroQ-0.0.0+sha.97921a2adf78.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ChoroQ-0.0.0+sha.97921a2adf78.tar.gz",
+    "size_bytes": 3196,
+    "sha256": "6b76337bddcbc3e313626a8c2e22dd5dfecb3a0ce916ce10425a34e7670f1be3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-shintamainjp/library/ChoroQ/0.0.0%2Bsha.97921a2adf78/ChoroQ-0.0.0%2Bsha.97921a2adf78.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-shintamainjp/library/ChoroQ/0.0.0%2Bsha.97921a2adf78/ChoroQ-0.0.0%2Bsha.97921a2adf78.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-shintamainjp/library/ConfigFile/0.0.0+sha.f6ceafabe9f8/ConfigFile-0.0.0+sha.f6ceafabe9f8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ConfigFile-0.0.0+sha.f6ceafabe9f8.tar.gz",
+    "size_bytes": 3159,
+    "sha256": "d003ec42f2a95b3ebc24d7bfe87d3e96f69768622657bbdc2f21521ae4a9c814",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-shintamainjp/library/ConfigFile/0.0.0%2Bsha.f6ceafabe9f8/ConfigFile-0.0.0%2Bsha.f6ceafabe9f8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-shintamainjp/library/ConfigFile/0.0.0%2Bsha.f6ceafabe9f8/ConfigFile-0.0.0%2Bsha.f6ceafabe9f8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-shintamainjp/library/FatFileSystem/0.0.0+sha.8c55801ce311/FatFileSystem-0.0.0+sha.8c55801ce311.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FatFileSystem-0.0.0+sha.8c55801ce311.tar.gz",
+    "size_bytes": 49987,
+    "sha256": "bd70bcfa0a3b623a3b6c082350c00e8f2ae8adb12c19f5d55a35849d3ddd2da0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-shintamainjp/library/FatFileSystem/0.0.0%2Bsha.8c55801ce311/FatFileSystem-0.0.0%2Bsha.8c55801ce311.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-shintamainjp/library/FatFileSystem/0.0.0%2Bsha.8c55801ce311/FatFileSystem-0.0.0%2Bsha.8c55801ce311.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-shintamainjp/library/FirmwareUpdater/0.0.0+sha.851bd91fa0ae/FirmwareUpdater-0.0.0+sha.851bd91fa0ae.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FirmwareUpdater-0.0.0+sha.851bd91fa0ae.tar.gz",
+    "size_bytes": 4633,
+    "sha256": "347bcc7e638064e5446bbf261afa5f9c287b0872f1d47688b9623af6d2782f79",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-shintamainjp/library/FirmwareUpdater/0.0.0%2Bsha.851bd91fa0ae/FirmwareUpdater-0.0.0%2Bsha.851bd91fa0ae.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-shintamainjp/library/FirmwareUpdater/0.0.0%2Bsha.851bd91fa0ae/FirmwareUpdater-0.0.0%2Bsha.851bd91fa0ae.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-shintamainjp/library/GoogleChart/0.0.0+sha.ded8a44ff71f/GoogleChart-0.0.0+sha.ded8a44ff71f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GoogleChart-0.0.0+sha.ded8a44ff71f.tar.gz",
+    "size_bytes": 3826,
+    "sha256": "6db2761170cc4993364170d99d9ea12e00c937b73c92167f05198f716f2868e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-shintamainjp/library/GoogleChart/0.0.0%2Bsha.ded8a44ff71f/GoogleChart-0.0.0%2Bsha.ded8a44ff71f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-shintamainjp/library/GoogleChart/0.0.0%2Bsha.ded8a44ff71f/GoogleChart-0.0.0%2Bsha.ded8a44ff71f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-shintamainjp/library/HighSpeedAnalogIn/0.0.0+sha.db55359719e7/HighSpeedAnalogIn-0.0.0+sha.db55359719e7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HighSpeedAnalogIn-0.0.0+sha.db55359719e7.tar.gz",
+    "size_bytes": 3080,
+    "sha256": "1fb10e1b5000ea6c69613b99a60aae778be316bfe3fe7a2f92a223e9db2e0ece",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-shintamainjp/library/HighSpeedAnalogIn/0.0.0%2Bsha.db55359719e7/HighSpeedAnalogIn-0.0.0%2Bsha.db55359719e7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-shintamainjp/library/HighSpeedAnalogIn/0.0.0%2Bsha.db55359719e7/HighSpeedAnalogIn-0.0.0%2Bsha.db55359719e7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-shintamainjp/library/MicroShell/0.0.0+sha.e91b984e285d/MicroShell-0.0.0+sha.e91b984e285d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MicroShell-0.0.0+sha.e91b984e285d.tar.gz",
+    "size_bytes": 7269,
+    "sha256": "63c232c89203406d2c8f539e2ba7a7cbabf0eabdbcd4dde2475836a1ac2f9693",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-shintamainjp/library/MicroShell/0.0.0%2Bsha.e91b984e285d/MicroShell-0.0.0%2Bsha.e91b984e285d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-shintamainjp/library/MicroShell/0.0.0%2Bsha.e91b984e285d/MicroShell-0.0.0%2Bsha.e91b984e285d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-shintamainjp/library/NaturalTinyShell/0.0.0+sha.7147d6024de8/NaturalTinyShell-0.0.0+sha.7147d6024de8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NaturalTinyShell-0.0.0+sha.7147d6024de8.tar.gz",
+    "size_bytes": 15999,
+    "sha256": "c734d563955152051983d42d54c9e17e8f8595adb37dc65d0c9b5d06a5edd3db",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-shintamainjp/library/NaturalTinyShell/0.0.0%2Bsha.7147d6024de8/NaturalTinyShell-0.0.0%2Bsha.7147d6024de8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-shintamainjp/library/NaturalTinyShell/0.0.0%2Bsha.7147d6024de8/NaturalTinyShell-0.0.0%2Bsha.7147d6024de8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-shintamainjp/library/PS2/0.0.0+sha.a57bbbec16b1/PS2-0.0.0+sha.a57bbbec16b1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PS2-0.0.0+sha.a57bbbec16b1.tar.gz",
+    "size_bytes": 5424,
+    "sha256": "deb492b4d640e159e21ab6c62120b3d0716205fac76ecd86102ca27d1c16a50f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-shintamainjp/library/PS2/0.0.0%2Bsha.a57bbbec16b1/PS2-0.0.0%2Bsha.a57bbbec16b1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-shintamainjp/library/PS2/0.0.0%2Bsha.a57bbbec16b1/PS2-0.0.0%2Bsha.a57bbbec16b1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-shintamainjp/library/Pachube/0.0.0+sha.19accbe9a05e/Pachube-0.0.0+sha.19accbe9a05e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pachube-0.0.0+sha.19accbe9a05e.tar.gz",
+    "size_bytes": 3129,
+    "sha256": "7c208f08533d357a5d0e96f6021f055269a77beb8d4fda6ee626bd12857c59f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-shintamainjp/library/Pachube/0.0.0%2Bsha.19accbe9a05e/Pachube-0.0.0%2Bsha.19accbe9a05e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-shintamainjp/library/Pachube/0.0.0%2Bsha.19accbe9a05e/Pachube-0.0.0%2Bsha.19accbe9a05e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-shintamainjp/library/RemoteIR/0.0.0+sha.268cc2ab63bd/RemoteIR-0.0.0+sha.268cc2ab63bd.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RemoteIR-0.0.0+sha.268cc2ab63bd.tar.gz",
+    "size_bytes": 4187,
+    "sha256": "2ca156f474d98e5d1507696fa3c3430c7aece7decfdca8af23f2bbf733dc36e1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-shintamainjp/library/RemoteIR/0.0.0%2Bsha.268cc2ab63bd/RemoteIR-0.0.0%2Bsha.268cc2ab63bd.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-shintamainjp/library/RemoteIR/0.0.0%2Bsha.268cc2ab63bd/RemoteIR-0.0.0%2Bsha.268cc2ab63bd.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-shintamainjp/library/RotaryEncoder/0.0.0+sha.8000eddbf4aa/RotaryEncoder-0.0.0+sha.8000eddbf4aa.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RotaryEncoder-0.0.0+sha.8000eddbf4aa.tar.gz",
+    "size_bytes": 2167,
+    "sha256": "fda1a9863d1e2a6b440dfae39e9dd57b541dc4d3b7e7d1abd08704f81e4ecab6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-shintamainjp/library/RotaryEncoder/0.0.0%2Bsha.8000eddbf4aa/RotaryEncoder-0.0.0%2Bsha.8000eddbf4aa.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-shintamainjp/library/RotaryEncoder/0.0.0%2Bsha.8000eddbf4aa/RotaryEncoder-0.0.0%2Bsha.8000eddbf4aa.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-shintamainjp/library/SG12864A/0.0.0+sha.bc2da4c1c5a0/SG12864A-0.0.0+sha.bc2da4c1c5a0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SG12864A-0.0.0+sha.bc2da4c1c5a0.tar.gz",
+    "size_bytes": 4878,
+    "sha256": "4c14bec808e7fb3f55e8f9fd94fb561b26d618cd69727fd10a69e1c11d1e03bf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-shintamainjp/library/SG12864A/0.0.0%2Bsha.bc2da4c1c5a0/SG12864A-0.0.0%2Bsha.bc2da4c1c5a0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-shintamainjp/library/SG12864A/0.0.0%2Bsha.bc2da4c1c5a0/SG12864A-0.0.0%2Bsha.bc2da4c1c5a0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-shintamainjp/library/SerialGPS/0.0.0+sha.a5b887e09aa4/SerialGPS-0.0.0+sha.a5b887e09aa4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialGPS-0.0.0+sha.a5b887e09aa4.tar.gz",
+    "size_bytes": 4831,
+    "sha256": "8be3a685c278d8e1b2f3e8a12780ed7ac8b4ef3d235f7644eb89017987c2b115",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-shintamainjp/library/SerialGPS/0.0.0%2Bsha.a5b887e09aa4/SerialGPS-0.0.0%2Bsha.a5b887e09aa4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-shintamainjp/library/SerialGPS/0.0.0%2Bsha.a5b887e09aa4/SerialGPS-0.0.0%2Bsha.a5b887e09aa4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-shintamainjp/library/StarBoardOrangePinNames/0.0.0+sha.a88ef72e11cc/StarBoardOrangePinNames-0.0.0+sha.a88ef72e11cc.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StarBoardOrangePinNames-0.0.0+sha.a88ef72e11cc.tar.gz",
+    "size_bytes": 940,
+    "sha256": "3c78e62b7bce9760bc6a8b05f3a9fecb29205734cbb3d8b6bde3181f01e53476",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-shintamainjp/library/StarBoardOrangePinNames/0.0.0%2Bsha.a88ef72e11cc/StarBoardOrangePinNames-0.0.0%2Bsha.a88ef72e11cc.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-shintamainjp/library/StarBoardOrangePinNames/0.0.0%2Bsha.a88ef72e11cc/StarBoardOrangePinNames-0.0.0%2Bsha.a88ef72e11cc.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-shintamainjp/library/SuperTweet/0.0.0+sha.d463d3fc4f81/SuperTweet-0.0.0+sha.d463d3fc4f81.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperTweet-0.0.0+sha.d463d3fc4f81.tar.gz",
+    "size_bytes": 2157,
+    "sha256": "1846819698ef995dd70cad092ffdacc45763163c0ea237dd1decf27cfe490611",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-shintamainjp/library/SuperTweet/0.0.0%2Bsha.d463d3fc4f81/SuperTweet-0.0.0%2Bsha.d463d3fc4f81.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-shintamainjp/library/SuperTweet/0.0.0%2Bsha.d463d3fc4f81/SuperTweet-0.0.0%2Bsha.d463d3fc4f81.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-shintamainjp/library/TextLCD_SR4/0.0.0+sha.e768257aba09/TextLCD_SR4-0.0.0+sha.e768257aba09.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TextLCD_SR4-0.0.0+sha.e768257aba09.tar.gz",
+    "size_bytes": 3264,
+    "sha256": "3594b057fd66a4eeed5bf37e693233fb4a086afa438850efc11ba06a08fcd39d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-shintamainjp/library/TextLCD_SR4/0.0.0%2Bsha.e768257aba09/TextLCD_SR4-0.0.0%2Bsha.e768257aba09.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-shintamainjp/library/TextLCD_SR4/0.0.0%2Bsha.e768257aba09/TextLCD_SR4-0.0.0%2Bsha.e768257aba09.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-shintamainjp/library/ThermistorPack/0.0.0+sha.4f84f03b1703/ThermistorPack-0.0.0+sha.4f84f03b1703.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ThermistorPack-0.0.0+sha.4f84f03b1703.tar.gz",
+    "size_bytes": 1924,
+    "sha256": "f455ad2eff719b7adf1672220ed12e7103c84ffc05c15106bed936765aabc033",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-shintamainjp/library/ThermistorPack/0.0.0%2Bsha.4f84f03b1703/ThermistorPack-0.0.0%2Bsha.4f84f03b1703.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-shintamainjp/library/ThermistorPack/0.0.0%2Bsha.4f84f03b1703/ThermistorPack-0.0.0%2Bsha.4f84f03b1703.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-shintamainjp/library/TouchSense/0.0.0+sha.08658b9787d8/TouchSense-0.0.0+sha.08658b9787d8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TouchSense-0.0.0+sha.08658b9787d8.tar.gz",
+    "size_bytes": 1809,
+    "sha256": "0aacfe6c0b9dae2cc2e6a080926850200960944156b02e2e82fe526e4ed67ea4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-shintamainjp/library/TouchSense/0.0.0%2Bsha.08658b9787d8/TouchSense-0.0.0%2Bsha.08658b9787d8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-shintamainjp/library/TouchSense/0.0.0%2Bsha.08658b9787d8/TouchSense-0.0.0%2Bsha.08658b9787d8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-shintamainjp/library/wavfile/0.0.0+sha.c853ba46d0b9/wavfile-0.0.0+sha.c853ba46d0b9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "wavfile-0.0.0+sha.c853ba46d0b9.tar.gz",
+    "size_bytes": 7034,
+    "sha256": "eb8c18fa598cde4e5c94b732e6fe22c3fac4dade3b64f0ce48b0206a77a0dbb4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-shintamainjp/library/wavfile/0.0.0%2Bsha.c853ba46d0b9/wavfile-0.0.0%2Bsha.c853ba46d0b9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-shintamainjp/library/wavfile/0.0.0%2Bsha.c853ba46d0b9/wavfile-0.0.0%2Bsha.c853ba46d0b9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

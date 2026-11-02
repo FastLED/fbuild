@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-nut",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-nut/library/Goldelox_SerialLCD/0.0.0+sha.6987c004e123/Goldelox_SerialLCD-0.0.0+sha.6987c004e123.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Goldelox_SerialLCD-0.0.0+sha.6987c004e123.tar.gz",
+    "size_bytes": 13032,
+    "sha256": "7226ee5711b1d5cd5a96e1b8e7fceccb269fc0c6c34577d4ccd4db84f4cbf71d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nut/library/Goldelox_SerialLCD/0.0.0%2Bsha.6987c004e123/Goldelox_SerialLCD-0.0.0%2Bsha.6987c004e123.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nut/library/Goldelox_SerialLCD/0.0.0%2Bsha.6987c004e123/Goldelox_SerialLCD-0.0.0%2Bsha.6987c004e123.tar.gz"
+    ]
+   }
+  }
+ ]
+}

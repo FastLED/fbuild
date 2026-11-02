@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lmtreser",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lmtreser/library/Robotec/1.0.1/Robotec-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Robotec-1.0.1.tar.gz",
+    "size_bytes": 104029,
+    "sha256": "93e5d6353ef25b7819d5c1b75f67c9e2fc33feb5121e2b72c64af56d29c1d6c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lmtreser/library/Robotec/1.0.1/Robotec-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lmtreser/library/Robotec/1.0.1/Robotec-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

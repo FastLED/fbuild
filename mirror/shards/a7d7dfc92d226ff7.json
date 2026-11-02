@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/chinmaynagar",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "chinmaynagar/library/ESPToon/1.0.0/ESPToon-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPToon-1.0.0.tar.gz",
+    "size_bytes": 21593,
+    "sha256": "f92f86a3b823873425d3ea32fc27bc7b7042bd4a584752378fbdc33d50575613",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chinmaynagar/library/ESPToon/1.0.0/ESPToon-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chinmaynagar/library/ESPToon/1.0.0/ESPToon-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chinmaynagar/library/ESPToon/1.0.4/ESPToon-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPToon-1.0.4.tar.gz",
+    "size_bytes": 23554,
+    "sha256": "bb562ae8acf17b8c56c966515f9eb4e787dd28cc31e331ab365e9788ff0aafbf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chinmaynagar/library/ESPToon/1.0.4/ESPToon-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/chinmaynagar/library/ESPToon/1.0.4/ESPToon-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

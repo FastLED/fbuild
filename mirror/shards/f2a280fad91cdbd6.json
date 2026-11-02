@@ -1,0 +1,126 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gvp-257",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gvp-257/library/AVRactivePower/0.5.0/AVRactivePower-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AVRactivePower-0.5.0.tar.gz",
+    "size_bytes": 7892,
+    "sha256": "83720510466c8e2e71298d1df9e65f3620d494af3eebc5e0af70f7b439d3a770",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gvp-257/library/AVRactivePower/0.5.0/AVRactivePower-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gvp-257/library/AVRactivePower/0.5.0/AVRactivePower-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gvp-257/library/AVRactivePower/0.5.1/AVRactivePower-0.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AVRactivePower-0.5.1.tar.gz",
+    "size_bytes": 8567,
+    "sha256": "dd078f316ac6d062a6336665864067a0c1875b2df26ad776a9af96d9e2782596",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gvp-257/library/AVRactivePower/0.5.1/AVRactivePower-0.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gvp-257/library/AVRactivePower/0.5.1/AVRactivePower-0.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gvp-257/library/AnalogControlPanel/0.6.0/AnalogControlPanel-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AnalogControlPanel-0.6.0.tar.gz",
+    "size_bytes": 27183,
+    "sha256": "c34347f13e9974de5224c5ba624588ee424ee1682734af6ab0824d0af754f6ea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gvp-257/library/AnalogControlPanel/0.6.0/AnalogControlPanel-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gvp-257/library/AnalogControlPanel/0.6.0/AnalogControlPanel-0.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gvp-257/library/AnalogControlPanel/0.6.1/AnalogControlPanel-0.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AnalogControlPanel-0.6.1.tar.gz",
+    "size_bytes": 29249,
+    "sha256": "3a1d7f3a37e329cdea31d1707e30651745f5ed2a7725f0a9635f450813fe02ec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gvp-257/library/AnalogControlPanel/0.6.1/AnalogControlPanel-0.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gvp-257/library/AnalogControlPanel/0.6.1/AnalogControlPanel-0.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gvp-257/library/AnalogControlPanel/0.6.2/AnalogControlPanel-0.6.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AnalogControlPanel-0.6.2.tar.gz",
+    "size_bytes": 29938,
+    "sha256": "77cd0ebd855a2b3cd252a6b76ad58dc26fefb22963283466953108d54934c8b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gvp-257/library/AnalogControlPanel/0.6.2/AnalogControlPanel-0.6.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gvp-257/library/AnalogControlPanel/0.6.2/AnalogControlPanel-0.6.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gvp-257/library/AnalogControlPanel/0.6.4/AnalogControlPanel-0.6.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AnalogControlPanel-0.6.4.tar.gz",
+    "size_bytes": 31289,
+    "sha256": "acd6510830ae6e7e131c83a63d6bd6bf0ab49c61955bd297d30f0f89cb012639",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gvp-257/library/AnalogControlPanel/0.6.4/AnalogControlPanel-0.6.4.tar.gz",
+     "https://dl.registry.platformio.org/download/gvp-257/library/AnalogControlPanel/0.6.4/AnalogControlPanel-0.6.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gvp-257/library/DietSerial/1.0.1/DietSerial-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DietSerial-1.0.1.tar.gz",
+    "size_bytes": 24286,
+    "sha256": "7e9f9779bf52a7ea1bec48f35273f1c6607f2cb19e38c8e2c985a84289a07114",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gvp-257/library/DietSerial/1.0.1/DietSerial-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gvp-257/library/DietSerial/1.0.1/DietSerial-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gvp-257/library/SendOnlySerial/1.0.4/SendOnlySerial-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SendOnlySerial-1.0.4.tar.gz",
+    "size_bytes": 12211,
+    "sha256": "9ff178165e9928bb760508be75a86997455cd5ee48ca42a74191925bee437070",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gvp-257/library/SendOnlySerial/1.0.4/SendOnlySerial-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/gvp-257/library/SendOnlySerial/1.0.4/SendOnlySerial-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gvp-257/library/SendOnlySerial/1.0.5/SendOnlySerial-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SendOnlySerial-1.0.5.tar.gz",
+    "size_bytes": 12458,
+    "sha256": "6acce45f2e85450c6c320b9fcc17c2b98e37c46d12ae398c531fe33ba6a3c377",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gvp-257/library/SendOnlySerial/1.0.5/SendOnlySerial-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/gvp-257/library/SendOnlySerial/1.0.5/SendOnlySerial-1.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

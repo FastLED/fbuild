@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lperez31",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lperez31/library/YouMadeIt/1.0.1/YouMadeIt-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YouMadeIt-1.0.1.tar.gz",
+    "size_bytes": 8346,
+    "sha256": "8956157775a2a2417916e587065cf40d47405708fb2952bc4d8d713390f46cbc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lperez31/library/YouMadeIt/1.0.1/YouMadeIt-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lperez31/library/YouMadeIt/1.0.1/YouMadeIt-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

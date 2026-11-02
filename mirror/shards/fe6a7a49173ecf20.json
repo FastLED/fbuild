@@ -1,0 +1,126 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/signalk",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "signalk/library/SensESP/2.7.2/SensESP-2.7.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensESP-2.7.2.tar.gz",
+    "size_bytes": 1073293,
+    "sha256": "8e5f8f5db08b090be709d761fdb8c78adcf2e4424af381da08db0767941f59fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/signalk/library/SensESP/2.7.2/SensESP-2.7.2.tar.gz",
+     "https://dl.registry.platformio.org/download/signalk/library/SensESP/2.7.2/SensESP-2.7.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "signalk/library/SensESP/3.1.1/SensESP-3.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensESP-3.1.1.tar.gz",
+    "size_bytes": 1352207,
+    "sha256": "baee9edcf6087fe6e57cd641e65192fbf1992324feb4707f093699d49fadb084",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/signalk/library/SensESP/3.1.1/SensESP-3.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/signalk/library/SensESP/3.1.1/SensESP-3.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "signalk/library/SensESP/3.2.0/SensESP-3.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensESP-3.2.0.tar.gz",
+    "size_bytes": 1356039,
+    "sha256": "99c9c732e35e42ed184b91dfe3b537e6e4e84fe00273572f87ad30ee04794d9b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/signalk/library/SensESP/3.2.0/SensESP-3.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/signalk/library/SensESP/3.2.0/SensESP-3.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "signalk/library/SensESP/3.2.1/SensESP-3.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensESP-3.2.1.tar.gz",
+    "size_bytes": 1358977,
+    "sha256": "360c635fae28d7752b7e0152c63ea684d93748571bbefd370b8b81ed58df15f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/signalk/library/SensESP/3.2.1/SensESP-3.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/signalk/library/SensESP/3.2.1/SensESP-3.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "signalk/library/SensESP/3.2.2/SensESP-3.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensESP-3.2.2.tar.gz",
+    "size_bytes": 1359006,
+    "sha256": "d8bbf6c964dfc413bbe8d686f1ec74a93236996b64f714fec820befb1c4b1809",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/signalk/library/SensESP/3.2.2/SensESP-3.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/signalk/library/SensESP/3.2.2/SensESP-3.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "signalk/library/SensESP/3.3.0/SensESP-3.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensESP-3.3.0.tar.gz",
+    "size_bytes": 1367321,
+    "sha256": "e3a18e01062278d3967f1d661e42eafcd3b5e4a93b3aa66793dd9e4b3fbfe1db",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/signalk/library/SensESP/3.3.0/SensESP-3.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/signalk/library/SensESP/3.3.0/SensESP-3.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "signalk/library/SensESP/3.4.0/SensESP-3.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensESP-3.4.0.tar.gz",
+    "size_bytes": 6126693,
+    "sha256": "55f19ec16270c9a6e8e3673d963dc33e76fc9e06f46ee1156d94190ecf05d297",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/signalk/library/SensESP/3.4.0/SensESP-3.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/signalk/library/SensESP/3.4.0/SensESP-3.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "signalk/library/SensESP/3.5.0/SensESP-3.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensESP-3.5.0.tar.gz",
+    "size_bytes": 6161759,
+    "sha256": "1fa2d0ab3587acfe8982752a853e051a17899cab9b8df7aee2374dab0f5a835e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/signalk/library/SensESP/3.5.0/SensESP-3.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/signalk/library/SensESP/3.5.0/SensESP-3.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "signalk/library/SensESP/3.6.0/SensESP-3.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensESP-3.6.0.tar.gz",
+    "size_bytes": 6171213,
+    "sha256": "460abb13ffb3f9585e1063a2036ab0bebcf5036e132c63bd811f73142af1b818",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/signalk/library/SensESP/3.6.0/SensESP-3.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/signalk/library/SensESP/3.6.0/SensESP-3.6.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

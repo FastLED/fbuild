@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/iot-gamer",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "iot-gamer/library/pico-ble-notify/1.0.1/pico-ble-notify-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pico-ble-notify-1.0.1.tar.gz",
+    "size_bytes": 190209,
+    "sha256": "e56c9c58e8e51692164416b5a6376c5d889164ff40cac4053075e7ea719e5f54",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iot-gamer/library/pico-ble-notify/1.0.1/pico-ble-notify-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/iot-gamer/library/pico-ble-notify/1.0.1/pico-ble-notify-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "iot-gamer/library/pico-ble-secure/1.2.0/pico-ble-secure-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pico-ble-secure-1.2.0.tar.gz",
+    "size_bytes": 188377,
+    "sha256": "1134f96b4f782d09e73fc6ce8a4d8c854f2b1d765bd230754cac1a2599f8b1d2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iot-gamer/library/pico-ble-secure/1.2.0/pico-ble-secure-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/iot-gamer/library/pico-ble-secure/1.2.0/pico-ble-secure-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "iot-gamer/library/pico-elliptic-curve/1.0.0/pico-elliptic-curve-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pico-elliptic-curve-1.0.0.tar.gz",
+    "size_bytes": 15105,
+    "sha256": "7e9c3e62c70a2082df8f5015807565bdb57188167baf7f24515995a506a124e5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iot-gamer/library/pico-elliptic-curve/1.0.0/pico-elliptic-curve-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/iot-gamer/library/pico-elliptic-curve/1.0.0/pico-elliptic-curve-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "iot-gamer/library/pico-rsa/1.0.0/pico-rsa-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pico-rsa-1.0.0.tar.gz",
+    "size_bytes": 10186,
+    "sha256": "6c6f7b97dd5a06701e371b62b6990efb886d304b217713e79f9ac2a406e61da9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iot-gamer/library/pico-rsa/1.0.0/pico-rsa-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/iot-gamer/library/pico-rsa/1.0.0/pico-rsa-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "iot-gamer/library/pico-wifi-provisioning/1.0.0/pico-wifi-provisioning-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pico-wifi-provisioning-1.0.0.tar.gz",
+    "size_bytes": 15395,
+    "sha256": "353cd120464ca394a0840d20dd97dcdeed2f395ab2955e9339e6652969414c7f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iot-gamer/library/pico-wifi-provisioning/1.0.0/pico-wifi-provisioning-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/iot-gamer/library/pico-wifi-provisioning/1.0.0/pico-wifi-provisioning-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

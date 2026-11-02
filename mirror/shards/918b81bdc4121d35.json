@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/davidegironi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "davidegironi/library/MicroProto/0.0.4/MicroProto-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MicroProto-0.0.4.tar.gz",
+    "size_bytes": 18755,
+    "sha256": "6fc115f1b8b7e7b4f06ab2293c1f5f8b26c7df9db31080fce23eed9f6c86a175",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/davidegironi/library/MicroProto/0.0.4/MicroProto-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/davidegironi/library/MicroProto/0.0.4/MicroProto-0.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

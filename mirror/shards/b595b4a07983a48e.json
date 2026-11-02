@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/swesteme",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "swesteme/library/Simple%20Homie%20IOT%20wrapper/0.0.1/SimpleHomieIOTwrapper-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleHomieIOTwrapper-0.0.1.tar.gz",
+    "size_bytes": 3635,
+    "sha256": "d6da0d555cce101b33af6990c543082a8c661513cc6d88d22a0e93ec6ef51bc7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/swesteme/library/Simple%2520Homie%2520IOT%2520wrapper/0.0.1/SimpleHomieIOTwrapper-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/swesteme/library/Simple%20Homie%20IOT%20wrapper/0.0.1/SimpleHomieIOTwrapper-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "swesteme/library/simple-homie-iot-capacitivebutton/0.0.1/simple-homie-iot-capacitivebutton-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "simple-homie-iot-capacitivebutton-0.0.1.tar.gz",
+    "size_bytes": 2185,
+    "sha256": "4c01eef8875fb8f9aa60a0ad1a4ebf35f60f78c1acf6e2f8da28b4b1e9550c2f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/swesteme/library/simple-homie-iot-capacitivebutton/0.0.1/simple-homie-iot-capacitivebutton-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/swesteme/library/simple-homie-iot-capacitivebutton/0.0.1/simple-homie-iot-capacitivebutton-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "swesteme/library/simple-homie-iot-ir/0.0.1/simple-homie-iot-ir-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "simple-homie-iot-ir-0.0.1.tar.gz",
+    "size_bytes": 2554,
+    "sha256": "88d9a7e869e584655cb1dc02b5809aca6a2d9d10cbe44036c9e5252910980914",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/swesteme/library/simple-homie-iot-ir/0.0.1/simple-homie-iot-ir-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/swesteme/library/simple-homie-iot-ir/0.0.1/simple-homie-iot-ir-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "swesteme/library/simple-homie-iot-rc433/0.0.2/simple-homie-iot-rc433-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "simple-homie-iot-rc433-0.0.2.tar.gz",
+    "size_bytes": 2688,
+    "sha256": "ba744cb057e7d123bd2469b6e6982aa1b057fefcfb04ace3e4435b3c58b49dd2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/swesteme/library/simple-homie-iot-rc433/0.0.2/simple-homie-iot-rc433-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/swesteme/library/simple-homie-iot-rc433/0.0.2/simple-homie-iot-rc433-0.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/beaniebob",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "beaniebob/library/GY26Compass/0.5.0/GY26Compass-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GY26Compass-0.5.0.tar.gz",
+    "size_bytes": 9275,
+    "sha256": "9c51bfeecd6dca8c263771c9445ce61ad544ebc88ae4a0a311e5b9572948cbf1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beaniebob/library/GY26Compass/0.5.0/GY26Compass-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/beaniebob/library/GY26Compass/0.5.0/GY26Compass-0.5.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

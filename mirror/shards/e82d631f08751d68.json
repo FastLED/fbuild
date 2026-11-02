@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lekpcsteam",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lekpcsteam/library/ESP32-OTA-Client/1.0.0/ESP32-OTA-Client-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-OTA-Client-1.0.0.tar.gz",
+    "size_bytes": 6228,
+    "sha256": "b0a8436fd64e162785b042094a7123ab27e067a57a18680656c7f906d3a777f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lekpcsteam/library/ESP32-OTA-Client/1.0.0/ESP32-OTA-Client-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lekpcsteam/library/ESP32-OTA-Client/1.0.0/ESP32-OTA-Client-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lekpcsteam/library/ESP32-OTA-Client/1.0.2/ESP32-OTA-Client-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-OTA-Client-1.0.2.tar.gz",
+    "size_bytes": 9478,
+    "sha256": "0dee2458603ae3c35e35d0bdeee20d58a4ec1e1fdc2eee70984819c824c8d1ca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lekpcsteam/library/ESP32-OTA-Client/1.0.2/ESP32-OTA-Client-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lekpcsteam/library/ESP32-OTA-Client/1.0.2/ESP32-OTA-Client-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lekpcsteam/library/ESP32-OTA-Client/1.0.3/ESP32-OTA-Client-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-OTA-Client-1.0.3.tar.gz",
+    "size_bytes": 10665,
+    "sha256": "79f4e4aad392f347118f6e36c5096943488ce65f109b9ee91aab9f3fda371b58",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lekpcsteam/library/ESP32-OTA-Client/1.0.3/ESP32-OTA-Client-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/lekpcsteam/library/ESP32-OTA-Client/1.0.3/ESP32-OTA-Client-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lekpcsteam/library/ESP32-OTA-Client/1.1.0/ESP32-OTA-Client-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-OTA-Client-1.1.0.tar.gz",
+    "size_bytes": 15809,
+    "sha256": "8c972208f096dae964fb9901c08238cd5514145cdf1e823284690d981dc20541",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lekpcsteam/library/ESP32-OTA-Client/1.1.0/ESP32-OTA-Client-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lekpcsteam/library/ESP32-OTA-Client/1.1.0/ESP32-OTA-Client-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lekpcsteam/library/ESP32-OTA-Client/1.2.0/ESP32-OTA-Client-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-OTA-Client-1.2.0.tar.gz",
+    "size_bytes": 33988,
+    "sha256": "9b7ee61b93f5e48e66d397f598d1bee295cfb246d47346cd9548cd0204ae71fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lekpcsteam/library/ESP32-OTA-Client/1.2.0/ESP32-OTA-Client-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lekpcsteam/library/ESP32-OTA-Client/1.2.0/ESP32-OTA-Client-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lekpcsteam/library/SmartFont/1.0.0/SmartFont-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartFont-1.0.0.tar.gz",
+    "size_bytes": 52705,
+    "sha256": "79f04da31be9690214715fa6dd9be9e3e598d611bffe54c0922c68e1d830708d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lekpcsteam/library/SmartFont/1.0.0/SmartFont-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lekpcsteam/library/SmartFont/1.0.0/SmartFont-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

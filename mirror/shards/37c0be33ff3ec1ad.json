@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/penguin-lab",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "penguin-lab/library/PenguinLib/1.0.0/PenguinLib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PenguinLib-1.0.0.tar.gz",
+    "size_bytes": 12890,
+    "sha256": "f3a73e1b8cdc0974c51424fca93b9ddd6cd06472296abe4276c889656237be15",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/penguin-lab/library/PenguinLib/1.0.0/PenguinLib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/penguin-lab/library/PenguinLib/1.0.0/PenguinLib-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

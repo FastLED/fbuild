@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-charlesmaxim",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-charlesmaxim/library/max32630fthr/0.0.0+sha.346783d1f8e1/max32630fthr-0.0.0+sha.346783d1f8e1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "max32630fthr-0.0.0+sha.346783d1f8e1.tar.gz",
+    "size_bytes": 3362,
+    "sha256": "7beefd63a78f83cf4d1183796c73278de73a6dfa1e59556cf8e9f8230ae44d7c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-charlesmaxim/library/max32630fthr/0.0.0%2Bsha.346783d1f8e1/max32630fthr-0.0.0%2Bsha.346783d1f8e1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-charlesmaxim/library/max32630fthr/0.0.0%2Bsha.346783d1f8e1/max32630fthr-0.0.0%2Bsha.346783d1f8e1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

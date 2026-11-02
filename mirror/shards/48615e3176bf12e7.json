@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-keithm01",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-keithm01/library/Hexidraw/0.0.0+sha.00876457cad4/Hexidraw-0.0.0+sha.00876457cad4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Hexidraw-0.0.0+sha.00876457cad4.tar.gz",
+    "size_bytes": 4433,
+    "sha256": "517cb2d3ec6bcc0cc145c08f220c8a9b63ace3f1d7b9567a93e2b39f25154629",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-keithm01/library/Hexidraw/0.0.0%2Bsha.00876457cad4/Hexidraw-0.0.0%2Bsha.00876457cad4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-keithm01/library/Hexidraw/0.0.0%2Bsha.00876457cad4/Hexidraw-0.0.0%2Bsha.00876457cad4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

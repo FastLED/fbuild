@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/devilsray",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "devilsray/library/Esp8266Configuration/0.1.4/Esp8266Configuration-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Esp8266Configuration-0.1.4.tar.gz",
+    "size_bytes": 9283,
+    "sha256": "9abb0b04e3d9c374d2ab973c56c36cee97d712a0147264d5967ed84a84083cbd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/devilsray/library/Esp8266Configuration/0.1.4/Esp8266Configuration-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/devilsray/library/Esp8266Configuration/0.1.4/Esp8266Configuration-0.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "devilsray/library/Fader/1.0.1/Fader-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Fader-1.0.1.tar.gz",
+    "size_bytes": 2067,
+    "sha256": "bc37a39d37b3c28b53b84335dc8d8e320bfb6a123679cf69e0c64b372a25c33f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/devilsray/library/Fader/1.0.1/Fader-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/devilsray/library/Fader/1.0.1/Fader-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "devilsray/library/MqttTopicHelper/0.0.2/MqttTopicHelper-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MqttTopicHelper-0.0.2.tar.gz",
+    "size_bytes": 1705,
+    "sha256": "ad8fa04a528f2719b9dcac8178aef9f8430de096ed8f4f0184eaea0cb1ebadf9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/devilsray/library/MqttTopicHelper/0.0.2/MqttTopicHelper-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/devilsray/library/MqttTopicHelper/0.0.2/MqttTopicHelper-0.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

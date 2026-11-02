@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/casiez",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "casiez/library/1euroFilter/1.0.0/1euroFilter-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "1euroFilter-1.0.0.tar.gz",
+    "size_bytes": 14087,
+    "sha256": "a3b7c71b56b5669eaa6617d25a3382d8cecb7d70e8b35fb0a90cb1a37094b8b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/casiez/library/1euroFilter/1.0.0/1euroFilter-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/casiez/library/1euroFilter/1.0.0/1euroFilter-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mauriciob16b",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mauriciob16b/library/asyncSerial/1.0.0/asyncSerial-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "asyncSerial-1.0.0.tar.gz",
+    "size_bytes": 1232,
+    "sha256": "5ba8a8d5fa1687ac11d1159d99844611a9551f2665cfefa0a95a866b059eddc6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mauriciob16b/library/asyncSerial/1.0.0/asyncSerial-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mauriciob16b/library/asyncSerial/1.0.0/asyncSerial-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

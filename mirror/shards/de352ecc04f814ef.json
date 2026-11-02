@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/facchinm",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "facchinm/library/Arduino_USBHostMbed5/0.3.1/Arduino_USBHostMbed5-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_USBHostMbed5-0.3.1.tar.gz",
+    "size_bytes": 58557,
+    "sha256": "a7060994f3515615eecdea57b85e19d27ead97a799c8459341068be87029ee3a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/facchinm/library/Arduino_USBHostMbed5/0.3.1/Arduino_USBHostMbed5-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/facchinm/library/Arduino_USBHostMbed5/0.3.1/Arduino_USBHostMbed5-0.3.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nyampass",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nyampass/library/ArduinoESPAT/1.0.2/ArduinoESPAT-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoESPAT-1.0.2.tar.gz",
+    "size_bytes": 4204,
+    "sha256": "da8e34f0b86532de7296287d66b2ad0aada81163a4a3b4121d99ba77cc792c79",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nyampass/library/ArduinoESPAT/1.0.2/ArduinoESPAT-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nyampass/library/ArduinoESPAT/1.0.2/ArduinoESPAT-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nyampass/library/HaLake-M5Stack-Library/1.0/HaLake-M5Stack-Library-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HaLake-M5Stack-Library-1.0.tar.gz",
+    "size_bytes": 4819,
+    "sha256": "2f8ea225c68482d0575c63cddf5a47daf7526d5e38179f976cc6eda4abe641a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nyampass/library/HaLake-M5Stack-Library/1.0/HaLake-M5Stack-Library-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nyampass/library/HaLake-M5Stack-Library/1.0/HaLake-M5Stack-Library-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nyampass/library/HaLakeKit/1.0.6/HaLakeKit-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HaLakeKit-1.0.6.tar.gz",
+    "size_bytes": 4468,
+    "sha256": "f192fa879beb610b59713e52d0921aac0ebe797abe647a56a45898ccb512d952",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nyampass/library/HaLakeKit/1.0.6/HaLakeKit-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/nyampass/library/HaLakeKit/1.0.6/HaLakeKit-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nyampass/library/HaLakeKitFirst/1.0.1/HaLakeKitFirst-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HaLakeKitFirst-1.0.1.tar.gz",
+    "size_bytes": 4563,
+    "sha256": "01bededd20c1c2fa5bce059a134957f2523ab7c862792e6ef28bb90f3ba8b4dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nyampass/library/HaLakeKitFirst/1.0.1/HaLakeKitFirst-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nyampass/library/HaLakeKitFirst/1.0.1/HaLakeKitFirst-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

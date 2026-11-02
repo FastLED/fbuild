@@ -1,0 +1,139 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ekoeppen",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ekoeppen/library/accept/0.5.1/accept-0.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "accept-0.5.1.tar.gz",
+    "size_bytes": 4598,
+    "sha256": "ac83e75591ddd76ce8641c60b7b4fea45101015fcc52cf5edeb3c4c0a9d858e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ekoeppen/library/accept/0.5.1/accept-0.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ekoeppen/library/accept/0.5.1/accept-0.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ekoeppen/library/accept/0.5.2/accept-0.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "accept-0.5.2.tar.gz",
+    "size_bytes": 4569,
+    "sha256": "25011614375ca18d9cd0bad45b82429c2aba2b2f49f8376b454f546f0c47f227",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ekoeppen/library/accept/0.5.2/accept-0.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ekoeppen/library/accept/0.5.2/accept-0.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ekoeppen/library/cmder/0.3.1/cmder-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cmder-0.3.1.tar.gz",
+    "size_bytes": 3108,
+    "sha256": "e15874d41aa32919ec612eb1028e20e4e8ea6fd5e51979a1d7d28599c564ea97",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ekoeppen/library/cmder/0.3.1/cmder-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ekoeppen/library/cmder/0.3.1/cmder-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ekoeppen/library/cmder/0.3.3/cmder-0.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cmder-0.3.3.tar.gz",
+    "size_bytes": 3091,
+    "sha256": "f363ef1b5499fcff8018ebb931505375f696671624091115c96005023cb4f9a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ekoeppen/library/cmder/0.3.3/cmder-0.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/ekoeppen/library/cmder/0.3.3/cmder-0.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ekoeppen/library/menu/0.5.3/menu-0.5.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "menu-0.5.3.tar.gz",
+    "size_bytes": 3521,
+    "sha256": "f1af34ef904fc912d5183bc05ef905e50bf59ebf7a1ecf7b6143755ccffc8f25",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ekoeppen/library/menu/0.5.3/menu-0.5.3.tar.gz",
+     "https://dl.registry.platformio.org/download/ekoeppen/library/menu/0.5.3/menu-0.5.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ekoeppen/library/menu/0.5.4/menu-0.5.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "menu-0.5.4.tar.gz",
+    "size_bytes": 3907,
+    "sha256": "29d85d5aa2492ec2084caf481cd3ce14d949cddd456057b0119480eba812c6e0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ekoeppen/library/menu/0.5.4/menu-0.5.4.tar.gz",
+     "https://dl.registry.platformio.org/download/ekoeppen/library/menu/0.5.4/menu-0.5.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ekoeppen/library/printer/0.1.4/printer-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "printer-0.1.4.tar.gz",
+    "size_bytes": 2664,
+    "sha256": "0c73a7b3765b39922c86ca6af737d778e695d59d5d165fd237f7c7763c96c03b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ekoeppen/library/printer/0.1.4/printer-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/ekoeppen/library/printer/0.1.4/printer-0.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ekoeppen/library/printer/0.1.6/printer-0.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "printer-0.1.6.tar.gz",
+    "size_bytes": 2997,
+    "sha256": "98fbfe2ea07c9a422598c4848ed385b437180c93ba2743846634ec1ef421ede6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ekoeppen/library/printer/0.1.6/printer-0.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/ekoeppen/library/printer/0.1.6/printer-0.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ekoeppen/library/simple-fsm/0.2.2/simple-fsm-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "simple-fsm-0.2.2.tar.gz",
+    "size_bytes": 3999,
+    "sha256": "d5cfde57f9b60b477eaa0d484264d86fb1eb8a35e52cea10a3d53cc33afe9e20",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ekoeppen/library/simple-fsm/0.2.2/simple-fsm-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ekoeppen/library/simple-fsm/0.2.2/simple-fsm-0.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ekoeppen/library/simple-fsm/0.2.3/simple-fsm-0.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "simple-fsm-0.2.3.tar.gz",
+    "size_bytes": 3908,
+    "sha256": "3e60f2281626a968fcf3c57019cfb2a114a09b3c0e319c3c50401eafa385f5c4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ekoeppen/library/simple-fsm/0.2.3/simple-fsm-0.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/ekoeppen/library/simple-fsm/0.2.3/simple-fsm-0.2.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

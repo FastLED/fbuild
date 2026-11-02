@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gordonrudman",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gordonrudman/library/ExampleLibrary/0.0.2/ExampleLibrary-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ExampleLibrary-0.0.2.tar.gz",
+    "size_bytes": 2320,
+    "sha256": "9fa10a1aaf25ca7223691eb1ed1bf98a9874b5eaa1b171bf41ce64e2f07dcab5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gordonrudman/library/ExampleLibrary/0.0.2/ExampleLibrary-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gordonrudman/library/ExampleLibrary/0.0.2/ExampleLibrary-0.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

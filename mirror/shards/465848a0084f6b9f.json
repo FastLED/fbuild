@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/blynkgo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "blynkgo/library/BeeNeXT/3.1.13/BeeNeXT-3.1.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BeeNeXT-3.1.13.tar.gz",
+    "size_bytes": 50717,
+    "sha256": "0de92d32d0e868b75c0d6aa683b1edb4ac22f9443aca3962d81043ed01ceabd8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blynkgo/library/BeeNeXT/3.1.13/BeeNeXT-3.1.13.tar.gz",
+     "https://dl.registry.platformio.org/download/blynkgo/library/BeeNeXT/3.1.13/BeeNeXT-3.1.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "blynkgo/library/BeeNeXT/3.1.14/BeeNeXT-3.1.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BeeNeXT-3.1.14.tar.gz",
+    "size_bytes": 50793,
+    "sha256": "80b52b4d966f7f0e3418f4b4dd99167413cf95a2b722ac33774750dc73d28175",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blynkgo/library/BeeNeXT/3.1.14/BeeNeXT-3.1.14.tar.gz",
+     "https://dl.registry.platformio.org/download/blynkgo/library/BeeNeXT/3.1.14/BeeNeXT-3.1.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "blynkgo/library/BeeNeXT/3.1.15/BeeNeXT-3.1.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BeeNeXT-3.1.15.tar.gz",
+    "size_bytes": 50966,
+    "sha256": "6b5e9bccfa52edb0012ece92d74872df0b8f50a4dcc83505074b1aecc6e21074",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blynkgo/library/BeeNeXT/3.1.15/BeeNeXT-3.1.15.tar.gz",
+     "https://dl.registry.platformio.org/download/blynkgo/library/BeeNeXT/3.1.15/BeeNeXT-3.1.15.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "blynkgo/library/BeeNeXT/3.1.16/BeeNeXT-3.1.16.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BeeNeXT-3.1.16.tar.gz",
+    "size_bytes": 52725,
+    "sha256": "f68f697b74b9cb7a993fa8b887416b9b0cb646cc20526b9d49dec7c745846301",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blynkgo/library/BeeNeXT/3.1.16/BeeNeXT-3.1.16.tar.gz",
+     "https://dl.registry.platformio.org/download/blynkgo/library/BeeNeXT/3.1.16/BeeNeXT-3.1.16.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "blynkgo/library/BlynkGO_Buzzer/1.0.0/BlynkGO_Buzzer-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BlynkGO_Buzzer-1.0.0.tar.gz",
+    "size_bytes": 1101074,
+    "sha256": "2b94fb9c568e85db85290dd127ebbf1cd02298b1c992209300ada39c51e65bba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blynkgo/library/BlynkGO_Buzzer/1.0.0/BlynkGO_Buzzer-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/blynkgo/library/BlynkGO_Buzzer/1.0.0/BlynkGO_Buzzer-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "blynkgo/library/BlynkGO_CircularBuffer/1.0.1/BlynkGO_CircularBuffer-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BlynkGO_CircularBuffer-1.0.1.tar.gz",
+    "size_bytes": 2881,
+    "sha256": "3409a7d3ba12113354936402647c77f71eed4c150e6bfbade0ab4e758af26849",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blynkgo/library/BlynkGO_CircularBuffer/1.0.1/BlynkGO_CircularBuffer-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/blynkgo/library/BlynkGO_CircularBuffer/1.0.1/BlynkGO_CircularBuffer-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "blynkgo/library/BlynkGO_ThaiCal/1.0.3/BlynkGO_ThaiCal-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BlynkGO_ThaiCal-1.0.3.tar.gz",
+    "size_bytes": 4819,
+    "sha256": "4b5985688a9ff48608db9b702dbdef147857b5e076d83dc8b3fc115e4033cdf4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blynkgo/library/BlynkGO_ThaiCal/1.0.3/BlynkGO_ThaiCal-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/blynkgo/library/BlynkGO_ThaiCal/1.0.3/BlynkGO_ThaiCal-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "blynkgo/library/BlynkGOv3/3.1.9/BlynkGOv3-3.1.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BlynkGOv3-3.1.9.tar.gz",
+    "size_bytes": 13050283,
+    "sha256": "764237a0d21136b5ddc0fd2321e3a4ba79b603b0ecbac9c92803055493238481",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blynkgo/library/BlynkGOv3/3.1.9/BlynkGOv3-3.1.9.tar.gz",
+     "https://dl.registry.platformio.org/download/blynkgo/library/BlynkGOv3/3.1.9/BlynkGOv3-3.1.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/maffooclock",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "maffooclock/library/DFR_Radar/1.2.0/DFR_Radar-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFR_Radar-1.2.0.tar.gz",
+    "size_bytes": 80442,
+    "sha256": "3f843d2484cabfb21eae53de3c6f3cba8609d5a995b8d4abfdeb2671967d7323",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maffooclock/library/DFR_Radar/1.2.0/DFR_Radar-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/maffooclock/library/DFR_Radar/1.2.0/DFR_Radar-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "maffooclock/library/ESP32RotaryEncoder/1.1.2/ESP32RotaryEncoder-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32RotaryEncoder-1.1.2.tar.gz",
+    "size_bytes": 16075,
+    "sha256": "434f4d700b9dc0f7fd6fe2232e72453a6d57ecd8a8439e5bebc6a05be831d5ba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maffooclock/library/ESP32RotaryEncoder/1.1.2/ESP32RotaryEncoder-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/maffooclock/library/ESP32RotaryEncoder/1.1.2/ESP32RotaryEncoder-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "maffooclock/library/ESP32RotaryEncoder/1.2.0/ESP32RotaryEncoder-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32RotaryEncoder-1.2.0.tar.gz",
+    "size_bytes": 15596,
+    "sha256": "011ca2949144dbb385ddcf69a397afdb000a61b0182d682adb6d5a188ef58a53",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maffooclock/library/ESP32RotaryEncoder/1.2.0/ESP32RotaryEncoder-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/maffooclock/library/ESP32RotaryEncoder/1.2.0/ESP32RotaryEncoder-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jiesou",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jiesou/library/Slint_LovyanGFX/1.0.0/Slint_LovyanGFX-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Slint_LovyanGFX-1.0.0.tar.gz",
+    "size_bytes": 15363,
+    "sha256": "743eff266a6b1b5c2498232191eee36287b54c65899132b13526ad48d86a551e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jiesou/library/Slint_LovyanGFX/1.0.0/Slint_LovyanGFX-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jiesou/library/Slint_LovyanGFX/1.0.0/Slint_LovyanGFX-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

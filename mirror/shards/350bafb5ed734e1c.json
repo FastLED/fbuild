@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-izu2020",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-izu2020/library/PQINA226/0.0.0+sha.7f4ebd11d751/PQINA226-0.0.0+sha.7f4ebd11d751.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PQINA226-0.0.0+sha.7f4ebd11d751.tar.gz",
+    "size_bytes": 1917,
+    "sha256": "7c729c9cf34e54008f2fe22aa8e921dda270912cd70578e89b7503330d23aa8e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-izu2020/library/PQINA226/0.0.0%2Bsha.7f4ebd11d751/PQINA226-0.0.0%2Bsha.7f4ebd11d751.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-izu2020/library/PQINA226/0.0.0%2Bsha.7f4ebd11d751/PQINA226-0.0.0%2Bsha.7f4ebd11d751.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-izu2020/library/PQLPS22HB/0.0.0+sha.b2e1b4e9fdf8/PQLPS22HB-0.0.0+sha.b2e1b4e9fdf8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PQLPS22HB-0.0.0+sha.b2e1b4e9fdf8.tar.gz",
+    "size_bytes": 1780,
+    "sha256": "ae32140c0c1604de8d325dff2fc0abb3cb67c41c728538bfd3d6f318657a3b3a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-izu2020/library/PQLPS22HB/0.0.0%2Bsha.b2e1b4e9fdf8/PQLPS22HB-0.0.0%2Bsha.b2e1b4e9fdf8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-izu2020/library/PQLPS22HB/0.0.0%2Bsha.b2e1b4e9fdf8/PQLPS22HB-0.0.0%2Bsha.b2e1b4e9fdf8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

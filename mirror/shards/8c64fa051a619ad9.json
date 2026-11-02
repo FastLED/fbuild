@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-gottfried",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-gottfried/library/DMX-ST/0.0.0+sha.e5e5eca21b4a/DMX-ST-0.0.0+sha.e5e5eca21b4a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DMX-ST-0.0.0+sha.e5e5eca21b4a.tar.gz",
+    "size_bytes": 2597,
+    "sha256": "77ae7f6e1a526b19654eef5b6669c8456283c1abf4125c0a65bdf6a3b8d713cf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-gottfried/library/DMX-ST/0.0.0%2Bsha.e5e5eca21b4a/DMX-ST-0.0.0%2Bsha.e5e5eca21b4a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-gottfried/library/DMX-ST/0.0.0%2Bsha.e5e5eca21b4a/DMX-ST-0.0.0%2Bsha.e5e5eca21b4a.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lordofrobots",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lordofrobots/library/LoR/0.0.10/LoR-0.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LoR-0.0.10.tar.gz",
+    "size_bytes": 18179,
+    "sha256": "739796f1c4b6847453667f02da398cdbd860b8b29d6634b44e55caf3c29d96c9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordofrobots/library/LoR/0.0.10/LoR-0.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/lordofrobots/library/LoR/0.0.10/LoR-0.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordofrobots/library/LoR_Core_V3/0.0.1/LoR_v3-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LoR_v3-0.0.1.tar.gz",
+    "size_bytes": 13387,
+    "sha256": "fd19c57e4ae4cbafe2392e7e73af8275570079220176a6bd1d4e8c103131d805",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordofrobots/library/LoR_Core_V3/0.0.1/LoR_v3-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lordofrobots/library/LoR_Core_V3/0.0.1/LoR_v3-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordofrobots/library/LoR_Core_V3/0.0.2/LoR_Core_V3-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LoR_Core_V3-0.0.2.tar.gz",
+    "size_bytes": 13648,
+    "sha256": "19c2a59f99264a7fb6ad69d97bf16c2742840094737eed06d40aea254d2696f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordofrobots/library/LoR_Core_V3/0.0.2/LoR_Core_V3-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lordofrobots/library/LoR_Core_V3/0.0.2/LoR_Core_V3-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordofrobots/library/LoR_Core_V3/0.0.3/LoR_Core_V3-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LoR_Core_V3-0.0.3.tar.gz",
+    "size_bytes": 13950,
+    "sha256": "27191faa2c44e7544a1ccb86ff15990c6236ddc7161a8c4bbd1a8c07dd3f678f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordofrobots/library/LoR_Core_V3/0.0.3/LoR_Core_V3-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/lordofrobots/library/LoR_Core_V3/0.0.3/LoR_Core_V3-0.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/toannv17",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "toannv17/library/DHT%20Sensors%20Non-Blocking/1.0.4/DHTSensorsNon-Blocking-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DHTSensorsNon-Blocking-1.0.4.tar.gz",
+    "size_bytes": 26371,
+    "sha256": "4f62cbb63d1a0f24b45f14b3fb12b78477bbe2a215338d4fc08366e9b5b8e8fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/toannv17/library/DHT%2520Sensors%2520Non-Blocking/1.0.4/DHTSensorsNon-Blocking-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/toannv17/library/DHT%20Sensors%20Non-Blocking/1.0.4/DHTSensorsNon-Blocking-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

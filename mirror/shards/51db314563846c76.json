@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-mzcs",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-mzcs/library/Si4703/0.0.0+sha.bc6f2d389038/Si4703-0.0.0+sha.bc6f2d389038.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Si4703-0.0.0+sha.bc6f2d389038.tar.gz",
+    "size_bytes": 5849,
+    "sha256": "91935012cda59692367574db32c5c37da017d7c674f09cc0d8eeb79057f8d8e1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mzcs/library/Si4703/0.0.0%2Bsha.bc6f2d389038/Si4703-0.0.0%2Bsha.bc6f2d389038.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mzcs/library/Si4703/0.0.0%2Bsha.bc6f2d389038/Si4703-0.0.0%2Bsha.bc6f2d389038.tar.gz"
+    ]
+   }
+  }
+ ]
+}

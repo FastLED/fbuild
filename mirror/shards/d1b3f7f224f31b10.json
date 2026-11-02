@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/aschet",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "aschet/library/tinyolfarve/1.0.1/tinyolfarve-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tinyolfarve-1.0.1.tar.gz",
+    "size_bytes": 11287,
+    "sha256": "87505eed158102c75de5dd0ee5ad1ae3bef186fb59441bd0396b4bdd86deb143",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aschet/library/tinyolfarve/1.0.1/tinyolfarve-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/aschet/library/tinyolfarve/1.0.1/tinyolfarve-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aschet/library/tinyolfarve/1.0.2/tinyolfarve-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tinyolfarve-1.0.2.tar.gz",
+    "size_bytes": 11268,
+    "sha256": "47de8e72b88a463cf30dd34f3247f8d70d7b83f2414a40041d6f50ea5dd84944",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aschet/library/tinyolfarve/1.0.2/tinyolfarve-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/aschet/library/tinyolfarve/1.0.2/tinyolfarve-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

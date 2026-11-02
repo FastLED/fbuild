@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mjbeltran13",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mjbeltran13/library/BUCO-PI/0.0.1/BUCO-PI-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BUCO-PI-0.0.1.tar.gz",
+    "size_bytes": 14140,
+    "sha256": "711f635d77c6f39166d71f353ab5103fdb82fcf4ca6e8ec258e235e966a03417",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mjbeltran13/library/BUCO-PI/0.0.1/BUCO-PI-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mjbeltran13/library/BUCO-PI/0.0.1/BUCO-PI-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mjbeltran13/library/Trioe/3.2.10/Trioe-3.2.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trioe-3.2.10.tar.gz",
+    "size_bytes": 49844,
+    "sha256": "99ad92417a69eda36942d1fb66bbebb389e48adcb1b5b620c6420f7c22d76bce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mjbeltran13/library/Trioe/3.2.10/Trioe-3.2.10.tar.gz",
+     "https://dl.registry.platformio.org/download/mjbeltran13/library/Trioe/3.2.10/Trioe-3.2.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mjbeltran13/library/Trioe/3.2.6/Trioe-3.2.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trioe-3.2.6.tar.gz",
+    "size_bytes": 48944,
+    "sha256": "f19a946f912890266fe387bdaba05c3e3238e78971c77387a858b6e374d6c15f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mjbeltran13/library/Trioe/3.2.6/Trioe-3.2.6.tar.gz",
+     "https://dl.registry.platformio.org/download/mjbeltran13/library/Trioe/3.2.6/Trioe-3.2.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mjbeltran13/library/Trioe/3.2.7/Trioe-3.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trioe-3.2.7.tar.gz",
+    "size_bytes": 49030,
+    "sha256": "3cf1ff4fcd65d8e21430d2e74e2b63a9c9d71392e271d5a8cd4622d734329e0d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mjbeltran13/library/Trioe/3.2.7/Trioe-3.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/mjbeltran13/library/Trioe/3.2.7/Trioe-3.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mjbeltran13/library/Trioe/3.2.9/Trioe-3.2.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trioe-3.2.9.tar.gz",
+    "size_bytes": 49662,
+    "sha256": "1a30c174631533d723ea82ce2333cae5c463be042a31bb6c2f641c64fa721218",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mjbeltran13/library/Trioe/3.2.9/Trioe-3.2.9.tar.gz",
+     "https://dl.registry.platformio.org/download/mjbeltran13/library/Trioe/3.2.9/Trioe-3.2.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/clearwater",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "clearwater/library/SwitecX25/1.0.0/SwitecX25-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SwitecX25-1.0.0.tar.gz",
+    "size_bytes": 6126,
+    "sha256": "9814a9c57ce6488d1bc6b31747f19baeee70910f3e383414e86fc24e40ef3c7c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/clearwater/library/SwitecX25/1.0.0/SwitecX25-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/clearwater/library/SwitecX25/1.0.0/SwitecX25-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

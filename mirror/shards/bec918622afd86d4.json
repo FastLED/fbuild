@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/djaumann",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "djaumann/library/multi-half-bridge/3.0.3/multi-half-bridge-3.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "multi-half-bridge-3.0.3.tar.gz",
+    "size_bytes": 25197,
+    "sha256": "8c98850ad9376796b5fb9be0fdd3af2573503dc6adb712f9b301695e34714d72",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/djaumann/library/multi-half-bridge/3.0.3/multi-half-bridge-3.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/djaumann/library/multi-half-bridge/3.0.3/multi-half-bridge-3.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

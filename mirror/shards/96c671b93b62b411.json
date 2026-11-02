@@ -1,0 +1,581 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/vitaly.ruhl",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "vitaly.ruhl/library/ESP32%20BACnet%20Stack/0.18.0/ESP32BACnetStack-0.18.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32BACnetStack-0.18.0.tar.gz",
+    "size_bytes": 263640,
+    "sha256": "25d5f70cd31b16eca7153abf2ab091c499bbc7d13d1e2cb8e6012fc6730ad523",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vitaly.ruhl/library/ESP32%2520BACnet%2520Stack/0.18.0/ESP32BACnetStack-0.18.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vitaly.ruhl/library/ESP32%20BACnet%20Stack/0.18.0/ESP32BACnetStack-0.18.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vitaly.ruhl/library/ESP32%20BACnet%20Stack/0.23.0/ESP32BACnetStack-0.23.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32BACnetStack-0.23.0.tar.gz",
+    "size_bytes": 263583,
+    "sha256": "2640f505477060ed61d1697a4b3c1dfcbb29f537b9b697ca683bd0e4b2d18fc3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vitaly.ruhl/library/ESP32%2520BACnet%2520Stack/0.23.0/ESP32BACnetStack-0.23.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vitaly.ruhl/library/ESP32%20BACnet%20Stack/0.23.0/ESP32BACnetStack-0.23.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vitaly.ruhl/library/ESP32%20BACnet%20Stack/0.24.0/ESP32BACnetStack-0.24.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32BACnetStack-0.24.0.tar.gz",
+    "size_bytes": 350996,
+    "sha256": "48908bc39049636df813c8f3cf9b8a425a7ee4a32bec512a9c6c9bd2531248c9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vitaly.ruhl/library/ESP32%2520BACnet%2520Stack/0.24.0/ESP32BACnetStack-0.24.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vitaly.ruhl/library/ESP32%20BACnet%20Stack/0.24.0/ESP32BACnetStack-0.24.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vitaly.ruhl/library/ESP32%20BACnet%20Stack/0.24.1/ESP32BACnetStack-0.24.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32BACnetStack-0.24.1.tar.gz",
+    "size_bytes": 297583,
+    "sha256": "604d809bed0714732f5e3165092dd0cc27e3180a521533b540612059b766d5ba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vitaly.ruhl/library/ESP32%2520BACnet%2520Stack/0.24.1/ESP32BACnetStack-0.24.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vitaly.ruhl/library/ESP32%20BACnet%20Stack/0.24.1/ESP32BACnetStack-0.24.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vitaly.ruhl/library/ESP32%20BACnet%20Stack/0.24.2/ESP32BACnetStack-0.24.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32BACnetStack-0.24.2.tar.gz",
+    "size_bytes": 300496,
+    "sha256": "815c4dec753717f597749f4daefd92ac668e28a51b349fda3dc7bf0c320a3a31",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vitaly.ruhl/library/ESP32%2520BACnet%2520Stack/0.24.2/ESP32BACnetStack-0.24.2.tar.gz",
+     "https://dl.registry.platformio.org/download/vitaly.ruhl/library/ESP32%20BACnet%20Stack/0.24.2/ESP32BACnetStack-0.24.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vitaly.ruhl/library/ESP32%20BACnet%20Stack/0.33.0/ESP32BACnetStack-0.33.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32BACnetStack-0.33.0.tar.gz",
+    "size_bytes": 370504,
+    "sha256": "eb55b6e892b025d2701c847d10e9ca80e45eac787dddee6980907067f913923d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vitaly.ruhl/library/ESP32%2520BACnet%2520Stack/0.33.0/ESP32BACnetStack-0.33.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vitaly.ruhl/library/ESP32%20BACnet%20Stack/0.33.0/ESP32BACnetStack-0.33.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vitaly.ruhl/library/ESP32%20BACnet%20Stack/0.34.0/ESP32BACnetStack-0.34.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32BACnetStack-0.34.0.tar.gz",
+    "size_bytes": 380997,
+    "sha256": "a7da98161482d9124e7e374d1f083017eeef0056f4ca6999cb6ccdaea9083228",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vitaly.ruhl/library/ESP32%2520BACnet%2520Stack/0.34.0/ESP32BACnetStack-0.34.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vitaly.ruhl/library/ESP32%20BACnet%20Stack/0.34.0/ESP32BACnetStack-0.34.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vitaly.ruhl/library/ESP32%20BACnet%20Stack/0.35.0/ESP32BACnetStack-0.35.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32BACnetStack-0.35.0.tar.gz",
+    "size_bytes": 390271,
+    "sha256": "06a6ae9eb5107ad58c4c93736727ef0cd32ede36c369b70db5a996b42a84b42f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vitaly.ruhl/library/ESP32%2520BACnet%2520Stack/0.35.0/ESP32BACnetStack-0.35.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vitaly.ruhl/library/ESP32%20BACnet%20Stack/0.35.0/ESP32BACnetStack-0.35.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vitaly.ruhl/library/ESP32%20BACnet%20Stack/0.36.0/ESP32BACnetStack-0.36.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32BACnetStack-0.36.0.tar.gz",
+    "size_bytes": 468611,
+    "sha256": "966eb2cca4e321b6ac74d130a908d6c4801a4d71edde235c942f7e0d37764206",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vitaly.ruhl/library/ESP32%2520BACnet%2520Stack/0.36.0/ESP32BACnetStack-0.36.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vitaly.ruhl/library/ESP32%20BACnet%20Stack/0.36.0/ESP32BACnetStack-0.36.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vitaly.ruhl/library/ESP32%20BACnet%20Stack/0.40.0/ESP32BACnetStack-0.40.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32BACnetStack-0.40.0.tar.gz",
+    "size_bytes": 1157813,
+    "sha256": "8ce0c5c1cde1174a875ca5799adae0c669ccda7b0fb457da115f5e67b3fffea8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vitaly.ruhl/library/ESP32%2520BACnet%2520Stack/0.40.0/ESP32BACnetStack-0.40.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vitaly.ruhl/library/ESP32%20BACnet%20Stack/0.40.0/ESP32BACnetStack-0.40.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vitaly.ruhl/library/ESP32%20Configuration%20Manager/2.0.1/ESP32ConfigurationManager-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32ConfigurationManager-2.0.1.tar.gz",
+    "size_bytes": 14744,
+    "sha256": "18e82803ba25b18acff3188c0aaaed4c7e08f0ed10e65a4dfea05839367e1a51",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vitaly.ruhl/library/ESP32%2520Configuration%2520Manager/2.0.1/ESP32ConfigurationManager-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vitaly.ruhl/library/ESP32%20Configuration%20Manager/2.0.1/ESP32ConfigurationManager-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vitaly.ruhl/library/ESP32%20Configuration%20Manager/2.0.2/ESP32ConfigurationManager-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32ConfigurationManager-2.0.2.tar.gz",
+    "size_bytes": 16169,
+    "sha256": "0e4a129b3f8fb109af4fbedb0dd890288e95f3f87cbf21e887b5d312c8036f68",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vitaly.ruhl/library/ESP32%2520Configuration%2520Manager/2.0.2/ESP32ConfigurationManager-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/vitaly.ruhl/library/ESP32%20Configuration%20Manager/2.0.2/ESP32ConfigurationManager-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vitaly.ruhl/library/ESP32%20Configuration%20Manager/2.1.0/ESP32ConfigurationManager-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32ConfigurationManager-2.1.0.tar.gz",
+    "size_bytes": 18224,
+    "sha256": "ed6050effa06d5e8a2286507097e0d7faec3e63ecab88cf0c0854d2850cfdae3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vitaly.ruhl/library/ESP32%2520Configuration%2520Manager/2.1.0/ESP32ConfigurationManager-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vitaly.ruhl/library/ESP32%20Configuration%20Manager/2.1.0/ESP32ConfigurationManager-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vitaly.ruhl/library/ESP32%20Configuration%20Manager/2.2.0/ESP32ConfigurationManager-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32ConfigurationManager-2.2.0.tar.gz",
+    "size_bytes": 76728,
+    "sha256": "4e97ac90c4f2abb5e98a27494668798f7931bf989d203a04107c70bc23aed968",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vitaly.ruhl/library/ESP32%2520Configuration%2520Manager/2.2.0/ESP32ConfigurationManager-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vitaly.ruhl/library/ESP32%20Configuration%20Manager/2.2.0/ESP32ConfigurationManager-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vitaly.ruhl/library/ESP32%20Configuration%20Manager/2.3.1/ESP32ConfigurationManager-2.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32ConfigurationManager-2.3.1.tar.gz",
+    "size_bytes": 2959681,
+    "sha256": "3834647d4108f59518dcf2b1da7df643a4085aa9ef2d34b0807c0a8b8e2428dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vitaly.ruhl/library/ESP32%2520Configuration%2520Manager/2.3.1/ESP32ConfigurationManager-2.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vitaly.ruhl/library/ESP32%20Configuration%20Manager/2.3.1/ESP32ConfigurationManager-2.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vitaly.ruhl/library/ESP32%20Configuration%20Manager/2.4.0/ESP32ConfigurationManager-2.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32ConfigurationManager-2.4.0.tar.gz",
+    "size_bytes": 3880493,
+    "sha256": "ab5edf6f0b2b8a1bab31ae9cbf9cfae644ebed47d4f61a0f4206d4c1a331e52c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vitaly.ruhl/library/ESP32%2520Configuration%2520Manager/2.4.0/ESP32ConfigurationManager-2.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vitaly.ruhl/library/ESP32%20Configuration%20Manager/2.4.0/ESP32ConfigurationManager-2.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vitaly.ruhl/library/ESP32%20Configuration%20Manager/2.4.1/ESP32ConfigurationManager-2.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32ConfigurationManager-2.4.1.tar.gz",
+    "size_bytes": 3879418,
+    "sha256": "3677beebe444196efb9cc289524a5fc7dc580a05412e30b3359ae639bc6420c4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vitaly.ruhl/library/ESP32%2520Configuration%2520Manager/2.4.1/ESP32ConfigurationManager-2.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vitaly.ruhl/library/ESP32%20Configuration%20Manager/2.4.1/ESP32ConfigurationManager-2.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vitaly.ruhl/library/ESP32%20Configuration%20Manager/2.4.2/ESP32ConfigurationManager-2.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32ConfigurationManager-2.4.2.tar.gz",
+    "size_bytes": 3881090,
+    "sha256": "5c38ea22bbb61910d52f0cb4d3a6396a86d1941e4776af019eb4d81d4377aecd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vitaly.ruhl/library/ESP32%2520Configuration%2520Manager/2.4.2/ESP32ConfigurationManager-2.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/vitaly.ruhl/library/ESP32%20Configuration%20Manager/2.4.2/ESP32ConfigurationManager-2.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vitaly.ruhl/library/ESP32%20Configuration%20Manager/2.5.0/ESP32ConfigurationManager-2.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32ConfigurationManager-2.5.0.tar.gz",
+    "size_bytes": 4143507,
+    "sha256": "cfce0db961a2929669cbc15fd87db0a1fcfe69735bfe48972259e1e396eca6e5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vitaly.ruhl/library/ESP32%2520Configuration%2520Manager/2.5.0/ESP32ConfigurationManager-2.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vitaly.ruhl/library/ESP32%20Configuration%20Manager/2.5.0/ESP32ConfigurationManager-2.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vitaly.ruhl/library/ESP32%20Configuration%20Manager/2.6.1/ESP32ConfigurationManager-2.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32ConfigurationManager-2.6.1.tar.gz",
+    "size_bytes": 4186009,
+    "sha256": "95d52c1f296bc44d262bedb15553926caa35d5a8961e7d36817e31d949d11189",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vitaly.ruhl/library/ESP32%2520Configuration%2520Manager/2.6.1/ESP32ConfigurationManager-2.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vitaly.ruhl/library/ESP32%20Configuration%20Manager/2.6.1/ESP32ConfigurationManager-2.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vitaly.ruhl/library/ESP32%20Configuration%20Manager/2.7.0/ESP32ConfigurationManager-2.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32ConfigurationManager-2.7.0.tar.gz",
+    "size_bytes": 4249811,
+    "sha256": "1a06e27c3c440a614ea5ddc66079be254a7ba99bcee0d4b19886928d2a2bb6b0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vitaly.ruhl/library/ESP32%2520Configuration%2520Manager/2.7.0/ESP32ConfigurationManager-2.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vitaly.ruhl/library/ESP32%20Configuration%20Manager/2.7.0/ESP32ConfigurationManager-2.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vitaly.ruhl/library/ESP32%20Configuration%20Manager/2.7.1/ESP32ConfigurationManager-2.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32ConfigurationManager-2.7.1.tar.gz",
+    "size_bytes": 4251269,
+    "sha256": "f83323f519fb753575319b4953fbdceb474c014e57f93b26a1d9367f79da07fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vitaly.ruhl/library/ESP32%2520Configuration%2520Manager/2.7.1/ESP32ConfigurationManager-2.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vitaly.ruhl/library/ESP32%20Configuration%20Manager/2.7.1/ESP32ConfigurationManager-2.7.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vitaly.ruhl/library/ESP32%20Configuration%20Manager/2.7.2/ESP32ConfigurationManager-2.7.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32ConfigurationManager-2.7.2.tar.gz",
+    "size_bytes": 4256313,
+    "sha256": "6830db636779748d9ab9f18ee2f4b2fb42d3fab3e841382ddb01d5be2e415803",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vitaly.ruhl/library/ESP32%2520Configuration%2520Manager/2.7.2/ESP32ConfigurationManager-2.7.2.tar.gz",
+     "https://dl.registry.platformio.org/download/vitaly.ruhl/library/ESP32%20Configuration%20Manager/2.7.2/ESP32ConfigurationManager-2.7.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vitaly.ruhl/library/ESP32%20Configuration%20Manager/2.7.3/ESP32ConfigurationManager-2.7.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32ConfigurationManager-2.7.3.tar.gz",
+    "size_bytes": 950321,
+    "sha256": "d343305ef6c4b74526d9d627086e1f520403819f9dee8c8b6a9ef54360ded747",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vitaly.ruhl/library/ESP32%2520Configuration%2520Manager/2.7.3/ESP32ConfigurationManager-2.7.3.tar.gz",
+     "https://dl.registry.platformio.org/download/vitaly.ruhl/library/ESP32%20Configuration%20Manager/2.7.3/ESP32ConfigurationManager-2.7.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vitaly.ruhl/library/ESP32%20Configuration%20Manager/2.7.4/ESP32ConfigurationManager-2.7.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32ConfigurationManager-2.7.4.tar.gz",
+    "size_bytes": 989948,
+    "sha256": "2a793577637e5c0cbec2cdd4c37c5484539dc2d7772f674edc12bc9954c790b4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vitaly.ruhl/library/ESP32%2520Configuration%2520Manager/2.7.4/ESP32ConfigurationManager-2.7.4.tar.gz",
+     "https://dl.registry.platformio.org/download/vitaly.ruhl/library/ESP32%20Configuration%20Manager/2.7.4/ESP32ConfigurationManager-2.7.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vitaly.ruhl/library/ESP32%20Configuration%20Manager/3.1.0/ESP32ConfigurationManager-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32ConfigurationManager-3.1.0.tar.gz",
+    "size_bytes": 1001366,
+    "sha256": "55f369dceac77070aef9dd8e2f2c224bdc23ab867c6f896627f1b78d8d41c371",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vitaly.ruhl/library/ESP32%2520Configuration%2520Manager/3.1.0/ESP32ConfigurationManager-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vitaly.ruhl/library/ESP32%20Configuration%20Manager/3.1.0/ESP32ConfigurationManager-3.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vitaly.ruhl/library/ESP32%20Configuration%20Manager/4.0.0/ESP32ConfigurationManager-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32ConfigurationManager-4.0.0.tar.gz",
+    "size_bytes": 4007325,
+    "sha256": "63e2a3a4ced6816009fbdd2197e49dacae1f23befa23caee7e67b3eb80e22dde",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vitaly.ruhl/library/ESP32%2520Configuration%2520Manager/4.0.0/ESP32ConfigurationManager-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vitaly.ruhl/library/ESP32%20Configuration%20Manager/4.0.0/ESP32ConfigurationManager-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vitaly.ruhl/library/ESP32%20Configuration%20Manager/4.0.3/ESP32ConfigurationManager-4.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32ConfigurationManager-4.0.3.tar.gz",
+    "size_bytes": 4020179,
+    "sha256": "24db628b2449c813fec2e85825517a2a268fecb0d937a413ac0cd85ae61a0212",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vitaly.ruhl/library/ESP32%2520Configuration%2520Manager/4.0.3/ESP32ConfigurationManager-4.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/vitaly.ruhl/library/ESP32%20Configuration%20Manager/4.0.3/ESP32ConfigurationManager-4.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vitaly.ruhl/library/ESP32%20Configuration%20Manager/4.0.4/ESP32ConfigurationManager-4.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32ConfigurationManager-4.0.4.tar.gz",
+    "size_bytes": 4069226,
+    "sha256": "52a0593c5a7fd57ca6677a05720c7958b1dd649ea442811a1df587d9d0c18b85",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vitaly.ruhl/library/ESP32%2520Configuration%2520Manager/4.0.4/ESP32ConfigurationManager-4.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/vitaly.ruhl/library/ESP32%20Configuration%20Manager/4.0.4/ESP32ConfigurationManager-4.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vitaly.ruhl/library/ESP32%20Configuration%20Manager/4.0.5/ESP32ConfigurationManager-4.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32ConfigurationManager-4.0.5.tar.gz",
+    "size_bytes": 3995866,
+    "sha256": "0a27ce9d144c946126da1e2a50022980195fad418d6f422198496fa92cdc2422",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vitaly.ruhl/library/ESP32%2520Configuration%2520Manager/4.0.5/ESP32ConfigurationManager-4.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/vitaly.ruhl/library/ESP32%20Configuration%20Manager/4.0.5/ESP32ConfigurationManager-4.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vitaly.ruhl/library/ESP32%20Configuration%20Manager/4.1.0/ESP32ConfigurationManager-4.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32ConfigurationManager-4.1.0.tar.gz",
+    "size_bytes": 4033022,
+    "sha256": "f11ffc5015b2c0d4a7812c84861be6f1f024d70feb74f39785dc09c3dcbb5328",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vitaly.ruhl/library/ESP32%2520Configuration%2520Manager/4.1.0/ESP32ConfigurationManager-4.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vitaly.ruhl/library/ESP32%20Configuration%20Manager/4.1.0/ESP32ConfigurationManager-4.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vitaly.ruhl/library/ESP32%20Configuration%20Manager/4.1.1/ESP32ConfigurationManager-4.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32ConfigurationManager-4.1.1.tar.gz",
+    "size_bytes": 4033233,
+    "sha256": "7db474909a09708f881bf286369e0a046cc29b95d3947b74d3076e37e773e0e8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vitaly.ruhl/library/ESP32%2520Configuration%2520Manager/4.1.1/ESP32ConfigurationManager-4.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vitaly.ruhl/library/ESP32%20Configuration%20Manager/4.1.1/ESP32ConfigurationManager-4.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vitaly.ruhl/library/ESP32%20Configuration%20Manager/4.10.5/ESP32ConfigurationManager-4.10.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32ConfigurationManager-4.10.5.tar.gz",
+    "size_bytes": 4262686,
+    "sha256": "995987a65f10e38693b82cf08507ac1cb850a1f32245a62cef19ec97d54642ea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vitaly.ruhl/library/ESP32%2520Configuration%2520Manager/4.10.5/ESP32ConfigurationManager-4.10.5.tar.gz",
+     "https://dl.registry.platformio.org/download/vitaly.ruhl/library/ESP32%20Configuration%20Manager/4.10.5/ESP32ConfigurationManager-4.10.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vitaly.ruhl/library/ESP32%20Configuration%20Manager/4.2.0/ESP32ConfigurationManager-4.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32ConfigurationManager-4.2.0.tar.gz",
+    "size_bytes": 4040363,
+    "sha256": "6c7751ec6cc41d952f9f6689e4541420a151da21cd8ccfd35aee3a6ef9403518",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vitaly.ruhl/library/ESP32%2520Configuration%2520Manager/4.2.0/ESP32ConfigurationManager-4.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vitaly.ruhl/library/ESP32%20Configuration%20Manager/4.2.0/ESP32ConfigurationManager-4.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vitaly.ruhl/library/ESP32%20Configuration%20Manager/4.2.1/ESP32ConfigurationManager-4.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32ConfigurationManager-4.2.1.tar.gz",
+    "size_bytes": 4041219,
+    "sha256": "d4b395f474e1593d8e0fbb863886319756a171018c33fcb97e4e54f3c699d83d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vitaly.ruhl/library/ESP32%2520Configuration%2520Manager/4.2.1/ESP32ConfigurationManager-4.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vitaly.ruhl/library/ESP32%20Configuration%20Manager/4.2.1/ESP32ConfigurationManager-4.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vitaly.ruhl/library/ESP32%20Configuration%20Manager/4.2.2/ESP32ConfigurationManager-4.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32ConfigurationManager-4.2.2.tar.gz",
+    "size_bytes": 4041273,
+    "sha256": "d9a9bd4e45748ca56c8bd643c7fed767ef6e0de6986aa489e3f50d3996aefb8c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vitaly.ruhl/library/ESP32%2520Configuration%2520Manager/4.2.2/ESP32ConfigurationManager-4.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/vitaly.ruhl/library/ESP32%20Configuration%20Manager/4.2.2/ESP32ConfigurationManager-4.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vitaly.ruhl/library/ESP32%20Configuration%20Manager/4.2.3/ESP32ConfigurationManager-4.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32ConfigurationManager-4.2.3.tar.gz",
+    "size_bytes": 4042466,
+    "sha256": "8968098a6e1e98b1d0afe2bdbf997b0e84b0c70140765e579c457b54ca6d9dcc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vitaly.ruhl/library/ESP32%2520Configuration%2520Manager/4.2.3/ESP32ConfigurationManager-4.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/vitaly.ruhl/library/ESP32%20Configuration%20Manager/4.2.3/ESP32ConfigurationManager-4.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vitaly.ruhl/library/ESP32%20Configuration%20Manager/4.4.0/ESP32ConfigurationManager-4.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32ConfigurationManager-4.4.0.tar.gz",
+    "size_bytes": 4051061,
+    "sha256": "268f359331f80d69000e8f470a3ad779ab17fe5d7f0cc865440c5febf2736ed0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vitaly.ruhl/library/ESP32%2520Configuration%2520Manager/4.4.0/ESP32ConfigurationManager-4.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vitaly.ruhl/library/ESP32%20Configuration%20Manager/4.4.0/ESP32ConfigurationManager-4.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vitaly.ruhl/library/ESP32%20Configuration%20Manager/4.4.1/ESP32ConfigurationManager-4.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32ConfigurationManager-4.4.1.tar.gz",
+    "size_bytes": 4051139,
+    "sha256": "3b2e77c0e3f176874da82f9d237c180b1c88c486be5ad7498b6e2bddd7eff411",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vitaly.ruhl/library/ESP32%2520Configuration%2520Manager/4.4.1/ESP32ConfigurationManager-4.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vitaly.ruhl/library/ESP32%20Configuration%20Manager/4.4.1/ESP32ConfigurationManager-4.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vitaly.ruhl/library/ESP32%20Configuration%20Manager/4.4.10/ESP32ConfigurationManager-4.4.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32ConfigurationManager-4.4.10.tar.gz",
+    "size_bytes": 4068229,
+    "sha256": "3c45880765a38e8f71fca1d8a4aa7f42b011a9f4704e950923403a0ae236ef3e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vitaly.ruhl/library/ESP32%2520Configuration%2520Manager/4.4.10/ESP32ConfigurationManager-4.4.10.tar.gz",
+     "https://dl.registry.platformio.org/download/vitaly.ruhl/library/ESP32%20Configuration%20Manager/4.4.10/ESP32ConfigurationManager-4.4.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vitaly.ruhl/library/ESP32%20Configuration%20Manager/4.4.8/ESP32ConfigurationManager-4.4.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32ConfigurationManager-4.4.8.tar.gz",
+    "size_bytes": 27558072,
+    "sha256": "251544d7a8261e97207ed9a313e5d35c998ee43bb2d9bbded27f427c51aecac8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vitaly.ruhl/library/ESP32%2520Configuration%2520Manager/4.4.8/ESP32ConfigurationManager-4.4.8.tar.gz",
+     "https://dl.registry.platformio.org/download/vitaly.ruhl/library/ESP32%20Configuration%20Manager/4.4.8/ESP32ConfigurationManager-4.4.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vitaly.ruhl/library/ESP32%20Configuration%20Manager/4.4.9/ESP32ConfigurationManager-4.4.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32ConfigurationManager-4.4.9.tar.gz",
+    "size_bytes": 51061096,
+    "sha256": "22acf5f8c000d1af4d28540492c2fc2dee7ad70ba954a9bdba97eaec1a73d3d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vitaly.ruhl/library/ESP32%2520Configuration%2520Manager/4.4.9/ESP32ConfigurationManager-4.4.9.tar.gz",
+     "https://dl.registry.platformio.org/download/vitaly.ruhl/library/ESP32%20Configuration%20Manager/4.4.9/ESP32ConfigurationManager-4.4.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vitaly.ruhl/library/ESP32%20Configuration%20Manager/4.8.0/ESP32ConfigurationManager-4.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32ConfigurationManager-4.8.0.tar.gz",
+    "size_bytes": 4224778,
+    "sha256": "c18503c06b82873a02c8131562cd1363f2db4d7e271e005a1104041eaab60aab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vitaly.ruhl/library/ESP32%2520Configuration%2520Manager/4.8.0/ESP32ConfigurationManager-4.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vitaly.ruhl/library/ESP32%20Configuration%20Manager/4.8.0/ESP32ConfigurationManager-4.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vitaly.ruhl/library/ESP32%20Configuration%20Manager/4.9.0/ESP32ConfigurationManager-4.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32ConfigurationManager-4.9.0.tar.gz",
+    "size_bytes": 4239784,
+    "sha256": "0a36df280dee3df5364bb7ca7df2870c22573d1574b2f8fa4e8771b4e1a29c78",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vitaly.ruhl/library/ESP32%2520Configuration%2520Manager/4.9.0/ESP32ConfigurationManager-4.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vitaly.ruhl/library/ESP32%20Configuration%20Manager/4.9.0/ESP32ConfigurationManager-4.9.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

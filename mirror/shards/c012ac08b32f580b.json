@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kalzifer",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kalzifer/library/AHA/1.0.0/AHA-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AHA-1.0.0.tar.gz",
+    "size_bytes": 3434,
+    "sha256": "f12c4b75b6631aa0674954df44c9c85ad6b9f5cb8703242b537478d39c49312f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kalzifer/library/AHA/1.0.0/AHA-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kalzifer/library/AHA/1.0.0/AHA-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

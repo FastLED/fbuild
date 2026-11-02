@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-rosienej",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-rosienej/library/APA102/0.0.0+sha.b8dc9a84801c/APA102-0.0.0+sha.b8dc9a84801c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "APA102-0.0.0+sha.b8dc9a84801c.tar.gz",
+    "size_bytes": 1971,
+    "sha256": "7f29a005419a3ade0f8bf820aa013affdbc50024c4bb70891e581d0e8793e430",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rosienej/library/APA102/0.0.0%2Bsha.b8dc9a84801c/APA102-0.0.0%2Bsha.b8dc9a84801c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rosienej/library/APA102/0.0.0%2Bsha.b8dc9a84801c/APA102-0.0.0%2Bsha.b8dc9a84801c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-rosienej/library/Ping/0.0.0+sha.6996f66161d7/Ping-0.0.0+sha.6996f66161d7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ping-0.0.0+sha.6996f66161d7.tar.gz",
+    "size_bytes": 2582,
+    "sha256": "8ef1cc989cc07547ed3585c8486662985e3504af6e4da8ebd722e05e4a008c69",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rosienej/library/Ping/0.0.0%2Bsha.6996f66161d7/Ping-0.0.0%2Bsha.6996f66161d7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rosienej/library/Ping/0.0.0%2Bsha.6996f66161d7/Ping-0.0.0%2Bsha.6996f66161d7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

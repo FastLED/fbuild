@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-hepta2ume",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-hepta2ume/library/Hepta2_9axis/0.0.0+sha.5b35162b3b6a/Hepta2_9axis-0.0.0+sha.5b35162b3b6a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Hepta2_9axis-0.0.0+sha.5b35162b3b6a.tar.gz",
+    "size_bytes": 2232,
+    "sha256": "4aaaa434b624bf493c4580882d8837963edb286bcacc745561c0077b35c7bd0f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hepta2ume/library/Hepta2_9axis/0.0.0%2Bsha.5b35162b3b6a/Hepta2_9axis-0.0.0%2Bsha.5b35162b3b6a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hepta2ume/library/Hepta2_9axis/0.0.0%2Bsha.5b35162b3b6a/Hepta2_9axis-0.0.0%2Bsha.5b35162b3b6a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hepta2ume/library/HeptaBattery/0.0.0+sha.821f36c03e26/HeptaBattery-0.0.0+sha.821f36c03e26.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HeptaBattery-0.0.0+sha.821f36c03e26.tar.gz",
+    "size_bytes": 1694,
+    "sha256": "5337ac29d702901d810c077fb8f4304211b3c4e14f369877ca2c5dda9e1d64b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hepta2ume/library/HeptaBattery/0.0.0%2Bsha.821f36c03e26/HeptaBattery-0.0.0%2Bsha.821f36c03e26.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hepta2ume/library/HeptaBattery/0.0.0%2Bsha.821f36c03e26/HeptaBattery-0.0.0%2Bsha.821f36c03e26.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hepta2ume/library/HeptaTemp/0.0.0+sha.a23c2cd65379/HeptaTemp-0.0.0+sha.a23c2cd65379.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HeptaTemp-0.0.0+sha.a23c2cd65379.tar.gz",
+    "size_bytes": 1487,
+    "sha256": "4003229965b9384e1904e7c1374e3d2d3f9ae500c84a3d27822be1b5dcfbdfb3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hepta2ume/library/HeptaTemp/0.0.0%2Bsha.a23c2cd65379/HeptaTemp-0.0.0%2Bsha.a23c2cd65379.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hepta2ume/library/HeptaTemp/0.0.0%2Bsha.a23c2cd65379/HeptaTemp-0.0.0%2Bsha.a23c2cd65379.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hepta2ume/library/SDHCFileSystem/0.0.0+sha.ee6c3a0bbbbb/SDHCFileSystem-0.0.0+sha.ee6c3a0bbbbb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SDHCFileSystem-0.0.0+sha.ee6c3a0bbbbb.tar.gz",
+    "size_bytes": 6057,
+    "sha256": "55603bea9ca57b6809bf67de8d0e4e55cad0fcf8132a151561d9f2923d9dbb89",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hepta2ume/library/SDHCFileSystem/0.0.0%2Bsha.ee6c3a0bbbbb/SDHCFileSystem-0.0.0%2Bsha.ee6c3a0bbbbb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hepta2ume/library/SDHCFileSystem/0.0.0%2Bsha.ee6c3a0bbbbb/SDHCFileSystem-0.0.0%2Bsha.ee6c3a0bbbbb.tar.gz"
+    ]
+   }
+  }
+ ]
+}

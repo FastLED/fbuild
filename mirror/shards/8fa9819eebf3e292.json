@@ -1,0 +1,490 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/inanimate",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "inanimate/library/courier/0.1.0/courier-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "courier-0.1.0.tar.gz",
+    "size_bytes": 16075,
+    "sha256": "ec4631b1e422c776d1467b8620460eeee7a3574464337f967438fb7be1c62e7e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inanimate/library/courier/0.1.0/courier-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/inanimate/library/courier/0.1.0/courier-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "inanimate/library/courier/0.10.0/courier-0.10.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "courier-0.10.0.tar.gz",
+    "size_bytes": 44802,
+    "sha256": "ef588099e656333a375bb3d921af106e80b5837d06c7d7819b85cf33edf3cefe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inanimate/library/courier/0.10.0/courier-0.10.0.tar.gz",
+     "https://dl.registry.platformio.org/download/inanimate/library/courier/0.10.0/courier-0.10.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "inanimate/library/courier/0.2.0/courier-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "courier-0.2.0.tar.gz",
+    "size_bytes": 19893,
+    "sha256": "c73aeb78f25e5fc1562feb93828560ddb48ec81f01895ff3b177f0a1144ca435",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inanimate/library/courier/0.2.0/courier-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/inanimate/library/courier/0.2.0/courier-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "inanimate/library/courier/0.3.0/courier-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "courier-0.3.0.tar.gz",
+    "size_bytes": 71105,
+    "sha256": "9ac2b95a2b08952b28b7a7f8b9ed34478440a3fdf2d394284a2a4b29eb475951",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inanimate/library/courier/0.3.0/courier-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/inanimate/library/courier/0.3.0/courier-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "inanimate/library/courier/0.3.1/courier-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "courier-0.3.1.tar.gz",
+    "size_bytes": 73404,
+    "sha256": "c19ad24249f664260a5b1994bd058e65ad624361e9a1428f38dc1cc9c4551e20",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inanimate/library/courier/0.3.1/courier-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/inanimate/library/courier/0.3.1/courier-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "inanimate/library/courier/0.3.2/courier-0.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "courier-0.3.2.tar.gz",
+    "size_bytes": 73087,
+    "sha256": "4639715f928802b8c874939fa022ebf41e3473f8520b24f68866ad2b13c1c708",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inanimate/library/courier/0.3.2/courier-0.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/inanimate/library/courier/0.3.2/courier-0.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "inanimate/library/courier/0.4.0/courier-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "courier-0.4.0.tar.gz",
+    "size_bytes": 77783,
+    "sha256": "56060898fecd70dd7f66a0485dccaaf3706a795f6c4f02527a9cb2c5ee618da3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inanimate/library/courier/0.4.0/courier-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/inanimate/library/courier/0.4.0/courier-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "inanimate/library/courier/0.4.1/courier-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "courier-0.4.1.tar.gz",
+    "size_bytes": 78426,
+    "sha256": "3d647dc634571de259f8f9a871a5d38058d91ce936f4f739c5f691f7f7616e30",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inanimate/library/courier/0.4.1/courier-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/inanimate/library/courier/0.4.1/courier-0.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "inanimate/library/courier/0.4.2/courier-0.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "courier-0.4.2.tar.gz",
+    "size_bytes": 22937,
+    "sha256": "320cb619b2e45b4b0be21af6393603c0efaaf4c672b386dfd2383fdb8e90221a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inanimate/library/courier/0.4.2/courier-0.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/inanimate/library/courier/0.4.2/courier-0.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "inanimate/library/courier/0.5.0/courier-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "courier-0.5.0.tar.gz",
+    "size_bytes": 34573,
+    "sha256": "df88fd826ab62b591e94b67f0d57623820f5f5d1843a45aa41eefc3529f04f1f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inanimate/library/courier/0.5.0/courier-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/inanimate/library/courier/0.5.0/courier-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "inanimate/library/courier/0.5.1/courier-0.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "courier-0.5.1.tar.gz",
+    "size_bytes": 35510,
+    "sha256": "e327c9e90e9a3d13ad4ec421e0025ae6859657307328f461e55c064888b8528d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inanimate/library/courier/0.5.1/courier-0.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/inanimate/library/courier/0.5.1/courier-0.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "inanimate/library/courier/0.6.0/courier-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "courier-0.6.0.tar.gz",
+    "size_bytes": 35793,
+    "sha256": "d04beb9c23c62feb5eb66f276f10fda8551e4b815eb8640982531c450757ea98",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inanimate/library/courier/0.6.0/courier-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/inanimate/library/courier/0.6.0/courier-0.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "inanimate/library/courier/0.7.0/courier-0.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "courier-0.7.0.tar.gz",
+    "size_bytes": 40036,
+    "sha256": "dfe65d6853adebc905477d7a67817a530263ac40dae1a9a4293fa1d38886798d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inanimate/library/courier/0.7.0/courier-0.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/inanimate/library/courier/0.7.0/courier-0.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "inanimate/library/courier/0.8.0/courier-0.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "courier-0.8.0.tar.gz",
+    "size_bytes": 42299,
+    "sha256": "922e09c1424ca5bfe078e43096bd74c4d606b4ac9c6d2e13a20548766584235b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inanimate/library/courier/0.8.0/courier-0.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/inanimate/library/courier/0.8.0/courier-0.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "inanimate/library/courier/0.9.0/courier-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "courier-0.9.0.tar.gz",
+    "size_bytes": 43899,
+    "sha256": "30b1ab8f49eb9f4a114e2efa95981bc33cd17749b09db10c41e3fe1f7acc2a31",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inanimate/library/courier/0.9.0/courier-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/inanimate/library/courier/0.9.0/courier-0.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "inanimate/library/courier/0.9.1/courier-0.9.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "courier-0.9.1.tar.gz",
+    "size_bytes": 43839,
+    "sha256": "939cfebe84166c3dd463f15b252ac14b46d5c0d0982f962d6f82686b0a675dfd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inanimate/library/courier/0.9.1/courier-0.9.1.tar.gz",
+     "https://dl.registry.platformio.org/download/inanimate/library/courier/0.9.1/courier-0.9.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "inanimate/library/courier/0.9.2/courier-0.9.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "courier-0.9.2.tar.gz",
+    "size_bytes": 44138,
+    "sha256": "2a2b6d31d10cb21d0eb3c76d6eb57afb2b7b77560e0d085b08a8a442956b4dd0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inanimate/library/courier/0.9.2/courier-0.9.2.tar.gz",
+     "https://dl.registry.platformio.org/download/inanimate/library/courier/0.9.2/courier-0.9.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "inanimate/library/resident/0.10.0/resident-0.10.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "resident-0.10.0.tar.gz",
+    "size_bytes": 138135,
+    "sha256": "b0a85e7ac23b02129415c06c1b8f857f3f5f3f022fff8e12e6c34fdd2016db43",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inanimate/library/resident/0.10.0/resident-0.10.0.tar.gz",
+     "https://dl.registry.platformio.org/download/inanimate/library/resident/0.10.0/resident-0.10.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "inanimate/library/resident/0.10.1/resident-0.10.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "resident-0.10.1.tar.gz",
+    "size_bytes": 139238,
+    "sha256": "840223535bd4e80122e05af8ab1457a9f04dfc2916da4a88ae32a82e35afedb0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inanimate/library/resident/0.10.1/resident-0.10.1.tar.gz",
+     "https://dl.registry.platformio.org/download/inanimate/library/resident/0.10.1/resident-0.10.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "inanimate/library/resident/0.10.2/resident-0.10.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "resident-0.10.2.tar.gz",
+    "size_bytes": 139347,
+    "sha256": "16fff3f96c0726b4b9352f0269c89ddb317f8e670432ea787acfa3a2a944b7e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inanimate/library/resident/0.10.2/resident-0.10.2.tar.gz",
+     "https://dl.registry.platformio.org/download/inanimate/library/resident/0.10.2/resident-0.10.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "inanimate/library/resident/0.11.0/resident-0.11.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "resident-0.11.0.tar.gz",
+    "size_bytes": 139490,
+    "sha256": "9b8ebdb31c00f99cf1fc44e3b8d047cc68615ff036368b491d2bd91b2623b0ef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inanimate/library/resident/0.11.0/resident-0.11.0.tar.gz",
+     "https://dl.registry.platformio.org/download/inanimate/library/resident/0.11.0/resident-0.11.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "inanimate/library/resident/0.11.1/resident-0.11.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "resident-0.11.1.tar.gz",
+    "size_bytes": 139542,
+    "sha256": "5f99bc3e0807e1538b6635c2f1a0e5237621f385dbb3e894c885035ea47a63e7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inanimate/library/resident/0.11.1/resident-0.11.1.tar.gz",
+     "https://dl.registry.platformio.org/download/inanimate/library/resident/0.11.1/resident-0.11.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "inanimate/library/resident/0.12.0/resident-0.12.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "resident-0.12.0.tar.gz",
+    "size_bytes": 139920,
+    "sha256": "d2d0bc3f97300d8f9e5018dc5830ccd0c7e9d4badfe4c9cb909b142c0abe7d7b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inanimate/library/resident/0.12.0/resident-0.12.0.tar.gz",
+     "https://dl.registry.platformio.org/download/inanimate/library/resident/0.12.0/resident-0.12.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "inanimate/library/resident/0.5.0/resident-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "resident-0.5.0.tar.gz",
+    "size_bytes": 28687,
+    "sha256": "5bc3dcd4ac309a79b0c5fb8c520466e516c7307b2fed98a4f666658b076ae250",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inanimate/library/resident/0.5.0/resident-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/inanimate/library/resident/0.5.0/resident-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "inanimate/library/resident/0.6.0/resident-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "resident-0.6.0.tar.gz",
+    "size_bytes": 42947,
+    "sha256": "6a5ac933ce077d4e09e8b6e08f139a5dba36a63956c2fd4756422d493eed4c92",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inanimate/library/resident/0.6.0/resident-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/inanimate/library/resident/0.6.0/resident-0.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "inanimate/library/resident/0.6.1/resident-0.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "resident-0.6.1.tar.gz",
+    "size_bytes": 42939,
+    "sha256": "8d5af0d48800aba9ed30cc703c43f0be7c88b522f0598f905688de06a0dbf108",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inanimate/library/resident/0.6.1/resident-0.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/inanimate/library/resident/0.6.1/resident-0.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "inanimate/library/resident/0.6.2/resident-0.6.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "resident-0.6.2.tar.gz",
+    "size_bytes": 46948,
+    "sha256": "aaa4c20ca0eb82f20fb98d6e5af7eb4ccae32c66c13a57afebb378a8db56e228",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inanimate/library/resident/0.6.2/resident-0.6.2.tar.gz",
+     "https://dl.registry.platformio.org/download/inanimate/library/resident/0.6.2/resident-0.6.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "inanimate/library/resident/0.7.0/resident-0.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "resident-0.7.0.tar.gz",
+    "size_bytes": 61352,
+    "sha256": "9f2792ed1859e51a8ff701865065c6a7c4842f27ccc2507bf6cef3d7f46b784f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inanimate/library/resident/0.7.0/resident-0.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/inanimate/library/resident/0.7.0/resident-0.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "inanimate/library/resident/0.8.0/resident-0.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "resident-0.8.0.tar.gz",
+    "size_bytes": 114530,
+    "sha256": "f50341fb19645673ddc6c010f2d69a755b3f3d2c67c9c3f0f2d2688b140b9cd4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inanimate/library/resident/0.8.0/resident-0.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/inanimate/library/resident/0.8.0/resident-0.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "inanimate/library/resident/0.8.1/resident-0.8.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "resident-0.8.1.tar.gz",
+    "size_bytes": 114649,
+    "sha256": "8b829a9c18579396601e7ebf90594ff38d78f938b96b8753f30b8c83303c08ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inanimate/library/resident/0.8.1/resident-0.8.1.tar.gz",
+     "https://dl.registry.platformio.org/download/inanimate/library/resident/0.8.1/resident-0.8.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "inanimate/library/resident/0.8.2/resident-0.8.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "resident-0.8.2.tar.gz",
+    "size_bytes": 115098,
+    "sha256": "66de17b7d9150743e54b70a542961c65c5fbd8fb4a383e04f593693ba4e668a7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inanimate/library/resident/0.8.2/resident-0.8.2.tar.gz",
+     "https://dl.registry.platformio.org/download/inanimate/library/resident/0.8.2/resident-0.8.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "inanimate/library/resident/0.8.3/resident-0.8.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "resident-0.8.3.tar.gz",
+    "size_bytes": 115762,
+    "sha256": "39d3ad3f545b322b48f2cff566d7a9f30e83420deaff242cfae880c45067b409",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inanimate/library/resident/0.8.3/resident-0.8.3.tar.gz",
+     "https://dl.registry.platformio.org/download/inanimate/library/resident/0.8.3/resident-0.8.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "inanimate/library/resident/0.8.4/resident-0.8.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "resident-0.8.4.tar.gz",
+    "size_bytes": 115858,
+    "sha256": "5967f23e40dc199da98b3981d96bce9e43c29f200d71894358e30721b22866dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inanimate/library/resident/0.8.4/resident-0.8.4.tar.gz",
+     "https://dl.registry.platformio.org/download/inanimate/library/resident/0.8.4/resident-0.8.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "inanimate/library/resident/0.8.5/resident-0.8.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "resident-0.8.5.tar.gz",
+    "size_bytes": 117607,
+    "sha256": "145561ec126ec32aad8670962b7239577ae2ea92e11ab70a05b21b63b8599dae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inanimate/library/resident/0.8.5/resident-0.8.5.tar.gz",
+     "https://dl.registry.platformio.org/download/inanimate/library/resident/0.8.5/resident-0.8.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "inanimate/library/resident/0.8.6/resident-0.8.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "resident-0.8.6.tar.gz",
+    "size_bytes": 118369,
+    "sha256": "a5c359979b996d3bd227aa8e2427c50da167d805d2747777864b014f1a96ff21",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inanimate/library/resident/0.8.6/resident-0.8.6.tar.gz",
+     "https://dl.registry.platformio.org/download/inanimate/library/resident/0.8.6/resident-0.8.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "inanimate/library/resident/0.9.0/resident-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "resident-0.9.0.tar.gz",
+    "size_bytes": 118836,
+    "sha256": "d7b5758a0b0173f2a31b0ba633111f0a453569f25f6f278db43c058215358d59",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inanimate/library/resident/0.9.0/resident-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/inanimate/library/resident/0.9.0/resident-0.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "inanimate/library/resident/0.9.1/resident-0.9.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "resident-0.9.1.tar.gz",
+    "size_bytes": 118884,
+    "sha256": "a445ebb4938597df5760d8c7950ae5ad379b06e737076ef8b5d87f8262d4a92a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inanimate/library/resident/0.9.1/resident-0.9.1.tar.gz",
+     "https://dl.registry.platformio.org/download/inanimate/library/resident/0.9.1/resident-0.9.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/charo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "charo/library/FastLEDitor/1.0.15/FastLEDitor-1.0.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastLEDitor-1.0.15.tar.gz",
+    "size_bytes": 154885,
+    "sha256": "37cacea8839b3e1851742bcdb4f210832022c8626bd7f281c6d2d2f18b137ef5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/charo/library/FastLEDitor/1.0.15/FastLEDitor-1.0.15.tar.gz",
+     "https://dl.registry.platformio.org/download/charo/library/FastLEDitor/1.0.15/FastLEDitor-1.0.15.tar.gz"
+    ]
+   }
+  }
+ ]
+}

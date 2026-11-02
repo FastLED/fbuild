@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nativeme",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nativeme/library/MicroAsync/1.0.0/MicroAsync-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MicroAsync-1.0.0.tar.gz",
+    "size_bytes": 16270,
+    "sha256": "1767517ba1fd098998f849eb8563b3b29a894ca011d9b7a71619ad52ccfde2fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nativeme/library/MicroAsync/1.0.0/MicroAsync-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nativeme/library/MicroAsync/1.0.0/MicroAsync-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nativeme/library/async-tools/1.0.7/async-tools-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "async-tools-1.0.7.tar.gz",
+    "size_bytes": 12662,
+    "sha256": "961c9a425047e95f0132e4cfe91b613605139cdb0d64293dd697f3a6ebf40ddc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nativeme/library/async-tools/1.0.7/async-tools-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/nativeme/library/async-tools/1.0.7/async-tools-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nativeme/library/iter-tools/0.1.0/iter-tools-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iter-tools-0.1.0.tar.gz",
+    "size_bytes": 2958,
+    "sha256": "a7dd7e3bd4896cb92e81209ec74e3d2a4d071c9b608735fa7c9c886b38692e92",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nativeme/library/iter-tools/0.1.0/iter-tools-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nativeme/library/iter-tools/0.1.0/iter-tools-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nativeme/library/micro-log/0.1.0/micro-log-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "micro-log-0.1.0.tar.gz",
+    "size_bytes": 3625,
+    "sha256": "fd892ef89367da302aad527c825e76982677779cbea46cf7fbb61a9abe0648d2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nativeme/library/micro-log/0.1.0/micro-log-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nativeme/library/micro-log/0.1.0/micro-log-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nativeme/library/nativ-splitstr/1.0.1/nativ-splitstr-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nativ-splitstr-1.0.1.tar.gz",
+    "size_bytes": 2709,
+    "sha256": "720674f7f1ee9dd811fb2280d0aa4cef113cdc5b34a1384bbe25e35f4d2e0fce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nativeme/library/nativ-splitstr/1.0.1/nativ-splitstr-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nativeme/library/nativ-splitstr/1.0.1/nativ-splitstr-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nativeme/library/softcast-utillib/1.1.0/softcast-utillib-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "softcast-utillib-1.1.0.tar.gz",
+    "size_bytes": 6249,
+    "sha256": "6ff4e66e925ecae4c7104f638887f898d31560b534de3f00872bef197c9c0184",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nativeme/library/softcast-utillib/1.1.0/softcast-utillib-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nativeme/library/softcast-utillib/1.1.0/softcast-utillib-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

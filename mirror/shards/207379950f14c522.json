@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lrlopez",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lrlopez/library/lv_lib_qrcode/1.0.2/lv_lib_qrcode-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lv_lib_qrcode-1.0.2.tar.gz",
+    "size_bytes": 443414,
+    "sha256": "db79805376809ad3fbe20daaf4f2bdb7ff7e4d020c24d0823bc7eef5996cc9c5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lrlopez/library/lv_lib_qrcode/1.0.2/lv_lib_qrcode-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lrlopez/library/lv_lib_qrcode/1.0.2/lv_lib_qrcode-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

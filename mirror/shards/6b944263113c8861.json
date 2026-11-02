@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tamsinrose",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tamsinrose/library/SimpleCounter/0.4.1/SimpleCounter-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleCounter-0.4.1.tar.gz",
+    "size_bytes": 2963,
+    "sha256": "ce0ba067fe1de60d1ebb168f54e9cfca6064d4e3f9fef31a1120fb06f5b73d78",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tamsinrose/library/SimpleCounter/0.4.1/SimpleCounter-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tamsinrose/library/SimpleCounter/0.4.1/SimpleCounter-0.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tamsinrose/library/SimpleCounter/0.4.2/SimpleCounter-0.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleCounter-0.4.2.tar.gz",
+    "size_bytes": 2963,
+    "sha256": "e04de791ca1f2622ef332e0d926de3038a445081bf99cdd2319f63bc55271b71",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tamsinrose/library/SimpleCounter/0.4.2/SimpleCounter-0.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tamsinrose/library/SimpleCounter/0.4.2/SimpleCounter-0.4.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

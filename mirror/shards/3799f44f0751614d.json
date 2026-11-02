@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/red-scorp",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "red-scorp/library/LiquidCrystal_AIP31068/1.0.5/LiquidCrystal_AIP31068-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LiquidCrystal_AIP31068-1.0.5.tar.gz",
+    "size_bytes": 7029,
+    "sha256": "8ee0a920668813bc9a62be7217faaa607ec2cb6f11f2ccefaafeaea1123d1b27",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/red-scorp/library/LiquidCrystal_AIP31068/1.0.5/LiquidCrystal_AIP31068-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/red-scorp/library/LiquidCrystal_AIP31068/1.0.5/LiquidCrystal_AIP31068-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "red-scorp/library/SoftSPIB/1.1.2/SoftSPIB-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SoftSPIB-1.1.2.tar.gz",
+    "size_bytes": 3849,
+    "sha256": "f78147273ffeae177e794de9e8521badb682c53c37a1c1064aa096a820b400fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/red-scorp/library/SoftSPIB/1.1.2/SoftSPIB-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/red-scorp/library/SoftSPIB/1.1.2/SoftSPIB-1.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

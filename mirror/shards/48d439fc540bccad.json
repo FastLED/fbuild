@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/justplaysoftware",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "justplaysoftware/library/EduShield-2%20Library/1.0.6/EduShield-2Library-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EduShield-2Library-1.0.6.tar.gz",
+    "size_bytes": 4592,
+    "sha256": "c54df51572322b6f4c4f246bf6865a685a5a549a83769bf91e1e8672f9d4cf38",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/justplaysoftware/library/EduShield-2%2520Library/1.0.6/EduShield-2Library-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/justplaysoftware/library/EduShield-2%20Library/1.0.6/EduShield-2Library-1.0.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

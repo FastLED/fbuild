@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-taylorza",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-taylorza/library/LCD_ST7735/0.0.0+sha.516f15979b53/LCD_ST7735-0.0.0+sha.516f15979b53.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCD_ST7735-0.0.0+sha.516f15979b53.tar.gz",
+    "size_bytes": 10854,
+    "sha256": "04b7988274ff0236264d9b960a2f4d3d3b6287002cc413377445b2da0737ca63",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-taylorza/library/LCD_ST7735/0.0.0%2Bsha.516f15979b53/LCD_ST7735-0.0.0%2Bsha.516f15979b53.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-taylorza/library/LCD_ST7735/0.0.0%2Bsha.516f15979b53/LCD_ST7735-0.0.0%2Bsha.516f15979b53.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-taylorza/library/MusicEngine/0.0.0+sha.4f7c4255997a/MusicEngine-0.0.0+sha.4f7c4255997a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MusicEngine-0.0.0+sha.4f7c4255997a.tar.gz",
+    "size_bytes": 3560,
+    "sha256": "90c4932256262261d7d225b8785067f836aab260e9a8857e3e833bc4fc659348",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-taylorza/library/MusicEngine/0.0.0%2Bsha.4f7c4255997a/MusicEngine-0.0.0%2Bsha.4f7c4255997a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-taylorza/library/MusicEngine/0.0.0%2Bsha.4f7c4255997a/MusicEngine-0.0.0%2Bsha.4f7c4255997a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-taylorza/library/SignalCapture/0.0.0+sha.c6f86d422a7e/SignalCapture-0.0.0+sha.c6f86d422a7e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SignalCapture-0.0.0+sha.c6f86d422a7e.tar.gz",
+    "size_bytes": 2630,
+    "sha256": "310c3448f03fc75d6719abc769a56164acbfcbfec68feeec6e7d9a4bb81bb8c3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-taylorza/library/SignalCapture/0.0.0%2Bsha.c6f86d422a7e/SignalCapture-0.0.0%2Bsha.c6f86d422a7e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-taylorza/library/SignalCapture/0.0.0%2Bsha.c6f86d422a7e/SignalCapture-0.0.0%2Bsha.c6f86d422a7e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-taylorza/library/SignalGenerator/0.0.0+sha.64d2d834341b/SignalGenerator-0.0.0+sha.64d2d834341b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SignalGenerator-0.0.0+sha.64d2d834341b.tar.gz",
+    "size_bytes": 2551,
+    "sha256": "36505dff6644bc1a9b0fa8fc5d3c15bca20c1551b2a8bbed09ccee80966f16a0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-taylorza/library/SignalGenerator/0.0.0%2Bsha.64d2d834341b/SignalGenerator-0.0.0%2Bsha.64d2d834341b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-taylorza/library/SignalGenerator/0.0.0%2Bsha.64d2d834341b/SignalGenerator-0.0.0%2Bsha.64d2d834341b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

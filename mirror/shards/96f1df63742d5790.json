@@ -1,0 +1,139 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-reiko",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-reiko/library/A3930/0.0.0+sha.464cd2cb852e/A3930-0.0.0+sha.464cd2cb852e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "A3930-0.0.0+sha.464cd2cb852e.tar.gz",
+    "size_bytes": 2581,
+    "sha256": "e271a46d85c58ef13600c344044d2f0615544158011c41a475f14e43670006e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-reiko/library/A3930/0.0.0%2Bsha.464cd2cb852e/A3930-0.0.0%2Bsha.464cd2cb852e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-reiko/library/A3930/0.0.0%2Bsha.464cd2cb852e/A3930-0.0.0%2Bsha.464cd2cb852e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-reiko/library/ADXL345_I2C/0.0.0+sha.753991a08b2a/ADXL345_I2C-0.0.0+sha.753991a08b2a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADXL345_I2C-0.0.0+sha.753991a08b2a.tar.gz",
+    "size_bytes": 6983,
+    "sha256": "dbfc0e8b86c6cb45b77f308cae6824e6fc66295ee75346d5c8488b0b8f22fa7c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-reiko/library/ADXL345_I2C/0.0.0%2Bsha.753991a08b2a/ADXL345_I2C-0.0.0%2Bsha.753991a08b2a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-reiko/library/ADXL345_I2C/0.0.0%2Bsha.753991a08b2a/ADXL345_I2C-0.0.0%2Bsha.753991a08b2a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-reiko/library/CoilGun/0.0.0+sha.b663ba6a53fe/CoilGun-0.0.0+sha.b663ba6a53fe.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CoilGun-0.0.0+sha.b663ba6a53fe.tar.gz",
+    "size_bytes": 1788,
+    "sha256": "184ea00849765af54fcedf68e2626853617a79069dc66170bc22f918e2af199c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-reiko/library/CoilGun/0.0.0%2Bsha.b663ba6a53fe/CoilGun-0.0.0%2Bsha.b663ba6a53fe.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-reiko/library/CoilGun/0.0.0%2Bsha.b663ba6a53fe/CoilGun-0.0.0%2Bsha.b663ba6a53fe.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-reiko/library/ExternalIn/0.0.0+sha.6c525c701aad/ExternalIn-0.0.0+sha.6c525c701aad.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ExternalIn-0.0.0+sha.6c525c701aad.tar.gz",
+    "size_bytes": 1248,
+    "sha256": "4c5c4f3b2a33be68d6451c9dec43f30c26590558f00739c5becf15c88eca3c09",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-reiko/library/ExternalIn/0.0.0%2Bsha.6c525c701aad/ExternalIn-0.0.0%2Bsha.6c525c701aad.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-reiko/library/ExternalIn/0.0.0%2Bsha.6c525c701aad/ExternalIn-0.0.0%2Bsha.6c525c701aad.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-reiko/library/LedOut/0.0.0+sha.e84e28f3573f/LedOut-0.0.0+sha.e84e28f3573f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LedOut-0.0.0+sha.e84e28f3573f.tar.gz",
+    "size_bytes": 909,
+    "sha256": "068533b4a98faec0a3cf6ad66bb843b6000c8435ea74274f3960f30ca99d7995",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-reiko/library/LedOut/0.0.0%2Bsha.e84e28f3573f/LedOut-0.0.0%2Bsha.e84e28f3573f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-reiko/library/LedOut/0.0.0%2Bsha.e84e28f3573f/LedOut-0.0.0%2Bsha.e84e28f3573f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-reiko/library/Motor/0.0.0+sha.37199f371bf8/Motor-0.0.0+sha.37199f371bf8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Motor-0.0.0+sha.37199f371bf8.tar.gz",
+    "size_bytes": 2106,
+    "sha256": "4f16f25d2dab18c5352a8ac54a0591c809231a307e9772343559937138805446",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-reiko/library/Motor/0.0.0%2Bsha.37199f371bf8/Motor-0.0.0%2Bsha.37199f371bf8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-reiko/library/Motor/0.0.0%2Bsha.37199f371bf8/Motor-0.0.0%2Bsha.37199f371bf8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-reiko/library/Motor2/0.0.0+sha.b0e6051a6109/Motor2-0.0.0+sha.b0e6051a6109.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Motor2-0.0.0+sha.b0e6051a6109.tar.gz",
+    "size_bytes": 2310,
+    "sha256": "c1b27f3572132aac45f214bf1125f04e1ccce4ea7f051ef80dd139375441cd65",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-reiko/library/Motor2/0.0.0%2Bsha.b0e6051a6109/Motor2-0.0.0%2Bsha.b0e6051a6109.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-reiko/library/Motor2/0.0.0%2Bsha.b0e6051a6109/Motor2-0.0.0%2Bsha.b0e6051a6109.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-reiko/library/PCA9555/0.0.0+sha.8f59b7233e6c/PCA9555-0.0.0+sha.8f59b7233e6c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCA9555-0.0.0+sha.8f59b7233e6c.tar.gz",
+    "size_bytes": 2017,
+    "sha256": "ad162a8585229bbcba354df51c63e720b2edc06b21c2bef19bcab5dd306a6491",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-reiko/library/PCA9555/0.0.0%2Bsha.8f59b7233e6c/PCA9555-0.0.0%2Bsha.8f59b7233e6c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-reiko/library/PCA9555/0.0.0%2Bsha.8f59b7233e6c/PCA9555-0.0.0%2Bsha.8f59b7233e6c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-reiko/library/PinDetect/0.0.0+sha.d78a22c040e4/PinDetect-0.0.0+sha.d78a22c040e4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PinDetect-0.0.0+sha.d78a22c040e4.tar.gz",
+    "size_bytes": 4092,
+    "sha256": "84ab28f51fcbcdd358f9e0f5589be9a2e977df75c19dc4cc0a47057c6964a19d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-reiko/library/PinDetect/0.0.0%2Bsha.d78a22c040e4/PinDetect-0.0.0%2Bsha.d78a22c040e4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-reiko/library/PinDetect/0.0.0%2Bsha.d78a22c040e4/PinDetect-0.0.0%2Bsha.d78a22c040e4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-reiko/library/QED/0.0.0+sha.72d7f93f2881/QED-0.0.0+sha.72d7f93f2881.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QED-0.0.0+sha.72d7f93f2881.tar.gz",
+    "size_bytes": 1231,
+    "sha256": "b6475e1a77b414108077581d47c44c9ea640892901fa43cbde29723605fb4052",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-reiko/library/QED/0.0.0%2Bsha.72d7f93f2881/QED-0.0.0%2Bsha.72d7f93f2881.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-reiko/library/QED/0.0.0%2Bsha.72d7f93f2881/QED-0.0.0%2Bsha.72d7f93f2881.tar.gz"
+    ]
+   }
+  }
+ ]
+}

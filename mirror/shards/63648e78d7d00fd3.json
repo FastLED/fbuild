@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/chan1sook",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "chan1sook/library/SensesInnoma/1.1.0/SensesInnoma-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensesInnoma-1.1.0.tar.gz",
+    "size_bytes": 4704,
+    "sha256": "a9009b619cc512afdd7541366a82c8a6508e1af0b0a7556686630df7c49f84c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chan1sook/library/SensesInnoma/1.1.0/SensesInnoma-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chan1sook/library/SensesInnoma/1.1.0/SensesInnoma-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chan1sook/library/Sensesiot/3.0.0/Sensesiot-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sensesiot-3.0.0.tar.gz",
+    "size_bytes": 6047,
+    "sha256": "5340a3384695703223b1f84b7b1fd9cac71a813a58f44eabdeaba4c84bd9c6f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chan1sook/library/Sensesiot/3.0.0/Sensesiot-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chan1sook/library/Sensesiot/3.0.0/Sensesiot-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chan1sook/library/Web3E_JBC/0.0.1/Web3E_JBC-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Web3E_JBC-0.0.1.tar.gz",
+    "size_bytes": 172543,
+    "sha256": "5bff3d90358548b4430eb4ad1135921f4e8a02cf8257b6be32f3103d0c65eb56",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chan1sook/library/Web3E_JBC/0.0.1/Web3E_JBC-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/chan1sook/library/Web3E_JBC/0.0.1/Web3E_JBC-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

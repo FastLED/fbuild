@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-blaze513",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-blaze513/library/GenericFunctionHandler/0.0.0+sha.7e4f282982a6/GenericFunctionHandler-0.0.0+sha.7e4f282982a6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GenericFunctionHandler-0.0.0+sha.7e4f282982a6.tar.gz",
+    "size_bytes": 1519,
+    "sha256": "eab62975b4d2deaabb34a3338a0542ddb595a0aca9b8993f16e705cce65f793c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-blaze513/library/GenericFunctionHandler/0.0.0%2Bsha.7e4f282982a6/GenericFunctionHandler-0.0.0%2Bsha.7e4f282982a6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-blaze513/library/GenericFunctionHandler/0.0.0%2Bsha.7e4f282982a6/GenericFunctionHandler-0.0.0%2Bsha.7e4f282982a6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

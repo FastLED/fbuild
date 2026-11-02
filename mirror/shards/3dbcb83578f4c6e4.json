@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-bencarr22",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-bencarr22/library/CR95/0.0.0+sha.3f7592d47d4f/CR95-0.0.0+sha.3f7592d47d4f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CR95-0.0.0+sha.3f7592d47d4f.tar.gz",
+    "size_bytes": 5897,
+    "sha256": "40d3ccf5db875fc9fe731f8f9f25e2d58785d40715ba8857a094f2c6a656e022",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bencarr22/library/CR95/0.0.0%2Bsha.3f7592d47d4f/CR95-0.0.0%2Bsha.3f7592d47d4f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bencarr22/library/CR95/0.0.0%2Bsha.3f7592d47d4f/CR95-0.0.0%2Bsha.3f7592d47d4f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

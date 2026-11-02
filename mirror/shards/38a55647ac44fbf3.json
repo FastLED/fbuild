@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ethanharstad",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ethanharstad/library/Fader/0.0.0+sha.127c030fa3ca/Fader-0.0.0+sha.127c030fa3ca.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Fader-0.0.0+sha.127c030fa3ca.tar.gz",
+    "size_bytes": 855,
+    "sha256": "9aa282f2247868a6022946af8e9bb8c47ceb6dcbec379b9e1f7da152087bfde9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ethanharstad/library/Fader/0.0.0%2Bsha.127c030fa3ca/Fader-0.0.0%2Bsha.127c030fa3ca.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ethanharstad/library/Fader/0.0.0%2Bsha.127c030fa3ca/Fader-0.0.0%2Bsha.127c030fa3ca.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ethanharstad/library/I2CHelper/0.0.0+sha.51de41e0e0c9/I2CHelper-0.0.0+sha.51de41e0e0c9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2CHelper-0.0.0+sha.51de41e0e0c9.tar.gz",
+    "size_bytes": 1529,
+    "sha256": "77b7dbb52f84a1253440cbb7ed3b2f482922ef7e438eca15681cd345894fdaee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ethanharstad/library/I2CHelper/0.0.0%2Bsha.51de41e0e0c9/I2CHelper-0.0.0%2Bsha.51de41e0e0c9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ethanharstad/library/I2CHelper/0.0.0%2Bsha.51de41e0e0c9/I2CHelper-0.0.0%2Bsha.51de41e0e0c9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ethanharstad/library/MPU9150/0.0.0+sha.581fad93a809/MPU9150-0.0.0+sha.581fad93a809.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPU9150-0.0.0+sha.581fad93a809.tar.gz",
+    "size_bytes": 3470,
+    "sha256": "31cb1c015d6f08cb6f3b759d72e4ae9fdde071e17e75ab6ed0744088e51787aa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ethanharstad/library/MPU9150/0.0.0%2Bsha.581fad93a809/MPU9150-0.0.0%2Bsha.581fad93a809.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ethanharstad/library/MPU9150/0.0.0%2Bsha.581fad93a809/MPU9150-0.0.0%2Bsha.581fad93a809.tar.gz"
+    ]
+   }
+  }
+ ]
+}

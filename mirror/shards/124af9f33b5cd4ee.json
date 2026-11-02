@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nfrproducts",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nfrproducts/library/probot/0.1.2/probot-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "probot-0.1.2.tar.gz",
+    "size_bytes": 64677,
+    "sha256": "c1bf4c1ab68b89f4d8183dd553a48cf038dabfa39174f7da7a905f7e1dffb557",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nfrproducts/library/probot/0.1.2/probot-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nfrproducts/library/probot/0.1.2/probot-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nfrproducts/library/probot/0.1.4/probot-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "probot-0.1.4.tar.gz",
+    "size_bytes": 87138,
+    "sha256": "a6e5677b86e354509ed988a63391175e45f47a2379340aad4eb6823574bdd202",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nfrproducts/library/probot/0.1.4/probot-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/nfrproducts/library/probot/0.1.4/probot-0.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nfrproducts/library/probot/0.1.5/probot-0.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "probot-0.1.5.tar.gz",
+    "size_bytes": 87363,
+    "sha256": "2469a4f022bb0a1ff77b7f389cde21357de91ff99ce68b5a38048326d1721c09",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nfrproducts/library/probot/0.1.5/probot-0.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/nfrproducts/library/probot/0.1.5/probot-0.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nfrproducts/library/probot/0.2.0/probot-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "probot-0.2.0.tar.gz",
+    "size_bytes": 65766,
+    "sha256": "f2722eea52c4c9b4ccacc6c69897299aff18f959b548cb04a03ae59d02dd4cc3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nfrproducts/library/probot/0.2.0/probot-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nfrproducts/library/probot/0.2.0/probot-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nfrproducts/library/probot/0.2.6/probot-0.2.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "probot-0.2.6.tar.gz",
+    "size_bytes": 69273,
+    "sha256": "400243888e1b18d993d69366e07e2b3986b4bc98e4a355465456215ba98b3bd9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nfrproducts/library/probot/0.2.6/probot-0.2.6.tar.gz",
+     "https://dl.registry.platformio.org/download/nfrproducts/library/probot/0.2.6/probot-0.2.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nfrproducts/library/probot/0.2.7/probot-0.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "probot-0.2.7.tar.gz",
+    "size_bytes": 39302,
+    "sha256": "e1643db7e1543521bc773462ab96e625afde646c91c9ed169ae6fe8f73826b74",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nfrproducts/library/probot/0.2.7/probot-0.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/nfrproducts/library/probot/0.2.7/probot-0.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nfrproducts/library/probot/0.3.0/probot-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "probot-0.3.0.tar.gz",
+    "size_bytes": 78952,
+    "sha256": "c179f8c07854230372573e65c93ddeed3b9abda06e7d94c94e0f0404f2523bbf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nfrproducts/library/probot/0.3.0/probot-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nfrproducts/library/probot/0.3.0/probot-0.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

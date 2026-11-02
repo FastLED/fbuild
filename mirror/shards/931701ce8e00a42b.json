@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-projetremote",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-projetremote/library/4DGL/0.0.0+sha.277186c9dd25/4DGL-0.0.0+sha.277186c9dd25.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "4DGL-0.0.0+sha.277186c9dd25.tar.gz",
+    "size_bytes": 8313,
+    "sha256": "db53d6640634b62fabed1feb737dab6485012b5bee75de22a6576c7b95e27b3d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-projetremote/library/4DGL/0.0.0%2Bsha.277186c9dd25/4DGL-0.0.0%2Bsha.277186c9dd25.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-projetremote/library/4DGL/0.0.0%2Bsha.277186c9dd25/4DGL-0.0.0%2Bsha.277186c9dd25.tar.gz"
+    ]
+   }
+  }
+ ]
+}

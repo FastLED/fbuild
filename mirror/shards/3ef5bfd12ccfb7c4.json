@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-earlz",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-earlz/library/SDFileSystem_tryagain/0.0.0+sha.722f622d057a/SDFileSystem_tryagain-0.0.0+sha.722f622d057a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SDFileSystem_tryagain-0.0.0+sha.722f622d057a.tar.gz",
+    "size_bytes": 5927,
+    "sha256": "8f333dc282e6d7b6f6fb3cb6570d01da6317eb2f8fe27e4639c277cdf1440115",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-earlz/library/SDFileSystem_tryagain/0.0.0%2Bsha.722f622d057a/SDFileSystem_tryagain-0.0.0%2Bsha.722f622d057a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-earlz/library/SDFileSystem_tryagain/0.0.0%2Bsha.722f622d057a/SDFileSystem_tryagain-0.0.0%2Bsha.722f622d057a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-earlz/library/TermControl/0.0.0+sha.ef410bacf0e5/TermControl-0.0.0+sha.ef410bacf0e5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TermControl-0.0.0+sha.ef410bacf0e5.tar.gz",
+    "size_bytes": 1873,
+    "sha256": "59f129f8e48a19912b6084c74b78b3b34d0de698841e5761a02532e07349fac0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-earlz/library/TermControl/0.0.0%2Bsha.ef410bacf0e5/TermControl-0.0.0%2Bsha.ef410bacf0e5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-earlz/library/TermControl/0.0.0%2Bsha.ef410bacf0e5/TermControl-0.0.0%2Bsha.ef410bacf0e5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-earlz/library/lightvm/0.0.0+sha.dac6a7d43ed2/lightvm-0.0.0+sha.dac6a7d43ed2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lightvm-0.0.0+sha.dac6a7d43ed2.tar.gz",
+    "size_bytes": 4923,
+    "sha256": "5e27ff29bd2b89443fc4da39d8899aa8f6ab1c115d713418088b7a53ae584755",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-earlz/library/lightvm/0.0.0%2Bsha.dac6a7d43ed2/lightvm-0.0.0%2Bsha.dac6a7d43ed2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-earlz/library/lightvm/0.0.0%2Bsha.dac6a7d43ed2/lightvm-0.0.0%2Bsha.dac6a7d43ed2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-earlz/library/vga640x480g_mbedconsole/0.0.0+sha.be212d7dbb60/vga640x480g_mbedconsole-0.0.0+sha.be212d7dbb60.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vga640x480g_mbedconsole-0.0.0+sha.be212d7dbb60.tar.gz",
+    "size_bytes": 22307,
+    "sha256": "b46d26a382a0bc59725abb21a3ee9123ce6ca38c62751c59b37ad3c3f3076b27",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-earlz/library/vga640x480g_mbedconsole/0.0.0%2Bsha.be212d7dbb60/vga640x480g_mbedconsole-0.0.0%2Bsha.be212d7dbb60.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-earlz/library/vga640x480g_mbedconsole/0.0.0%2Bsha.be212d7dbb60/vga640x480g_mbedconsole-0.0.0%2Bsha.be212d7dbb60.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-earlz/library/x86Lib/0.0.0+sha.217a7931b41f/x86Lib-0.0.0+sha.217a7931b41f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "x86Lib-0.0.0+sha.217a7931b41f.tar.gz",
+    "size_bytes": 23898,
+    "sha256": "c4791a3292a44d3eb360ba484f395f8ec38a7f5948ff197c5a4c32b997cc2e5b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-earlz/library/x86Lib/0.0.0%2Bsha.217a7931b41f/x86Lib-0.0.0%2Bsha.217a7931b41f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-earlz/library/x86Lib/0.0.0%2Bsha.217a7931b41f/x86Lib-0.0.0%2Bsha.217a7931b41f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

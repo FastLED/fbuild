@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hardwario",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hardwario/library/HARDWARIO%20Soil%20Sensor/1.2.1/HARDWARIOSoilSensor-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HARDWARIOSoilSensor-1.2.1.tar.gz",
+    "size_bytes": 5852,
+    "sha256": "44464620c1bea516dcb648db35cb17438d255667ad09b5962dfdf36bce2a1176",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hardwario/library/HARDWARIO%2520Soil%2520Sensor/1.2.1/HARDWARIOSoilSensor-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/hardwario/library/HARDWARIO%20Soil%20Sensor/1.2.1/HARDWARIOSoilSensor-1.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

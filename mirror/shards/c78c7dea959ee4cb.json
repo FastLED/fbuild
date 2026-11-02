@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/flinduino",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "flinduino/library/Flinders_ENGR2781/1.0.0/Flinders_ENGR2781-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Flinders_ENGR2781-1.0.0.tar.gz",
+    "size_bytes": 6658,
+    "sha256": "ead0baeb643e11d33af39e380d07e9dbebff15fbce8274de093725bc222b0ead",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/flinduino/library/Flinders_ENGR2781/1.0.0/Flinders_ENGR2781-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/flinduino/library/Flinders_ENGR2781/1.0.0/Flinders_ENGR2781-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "flinduino/library/Flinduino_Sensorkit/1.0.3/Flinduino_Sensorkit-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Flinduino_Sensorkit-1.0.3.tar.gz",
+    "size_bytes": 5614,
+    "sha256": "68b6e969a9263eb2a5b596379104c0b1d79afb6d61867f2cb614dc7f7950e0e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/flinduino/library/Flinduino_Sensorkit/1.0.3/Flinduino_Sensorkit-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/flinduino/library/Flinduino_Sensorkit/1.0.3/Flinduino_Sensorkit-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

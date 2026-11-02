@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/remoteme",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "remoteme/library/RemoteMe/1.0.26/RemoteMe-1.0.26.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RemoteMe-1.0.26.tar.gz",
+    "size_bytes": 13118,
+    "sha256": "7ae53107ec852a55aa6b306fbe0fd61c3708fa29aba3a9553c28744dec65254b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/remoteme/library/RemoteMe/1.0.26/RemoteMe-1.0.26.tar.gz",
+     "https://dl.registry.platformio.org/download/remoteme/library/RemoteMe/1.0.26/RemoteMe-1.0.26.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "remoteme/library/RemoteMeUtils/1.0.18/RemoteMeUtils-1.0.18.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RemoteMeUtils-1.0.18.tar.gz",
+    "size_bytes": 2654,
+    "sha256": "6bcff1ad275bbaf50b3f2db66961374db771daa7f67f07e97ca289869623565d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/remoteme/library/RemoteMeUtils/1.0.18/RemoteMeUtils-1.0.18.tar.gz",
+     "https://dl.registry.platformio.org/download/remoteme/library/RemoteMeUtils/1.0.18/RemoteMeUtils-1.0.18.tar.gz"
+    ]
+   }
+  }
+ ]
+}

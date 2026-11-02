@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/erropix",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "erropix/library/ESP32%20AnalogWrite/0.2/ESP32AnalogWrite-0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32AnalogWrite-0.2.tar.gz",
+    "size_bytes": 3012,
+    "sha256": "5c345ca27fa218b51898e8e302ad36f0728ea8aac7ee4cea99608c6ded68bf9d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/erropix/library/ESP32%2520AnalogWrite/0.2/ESP32AnalogWrite-0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/erropix/library/ESP32%20AnalogWrite/0.2/ESP32AnalogWrite-0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "erropix/library/ESP32%20AnalogWrite/0.3/ESP32AnalogWrite-0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32AnalogWrite-0.3.tar.gz",
+    "size_bytes": 3344,
+    "sha256": "f4adae824e5278ef6518192e97b0e8ec1ef205f55550442350b15559784fff1d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/erropix/library/ESP32%2520AnalogWrite/0.3/ESP32AnalogWrite-0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/erropix/library/ESP32%20AnalogWrite/0.3/ESP32AnalogWrite-0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

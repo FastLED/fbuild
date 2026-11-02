@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/piezosonic",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "piezosonic/library/PSI/1.0.0/PSI-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PSI-1.0.0.tar.gz",
+    "size_bytes": 19735,
+    "sha256": "53d45ba4793fa3e8b9a17974a61711dec66a3f59e6b39cade2d358fec0c9658b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/piezosonic/library/PSI/1.0.0/PSI-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/piezosonic/library/PSI/1.0.0/PSI-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

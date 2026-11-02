@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/moinologics",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "moinologics/library/AsyncTask/1.0.0/AsyncTask-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncTask-1.0.0.tar.gz",
+    "size_bytes": 4374,
+    "sha256": "c920ac71f1e9935beeca7fd45fb8fd174fb189307e63956e6034fe78866181ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moinologics/library/AsyncTask/1.0.0/AsyncTask-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/moinologics/library/AsyncTask/1.0.0/AsyncTask-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

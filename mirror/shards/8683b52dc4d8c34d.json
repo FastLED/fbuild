@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/markhor3d",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "markhor3d/library/M3D-Go-PIO/1.0.15/M3D-Go-PIO-1.0.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M3D-Go-PIO-1.0.15.tar.gz",
+    "size_bytes": 54733,
+    "sha256": "8baffcd63f0025f8ba6f85ee3668cc904af0ed7073125355c5795c206c1dbc0b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/markhor3d/library/M3D-Go-PIO/1.0.15/M3D-Go-PIO-1.0.15.tar.gz",
+     "https://dl.registry.platformio.org/download/markhor3d/library/M3D-Go-PIO/1.0.15/M3D-Go-PIO-1.0.15.tar.gz"
+    ]
+   }
+  }
+ ]
+}

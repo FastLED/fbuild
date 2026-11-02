@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/udfsmart",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "udfsmart/library/Relay%20Controller/1.0.1/RelayController-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RelayController-1.0.1.tar.gz",
+    "size_bytes": 7947,
+    "sha256": "8a5640afbf54e9ec1acb4822ab00ac859c5ecc7bfcf2f5a7841ff3d8a821f116",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/udfsmart/library/Relay%2520Controller/1.0.1/RelayController-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/udfsmart/library/Relay%20Controller/1.0.1/RelayController-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "udfsmart/library/Relay%20Controller/1.0.3/RelayController-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RelayController-1.0.3.tar.gz",
+    "size_bytes": 8086,
+    "sha256": "30540b0feb0bb271a5182a25df65cc256e0ab49cc93ffd0c81c2ba14da40a9f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/udfsmart/library/Relay%2520Controller/1.0.3/RelayController-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/udfsmart/library/Relay%20Controller/1.0.3/RelayController-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "udfsmart/library/Relay%20Controller/1.0.5/RelayController-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RelayController-1.0.5.tar.gz",
+    "size_bytes": 8515,
+    "sha256": "d03e3ad0abdb11e726e96eeffe91bef27d2f60d75690be6ca7d2a435639998e0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/udfsmart/library/Relay%2520Controller/1.0.5/RelayController-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/udfsmart/library/Relay%20Controller/1.0.5/RelayController-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "udfsmart/library/UCommandExecutor/1.0.0/UCommandExecutor-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UCommandExecutor-1.0.0.tar.gz",
+    "size_bytes": 7926,
+    "sha256": "c6f72f77df00ab6baf4238355b21c8fadef5ce04c51133b091d38508c33c9af1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/udfsmart/library/UCommandExecutor/1.0.0/UCommandExecutor-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/udfsmart/library/UCommandExecutor/1.0.0/UCommandExecutor-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

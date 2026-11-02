@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mcudude",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mcudude/library/KTMS1201/1.0.1/KTMS1201-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KTMS1201-1.0.1.tar.gz",
+    "size_bytes": 6863,
+    "sha256": "65ab97097cc27161b1c2bafeaa9fc9bac0ea11fb30aef6175628e6c1c2498de6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mcudude/library/KTMS1201/1.0.1/KTMS1201-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mcudude/library/KTMS1201/1.0.1/KTMS1201-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mcudude/library/Parallel%20Thermal%20Printer/1.0/ParallelThermalPrinter-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ParallelThermalPrinter-1.0.tar.gz",
+    "size_bytes": 9052,
+    "sha256": "4ec8740c33da53f1d3b35ff1a0d66ecee3776d1dc19bc84aa04788dc16021602",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mcudude/library/Parallel%2520Thermal%2520Printer/1.0/ParallelThermalPrinter-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mcudude/library/Parallel%20Thermal%20Printer/1.0/ParallelThermalPrinter-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mcudude/library/SigmaDSP/1.1.6/SigmaDSP-1.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SigmaDSP-1.1.6.tar.gz",
+    "size_bytes": 221082,
+    "sha256": "0a7063a0cce55caf2767ec02edddc2bc686d4033cd127de7a44fa5ef60eaeef9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mcudude/library/SigmaDSP/1.1.6/SigmaDSP-1.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/mcudude/library/SigmaDSP/1.1.6/SigmaDSP-1.1.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

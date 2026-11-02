@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pvizeli",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pvizeli/library/CmdParser/0.0.0-alpha+sha.dcaa7eada9/CmdParser-0.0.0-alphasha.dcaa7eada9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CmdParser-0.0.0-alphasha.dcaa7eada9.tar.gz",
+    "size_bytes": 10534,
+    "sha256": "8684a670d8e6e6a27ae7a8534a26817afb83a04397bef3c31d6f05a057e4e00d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pvizeli/library/CmdParser/0.0.0-alpha%2Bsha.dcaa7eada9/CmdParser-0.0.0-alphasha.dcaa7eada9.tar.gz",
+     "https://dl.registry.platformio.org/download/pvizeli/library/CmdParser/0.0.0-alpha%2Bsha.dcaa7eada9/CmdParser-0.0.0-alphasha.dcaa7eada9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

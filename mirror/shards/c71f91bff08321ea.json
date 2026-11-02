@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/frnikho",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "frnikho/library/esp32-hive-adapter/0.0.4/esp32-hive-adapter-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32-hive-adapter-0.0.4.tar.gz",
+    "size_bytes": 3027,
+    "sha256": "7895fed128258267a148d0926c845e39f71ddd709ce6836fc10ee5ce16b4b4b0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/frnikho/library/esp32-hive-adapter/0.0.4/esp32-hive-adapter-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/frnikho/library/esp32-hive-adapter/0.0.4/esp32-hive-adapter-0.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

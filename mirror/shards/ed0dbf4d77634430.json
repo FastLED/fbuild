@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fabianvoelker",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fabianvoelker/library/AD7719/1.6.0/AD7719-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AD7719-1.6.0.tar.gz",
+    "size_bytes": 8667,
+    "sha256": "5b7b57655260a5d0f2035170229c511c8e18d360c6f857213fc6e2e7257e118b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fabianvoelker/library/AD7719/1.6.0/AD7719-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fabianvoelker/library/AD7719/1.6.0/AD7719-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fabianvoelker/library/FDC2214%20Library/0.0.6/FDC2214Library-0.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FDC2214Library-0.0.6.tar.gz",
+    "size_bytes": 7478,
+    "sha256": "ccbf47a0dc0f7b5129836c2b98aaacd655d508f1f0cf1912baff9f476e42017b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fabianvoelker/library/FDC2214%2520Library/0.0.6/FDC2214Library-0.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/fabianvoelker/library/FDC2214%20Library/0.0.6/FDC2214Library-0.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fabianvoelker/library/PCF85263/1.0.9/PCF85263-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCF85263-1.0.9.tar.gz",
+    "size_bytes": 13165,
+    "sha256": "87844077523cc8fd42f2e936894486413c32e9394152434f0fd0c6e0aacfb5d4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fabianvoelker/library/PCF85263/1.0.9/PCF85263-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/fabianvoelker/library/PCF85263/1.0.9/PCF85263-1.0.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

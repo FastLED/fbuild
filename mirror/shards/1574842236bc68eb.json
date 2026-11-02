@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rigelsixsix",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rigelsixsix/library/flagManager/2.1.0/flagManager-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "flagManager-2.1.0.tar.gz",
+    "size_bytes": 15247,
+    "sha256": "9e160bfe8ff861f6794edb2f7e7af463e7259bd67a6fba2b52f96ae27fb54433",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rigelsixsix/library/flagManager/2.1.0/flagManager-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rigelsixsix/library/flagManager/2.1.0/flagManager-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rigelsixsix/library/flagManager/2.1.6/flagManager-2.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "flagManager-2.1.6.tar.gz",
+    "size_bytes": 15862,
+    "sha256": "a1493dd827db35036152d1f8a1bdee2c883824c3b04ff2d0fc50989bd7df18a3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rigelsixsix/library/flagManager/2.1.6/flagManager-2.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/rigelsixsix/library/flagManager/2.1.6/flagManager-2.1.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

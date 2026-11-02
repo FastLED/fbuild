@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sadika9",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sadika9/library/SPFD5408%20TFT%20Library/1.2.0/SPFD5408TFTLibrary-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SPFD5408TFTLibrary-1.2.0.tar.gz",
+    "size_bytes": 139889,
+    "sha256": "b04da76fe6a810c032a89db65b14439f2b931443516894dc021acc91d0b5e520",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sadika9/library/SPFD5408%2520TFT%2520Library/1.2.0/SPFD5408TFTLibrary-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sadika9/library/SPFD5408%20TFT%20Library/1.2.0/SPFD5408TFTLibrary-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

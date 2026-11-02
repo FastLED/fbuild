@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/arduinogetstarted",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "arduinogetstarted/library/ezAnalogKeypad/1.0.2/ezAnalogKeypad-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ezAnalogKeypad-1.0.2.tar.gz",
+    "size_bytes": 3580,
+    "sha256": "fecdf635c0f6cf431aac54f270a070f9d9ae144028daf596f76ac78a815b7777",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduinogetstarted/library/ezAnalogKeypad/1.0.2/ezAnalogKeypad-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/arduinogetstarted/library/ezAnalogKeypad/1.0.2/ezAnalogKeypad-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduinogetstarted/library/ezButton/1.0.6/ezButton-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ezButton-1.0.6.tar.gz",
+    "size_bytes": 4412,
+    "sha256": "2c9861c443a6c2ddd3ccb584a8d03059f0be77428743ebd798e2d51b935074b0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduinogetstarted/library/ezButton/1.0.6/ezButton-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/arduinogetstarted/library/ezButton/1.0.6/ezButton-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduinogetstarted/library/ezBuzzer/1.0.2/ezBuzzer-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ezBuzzer-1.0.2.tar.gz",
+    "size_bytes": 5959,
+    "sha256": "71f21a5ed32239822bb4ad712d84a47ff7de01065dfa7918515c9d81df31f328",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduinogetstarted/library/ezBuzzer/1.0.2/ezBuzzer-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/arduinogetstarted/library/ezBuzzer/1.0.2/ezBuzzer-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduinogetstarted/library/ezLED/1.0.1/ezLED-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ezLED-1.0.1.tar.gz",
+    "size_bytes": 5862,
+    "sha256": "437ca8a727ea3b62a9481771022d58794360b313fac7ea3c3242de7231cc9421",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduinogetstarted/library/ezLED/1.0.1/ezLED-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduinogetstarted/library/ezLED/1.0.1/ezLED-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduinogetstarted/library/ezOutput/1.2.0/ezOutput-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ezOutput-1.2.0.tar.gz",
+    "size_bytes": 4165,
+    "sha256": "01e5a1ac4c4f49e69f63609b44e6ba3613b5feb6db99bc251eb8a78499e87b09",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduinogetstarted/library/ezOutput/1.2.0/ezOutput-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduinogetstarted/library/ezOutput/1.2.0/ezOutput-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

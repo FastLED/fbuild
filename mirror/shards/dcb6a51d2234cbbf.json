@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-timgoh0",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-timgoh0/library/HT1632/0.0.0+sha.0c434f20492d/HT1632-0.0.0+sha.0c434f20492d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HT1632-0.0.0+sha.0c434f20492d.tar.gz",
+    "size_bytes": 2515,
+    "sha256": "edce9ba84313054a7d74355efb2288160c9f95a781ec62cd4c5251edc69514a0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-timgoh0/library/HT1632/0.0.0%2Bsha.0c434f20492d/HT1632-0.0.0%2Bsha.0c434f20492d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-timgoh0/library/HT1632/0.0.0%2Bsha.0c434f20492d/HT1632-0.0.0%2Bsha.0c434f20492d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bitsanddroids",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bitsanddroids/library/Bits%20and%20Droids%20flight%20sim%20library/1.6.16/BitsandDroidsflightsimlibrary-1.6.16.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BitsandDroidsflightsimlibrary-1.6.16.tar.gz",
+    "size_bytes": 25984,
+    "sha256": "91d4c63e277715aed05a3ea2309d081e790109941fce1171e9eb8d6d834f2710",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitsanddroids/library/Bits%2520and%2520Droids%2520flight%2520sim%2520library/1.6.16/BitsandDroidsflightsimlibrary-1.6.16.tar.gz",
+     "https://dl.registry.platformio.org/download/bitsanddroids/library/Bits%20and%20Droids%20flight%20sim%20library/1.6.16/BitsandDroidsflightsimlibrary-1.6.16.tar.gz"
+    ]
+   }
+  }
+ ]
+}

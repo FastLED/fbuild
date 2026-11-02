@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/johnsnow-nam",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "johnsnow-nam/library/ELIO-ARDUINO-EXAMPLE/1.0.1/ELIO-ARDUINO-EXAMPLE-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ELIO-ARDUINO-EXAMPLE-1.0.1.tar.gz",
+    "size_bytes": 9145,
+    "sha256": "583a4305f4509f3b063f12adfc7e15dd8b69aaab512c65a5737badd1efa264ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/johnsnow-nam/library/ELIO-ARDUINO-EXAMPLE/1.0.1/ELIO-ARDUINO-EXAMPLE-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/johnsnow-nam/library/ELIO-ARDUINO-EXAMPLE/1.0.1/ELIO-ARDUINO-EXAMPLE-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

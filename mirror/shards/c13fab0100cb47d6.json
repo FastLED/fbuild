@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/5n44p",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "5n44p/library/HT1621/2.1.2/HT1621-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HT1621-2.1.2.tar.gz",
+    "size_bytes": 6936,
+    "sha256": "9f513cc759beb418d33c676de09097c1a0feeb02abf83ce1340287c0e4f1f555",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/5n44p/library/HT1621/2.1.2/HT1621-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/5n44p/library/HT1621/2.1.2/HT1621-2.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

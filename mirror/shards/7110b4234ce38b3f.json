@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-s5info-h14",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-s5info-h14/library/WebSocketClient/0.0.0+sha.71d34230a98b/WebSocketClient-0.0.0+sha.71d34230a98b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WebSocketClient-0.0.0+sha.71d34230a98b.tar.gz",
+    "size_bytes": 4703,
+    "sha256": "4362ad30275a7f22963e19283a81780895415f6587c1584f6f62b1913f282586",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-s5info-h14/library/WebSocketClient/0.0.0%2Bsha.71d34230a98b/WebSocketClient-0.0.0%2Bsha.71d34230a98b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-s5info-h14/library/WebSocketClient/0.0.0%2Bsha.71d34230a98b/WebSocketClient-0.0.0%2Bsha.71d34230a98b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

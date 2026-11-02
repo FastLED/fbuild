@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-akira",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-akira/library/AD128160/0.0.0+sha.96576c9c7828/AD128160-0.0.0+sha.96576c9c7828.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AD128160-0.0.0+sha.96576c9c7828.tar.gz",
+    "size_bytes": 2886,
+    "sha256": "4133453ef4d713fa388dd716833c2d18d5735acda143a6b18941ff462e0b97da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-akira/library/AD128160/0.0.0%2Bsha.96576c9c7828/AD128160-0.0.0%2Bsha.96576c9c7828.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-akira/library/AD128160/0.0.0%2Bsha.96576c9c7828/AD128160-0.0.0%2Bsha.96576c9c7828.tar.gz"
+    ]
+   }
+  }
+ ]
+}

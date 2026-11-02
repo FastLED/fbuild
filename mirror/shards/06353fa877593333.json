@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fablab-bayreuth",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fablab-bayreuth/library/WTV020SD16P/1.4.0/WTV020SD16P-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WTV020SD16P-1.4.0.tar.gz",
+    "size_bytes": 3231,
+    "sha256": "a343a988e10c4cc5d4a73e353b088f4238bfb6dfdb7e2ce90fbee1e0c944d6a7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fablab-bayreuth/library/WTV020SD16P/1.4.0/WTV020SD16P-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fablab-bayreuth/library/WTV020SD16P/1.4.0/WTV020SD16P-1.4.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

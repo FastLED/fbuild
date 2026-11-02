@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nathanramanoodles",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nathanramanoodles/library/NoodleSynth/4.0.0/NoodleSynth-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NoodleSynth-4.0.0.tar.gz",
+    "size_bytes": 45572,
+    "sha256": "314ffc5d2931f374f92f786325926660b405a4453f3691e84ff81329e81d9ae3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nathanramanoodles/library/NoodleSynth/4.0.0/NoodleSynth-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nathanramanoodles/library/NoodleSynth/4.0.0/NoodleSynth-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nathanramanoodles/library/SensorToButton/1.0.1/SensorToButton-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensorToButton-1.0.1.tar.gz",
+    "size_bytes": 4781,
+    "sha256": "f928b9a265e73e2dc8ef722e4409d76d504c50ac8190f3b3e8c89ee5ebff8e1e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nathanramanoodles/library/SensorToButton/1.0.1/SensorToButton-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nathanramanoodles/library/SensorToButton/1.0.1/SensorToButton-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nathanramanoodles/library/TinkerController/0.1.0/TinkerController-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinkerController-0.1.0.tar.gz",
+    "size_bytes": 2850,
+    "sha256": "c95eac5488462636e779b779870d5ba628b9d9190353d0b40e8d0dd1a2dbf8c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nathanramanoodles/library/TinkerController/0.1.0/TinkerController-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nathanramanoodles/library/TinkerController/0.1.0/TinkerController-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

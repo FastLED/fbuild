@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-rctaduio",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-rctaduio/library/mpu9250/0.0.0+sha.89967a01628c/mpu9250-0.0.0+sha.89967a01628c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mpu9250-0.0.0+sha.89967a01628c.tar.gz",
+    "size_bytes": 12163,
+    "sha256": "dd36560c2871e92812ddabfb71af4dac31fc45917cc969dc9445e8d9f74118b6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rctaduio/library/mpu9250/0.0.0%2Bsha.89967a01628c/mpu9250-0.0.0%2Bsha.89967a01628c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rctaduio/library/mpu9250/0.0.0%2Bsha.89967a01628c/mpu9250-0.0.0%2Bsha.89967a01628c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

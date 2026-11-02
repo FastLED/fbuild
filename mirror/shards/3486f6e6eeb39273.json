@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/reinodovo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "reinodovo/library/BombManualGenerator/0.3.0/BombManualGenerator-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BombManualGenerator-0.3.0.tar.gz",
+    "size_bytes": 137403,
+    "sha256": "c4bfa0420c9ca350ded00aca3df44c7cc0aab6b94e209c7d8c4e116b5c542ae5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/reinodovo/library/BombManualGenerator/0.3.0/BombManualGenerator-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/reinodovo/library/BombManualGenerator/0.3.0/BombManualGenerator-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "reinodovo/library/BombManualGenerator/0.3.1/BombManualGenerator-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BombManualGenerator-0.3.1.tar.gz",
+    "size_bytes": 138121,
+    "sha256": "8b6e44a73bbf7cc98b9318b06b474e81178211287dbfbd099ee6a2555738eb85",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/reinodovo/library/BombManualGenerator/0.3.1/BombManualGenerator-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/reinodovo/library/BombManualGenerator/0.3.1/BombManualGenerator-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "reinodovo/library/BombProtocol/0.4.1/BombProtocol-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BombProtocol-0.4.1.tar.gz",
+    "size_bytes": 14446,
+    "sha256": "64c950ad4f43cdd8293c4d1fb262fda822bdcb6b8d0b168f3bf5bb35c053c660",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/reinodovo/library/BombProtocol/0.4.1/BombProtocol-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/reinodovo/library/BombProtocol/0.4.1/BombProtocol-0.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "reinodovo/library/BombProtocol/0.5.0/BombProtocol-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BombProtocol-0.5.0.tar.gz",
+    "size_bytes": 17820,
+    "sha256": "af2ef53fffa3585004865625109a367e66c348841b6e723fd682c957b0f9c4c4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/reinodovo/library/BombProtocol/0.5.0/BombProtocol-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/reinodovo/library/BombProtocol/0.5.0/BombProtocol-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "reinodovo/library/BombProtocol/0.6.0/BombProtocol-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BombProtocol-0.6.0.tar.gz",
+    "size_bytes": 18117,
+    "sha256": "255b846d7ae9cbcf1c6fe44b1c28cea1d9a9c433547cea7969e66f4a8a7aa60b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/reinodovo/library/BombProtocol/0.6.0/BombProtocol-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/reinodovo/library/BombProtocol/0.6.0/BombProtocol-0.6.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

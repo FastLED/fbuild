@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/leodj",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "leodj/library/SSD1303/1.0.1/SSD1303-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SSD1303-1.0.1.tar.gz",
+    "size_bytes": 9494,
+    "sha256": "35466465e59d3a7755f4b2056f88b245247a8fe3f1f754c0c1cbc406c6258ddb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leodj/library/SSD1303/1.0.1/SSD1303-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/leodj/library/SSD1303/1.0.1/SSD1303-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

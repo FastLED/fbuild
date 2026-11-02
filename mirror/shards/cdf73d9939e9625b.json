@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ivop",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ivop/library/fastlib/0.0.0+sha.148b9af2b336/fastlib-0.0.0+sha.148b9af2b336.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "fastlib-0.0.0+sha.148b9af2b336.tar.gz",
+    "size_bytes": 26383,
+    "sha256": "e6ab7140260b29d1fcb112746c7a976d3b79b3ab0209f9ee340ee1ca35738cfa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ivop/library/fastlib/0.0.0%2Bsha.148b9af2b336/fastlib-0.0.0%2Bsha.148b9af2b336.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ivop/library/fastlib/0.0.0%2Bsha.148b9af2b336/fastlib-0.0.0%2Bsha.148b9af2b336.tar.gz"
+    ]
+   }
+  }
+ ]
+}

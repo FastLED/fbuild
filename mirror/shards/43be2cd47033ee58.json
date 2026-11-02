@@ -1,0 +1,126 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/klonek",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "klonek/library/kloniot/0.0.1/kloniot-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "kloniot-0.0.1.tar.gz",
+    "size_bytes": 54282,
+    "sha256": "b57f37facfa40221a14b6af11dd97c1581b71cefba089a98c72e113940e51054",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/klonek/library/kloniot/0.0.1/kloniot-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/klonek/library/kloniot/0.0.1/kloniot-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "klonek/library/kloniot/0.0.2/kloniot-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "kloniot-0.0.2.tar.gz",
+    "size_bytes": 53738,
+    "sha256": "72f9485c9d737a8feb810e0eaae0f1d16fd70c99d6f3de3a77eaa917200a6c3a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/klonek/library/kloniot/0.0.2/kloniot-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/klonek/library/kloniot/0.0.2/kloniot-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "klonek/library/kloniot/0.0.3/kloniot-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "kloniot-0.0.3.tar.gz",
+    "size_bytes": 54051,
+    "sha256": "6b0f93864a6becab8a425cae6d1cac525aa1c57b222950ebc782b62ff7a9230c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/klonek/library/kloniot/0.0.3/kloniot-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/klonek/library/kloniot/0.0.3/kloniot-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "klonek/library/kloniot/0.0.4/kloniot-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "kloniot-0.0.4.tar.gz",
+    "size_bytes": 58476,
+    "sha256": "7217b3e5b9c8702131b687c6d69e7c5aaa6ed9ac59c01224c1c2594ad5409742",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/klonek/library/kloniot/0.0.4/kloniot-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/klonek/library/kloniot/0.0.4/kloniot-0.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "klonek/library/kloniot/0.0.5/kloniot-0.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "kloniot-0.0.5.tar.gz",
+    "size_bytes": 58474,
+    "sha256": "e636a90ed74815691285e8e7d7375c3f2c968336913f5ac94e3a971537bc6724",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/klonek/library/kloniot/0.0.5/kloniot-0.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/klonek/library/kloniot/0.0.5/kloniot-0.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "klonek/library/kloniot/0.0.6/kloniot-0.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "kloniot-0.0.6.tar.gz",
+    "size_bytes": 58571,
+    "sha256": "de7dfd7629ebc8d68429c528d84f8144918bbe851f32b497ea79b1ee8c180e0c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/klonek/library/kloniot/0.0.6/kloniot-0.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/klonek/library/kloniot/0.0.6/kloniot-0.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "klonek/library/kloniot/0.0.7/kloniot-0.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "kloniot-0.0.7.tar.gz",
+    "size_bytes": 58591,
+    "sha256": "db18e2d370a481c88840757c319f537d88e6be8d716e62f26a9820e2a0de9bf7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/klonek/library/kloniot/0.0.7/kloniot-0.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/klonek/library/kloniot/0.0.7/kloniot-0.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "klonek/library/kloniot/0.0.8/kloniot-0.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "kloniot-0.0.8.tar.gz",
+    "size_bytes": 58562,
+    "sha256": "a024102ab945bc24b87a0d1f99a0cc83fb3c8012d5a5d2ef8d716df482c65a64",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/klonek/library/kloniot/0.0.8/kloniot-0.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/klonek/library/kloniot/0.0.8/kloniot-0.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "klonek/library/kloniot/0.0.9/kloniot-0.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "kloniot-0.0.9.tar.gz",
+    "size_bytes": 58969,
+    "sha256": "6eecc379e481e436308c197d0ccbbea60ca61b92e56c57a28294d6a0dd08518b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/klonek/library/kloniot/0.0.9/kloniot-0.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/klonek/library/kloniot/0.0.9/kloniot-0.0.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

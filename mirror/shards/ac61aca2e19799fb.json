@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-innovodesign",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-innovodesign/library/udpBroadcastSocket/0.0.0+sha.45f2ef9eadb6/udpBroadcastSocket-0.0.0+sha.45f2ef9eadb6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "udpBroadcastSocket-0.0.0+sha.45f2ef9eadb6.tar.gz",
+    "size_bytes": 1682,
+    "sha256": "8cd34cf1b34f9a274072d1757ae55060f663211f2c89c3f3a30e967f9904b108",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-innovodesign/library/udpBroadcastSocket/0.0.0%2Bsha.45f2ef9eadb6/udpBroadcastSocket-0.0.0%2Bsha.45f2ef9eadb6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-innovodesign/library/udpBroadcastSocket/0.0.0%2Bsha.45f2ef9eadb6/udpBroadcastSocket-0.0.0%2Bsha.45f2ef9eadb6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

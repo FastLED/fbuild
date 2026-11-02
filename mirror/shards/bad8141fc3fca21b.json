@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-hexiwear",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-hexiwear/library/Hexi_KW40Z/0.0.0+sha.3f5ed7abc5c7/Hexi_KW40Z-0.0.0+sha.3f5ed7abc5c7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Hexi_KW40Z-0.0.0+sha.3f5ed7abc5c7.tar.gz",
+    "size_bytes": 6902,
+    "sha256": "3d72fbba2b9ccaed6a3e97fdb97b4b5182681d13f98f3a0d8ddf46ff1af8ce5b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hexiwear/library/Hexi_KW40Z/0.0.0%2Bsha.3f5ed7abc5c7/Hexi_KW40Z-0.0.0%2Bsha.3f5ed7abc5c7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hexiwear/library/Hexi_KW40Z/0.0.0%2Bsha.3f5ed7abc5c7/Hexi_KW40Z-0.0.0%2Bsha.3f5ed7abc5c7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hexiwear/library/Hexi_MLX90614/0.0.0+sha.8f8aedd25609/Hexi_MLX90614-0.0.0+sha.8f8aedd25609.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Hexi_MLX90614-0.0.0+sha.8f8aedd25609.tar.gz",
+    "size_bytes": 1733,
+    "sha256": "0120b2e0b51705e65c1b9d7a2ecbec88908c64a5d73d568ab529a0134f90f0b6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hexiwear/library/Hexi_MLX90614/0.0.0%2Bsha.8f8aedd25609/Hexi_MLX90614-0.0.0%2Bsha.8f8aedd25609.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hexiwear/library/Hexi_MLX90614/0.0.0%2Bsha.8f8aedd25609/Hexi_MLX90614-0.0.0%2Bsha.8f8aedd25609.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hexiwear/library/Hexi_OLED_SSD1351/0.0.0+sha.ae5fad429790/Hexi_OLED_SSD1351-0.0.0+sha.ae5fad429790.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Hexi_OLED_SSD1351-0.0.0+sha.ae5fad429790.tar.gz",
+    "size_bytes": 21338,
+    "sha256": "adf6ed1a26462ee04200d522a0cde6aa45a2ae82f329ec6c25e01384a54a389e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hexiwear/library/Hexi_OLED_SSD1351/0.0.0%2Bsha.ae5fad429790/Hexi_OLED_SSD1351-0.0.0%2Bsha.ae5fad429790.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hexiwear/library/Hexi_OLED_SSD1351/0.0.0%2Bsha.ae5fad429790/Hexi_OLED_SSD1351-0.0.0%2Bsha.ae5fad429790.tar.gz"
+    ]
+   }
+  }
+ ]
+}

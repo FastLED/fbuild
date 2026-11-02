@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-wolfsberger",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-wolfsberger/library/InterruptBasedEncoder/0.0.0+sha.d510e8063ad1/InterruptBasedEncoder-0.0.0+sha.d510e8063ad1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "InterruptBasedEncoder-0.0.0+sha.d510e8063ad1.tar.gz",
+    "size_bytes": 1308,
+    "sha256": "bbd89daf64a19fccdba99323789fe22a1a5abbbe5dcef213c88cb3f418f8431a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wolfsberger/library/InterruptBasedEncoder/0.0.0%2Bsha.d510e8063ad1/InterruptBasedEncoder-0.0.0%2Bsha.d510e8063ad1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wolfsberger/library/InterruptBasedEncoder/0.0.0%2Bsha.d510e8063ad1/InterruptBasedEncoder-0.0.0%2Bsha.d510e8063ad1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wolfsberger/library/SPI_TFT_ILI9341/0.0.0+sha.77f9f262e449/SPI_TFT_ILI9341-0.0.0+sha.77f9f262e449.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SPI_TFT_ILI9341-0.0.0+sha.77f9f262e449.tar.gz",
+    "size_bytes": 18697,
+    "sha256": "6a41d678c7d2be53f2ddf90ae44520d64fe566939883047ea7f978fc626b5ce2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wolfsberger/library/SPI_TFT_ILI9341/0.0.0%2Bsha.77f9f262e449/SPI_TFT_ILI9341-0.0.0%2Bsha.77f9f262e449.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wolfsberger/library/SPI_TFT_ILI9341/0.0.0%2Bsha.77f9f262e449/SPI_TFT_ILI9341-0.0.0%2Bsha.77f9f262e449.tar.gz"
+    ]
+   }
+  }
+ ]
+}

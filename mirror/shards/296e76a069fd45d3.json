@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/platisd",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "platisd/library/Nokia%205110%20LCD%20library/2.7.2/Nokia5110LCDlibrary-2.7.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Nokia5110LCDlibrary-2.7.2.tar.gz",
+    "size_bytes": 26704,
+    "sha256": "dc5870ef3686c06f62e886618ecb4cbdacc0f4a9e74a9a8dc8a9042a6a2a8839",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/platisd/library/Nokia%25205110%2520LCD%2520library/2.7.2/Nokia5110LCDlibrary-2.7.2.tar.gz",
+     "https://dl.registry.platformio.org/download/platisd/library/Nokia%205110%20LCD%20library/2.7.2/Nokia5110LCDlibrary-2.7.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "platisd/library/Smartcar%20shield/7.1.2/Smartcarshield-7.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Smartcarshield-7.1.2.tar.gz",
+    "size_bytes": 47558,
+    "sha256": "a3b3571f6b9ba742d4d2faf5b125f8be865ded6290ab1995d6e17d79c57e23af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/platisd/library/Smartcar%2520shield/7.1.2/Smartcarshield-7.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/platisd/library/Smartcar%20shield/7.1.2/Smartcarshield-7.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "platisd/library/Smartcar%20shield/7.1.3/Smartcarshield-7.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Smartcarshield-7.1.3.tar.gz",
+    "size_bytes": 47911,
+    "sha256": "566171e52a6083d04f53179e6cd42fc69b692dd028c2f6ebe3e916b384782be4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/platisd/library/Smartcar%2520shield/7.1.3/Smartcarshield-7.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/platisd/library/Smartcar%20shield/7.1.3/Smartcarshield-7.1.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,633 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/alivka",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "alivka/library/vex5/0.9.0/vex5-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vex5-0.9.0.tar.gz",
+    "size_bytes": 56345,
+    "sha256": "f3437a603f3ced8aad601c13464f8dc8e17aaa9546b3c379d9d1982062e438c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alivka/library/vex5/0.9.0/vex5-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alivka/library/vex5/0.9.0/vex5-0.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alivka/library/vex5/0.9.1/vex5-0.9.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vex5-0.9.1.tar.gz",
+    "size_bytes": 56350,
+    "sha256": "84eac4f136155d92db562782161af58f55841770451a02317f3f2d83f8c51d20",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alivka/library/vex5/0.9.1/vex5-0.9.1.tar.gz",
+     "https://dl.registry.platformio.org/download/alivka/library/vex5/0.9.1/vex5-0.9.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alivka/library/vex5/0.9.2/vex5-0.9.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vex5-0.9.2.tar.gz",
+    "size_bytes": 56352,
+    "sha256": "5d07b3a3c30fa57a367c490d336a1006b684cac4c60ca1280f0b16886f405bc7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alivka/library/vex5/0.9.2/vex5-0.9.2.tar.gz",
+     "https://dl.registry.platformio.org/download/alivka/library/vex5/0.9.2/vex5-0.9.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alivka/library/vislib/0.0.10/vislib-0.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vislib-0.0.10.tar.gz",
+    "size_bytes": 11465,
+    "sha256": "ea251a228b954e505df78c03f79199f00521095afe117fc554e8f7f7f104bc73",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alivka/library/vislib/0.0.10/vislib-0.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/alivka/library/vislib/0.0.10/vislib-0.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alivka/library/vislib/0.0.12/vislib-0.0.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vislib-0.0.12.tar.gz",
+    "size_bytes": 13061,
+    "sha256": "2119f2cfda9e38eb799b2fd791c8fcef14e3589e93879f35082ad9a88ab09bba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alivka/library/vislib/0.0.12/vislib-0.0.12.tar.gz",
+     "https://dl.registry.platformio.org/download/alivka/library/vislib/0.0.12/vislib-0.0.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alivka/library/vislib/0.0.13/vislib-0.0.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vislib-0.0.13.tar.gz",
+    "size_bytes": 13113,
+    "sha256": "4f2c2c6c2cdbf29ca2902e1a91d48c8652d8acc1cf9d4b420820f40f56bcf71d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alivka/library/vislib/0.0.13/vislib-0.0.13.tar.gz",
+     "https://dl.registry.platformio.org/download/alivka/library/vislib/0.0.13/vislib-0.0.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alivka/library/vislib/0.0.14/vislib-0.0.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vislib-0.0.14.tar.gz",
+    "size_bytes": 12902,
+    "sha256": "9feae85fa99c9875eca384915e32c9f98e679f40966109e12e6944d005676750",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alivka/library/vislib/0.0.14/vislib-0.0.14.tar.gz",
+     "https://dl.registry.platformio.org/download/alivka/library/vislib/0.0.14/vislib-0.0.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alivka/library/vislib/0.0.15/vislib-0.0.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vislib-0.0.15.tar.gz",
+    "size_bytes": 13260,
+    "sha256": "9db61b0b104a2bd14b36d1840eaa3fd8ebdda264229d6eea70447f9c09b8bb40",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alivka/library/vislib/0.0.15/vislib-0.0.15.tar.gz",
+     "https://dl.registry.platformio.org/download/alivka/library/vislib/0.0.15/vislib-0.0.15.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alivka/library/vislib/0.0.16/vislib-0.0.16.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vislib-0.0.16.tar.gz",
+    "size_bytes": 13477,
+    "sha256": "28fe14b0fda4f87f20529d7cd5cfb1660de804c5ba19725df50fc063e91831b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alivka/library/vislib/0.0.16/vislib-0.0.16.tar.gz",
+     "https://dl.registry.platformio.org/download/alivka/library/vislib/0.0.16/vislib-0.0.16.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alivka/library/vislib/0.0.18/vislib-0.0.18.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vislib-0.0.18.tar.gz",
+    "size_bytes": 13598,
+    "sha256": "f345911fba7c392f8146da53182ddc0334ddda729e68d2e551b2b8ed2e70fec0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alivka/library/vislib/0.0.18/vislib-0.0.18.tar.gz",
+     "https://dl.registry.platformio.org/download/alivka/library/vislib/0.0.18/vislib-0.0.18.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alivka/library/vislib/0.0.19/vislib-0.0.19.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vislib-0.0.19.tar.gz",
+    "size_bytes": 14619,
+    "sha256": "16a274c8240a41410e7415754f07af463de9e1642b2016c3a3050e2d6faec89c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alivka/library/vislib/0.0.19/vislib-0.0.19.tar.gz",
+     "https://dl.registry.platformio.org/download/alivka/library/vislib/0.0.19/vislib-0.0.19.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alivka/library/vislib/0.0.2/vislib-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vislib-0.0.2.tar.gz",
+    "size_bytes": 7688,
+    "sha256": "c8d17287c11a28ffdfe512a6cb4d42c93177fedd5157a1e31c9d1a080b13c472",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alivka/library/vislib/0.0.2/vislib-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/alivka/library/vislib/0.0.2/vislib-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alivka/library/vislib/0.0.20/vislib-0.0.20.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vislib-0.0.20.tar.gz",
+    "size_bytes": 15166,
+    "sha256": "a978117a472f1cbc745fe9df1249e7d5dd4ec0bb340e88aca5699984d238606e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alivka/library/vislib/0.0.20/vislib-0.0.20.tar.gz",
+     "https://dl.registry.platformio.org/download/alivka/library/vislib/0.0.20/vislib-0.0.20.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alivka/library/vislib/0.0.21/vislib-0.0.21.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vislib-0.0.21.tar.gz",
+    "size_bytes": 15918,
+    "sha256": "018a1387aaccded094df3f3d2490feb83af8bc0e025cbe3558b0aaf3c5fccbab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alivka/library/vislib/0.0.21/vislib-0.0.21.tar.gz",
+     "https://dl.registry.platformio.org/download/alivka/library/vislib/0.0.21/vislib-0.0.21.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alivka/library/vislib/0.0.22/vislib-0.0.22.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vislib-0.0.22.tar.gz",
+    "size_bytes": 15820,
+    "sha256": "0f6032166e4d49b257962ff27205b72f9aa49b9d56cfff921e5e38ec8bc59822",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alivka/library/vislib/0.0.22/vislib-0.0.22.tar.gz",
+     "https://dl.registry.platformio.org/download/alivka/library/vislib/0.0.22/vislib-0.0.22.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alivka/library/vislib/0.0.23/vislib-0.0.23.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vislib-0.0.23.tar.gz",
+    "size_bytes": 8613,
+    "sha256": "d7a72994aaf08283567156469111fa451e9582543a79972377e09f8eda0ada5d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alivka/library/vislib/0.0.23/vislib-0.0.23.tar.gz",
+     "https://dl.registry.platformio.org/download/alivka/library/vislib/0.0.23/vislib-0.0.23.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alivka/library/vislib/0.0.24/vislib-0.0.24.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vislib-0.0.24.tar.gz",
+    "size_bytes": 8421,
+    "sha256": "a6eb098a7e29b937fc9c189625cf6d2b6e1fdc1609dbd928eb6b2572e8f9d617",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alivka/library/vislib/0.0.24/vislib-0.0.24.tar.gz",
+     "https://dl.registry.platformio.org/download/alivka/library/vislib/0.0.24/vislib-0.0.24.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alivka/library/vislib/0.0.3/vislib-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vislib-0.0.3.tar.gz",
+    "size_bytes": 7698,
+    "sha256": "7f6a575cb1c8d3b7eeb9770ccdabf6a4c511077682fbb6b66e60f7c28ab1ec28",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alivka/library/vislib/0.0.3/vislib-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/alivka/library/vislib/0.0.3/vislib-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alivka/library/vislib/0.0.4/vislib-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vislib-0.0.4.tar.gz",
+    "size_bytes": 8044,
+    "sha256": "7f8a444e79ac40c9052cc9f3d4074fa625548bfdba7952d3864ab3f7c1a2164c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alivka/library/vislib/0.0.4/vislib-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/alivka/library/vislib/0.0.4/vislib-0.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alivka/library/vislib/0.0.5/vislib-0.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vislib-0.0.5.tar.gz",
+    "size_bytes": 8034,
+    "sha256": "efb75ff13cdf2208a50bdac15e2b01232590af13ca7f2358601d7846223344f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alivka/library/vislib/0.0.5/vislib-0.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/alivka/library/vislib/0.0.5/vislib-0.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alivka/library/vislib/0.0.6/vislib-0.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vislib-0.0.6.tar.gz",
+    "size_bytes": 8594,
+    "sha256": "8ec39b5a718bd8fe5e6571fb881bc5dde662efad75913a8a245884208e9b3224",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alivka/library/vislib/0.0.6/vislib-0.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/alivka/library/vislib/0.0.6/vislib-0.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alivka/library/vislib/0.0.7/vislib-0.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vislib-0.0.7.tar.gz",
+    "size_bytes": 9766,
+    "sha256": "e15f4dbe0fab2fec15d2fec324abd12c5e1b47816026c70a8c84400f43dcccaf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alivka/library/vislib/0.0.7/vislib-0.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/alivka/library/vislib/0.0.7/vislib-0.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alivka/library/vislib/0.0.8/vislib-0.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vislib-0.0.8.tar.gz",
+    "size_bytes": 10297,
+    "sha256": "359316ce3a8d3eb2d893eaf1ffd0bd0a11cfa21e7065aecd6a4fc94034e80478",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alivka/library/vislib/0.0.8/vislib-0.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/alivka/library/vislib/0.0.8/vislib-0.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alivka/library/vislib/0.0.9/vislib-0.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vislib-0.0.9.tar.gz",
+    "size_bytes": 10381,
+    "sha256": "afe7faf3f405129108e892cdc60c27258873cd433bd86a0cfb8874a05515a0ef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alivka/library/vislib/0.0.9/vislib-0.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/alivka/library/vislib/0.0.9/vislib-0.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alivka/library/vislib_arduino/0.0.0/vislib_arduino-0.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vislib_arduino-0.0.0.tar.gz",
+    "size_bytes": 1682,
+    "sha256": "da1a2ddcf8be86793f7f85d9673eb7c9872e27e235429955f7add2ed79e3c3c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alivka/library/vislib_arduino/0.0.0/vislib_arduino-0.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alivka/library/vislib_arduino/0.0.0/vislib_arduino-0.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alivka/library/vislib_arduino/0.0.1/vislib_arduino-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vislib_arduino-0.0.1.tar.gz",
+    "size_bytes": 2002,
+    "sha256": "c9e46136835b6748fd54744fe0c93d9db2565525dc5fb7ca04308f6097521c96",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alivka/library/vislib_arduino/0.0.1/vislib_arduino-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/alivka/library/vislib_arduino/0.0.1/vislib_arduino-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alivka/library/vislib_arduino/0.0.2/vislib_arduino-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vislib_arduino-0.0.2.tar.gz",
+    "size_bytes": 2105,
+    "sha256": "15fd1a948b90ad79acf0f070f4e298e8c88ada89b6dfcbe838b352263dadbfcc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alivka/library/vislib_arduino/0.0.2/vislib_arduino-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/alivka/library/vislib_arduino/0.0.2/vislib_arduino-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alivka/library/vislib_arduino/0.0.3/vislib_arduino-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vislib_arduino-0.0.3.tar.gz",
+    "size_bytes": 2102,
+    "sha256": "18c28a66c8cef52323c233f693fa6cbb5b402a374fa94d8b2f6fc795ac80bcc5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alivka/library/vislib_arduino/0.0.3/vislib_arduino-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/alivka/library/vislib_arduino/0.0.3/vislib_arduino-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alivka/library/vislib_mpu6050/0.0.0/vislib_mpu6050-0.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vislib_mpu6050-0.0.0.tar.gz",
+    "size_bytes": 1774,
+    "sha256": "c933cb555966a1e9a311544c35db992d3880e5ca9ae307dd18f5742f98edd9f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alivka/library/vislib_mpu6050/0.0.0/vislib_mpu6050-0.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alivka/library/vislib_mpu6050/0.0.0/vislib_mpu6050-0.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alivka/library/vislib_mpu6050/0.0.1/vislib_mpu6050-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vislib_mpu6050-0.0.1.tar.gz",
+    "size_bytes": 2165,
+    "sha256": "ad26b3423998f40f4db34f679c35c09d0aa82d6b13db0e7c6a78e54c1807fb47",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alivka/library/vislib_mpu6050/0.0.1/vislib_mpu6050-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/alivka/library/vislib_mpu6050/0.0.1/vislib_mpu6050-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alivka/library/vislib_mpu6050/0.0.2/vislib_mpu6050-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vislib_mpu6050-0.0.2.tar.gz",
+    "size_bytes": 2219,
+    "sha256": "afe2acf9354c6234bb60d4e06832453cd624d0578ac3620c0ef86f3720e537f9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alivka/library/vislib_mpu6050/0.0.2/vislib_mpu6050-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/alivka/library/vislib_mpu6050/0.0.2/vislib_mpu6050-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alivka/library/vislib_mpu6050/0.0.3/vislib_mpu6050-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vislib_mpu6050-0.0.3.tar.gz",
+    "size_bytes": 2147,
+    "sha256": "6e5d3b2bfc15054471dd1a2c4d0aa49a5782b38bc5a7b6a27fd5e7476d5534c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alivka/library/vislib_mpu6050/0.0.3/vislib_mpu6050-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/alivka/library/vislib_mpu6050/0.0.3/vislib_mpu6050-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alivka/library/vislib_mpu6050/0.0.4/vislib_mpu6050-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vislib_mpu6050-0.0.4.tar.gz",
+    "size_bytes": 4137,
+    "sha256": "6d02beb2ddbccbdf55ae5fb684bf452e68e424a257171bfc40950ede3e40d8f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alivka/library/vislib_mpu6050/0.0.4/vislib_mpu6050-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/alivka/library/vislib_mpu6050/0.0.4/vislib_mpu6050-0.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alivka/library/vislib_mpu6050/0.0.5/vislib_mpu6050-0.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vislib_mpu6050-0.0.5.tar.gz",
+    "size_bytes": 3508,
+    "sha256": "c67d4478c068fd7773e50e261c6e8b59d077d9a62e15535d927a05b21fc6bb50",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alivka/library/vislib_mpu6050/0.0.5/vislib_mpu6050-0.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/alivka/library/vislib_mpu6050/0.0.5/vislib_mpu6050-0.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alivka/library/vislib_mpu6050/0.0.6/vislib_mpu6050-0.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vislib_mpu6050-0.0.6.tar.gz",
+    "size_bytes": 3555,
+    "sha256": "5b3110ff6389af70d19bba139ef1f9d52500085ce3af7c955fa915f0f5eb74b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alivka/library/vislib_mpu6050/0.0.6/vislib_mpu6050-0.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/alivka/library/vislib_mpu6050/0.0.6/vislib_mpu6050-0.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alivka/library/vislib_mpu6050/0.0.7/vislib_mpu6050-0.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vislib_mpu6050-0.0.7.tar.gz",
+    "size_bytes": 3621,
+    "sha256": "a3dfca02ee16504afcb0dbe1067ef68cdf823306fc71ff8fcd4465cdfb893816",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alivka/library/vislib_mpu6050/0.0.7/vislib_mpu6050-0.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/alivka/library/vislib_mpu6050/0.0.7/vislib_mpu6050-0.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alivka/library/vislib_robo/0.0.22/vislib_robo-0.0.22.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vislib_robo-0.0.22.tar.gz",
+    "size_bytes": 9539,
+    "sha256": "7fb513eb82b01e8de672e5cc5cf65df4d85495c2a288b1ba7307c6bc5dc0c6a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alivka/library/vislib_robo/0.0.22/vislib_robo-0.0.22.tar.gz",
+     "https://dl.registry.platformio.org/download/alivka/library/vislib_robo/0.0.22/vislib_robo-0.0.22.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alivka/library/vislib_vex5/0.0.1/vislib_vex5-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vislib_vex5-0.0.1.tar.gz",
+    "size_bytes": 2098,
+    "sha256": "ee004eb757d4cea7918c9912d00269614c865e9ab925025da076c048b070cd16",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alivka/library/vislib_vex5/0.0.1/vislib_vex5-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/alivka/library/vislib_vex5/0.0.1/vislib_vex5-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alivka/library/vislib_vex5/0.0.10/vislib_vex5-0.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vislib_vex5-0.0.10.tar.gz",
+    "size_bytes": 2363,
+    "sha256": "54a57eb7a6eb2567e4f7a95a969c8e5d3fc2ad97b69281df739aa866f9a3cada",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alivka/library/vislib_vex5/0.0.10/vislib_vex5-0.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/alivka/library/vislib_vex5/0.0.10/vislib_vex5-0.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alivka/library/vislib_vex5/0.0.11/vislib_vex5-0.0.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vislib_vex5-0.0.11.tar.gz",
+    "size_bytes": 2318,
+    "sha256": "543827bc504213ad35d350c99e28b2bd9a21ed2f15cc169974fd98481807141e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alivka/library/vislib_vex5/0.0.11/vislib_vex5-0.0.11.tar.gz",
+     "https://dl.registry.platformio.org/download/alivka/library/vislib_vex5/0.0.11/vislib_vex5-0.0.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alivka/library/vislib_vex5/0.0.2/vislib_vex5-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vislib_vex5-0.0.2.tar.gz",
+    "size_bytes": 2244,
+    "sha256": "baf1ee04df6668ad347460cfcbc5fc4b74a37f09e49e69cdd8a8bccb1155c569",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alivka/library/vislib_vex5/0.0.2/vislib_vex5-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/alivka/library/vislib_vex5/0.0.2/vislib_vex5-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alivka/library/vislib_vex5/0.0.3/vislib_vex5-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vislib_vex5-0.0.3.tar.gz",
+    "size_bytes": 2249,
+    "sha256": "09ab519bd9ddcd79210abe41a41b3d50fd38506e79ba9fed7024661f42c4290e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alivka/library/vislib_vex5/0.0.3/vislib_vex5-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/alivka/library/vislib_vex5/0.0.3/vislib_vex5-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alivka/library/vislib_vex5/0.0.4/vislib_vex5-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vislib_vex5-0.0.4.tar.gz",
+    "size_bytes": 2256,
+    "sha256": "eb4c4aa3d97d51d9f850cacc395c8767c7d41e3c3570e64815af954385f37c6e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alivka/library/vislib_vex5/0.0.4/vislib_vex5-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/alivka/library/vislib_vex5/0.0.4/vislib_vex5-0.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alivka/library/vislib_vex5/0.0.5/vislib_vex5-0.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vislib_vex5-0.0.5.tar.gz",
+    "size_bytes": 2257,
+    "sha256": "d6514a1326f9487bd1498ab97bed46c8381668e0e5e43ec00283643d683b0564",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alivka/library/vislib_vex5/0.0.5/vislib_vex5-0.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/alivka/library/vislib_vex5/0.0.5/vislib_vex5-0.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alivka/library/vislib_vex5/0.0.6/vislib_vex5-0.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vislib_vex5-0.0.6.tar.gz",
+    "size_bytes": 2267,
+    "sha256": "65d7827f23a799874e766179b1d8c47a8ce2966713cddedb0d8c9bbc5c2759f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alivka/library/vislib_vex5/0.0.6/vislib_vex5-0.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/alivka/library/vislib_vex5/0.0.6/vislib_vex5-0.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alivka/library/vislib_vex5/0.0.7/vislib_vex5-0.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vislib_vex5-0.0.7.tar.gz",
+    "size_bytes": 2250,
+    "sha256": "2fedec3c9bc67c95c314295327b50b8ca9b342ce09118a45739452a2c6348435",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alivka/library/vislib_vex5/0.0.7/vislib_vex5-0.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/alivka/library/vislib_vex5/0.0.7/vislib_vex5-0.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alivka/library/vislib_vex5/0.0.8/vislib_vex5-0.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vislib_vex5-0.0.8.tar.gz",
+    "size_bytes": 2345,
+    "sha256": "0ad2e315c43f22701a51ea6491eb11ed7434eeff301b80ebadf2630d48d73803",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alivka/library/vislib_vex5/0.0.8/vislib_vex5-0.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/alivka/library/vislib_vex5/0.0.8/vislib_vex5-0.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alivka/library/vislib_vex5/0.0.9/vislib_vex5-0.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vislib_vex5-0.0.9.tar.gz",
+    "size_bytes": 2368,
+    "sha256": "9902274f97922fa6a03369c6dad7be94a9b3d139d8d112622c58c01a5cd95279",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alivka/library/vislib_vex5/0.0.9/vislib_vex5-0.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/alivka/library/vislib_vex5/0.0.9/vislib_vex5-0.0.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

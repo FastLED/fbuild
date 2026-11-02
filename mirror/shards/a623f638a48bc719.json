@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tfeldmann",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tfeldmann/library/Blinkenlight/2.3.0/Blinkenlight-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Blinkenlight-2.3.0.tar.gz",
+    "size_bytes": 125554,
+    "sha256": "3a275cdc065d3861e5fcf369b582f820083fc6f4d0717ff2eb13344c04d9df99",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tfeldmann/library/Blinkenlight/2.3.0/Blinkenlight-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tfeldmann/library/Blinkenlight/2.3.0/Blinkenlight-2.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tfeldmann/library/Button/1.0.1/Button-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Button-1.0.1.tar.gz",
+    "size_bytes": 4578,
+    "sha256": "e7d50cb7735f506cbbe8bfa7876e5604edc9a387484f9d7eb99ece057d31e707",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tfeldmann/library/Button/1.0.1/Button-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tfeldmann/library/Button/1.0.1/Button-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tfeldmann/library/ChangeTracker/1.0.0/ChangeTracker-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ChangeTracker-1.0.0.tar.gz",
+    "size_bytes": 3062,
+    "sha256": "a667d0ac1c697336b553e2f479739cb97194c8dc1983fb18dd175aa5ca6366cd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tfeldmann/library/ChangeTracker/1.0.0/ChangeTracker-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tfeldmann/library/ChangeTracker/1.0.0/ChangeTracker-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tfeldmann/library/Indicator/2.0.0/Indicator-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Indicator-2.0.0.tar.gz",
+    "size_bytes": 7372,
+    "sha256": "5353261ec4473e79b0a609e97676f273ee2deae3133b10b13d600ad4e13ecfdf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tfeldmann/library/Indicator/2.0.0/Indicator-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tfeldmann/library/Indicator/2.0.0/Indicator-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tfeldmann/library/Minimal%20Timeout/1.3/MinimalTimeout-1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MinimalTimeout-1.3.tar.gz",
+    "size_bytes": 3604,
+    "sha256": "e585233f7fa63047999c1437aad5c15d4cb76e7f3441b0041232ce435a83fd66",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tfeldmann/library/Minimal%2520Timeout/1.3/MinimalTimeout-1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tfeldmann/library/Minimal%20Timeout/1.3/MinimalTimeout-1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tfeldmann/library/MotorDriver/4.0.1/MotorDriver-4.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MotorDriver-4.0.1.tar.gz",
+    "size_bytes": 6079,
+    "sha256": "598cf76e20882d58199b519d3fcd24ffad2920a6b31b38ef9eb5b4abea8c23e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tfeldmann/library/MotorDriver/4.0.1/MotorDriver-4.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tfeldmann/library/MotorDriver/4.0.1/MotorDriver-4.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tfeldmann/library/SchmittTrigger/1.0.2/SchmittTrigger-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SchmittTrigger-1.0.2.tar.gz",
+    "size_bytes": 3778,
+    "sha256": "22c5d9b18d2b939e8b0fde55d48723cdac475c78f4ac4a908673739790025eac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tfeldmann/library/SchmittTrigger/1.0.2/SchmittTrigger-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tfeldmann/library/SchmittTrigger/1.0.2/SchmittTrigger-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tfeldmann/library/Timeout/2.0.0/Timeout-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Timeout-2.0.0.tar.gz",
+    "size_bytes": 4290,
+    "sha256": "182c712be4b8abf6fe2fb7ffff33fb4472e713e7ff94254fac62c8a1994431ff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tfeldmann/library/Timeout/2.0.0/Timeout-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tfeldmann/library/Timeout/2.0.0/Timeout-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/raghavendra3790",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "raghavendra3790/library/IR_Buzzer/1.0.0/IR_Buzzer-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IR_Buzzer-1.0.0.tar.gz",
+    "size_bytes": 2950,
+    "sha256": "52aafa29f54ece8170ec754f53382f1066469a0e4b4ae7f2d913782f40e06162",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/raghavendra3790/library/IR_Buzzer/1.0.0/IR_Buzzer-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/raghavendra3790/library/IR_Buzzer/1.0.0/IR_Buzzer-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "raghavendra3790/library/IR_LedBlinker/1.0.0/IR_LedBlinker-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IR_LedBlinker-1.0.0.tar.gz",
+    "size_bytes": 2600,
+    "sha256": "7d44b252125a40f43ea55e6209d2f0c4c396b81d08eb9c55d7b0296351561a75",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/raghavendra3790/library/IR_LedBlinker/1.0.0/IR_LedBlinker-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/raghavendra3790/library/IR_LedBlinker/1.0.0/IR_LedBlinker-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

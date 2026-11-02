@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/oryomei",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "oryomei/library/Teensy4TinyUSB/0.1.0/Teensy4TinyUSB-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Teensy4TinyUSB-0.1.0.tar.gz",
+    "size_bytes": 258499,
+    "sha256": "8a1ff1a0d8a1089df50c72936dd383be8a8dc7b9f668aefa5cfc42f8d20fbf2c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/oryomei/library/Teensy4TinyUSB/0.1.0/Teensy4TinyUSB-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/oryomei/library/Teensy4TinyUSB/0.1.0/Teensy4TinyUSB-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

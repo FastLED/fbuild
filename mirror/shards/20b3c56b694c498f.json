@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/smartblocksat",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "smartblocksat/library/Smartblocks/1.0.5/Smartblocks-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Smartblocks-1.0.5.tar.gz",
+    "size_bytes": 3296,
+    "sha256": "eabc4f8c8dd6a55f58e297b3e144ea8071bf9ddb6cbb618dae4b66ea8f673674",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/smartblocksat/library/Smartblocks/1.0.5/Smartblocks-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/smartblocksat/library/Smartblocks/1.0.5/Smartblocks-1.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

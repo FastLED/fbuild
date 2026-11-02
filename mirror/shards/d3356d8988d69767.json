@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-cromda",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-cromda/library/DS3231/0.0.0+sha.6718c4fabf95/DS3231-0.0.0+sha.6718c4fabf95.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS3231-0.0.0+sha.6718c4fabf95.tar.gz",
+    "size_bytes": 3526,
+    "sha256": "c7323a94da36a595f5fd61428761f31d51f615b54c58e4455f7089c9aee8f3b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-cromda/library/DS3231/0.0.0%2Bsha.6718c4fabf95/DS3231-0.0.0%2Bsha.6718c4fabf95.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-cromda/library/DS3231/0.0.0%2Bsha.6718c4fabf95/DS3231-0.0.0%2Bsha.6718c4fabf95.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-cromda/library/Trigo/0.0.0+sha.690d6de2df16/Trigo-0.0.0+sha.690d6de2df16.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trigo-0.0.0+sha.690d6de2df16.tar.gz",
+    "size_bytes": 2071,
+    "sha256": "84627b33c335f3332019998d7a32e5a84b06045ad9bab34b2f4f93fec2400caf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-cromda/library/Trigo/0.0.0%2Bsha.690d6de2df16/Trigo-0.0.0%2Bsha.690d6de2df16.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-cromda/library/Trigo/0.0.0%2Bsha.690d6de2df16/Trigo-0.0.0%2Bsha.690d6de2df16.tar.gz"
+    ]
+   }
+  }
+ ]
+}

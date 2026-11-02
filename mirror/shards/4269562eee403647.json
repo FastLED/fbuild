@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-proc-ii-trabajofinal",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-proc-ii-trabajofinal/library/ArduMotor/0.0.0+sha.d64edd9bedba/ArduMotor-0.0.0+sha.d64edd9bedba.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduMotor-0.0.0+sha.d64edd9bedba.tar.gz",
+    "size_bytes": 5100,
+    "sha256": "caf98564413d8a77058bd9b2d45fa360b70ab773d2794fdfc0b8bf59e81b8d84",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-proc-ii-trabajofinal/library/ArduMotor/0.0.0%2Bsha.d64edd9bedba/ArduMotor-0.0.0%2Bsha.d64edd9bedba.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-proc-ii-trabajofinal/library/ArduMotor/0.0.0%2Bsha.d64edd9bedba/ArduMotor-0.0.0%2Bsha.d64edd9bedba.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-proc-ii-trabajofinal/library/DCMotorDriver/0.0.0+sha.6718a9592b4b/DCMotorDriver-0.0.0+sha.6718a9592b4b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DCMotorDriver-0.0.0+sha.6718a9592b4b.tar.gz",
+    "size_bytes": 5157,
+    "sha256": "b256cafffbdfc2603c09b3ef36282765bc735d85100c9574c9a7c56bbfc6704d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-proc-ii-trabajofinal/library/DCMotorDriver/0.0.0%2Bsha.6718a9592b4b/DCMotorDriver-0.0.0%2Bsha.6718a9592b4b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-proc-ii-trabajofinal/library/DCMotorDriver/0.0.0%2Bsha.6718a9592b4b/DCMotorDriver-0.0.0%2Bsha.6718a9592b4b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-proc-ii-trabajofinal/library/MotorDriver/0.0.0+sha.8ef774b50de9/MotorDriver-0.0.0+sha.8ef774b50de9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MotorDriver-0.0.0+sha.8ef774b50de9.tar.gz",
+    "size_bytes": 5212,
+    "sha256": "80e939154ee16b06a3c51e6dfad008c8cd3eb7e4e7ddbf88c8be5c66de932808",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-proc-ii-trabajofinal/library/MotorDriver/0.0.0%2Bsha.8ef774b50de9/MotorDriver-0.0.0%2Bsha.8ef774b50de9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-proc-ii-trabajofinal/library/MotorDriver/0.0.0%2Bsha.8ef774b50de9/MotorDriver-0.0.0%2Bsha.8ef774b50de9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

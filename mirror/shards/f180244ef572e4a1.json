@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bonkmachines",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bonkmachines/library/CTRL/1.5.1/CTRL-1.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CTRL-1.5.1.tar.gz",
+    "size_bytes": 22687,
+    "sha256": "e23617b30b0f4a4fab44cbb8ac63b9fe9a06bae4e94073200461678873d18d04",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bonkmachines/library/CTRL/1.5.1/CTRL-1.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bonkmachines/library/CTRL/1.5.1/CTRL-1.5.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

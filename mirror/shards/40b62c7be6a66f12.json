@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/amazing_robot",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "amazing_robot/library/CRC/0.0.1/CRC-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CRC-0.0.1.tar.gz",
+    "size_bytes": 3514,
+    "sha256": "7c620e7265b31b4aa51738ce9e12564eae53061f005d0c803414ed4410ae9edd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/amazing_robot/library/CRC/0.0.1/CRC-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/amazing_robot/library/CRC/0.0.1/CRC-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "amazing_robot/library/CmBacktrace/0.0.3/CmBacktrace-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CmBacktrace-0.0.3.tar.gz",
+    "size_bytes": 2479498,
+    "sha256": "564993d920abd2865af45609a43849b93435959e2d21e1bc96745b5b1369d2ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/amazing_robot/library/CmBacktrace/0.0.3/CmBacktrace-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/amazing_robot/library/CmBacktrace/0.0.3/CmBacktrace-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "amazing_robot/library/FlashDB/0.0.2/FlashDB-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FlashDB-0.0.2.tar.gz",
+    "size_bytes": 6475330,
+    "sha256": "23fdc5b15600a01e7209ee43ae1d15a459922681007445eb9830e3e99192b08d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/amazing_robot/library/FlashDB/0.0.2/FlashDB-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/amazing_robot/library/FlashDB/0.0.2/FlashDB-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "amazing_robot/library/SFUD/0.0.2/SFUD-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SFUD-0.0.2.tar.gz",
+    "size_bytes": 3439376,
+    "sha256": "5f32b40ae6a59b55df921102ab45af0319755de06abbd193dcd6fba6b1a690c9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/amazing_robot/library/SFUD/0.0.2/SFUD-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/amazing_robot/library/SFUD/0.0.2/SFUD-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "amazing_robot/library/STemWin532_CM3_GCC/0.0.5/STemWin532_CM3_GCC-0.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STemWin532_CM3_GCC-0.0.5.tar.gz",
+    "size_bytes": 890592,
+    "sha256": "74908e8295953f4509979953be2a72d53f87153a563db385fa23aec3e6f98166",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/amazing_robot/library/STemWin532_CM3_GCC/0.0.5/STemWin532_CM3_GCC-0.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/amazing_robot/library/STemWin532_CM3_GCC/0.0.5/STemWin532_CM3_GCC-0.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "amazing_robot/library/STemWinLibrary532_inc/0.0.2/STemWinLibrary532_inc-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STemWinLibrary532_inc-0.0.2.tar.gz",
+    "size_bytes": 121749,
+    "sha256": "652590a563dd33eb6308d72d99406dd852bed10f9e541081295d8932038f3329",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/amazing_robot/library/STemWinLibrary532_inc/0.0.2/STemWinLibrary532_inc-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/amazing_robot/library/STemWinLibrary532_inc/0.0.2/STemWinLibrary532_inc-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "amazing_robot/library/W5500_EVB/0.0.1/W5500_EVB-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "W5500_EVB-0.0.1.tar.gz",
+    "size_bytes": 649565,
+    "sha256": "c14363b1a3713634da9f1c975edb779e6c3c29cb17fe93c190fa5fc7d7e8e52e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/amazing_robot/library/W5500_EVB/0.0.1/W5500_EVB-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/amazing_robot/library/W5500_EVB/0.0.1/W5500_EVB-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "amazing_robot/library/ioLibrary_Driver/0.0.1/ioLibrary_Driver-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ioLibrary_Driver-0.0.1.tar.gz",
+    "size_bytes": 6325031,
+    "sha256": "3a2b22b4b30a6bfd7744592699ec34976133a7d185fe952fd712f7d2578c2c21",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/amazing_robot/library/ioLibrary_Driver/0.0.1/ioLibrary_Driver-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/amazing_robot/library/ioLibrary_Driver/0.0.1/ioLibrary_Driver-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

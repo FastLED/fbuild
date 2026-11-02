@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/robotzwrrl",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "robotzwrrl/library/RobotButterfly/1.4.3/RobotButterfly-1.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RobotButterfly-1.4.3.tar.gz",
+    "size_bytes": 50270,
+    "sha256": "a2aba00a47d2dbf292ab357abf5b37c4b0e9cf55c590afc9dca3ff5b02cdefe2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robotzwrrl/library/RobotButterfly/1.4.3/RobotButterfly-1.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/robotzwrrl/library/RobotButterfly/1.4.3/RobotButterfly-1.4.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

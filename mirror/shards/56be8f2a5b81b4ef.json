@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/martindacosta53",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "martindacosta53/library/VCAN2040/1.0.0/VCAN2040-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VCAN2040-1.0.0.tar.gz",
+    "size_bytes": 80908,
+    "sha256": "cdc2a065d7ff3df8b7986f85e554803985b3a58d7ec1723982b4cd7ca7b6a63d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martindacosta53/library/VCAN2040/1.0.0/VCAN2040-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/martindacosta53/library/VCAN2040/1.0.0/VCAN2040-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martindacosta53/library/VCAN2040/1.0.1/VCAN2040-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VCAN2040-1.0.1.tar.gz",
+    "size_bytes": 80839,
+    "sha256": "4029b503fce09ad4c63d013f8dfee44f3e91a0b7506cb1f81ff689851760d925",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martindacosta53/library/VCAN2040/1.0.1/VCAN2040-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/martindacosta53/library/VCAN2040/1.0.1/VCAN2040-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

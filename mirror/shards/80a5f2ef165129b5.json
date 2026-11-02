@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-bulme-bhel18",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-bulme-bhel18/library/Drive/0.0.0+sha.5dcb55a2880c/Drive-0.0.0+sha.5dcb55a2880c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Drive-0.0.0+sha.5dcb55a2880c.tar.gz",
+    "size_bytes": 1412,
+    "sha256": "23745cbfecf7c2d911e0b6b219ff944ce969ff28df0c243f0e6120b5d46f39fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bulme-bhel18/library/Drive/0.0.0%2Bsha.5dcb55a2880c/Drive-0.0.0%2Bsha.5dcb55a2880c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bulme-bhel18/library/Drive/0.0.0%2Bsha.5dcb55a2880c/Drive-0.0.0%2Bsha.5dcb55a2880c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-bulme-bhel18/library/LM75B/0.0.0+sha.7ac462ba84ac/LM75B-0.0.0+sha.7ac462ba84ac.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LM75B-0.0.0+sha.7ac462ba84ac.tar.gz",
+    "size_bytes": 3876,
+    "sha256": "5704c2210c1dbaad175940a4a334241dc86cd14ca56a36a8f94c914523c54ca0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bulme-bhel18/library/LM75B/0.0.0%2Bsha.7ac462ba84ac/LM75B-0.0.0%2Bsha.7ac462ba84ac.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bulme-bhel18/library/LM75B/0.0.0%2Bsha.7ac462ba84ac/LM75B-0.0.0%2Bsha.7ac462ba84ac.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-bulme-bhel18/library/distance/0.0.0+sha.5c52865b8204/distance-0.0.0+sha.5c52865b8204.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "distance-0.0.0+sha.5c52865b8204.tar.gz",
+    "size_bytes": 937,
+    "sha256": "e59d41bb0c12dda9e494b10dc1ede1efc725c4c68563c17f422a8acc0895248f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bulme-bhel18/library/distance/0.0.0%2Bsha.5c52865b8204/distance-0.0.0%2Bsha.5c52865b8204.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bulme-bhel18/library/distance/0.0.0%2Bsha.5c52865b8204/distance-0.0.0%2Bsha.5c52865b8204.tar.gz"
+    ]
+   }
+  }
+ ]
+}

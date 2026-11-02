@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/blue-crescent",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "blue-crescent/library/JJYReceiver/0.11.4/JJYReceiver-0.11.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JJYReceiver-0.11.4.tar.gz",
+    "size_bytes": 20554,
+    "sha256": "f012607cde0e8ee579689abd8eef830ae3f84fc031584f047754e8200363c6d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blue-crescent/library/JJYReceiver/0.11.4/JJYReceiver-0.11.4.tar.gz",
+     "https://dl.registry.platformio.org/download/blue-crescent/library/JJYReceiver/0.11.4/JJYReceiver-0.11.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "blue-crescent/library/JJYReceiver/1.0.0/JJYReceiver-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JJYReceiver-1.0.0.tar.gz",
+    "size_bytes": 20533,
+    "sha256": "96dfeed732c8006957f438f87ddebf5ad74fb40134568e7f51c35dee3cafb91f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blue-crescent/library/JJYReceiver/1.0.0/JJYReceiver-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/blue-crescent/library/JJYReceiver/1.0.0/JJYReceiver-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "blue-crescent/library/JJYReceiver/1.1.1/JJYReceiver-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JJYReceiver-1.1.1.tar.gz",
+    "size_bytes": 22309,
+    "sha256": "36a321fd7eb548b7e7850ee5705ff351f1b984ab94aa03649b806b895f614de1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blue-crescent/library/JJYReceiver/1.1.1/JJYReceiver-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/blue-crescent/library/JJYReceiver/1.1.1/JJYReceiver-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "blue-crescent/library/JJYReceiver/1.2.0/JJYReceiver-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JJYReceiver-1.2.0.tar.gz",
+    "size_bytes": 23612,
+    "sha256": "0016b768f7d9fdc175b4289f459f6ff59379120660f18bcc737224859ebc2334",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blue-crescent/library/JJYReceiver/1.2.0/JJYReceiver-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/blue-crescent/library/JJYReceiver/1.2.0/JJYReceiver-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "blue-crescent/library/JJYReceiver/1.2.1/JJYReceiver-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JJYReceiver-1.2.1.tar.gz",
+    "size_bytes": 23744,
+    "sha256": "af82b11330c21f7535f5b5dea5a809aa83a190e161f95cdbc94adbf0bab6d37a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blue-crescent/library/JJYReceiver/1.2.1/JJYReceiver-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/blue-crescent/library/JJYReceiver/1.2.1/JJYReceiver-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "blue-crescent/library/JJYReceiver/1.2.3/JJYReceiver-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JJYReceiver-1.2.3.tar.gz",
+    "size_bytes": 23775,
+    "sha256": "9e89cf7f4693965c15b745dc01934809569c8bd20a0795ed895b4320dc68a073",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blue-crescent/library/JJYReceiver/1.2.3/JJYReceiver-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/blue-crescent/library/JJYReceiver/1.2.3/JJYReceiver-1.2.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

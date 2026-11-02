@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/colin-atsign",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "colin-atsign/library/at_client/0.1.1/at_client-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "at_client-0.1.1.tar.gz",
+    "size_bytes": 5634142,
+    "sha256": "3ad4d979c2bae77358f74e77cd4d21bcc20cd4b7f115514f0610fece8771f262",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/colin-atsign/library/at_client/0.1.1/at_client-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/colin-atsign/library/at_client/0.1.1/at_client-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

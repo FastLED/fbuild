@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/firstbuild",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "firstbuild/library/FirstBuild%20-%20Relay/1.0.1/FirstBuild-Relay-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FirstBuild-Relay-1.0.1.tar.gz",
+    "size_bytes": 3904,
+    "sha256": "15f608bfd015208a621095ab4a315e4ac9e424a84220d9c047732e6e1c724981",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/firstbuild/library/FirstBuild%2520-%2520Relay/1.0.1/FirstBuild-Relay-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/firstbuild/library/FirstBuild%20-%20Relay/1.0.1/FirstBuild-Relay-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

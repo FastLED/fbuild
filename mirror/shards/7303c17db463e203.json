@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-daan",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-daan/library/dac57xx/0.0.0+sha.59ce04153689/dac57xx-0.0.0+sha.59ce04153689.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "dac57xx-0.0.0+sha.59ce04153689.tar.gz",
+    "size_bytes": 2521,
+    "sha256": "faae543fbc3f87f27906941dd4f609b18aa10d32adc030e750a34c97f6d469c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-daan/library/dac57xx/0.0.0%2Bsha.59ce04153689/dac57xx-0.0.0%2Bsha.59ce04153689.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-daan/library/dac57xx/0.0.0%2Bsha.59ce04153689/dac57xx-0.0.0%2Bsha.59ce04153689.tar.gz"
+    ]
+   }
+  }
+ ]
+}

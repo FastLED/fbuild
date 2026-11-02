@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/phando",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "phando/library/ESP%20Utils/0.1.4/ESPUtils-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPUtils-0.1.4.tar.gz",
+    "size_bytes": 19667,
+    "sha256": "66ca11f67dd795c6b043971499397f6cb82242ee06e2ef5d4178fef8cd545823",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/phando/library/ESP%2520Utils/0.1.4/ESPUtils-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/phando/library/ESP%20Utils/0.1.4/ESPUtils-0.1.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

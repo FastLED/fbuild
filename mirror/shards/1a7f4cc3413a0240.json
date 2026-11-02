@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/om222o",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "om222o/library/ADS1219/1.0.0/ADS1219-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADS1219-1.0.0.tar.gz",
+    "size_bytes": 2050,
+    "sha256": "b72843aa5150b26dc2147f28f80004b6023364aaee23dbc6feb6e882da7ed1b4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/om222o/library/ADS1219/1.0.0/ADS1219-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/om222o/library/ADS1219/1.0.0/ADS1219-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-pixart",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-pixart/library/PixArt_PAH8011_HR_NUCLEO-L476RG/0.0.0+sha.dafeae8d92bf/PixArt_PAH8011_HR_NUCLEO-L476RG-0.0.0+sha.dafeae8d92bf.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PixArt_PAH8011_HR_NUCLEO-L476RG-0.0.0+sha.dafeae8d92bf.tar.gz",
+    "size_bytes": 1098,
+    "sha256": "8fb616ab2f99e6d94f18db2525e079fb36cdc59316b7512f131eef6994494e96",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pixart/library/PixArt_PAH8011_HR_NUCLEO-L476RG/0.0.0%2Bsha.dafeae8d92bf/PixArt_PAH8011_HR_NUCLEO-L476RG-0.0.0%2Bsha.dafeae8d92bf.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pixart/library/PixArt_PAH8011_HR_NUCLEO-L476RG/0.0.0%2Bsha.dafeae8d92bf/PixArt_PAH8011_HR_NUCLEO-L476RG-0.0.0%2Bsha.dafeae8d92bf.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-pixart/library/Pixart_Gesture/0.0.0+sha.726fdf0062c6/Pixart_Gesture-0.0.0+sha.726fdf0062c6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pixart_Gesture-0.0.0+sha.726fdf0062c6.tar.gz",
+    "size_bytes": 3107,
+    "sha256": "c921a445be20231721e685e5577574df84032af84eea452db24210c493f4a598",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pixart/library/Pixart_Gesture/0.0.0%2Bsha.726fdf0062c6/Pixart_Gesture-0.0.0%2Bsha.726fdf0062c6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pixart/library/Pixart_Gesture/0.0.0%2Bsha.726fdf0062c6/Pixart_Gesture-0.0.0%2Bsha.726fdf0062c6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-pixart/library/pat9125_mbed/0.0.0+sha.4b7c15d9c864/pat9125_mbed-0.0.0+sha.4b7c15d9c864.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pat9125_mbed-0.0.0+sha.4b7c15d9c864.tar.gz",
+    "size_bytes": 7451,
+    "sha256": "688646b5f0dde531de323b0ac17ae5861b84443073a14fca81e1810b8ab93a91",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pixart/library/pat9125_mbed/0.0.0%2Bsha.4b7c15d9c864/pat9125_mbed-0.0.0%2Bsha.4b7c15d9c864.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pixart/library/pat9125_mbed/0.0.0%2Bsha.4b7c15d9c864/pat9125_mbed-0.0.0%2Bsha.4b7c15d9c864.tar.gz"
+    ]
+   }
+  }
+ ]
+}

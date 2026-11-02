@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tutgit",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tutgit/library/Single_WS2812_Bitbang_Write/1.0.0/Single_WS2812_Bitbang_Write-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Single_WS2812_Bitbang_Write-1.0.0.tar.gz",
+    "size_bytes": 6911,
+    "sha256": "b3d3acb67d2703f69b4cfa8205c05887d76ac0a5ecb6a30d934d96511fbb3a6c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tutgit/library/Single_WS2812_Bitbang_Write/1.0.0/Single_WS2812_Bitbang_Write-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tutgit/library/Single_WS2812_Bitbang_Write/1.0.0/Single_WS2812_Bitbang_Write-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

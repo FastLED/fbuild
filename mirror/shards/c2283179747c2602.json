@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/phatpaul",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "phatpaul/library/arduino-pwm-frequency-library/2.0.0/arduino-pwm-frequency-library-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arduino-pwm-frequency-library-2.0.0.tar.gz",
+    "size_bytes": 8026,
+    "sha256": "b8bd04afe0f938fcf5e09805b44740f18b02695a7ba4bef31ebeb58a0fcf980c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/phatpaul/library/arduino-pwm-frequency-library/2.0.0/arduino-pwm-frequency-library-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/phatpaul/library/arduino-pwm-frequency-library/2.0.0/arduino-pwm-frequency-library-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

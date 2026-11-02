@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-wingblank",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-wingblank/library/TCS3200/0.0.0+sha.9edf5a7e29e6/TCS3200-0.0.0+sha.9edf5a7e29e6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TCS3200-0.0.0+sha.9edf5a7e29e6.tar.gz",
+    "size_bytes": 1489,
+    "sha256": "e2af398c753d716c9d8eb00b0d6f1f74c93e9cfc7b90c3e8903e90f3e0399402",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wingblank/library/TCS3200/0.0.0%2Bsha.9edf5a7e29e6/TCS3200-0.0.0%2Bsha.9edf5a7e29e6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wingblank/library/TCS3200/0.0.0%2Bsha.9edf5a7e29e6/TCS3200-0.0.0%2Bsha.9edf5a7e29e6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

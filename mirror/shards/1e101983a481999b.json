@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-casper",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-casper/library/AS3935/0.0.0+sha.346c723cac97/AS3935-0.0.0+sha.346c723cac97.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AS3935-0.0.0+sha.346c723cac97.tar.gz",
+    "size_bytes": 3203,
+    "sha256": "f41c3d43f2f7b555553fb2ccc16c127a5635b0b9fcd94594d4ec4b33236c87be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-casper/library/AS3935/0.0.0%2Bsha.346c723cac97/AS3935-0.0.0%2Bsha.346c723cac97.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-casper/library/AS3935/0.0.0%2Bsha.346c723cac97/AS3935-0.0.0%2Bsha.346c723cac97.tar.gz"
+    ]
+   }
+  }
+ ]
+}

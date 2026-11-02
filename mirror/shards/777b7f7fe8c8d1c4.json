@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mressl",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mressl/library/mcu-max/1.0.2/mcu-max-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mcu-max-1.0.2.tar.gz",
+    "size_bytes": 10749,
+    "sha256": "c5dc1daf5dc2a7b3f8e5475448a09964b49da22b155d0696d5f97ed3d7ccd7dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mressl/library/mcu-max/1.0.2/mcu-max-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mressl/library/mcu-max/1.0.2/mcu-max-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

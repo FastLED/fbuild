@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/shufflebits",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "shufflebits/library/GU140X32F-7703A/1.0.0/GU140X32F-7703A-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GU140X32F-7703A-1.0.0.tar.gz",
+    "size_bytes": 19781,
+    "sha256": "150bc2ce5cf5df868d50c611b17529710e137c81bd19c86621cb7d03dbb0f76d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shufflebits/library/GU140X32F-7703A/1.0.0/GU140X32F-7703A-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/shufflebits/library/GU140X32F-7703A/1.0.0/GU140X32F-7703A-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

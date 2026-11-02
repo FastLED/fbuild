@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/aidenkunkler-peck",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "aidenkunkler-peck/library/TactNecklace/1.0.0/TactNecklace-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TactNecklace-1.0.0.tar.gz",
+    "size_bytes": 3986,
+    "sha256": "a3e5cadc2b6af5eb9298456b902e16f00be89ecb2477e442866538a218a45c2b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aidenkunkler-peck/library/TactNecklace/1.0.0/TactNecklace-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aidenkunkler-peck/library/TactNecklace/1.0.0/TactNecklace-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

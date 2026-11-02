@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/r12f",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "r12f/library/Sactor/0.2.3/Sactor-0.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sactor-0.2.3.tar.gz",
+    "size_bytes": 221879,
+    "sha256": "95edc677e9c292cf5e44ef704dd4e378d9f6c1ea77e07846c75afce57244cc90",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/r12f/library/Sactor/0.2.3/Sactor-0.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/r12f/library/Sactor/0.2.3/Sactor-0.2.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

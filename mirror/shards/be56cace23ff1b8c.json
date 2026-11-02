@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/8lall0",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "8lall0/library/Minitel1B_Hard/0.9.0/Minitel1B_Hard-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Minitel1B_Hard-0.9.0.tar.gz",
+    "size_bytes": 41115,
+    "sha256": "c6580066bcc2c1f0d33ec0950faab2278af7cac89e5df2e91e82fa6f31d4e717",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/8lall0/library/Minitel1B_Hard/0.9.0/Minitel1B_Hard-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/8lall0/library/Minitel1B_Hard/0.9.0/Minitel1B_Hard-0.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "8lall0/library/Minitel1B_Hard/1.0.0/Minitel1B_Hard-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Minitel1B_Hard-1.0.0.tar.gz",
+    "size_bytes": 35770,
+    "sha256": "321ca054ef614cb6ed85a05cd4be34a866eda72fbeec16f839ee92df185a20d9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/8lall0/library/Minitel1B_Hard/1.0.0/Minitel1B_Hard-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/8lall0/library/Minitel1B_Hard/1.0.0/Minitel1B_Hard-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

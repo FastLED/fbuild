@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dannixon",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dannixon/library/NeoNextion/2.2.0/NeoNextion-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeoNextion-2.2.0.tar.gz",
+    "size_bytes": 25819,
+    "sha256": "0f4c9623d7b4308b7f6f1202f7ed237465acced95735b533af4a4fb8cebf3cb9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dannixon/library/NeoNextion/2.2.0/NeoNextion-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dannixon/library/NeoNextion/2.2.0/NeoNextion-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dannixon/library/Universal%20Inputs/0.0.0-alpha+sha.5b2654438c/UniversalInputs-0.0.0-alphasha.5b2654438c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UniversalInputs-0.0.0-alphasha.5b2654438c.tar.gz",
+    "size_bytes": 40427,
+    "sha256": "04ce4c86a8d35a3f329067c01270d9fff68f6fc921e59117fc945f834b9aa65c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dannixon/library/Universal%2520Inputs/0.0.0-alpha%2Bsha.5b2654438c/UniversalInputs-0.0.0-alphasha.5b2654438c.tar.gz",
+     "https://dl.registry.platformio.org/download/dannixon/library/Universal%20Inputs/0.0.0-alpha%2Bsha.5b2654438c/UniversalInputs-0.0.0-alphasha.5b2654438c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

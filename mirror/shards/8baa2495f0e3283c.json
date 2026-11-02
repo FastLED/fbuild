@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-clarkk",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-clarkk/library/PIDcontroller/0.0.0+sha.994ed695c8a5/PIDcontroller-0.0.0+sha.994ed695c8a5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PIDcontroller-0.0.0+sha.994ed695c8a5.tar.gz",
+    "size_bytes": 1463,
+    "sha256": "9b2a0836de9e2d0ea523fc38f58ab9a9576f7586ccae5024ef9d855d883134a6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-clarkk/library/PIDcontroller/0.0.0%2Bsha.994ed695c8a5/PIDcontroller-0.0.0%2Bsha.994ed695c8a5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-clarkk/library/PIDcontroller/0.0.0%2Bsha.994ed695c8a5/PIDcontroller-0.0.0%2Bsha.994ed695c8a5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gitlab-konnekting",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gitlab-konnekting/library/KonnektingFlashStorage/1.0.1/KonnektingFlashStorage-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KonnektingFlashStorage-1.0.1.tar.gz",
+    "size_bytes": 19495,
+    "sha256": "73b06236897952b3c248c0763d883baf8ae4fee25f051e1f191f67cb1d5e144a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gitlab-konnekting/library/KonnektingFlashStorage/1.0.1/KonnektingFlashStorage-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gitlab-konnekting/library/KonnektingFlashStorage/1.0.1/KonnektingFlashStorage-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

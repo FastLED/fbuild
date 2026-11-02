@@ -1,0 +1,165 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/styropyr0",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "styropyr0/library/ADS111S/1.0.1/ADS111S-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADS111S-1.0.1.tar.gz",
+    "size_bytes": 6836,
+    "sha256": "27bc4fe23c909cb2fa84284c0ceadb1019513569372a643d1f5cbff3617e7bba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/styropyr0/library/ADS111S/1.0.1/ADS111S-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/styropyr0/library/ADS111S/1.0.1/ADS111S-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "styropyr0/library/APDS9960/1.0.2/APDS9960-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "APDS9960-1.0.2.tar.gz",
+    "size_bytes": 9015,
+    "sha256": "86520a61550e495472e7b69b4f51b12655852543d27f21dfce01180574b0eb92",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/styropyr0/library/APDS9960/1.0.2/APDS9960-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/styropyr0/library/APDS9960/1.0.2/APDS9960-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "styropyr0/library/BME688/1.0.1/BME688-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BME688-1.0.1.tar.gz",
+    "size_bytes": 8947,
+    "sha256": "6565f4ed61377040fe53413d5e56c91791cb23f107818cbf6a63c888ccc34ec3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/styropyr0/library/BME688/1.0.1/BME688-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/styropyr0/library/BME688/1.0.1/BME688-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "styropyr0/library/JSON%20Encoder/1.0.0/JSONEncoder-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JSONEncoder-1.0.0.tar.gz",
+    "size_bytes": 1082,
+    "sha256": "77a00c5eb43bb73567f277d5aeeb589af01e4086616e967e4a7af3222caf4ae9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/styropyr0/library/JSON%2520Encoder/1.0.0/JSONEncoder-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/styropyr0/library/JSON%20Encoder/1.0.0/JSONEncoder-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "styropyr0/library/ML8511%20UV%20Sensor/1.0.0/ML8511UVSensor-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ML8511UVSensor-1.0.0.tar.gz",
+    "size_bytes": 6229,
+    "sha256": "f8f076d1f6183333346ca7d457f769068a3af859bbee9ab5b7bd6613148be301",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/styropyr0/library/ML8511%2520UV%2520Sensor/1.0.0/ML8511UVSensor-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/styropyr0/library/ML8511%20UV%20Sensor/1.0.0/ML8511UVSensor-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "styropyr0/library/MPM10/1.0.1/MPM10-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPM10-1.0.1.tar.gz",
+    "size_bytes": 6060,
+    "sha256": "6db5cbae728e698f5e1449c649db5888fa3b8b1898635ec9013769333c1d7fe7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/styropyr0/library/MPM10/1.0.1/MPM10-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/styropyr0/library/MPM10/1.0.1/MPM10-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "styropyr0/library/MX8650%20Mouse%20sensor%20library/1.0.2/MX8650Mousesensorlibrary-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MX8650Mousesensorlibrary-1.0.2.tar.gz",
+    "size_bytes": 7222,
+    "sha256": "e1508d8eaaaaa9c0ecd2c7ddca0d05c0786c3cbe0d16ac48290463b2dc3e008c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/styropyr0/library/MX8650%2520Mouse%2520sensor%2520library/1.0.2/MX8650Mousesensorlibrary-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/styropyr0/library/MX8650%20Mouse%20sensor%20library/1.0.2/MX8650Mousesensorlibrary-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "styropyr0/library/MjolnFileSystem/1.0.0/MjolnFileSystem-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MjolnFileSystem-1.0.0.tar.gz",
+    "size_bytes": 13242,
+    "sha256": "41b1a073a4da6276b42b76de65e73816cc6e0380e1c9272642aa8cb9be9a33ab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/styropyr0/library/MjolnFileSystem/1.0.0/MjolnFileSystem-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/styropyr0/library/MjolnFileSystem/1.0.0/MjolnFileSystem-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "styropyr0/library/MjolnFileSystem/1.0.1/MjolnFileSystem-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MjolnFileSystem-1.0.1.tar.gz",
+    "size_bytes": 17476,
+    "sha256": "7b8246623969dd04168d272f6bcf679c3646cfb2a10165f186d7a0a6cb8b1147",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/styropyr0/library/MjolnFileSystem/1.0.1/MjolnFileSystem-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/styropyr0/library/MjolnFileSystem/1.0.1/MjolnFileSystem-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "styropyr0/library/SSD1306%20OLED%20Display/1.0.5/SSD1306OLEDDisplay-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SSD1306OLEDDisplay-1.0.5.tar.gz",
+    "size_bytes": 24367,
+    "sha256": "8b79cae02c914d1f36d7f2ef0a8fa0b8d52332de3981df1bdf7a14654cf1ab34",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/styropyr0/library/SSD1306%2520OLED%2520Display/1.0.5/SSD1306OLEDDisplay-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/styropyr0/library/SSD1306%20OLED%20Display/1.0.5/SSD1306OLEDDisplay-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "styropyr0/library/SensorHub/1.0.2/SensorHub-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensorHub-1.0.2.tar.gz",
+    "size_bytes": 4286,
+    "sha256": "8e1c8ad1bb4d2d49e1b2d658d89cca36d215c6a36d0ffa79eaafa6e9054c9db8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/styropyr0/library/SensorHub/1.0.2/SensorHub-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/styropyr0/library/SensorHub/1.0.2/SensorHub-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "styropyr0/library/Wizer/1.0.0/Wizer-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Wizer-1.0.0.tar.gz",
+    "size_bytes": 9081,
+    "sha256": "5982b829e497f9b955d162d5d2f82b6f0b5222648e817b47c5285c937fb057b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/styropyr0/library/Wizer/1.0.0/Wizer-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/styropyr0/library/Wizer/1.0.0/Wizer-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

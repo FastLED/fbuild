@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kitki30",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kitki30/library/RotaryEncoderIDF/1.0.0/RotaryEncoderIDF-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RotaryEncoderIDF-1.0.0.tar.gz",
+    "size_bytes": 7848,
+    "sha256": "8e52bc1f1dccd21016540e10249cb79a31fef7b32de7a6b2319b77fb689a60ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kitki30/library/RotaryEncoderIDF/1.0.0/RotaryEncoderIDF-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kitki30/library/RotaryEncoderIDF/1.0.0/RotaryEncoderIDF-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kitki30/library/aw9364/1.0.1/aw9364-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "aw9364-1.0.1.tar.gz",
+    "size_bytes": 6749,
+    "sha256": "c1826368aa213de6d5f41550849c466524bcc898df4fa1221a2339f4e4b0c468",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kitki30/library/aw9364/1.0.1/aw9364-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/kitki30/library/aw9364/1.0.1/aw9364-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

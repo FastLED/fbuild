@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-yann",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-yann/library/24LCxx_I2C/0.0.0+sha.16ce7dae9019/24LCxx_I2C-0.0.0+sha.16ce7dae9019.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "24LCxx_I2C-0.0.0+sha.16ce7dae9019.tar.gz",
+    "size_bytes": 6912,
+    "sha256": "3a538427ef5787664f195eca62b008eb5e990c9a80c93264290649bd324839ba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yann/library/24LCxx_I2C/0.0.0%2Bsha.16ce7dae9019/24LCxx_I2C-0.0.0%2Bsha.16ce7dae9019.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yann/library/24LCxx_I2C/0.0.0%2Bsha.16ce7dae9019/24LCxx_I2C-0.0.0%2Bsha.16ce7dae9019.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-yann/library/DS130x_I2C/0.0.0+sha.834e9897e269/DS130x_I2C-0.0.0+sha.834e9897e269.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS130x_I2C-0.0.0+sha.834e9897e269.tar.gz",
+    "size_bytes": 8572,
+    "sha256": "e65cebb8d66a00b20c6240e3352913c7a632754581b4584803994de7a9514501",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yann/library/DS130x_I2C/0.0.0%2Bsha.834e9897e269/DS130x_I2C-0.0.0%2Bsha.834e9897e269.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yann/library/DS130x_I2C/0.0.0%2Bsha.834e9897e269/DS130x_I2C-0.0.0%2Bsha.834e9897e269.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-yann/library/DebugLibrary/0.0.0+sha.a11adabe9ded/DebugLibrary-0.0.0+sha.a11adabe9ded.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DebugLibrary-0.0.0+sha.a11adabe9ded.tar.gz",
+    "size_bytes": 4193,
+    "sha256": "c7134ca64375855fcb9371277bb213e3875d121b18150a9a27b5df3e3dd7f307",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yann/library/DebugLibrary/0.0.0%2Bsha.a11adabe9ded/DebugLibrary-0.0.0%2Bsha.a11adabe9ded.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yann/library/DebugLibrary/0.0.0%2Bsha.a11adabe9ded/DebugLibrary-0.0.0%2Bsha.a11adabe9ded.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-yann/library/FM24Vxx_I2C/0.0.0+sha.bf7d1264d3ff/FM24Vxx_I2C-0.0.0+sha.bf7d1264d3ff.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FM24Vxx_I2C-0.0.0+sha.bf7d1264d3ff.tar.gz",
+    "size_bytes": 9278,
+    "sha256": "0494b331a7a069cfe4d60d79e5bc7b0d9b63331f3b93fbf2d9c4e836e8045bbf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yann/library/FM24Vxx_I2C/0.0.0%2Bsha.bf7d1264d3ff/FM24Vxx_I2C-0.0.0%2Bsha.bf7d1264d3ff.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yann/library/FM24Vxx_I2C/0.0.0%2Bsha.bf7d1264d3ff/FM24Vxx_I2C-0.0.0%2Bsha.bf7d1264d3ff.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-yann/library/MCP23017_I2C/0.0.0+sha.b902729a1675/MCP23017_I2C-0.0.0+sha.b902729a1675.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP23017_I2C-0.0.0+sha.b902729a1675.tar.gz",
+    "size_bytes": 8744,
+    "sha256": "74bde6fd0d575ba32e7548745641d7e9dba8711f78b213b4c040ce21e239bca0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yann/library/MCP23017_I2C/0.0.0%2Bsha.b902729a1675/MCP23017_I2C-0.0.0%2Bsha.b902729a1675.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yann/library/MCP23017_I2C/0.0.0%2Bsha.b902729a1675/MCP23017_I2C-0.0.0%2Bsha.b902729a1675.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-yann/library/MCP320x_SPI/0.0.0+sha.a273b5fcad50/MCP320x_SPI-0.0.0+sha.a273b5fcad50.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP320x_SPI-0.0.0+sha.a273b5fcad50.tar.gz",
+    "size_bytes": 4393,
+    "sha256": "c583ce75ab0e86ac298cb708f5303f1fd517439448fbfd8231c702c1a483d1c4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yann/library/MCP320x_SPI/0.0.0%2Bsha.a273b5fcad50/MCP320x_SPI-0.0.0%2Bsha.a273b5fcad50.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yann/library/MCP320x_SPI/0.0.0%2Bsha.a273b5fcad50/MCP320x_SPI-0.0.0%2Bsha.a273b5fcad50.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-yann/library/MCP4xxxx_SPI/0.0.0+sha.12a0d89aa72f/MCP4xxxx_SPI-0.0.0+sha.12a0d89aa72f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP4xxxx_SPI-0.0.0+sha.12a0d89aa72f.tar.gz",
+    "size_bytes": 5434,
+    "sha256": "c7a56b624a4310566652ebcbec7adcf493682529170dd4d3ec7dd136c25830c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yann/library/MCP4xxxx_SPI/0.0.0%2Bsha.12a0d89aa72f/MCP4xxxx_SPI-0.0.0%2Bsha.12a0d89aa72f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yann/library/MCP4xxxx_SPI/0.0.0%2Bsha.12a0d89aa72f/MCP4xxxx_SPI-0.0.0%2Bsha.12a0d89aa72f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-yann/library/SignalGenerator/0.0.0+sha.d6cbee8595e0/SignalGenerator-0.0.0+sha.d6cbee8595e0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SignalGenerator-0.0.0+sha.d6cbee8595e0.tar.gz",
+    "size_bytes": 4386,
+    "sha256": "57017fcc2f0d7054bf95943ed084ab0cfc208955f4d8726b99095b499144ece7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yann/library/SignalGenerator/0.0.0%2Bsha.d6cbee8595e0/SignalGenerator-0.0.0%2Bsha.d6cbee8595e0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yann/library/SignalGenerator/0.0.0%2Bsha.d6cbee8595e0/SignalGenerator-0.0.0%2Bsha.d6cbee8595e0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

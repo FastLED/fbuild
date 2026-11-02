@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ftservo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ftservo/library/FTServo/2.0.0/FTServo-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FTServo-2.0.0.tar.gz",
+    "size_bytes": 14451,
+    "sha256": "d72303469cc03e7c4e09af68090d89bf72c4f4c9d1d23d249a254cbb34d0f272",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ftservo/library/FTServo/2.0.0/FTServo-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ftservo/library/FTServo/2.0.0/FTServo-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

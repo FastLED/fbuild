@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/alexandrehiroyuki",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "alexandrehiroyuki/library/DataTome/1.9.0/DataTome-1.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DataTome-1.9.0.tar.gz",
+    "size_bytes": 8026,
+    "sha256": "6187d20ea5ed36bbd79bfd7e5160551bc9bab2c68e62a2903200d81c7a76342d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alexandrehiroyuki/library/DataTome/1.9.0/DataTome-1.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alexandrehiroyuki/library/DataTome/1.9.0/DataTome-1.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alexandrehiroyuki/library/DataTome/1.9.1/DataTome-1.9.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DataTome-1.9.1.tar.gz",
+    "size_bytes": 9011,
+    "sha256": "936575302c5e9c328066f59696165c45cceace0639823b29bcb4f386576dfb1d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alexandrehiroyuki/library/DataTome/1.9.1/DataTome-1.9.1.tar.gz",
+     "https://dl.registry.platformio.org/download/alexandrehiroyuki/library/DataTome/1.9.1/DataTome-1.9.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alexandrehiroyuki/library/MovingAveragePlus/4.4.1/MovingAveragePlus-4.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MovingAveragePlus-4.4.1.tar.gz",
+    "size_bytes": 6864,
+    "sha256": "4b708d356e9a5f3b4124802d0f6d2e01b5edd3b0f1d0d1b89bf262ad9ca4bc56",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alexandrehiroyuki/library/MovingAveragePlus/4.4.1/MovingAveragePlus-4.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/alexandrehiroyuki/library/MovingAveragePlus/4.4.1/MovingAveragePlus-4.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alexandrehiroyuki/library/compkit/1.3.0/compkit-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "compkit-1.3.0.tar.gz",
+    "size_bytes": 6956,
+    "sha256": "42d00994892846943e7e18edb5c8eafcdf1510223c20748d9df0b313eaabc73b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alexandrehiroyuki/library/compkit/1.3.0/compkit-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alexandrehiroyuki/library/compkit/1.3.0/compkit-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alexandrehiroyuki/library/compkit/1.3.1/compkit-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "compkit-1.3.1.tar.gz",
+    "size_bytes": 6965,
+    "sha256": "87e0918cb046e68f489b10e203b0637f8b8247779e81afa95c1773bbc5467371",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alexandrehiroyuki/library/compkit/1.3.1/compkit-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/alexandrehiroyuki/library/compkit/1.3.1/compkit-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alexandrehiroyuki/library/compkit/1.3.2/compkit-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "compkit-1.3.2.tar.gz",
+    "size_bytes": 6725,
+    "sha256": "2647c4bdd332c2537d62a4c67f28f92a9cdc44b08fbd5b71de145fbc29761bc7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alexandrehiroyuki/library/compkit/1.3.2/compkit-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/alexandrehiroyuki/library/compkit/1.3.2/compkit-1.3.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

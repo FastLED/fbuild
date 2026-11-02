@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/purwar2016",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "purwar2016/library/ArduinoBlue/3.1.2/ArduinoBlue-3.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBlue-3.1.2.tar.gz",
+    "size_bytes": 9485,
+    "sha256": "3857490de8617c3af4186dca39ed416ea4a169643597eca7ffec5f285288f8a7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/purwar2016/library/ArduinoBlue/3.1.2/ArduinoBlue-3.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/purwar2016/library/ArduinoBlue/3.1.2/ArduinoBlue-3.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "purwar2016/library/DeadReckoning-library/2.0.0/DeadReckoning-library-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DeadReckoning-library-2.0.0.tar.gz",
+    "size_bytes": 3497,
+    "sha256": "2c25ac9e3dfef697e0a6873a3a3d3ce502cbf5b163fcaae454d37cc32bf2af57",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/purwar2016/library/DeadReckoning-library/2.0.0/DeadReckoning-library-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/purwar2016/library/DeadReckoning-library/2.0.0/DeadReckoning-library-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "purwar2016/library/PreMo-Virtual%20Path%20Following/2.1.0/PreMo-VirtualPathFollowing-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PreMo-VirtualPathFollowing-2.1.0.tar.gz",
+    "size_bytes": 16909,
+    "sha256": "4cee340ffe9c83ebe1d953b0ef50522a237d2aba409fbe7d00d78cca80562928",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/purwar2016/library/PreMo-Virtual%2520Path%2520Following/2.1.0/PreMo-VirtualPathFollowing-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/purwar2016/library/PreMo-Virtual%20Path%20Following/2.1.0/PreMo-VirtualPathFollowing-2.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/david1983",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "david1983/library/eBtn/1.0/eBtn-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "eBtn-1.0.tar.gz",
+    "size_bytes": 2043,
+    "sha256": "8cf3e380d6b522f51ee5ad1823993800708784e87073026cece96fdcd9238d54",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/david1983/library/eBtn/1.0/eBtn-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/david1983/library/eBtn/1.0/eBtn-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/skaygin",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "skaygin/library/ArduinoNative/0.1.4/ArduinoNative-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoNative-0.1.4.tar.gz",
+    "size_bytes": 30654,
+    "sha256": "3f201f37dc6e88dfe69b658b392c127eff8a90104a6704e6e4494410fbc9d040",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/skaygin/library/ArduinoNative/0.1.4/ArduinoNative-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/skaygin/library/ArduinoNative/0.1.4/ArduinoNative-0.1.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

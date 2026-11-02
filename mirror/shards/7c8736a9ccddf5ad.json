@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gillham",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gillham/library/LogicAnalyzer/0.17.0/LogicAnalyzer-0.17.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LogicAnalyzer-0.17.0.tar.gz",
+    "size_bytes": 156397,
+    "sha256": "dd4275dc918d1044011bcb8e835b5e79ae6103e1f2f4b208ef7c152c74845670",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gillham/library/LogicAnalyzer/0.17.0/LogicAnalyzer-0.17.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gillham/library/LogicAnalyzer/0.17.0/LogicAnalyzer-0.17.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

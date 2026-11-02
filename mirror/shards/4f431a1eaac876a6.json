@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/renanrms",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "renanrms/library/FTRLab/0.5.2/FTRLab-0.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FTRLab-0.5.2.tar.gz",
+    "size_bytes": 14869,
+    "sha256": "a2306ef7b5f4ed06acdd0f943143f4bc0f616e71b52b4d77337e5c5b978424d7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/renanrms/library/FTRLab/0.5.2/FTRLab-0.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/renanrms/library/FTRLab/0.5.2/FTRLab-0.5.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

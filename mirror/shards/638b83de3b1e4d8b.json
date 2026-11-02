@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fabiobatsilva",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fabiobatsilva/library/ArduinoFake/0.3.1/ArduinoFake-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoFake-0.3.1.tar.gz",
+    "size_bytes": 67202,
+    "sha256": "9a0f2d5a6d67570953e45a55976924a55e9b873b5eeeeb16ec1f77ae11ce2450",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fabiobatsilva/library/ArduinoFake/0.3.1/ArduinoFake-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fabiobatsilva/library/ArduinoFake/0.3.1/ArduinoFake-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fabiobatsilva/library/ArduinoFake/0.4.0/ArduinoFake-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoFake-0.4.0.tar.gz",
+    "size_bytes": 74857,
+    "sha256": "5aa8f2c3eb6ecf70170b57a7cca69b9f5c059d10033bf9037a72ee230f763ca8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fabiobatsilva/library/ArduinoFake/0.4.0/ArduinoFake-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fabiobatsilva/library/ArduinoFake/0.4.0/ArduinoFake-0.4.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

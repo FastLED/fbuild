@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jrbenito",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jrbenito/library/ABB%20Aurora/1.0.1/ABBAurora-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ABBAurora-1.0.1.tar.gz",
+    "size_bytes": 17594,
+    "sha256": "f9b912226f50ebcec816b4dbe0b3bec700a07a1fa9403765ddf81cee56908d81",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jrbenito/library/ABB%2520Aurora/1.0.1/ABBAurora-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jrbenito/library/ABB%20Aurora/1.0.1/ABBAurora-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jrbenito/library/MCP7940RTC/0.0.0-alpha+sha.520ce1213c/MCP7940RTC-0.0.0-alphasha.520ce1213c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP7940RTC-0.0.0-alphasha.520ce1213c.tar.gz",
+    "size_bytes": 46155,
+    "sha256": "ece96f76d877e6707e1cc3c6675864a51a0d3f125157e9f644dcb3facd426254",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jrbenito/library/MCP7940RTC/0.0.0-alpha%2Bsha.520ce1213c/MCP7940RTC-0.0.0-alphasha.520ce1213c.tar.gz",
+     "https://dl.registry.platformio.org/download/jrbenito/library/MCP7940RTC/0.0.0-alpha%2Bsha.520ce1213c/MCP7940RTC-0.0.0-alphasha.520ce1213c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jrbenito/library/SPIFlashA/0.0.0-alpha+sha.39646671e8/SPIFlashA-0.0.0-alphasha.39646671e8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SPIFlashA-0.0.0-alphasha.39646671e8.tar.gz",
+    "size_bytes": 10261,
+    "sha256": "e960e0de4d74f893438f5144fdd24db914d9761f449d25db8457bf01af40008f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jrbenito/library/SPIFlashA/0.0.0-alpha%2Bsha.39646671e8/SPIFlashA-0.0.0-alphasha.39646671e8.tar.gz",
+     "https://dl.registry.platformio.org/download/jrbenito/library/SPIFlashA/0.0.0-alpha%2Bsha.39646671e8/SPIFlashA-0.0.0-alphasha.39646671e8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

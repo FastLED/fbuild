@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rodrigodornelles",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rodrigodornelles/library/3BC%20Language%20Virtual%20Machine/0.1.4/3BCLanguageVirtualMachine-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "3BCLanguageVirtualMachine-0.1.4.tar.gz",
+    "size_bytes": 52781,
+    "sha256": "959e383a8a99bfc8e13be13f335e47278b4387ac80044b667121d03d39ff9da8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rodrigodornelles/library/3BC%2520Language%2520Virtual%2520Machine/0.1.4/3BCLanguageVirtualMachine-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/rodrigodornelles/library/3BC%20Language%20Virtual%20Machine/0.1.4/3BCLanguageVirtualMachine-0.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rodrigodornelles/library/TonePitch/1.0.3/TonePitch-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TonePitch-1.0.3.tar.gz",
+    "size_bytes": 15469,
+    "sha256": "9fa857565c1ff58b72fbb5cbec98ad1de159e75aa2e00fc6877dd9fb0b9b2b3b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rodrigodornelles/library/TonePitch/1.0.3/TonePitch-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/rodrigodornelles/library/TonePitch/1.0.3/TonePitch-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

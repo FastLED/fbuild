@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jgohyeah",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jgohyeah/library/LCDGraph/1.2.0/LCDGraph-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCDGraph-1.2.0.tar.gz",
+    "size_bytes": 8301,
+    "sha256": "52c90b9f06f7104362c19bd0fe86d7e686eb6f27fb446123df57922caf7ea28f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jgohyeah/library/LCDGraph/1.2.0/LCDGraph-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jgohyeah/library/LCDGraph/1.2.0/LCDGraph-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jgohyeah/library/TunePlayer/1.3.4/TunePlayer-1.3.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TunePlayer-1.3.4.tar.gz",
+    "size_bytes": 10968,
+    "sha256": "8d32931f7a3682e97e9dd088ab644c1c7920af291297ad466bde3055bcd8637e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jgohyeah/library/TunePlayer/1.3.4/TunePlayer-1.3.4.tar.gz",
+     "https://dl.registry.platformio.org/download/jgohyeah/library/TunePlayer/1.3.4/TunePlayer-1.3.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

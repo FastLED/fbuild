@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dlyckelid",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dlyckelid/library/HDC2010/1.0.1/HDC2010-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HDC2010-1.0.1.tar.gz",
+    "size_bytes": 6309,
+    "sha256": "2ac2dc274016a97946a4c7901f64a73c48ae974e086f7264602b64e1bbd1b50c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dlyckelid/library/HDC2010/1.0.1/HDC2010-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dlyckelid/library/HDC2010/1.0.1/HDC2010-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dlyckelid/library/KX0231025IMU/1.0.1/KX0231025IMU-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KX0231025IMU-1.0.1.tar.gz",
+    "size_bytes": 15626,
+    "sha256": "86264c3c74ecf123cd6b452974c5e9df3ab9d39e67cdcf02fdae6beb63d8ae23",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dlyckelid/library/KX0231025IMU/1.0.1/KX0231025IMU-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dlyckelid/library/KX0231025IMU/1.0.1/KX0231025IMU-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dlyckelid/library/TLA2518/1.0.4/TLA2518-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TLA2518-1.0.4.tar.gz",
+    "size_bytes": 5802,
+    "sha256": "f5111caed8b4ec9d248b23e127204f192a25986ced2c14b2fbab1deb0026cdc4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dlyckelid/library/TLA2518/1.0.4/TLA2518-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/dlyckelid/library/TLA2518/1.0.4/TLA2518-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

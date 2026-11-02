@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/periashutosh-prog",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "periashutosh-prog/library/Smart%20Connect/1.0.0/SmartConnect-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartConnect-1.0.0.tar.gz",
+    "size_bytes": 24196,
+    "sha256": "82baa8e056fc74dd4eee4b10d1f193e2f5943c39264175fcb7b3467f9cd9c434",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/periashutosh-prog/library/Smart%2520Connect/1.0.0/SmartConnect-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/periashutosh-prog/library/Smart%20Connect/1.0.0/SmartConnect-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "periashutosh-prog/library/Smart%20Connect/1.5.0/SmartConnect-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartConnect-1.5.0.tar.gz",
+    "size_bytes": 27831,
+    "sha256": "79b510d85960309fca6318f7eb4b45e2758ceaf24440a2008229fc80c1c92c7e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/periashutosh-prog/library/Smart%2520Connect/1.5.0/SmartConnect-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/periashutosh-prog/library/Smart%20Connect/1.5.0/SmartConnect-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "periashutosh-prog/library/Smart%20Connect/1.6.0/SmartConnect-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartConnect-1.6.0.tar.gz",
+    "size_bytes": 29287,
+    "sha256": "98b0ee94c16261e19500474112c256905a0227e49ef034ab2ce6d5312d87d7fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/periashutosh-prog/library/Smart%2520Connect/1.6.0/SmartConnect-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/periashutosh-prog/library/Smart%20Connect/1.6.0/SmartConnect-1.6.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

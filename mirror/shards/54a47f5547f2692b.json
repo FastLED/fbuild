@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tonimatutinovic",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tonimatutinovic/library/myDHT/1.0.0/myDHT-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "myDHT-1.0.0.tar.gz",
+    "size_bytes": 16671,
+    "sha256": "9ac8e230ef0a81e8413f1aa2cf48457e5a553116ca806b82fb8645ada81b2301",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tonimatutinovic/library/myDHT/1.0.0/myDHT-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tonimatutinovic/library/myDHT/1.0.0/myDHT-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tonimatutinovic/library/myDHT/2.0.1/myDHT-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "myDHT-2.0.1.tar.gz",
+    "size_bytes": 22952,
+    "sha256": "35e97b88dfe329659e83ca0e7004a08a312f88b45665270ce952435b9401f838",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tonimatutinovic/library/myDHT/2.0.1/myDHT-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tonimatutinovic/library/myDHT/2.0.1/myDHT-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tonimatutinovic/library/myDHT/2.0.2/myDHT-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "myDHT-2.0.2.tar.gz",
+    "size_bytes": 24426,
+    "sha256": "3b0d9712d8625d0f8f013fa35ec5cc631b6f0b1058e2ed638e8017e489dd8df5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tonimatutinovic/library/myDHT/2.0.2/myDHT-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tonimatutinovic/library/myDHT/2.0.2/myDHT-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tonimatutinovic/library/myDHT/2.0.3/myDHT-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "myDHT-2.0.3.tar.gz",
+    "size_bytes": 28742,
+    "sha256": "4f4f8d319d43a36dae2a0833e116e173c1fddd5f481c11f1e57a7d910b0fad5a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tonimatutinovic/library/myDHT/2.0.3/myDHT-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tonimatutinovic/library/myDHT/2.0.3/myDHT-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tonimatutinovic/library/myDHT/2.0.4/myDHT-2.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "myDHT-2.0.4.tar.gz",
+    "size_bytes": 29891,
+    "sha256": "6df824c933cfe7648297b20a56121f2b094fda71269c31dced33748bde9747a0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tonimatutinovic/library/myDHT/2.0.4/myDHT-2.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/tonimatutinovic/library/myDHT/2.0.4/myDHT-2.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

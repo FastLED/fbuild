@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/xose",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "xose/library/NoFUSS/0.3.0/NoFUSS-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NoFUSS-0.3.0.tar.gz",
+    "size_bytes": 32003,
+    "sha256": "12892e55e44f57b3990cc37005eca90da568242c419d3806d47d9bbac33b6d52",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xose/library/NoFUSS/0.3.0/NoFUSS-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xose/library/NoFUSS/0.3.0/NoFUSS-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xose/library/PCF8583/1.0.0/PCF8583-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCF8583-1.0.0.tar.gz",
+    "size_bytes": 19717,
+    "sha256": "5b3ccd179723532c0d3e8d9a687e87872d090dd5b8cb52aa33c733050ccb4161",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xose/library/PCF8583/1.0.0/PCF8583-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xose/library/PCF8583/1.0.0/PCF8583-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

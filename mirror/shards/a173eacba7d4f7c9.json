@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-vlad",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-vlad/library/Chirp/0.0.0+sha.faff11456df9/Chirp-0.0.0+sha.faff11456df9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Chirp-0.0.0+sha.faff11456df9.tar.gz",
+    "size_bytes": 1521,
+    "sha256": "43b64844d5ab722551a11c03acf695f19330a5672b9d63eff7d43633a8982046",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-vlad/library/Chirp/0.0.0%2Bsha.faff11456df9/Chirp-0.0.0%2Bsha.faff11456df9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-vlad/library/Chirp/0.0.0%2Bsha.faff11456df9/Chirp-0.0.0%2Bsha.faff11456df9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

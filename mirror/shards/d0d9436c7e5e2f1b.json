@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hopperpop",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hopperpop/library/Sgp4/1.0.3/Sgp4-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sgp4-1.0.3.tar.gz",
+    "size_bytes": 42774,
+    "sha256": "99ccaf0d1c01b1fb707c0104239e77e16a9e02fc58e1a845393d593636080f73",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hopperpop/library/Sgp4/1.0.3/Sgp4-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/hopperpop/library/Sgp4/1.0.3/Sgp4-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

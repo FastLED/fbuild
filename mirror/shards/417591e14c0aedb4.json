@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-mbed",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-mbed/library/DHT11/0.0.0+sha.e91c151d1798/DHT11-0.0.0+sha.e91c151d1798.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DHT11-0.0.0+sha.e91c151d1798.tar.gz",
+    "size_bytes": 3280,
+    "sha256": "de30803af3bde3957a2ba7ef6228d1cdb40ae300acdd569e34ed3bd8b6b4fc14",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mbed/library/DHT11/0.0.0%2Bsha.e91c151d1798/DHT11-0.0.0%2Bsha.e91c151d1798.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mbed/library/DHT11/0.0.0%2Bsha.e91c151d1798/DHT11-0.0.0%2Bsha.e91c151d1798.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-mbed/library/PseudoRTC/0.0.0+sha.fb8fd750e935/PseudoRTC-0.0.0+sha.fb8fd750e935.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PseudoRTC-0.0.0+sha.fb8fd750e935.tar.gz",
+    "size_bytes": 2276,
+    "sha256": "0d8af59596f7cc9c2f4aa210f0c4fa3ed53c680f9e97b2c79a8066f0b4feec31",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mbed/library/PseudoRTC/0.0.0%2Bsha.fb8fd750e935/PseudoRTC-0.0.0%2Bsha.fb8fd750e935.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mbed/library/PseudoRTC/0.0.0%2Bsha.fb8fd750e935/PseudoRTC-0.0.0%2Bsha.fb8fd750e935.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-mbed/library/RGB_matrix_Panel/0.0.0+sha.0ceb1b8893e9/RGB_matrix_Panel-0.0.0+sha.0ceb1b8893e9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RGB_matrix_Panel-0.0.0+sha.0ceb1b8893e9.tar.gz",
+    "size_bytes": 7158,
+    "sha256": "5f2ecf414a99b971020642579ba80e487b4b78ce9c694ba7929e3aa68a27387b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mbed/library/RGB_matrix_Panel/0.0.0%2Bsha.0ceb1b8893e9/RGB_matrix_Panel-0.0.0%2Bsha.0ceb1b8893e9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mbed/library/RGB_matrix_Panel/0.0.0%2Bsha.0ceb1b8893e9/RGB_matrix_Panel-0.0.0%2Bsha.0ceb1b8893e9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-mbed/library/ZumoControl/0.0.0+sha.da217aaa04ef/ZumoControl-0.0.0+sha.da217aaa04ef.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ZumoControl-0.0.0+sha.da217aaa04ef.tar.gz",
+    "size_bytes": 2705,
+    "sha256": "ffc0c2fb298309130b93afb348a86e5fabafd106d6ca8d08e097fcac55ecc7cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mbed/library/ZumoControl/0.0.0%2Bsha.da217aaa04ef/ZumoControl-0.0.0%2Bsha.da217aaa04ef.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mbed/library/ZumoControl/0.0.0%2Bsha.da217aaa04ef/ZumoControl-0.0.0%2Bsha.da217aaa04ef.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-mbed/library/mbedHelper/0.0.0+sha.01bb68972e7b/mbedHelper-0.0.0+sha.01bb68972e7b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mbedHelper-0.0.0+sha.01bb68972e7b.tar.gz",
+    "size_bytes": 1921,
+    "sha256": "664753acc1abc8c3bf744a1bfddc81cb950ec1729952ea6ab693eeab0c4d0e95",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mbed/library/mbedHelper/0.0.0%2Bsha.01bb68972e7b/mbedHelper-0.0.0%2Bsha.01bb68972e7b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mbed/library/mbedHelper/0.0.0%2Bsha.01bb68972e7b/mbedHelper-0.0.0%2Bsha.01bb68972e7b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

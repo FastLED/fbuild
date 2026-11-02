@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/szotsaki",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "szotsaki/library/LIS331/2.2.3/LIS331-2.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LIS331-2.2.3.tar.gz",
+    "size_bytes": 21034,
+    "sha256": "d3cb7ce456e251f33dbea51dff54412b30387a70f8be30e61dfbfe923e3af2fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/szotsaki/library/LIS331/2.2.3/LIS331-2.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/szotsaki/library/LIS331/2.2.3/LIS331-2.2.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

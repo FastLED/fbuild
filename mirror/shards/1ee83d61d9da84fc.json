@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/wamisnet",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "wamisnet/library/AzureIoTHub/1.0/AzureIoTHub-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AzureIoTHub-1.0.tar.gz",
+    "size_bytes": 21960,
+    "sha256": "adc8891893b3d417e059eb270d5172890c8aeef5b3f25fb0b441f1a820ac10b6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wamisnet/library/AzureIoTHub/1.0/AzureIoTHub-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/wamisnet/library/AzureIoTHub/1.0/AzureIoTHub-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

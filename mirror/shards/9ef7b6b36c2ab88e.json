@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jppang",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jppang/library/MAG3110/0.0.0+sha.9644c7d596a1/MAG3110-0.0.0+sha.9644c7d596a1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAG3110-0.0.0+sha.9644c7d596a1.tar.gz",
+    "size_bytes": 2650,
+    "sha256": "df770e68335b6acfbe439d5863949988ce475ee22194e638e69680cc804f4998",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jppang/library/MAG3110/0.0.0%2Bsha.9644c7d596a1/MAG3110-0.0.0%2Bsha.9644c7d596a1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jppang/library/MAG3110/0.0.0%2Bsha.9644c7d596a1/MAG3110-0.0.0%2Bsha.9644c7d596a1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jppang/library/MMA8491Q/0.0.0+sha.2d4b7fadb1e6/MMA8491Q-0.0.0+sha.2d4b7fadb1e6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MMA8491Q-0.0.0+sha.2d4b7fadb1e6.tar.gz",
+    "size_bytes": 3663,
+    "sha256": "d4f8d744873f2f4b1770d5cb46657ae2888c8f9e48a025cceb7631c93aeb450e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jppang/library/MMA8491Q/0.0.0%2Bsha.2d4b7fadb1e6/MMA8491Q-0.0.0%2Bsha.2d4b7fadb1e6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jppang/library/MMA8491Q/0.0.0%2Bsha.2d4b7fadb1e6/MMA8491Q-0.0.0%2Bsha.2d4b7fadb1e6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jppang/library/NokiaLCD_SWSPI/0.0.0+sha.046bfae72c0c/NokiaLCD_SWSPI-0.0.0+sha.046bfae72c0c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NokiaLCD_SWSPI-0.0.0+sha.046bfae72c0c.tar.gz",
+    "size_bytes": 6441,
+    "sha256": "1a30a5cdfb95b8119d2cd64f6a2f420e60b3f56fed212b7a3bf90a089d356d9f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jppang/library/NokiaLCD_SWSPI/0.0.0%2Bsha.046bfae72c0c/NokiaLCD_SWSPI-0.0.0%2Bsha.046bfae72c0c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jppang/library/NokiaLCD_SWSPI/0.0.0%2Bsha.046bfae72c0c/NokiaLCD_SWSPI-0.0.0%2Bsha.046bfae72c0c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/taraszhylenko",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "taraszhylenko/library/TickerTape7SegmentDisplay/1.0.0/TickerTape7SegmentDisplay-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TickerTape7SegmentDisplay-1.0.0.tar.gz",
+    "size_bytes": 3569,
+    "sha256": "2f1e225b1d8ec260de0da1c44084136adbb72feb66fda9484858edfcda6272f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/taraszhylenko/library/TickerTape7SegmentDisplay/1.0.0/TickerTape7SegmentDisplay-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/taraszhylenko/library/TickerTape7SegmentDisplay/1.0.0/TickerTape7SegmentDisplay-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

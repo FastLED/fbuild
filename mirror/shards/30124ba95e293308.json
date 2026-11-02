@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jppfavonian",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jppfavonian/library/LCD43PTC/0.0.0+sha.cf251e70769f/LCD43PTC-0.0.0+sha.cf251e70769f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCD43PTC-0.0.0+sha.cf251e70769f.tar.gz",
+    "size_bytes": 3541,
+    "sha256": "6fb6c56e274570aa99502195b3d9ec05048f07fc4092b387f91d8dac322b10e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jppfavonian/library/LCD43PTC/0.0.0%2Bsha.cf251e70769f/LCD43PTC-0.0.0%2Bsha.cf251e70769f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jppfavonian/library/LCD43PTC/0.0.0%2Bsha.cf251e70769f/LCD43PTC-0.0.0%2Bsha.cf251e70769f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

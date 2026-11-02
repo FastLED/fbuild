@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tinycircuits",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tinycircuits/library/TinyScreen/1.1.0/TinyScreen-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyScreen-1.1.0.tar.gz",
+    "size_bytes": 61464,
+    "sha256": "1c6ffe7561ac7767dde1ac57a9fcd2e6f67d8bf8302678e11e68632517fffa87",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tinycircuits/library/TinyScreen/1.1.0/TinyScreen-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tinycircuits/library/TinyScreen/1.1.0/TinyScreen-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tinycircuits/library/Wireling/0.1.1/Wireling-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Wireling-0.1.1.tar.gz",
+    "size_bytes": 5211,
+    "sha256": "ac20cf3d06a2d623d4169b87a91f12fdd3e4d7dc878cf8697fd4a435567a6252",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tinycircuits/library/Wireling/0.1.1/Wireling-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tinycircuits/library/Wireling/0.1.1/Wireling-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

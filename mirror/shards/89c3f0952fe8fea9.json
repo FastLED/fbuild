@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-evwijk",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-evwijk/library/ButtonIn/0.0.0+sha.c353357a97e4/ButtonIn-0.0.0+sha.c353357a97e4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ButtonIn-0.0.0+sha.c353357a97e4.tar.gz",
+    "size_bytes": 1832,
+    "sha256": "2d96eef3c30eab6b04ea822fd46ef64ce143e113e9d70bf58e1077d4e5c19c0c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-evwijk/library/ButtonIn/0.0.0%2Bsha.c353357a97e4/ButtonIn-0.0.0%2Bsha.c353357a97e4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-evwijk/library/ButtonIn/0.0.0%2Bsha.c353357a97e4/ButtonIn-0.0.0%2Bsha.c353357a97e4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-evwijk/library/crc8/0.0.0+sha.cc65a6cec1a1/crc8-0.0.0+sha.cc65a6cec1a1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "crc8-0.0.0+sha.cc65a6cec1a1.tar.gz",
+    "size_bytes": 1859,
+    "sha256": "8db7aa6ab65de42729c65baa0cda591d7641f054d679c981d7489221dc62327f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-evwijk/library/crc8/0.0.0%2Bsha.cc65a6cec1a1/crc8-0.0.0%2Bsha.cc65a6cec1a1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-evwijk/library/crc8/0.0.0%2Bsha.cc65a6cec1a1/crc8-0.0.0%2Bsha.cc65a6cec1a1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-evwijk/library/microOLED/0.0.0+sha.3a99823210c0/microOLED-0.0.0+sha.3a99823210c0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "microOLED-0.0.0+sha.3a99823210c0.tar.gz",
+    "size_bytes": 2348,
+    "sha256": "98ea5af1d68b59cb376113b747ab758b9ebd09214f83637a3c560bb14b976061",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-evwijk/library/microOLED/0.0.0%2Bsha.3a99823210c0/microOLED-0.0.0%2Bsha.3a99823210c0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-evwijk/library/microOLED/0.0.0%2Bsha.3a99823210c0/microOLED-0.0.0%2Bsha.3a99823210c0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

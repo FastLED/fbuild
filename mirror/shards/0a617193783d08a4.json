@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/devarishi7",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "devarishi7/library/Dmx_ESP32/1.1.0/Dmx_ESP32-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Dmx_ESP32-1.1.0.tar.gz",
+    "size_bytes": 23860,
+    "sha256": "1954a753ce6fa081a0109d3f73c20ca3d50308affd1cc3f58663ebbfda47625c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/devarishi7/library/Dmx_ESP32/1.1.0/Dmx_ESP32-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/devarishi7/library/Dmx_ESP32/1.1.0/Dmx_ESP32-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

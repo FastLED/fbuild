@@ -1,0 +1,919 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nomis",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nomis/library/uuid-common/1.0.0/uuid-common-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-common-1.0.0.tar.gz",
+    "size_bytes": 14323,
+    "sha256": "06ef566dec3411357049dcf43c5f4d49380a879a501392059fb3abd3b1ac80b0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-common/1.0.0/uuid-common-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-common/1.0.0/uuid-common-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-common/1.0.1/uuid-common-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-common-1.0.1.tar.gz",
+    "size_bytes": 14911,
+    "sha256": "b471dfd2b9c9091fc1fa953d800d9f15bcbf1453b5fac8ecb2f23da198f40ae3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-common/1.0.1/uuid-common-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-common/1.0.1/uuid-common-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-common/1.0.2/uuid-common-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-common-1.0.2.tar.gz",
+    "size_bytes": 14988,
+    "sha256": "c733339047a047a437a9a171a8439e95b3153a32294183354cb8283598583c8c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-common/1.0.2/uuid-common-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-common/1.0.2/uuid-common-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-common/1.1.0/uuid-common-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-common-1.1.0.tar.gz",
+    "size_bytes": 16935,
+    "sha256": "4c5a78ee5f37c38a12e221868b664cf0288a092ab99ab74daa7e5eb09e00d94a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-common/1.1.0/uuid-common-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-common/1.1.0/uuid-common-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-common/1.1.1/uuid-common-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-common-1.1.1.tar.gz",
+    "size_bytes": 17150,
+    "sha256": "f4c84626cba9c84c0eb5b1bef3f6fe6e3f19518f7f9b7273e765693c54a13778",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-common/1.1.1/uuid-common-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-common/1.1.1/uuid-common-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-common/1.1.2/uuid-common-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-common-1.1.2.tar.gz",
+    "size_bytes": 17374,
+    "sha256": "894dda95c65e5cded2892a944e0a592494a8eee411eb72a4d7a0720682f82133",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-common/1.1.2/uuid-common-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-common/1.1.2/uuid-common-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-common/1.2.0/uuid-common-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-common-1.2.0.tar.gz",
+    "size_bytes": 17752,
+    "sha256": "12c3dc373c5727e1eb0a4d096eb37469696d674ebe668f3408f2900649e282f9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-common/1.2.0/uuid-common-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-common/1.2.0/uuid-common-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-console/0.1.0/uuid-console-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-console-0.1.0.tar.gz",
+    "size_bytes": 29176,
+    "sha256": "fe51b77b5c74769f453b5ab41d49a520ad468876f098549c5b0606ffd4fa0e03",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-console/0.1.0/uuid-console-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-console/0.1.0/uuid-console-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-console/0.2.0/uuid-console-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-console-0.2.0.tar.gz",
+    "size_bytes": 33324,
+    "sha256": "460da1ea6f4b4eaffd7ef7e8151887490b822f37465227a423bc819a12496b2c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-console/0.2.0/uuid-console-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-console/0.2.0/uuid-console-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-console/0.3.0/uuid-console-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-console-0.3.0.tar.gz",
+    "size_bytes": 33811,
+    "sha256": "05d01a8ada561696d0e6163a78415f327a6eeb6f7cabdbffef942854d75a963d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-console/0.3.0/uuid-console-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-console/0.3.0/uuid-console-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-console/0.4.0/uuid-console-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-console-0.4.0.tar.gz",
+    "size_bytes": 34366,
+    "sha256": "db3129a6f5982009091edbe63e9a52a35525583329d7cbe58cbe650e74ce516e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-console/0.4.0/uuid-console-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-console/0.4.0/uuid-console-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-console/0.5.0/uuid-console-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-console-0.5.0.tar.gz",
+    "size_bytes": 34942,
+    "sha256": "5876f99d9b2070660951ea157188c52edea64b4d548323e22f16310b3d028b12",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-console/0.5.0/uuid-console-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-console/0.5.0/uuid-console-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-console/0.6.0/uuid-console-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-console-0.6.0.tar.gz",
+    "size_bytes": 35494,
+    "sha256": "d46aa5ab81125844c41309793543840a146b281f9dd65ba606dc6d84e1ef6169",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-console/0.6.0/uuid-console-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-console/0.6.0/uuid-console-0.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-console/0.7.0/uuid-console-0.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-console-0.7.0.tar.gz",
+    "size_bytes": 35806,
+    "sha256": "109957c55925cbe2ca62736ae833bcd391b027bdefd9cf4fde21b192664b5108",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-console/0.7.0/uuid-console-0.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-console/0.7.0/uuid-console-0.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-console/0.7.1/uuid-console-0.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-console-0.7.1.tar.gz",
+    "size_bytes": 35809,
+    "sha256": "b1d29171b4a9766457a7ac80afc23e3bfbc793e0c22cbf67929b54823efeaf02",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-console/0.7.1/uuid-console-0.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-console/0.7.1/uuid-console-0.7.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-console/0.7.2/uuid-console-0.7.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-console-0.7.2.tar.gz",
+    "size_bytes": 35954,
+    "sha256": "bf11df53b4dc8c5c8b21bbb0fbce531a0fd1b316035d5841ec0bf7ddeb39c153",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-console/0.7.2/uuid-console-0.7.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-console/0.7.2/uuid-console-0.7.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-console/0.7.3/uuid-console-0.7.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-console-0.7.3.tar.gz",
+    "size_bytes": 36064,
+    "sha256": "9e276cf00f30ac7070ab418e1f58a8df068f88433495694246ab77ab61e1c713",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-console/0.7.3/uuid-console-0.7.3.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-console/0.7.3/uuid-console-0.7.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-console/0.7.4/uuid-console-0.7.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-console-0.7.4.tar.gz",
+    "size_bytes": 36281,
+    "sha256": "0a177718deeecf8b63d73bd45935f1d61160ebc7ebe77305c6e176076e185df8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-console/0.7.4/uuid-console-0.7.4.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-console/0.7.4/uuid-console-0.7.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-console/0.7.5/uuid-console-0.7.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-console-0.7.5.tar.gz",
+    "size_bytes": 36318,
+    "sha256": "433b84625b03135a5b2b233fcfa0981d6331cd1b78ca4fa6ff0e3e41e7556dbb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-console/0.7.5/uuid-console-0.7.5.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-console/0.7.5/uuid-console-0.7.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-console/0.7.6/uuid-console-0.7.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-console-0.7.6.tar.gz",
+    "size_bytes": 36741,
+    "sha256": "ed91e6a86acbaea0cced7b1c363656e52629369573c893718f9e7f0118f5aa04",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-console/0.7.6/uuid-console-0.7.6.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-console/0.7.6/uuid-console-0.7.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-console/0.8.0/uuid-console-0.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-console-0.8.0.tar.gz",
+    "size_bytes": 37438,
+    "sha256": "3715ec4b49504a7dc6eef05d46587befa77e7d8c5be3160eb6afe53867c34917",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-console/0.8.0/uuid-console-0.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-console/0.8.0/uuid-console-0.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-console/0.9.0/uuid-console-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-console-0.9.0.tar.gz",
+    "size_bytes": 39086,
+    "sha256": "2f4b1d3033a642b7ff046055eb7c4b2e69771cdef10ebb58619bf92c72f82088",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-console/0.9.0/uuid-console-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-console/0.9.0/uuid-console-0.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-console/1.0.0/uuid-console-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-console-1.0.0.tar.gz",
+    "size_bytes": 39679,
+    "sha256": "a15a8337f064dc5fe64697e5daaf907192c062f2e2b3106c5ed6f6aa760d16b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-console/1.0.0/uuid-console-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-console/1.0.0/uuid-console-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-console/1.0.1/uuid-console-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-console-1.0.1.tar.gz",
+    "size_bytes": 39793,
+    "sha256": "7a449711a201d9b270134a0d966ee48a3b2f1c1177dc38a963d2555ec91f6dc9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-console/1.0.1/uuid-console-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-console/1.0.1/uuid-console-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-console/2.0.0/uuid-console-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-console-2.0.0.tar.gz",
+    "size_bytes": 39923,
+    "sha256": "a38c4f455cd94664bfa5f950129d540591a07eace664a4385e5121b27730fce3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-console/2.0.0/uuid-console-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-console/2.0.0/uuid-console-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-console/2.0.1/uuid-console-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-console-2.0.1.tar.gz",
+    "size_bytes": 40251,
+    "sha256": "aceb1247313d244a8e0d12cf0767862751da98a996480c8d9200149ee71d321f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-console/2.0.1/uuid-console-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-console/2.0.1/uuid-console-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-console/3.0.0/uuid-console-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-console-3.0.0.tar.gz",
+    "size_bytes": 39596,
+    "sha256": "1aaddbf9809b5b7a0cdfa48c57e42cb865ca41c019ac1de2b0af86ed2e170f47",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-console/3.0.0/uuid-console-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-console/3.0.0/uuid-console-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-console/3.0.1/uuid-console-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-console-3.0.1.tar.gz",
+    "size_bytes": 39575,
+    "sha256": "0ad763cd5cb12702f9ea0a57a7102f195ffe50f9a9d2545406dc497c09378874",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-console/3.0.1/uuid-console-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-console/3.0.1/uuid-console-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-log/1.0.0/uuid-log-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-log-1.0.0.tar.gz",
+    "size_bytes": 18825,
+    "sha256": "e95be2a9abf7727ed118c418e4ff3259b1cd92f30f25c485992f144e97ea65f9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-log/1.0.0/uuid-log-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-log/1.0.0/uuid-log-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-log/1.0.1/uuid-log-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-log-1.0.1.tar.gz",
+    "size_bytes": 18963,
+    "sha256": "28f5280ff0f4a1307d48702f6f45056076ae83bea05329a128f05a9ebf6a123e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-log/1.0.1/uuid-log-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-log/1.0.1/uuid-log-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-log/2.0.0/uuid-log-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-log-2.0.0.tar.gz",
+    "size_bytes": 19069,
+    "sha256": "db2975d3b9e449c139d8ee7b32505e8a09286df912b0f2a19c02db84c9765565",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-log/2.0.0/uuid-log-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-log/2.0.0/uuid-log-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-log/2.0.1/uuid-log-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-log-2.0.1.tar.gz",
+    "size_bytes": 19200,
+    "sha256": "f5ad44f2dd2356bc4d47591874e67e967093a73ecc6857e74d1991ec1432fd0d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-log/2.0.1/uuid-log-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-log/2.0.1/uuid-log-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-log/2.0.2/uuid-log-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-log-2.0.2.tar.gz",
+    "size_bytes": 19253,
+    "sha256": "4a61153103dd187ffcbe8baf741c10b00a8cceed986954f12fd374d5ac970f56",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-log/2.0.2/uuid-log-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-log/2.0.2/uuid-log-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-log/2.0.3/uuid-log-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-log-2.0.3.tar.gz",
+    "size_bytes": 19302,
+    "sha256": "5dfbab593afb8fa7a9bab58e913aef39d3607e685ac5b3821cc9019800048444",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-log/2.0.3/uuid-log-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-log/2.0.3/uuid-log-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-log/2.0.4/uuid-log-2.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-log-2.0.4.tar.gz",
+    "size_bytes": 21032,
+    "sha256": "4b26ebf24fe0b8a0cc24e7e931163f8feb0254661207e4dd4af89bb5de98ae9d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-log/2.0.4/uuid-log-2.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-log/2.0.4/uuid-log-2.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-log/2.1.0/uuid-log-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-log-2.1.0.tar.gz",
+    "size_bytes": 22532,
+    "sha256": "8079838c77599ae15f6f0c6d2a583a2b7209717126a5c5ad1a3b36f3ba857489",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-log/2.1.0/uuid-log-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-log/2.1.0/uuid-log-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-log/2.1.1/uuid-log-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-log-2.1.1.tar.gz",
+    "size_bytes": 22327,
+    "sha256": "54bc50825f4e2ed56e6640c26ac88694d5bdc7fb0c86da22cd3e9ca2adb2bbd8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-log/2.1.1/uuid-log-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-log/2.1.1/uuid-log-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-log/2.1.2/uuid-log-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-log-2.1.2.tar.gz",
+    "size_bytes": 22787,
+    "sha256": "73a9c90c8068cc76b0c69a7bf0af7e3569fcda5332948e1fa1af4279d70d9e18",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-log/2.1.2/uuid-log-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-log/2.1.2/uuid-log-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-log/2.1.3/uuid-log-2.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-log-2.1.3.tar.gz",
+    "size_bytes": 22834,
+    "sha256": "a00f513fff4eb0e8e715f88bf2b456d0e46faeeb06a2e5bf0e1dfc9a4c5a5c3a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-log/2.1.3/uuid-log-2.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-log/2.1.3/uuid-log-2.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-log/2.1.4/uuid-log-2.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-log-2.1.4.tar.gz",
+    "size_bytes": 22943,
+    "sha256": "2c77ef7984f726db0d172fdff09df59594c4ea8ebeaa50ffe829366fb159d292",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-log/2.1.4/uuid-log-2.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-log/2.1.4/uuid-log-2.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-log/2.2.0/uuid-log-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-log-2.2.0.tar.gz",
+    "size_bytes": 23941,
+    "sha256": "a755adf10917b8dbe525063665da849251ae11a0077c4eb1e4544e589e952c83",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-log/2.2.0/uuid-log-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-log/2.2.0/uuid-log-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-log/2.3.0/uuid-log-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-log-2.3.0.tar.gz",
+    "size_bytes": 24693,
+    "sha256": "01671df548f2054b725197c0814649642f67ac806b069ff2bd1dd2ea01326b40",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-log/2.3.0/uuid-log-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-log/2.3.0/uuid-log-2.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-log/3.0.0/uuid-log-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-log-3.0.0.tar.gz",
+    "size_bytes": 25148,
+    "sha256": "ade9c66a13e8ba70d2210659f29d2fb1a954cbddddfc018c3f7e55213c26fcd8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-log/3.0.0/uuid-log-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-log/3.0.0/uuid-log-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-log/3.1.0/uuid-log-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-log-3.1.0.tar.gz",
+    "size_bytes": 26033,
+    "sha256": "a13f1f9ec8cddcec7dc7ddde4ec2b0274a0d2ea0c4b74388c8b6c416bc5a133c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-log/3.1.0/uuid-log-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-log/3.1.0/uuid-log-3.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-modbus/0.1.0/uuid-modbus-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-modbus-0.1.0.tar.gz",
+    "size_bytes": 22440,
+    "sha256": "641d4ac47b4a98a2a3dcefb32d2dedb6d0b6c9d35a8584086bf075d203ec2d31",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-modbus/0.1.0/uuid-modbus-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-modbus/0.1.0/uuid-modbus-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-modbus/0.1.1/uuid-modbus-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-modbus-0.1.1.tar.gz",
+    "size_bytes": 22574,
+    "sha256": "4f560f05afeed7f176ce18f6731051adcf6a0f85dee40d936758abbd726128a0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-modbus/0.1.1/uuid-modbus-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-modbus/0.1.1/uuid-modbus-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-modbus/0.2.0/uuid-modbus-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-modbus-0.2.0.tar.gz",
+    "size_bytes": 22785,
+    "sha256": "ddad064c8501874aeb8d82daf5b858aab6c47a765e515d48d4feced54d9daab2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-modbus/0.2.0/uuid-modbus-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-modbus/0.2.0/uuid-modbus-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-modbus/0.2.1/uuid-modbus-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-modbus-0.2.1.tar.gz",
+    "size_bytes": 23575,
+    "sha256": "c99c5de8c6dc401435b39ad83c5e10f218df014cef44ab4fb3aa0ed4ef4d833d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-modbus/0.2.1/uuid-modbus-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-modbus/0.2.1/uuid-modbus-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-syslog/1.0.0/uuid-syslog-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-syslog-1.0.0.tar.gz",
+    "size_bytes": 18990,
+    "sha256": "7351915655d4883c716eb1ae74c4467794c1d95dab266b21739dd8ff7ef5824a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-syslog/1.0.0/uuid-syslog-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-syslog/1.0.0/uuid-syslog-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-syslog/2.0.0/uuid-syslog-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-syslog-2.0.0.tar.gz",
+    "size_bytes": 19808,
+    "sha256": "823957f77f09cd6349afa2e071dcb8c52174d5a4e5c1ecec6a79a6d157dd0b14",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-syslog/2.0.0/uuid-syslog-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-syslog/2.0.0/uuid-syslog-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-syslog/2.0.1/uuid-syslog-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-syslog-2.0.1.tar.gz",
+    "size_bytes": 19866,
+    "sha256": "322183428b93f0126f12dda5d8201e9b6056abc9f1058cb9ee6b025e6b4df6fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-syslog/2.0.1/uuid-syslog-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-syslog/2.0.1/uuid-syslog-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-syslog/2.0.2/uuid-syslog-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-syslog-2.0.2.tar.gz",
+    "size_bytes": 20504,
+    "sha256": "8dba383e06196549b0af94de72758da12ed75f0338c612d01ade0ae9e9dac257",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-syslog/2.0.2/uuid-syslog-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-syslog/2.0.2/uuid-syslog-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-syslog/2.0.3/uuid-syslog-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-syslog-2.0.3.tar.gz",
+    "size_bytes": 20579,
+    "sha256": "3a8a3bef5cd648da1de68d8bb1e4658c52e090746f9b29879676852ea8903e44",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-syslog/2.0.3/uuid-syslog-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-syslog/2.0.3/uuid-syslog-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-syslog/2.0.4/uuid-syslog-2.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-syslog-2.0.4.tar.gz",
+    "size_bytes": 20721,
+    "sha256": "bf107007295f4e6e84ef7180276e9f63c8b774537f172d593199c1ec95c8f511",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-syslog/2.0.4/uuid-syslog-2.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-syslog/2.0.4/uuid-syslog-2.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-syslog/2.0.5/uuid-syslog-2.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-syslog-2.0.5.tar.gz",
+    "size_bytes": 20849,
+    "sha256": "90f6409833a2cf6d145b5167b01065d95b8da711e7a87683a4b275c214e31259",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-syslog/2.0.5/uuid-syslog-2.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-syslog/2.0.5/uuid-syslog-2.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-syslog/2.0.6/uuid-syslog-2.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-syslog-2.0.6.tar.gz",
+    "size_bytes": 20934,
+    "sha256": "4014542ffec5ffc60fcff89ea6f8992bf9ec319300630682b7bab84c8d92a5a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-syslog/2.0.6/uuid-syslog-2.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-syslog/2.0.6/uuid-syslog-2.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-syslog/2.1.0/uuid-syslog-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-syslog-2.1.0.tar.gz",
+    "size_bytes": 21354,
+    "sha256": "a2fd37ca83082f8767d0991dd17c4e2ab97da3c5d811b993b04e757cd8a4415f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-syslog/2.1.0/uuid-syslog-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-syslog/2.1.0/uuid-syslog-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-syslog/2.1.1/uuid-syslog-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-syslog-2.1.1.tar.gz",
+    "size_bytes": 21488,
+    "sha256": "c0793cd351f35a515edc3e6a4d957a98decb5c4ee264084fb306c0bb0daad7d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-syslog/2.1.1/uuid-syslog-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-syslog/2.1.1/uuid-syslog-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-syslog/2.1.2/uuid-syslog-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-syslog-2.1.2.tar.gz",
+    "size_bytes": 21567,
+    "sha256": "d8c8ba66291039a6ea4cd5fe9c0c7cf1a2570bdd2ca8568a3012722085e9730b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-syslog/2.1.2/uuid-syslog-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-syslog/2.1.2/uuid-syslog-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-syslog/2.2.0/uuid-syslog-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-syslog-2.2.0.tar.gz",
+    "size_bytes": 21993,
+    "sha256": "122cedc02852bcc16362bbd91216709bc3784544244cad0a83f2fd674c98afde",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-syslog/2.2.0/uuid-syslog-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-syslog/2.2.0/uuid-syslog-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-syslog/2.2.1/uuid-syslog-2.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-syslog-2.2.1.tar.gz",
+    "size_bytes": 22178,
+    "sha256": "0b53fb71e005245f9774c7961729edafd8660a92de3e57d73f850a7937a49a7f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-syslog/2.2.1/uuid-syslog-2.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-syslog/2.2.1/uuid-syslog-2.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-syslog/2.2.2/uuid-syslog-2.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-syslog-2.2.2.tar.gz",
+    "size_bytes": 23181,
+    "sha256": "092f1da173f316f89aa5338aef35fc259f9fc40cee1fcf040aa8fc1fda2130ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-syslog/2.2.2/uuid-syslog-2.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-syslog/2.2.2/uuid-syslog-2.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-telnet/0.1.0/uuid-telnet-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-telnet-0.1.0.tar.gz",
+    "size_bytes": 21536,
+    "sha256": "75584c2321fd3d4e8031edd6dc20beda16e26180f4ec888056a0861c4c71e852",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-telnet/0.1.0/uuid-telnet-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-telnet/0.1.0/uuid-telnet-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-telnet/0.1.1/uuid-telnet-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-telnet-0.1.1.tar.gz",
+    "size_bytes": 21616,
+    "sha256": "64703d0b45222849844e3b4644ef47e99916d81e22e5f970ebae7aabe5061003",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-telnet/0.1.1/uuid-telnet-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-telnet/0.1.1/uuid-telnet-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-telnet/0.1.2/uuid-telnet-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-telnet-0.1.2.tar.gz",
+    "size_bytes": 21783,
+    "sha256": "f1a26eacb8e3fc4fc84d7b14a68ff82bf527c210c5e34e9bdd83f9268a8735cd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-telnet/0.1.2/uuid-telnet-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-telnet/0.1.2/uuid-telnet-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-telnet/0.1.3/uuid-telnet-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-telnet-0.1.3.tar.gz",
+    "size_bytes": 21853,
+    "sha256": "eaebf8310da541fabcc62f5daf7d81d796b5d6d913c421bff34e69ff38a7a7ff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-telnet/0.1.3/uuid-telnet-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-telnet/0.1.3/uuid-telnet-0.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-telnet/0.1.4/uuid-telnet-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-telnet-0.1.4.tar.gz",
+    "size_bytes": 21900,
+    "sha256": "aeabf367e0d023b7e83c0b4cb89ca56b10b505a2956dc3e1bc0f49aacfe81e6d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-telnet/0.1.4/uuid-telnet-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-telnet/0.1.4/uuid-telnet-0.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-telnet/0.1.5/uuid-telnet-0.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-telnet-0.1.5.tar.gz",
+    "size_bytes": 21976,
+    "sha256": "a7bd0acf28cdeb1e3457fc2442397530519ba4ea85983ef7cc2f548d6a754477",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-telnet/0.1.5/uuid-telnet-0.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-telnet/0.1.5/uuid-telnet-0.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-telnet/0.1.6/uuid-telnet-0.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-telnet-0.1.6.tar.gz",
+    "size_bytes": 22080,
+    "sha256": "2444f976debf79017b9ce62d521eaafe80199ab058eed3c8b55fd47f1a47205a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-telnet/0.1.6/uuid-telnet-0.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-telnet/0.1.6/uuid-telnet-0.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nomis/library/uuid-telnet/0.2.0/uuid-telnet-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid-telnet-0.2.0.tar.gz",
+    "size_bytes": 21901,
+    "sha256": "c6fbcaf53177db3c75baa3db2cb759c1c2389cc41ee7316f85429abb8e24c96d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nomis/library/uuid-telnet/0.2.0/uuid-telnet-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nomis/library/uuid-telnet/0.2.0/uuid-telnet-0.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-dishbreak",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-dishbreak/library/BGLib/0.0.0+sha.63daf39f20e1/BGLib-0.0.0+sha.63daf39f20e1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BGLib-0.0.0+sha.63daf39f20e1.tar.gz",
+    "size_bytes": 3857,
+    "sha256": "41b40b61ffeb8c3dbd0de38aca1f5947348c29551a9c90d9d1cf4b8c690df9a1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dishbreak/library/BGLib/0.0.0%2Bsha.63daf39f20e1/BGLib-0.0.0%2Bsha.63daf39f20e1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dishbreak/library/BGLib/0.0.0%2Bsha.63daf39f20e1/BGLib-0.0.0%2Bsha.63daf39f20e1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dishbreak/library/TimerCapture/0.0.0+sha.3ae9f68bae6a/TimerCapture-0.0.0+sha.3ae9f68bae6a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TimerCapture-0.0.0+sha.3ae9f68bae6a.tar.gz",
+    "size_bytes": 2961,
+    "sha256": "92410206da5ba497f6eea56d191cabdca26ba615371d76ec02066a9f28096c2c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dishbreak/library/TimerCapture/0.0.0%2Bsha.3ae9f68bae6a/TimerCapture-0.0.0%2Bsha.3ae9f68bae6a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dishbreak/library/TimerCapture/0.0.0%2Bsha.3ae9f68bae6a/TimerCapture-0.0.0%2Bsha.3ae9f68bae6a.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/chuanstudyup",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "chuanstudyup/library/EasyGNSS/1.0.0/EasyGNSS-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyGNSS-1.0.0.tar.gz",
+    "size_bytes": 3459,
+    "sha256": "970dace53c38e6fc6ca57cf4a73e49d05cfd653ac89018807b0191805b69f81d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chuanstudyup/library/EasyGNSS/1.0.0/EasyGNSS-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chuanstudyup/library/EasyGNSS/1.0.0/EasyGNSS-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

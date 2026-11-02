@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-amateusz",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-amateusz/library/BH1750/0.0.0+sha.a7280a6c3c9b/BH1750-0.0.0+sha.a7280a6c3c9b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BH1750-0.0.0+sha.a7280a6c3c9b.tar.gz",
+    "size_bytes": 2371,
+    "sha256": "359a5e5935328b773a91436ff44156c8cc3362b0557ced2044639ade9562f2c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-amateusz/library/BH1750/0.0.0%2Bsha.a7280a6c3c9b/BH1750-0.0.0%2Bsha.a7280a6c3c9b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-amateusz/library/BH1750/0.0.0%2Bsha.a7280a6c3c9b/BH1750-0.0.0%2Bsha.a7280a6c3c9b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-amateusz/library/GP2Y1010AU0F/0.0.0+sha.f4e3a6f03b9c/GP2Y1010AU0F-0.0.0+sha.f4e3a6f03b9c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GP2Y1010AU0F-0.0.0+sha.f4e3a6f03b9c.tar.gz",
+    "size_bytes": 1519,
+    "sha256": "bf7321fcf694a4af3f49c8ff53848277c2504237c2f39bfb6969345784c02a94",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-amateusz/library/GP2Y1010AU0F/0.0.0%2Bsha.f4e3a6f03b9c/GP2Y1010AU0F-0.0.0%2Bsha.f4e3a6f03b9c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-amateusz/library/GP2Y1010AU0F/0.0.0%2Bsha.f4e3a6f03b9c/GP2Y1010AU0F-0.0.0%2Bsha.f4e3a6f03b9c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-amateusz/library/LED7segmDual4094/0.0.0+sha.55c62e840faf/LED7segmDual4094-0.0.0+sha.55c62e840faf.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LED7segmDual4094-0.0.0+sha.55c62e840faf.tar.gz",
+    "size_bytes": 3045,
+    "sha256": "70e142ad3a7319d1a5404616af2d41c69e422fcd732505dbb516a1c64a40906b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-amateusz/library/LED7segmDual4094/0.0.0%2Bsha.55c62e840faf/LED7segmDual4094-0.0.0%2Bsha.55c62e840faf.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-amateusz/library/LED7segmDual4094/0.0.0%2Bsha.55c62e840faf/LED7segmDual4094-0.0.0%2Bsha.55c62e840faf.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-amateusz/library/Yellow2WheeledRobot_motor_shield/0.0.0+sha.6dbb019203e9/Yellow2WheeledRobot_motor_shield-0.0.0+sha.6dbb019203e9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Yellow2WheeledRobot_motor_shield-0.0.0+sha.6dbb019203e9.tar.gz",
+    "size_bytes": 3487,
+    "sha256": "4fa178d6b34a2d5e419f4dad600c5dcdd3c0b070cb1ccfd87646e7793d5308c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-amateusz/library/Yellow2WheeledRobot_motor_shield/0.0.0%2Bsha.6dbb019203e9/Yellow2WheeledRobot_motor_shield-0.0.0%2Bsha.6dbb019203e9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-amateusz/library/Yellow2WheeledRobot_motor_shield/0.0.0%2Bsha.6dbb019203e9/Yellow2WheeledRobot_motor_shield-0.0.0%2Bsha.6dbb019203e9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

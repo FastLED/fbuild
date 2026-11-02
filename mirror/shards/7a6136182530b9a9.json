@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pmarques-dev",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pmarques-dev/library/ArucoLite/2.0.0/ArucoLite-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArucoLite-2.0.0.tar.gz",
+    "size_bytes": 354774,
+    "sha256": "c754042119aa7fd3f9f1bb8b5132c98318205484c025cbe61a3c326cab6a1a0d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pmarques-dev/library/ArucoLite/2.0.0/ArucoLite-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pmarques-dev/library/ArucoLite/2.0.0/ArucoLite-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pmarques-dev/library/ArucoLite/2.0.1/ArucoLite-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArucoLite-2.0.1.tar.gz",
+    "size_bytes": 359453,
+    "sha256": "b118d79e8ad7b1aeeaa0a3c93e79e4c7b1b4c7b20aa53eb781150fad85cccdbb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pmarques-dev/library/ArucoLite/2.0.1/ArucoLite-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pmarques-dev/library/ArucoLite/2.0.1/ArucoLite-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pmarques-dev/library/ArucoLite/2.0.2/ArucoLite-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArucoLite-2.0.2.tar.gz",
+    "size_bytes": 359747,
+    "sha256": "01aa2275ae47add3db240b7c12a56799d90fc8604928c35d0ffa85e2b30af5af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pmarques-dev/library/ArucoLite/2.0.2/ArucoLite-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/pmarques-dev/library/ArucoLite/2.0.2/ArucoLite-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pmarques-dev/library/ArucoLite/2.0.3/ArucoLite-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArucoLite-2.0.3.tar.gz",
+    "size_bytes": 359923,
+    "sha256": "fc6866f814f812238032f8f830f7f4d2fd0a785c7083dc574fc17da79322ee0e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pmarques-dev/library/ArucoLite/2.0.3/ArucoLite-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/pmarques-dev/library/ArucoLite/2.0.3/ArucoLite-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pmarques-dev/library/PicoEncoder/1.1.1/PicoEncoder-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PicoEncoder-1.1.1.tar.gz",
+    "size_bytes": 14541,
+    "sha256": "e73fa104f2d6ac8b1cd8270196b77b83fe60794d478814ad0a96375698b7b1db",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pmarques-dev/library/PicoEncoder/1.1.1/PicoEncoder-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pmarques-dev/library/PicoEncoder/1.1.1/PicoEncoder-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pmarques-dev/library/PicoHM01B0/1.0.0/PicoHM01B0-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PicoHM01B0-1.0.0.tar.gz",
+    "size_bytes": 11331,
+    "sha256": "5c93912bff707755a2aaf06645d04a2971f7000492073c1e06dcfa00abc5f607",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pmarques-dev/library/PicoHM01B0/1.0.0/PicoHM01B0-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pmarques-dev/library/PicoHM01B0/1.0.0/PicoHM01B0-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

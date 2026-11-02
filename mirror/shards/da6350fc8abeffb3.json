@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/git-jamie-s",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "git-jamie-s/library/CppStateMachine/1.0.6/CppStateMachine-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CppStateMachine-1.0.6.tar.gz",
+    "size_bytes": 9003,
+    "sha256": "a2b501f86dd4e18c81d03f3206e8e31c4ecd221eb6e12863f8f11cf2ee37d70b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/git-jamie-s/library/CppStateMachine/1.0.6/CppStateMachine-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/git-jamie-s/library/CppStateMachine/1.0.6/CppStateMachine-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "git-jamie-s/library/Debounce/1.0.0/Debounce-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Debounce-1.0.0.tar.gz",
+    "size_bytes": 3021,
+    "sha256": "2ce101fcb86e28786d7a77e1a8c123646468423556ff142f7030e09f32ac1161",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/git-jamie-s/library/Debounce/1.0.0/Debounce-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/git-jamie-s/library/Debounce/1.0.0/Debounce-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

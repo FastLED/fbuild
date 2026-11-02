@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kd8bxp",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kd8bxp/library/TheTroll/1.0.10/TheTroll-1.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TheTroll-1.0.10.tar.gz",
+    "size_bytes": 16047,
+    "sha256": "73810af57fe84e4138147569cc10660696ef822a3401f666442f9cde963044a1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kd8bxp/library/TheTroll/1.0.10/TheTroll-1.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/kd8bxp/library/TheTroll/1.0.10/TheTroll-1.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kd8bxp/library/Word100%20Library/5.1.1/Word100Library-5.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Word100Library-5.1.1.tar.gz",
+    "size_bytes": 43563,
+    "sha256": "87f32e4682c37adbce504ae6e2d4cff149cfc0cced54eb0bdc40a82b00cd1113",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kd8bxp/library/Word100%2520Library/5.1.1/Word100Library-5.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/kd8bxp/library/Word100%20Library/5.1.1/Word100Library-5.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kd8bxp/library/micro%20Maqueen/1.1.1/microMaqueen-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "microMaqueen-1.1.1.tar.gz",
+    "size_bytes": 18121,
+    "sha256": "4cfb0b995481b4cfa7b863d21396cbd3353f7d9fc802ab29f82c392b6a5974c1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kd8bxp/library/micro%2520Maqueen/1.1.1/microMaqueen-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/kd8bxp/library/micro%20Maqueen/1.1.1/microMaqueen-1.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

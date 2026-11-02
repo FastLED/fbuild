@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-elevatorguy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-elevatorguy/library/ARM/0.0.0-alpha+sha.f86e6135dc/ARM-0.0.0-alphasha.f86e6135dc.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ARM-0.0.0-alphasha.f86e6135dc.tar.gz",
+    "size_bytes": 150500,
+    "sha256": "89e91b20b7dd423bc3dedca3c45d625091db4565877f81f306da947c7557463d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-elevatorguy/library/ARM/0.0.0-alpha%2Bsha.f86e6135dc/ARM-0.0.0-alphasha.f86e6135dc.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-elevatorguy/library/ARM/0.0.0-alpha%2Bsha.f86e6135dc/ARM-0.0.0-alphasha.f86e6135dc.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-elevatorguy/library/registers/0.0.0+sha.276fb0fe230c/registers-0.0.0+sha.276fb0fe230c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "registers-0.0.0+sha.276fb0fe230c.tar.gz",
+    "size_bytes": 7755,
+    "sha256": "49cac119646f27e694a83c4d8e28c9f2b842051ee1b675b3535039202fdae2c9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-elevatorguy/library/registers/0.0.0%2Bsha.276fb0fe230c/registers-0.0.0%2Bsha.276fb0fe230c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-elevatorguy/library/registers/0.0.0%2Bsha.276fb0fe230c/registers-0.0.0%2Bsha.276fb0fe230c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

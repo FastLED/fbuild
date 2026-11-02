@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gabryelreyes",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gabryelreyes/library/RMT_LED/1.0.0/RMT_LED-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RMT_LED-1.0.0.tar.gz",
+    "size_bytes": 4488,
+    "sha256": "0f68792a620a496dbfeac68b4f56f4a56e7716d7dae5396f99cf5db9454eebe7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gabryelreyes/library/RMT_LED/1.0.0/RMT_LED-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gabryelreyes/library/RMT_LED/1.0.0/RMT_LED-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gabryelreyes/library/SerialMuxProt/2.4.0/SerialMuxProt-2.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialMuxProt-2.4.0.tar.gz",
+    "size_bytes": 23899,
+    "sha256": "01440a8d0a59425458561016e5f05a9d02803be0809c845a23f4ede713d6af65",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gabryelreyes/library/SerialMuxProt/2.4.0/SerialMuxProt-2.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gabryelreyes/library/SerialMuxProt/2.4.0/SerialMuxProt-2.4.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

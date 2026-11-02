@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/alexanderhoet",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "alexanderhoet/library/esp32-daikin-p1p2-serial/0.0.1/esp32-daikin-p1p2-serial-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32-daikin-p1p2-serial-0.0.1.tar.gz",
+    "size_bytes": 17781,
+    "sha256": "7351ca4e14a38e174ce54f73c68b56703673eed3902adfee20a249515576f17a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alexanderhoet/library/esp32-daikin-p1p2-serial/0.0.1/esp32-daikin-p1p2-serial-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/alexanderhoet/library/esp32-daikin-p1p2-serial/0.0.1/esp32-daikin-p1p2-serial-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

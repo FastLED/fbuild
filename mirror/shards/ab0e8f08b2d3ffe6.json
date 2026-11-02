@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/seimen",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "seimen/library/mbparser/0.1.1/mbparser-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mbparser-0.1.1.tar.gz",
+    "size_bytes": 7618,
+    "sha256": "936e2df30363c88f28645bf45f69fa48ebf172f626f2d898773129f364aac6fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seimen/library/mbparser/0.1.1/mbparser-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/seimen/library/mbparser/0.1.1/mbparser-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seimen/library/modernbus/0.5.1/modernbus-0.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "modernbus-0.5.1.tar.gz",
+    "size_bytes": 17528,
+    "sha256": "79e856bd2fefa4375d839ef010ed169062be599f1b2a0400b7a0db1dc5f3776b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seimen/library/modernbus/0.5.1/modernbus-0.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/seimen/library/modernbus/0.5.1/modernbus-0.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seimen/library/tinylinkedlist/1.2.0/tinylinkedlist-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tinylinkedlist-1.2.0.tar.gz",
+    "size_bytes": 3276,
+    "sha256": "8840b9261a93e0952882c1a3e4f57ac7218e6ceaebc208c90f6dde0db1f46ce2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seimen/library/tinylinkedlist/1.2.0/tinylinkedlist-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seimen/library/tinylinkedlist/1.2.0/tinylinkedlist-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

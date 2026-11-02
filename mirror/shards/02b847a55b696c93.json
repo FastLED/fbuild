@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/a35hie",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "a35hie/library/TM1637CharsWords/0.1.1/TM1637CharsWords-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TM1637CharsWords-0.1.1.tar.gz",
+    "size_bytes": 7712,
+    "sha256": "2c82355786cb13b3f3c75447e1880688c29f7772ac8408bf12388dcefbaa8e81",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/a35hie/library/TM1637CharsWords/0.1.1/TM1637CharsWords-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/a35hie/library/TM1637CharsWords/0.1.1/TM1637CharsWords-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "a35hie/library/TM1637CharsWords/0.1.2/TM1637CharsWords-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TM1637CharsWords-0.1.2.tar.gz",
+    "size_bytes": 13427,
+    "sha256": "455ca785eb0f92fa8f198923802ec059789ff1e4a83fbbcebdca035fffd77c55",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/a35hie/library/TM1637CharsWords/0.1.2/TM1637CharsWords-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/a35hie/library/TM1637CharsWords/0.1.2/TM1637CharsWords-0.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

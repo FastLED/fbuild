@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/logantraceur",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "logantraceur/library/LogansGreatButton/1.3.1/LogansGreatButton-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LogansGreatButton-1.3.1.tar.gz",
+    "size_bytes": 7757,
+    "sha256": "d3beea730e7210d7906d8173216b01709ffaf99425a47df7916ba956646a67ff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/logantraceur/library/LogansGreatButton/1.3.1/LogansGreatButton-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/logantraceur/library/LogansGreatButton/1.3.1/LogansGreatButton-1.3.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

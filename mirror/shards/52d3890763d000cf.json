@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-joeh",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-joeh/library/mpl115a2/0.0.0+sha.6dbe3322f203/mpl115a2-0.0.0+sha.6dbe3322f203.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mpl115a2-0.0.0+sha.6dbe3322f203.tar.gz",
+    "size_bytes": 3156,
+    "sha256": "7656c8979898acf4b1fe142e4d6c91d6c22d778477d26c217ff6eb607bc268a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-joeh/library/mpl115a2/0.0.0%2Bsha.6dbe3322f203/mpl115a2-0.0.0%2Bsha.6dbe3322f203.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-joeh/library/mpl115a2/0.0.0%2Bsha.6dbe3322f203/mpl115a2-0.0.0%2Bsha.6dbe3322f203.tar.gz"
+    ]
+   }
+  }
+ ]
+}

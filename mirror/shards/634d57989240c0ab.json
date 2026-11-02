@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/error911",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "error911/library/Galaxy_HMC5883/0.0.2/Galaxy_HMC5883-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Galaxy_HMC5883-0.0.2.tar.gz",
+    "size_bytes": 8126,
+    "sha256": "f0930995f8821661ce1fdf009863322b0cb4674401258639ed08fd5727184f77",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/error911/library/Galaxy_HMC5883/0.0.2/Galaxy_HMC5883-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/error911/library/Galaxy_HMC5883/0.0.2/Galaxy_HMC5883-0.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

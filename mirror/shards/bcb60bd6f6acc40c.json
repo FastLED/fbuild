@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-soldersplashlabs",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-soldersplashlabs/library/DipCortex-EEprom/0.0.0+sha.53297f36733d/DipCortex-EEprom-0.0.0+sha.53297f36733d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DipCortex-EEprom-0.0.0+sha.53297f36733d.tar.gz",
+    "size_bytes": 3257,
+    "sha256": "7210ab887b40ed2eb1bdf8508e80fd5463bdd6675fd061031c2b9ab98792ea31",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-soldersplashlabs/library/DipCortex-EEprom/0.0.0%2Bsha.53297f36733d/DipCortex-EEprom-0.0.0%2Bsha.53297f36733d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-soldersplashlabs/library/DipCortex-EEprom/0.0.0%2Bsha.53297f36733d/DipCortex-EEprom-0.0.0%2Bsha.53297f36733d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rcduino",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rcduino/library/RCduino/2.0.0/RCduino-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RCduino-2.0.0.tar.gz",
+    "size_bytes": 23121,
+    "sha256": "10f38ada9adcfd7b9be589c2a7472a7adac12911b594b750ff8cef50b76ae075",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rcduino/library/RCduino/2.0.0/RCduino-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rcduino/library/RCduino/2.0.0/RCduino-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

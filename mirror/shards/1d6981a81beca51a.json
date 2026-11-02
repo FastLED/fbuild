@@ -1,0 +1,126 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/reyette",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "reyette/library/espServer/1.0.0/espServer-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "espServer-1.0.0.tar.gz",
+    "size_bytes": 9278,
+    "sha256": "abee0aa2226750d709a6c69f91b1b8943ea66f81bcfe083594cfafdaac7eb0c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/reyette/library/espServer/1.0.0/espServer-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/reyette/library/espServer/1.0.0/espServer-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "reyette/library/espServer/1.0.1/espServer-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "espServer-1.0.1.tar.gz",
+    "size_bytes": 9293,
+    "sha256": "f2fbc5a36845f7f8af0c2cb3833a8fe29cacb67715f9af6737cd7c85799c63b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/reyette/library/espServer/1.0.1/espServer-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/reyette/library/espServer/1.0.1/espServer-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "reyette/library/espServer/1.0.2/espServer-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "espServer-1.0.2.tar.gz",
+    "size_bytes": 9287,
+    "sha256": "33882d4df16d6a186b9f566dc15cda2d51bc02ab9c1136650fedab0c4838e934",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/reyette/library/espServer/1.0.2/espServer-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/reyette/library/espServer/1.0.2/espServer-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "reyette/library/espServer/1.0.3/espServer-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "espServer-1.0.3.tar.gz",
+    "size_bytes": 9398,
+    "sha256": "61252a91a86aaf244af3c8ee3e45da4a99478b80836a00aa979f588668075177",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/reyette/library/espServer/1.0.3/espServer-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/reyette/library/espServer/1.0.3/espServer-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "reyette/library/espServer/1.0.4/espServer-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "espServer-1.0.4.tar.gz",
+    "size_bytes": 9326,
+    "sha256": "938d403a9dcd597f1d24679eb9fdddb514227ef76baf6bb935b083e8ebda6f95",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/reyette/library/espServer/1.0.4/espServer-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/reyette/library/espServer/1.0.4/espServer-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "reyette/library/espServer/1.0.5/espServer-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "espServer-1.0.5.tar.gz",
+    "size_bytes": 9454,
+    "sha256": "55451f9e819cc63a7cc80b50398edbc75371049d4799c71f9ae69c51a0b67a76",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/reyette/library/espServer/1.0.5/espServer-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/reyette/library/espServer/1.0.5/espServer-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "reyette/library/espServer/1.0.6/espServer-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "espServer-1.0.6.tar.gz",
+    "size_bytes": 9459,
+    "sha256": "ae38df499e7b7dea060f5e5323e5daf379ed4518fe9b2dd0c8f7230108170065",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/reyette/library/espServer/1.0.6/espServer-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/reyette/library/espServer/1.0.6/espServer-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "reyette/library/espServer/1.0.7/espServer-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "espServer-1.0.7.tar.gz",
+    "size_bytes": 9457,
+    "sha256": "23c2138d7bcfa56fabd7f2008242fb4d0d629090c253ec9491d87598dce0bbfc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/reyette/library/espServer/1.0.7/espServer-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/reyette/library/espServer/1.0.7/espServer-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "reyette/library/espServer/1.0.8/espServer-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "espServer-1.0.8.tar.gz",
+    "size_bytes": 9527,
+    "sha256": "dab94cdd825ff39015dfad6844329b6844041cf8d91f2686a2354bd57fb7bf8f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/reyette/library/espServer/1.0.8/espServer-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/reyette/library/espServer/1.0.8/espServer-1.0.8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

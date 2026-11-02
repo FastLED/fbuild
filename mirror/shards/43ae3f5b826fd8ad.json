@@ -1,0 +1,178 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-dkato",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-dkato/library/DhcpServer/0.0.0+sha.14ee6da645a9/DhcpServer-0.0.0+sha.14ee6da645a9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DhcpServer-0.0.0+sha.14ee6da645a9.tar.gz",
+    "size_bytes": 2421,
+    "sha256": "a2a9349995003293aefeababf8ead7b9ed3f4384bc8dc51d52b4cb2e14aca21c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dkato/library/DhcpServer/0.0.0%2Bsha.14ee6da645a9/DhcpServer-0.0.0%2Bsha.14ee6da645a9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dkato/library/DhcpServer/0.0.0%2Bsha.14ee6da645a9/DhcpServer-0.0.0%2Bsha.14ee6da645a9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dkato/library/DisplayApp/0.0.0+sha.6c04d9d15395/DisplayApp-0.0.0+sha.6c04d9d15395.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DisplayApp-0.0.0+sha.6c04d9d15395.tar.gz",
+    "size_bytes": 3305,
+    "sha256": "bf9574580a14bd0eda1cf8b40aeccc503a204fdda531c9eb4d72d3990407da0a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dkato/library/DisplayApp/0.0.0%2Bsha.6c04d9d15395/DisplayApp-0.0.0%2Bsha.6c04d9d15395.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dkato/library/DisplayApp/0.0.0%2Bsha.6c04d9d15395/DisplayApp-0.0.0%2Bsha.6c04d9d15395.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dkato/library/Display_shield_config/0.0.0+sha.5dc57d29779d/Display_shield_config-0.0.0+sha.5dc57d29779d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Display_shield_config-0.0.0+sha.5dc57d29779d.tar.gz",
+    "size_bytes": 1577,
+    "sha256": "e8e88b1923569589f1e3f0578cbbcb8139b10896618b0620b71ed706492f5c82",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dkato/library/Display_shield_config/0.0.0%2Bsha.5dc57d29779d/Display_shield_config-0.0.0%2Bsha.5dc57d29779d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dkato/library/Display_shield_config/0.0.0%2Bsha.5dc57d29779d/Display_shield_config-0.0.0%2Bsha.5dc57d29779d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dkato/library/FlashAccess/0.0.0+sha.652a093cf264/FlashAccess-0.0.0+sha.652a093cf264.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FlashAccess-0.0.0+sha.652a093cf264.tar.gz",
+    "size_bytes": 10456,
+    "sha256": "f473596039f3d515358af37bb7c78a87460208cbf659edc9ceb2d05233d1e251",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dkato/library/FlashAccess/0.0.0%2Bsha.652a093cf264/FlashAccess-0.0.0%2Bsha.652a093cf264.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dkato/library/FlashAccess/0.0.0%2Bsha.652a093cf264/FlashAccess-0.0.0%2Bsha.652a093cf264.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dkato/library/LCD_shield_config/0.0.0+sha.720a62b44d67/LCD_shield_config-0.0.0+sha.720a62b44d67.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCD_shield_config-0.0.0+sha.720a62b44d67.tar.gz",
+    "size_bytes": 1210,
+    "sha256": "c0acd215ef90aa8fe08abfb17412f880c4ffe7a4fda8a20ef52efec95dd9a7e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dkato/library/LCD_shield_config/0.0.0%2Bsha.720a62b44d67/LCD_shield_config-0.0.0%2Bsha.720a62b44d67.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dkato/library/LCD_shield_config/0.0.0%2Bsha.720a62b44d67/LCD_shield_config-0.0.0%2Bsha.720a62b44d67.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dkato/library/LcdCfg_LCD_shield/0.0.0+sha.43578daab4d8/LcdCfg_LCD_shield-0.0.0+sha.43578daab4d8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LcdCfg_LCD_shield-0.0.0+sha.43578daab4d8.tar.gz",
+    "size_bytes": 1446,
+    "sha256": "5663a8878f086d402e03c994a55f8409814e1c535c2b0b7046ac48b6ec5c22d9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dkato/library/LcdCfg_LCD_shield/0.0.0%2Bsha.43578daab4d8/LcdCfg_LCD_shield-0.0.0%2Bsha.43578daab4d8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dkato/library/LcdCfg_LCD_shield/0.0.0%2Bsha.43578daab4d8/LcdCfg_LCD_shield-0.0.0%2Bsha.43578daab4d8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dkato/library/PwmOutResetSync/0.0.0+sha.2ceb3de67371/PwmOutResetSync-0.0.0+sha.2ceb3de67371.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PwmOutResetSync-0.0.0+sha.2ceb3de67371.tar.gz",
+    "size_bytes": 3921,
+    "sha256": "c74ba9d7866f6f03e7297a9e120489514e89f8540fff1ab17ee66e646ac7406d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dkato/library/PwmOutResetSync/0.0.0%2Bsha.2ceb3de67371/PwmOutResetSync-0.0.0%2Bsha.2ceb3de67371.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dkato/library/PwmOutResetSync/0.0.0%2Bsha.2ceb3de67371/PwmOutResetSync-0.0.0%2Bsha.2ceb3de67371.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dkato/library/PwmOutSpeaker/0.0.0+sha.37a886d77bae/PwmOutSpeaker-0.0.0+sha.37a886d77bae.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PwmOutSpeaker-0.0.0+sha.37a886d77bae.tar.gz",
+    "size_bytes": 2850,
+    "sha256": "d92aa7fa343767805b682202cc55408480c4a732f93b61eb69a5e0e72a149e7e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dkato/library/PwmOutSpeaker/0.0.0%2Bsha.37a886d77bae/PwmOutSpeaker-0.0.0%2Bsha.37a886d77bae.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dkato/library/PwmOutSpeaker/0.0.0%2Bsha.37a886d77bae/PwmOutSpeaker-0.0.0%2Bsha.37a886d77bae.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dkato/library/SDBlockDevice_GR_PEACH/0.0.0+sha.98b088c91edd/SDBlockDevice_GR_PEACH-0.0.0+sha.98b088c91edd.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SDBlockDevice_GR_PEACH-0.0.0+sha.98b088c91edd.tar.gz",
+    "size_bytes": 1279,
+    "sha256": "829e3a09e30209fe8cf524e9a8f4de4830db30931bb0770ad59c0f40e8b4cd69",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dkato/library/SDBlockDevice_GR_PEACH/0.0.0%2Bsha.98b088c91edd/SDBlockDevice_GR_PEACH-0.0.0%2Bsha.98b088c91edd.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dkato/library/SDBlockDevice_GR_PEACH/0.0.0%2Bsha.98b088c91edd/SDBlockDevice_GR_PEACH-0.0.0%2Bsha.98b088c91edd.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dkato/library/TouchKey_LCD_shield/0.0.0+sha.538027089976/TouchKey_LCD_shield-0.0.0+sha.538027089976.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TouchKey_LCD_shield-0.0.0+sha.538027089976.tar.gz",
+    "size_bytes": 3080,
+    "sha256": "e8384d0c677b7c9efa725dbfca4a0160b5816b7295291d20a7b51513826d8632",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dkato/library/TouchKey_LCD_shield/0.0.0%2Bsha.538027089976/TouchKey_LCD_shield-0.0.0%2Bsha.538027089976.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dkato/library/TouchKey_LCD_shield/0.0.0%2Bsha.538027089976/TouchKey_LCD_shield-0.0.0%2Bsha.538027089976.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dkato/library/easy-connect-gr-peach/0.0.0+sha.34fe4f11941d/easy-connect-gr-peach-0.0.0+sha.34fe4f11941d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "easy-connect-gr-peach-0.0.0+sha.34fe4f11941d.tar.gz",
+    "size_bytes": 3060,
+    "sha256": "d85a74792b85ad4d2c6d8c818a781c18931c1d70631c783660dff59191b0ca0b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dkato/library/easy-connect-gr-peach/0.0.0%2Bsha.34fe4f11941d/easy-connect-gr-peach-0.0.0%2Bsha.34fe4f11941d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dkato/library/easy-connect-gr-peach/0.0.0%2Bsha.34fe4f11941d/easy-connect-gr-peach-0.0.0%2Bsha.34fe4f11941d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dkato/library/ftp-client/0.0.0+sha.88b7399c8260/ftp-client-0.0.0+sha.88b7399c8260.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ftp-client-0.0.0+sha.88b7399c8260.tar.gz",
+    "size_bytes": 2946,
+    "sha256": "bc3155abededa169f9ed7029e619f30f69f3400d4ce0877c774c34543054334a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dkato/library/ftp-client/0.0.0%2Bsha.88b7399c8260/ftp-client-0.0.0%2Bsha.88b7399c8260.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dkato/library/ftp-client/0.0.0%2Bsha.88b7399c8260/ftp-client-0.0.0%2Bsha.88b7399c8260.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dkato/library/sd-driver-hs/0.0.0+sha.b22a1df967cb/sd-driver-hs-0.0.0+sha.b22a1df967cb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "sd-driver-hs-0.0.0+sha.b22a1df967cb.tar.gz",
+    "size_bytes": 47605,
+    "sha256": "2eb1b7e92b6d778feff7aea17b5c7770444b3fbd8b550d75a6f1bc3e83b17170",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dkato/library/sd-driver-hs/0.0.0%2Bsha.b22a1df967cb/sd-driver-hs-0.0.0%2Bsha.b22a1df967cb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dkato/library/sd-driver-hs/0.0.0%2Bsha.b22a1df967cb/sd-driver-hs-0.0.0%2Bsha.b22a1df967cb.tar.gz"
+    ]
+   }
+  }
+ ]
+}

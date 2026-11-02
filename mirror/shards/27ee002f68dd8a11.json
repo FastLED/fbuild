@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-usna-wse-es456",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-usna-wse-es456/library/BNO055_fusion/0.0.0+sha.ae4be69ac7bb/BNO055_fusion-0.0.0+sha.ae4be69ac7bb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BNO055_fusion-0.0.0+sha.ae4be69ac7bb.tar.gz",
+    "size_bytes": 5054,
+    "sha256": "03583be9ced20e7a8a42fdcc9c466b6ffc96d66e3b5cceddaf50ba72a4ee955e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-usna-wse-es456/library/BNO055_fusion/0.0.0%2Bsha.ae4be69ac7bb/BNO055_fusion-0.0.0%2Bsha.ae4be69ac7bb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-usna-wse-es456/library/BNO055_fusion/0.0.0%2Bsha.ae4be69ac7bb/BNO055_fusion-0.0.0%2Bsha.ae4be69ac7bb.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-usna-wse-es456/library/NeoStrip/0.0.0+sha.b33251737b7c/NeoStrip-0.0.0+sha.b33251737b7c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeoStrip-0.0.0+sha.b33251737b7c.tar.gz",
+    "size_bytes": 3770,
+    "sha256": "db55b02e12c0c0a38dd577c7921a70da44413b57910747e16f7d753e68a3f2f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-usna-wse-es456/library/NeoStrip/0.0.0%2Bsha.b33251737b7c/NeoStrip-0.0.0%2Bsha.b33251737b7c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-usna-wse-es456/library/NeoStrip/0.0.0%2Bsha.b33251737b7c/NeoStrip-0.0.0%2Bsha.b33251737b7c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

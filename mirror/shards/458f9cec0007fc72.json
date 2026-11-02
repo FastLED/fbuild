@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/leoaliperti",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "leoaliperti/library/MuxControl/1.0.2/MuxControl-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MuxControl-1.0.2.tar.gz",
+    "size_bytes": 4353,
+    "sha256": "29b7acf9d06a4680123941f36bf1b41dca55154f870027dc4dc95f4fef5fcb28",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leoaliperti/library/MuxControl/1.0.2/MuxControl-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/leoaliperti/library/MuxControl/1.0.2/MuxControl-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/networking-for-arduino",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "networking-for-arduino/library/EthernetESP32/1.0.2/EthernetESP32-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EthernetESP32-1.0.2.tar.gz",
+    "size_bytes": 38459,
+    "sha256": "0de857c94104e57a6e6af02aebfdfb9dbbafb788c932d66d13995250961a79ca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/networking-for-arduino/library/EthernetESP32/1.0.2/EthernetESP32-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/networking-for-arduino/library/EthernetESP32/1.0.2/EthernetESP32-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "networking-for-arduino/library/EthernetEspAT/1.0.0/EthernetEspAT-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EthernetEspAT-1.0.0.tar.gz",
+    "size_bytes": 13780,
+    "sha256": "dadc114c1c67e98e03e730b358a46800d234595ce3bade9e27ac19097637e4b4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/networking-for-arduino/library/EthernetEspAT/1.0.0/EthernetEspAT-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/networking-for-arduino/library/EthernetEspAT/1.0.0/EthernetEspAT-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

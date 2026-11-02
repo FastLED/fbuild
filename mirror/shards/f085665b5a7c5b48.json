@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nopnop2002",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nopnop2002/library/STM32_TFT_8bit/1.3.0/STM32_TFT_8bit-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32_TFT_8bit-1.3.0.tar.gz",
+    "size_bytes": 44878,
+    "sha256": "c555dce8512a222b1aa1187064cde910f66c4a6faf240477c4e1b3db3180e36d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nopnop2002/library/STM32_TFT_8bit/1.3.0/STM32_TFT_8bit-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nopnop2002/library/STM32_TFT_8bit/1.3.0/STM32_TFT_8bit-1.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

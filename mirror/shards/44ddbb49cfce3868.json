@@ -1,0 +1,152 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-wiznet",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-wiznet/library/DDNS_NoIP/0.0.0+sha.a5d5ddadd7e7/DDNS_NoIP-0.0.0+sha.a5d5ddadd7e7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DDNS_NoIP-0.0.0+sha.a5d5ddadd7e7.tar.gz",
+    "size_bytes": 1665,
+    "sha256": "802aed8009e3f101b9f66a720f2304f96ca772cd552176273902d57f691e8f50",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wiznet/library/DDNS_NoIP/0.0.0%2Bsha.a5d5ddadd7e7/DDNS_NoIP-0.0.0%2Bsha.a5d5ddadd7e7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wiznet/library/DDNS_NoIP/0.0.0%2Bsha.a5d5ddadd7e7/DDNS_NoIP-0.0.0%2Bsha.a5d5ddadd7e7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wiznet/library/Ethernet/0.0.0+sha.ee0f7508fb5c/Ethernet-0.0.0+sha.ee0f7508fb5c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ethernet-0.0.0+sha.ee0f7508fb5c.tar.gz",
+    "size_bytes": 16864,
+    "sha256": "293b9f628ad49fed9b5e7ade7088bf2568a60b6347bd1259657da3096293ff7b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wiznet/library/Ethernet/0.0.0%2Bsha.ee0f7508fb5c/Ethernet-0.0.0%2Bsha.ee0f7508fb5c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wiznet/library/Ethernet/0.0.0%2Bsha.ee0f7508fb5c/Ethernet-0.0.0%2Bsha.ee0f7508fb5c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wiznet/library/FTPClient/0.0.0+sha.fe95043a506e/FTPClient-0.0.0+sha.fe95043a506e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FTPClient-0.0.0+sha.fe95043a506e.tar.gz",
+    "size_bytes": 3097,
+    "sha256": "70f338d17c5f7892fea6516185ad61f18d133d512ac445f3f9e0feb892337fc4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wiznet/library/FTPClient/0.0.0%2Bsha.fe95043a506e/FTPClient-0.0.0%2Bsha.fe95043a506e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wiznet/library/FTPClient/0.0.0%2Bsha.fe95043a506e/FTPClient-0.0.0%2Bsha.fe95043a506e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wiznet/library/W5500/0.0.0+sha.4f25c0dc00f7/W5500-0.0.0+sha.4f25c0dc00f7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "W5500-0.0.0+sha.4f25c0dc00f7.tar.gz",
+    "size_bytes": 16901,
+    "sha256": "6c5738eb1dda7c3b4fd59972e7abfaa872c92a9e2bb2206b9efe4af774485dd9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wiznet/library/W5500/0.0.0%2Bsha.4f25c0dc00f7/W5500-0.0.0%2Bsha.4f25c0dc00f7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wiznet/library/W5500/0.0.0%2Bsha.4f25c0dc00f7/W5500-0.0.0%2Bsha.4f25c0dc00f7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wiznet/library/WIZnetInterface-OS5/0.0.0+sha.d4c8fe4d9b29/WIZnetInterface-OS5-0.0.0+sha.d4c8fe4d9b29.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WIZnetInterface-OS5-0.0.0+sha.d4c8fe4d9b29.tar.gz",
+    "size_bytes": 22900,
+    "sha256": "a154a680644b822e03794a003dfa8305805f836ab4a2340a7520ef76252ed8ef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wiznet/library/WIZnetInterface-OS5/0.0.0%2Bsha.d4c8fe4d9b29/WIZnetInterface-OS5-0.0.0%2Bsha.d4c8fe4d9b29.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wiznet/library/WIZnetInterface-OS5/0.0.0%2Bsha.d4c8fe4d9b29/WIZnetInterface-OS5-0.0.0%2Bsha.d4c8fe4d9b29.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wiznet/library/WIZnetInterface/0.0.0+sha.c91884bd2713/WIZnetInterface-0.0.0+sha.c91884bd2713.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WIZnetInterface-0.0.0+sha.c91884bd2713.tar.gz",
+    "size_bytes": 23248,
+    "sha256": "e593956f485bba1ad04437fc303d061332b8a1748148b94d474e7a7149b0cba7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wiznet/library/WIZnetInterface/0.0.0%2Bsha.c91884bd2713/WIZnetInterface-0.0.0%2Bsha.c91884bd2713.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wiznet/library/WIZnetInterface/0.0.0%2Bsha.c91884bd2713/WIZnetInterface-0.0.0%2Bsha.c91884bd2713.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wiznet/library/WIZnet_Library/0.0.0+sha.cb8808b47e69/WIZnet_Library-0.0.0+sha.cb8808b47e69.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WIZnet_Library-0.0.0+sha.cb8808b47e69.tar.gz",
+    "size_bytes": 15934,
+    "sha256": "1ac7888193700dce225a396998734cc09e8a480ebe01b0d9efa65aedd740ce51",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wiznet/library/WIZnet_Library/0.0.0%2Bsha.cb8808b47e69/WIZnet_Library-0.0.0%2Bsha.cb8808b47e69.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wiznet/library/WIZnet_Library/0.0.0%2Bsha.cb8808b47e69/WIZnet_Library-0.0.0%2Bsha.cb8808b47e69.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wiznet/library/WizFi250Interface/0.0.0+sha.e3dc9e54a15b/WizFi250Interface-0.0.0+sha.e3dc9e54a15b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WizFi250Interface-0.0.0+sha.e3dc9e54a15b.tar.gz",
+    "size_bytes": 12601,
+    "sha256": "89c937c843027ca63c4700a5ee60791dd5c6b962d138a84eb96c29cd5989ff68",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wiznet/library/WizFi250Interface/0.0.0%2Bsha.e3dc9e54a15b/WizFi250Interface-0.0.0%2Bsha.e3dc9e54a15b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wiznet/library/WizFi250Interface/0.0.0%2Bsha.e3dc9e54a15b/WizFi250Interface-0.0.0%2Bsha.e3dc9e54a15b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wiznet/library/WizFi310Interface/0.0.0+sha.08771e4906bb/WizFi310Interface-0.0.0+sha.08771e4906bb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WizFi310Interface-0.0.0+sha.08771e4906bb.tar.gz",
+    "size_bytes": 13343,
+    "sha256": "c732979a4d349940fc8d666fd62372e1ec43f9507d66b050981cfd32ead74aff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wiznet/library/WizFi310Interface/0.0.0%2Bsha.08771e4906bb/WizFi310Interface-0.0.0%2Bsha.08771e4906bb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wiznet/library/WizFi310Interface/0.0.0%2Bsha.08771e4906bb/WizFi310Interface-0.0.0%2Bsha.08771e4906bb.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wiznet/library/WizFi310Interface_Legacy/0.0.0+sha.e08ea0ee2788/WizFi310Interface_Legacy-0.0.0+sha.e08ea0ee2788.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WizFi310Interface_Legacy-0.0.0+sha.e08ea0ee2788.tar.gz",
+    "size_bytes": 14673,
+    "sha256": "66e408bdd01d9e654556b9064e04ac7a9720f3fd4157eb209c516c3b1c5b0729",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wiznet/library/WizFi310Interface_Legacy/0.0.0%2Bsha.e08ea0ee2788/WizFi310Interface_Legacy-0.0.0%2Bsha.e08ea0ee2788.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wiznet/library/WizFi310Interface_Legacy/0.0.0%2Bsha.e08ea0ee2788/WizFi310Interface_Legacy-0.0.0%2Bsha.e08ea0ee2788.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wiznet/library/httpServer/0.0.0+sha.772534e3b627/httpServer-0.0.0+sha.772534e3b627.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "httpServer-0.0.0+sha.772534e3b627.tar.gz",
+    "size_bytes": 13801,
+    "sha256": "2962ca78e07202e69754414788aaadf176c6009e692f64d0fce213be9b3f52f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wiznet/library/httpServer/0.0.0%2Bsha.772534e3b627/httpServer-0.0.0%2Bsha.772534e3b627.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wiznet/library/httpServer/0.0.0%2Bsha.772534e3b627/httpServer-0.0.0%2Bsha.772534e3b627.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,373 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/etlcpp",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "etlcpp/library/Embedded%20Template%20Library%20-%20Arduino/20.38.2/EmbeddedTemplateLibrary-Arduino-20.38.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmbeddedTemplateLibrary-Arduino-20.38.2.tar.gz",
+    "size_bytes": 2896,
+    "sha256": "34319fb10972886fb13d730d5ef606b28a4e5c5cc56cf0c492e95b7d1bf62a1e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/etlcpp/library/Embedded%2520Template%2520Library%2520-%2520Arduino/20.38.2/EmbeddedTemplateLibrary-Arduino-20.38.2.tar.gz",
+     "https://dl.registry.platformio.org/download/etlcpp/library/Embedded%20Template%20Library%20-%20Arduino/20.38.2/EmbeddedTemplateLibrary-Arduino-20.38.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "etlcpp/library/Embedded%20Template%20Library%20ETL/20.43.1/EmbeddedTemplateLibraryETL-20.43.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmbeddedTemplateLibraryETL-20.43.1.tar.gz",
+    "size_bytes": 2767,
+    "sha256": "ebb5907696f0aa9afa9a62c3c104496cb588d1728eb8b8b8e0c3f02d200aa7c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/etlcpp/library/Embedded%2520Template%2520Library%2520ETL/20.43.1/EmbeddedTemplateLibraryETL-20.43.1.tar.gz",
+     "https://dl.registry.platformio.org/download/etlcpp/library/Embedded%20Template%20Library%20ETL/20.43.1/EmbeddedTemplateLibraryETL-20.43.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "etlcpp/library/Embedded%20Template%20Library%20ETL/20.43.2/EmbeddedTemplateLibraryETL-20.43.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmbeddedTemplateLibraryETL-20.43.2.tar.gz",
+    "size_bytes": 2765,
+    "sha256": "abe27dd9b19500942dca427437232400e66fe8dc3bb3b69dd5095ce595d1ea1d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/etlcpp/library/Embedded%2520Template%2520Library%2520ETL/20.43.2/EmbeddedTemplateLibraryETL-20.43.2.tar.gz",
+     "https://dl.registry.platformio.org/download/etlcpp/library/Embedded%20Template%20Library%20ETL/20.43.2/EmbeddedTemplateLibraryETL-20.43.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "etlcpp/library/Embedded%20Template%20Library%20ETL/20.43.3/EmbeddedTemplateLibraryETL-20.43.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmbeddedTemplateLibraryETL-20.43.3.tar.gz",
+    "size_bytes": 2760,
+    "sha256": "252a5773f3128f0f99bc2bff443fa0376c2f8f8a228c5de85425f3dde75adad3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/etlcpp/library/Embedded%2520Template%2520Library%2520ETL/20.43.3/EmbeddedTemplateLibraryETL-20.43.3.tar.gz",
+     "https://dl.registry.platformio.org/download/etlcpp/library/Embedded%20Template%20Library%20ETL/20.43.3/EmbeddedTemplateLibraryETL-20.43.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "etlcpp/library/Embedded%20Template%20Library%20ETL/20.43.4/EmbeddedTemplateLibraryETL-20.43.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmbeddedTemplateLibraryETL-20.43.4.tar.gz",
+    "size_bytes": 2762,
+    "sha256": "ea11876bc61d36471527d517723eb900ff7a44f1f0b0e736df2ad9fe2a520540",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/etlcpp/library/Embedded%2520Template%2520Library%2520ETL/20.43.4/EmbeddedTemplateLibraryETL-20.43.4.tar.gz",
+     "https://dl.registry.platformio.org/download/etlcpp/library/Embedded%20Template%20Library%20ETL/20.43.4/EmbeddedTemplateLibraryETL-20.43.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "etlcpp/library/Embedded%20Template%20Library%20ETL/20.44.1/EmbeddedTemplateLibraryETL-20.44.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmbeddedTemplateLibraryETL-20.44.1.tar.gz",
+    "size_bytes": 2776,
+    "sha256": "95c2129d7d2bcaf8367caf2166d7fa89e345283a5c4a246a92e5a7bdf6336230",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/etlcpp/library/Embedded%2520Template%2520Library%2520ETL/20.44.1/EmbeddedTemplateLibraryETL-20.44.1.tar.gz",
+     "https://dl.registry.platformio.org/download/etlcpp/library/Embedded%20Template%20Library%20ETL/20.44.1/EmbeddedTemplateLibraryETL-20.44.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "etlcpp/library/Embedded%20Template%20Library%20ETL/20.44.2/EmbeddedTemplateLibraryETL-20.44.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmbeddedTemplateLibraryETL-20.44.2.tar.gz",
+    "size_bytes": 2762,
+    "sha256": "9d130d57309abfc496049679a9914c503689354b24fb5efb646e79ccfc9e3102",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/etlcpp/library/Embedded%2520Template%2520Library%2520ETL/20.44.2/EmbeddedTemplateLibraryETL-20.44.2.tar.gz",
+     "https://dl.registry.platformio.org/download/etlcpp/library/Embedded%20Template%20Library%20ETL/20.44.2/EmbeddedTemplateLibraryETL-20.44.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "etlcpp/library/Embedded%20Template%20Library%20ETL/20.48.0/EmbeddedTemplateLibraryETL-20.48.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmbeddedTemplateLibraryETL-20.48.0.tar.gz",
+    "size_bytes": 2776,
+    "sha256": "a73f8d1f8a911fd9cdb69366d11fe8cdd073201adc859a8a30ecd9267aca9dd0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/etlcpp/library/Embedded%2520Template%2520Library%2520ETL/20.48.0/EmbeddedTemplateLibraryETL-20.48.0.tar.gz",
+     "https://dl.registry.platformio.org/download/etlcpp/library/Embedded%20Template%20Library%20ETL/20.48.0/EmbeddedTemplateLibraryETL-20.48.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "etlcpp/library/Embedded%20Template%20Library%20ETL/20.48.1/EmbeddedTemplateLibraryETL-20.48.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmbeddedTemplateLibraryETL-20.48.1.tar.gz",
+    "size_bytes": 2777,
+    "sha256": "8dd9fe0441f27f33729ffe2533ab2d45483102af03fde676a2dcff58af84723a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/etlcpp/library/Embedded%2520Template%2520Library%2520ETL/20.48.1/EmbeddedTemplateLibraryETL-20.48.1.tar.gz",
+     "https://dl.registry.platformio.org/download/etlcpp/library/Embedded%20Template%20Library%20ETL/20.48.1/EmbeddedTemplateLibraryETL-20.48.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "etlcpp/library/Embedded%20Template%20Library/20.32.1/EmbeddedTemplateLibrary-20.32.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmbeddedTemplateLibrary-20.32.1.tar.gz",
+    "size_bytes": 2565014,
+    "sha256": "e93a4cc28c53445217074621c67f76ba14f90e5260911c73dab37cd4978d081e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/etlcpp/library/Embedded%2520Template%2520Library/20.32.1/EmbeddedTemplateLibrary-20.32.1.tar.gz",
+     "https://dl.registry.platformio.org/download/etlcpp/library/Embedded%20Template%20Library/20.32.1/EmbeddedTemplateLibrary-20.32.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "etlcpp/library/Embedded%20Template%20Library/20.39.4/EmbeddedTemplateLibrary-20.39.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmbeddedTemplateLibrary-20.39.4.tar.gz",
+    "size_bytes": 1437192,
+    "sha256": "25e2d8dc38ac26ea0825ee68a82f675799f83091f4060e4126e2fffeed712ca3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/etlcpp/library/Embedded%2520Template%2520Library/20.39.4/EmbeddedTemplateLibrary-20.39.4.tar.gz",
+     "https://dl.registry.platformio.org/download/etlcpp/library/Embedded%20Template%20Library/20.39.4/EmbeddedTemplateLibrary-20.39.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "etlcpp/library/Embedded%20Template%20Library/20.43.0/EmbeddedTemplateLibrary-20.43.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmbeddedTemplateLibrary-20.43.0.tar.gz",
+    "size_bytes": 671342,
+    "sha256": "da0c4ade70ce31835ad79062d39ef17965fdc8f2864f23af460d9cc53549cc5e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/etlcpp/library/Embedded%2520Template%2520Library/20.43.0/EmbeddedTemplateLibrary-20.43.0.tar.gz",
+     "https://dl.registry.platformio.org/download/etlcpp/library/Embedded%20Template%20Library/20.43.0/EmbeddedTemplateLibrary-20.43.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "etlcpp/library/Embedded%20Template%20Library/20.43.1/EmbeddedTemplateLibrary-20.43.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmbeddedTemplateLibrary-20.43.1.tar.gz",
+    "size_bytes": 675736,
+    "sha256": "d6f1fc0393b2b621400a3d1c63b69a37d8489184710146022f47890448213fb2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/etlcpp/library/Embedded%2520Template%2520Library/20.43.1/EmbeddedTemplateLibrary-20.43.1.tar.gz",
+     "https://dl.registry.platformio.org/download/etlcpp/library/Embedded%20Template%20Library/20.43.1/EmbeddedTemplateLibrary-20.43.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "etlcpp/library/Embedded%20Template%20Library/20.43.2/EmbeddedTemplateLibrary-20.43.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmbeddedTemplateLibrary-20.43.2.tar.gz",
+    "size_bytes": 675682,
+    "sha256": "f8f3af08d5b92ad61a82fbadbc06cc49660db88797f53008eb7760efd684c469",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/etlcpp/library/Embedded%2520Template%2520Library/20.43.2/EmbeddedTemplateLibrary-20.43.2.tar.gz",
+     "https://dl.registry.platformio.org/download/etlcpp/library/Embedded%20Template%20Library/20.43.2/EmbeddedTemplateLibrary-20.43.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "etlcpp/library/Embedded%20Template%20Library/20.43.3/EmbeddedTemplateLibrary-20.43.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmbeddedTemplateLibrary-20.43.3.tar.gz",
+    "size_bytes": 675653,
+    "sha256": "66a696383013f2dab23d98e1abe3fa8ae900e127db6f78c027abff740bd97fa7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/etlcpp/library/Embedded%2520Template%2520Library/20.43.3/EmbeddedTemplateLibrary-20.43.3.tar.gz",
+     "https://dl.registry.platformio.org/download/etlcpp/library/Embedded%20Template%20Library/20.43.3/EmbeddedTemplateLibrary-20.43.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "etlcpp/library/Embedded%20Template%20Library/20.43.4/EmbeddedTemplateLibrary-20.43.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmbeddedTemplateLibrary-20.43.4.tar.gz",
+    "size_bytes": 675784,
+    "sha256": "b5258cc30c26dfbe7c7745e0b60408ef4cefa3bd01ff22e4928ed7ca2bb94659",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/etlcpp/library/Embedded%2520Template%2520Library/20.43.4/EmbeddedTemplateLibrary-20.43.4.tar.gz",
+     "https://dl.registry.platformio.org/download/etlcpp/library/Embedded%20Template%20Library/20.43.4/EmbeddedTemplateLibrary-20.43.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "etlcpp/library/Embedded%20Template%20Library/20.44.0/EmbeddedTemplateLibrary-20.44.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmbeddedTemplateLibrary-20.44.0.tar.gz",
+    "size_bytes": 680239,
+    "sha256": "458c0f2feb0c50d002eddfe54f2ec5f38cdfb0b21f1bacb854154baae5cd6d1b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/etlcpp/library/Embedded%2520Template%2520Library/20.44.0/EmbeddedTemplateLibrary-20.44.0.tar.gz",
+     "https://dl.registry.platformio.org/download/etlcpp/library/Embedded%20Template%20Library/20.44.0/EmbeddedTemplateLibrary-20.44.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "etlcpp/library/Embedded%20Template%20Library/20.44.1/EmbeddedTemplateLibrary-20.44.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmbeddedTemplateLibrary-20.44.1.tar.gz",
+    "size_bytes": 680498,
+    "sha256": "f11a50fee97304e347f22d2c759bf79ad0871561020aa31d800025ee14aaf4ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/etlcpp/library/Embedded%2520Template%2520Library/20.44.1/EmbeddedTemplateLibrary-20.44.1.tar.gz",
+     "https://dl.registry.platformio.org/download/etlcpp/library/Embedded%20Template%20Library/20.44.1/EmbeddedTemplateLibrary-20.44.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "etlcpp/library/Embedded%20Template%20Library/20.44.2/EmbeddedTemplateLibrary-20.44.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmbeddedTemplateLibrary-20.44.2.tar.gz",
+    "size_bytes": 684831,
+    "sha256": "a636117529e8319565eb3f09baef5898f1ebd2d5be61a0bf6002160ade5cf806",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/etlcpp/library/Embedded%2520Template%2520Library/20.44.2/EmbeddedTemplateLibrary-20.44.2.tar.gz",
+     "https://dl.registry.platformio.org/download/etlcpp/library/Embedded%20Template%20Library/20.44.2/EmbeddedTemplateLibrary-20.44.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "etlcpp/library/Embedded%20Template%20Library/20.45.0/EmbeddedTemplateLibrary-20.45.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmbeddedTemplateLibrary-20.45.0.tar.gz",
+    "size_bytes": 708397,
+    "sha256": "8af225247114801528088ed3efeeb0658e8d0ec2f9f318b784b30a98539197b0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/etlcpp/library/Embedded%2520Template%2520Library/20.45.0/EmbeddedTemplateLibrary-20.45.0.tar.gz",
+     "https://dl.registry.platformio.org/download/etlcpp/library/Embedded%20Template%20Library/20.45.0/EmbeddedTemplateLibrary-20.45.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "etlcpp/library/Embedded%20Template%20Library/20.46.0/EmbeddedTemplateLibrary-20.46.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmbeddedTemplateLibrary-20.46.0.tar.gz",
+    "size_bytes": 728879,
+    "sha256": "7efaa31857e324210e24401cd66cf74cd42456478344a890ae0f193dfb46b0ca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/etlcpp/library/Embedded%2520Template%2520Library/20.46.0/EmbeddedTemplateLibrary-20.46.0.tar.gz",
+     "https://dl.registry.platformio.org/download/etlcpp/library/Embedded%20Template%20Library/20.46.0/EmbeddedTemplateLibrary-20.46.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "etlcpp/library/Embedded%20Template%20Library/20.46.1/EmbeddedTemplateLibrary-20.46.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmbeddedTemplateLibrary-20.46.1.tar.gz",
+    "size_bytes": 728824,
+    "sha256": "a2c97e8ac46f680f12cfcfc84b10072c953cdd26b41bb4d9ce674f53d1d53c60",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/etlcpp/library/Embedded%2520Template%2520Library/20.46.1/EmbeddedTemplateLibrary-20.46.1.tar.gz",
+     "https://dl.registry.platformio.org/download/etlcpp/library/Embedded%20Template%20Library/20.46.1/EmbeddedTemplateLibrary-20.46.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "etlcpp/library/Embedded%20Template%20Library/20.46.2/EmbeddedTemplateLibrary-20.46.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmbeddedTemplateLibrary-20.46.2.tar.gz",
+    "size_bytes": 728831,
+    "sha256": "1305c78cc0dd103b1933624d179076c3c42eb50777254978f657c32db99f8dc5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/etlcpp/library/Embedded%2520Template%2520Library/20.46.2/EmbeddedTemplateLibrary-20.46.2.tar.gz",
+     "https://dl.registry.platformio.org/download/etlcpp/library/Embedded%20Template%20Library/20.46.2/EmbeddedTemplateLibrary-20.46.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "etlcpp/library/Embedded%20Template%20Library/20.47.0/EmbeddedTemplateLibrary-20.47.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmbeddedTemplateLibrary-20.47.0.tar.gz",
+    "size_bytes": 754796,
+    "sha256": "aff2daf0176b83ad0cc8f4fc0b88e0c802b797d4e19f2737eae1171daace3031",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/etlcpp/library/Embedded%2520Template%2520Library/20.47.0/EmbeddedTemplateLibrary-20.47.0.tar.gz",
+     "https://dl.registry.platformio.org/download/etlcpp/library/Embedded%20Template%20Library/20.47.0/EmbeddedTemplateLibrary-20.47.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "etlcpp/library/Embedded%20Template%20Library/20.47.1/EmbeddedTemplateLibrary-20.47.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmbeddedTemplateLibrary-20.47.1.tar.gz",
+    "size_bytes": 755032,
+    "sha256": "8724e44955bf2b4f7391cd636c340d7ca138fb57b6bcf429f344d60005b6a0b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/etlcpp/library/Embedded%2520Template%2520Library/20.47.1/EmbeddedTemplateLibrary-20.47.1.tar.gz",
+     "https://dl.registry.platformio.org/download/etlcpp/library/Embedded%20Template%20Library/20.47.1/EmbeddedTemplateLibrary-20.47.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "etlcpp/library/Embedded%20Template%20Library/20.48.0/EmbeddedTemplateLibrary-20.48.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmbeddedTemplateLibrary-20.48.0.tar.gz",
+    "size_bytes": 790129,
+    "sha256": "4ee9003ae141710786c709ceb240bf7837fbf4f26159cadcff405bd84841dddd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/etlcpp/library/Embedded%2520Template%2520Library/20.48.0/EmbeddedTemplateLibrary-20.48.0.tar.gz",
+     "https://dl.registry.platformio.org/download/etlcpp/library/Embedded%20Template%20Library/20.48.0/EmbeddedTemplateLibrary-20.48.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "etlcpp/library/Embedded%20Template%20Library/20.48.1/EmbeddedTemplateLibrary-20.48.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmbeddedTemplateLibrary-20.48.1.tar.gz",
+    "size_bytes": 791511,
+    "sha256": "90e437d13afff9c3e46975513c7e680644bd912695f3badc10b40bcc35f614b6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/etlcpp/library/Embedded%2520Template%2520Library/20.48.1/EmbeddedTemplateLibrary-20.48.1.tar.gz",
+     "https://dl.registry.platformio.org/download/etlcpp/library/Embedded%20Template%20Library/20.48.1/EmbeddedTemplateLibrary-20.48.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "etlcpp/library/Embedded%20Template%20Library/20.49.0/EmbeddedTemplateLibrary-20.49.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmbeddedTemplateLibrary-20.49.0.tar.gz",
+    "size_bytes": 816877,
+    "sha256": "319f7d6c87827a1de1942fb50ea277277e327e0897e5fae2bede64d3f45762fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/etlcpp/library/Embedded%2520Template%2520Library/20.49.0/EmbeddedTemplateLibrary-20.49.0.tar.gz",
+     "https://dl.registry.platformio.org/download/etlcpp/library/Embedded%20Template%20Library/20.49.0/EmbeddedTemplateLibrary-20.49.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

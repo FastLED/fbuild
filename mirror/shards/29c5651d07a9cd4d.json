@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/yourapiexpert",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "yourapiexpert/library/ATCommands/0.0.1/ATCommands-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ATCommands-0.0.1.tar.gz",
+    "size_bytes": 19772,
+    "sha256": "7d8303005fa7e3e1ac03bf6b99d9db5ff9f1120cf2271adca95c829d896e524f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yourapiexpert/library/ATCommands/0.0.1/ATCommands-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/yourapiexpert/library/ATCommands/0.0.1/ATCommands-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

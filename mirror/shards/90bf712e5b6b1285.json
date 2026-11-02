@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-infinnovation",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-infinnovation/library/micropython/0.0.0+sha.33521d742af1/micropython-0.0.0+sha.33521d742af1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "micropython-0.0.0+sha.33521d742af1.tar.gz",
+    "size_bytes": 361375,
+    "sha256": "eb403d0e3b3c2aac56edabb00a534235ab9fa660b08a3ea7d1584ec8341758c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-infinnovation/library/micropython/0.0.0%2Bsha.33521d742af1/micropython-0.0.0%2Bsha.33521d742af1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-infinnovation/library/micropython/0.0.0%2Bsha.33521d742af1/micropython-0.0.0%2Bsha.33521d742af1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tomcombriat",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tomcombriat/library/FixMath/1.0.9/FixMath-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FixMath-1.0.9.tar.gz",
+    "size_bytes": 21604,
+    "sha256": "9d623193fc4e838938a7af3b1f506aff6bc78cab2db7cecd074ea6b0974c57f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tomcombriat/library/FixMath/1.0.9/FixMath-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/tomcombriat/library/FixMath/1.0.9/FixMath-1.0.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

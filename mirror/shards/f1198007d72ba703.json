@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ceri",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ceri/library/Stepper/0.0.0+sha.57d3774612fc/Stepper-0.0.0+sha.57d3774612fc.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Stepper-0.0.0+sha.57d3774612fc.tar.gz",
+    "size_bytes": 2481,
+    "sha256": "4c8d85c432f090eaa020f0a020d7afe5d5ccf170bf3a771e8b944a8d974c6f18",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ceri/library/Stepper/0.0.0%2Bsha.57d3774612fc/Stepper-0.0.0%2Bsha.57d3774612fc.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ceri/library/Stepper/0.0.0%2Bsha.57d3774612fc/Stepper-0.0.0%2Bsha.57d3774612fc.tar.gz"
+    ]
+   }
+  }
+ ]
+}

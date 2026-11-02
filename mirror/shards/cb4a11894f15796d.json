@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-uavro",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-uavro/library/ESC/0.0.0+sha.c995af692179/ESC-0.0.0+sha.c995af692179.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESC-0.0.0+sha.c995af692179.tar.gz",
+    "size_bytes": 1678,
+    "sha256": "1ab880b7d5bc9db5700ef9493781f83970bc62cfe6b66057e2c88f4bfd7bab93",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-uavro/library/ESC/0.0.0%2Bsha.c995af692179/ESC-0.0.0%2Bsha.c995af692179.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-uavro/library/ESC/0.0.0%2Bsha.c995af692179/ESC-0.0.0%2Bsha.c995af692179.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-uavro/library/MadgwickAHRS/0.0.0+sha.0c61d7209f75/MadgwickAHRS-0.0.0+sha.0c61d7209f75.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MadgwickAHRS-0.0.0+sha.0c61d7209f75.tar.gz",
+    "size_bytes": 3057,
+    "sha256": "74fe07eb6cfc840f632c81ccc4f2d325bb2554b47101f0dc08e0561b0a2bcdc3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-uavro/library/MadgwickAHRS/0.0.0%2Bsha.0c61d7209f75/MadgwickAHRS-0.0.0%2Bsha.0c61d7209f75.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-uavro/library/MadgwickAHRS/0.0.0%2Bsha.0c61d7209f75/MadgwickAHRS-0.0.0%2Bsha.0c61d7209f75.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-uavro/library/ms5611/0.0.0+sha.af100556f99e/ms5611-0.0.0+sha.af100556f99e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ms5611-0.0.0+sha.af100556f99e.tar.gz",
+    "size_bytes": 6071,
+    "sha256": "cb5191d2dfa04b3a6ab94b338bce30ca9306fa97ecaae6e69d548b9909ed11a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-uavro/library/ms5611/0.0.0%2Bsha.af100556f99e/ms5611-0.0.0%2Bsha.af100556f99e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-uavro/library/ms5611/0.0.0%2Bsha.af100556f99e/ms5611-0.0.0%2Bsha.af100556f99e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

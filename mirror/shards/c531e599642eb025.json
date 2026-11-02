@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lyvewave",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lyvewave/library/Serial%20Data%20Exporter/0.1.0/SerialDataExporter-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialDataExporter-0.1.0.tar.gz",
+    "size_bytes": 4929,
+    "sha256": "4525a340d49393627ce93f5c98403ded6bd0db40bc8cb4ae2feeba944b55daba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lyvewave/library/Serial%2520Data%2520Exporter/0.1.0/SerialDataExporter-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lyvewave/library/Serial%20Data%20Exporter/0.1.0/SerialDataExporter-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/senseshift",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "senseshift/library/Serial_BLE/1.2.0/Serial_BLE-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Serial_BLE-1.2.0.tar.gz",
+    "size_bytes": 6620,
+    "sha256": "0ffa3368a439e91796544e850ff2555b7ed3184827a99eb90bcd953f1522cb5b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/senseshift/library/Serial_BLE/1.2.0/Serial_BLE-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/senseshift/library/Serial_BLE/1.2.0/Serial_BLE-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "senseshift/library/Serial_BLE/1.2.2/Serial_BLE-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Serial_BLE-1.2.2.tar.gz",
+    "size_bytes": 7055,
+    "sha256": "bc4f3f7887956a16489a6169d803b07bc47656c235c9f7bc7d8c8588015382c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/senseshift/library/Serial_BLE/1.2.2/Serial_BLE-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/senseshift/library/Serial_BLE/1.2.2/Serial_BLE-1.2.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

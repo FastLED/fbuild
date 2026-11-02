@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/asimzulfiqar",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "asimzulfiqar/library/esp_cron/0.0.5/esp_cron-0.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_cron-0.0.5.tar.gz",
+    "size_bytes": 20473,
+    "sha256": "4e2f9fefa4250b55d59d7d386da2b01e91e65c6851fc55bfb746483088eb0fde",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/asimzulfiqar/library/esp_cron/0.0.5/esp_cron-0.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/asimzulfiqar/library/esp_cron/0.0.5/esp_cron-0.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "asimzulfiqar/library/esp_cron/0.0.6/esp_cron-0.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_cron-0.0.6.tar.gz",
+    "size_bytes": 23105,
+    "sha256": "52d694b97d4fb8588083c975c37c9e4ace73a1ab8d010691923580181ab44306",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/asimzulfiqar/library/esp_cron/0.0.6/esp_cron-0.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/asimzulfiqar/library/esp_cron/0.0.6/esp_cron-0.0.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

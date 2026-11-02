@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/darrylnoakes",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "darrylnoakes/library/DynamicModbusRTUClientClass/3.2.0/DynamicModbusRTUClientClass-3.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DynamicModbusRTUClientClass-3.2.0.tar.gz",
+    "size_bytes": 36093,
+    "sha256": "b71a47545634b83389771d7e6a4ef78634838ed77fd4a1e60a2ccc77ddd04fb4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/darrylnoakes/library/DynamicModbusRTUClientClass/3.2.0/DynamicModbusRTUClientClass-3.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/darrylnoakes/library/DynamicModbusRTUClientClass/3.2.0/DynamicModbusRTUClientClass-3.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "darrylnoakes/library/DynamicModbusRTUServerClass/4.0.0/DynamicModbusRTUServerClass-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DynamicModbusRTUServerClass-4.0.0.tar.gz",
+    "size_bytes": 30287,
+    "sha256": "3c2da74e306ae2826e053b4205f48b681a5e6f5dfc9cb72d5ea7bd5b90976ed4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/darrylnoakes/library/DynamicModbusRTUServerClass/4.0.0/DynamicModbusRTUServerClass-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/darrylnoakes/library/DynamicModbusRTUServerClass/4.0.0/DynamicModbusRTUServerClass-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "darrylnoakes/library/ModbusRTUServer/1.0.0/ModbusRTUServer-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ModbusRTUServer-1.0.0.tar.gz",
+    "size_bytes": 37620,
+    "sha256": "aadcd6ef58dc4506fb13b5520be347907d2f734040fcafa349f801696e5a0dc2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/darrylnoakes/library/ModbusRTUServer/1.0.0/ModbusRTUServer-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/darrylnoakes/library/ModbusRTUServer/1.0.0/ModbusRTUServer-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

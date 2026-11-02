@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/will2055",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "will2055/library/AS6212%20Temperature%20Sensor/0.5/AS6212TemperatureSensor-0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AS6212TemperatureSensor-0.5.tar.gz",
+    "size_bytes": 36182,
+    "sha256": "6348f73b8cf4c81d1905b4d71a8bae5fcc9cd09550a83677872abd4ae9a58cc1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/will2055/library/AS6212%2520Temperature%2520Sensor/0.5/AS6212TemperatureSensor-0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/will2055/library/AS6212%20Temperature%20Sensor/0.5/AS6212TemperatureSensor-0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

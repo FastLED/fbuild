@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jayasinghepasan",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jayasinghepasan/library/HoneyWellFMA_SPI/1.0.0/HoneyWellFMA_SPI-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HoneyWellFMA_SPI-1.0.0.tar.gz",
+    "size_bytes": 1651,
+    "sha256": "4b2076ebb227c8b56f76e2c002468f2f06e9d4376722fc9c3fdb935a938fae9b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jayasinghepasan/library/HoneyWellFMA_SPI/1.0.0/HoneyWellFMA_SPI-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jayasinghepasan/library/HoneyWellFMA_SPI/1.0.0/HoneyWellFMA_SPI-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

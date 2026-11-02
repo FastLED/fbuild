@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/z01ne",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "z01ne/library/MyAlarm/1.1.2/MyAlarm-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MyAlarm-1.1.2.tar.gz",
+    "size_bytes": 9337,
+    "sha256": "9e37363738ea59110e4d1cd24f6676eeb6ad41a1e83520b6e13adfeaa77d69a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/z01ne/library/MyAlarm/1.1.2/MyAlarm-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/z01ne/library/MyAlarm/1.1.2/MyAlarm-1.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

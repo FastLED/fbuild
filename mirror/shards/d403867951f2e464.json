@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/a5huynh",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "a5huynh/library/knock-esp32/0.1.1/knock-esp32-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "knock-esp32-0.1.1.tar.gz",
+    "size_bytes": 6839,
+    "sha256": "5f6746e35ad0ad1bb6192e610149629838039df506288b63d1143c1ddc4a41ff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/a5huynh/library/knock-esp32/0.1.1/knock-esp32-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/a5huynh/library/knock-esp32/0.1.1/knock-esp32-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

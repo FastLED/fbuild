@@ -1,0 +1,269 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/teamprof",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "teamprof/library/ArduCMSIS-DSP/1.0.0/ArduCMSIS-DSP-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduCMSIS-DSP-1.0.0.tar.gz",
+    "size_bytes": 1147741,
+    "sha256": "c5d2a41b14573c528d57b64e63c3e0e113f5a2f40c245e1bdae12b6a956a0952",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teamprof/library/ArduCMSIS-DSP/1.0.0/ArduCMSIS-DSP-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/teamprof/library/ArduCMSIS-DSP/1.0.0/ArduCMSIS-DSP-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "teamprof/library/ArduProf/2.1/ArduProf-2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduProf-2.1.tar.gz",
+    "size_bytes": 30113,
+    "sha256": "f41fd981be1ed157840f1531d0f28fc0a3b409b03db476b67bd195477e6c0cbd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teamprof/library/ArduProf/2.1/ArduProf-2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/teamprof/library/ArduProf/2.1/ArduProf-2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "teamprof/library/ArduProf/2.2.1/ArduProf-2.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduProf-2.2.1.tar.gz",
+    "size_bytes": 33071,
+    "sha256": "86de7629c30dc5fb74cf4554cc5541c8d060e64ef577895d6d67c3edce672b4e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teamprof/library/ArduProf/2.2.1/ArduProf-2.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/teamprof/library/ArduProf/2.2.1/ArduProf-2.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "teamprof/library/ArduProf/2.2.2/ArduProf-2.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduProf-2.2.2.tar.gz",
+    "size_bytes": 34722,
+    "sha256": "d04b59e3eeb1b95de2dd6473fdae4c02e2da0b12d74ec92989b5925d076a634c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teamprof/library/ArduProf/2.2.2/ArduProf-2.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/teamprof/library/ArduProf/2.2.2/ArduProf-2.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "teamprof/library/ArduProf/2.2.3/ArduProf-2.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduProf-2.2.3.tar.gz",
+    "size_bytes": 34799,
+    "sha256": "ddc803700099d6289888273167ba7c27fe348d853829bc727072d03b54297516",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teamprof/library/ArduProf/2.2.3/ArduProf-2.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/teamprof/library/ArduProf/2.2.3/ArduProf-2.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "teamprof/library/ArduProf/2.2.4/ArduProf-2.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduProf-2.2.4.tar.gz",
+    "size_bytes": 34916,
+    "sha256": "7aae879cdd20a574f038145951686f54dec7a06208c5fa76de1fa9ee8a699268",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teamprof/library/ArduProf/2.2.4/ArduProf-2.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/teamprof/library/ArduProf/2.2.4/ArduProf-2.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "teamprof/library/ArduProf/2.3.0/ArduProf-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduProf-2.3.0.tar.gz",
+    "size_bytes": 37193,
+    "sha256": "9dc1f5be14eaa3b36f110b09153a271e2332dee517a68f81edf1ce8a6ecc5740",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teamprof/library/ArduProf/2.3.0/ArduProf-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/teamprof/library/ArduProf/2.3.0/ArduProf-2.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "teamprof/library/ArduProf/2.3.1/ArduProf-2.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduProf-2.3.1.tar.gz",
+    "size_bytes": 37195,
+    "sha256": "fa8a25438eacfa65678678dd5fa1d377083bba47c98526477088439c52805413",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teamprof/library/ArduProf/2.3.1/ArduProf-2.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/teamprof/library/ArduProf/2.3.1/ArduProf-2.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "teamprof/library/ArduProf/2.3.2/ArduProf-2.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduProf-2.3.2.tar.gz",
+    "size_bytes": 37277,
+    "sha256": "95d525ac0e49f50ff102b329a1a2fc8282f4faa93d040ed628ec2676c3a9b3a7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teamprof/library/ArduProf/2.3.2/ArduProf-2.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/teamprof/library/ArduProf/2.3.2/ArduProf-2.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "teamprof/library/ArduProf/2.4.0/ArduProf-2.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduProf-2.4.0.tar.gz",
+    "size_bytes": 37591,
+    "sha256": "d36246d48bda84a1a3922c1a7db21a6427360594c36eff6d6a04b4a74c19b228",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teamprof/library/ArduProf/2.4.0/ArduProf-2.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/teamprof/library/ArduProf/2.4.0/ArduProf-2.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "teamprof/library/ArduProf/2.4.1/ArduProf-2.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduProf-2.4.1.tar.gz",
+    "size_bytes": 37573,
+    "sha256": "c66147f9b6a82b497c54465459d2ffd4696b29f48dd8ae981582331094dd4bfe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teamprof/library/ArduProf/2.4.1/ArduProf-2.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/teamprof/library/ArduProf/2.4.1/ArduProf-2.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "teamprof/library/ArduProf/2.5.0/ArduProf-2.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduProf-2.5.0.tar.gz",
+    "size_bytes": 42361,
+    "sha256": "fcdfd1562029428c4c08dcb224f7abf1778cbc3ab1f3f8c5b2eec16a947c0224",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teamprof/library/ArduProf/2.5.0/ArduProf-2.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/teamprof/library/ArduProf/2.5.0/ArduProf-2.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "teamprof/library/ArduProf/2.5.1/ArduProf-2.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduProf-2.5.1.tar.gz",
+    "size_bytes": 42603,
+    "sha256": "ab4807a00ecb10e1963ad10dac32905ca49532c9bb5d1947b697a1ef0a751e74",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teamprof/library/ArduProf/2.5.1/ArduProf-2.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/teamprof/library/ArduProf/2.5.1/ArduProf-2.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "teamprof/library/ArduProf/2.5.2/ArduProf-2.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduProf-2.5.2.tar.gz",
+    "size_bytes": 42659,
+    "sha256": "dacc8374a32b6733ccf63cb8945d40648e079d1882107161e2999ad535660250",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teamprof/library/ArduProf/2.5.2/ArduProf-2.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/teamprof/library/ArduProf/2.5.2/ArduProf-2.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "teamprof/library/ArduProf/2.5.3/ArduProf-2.5.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduProf-2.5.3.tar.gz",
+    "size_bytes": 44298,
+    "sha256": "0f447afa660df092fd4051a4894e476931fa29e57ddb78910b91f2d397c37c18",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teamprof/library/ArduProf/2.5.3/ArduProf-2.5.3.tar.gz",
+     "https://dl.registry.platformio.org/download/teamprof/library/ArduProf/2.5.3/ArduProf-2.5.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "teamprof/library/ArduProf/2.5.4/ArduProf-2.5.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduProf-2.5.4.tar.gz",
+    "size_bytes": 44365,
+    "sha256": "dd6dd5d7d4f050e32e90ab95424aa5a4bef05e7708d03646594c2b41704bd28e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teamprof/library/ArduProf/2.5.4/ArduProf-2.5.4.tar.gz",
+     "https://dl.registry.platformio.org/download/teamprof/library/ArduProf/2.5.4/ArduProf-2.5.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "teamprof/library/ArduProf/2.5.5/ArduProf-2.5.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduProf-2.5.5.tar.gz",
+    "size_bytes": 44478,
+    "sha256": "a259514ccc3fc022aab36d1b8a0f717b2481dd076453ccf29aab3332eb6948b4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teamprof/library/ArduProf/2.5.5/ArduProf-2.5.5.tar.gz",
+     "https://dl.registry.platformio.org/download/teamprof/library/ArduProf/2.5.5/ArduProf-2.5.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "teamprof/library/ArduProf/2.5.6/ArduProf-2.5.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduProf-2.5.6.tar.gz",
+    "size_bytes": 44503,
+    "sha256": "a2af3462abcf287b1b4d6394608008b9cf83f3048e4f83395e313d1eedfb082e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teamprof/library/ArduProf/2.5.6/ArduProf-2.5.6.tar.gz",
+     "https://dl.registry.platformio.org/download/teamprof/library/ArduProf/2.5.6/ArduProf-2.5.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "teamprof/library/ArduProf/2.6.0/ArduProf-2.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduProf-2.6.0.tar.gz",
+    "size_bytes": 44804,
+    "sha256": "39943aff17a7a6c169f22a8dcd62ff0bc1e4cd2e10c0e75ffe8f78bd1d8c167d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teamprof/library/ArduProf/2.6.0/ArduProf-2.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/teamprof/library/ArduProf/2.6.0/ArduProf-2.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "teamprof/library/EventEthernet/1.0.0/EventEthernet-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EventEthernet-1.0.0.tar.gz",
+    "size_bytes": 44588,
+    "sha256": "19b669de7352d4427c09575703a808a8eb1d6afaf0b3acf20ef222482230e267",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teamprof/library/EventEthernet/1.0.0/EventEthernet-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/teamprof/library/EventEthernet/1.0.0/EventEthernet-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

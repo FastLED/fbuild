@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/syncano",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "syncano/library/Syncano%20Arduino%20Library/0.2.0/SyncanoArduinoLibrary-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SyncanoArduinoLibrary-0.2.0.tar.gz",
+    "size_bytes": 41148,
+    "sha256": "8a793d6e660425a623a3cc4d27bcbcbf8e101861c4c4400746294659b6a9ffbe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/syncano/library/Syncano%2520Arduino%2520Library/0.2.0/SyncanoArduinoLibrary-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/syncano/library/Syncano%20Arduino%20Library/0.2.0/SyncanoArduinoLibrary-0.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

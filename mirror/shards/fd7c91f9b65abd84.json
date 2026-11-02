@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-mtm",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-mtm/library/BMA250E/0.0.0+sha.b6bb47e17a9a/BMA250E-0.0.0+sha.b6bb47e17a9a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMA250E-0.0.0+sha.b6bb47e17a9a.tar.gz",
+    "size_bytes": 2789,
+    "sha256": "26f8da18922f4ffe2f97e162616fff54671a6cc1dd37b4d2901e2e5483ad8754",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mtm/library/BMA250E/0.0.0%2Bsha.b6bb47e17a9a/BMA250E-0.0.0%2Bsha.b6bb47e17a9a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mtm/library/BMA250E/0.0.0%2Bsha.b6bb47e17a9a/BMA250E-0.0.0%2Bsha.b6bb47e17a9a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-mtm/library/BMP280/0.0.0+sha.9bb59e83df7a/BMP280-0.0.0+sha.9bb59e83df7a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMP280-0.0.0+sha.9bb59e83df7a.tar.gz",
+    "size_bytes": 2419,
+    "sha256": "36443f2000cdd2f1bdb074846775b4e5e2e45e326dd40ed622716787ebe0b462",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mtm/library/BMP280/0.0.0%2Bsha.9bb59e83df7a/BMP280-0.0.0%2Bsha.9bb59e83df7a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mtm/library/BMP280/0.0.0%2Bsha.9bb59e83df7a/BMP280-0.0.0%2Bsha.9bb59e83df7a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-mtm/library/CCS811/0.0.0+sha.57eb62ded32d/CCS811-0.0.0+sha.57eb62ded32d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CCS811-0.0.0+sha.57eb62ded32d.tar.gz",
+    "size_bytes": 2757,
+    "sha256": "f5576dd8952ed9511df6c509d7a8a606cc60487bedda78f2304a444e61485ddc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mtm/library/CCS811/0.0.0%2Bsha.57eb62ded32d/CCS811-0.0.0%2Bsha.57eb62ded32d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mtm/library/CCS811/0.0.0%2Bsha.57eb62ded32d/CCS811-0.0.0%2Bsha.57eb62ded32d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-mtm/library/MtSense01/0.0.0+sha.9a301d7b8f44/MtSense01-0.0.0+sha.9a301d7b8f44.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MtSense01-0.0.0+sha.9a301d7b8f44.tar.gz",
+    "size_bytes": 1005,
+    "sha256": "6a3d7212232614bb5528d15d5d9c4a192ff0f42bf756b0ef4cf13c77568b566e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mtm/library/MtSense01/0.0.0%2Bsha.9a301d7b8f44/MtSense01-0.0.0%2Bsha.9a301d7b8f44.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mtm/library/MtSense01/0.0.0%2Bsha.9a301d7b8f44/MtSense01-0.0.0%2Bsha.9a301d7b8f44.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-mtm/library/MtSense07/0.0.0+sha.413b8ef9aed5/MtSense07-0.0.0+sha.413b8ef9aed5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MtSense07-0.0.0+sha.413b8ef9aed5.tar.gz",
+    "size_bytes": 4433,
+    "sha256": "976a013132dac5cec4c27011f9a6b008b1934fb9cf4d4daa5e087cb80b969911",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mtm/library/MtSense07/0.0.0%2Bsha.413b8ef9aed5/MtSense07-0.0.0%2Bsha.413b8ef9aed5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mtm/library/MtSense07/0.0.0%2Bsha.413b8ef9aed5/MtSense07-0.0.0%2Bsha.413b8ef9aed5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-mtm/library/PAJ7620U2/0.0.0+sha.5ab081158441/PAJ7620U2-0.0.0+sha.5ab081158441.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PAJ7620U2-0.0.0+sha.5ab081158441.tar.gz",
+    "size_bytes": 3526,
+    "sha256": "54db2e11a2282b5e386abc904f9c204c1b745648bdb931eb589e23a8182a6ac3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mtm/library/PAJ7620U2/0.0.0%2Bsha.5ab081158441/PAJ7620U2-0.0.0%2Bsha.5ab081158441.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mtm/library/PAJ7620U2/0.0.0%2Bsha.5ab081158441/PAJ7620U2-0.0.0%2Bsha.5ab081158441.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-mtm/library/SHT2X/0.0.0+sha.f9e3348b41a2/SHT2X-0.0.0+sha.f9e3348b41a2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SHT2X-0.0.0+sha.f9e3348b41a2.tar.gz",
+    "size_bytes": 1871,
+    "sha256": "66ddaaedcf378710513d81fc6a22093b7520f6e3f67c28a61afe35894d0d5835",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mtm/library/SHT2X/0.0.0%2Bsha.f9e3348b41a2/SHT2X-0.0.0%2Bsha.f9e3348b41a2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mtm/library/SHT2X/0.0.0%2Bsha.f9e3348b41a2/SHT2X-0.0.0%2Bsha.f9e3348b41a2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

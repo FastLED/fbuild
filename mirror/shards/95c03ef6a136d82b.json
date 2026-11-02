@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ramwilliford",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ramwilliford/library/SiliconSensingDMU/0.0.0+sha.8f71fe74e379/SiliconSensingDMU-0.0.0+sha.8f71fe74e379.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SiliconSensingDMU-0.0.0+sha.8f71fe74e379.tar.gz",
+    "size_bytes": 2353,
+    "sha256": "6e1b9a1a04e637d75312e2516f2df56cb55118c7085e6bdc85e253bdefc6458c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ramwilliford/library/SiliconSensingDMU/0.0.0%2Bsha.8f71fe74e379/SiliconSensingDMU-0.0.0%2Bsha.8f71fe74e379.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ramwilliford/library/SiliconSensingDMU/0.0.0%2Bsha.8f71fe74e379/SiliconSensingDMU-0.0.0%2Bsha.8f71fe74e379.tar.gz"
+    ]
+   }
+  }
+ ]
+}

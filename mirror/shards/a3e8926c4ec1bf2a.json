@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rocketmanrc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rocketmanrc/library/u-blox-m8/0.0.2/u-blox-m8-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "u-blox-m8-0.0.2.tar.gz",
+    "size_bytes": 15357,
+    "sha256": "ebd038b98df34d5a1c9e000e90acd876196c3494b757536d5a8367e53f02496a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rocketmanrc/library/u-blox-m8/0.0.2/u-blox-m8-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/rocketmanrc/library/u-blox-m8/0.0.2/u-blox-m8-0.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

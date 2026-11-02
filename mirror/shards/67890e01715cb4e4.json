@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/iwanidev",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "iwanidev/library/LEGOTrainController/1.0.1/LEGOTrainController-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LEGOTrainController-1.0.1.tar.gz",
+    "size_bytes": 43335,
+    "sha256": "5a97024401d3542afc03ad6f1a25bd891f360c918934b53752fbaa6e2ccbdc79",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iwanidev/library/LEGOTrainController/1.0.1/LEGOTrainController-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/iwanidev/library/LEGOTrainController/1.0.1/LEGOTrainController-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "iwanidev/library/LEGOTrainController/1.2/LEGOTrainController-1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LEGOTrainController-1.2.tar.gz",
+    "size_bytes": 45728,
+    "sha256": "fd590ba1b38abbab9f85a9e828d80e8e146056b9a7d5b0ebf88fbe0d8549df8e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iwanidev/library/LEGOTrainController/1.2/LEGOTrainController-1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/iwanidev/library/LEGOTrainController/1.2/LEGOTrainController-1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nikolaindustry",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nikolaindustry/library/Hyperwisor-IOT/3.0.0/Hyperwisor-IOT-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Hyperwisor-IOT-3.0.0.tar.gz",
+    "size_bytes": 298215,
+    "sha256": "21283e22fce73dbd9de5526174ff3cd0f591930d7fdbb1c7968d843f90ea02a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nikolaindustry/library/Hyperwisor-IOT/3.0.0/Hyperwisor-IOT-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nikolaindustry/library/Hyperwisor-IOT/3.0.0/Hyperwisor-IOT-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nikolaindustry/library/Hyperwisor-IOT/3.0.1/Hyperwisor-IOT-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Hyperwisor-IOT-3.0.1.tar.gz",
+    "size_bytes": 299113,
+    "sha256": "3c8b436fc0cf5f6b1854bda9d7240fac649e9f00d62c3fbf04da8bbc588eba51",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nikolaindustry/library/Hyperwisor-IOT/3.0.1/Hyperwisor-IOT-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nikolaindustry/library/Hyperwisor-IOT/3.0.1/Hyperwisor-IOT-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nikolaindustry/library/Hyperwisor-IOT/3.0.2/Hyperwisor-IOT-3.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Hyperwisor-IOT-3.0.2.tar.gz",
+    "size_bytes": 299431,
+    "sha256": "962a6884d157d3c989a1898e95cf3405c4f4055dfced5c712ba3a031011c80ec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nikolaindustry/library/Hyperwisor-IOT/3.0.2/Hyperwisor-IOT-3.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nikolaindustry/library/Hyperwisor-IOT/3.0.2/Hyperwisor-IOT-3.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nikolaindustry/library/Hyperwisor-IOT/3.1.0/Hyperwisor-IOT-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Hyperwisor-IOT-3.1.0.tar.gz",
+    "size_bytes": 300479,
+    "sha256": "fbdef4a2ffd8a6bbb5f4167b4250926a2faca42c084d841b68c6e4142dd42701",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nikolaindustry/library/Hyperwisor-IOT/3.1.0/Hyperwisor-IOT-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nikolaindustry/library/Hyperwisor-IOT/3.1.0/Hyperwisor-IOT-3.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nikolaindustry/library/Hyperwisor-IOT/3.2.0/Hyperwisor-IOT-3.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Hyperwisor-IOT-3.2.0.tar.gz",
+    "size_bytes": 301237,
+    "sha256": "54fdada63d9455157e68680bbe1a2470fe24355ff3f32d0e002767e340d2ac7f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nikolaindustry/library/Hyperwisor-IOT/3.2.0/Hyperwisor-IOT-3.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nikolaindustry/library/Hyperwisor-IOT/3.2.0/Hyperwisor-IOT-3.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

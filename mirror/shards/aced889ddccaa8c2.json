@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/havishvivek",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "havishvivek/library/ESP32MacroPad/1.0.2/ESP32MacroPad-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32MacroPad-1.0.2.tar.gz",
+    "size_bytes": 8186,
+    "sha256": "c9af1d7a792b0c23249bece1ad775f8794eae1bcf3cf2011963ec712f31a2bcb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/havishvivek/library/ESP32MacroPad/1.0.2/ESP32MacroPad-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/havishvivek/library/ESP32MacroPad/1.0.2/ESP32MacroPad-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "havishvivek/library/WirelessRC/1.0.1/WirelessRC-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WirelessRC-1.0.1.tar.gz",
+    "size_bytes": 4919,
+    "sha256": "9a095330b205b0cee50a0a5850582e83ccc49a94122c63ab25551d772847d7aa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/havishvivek/library/WirelessRC/1.0.1/WirelessRC-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/havishvivek/library/WirelessRC/1.0.1/WirelessRC-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "havishvivek/library/WirelessRC/1.1.0/WirelessRC-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WirelessRC-1.1.0.tar.gz",
+    "size_bytes": 6900,
+    "sha256": "0ac4d29ef7c1ecb2c9d822b626d38f76c18bfd136a9be140d8bd3e5a13319a65",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/havishvivek/library/WirelessRC/1.1.0/WirelessRC-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/havishvivek/library/WirelessRC/1.1.0/WirelessRC-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

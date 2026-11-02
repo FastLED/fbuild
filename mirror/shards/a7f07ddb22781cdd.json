@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/patternagents",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "patternagents/library/Haptic_DA7280/1.1.0/Haptic_DA7280-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Haptic_DA7280-1.1.0.tar.gz",
+    "size_bytes": 31865,
+    "sha256": "be95fbaa12782cfbd8bac585b349dc2a6086509ca857df84d7413f5106fc4035",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/patternagents/library/Haptic_DA7280/1.1.0/Haptic_DA7280-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/patternagents/library/Haptic_DA7280/1.1.0/Haptic_DA7280-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "patternagents/library/Haptic_DRV2605/1.1.0/Haptic_DRV2605-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Haptic_DRV2605-1.1.0.tar.gz",
+    "size_bytes": 24897,
+    "sha256": "f1a7052d320804981a8d38ed89066608d7a4642192104f2e3310d0c106afbd9d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/patternagents/library/Haptic_DRV2605/1.1.0/Haptic_DRV2605-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/patternagents/library/Haptic_DRV2605/1.1.0/Haptic_DRV2605-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/thomasklingbeil",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "thomasklingbeil/library/SR04_Ultrasonic/1.0.0/SR04_Ultrasonic-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SR04_Ultrasonic-1.0.0.tar.gz",
+    "size_bytes": 1998,
+    "sha256": "226ecc737ec290ad0344b3dd1935cfbe12eab495e3c60074eaf019d187fa870d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thomasklingbeil/library/SR04_Ultrasonic/1.0.0/SR04_Ultrasonic-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/thomasklingbeil/library/SR04_Ultrasonic/1.0.0/SR04_Ultrasonic-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

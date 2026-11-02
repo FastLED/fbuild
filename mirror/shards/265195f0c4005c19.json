@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-yaasan",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-yaasan/library/DSgatewayMBED/0.0.0+sha.39249e22e9f5/DSgatewayMBED-0.0.0+sha.39249e22e9f5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DSgatewayMBED-0.0.0+sha.39249e22e9f5.tar.gz",
+    "size_bytes": 3323,
+    "sha256": "5189af545243bb602394a49d811ded72b1e6715f57a9ec0c97df0d3fc79838c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yaasan/library/DSgatewayMBED/0.0.0%2Bsha.39249e22e9f5/DSgatewayMBED-0.0.0%2Bsha.39249e22e9f5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yaasan/library/DSgatewayMBED/0.0.0%2Bsha.39249e22e9f5/DSgatewayMBED-0.0.0%2Bsha.39249e22e9f5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

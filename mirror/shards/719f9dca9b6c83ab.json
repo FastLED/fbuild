@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/carlos-korovsky",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "carlos-korovsky/library/Esp-IDF-SX127x/0.0.1/Esp-IDF-SX127x-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Esp-IDF-SX127x-0.0.1.tar.gz",
+    "size_bytes": 29395,
+    "sha256": "a64282b8afa3c3ffa44940b37e08a912a3a55552f66c94be57db128d48f89a69",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/carlos-korovsky/library/Esp-IDF-SX127x/0.0.1/Esp-IDF-SX127x-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/carlos-korovsky/library/Esp-IDF-SX127x/0.0.1/Esp-IDF-SX127x-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

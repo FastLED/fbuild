@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/renomafex",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "renomafex/library/shiftOut/1.0.1/shiftOut-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "shiftOut-1.0.1.tar.gz",
+    "size_bytes": 5761,
+    "sha256": "20b895a17655d0492d48d4e8295e36f835ff7939c84332eb6dce0f432d73eb6c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/renomafex/library/shiftOut/1.0.1/shiftOut-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/renomafex/library/shiftOut/1.0.1/shiftOut-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

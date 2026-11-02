@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/atominick",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "atominick/library/GeneralPushButton/1.1.0/GeneralPushButton-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GeneralPushButton-1.1.0.tar.gz",
+    "size_bytes": 5093,
+    "sha256": "c5f5b5bb46c80e7f2f09431f853b0bade9c1d9c3774c46d825a7c736a505309a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/atominick/library/GeneralPushButton/1.1.0/GeneralPushButton-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/atominick/library/GeneralPushButton/1.1.0/GeneralPushButton-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

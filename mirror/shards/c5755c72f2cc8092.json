@@ -1,0 +1,243 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/emotibit",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "emotibit/library/BrainflowSpO2Algorithm/0.0.1/BrainflowSpO2Algorithm-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BrainflowSpO2Algorithm-0.0.1.tar.gz",
+    "size_bytes": 5417,
+    "sha256": "523031ed33e1e250cf33895557c5fb5a8ea1c6ec81d2c038255114d2adf55462",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/emotibit/library/BrainflowSpO2Algorithm/0.0.1/BrainflowSpO2Algorithm-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/emotibit/library/BrainflowSpO2Algorithm/0.0.1/BrainflowSpO2Algorithm-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "emotibit/library/EmotiBit%20ADS1X15/2.2.0+EmotiBit.0.0.1/EmotiBitADS1X15-2.2.0+EmotiBit.0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmotiBitADS1X15-2.2.0+EmotiBit.0.0.1.tar.gz",
+    "size_bytes": 9451,
+    "sha256": "2fa9f59c9f04f861e8f104f0131c4f9acf34c1ed4aadaa4e9d425b9586c8dd05",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/emotibit/library/EmotiBit%2520ADS1X15/2.2.0%2BEmotiBit.0.0.1/EmotiBitADS1X15-2.2.0%2BEmotiBit.0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/emotibit/library/EmotiBit%20ADS1X15/2.2.0%2BEmotiBit.0.0.1/EmotiBitADS1X15-2.2.0%2BEmotiBit.0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "emotibit/library/EmotiBit%20ArduinoFilters/1.0.1/EmotiBitArduinoFilters-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmotiBitArduinoFilters-1.0.1.tar.gz",
+    "size_bytes": 326539,
+    "sha256": "f31ad9e5aed281e05c973158c78b74e67a40f7a11cee2e037ed50eb3bae51001",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/emotibit/library/EmotiBit%2520ArduinoFilters/1.0.1/EmotiBitArduinoFilters-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/emotibit/library/EmotiBit%20ArduinoFilters/1.0.1/EmotiBitArduinoFilters-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "emotibit/library/EmotiBit%20BMI160/0.3.3/EmotiBitBMI160-0.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmotiBitBMI160-0.3.3.tar.gz",
+    "size_bytes": 35856,
+    "sha256": "368f911af92eadd59520708988b5d9119727defbb9235c7b970a4506537456ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/emotibit/library/EmotiBit%2520BMI160/0.3.3/EmotiBitBMI160-0.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/emotibit/library/EmotiBit%20BMI160/0.3.3/EmotiBitBMI160-0.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "emotibit/library/EmotiBit%20EmojiLib/0.0.1/EmotiBitEmojiLib-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmotiBitEmojiLib-0.0.1.tar.gz",
+    "size_bytes": 2194,
+    "sha256": "8e34072dc14d7eefabe706e0450f59c2cf6b89e72d1c6a6533602226fbc9c109",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/emotibit/library/EmotiBit%2520EmojiLib/0.0.1/EmotiBitEmojiLib-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/emotibit/library/EmotiBit%20EmojiLib/0.0.1/EmotiBitEmojiLib-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "emotibit/library/EmotiBit%20External%20EEPROM/1.0.5+EmotiBit.0.0.1/EmotiBitExternalEEPROM-1.0.5+EmotiBit.0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmotiBitExternalEEPROM-1.0.5+EmotiBit.0.0.1.tar.gz",
+    "size_bytes": 15336,
+    "sha256": "a9636ca2fd3be79ad21455ae94ae5bcd2a388b22d8ed1af7cdce26771a3b6231",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/emotibit/library/EmotiBit%2520External%2520EEPROM/1.0.5%2BEmotiBit.0.0.1/EmotiBitExternalEEPROM-1.0.5%2BEmotiBit.0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/emotibit/library/EmotiBit%20External%20EEPROM/1.0.5%2BEmotiBit.0.0.1/EmotiBitExternalEEPROM-1.0.5%2BEmotiBit.0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "emotibit/library/EmotiBit%20FeatherWing/1.14.1/EmotiBitFeatherWing-1.14.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmotiBitFeatherWing-1.14.1.tar.gz",
+    "size_bytes": 110220,
+    "sha256": "36bdfc490de324226f864399ab1dfaad9310c9906fed778996b27bd733209b2d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/emotibit/library/EmotiBit%2520FeatherWing/1.14.1/EmotiBitFeatherWing-1.14.1.tar.gz",
+     "https://dl.registry.platformio.org/download/emotibit/library/EmotiBit%20FeatherWing/1.14.1/EmotiBitFeatherWing-1.14.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "emotibit/library/EmotiBit%20FeatherWing/1.14.2/EmotiBitFeatherWing-1.14.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmotiBitFeatherWing-1.14.2.tar.gz",
+    "size_bytes": 112251,
+    "sha256": "d2faee4860e140aa758bc3061287bc8521a5394c10ffcdc29e5baa5e81ccdc1b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/emotibit/library/EmotiBit%2520FeatherWing/1.14.2/EmotiBitFeatherWing-1.14.2.tar.gz",
+     "https://dl.registry.platformio.org/download/emotibit/library/EmotiBit%20FeatherWing/1.14.2/EmotiBitFeatherWing-1.14.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "emotibit/library/EmotiBit%20FeatherWing/1.14.3/EmotiBitFeatherWing-1.14.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmotiBitFeatherWing-1.14.3.tar.gz",
+    "size_bytes": 113680,
+    "sha256": "3ec7233e2b9538364acf3066e882078c156f09d455d6c15efa3da99ccd342345",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/emotibit/library/EmotiBit%2520FeatherWing/1.14.3/EmotiBitFeatherWing-1.14.3.tar.gz",
+     "https://dl.registry.platformio.org/download/emotibit/library/EmotiBit%20FeatherWing/1.14.3/EmotiBitFeatherWing-1.14.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "emotibit/library/EmotiBit%20FeatherWing/1.14.4/EmotiBitFeatherWing-1.14.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmotiBitFeatherWing-1.14.4.tar.gz",
+    "size_bytes": 116938,
+    "sha256": "27d8794d3956862cd751ef70971057d6df0834816e2e3abe7fc9275eb2c2e867",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/emotibit/library/EmotiBit%2520FeatherWing/1.14.4/EmotiBitFeatherWing-1.14.4.tar.gz",
+     "https://dl.registry.platformio.org/download/emotibit/library/EmotiBit%20FeatherWing/1.14.4/EmotiBitFeatherWing-1.14.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "emotibit/library/EmotiBit%20KTD2026/0.0.1/EmotiBitKTD2026-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmotiBitKTD2026-0.0.1.tar.gz",
+    "size_bytes": 3286,
+    "sha256": "c24f9d3276de25c8d13ad2f87decd60357ea6394dc2412a5a0b87d7a6160c474",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/emotibit/library/EmotiBit%2520KTD2026/0.0.1/EmotiBitKTD2026-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/emotibit/library/EmotiBit%20KTD2026/0.0.1/EmotiBitKTD2026-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "emotibit/library/EmotiBit%20MAX30101/2.0.3/EmotiBitMAX30101-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmotiBitMAX30101-2.0.3.tar.gz",
+    "size_bytes": 27180,
+    "sha256": "5aa9736dc6557308f9847c094296f51acbd3a0ff636cd67359cb7356e9a028d2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/emotibit/library/EmotiBit%2520MAX30101/2.0.3/EmotiBitMAX30101-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/emotibit/library/EmotiBit%20MAX30101/2.0.3/EmotiBitMAX30101-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "emotibit/library/EmotiBit%20MLX90632/1.0.8/EmotiBitMLX90632-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmotiBitMLX90632-1.0.8.tar.gz",
+    "size_bytes": 14218,
+    "sha256": "cba029d17e7ac92811f5e43582d1c536467f0533fa0db31466f535827631bc56",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/emotibit/library/EmotiBit%2520MLX90632/1.0.8/EmotiBitMLX90632-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/emotibit/library/EmotiBit%20MLX90632/1.0.8/EmotiBitMLX90632-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "emotibit/library/EmotiBit%20NCP5623/0.1.0/EmotiBitNCP5623-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmotiBitNCP5623-0.1.0.tar.gz",
+    "size_bytes": 3613,
+    "sha256": "20a1d65a783bfc35e1e4c8766fe0bf91e20538506c01a6ec4a3c820a12bab61b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/emotibit/library/EmotiBit%2520NCP5623/0.1.0/EmotiBitNCP5623-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/emotibit/library/EmotiBit%20NCP5623/0.1.0/EmotiBitNCP5623-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "emotibit/library/EmotiBit%20SI7013/0.0.7/EmotiBitSI7013-0.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmotiBitSI7013-0.0.7.tar.gz",
+    "size_bytes": 8044,
+    "sha256": "428682afb1b86110a9dd8e73bf02070077ca11d8dff2fcb5b4aaf1f9a41d78f9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/emotibit/library/EmotiBit%2520SI7013/0.0.7/EmotiBitSI7013-0.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/emotibit/library/EmotiBit%20SI7013/0.0.7/EmotiBitSI7013-0.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "emotibit/library/EmotiBit%20XPlat%20Utils/1.7.2/EmotiBitXPlatUtils-1.7.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmotiBitXPlatUtils-1.7.2.tar.gz",
+    "size_bytes": 15536,
+    "sha256": "2f9eef2be78367f9e17388572d01d5a4ba1fdcd2ee3d0b1cdf44ac719ebe19f3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/emotibit/library/EmotiBit%2520XPlat%2520Utils/1.7.2/EmotiBitXPlatUtils-1.7.2.tar.gz",
+     "https://dl.registry.platformio.org/download/emotibit/library/EmotiBit%20XPlat%20Utils/1.7.2/EmotiBitXPlatUtils-1.7.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "emotibit/library/EmotiBit%20XPlat%20Utils/1.7.3/EmotiBitXPlatUtils-1.7.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmotiBitXPlatUtils-1.7.3.tar.gz",
+    "size_bytes": 15566,
+    "sha256": "13cac4cd7ac602f6ef964445b4fed0ef2f8ca1d56a7a660f4f4b2bacfdcd0bda",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/emotibit/library/EmotiBit%2520XPlat%2520Utils/1.7.3/EmotiBitXPlatUtils-1.7.3.tar.gz",
+     "https://dl.registry.platformio.org/download/emotibit/library/EmotiBit%20XPlat%20Utils/1.7.3/EmotiBitXPlatUtils-1.7.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "emotibit/library/EmotiBit_DSPFilters/0.0.1/EmotiBit_DSPFilters-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmotiBit_DSPFilters-0.0.1.tar.gz",
+    "size_bytes": 38503,
+    "sha256": "66cd294965d72b9c47b9070316c94b743517d17630d9be10430248455766fb59",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/emotibit/library/EmotiBit_DSPFilters/0.0.1/EmotiBit_DSPFilters-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/emotibit/library/EmotiBit_DSPFilters/0.0.1/EmotiBit_DSPFilters-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

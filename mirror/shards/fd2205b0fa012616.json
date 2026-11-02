@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bencestmoiquoi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bencestmoiquoi/library/I2C_Insarianne/1.0.2/I2C_Insarianne-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2C_Insarianne-1.0.2.tar.gz",
+    "size_bytes": 15206,
+    "sha256": "b28074d874071052ca9dd12cdfaf34bf036e4c4fd8647ba6abe827142814cab0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bencestmoiquoi/library/I2C_Insarianne/1.0.2/I2C_Insarianne-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bencestmoiquoi/library/I2C_Insarianne/1.0.2/I2C_Insarianne-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bencestmoiquoi/library/INSARIANNE/1.1.6/INSARIANNE-1.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "INSARIANNE-1.1.6.tar.gz",
+    "size_bytes": 9111,
+    "sha256": "222865ffacb9a444aa9dfc1ba83a248c19d55adfebe0ae939418a0401288c30a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bencestmoiquoi/library/INSARIANNE/1.1.6/INSARIANNE-1.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/bencestmoiquoi/library/INSARIANNE/1.1.6/INSARIANNE-1.1.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

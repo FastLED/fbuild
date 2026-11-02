@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/maisonsmd",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "maisonsmd/library/msTask/1.0.3/msTask-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "msTask-1.0.3.tar.gz",
+    "size_bytes": 4277,
+    "sha256": "8db4f5ae24013bb045280813abff5e73eb433cd95c06a725acf4bc74e8cc1438",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maisonsmd/library/msTask/1.0.3/msTask-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/maisonsmd/library/msTask/1.0.3/msTask-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

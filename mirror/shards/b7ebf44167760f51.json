@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ppr2013g2",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ppr2013g2/library/AX12/0.0.0+sha.99c6ddabe9e6/AX12-0.0.0+sha.99c6ddabe9e6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AX12-0.0.0+sha.99c6ddabe9e6.tar.gz",
+    "size_bytes": 5197,
+    "sha256": "4a40a883cd10a03940ca6d4b7f6d674d3c6e2fb228243ee88a54bacb23fd949f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ppr2013g2/library/AX12/0.0.0%2Bsha.99c6ddabe9e6/AX12-0.0.0%2Bsha.99c6ddabe9e6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ppr2013g2/library/AX12/0.0.0%2Bsha.99c6ddabe9e6/AX12-0.0.0%2Bsha.99c6ddabe9e6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

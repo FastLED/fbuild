@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-joelbandi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-joelbandi/library/ADSlib/0.0.0+sha.715c88178998/ADSlib-0.0.0+sha.715c88178998.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADSlib-0.0.0+sha.715c88178998.tar.gz",
+    "size_bytes": 1297,
+    "sha256": "4e8166dd280c2a965612966be8e59e6461d9dc91818abf96a4255c558eeead5d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-joelbandi/library/ADSlib/0.0.0%2Bsha.715c88178998/ADSlib-0.0.0%2Bsha.715c88178998.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-joelbandi/library/ADSlib/0.0.0%2Bsha.715c88178998/ADSlib-0.0.0%2Bsha.715c88178998.tar.gz"
+    ]
+   }
+  }
+ ]
+}

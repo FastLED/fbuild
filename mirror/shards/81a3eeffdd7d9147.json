@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hs3uka",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hs3uka/library/HS3UKA_PCF8574/1.0.0/HS3UKA_PCF8574-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HS3UKA_PCF8574-1.0.0.tar.gz",
+    "size_bytes": 2187,
+    "sha256": "946b27836612f7eea6bc8335ab7ff83e3f77f30aed4afe81aadd6e4d4ae4c109",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hs3uka/library/HS3UKA_PCF8574/1.0.0/HS3UKA_PCF8574-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hs3uka/library/HS3UKA_PCF8574/1.0.0/HS3UKA_PCF8574-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

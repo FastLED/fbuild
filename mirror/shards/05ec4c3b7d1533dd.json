@@ -1,0 +1,139 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-charly",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-charly/library/24LCxx_I2C/0.0.0+sha.2add27250e69/24LCxx_I2C-0.0.0+sha.2add27250e69.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "24LCxx_I2C-0.0.0+sha.2add27250e69.tar.gz",
+    "size_bytes": 7585,
+    "sha256": "0b1ff9f1f28962f3ca18cf88eff6d6d69913d718f3b1be361db28ef0d244277c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-charly/library/24LCxx_I2C/0.0.0%2Bsha.2add27250e69/24LCxx_I2C-0.0.0%2Bsha.2add27250e69.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-charly/library/24LCxx_I2C/0.0.0%2Bsha.2add27250e69/24LCxx_I2C-0.0.0%2Bsha.2add27250e69.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-charly/library/BMP280/0.0.0+sha.d22ecbef9b90/BMP280-0.0.0+sha.d22ecbef9b90.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMP280-0.0.0+sha.d22ecbef9b90.tar.gz",
+    "size_bytes": 3121,
+    "sha256": "1ba52675cf66b6f52f72f9a8dad4c0a812f6aa0f7483568710a3ddf817263aa9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-charly/library/BMP280/0.0.0%2Bsha.d22ecbef9b90/BMP280-0.0.0%2Bsha.d22ecbef9b90.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-charly/library/BMP280/0.0.0%2Bsha.d22ecbef9b90/BMP280-0.0.0%2Bsha.d22ecbef9b90.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-charly/library/LcdWindow/0.0.0+sha.99b500b05716/LcdWindow-0.0.0+sha.99b500b05716.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LcdWindow-0.0.0+sha.99b500b05716.tar.gz",
+    "size_bytes": 12657,
+    "sha256": "954022a221d18bc45c89e0adb7e201c3989c19b43edc921affa4def8956576cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-charly/library/LcdWindow/0.0.0%2Bsha.99b500b05716/LcdWindow-0.0.0%2Bsha.99b500b05716.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-charly/library/LcdWindow/0.0.0%2Bsha.99b500b05716/LcdWindow-0.0.0%2Bsha.99b500b05716.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-charly/library/RF22/0.0.0+sha.4002a2c117cc/RF22-0.0.0+sha.4002a2c117cc.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RF22-0.0.0+sha.4002a2c117cc.tar.gz",
+    "size_bytes": 39846,
+    "sha256": "f495afbfe7e22ead6c3c1db0115654305e5b110deb45719caf4c59bc636bc169",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-charly/library/RF22/0.0.0%2Bsha.4002a2c117cc/RF22-0.0.0%2Bsha.4002a2c117cc.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-charly/library/RF22/0.0.0%2Bsha.4002a2c117cc/RF22-0.0.0%2Bsha.4002a2c117cc.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-charly/library/RF22Max/0.0.0+sha.f75e51ce001b/RF22Max-0.0.0+sha.f75e51ce001b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RF22Max-0.0.0+sha.f75e51ce001b.tar.gz",
+    "size_bytes": 6307,
+    "sha256": "1d6dc06c811867538669622bdb698004577bb6dace01e97828e911d88dc61b2e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-charly/library/RF22Max/0.0.0%2Bsha.f75e51ce001b/RF22Max-0.0.0%2Bsha.f75e51ce001b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-charly/library/RF22Max/0.0.0%2Bsha.f75e51ce001b/RF22Max-0.0.0%2Bsha.f75e51ce001b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-charly/library/RTC-MCP97410/0.0.0+sha.10e564536e23/RTC-MCP97410-0.0.0+sha.10e564536e23.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RTC-MCP97410-0.0.0+sha.10e564536e23.tar.gz",
+    "size_bytes": 7980,
+    "sha256": "25a07575ff243d617cdd2b26238d553433d5794f7640b6f27ec5e864f26edd89",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-charly/library/RTC-MCP97410/0.0.0%2Bsha.10e564536e23/RTC-MCP97410-0.0.0%2Bsha.10e564536e23.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-charly/library/RTC-MCP97410/0.0.0%2Bsha.10e564536e23/RTC-MCP97410-0.0.0%2Bsha.10e564536e23.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-charly/library/TextLCDScroll/0.0.0+sha.e3b565c4190c/TextLCDScroll-0.0.0+sha.e3b565c4190c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TextLCDScroll-0.0.0+sha.e3b565c4190c.tar.gz",
+    "size_bytes": 3387,
+    "sha256": "cdc9d8c633f8846435fb53ddaf373fb41f233da6069e5faf8363417d6a772d56",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-charly/library/TextLCDScroll/0.0.0%2Bsha.e3b565c4190c/TextLCDScroll-0.0.0%2Bsha.e3b565c4190c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-charly/library/TextLCDScroll/0.0.0%2Bsha.e3b565c4190c/TextLCDScroll-0.0.0%2Bsha.e3b565c4190c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-charly/library/UniGraphic/0.0.0+sha.1b6f9fc49a03/UniGraphic-0.0.0+sha.1b6f9fc49a03.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UniGraphic-0.0.0+sha.1b6f9fc49a03.tar.gz",
+    "size_bytes": 54359,
+    "sha256": "c5c81c119793fa15b3120a3ff9a3bf0905e4ff20f8b44c801ec2b304af788fbf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-charly/library/UniGraphic/0.0.0%2Bsha.1b6f9fc49a03/UniGraphic-0.0.0%2Bsha.1b6f9fc49a03.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-charly/library/UniGraphic/0.0.0%2Bsha.1b6f9fc49a03/UniGraphic-0.0.0%2Bsha.1b6f9fc49a03.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-charly/library/WordClock_de/0.0.0+sha.284c13980da8/WordClock_de-0.0.0+sha.284c13980da8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WordClock_de-0.0.0+sha.284c13980da8.tar.gz",
+    "size_bytes": 3927,
+    "sha256": "ff1158f5718e49f41583d27cfad083d3d3abff75f931ddbfd50639598667066b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-charly/library/WordClock_de/0.0.0%2Bsha.284c13980da8/WordClock_de-0.0.0%2Bsha.284c13980da8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-charly/library/WordClock_de/0.0.0%2Bsha.284c13980da8/WordClock_de-0.0.0%2Bsha.284c13980da8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-charly/library/mRotaryEncoder/0.0.0+sha.2502b829d452/mRotaryEncoder-0.0.0+sha.2502b829d452.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mRotaryEncoder-0.0.0+sha.2502b829d452.tar.gz",
+    "size_bytes": 3017,
+    "sha256": "aca105edf65e0631b23685ddbf84517b970155c0c5216539531e5799df6abc7d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-charly/library/mRotaryEncoder/0.0.0%2Bsha.2502b829d452/mRotaryEncoder-0.0.0%2Bsha.2502b829d452.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-charly/library/mRotaryEncoder/0.0.0%2Bsha.2502b829d452/mRotaryEncoder-0.0.0%2Bsha.2502b829d452.tar.gz"
+    ]
+   }
+  }
+ ]
+}

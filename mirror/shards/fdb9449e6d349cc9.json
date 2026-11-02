@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ibm666",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ibm666/library/ILI9341/1.0.0/ILI9341-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ILI9341-1.0.0.tar.gz",
+    "size_bytes": 7691,
+    "sha256": "bfbbed2466ee27cb0396c1f3ae00d2a2bb40a18e8bff1e40b0ff8721f8d7a669",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ibm666/library/ILI9341/1.0.0/ILI9341-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ibm666/library/ILI9341/1.0.0/ILI9341-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

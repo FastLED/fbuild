@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/misaproyectil",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "misaproyectil/library/Proyectil%20GD3300/1.0.2/ProyectilGD3300-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProyectilGD3300-1.0.2.tar.gz",
+    "size_bytes": 17946,
+    "sha256": "9f1c35742ae14e0e2ba9e245442dbe48b6e092b8e60f526af527f08f1cebee95",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/misaproyectil/library/Proyectil%2520GD3300/1.0.2/ProyectilGD3300-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/misaproyectil/library/Proyectil%20GD3300/1.0.2/ProyectilGD3300-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "misaproyectil/library/Proyectil%20MedeaWiz/1.0.0/ProyectilMedeaWiz-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProyectilMedeaWiz-1.0.0.tar.gz",
+    "size_bytes": 2782,
+    "sha256": "bba9678e4998bd74b4a143d6214c2533ab45fef294e5db34c69af22fcdd77313",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/misaproyectil/library/Proyectil%2520MedeaWiz/1.0.0/ProyectilMedeaWiz-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/misaproyectil/library/Proyectil%20MedeaWiz/1.0.0/ProyectilMedeaWiz-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "misaproyectil/library/Proyectil%20digitalIO/1.0.1/ProyectildigitalIO-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProyectildigitalIO-1.0.1.tar.gz",
+    "size_bytes": 4702,
+    "sha256": "8a1b5da75b608620024ec54fc707ab9a07bdffa7e71785e899ec6b8e4e5e69e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/misaproyectil/library/Proyectil%2520digitalIO/1.0.1/ProyectildigitalIO-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/misaproyectil/library/Proyectil%20digitalIO/1.0.1/ProyectildigitalIO-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/darkdragonsastro",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "darkdragonsastro/library/esp32-idf-ascom-alpaca/1.1.4/esp32-idf-ascom-alpaca-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32-idf-ascom-alpaca-1.1.4.tar.gz",
+    "size_bytes": 24446,
+    "sha256": "ef51325fce12a685206ddcd63f83a87e95614bde09547571dd50de2e71b589da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/darkdragonsastro/library/esp32-idf-ascom-alpaca/1.1.4/esp32-idf-ascom-alpaca-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/darkdragonsastro/library/esp32-idf-ascom-alpaca/1.1.4/esp32-idf-ascom-alpaca-1.1.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

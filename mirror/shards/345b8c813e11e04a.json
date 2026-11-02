@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nonamedcat",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nonamedcat/library/CH32X035_USBComposite/1.0.0/CH32X035_USBComposite-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CH32X035_USBComposite-1.0.0.tar.gz",
+    "size_bytes": 12243,
+    "sha256": "d4515962176e1137511bf6ce84d55d24104685bd1e8b845b75ac07da15f34a69",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nonamedcat/library/CH32X035_USBComposite/1.0.0/CH32X035_USBComposite-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nonamedcat/library/CH32X035_USBComposite/1.0.0/CH32X035_USBComposite-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nonamedcat/library/CH32X035_USBGamepad/1.0.1/CH32X035_USBGamepad-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CH32X035_USBGamepad-1.0.1.tar.gz",
+    "size_bytes": 10859,
+    "sha256": "d3cc39adf299f2b0a1e1e661e58c7738f13fbd3e8b36fcdd7549aad8f586a15a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nonamedcat/library/CH32X035_USBGamepad/1.0.1/CH32X035_USBGamepad-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nonamedcat/library/CH32X035_USBGamepad/1.0.1/CH32X035_USBGamepad-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nonamedcat/library/CH32X035_USBHIDKeyboard/1.0.0/CH32X035_USBHIDKeyboard-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CH32X035_USBHIDKeyboard-1.0.0.tar.gz",
+    "size_bytes": 11694,
+    "sha256": "01b71f6b9ca01584b9f1760247cfae888c476c2a1d0cd3a6bda63db51b52c5b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nonamedcat/library/CH32X035_USBHIDKeyboard/1.0.0/CH32X035_USBHIDKeyboard-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nonamedcat/library/CH32X035_USBHIDKeyboard/1.0.0/CH32X035_USBHIDKeyboard-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nonamedcat/library/CH32X035_USBMIDI/1.0.0/CH32X035_USBMIDI-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CH32X035_USBMIDI-1.0.0.tar.gz",
+    "size_bytes": 15478,
+    "sha256": "fe24965080db11d35babb2111ddcb48b3ef0fdcb4704b4c9ed6d6e9f7abab23d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nonamedcat/library/CH32X035_USBMIDI/1.0.0/CH32X035_USBMIDI-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nonamedcat/library/CH32X035_USBMIDI/1.0.0/CH32X035_USBMIDI-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nonamedcat/library/CH32X035_USBMIDI/1.0.1/CH32X035_USBMIDI-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CH32X035_USBMIDI-1.0.1.tar.gz",
+    "size_bytes": 15846,
+    "sha256": "1fd7d95e7079d3216c67397cf216b1e3fbba4e41a20de5c35402cdc0811c53b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nonamedcat/library/CH32X035_USBMIDI/1.0.1/CH32X035_USBMIDI-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nonamedcat/library/CH32X035_USBMIDI/1.0.1/CH32X035_USBMIDI-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nonamedcat/library/CH32X035_USBMIDI/1.0.2/CH32X035_USBMIDI-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CH32X035_USBMIDI-1.0.2.tar.gz",
+    "size_bytes": 15843,
+    "sha256": "456c0cf85960159e03e5d1cb9c493c9580fb4abd36d58d822340e95357c04a13",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nonamedcat/library/CH32X035_USBMIDI/1.0.2/CH32X035_USBMIDI-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nonamedcat/library/CH32X035_USBMIDI/1.0.2/CH32X035_USBMIDI-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nonamedcat/library/CH32X035_USBMouse/1.0.0/CH32X035_USBMouse-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CH32X035_USBMouse-1.0.0.tar.gz",
+    "size_bytes": 11003,
+    "sha256": "8d45ec6b89897b013aa446367917c5a731508c3ac17487ed9a1182e2d5bacf2a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nonamedcat/library/CH32X035_USBMouse/1.0.0/CH32X035_USBMouse-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nonamedcat/library/CH32X035_USBMouse/1.0.0/CH32X035_USBMouse-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

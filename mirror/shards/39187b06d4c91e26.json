@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jmderomedi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jmderomedi/library/SavLayFilter/1.0.1/SavLayFilter-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SavLayFilter-1.0.1.tar.gz",
+    "size_bytes": 6105,
+    "sha256": "61a3f2caf0cb0b81ccbdfd2a8c9dc6dd4cc192ff3a7f38ad9ca5c43a3c97c834",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jmderomedi/library/SavLayFilter/1.0.1/SavLayFilter-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jmderomedi/library/SavLayFilter/1.0.1/SavLayFilter-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/valdemir-dsw",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "valdemir-dsw/library/VALMUX16/1.0.4/VALMUX16-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VALMUX16-1.0.4.tar.gz",
+    "size_bytes": 2835,
+    "sha256": "c72c5cc31d78a1c26b33cab10afeb26f0fc226e98a987526ccd56ec131d40cdd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/valdemir-dsw/library/VALMUX16/1.0.4/VALMUX16-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/valdemir-dsw/library/VALMUX16/1.0.4/VALMUX16-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "valdemir-dsw/library/dswpainelpro/2.4.6/dswpainelpro-2.4.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "dswpainelpro-2.4.6.tar.gz",
+    "size_bytes": 12438,
+    "sha256": "2ff5cf3a08eb972d0250020dee605a0c39658840d07e3b49d598294721189ec6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/valdemir-dsw/library/dswpainelpro/2.4.6/dswpainelpro-2.4.6.tar.gz",
+     "https://dl.registry.platformio.org/download/valdemir-dsw/library/dswpainelpro/2.4.6/dswpainelpro-2.4.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "valdemir-dsw/library/val_flash_spi/2.4.4/val_flash_spi-2.4.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "val_flash_spi-2.4.4.tar.gz",
+    "size_bytes": 6323,
+    "sha256": "414bc77ba11a9192424be762011c96eb2030c4d6ab2360b55d788ae2a4c22242",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/valdemir-dsw/library/val_flash_spi/2.4.4/val_flash_spi-2.4.4.tar.gz",
+     "https://dl.registry.platformio.org/download/valdemir-dsw/library/val_flash_spi/2.4.4/val_flash_spi-2.4.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

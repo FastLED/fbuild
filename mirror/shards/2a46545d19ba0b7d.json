@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/vishal-95-um",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "vishal-95-um/library/ESP32%20IoT%20Management/0.1.1/ESP32IoTManagement-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32IoTManagement-0.1.1.tar.gz",
+    "size_bytes": 14004,
+    "sha256": "0de988eabf28731c508648e4c417589700f89f21fdf0ad2a73ada52920c0c230",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vishal-95-um/library/ESP32%2520IoT%2520Management/0.1.1/ESP32IoTManagement-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vishal-95-um/library/ESP32%20IoT%20Management/0.1.1/ESP32IoTManagement-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

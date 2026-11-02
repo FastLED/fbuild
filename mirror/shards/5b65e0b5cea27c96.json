@@ -1,0 +1,243 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/4dsystems",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "4dsystems/library/Diablo16-Serial-Arduino-Library/1.0.5/Diablo16-Serial-Arduino-Library-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Diablo16-Serial-Arduino-Library-1.0.5.tar.gz",
+    "size_bytes": 51117,
+    "sha256": "1fab41abc8d95d808c9647a75328d3dc516ec8802f363c04b24332733aed6925",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/4dsystems/library/Diablo16-Serial-Arduino-Library/1.0.5/Diablo16-Serial-Arduino-Library-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/4dsystems/library/Diablo16-Serial-Arduino-Library/1.0.5/Diablo16-Serial-Arduino-Library-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "4dsystems/library/GFX4DIoD9/1.0.2/GFX4DIoD9-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GFX4DIoD9-1.0.2.tar.gz",
+    "size_bytes": 88611,
+    "sha256": "2b89f368473bd5b94ac3b2ff620090f982c6f4644bf7c34b6b3c6a443da3c324",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/4dsystems/library/GFX4DIoD9/1.0.2/GFX4DIoD9-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/4dsystems/library/GFX4DIoD9/1.0.2/GFX4DIoD9-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "4dsystems/library/GFX4d/1.0.10/GFX4d-1.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GFX4d-1.0.10.tar.gz",
+    "size_bytes": 3746691,
+    "sha256": "17ffec895701ec06f92ec02cb4b566a56df1f8810a395cd299463c0b18e47f4a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/4dsystems/library/GFX4d/1.0.10/GFX4d-1.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/4dsystems/library/GFX4d/1.0.10/GFX4d-1.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "4dsystems/library/GFX4dESP32/1.1.5/GFX4dESP32-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GFX4dESP32-1.1.5.tar.gz",
+    "size_bytes": 3828035,
+    "sha256": "e1341688ce2fcb30b0e6d0a82eaf2f15193235ce1f2b24dd603f8f85290f4ea0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/4dsystems/library/GFX4dESP32/1.1.5/GFX4dESP32-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/4dsystems/library/GFX4dESP32/1.1.5/GFX4dESP32-1.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "4dsystems/library/GFX4dESP32/1.1.6/GFX4dESP32-1.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GFX4dESP32-1.1.6.tar.gz",
+    "size_bytes": 3828050,
+    "sha256": "2f00874596633b36c63224308ce8dc3400df36532edc0dfbde765a3672d8deb1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/4dsystems/library/GFX4dESP32/1.1.6/GFX4dESP32-1.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/4dsystems/library/GFX4dESP32/1.1.6/GFX4dESP32-1.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "4dsystems/library/GFX4dESP32/1.2.0/GFX4dESP32-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GFX4dESP32-1.2.0.tar.gz",
+    "size_bytes": 4326127,
+    "sha256": "262b5d2fde9fbdc6a16a465e7b59548dbb444fc19a4c73770cdd99021ecbf224",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/4dsystems/library/GFX4dESP32/1.2.0/GFX4dESP32-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/4dsystems/library/GFX4dESP32/1.2.0/GFX4dESP32-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "4dsystems/library/GFX4dESP32/1.2.1/GFX4dESP32-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GFX4dESP32-1.2.1.tar.gz",
+    "size_bytes": 4333321,
+    "sha256": "116ed5e38b4419793c3b7f88495acfd26ff7056650f2715e1b7ad9b64b5a574a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/4dsystems/library/GFX4dESP32/1.2.1/GFX4dESP32-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/4dsystems/library/GFX4dESP32/1.2.1/GFX4dESP32-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "4dsystems/library/GFX4dESP32/1.3.0/GFX4dESP32-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GFX4dESP32-1.3.0.tar.gz",
+    "size_bytes": 4327113,
+    "sha256": "576feb095389214757ba858676c2dc09797bf89d2bab0467886b8862af8a3b05",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/4dsystems/library/GFX4dESP32/1.3.0/GFX4dESP32-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/4dsystems/library/GFX4dESP32/1.3.0/GFX4dESP32-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "4dsystems/library/GFX4dESP32P4/1.0.1/GFX4dESP32P4-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GFX4dESP32P4-1.0.1.tar.gz",
+    "size_bytes": 3794196,
+    "sha256": "bd9a765eef7967a2734057bacf57586c359ce869a7aee5c9aa6caad395400abf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/4dsystems/library/GFX4dESP32P4/1.0.1/GFX4dESP32P4-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/4dsystems/library/GFX4dESP32P4/1.0.1/GFX4dESP32P4-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "4dsystems/library/GFX4dESP32P4/1.1.0/GFX4dESP32P4-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GFX4dESP32P4-1.1.0.tar.gz",
+    "size_bytes": 11968185,
+    "sha256": "5a9990244ce30371734014bd5da0e4be84090f0bb6163c19ad76051d2152fdfa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/4dsystems/library/GFX4dESP32P4/1.1.0/GFX4dESP32P4-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/4dsystems/library/GFX4dESP32P4/1.1.0/GFX4dESP32P4-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "4dsystems/library/GFX4dESP32P4/1.1.1/GFX4dESP32P4-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GFX4dESP32P4-1.1.1.tar.gz",
+    "size_bytes": 11968636,
+    "sha256": "a359a3dc8329542951760e8c4328c0988c7fee93361aa8c0118845e189d718da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/4dsystems/library/GFX4dESP32P4/1.1.1/GFX4dESP32P4-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/4dsystems/library/GFX4dESP32P4/1.1.1/GFX4dESP32P4-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "4dsystems/library/GFX4dESP32P4/1.1.2/GFX4dESP32P4-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GFX4dESP32P4-1.1.2.tar.gz",
+    "size_bytes": 11968714,
+    "sha256": "b341db0e0058d01c6eae41c292c8fa37222343f83af8ecc7a2a2604b9009bae3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/4dsystems/library/GFX4dESP32P4/1.1.2/GFX4dESP32P4-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/4dsystems/library/GFX4dESP32P4/1.1.2/GFX4dESP32P4-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "4dsystems/library/Goldelox-Serial-Arduino-Library/1.0.4/Goldelox-Serial-Arduino-Library-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Goldelox-Serial-Arduino-Library-1.0.4.tar.gz",
+    "size_bytes": 25298,
+    "sha256": "b114c5aede25875871fce91f5e0dbc4bee48b254153fb710d0915e379dc72428",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/4dsystems/library/Goldelox-Serial-Arduino-Library/1.0.4/Goldelox-Serial-Arduino-Library-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/4dsystems/library/Goldelox-Serial-Arduino-Library/1.0.4/Goldelox-Serial-Arduino-Library-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "4dsystems/library/Picaso-Serial-Arduino-Library/1.0.5/Picaso-Serial-Arduino-Library-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Picaso-Serial-Arduino-Library-1.0.5.tar.gz",
+    "size_bytes": 47150,
+    "sha256": "91e7f4993550adf2bf60e9c4351843edb4a7e986681d50badf64e5092fb5ddad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/4dsystems/library/Picaso-Serial-Arduino-Library/1.0.5/Picaso-Serial-Arduino-Library-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/4dsystems/library/Picaso-Serial-Arduino-Library/1.0.5/Picaso-Serial-Arduino-Library-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "4dsystems/library/Pixxi-Serial-Arduino-Library/1.0.3/Pixxi-Serial-Arduino-Library-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pixxi-Serial-Arduino-Library-1.0.3.tar.gz",
+    "size_bytes": 50685,
+    "sha256": "48624dd81715b122db2133e3d149a439fe803148b119a9b1a75b2c64efd8111e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/4dsystems/library/Pixxi-Serial-Arduino-Library/1.0.3/Pixxi-Serial-Arduino-Library-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/4dsystems/library/Pixxi-Serial-Arduino-Library/1.0.3/Pixxi-Serial-Arduino-Library-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "4dsystems/library/SOMOIoD/1.0.0/SOMOIoD-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SOMOIoD-1.0.0.tar.gz",
+    "size_bytes": 6261,
+    "sha256": "e6ebd62427ed5b9fc7378fec94f34ac5d3b08e336b6fa4cd66d69454ff0961bd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/4dsystems/library/SOMOIoD/1.0.0/SOMOIoD-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/4dsystems/library/SOMOIoD/1.0.0/SOMOIoD-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "4dsystems/library/genieArduino/1.5.3/genieArduino-1.5.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "genieArduino-1.5.3.tar.gz",
+    "size_bytes": 37603,
+    "sha256": "cbe9bae495a613e075c982a19297f8c6b035768134982ab2490b643a045348e2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/4dsystems/library/genieArduino/1.5.3/genieArduino-1.5.3.tar.gz",
+     "https://dl.registry.platformio.org/download/4dsystems/library/genieArduino/1.5.3/genieArduino-1.5.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "4dsystems/library/genieArduinoDEV/1.0.7/genieArduinoDEV-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "genieArduinoDEV-1.0.7.tar.gz",
+    "size_bytes": 41345,
+    "sha256": "d3be6c6bee08e55530ee492e2a0ba5f0959d5b0bcb273a32fcedf89187c8316e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/4dsystems/library/genieArduinoDEV/1.0.7/genieArduinoDEV-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/4dsystems/library/genieArduinoDEV/1.0.7/genieArduinoDEV-1.0.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

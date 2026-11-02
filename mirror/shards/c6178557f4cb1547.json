@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/aszopko",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "aszopko/library/Somfy_RTS/1.0.0/Somfy_RTS-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Somfy_RTS-1.0.0.tar.gz",
+    "size_bytes": 6249,
+    "sha256": "f98d6473c473f31b53699e6dc5258866c0e1658738121e0a98398fcdb0605d4e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aszopko/library/Somfy_RTS/1.0.0/Somfy_RTS-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aszopko/library/Somfy_RTS/1.0.0/Somfy_RTS-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

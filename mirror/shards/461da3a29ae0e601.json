@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/intrbiz",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "intrbiz/library/Crypto/1.0.0/Crypto-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Crypto-1.0.0.tar.gz",
+    "size_bytes": 13659,
+    "sha256": "8031df089ffc2a67e40e5849db7419fdef7a38019a4d40c0f31309e147dbba38",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/intrbiz/library/Crypto/1.0.0/Crypto-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/intrbiz/library/Crypto/1.0.0/Crypto-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

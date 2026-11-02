@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jclds139",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jclds139/library/FS_FilePrint/2.0.0/FS_FilePrint-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FS_FilePrint-2.0.0.tar.gz",
+    "size_bytes": 7671,
+    "sha256": "b2a4635a1d79470bfc5a6c74e2bfb240965540aa2e4d1a7e06acf7f88e9d8111",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jclds139/library/FS_FilePrint/2.0.0/FS_FilePrint-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jclds139/library/FS_FilePrint/2.0.0/FS_FilePrint-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

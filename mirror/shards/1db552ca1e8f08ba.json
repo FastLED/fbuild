@@ -1,0 +1,152 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cyfney",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cyfney/library/EasyI2c/1.0.0/EasyI2c-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyI2c-1.0.0.tar.gz",
+    "size_bytes": 3074,
+    "sha256": "e1840d190de5ffeb7f90f44aca80160a96585a28082d0daf7e74a8842320fc1a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cyfney/library/EasyI2c/1.0.0/EasyI2c-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cyfney/library/EasyI2c/1.0.0/EasyI2c-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cyfney/library/EasyI2c/1.1.0/EasyI2c-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyI2c-1.1.0.tar.gz",
+    "size_bytes": 3945,
+    "sha256": "404a3cb673ca65e311350bddd3f9abab22114db37695fee575dbbf9b3abaf3a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cyfney/library/EasyI2c/1.1.0/EasyI2c-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cyfney/library/EasyI2c/1.1.0/EasyI2c-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cyfney/library/clogger/1.0.2/clogger-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "clogger-1.0.2.tar.gz",
+    "size_bytes": 6818,
+    "sha256": "7fc3b2c345eafd69b0fdb14aefc1e05d75f9e1f85fa7d38dded6d45e4d760bee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cyfney/library/clogger/1.0.2/clogger-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cyfney/library/clogger/1.0.2/clogger-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cyfney/library/clogger/1.1.0/clogger-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "clogger-1.1.0.tar.gz",
+    "size_bytes": 6934,
+    "sha256": "6e9d9f0214f06506c9929a7191da7a5252abf884594ccab8231e8a0ae51db61c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cyfney/library/clogger/1.1.0/clogger-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cyfney/library/clogger/1.1.0/clogger-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cyfney/library/clogger/1.1.1/clogger-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "clogger-1.1.1.tar.gz",
+    "size_bytes": 6928,
+    "sha256": "040365cfd91a4d2ad17940bdc57646bc281f4d8c26bd4816fa2016dcecd20576",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cyfney/library/clogger/1.1.1/clogger-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cyfney/library/clogger/1.1.1/clogger-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cyfney/library/cyfney-cpp/1.0.0/cyfney-cpp-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cyfney-cpp-1.0.0.tar.gz",
+    "size_bytes": 6757,
+    "sha256": "3eb59cb5f7082bf089c7a3ba69e0d4ecdaff2b64797f3881179f107b3ccc37aa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cyfney/library/cyfney-cpp/1.0.0/cyfney-cpp-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cyfney/library/cyfney-cpp/1.0.0/cyfney-cpp-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cyfney/library/cyfney-cpp/1.0.5/cyfney-cpp-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cyfney-cpp-1.0.5.tar.gz",
+    "size_bytes": 6741,
+    "sha256": "9492803e5abbe238949ec01b78e83451c5b971b1a69aac868193ac386b06d1f5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cyfney/library/cyfney-cpp/1.0.5/cyfney-cpp-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/cyfney/library/cyfney-cpp/1.0.5/cyfney-cpp-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cyfney/library/cyfney-cpp/1.0.6/cyfney-cpp-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cyfney-cpp-1.0.6.tar.gz",
+    "size_bytes": 6844,
+    "sha256": "edefc10d765abe7428a92ec8581150de4d3ee19b7712e81ccc8b7f707d6b7450",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cyfney/library/cyfney-cpp/1.0.6/cyfney-cpp-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/cyfney/library/cyfney-cpp/1.0.6/cyfney-cpp-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cyfney/library/cyfney-cpp/2.0.1/cyfney-cpp-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cyfney-cpp-2.0.1.tar.gz",
+    "size_bytes": 9873,
+    "sha256": "29460043814edc3e538575ef3f25033663dff91e5785d894996b1d271e5136cf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cyfney/library/cyfney-cpp/2.0.1/cyfney-cpp-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cyfney/library/cyfney-cpp/2.0.1/cyfney-cpp-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cyfney/library/cyfney-cpp/2.2.0/cyfney-cpp-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cyfney-cpp-2.2.0.tar.gz",
+    "size_bytes": 9975,
+    "sha256": "9044c13af09ead1d6981058b9751230c31ea85a4099f7227a0f199101d033648",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cyfney/library/cyfney-cpp/2.2.0/cyfney-cpp-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cyfney/library/cyfney-cpp/2.2.0/cyfney-cpp-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cyfney/library/cyfney-cpp/2.3.0/cyfney-cpp-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cyfney-cpp-2.3.0.tar.gz",
+    "size_bytes": 12044,
+    "sha256": "d4ce5afc661c9271d1a93fb16307ace68e4423add212cd8edd32a1079081d116",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cyfney/library/cyfney-cpp/2.3.0/cyfney-cpp-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cyfney/library/cyfney-cpp/2.3.0/cyfney-cpp-2.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

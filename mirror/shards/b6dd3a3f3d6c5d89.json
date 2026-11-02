@@ -1,0 +1,139 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mcmchris",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mcmchris/library/MCMVoltSense/0.0.1/MCMVoltSense-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCMVoltSense-0.0.1.tar.gz",
+    "size_bytes": 3835,
+    "sha256": "139aeca3b178a36f937c41808171fef95a2caf2fc4fbee84835f5675fc7b95d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mcmchris/library/MCMVoltSense/0.0.1/MCMVoltSense-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mcmchris/library/MCMVoltSense/0.0.1/MCMVoltSense-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mcmchris/library/MCM_ATM90E32/0.0.2/MCM_ATM90E32-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCM_ATM90E32-0.0.2.tar.gz",
+    "size_bytes": 24606,
+    "sha256": "8bfdfdf745d03cd81803146af370bbc8ce62ae3fff3642a8e15ad4a136de82fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mcmchris/library/MCM_ATM90E32/0.0.2/MCM_ATM90E32-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mcmchris/library/MCM_ATM90E32/0.0.2/MCM_ATM90E32-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mcmchris/library/MCM_BL0940/0.0.3/MCM_BL0940-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCM_BL0940-0.0.3.tar.gz",
+    "size_bytes": 16872,
+    "sha256": "56e64db19fb9d917b21fe59c7c7063c4f17392a9b286f0d9595390e5e96d1594",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mcmchris/library/MCM_BL0940/0.0.3/MCM_BL0940-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mcmchris/library/MCM_BL0940/0.0.3/MCM_BL0940-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mcmchris/library/MCM_GitHub_OTA/0.0.1/MCM_GitHub_OTA-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCM_GitHub_OTA-0.0.1.tar.gz",
+    "size_bytes": 27184,
+    "sha256": "f65f8e83779a1f537e7ea5f9da96c84bf0458720b260b7c85036cd8baf53cffa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mcmchris/library/MCM_GitHub_OTA/0.0.1/MCM_GitHub_OTA-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mcmchris/library/MCM_GitHub_OTA/0.0.1/MCM_GitHub_OTA-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mcmchris/library/MCM_GitHub_OTA/0.0.3/MCM_GitHub_OTA-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCM_GitHub_OTA-0.0.3.tar.gz",
+    "size_bytes": 27534,
+    "sha256": "6ec8cd575b2f25bc36a2d648230d152105a7862f01e9bdee9f4cbc5708f04b93",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mcmchris/library/MCM_GitHub_OTA/0.0.3/MCM_GitHub_OTA-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mcmchris/library/MCM_GitHub_OTA/0.0.3/MCM_GitHub_OTA-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mcmchris/library/MCM_GitHub_OTA/0.0.5/MCM_GitHub_OTA-0.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCM_GitHub_OTA-0.0.5.tar.gz",
+    "size_bytes": 28650,
+    "sha256": "91806cbebc580d028c273f49141daf532b0bd6cb5d95084c558ce8221da40fdf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mcmchris/library/MCM_GitHub_OTA/0.0.5/MCM_GitHub_OTA-0.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/mcmchris/library/MCM_GitHub_OTA/0.0.5/MCM_GitHub_OTA-0.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mcmchris/library/MCM_GitHub_OTA/0.0.6/MCM_GitHub_OTA-0.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCM_GitHub_OTA-0.0.6.tar.gz",
+    "size_bytes": 29187,
+    "sha256": "e0c749abcc26181ae636b7592bd944e20f9e9fd7941aed80af44c72c192bfdb8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mcmchris/library/MCM_GitHub_OTA/0.0.6/MCM_GitHub_OTA-0.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/mcmchris/library/MCM_GitHub_OTA/0.0.6/MCM_GitHub_OTA-0.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mcmchris/library/MCM_GitHub_OTA/0.0.7/MCM_GitHub_OTA-0.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCM_GitHub_OTA-0.0.7.tar.gz",
+    "size_bytes": 29350,
+    "sha256": "1a86e4e5ec0f5c6841aff13c83c097bae06fcce28df67432b45cfdac2ac5bd60",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mcmchris/library/MCM_GitHub_OTA/0.0.7/MCM_GitHub_OTA-0.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/mcmchris/library/MCM_GitHub_OTA/0.0.7/MCM_GitHub_OTA-0.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mcmchris/library/MCM_GitHub_OTA/0.0.8/MCM_GitHub_OTA-0.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCM_GitHub_OTA-0.0.8.tar.gz",
+    "size_bytes": 29887,
+    "sha256": "8209b71a7669c4af014a83f5cd808678758b7ac7ee222c2c740589bcb55a77e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mcmchris/library/MCM_GitHub_OTA/0.0.8/MCM_GitHub_OTA-0.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/mcmchris/library/MCM_GitHub_OTA/0.0.8/MCM_GitHub_OTA-0.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mcmchris/library/MCM_GitHub_OTA/0.0.9/MCM_GitHub_OTA-0.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCM_GitHub_OTA-0.0.9.tar.gz",
+    "size_bytes": 30224,
+    "sha256": "73f31586faa8259e6918a9cbc1fd975c420f04180ede9a6a7d9320bc5627e757",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mcmchris/library/MCM_GitHub_OTA/0.0.9/MCM_GitHub_OTA-0.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/mcmchris/library/MCM_GitHub_OTA/0.0.9/MCM_GitHub_OTA-0.0.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

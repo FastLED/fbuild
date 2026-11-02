@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/saviocmc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "saviocmc/library/Arduino-LedStrip/1.0/Arduino-LedStrip-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino-LedStrip-1.0.tar.gz",
+    "size_bytes": 14433,
+    "sha256": "317be635a7fb0e41054f7f1ee036888d69b1f180c9001f5522040172e7dbcb51",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/saviocmc/library/Arduino-LedStrip/1.0/Arduino-LedStrip-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/saviocmc/library/Arduino-LedStrip/1.0/Arduino-LedStrip-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "saviocmc/library/Arduino-Photosensor/1.0/Arduino-Photosensor-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino-Photosensor-1.0.tar.gz",
+    "size_bytes": 1460,
+    "sha256": "bfe95f24fcfef19a751edc0c8016ce3b16bbd7f7ca177f62f3dd00eec9791fc9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/saviocmc/library/Arduino-Photosensor/1.0/Arduino-Photosensor-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/saviocmc/library/Arduino-Photosensor/1.0/Arduino-Photosensor-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "saviocmc/library/Arduino-Relay/1.0/Arduino-Relay-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino-Relay-1.0.tar.gz",
+    "size_bytes": 1464,
+    "sha256": "f6a394dacf42ddd89239a2857b5f2b3ae53544d8b1984c3a4a973a6550150028",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/saviocmc/library/Arduino-Relay/1.0/Arduino-Relay-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/saviocmc/library/Arduino-Relay/1.0/Arduino-Relay-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

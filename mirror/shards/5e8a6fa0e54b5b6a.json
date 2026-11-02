@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sabrinawilk",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sabrinawilk/library/cppjson/0.0.1-rc.1/cppjson-0.0.1-rc.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cppjson-0.0.1-rc.1.tar.gz",
+    "size_bytes": 3906,
+    "sha256": "354677d59838f510cb3705d057dd2cfcbb77229aaf46ee917bf9286e88d91ed9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sabrinawilk/library/cppjson/0.0.1-rc.1/cppjson-0.0.1-rc.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sabrinawilk/library/cppjson/0.0.1-rc.1/cppjson-0.0.1-rc.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sabrinawilk/library/cppjson/0.0.2-rc.1/cppjson-0.0.2-rc.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cppjson-0.0.2-rc.1.tar.gz",
+    "size_bytes": 3911,
+    "sha256": "d5ccc6d0445168b80efaa6f12e08543cf10403b6083f29db7e6166445c4a5d9f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sabrinawilk/library/cppjson/0.0.2-rc.1/cppjson-0.0.2-rc.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sabrinawilk/library/cppjson/0.0.2-rc.1/cppjson-0.0.2-rc.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sabrinawilk/library/cppjson/0.0.3-rc.1/cppjson-0.0.3-rc.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cppjson-0.0.3-rc.1.tar.gz",
+    "size_bytes": 3901,
+    "sha256": "88a99bc3a402641c5006757494010c78299329aaff53e4278cda16308bd17986",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sabrinawilk/library/cppjson/0.0.3-rc.1/cppjson-0.0.3-rc.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sabrinawilk/library/cppjson/0.0.3-rc.1/cppjson-0.0.3-rc.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sabrinawilk/library/cppjson/0.0.4-rc.1/cppjson-0.0.4-rc.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cppjson-0.0.4-rc.1.tar.gz",
+    "size_bytes": 3924,
+    "sha256": "c13787d77660c8d8bcd90daf40dbbbf8283d7a2f241882784025ca31e7f06b08",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sabrinawilk/library/cppjson/0.0.4-rc.1/cppjson-0.0.4-rc.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sabrinawilk/library/cppjson/0.0.4-rc.1/cppjson-0.0.4-rc.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sabrinawilk/library/cppjson/0.0.5-rc.1/cppjson-0.0.5-rc.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cppjson-0.0.5-rc.1.tar.gz",
+    "size_bytes": 3922,
+    "sha256": "0260c83e45805537babbc2adf373642ff1beb12b7c997555d43e7917fb052432",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sabrinawilk/library/cppjson/0.0.5-rc.1/cppjson-0.0.5-rc.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sabrinawilk/library/cppjson/0.0.5-rc.1/cppjson-0.0.5-rc.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sabrinawilk/library/cppjson/0.0.6-rc.1/cppjson-0.0.6-rc.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cppjson-0.0.6-rc.1.tar.gz",
+    "size_bytes": 4075,
+    "sha256": "8dc8fe693eb188be6d09dbd92370d7e7896c3e4fbd5ce8581513686717ba1caf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sabrinawilk/library/cppjson/0.0.6-rc.1/cppjson-0.0.6-rc.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sabrinawilk/library/cppjson/0.0.6-rc.1/cppjson-0.0.6-rc.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sabrinawilk/library/cppjson/0.0.7-rc.1/cppjson-0.0.7-rc.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cppjson-0.0.7-rc.1.tar.gz",
+    "size_bytes": 4085,
+    "sha256": "ebb53bb9412e92a6efc406c035d292dbdf4711fb00dd0dd6f284171e0552520f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sabrinawilk/library/cppjson/0.0.7-rc.1/cppjson-0.0.7-rc.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sabrinawilk/library/cppjson/0.0.7-rc.1/cppjson-0.0.7-rc.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

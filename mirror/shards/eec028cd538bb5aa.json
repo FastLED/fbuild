@@ -1,0 +1,139 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-tylerjw",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-tylerjw/library/ADXL345/0.0.0+sha.d81793e01ec4/ADXL345-0.0.0+sha.d81793e01ec4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADXL345-0.0.0+sha.d81793e01ec4.tar.gz",
+    "size_bytes": 8721,
+    "sha256": "9cbe41990937ebafa41861829f5a725dd3928b2229f6e2ce63d15ff69df267c3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tylerjw/library/ADXL345/0.0.0%2Bsha.d81793e01ec4/ADXL345-0.0.0%2Bsha.d81793e01ec4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tylerjw/library/ADXL345/0.0.0%2Bsha.d81793e01ec4/ADXL345-0.0.0%2Bsha.d81793e01ec4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-tylerjw/library/AHRS/0.0.0+sha.da3b20b5d38a/AHRS-0.0.0+sha.da3b20b5d38a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AHRS-0.0.0+sha.da3b20b5d38a.tar.gz",
+    "size_bytes": 12991,
+    "sha256": "5c6880467c424c673ad879379c90985db202b077fa9ecdc2322593a3be6fc632",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tylerjw/library/AHRS/0.0.0%2Bsha.da3b20b5d38a/AHRS-0.0.0%2Bsha.da3b20b5d38a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tylerjw/library/AHRS/0.0.0%2Bsha.da3b20b5d38a/AHRS-0.0.0%2Bsha.da3b20b5d38a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-tylerjw/library/BMP085/0.0.0+sha.0b4c4632aeb0/BMP085-0.0.0+sha.0b4c4632aeb0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMP085-0.0.0+sha.0b4c4632aeb0.tar.gz",
+    "size_bytes": 3710,
+    "sha256": "67a7113ec42104c02fa15923144765edb9b2cd7ad5a9c8069f04e38a13cf4237",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tylerjw/library/BMP085/0.0.0%2Bsha.0b4c4632aeb0/BMP085-0.0.0%2Bsha.0b4c4632aeb0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tylerjw/library/BMP085/0.0.0%2Bsha.0b4c4632aeb0/BMP085-0.0.0%2Bsha.0b4c4632aeb0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-tylerjw/library/BSP_lcd_joy/0.0.0+sha.60800820b5a8/BSP_lcd_joy-0.0.0+sha.60800820b5a8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BSP_lcd_joy-0.0.0+sha.60800820b5a8.tar.gz",
+    "size_bytes": 1773,
+    "sha256": "d105dcff34d89f6991e0a38c6b469fec637f4938ef14d2b56b85612807f551b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tylerjw/library/BSP_lcd_joy/0.0.0%2Bsha.60800820b5a8/BSP_lcd_joy-0.0.0%2Bsha.60800820b5a8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tylerjw/library/BSP_lcd_joy/0.0.0%2Bsha.60800820b5a8/BSP_lcd_joy-0.0.0%2Bsha.60800820b5a8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-tylerjw/library/GPS_parser/0.0.0+sha.59acef1c795b/GPS_parser-0.0.0+sha.59acef1c795b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GPS_parser-0.0.0+sha.59acef1c795b.tar.gz",
+    "size_bytes": 3479,
+    "sha256": "02a96145f3eb672d3a496eeae343ae0bea9c833c3eaf17f5303fe4862e146184",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tylerjw/library/GPS_parser/0.0.0%2Bsha.59acef1c795b/GPS_parser-0.0.0%2Bsha.59acef1c795b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tylerjw/library/GPS_parser/0.0.0%2Bsha.59acef1c795b/GPS_parser-0.0.0%2Bsha.59acef1c795b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-tylerjw/library/HMC5883L/0.0.0+sha.bc4e1201e092/HMC5883L-0.0.0+sha.bc4e1201e092.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HMC5883L-0.0.0+sha.bc4e1201e092.tar.gz",
+    "size_bytes": 4179,
+    "sha256": "aa62dcd36e1bc7900e0f738628fb3c949974a5ade75851afd3a987133dfcaf51",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tylerjw/library/HMC5883L/0.0.0%2Bsha.bc4e1201e092/HMC5883L-0.0.0%2Bsha.bc4e1201e092.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tylerjw/library/HMC5883L/0.0.0%2Bsha.bc4e1201e092/HMC5883L-0.0.0%2Bsha.bc4e1201e092.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-tylerjw/library/SDHC_FileSystem/0.0.0+sha.b553aa902f90/SDHC_FileSystem-0.0.0+sha.b553aa902f90.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SDHC_FileSystem-0.0.0+sha.b553aa902f90.tar.gz",
+    "size_bytes": 6062,
+    "sha256": "ef652665a2d7f5fdc5ff302c47c0c937246b412f8837ebf16f77c36b7a459b11",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tylerjw/library/SDHC_FileSystem/0.0.0%2Bsha.b553aa902f90/SDHC_FileSystem-0.0.0%2Bsha.b553aa902f90.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tylerjw/library/SDHC_FileSystem/0.0.0%2Bsha.b553aa902f90/SDHC_FileSystem-0.0.0%2Bsha.b553aa902f90.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-tylerjw/library/TMP36%20GZ/0.0.0+sha.2b0feb7bdebc/TMP36GZ-0.0.0+sha.2b0feb7bdebc.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TMP36GZ-0.0.0+sha.2b0feb7bdebc.tar.gz",
+    "size_bytes": 2118,
+    "sha256": "50af565cf58150bfc37618d3709369045efc94e7fc0be6c681f1e11c9d12ed22",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tylerjw/library/TMP36%2520GZ/0.0.0%2Bsha.2b0feb7bdebc/TMP36GZ-0.0.0%2Bsha.2b0feb7bdebc.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tylerjw/library/TMP36%20GZ/0.0.0%2Bsha.2b0feb7bdebc/TMP36GZ-0.0.0%2Bsha.2b0feb7bdebc.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-tylerjw/library/buffered-serial1/0.0.0+sha.d3122119f92b/buffered-serial1-0.0.0+sha.d3122119f92b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "buffered-serial1-0.0.0+sha.d3122119f92b.tar.gz",
+    "size_bytes": 3128,
+    "sha256": "052e0ef326b9bc98ffc41d8be5e39cde05e38aab6a18a8c69c0b1f41f518ba77",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tylerjw/library/buffered-serial1/0.0.0%2Bsha.d3122119f92b/buffered-serial1-0.0.0%2Bsha.d3122119f92b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tylerjw/library/buffered-serial1/0.0.0%2Bsha.d3122119f92b/buffered-serial1-0.0.0%2Bsha.d3122119f92b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-tylerjw/library/nmea_parser/0.0.0+sha.a6e1707fdec0/nmea_parser-0.0.0+sha.a6e1707fdec0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nmea_parser-0.0.0+sha.a6e1707fdec0.tar.gz",
+    "size_bytes": 4469,
+    "sha256": "943798e835568fc34fe00f7fe9ba8a6843809163935915f9acb4e1537b2f3822",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tylerjw/library/nmea_parser/0.0.0%2Bsha.a6e1707fdec0/nmea_parser-0.0.0%2Bsha.a6e1707fdec0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tylerjw/library/nmea_parser/0.0.0%2Bsha.a6e1707fdec0/nmea_parser-0.0.0%2Bsha.a6e1707fdec0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

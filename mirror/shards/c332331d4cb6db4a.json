@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/snakeye",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "snakeye/library/HT1621/1.0.0/HT1621-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HT1621-1.0.0.tar.gz",
+    "size_bytes": 5880,
+    "sha256": "f063516ef19e0c14a22e9e769ca234e4cb6dfa1510ddd6208a86591cbc3f2bfd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/snakeye/library/HT1621/1.0.0/HT1621-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/snakeye/library/HT1621/1.0.0/HT1621-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "snakeye/library/LedMatrixDisplay/1.0.0/LedMatrixDisplay-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LedMatrixDisplay-1.0.0.tar.gz",
+    "size_bytes": 33737,
+    "sha256": "8243d1a1ae97281feeee4b99610867873e3677ddda5bc3abd189145b426e7d31",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/snakeye/library/LedMatrixDisplay/1.0.0/LedMatrixDisplay-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/snakeye/library/LedMatrixDisplay/1.0.0/LedMatrixDisplay-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "snakeye/library/RecurringTask/1.0.1/RecurringTask-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RecurringTask-1.0.1.tar.gz",
+    "size_bytes": 1958,
+    "sha256": "04dab837ea2a0057e02cd28c50703d6d77f38006aca9ad1eb46c41b590a0ef2b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/snakeye/library/RecurringTask/1.0.1/RecurringTask-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/snakeye/library/RecurringTask/1.0.1/RecurringTask-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "snakeye/library/WiFiConfig/2.2.1/WiFiConfig-2.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFiConfig-2.2.1.tar.gz",
+    "size_bytes": 156263,
+    "sha256": "c0b719540b50ebcb5818a3e8195113bb591aed9eeb4e9278314d9af861a881f3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/snakeye/library/WiFiConfig/2.2.1/WiFiConfig-2.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/snakeye/library/WiFiConfig/2.2.1/WiFiConfig-2.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

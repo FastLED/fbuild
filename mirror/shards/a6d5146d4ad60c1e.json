@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/denn-gubsky",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "denn-gubsky/library/GCloudHandler/1.0.3/GCloudHandler-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GCloudHandler-1.0.3.tar.gz",
+    "size_bytes": 33968,
+    "sha256": "024fcf7ac806be4befa6ba23d548ac7aac8812f0dada929d0559d0a8d8bccaa1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/denn-gubsky/library/GCloudHandler/1.0.3/GCloudHandler-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/denn-gubsky/library/GCloudHandler/1.0.3/GCloudHandler-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

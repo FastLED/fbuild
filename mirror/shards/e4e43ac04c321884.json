@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-baraton",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-baraton/library/rfid-rc522/0.0.0+sha.74ecb6c88b64/rfid-rc522-0.0.0+sha.74ecb6c88b64.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "rfid-rc522-0.0.0+sha.74ecb6c88b64.tar.gz",
+    "size_bytes": 19897,
+    "sha256": "6a6811e7eebbaa49272a9bcae17266cdbcde459a9f5b6e46743ffed8af6bbb04",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-baraton/library/rfid-rc522/0.0.0%2Bsha.74ecb6c88b64/rfid-rc522-0.0.0%2Bsha.74ecb6c88b64.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-baraton/library/rfid-rc522/0.0.0%2Bsha.74ecb6c88b64/rfid-rc522-0.0.0%2Bsha.74ecb6c88b64.tar.gz"
+    ]
+   }
+  }
+ ]
+}

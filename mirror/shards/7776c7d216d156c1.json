@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mikem",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mikem/library/RadioHead/1.120/RadioHead-1.120.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RadioHead-1.120.tar.gz",
+    "size_bytes": 325153,
+    "sha256": "316fc5f16793c1d9f451536e8345536a1dcd0ef30851263a13cac7eca3d08e65",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mikem/library/RadioHead/1.120/RadioHead-1.120.tar.gz",
+     "https://dl.registry.platformio.org/download/mikem/library/RadioHead/1.120/RadioHead-1.120.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mikem/library/VirtualWire/1.27/VirtualWire-1.27.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VirtualWire-1.27.tar.gz",
+    "size_bytes": 19588,
+    "sha256": "dfea45027caa7b6ef16e655268ed7846b5be8904493252f05b64a2baf6d0a13e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mikem/library/VirtualWire/1.27/VirtualWire-1.27.tar.gz",
+     "https://dl.registry.platformio.org/download/mikem/library/VirtualWire/1.27/VirtualWire-1.27.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mikem/library/nRF24/1.14/nRF24-1.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nRF24-1.14.tar.gz",
+    "size_bytes": 151500,
+    "sha256": "5717fc13511090ac02b0a17a35d4d01bb629cd4ee185650256039f260fd71b58",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mikem/library/nRF24/1.14/nRF24-1.14.tar.gz",
+     "https://dl.registry.platformio.org/download/mikem/library/nRF24/1.14/nRF24-1.14.tar.gz"
+    ]
+   }
+  }
+ ]
+}

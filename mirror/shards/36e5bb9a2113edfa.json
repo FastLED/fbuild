@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lukdog",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lukdog/library/BleValueSync/0.0.1/BleValueSync-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BleValueSync-0.0.1.tar.gz",
+    "size_bytes": 12037,
+    "sha256": "4394d8fd4afab7d2e1c465be6ec563841c15e71f0e1607ee299ae0520b4914ab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lukdog/library/BleValueSync/0.0.1/BleValueSync-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lukdog/library/BleValueSync/0.0.1/BleValueSync-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

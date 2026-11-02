@@ -1,0 +1,152 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/irrelon",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "irrelon/library/DynaVal/1.0.10/DynaVal-1.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DynaVal-1.0.10.tar.gz",
+    "size_bytes": 19252,
+    "sha256": "51ba79627d412a9944e3ba2b900a7565484b24ab3ec5e98e0a668c3242dd0b2c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/irrelon/library/DynaVal/1.0.10/DynaVal-1.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/irrelon/library/DynaVal/1.0.10/DynaVal-1.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "irrelon/library/DynaVal/1.0.6/DynaVal-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DynaVal-1.0.6.tar.gz",
+    "size_bytes": 17830,
+    "sha256": "284f963d350a8f77587f90dd7302fa6e157b0bd509354d6431b85c445e0ef4e3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/irrelon/library/DynaVal/1.0.6/DynaVal-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/irrelon/library/DynaVal/1.0.6/DynaVal-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "irrelon/library/DynaVal/1.0.7/DynaVal-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DynaVal-1.0.7.tar.gz",
+    "size_bytes": 17851,
+    "sha256": "e1d44d65a6348b1b746e1562ad1cdabb0fe3f3a9126784aa878539c8f22f7e10",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/irrelon/library/DynaVal/1.0.7/DynaVal-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/irrelon/library/DynaVal/1.0.7/DynaVal-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "irrelon/library/DynaVal/1.0.8/DynaVal-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DynaVal-1.0.8.tar.gz",
+    "size_bytes": 18870,
+    "sha256": "40ab2fbdc31cd99901c2fc61f8e5ea8bec126282ff6b90095805aae1b9bec4c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/irrelon/library/DynaVal/1.0.8/DynaVal-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/irrelon/library/DynaVal/1.0.8/DynaVal-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "irrelon/library/DynaVal/1.0.9/DynaVal-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DynaVal-1.0.9.tar.gz",
+    "size_bytes": 18933,
+    "sha256": "8964d68e7686bb4f9eb8f28f13cea452609485a6add4cfbbead02fb3d8c9fb29",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/irrelon/library/DynaVal/1.0.9/DynaVal-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/irrelon/library/DynaVal/1.0.9/DynaVal-1.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "irrelon/library/ESPNowW/2.0.0/ESPNowW-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPNowW-2.0.0.tar.gz",
+    "size_bytes": 11240,
+    "sha256": "5f12f8b1d32d4ad5f7adca20c1ff7edd671aed8d7315a31f1f71a1b22a85e15d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/irrelon/library/ESPNowW/2.0.0/ESPNowW-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/irrelon/library/ESPNowW/2.0.0/ESPNowW-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "irrelon/library/Emitter/1.0.4/Emitter-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Emitter-1.0.4.tar.gz",
+    "size_bytes": 10533,
+    "sha256": "5fc303811f1090920cb50da9601a597322a7dbf88a1b4b5523c17d0f25005a64",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/irrelon/library/Emitter/1.0.4/Emitter-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/irrelon/library/Emitter/1.0.4/Emitter-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "irrelon/library/Emitter/1.0.5/Emitter-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Emitter-1.0.5.tar.gz",
+    "size_bytes": 10533,
+    "sha256": "ef4b61102a72051c2ff3613b0e5e9d58023176b2a5d6e7fcdd5c7c02a95beb43",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/irrelon/library/Emitter/1.0.5/Emitter-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/irrelon/library/Emitter/1.0.5/Emitter-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "irrelon/library/FileSystemInterface/1.0.5/FileSystemInterface-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FileSystemInterface-1.0.5.tar.gz",
+    "size_bytes": 8305,
+    "sha256": "6cbf391634c8486fdd3f340bbdd637195248cd0d8738363625c50b0c9fb1e31f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/irrelon/library/FileSystemInterface/1.0.5/FileSystemInterface-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/irrelon/library/FileSystemInterface/1.0.5/FileSystemInterface-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "irrelon/library/IrrelonDynaVal/1.0.10/IrrelonDynaVal-1.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IrrelonDynaVal-1.0.10.tar.gz",
+    "size_bytes": 19739,
+    "sha256": "9bc4a0895ebf86c023b94ab87a106072011352066011e095e417920b0aacedab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/irrelon/library/IrrelonDynaVal/1.0.10/IrrelonDynaVal-1.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/irrelon/library/IrrelonDynaVal/1.0.10/IrrelonDynaVal-1.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "irrelon/library/PSRAMAllocator/1.0.1/PSRAMAllocator-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PSRAMAllocator-1.0.1.tar.gz",
+    "size_bytes": 8251,
+    "sha256": "20f2251e766b76aaf00c4846c7ed7e450751ae12880eea92efbfbbbc2cd42983",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/irrelon/library/PSRAMAllocator/1.0.1/PSRAMAllocator-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/irrelon/library/PSRAMAllocator/1.0.1/PSRAMAllocator-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

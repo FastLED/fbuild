@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sekigon-gonnoc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sekigon-gonnoc/library/Pico%20PIO%20USB/0.7.2/PicoPIOUSB-0.7.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PicoPIOUSB-0.7.2.tar.gz",
+    "size_bytes": 36587,
+    "sha256": "971043696f75739cb89858219976a96a104de3b9a4de2b8552ea98305c7500be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sekigon-gonnoc/library/Pico%2520PIO%2520USB/0.7.2/PicoPIOUSB-0.7.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sekigon-gonnoc/library/Pico%20PIO%20USB/0.7.2/PicoPIOUSB-0.7.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sekigon-gonnoc/library/Pico%20PIO%20USB/0.7.3/PicoPIOUSB-0.7.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PicoPIOUSB-0.7.3.tar.gz",
+    "size_bytes": 38290,
+    "sha256": "3e98c7aa5c5d2904e9feb359abc5fe166449f8c886de4da2ca8eb2e796af1b23",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sekigon-gonnoc/library/Pico%2520PIO%2520USB/0.7.3/PicoPIOUSB-0.7.3.tar.gz",
+     "https://dl.registry.platformio.org/download/sekigon-gonnoc/library/Pico%20PIO%20USB/0.7.3/PicoPIOUSB-0.7.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

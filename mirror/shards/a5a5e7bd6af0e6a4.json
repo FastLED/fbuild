@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/frietman",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "frietman/library/Arduino-Websocket-Fast/1.2.0/Arduino-Websocket-Fast-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino-Websocket-Fast-1.2.0.tar.gz",
+    "size_bytes": 17006,
+    "sha256": "8d6b5d3e73926205c3f0d585106c0862465fb61cbd3ff381f09a1834bf139ee0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/frietman/library/Arduino-Websocket-Fast/1.2.0/Arduino-Websocket-Fast-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/frietman/library/Arduino-Websocket-Fast/1.2.0/Arduino-Websocket-Fast-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "frietman/library/HTTPClientGeneric/1.3.0/HTTPClientGeneric-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HTTPClientGeneric-1.3.0.tar.gz",
+    "size_bytes": 20698,
+    "sha256": "f481eef9393b39476dfa0c2042f143971057bdedc80425c2bb5c1ceec6c8e843",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/frietman/library/HTTPClientGeneric/1.3.0/HTTPClientGeneric-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/frietman/library/HTTPClientGeneric/1.3.0/HTTPClientGeneric-1.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-govardhan1",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-govardhan1/library/flasher/0.0.0+sha.59664ad9c8e5/flasher-0.0.0+sha.59664ad9c8e5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "flasher-0.0.0+sha.59664ad9c8e5.tar.gz",
+    "size_bytes": 836,
+    "sha256": "44e86b1f59e3957c066e323110a3783ea2310bef31c80f8a5a314b244c0d7b18",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-govardhan1/library/flasher/0.0.0%2Bsha.59664ad9c8e5/flasher-0.0.0%2Bsha.59664ad9c8e5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-govardhan1/library/flasher/0.0.0%2Bsha.59664ad9c8e5/flasher-0.0.0%2Bsha.59664ad9c8e5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

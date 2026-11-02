@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dukang1996",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dukang1996/library/DroneCAN_ESP32/1.0.0/DroneCAN_ESP32-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DroneCAN_ESP32-1.0.0.tar.gz",
+    "size_bytes": 75079,
+    "sha256": "417f2514f8a940670b4a443c6670409a5c226e10077b18a09de7ef2781dc07ab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dukang1996/library/DroneCAN_ESP32/1.0.0/DroneCAN_ESP32-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dukang1996/library/DroneCAN_ESP32/1.0.0/DroneCAN_ESP32-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

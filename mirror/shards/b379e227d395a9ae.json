@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-gsfan",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-gsfan/library/GSwifiInterface/0.0.0+sha.d25a5a0d2497/GSwifiInterface-0.0.0+sha.d25a5a0d2497.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GSwifiInterface-0.0.0+sha.d25a5a0d2497.tar.gz",
+    "size_bytes": 30834,
+    "sha256": "9ed587d7cc472a030ba2d36228e02a72a9868fda24efaaa46c27e3a39feab28a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-gsfan/library/GSwifiInterface/0.0.0%2Bsha.d25a5a0d2497/GSwifiInterface-0.0.0%2Bsha.d25a5a0d2497.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-gsfan/library/GSwifiInterface/0.0.0%2Bsha.d25a5a0d2497/GSwifiInterface-0.0.0%2Bsha.d25a5a0d2497.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-gsfan/library/GSwifi_old/0.0.0+sha.5c350ae2e703/GSwifi_old-0.0.0+sha.5c350ae2e703.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GSwifi_old-0.0.0+sha.5c350ae2e703.tar.gz",
+    "size_bytes": 21326,
+    "sha256": "07ce78674ea7dfcf999c39a3153b30b32b4295ab0ce58ed7ac9a12aa4e077330",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-gsfan/library/GSwifi_old/0.0.0%2Bsha.5c350ae2e703/GSwifi_old-0.0.0%2Bsha.5c350ae2e703.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-gsfan/library/GSwifi_old/0.0.0%2Bsha.5c350ae2e703/GSwifi_old-0.0.0%2Bsha.5c350ae2e703.tar.gz"
+    ]
+   }
+  }
+ ]
+}

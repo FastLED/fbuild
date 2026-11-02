@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/vpbharath",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "vpbharath/library/RobotControl/1.0.0/RobotControl-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RobotControl-1.0.0.tar.gz",
+    "size_bytes": 2434,
+    "sha256": "aa8b0aff56d292628ddfdee792eea1da1bedb3f53a7b98417272b527aa784b9c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vpbharath/library/RobotControl/1.0.0/RobotControl-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vpbharath/library/RobotControl/1.0.0/RobotControl-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

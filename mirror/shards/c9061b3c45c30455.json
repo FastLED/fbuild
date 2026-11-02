@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/csharpermantle",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "csharpermantle/library/http-parser-arduino/2.9.4/http-parser-arduino-2.9.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "http-parser-arduino-2.9.4.tar.gz",
+    "size_bytes": 52373,
+    "sha256": "714c30413fb01fe11876c72e3063668572461c4fba223000fb7560670153a809",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/csharpermantle/library/http-parser-arduino/2.9.4/http-parser-arduino-2.9.4.tar.gz",
+     "https://dl.registry.platformio.org/download/csharpermantle/library/http-parser-arduino/2.9.4/http-parser-arduino-2.9.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

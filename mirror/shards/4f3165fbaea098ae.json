@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ewerton",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ewerton/library/iothub_client_sample_amqp_bld/0.0.0+sha.b5c77371bbd9/iothub_client_sample_amqp_bld-0.0.0+sha.b5c77371bbd9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iothub_client_sample_amqp_bld-0.0.0+sha.b5c77371bbd9.tar.gz",
+    "size_bytes": 651,
+    "sha256": "3123b4a26992218a87ec9b632d75d44244376f9774a957af5b4a99d90be2323e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ewerton/library/iothub_client_sample_amqp_bld/0.0.0%2Bsha.b5c77371bbd9/iothub_client_sample_amqp_bld-0.0.0%2Bsha.b5c77371bbd9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ewerton/library/iothub_client_sample_amqp_bld/0.0.0%2Bsha.b5c77371bbd9/iothub_client_sample_amqp_bld-0.0.0%2Bsha.b5c77371bbd9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ewerton/library/iothubclientlonghaultests_bld/0.0.0+sha.e52602a281bb/iothubclientlonghaultests_bld-0.0.0+sha.e52602a281bb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iothubclientlonghaultests_bld-0.0.0+sha.e52602a281bb.tar.gz",
+    "size_bytes": 198719,
+    "sha256": "50e5769f74c3840edd48801ce25650c2dafc6fbb292c3692b0e3667780d9623d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ewerton/library/iothubclientlonghaultests_bld/0.0.0%2Bsha.e52602a281bb/iothubclientlonghaultests_bld-0.0.0%2Bsha.e52602a281bb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ewerton/library/iothubclientlonghaultests_bld/0.0.0%2Bsha.e52602a281bb/iothubclientlonghaultests_bld-0.0.0%2Bsha.e52602a281bb.tar.gz"
+    ]
+   }
+  }
+ ]
+}

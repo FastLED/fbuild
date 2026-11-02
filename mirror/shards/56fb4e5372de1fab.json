@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/krtech",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "krtech/library/GroovyLib/1.0.1/GroovyLib-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GroovyLib-1.0.1.tar.gz",
+    "size_bytes": 3847,
+    "sha256": "a58ae6f76ca7e9bb42fde738b592fb08fcbf1b099f8dd748c263dd9a0bf8446a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/krtech/library/GroovyLib/1.0.1/GroovyLib-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/krtech/library/GroovyLib/1.0.1/GroovyLib-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "krtech/library/GroovyOTA/1.4.1/GroovyOTA-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GroovyOTA-1.4.1.tar.gz",
+    "size_bytes": 3361,
+    "sha256": "b0450d20ec707cdaa6956137ba0598e203645370adcffab7b335c4a90aaab7a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/krtech/library/GroovyOTA/1.4.1/GroovyOTA-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/krtech/library/GroovyOTA/1.4.1/GroovyOTA-1.4.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

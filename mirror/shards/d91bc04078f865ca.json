@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-flash-ahaa",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-flash-ahaa/library/PwmDAC/0.0.0+sha.381bd99d10a4/PwmDAC-0.0.0+sha.381bd99d10a4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PwmDAC-0.0.0+sha.381bd99d10a4.tar.gz",
+    "size_bytes": 3366,
+    "sha256": "6348f65a6746f154f47814c63e6cea208847537e8ad840e8cb90cc924e805c7d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-flash-ahaa/library/PwmDAC/0.0.0%2Bsha.381bd99d10a4/PwmDAC-0.0.0%2Bsha.381bd99d10a4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-flash-ahaa/library/PwmDAC/0.0.0%2Bsha.381bd99d10a4/PwmDAC-0.0.0%2Bsha.381bd99d10a4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-flash-ahaa/library/adc/0.0.0+sha.b05e4f5e2c8c/adc-0.0.0+sha.b05e4f5e2c8c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "adc-0.0.0+sha.b05e4f5e2c8c.tar.gz",
+    "size_bytes": 4617,
+    "sha256": "246936d17cea79ccee6fa0b5bc4321051aad04e30518db3f4cd0ba8045ff7d73",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-flash-ahaa/library/adc/0.0.0%2Bsha.b05e4f5e2c8c/adc-0.0.0%2Bsha.b05e4f5e2c8c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-flash-ahaa/library/adc/0.0.0%2Bsha.b05e4f5e2c8c/adc-0.0.0%2Bsha.b05e4f5e2c8c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

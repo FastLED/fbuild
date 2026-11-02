@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bengtmartensson",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bengtmartensson/library/AGirs/1.0.5/AGirs-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AGirs-1.0.5.tar.gz",
+    "size_bytes": 74756,
+    "sha256": "8cdf73f609640d3a6847b37ebd8421a7f23d794161c6b27bf5c5fb846fa84318",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bengtmartensson/library/AGirs/1.0.5/AGirs-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/bengtmartensson/library/AGirs/1.0.5/AGirs-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bengtmartensson/library/Beacon/1.0.0/Beacon-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Beacon-1.0.0.tar.gz",
+    "size_bytes": 38900,
+    "sha256": "06e2eb1f0ca2da787f12082431498d2ac1c83aa6d430a932d57e6f7e12d05560",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bengtmartensson/library/Beacon/1.0.0/Beacon-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bengtmartensson/library/Beacon/1.0.0/Beacon-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bengtmartensson/library/DecodeIR/2.45.4/DecodeIR-2.45.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DecodeIR-2.45.4.tar.gz",
+    "size_bytes": 63503,
+    "sha256": "9b9804e045ed7e4aebea6fb2b7fd7c6019c66274a60f23db3cb3a5f71b51d61d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bengtmartensson/library/DecodeIR/2.45.4/DecodeIR-2.45.4.tar.gz",
+     "https://dl.registry.platformio.org/download/bengtmartensson/library/DecodeIR/2.45.4/DecodeIR-2.45.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bengtmartensson/library/GlobalCovfefe/0.2.0/GlobalCovfefe-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GlobalCovfefe-0.2.0.tar.gz",
+    "size_bytes": 43682,
+    "sha256": "cc5c1760995f7978349fdcd4d18794fafc0c0df5b3481be748e35b3f968aedd4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bengtmartensson/library/GlobalCovfefe/0.2.0/GlobalCovfefe-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bengtmartensson/library/GlobalCovfefe/0.2.0/GlobalCovfefe-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bengtmartensson/library/Infrared/1.2.3/Infrared-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Infrared-1.2.3.tar.gz",
+    "size_bytes": 100793,
+    "sha256": "e42aa20e9dbeb4a7154c48d8e6465d1e81bb25d6dd2ffbad4529b33e2edf4472",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bengtmartensson/library/Infrared/1.2.3/Infrared-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/bengtmartensson/library/Infrared/1.2.3/Infrared-1.2.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

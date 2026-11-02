@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jaggzh",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jaggzh/library/mini-ppm-info/1.0.1/mini-ppm-info-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mini-ppm-info-1.0.1.tar.gz",
+    "size_bytes": 3363,
+    "sha256": "8676154e74e182485705de51dbd146784381649c36c2a874d374f4b8675d7c5e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jaggzh/library/mini-ppm-info/1.0.1/mini-ppm-info-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jaggzh/library/mini-ppm-info/1.0.1/mini-ppm-info-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

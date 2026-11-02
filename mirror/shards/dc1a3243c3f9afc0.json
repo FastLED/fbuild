@@ -1,0 +1,438 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fa-yoshinobu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fa-yoshinobu/library/mcprotocol-serial-cpp/0.2.3/mcprotocol-serial-cpp-0.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mcprotocol-serial-cpp-0.2.3.tar.gz",
+    "size_bytes": 70060,
+    "sha256": "8d1d347f4ea9d4efb72aaf7ff9f7960cad82a071abbfe4ce9e5e25c471bacbf6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fa-yoshinobu/library/mcprotocol-serial-cpp/0.2.3/mcprotocol-serial-cpp-0.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/fa-yoshinobu/library/mcprotocol-serial-cpp/0.2.3/mcprotocol-serial-cpp-0.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fa-yoshinobu/library/mcprotocol-serial-cpp/0.2.8/mcprotocol-serial-cpp-0.2.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mcprotocol-serial-cpp-0.2.8.tar.gz",
+    "size_bytes": 73251,
+    "sha256": "17d95d2063f198366397426496103d8d18e869f2fc99aaf5446dd55ea74e4a6c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fa-yoshinobu/library/mcprotocol-serial-cpp/0.2.8/mcprotocol-serial-cpp-0.2.8.tar.gz",
+     "https://dl.registry.platformio.org/download/fa-yoshinobu/library/mcprotocol-serial-cpp/0.2.8/mcprotocol-serial-cpp-0.2.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fa-yoshinobu/library/mcprotocol-serial-cpp/0.6.0/mcprotocol-serial-cpp-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mcprotocol-serial-cpp-0.6.0.tar.gz",
+    "size_bytes": 76375,
+    "sha256": "3b0c3e8d55011c3cf2d074b905e9ba2e5a1c92df38f9df0c99b998c7718a5c15",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fa-yoshinobu/library/mcprotocol-serial-cpp/0.6.0/mcprotocol-serial-cpp-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fa-yoshinobu/library/mcprotocol-serial-cpp/0.6.0/mcprotocol-serial-cpp-0.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fa-yoshinobu/library/mcprotocol-serial-cpp/1.0.0/mcprotocol-serial-cpp-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mcprotocol-serial-cpp-1.0.0.tar.gz",
+    "size_bytes": 76444,
+    "sha256": "07ffcbb348bc77f94e91599716ca1183edf11511b1296bea609981eef8b3ffb4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fa-yoshinobu/library/mcprotocol-serial-cpp/1.0.0/mcprotocol-serial-cpp-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fa-yoshinobu/library/mcprotocol-serial-cpp/1.0.0/mcprotocol-serial-cpp-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fa-yoshinobu/library/mcprotocol-serial-cpp/1.0.1/mcprotocol-serial-cpp-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mcprotocol-serial-cpp-1.0.1.tar.gz",
+    "size_bytes": 76542,
+    "sha256": "5bc649bc7efac04ad935d021aa919263691b465cbc6ed45c4d36387cb206ddad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fa-yoshinobu/library/mcprotocol-serial-cpp/1.0.1/mcprotocol-serial-cpp-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fa-yoshinobu/library/mcprotocol-serial-cpp/1.0.1/mcprotocol-serial-cpp-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fa-yoshinobu/library/mcprotocol-serial-cpp/1.0.2/mcprotocol-serial-cpp-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mcprotocol-serial-cpp-1.0.2.tar.gz",
+    "size_bytes": 75376,
+    "sha256": "1e855da8a5d7fed1e9d5ee07ae33e6018f3c4b5a761dcb3b507df52b07ddd148",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fa-yoshinobu/library/mcprotocol-serial-cpp/1.0.2/mcprotocol-serial-cpp-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/fa-yoshinobu/library/mcprotocol-serial-cpp/1.0.2/mcprotocol-serial-cpp-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fa-yoshinobu/library/mcprotocol-serial-cpp/1.1.1/mcprotocol-serial-cpp-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mcprotocol-serial-cpp-1.1.1.tar.gz",
+    "size_bytes": 84168,
+    "sha256": "021453b34e822c185c98f0cb0d94adb8698d350d40559e547c1c1b58ffb2dcf4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fa-yoshinobu/library/mcprotocol-serial-cpp/1.1.1/mcprotocol-serial-cpp-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fa-yoshinobu/library/mcprotocol-serial-cpp/1.1.1/mcprotocol-serial-cpp-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fa-yoshinobu/library/mcprotocol-serial-cpp/2.0.0/mcprotocol-serial-cpp-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mcprotocol-serial-cpp-2.0.0.tar.gz",
+    "size_bytes": 85165,
+    "sha256": "6a63c4d97962617186ac496ca78946761859dcb8c8f6ff229bbce935496dcb16",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fa-yoshinobu/library/mcprotocol-serial-cpp/2.0.0/mcprotocol-serial-cpp-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fa-yoshinobu/library/mcprotocol-serial-cpp/2.0.0/mcprotocol-serial-cpp-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fa-yoshinobu/library/mcprotocol-serial-cpp/3.0.0/mcprotocol-serial-cpp-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mcprotocol-serial-cpp-3.0.0.tar.gz",
+    "size_bytes": 85484,
+    "sha256": "2280bc1dc11d991b59d8c550211ebfe2b7be5097012061a3d8f2cbc6ed7f0211",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fa-yoshinobu/library/mcprotocol-serial-cpp/3.0.0/mcprotocol-serial-cpp-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fa-yoshinobu/library/mcprotocol-serial-cpp/3.0.0/mcprotocol-serial-cpp-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fa-yoshinobu/library/mcprotocol-serial-cpp/3.1.0/mcprotocol-serial-cpp-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mcprotocol-serial-cpp-3.1.0.tar.gz",
+    "size_bytes": 101879,
+    "sha256": "172777538f2e24054f1db4e836cc60a48e807e9ff8ca311af5c09e52d4ada08e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fa-yoshinobu/library/mcprotocol-serial-cpp/3.1.0/mcprotocol-serial-cpp-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fa-yoshinobu/library/mcprotocol-serial-cpp/3.1.0/mcprotocol-serial-cpp-3.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fa-yoshinobu/library/mcprotocol-serial-cpp/3.2.0/mcprotocol-serial-cpp-3.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mcprotocol-serial-cpp-3.2.0.tar.gz",
+    "size_bytes": 102068,
+    "sha256": "2b02fc70cff548e733f04044f229c7389fd75680bbe71e9a4883ba3e4dfcc677",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fa-yoshinobu/library/mcprotocol-serial-cpp/3.2.0/mcprotocol-serial-cpp-3.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fa-yoshinobu/library/mcprotocol-serial-cpp/3.2.0/mcprotocol-serial-cpp-3.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fa-yoshinobu/library/mcprotocol-serial-cpp/3.2.2/mcprotocol-serial-cpp-3.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mcprotocol-serial-cpp-3.2.2.tar.gz",
+    "size_bytes": 103476,
+    "sha256": "d9dd2550b3cc102e7a2dca684663f5645e812f1b862f8fb2da39f40a754c5f5a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fa-yoshinobu/library/mcprotocol-serial-cpp/3.2.2/mcprotocol-serial-cpp-3.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/fa-yoshinobu/library/mcprotocol-serial-cpp/3.2.2/mcprotocol-serial-cpp-3.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fa-yoshinobu/library/mcprotocol-serial-cpp/4.0.0/mcprotocol-serial-cpp-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mcprotocol-serial-cpp-4.0.0.tar.gz",
+    "size_bytes": 118501,
+    "sha256": "ff6431f6b065342b14d3c5b44e1aa10750e51b91b53e15c2c11c254bfb150238",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fa-yoshinobu/library/mcprotocol-serial-cpp/4.0.0/mcprotocol-serial-cpp-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fa-yoshinobu/library/mcprotocol-serial-cpp/4.0.0/mcprotocol-serial-cpp-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fa-yoshinobu/library/mcprotocol-serial-cpp/4.1.0/mcprotocol-serial-cpp-4.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mcprotocol-serial-cpp-4.1.0.tar.gz",
+    "size_bytes": 118922,
+    "sha256": "562f5ac0747ed40eacce6c659c6b8d38be82f710bb1dded26524f04d35cb6ec6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fa-yoshinobu/library/mcprotocol-serial-cpp/4.1.0/mcprotocol-serial-cpp-4.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fa-yoshinobu/library/mcprotocol-serial-cpp/4.1.0/mcprotocol-serial-cpp-4.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fa-yoshinobu/library/mcprotocol-serial-cpp/4.2.0/mcprotocol-serial-cpp-4.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mcprotocol-serial-cpp-4.2.0.tar.gz",
+    "size_bytes": 119414,
+    "sha256": "317faebeae51bbb8f5d80438709c6cfa05e09a1eca56bd3b9b2e849691db863a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fa-yoshinobu/library/mcprotocol-serial-cpp/4.2.0/mcprotocol-serial-cpp-4.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fa-yoshinobu/library/mcprotocol-serial-cpp/4.2.0/mcprotocol-serial-cpp-4.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fa-yoshinobu/library/mcprotocol-serial-cpp/4.2.1/mcprotocol-serial-cpp-4.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mcprotocol-serial-cpp-4.2.1.tar.gz",
+    "size_bytes": 135789,
+    "sha256": "16309eb4de398adbf89a2c25d81f9a2f0236ad944c3d989076793716be40d7b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fa-yoshinobu/library/mcprotocol-serial-cpp/4.2.1/mcprotocol-serial-cpp-4.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fa-yoshinobu/library/mcprotocol-serial-cpp/4.2.1/mcprotocol-serial-cpp-4.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fa-yoshinobu/library/slmp-connect-cpp-minimal/0.4.1/slmp-connect-cpp-minimal-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "slmp-connect-cpp-minimal-0.4.1.tar.gz",
+    "size_bytes": 46009,
+    "sha256": "5f990fbae72a97c203251512192dbe16786d8ba884fe41f87258f523c061eca0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fa-yoshinobu/library/slmp-connect-cpp-minimal/0.4.1/slmp-connect-cpp-minimal-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fa-yoshinobu/library/slmp-connect-cpp-minimal/0.4.1/slmp-connect-cpp-minimal-0.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fa-yoshinobu/library/slmp-connect-cpp-minimal/0.4.11/slmp-connect-cpp-minimal-0.4.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "slmp-connect-cpp-minimal-0.4.11.tar.gz",
+    "size_bytes": 62685,
+    "sha256": "2bcab2324d441eed67a721ec4e9d44a9c8c367e06aa8dc55940ff22e25027b14",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fa-yoshinobu/library/slmp-connect-cpp-minimal/0.4.11/slmp-connect-cpp-minimal-0.4.11.tar.gz",
+     "https://dl.registry.platformio.org/download/fa-yoshinobu/library/slmp-connect-cpp-minimal/0.4.11/slmp-connect-cpp-minimal-0.4.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fa-yoshinobu/library/slmp-connect-cpp-minimal/0.4.12/slmp-connect-cpp-minimal-0.4.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "slmp-connect-cpp-minimal-0.4.12.tar.gz",
+    "size_bytes": 63810,
+    "sha256": "8f491febc3f2aff07ec54e917647cc0e1b9c07fec3ed0d620aae9797a535b3d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fa-yoshinobu/library/slmp-connect-cpp-minimal/0.4.12/slmp-connect-cpp-minimal-0.4.12.tar.gz",
+     "https://dl.registry.platformio.org/download/fa-yoshinobu/library/slmp-connect-cpp-minimal/0.4.12/slmp-connect-cpp-minimal-0.4.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fa-yoshinobu/library/slmp-connect-cpp-minimal/0.4.3/slmp-connect-cpp-minimal-0.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "slmp-connect-cpp-minimal-0.4.3.tar.gz",
+    "size_bytes": 51786,
+    "sha256": "8269d2e32c4771cd127e3b4319b4ff607d4074d1a08f593269f110188792bee5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fa-yoshinobu/library/slmp-connect-cpp-minimal/0.4.3/slmp-connect-cpp-minimal-0.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/fa-yoshinobu/library/slmp-connect-cpp-minimal/0.4.3/slmp-connect-cpp-minimal-0.4.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fa-yoshinobu/library/slmp-connect-cpp-minimal/0.8.0/slmp-connect-cpp-minimal-0.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "slmp-connect-cpp-minimal-0.8.0.tar.gz",
+    "size_bytes": 92850,
+    "sha256": "f01c59facfd2642b50e6d7a36b6d62025060a502fcac5d5c4c311efc1c483ee7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fa-yoshinobu/library/slmp-connect-cpp-minimal/0.8.0/slmp-connect-cpp-minimal-0.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fa-yoshinobu/library/slmp-connect-cpp-minimal/0.8.0/slmp-connect-cpp-minimal-0.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fa-yoshinobu/library/slmp-connect-cpp-minimal/1.0.0/slmp-connect-cpp-minimal-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "slmp-connect-cpp-minimal-1.0.0.tar.gz",
+    "size_bytes": 92853,
+    "sha256": "c8419577055819621ee46d5c61b0d0bc0f4dc52109b070cab36b964953d851cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fa-yoshinobu/library/slmp-connect-cpp-minimal/1.0.0/slmp-connect-cpp-minimal-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fa-yoshinobu/library/slmp-connect-cpp-minimal/1.0.0/slmp-connect-cpp-minimal-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fa-yoshinobu/library/slmp-connect-cpp-minimal/1.1.0/slmp-connect-cpp-minimal-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "slmp-connect-cpp-minimal-1.1.0.tar.gz",
+    "size_bytes": 59389,
+    "sha256": "6f5782c312920716ce667a1bdd773f23384e63c61ab290cb5e51818cc22491bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fa-yoshinobu/library/slmp-connect-cpp-minimal/1.1.0/slmp-connect-cpp-minimal-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fa-yoshinobu/library/slmp-connect-cpp-minimal/1.1.0/slmp-connect-cpp-minimal-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fa-yoshinobu/library/slmp-connect-cpp-minimal/1.1.1/slmp-connect-cpp-minimal-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "slmp-connect-cpp-minimal-1.1.1.tar.gz",
+    "size_bytes": 59305,
+    "sha256": "8c53c7ae5f10bdf292f672e9ce8ab5edce24217d66da1477751628b2540c3ee6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fa-yoshinobu/library/slmp-connect-cpp-minimal/1.1.1/slmp-connect-cpp-minimal-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fa-yoshinobu/library/slmp-connect-cpp-minimal/1.1.1/slmp-connect-cpp-minimal-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fa-yoshinobu/library/slmp-connect-cpp-minimal/1.2.1/slmp-connect-cpp-minimal-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "slmp-connect-cpp-minimal-1.2.1.tar.gz",
+    "size_bytes": 68884,
+    "sha256": "5793af7c63db785d45cb640b37a777b8748a15a4be2b8ee6b760dc4203bd2ace",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fa-yoshinobu/library/slmp-connect-cpp-minimal/1.2.1/slmp-connect-cpp-minimal-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fa-yoshinobu/library/slmp-connect-cpp-minimal/1.2.1/slmp-connect-cpp-minimal-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fa-yoshinobu/library/slmp-connect-cpp-minimal/2.0.0/slmp-connect-cpp-minimal-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "slmp-connect-cpp-minimal-2.0.0.tar.gz",
+    "size_bytes": 69593,
+    "sha256": "b0729ee4ef96f47bf4f3f2ca64f24a7ea320231498b09a46655c9012181be854",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fa-yoshinobu/library/slmp-connect-cpp-minimal/2.0.0/slmp-connect-cpp-minimal-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fa-yoshinobu/library/slmp-connect-cpp-minimal/2.0.0/slmp-connect-cpp-minimal-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fa-yoshinobu/library/slmp-connect-cpp-minimal/3.0.0/slmp-connect-cpp-minimal-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "slmp-connect-cpp-minimal-3.0.0.tar.gz",
+    "size_bytes": 70323,
+    "sha256": "cd9eff6ff4ff87116d664765d4b78754e09cca563e579661a0eb5d4d72e1a7af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fa-yoshinobu/library/slmp-connect-cpp-minimal/3.0.0/slmp-connect-cpp-minimal-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fa-yoshinobu/library/slmp-connect-cpp-minimal/3.0.0/slmp-connect-cpp-minimal-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fa-yoshinobu/library/slmp-connect-cpp-minimal/3.1.0/slmp-connect-cpp-minimal-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "slmp-connect-cpp-minimal-3.1.0.tar.gz",
+    "size_bytes": 72269,
+    "sha256": "c5ae7472c70f302355d197adfcc2d8abdd984425486101e11c6d19b9b97381d2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fa-yoshinobu/library/slmp-connect-cpp-minimal/3.1.0/slmp-connect-cpp-minimal-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fa-yoshinobu/library/slmp-connect-cpp-minimal/3.1.0/slmp-connect-cpp-minimal-3.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fa-yoshinobu/library/slmp-connect-cpp-minimal/4.0.0/slmp-connect-cpp-minimal-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "slmp-connect-cpp-minimal-4.0.0.tar.gz",
+    "size_bytes": 73777,
+    "sha256": "87b880caf19870ecedc1db8139be1d2bc787c11dcafec4a57d43a04a25ce0a07",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fa-yoshinobu/library/slmp-connect-cpp-minimal/4.0.0/slmp-connect-cpp-minimal-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fa-yoshinobu/library/slmp-connect-cpp-minimal/4.0.0/slmp-connect-cpp-minimal-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fa-yoshinobu/library/slmp-connect-cpp-minimal/4.0.1/slmp-connect-cpp-minimal-4.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "slmp-connect-cpp-minimal-4.0.1.tar.gz",
+    "size_bytes": 74940,
+    "sha256": "8039753b0d224f643dbaf7544b5652157708b6ceb78b19b1705b1f6f9c371589",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fa-yoshinobu/library/slmp-connect-cpp-minimal/4.0.1/slmp-connect-cpp-minimal-4.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fa-yoshinobu/library/slmp-connect-cpp-minimal/4.0.1/slmp-connect-cpp-minimal-4.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fa-yoshinobu/library/slmp-connect-cpp-minimal/5.0.0/slmp-connect-cpp-minimal-5.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "slmp-connect-cpp-minimal-5.0.0.tar.gz",
+    "size_bytes": 95525,
+    "sha256": "33d4fa1399e436ee400c6241f912098529bebd1115cf4ef00ede206343a53ff1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fa-yoshinobu/library/slmp-connect-cpp-minimal/5.0.0/slmp-connect-cpp-minimal-5.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fa-yoshinobu/library/slmp-connect-cpp-minimal/5.0.0/slmp-connect-cpp-minimal-5.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fa-yoshinobu/library/slmp-connect-cpp-minimal/5.1.0/slmp-connect-cpp-minimal-5.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "slmp-connect-cpp-minimal-5.1.0.tar.gz",
+    "size_bytes": 96128,
+    "sha256": "545a7283d57ef263bb3941cf9dab764b7e224d5651fe398bd1d8a6c50d36ce99",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fa-yoshinobu/library/slmp-connect-cpp-minimal/5.1.0/slmp-connect-cpp-minimal-5.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fa-yoshinobu/library/slmp-connect-cpp-minimal/5.1.0/slmp-connect-cpp-minimal-5.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fa-yoshinobu/library/slmp-connect-cpp-minimal/5.2.0/slmp-connect-cpp-minimal-5.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "slmp-connect-cpp-minimal-5.2.0.tar.gz",
+    "size_bytes": 96370,
+    "sha256": "4ff794a90eea7597207f89d4fe40eff5f84d8b4039d42258e50c81b7a97a7cbb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fa-yoshinobu/library/slmp-connect-cpp-minimal/5.2.0/slmp-connect-cpp-minimal-5.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fa-yoshinobu/library/slmp-connect-cpp-minimal/5.2.0/slmp-connect-cpp-minimal-5.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

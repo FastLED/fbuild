@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/out0f0rder",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "out0f0rder/tool/framework-stm32cubewl/1.1.0/framework-stm32cubewl-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "framework-stm32cubewl-1.1.0.tar.gz",
+    "size_bytes": 101172538,
+    "sha256": "e48cf5327b3a30f6128679a707fe886c8a314b87fac477ed6076cf7877feef8d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/out0f0rder/tool/framework-stm32cubewl/1.1.0/framework-stm32cubewl-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/out0f0rder/tool/framework-stm32cubewl/1.1.0/framework-stm32cubewl-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

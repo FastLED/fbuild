@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-cz",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-cz/library/Logger/0.0.0+sha.85606321b100/Logger-0.0.0+sha.85606321b100.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Logger-0.0.0+sha.85606321b100.tar.gz",
+    "size_bytes": 1549,
+    "sha256": "ebdbb5de054f4a09929fc6fe8aa13c84a1d14446446c6ecb369c0ca361416553",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-cz/library/Logger/0.0.0%2Bsha.85606321b100/Logger-0.0.0%2Bsha.85606321b100.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-cz/library/Logger/0.0.0%2Bsha.85606321b100/Logger-0.0.0%2Bsha.85606321b100.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-cz/library/Motor_Driver/0.0.0+sha.c1767d70d47e/Motor_Driver-0.0.0+sha.c1767d70d47e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Motor_Driver-0.0.0+sha.c1767d70d47e.tar.gz",
+    "size_bytes": 1979,
+    "sha256": "b5d01a08db1cfacc87233d0a03f61f14458b5ab178c3bbe082e507a5b016a519",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-cz/library/Motor_Driver/0.0.0%2Bsha.c1767d70d47e/Motor_Driver-0.0.0%2Bsha.c1767d70d47e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-cz/library/Motor_Driver/0.0.0%2Bsha.c1767d70d47e/Motor_Driver-0.0.0%2Bsha.c1767d70d47e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-cz/library/Motor_Encoders/0.0.0+sha.f803ea95592c/Motor_Encoders-0.0.0+sha.f803ea95592c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Motor_Encoders-0.0.0+sha.f803ea95592c.tar.gz",
+    "size_bytes": 1747,
+    "sha256": "30dbceebd81e2f76882ef77c6768ef158c7999926a67f45580a433325ab63758",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-cz/library/Motor_Encoders/0.0.0%2Bsha.f803ea95592c/Motor_Encoders-0.0.0%2Bsha.f803ea95592c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-cz/library/Motor_Encoders/0.0.0%2Bsha.f803ea95592c/Motor_Encoders-0.0.0%2Bsha.f803ea95592c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-cz/library/PiezoSpeaker/0.0.0+sha.df1e38c2c57b/PiezoSpeaker-0.0.0+sha.df1e38c2c57b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PiezoSpeaker-0.0.0+sha.df1e38c2c57b.tar.gz",
+    "size_bytes": 1490,
+    "sha256": "e8583418ec18f31ea8face1c581401f9721832fab12bba745368d220031ad501",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-cz/library/PiezoSpeaker/0.0.0%2Bsha.df1e38c2c57b/PiezoSpeaker-0.0.0%2Bsha.df1e38c2c57b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-cz/library/PiezoSpeaker/0.0.0%2Bsha.df1e38c2c57b/PiezoSpeaker-0.0.0%2Bsha.df1e38c2c57b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cienti",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cienti/library/IoTesla-client/0.9.0/IoTesla-client-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTesla-client-0.9.0.tar.gz",
+    "size_bytes": 8647,
+    "sha256": "3f9d92ae65bf7cef910e3a5eb0e59e00f7ccafc1e931a4bcc291b28d80bf806c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cienti/library/IoTesla-client/0.9.0/IoTesla-client-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cienti/library/IoTesla-client/0.9.0/IoTesla-client-0.9.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-thebeaugosse",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-thebeaugosse/library/LSM6DS33/0.0.0+sha.6f5e9ca12899/LSM6DS33-0.0.0+sha.6f5e9ca12899.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LSM6DS33-0.0.0+sha.6f5e9ca12899.tar.gz",
+    "size_bytes": 1181,
+    "sha256": "1675e8755cbbb369b5bc2b64333d475f7482f3aaf8e6c9036485356bf6686414",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-thebeaugosse/library/LSM6DS33/0.0.0%2Bsha.6f5e9ca12899/LSM6DS33-0.0.0%2Bsha.6f5e9ca12899.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-thebeaugosse/library/LSM6DS33/0.0.0%2Bsha.6f5e9ca12899/LSM6DS33-0.0.0%2Bsha.6f5e9ca12899.tar.gz"
+    ]
+   }
+  }
+ ]
+}

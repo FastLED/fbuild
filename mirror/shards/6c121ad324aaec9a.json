@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/waspinator",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "waspinator/library/AccelStepper/1.61/AccelStepper-1.61.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AccelStepper-1.61.tar.gz",
+    "size_bytes": 22483,
+    "sha256": "7a035cb7b384e74b58e2dd6db94bd85170981277e7aa0b050571984df192ca0b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/waspinator/library/AccelStepper/1.61/AccelStepper-1.61.tar.gz",
+     "https://dl.registry.platformio.org/download/waspinator/library/AccelStepper/1.61/AccelStepper-1.61.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "waspinator/library/AccelStepper/1.64/AccelStepper-1.64.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AccelStepper-1.64.tar.gz",
+    "size_bytes": 23034,
+    "sha256": "79c2877089441d940f75e1a415641f5bcd90987b4493c33df18dfa49e435d4ef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/waspinator/library/AccelStepper/1.64/AccelStepper-1.64.tar.gz",
+     "https://dl.registry.platformio.org/download/waspinator/library/AccelStepper/1.64/AccelStepper-1.64.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "waspinator/library/CD74HC4067/1.0.2/CD74HC4067-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CD74HC4067-1.0.2.tar.gz",
+    "size_bytes": 2508,
+    "sha256": "ea0efa02b15d4848aad3b55d930c814ea5c5be63dc2b13b39930668207b12106",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/waspinator/library/CD74HC4067/1.0.2/CD74HC4067-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/waspinator/library/CD74HC4067/1.0.2/CD74HC4067-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

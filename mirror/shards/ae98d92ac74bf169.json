@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pavlodn",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pavlodn/library/HaierProtocol/0.9.25/HaierProtocol-0.9.25.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HaierProtocol-0.9.25.tar.gz",
+    "size_bytes": 16210,
+    "sha256": "6b7414b0e3a7605f3d1260c48d41123e7f2eb3cc9b05c1e2ecd4403eb7ebcd13",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pavlodn/library/HaierProtocol/0.9.25/HaierProtocol-0.9.25.tar.gz",
+     "https://dl.registry.platformio.org/download/pavlodn/library/HaierProtocol/0.9.25/HaierProtocol-0.9.25.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pavlodn/library/HaierProtocol/0.9.31/HaierProtocol-0.9.31.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HaierProtocol-0.9.31.tar.gz",
+    "size_bytes": 17006,
+    "sha256": "583091654579ffe2abedefe4ac4962b84f076c0e6afc09852791ae50a9c016f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pavlodn/library/HaierProtocol/0.9.31/HaierProtocol-0.9.31.tar.gz",
+     "https://dl.registry.platformio.org/download/pavlodn/library/HaierProtocol/0.9.31/HaierProtocol-0.9.31.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pavlodn/library/HaierProtocol/0.9.32/HaierProtocol-0.9.32.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HaierProtocol-0.9.32.tar.gz",
+    "size_bytes": 17390,
+    "sha256": "35063c27e6908fbf41f43948dc8ee4a4277c94e977865c514c4575820286e56c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pavlodn/library/HaierProtocol/0.9.32/HaierProtocol-0.9.32.tar.gz",
+     "https://dl.registry.platformio.org/download/pavlodn/library/HaierProtocol/0.9.32/HaierProtocol-0.9.32.tar.gz"
+    ]
+   }
+  }
+ ]
+}

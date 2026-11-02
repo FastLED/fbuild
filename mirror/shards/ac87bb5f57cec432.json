@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ganeshstuttgart",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ganeshstuttgart/library/Temperature-nrf51822/0.0.0+sha.215ec1927e6e/Temperature-nrf51822-0.0.0+sha.215ec1927e6e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Temperature-nrf51822-0.0.0+sha.215ec1927e6e.tar.gz",
+    "size_bytes": 987,
+    "sha256": "10ca0d2ca5409dd6a4f80d5ae3ba1b7491f4470eabd3882ccfd0b4a3f21536e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ganeshstuttgart/library/Temperature-nrf51822/0.0.0%2Bsha.215ec1927e6e/Temperature-nrf51822-0.0.0%2Bsha.215ec1927e6e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ganeshstuttgart/library/Temperature-nrf51822/0.0.0%2Bsha.215ec1927e6e/Temperature-nrf51822-0.0.0%2Bsha.215ec1927e6e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

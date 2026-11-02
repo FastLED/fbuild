@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-no111u3",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-no111u3/library/F746_GUI/0.0.0+sha.b670891b3114/F746_GUI-0.0.0+sha.b670891b3114.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "F746_GUI-0.0.0+sha.b670891b3114.tar.gz",
+    "size_bytes": 8729,
+    "sha256": "ff7a9883eba2213315b23ce8df7d201bd8e09ab4466912ec09d39f3c651557b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-no111u3/library/F746_GUI/0.0.0%2Bsha.b670891b3114/F746_GUI-0.0.0%2Bsha.b670891b3114.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-no111u3/library/F746_GUI/0.0.0%2Bsha.b670891b3114/F746_GUI-0.0.0%2Bsha.b670891b3114.tar.gz"
+    ]
+   }
+  }
+ ]
+}

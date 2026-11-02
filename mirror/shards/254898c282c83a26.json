@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-dextorslabs",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-dextorslabs/library/CPU_Usage/0.0.0+sha.807947fd7dde/CPU_Usage-0.0.0+sha.807947fd7dde.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CPU_Usage-0.0.0+sha.807947fd7dde.tar.gz",
+    "size_bytes": 1807,
+    "sha256": "64f94d9c13ddd5e388d2042760265f638ecd25c5c973b2ced4e5e857b8b43760",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dextorslabs/library/CPU_Usage/0.0.0%2Bsha.807947fd7dde/CPU_Usage-0.0.0%2Bsha.807947fd7dde.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dextorslabs/library/CPU_Usage/0.0.0%2Bsha.807947fd7dde/CPU_Usage-0.0.0%2Bsha.807947fd7dde.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dextorslabs/library/ILI9340_Driver_Lib/0.0.0+sha.216d35e347b8/ILI9340_Driver_Lib-0.0.0+sha.216d35e347b8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ILI9340_Driver_Lib-0.0.0+sha.216d35e347b8.tar.gz",
+    "size_bytes": 6566,
+    "sha256": "45a5126bf7008db312b3ca728f960689101996930af347f7f7ec9ae33ba92e6c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dextorslabs/library/ILI9340_Driver_Lib/0.0.0%2Bsha.216d35e347b8/ILI9340_Driver_Lib-0.0.0%2Bsha.216d35e347b8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dextorslabs/library/ILI9340_Driver_Lib/0.0.0%2Bsha.216d35e347b8/ILI9340_Driver_Lib-0.0.0%2Bsha.216d35e347b8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

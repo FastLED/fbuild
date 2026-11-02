@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ehajo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ehajo/library/eHaJo%20Absolute%20Pressure%20Addon/1.0.0/eHaJoAbsolutePressureAddon-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "eHaJoAbsolutePressureAddon-1.0.0.tar.gz",
+    "size_bytes": 7269,
+    "sha256": "77513135716318c85e49007ca9275d9f31baecc8b5d35859888118b71492280f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ehajo/library/eHaJo%2520Absolute%2520Pressure%2520Addon/1.0.0/eHaJoAbsolutePressureAddon-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ehajo/library/eHaJo%20Absolute%20Pressure%20Addon/1.0.0/eHaJoAbsolutePressureAddon-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ehajo/library/eHaJo%20LM75-Addon-Board/1.0.1/eHaJoLM75-Addon-Board-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "eHaJoLM75-Addon-Board-1.0.1.tar.gz",
+    "size_bytes": 4569,
+    "sha256": "7f354a42a461d0b4769ce6b4622e8e17521ecb33e739202e23627953bd291f6c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ehajo/library/eHaJo%2520LM75-Addon-Board/1.0.1/eHaJoLM75-Addon-Board-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ehajo/library/eHaJo%20LM75-Addon-Board/1.0.1/eHaJoLM75-Addon-Board-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

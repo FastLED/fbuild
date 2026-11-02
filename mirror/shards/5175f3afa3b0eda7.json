@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/carminelaudato",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "carminelaudato/library/hywdc6e-lib/2.1.1/hywdc6e-lib-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "hywdc6e-lib-2.1.1.tar.gz",
+    "size_bytes": 5642,
+    "sha256": "0e57ec50a1ade0691ed25016f3334bc96d9e9542e51c1f79901d8ab44b1b031c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/carminelaudato/library/hywdc6e-lib/2.1.1/hywdc6e-lib-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/carminelaudato/library/hywdc6e-lib/2.1.1/hywdc6e-lib-2.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

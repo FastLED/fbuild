@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mawaeg",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mawaeg/library/RV8523/1.0.0/RV8523-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RV8523-1.0.0.tar.gz",
+    "size_bytes": 10259,
+    "sha256": "59839f6a0584b27aaddf83f09ef8999698d7b0fea419fdf7db1b3ac733a50237",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mawaeg/library/RV8523/1.0.0/RV8523-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mawaeg/library/RV8523/1.0.0/RV8523-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

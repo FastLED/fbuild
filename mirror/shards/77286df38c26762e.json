@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mark170987",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mark170987/library/Button/1.0.0/Button-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Button-1.0.0.tar.gz",
+    "size_bytes": 4063,
+    "sha256": "e14f87a2331b53341ede3e30e87a9551a122edb65cc9e03f86944a920d86654b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mark170987/library/Button/1.0.0/Button-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mark170987/library/Button/1.0.0/Button-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

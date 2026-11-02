@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-akashvibhute",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-akashvibhute/library/BNO055/0.0.0+sha.fc4b99b86e67/BNO055-0.0.0+sha.fc4b99b86e67.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BNO055-0.0.0+sha.fc4b99b86e67.tar.gz",
+    "size_bytes": 4831,
+    "sha256": "a6a0249e952b29dd8d6694510b6d5615e6f04fac39bdede8a0adf28561d0f09a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-akashvibhute/library/BNO055/0.0.0%2Bsha.fc4b99b86e67/BNO055-0.0.0%2Bsha.fc4b99b86e67.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-akashvibhute/library/BNO055/0.0.0%2Bsha.fc4b99b86e67/BNO055-0.0.0%2Bsha.fc4b99b86e67.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-akashvibhute/library/DRV2665/0.0.0+sha.e2c726c628dc/DRV2665-0.0.0+sha.e2c726c628dc.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DRV2665-0.0.0+sha.e2c726c628dc.tar.gz",
+    "size_bytes": 4295,
+    "sha256": "2e3bf9aaa0517201e22fc8dc975e60da7a0b8e433c9b83c21ba905ed4a1cd907",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-akashvibhute/library/DRV2665/0.0.0%2Bsha.e2c726c628dc/DRV2665-0.0.0%2Bsha.e2c726c628dc.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-akashvibhute/library/DRV2665/0.0.0%2Bsha.e2c726c628dc/DRV2665-0.0.0%2Bsha.e2c726c628dc.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-akashvibhute/library/LidarLite/0.0.0+sha.543c0d15d3b3/LidarLite-0.0.0+sha.543c0d15d3b3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LidarLite-0.0.0+sha.543c0d15d3b3.tar.gz",
+    "size_bytes": 3543,
+    "sha256": "4d0dfbb5de4a5a2e3d364d60ebbe7e793660ea12215dbdeeb2cd9a7f330f5ab8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-akashvibhute/library/LidarLite/0.0.0%2Bsha.543c0d15d3b3/LidarLite-0.0.0%2Bsha.543c0d15d3b3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-akashvibhute/library/LidarLite/0.0.0%2Bsha.543c0d15d3b3/LidarLite-0.0.0%2Bsha.543c0d15d3b3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-akashvibhute/library/MPU6050_DMP_Nucleo-I2Cdev/0.0.0+sha.d12e7a7d4d02/MPU6050_DMP_Nucleo-I2Cdev-0.0.0+sha.d12e7a7d4d02.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPU6050_DMP_Nucleo-I2Cdev-0.0.0+sha.d12e7a7d4d02.tar.gz",
+    "size_bytes": 43604,
+    "sha256": "3aaeee5cf1cfbf7f9061b1902b76ace8cae33e17111ca47bb266f1c2edbfb437",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-akashvibhute/library/MPU6050_DMP_Nucleo-I2Cdev/0.0.0%2Bsha.d12e7a7d4d02/MPU6050_DMP_Nucleo-I2Cdev-0.0.0%2Bsha.d12e7a7d4d02.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-akashvibhute/library/MPU6050_DMP_Nucleo-I2Cdev/0.0.0%2Bsha.d12e7a7d4d02/MPU6050_DMP_Nucleo-I2Cdev-0.0.0%2Bsha.d12e7a7d4d02.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-akashvibhute/library/RF24/0.0.0+sha.ef74df512fed/RF24-0.0.0+sha.ef74df512fed.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RF24-0.0.0+sha.ef74df512fed.tar.gz",
+    "size_bytes": 29523,
+    "sha256": "3169a867aadc43193607b993daf187122dadf05cf32cff4a1fc4689325b8be34",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-akashvibhute/library/RF24/0.0.0%2Bsha.ef74df512fed/RF24-0.0.0%2Bsha.ef74df512fed.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-akashvibhute/library/RF24/0.0.0%2Bsha.ef74df512fed/RF24-0.0.0%2Bsha.ef74df512fed.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-akashvibhute/library/RF24Network/0.0.0+sha.b1110d26a900/RF24Network-0.0.0+sha.b1110d26a900.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RF24Network-0.0.0+sha.b1110d26a900.tar.gz",
+    "size_bytes": 29451,
+    "sha256": "ed473153c762fb556116d517ac0a9e31ae46b9a641d2c797ae070e7971213ca3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-akashvibhute/library/RF24Network/0.0.0%2Bsha.b1110d26a900/RF24Network-0.0.0%2Bsha.b1110d26a900.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-akashvibhute/library/RF24Network/0.0.0%2Bsha.b1110d26a900/RF24Network-0.0.0%2Bsha.b1110d26a900.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-akashvibhute/library/TCA9548A/0.0.0+sha.768491b5e55d/TCA9548A-0.0.0+sha.768491b5e55d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TCA9548A-0.0.0+sha.768491b5e55d.tar.gz",
+    "size_bytes": 2513,
+    "sha256": "8a2df08f6746dc41d73804d477fde0e8a9ee6c274dbd1158699b5131be8628c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-akashvibhute/library/TCA9548A/0.0.0%2Bsha.768491b5e55d/TCA9548A-0.0.0%2Bsha.768491b5e55d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-akashvibhute/library/TCA9548A/0.0.0%2Bsha.768491b5e55d/TCA9548A-0.0.0%2Bsha.768491b5e55d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-akashvibhute/library/rosserial_hydro/0.0.0+sha.30537dec6e0b/rosserial_hydro-0.0.0+sha.30537dec6e0b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "rosserial_hydro-0.0.0+sha.30537dec6e0b.tar.gz",
+    "size_bytes": 153286,
+    "sha256": "cb25fccb60ac46c64ab2a075d8cec877a55dde9eaff1ab7d2deb0cdcf97a9910",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-akashvibhute/library/rosserial_hydro/0.0.0%2Bsha.30537dec6e0b/rosserial_hydro-0.0.0%2Bsha.30537dec6e0b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-akashvibhute/library/rosserial_hydro/0.0.0%2Bsha.30537dec6e0b/rosserial_hydro-0.0.0%2Bsha.30537dec6e0b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

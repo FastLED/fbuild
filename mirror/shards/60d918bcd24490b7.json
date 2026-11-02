@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nanopb",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nanopb/library/Nanopb/0.4.6.4/Nanopb-0.4.6.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Nanopb-0.4.6.4.tar.gz",
+    "size_bytes": 85288,
+    "sha256": "280dffff7934a34a653e029640375e9b32a923aff29e44f4b1e6f42cbd52c0d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nanopb/library/Nanopb/0.4.6.4/Nanopb-0.4.6.4.tar.gz",
+     "https://dl.registry.platformio.org/download/nanopb/library/Nanopb/0.4.6.4/Nanopb-0.4.6.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nanopb/library/Nanopb/0.4.7/Nanopb-0.4.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Nanopb-0.4.7.tar.gz",
+    "size_bytes": 89148,
+    "sha256": "dd8d28c8307fe75dee2e672fe0d692540236ad7507f5a673d0d81dc48ab3af47",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nanopb/library/Nanopb/0.4.7/Nanopb-0.4.7.tar.gz",
+     "https://dl.registry.platformio.org/download/nanopb/library/Nanopb/0.4.7/Nanopb-0.4.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nanopb/library/Nanopb/0.4.8/Nanopb-0.4.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Nanopb-0.4.8.tar.gz",
+    "size_bytes": 90630,
+    "sha256": "9f4ab8151a415321720b2c23f58a60c47676aba8ab6c3647dc912fdd7547587a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nanopb/library/Nanopb/0.4.8/Nanopb-0.4.8.tar.gz",
+     "https://dl.registry.platformio.org/download/nanopb/library/Nanopb/0.4.8/Nanopb-0.4.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nanopb/library/Nanopb/0.4.9+1/Nanopb-0.4.9+1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Nanopb-0.4.9+1.tar.gz",
+    "size_bytes": 96203,
+    "sha256": "92a5537de7f70ccdb001cfcda17026c7ff0da8bc5af04e25eb198f201026919d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nanopb/library/Nanopb/0.4.9%2B1/Nanopb-0.4.9%2B1.tar.gz",
+     "https://dl.registry.platformio.org/download/nanopb/library/Nanopb/0.4.9%2B1/Nanopb-0.4.9%2B1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nanopb/library/Nanopb/0.4.91/Nanopb-0.4.91.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Nanopb-0.4.91.tar.gz",
+    "size_bytes": 96186,
+    "sha256": "016aa3c77efeea6e94493172d1b345ef23e75f21d024243db15026ae4d581865",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nanopb/library/Nanopb/0.4.91/Nanopb-0.4.91.tar.gz",
+     "https://dl.registry.platformio.org/download/nanopb/library/Nanopb/0.4.91/Nanopb-0.4.91.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nanopb/library/Nanopb/0.4.92/Nanopb-0.4.92.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Nanopb-0.4.92.tar.gz",
+    "size_bytes": 97831,
+    "sha256": "2fdd72f01f03b2f08b9915827d1eea9b22ac49df7e243cba06b8593624797b8e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nanopb/library/Nanopb/0.4.92/Nanopb-0.4.92.tar.gz",
+     "https://dl.registry.platformio.org/download/nanopb/library/Nanopb/0.4.92/Nanopb-0.4.92.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nanopb/library/Nanopb_Cpp/0.1.10/Nanopb_Cpp-0.1.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Nanopb_Cpp-0.1.10.tar.gz",
+    "size_bytes": 9024,
+    "sha256": "935eaa2858037a1f96ccbd94aa7d523a268192f3ddd570021a245c88200761cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nanopb/library/Nanopb_Cpp/0.1.10/Nanopb_Cpp-0.1.10.tar.gz",
+     "https://dl.registry.platformio.org/download/nanopb/library/Nanopb_Cpp/0.1.10/Nanopb_Cpp-0.1.10.tar.gz"
+    ]
+   }
+  }
+ ]
+}

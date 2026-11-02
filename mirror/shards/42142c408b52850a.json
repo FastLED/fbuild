@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-lewisdaw3",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-lewisdaw3/library/Adafruit_FONA/0.0.0+sha.8b6028668696/Adafruit_FONA-0.0.0+sha.8b6028668696.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Adafruit_FONA-0.0.0+sha.8b6028668696.tar.gz",
+    "size_bytes": 13548,
+    "sha256": "bdd1ed8088348c68e223d9256add59168cd3a148ee978f493a109c50a22f190c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-lewisdaw3/library/Adafruit_FONA/0.0.0%2Bsha.8b6028668696/Adafruit_FONA-0.0.0%2Bsha.8b6028668696.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-lewisdaw3/library/Adafruit_FONA/0.0.0%2Bsha.8b6028668696/Adafruit_FONA-0.0.0%2Bsha.8b6028668696.tar.gz"
+    ]
+   }
+  }
+ ]
+}

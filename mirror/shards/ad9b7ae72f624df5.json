@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/michaelgr22",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "michaelgr22/library/AWS%20Iot/0.0.22/AWSIot-0.0.22.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AWSIot-0.0.22.tar.gz",
+    "size_bytes": 3097,
+    "sha256": "ec77d870d4088c2cdadf848a8444dc2b34864ee92e04e75215b1ce6694c812a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/michaelgr22/library/AWS%2520Iot/0.0.22/AWSIot-0.0.22.tar.gz",
+     "https://dl.registry.platformio.org/download/michaelgr22/library/AWS%20Iot/0.0.22/AWSIot-0.0.22.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "michaelgr22/library/AWSIot/0.0.30/AWSIot-0.0.30.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AWSIot-0.0.30.tar.gz",
+    "size_bytes": 20706,
+    "sha256": "f268746550d5c7544c2e340f73abe38580305d155a5e39dae1aa3bdd566e6430",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/michaelgr22/library/AWSIot/0.0.30/AWSIot-0.0.30.tar.gz",
+     "https://dl.registry.platformio.org/download/michaelgr22/library/AWSIot/0.0.30/AWSIot-0.0.30.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "michaelgr22/library/ESP32%20Minimalistic%20Wifi/0.0.4/ESP32MinimalisticWifi-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32MinimalisticWifi-0.0.4.tar.gz",
+    "size_bytes": 2680,
+    "sha256": "febb0324a61eed342a1e492a67b9de635dea1cc1033f770db1d2e1812814f149",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/michaelgr22/library/ESP32%2520Minimalistic%2520Wifi/0.0.4/ESP32MinimalisticWifi-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/michaelgr22/library/ESP32%20Minimalistic%20Wifi/0.0.4/ESP32MinimalisticWifi-0.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

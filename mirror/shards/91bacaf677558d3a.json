@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-elrafapadron",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-elrafapadron/library/ADXL345/0.0.0+sha.baba3e2f977d/ADXL345-0.0.0+sha.baba3e2f977d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADXL345-0.0.0+sha.baba3e2f977d.tar.gz",
+    "size_bytes": 5561,
+    "sha256": "e7f939f866023c485752cb5ed69bc3cab46541e8a4f438bff47923d12c9c48e0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-elrafapadron/library/ADXL345/0.0.0%2Bsha.baba3e2f977d/ADXL345-0.0.0%2Bsha.baba3e2f977d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-elrafapadron/library/ADXL345/0.0.0%2Bsha.baba3e2f977d/ADXL345-0.0.0%2Bsha.baba3e2f977d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-elrafapadron/library/ADXL345_I2C/0.0.0+sha.a948fcfd705e/ADXL345_I2C-0.0.0+sha.a948fcfd705e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADXL345_I2C-0.0.0+sha.a948fcfd705e.tar.gz",
+    "size_bytes": 5556,
+    "sha256": "dcd0d06d801a49ef9e2ca0c54844aa649734464a51f6c6c716f17993ca03a1ea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-elrafapadron/library/ADXL345_I2C/0.0.0%2Bsha.a948fcfd705e/ADXL345_I2C-0.0.0%2Bsha.a948fcfd705e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-elrafapadron/library/ADXL345_I2C/0.0.0%2Bsha.a948fcfd705e/ADXL345_I2C-0.0.0%2Bsha.a948fcfd705e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-elrafapadron/library/HMC5843/0.0.0+sha.fdab96fc6fff/HMC5843-0.0.0+sha.fdab96fc6fff.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HMC5843-0.0.0+sha.fdab96fc6fff.tar.gz",
+    "size_bytes": 3173,
+    "sha256": "6181e75c29cd078a2afa11c162956a3fc956e2abf1561bea2fb51070e4257c8c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-elrafapadron/library/HMC5843/0.0.0%2Bsha.fdab96fc6fff/HMC5843-0.0.0%2Bsha.fdab96fc6fff.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-elrafapadron/library/HMC5843/0.0.0%2Bsha.fdab96fc6fff/HMC5843-0.0.0%2Bsha.fdab96fc6fff.tar.gz"
+    ]
+   }
+  }
+ ]
+}

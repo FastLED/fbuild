@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tdoe4321",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tdoe4321/library/FlexLibrary/1.0/FlexLibrary-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FlexLibrary-1.0.tar.gz",
+    "size_bytes": 4467,
+    "sha256": "0d71968b70354e7cae50d92c23a3db3788e3035957a1957d6726cfede4e57369",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tdoe4321/library/FlexLibrary/1.0/FlexLibrary-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tdoe4321/library/FlexLibrary/1.0/FlexLibrary-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-dotnfc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-dotnfc/library/LibPN532/0.0.0+sha.b5922b3b3257/LibPN532-0.0.0+sha.b5922b3b3257.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LibPN532-0.0.0+sha.b5922b3b3257.tar.gz",
+    "size_bytes": 24307,
+    "sha256": "309c72d9c46de7ea2e089d0ca8fc683cc5132b1739f5d1e503056923ef602808",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dotnfc/library/LibPN532/0.0.0%2Bsha.b5922b3b3257/LibPN532-0.0.0%2Bsha.b5922b3b3257.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dotnfc/library/LibPN532/0.0.0%2Bsha.b5922b3b3257/LibPN532-0.0.0%2Bsha.b5922b3b3257.tar.gz"
+    ]
+   }
+  }
+ ]
+}

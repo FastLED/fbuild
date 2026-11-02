@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ve-cto",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ve-cto/library/SwitchMatrixLib/1.0.0/SwitchMatrixLib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SwitchMatrixLib-1.0.0.tar.gz",
+    "size_bytes": 6117,
+    "sha256": "94118cab876b895db0b8bc6e8d97a7fd61d67b7ab4f1c29e6c77ea6dcfa0c089",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ve-cto/library/SwitchMatrixLib/1.0.0/SwitchMatrixLib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ve-cto/library/SwitchMatrixLib/1.0.0/SwitchMatrixLib-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ve-cto/library/SwitchMatrixLib/1.0.1/SwitchMatrixLib-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SwitchMatrixLib-1.0.1.tar.gz",
+    "size_bytes": 6243,
+    "sha256": "aa6a169710c62cd9f2e495b6a45cc5a5de2ba3957ed28d7ff707bef971ce610d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ve-cto/library/SwitchMatrixLib/1.0.1/SwitchMatrixLib-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ve-cto/library/SwitchMatrixLib/1.0.1/SwitchMatrixLib-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ve-cto/library/SwitchMatrixLib/1.0.2/SwitchMatrixLib-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SwitchMatrixLib-1.0.2.tar.gz",
+    "size_bytes": 6255,
+    "sha256": "b1f40575d86e22ca9e1d8fe5483128373eac13f7b253b0e66a498268c3a70ca1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ve-cto/library/SwitchMatrixLib/1.0.2/SwitchMatrixLib-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ve-cto/library/SwitchMatrixLib/1.0.2/SwitchMatrixLib-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ve-cto/library/SwitchMatrixLib/1.0.3/SwitchMatrixLib-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SwitchMatrixLib-1.0.3.tar.gz",
+    "size_bytes": 6438,
+    "sha256": "90a02d2fd1d9382b409194d33e86aa01770dee85ed70bbb10289c1de1cb3179d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ve-cto/library/SwitchMatrixLib/1.0.3/SwitchMatrixLib-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/ve-cto/library/SwitchMatrixLib/1.0.3/SwitchMatrixLib-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

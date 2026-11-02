@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/exosite",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "exosite/library/Exosite%20IIoT%20HTTP%20Device/1.0.0/ExositeIIoTHTTPDevice-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ExositeIIoTHTTPDevice-1.0.0.tar.gz",
+    "size_bytes": 15166,
+    "sha256": "22f8b95218a24814c4573d26c9e6f312788466d1fbb59dc26908fb07e4525c4b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/exosite/library/Exosite%2520IIoT%2520HTTP%2520Device/1.0.0/ExositeIIoTHTTPDevice-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/exosite/library/Exosite%20IIoT%20HTTP%20Device/1.0.0/ExositeIIoTHTTPDevice-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "exosite/library/libexosite%20http-data-api%20async/2.0.0/libexositehttp-data-apiasync-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libexositehttp-data-apiasync-2.0.0.tar.gz",
+    "size_bytes": 12383,
+    "sha256": "bc692574dc2abcbb5a1f32f49464de262f750da191062e125905ad279846358b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/exosite/library/libexosite%2520http-data-api%2520async/2.0.0/libexositehttp-data-apiasync-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/exosite/library/libexosite%20http-data-api%20async/2.0.0/libexositehttp-data-apiasync-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "exosite/library/libexosite%20http-data-api%20sync/2.0.0/libexositehttp-data-apisync-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libexositehttp-data-apisync-2.0.0.tar.gz",
+    "size_bytes": 9470,
+    "sha256": "023590a11adfaa6ef6c1c45bf03eb6af952842152da6c4d712c27eac12866514",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/exosite/library/libexosite%2520http-data-api%2520sync/2.0.0/libexositehttp-data-apisync-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/exosite/library/libexosite%20http-data-api%20sync/2.0.0/libexositehttp-data-apisync-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

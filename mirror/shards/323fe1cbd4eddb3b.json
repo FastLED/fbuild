@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hazielvds",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hazielvds/library/InerzaLabs/1.0.0/InerzaLabs-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "InerzaLabs-1.0.0.tar.gz",
+    "size_bytes": 4161,
+    "sha256": "488d86c97a95dcdf44df65a418c6d0670ab3d6b2c4495b7d44d137ff0a09ed15",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hazielvds/library/InerzaLabs/1.0.0/InerzaLabs-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hazielvds/library/InerzaLabs/1.0.0/InerzaLabs-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hazielvds/library/InerzaLabs/1.0.1/InerzaLabs-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "InerzaLabs-1.0.1.tar.gz",
+    "size_bytes": 4800,
+    "sha256": "c3db159b6b01af5138dcd28ad36d657cf84a9a26c611f4624b185818f5cade81",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hazielvds/library/InerzaLabs/1.0.1/InerzaLabs-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/hazielvds/library/InerzaLabs/1.0.1/InerzaLabs-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hazielvds/library/InerzaLabs/1.0.3/InerzaLabs-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "InerzaLabs-1.0.3.tar.gz",
+    "size_bytes": 4767,
+    "sha256": "083ddb75a9a56f781bbba1d509b16068ed3c729f7974a2c2245bf47cd820bb72",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hazielvds/library/InerzaLabs/1.0.3/InerzaLabs-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/hazielvds/library/InerzaLabs/1.0.3/InerzaLabs-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

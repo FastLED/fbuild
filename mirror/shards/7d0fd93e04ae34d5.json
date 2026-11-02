@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/steins1997",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "steins1997/library/R4_LIB_FOR_MCP2517FD/3.0.0/R4_LIB_FOR_MCP2517FD-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "R4_LIB_FOR_MCP2517FD-3.0.0.tar.gz",
+    "size_bytes": 36920,
+    "sha256": "f9ffe50a07c24bb113597a02c601f78c1e7571a349657bcbf4a4739884cd6f8e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/steins1997/library/R4_LIB_FOR_MCP2517FD/3.0.0/R4_LIB_FOR_MCP2517FD-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/steins1997/library/R4_LIB_FOR_MCP2517FD/3.0.0/R4_LIB_FOR_MCP2517FD-3.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

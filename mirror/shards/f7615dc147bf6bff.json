@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-stoma",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-stoma/library/I2CLCD/0.0.0+sha.c136b753b83c/I2CLCD-0.0.0+sha.c136b753b83c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2CLCD-0.0.0+sha.c136b753b83c.tar.gz",
+    "size_bytes": 2313,
+    "sha256": "17bb36c66816c524b6c245509f8c3e8b2094ebcd45ee31f8d822387906d8a6f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-stoma/library/I2CLCD/0.0.0%2Bsha.c136b753b83c/I2CLCD-0.0.0%2Bsha.c136b753b83c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-stoma/library/I2CLCD/0.0.0%2Bsha.c136b753b83c/I2CLCD-0.0.0%2Bsha.c136b753b83c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,126 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cytrontechnologies",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cytrontechnologies/library/Cytron%203A%20Motor%20Driver%20Shield/1.0.0/Cytron3AMotorDriverShield-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Cytron3AMotorDriverShield-1.0.0.tar.gz",
+    "size_bytes": 2374,
+    "sha256": "ccd4f8891f8fa49ba575397666af8b784dea00c510101cf9c35e690c5634a22e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cytrontechnologies/library/Cytron%25203A%2520Motor%2520Driver%2520Shield/1.0.0/Cytron3AMotorDriverShield-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cytrontechnologies/library/Cytron%203A%20Motor%20Driver%20Shield/1.0.0/Cytron3AMotorDriverShield-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cytrontechnologies/library/Cytron%20ESPWiFi%20Shield/3.0.2/CytronESPWiFiShield-3.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CytronESPWiFiShield-3.0.2.tar.gz",
+    "size_bytes": 21317,
+    "sha256": "3e857bde78fa1c9f392a990ff3b82205fbe0d0244e5f085478e499fdce84df2b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cytrontechnologies/library/Cytron%2520ESPWiFi%2520Shield/3.0.2/CytronESPWiFiShield-3.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cytrontechnologies/library/Cytron%20ESPWiFi%20Shield/3.0.2/CytronESPWiFiShield-3.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cytrontechnologies/library/Cytron%20G15%20Shield/1.0.0/CytronG15Shield-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CytronG15Shield-1.0.0.tar.gz",
+    "size_bytes": 13366,
+    "sha256": "c2374217284213ac0508bb3dfb907c7b3a008ffbae1d9932a994b98a3b3906fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cytrontechnologies/library/Cytron%2520G15%2520Shield/1.0.0/CytronG15Shield-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cytrontechnologies/library/Cytron%20G15%20Shield/1.0.0/CytronG15Shield-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cytrontechnologies/library/Cytron%20Maker%20Sumo%20Library/1.2.3/CytronMakerSumoLibrary-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CytronMakerSumoLibrary-1.2.3.tar.gz",
+    "size_bytes": 9135,
+    "sha256": "96a104bfe4a626c9b719161deb1bf74d40ce27f65218c2f1b875c35434a35da7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cytrontechnologies/library/Cytron%2520Maker%2520Sumo%2520Library/1.2.3/CytronMakerSumoLibrary-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/cytrontechnologies/library/Cytron%20Maker%20Sumo%20Library/1.2.3/CytronMakerSumoLibrary-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cytrontechnologies/library/Cytron%20Motor%20Drivers%20Library/1.0.1/CytronMotorDriversLibrary-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CytronMotorDriversLibrary-1.0.1.tar.gz",
+    "size_bytes": 3501,
+    "sha256": "be7154b5aa09c548d84ac25815f05ddee7096eec16dea9226ee61537774ccd9a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cytrontechnologies/library/Cytron%2520Motor%2520Drivers%2520Library/1.0.1/CytronMotorDriversLibrary-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cytrontechnologies/library/Cytron%20Motor%20Drivers%20Library/1.0.1/CytronMotorDriversLibrary-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cytrontechnologies/library/Cytron%20Servo%20Shield/2.0.0/CytronServoShield-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CytronServoShield-2.0.0.tar.gz",
+    "size_bytes": 5565,
+    "sha256": "15ae1104750f4f67f5f806a6218910e83dff8f4de2171e061d8d44ce6f8e5ac8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cytrontechnologies/library/Cytron%2520Servo%2520Shield/2.0.0/CytronServoShield-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cytrontechnologies/library/Cytron%20Servo%20Shield/2.0.0/CytronServoShield-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cytrontechnologies/library/CytronEasyMP3/1.1.0/CytronEasyMP3-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CytronEasyMP3-1.1.0.tar.gz",
+    "size_bytes": 9882,
+    "sha256": "205c52f2def492847d2e4fd658455b015413f1ae63d2cecb6c9a5c4109db16c5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cytrontechnologies/library/CytronEasyMP3/1.1.0/CytronEasyMP3-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cytrontechnologies/library/CytronEasyMP3/1.1.0/CytronEasyMP3-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cytrontechnologies/library/MP3Player/1.1.0/MP3Player-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MP3Player-1.1.0.tar.gz",
+    "size_bytes": 11557,
+    "sha256": "6f0140f1aea3cc0dc61c166f31ef4e290a5d9127fde9a6664183072a895662cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cytrontechnologies/library/MP3Player/1.1.0/MP3Player-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cytrontechnologies/library/MP3Player/1.1.0/MP3Player-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cytrontechnologies/library/MakerSumoRP2350/1.0.0/MakerSumoRP2350-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MakerSumoRP2350-1.0.0.tar.gz",
+    "size_bytes": 22962,
+    "sha256": "4c08edc3995a72f895831b74e5c5dda339905b9f9fe43fa28d8753b7b6ba14e2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cytrontechnologies/library/MakerSumoRP2350/1.0.0/MakerSumoRP2350-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cytrontechnologies/library/MakerSumoRP2350/1.0.0/MakerSumoRP2350-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

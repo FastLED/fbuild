@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/blemasle",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "blemasle/library/AS1115/1.1.1/AS1115-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AS1115-1.1.1.tar.gz",
+    "size_bytes": 6012,
+    "sha256": "1dfb6569715fa605ac47e3066ae87970a9252a32a559eb76b8cc03b4fc7815ff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blemasle/library/AS1115/1.1.1/AS1115-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/blemasle/library/AS1115/1.1.1/AS1115-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "blemasle/library/E24/1.1.0/E24-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "E24-1.1.0.tar.gz",
+    "size_bytes": 6634,
+    "sha256": "caac3da6f4cbfd8256219fc4f43548a9d055fcfde7bedaa3367ad7fd06a20ace",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blemasle/library/E24/1.1.0/E24-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/blemasle/library/E24/1.1.0/E24-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "blemasle/library/MCP23017/2.0.0/MCP23017-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP23017-2.0.0.tar.gz",
+    "size_bytes": 7069,
+    "sha256": "2beba265f2f6b6f89d5f098610fa486abcb06ecb1e81d1f1aff738c8b4ab573a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blemasle/library/MCP23017/2.0.0/MCP23017-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/blemasle/library/MCP23017/2.0.0/MCP23017-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "blemasle/library/SIM808/2.0.0/SIM808-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SIM808-2.0.0.tar.gz",
+    "size_bytes": 17409,
+    "sha256": "b3fee154ac1edbb5ecd6b4dc12672198b9f47ad982ea9af6cd9453856b22ca25",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blemasle/library/SIM808/2.0.0/SIM808-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/blemasle/library/SIM808/2.0.0/SIM808-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

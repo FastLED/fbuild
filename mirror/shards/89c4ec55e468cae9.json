@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/firepick1",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "firepick1/library/FireStep/0.0.0-alpha+sha.dcbd962bff/FireStep-0.0.0-alphasha.dcbd962bff.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FireStep-0.0.0-alphasha.dcbd962bff.tar.gz",
+    "size_bytes": 141972,
+    "sha256": "878903a1a5e8bd056b936da4673cc4692f66dab39f505ccee57ab5d6eadd5e22",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/firepick1/library/FireStep/0.0.0-alpha%2Bsha.dcbd962bff/FireStep-0.0.0-alphasha.dcbd962bff.tar.gz",
+     "https://dl.registry.platformio.org/download/firepick1/library/FireStep/0.0.0-alpha%2Bsha.dcbd962bff/FireStep-0.0.0-alphasha.dcbd962bff.tar.gz"
+    ]
+   }
+  }
+ ]
+}

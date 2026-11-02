@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mncc8337",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mncc8337/library/BMI160-Arduino-Extended/1.0.0/BMI160-Arduino-Extended-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMI160-Arduino-Extended-1.0.0.tar.gz",
+    "size_bytes": 36481,
+    "sha256": "48e052d235d902adc4eb1c86c80984cea18f3835fe640b2eab2699724fc75d8b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mncc8337/library/BMI160-Arduino-Extended/1.0.0/BMI160-Arduino-Extended-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mncc8337/library/BMI160-Arduino-Extended/1.0.0/BMI160-Arduino-Extended-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mncc8337/library/BMI160-Arduino-Extended/1.0.1/BMI160-Arduino-Extended-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMI160-Arduino-Extended-1.0.1.tar.gz",
+    "size_bytes": 36445,
+    "sha256": "bbd1dd6f22828f702e9c91b1b363828b7b436a43680d990534e8cf33d1452f7c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mncc8337/library/BMI160-Arduino-Extended/1.0.1/BMI160-Arduino-Extended-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mncc8337/library/BMI160-Arduino-Extended/1.0.1/BMI160-Arduino-Extended-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mncc8337/library/BMI160_QMC5883P/1.0.0/BMI160_QMC5883P-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMI160_QMC5883P-1.0.0.tar.gz",
+    "size_bytes": 3534,
+    "sha256": "c5ccf4aba153ef202525cf56802fe13c5f9bd0b8ed4b5226be3db1a1f0bff375",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mncc8337/library/BMI160_QMC5883P/1.0.0/BMI160_QMC5883P-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mncc8337/library/BMI160_QMC5883P/1.0.0/BMI160_QMC5883P-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mncc8337/library/BMI160_QMC5883P/1.0.1/BMI160_QMC5883P-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMI160_QMC5883P-1.0.1.tar.gz",
+    "size_bytes": 3531,
+    "sha256": "300385ff3115bc2ba8bf47b10567e8ccae1cc76216e4b8d73d8f18e0e8279c71",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mncc8337/library/BMI160_QMC5883P/1.0.1/BMI160_QMC5883P-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mncc8337/library/BMI160_QMC5883P/1.0.1/BMI160_QMC5883P-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

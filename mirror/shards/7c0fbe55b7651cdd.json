@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/winglander",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "winglander/library/PiicoDev_Button/1.0.0/PiicoDev_Button-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PiicoDev_Button-1.0.0.tar.gz",
+    "size_bytes": 3478,
+    "sha256": "130c7dd11c0069ae5c3c748579d9a3e3128a05c49e6030d424c34e3d3b5b0cd8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/winglander/library/PiicoDev_Button/1.0.0/PiicoDev_Button-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/winglander/library/PiicoDev_Button/1.0.0/PiicoDev_Button-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "winglander/library/PiicoDev_Buzzer/1.0.0/PiicoDev_Buzzer-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PiicoDev_Buzzer-1.0.0.tar.gz",
+    "size_bytes": 3371,
+    "sha256": "8a2ad7de5dabe026884179d765ecf5bae1366222ed6d488c072960c7d16ef36c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/winglander/library/PiicoDev_Buzzer/1.0.0/PiicoDev_Buzzer-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/winglander/library/PiicoDev_Buzzer/1.0.0/PiicoDev_Buzzer-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-nimbelink",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-nimbelink/library/LPS331_old/0.0.0+sha.283e88a1bed7/LPS331_old-0.0.0+sha.283e88a1bed7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LPS331_old-0.0.0+sha.283e88a1bed7.tar.gz",
+    "size_bytes": 1906,
+    "sha256": "dc07e12ecb8d72eb9773bc005eafeeb70aee73b744fcd1a43fd99f358c2c11d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nimbelink/library/LPS331_old/0.0.0%2Bsha.283e88a1bed7/LPS331_old-0.0.0%2Bsha.283e88a1bed7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nimbelink/library/LPS331_old/0.0.0%2Bsha.283e88a1bed7/LPS331_old-0.0.0%2Bsha.283e88a1bed7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/depben",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "depben/library/PT7C4339-RTC/1.0.0/PT7C4339-RTC-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PT7C4339-RTC-1.0.0.tar.gz",
+    "size_bytes": 15400,
+    "sha256": "7be9937deb5f78eee796cb12508f5301e326b478ec8a4001b5793b0c10bf5c05",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/depben/library/PT7C4339-RTC/1.0.0/PT7C4339-RTC-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/depben/library/PT7C4339-RTC/1.0.0/PT7C4339-RTC-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/habuenav",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "habuenav/library/Breath/1.0.0/Breath-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Breath-1.0.0.tar.gz",
+    "size_bytes": 6909,
+    "sha256": "e5e463db75ae57e00091190d8be98ea485344ef2a3d9ec26c0a8dec53d8bad32",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/habuenav/library/Breath/1.0.0/Breath-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/habuenav/library/Breath/1.0.0/Breath-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "habuenav/library/Breath/1.0.1/Breath-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Breath-1.0.1.tar.gz",
+    "size_bytes": 7032,
+    "sha256": "f8cdaeb02f77cec66647e10ad6314be746ffeaa7b46ba92b22129ec81406c2b4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/habuenav/library/Breath/1.0.1/Breath-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/habuenav/library/Breath/1.0.1/Breath-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "habuenav/library/easyMenu/1.0.0/easyMenu-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "easyMenu-1.0.0.tar.gz",
+    "size_bytes": 6730,
+    "sha256": "40daf9d18bcb6ee0077c5c7eba5825cbf2619dcfa27c3c058f539236c66439d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/habuenav/library/easyMenu/1.0.0/easyMenu-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/habuenav/library/easyMenu/1.0.0/easyMenu-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "habuenav/library/easyMenu/1.0.1/easyMenu-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "easyMenu-1.0.1.tar.gz",
+    "size_bytes": 8169,
+    "sha256": "0d1a59e97cb1f6594a69e08969c0f3489a26806d122e9e6238e66b7ba0a5ca45",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/habuenav/library/easyMenu/1.0.1/easyMenu-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/habuenav/library/easyMenu/1.0.1/easyMenu-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "habuenav/library/quickMap/1.0.0/quickMap-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "quickMap-1.0.0.tar.gz",
+    "size_bytes": 4796,
+    "sha256": "6404508c1edeaf05768d3e5699ce4ed06ad7dd5eb1ad00d6013a942c0eefb16f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/habuenav/library/quickMap/1.0.0/quickMap-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/habuenav/library/quickMap/1.0.0/quickMap-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "habuenav/library/quickMap/1.0.2/quickMap-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "quickMap-1.0.2.tar.gz",
+    "size_bytes": 6628,
+    "sha256": "4102e889d7e5dc0e2f420d9338bb2677e9054701d79c48a4cf1b2c245080dc57",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/habuenav/library/quickMap/1.0.2/quickMap-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/habuenav/library/quickMap/1.0.2/quickMap-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

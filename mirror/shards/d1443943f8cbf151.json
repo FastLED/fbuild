@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lucashudson-eng",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lucashudson-eng/library/PZEMPlus/0.5.1/PZEMPlus-0.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PZEMPlus-0.5.1.tar.gz",
+    "size_bytes": 22537,
+    "sha256": "b0254abfb5b7eb63ebd649eff6bbb3a040ed05665cdf251b4eae2d0c3ef9910b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lucashudson-eng/library/PZEMPlus/0.5.1/PZEMPlus-0.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lucashudson-eng/library/PZEMPlus/0.5.1/PZEMPlus-0.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lucashudson-eng/library/PZEMPlus/0.5.3/PZEMPlus-0.5.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PZEMPlus-0.5.3.tar.gz",
+    "size_bytes": 22803,
+    "sha256": "7e369eb0269812a033a51947a66783e66e21c5f745ff764fc5e8ea9017d9a435",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lucashudson-eng/library/PZEMPlus/0.5.3/PZEMPlus-0.5.3.tar.gz",
+     "https://dl.registry.platformio.org/download/lucashudson-eng/library/PZEMPlus/0.5.3/PZEMPlus-0.5.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lucashudson-eng/library/PZEMPlus/0.7.0/PZEMPlus-0.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PZEMPlus-0.7.0.tar.gz",
+    "size_bytes": 34647,
+    "sha256": "5ba0610579cebeca611933787870da81d25c4417f2ee743edb0645e86c55324a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lucashudson-eng/library/PZEMPlus/0.7.0/PZEMPlus-0.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lucashudson-eng/library/PZEMPlus/0.7.0/PZEMPlus-0.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lucashudson-eng/library/PZEMPlus/0.7.1/PZEMPlus-0.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PZEMPlus-0.7.1.tar.gz",
+    "size_bytes": 34688,
+    "sha256": "3bb7842e6a129ba15407729d27dc2f74b8db7f8f64a7d49b907a20b65682c6a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lucashudson-eng/library/PZEMPlus/0.7.1/PZEMPlus-0.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lucashudson-eng/library/PZEMPlus/0.7.1/PZEMPlus-0.7.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lucashudson-eng/library/PZEMPlus/0.7.3/PZEMPlus-0.7.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PZEMPlus-0.7.3.tar.gz",
+    "size_bytes": 35218,
+    "sha256": "ec694f2091c46ddc50bd92b42b90afa2e90d4aa55092d84d792d55cc2d400258",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lucashudson-eng/library/PZEMPlus/0.7.3/PZEMPlus-0.7.3.tar.gz",
+     "https://dl.registry.platformio.org/download/lucashudson-eng/library/PZEMPlus/0.7.3/PZEMPlus-0.7.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/xxmariffxx",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "xxmariffxx/library/N-R_ESP32/1.0.1/N-R_ESP32-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "N-R_ESP32-1.0.1.tar.gz",
+    "size_bytes": 11177,
+    "sha256": "c0bbc6f91941f5ad38f29e467b377c4ab662b4e6837d0fef242b9b914f844e39",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xxmariffxx/library/N-R_ESP32/1.0.1/N-R_ESP32-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/xxmariffxx/library/N-R_ESP32/1.0.1/N-R_ESP32-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xxmariffxx/library/N-R_ESP32/1.0.3/N-R_ESP32-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "N-R_ESP32-1.0.3.tar.gz",
+    "size_bytes": 16796,
+    "sha256": "3175542b357352f6d7893373ddcafc3d6c6296e7e5fe5a55c30fbc254cfdf977",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xxmariffxx/library/N-R_ESP32/1.0.3/N-R_ESP32-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/xxmariffxx/library/N-R_ESP32/1.0.3/N-R_ESP32-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xxmariffxx/library/N-R_ESP32/1.1.0/N-R_ESP32-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "N-R_ESP32-1.1.0.tar.gz",
+    "size_bytes": 24299,
+    "sha256": "ac3ec9ce6ee14f0005a9ae3ce527dda16bd2699305a1d957d57cf65415393f85",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xxmariffxx/library/N-R_ESP32/1.1.0/N-R_ESP32-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xxmariffxx/library/N-R_ESP32/1.1.0/N-R_ESP32-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xxmariffxx/library/N-R_ESP32/1.1.2/N-R_ESP32-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "N-R_ESP32-1.1.2.tar.gz",
+    "size_bytes": 26818,
+    "sha256": "99fe2a7350971df3aa5cd96d435e8b49e106d2bde9cdb954cd570a4e944b011a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xxmariffxx/library/N-R_ESP32/1.1.2/N-R_ESP32-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/xxmariffxx/library/N-R_ESP32/1.1.2/N-R_ESP32-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xxmariffxx/library/N-R_ESP32/1.1.4/N-R_ESP32-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "N-R_ESP32-1.1.4.tar.gz",
+    "size_bytes": 28449,
+    "sha256": "24d852578d7ab01702132bed1cd17f7df973b7de269dee7a9eb117cdf556f4de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xxmariffxx/library/N-R_ESP32/1.1.4/N-R_ESP32-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/xxmariffxx/library/N-R_ESP32/1.1.4/N-R_ESP32-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xxmariffxx/library/N-R_ESP32/1.2.0/N-R_ESP32-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "N-R_ESP32-1.2.0.tar.gz",
+    "size_bytes": 32049,
+    "sha256": "4d440afa5d4c292f3f235795c422d46c48b153926ddaf4cb98258ed69681016d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xxmariffxx/library/N-R_ESP32/1.2.0/N-R_ESP32-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xxmariffxx/library/N-R_ESP32/1.2.0/N-R_ESP32-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

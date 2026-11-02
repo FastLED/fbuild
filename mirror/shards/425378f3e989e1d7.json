@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/smartphone-companions",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "smartphone-companions/library/ESP32%20BLE%20ANCS%20Notifications/0.0.1/ESP32BLEANCSNotifications-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32BLEANCSNotifications-0.0.1.tar.gz",
+    "size_bytes": 23720,
+    "sha256": "8923cfa1ee95cd3ebf3ef4a4073e91bd14a0dde894962e52de0e3d16bcf5bcde",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/smartphone-companions/library/ESP32%2520BLE%2520ANCS%2520Notifications/0.0.1/ESP32BLEANCSNotifications-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/smartphone-companions/library/ESP32%20BLE%20ANCS%20Notifications/0.0.1/ESP32BLEANCSNotifications-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

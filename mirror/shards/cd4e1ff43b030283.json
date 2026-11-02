@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/felixthecat8a",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "felixthecat8a/library/LCD_BacklightRGB/1.6.3/LCD_BacklightRGB-1.6.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCD_BacklightRGB-1.6.3.tar.gz",
+    "size_bytes": 12766,
+    "sha256": "f8d3a1487d32465acbbc9226f3e092082f0f4552b96961b1e565a25bf11d6a47",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/felixthecat8a/library/LCD_BacklightRGB/1.6.3/LCD_BacklightRGB-1.6.3.tar.gz",
+     "https://dl.registry.platformio.org/download/felixthecat8a/library/LCD_BacklightRGB/1.6.3/LCD_BacklightRGB-1.6.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "felixthecat8a/library/LCD_BacklightRGB/1.7.0/LCD_BacklightRGB-1.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCD_BacklightRGB-1.7.0.tar.gz",
+    "size_bytes": 14638,
+    "sha256": "2d3eb912ddbcd1c6a93a806af4f47bcd603c8fb064e45eced3e3d3934f00ac0b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/felixthecat8a/library/LCD_BacklightRGB/1.7.0/LCD_BacklightRGB-1.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/felixthecat8a/library/LCD_BacklightRGB/1.7.0/LCD_BacklightRGB-1.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "felixthecat8a/library/LCD_BacklightRGB/1.7.1/LCD_BacklightRGB-1.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCD_BacklightRGB-1.7.1.tar.gz",
+    "size_bytes": 14942,
+    "sha256": "7e904336a69fc1e3d4ff81d395fbc32c87d8dee2a8845686e4a0415dd49c1521",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/felixthecat8a/library/LCD_BacklightRGB/1.7.1/LCD_BacklightRGB-1.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/felixthecat8a/library/LCD_BacklightRGB/1.7.1/LCD_BacklightRGB-1.7.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "felixthecat8a/library/LCD_BacklightRGB/1.7.2/LCD_BacklightRGB-1.7.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCD_BacklightRGB-1.7.2.tar.gz",
+    "size_bytes": 14749,
+    "sha256": "34de69ee3dd7805e8db94b0c1feeebc614f7be22b308a4be2459d6b02d3004eb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/felixthecat8a/library/LCD_BacklightRGB/1.7.2/LCD_BacklightRGB-1.7.2.tar.gz",
+     "https://dl.registry.platformio.org/download/felixthecat8a/library/LCD_BacklightRGB/1.7.2/LCD_BacklightRGB-1.7.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "felixthecat8a/library/LCD_BacklightRGB/1.7.3/LCD_BacklightRGB-1.7.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCD_BacklightRGB-1.7.3.tar.gz",
+    "size_bytes": 12651,
+    "sha256": "323387f81ff3198f3114ea8cf500ef33526497502bee8de46876f672d09d1e33",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/felixthecat8a/library/LCD_BacklightRGB/1.7.3/LCD_BacklightRGB-1.7.3.tar.gz",
+     "https://dl.registry.platformio.org/download/felixthecat8a/library/LCD_BacklightRGB/1.7.3/LCD_BacklightRGB-1.7.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "felixthecat8a/library/LCD_BacklightRGB/1.8.1/LCD_BacklightRGB-1.8.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCD_BacklightRGB-1.8.1.tar.gz",
+    "size_bytes": 13638,
+    "sha256": "623667ba3070af306942160918f9c3a3929ed4d44ccb37a99e3b3160e78575be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/felixthecat8a/library/LCD_BacklightRGB/1.8.1/LCD_BacklightRGB-1.8.1.tar.gz",
+     "https://dl.registry.platformio.org/download/felixthecat8a/library/LCD_BacklightRGB/1.8.1/LCD_BacklightRGB-1.8.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

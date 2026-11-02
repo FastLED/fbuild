@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/heman",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "heman/library/AsyncMqttClient-esphome/1.0.0/AsyncMqttClient-esphome-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncMqttClient-esphome-1.0.0.tar.gz",
+    "size_bytes": 26936,
+    "sha256": "68e5a52b8defdbc63f463845c609cce4e2d52517c4a5743a70795a69fa9920fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/heman/library/AsyncMqttClient-esphome/1.0.0/AsyncMqttClient-esphome-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/heman/library/AsyncMqttClient-esphome/1.0.0/AsyncMqttClient-esphome-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "heman/library/AsyncMqttClient-esphome/2.0.0/AsyncMqttClient-esphome-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncMqttClient-esphome-2.0.0.tar.gz",
+    "size_bytes": 25005,
+    "sha256": "5d73786597b51b61a54a8d78f7d90cbfc814cbe1b32490bb401c3e6e86d855de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/heman/library/AsyncMqttClient-esphome/2.0.0/AsyncMqttClient-esphome-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/heman/library/AsyncMqttClient-esphome/2.0.0/AsyncMqttClient-esphome-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "heman/library/AsyncMqttClient-esphome/2.1.0/AsyncMqttClient-esphome-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncMqttClient-esphome-2.1.0.tar.gz",
+    "size_bytes": 25050,
+    "sha256": "69a09253284d581b857191eeabb1f0fcf20af510aabc60618221fcbbdb7b6f9f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/heman/library/AsyncMqttClient-esphome/2.1.0/AsyncMqttClient-esphome-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/heman/library/AsyncMqttClient-esphome/2.1.0/AsyncMqttClient-esphome-2.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

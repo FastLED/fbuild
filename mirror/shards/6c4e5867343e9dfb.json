@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-mydevicesiot",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-mydevicesiot/library/Cayenne-MQTT-mbed/0.0.0+sha.1a9aed5e77c9/Cayenne-MQTT-mbed-0.0.0+sha.1a9aed5e77c9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Cayenne-MQTT-mbed-0.0.0+sha.1a9aed5e77c9.tar.gz",
+    "size_bytes": 33897,
+    "sha256": "7d76820ac14e75153be97087df3a9bb8d44b463f1b5a5c5d644c05c595510ff4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mydevicesiot/library/Cayenne-MQTT-mbed/0.0.0%2Bsha.1a9aed5e77c9/Cayenne-MQTT-mbed-0.0.0%2Bsha.1a9aed5e77c9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mydevicesiot/library/Cayenne-MQTT-mbed/0.0.0%2Bsha.1a9aed5e77c9/Cayenne-MQTT-mbed-0.0.0%2Bsha.1a9aed5e77c9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kegnet",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kegnet/library/universal-thermistor/4.1.1/universal-thermistor-4.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "universal-thermistor-4.1.1.tar.gz",
+    "size_bytes": 944427,
+    "sha256": "154e1acdfb97d7ed9327ec03c278dc83d7db8796999f60fbe9f68c5ea11a8160",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kegnet/library/universal-thermistor/4.1.1/universal-thermistor-4.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/kegnet/library/universal-thermistor/4.1.1/universal-thermistor-4.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

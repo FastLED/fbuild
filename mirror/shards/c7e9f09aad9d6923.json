@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fajarnurprasetyo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fajarnurprasetyo/library/ESPAsyncFTPServer/1.0.0/ESPAsyncFTPServer-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncFTPServer-1.0.0.tar.gz",
+    "size_bytes": 19575,
+    "sha256": "89a439eefab7fae1abd5050f0be2be6e3dfe8d27993fccc8ce89b730f19e38fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fajarnurprasetyo/library/ESPAsyncFTPServer/1.0.0/ESPAsyncFTPServer-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fajarnurprasetyo/library/ESPAsyncFTPServer/1.0.0/ESPAsyncFTPServer-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fajarnurprasetyo/library/ESPAsyncFTPServer/1.0.1/ESPAsyncFTPServer-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncFTPServer-1.0.1.tar.gz",
+    "size_bytes": 19565,
+    "sha256": "d6528294a897d7a26cbc1e9662251ea184859162840a3970d55b19dd47a6eba5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fajarnurprasetyo/library/ESPAsyncFTPServer/1.0.1/ESPAsyncFTPServer-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fajarnurprasetyo/library/ESPAsyncFTPServer/1.0.1/ESPAsyncFTPServer-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

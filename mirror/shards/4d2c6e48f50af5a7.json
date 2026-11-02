@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rbegamer",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rbegamer/library/EEPROM_24AA025/1.0.0/EEPROM_24AA025-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EEPROM_24AA025-1.0.0.tar.gz",
+    "size_bytes": 4654,
+    "sha256": "15c70dccb5ba7d143c0658757c5ae07b2a1ca113c8e4119b61af5e5d92f4fddf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rbegamer/library/EEPROM_24AA025/1.0.0/EEPROM_24AA025-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rbegamer/library/EEPROM_24AA025/1.0.0/EEPROM_24AA025-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rbegamer/library/HLK-LD2450/1.0.9/HLK-LD2450-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HLK-LD2450-1.0.9.tar.gz",
+    "size_bytes": 8541,
+    "sha256": "8cda65fae86125220ef3f3e618e6a4afebaf10028cc14acf8534ce877525b8b4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rbegamer/library/HLK-LD2450/1.0.9/HLK-LD2450-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/rbegamer/library/HLK-LD2450/1.0.9/HLK-LD2450-1.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rbegamer/library/HLK-LD2450/1.1.0/HLK-LD2450-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HLK-LD2450-1.1.0.tar.gz",
+    "size_bytes": 8576,
+    "sha256": "844071a8eee2355963e107c9a1260c9c0f8cbe3d0d4f8eb0a26cc572c3ef73ff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rbegamer/library/HLK-LD2450/1.1.0/HLK-LD2450-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rbegamer/library/HLK-LD2450/1.1.0/HLK-LD2450-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rbegamer/library/Sfp/0.1.0/Sfp-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sfp-0.1.0.tar.gz",
+    "size_bytes": 13871,
+    "sha256": "357b023c283d0dcd562b78ba71de3bbe627c454c6746efb1305aa914570216b0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rbegamer/library/Sfp/0.1.0/Sfp-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rbegamer/library/Sfp/0.1.0/Sfp-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

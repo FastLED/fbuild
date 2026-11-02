@@ -1,0 +1,464 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/greghulette",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "greghulette/library/WCB_Client/1.0.0/WCB_Client-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WCB_Client-1.0.0.tar.gz",
+    "size_bytes": 30161,
+    "sha256": "b66e19b19ebe288cb71b6f5ca6db0d37557f377fe2efda33191ef2c97685f2ff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/greghulette/library/WCB_Client/1.0.0/WCB_Client-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/greghulette/library/WCB_Client/1.0.0/WCB_Client-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "greghulette/library/WCB_Client/1.1.0/WCB_Client-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WCB_Client-1.1.0.tar.gz",
+    "size_bytes": 32033,
+    "sha256": "73506eaa9123e2ac3ca469232f00e6ff09dff0c755e97da17fc2e9564eaf3eb2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/greghulette/library/WCB_Client/1.1.0/WCB_Client-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/greghulette/library/WCB_Client/1.1.0/WCB_Client-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "greghulette/library/WCB_Client/1.10.0/WCB_Client-1.10.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WCB_Client-1.10.0.tar.gz",
+    "size_bytes": 95128,
+    "sha256": "55337f2384f3c7149b6c2ca54587e0415ddbfe39f8ffc836c77cba096fb55d6f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/greghulette/library/WCB_Client/1.10.0/WCB_Client-1.10.0.tar.gz",
+     "https://dl.registry.platformio.org/download/greghulette/library/WCB_Client/1.10.0/WCB_Client-1.10.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "greghulette/library/WCB_Client/1.11.0/WCB_Client-1.11.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WCB_Client-1.11.0.tar.gz",
+    "size_bytes": 95871,
+    "sha256": "a9434a0010700a6e3c5e29946147fbe9763d882e341b758f2b99db6fde73e177",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/greghulette/library/WCB_Client/1.11.0/WCB_Client-1.11.0.tar.gz",
+     "https://dl.registry.platformio.org/download/greghulette/library/WCB_Client/1.11.0/WCB_Client-1.11.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "greghulette/library/WCB_Client/1.12.0/WCB_Client-1.12.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WCB_Client-1.12.0.tar.gz",
+    "size_bytes": 99373,
+    "sha256": "4b0222f1fc935cde1dab856f4c50469c125007ab8ed20ff1818c7ff3b1064fae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/greghulette/library/WCB_Client/1.12.0/WCB_Client-1.12.0.tar.gz",
+     "https://dl.registry.platformio.org/download/greghulette/library/WCB_Client/1.12.0/WCB_Client-1.12.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "greghulette/library/WCB_Client/1.13.1/WCB_Client-1.13.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WCB_Client-1.13.1.tar.gz",
+    "size_bytes": 116564,
+    "sha256": "31d196b9bbc0b0f21afd4b6efa20a8443e74dd81904d3c8ecc96864f4a1d781f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/greghulette/library/WCB_Client/1.13.1/WCB_Client-1.13.1.tar.gz",
+     "https://dl.registry.platformio.org/download/greghulette/library/WCB_Client/1.13.1/WCB_Client-1.13.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "greghulette/library/WCB_Client/1.15.0/WCB_Client-1.15.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WCB_Client-1.15.0.tar.gz",
+    "size_bytes": 132441,
+    "sha256": "7e58151adf2f5b0dd8adc644256ec629dc3fdaa52d5f9b68e24cf9eae2c6850c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/greghulette/library/WCB_Client/1.15.0/WCB_Client-1.15.0.tar.gz",
+     "https://dl.registry.platformio.org/download/greghulette/library/WCB_Client/1.15.0/WCB_Client-1.15.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "greghulette/library/WCB_Client/1.15.1/WCB_Client-1.15.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WCB_Client-1.15.1.tar.gz",
+    "size_bytes": 133134,
+    "sha256": "b7f069924fc1f6940667166a7174fa7ff78c54a1e04e5e8b2a10e6f055f20dcf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/greghulette/library/WCB_Client/1.15.1/WCB_Client-1.15.1.tar.gz",
+     "https://dl.registry.platformio.org/download/greghulette/library/WCB_Client/1.15.1/WCB_Client-1.15.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "greghulette/library/WCB_Client/1.15.2/WCB_Client-1.15.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WCB_Client-1.15.2.tar.gz",
+    "size_bytes": 134285,
+    "sha256": "47f394e38e3a9e35be2400da1d6d737d68573e02be9a410c999efbb14584b4c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/greghulette/library/WCB_Client/1.15.2/WCB_Client-1.15.2.tar.gz",
+     "https://dl.registry.platformio.org/download/greghulette/library/WCB_Client/1.15.2/WCB_Client-1.15.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "greghulette/library/WCB_Client/1.16.0/WCB_Client-1.16.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WCB_Client-1.16.0.tar.gz",
+    "size_bytes": 137600,
+    "sha256": "ddae007c1b64733fb27fff2f0ab55d1ac2481dd8e723b4f2c7b0135725e16ebb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/greghulette/library/WCB_Client/1.16.0/WCB_Client-1.16.0.tar.gz",
+     "https://dl.registry.platformio.org/download/greghulette/library/WCB_Client/1.16.0/WCB_Client-1.16.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "greghulette/library/WCB_Client/1.17.0/WCB_Client-1.17.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WCB_Client-1.17.0.tar.gz",
+    "size_bytes": 164739,
+    "sha256": "a7c70cad4d76ec880b49a4122ea8aa4163d15b7427e58e5f1ee463ffb9f2c3bf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/greghulette/library/WCB_Client/1.17.0/WCB_Client-1.17.0.tar.gz",
+     "https://dl.registry.platformio.org/download/greghulette/library/WCB_Client/1.17.0/WCB_Client-1.17.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "greghulette/library/WCB_Client/1.17.2/WCB_Client-1.17.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WCB_Client-1.17.2.tar.gz",
+    "size_bytes": 174225,
+    "sha256": "fd6d3f778d86cab2bb1b64a164b0cfd80574c48c3ff080b6255eb85543015146",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/greghulette/library/WCB_Client/1.17.2/WCB_Client-1.17.2.tar.gz",
+     "https://dl.registry.platformio.org/download/greghulette/library/WCB_Client/1.17.2/WCB_Client-1.17.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "greghulette/library/WCB_Client/1.18.1/WCB_Client-1.18.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WCB_Client-1.18.1.tar.gz",
+    "size_bytes": 183037,
+    "sha256": "6ad95575d18fb348d9d0a09f24bfdbf9b9b5b46065634485dc2ec8993564577d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/greghulette/library/WCB_Client/1.18.1/WCB_Client-1.18.1.tar.gz",
+     "https://dl.registry.platformio.org/download/greghulette/library/WCB_Client/1.18.1/WCB_Client-1.18.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "greghulette/library/WCB_Client/1.19.0/WCB_Client-1.19.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WCB_Client-1.19.0.tar.gz",
+    "size_bytes": 236512,
+    "sha256": "c35e23588ddfb3089e9e82eaffb6ce608c9c3f256e44a7f5a821b12134a986b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/greghulette/library/WCB_Client/1.19.0/WCB_Client-1.19.0.tar.gz",
+     "https://dl.registry.platformio.org/download/greghulette/library/WCB_Client/1.19.0/WCB_Client-1.19.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "greghulette/library/WCB_Client/1.2.0/WCB_Client-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WCB_Client-1.2.0.tar.gz",
+    "size_bytes": 36414,
+    "sha256": "3f150c3ee62e8df6deae34c40b68587d13750916051c4357cb5b0148b1803d60",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/greghulette/library/WCB_Client/1.2.0/WCB_Client-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/greghulette/library/WCB_Client/1.2.0/WCB_Client-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "greghulette/library/WCB_Client/1.20.0/WCB_Client-1.20.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WCB_Client-1.20.0.tar.gz",
+    "size_bytes": 248770,
+    "sha256": "e0f80a37bef37ef2d483323cdc95d18557a913cad8bc7f6ee6f9f082bdaa6d46",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/greghulette/library/WCB_Client/1.20.0/WCB_Client-1.20.0.tar.gz",
+     "https://dl.registry.platformio.org/download/greghulette/library/WCB_Client/1.20.0/WCB_Client-1.20.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "greghulette/library/WCB_Client/1.3.1/WCB_Client-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WCB_Client-1.3.1.tar.gz",
+    "size_bytes": 42450,
+    "sha256": "e100e852db332e4b204a400ef6480544e5cbf1be2efae79bea5f814078a37de2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/greghulette/library/WCB_Client/1.3.1/WCB_Client-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/greghulette/library/WCB_Client/1.3.1/WCB_Client-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "greghulette/library/WCB_Client/1.4.0/WCB_Client-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WCB_Client-1.4.0.tar.gz",
+    "size_bytes": 44541,
+    "sha256": "e54df5a46e77e739004cf3d57497d0bd5db1aab329bdce9b3fc791a6e4fb8caa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/greghulette/library/WCB_Client/1.4.0/WCB_Client-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/greghulette/library/WCB_Client/1.4.0/WCB_Client-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "greghulette/library/WCB_Client/1.5.0/WCB_Client-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WCB_Client-1.5.0.tar.gz",
+    "size_bytes": 44837,
+    "sha256": "50177335c19e5ba618e0fbeef7e911575462cee15e26374d34cb15682ba8fbe8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/greghulette/library/WCB_Client/1.5.0/WCB_Client-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/greghulette/library/WCB_Client/1.5.0/WCB_Client-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "greghulette/library/WCB_Client/1.6.0/WCB_Client-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WCB_Client-1.6.0.tar.gz",
+    "size_bytes": 45640,
+    "sha256": "fa244a238530f607d78fe214ac6c51c2098e4aa7ee9254913ffba7b02106d882",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/greghulette/library/WCB_Client/1.6.0/WCB_Client-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/greghulette/library/WCB_Client/1.6.0/WCB_Client-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "greghulette/library/WCB_Client/1.7.0/WCB_Client-1.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WCB_Client-1.7.0.tar.gz",
+    "size_bytes": 48732,
+    "sha256": "4a26875e820b9378c8bf9b5f77d70e4cca577d80d3ce998a4f823f74fbe7b270",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/greghulette/library/WCB_Client/1.7.0/WCB_Client-1.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/greghulette/library/WCB_Client/1.7.0/WCB_Client-1.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "greghulette/library/WCB_Client/1.9.0/WCB_Client-1.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WCB_Client-1.9.0.tar.gz",
+    "size_bytes": 59394,
+    "sha256": "4652583cfd1148b15fae62873c5c9c2346bde76606caf5c62f8a6adce859c397",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/greghulette/library/WCB_Client/1.9.0/WCB_Client-1.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/greghulette/library/WCB_Client/1.9.0/WCB_Client-1.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "greghulette/library/WCB_Client/1.9.10/WCB_Client-1.9.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WCB_Client-1.9.10.tar.gz",
+    "size_bytes": 88028,
+    "sha256": "b3fe9c0470394dc4aa776b235df9ba1d72f132bb790c17ba3eef3848036fdf3a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/greghulette/library/WCB_Client/1.9.10/WCB_Client-1.9.10.tar.gz",
+     "https://dl.registry.platformio.org/download/greghulette/library/WCB_Client/1.9.10/WCB_Client-1.9.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "greghulette/library/WCB_Client/1.9.11/WCB_Client-1.9.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WCB_Client-1.9.11.tar.gz",
+    "size_bytes": 88103,
+    "sha256": "24373759985c69582e136746df833327fdba3482d86068bf51293445784b6848",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/greghulette/library/WCB_Client/1.9.11/WCB_Client-1.9.11.tar.gz",
+     "https://dl.registry.platformio.org/download/greghulette/library/WCB_Client/1.9.11/WCB_Client-1.9.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "greghulette/library/WCB_Client/1.9.2/WCB_Client-1.9.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WCB_Client-1.9.2.tar.gz",
+    "size_bytes": 61421,
+    "sha256": "6749778eade8b112d4b2e79a9a62d1216bcccfdd8ad801a86b1a6d81410e9bc9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/greghulette/library/WCB_Client/1.9.2/WCB_Client-1.9.2.tar.gz",
+     "https://dl.registry.platformio.org/download/greghulette/library/WCB_Client/1.9.2/WCB_Client-1.9.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "greghulette/library/WCB_Client/1.9.3/WCB_Client-1.9.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WCB_Client-1.9.3.tar.gz",
+    "size_bytes": 64721,
+    "sha256": "029653258fda31d87b21f6e5ad73a85a39a3e5761bfab978f080cd8493b4ad3b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/greghulette/library/WCB_Client/1.9.3/WCB_Client-1.9.3.tar.gz",
+     "https://dl.registry.platformio.org/download/greghulette/library/WCB_Client/1.9.3/WCB_Client-1.9.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "greghulette/library/WCB_Client/1.9.5/WCB_Client-1.9.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WCB_Client-1.9.5.tar.gz",
+    "size_bytes": 70330,
+    "sha256": "87843ccc3bf4018b1a407ac46058affdde032b32989cd0c554f5d2b7a442af95",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/greghulette/library/WCB_Client/1.9.5/WCB_Client-1.9.5.tar.gz",
+     "https://dl.registry.platformio.org/download/greghulette/library/WCB_Client/1.9.5/WCB_Client-1.9.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "greghulette/library/WCB_Client/1.9.7/WCB_Client-1.9.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WCB_Client-1.9.7.tar.gz",
+    "size_bytes": 86411,
+    "sha256": "c4bcfd70e58bb017a7002fb5509f45c3ee35b961fcd9dec8a5c30b51ec6c3284",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/greghulette/library/WCB_Client/1.9.7/WCB_Client-1.9.7.tar.gz",
+     "https://dl.registry.platformio.org/download/greghulette/library/WCB_Client/1.9.7/WCB_Client-1.9.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "greghulette/library/WcbCmd/0.4.0/WcbCmd-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WcbCmd-0.4.0.tar.gz",
+    "size_bytes": 17155,
+    "sha256": "4e34d6f4b0afb92f58723d8140b405ff76694e2b24d4dd0b39940cc71c5a5eeb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/greghulette/library/WcbCmd/0.4.0/WcbCmd-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/greghulette/library/WcbCmd/0.4.0/WcbCmd-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "greghulette/library/WcbCmd/0.6.0/WcbCmd-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WcbCmd-0.6.0.tar.gz",
+    "size_bytes": 22168,
+    "sha256": "21195ad1b22c0b4ddc9d940c1bfd92aaee6cac54d1c2a7323ef5f288e6489c7d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/greghulette/library/WcbCmd/0.6.0/WcbCmd-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/greghulette/library/WcbCmd/0.6.0/WcbCmd-0.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "greghulette/library/WcbCmd/0.7.0/WcbCmd-0.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WcbCmd-0.7.0.tar.gz",
+    "size_bytes": 24177,
+    "sha256": "7f7a37b81ec273f623f2a77cf64cff412e559e1e6c1d12bb6f7cfe4091b91a63",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/greghulette/library/WcbCmd/0.7.0/WcbCmd-0.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/greghulette/library/WcbCmd/0.7.0/WcbCmd-0.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "greghulette/library/WcbCmd/0.8.0/WcbCmd-0.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WcbCmd-0.8.0.tar.gz",
+    "size_bytes": 31597,
+    "sha256": "a12875350595b06ad7847639e4af58adec666871d012d75b03e66c6616d11c77",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/greghulette/library/WcbCmd/0.8.0/WcbCmd-0.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/greghulette/library/WcbCmd/0.8.0/WcbCmd-0.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "greghulette/library/WcbCmd/0.9.0/WcbCmd-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WcbCmd-0.9.0.tar.gz",
+    "size_bytes": 32645,
+    "sha256": "d6e1d91a4343c80555963b46f3acd0fb4ceef0fa278369b19fbb12a78ea4006a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/greghulette/library/WcbCmd/0.9.0/WcbCmd-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/greghulette/library/WcbCmd/0.9.0/WcbCmd-0.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "greghulette/library/WcbCmd/0.9.1/WcbCmd-0.9.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WcbCmd-0.9.1.tar.gz",
+    "size_bytes": 34618,
+    "sha256": "b5b489fd0ef6a2ffd5a715e47727522d485ef1532a8885b36be5393c7f228a0f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/greghulette/library/WcbCmd/0.9.1/WcbCmd-0.9.1.tar.gz",
+     "https://dl.registry.platformio.org/download/greghulette/library/WcbCmd/0.9.1/WcbCmd-0.9.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "greghulette/library/WcbCmd/0.9.2/WcbCmd-0.9.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WcbCmd-0.9.2.tar.gz",
+    "size_bytes": 35584,
+    "sha256": "d140ce63f6d807fb0791d0f629b32a3f301d5a8f5e0adc5bab84d6b8b78df675",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/greghulette/library/WcbCmd/0.9.2/WcbCmd-0.9.2.tar.gz",
+     "https://dl.registry.platformio.org/download/greghulette/library/WcbCmd/0.9.2/WcbCmd-0.9.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-caroe",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-caroe/library/BMA180/0.0.0+sha.6904212fb1d1/BMA180-0.0.0+sha.6904212fb1d1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMA180-0.0.0+sha.6904212fb1d1.tar.gz",
+    "size_bytes": 2049,
+    "sha256": "40beb4441441effb97a2d1f92a937ecc962f22559109fc1179328ccb3204a9a3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-caroe/library/BMA180/0.0.0%2Bsha.6904212fb1d1/BMA180-0.0.0%2Bsha.6904212fb1d1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-caroe/library/BMA180/0.0.0%2Bsha.6904212fb1d1/BMA180-0.0.0%2Bsha.6904212fb1d1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-caroe/library/HMC5883/0.0.0+sha.a5e06bb74915/HMC5883-0.0.0+sha.a5e06bb74915.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HMC5883-0.0.0+sha.a5e06bb74915.tar.gz",
+    "size_bytes": 2253,
+    "sha256": "f832f39d6600fb726d941a617b8ad102fc77f4d82b7a190a28a721d330fa9ada",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-caroe/library/HMC5883/0.0.0%2Bsha.a5e06bb74915/HMC5883-0.0.0%2Bsha.a5e06bb74915.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-caroe/library/HMC5883/0.0.0%2Bsha.a5e06bb74915/HMC5883-0.0.0%2Bsha.a5e06bb74915.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-caroe/library/ITG3200/0.0.0+sha.a3a0caa8e802/ITG3200-0.0.0+sha.a3a0caa8e802.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ITG3200-0.0.0+sha.a3a0caa8e802.tar.gz",
+    "size_bytes": 1871,
+    "sha256": "f1538e2903087efd0378a802d6a32f29855be05ba0da229be71140c9e5ca2c31",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-caroe/library/ITG3200/0.0.0%2Bsha.a3a0caa8e802/ITG3200-0.0.0%2Bsha.a3a0caa8e802.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-caroe/library/ITG3200/0.0.0%2Bsha.a3a0caa8e802/ITG3200-0.0.0%2Bsha.a3a0caa8e802.tar.gz"
+    ]
+   }
+  }
+ ]
+}

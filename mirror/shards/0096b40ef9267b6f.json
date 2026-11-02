@@ -1,0 +1,399 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/themastercoder007",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "themastercoder007/library/embedded-react/0.1.1/embedded-react-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "embedded-react-0.1.1.tar.gz",
+    "size_bytes": 8107005,
+    "sha256": "019a818ffb17e16465a8710cbbfcf99d56cbe01856b277eb90cdef4830b95a84",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/themastercoder007/library/embedded-react/0.1.1/embedded-react-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/themastercoder007/library/embedded-react/0.1.1/embedded-react-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "themastercoder007/library/embedded-react/0.10.0/embedded-react-0.10.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "embedded-react-0.10.0.tar.gz",
+    "size_bytes": 10078617,
+    "sha256": "9bf921e866ae6d2b0c0eb6af89feffdd777b51cc13a05c152e647ae71db176a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/themastercoder007/library/embedded-react/0.10.0/embedded-react-0.10.0.tar.gz",
+     "https://dl.registry.platformio.org/download/themastercoder007/library/embedded-react/0.10.0/embedded-react-0.10.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "themastercoder007/library/embedded-react/0.10.1/embedded-react-0.10.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "embedded-react-0.10.1.tar.gz",
+    "size_bytes": 10079845,
+    "sha256": "9881ee361ed51fc1de902be7e16815ed67a627d95dbb1eaf91169e4489bd3f5f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/themastercoder007/library/embedded-react/0.10.1/embedded-react-0.10.1.tar.gz",
+     "https://dl.registry.platformio.org/download/themastercoder007/library/embedded-react/0.10.1/embedded-react-0.10.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "themastercoder007/library/embedded-react/0.10.2/embedded-react-0.10.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "embedded-react-0.10.2.tar.gz",
+    "size_bytes": 10122816,
+    "sha256": "df2765aa2e02821d63eabb426b9003e306570ad76601c5cfa6ec5dd10145f9b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/themastercoder007/library/embedded-react/0.10.2/embedded-react-0.10.2.tar.gz",
+     "https://dl.registry.platformio.org/download/themastercoder007/library/embedded-react/0.10.2/embedded-react-0.10.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "themastercoder007/library/embedded-react/0.11.0/embedded-react-0.11.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "embedded-react-0.11.0.tar.gz",
+    "size_bytes": 12025290,
+    "sha256": "74574ea430914288436d0599027351f867d33327122ecffa82858ad31d052729",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/themastercoder007/library/embedded-react/0.11.0/embedded-react-0.11.0.tar.gz",
+     "https://dl.registry.platformio.org/download/themastercoder007/library/embedded-react/0.11.0/embedded-react-0.11.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "themastercoder007/library/embedded-react/0.11.1/embedded-react-0.11.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "embedded-react-0.11.1.tar.gz",
+    "size_bytes": 12024633,
+    "sha256": "312392fedd4e405a8d093bd9ecb996fd82e19f4d6c311046bc1c92ea9a6b79f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/themastercoder007/library/embedded-react/0.11.1/embedded-react-0.11.1.tar.gz",
+     "https://dl.registry.platformio.org/download/themastercoder007/library/embedded-react/0.11.1/embedded-react-0.11.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "themastercoder007/library/embedded-react/0.12.0/embedded-react-0.12.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "embedded-react-0.12.0.tar.gz",
+    "size_bytes": 12467083,
+    "sha256": "90f923a7547d5bdbb9247e89da2edc521f085b156c3ed0eff7c01849587d26d2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/themastercoder007/library/embedded-react/0.12.0/embedded-react-0.12.0.tar.gz",
+     "https://dl.registry.platformio.org/download/themastercoder007/library/embedded-react/0.12.0/embedded-react-0.12.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "themastercoder007/library/embedded-react/0.13.0/embedded-react-0.13.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "embedded-react-0.13.0.tar.gz",
+    "size_bytes": 20658538,
+    "sha256": "238147420aa07e24831222b9c27159c13a81e75b80e5992ea28b3b59e8634cda",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/themastercoder007/library/embedded-react/0.13.0/embedded-react-0.13.0.tar.gz",
+     "https://dl.registry.platformio.org/download/themastercoder007/library/embedded-react/0.13.0/embedded-react-0.13.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "themastercoder007/library/embedded-react/0.14.0/embedded-react-0.14.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "embedded-react-0.14.0.tar.gz",
+    "size_bytes": 22931410,
+    "sha256": "dc421b0532177710c3a38412b8c186c63957c4b01a22f6ab6a652967f6c877ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/themastercoder007/library/embedded-react/0.14.0/embedded-react-0.14.0.tar.gz",
+     "https://dl.registry.platformio.org/download/themastercoder007/library/embedded-react/0.14.0/embedded-react-0.14.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "themastercoder007/library/embedded-react/0.14.1/embedded-react-0.14.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "embedded-react-0.14.1.tar.gz",
+    "size_bytes": 22932257,
+    "sha256": "3aae5d13461a1b44129c270e0db924369c9fdd7b6d45dfdc7e0cc329dde7f2e3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/themastercoder007/library/embedded-react/0.14.1/embedded-react-0.14.1.tar.gz",
+     "https://dl.registry.platformio.org/download/themastercoder007/library/embedded-react/0.14.1/embedded-react-0.14.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "themastercoder007/library/embedded-react/0.15.0/embedded-react-0.15.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "embedded-react-0.15.0.tar.gz",
+    "size_bytes": 22879479,
+    "sha256": "3ede0e6f702a4f2341e07763c8a1aa0917d581f72e7e1aea21c997edb9284672",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/themastercoder007/library/embedded-react/0.15.0/embedded-react-0.15.0.tar.gz",
+     "https://dl.registry.platformio.org/download/themastercoder007/library/embedded-react/0.15.0/embedded-react-0.15.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "themastercoder007/library/embedded-react/0.16.0/embedded-react-0.16.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "embedded-react-0.16.0.tar.gz",
+    "size_bytes": 23543940,
+    "sha256": "a39b6b0b71c4ea67b8052e5d2304bacf7b1f4c160760773514427c222fac6db7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/themastercoder007/library/embedded-react/0.16.0/embedded-react-0.16.0.tar.gz",
+     "https://dl.registry.platformio.org/download/themastercoder007/library/embedded-react/0.16.0/embedded-react-0.16.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "themastercoder007/library/embedded-react/0.17.0/embedded-react-0.17.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "embedded-react-0.17.0.tar.gz",
+    "size_bytes": 23544167,
+    "sha256": "ebbdf4058b470cb3e68614a3ced838c580a5b02c9bae4482c3aa5cbee7bd8004",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/themastercoder007/library/embedded-react/0.17.0/embedded-react-0.17.0.tar.gz",
+     "https://dl.registry.platformio.org/download/themastercoder007/library/embedded-react/0.17.0/embedded-react-0.17.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "themastercoder007/library/embedded-react/0.18.0/embedded-react-0.18.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "embedded-react-0.18.0.tar.gz",
+    "size_bytes": 25831947,
+    "sha256": "3bff2853088d059a7c4655af04f9a6bca17261c79c972d870cb7e08f059d12aa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/themastercoder007/library/embedded-react/0.18.0/embedded-react-0.18.0.tar.gz",
+     "https://dl.registry.platformio.org/download/themastercoder007/library/embedded-react/0.18.0/embedded-react-0.18.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "themastercoder007/library/embedded-react/0.19.0/embedded-react-0.19.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "embedded-react-0.19.0.tar.gz",
+    "size_bytes": 25831145,
+    "sha256": "112835a1ebbf772ae88a2bea20df80005293f3ea4df8fc6a6c13e8d8cdb2bdad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/themastercoder007/library/embedded-react/0.19.0/embedded-react-0.19.0.tar.gz",
+     "https://dl.registry.platformio.org/download/themastercoder007/library/embedded-react/0.19.0/embedded-react-0.19.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "themastercoder007/library/embedded-react/0.2.0/embedded-react-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "embedded-react-0.2.0.tar.gz",
+    "size_bytes": 8111493,
+    "sha256": "05df69a3ba66ebe5d5557cf2b6e94920a92a16c5af353c33bb41c1d59f1334dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/themastercoder007/library/embedded-react/0.2.0/embedded-react-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/themastercoder007/library/embedded-react/0.2.0/embedded-react-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "themastercoder007/library/embedded-react/0.2.1/embedded-react-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "embedded-react-0.2.1.tar.gz",
+    "size_bytes": 8111667,
+    "sha256": "8530c56f66605677e40dc5d2fa719a0b180caf8c019a0899a9e785da21716bcd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/themastercoder007/library/embedded-react/0.2.1/embedded-react-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/themastercoder007/library/embedded-react/0.2.1/embedded-react-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "themastercoder007/library/embedded-react/0.2.2/embedded-react-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "embedded-react-0.2.2.tar.gz",
+    "size_bytes": 8111501,
+    "sha256": "3ece98f34c3df1a21ac1e143585f29b0a7df0357104cd9c2707f0912119f7218",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/themastercoder007/library/embedded-react/0.2.2/embedded-react-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/themastercoder007/library/embedded-react/0.2.2/embedded-react-0.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "themastercoder007/library/embedded-react/0.2.3/embedded-react-0.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "embedded-react-0.2.3.tar.gz",
+    "size_bytes": 8111907,
+    "sha256": "6c1cff8576a6ac85d36343b3f95fac2f99fef645cec8ddf6ed70416279db1065",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/themastercoder007/library/embedded-react/0.2.3/embedded-react-0.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/themastercoder007/library/embedded-react/0.2.3/embedded-react-0.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "themastercoder007/library/embedded-react/0.3.0/embedded-react-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "embedded-react-0.3.0.tar.gz",
+    "size_bytes": 8112442,
+    "sha256": "932a049d19bb823745f4d041aed19395f4f16fd5f2a568ca8f72fd032505abb7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/themastercoder007/library/embedded-react/0.3.0/embedded-react-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/themastercoder007/library/embedded-react/0.3.0/embedded-react-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "themastercoder007/library/embedded-react/0.4.0/embedded-react-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "embedded-react-0.4.0.tar.gz",
+    "size_bytes": 8187324,
+    "sha256": "ec73bdfceb9d71707dbb120f854c0e711550ae567c73052025a6f10104113f3b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/themastercoder007/library/embedded-react/0.4.0/embedded-react-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/themastercoder007/library/embedded-react/0.4.0/embedded-react-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "themastercoder007/library/embedded-react/0.4.1/embedded-react-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "embedded-react-0.4.1.tar.gz",
+    "size_bytes": 8561339,
+    "sha256": "a62a50d51f3303857d904bb97b9f47ecbcd37b815fb12e281a377a6bcea9e8fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/themastercoder007/library/embedded-react/0.4.1/embedded-react-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/themastercoder007/library/embedded-react/0.4.1/embedded-react-0.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "themastercoder007/library/embedded-react/0.5.0/embedded-react-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "embedded-react-0.5.0.tar.gz",
+    "size_bytes": 8561298,
+    "sha256": "dc8ed9164c95bd15e1c8dc28632048a26c9781060102f81423b5f1005fc245d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/themastercoder007/library/embedded-react/0.5.0/embedded-react-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/themastercoder007/library/embedded-react/0.5.0/embedded-react-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "themastercoder007/library/embedded-react/0.5.1/embedded-react-0.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "embedded-react-0.5.1.tar.gz",
+    "size_bytes": 8561376,
+    "sha256": "434b154096a2b6d927f9f4b9ddab573cb4296dd8f033fd56c14e8df92bb37539",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/themastercoder007/library/embedded-react/0.5.1/embedded-react-0.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/themastercoder007/library/embedded-react/0.5.1/embedded-react-0.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "themastercoder007/library/embedded-react/0.5.2/embedded-react-0.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "embedded-react-0.5.2.tar.gz",
+    "size_bytes": 8561064,
+    "sha256": "93301c3e3b831ced012450f205833733aee87ec17e3689349aa59957884624be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/themastercoder007/library/embedded-react/0.5.2/embedded-react-0.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/themastercoder007/library/embedded-react/0.5.2/embedded-react-0.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "themastercoder007/library/embedded-react/0.5.3/embedded-react-0.5.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "embedded-react-0.5.3.tar.gz",
+    "size_bytes": 8561087,
+    "sha256": "ea3f3ad78168a75d89aeb6c7a98f9780d956bf0d5130799a7da8b226f37404a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/themastercoder007/library/embedded-react/0.5.3/embedded-react-0.5.3.tar.gz",
+     "https://dl.registry.platformio.org/download/themastercoder007/library/embedded-react/0.5.3/embedded-react-0.5.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "themastercoder007/library/embedded-react/0.6.0/embedded-react-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "embedded-react-0.6.0.tar.gz",
+    "size_bytes": 8580748,
+    "sha256": "6168853150ccfdd6759bc3ce3ca355451c4646c7adac5fdfc67a6499d15649ac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/themastercoder007/library/embedded-react/0.6.0/embedded-react-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/themastercoder007/library/embedded-react/0.6.0/embedded-react-0.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "themastercoder007/library/embedded-react/0.7.0/embedded-react-0.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "embedded-react-0.7.0.tar.gz",
+    "size_bytes": 9008087,
+    "sha256": "a2a11d73b47b63f5cb4d4b1107d8a1eb28e8bac6a31fde6cfab05e2275f06430",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/themastercoder007/library/embedded-react/0.7.0/embedded-react-0.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/themastercoder007/library/embedded-react/0.7.0/embedded-react-0.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "themastercoder007/library/embedded-react/0.8.0/embedded-react-0.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "embedded-react-0.8.0.tar.gz",
+    "size_bytes": 9008489,
+    "sha256": "a84a06419e9b65b9cb01baa023fe46f241368f210936a242ba7feed27f6bd162",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/themastercoder007/library/embedded-react/0.8.0/embedded-react-0.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/themastercoder007/library/embedded-react/0.8.0/embedded-react-0.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "themastercoder007/library/embedded-react/0.9.0/embedded-react-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "embedded-react-0.9.0.tar.gz",
+    "size_bytes": 10068276,
+    "sha256": "982027d3f6def8ec42feca82e2f1009a7df0fd6aadfdfa080210965bfd3c8803",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/themastercoder007/library/embedded-react/0.9.0/embedded-react-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/themastercoder007/library/embedded-react/0.9.0/embedded-react-0.9.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

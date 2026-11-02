@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-wanzq",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-wanzq/library/SoftPWM/0.0.0+sha.6d557e90686e/SoftPWM-0.0.0+sha.6d557e90686e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SoftPWM-0.0.0+sha.6d557e90686e.tar.gz",
+    "size_bytes": 1656,
+    "sha256": "e4d8a8c2c8981758378e8f76b25d665ebcbda42ff9b1fd45316a6ec48ebd620f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wanzq/library/SoftPWM/0.0.0%2Bsha.6d557e90686e/SoftPWM-0.0.0%2Bsha.6d557e90686e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wanzq/library/SoftPWM/0.0.0%2Bsha.6d557e90686e/SoftPWM-0.0.0%2Bsha.6d557e90686e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

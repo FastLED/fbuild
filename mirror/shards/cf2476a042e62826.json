@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/warhog",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "warhog/library/MedianFilterLib2/1.0.0/MedianFilterLib2-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MedianFilterLib2-1.0.0.tar.gz",
+    "size_bytes": 7657,
+    "sha256": "a6068f231aa6a92203585b6f18862e0a556d3b768ccae57c1ca3a6c8be6626f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/warhog/library/MedianFilterLib2/1.0.0/MedianFilterLib2-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/warhog/library/MedianFilterLib2/1.0.0/MedianFilterLib2-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/emilio1625",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "emilio1625/library/Motor%20Control%20Shield%20v1%20library/1.0.0/MotorControlShieldv1library-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MotorControlShieldv1library-1.0.0.tar.gz",
+    "size_bytes": 4653,
+    "sha256": "ee8c9f0f8c36ee75a5533ab9e352e0ae99505e41c05f4f1b117a5ca691589012",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/emilio1625/library/Motor%2520Control%2520Shield%2520v1%2520library/1.0.0/MotorControlShieldv1library-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/emilio1625/library/Motor%20Control%20Shield%20v1%20library/1.0.0/MotorControlShieldv1library-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

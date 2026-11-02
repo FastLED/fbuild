@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/neonode-inc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "neonode-inc/library/zForce%20Air%20Library/1.4.0/zForceAirLibrary-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "zForceAirLibrary-1.4.0.tar.gz",
+    "size_bytes": 22879,
+    "sha256": "e9656da897643e9f746f1fa647de70c5024e1abf60ef4710aba3bc4a4619d523",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/neonode-inc/library/zForce%2520Air%2520Library/1.4.0/zForceAirLibrary-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/neonode-inc/library/zForce%20Air%20Library/1.4.0/zForceAirLibrary-1.4.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-cubebite",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-cubebite/library/cube_crc_16/0.0.0+sha.e30d6ab46e27/cube_crc_16-0.0.0+sha.e30d6ab46e27.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cube_crc_16-0.0.0+sha.e30d6ab46e27.tar.gz",
+    "size_bytes": 1481,
+    "sha256": "ca9ae1f8d3ec5392f21d16ff28b95292a735d01dc4bd9fdd2bc928a27249bfc9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-cubebite/library/cube_crc_16/0.0.0%2Bsha.e30d6ab46e27/cube_crc_16-0.0.0%2Bsha.e30d6ab46e27.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-cubebite/library/cube_crc_16/0.0.0%2Bsha.e30d6ab46e27/cube_crc_16-0.0.0%2Bsha.e30d6ab46e27.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-cubebite/library/cube_crypto/0.0.0+sha.77ed53bde81a/cube_crypto-0.0.0+sha.77ed53bde81a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cube_crypto-0.0.0+sha.77ed53bde81a.tar.gz",
+    "size_bytes": 4440,
+    "sha256": "968624b7d0f44ca0885b47006c0a7327e72cf95499689d042c969d5078596b7d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-cubebite/library/cube_crypto/0.0.0%2Bsha.77ed53bde81a/cube_crypto-0.0.0%2Bsha.77ed53bde81a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-cubebite/library/cube_crypto/0.0.0%2Bsha.77ed53bde81a/cube_crypto-0.0.0%2Bsha.77ed53bde81a.tar.gz"
+    ]
+   }
+  }
+ ]
+}

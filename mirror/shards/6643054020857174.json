@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nicholasberryman",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nicholasberryman/library/GenericMotorDriver/0.7.4/GenericMotorDriver-0.7.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GenericMotorDriver-0.7.4.tar.gz",
+    "size_bytes": 2168,
+    "sha256": "5096f4702826b7443cf1d8092d8f3bb197376d63af92bf9a531afff46dce2df4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nicholasberryman/library/GenericMotorDriver/0.7.4/GenericMotorDriver-0.7.4.tar.gz",
+     "https://dl.registry.platformio.org/download/nicholasberryman/library/GenericMotorDriver/0.7.4/GenericMotorDriver-0.7.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nicholasberryman/library/USBControllerLib/1.0.0/USBControllerLib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "USBControllerLib-1.0.0.tar.gz",
+    "size_bytes": 2633,
+    "sha256": "95c09b697eee96c9b6bec088d2a2ee5379ab9bdd4d7c80e160439a4e7989fa73",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nicholasberryman/library/USBControllerLib/1.0.0/USBControllerLib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nicholasberryman/library/USBControllerLib/1.0.0/USBControllerLib-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

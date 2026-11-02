@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/locple",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "locple/library/LiquidCrystal%20I2C%20Multilingual/2.0.2/LiquidCrystalI2CMultilingual-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LiquidCrystalI2CMultilingual-2.0.2.tar.gz",
+    "size_bytes": 30592,
+    "sha256": "1072a4aafc6d3214ddbd1d3bc43e4c65f86243b910515e2f500719b0d142e849",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/locple/library/LiquidCrystal%2520I2C%2520Multilingual/2.0.2/LiquidCrystalI2CMultilingual-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/locple/library/LiquidCrystal%20I2C%20Multilingual/2.0.2/LiquidCrystalI2CMultilingual-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "locple/library/LiquidCrystal_I2C_UTF8/1.2.2/LiquidCrystal_I2C_UTF8-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LiquidCrystal_I2C_UTF8-1.2.2.tar.gz",
+    "size_bytes": 18188,
+    "sha256": "44bdc966be9791860f5f91488bf4a714c8a0e5042dfbdf009e06ada947ad290f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/locple/library/LiquidCrystal_I2C_UTF8/1.2.2/LiquidCrystal_I2C_UTF8-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/locple/library/LiquidCrystal_I2C_UTF8/1.2.2/LiquidCrystal_I2C_UTF8-1.2.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

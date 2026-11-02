@@ -1,0 +1,230 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bertmelis",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bertmelis/library/DHT/1.0.1/DHT-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DHT-1.0.1.tar.gz",
+    "size_bytes": 5519,
+    "sha256": "4596f745707c68692a493b7d44be235e0193dbbbaa31a4b7bacb759765a02d66",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bertmelis/library/DHT/1.0.1/DHT-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bertmelis/library/DHT/1.0.1/DHT-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bertmelis/library/MemoryPool/0.1.0/MemoryPool-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MemoryPool-0.1.0.tar.gz",
+    "size_bytes": 6565,
+    "sha256": "91476f039fe6d30108d94c65f196ae99a6c1282ec718a2d2d8634005be79ccb0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bertmelis/library/MemoryPool/0.1.0/MemoryPool-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bertmelis/library/MemoryPool/0.1.0/MemoryPool-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bertmelis/library/SDS011/1.0.0/SDS011-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SDS011-1.0.0.tar.gz",
+    "size_bytes": 4812,
+    "sha256": "67da7ee3dcf4cf471c86d4f7aa1331ebef53cc92c1af1987d52c1dce905a1c8f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bertmelis/library/SDS011/1.0.0/SDS011-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bertmelis/library/SDS011/1.0.0/SDS011-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bertmelis/library/Ticker-esp32/1.1.0/Ticker-esp32-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ticker-esp32-1.1.0.tar.gz",
+    "size_bytes": 12673,
+    "sha256": "e6881ac43a6f38753d8e1ad8276367eb30dbad91020bd605c3922ec6b899a532",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bertmelis/library/Ticker-esp32/1.1.0/Ticker-esp32-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bertmelis/library/Ticker-esp32/1.1.0/Ticker-esp32-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bertmelis/library/USBHostSerial/0.1.0/USBHostSerial-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "USBHostSerial-0.1.0.tar.gz",
+    "size_bytes": 89310,
+    "sha256": "dc1d9c07d266c3040306d57007748e792c0d84983e006a776205ae21a9de5135",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bertmelis/library/USBHostSerial/0.1.0/USBHostSerial-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bertmelis/library/USBHostSerial/0.1.0/USBHostSerial-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bertmelis/library/VitoWiFi/1.1.2/VitoWiFi-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VitoWiFi-1.1.2.tar.gz",
+    "size_bytes": 19238,
+    "sha256": "3491958060ca24a94d26fed8133600d3d5bc007346e51b8d68877db02cdbe97a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bertmelis/library/VitoWiFi/1.1.2/VitoWiFi-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bertmelis/library/VitoWiFi/1.1.2/VitoWiFi-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bertmelis/library/VitoWiFi/1.1.3/VitoWiFi-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VitoWiFi-1.1.3.tar.gz",
+    "size_bytes": 19426,
+    "sha256": "b0be204e51dc066d9bc3916b5d85398c83ab3529cfdad2c904cd5378bd83e110",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bertmelis/library/VitoWiFi/1.1.3/VitoWiFi-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/bertmelis/library/VitoWiFi/1.1.3/VitoWiFi-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bertmelis/library/VitoWiFi/3.0.1/VitoWiFi-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VitoWiFi-3.0.1.tar.gz",
+    "size_bytes": 23397,
+    "sha256": "27cfe552de1872d829e969e0015b8f0d6b70dc60771738d80ed111fa8abf5b0a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bertmelis/library/VitoWiFi/3.0.1/VitoWiFi-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bertmelis/library/VitoWiFi/3.0.1/VitoWiFi-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bertmelis/library/VitoWiFi/3.0.2/VitoWiFi-3.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VitoWiFi-3.0.2.tar.gz",
+    "size_bytes": 29080,
+    "sha256": "24845453f7000d2090145593ab8252dcaa5a6e7c1b1f1ad4daa65570624ea703",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bertmelis/library/VitoWiFi/3.0.2/VitoWiFi-3.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bertmelis/library/VitoWiFi/3.0.2/VitoWiFi-3.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bertmelis/library/esp32DHT/1.0.1/esp32DHT-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32DHT-1.0.1.tar.gz",
+    "size_bytes": 5668,
+    "sha256": "03a26a78c34d847ac1ecaded07ca6fb859e55fb5ff909de7e25185b04a5dfd20",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bertmelis/library/esp32DHT/1.0.1/esp32DHT-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bertmelis/library/esp32DHT/1.0.1/esp32DHT-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bertmelis/library/esp32ModbusRTU/0.0.2/esp32ModbusRTU-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32ModbusRTU-0.0.2.tar.gz",
+    "size_bytes": 111283,
+    "sha256": "cf4bc28ec7fc96c21b136ee57c6fa04802841526d75ee005cf2fe4034cd777c3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bertmelis/library/esp32ModbusRTU/0.0.2/esp32ModbusRTU-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bertmelis/library/esp32ModbusRTU/0.0.2/esp32ModbusRTU-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bertmelis/library/esp32ModbusTCP/0.0.1/esp32ModbusTCP-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32ModbusTCP-0.0.1.tar.gz",
+    "size_bytes": 7294,
+    "sha256": "fb4586b0cea2e060e62a8b07ff4a5ebdc45b64860deb036137fd84d73ab3a310",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bertmelis/library/esp32ModbusTCP/0.0.1/esp32ModbusTCP-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bertmelis/library/esp32ModbusTCP/0.0.1/esp32ModbusTCP-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bertmelis/library/espMqttClient/1.7.0/espMqttClient-1.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "espMqttClient-1.7.0.tar.gz",
+    "size_bytes": 38580,
+    "sha256": "f8f1d6616c731694ceebad500e40854f79c71bd2b11c6a9cc2a8a349a306f5a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bertmelis/library/espMqttClient/1.7.0/espMqttClient-1.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bertmelis/library/espMqttClient/1.7.0/espMqttClient-1.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bertmelis/library/espMqttClient/1.7.1/espMqttClient-1.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "espMqttClient-1.7.1.tar.gz",
+    "size_bytes": 41268,
+    "sha256": "ce063fc724bdc301f8c3ae70e422723a127ba76ef1c27a0e5cdbb8939e273273",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bertmelis/library/espMqttClient/1.7.1/espMqttClient-1.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bertmelis/library/espMqttClient/1.7.1/espMqttClient-1.7.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bertmelis/library/espMqttClient/1.7.2/espMqttClient-1.7.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "espMqttClient-1.7.2.tar.gz",
+    "size_bytes": 41282,
+    "sha256": "d7cc5c584e0db913ab77d6daf0d9bcc9eb25c58d5afdb23a726ffade3d3fae2e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bertmelis/library/espMqttClient/1.7.2/espMqttClient-1.7.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bertmelis/library/espMqttClient/1.7.2/espMqttClient-1.7.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bertmelis/library/espMqttClient/1.7.3/espMqttClient-1.7.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "espMqttClient-1.7.3.tar.gz",
+    "size_bytes": 42559,
+    "sha256": "a73005c3ced77a80c2744f0c1654e75638f338dff81e5d514663e8b6ab03bc95",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bertmelis/library/espMqttClient/1.7.3/espMqttClient-1.7.3.tar.gz",
+     "https://dl.registry.platformio.org/download/bertmelis/library/espMqttClient/1.7.3/espMqttClient-1.7.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bertmelis/library/espMqttManager/0.0.1/espMqttManager-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "espMqttManager-0.0.1.tar.gz",
+    "size_bytes": 14260,
+    "sha256": "3fb1da2ebd0bcf5fe670a3634af765c77740b3e350839832e9a1b2253eb2a4c9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bertmelis/library/espMqttManager/0.0.1/espMqttManager-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bertmelis/library/espMqttManager/0.0.1/espMqttManager-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

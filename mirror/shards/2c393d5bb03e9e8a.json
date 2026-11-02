@@ -1,0 +1,152 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/makerlabvn",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "makerlabvn/library/BlynkGate/1.0.3/BlynkGate-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BlynkGate-1.0.3.tar.gz",
+    "size_bytes": 8052,
+    "sha256": "b81f3bea3960ff95a665881f06c739aad0dcc6feb05af4bc7675209ba135ca75",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/makerlabvn/library/BlynkGate/1.0.3/BlynkGate-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/makerlabvn/library/BlynkGate/1.0.3/BlynkGate-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "makerlabvn/library/HCSR04%20ultrasonic%20MKL/3.0.3/HCSR04ultrasonicMKL-3.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HCSR04ultrasonicMKL-3.0.3.tar.gz",
+    "size_bytes": 2850,
+    "sha256": "a6300580d4c5bd71862482fe7abac451a3012cd1240bc263e8b42a27ccdcc711",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/makerlabvn/library/HCSR04%2520ultrasonic%2520MKL/3.0.3/HCSR04ultrasonicMKL-3.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/makerlabvn/library/HCSR04%20ultrasonic%20MKL/3.0.3/HCSR04ultrasonicMKL-3.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "makerlabvn/library/MAKERLABVN/1.0.14/MAKERLABVN-1.0.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAKERLABVN-1.0.14.tar.gz",
+    "size_bytes": 25697,
+    "sha256": "12572269f6b0da026b94f7506822aa9240c339f37746843f327aa655a23aec1e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/makerlabvn/library/MAKERLABVN/1.0.14/MAKERLABVN-1.0.14.tar.gz",
+     "https://dl.registry.platformio.org/download/makerlabvn/library/MAKERLABVN/1.0.14/MAKERLABVN-1.0.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "makerlabvn/library/MKL_DHT%20sensor%20library/2.4.6/MKL_DHTsensorlibrary-2.4.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MKL_DHTsensorlibrary-2.4.6.tar.gz",
+    "size_bytes": 9787,
+    "sha256": "b1ab89b7bf5b9be7cfb2103b9349a64281c819215d5d127d3bfd42ca382dc4b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/makerlabvn/library/MKL_DHT%2520sensor%2520library/2.4.6/MKL_DHTsensorlibrary-2.4.6.tar.gz",
+     "https://dl.registry.platformio.org/download/makerlabvn/library/MKL_DHT%20sensor%20library/2.4.6/MKL_DHTsensorlibrary-2.4.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "makerlabvn/library/MKL_DS18B20/1.2.3/MKL_DS18B20-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MKL_DS18B20-1.2.3.tar.gz",
+    "size_bytes": 12113,
+    "sha256": "0023c403242b66a67fccd3edb2d8c520fa7ff5c9777f4347ce6b3a2caa8f1965",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/makerlabvn/library/MKL_DS18B20/1.2.3/MKL_DS18B20-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/makerlabvn/library/MKL_DS18B20/1.2.3/MKL_DS18B20-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "makerlabvn/library/MKL_RTClib/1.0.1/MKL_RTClib-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MKL_RTClib-1.0.1.tar.gz",
+    "size_bytes": 22260,
+    "sha256": "beac09a7cf1a6fc790c336f6f0a6a352d1530099d978a44b838711afd209e2e1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/makerlabvn/library/MKL_RTClib/1.0.1/MKL_RTClib-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/makerlabvn/library/MKL_RTClib/1.0.1/MKL_RTClib-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "makerlabvn/library/Makerlabvn_SimpleMotor/1.0.2/Makerlabvn_SimpleMotor-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Makerlabvn_SimpleMotor-1.0.2.tar.gz",
+    "size_bytes": 4661,
+    "sha256": "35bbb6dc92edc14c8aad1634eda3b3bfcc9f092a850ce3e5f1a6e9da02636bdf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/makerlabvn/library/Makerlabvn_SimpleMotor/1.0.2/Makerlabvn_SimpleMotor-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/makerlabvn/library/Makerlabvn_SimpleMotor/1.0.2/Makerlabvn_SimpleMotor-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "makerlabvn/library/Makerlabvn_kit_CIA0_BOT/1.0.0/Makerlabvn_kit_CIA0_BOT-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Makerlabvn_kit_CIA0_BOT-1.0.0.tar.gz",
+    "size_bytes": 5429,
+    "sha256": "5a39055f155a5fabb0a4101408ba29827987ae622fe4b3c5ef862cb7366685ab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/makerlabvn/library/Makerlabvn_kit_CIA0_BOT/1.0.0/Makerlabvn_kit_CIA0_BOT-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/makerlabvn/library/Makerlabvn_kit_CIA0_BOT/1.0.0/Makerlabvn_kit_CIA0_BOT-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "makerlabvn/library/Waterproof_Ultrasonic/1.0.1/Waterproof_Ultrasonic-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Waterproof_Ultrasonic-1.0.1.tar.gz",
+    "size_bytes": 6749,
+    "sha256": "16f384c41ad6bd1af08dae216e4f443e3d22c11056e661d78f79378c613a7ac2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/makerlabvn/library/Waterproof_Ultrasonic/1.0.1/Waterproof_Ultrasonic-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/makerlabvn/library/Waterproof_Ultrasonic/1.0.1/Waterproof_Ultrasonic-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "makerlabvn/library/kxnTask/1.0.3/kxnTask-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "kxnTask-1.0.3.tar.gz",
+    "size_bytes": 7842,
+    "sha256": "b2017571554754ce11a55f8a504953a60036a76bfd3d1559de4371b90395de6f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/makerlabvn/library/kxnTask/1.0.3/kxnTask-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/makerlabvn/library/kxnTask/1.0.3/kxnTask-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "makerlabvn/library/kxnTask/1.0.4/kxnTask-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "kxnTask-1.0.4.tar.gz",
+    "size_bytes": 7847,
+    "sha256": "cd5b1b3662c1770a539d4ab4166ebe7f5498b2c22c3d847589bd924fc359ab39",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/makerlabvn/library/kxnTask/1.0.4/kxnTask-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/makerlabvn/library/kxnTask/1.0.4/kxnTask-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

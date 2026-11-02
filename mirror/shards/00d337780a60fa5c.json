@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/scrath1",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "scrath1/library/BitBang-UART/1.0.0/BitBang-UART-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BitBang-UART-1.0.0.tar.gz",
+    "size_bytes": 16025,
+    "sha256": "5f2b6b4e38d9d0d4afae86c4ecafdb64606c943e44a6bf68dbb3dd8004717660",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/scrath1/library/BitBang-UART/1.0.0/BitBang-UART-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/scrath1/library/BitBang-UART/1.0.0/BitBang-UART-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

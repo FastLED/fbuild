@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/maddy0723",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "maddy0723/library/Simple-Function/1.0.0/Simple-Function-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Simple-Function-1.0.0.tar.gz",
+    "size_bytes": 2280,
+    "sha256": "ee89907ebda42d724841586c0d8c003acf3b6c8fce8ff223b7934669f573cf62",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maddy0723/library/Simple-Function/1.0.0/Simple-Function-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/maddy0723/library/Simple-Function/1.0.0/Simple-Function-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

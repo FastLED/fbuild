@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ivankravets",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ivankravets/library/OneWire/0.0.0+sha.7bd102cb73e0/OneWire-0.0.0+sha.7bd102cb73e0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OneWire-0.0.0+sha.7bd102cb73e0.tar.gz",
+    "size_bytes": 5973,
+    "sha256": "ea7a73c220f6bd48ffb9e27221b11f3b096c910947fb6d9ce8973e3fc6135d3a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ivankravets/library/OneWire/0.0.0%2Bsha.7bd102cb73e0/OneWire-0.0.0%2Bsha.7bd102cb73e0.tar.gz",
+     "https://dl.registry.platformio.org/download/ivankravets/library/OneWire/0.0.0%2Bsha.7bd102cb73e0/OneWire-0.0.0%2Bsha.7bd102cb73e0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

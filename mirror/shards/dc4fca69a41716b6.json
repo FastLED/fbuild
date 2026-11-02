@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/smartpanle",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "smartpanle/library/PanelLan/0.0.1/PanelLan-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PanelLan-0.0.1.tar.gz",
+    "size_bytes": 24923,
+    "sha256": "30cd63de161370c96e9ff3756003e4287112425d2e2b032cf61d58d6ce2682bf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/smartpanle/library/PanelLan/0.0.1/PanelLan-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/smartpanle/library/PanelLan/0.0.1/PanelLan-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "smartpanle/library/PanelLan/0.0.4/PanelLan-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PanelLan-0.0.4.tar.gz",
+    "size_bytes": 54209,
+    "sha256": "74e66cd826de8b8b7097b910903d1cb6af5a0c9873de0322b6cafe5d3fe133d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/smartpanle/library/PanelLan/0.0.4/PanelLan-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/smartpanle/library/PanelLan/0.0.4/PanelLan-0.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "smartpanle/library/PanelLan/0.0.5/PanelLan-0.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PanelLan-0.0.5.tar.gz",
+    "size_bytes": 54217,
+    "sha256": "6fe80039b7dcf9da921163adf6b8f1b1ab0bfb03820da5efb2a2452c6d327eeb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/smartpanle/library/PanelLan/0.0.5/PanelLan-0.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/smartpanle/library/PanelLan/0.0.5/PanelLan-0.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

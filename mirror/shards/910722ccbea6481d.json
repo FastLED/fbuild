@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pkstrsk",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pkstrsk/library/FSRButton/1.0.4/FSRButton-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FSRButton-1.0.4.tar.gz",
+    "size_bytes": 2721,
+    "sha256": "003dc58c8dd5b7a1b0511bba69c3a5e84393bba18a8be963d19d45fb7e7a86e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pkstrsk/library/FSRButton/1.0.4/FSRButton-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/pkstrsk/library/FSRButton/1.0.4/FSRButton-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

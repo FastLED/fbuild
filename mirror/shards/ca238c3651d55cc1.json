@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/facundopumilla",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "facundopumilla/library/MQ137/0.5/MQ137-0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQ137-0.5.tar.gz",
+    "size_bytes": 3566,
+    "sha256": "a195740417d98cac07cce63862a9830ecbaa91a863611534e4687af0d349ea4b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/facundopumilla/library/MQ137/0.5/MQ137-0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/facundopumilla/library/MQ137/0.5/MQ137-0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

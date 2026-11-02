@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/unera",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "unera/library/fiber/0.0.1/fiber-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "fiber-0.0.1.tar.gz",
+    "size_bytes": 15091,
+    "sha256": "fcc3a9f12a3abbf2741d4bc5ef950cb8af95e6748221632f5e35c904c6857318",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unera/library/fiber/0.0.1/fiber-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/unera/library/fiber/0.0.1/fiber-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

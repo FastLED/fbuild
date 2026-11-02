@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-mischa",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-mischa/library/DMAFuncGen/0.0.0+sha.337ad0fe7734/DMAFuncGen-0.0.0+sha.337ad0fe7734.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DMAFuncGen-0.0.0+sha.337ad0fe7734.tar.gz",
+    "size_bytes": 2766,
+    "sha256": "8aea28af31510217bae02dd850309f61d027af7a9808716a444a97ad3cfd4bef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mischa/library/DMAFuncGen/0.0.0%2Bsha.337ad0fe7734/DMAFuncGen-0.0.0%2Bsha.337ad0fe7734.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mischa/library/DMAFuncGen/0.0.0%2Bsha.337ad0fe7734/DMAFuncGen-0.0.0%2Bsha.337ad0fe7734.tar.gz"
+    ]
+   }
+  }
+ ]
+}

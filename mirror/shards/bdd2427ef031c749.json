@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jhon309",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jhon309/library/I2C_EEPROM/0.0.0+sha.ac8863619623/I2C_EEPROM-0.0.0+sha.ac8863619623.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2C_EEPROM-0.0.0+sha.ac8863619623.tar.gz",
+    "size_bytes": 533161,
+    "sha256": "ef61a8837b84f132dfb8652a1dfd7c31e7ea3ebd8259a2d93c316af2c0292137",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jhon309/library/I2C_EEPROM/0.0.0%2Bsha.ac8863619623/I2C_EEPROM-0.0.0%2Bsha.ac8863619623.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jhon309/library/I2C_EEPROM/0.0.0%2Bsha.ac8863619623/I2C_EEPROM-0.0.0%2Bsha.ac8863619623.tar.gz"
+    ]
+   }
+  }
+ ]
+}

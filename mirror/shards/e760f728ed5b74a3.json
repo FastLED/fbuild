@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-pubnub",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-pubnub/library/PubNub/0.0.0+sha.c9f79982b5ca/PubNub-0.0.0+sha.c9f79982b5ca.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PubNub-0.0.0+sha.c9f79982b5ca.tar.gz",
+    "size_bytes": 7590,
+    "sha256": "d8c4b7c700133ab0e4462ef8e9959ca692744236def2a2affe9609e95140928d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pubnub/library/PubNub/0.0.0%2Bsha.c9f79982b5ca/PubNub-0.0.0%2Bsha.c9f79982b5ca.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pubnub/library/PubNub/0.0.0%2Bsha.c9f79982b5ca/PubNub-0.0.0%2Bsha.c9f79982b5ca.tar.gz"
+    ]
+   }
+  }
+ ]
+}

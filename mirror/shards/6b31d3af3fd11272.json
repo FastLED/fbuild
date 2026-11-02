@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-glimwormbeacons",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-glimwormbeacons/library/SEGGER_RTT2/0.0.0+sha.a7800e894aaf/SEGGER_RTT2-0.0.0+sha.a7800e894aaf.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SEGGER_RTT2-0.0.0+sha.a7800e894aaf.tar.gz",
+    "size_bytes": 15790,
+    "sha256": "eb425ad6bb1c035d3696e44e25a9db7cbd0cdfb4816b760679275f39382b010c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-glimwormbeacons/library/SEGGER_RTT2/0.0.0%2Bsha.a7800e894aaf/SEGGER_RTT2-0.0.0%2Bsha.a7800e894aaf.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-glimwormbeacons/library/SEGGER_RTT2/0.0.0%2Bsha.a7800e894aaf/SEGGER_RTT2-0.0.0%2Bsha.a7800e894aaf.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/anotherishi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "anotherishi/library/wiser/1.1.0/wiser-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "wiser-1.1.0.tar.gz",
+    "size_bytes": 15547,
+    "sha256": "ad18fc648e64fb192df48d6914db4da04490d38d36a3c8d916506be5de86f27f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/anotherishi/library/wiser/1.1.0/wiser-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/anotherishi/library/wiser/1.1.0/wiser-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/philippg777",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "philippg777/library/HP03S/1.1.0/HP03S-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HP03S-1.1.0.tar.gz",
+    "size_bytes": 4140,
+    "sha256": "3347f97a65f31c22af7b79b77ae323e5118e5616eea6dd9f7204cff883c1747d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/philippg777/library/HP03S/1.1.0/HP03S-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/philippg777/library/HP03S/1.1.0/HP03S-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

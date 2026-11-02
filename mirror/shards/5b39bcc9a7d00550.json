@@ -1,0 +1,620 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cameronbrooks11",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cameronbrooks11/library/CRUMBS/0.10.0/CRUMBS-0.10.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CRUMBS-0.10.0.tar.gz",
+    "size_bytes": 406600,
+    "sha256": "6ce07d09e992e4259cdbd8f07a09628f4325c2fcc80d3fb9b83241ce383bb002",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cameronbrooks11/library/CRUMBS/0.10.0/CRUMBS-0.10.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cameronbrooks11/library/CRUMBS/0.10.0/CRUMBS-0.10.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cameronbrooks11/library/CRUMBS/0.10.1/CRUMBS-0.10.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CRUMBS-0.10.1.tar.gz",
+    "size_bytes": 104759,
+    "sha256": "f65d8b4518923ee6b3bc9ea139c1753815fef3a7b7b5841a66e95d35666306e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cameronbrooks11/library/CRUMBS/0.10.1/CRUMBS-0.10.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cameronbrooks11/library/CRUMBS/0.10.1/CRUMBS-0.10.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cameronbrooks11/library/CRUMBS/0.10.2/CRUMBS-0.10.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CRUMBS-0.10.2.tar.gz",
+    "size_bytes": 113666,
+    "sha256": "504816e850abaf065900963b69a1a36f7b9b04a3f07a8687f4d6c8e33ea97615",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cameronbrooks11/library/CRUMBS/0.10.2/CRUMBS-0.10.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cameronbrooks11/library/CRUMBS/0.10.2/CRUMBS-0.10.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cameronbrooks11/library/CRUMBS/0.10.3/CRUMBS-0.10.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CRUMBS-0.10.3.tar.gz",
+    "size_bytes": 111661,
+    "sha256": "0ab9dfa06dfdcc1e250620e2756af33e4bdaf7f60a6cbf9eaf067096dd6ae58d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cameronbrooks11/library/CRUMBS/0.10.3/CRUMBS-0.10.3.tar.gz",
+     "https://dl.registry.platformio.org/download/cameronbrooks11/library/CRUMBS/0.10.3/CRUMBS-0.10.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cameronbrooks11/library/CRUMBS/0.11.0/CRUMBS-0.11.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CRUMBS-0.11.0.tar.gz",
+    "size_bytes": 130569,
+    "sha256": "8c70089927234434ebe515866efa4f08a24a8c9d15f13deb835c280e98c30022",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cameronbrooks11/library/CRUMBS/0.11.0/CRUMBS-0.11.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cameronbrooks11/library/CRUMBS/0.11.0/CRUMBS-0.11.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cameronbrooks11/library/CRUMBS/0.12.0/CRUMBS-0.12.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CRUMBS-0.12.0.tar.gz",
+    "size_bytes": 142054,
+    "sha256": "0ba06c095b7547acacf66959d905f3d8a1b6ae9373fe74920dcdbc20035057bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cameronbrooks11/library/CRUMBS/0.12.0/CRUMBS-0.12.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cameronbrooks11/library/CRUMBS/0.12.0/CRUMBS-0.12.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cameronbrooks11/library/CRUMBS/0.12.2/CRUMBS-0.12.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CRUMBS-0.12.2.tar.gz",
+    "size_bytes": 148116,
+    "sha256": "6cd7e516ce9b1a3758f3223e205244bb5f42f3e73cb09c62ebb49e8e92de6e98",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cameronbrooks11/library/CRUMBS/0.12.2/CRUMBS-0.12.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cameronbrooks11/library/CRUMBS/0.12.2/CRUMBS-0.12.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cameronbrooks11/library/CRUMBS/0.12.3/CRUMBS-0.12.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CRUMBS-0.12.3.tar.gz",
+    "size_bytes": 148675,
+    "sha256": "a01dbca46200e1998409e14a724ad097cae7cd757fa315327fb0e2b2996c0fdb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cameronbrooks11/library/CRUMBS/0.12.3/CRUMBS-0.12.3.tar.gz",
+     "https://dl.registry.platformio.org/download/cameronbrooks11/library/CRUMBS/0.12.3/CRUMBS-0.12.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cameronbrooks11/library/CRUMBS/0.12.4/CRUMBS-0.12.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CRUMBS-0.12.4.tar.gz",
+    "size_bytes": 149520,
+    "sha256": "4c7c14c5840efdd8a766023c9e3de84c62c0cde2be6452ef3761247a1fa54c0b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cameronbrooks11/library/CRUMBS/0.12.4/CRUMBS-0.12.4.tar.gz",
+     "https://dl.registry.platformio.org/download/cameronbrooks11/library/CRUMBS/0.12.4/CRUMBS-0.12.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cameronbrooks11/library/CRUMBS/0.12.5/CRUMBS-0.12.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CRUMBS-0.12.5.tar.gz",
+    "size_bytes": 151446,
+    "sha256": "f252652732b2885187d4fedd847e1cdbb4a92e0e2ac93cc20698ee0686f524f5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cameronbrooks11/library/CRUMBS/0.12.5/CRUMBS-0.12.5.tar.gz",
+     "https://dl.registry.platformio.org/download/cameronbrooks11/library/CRUMBS/0.12.5/CRUMBS-0.12.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cameronbrooks11/library/CRUMBS/0.13.0/CRUMBS-0.13.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CRUMBS-0.13.0.tar.gz",
+    "size_bytes": 150724,
+    "sha256": "f39c34f60084a2feb53a33a71e98fe7e59a0eb87078e547d3e6d4f48bc79d4f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cameronbrooks11/library/CRUMBS/0.13.0/CRUMBS-0.13.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cameronbrooks11/library/CRUMBS/0.13.0/CRUMBS-0.13.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cameronbrooks11/library/CRUMBS/0.14.0/CRUMBS-0.14.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CRUMBS-0.14.0.tar.gz",
+    "size_bytes": 153009,
+    "sha256": "23f3c76596b6872194ca0793bafc4308068386b5c7f048b3150a3b96c2bed1b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cameronbrooks11/library/CRUMBS/0.14.0/CRUMBS-0.14.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cameronbrooks11/library/CRUMBS/0.14.0/CRUMBS-0.14.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cameronbrooks11/library/CRUMBS/0.15.0/CRUMBS-0.15.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CRUMBS-0.15.0.tar.gz",
+    "size_bytes": 228457,
+    "sha256": "bc8b2920ee8969611b8c5f18d13bbf5b348b8cf25f2dbf808803132d271bf47a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cameronbrooks11/library/CRUMBS/0.15.0/CRUMBS-0.15.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cameronbrooks11/library/CRUMBS/0.15.0/CRUMBS-0.15.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cameronbrooks11/library/CRUMBS/0.16.0/CRUMBS-0.16.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CRUMBS-0.16.0.tar.gz",
+    "size_bytes": 142586,
+    "sha256": "733ab794b2ccc714c0b24110afac934eb821ca7dc9842071422137d51992b6a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cameronbrooks11/library/CRUMBS/0.16.0/CRUMBS-0.16.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cameronbrooks11/library/CRUMBS/0.16.0/CRUMBS-0.16.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cameronbrooks11/library/CRUMBS/0.16.1/CRUMBS-0.16.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CRUMBS-0.16.1.tar.gz",
+    "size_bytes": 142766,
+    "sha256": "148d2c40691a1aabc02d512a915ed63fb99263cb6718b6be58cc4f262437bdfc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cameronbrooks11/library/CRUMBS/0.16.1/CRUMBS-0.16.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cameronbrooks11/library/CRUMBS/0.16.1/CRUMBS-0.16.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cameronbrooks11/library/CRUMBS/0.16.2/CRUMBS-0.16.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CRUMBS-0.16.2.tar.gz",
+    "size_bytes": 136296,
+    "sha256": "6ac170b755972b1119d64b2ceeac2dfabbdd34c722e48c7f4dfe8eb2638000f9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cameronbrooks11/library/CRUMBS/0.16.2/CRUMBS-0.16.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cameronbrooks11/library/CRUMBS/0.16.2/CRUMBS-0.16.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cameronbrooks11/library/CRUMBS/0.17.0/CRUMBS-0.17.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CRUMBS-0.17.0.tar.gz",
+    "size_bytes": 136721,
+    "sha256": "b460cfa7a0650c4b4bf67601253cbcd49f58d132b569caaaf0d642f376a39ee0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cameronbrooks11/library/CRUMBS/0.17.0/CRUMBS-0.17.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cameronbrooks11/library/CRUMBS/0.17.0/CRUMBS-0.17.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cameronbrooks11/library/CRUMBS/0.6.2/CRUMBS-0.6.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CRUMBS-0.6.2.tar.gz",
+    "size_bytes": 49072,
+    "sha256": "ce27ac6cd0075a73dae18b9d3bb6c6249babf2b9394454598cd6de45055bf926",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cameronbrooks11/library/CRUMBS/0.6.2/CRUMBS-0.6.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cameronbrooks11/library/CRUMBS/0.6.2/CRUMBS-0.6.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cameronbrooks11/library/CRUMBS/0.7.0/CRUMBS-0.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CRUMBS-0.7.0.tar.gz",
+    "size_bytes": 47346,
+    "sha256": "dae5da2a4e6301e5bebe2bb4f5ba5107eaab420caca706ebcd4231ccb57b717d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cameronbrooks11/library/CRUMBS/0.7.0/CRUMBS-0.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cameronbrooks11/library/CRUMBS/0.7.0/CRUMBS-0.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cameronbrooks11/library/CRUMBS/0.7.1/CRUMBS-0.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CRUMBS-0.7.1.tar.gz",
+    "size_bytes": 49527,
+    "sha256": "3ba5d96f7ecb996b518f0a4ffde681d9e86aed5d6b41bf3b05c0816fb09dfcf2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cameronbrooks11/library/CRUMBS/0.7.1/CRUMBS-0.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cameronbrooks11/library/CRUMBS/0.7.1/CRUMBS-0.7.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cameronbrooks11/library/CRUMBS/0.9.4/CRUMBS-0.9.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CRUMBS-0.9.4.tar.gz",
+    "size_bytes": 71893,
+    "sha256": "d385f506295763f59538001bc82f04b163c9afc9a56c26cab8d46546a47f5f45",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cameronbrooks11/library/CRUMBS/0.9.4/CRUMBS-0.9.4.tar.gz",
+     "https://dl.registry.platformio.org/download/cameronbrooks11/library/CRUMBS/0.9.4/CRUMBS-0.9.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cameronbrooks11/library/DCMotorServo/1.0.1/DCMotorServo-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DCMotorServo-1.0.1.tar.gz",
+    "size_bytes": 16881,
+    "sha256": "97586ce0dbdd9df5ff1f26844c03c5cc3017e7aca775d3bd73cbd613386ce02d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cameronbrooks11/library/DCMotorServo/1.0.1/DCMotorServo-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cameronbrooks11/library/DCMotorServo/1.0.1/DCMotorServo-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cameronbrooks11/library/DCMotorServo/1.1.0/DCMotorServo-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DCMotorServo-1.1.0.tar.gz",
+    "size_bytes": 27655,
+    "sha256": "7c53886c4ade98853757d2f07546e5f356a97be261fd9c2959cf1bdaca11d9a6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cameronbrooks11/library/DCMotorServo/1.1.0/DCMotorServo-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cameronbrooks11/library/DCMotorServo/1.1.0/DCMotorServo-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cameronbrooks11/library/DCMotorServo/1.2.0/DCMotorServo-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DCMotorServo-1.2.0.tar.gz",
+    "size_bytes": 29211,
+    "sha256": "4944be72a6d1dc8dee1ac269baccc3b827c7aea02b94306e80cd633c55e1874b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cameronbrooks11/library/DCMotorServo/1.2.0/DCMotorServo-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cameronbrooks11/library/DCMotorServo/1.2.0/DCMotorServo-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cameronbrooks11/library/L298N/0.1.0/L298N-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "L298N-0.1.0.tar.gz",
+    "size_bytes": 14841,
+    "sha256": "ad5d45452f72a9c8f0de109cbfd8c50c79d7353551676781802c7ed261acf25d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cameronbrooks11/library/L298N/0.1.0/L298N-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cameronbrooks11/library/L298N/0.1.0/L298N-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cameronbrooks11/library/LMD18200/0.1.3/LMD18200-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LMD18200-0.1.3.tar.gz",
+    "size_bytes": 6642,
+    "sha256": "6109e283b348910cffaf6ce6f915c7ea0d06bfe582566163f5ebb0c47a2460b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cameronbrooks11/library/LMD18200/0.1.3/LMD18200-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/cameronbrooks11/library/LMD18200/0.1.3/LMD18200-0.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cameronbrooks11/library/LMD18200/0.1.4/LMD18200-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LMD18200-0.1.4.tar.gz",
+    "size_bytes": 6943,
+    "sha256": "292a280a3ab487e532c7225a770ac0d90fcb5b1d8911aea41cb6d39ff4908d96",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cameronbrooks11/library/LMD18200/0.1.4/LMD18200-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/cameronbrooks11/library/LMD18200/0.1.4/LMD18200-0.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cameronbrooks11/library/LMD18200/0.1.5/LMD18200-0.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LMD18200-0.1.5.tar.gz",
+    "size_bytes": 8183,
+    "sha256": "7c082a96d50a8cfb0bfc893276a40dc18419caaf0cbca50c0bd9b4f91cd6706e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cameronbrooks11/library/LMD18200/0.1.5/LMD18200-0.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/cameronbrooks11/library/LMD18200/0.1.5/LMD18200-0.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cameronbrooks11/library/bread-crumbs-contracts/0.1.0/bread-crumbs-contracts-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bread-crumbs-contracts-0.1.0.tar.gz",
+    "size_bytes": 17031,
+    "sha256": "ae2f614581542213a9c8980cab1d5068005c218d2e6c58598c8f4f58f08c6b36",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cameronbrooks11/library/bread-crumbs-contracts/0.1.0/bread-crumbs-contracts-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cameronbrooks11/library/bread-crumbs-contracts/0.1.0/bread-crumbs-contracts-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cameronbrooks11/library/bread-crumbs-contracts/0.10.0/bread-crumbs-contracts-0.10.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bread-crumbs-contracts-0.10.0.tar.gz",
+    "size_bytes": 29410,
+    "sha256": "125aa7d84491d9e448ff04795a6976b03953c4a27fc5803fc27028ae51cb54c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cameronbrooks11/library/bread-crumbs-contracts/0.10.0/bread-crumbs-contracts-0.10.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cameronbrooks11/library/bread-crumbs-contracts/0.10.0/bread-crumbs-contracts-0.10.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cameronbrooks11/library/bread-crumbs-contracts/0.11.0/bread-crumbs-contracts-0.11.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bread-crumbs-contracts-0.11.0.tar.gz",
+    "size_bytes": 33667,
+    "sha256": "f0f7069908ea9be2f6b4842fd3f047794a8ccc10e5679a41437f9c802794cd4c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cameronbrooks11/library/bread-crumbs-contracts/0.11.0/bread-crumbs-contracts-0.11.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cameronbrooks11/library/bread-crumbs-contracts/0.11.0/bread-crumbs-contracts-0.11.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cameronbrooks11/library/bread-crumbs-contracts/0.11.1/bread-crumbs-contracts-0.11.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bread-crumbs-contracts-0.11.1.tar.gz",
+    "size_bytes": 33797,
+    "sha256": "8b42b4f0ddee8b4ebf0e602a7fdda8808a53b8c2b35f3b91d535c62bc55f3e80",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cameronbrooks11/library/bread-crumbs-contracts/0.11.1/bread-crumbs-contracts-0.11.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cameronbrooks11/library/bread-crumbs-contracts/0.11.1/bread-crumbs-contracts-0.11.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cameronbrooks11/library/bread-crumbs-contracts/0.2.0/bread-crumbs-contracts-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bread-crumbs-contracts-0.2.0.tar.gz",
+    "size_bytes": 27931,
+    "sha256": "ee968039fcdc1920cc6f6fe289f949bd0345aedfa49f073d09f80c1c48a947c5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cameronbrooks11/library/bread-crumbs-contracts/0.2.0/bread-crumbs-contracts-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cameronbrooks11/library/bread-crumbs-contracts/0.2.0/bread-crumbs-contracts-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cameronbrooks11/library/bread-crumbs-contracts/0.3.0/bread-crumbs-contracts-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bread-crumbs-contracts-0.3.0.tar.gz",
+    "size_bytes": 28480,
+    "sha256": "ee98de7181ceafac431a121cc971d08492c94a907f72c52632a8d7e8d562e1c1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cameronbrooks11/library/bread-crumbs-contracts/0.3.0/bread-crumbs-contracts-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cameronbrooks11/library/bread-crumbs-contracts/0.3.0/bread-crumbs-contracts-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cameronbrooks11/library/bread-crumbs-contracts/0.4.0/bread-crumbs-contracts-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bread-crumbs-contracts-0.4.0.tar.gz",
+    "size_bytes": 29522,
+    "sha256": "1c83af24ec514a7d017575a7563cd65016bacc0dd4034650811c7b019a7e311e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cameronbrooks11/library/bread-crumbs-contracts/0.4.0/bread-crumbs-contracts-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cameronbrooks11/library/bread-crumbs-contracts/0.4.0/bread-crumbs-contracts-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cameronbrooks11/library/bread-crumbs-contracts/0.4.1/bread-crumbs-contracts-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bread-crumbs-contracts-0.4.1.tar.gz",
+    "size_bytes": 29780,
+    "sha256": "330fb52b89faaff5df6acc71fcfce6044dc6e75de3e02ad0f35df75e97103046",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cameronbrooks11/library/bread-crumbs-contracts/0.4.1/bread-crumbs-contracts-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cameronbrooks11/library/bread-crumbs-contracts/0.4.1/bread-crumbs-contracts-0.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cameronbrooks11/library/bread-crumbs-contracts/0.4.3/bread-crumbs-contracts-0.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bread-crumbs-contracts-0.4.3.tar.gz",
+    "size_bytes": 33992,
+    "sha256": "415d05ec70927b54555d677132781413860419336000b6fd578d764380d563c5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cameronbrooks11/library/bread-crumbs-contracts/0.4.3/bread-crumbs-contracts-0.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/cameronbrooks11/library/bread-crumbs-contracts/0.4.3/bread-crumbs-contracts-0.4.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cameronbrooks11/library/bread-crumbs-contracts/0.4.4/bread-crumbs-contracts-0.4.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bread-crumbs-contracts-0.4.4.tar.gz",
+    "size_bytes": 33679,
+    "sha256": "81dbeee492481d3fee834059fcd04fd2fce10d4de69fcbca47be0041b55d7eb3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cameronbrooks11/library/bread-crumbs-contracts/0.4.4/bread-crumbs-contracts-0.4.4.tar.gz",
+     "https://dl.registry.platformio.org/download/cameronbrooks11/library/bread-crumbs-contracts/0.4.4/bread-crumbs-contracts-0.4.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cameronbrooks11/library/bread-crumbs-contracts/0.4.5/bread-crumbs-contracts-0.4.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bread-crumbs-contracts-0.4.5.tar.gz",
+    "size_bytes": 35104,
+    "sha256": "1fa014f9b30170be7348a9da69209d7e0b347f6937ba91a620881519866a83d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cameronbrooks11/library/bread-crumbs-contracts/0.4.5/bread-crumbs-contracts-0.4.5.tar.gz",
+     "https://dl.registry.platformio.org/download/cameronbrooks11/library/bread-crumbs-contracts/0.4.5/bread-crumbs-contracts-0.4.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cameronbrooks11/library/bread-crumbs-contracts/0.6.0/bread-crumbs-contracts-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bread-crumbs-contracts-0.6.0.tar.gz",
+    "size_bytes": 59696,
+    "sha256": "1a37552cd9d494494f2c3fe348de07b6084a8775ba1789595d9cd0f24ea6701a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cameronbrooks11/library/bread-crumbs-contracts/0.6.0/bread-crumbs-contracts-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cameronbrooks11/library/bread-crumbs-contracts/0.6.0/bread-crumbs-contracts-0.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cameronbrooks11/library/bread-crumbs-contracts/0.7.0/bread-crumbs-contracts-0.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bread-crumbs-contracts-0.7.0.tar.gz",
+    "size_bytes": 65510,
+    "sha256": "bc63b6282ee84aa6d74bc3cb81d4e7bf293239e0866f647bec1a25005f153fd8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cameronbrooks11/library/bread-crumbs-contracts/0.7.0/bread-crumbs-contracts-0.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cameronbrooks11/library/bread-crumbs-contracts/0.7.0/bread-crumbs-contracts-0.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cameronbrooks11/library/bread-crumbs-contracts/0.8.0/bread-crumbs-contracts-0.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bread-crumbs-contracts-0.8.0.tar.gz",
+    "size_bytes": 67267,
+    "sha256": "6c22bfbc9a3d4cc09bcf59fb95f7903b6e32eb984812ecaced4eb39896e5d471",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cameronbrooks11/library/bread-crumbs-contracts/0.8.0/bread-crumbs-contracts-0.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cameronbrooks11/library/bread-crumbs-contracts/0.8.0/bread-crumbs-contracts-0.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cameronbrooks11/library/bread-crumbs-contracts/0.9.0/bread-crumbs-contracts-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bread-crumbs-contracts-0.9.0.tar.gz",
+    "size_bytes": 73013,
+    "sha256": "304bdd79617fa2be55b65c7d1e6bd26123c2769b32de0bd31747870aa26ccb88",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cameronbrooks11/library/bread-crumbs-contracts/0.9.0/bread-crumbs-contracts-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cameronbrooks11/library/bread-crumbs-contracts/0.9.0/bread-crumbs-contracts-0.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cameronbrooks11/library/bread-crumbs-contracts/0.9.1/bread-crumbs-contracts-0.9.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bread-crumbs-contracts-0.9.1.tar.gz",
+    "size_bytes": 66467,
+    "sha256": "989a33392e9967aeecdfbfc7dcbb58590b6f2e676071b670976c78e3414155c3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cameronbrooks11/library/bread-crumbs-contracts/0.9.1/bread-crumbs-contracts-0.9.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cameronbrooks11/library/bread-crumbs-contracts/0.9.1/bread-crumbs-contracts-0.9.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cameronbrooks11/library/bread-slice-core/0.1.0/bread-slice-core-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bread-slice-core-0.1.0.tar.gz",
+    "size_bytes": 13223,
+    "sha256": "a29ee2d14ec17a86b79fa14958c5ee4ac0d047cb40f9f9211bb7b0029983a124",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cameronbrooks11/library/bread-slice-core/0.1.0/bread-slice-core-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cameronbrooks11/library/bread-slice-core/0.1.0/bread-slice-core-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cameronbrooks11/library/ezo-driver/0.7.1/ezo-driver-0.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ezo-driver-0.7.1.tar.gz",
+    "size_bytes": 70682,
+    "sha256": "6533ea27d3e8470a23058132b71eae8b7664cc4957c710809a1b2f6d2e7d9d03",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cameronbrooks11/library/ezo-driver/0.7.1/ezo-driver-0.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cameronbrooks11/library/ezo-driver/0.7.1/ezo-driver-0.7.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cameronbrooks11/library/ezo-driver/0.8.0/ezo-driver-0.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ezo-driver-0.8.0.tar.gz",
+    "size_bytes": 71418,
+    "sha256": "8824b04ff15564292932f42cec317540cf85f1c64c72191ea040998da07a9964",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cameronbrooks11/library/ezo-driver/0.8.0/ezo-driver-0.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cameronbrooks11/library/ezo-driver/0.8.0/ezo-driver-0.8.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

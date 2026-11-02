@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bgould",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bgould/library/Arduino%20TMK%20Keyboard/0.1/ArduinoTMKKeyboard-0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoTMKKeyboard-0.1.tar.gz",
+    "size_bytes": 16397,
+    "sha256": "fcfb9aac5068082ef2213a63a3758a6ca95fca1f5690c917b893e84251267f1a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bgould/library/Arduino%2520TMK%2520Keyboard/0.1/ArduinoTMKKeyboard-0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bgould/library/Arduino%20TMK%20Keyboard/0.1/ArduinoTMKKeyboard-0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

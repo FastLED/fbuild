@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-hirokimineshita",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-hirokimineshita/library/L3GD20/0.0.0+sha.438175c58b44/L3GD20-0.0.0+sha.438175c58b44.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "L3GD20-0.0.0+sha.438175c58b44.tar.gz",
+    "size_bytes": 4926,
+    "sha256": "d39173c65afbf01036ba1e803789a43bfb6aeef5f4546972b6ee15a859a24ebe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hirokimineshita/library/L3GD20/0.0.0%2Bsha.438175c58b44/L3GD20-0.0.0%2Bsha.438175c58b44.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hirokimineshita/library/L3GD20/0.0.0%2Bsha.438175c58b44/L3GD20-0.0.0%2Bsha.438175c58b44.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hirokimineshita/library/LFS_useful/0.0.0+sha.9da7f151616a/LFS_useful-0.0.0+sha.9da7f151616a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LFS_useful-0.0.0+sha.9da7f151616a.tar.gz",
+    "size_bytes": 1070,
+    "sha256": "d8c96d416210be646831a48c055aac3ea017089bca90edde97f1257398e2ef26",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hirokimineshita/library/LFS_useful/0.0.0%2Bsha.9da7f151616a/LFS_useful-0.0.0%2Bsha.9da7f151616a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hirokimineshita/library/LFS_useful/0.0.0%2Bsha.9da7f151616a/LFS_useful-0.0.0%2Bsha.9da7f151616a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hirokimineshita/library/MMA7361/0.0.0+sha.ca882e5e2686/MMA7361-0.0.0+sha.ca882e5e2686.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MMA7361-0.0.0+sha.ca882e5e2686.tar.gz",
+    "size_bytes": 7050,
+    "sha256": "a64f9e19e434f1ccac84ed9eea5ecd1b1952a0f9e9cc4c89d6d70420ccf0b913",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hirokimineshita/library/MMA7361/0.0.0%2Bsha.ca882e5e2686/MMA7361-0.0.0%2Bsha.ca882e5e2686.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hirokimineshita/library/MMA7361/0.0.0%2Bsha.ca882e5e2686/MMA7361-0.0.0%2Bsha.ca882e5e2686.tar.gz"
+    ]
+   }
+  }
+ ]
+}

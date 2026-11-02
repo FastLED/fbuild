@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/anasdtp",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "anasdtp/library/FrequencyMeter/2.0.6/FrequencyMeter-2.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FrequencyMeter-2.0.6.tar.gz",
+    "size_bytes": 12671,
+    "sha256": "20bb9b4515f5acece75d3a2105d54fe7f1821ec8f26f3927915eb84a87ae8f68",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/anasdtp/library/FrequencyMeter/2.0.6/FrequencyMeter-2.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/anasdtp/library/FrequencyMeter/2.0.6/FrequencyMeter-2.0.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

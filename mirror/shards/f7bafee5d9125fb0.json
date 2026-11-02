@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dani007200964",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dani007200964/library/Commander-API/3.0.0/Commander-API-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Commander-API-3.0.0.tar.gz",
+    "size_bytes": 64403,
+    "sha256": "05b584c29dbdc219eecacb8b77f7dc6816f9cae7712aaefb435f0732b87a81b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dani007200964/library/Commander-API/3.0.0/Commander-API-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dani007200964/library/Commander-API/3.0.0/Commander-API-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dani007200964/library/Shellminator/3.0.1/Shellminator-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Shellminator-3.0.1.tar.gz",
+    "size_bytes": 388826,
+    "sha256": "89cb39f2013d5dce2c11d8a269fbb79f9a16fba6e4102ae2d22e2b304b2b1f2e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dani007200964/library/Shellminator/3.0.1/Shellminator-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dani007200964/library/Shellminator/3.0.1/Shellminator-3.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

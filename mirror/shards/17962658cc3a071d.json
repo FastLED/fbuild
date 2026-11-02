@@ -1,0 +1,152 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lemmingdev",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lemmingdev/library/ESP32-BLE-Gamepad/0.3.4/ESP32-BLE-Gamepad-0.3.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-BLE-Gamepad-0.3.4.tar.gz",
+    "size_bytes": 16468,
+    "sha256": "5f212c86d85ebc4c208aedb924167a1731f984e7513eeb6c2e7c932c625cdfe0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lemmingdev/library/ESP32-BLE-Gamepad/0.3.4/ESP32-BLE-Gamepad-0.3.4.tar.gz",
+     "https://dl.registry.platformio.org/download/lemmingdev/library/ESP32-BLE-Gamepad/0.3.4/ESP32-BLE-Gamepad-0.3.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lemmingdev/library/ESP32-BLE-Gamepad/0.5.1/ESP32-BLE-Gamepad-0.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-BLE-Gamepad-0.5.1.tar.gz",
+    "size_bytes": 20537,
+    "sha256": "58710aae906c0d9ed23ed478aed1180f5641b4ac4c7b3395bfe8d4e1b991238a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lemmingdev/library/ESP32-BLE-Gamepad/0.5.1/ESP32-BLE-Gamepad-0.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lemmingdev/library/ESP32-BLE-Gamepad/0.5.1/ESP32-BLE-Gamepad-0.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lemmingdev/library/ESP32-BLE-Gamepad/0.5.2/ESP32-BLE-Gamepad-0.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-BLE-Gamepad-0.5.2.tar.gz",
+    "size_bytes": 22194,
+    "sha256": "044b4383ae2098f2eed1e548b402a9a87048ee0a947f796f1041f7cd30b1b26a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lemmingdev/library/ESP32-BLE-Gamepad/0.5.2/ESP32-BLE-Gamepad-0.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lemmingdev/library/ESP32-BLE-Gamepad/0.5.2/ESP32-BLE-Gamepad-0.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lemmingdev/library/ESP32-BLE-Gamepad/0.5.4/ESP32-BLE-Gamepad-0.5.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-BLE-Gamepad-0.5.4.tar.gz",
+    "size_bytes": 22692,
+    "sha256": "f1b34ad54b097933179591df8df2eecb77a4e1f90bbe231c47e35caa96f5ca72",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lemmingdev/library/ESP32-BLE-Gamepad/0.5.4/ESP32-BLE-Gamepad-0.5.4.tar.gz",
+     "https://dl.registry.platformio.org/download/lemmingdev/library/ESP32-BLE-Gamepad/0.5.4/ESP32-BLE-Gamepad-0.5.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lemmingdev/library/ESP32-BLE-Gamepad/0.5.6/ESP32-BLE-Gamepad-0.5.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-BLE-Gamepad-0.5.6.tar.gz",
+    "size_bytes": 25281,
+    "sha256": "9a73c62c7b8cc27a6e644968775731f5feab1f09331e95ced43f91e6164eabca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lemmingdev/library/ESP32-BLE-Gamepad/0.5.6/ESP32-BLE-Gamepad-0.5.6.tar.gz",
+     "https://dl.registry.platformio.org/download/lemmingdev/library/ESP32-BLE-Gamepad/0.5.6/ESP32-BLE-Gamepad-0.5.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lemmingdev/library/ESP32-BLE-Gamepad/0.6.9/ESP32-BLE-Gamepad-0.6.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-BLE-Gamepad-0.6.9.tar.gz",
+    "size_bytes": 29875,
+    "sha256": "ae884d6db9c98da694bf68b9ee2d9c91109acea297739fe27ac9b9f1b0f5278a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lemmingdev/library/ESP32-BLE-Gamepad/0.6.9/ESP32-BLE-Gamepad-0.6.9.tar.gz",
+     "https://dl.registry.platformio.org/download/lemmingdev/library/ESP32-BLE-Gamepad/0.6.9/ESP32-BLE-Gamepad-0.6.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lemmingdev/library/ESP32-BLE-Gamepad/0.7.3/ESP32-BLE-Gamepad-0.7.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-BLE-Gamepad-0.7.3.tar.gz",
+    "size_bytes": 36591,
+    "sha256": "74c54244aa0a8b1f8313d3cd72b8dc4fc462c0afffa01591da61012e196b1c81",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lemmingdev/library/ESP32-BLE-Gamepad/0.7.3/ESP32-BLE-Gamepad-0.7.3.tar.gz",
+     "https://dl.registry.platformio.org/download/lemmingdev/library/ESP32-BLE-Gamepad/0.7.3/ESP32-BLE-Gamepad-0.7.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lemmingdev/library/ESP32-BLE-Gamepad/0.7.4/ESP32-BLE-Gamepad-0.7.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-BLE-Gamepad-0.7.4.tar.gz",
+    "size_bytes": 38953,
+    "sha256": "fd861877750cbaf70e3dda0223ccbacd574a784a070e58ab3d78630a7e008f7d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lemmingdev/library/ESP32-BLE-Gamepad/0.7.4/ESP32-BLE-Gamepad-0.7.4.tar.gz",
+     "https://dl.registry.platformio.org/download/lemmingdev/library/ESP32-BLE-Gamepad/0.7.4/ESP32-BLE-Gamepad-0.7.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lemmingdev/library/ESP32-BLE-Gamepad/0.7.5-rc0/ESP32-BLE-Gamepad-0.7.5-rc0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-BLE-Gamepad-0.7.5-rc0.tar.gz",
+    "size_bytes": 76396,
+    "sha256": "247109db01198c4b803c7ec45ac4e3750c3419b3847b710f20de7a27680e8036",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lemmingdev/library/ESP32-BLE-Gamepad/0.7.5-rc0/ESP32-BLE-Gamepad-0.7.5-rc0.tar.gz",
+     "https://dl.registry.platformio.org/download/lemmingdev/library/ESP32-BLE-Gamepad/0.7.5-rc0/ESP32-BLE-Gamepad-0.7.5-rc0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lemmingdev/library/ESP32-BLE-Gamepad/0.7.5/ESP32-BLE-Gamepad-0.7.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-BLE-Gamepad-0.7.5.tar.gz",
+    "size_bytes": 90288,
+    "sha256": "a6eb1fda11a7692f918ba7b92ba4684e11d439b385fbdad0784b2beef44bfd78",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lemmingdev/library/ESP32-BLE-Gamepad/0.7.5/ESP32-BLE-Gamepad-0.7.5.tar.gz",
+     "https://dl.registry.platformio.org/download/lemmingdev/library/ESP32-BLE-Gamepad/0.7.5/ESP32-BLE-Gamepad-0.7.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lemmingdev/library/ESP32-BLE-Gamepad/0.8.0/ESP32-BLE-Gamepad-0.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-BLE-Gamepad-0.8.0.tar.gz",
+    "size_bytes": 177051,
+    "sha256": "59b00d9a13841d41a5f14e94b756cd0a4f0a7742e80ed321fee3c348edb6b3fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lemmingdev/library/ESP32-BLE-Gamepad/0.8.0/ESP32-BLE-Gamepad-0.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lemmingdev/library/ESP32-BLE-Gamepad/0.8.0/ESP32-BLE-Gamepad-0.8.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

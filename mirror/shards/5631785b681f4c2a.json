@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-rgrover1",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-rgrover1/library/CppUTest-mbed-port/0.0.0+sha.82161d9e7b36/CppUTest-mbed-port-0.0.0+sha.82161d9e7b36.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CppUTest-mbed-port-0.0.0+sha.82161d9e7b36.tar.gz",
+    "size_bytes": 40872,
+    "sha256": "dd0f67016f3016683f1aab548d2c5eb2dcb05442815a1f81b31f38bd3c5cc6cd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rgrover1/library/CppUTest-mbed-port/0.0.0%2Bsha.82161d9e7b36/CppUTest-mbed-port-0.0.0%2Bsha.82161d9e7b36.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rgrover1/library/CppUTest-mbed-port/0.0.0%2Bsha.82161d9e7b36/CppUTest-mbed-port-0.0.0%2Bsha.82161d9e7b36.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-rgrover1/library/DumpRegistersAtHardFault/0.0.0+sha.c325619800b2/DumpRegistersAtHardFault-0.0.0+sha.c325619800b2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DumpRegistersAtHardFault-0.0.0+sha.c325619800b2.tar.gz",
+    "size_bytes": 2044,
+    "sha256": "ad1db599d1f09e50f8b8d29db7e09ee1223e1ab1c40914051bd2d4f94adee467",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rgrover1/library/DumpRegistersAtHardFault/0.0.0%2Bsha.c325619800b2/DumpRegistersAtHardFault-0.0.0%2Bsha.c325619800b2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rgrover1/library/DumpRegistersAtHardFault/0.0.0%2Bsha.c325619800b2/DumpRegistersAtHardFault-0.0.0%2Bsha.c325619800b2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-rgrover1/library/FreeRTOS/0.0.0+sha.8e57f3e9cc89/FreeRTOS-0.0.0+sha.8e57f3e9cc89.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FreeRTOS-0.0.0+sha.8e57f3e9cc89.tar.gz",
+    "size_bytes": 111588,
+    "sha256": "ba80ed5b26bf82b7e54ac64b2ed5749e0dd1f58d6a3b8f3785470910057d68d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rgrover1/library/FreeRTOS/0.0.0%2Bsha.8e57f3e9cc89/FreeRTOS-0.0.0%2Bsha.8e57f3e9cc89.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rgrover1/library/FreeRTOS/0.0.0%2Bsha.8e57f3e9cc89/FreeRTOS-0.0.0%2Bsha.8e57f3e9cc89.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-rgrover1/library/SharpLCD/0.0.0+sha.761d0f489b61/SharpLCD-0.0.0+sha.761d0f489b61.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SharpLCD-0.0.0+sha.761d0f489b61.tar.gz",
+    "size_bytes": 14888,
+    "sha256": "948459b895c22545a14be22a6ee2efe65ee73ac2a16680d0ee9629406c569968",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rgrover1/library/SharpLCD/0.0.0%2Bsha.761d0f489b61/SharpLCD-0.0.0%2Bsha.761d0f489b61.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rgrover1/library/SharpLCD/0.0.0%2Bsha.761d0f489b61/SharpLCD-0.0.0%2Bsha.761d0f489b61.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-rgrover1/library/cpputest/0.0.0+sha.82161d9e7b36/cpputest-0.0.0+sha.82161d9e7b36.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cpputest-0.0.0+sha.82161d9e7b36.tar.gz",
+    "size_bytes": 40741,
+    "sha256": "8913afa25b2c0020f72e2f034d26fb5d4a623a6c35907524247ee072c6379369",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rgrover1/library/cpputest/0.0.0%2Bsha.82161d9e7b36/cpputest-0.0.0%2Bsha.82161d9e7b36.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rgrover1/library/cpputest/0.0.0%2Bsha.82161d9e7b36/cpputest-0.0.0%2Bsha.82161d9e7b36.tar.gz"
+    ]
+   }
+  }
+ ]
+}

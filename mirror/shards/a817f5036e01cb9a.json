@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-the-bani-crew",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-the-bani-crew/library/C12832_lcd/0.0.0+sha.aa1b84b92d5b/C12832_lcd-0.0.0+sha.aa1b84b92d5b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "C12832_lcd-0.0.0+sha.aa1b84b92d5b.tar.gz",
+    "size_bytes": 10775,
+    "sha256": "7ef5cf04138ba62fe4c6a9c48381f6aed88879a975d6d9ce0c8509691f9aa178",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-the-bani-crew/library/C12832_lcd/0.0.0%2Bsha.aa1b84b92d5b/C12832_lcd-0.0.0%2Bsha.aa1b84b92d5b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-the-bani-crew/library/C12832_lcd/0.0.0%2Bsha.aa1b84b92d5b/C12832_lcd-0.0.0%2Bsha.aa1b84b92d5b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

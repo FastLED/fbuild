@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/photodude",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "photodude/library/DualVNH5019MotorShieldMod3/4.0.0-dualshilds.1/DualVNH5019MotorShieldMod3-4.0.0-dualshilds.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DualVNH5019MotorShieldMod3-4.0.0-dualshilds.1.tar.gz",
+    "size_bytes": 11033,
+    "sha256": "7dec1198010bf637130c76d19200c95caacccd37bfe6d09561a998dc12c83b70",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/photodude/library/DualVNH5019MotorShieldMod3/4.0.0-dualshilds.1/DualVNH5019MotorShieldMod3-4.0.0-dualshilds.1.tar.gz",
+     "https://dl.registry.platformio.org/download/photodude/library/DualVNH5019MotorShieldMod3/4.0.0-dualshilds.1/DualVNH5019MotorShieldMod3-4.0.0-dualshilds.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

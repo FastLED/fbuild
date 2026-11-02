@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-hbp",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-hbp/library/gfxLcd/0.0.0+sha.183b861fba00/gfxLcd-0.0.0+sha.183b861fba00.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "gfxLcd-0.0.0+sha.183b861fba00.tar.gz",
+    "size_bytes": 3620,
+    "sha256": "b2869118244f4e0ed78a47f4a55f6096bac1f23dddf2f50dc5d283a81576e6a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hbp/library/gfxLcd/0.0.0%2Bsha.183b861fba00/gfxLcd-0.0.0%2Bsha.183b861fba00.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hbp/library/gfxLcd/0.0.0%2Bsha.183b861fba00/gfxLcd-0.0.0%2Bsha.183b861fba00.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hbp/library/mFS/0.0.0+sha.142b6be3e3c8/mFS-0.0.0+sha.142b6be3e3c8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mFS-0.0.0+sha.142b6be3e3c8.tar.gz",
+    "size_bytes": 9273,
+    "sha256": "c5431278023a5e505ec30d270921ff9c4218878257a1a389f1350dc666e9068b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hbp/library/mFS/0.0.0%2Bsha.142b6be3e3c8/mFS-0.0.0%2Bsha.142b6be3e3c8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hbp/library/mFS/0.0.0%2Bsha.142b6be3e3c8/mFS-0.0.0%2Bsha.142b6be3e3c8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

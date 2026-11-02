@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-adityap",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-adityap/library/BVBCET/0.0.0+sha.e88292a7e64c/BVBCET-0.0.0+sha.e88292a7e64c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BVBCET-0.0.0+sha.e88292a7e64c.tar.gz",
+    "size_bytes": 844,
+    "sha256": "b597da3a40d3c4bc5d0fb57281be85bc0ffbfcf38b5195380995028c147d3c8a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-adityap/library/BVBCET/0.0.0%2Bsha.e88292a7e64c/BVBCET-0.0.0%2Bsha.e88292a7e64c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-adityap/library/BVBCET/0.0.0%2Bsha.e88292a7e64c/BVBCET-0.0.0%2Bsha.e88292a7e64c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

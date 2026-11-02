@@ -1,0 +1,139 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/askuric",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "askuric/library/Simple%20FOC/2.2.1/SimpleFOC-2.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleFOC-2.2.1.tar.gz",
+    "size_bytes": 126739,
+    "sha256": "ad3390206d86afcb4f42371b6ddbca12a5d32be8c2125898b8e73dc48f922eec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/askuric/library/Simple%2520FOC/2.2.1/SimpleFOC-2.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/askuric/library/Simple%20FOC/2.2.1/SimpleFOC-2.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "askuric/library/Simple%20FOC/2.2.3/SimpleFOC-2.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleFOC-2.2.3.tar.gz",
+    "size_bytes": 147144,
+    "sha256": "973c3268774850df58a381bb6db2b2882c24eb0c72b137f25cff4c4c2667dc27",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/askuric/library/Simple%2520FOC/2.2.3/SimpleFOC-2.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/askuric/library/Simple%20FOC/2.2.3/SimpleFOC-2.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "askuric/library/Simple%20FOC/2.2/SimpleFOC-2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleFOC-2.2.tar.gz",
+    "size_bytes": 119012,
+    "sha256": "268b700b07aa7b8f42307d20d9a4145480423e8caf3f72d05fcb26e92e838d88",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/askuric/library/Simple%2520FOC/2.2/SimpleFOC-2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/askuric/library/Simple%20FOC/2.2/SimpleFOC-2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "askuric/library/Simple%20FOC/2.3.0/SimpleFOC-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleFOC-2.3.0.tar.gz",
+    "size_bytes": 160894,
+    "sha256": "6612fbbd787bc130942e0e16c37a60f0716294a1f876315a92fb36ee58f11232",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/askuric/library/Simple%2520FOC/2.3.0/SimpleFOC-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/askuric/library/Simple%20FOC/2.3.0/SimpleFOC-2.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "askuric/library/Simple%20FOC/2.3.1/SimpleFOC-2.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleFOC-2.3.1.tar.gz",
+    "size_bytes": 167290,
+    "sha256": "8576c53d9c8e5f1155be38f69d73fb75688f7d32f701746ee27f332995de20d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/askuric/library/Simple%2520FOC/2.3.1/SimpleFOC-2.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/askuric/library/Simple%20FOC/2.3.1/SimpleFOC-2.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "askuric/library/Simple%20FOC/2.3.2/SimpleFOC-2.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleFOC-2.3.2.tar.gz",
+    "size_bytes": 166923,
+    "sha256": "583d7d46db18ba00ee4193211028be3efd1014078a0a1c37272e396773a56a80",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/askuric/library/Simple%2520FOC/2.3.2/SimpleFOC-2.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/askuric/library/Simple%20FOC/2.3.2/SimpleFOC-2.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "askuric/library/Simple%20FOC/2.3.3/SimpleFOC-2.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleFOC-2.3.3.tar.gz",
+    "size_bytes": 176935,
+    "sha256": "85e5beeacc541e07c766519d7107a55147f7ed5667abb09a100fba4d3a9fe418",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/askuric/library/Simple%2520FOC/2.3.3/SimpleFOC-2.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/askuric/library/Simple%20FOC/2.3.3/SimpleFOC-2.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "askuric/library/Simple%20FOC/2.3.4/SimpleFOC-2.3.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleFOC-2.3.4.tar.gz",
+    "size_bytes": 188789,
+    "sha256": "8bbdafd893f6d9f4eaa9a6187ebbc9ae1299e4d254027a1de643f03b36a2e4fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/askuric/library/Simple%2520FOC/2.3.4/SimpleFOC-2.3.4.tar.gz",
+     "https://dl.registry.platformio.org/download/askuric/library/Simple%20FOC/2.3.4/SimpleFOC-2.3.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "askuric/library/Simple%20FOC/2.3.5/SimpleFOC-2.3.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleFOC-2.3.5.tar.gz",
+    "size_bytes": 198881,
+    "sha256": "0cc730bfde08f6416a08a400187fed8c43477a912a2443968599051e0bbaf616",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/askuric/library/Simple%2520FOC/2.3.5/SimpleFOC-2.3.5.tar.gz",
+     "https://dl.registry.platformio.org/download/askuric/library/Simple%20FOC/2.3.5/SimpleFOC-2.3.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "askuric/library/Simple%20FOC/2.4.0/SimpleFOC-2.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleFOC-2.4.0.tar.gz",
+    "size_bytes": 2278595,
+    "sha256": "03629c84a56d34feb064bed33dfb6359ec83e943c141495031a93ec1b6676328",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/askuric/library/Simple%2520FOC/2.4.0/SimpleFOC-2.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/askuric/library/Simple%20FOC/2.4.0/SimpleFOC-2.4.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

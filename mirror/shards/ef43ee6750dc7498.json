@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/awesomeyooner",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "awesomeyooner/library/EmbeddedLib/1.0.0/EmbeddedLib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmbeddedLib-1.0.0.tar.gz",
+    "size_bytes": 1658,
+    "sha256": "ef3f021bcef84fea10a18c66464bf3ea9b645c89ccae4e93831f0edb0949a395",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/awesomeyooner/library/EmbeddedLib/1.0.0/EmbeddedLib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/awesomeyooner/library/EmbeddedLib/1.0.0/EmbeddedLib-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "awesomeyooner/library/EmbeddedLib/1.0.1/EmbeddedLib-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmbeddedLib-1.0.1.tar.gz",
+    "size_bytes": 2769,
+    "sha256": "54d10f9bf6d06a36c66defbd4bb40f84777a3d7fb82cd2cdca8c7cb2e32551bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/awesomeyooner/library/EmbeddedLib/1.0.1/EmbeddedLib-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/awesomeyooner/library/EmbeddedLib/1.0.1/EmbeddedLib-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "awesomeyooner/library/WireLib/1.0.0/WireLib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WireLib-1.0.0.tar.gz",
+    "size_bytes": 3620,
+    "sha256": "c096ae286d49b14bcf32efccc3b86fe97d11b655561cddcde362221da0dd48c4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/awesomeyooner/library/WireLib/1.0.0/WireLib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/awesomeyooner/library/WireLib/1.0.0/WireLib-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "awesomeyooner/library/WireLib/1.0.1/WireLib-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WireLib-1.0.1.tar.gz",
+    "size_bytes": 5055,
+    "sha256": "6af9482a6e91991bc61e616c7a2296315d7461e33b96488c486ef0d619cbca99",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/awesomeyooner/library/WireLib/1.0.1/WireLib-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/awesomeyooner/library/WireLib/1.0.1/WireLib-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "awesomeyooner/library/WireLib/1.0.2/WireLib-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WireLib-1.0.2.tar.gz",
+    "size_bytes": 5122,
+    "sha256": "f754f80e62138d59e189c77bdec3324f49b7cfb603c5a0b246d3b0d57f24dc07",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/awesomeyooner/library/WireLib/1.0.2/WireLib-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/awesomeyooner/library/WireLib/1.0.2/WireLib-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

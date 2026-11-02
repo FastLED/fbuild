@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dirkohme",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dirkohme/library/Led/1.0.2/Led-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Led-1.0.2.tar.gz",
+    "size_bytes": 4087,
+    "sha256": "c4e9ac8ddce6c857d2f793944d8fb7ff803a9583b62decde1360a5476591aa4d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dirkohme/library/Led/1.0.2/Led-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dirkohme/library/Led/1.0.2/Led-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,893 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/samed5497kaya",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "samed5497kaya/library/ARMBOT/1.0.3/ARMBOT-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ARMBOT-1.0.3.tar.gz",
+    "size_bytes": 3652,
+    "sha256": "915299257f54e7e7245f951e2433bc1cb48988d9ade6bd4babe81d3961bcfc0c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/ARMBOT/1.0.3/ARMBOT-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/ARMBOT/1.0.3/ARMBOT-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_ARMBOT/1.0.0/CODLAI_ARMBOT-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_ARMBOT-1.0.0.tar.gz",
+    "size_bytes": 19324,
+    "sha256": "646e4ea6b3cff6b4052f2c7649f1af6046554b55ed146f86987cef1c31d2336c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_ARMBOT/1.0.0/CODLAI_ARMBOT-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_ARMBOT/1.0.0/CODLAI_ARMBOT-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_ARMBOT/1.0.3/CODLAI_ARMBOT-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_ARMBOT-1.0.3.tar.gz",
+    "size_bytes": 20044,
+    "sha256": "a11f00c3403300247144e32e833975721020e61b47cd90b2aaa4bfe9537dac72",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_ARMBOT/1.0.3/CODLAI_ARMBOT-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_ARMBOT/1.0.3/CODLAI_ARMBOT-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_ARMBOT/1.0.4/CODLAI_ARMBOT-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_ARMBOT-1.0.4.tar.gz",
+    "size_bytes": 20169,
+    "sha256": "eb1ec8b1da08f2341bc4d7c9364b7fcc2fc1e54d9d5c2c91c4a565ad23e97de7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_ARMBOT/1.0.4/CODLAI_ARMBOT-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_ARMBOT/1.0.4/CODLAI_ARMBOT-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_ARMBOT/1.0.5/CODLAI_ARMBOT-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_ARMBOT-1.0.5.tar.gz",
+    "size_bytes": 23696,
+    "sha256": "e11958f604a62ec44eb4508ddf52c7fe073d734cfb26dc9bc9a2c523ce93c675",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_ARMBOT/1.0.5/CODLAI_ARMBOT-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_ARMBOT/1.0.5/CODLAI_ARMBOT-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_ARMBOT/1.0.6/CODLAI_ARMBOT-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_ARMBOT-1.0.6.tar.gz",
+    "size_bytes": 32827,
+    "sha256": "873423739c5c7c0ef75cac6d23f24c9cc95ab1dc41a49da8b9918c7ba02cce9f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_ARMBOT/1.0.6/CODLAI_ARMBOT-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_ARMBOT/1.0.6/CODLAI_ARMBOT-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_ARMBOT/1.1.0/CODLAI_ARMBOT-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_ARMBOT-1.1.0.tar.gz",
+    "size_bytes": 56099,
+    "sha256": "bafa0ae7a94391b39c3d5f39553e7e1558784fd4fbfae3d0a3506a4a18e9c949",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_ARMBOT/1.1.0/CODLAI_ARMBOT-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_ARMBOT/1.1.0/CODLAI_ARMBOT-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_ARMBOT/1.1.1/CODLAI_ARMBOT-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_ARMBOT-1.1.1.tar.gz",
+    "size_bytes": 56591,
+    "sha256": "287268ebd18daefc6763f4ac6f05ab0ff0653cfc2eb85f40612750df2e109ec9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_ARMBOT/1.1.1/CODLAI_ARMBOT-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_ARMBOT/1.1.1/CODLAI_ARMBOT-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_CARBOT/1.0.0/CODLAI_CARBOT-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_CARBOT-1.0.0.tar.gz",
+    "size_bytes": 17976,
+    "sha256": "6f3d6f2ea014958a687b6654988b674aca1aa33f8f1dc1328bb802c476488bed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_CARBOT/1.0.0/CODLAI_CARBOT-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_CARBOT/1.0.0/CODLAI_CARBOT-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_CARBOT/1.0.3/CODLAI_CARBOT-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_CARBOT-1.0.3.tar.gz",
+    "size_bytes": 18729,
+    "sha256": "4af140e65559b1135e939017f1d5acba61df0dd07c11b4485dec08a5a91c333c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_CARBOT/1.0.3/CODLAI_CARBOT-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_CARBOT/1.0.3/CODLAI_CARBOT-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_CARBOT/1.0.4/CODLAI_CARBOT-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_CARBOT-1.0.4.tar.gz",
+    "size_bytes": 20531,
+    "sha256": "efaa3cbd2b7a25a2ada059625c2ab33052faf3b89feb4edafc23b5089ccbc71f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_CARBOT/1.0.4/CODLAI_CARBOT-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_CARBOT/1.0.4/CODLAI_CARBOT-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_CARBOT/1.1.0/CODLAI_CARBOT-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_CARBOT-1.1.0.tar.gz",
+    "size_bytes": 27570,
+    "sha256": "e05008521108092786b3eafee941dfc1340d15ffda0d1b9d97eddfacf0ec7468",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_CARBOT/1.1.0/CODLAI_CARBOT-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_CARBOT/1.1.0/CODLAI_CARBOT-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_CARBOT/1.1.1/CODLAI_CARBOT-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_CARBOT-1.1.1.tar.gz",
+    "size_bytes": 27986,
+    "sha256": "05b197f0593e3d87a74c393fe360b48932a83fae0e453b7959e8c60b34184f84",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_CARBOT/1.1.1/CODLAI_CARBOT-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_CARBOT/1.1.1/CODLAI_CARBOT-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_CARBOT/1.1.2/CODLAI_CARBOT-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_CARBOT-1.1.2.tar.gz",
+    "size_bytes": 28216,
+    "sha256": "f48b3e3b18dde0319df1968bada561526c12df62ef381ffab19542fd3e916932",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_CARBOT/1.1.2/CODLAI_CARBOT-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_CARBOT/1.1.2/CODLAI_CARBOT-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_CARBOT/1.1.3/CODLAI_CARBOT-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_CARBOT-1.1.3.tar.gz",
+    "size_bytes": 36141,
+    "sha256": "4a23d41eb2c7be3ca454a72bacf64741cdea87a53f3e2a702dbecc6095962baf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_CARBOT/1.1.3/CODLAI_CARBOT-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_CARBOT/1.1.3/CODLAI_CARBOT-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_CARBOT/1.2.0/CODLAI_CARBOT-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_CARBOT-1.2.0.tar.gz",
+    "size_bytes": 60120,
+    "sha256": "8a6f6bf9d49071bea2801a59297eae2a1b9bbc5a0f004d7095bb02ec85e590c4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_CARBOT/1.2.0/CODLAI_CARBOT-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_CARBOT/1.2.0/CODLAI_CARBOT-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_CARBOT/1.2.1/CODLAI_CARBOT-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_CARBOT-1.2.1.tar.gz",
+    "size_bytes": 60597,
+    "sha256": "007d6e1abefb9d0a4f2afed983b708022d15a88cde400eead55324c05bfd1411",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_CARBOT/1.2.1/CODLAI_CARBOT-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_CARBOT/1.2.1/CODLAI_CARBOT-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_IOTBOT/1.0.0/CODLAI_IOTBOT-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_IOTBOT-1.0.0.tar.gz",
+    "size_bytes": 48259,
+    "sha256": "aface15e57147a88a0ad6239d80116d61e34155e9c3abb18cdadb3c9d383663a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_IOTBOT/1.0.0/CODLAI_IOTBOT-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_IOTBOT/1.0.0/CODLAI_IOTBOT-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_IOTBOT/1.1.0/CODLAI_IOTBOT-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_IOTBOT-1.1.0.tar.gz",
+    "size_bytes": 51064,
+    "sha256": "d24493f4085c97b98b3914b3cf54e9ea7ead461f5314175d87365dc6acfcee6b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_IOTBOT/1.1.0/CODLAI_IOTBOT-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_IOTBOT/1.1.0/CODLAI_IOTBOT-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_IOTBOT/1.1.1/CODLAI_IOTBOT-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_IOTBOT-1.1.1.tar.gz",
+    "size_bytes": 52447,
+    "sha256": "f2ab1361efae60eeaccd380f0a741b480c952e29da7f9e7544d0dc48460617e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_IOTBOT/1.1.1/CODLAI_IOTBOT-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_IOTBOT/1.1.1/CODLAI_IOTBOT-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_IOTBOT/1.2.1/CODLAI_IOTBOT-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_IOTBOT-1.2.1.tar.gz",
+    "size_bytes": 5117830,
+    "sha256": "09b97b1d1cb3251c153e05c65f5682eaeb5f820314c13dbdb7fd14e5d24e647c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_IOTBOT/1.2.1/CODLAI_IOTBOT-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_IOTBOT/1.2.1/CODLAI_IOTBOT-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_IOTBOT/1.2.2/CODLAI_IOTBOT-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_IOTBOT-1.2.2.tar.gz",
+    "size_bytes": 5117901,
+    "sha256": "e0e889a5b51cd32b88eb75d34f410bab71babe2928084f9223aa5d60e5c42d75",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_IOTBOT/1.2.2/CODLAI_IOTBOT-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_IOTBOT/1.2.2/CODLAI_IOTBOT-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_IOTBOT/1.2.3/CODLAI_IOTBOT-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_IOTBOT-1.2.3.tar.gz",
+    "size_bytes": 5118019,
+    "sha256": "0e6edf7f2807d52b5660206709bf9d4721e376f618c5d5dab4150d9edcc3245f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_IOTBOT/1.2.3/CODLAI_IOTBOT-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_IOTBOT/1.2.3/CODLAI_IOTBOT-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_IOTBOT/1.2.4/CODLAI_IOTBOT-1.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_IOTBOT-1.2.4.tar.gz",
+    "size_bytes": 5122411,
+    "sha256": "25ff6ab3e979348e3099df1496a3a72acf648361d8a87ad479a7e714fd4abfa5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_IOTBOT/1.2.4/CODLAI_IOTBOT-1.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_IOTBOT/1.2.4/CODLAI_IOTBOT-1.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_IOTBOT/1.2.5/CODLAI_IOTBOT-1.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_IOTBOT-1.2.5.tar.gz",
+    "size_bytes": 5124407,
+    "sha256": "0881231ff6cdc1525ad292fd34151a7193b57c1350ca9359af36c6a8b13bd159",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_IOTBOT/1.2.5/CODLAI_IOTBOT-1.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_IOTBOT/1.2.5/CODLAI_IOTBOT-1.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_IOTBOT/1.3.0/CODLAI_IOTBOT-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_IOTBOT-1.3.0.tar.gz",
+    "size_bytes": 5128044,
+    "sha256": "6ee1a2309ab9d79c53b6c98a149f94671de445cbe7e6e6cc0a89fff549d49d46",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_IOTBOT/1.3.0/CODLAI_IOTBOT-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_IOTBOT/1.3.0/CODLAI_IOTBOT-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_IOTBOT/1.3.1/CODLAI_IOTBOT-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_IOTBOT-1.3.1.tar.gz",
+    "size_bytes": 5128387,
+    "sha256": "35b74ef87c6bc6b67f883a775bd51bb940a4056a69c568358de739d39686d5e7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_IOTBOT/1.3.1/CODLAI_IOTBOT-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_IOTBOT/1.3.1/CODLAI_IOTBOT-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_IOTBOT/1.4.0/CODLAI_IOTBOT-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_IOTBOT-1.4.0.tar.gz",
+    "size_bytes": 5128925,
+    "sha256": "2662466a1e4eb84a188fc529b598de702ff8a32b30be1e2e773bd13e8d56d105",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_IOTBOT/1.4.0/CODLAI_IOTBOT-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_IOTBOT/1.4.0/CODLAI_IOTBOT-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_IOTBOT/1.6.0/CODLAI_IOTBOT-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_IOTBOT-1.6.0.tar.gz",
+    "size_bytes": 5146417,
+    "sha256": "6c9bd3f017c9f464c4e351c583a4ac15dbcfe3d0c7edaf2544348b5b545d610f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_IOTBOT/1.6.0/CODLAI_IOTBOT-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_IOTBOT/1.6.0/CODLAI_IOTBOT-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_IOTBOT/1.6.1/CODLAI_IOTBOT-1.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_IOTBOT-1.6.1.tar.gz",
+    "size_bytes": 5146760,
+    "sha256": "3186a4298739d5e6c1e53c16de5c317d2a2d10fb73e7c2a2a8ee9f617b1a49d2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_IOTBOT/1.6.1/CODLAI_IOTBOT-1.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_IOTBOT/1.6.1/CODLAI_IOTBOT-1.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_IOTBOT/1.7.0/CODLAI_IOTBOT-1.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_IOTBOT-1.7.0.tar.gz",
+    "size_bytes": 5152736,
+    "sha256": "6a83d4fcc15181ceb9f24db982bfe007c3334216f67268a1f317927dc347233b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_IOTBOT/1.7.0/CODLAI_IOTBOT-1.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_IOTBOT/1.7.0/CODLAI_IOTBOT-1.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_IOTBOT/1.7.1/CODLAI_IOTBOT-1.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_IOTBOT-1.7.1.tar.gz",
+    "size_bytes": 5153451,
+    "sha256": "1f48217089190afad075e657e5113512827c7d5a7eb67f9dec649bdfc68af2ec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_IOTBOT/1.7.1/CODLAI_IOTBOT-1.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_IOTBOT/1.7.1/CODLAI_IOTBOT-1.7.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_IOTBOT/1.7.2/CODLAI_IOTBOT-1.7.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_IOTBOT-1.7.2.tar.gz",
+    "size_bytes": 5154258,
+    "sha256": "7b711dd47fa061a72febb47b7279c4308f2a67a794d3d1cc8f1e56b8974c679b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_IOTBOT/1.7.2/CODLAI_IOTBOT-1.7.2.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_IOTBOT/1.7.2/CODLAI_IOTBOT-1.7.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_IOTBOT/1.7.3/CODLAI_IOTBOT-1.7.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_IOTBOT-1.7.3.tar.gz",
+    "size_bytes": 5203909,
+    "sha256": "f0b03674a4deaa3facb94ea8d2b5061501a19fa5bd313c92a0ac3dd58d7c93db",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_IOTBOT/1.7.3/CODLAI_IOTBOT-1.7.3.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_IOTBOT/1.7.3/CODLAI_IOTBOT-1.7.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_IOTBOT/1.8.0/CODLAI_IOTBOT-1.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_IOTBOT-1.8.0.tar.gz",
+    "size_bytes": 5399883,
+    "sha256": "9b57e522b8793f9f93d16f6706c86815d11e5b46e14538b8a06969502332cec9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_IOTBOT/1.8.0/CODLAI_IOTBOT-1.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_IOTBOT/1.8.0/CODLAI_IOTBOT-1.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_IOTBOT/1.8.1/CODLAI_IOTBOT-1.8.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_IOTBOT-1.8.1.tar.gz",
+    "size_bytes": 5401476,
+    "sha256": "3cd68147d16f2516897bc40f977f39757afc05beb13ead621ef0e620dfc5d27e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_IOTBOT/1.8.1/CODLAI_IOTBOT-1.8.1.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_IOTBOT/1.8.1/CODLAI_IOTBOT-1.8.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_MINIBOT/1.0.0/CODLAI_MINIBOT-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_MINIBOT-1.0.0.tar.gz",
+    "size_bytes": 24703,
+    "sha256": "91f53298013e8787d7cda4a97272f49c04d2eb69ea24435b163d73e5c0db183f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_MINIBOT/1.0.0/CODLAI_MINIBOT-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_MINIBOT/1.0.0/CODLAI_MINIBOT-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_MINIBOT/1.1.1/CODLAI_MINIBOT-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_MINIBOT-1.1.1.tar.gz",
+    "size_bytes": 5083528,
+    "sha256": "3dfbc1078e5d854b46446cb78f4a559562ee6629612281d839ed1971638440f5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_MINIBOT/1.1.1/CODLAI_MINIBOT-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_MINIBOT/1.1.1/CODLAI_MINIBOT-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_MINIBOT/1.1.3/CODLAI_MINIBOT-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_MINIBOT-1.1.3.tar.gz",
+    "size_bytes": 5083853,
+    "sha256": "82df1cb601025d09f8ea17575c833b87d25f9ff2a336046d6a89d1087323aa6b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_MINIBOT/1.1.3/CODLAI_MINIBOT-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_MINIBOT/1.1.3/CODLAI_MINIBOT-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_MINIBOT/1.1.4/CODLAI_MINIBOT-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_MINIBOT-1.1.4.tar.gz",
+    "size_bytes": 5090173,
+    "sha256": "ba61e6bff834db56f3618f71dc555e6643693a8a1d40359493233c53d803ff5e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_MINIBOT/1.1.4/CODLAI_MINIBOT-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_MINIBOT/1.1.4/CODLAI_MINIBOT-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_MINIBOT/1.1.5/CODLAI_MINIBOT-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_MINIBOT-1.1.5.tar.gz",
+    "size_bytes": 5091422,
+    "sha256": "9624a8f5770c8f935d9a3c9c91a27f5fd5ad22bb1d2a5643b507eda808c18187",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_MINIBOT/1.1.5/CODLAI_MINIBOT-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_MINIBOT/1.1.5/CODLAI_MINIBOT-1.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_MINIBOT/1.2.0/CODLAI_MINIBOT-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_MINIBOT-1.2.0.tar.gz",
+    "size_bytes": 5091685,
+    "sha256": "402db32559f7191c429e1a272a452d6ef0873f00fd8efcb0e6d736fa74d0c66a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_MINIBOT/1.2.0/CODLAI_MINIBOT-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_MINIBOT/1.2.0/CODLAI_MINIBOT-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_MINIBOT/1.4.0/CODLAI_MINIBOT-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_MINIBOT-1.4.0.tar.gz",
+    "size_bytes": 5103073,
+    "sha256": "66187800f44d746ccd259cbcd88d7b64c173f6c51e94c341bce29085fa64deb7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_MINIBOT/1.4.0/CODLAI_MINIBOT-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_MINIBOT/1.4.0/CODLAI_MINIBOT-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_MINIBOT/1.4.1/CODLAI_MINIBOT-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_MINIBOT-1.4.1.tar.gz",
+    "size_bytes": 5103110,
+    "sha256": "e29bf5363b319c0a87755411afed37e105e2dce7bf0598469212754defbd0a86",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_MINIBOT/1.4.1/CODLAI_MINIBOT-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_MINIBOT/1.4.1/CODLAI_MINIBOT-1.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_MINIBOT/1.5.0/CODLAI_MINIBOT-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_MINIBOT-1.5.0.tar.gz",
+    "size_bytes": 5107785,
+    "sha256": "d0c50375c0cc71d266259f45049fcefd65d728a171824f11f7764d8859bbda64",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_MINIBOT/1.5.0/CODLAI_MINIBOT-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_MINIBOT/1.5.0/CODLAI_MINIBOT-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_MINIBOT/1.5.1/CODLAI_MINIBOT-1.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_MINIBOT-1.5.1.tar.gz",
+    "size_bytes": 5108159,
+    "sha256": "67e1f3965881330481cb6597782fb89dce508c6453cd6f665040e2c34eedef3a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_MINIBOT/1.5.1/CODLAI_MINIBOT-1.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_MINIBOT/1.5.1/CODLAI_MINIBOT-1.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_MINIBOT/1.5.2/CODLAI_MINIBOT-1.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_MINIBOT-1.5.2.tar.gz",
+    "size_bytes": 5108716,
+    "sha256": "afd84bdb8ed50048f902608376b71252e52dad4c3f4384805f490d0cdf091bb0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_MINIBOT/1.5.2/CODLAI_MINIBOT-1.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_MINIBOT/1.5.2/CODLAI_MINIBOT-1.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_MINIBOT/1.5.3/CODLAI_MINIBOT-1.5.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_MINIBOT-1.5.3.tar.gz",
+    "size_bytes": 5126902,
+    "sha256": "651fa422a49ce36abf3e875a16e737729a57f82a6be62b5c83df14db2958984a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_MINIBOT/1.5.3/CODLAI_MINIBOT-1.5.3.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_MINIBOT/1.5.3/CODLAI_MINIBOT-1.5.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_MINIBOT/1.6.0/CODLAI_MINIBOT-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_MINIBOT-1.6.0.tar.gz",
+    "size_bytes": 5217541,
+    "sha256": "c3b942b6549a077a4326675b3d07b8c5c79accc607886f8f06e010a81ba82890",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_MINIBOT/1.6.0/CODLAI_MINIBOT-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_MINIBOT/1.6.0/CODLAI_MINIBOT-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_MINIBOT/1.6.1/CODLAI_MINIBOT-1.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_MINIBOT-1.6.1.tar.gz",
+    "size_bytes": 5218133,
+    "sha256": "e48a62e489d2a064dc2730b5f994c0cebf615d67a4765a1341c0f553d6eda39a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_MINIBOT/1.6.1/CODLAI_MINIBOT-1.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_MINIBOT/1.6.1/CODLAI_MINIBOT-1.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_ROLEBOT/1.0.0/CODLAI_ROLEBOT-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_ROLEBOT-1.0.0.tar.gz",
+    "size_bytes": 15886,
+    "sha256": "e1af6708de62a1ddbb44568da466a2acfc80d8b7f0fc633e7fea1011f67676bd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_ROLEBOT/1.0.0/CODLAI_ROLEBOT-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_ROLEBOT/1.0.0/CODLAI_ROLEBOT-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_ROLEBOT/1.1.1/CODLAI_ROLEBOT-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_ROLEBOT-1.1.1.tar.gz",
+    "size_bytes": 5075122,
+    "sha256": "886c4ed31bbf603cf0ba42eab70cf48e25bc3c9aafef553a34adc0f9dcf03b57",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_ROLEBOT/1.1.1/CODLAI_ROLEBOT-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_ROLEBOT/1.1.1/CODLAI_ROLEBOT-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_ROLEBOT/1.1.3/CODLAI_ROLEBOT-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_ROLEBOT-1.1.3.tar.gz",
+    "size_bytes": 5075281,
+    "sha256": "35441ebbcf45bd8ceeb882a2a338e3463acdc73bdaebd3ff5f1e59f15d8ead9d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_ROLEBOT/1.1.3/CODLAI_ROLEBOT-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_ROLEBOT/1.1.3/CODLAI_ROLEBOT-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_ROLEBOT/1.1.4/CODLAI_ROLEBOT-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_ROLEBOT-1.1.4.tar.gz",
+    "size_bytes": 5078258,
+    "sha256": "75d4752e08b670315033df064dbd2b24710c337b60218745f38cb648d657d04d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_ROLEBOT/1.1.4/CODLAI_ROLEBOT-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_ROLEBOT/1.1.4/CODLAI_ROLEBOT-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_ROLEBOT/1.1.5/CODLAI_ROLEBOT-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_ROLEBOT-1.1.5.tar.gz",
+    "size_bytes": 5079309,
+    "sha256": "c3d56a038b604905da0c31164f159cd27c724230f5c98ae23e7873c0f7b28107",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_ROLEBOT/1.1.5/CODLAI_ROLEBOT-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_ROLEBOT/1.1.5/CODLAI_ROLEBOT-1.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_ROLEBOT/1.2.0/CODLAI_ROLEBOT-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_ROLEBOT-1.2.0.tar.gz",
+    "size_bytes": 5079585,
+    "sha256": "a4011c82653464ab86d02d37abd6e9f3938a1436c7b50d651fad37ed1f1d6726",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_ROLEBOT/1.2.0/CODLAI_ROLEBOT-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_ROLEBOT/1.2.0/CODLAI_ROLEBOT-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_ROLEBOT/1.4.0/CODLAI_ROLEBOT-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_ROLEBOT-1.4.0.tar.gz",
+    "size_bytes": 5091487,
+    "sha256": "f0ec89cdfc45ff9347976f8911e77b7dd35bc81bebb83d23d3fd3201444a6978",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_ROLEBOT/1.4.0/CODLAI_ROLEBOT-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_ROLEBOT/1.4.0/CODLAI_ROLEBOT-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_ROLEBOT/1.4.1/CODLAI_ROLEBOT-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_ROLEBOT-1.4.1.tar.gz",
+    "size_bytes": 5091557,
+    "sha256": "1519113f74d620fe7faf4546c4eb319a255e59ec0b365eaa56e90bed982f0f59",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_ROLEBOT/1.4.1/CODLAI_ROLEBOT-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_ROLEBOT/1.4.1/CODLAI_ROLEBOT-1.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_ROLEBOT/1.5.0/CODLAI_ROLEBOT-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_ROLEBOT-1.5.0.tar.gz",
+    "size_bytes": 5093473,
+    "sha256": "23eba6a355eb21ae9efabb73215fc16685f514cc1da1a3dc35fe75ac58ab2203",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_ROLEBOT/1.5.0/CODLAI_ROLEBOT-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_ROLEBOT/1.5.0/CODLAI_ROLEBOT-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_ROLEBOT/1.5.1/CODLAI_ROLEBOT-1.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_ROLEBOT-1.5.1.tar.gz",
+    "size_bytes": 5093621,
+    "sha256": "4d62c9336c3bf9e3c7a8409323fc598ea11553bf8089f9b382727b08d16a751c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_ROLEBOT/1.5.1/CODLAI_ROLEBOT-1.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_ROLEBOT/1.5.1/CODLAI_ROLEBOT-1.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_ROLEBOT/1.5.3/CODLAI_ROLEBOT-1.5.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_ROLEBOT-1.5.3.tar.gz",
+    "size_bytes": 5104443,
+    "sha256": "5c804a9621db1c17f99a1ab59d5ca868042a0e5377d9d1ce40a46467a282d093",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_ROLEBOT/1.5.3/CODLAI_ROLEBOT-1.5.3.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_ROLEBOT/1.5.3/CODLAI_ROLEBOT-1.5.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_ROLEBOT/1.6.0/CODLAI_ROLEBOT-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_ROLEBOT-1.6.0.tar.gz",
+    "size_bytes": 5165193,
+    "sha256": "eb489505c89525dfbb85a6050c64308c379eb41287e3a937682b619fc00c1e1d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_ROLEBOT/1.6.0/CODLAI_ROLEBOT-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_ROLEBOT/1.6.0/CODLAI_ROLEBOT-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODLAI_ROLEBOT/1.6.1/CODLAI_ROLEBOT-1.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODLAI_ROLEBOT-1.6.1.tar.gz",
+    "size_bytes": 5165618,
+    "sha256": "952fc412af4bdf9ecdec946d72ebc443b7d472061a136a4c3ad89769c9dc3f2d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODLAI_ROLEBOT/1.6.1/CODLAI_ROLEBOT-1.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODLAI_ROLEBOT/1.6.1/CODLAI_ROLEBOT-1.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODROB_ARMBOT/1.0.0/CODROB_ARMBOT-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODROB_ARMBOT-1.0.0.tar.gz",
+    "size_bytes": 19325,
+    "sha256": "58ee98cc9067323bb33a5b3bad94d4e6e59b8eca877dd51ed054686d1575bfcf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODROB_ARMBOT/1.0.0/CODROB_ARMBOT-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODROB_ARMBOT/1.0.0/CODROB_ARMBOT-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODROB_CARBOT/1.2.3/CODROB_CARBOT-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODROB_CARBOT-1.2.3.tar.gz",
+    "size_bytes": 4082,
+    "sha256": "a95f5750f6b84442d2f1c2e4d5c2a655184a6d2962a1a3a767bd80cf01f66989",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODROB_CARBOT/1.2.3/CODROB_CARBOT-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODROB_CARBOT/1.2.3/CODROB_CARBOT-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODROB_IOTBOT/1.0.0/CODROB_IOTBOT-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODROB_IOTBOT-1.0.0.tar.gz",
+    "size_bytes": 48270,
+    "sha256": "404a100734b25394aa2d2050642eced4fc9c82931223112576899bedaf7f4df7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODROB_IOTBOT/1.0.0/CODROB_IOTBOT-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODROB_IOTBOT/1.0.0/CODROB_IOTBOT-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODROB_MINIBOT/1.6.4/CODROB_MINIBOT-1.6.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODROB_MINIBOT-1.6.4.tar.gz",
+    "size_bytes": 20109,
+    "sha256": "060853c9345ef04d73886e0b26f7a6718cb7f952d572284d9a7046fd1a6d9626",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODROB_MINIBOT/1.6.4/CODROB_MINIBOT-1.6.4.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODROB_MINIBOT/1.6.4/CODROB_MINIBOT-1.6.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "samed5497kaya/library/CODROB_ROLEBOT/1.6.4/CODROB_ROLEBOT-1.6.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CODROB_ROLEBOT-1.6.4.tar.gz",
+    "size_bytes": 11475,
+    "sha256": "e0b9d0ad1596e610fbfa2c07cd9cda696643c878dabe797252eef2308ccdeaf3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samed5497kaya/library/CODROB_ROLEBOT/1.6.4/CODROB_ROLEBOT-1.6.4.tar.gz",
+     "https://dl.registry.platformio.org/download/samed5497kaya/library/CODROB_ROLEBOT/1.6.4/CODROB_ROLEBOT-1.6.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

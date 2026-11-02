@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-bmanga95",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-bmanga95/library/Adafruit9-DOf/0.0.0+sha.772bf4786416/Adafruit9-DOf-0.0.0+sha.772bf4786416.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Adafruit9-DOf-0.0.0+sha.772bf4786416.tar.gz",
+    "size_bytes": 13687,
+    "sha256": "a52a39d19c6d363a7e3ec8cf92d1b040f722e491de929889d800d487689107bd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bmanga95/library/Adafruit9-DOf/0.0.0%2Bsha.772bf4786416/Adafruit9-DOf-0.0.0%2Bsha.772bf4786416.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bmanga95/library/Adafruit9-DOf/0.0.0%2Bsha.772bf4786416/Adafruit9-DOf-0.0.0%2Bsha.772bf4786416.tar.gz"
+    ]
+   }
+  }
+ ]
+}

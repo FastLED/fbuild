@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ransky3000",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ransky3000/library/ACS712-driver/1.1.0/ACS712-driver-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ACS712-driver-1.1.0.tar.gz",
+    "size_bytes": 8518,
+    "sha256": "da00d3b630ae5aefef17beaf0318bddd1b51f7028bbd76cf7fcf77a49f973018",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ransky3000/library/ACS712-driver/1.1.0/ACS712-driver-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ransky3000/library/ACS712-driver/1.1.0/ACS712-driver-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ransky3000/library/SCT013-100/1.0.0/SCT013-100-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SCT013-100-1.0.0.tar.gz",
+    "size_bytes": 5638,
+    "sha256": "accc534be80bafe10f346f2e4d23ca86dcc01364c401ca7365534dad1eac86f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ransky3000/library/SCT013-100/1.0.0/SCT013-100-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ransky3000/library/SCT013-100/1.0.0/SCT013-100-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

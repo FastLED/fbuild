@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/forairaaaaa",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "forairaaaaa/library/Mooncake/1.0.4/Mooncake-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Mooncake-1.0.4.tar.gz",
+    "size_bytes": 229155,
+    "sha256": "7f3648865d21979bcad3ba6417847ca3b1ebfb50d050ee078592a38a97aad8d2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/forairaaaaa/library/Mooncake/1.0.4/Mooncake-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/forairaaaaa/library/Mooncake/1.0.4/Mooncake-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "forairaaaaa/library/Mooncake/1.2/Mooncake-1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Mooncake-1.2.tar.gz",
+    "size_bytes": 223749,
+    "sha256": "777fb9eef5d0339935e30afd827d281bdaf9982519aaae3a1642b14579da00d2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/forairaaaaa/library/Mooncake/1.2/Mooncake-1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/forairaaaaa/library/Mooncake/1.2/Mooncake-1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "forairaaaaa/library/SmoothUIToolKit/1.0.2/SmoothUIToolKit-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmoothUIToolKit-1.0.2.tar.gz",
+    "size_bytes": 30711,
+    "sha256": "7c52ef304547b5da2bef87e56d459c5e0a45dc0a8b0a84b2bd2a6df332f80b2d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/forairaaaaa/library/SmoothUIToolKit/1.0.2/SmoothUIToolKit-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/forairaaaaa/library/SmoothUIToolKit/1.0.2/SmoothUIToolKit-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

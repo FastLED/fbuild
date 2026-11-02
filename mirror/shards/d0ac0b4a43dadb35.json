@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-atthackathon",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-atthackathon/library/C12832_lcd/0.0.0+sha.3e64ca073642/C12832_lcd-0.0.0+sha.3e64ca073642.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "C12832_lcd-0.0.0+sha.3e64ca073642.tar.gz",
+    "size_bytes": 11193,
+    "sha256": "e57784d4e58c8005329ddda75df10a4a692df9b40678856aa079a31cc84836be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-atthackathon/library/C12832_lcd/0.0.0%2Bsha.3e64ca073642/C12832_lcd-0.0.0%2Bsha.3e64ca073642.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-atthackathon/library/C12832_lcd/0.0.0%2Bsha.3e64ca073642/C12832_lcd-0.0.0%2Bsha.3e64ca073642.tar.gz"
+    ]
+   }
+  }
+ ]
+}

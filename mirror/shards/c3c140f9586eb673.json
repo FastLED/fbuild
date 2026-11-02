@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lathoub",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lathoub/library/AppleMIDI/3.3.0/AppleMIDI-3.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AppleMIDI-3.3.0.tar.gz",
+    "size_bytes": 37845,
+    "sha256": "cc714003db8e53095bb749c1575bbd888255e24fd7d9542f1fd08df4ded70f0a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lathoub/library/AppleMIDI/3.3.0/AppleMIDI-3.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lathoub/library/AppleMIDI/3.3.0/AppleMIDI-3.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lathoub/library/AppleMIDI/3.5.0/AppleMIDI-3.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AppleMIDI-3.5.0.tar.gz",
+    "size_bytes": 43504,
+    "sha256": "74af2ce60f497a40de2f86ae088703d7844e5f1575dc2d9d1538a39163a0ba1c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lathoub/library/AppleMIDI/3.5.0/AppleMIDI-3.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lathoub/library/AppleMIDI/3.5.0/AppleMIDI-3.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lathoub/library/BLE-MIDI/2.2/BLE-MIDI-2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLE-MIDI-2.2.tar.gz",
+    "size_bytes": 18496,
+    "sha256": "06b817087bfd1bee8c36fd793101207a5fccbeb14378e5b8a7cf39d7adfdbc43",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lathoub/library/BLE-MIDI/2.2/BLE-MIDI-2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lathoub/library/BLE-MIDI/2.2/BLE-MIDI-2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lathoub/library/USB-MIDI/1.1.3/USB-MIDI-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "USB-MIDI-1.1.3.tar.gz",
+    "size_bytes": 7740,
+    "sha256": "dec6f6bb5128d342b376c977a611605ca711b963fea21afb4a1f346cbb6796b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lathoub/library/USB-MIDI/1.1.3/USB-MIDI-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/lathoub/library/USB-MIDI/1.1.3/USB-MIDI-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lathoub/library/ipMIDI/1.0.3/ipMIDI-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ipMIDI-1.0.3.tar.gz",
+    "size_bytes": 4547,
+    "sha256": "3285387c9e4b53167365c7779d3dabcd0d8928ba580649b23af802b2a93c95d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lathoub/library/ipMIDI/1.0.3/ipMIDI-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/lathoub/library/ipMIDI/1.0.3/ipMIDI-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

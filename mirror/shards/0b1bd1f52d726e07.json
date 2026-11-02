@@ -1,0 +1,347 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pervasivedisplays",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pervasivedisplays/library/Pervasive_BWRY_Large/10.0.3/Pervasive_BWRY_Large-10.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pervasive_BWRY_Large-10.0.3.tar.gz",
+    "size_bytes": 45725,
+    "sha256": "37ea80b6c0431074b2bd9010900d1f2fc8c86ea74bd17439761cd34f4fccd9cf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pervasivedisplays/library/Pervasive_BWRY_Large/10.0.3/Pervasive_BWRY_Large-10.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/pervasivedisplays/library/Pervasive_BWRY_Large/10.0.3/Pervasive_BWRY_Large-10.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pervasivedisplays/library/Pervasive_BWRY_Large/10.0.4/Pervasive_BWRY_Large-10.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pervasive_BWRY_Large-10.0.4.tar.gz",
+    "size_bytes": 46586,
+    "sha256": "8c19af73afc99a30050fd9d4a8cf01a659ea965b12ee522957ec3d36e55d6c06",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pervasivedisplays/library/Pervasive_BWRY_Large/10.0.4/Pervasive_BWRY_Large-10.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/pervasivedisplays/library/Pervasive_BWRY_Large/10.0.4/Pervasive_BWRY_Large-10.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pervasivedisplays/library/Pervasive_BWRY_Large/10.1.1/Pervasive_BWRY_Large-10.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pervasive_BWRY_Large-10.1.1.tar.gz",
+    "size_bytes": 46642,
+    "sha256": "dfae9c6ca8cfc530b70e95218da59a589dd031ab97c38582a2b39c7e8bf67ac2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pervasivedisplays/library/Pervasive_BWRY_Large/10.1.1/Pervasive_BWRY_Large-10.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pervasivedisplays/library/Pervasive_BWRY_Large/10.1.1/Pervasive_BWRY_Large-10.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pervasivedisplays/library/Pervasive_BWRY_Large/9.0.4/Pervasive_BWRY_Large-9.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pervasive_BWRY_Large-9.0.4.tar.gz",
+    "size_bytes": 44551,
+    "sha256": "1e02d416d9d61126463d768f0c6caba6ee1c5b1154b3b90439bbddd64aaa0f37",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pervasivedisplays/library/Pervasive_BWRY_Large/9.0.4/Pervasive_BWRY_Large-9.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/pervasivedisplays/library/Pervasive_BWRY_Large/9.0.4/Pervasive_BWRY_Large-9.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pervasivedisplays/library/Pervasive_BWRY_Large/9.0.5/Pervasive_BWRY_Large-9.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pervasive_BWRY_Large-9.0.5.tar.gz",
+    "size_bytes": 44554,
+    "sha256": "2a611ca54fa93adfeb05e41eb248c5bdd14111a82695ae64452f7ed34f277c84",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pervasivedisplays/library/Pervasive_BWRY_Large/9.0.5/Pervasive_BWRY_Large-9.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/pervasivedisplays/library/Pervasive_BWRY_Large/9.0.5/Pervasive_BWRY_Large-9.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pervasivedisplays/library/Pervasive_BWRY_Medium/10.0.0/Pervasive_BWRY_Medium-10.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pervasive_BWRY_Medium-10.0.0.tar.gz",
+    "size_bytes": 44704,
+    "sha256": "d0f8af9bff67fbd220cd2d76a1bc5b40fcc9fd1507763c6e3c6da0eac081dcef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pervasivedisplays/library/Pervasive_BWRY_Medium/10.0.0/Pervasive_BWRY_Medium-10.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pervasivedisplays/library/Pervasive_BWRY_Medium/10.0.0/Pervasive_BWRY_Medium-10.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pervasivedisplays/library/Pervasive_BWRY_Medium/10.1.1/Pervasive_BWRY_Medium-10.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pervasive_BWRY_Medium-10.1.1.tar.gz",
+    "size_bytes": 44755,
+    "sha256": "15975eb41af5bcae6f39ee3cde7561feb28e567879811adfc30fcb1e64ad767d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pervasivedisplays/library/Pervasive_BWRY_Medium/10.1.1/Pervasive_BWRY_Medium-10.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pervasivedisplays/library/Pervasive_BWRY_Medium/10.1.1/Pervasive_BWRY_Medium-10.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pervasivedisplays/library/Pervasive_BWRY_Medium/9.0.2/Pervasive_BWRY_Medium-9.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pervasive_BWRY_Medium-9.0.2.tar.gz",
+    "size_bytes": 42967,
+    "sha256": "682663d9d0ef8cd1d22f3fab8a9eb5908a89d832e6d0f818fb68817b66564c6f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pervasivedisplays/library/Pervasive_BWRY_Medium/9.0.2/Pervasive_BWRY_Medium-9.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/pervasivedisplays/library/Pervasive_BWRY_Medium/9.0.2/Pervasive_BWRY_Medium-9.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pervasivedisplays/library/Pervasive_BWRY_Medium/9.0.3/Pervasive_BWRY_Medium-9.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pervasive_BWRY_Medium-9.0.3.tar.gz",
+    "size_bytes": 42973,
+    "sha256": "d32211c65f513ad5cb5b2bcbf1da3820d945eeae19a729f3451f85b4507f2fe6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pervasivedisplays/library/Pervasive_BWRY_Medium/9.0.3/Pervasive_BWRY_Medium-9.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/pervasivedisplays/library/Pervasive_BWRY_Medium/9.0.3/Pervasive_BWRY_Medium-9.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pervasivedisplays/library/Pervasive_BWRY_Small/9.0.4/Pervasive_BWRY_Small-9.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pervasive_BWRY_Small-9.0.4.tar.gz",
+    "size_bytes": 35113,
+    "sha256": "341f0d8ba1a221afacc88bffdaeaf323429af33f6b7271b3a89f63d2311220c1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pervasivedisplays/library/Pervasive_BWRY_Small/9.0.4/Pervasive_BWRY_Small-9.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/pervasivedisplays/library/Pervasive_BWRY_Small/9.0.4/Pervasive_BWRY_Small-9.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pervasivedisplays/library/Pervasive_BWRY_Small/9.0.5/Pervasive_BWRY_Small-9.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pervasive_BWRY_Small-9.0.5.tar.gz",
+    "size_bytes": 44314,
+    "sha256": "82cf4ad487af8fb4b1849ebe82b7702075dba5625cbcf0647e3bf3ecc4ff2f7f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pervasivedisplays/library/Pervasive_BWRY_Small/9.0.5/Pervasive_BWRY_Small-9.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/pervasivedisplays/library/Pervasive_BWRY_Small/9.0.5/Pervasive_BWRY_Small-9.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pervasivedisplays/library/Pervasive_BWRY_Small/9.0.6/Pervasive_BWRY_Small-9.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pervasive_BWRY_Small-9.0.6.tar.gz",
+    "size_bytes": 44156,
+    "sha256": "ab29f5ba93605dfd52e05eba6545bdb6a51c76bd11be1c83668f8ed2acecbe40",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pervasivedisplays/library/Pervasive_BWRY_Small/9.0.6/Pervasive_BWRY_Small-9.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/pervasivedisplays/library/Pervasive_BWRY_Small/9.0.6/Pervasive_BWRY_Small-9.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pervasivedisplays/library/Pervasive_Touch_Small/10.0.0/Pervasive_Touch_Small-10.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pervasive_Touch_Small-10.0.0.tar.gz",
+    "size_bytes": 15304,
+    "sha256": "a98852a3dc49da955483425d004c9e4e66496f1b1da514c48dc602288e626a07",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pervasivedisplays/library/Pervasive_Touch_Small/10.0.0/Pervasive_Touch_Small-10.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pervasivedisplays/library/Pervasive_Touch_Small/10.0.0/Pervasive_Touch_Small-10.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pervasivedisplays/library/Pervasive_Touch_Small/10.1.1/Pervasive_Touch_Small-10.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pervasive_Touch_Small-10.1.1.tar.gz",
+    "size_bytes": 15336,
+    "sha256": "dcd985bcbb49df92f9e6814ca15e105175bea029ba00b186244500dce05a7e3d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pervasivedisplays/library/Pervasive_Touch_Small/10.1.1/Pervasive_Touch_Small-10.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pervasivedisplays/library/Pervasive_Touch_Small/10.1.1/Pervasive_Touch_Small-10.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pervasivedisplays/library/Pervasive_Touch_Small/9.0.9/Pervasive_Touch_Small-9.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pervasive_Touch_Small-9.0.9.tar.gz",
+    "size_bytes": 14323,
+    "sha256": "0326b9cdadb9afb36045486e256e9d5744493eee3692ac968936d401ba0b82f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pervasivedisplays/library/Pervasive_Touch_Small/9.0.9/Pervasive_Touch_Small-9.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/pervasivedisplays/library/Pervasive_Touch_Small/9.0.9/Pervasive_Touch_Small-9.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pervasivedisplays/library/Pervasive_Wide_Large/10.0.0/Pervasive_Wide_Large-10.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pervasive_Wide_Large-10.0.0.tar.gz",
+    "size_bytes": 208828,
+    "sha256": "bdd256484b62e0ec030c4d4bd3003f830c6d74925d9793567ec0629ab9c6165c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pervasivedisplays/library/Pervasive_Wide_Large/10.0.0/Pervasive_Wide_Large-10.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pervasivedisplays/library/Pervasive_Wide_Large/10.0.0/Pervasive_Wide_Large-10.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pervasivedisplays/library/Pervasive_Wide_Large/10.1.1/Pervasive_Wide_Large-10.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pervasive_Wide_Large-10.1.1.tar.gz",
+    "size_bytes": 208884,
+    "sha256": "b103c930c504112b6a565b8489f03d6534adc04c2a3e5797862deef30c9a0208",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pervasivedisplays/library/Pervasive_Wide_Large/10.1.1/Pervasive_Wide_Large-10.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pervasivedisplays/library/Pervasive_Wide_Large/10.1.1/Pervasive_Wide_Large-10.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pervasivedisplays/library/Pervasive_Wide_Large/9.0.4/Pervasive_Wide_Large-9.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pervasive_Wide_Large-9.0.4.tar.gz",
+    "size_bytes": 203884,
+    "sha256": "56ac8369d00cffd107109fb56875ee104893f5ef0660d0938d672131cdef6e62",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pervasivedisplays/library/Pervasive_Wide_Large/9.0.4/Pervasive_Wide_Large-9.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/pervasivedisplays/library/Pervasive_Wide_Large/9.0.4/Pervasive_Wide_Large-9.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pervasivedisplays/library/Pervasive_Wide_Medium/10.0.0/Pervasive_Wide_Medium-10.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pervasive_Wide_Medium-10.0.0.tar.gz",
+    "size_bytes": 139231,
+    "sha256": "db1a8c47280b033997aac462e6c2443dab7736a9680b3ff88081966ee5243ad1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pervasivedisplays/library/Pervasive_Wide_Medium/10.0.0/Pervasive_Wide_Medium-10.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pervasivedisplays/library/Pervasive_Wide_Medium/10.0.0/Pervasive_Wide_Medium-10.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pervasivedisplays/library/Pervasive_Wide_Medium/10.1.1/Pervasive_Wide_Medium-10.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pervasive_Wide_Medium-10.1.1.tar.gz",
+    "size_bytes": 139273,
+    "sha256": "03bcfad828b65dc53b1acdf783cc4aa3768985670fd58ef64f1a93893c227b0b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pervasivedisplays/library/Pervasive_Wide_Medium/10.1.1/Pervasive_Wide_Medium-10.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pervasivedisplays/library/Pervasive_Wide_Medium/10.1.1/Pervasive_Wide_Medium-10.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pervasivedisplays/library/Pervasive_Wide_Medium/9.0.3/Pervasive_Wide_Medium-9.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pervasive_Wide_Medium-9.0.3.tar.gz",
+    "size_bytes": 168632,
+    "sha256": "ad00821587c9a0de106bf4c7f3981415cc68b25bc065a97180cebe4fd5ffd897",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pervasivedisplays/library/Pervasive_Wide_Medium/9.0.3/Pervasive_Wide_Medium-9.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/pervasivedisplays/library/Pervasive_Wide_Medium/9.0.3/Pervasive_Wide_Medium-9.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pervasivedisplays/library/Pervasive_Wide_Medium/9.0.4/Pervasive_Wide_Medium-9.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pervasive_Wide_Medium-9.0.4.tar.gz",
+    "size_bytes": 168636,
+    "sha256": "088b69cdd765e8916f1b72a30a423079f51eb1213c43fcaca319f248ff636aa1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pervasivedisplays/library/Pervasive_Wide_Medium/9.0.4/Pervasive_Wide_Medium-9.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/pervasivedisplays/library/Pervasive_Wide_Medium/9.0.4/Pervasive_Wide_Medium-9.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pervasivedisplays/library/Pervasive_Wide_Small/10.0.1/Pervasive_Wide_Small-10.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pervasive_Wide_Small-10.0.1.tar.gz",
+    "size_bytes": 312866,
+    "sha256": "f4383665a03e1eba969886ddc625690edd9d1fde4c239741cc4b614717effb99",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pervasivedisplays/library/Pervasive_Wide_Small/10.0.1/Pervasive_Wide_Small-10.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pervasivedisplays/library/Pervasive_Wide_Small/10.0.1/Pervasive_Wide_Small-10.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pervasivedisplays/library/Pervasive_Wide_Small/10.1.1/Pervasive_Wide_Small-10.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pervasive_Wide_Small-10.1.1.tar.gz",
+    "size_bytes": 314314,
+    "sha256": "e3e27d95c1f3c7901f80b0f37e40b6b55f952d7cf25cfcc9b3845ae248aed2fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pervasivedisplays/library/Pervasive_Wide_Small/10.1.1/Pervasive_Wide_Small-10.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pervasivedisplays/library/Pervasive_Wide_Small/10.1.1/Pervasive_Wide_Small-10.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pervasivedisplays/library/Pervasive_Wide_Small/9.0.5/Pervasive_Wide_Small-9.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pervasive_Wide_Small-9.0.5.tar.gz",
+    "size_bytes": 289198,
+    "sha256": "63ab7677b049ac606bdf2fc5c4032e18c83fc96e04affc9246f4e165969bbec6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pervasivedisplays/library/Pervasive_Wide_Small/9.0.5/Pervasive_Wide_Small-9.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/pervasivedisplays/library/Pervasive_Wide_Small/9.0.5/Pervasive_Wide_Small-9.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pervasivedisplays/library/Pervasive_Wide_Small/9.0.6/Pervasive_Wide_Small-9.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pervasive_Wide_Small-9.0.6.tar.gz",
+    "size_bytes": 302669,
+    "sha256": "cce535e53c44cf98919df9d4beb6284bc0a1f86f8b7815592375ebbfc45fd937",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pervasivedisplays/library/Pervasive_Wide_Small/9.0.6/Pervasive_Wide_Small-9.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/pervasivedisplays/library/Pervasive_Wide_Small/9.0.6/Pervasive_Wide_Small-9.0.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

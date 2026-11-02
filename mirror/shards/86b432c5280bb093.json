@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ggerganov",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ggerganov/library/ggwave/0.1.10/ggwave-0.1.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ggwave-0.1.10.tar.gz",
+    "size_bytes": 1032320,
+    "sha256": "7e12c1d8b3061363a8e0149a859d827561512c3e4f6c9e0e032784a0f32e3a5e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ggerganov/library/ggwave/0.1.10/ggwave-0.1.10.tar.gz",
+     "https://dl.registry.platformio.org/download/ggerganov/library/ggwave/0.1.10/ggwave-0.1.10.tar.gz"
+    ]
+   }
+  }
+ ]
+}

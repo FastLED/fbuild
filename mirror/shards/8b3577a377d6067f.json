@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/miniiot",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "miniiot/library/MiniIot/2.2.1/MiniIot-2.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniIot-2.2.1.tar.gz",
+    "size_bytes": 14415,
+    "sha256": "38152a721967b92c78ecb26c234f9697d279b55489043e80b3013d1dae058d5c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/miniiot/library/MiniIot/2.2.1/MiniIot-2.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/miniiot/library/MiniIot/2.2.1/MiniIot-2.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "miniiot/library/MiniIot/2.3.1/MiniIot-2.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniIot-2.3.1.tar.gz",
+    "size_bytes": 17128,
+    "sha256": "dc7621136394597be2588baa51c53cdc65fc1c46b9fea29340022f62e56aaa66",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/miniiot/library/MiniIot/2.3.1/MiniIot-2.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/miniiot/library/MiniIot/2.3.1/MiniIot-2.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "miniiot/library/MiniIot/2.3.2/MiniIot-2.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniIot-2.3.2.tar.gz",
+    "size_bytes": 17134,
+    "sha256": "12fd56934ab3fb262b44bd62ca5de3732e5fc5d6afb36c24a22f0b5dbe0ad805",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/miniiot/library/MiniIot/2.3.2/MiniIot-2.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/miniiot/library/MiniIot/2.3.2/MiniIot-2.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "miniiot/library/MiniIot/2.3.3/MiniIot-2.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniIot-2.3.3.tar.gz",
+    "size_bytes": 17050,
+    "sha256": "835a5a3464a4bfb403cdfb864767d2f88c00c8af746d14b7d0925e05741f1a45",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/miniiot/library/MiniIot/2.3.3/MiniIot-2.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/miniiot/library/MiniIot/2.3.3/MiniIot-2.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "miniiot/library/MiniIot/2.4.0/MiniIot-2.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniIot-2.4.0.tar.gz",
+    "size_bytes": 23853,
+    "sha256": "ee1bd749151706f5d783e24e27bfc22e9e6f9e54665859044a897a75acc1645a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/miniiot/library/MiniIot/2.4.0/MiniIot-2.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/miniiot/library/MiniIot/2.4.0/MiniIot-2.4.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ductapemaster",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ductapemaster/library/IMU/0.0.0+sha.eca05448904d/IMU-0.0.0+sha.eca05448904d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IMU-0.0.0+sha.eca05448904d.tar.gz",
+    "size_bytes": 4011,
+    "sha256": "533a3116423b296ea5ab1afe7385aa935e83e0b54b8b728bb9390f9aad525cc1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ductapemaster/library/IMU/0.0.0%2Bsha.eca05448904d/IMU-0.0.0%2Bsha.eca05448904d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ductapemaster/library/IMU/0.0.0%2Bsha.eca05448904d/IMU-0.0.0%2Bsha.eca05448904d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

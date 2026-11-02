@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fazibear",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fazibear/library/Bcm2835/1.52/Bcm2835-1.52.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bcm2835-1.52.tar.gz",
+    "size_bytes": 235502,
+    "sha256": "4289c5e7c413250375d1b84a946625549be09fd3d1e4d24ab872e1ec8fb345f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fazibear/library/Bcm2835/1.52/Bcm2835-1.52.tar.gz",
+     "https://dl.registry.platformio.org/download/fazibear/library/Bcm2835/1.52/Bcm2835-1.52.tar.gz"
+    ]
+   }
+  }
+ ]
+}

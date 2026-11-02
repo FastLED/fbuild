@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/derekbreden",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "derekbreden/library/PersistentLog/0.1.0/PersistentLog-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PersistentLog-0.1.0.tar.gz",
+    "size_bytes": 6877,
+    "sha256": "0f8a3ecc621eb6901bc38cc8f5d2459911f0e8469185c84a73ca46eaaae0e28f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/derekbreden/library/PersistentLog/0.1.0/PersistentLog-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/derekbreden/library/PersistentLog/0.1.0/PersistentLog-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

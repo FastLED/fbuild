@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/codingarray",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "codingarray/library/CodingArray%20MotorShield%20V1%20Library/1.0.1/CodingArrayMotorShieldV1Library-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CodingArrayMotorShieldV1Library-1.0.1.tar.gz",
+    "size_bytes": 26995,
+    "sha256": "a5dae6cd0e9b052dd6f7e06c691659e56caca8899486f7a65dfe20323aa10d09",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codingarray/library/CodingArray%2520MotorShield%2520V1%2520Library/1.0.1/CodingArrayMotorShieldV1Library-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codingarray/library/CodingArray%20MotorShield%20V1%20Library/1.0.1/CodingArrayMotorShieldV1Library-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

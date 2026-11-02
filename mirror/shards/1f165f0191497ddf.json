@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-imadahirosi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-imadahirosi/library/testlib/0.0.0+sha.b04c6c20b4ab/testlib-0.0.0+sha.b04c6c20b4ab.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "testlib-0.0.0+sha.b04c6c20b4ab.tar.gz",
+    "size_bytes": 766,
+    "sha256": "f274263e5258b7cba6e9844a56c3db2fb8925c688959caf4f59d3ddc43e7ea5a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-imadahirosi/library/testlib/0.0.0%2Bsha.b04c6c20b4ab/testlib-0.0.0%2Bsha.b04c6c20b4ab.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-imadahirosi/library/testlib/0.0.0%2Bsha.b04c6c20b4ab/testlib-0.0.0%2Bsha.b04c6c20b4ab.tar.gz"
+    ]
+   }
+  }
+ ]
+}

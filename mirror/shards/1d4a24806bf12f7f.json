@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/akitsuha",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "akitsuha/library/AnimalOS/0.0.3/AnimalOS-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AnimalOS-0.0.3.tar.gz",
+    "size_bytes": 13479,
+    "sha256": "f202ef6da04b9a190828cb49feccb58f41164d2c25fca2300be49749c76604f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/akitsuha/library/AnimalOS/0.0.3/AnimalOS-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/akitsuha/library/AnimalOS/0.0.3/AnimalOS-0.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

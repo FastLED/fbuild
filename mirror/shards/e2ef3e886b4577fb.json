@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/allwhc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "allwhc/library/MvsConnect/1.2.2/MvsConnect-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MvsConnect-1.2.2.tar.gz",
+    "size_bytes": 11947,
+    "sha256": "2195285145bb5b1c9262cd2205540396b9e81cd7f81588d7753c95ef35ca6e4d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/allwhc/library/MvsConnect/1.2.2/MvsConnect-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/allwhc/library/MvsConnect/1.2.2/MvsConnect-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "allwhc/library/MvsConnect/1.2.3/MvsConnect-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MvsConnect-1.2.3.tar.gz",
+    "size_bytes": 12020,
+    "sha256": "771f0bc81fa9e2d248326075e3c2e7007d6b11cc5ae0ecedcf07316c6b051267",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/allwhc/library/MvsConnect/1.2.3/MvsConnect-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/allwhc/library/MvsConnect/1.2.3/MvsConnect-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "allwhc/library/MvsConnect/1.2.4/MvsConnect-1.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MvsConnect-1.2.4.tar.gz",
+    "size_bytes": 12326,
+    "sha256": "ecf87884fbe40589bc956ed1cde51ff3956cfe2064a48f5536e9fecd0c404c1b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/allwhc/library/MvsConnect/1.2.4/MvsConnect-1.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/allwhc/library/MvsConnect/1.2.4/MvsConnect-1.2.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

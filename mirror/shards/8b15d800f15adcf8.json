@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/shkoo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "shkoo/library/MeshGnome/1.1.1/MeshGnome-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MeshGnome-1.1.1.tar.gz",
+    "size_bytes": 29608,
+    "sha256": "81f6e1359942e45ff67fcb6358e91c6ca792a51eba4ff8ed2221c4bd99ec94bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shkoo/library/MeshGnome/1.1.1/MeshGnome-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/shkoo/library/MeshGnome/1.1.1/MeshGnome-1.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

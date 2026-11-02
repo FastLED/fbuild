@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jorgesilvaramos",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jorgesilvaramos/library/InkaLogic%20IO/1.0.0/InkaLogicIO-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "InkaLogicIO-1.0.0.tar.gz",
+    "size_bytes": 13996,
+    "sha256": "5decc6cf7b2b93a7ee220fe0ae55a4d1e35375ea5daa93ab2ec24f587636e5b2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jorgesilvaramos/library/InkaLogic%2520IO/1.0.0/InkaLogicIO-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jorgesilvaramos/library/InkaLogic%20IO/1.0.0/InkaLogicIO-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jorgesilvaramos/library/InkaLogic%20IO/1.0.3/InkaLogicIO-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "InkaLogicIO-1.0.3.tar.gz",
+    "size_bytes": 14011,
+    "sha256": "eb48962178d87dfbc76652bc434485b3447cad6b1437ef27f3d081895a378844",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jorgesilvaramos/library/InkaLogic%2520IO/1.0.3/InkaLogicIO-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/jorgesilvaramos/library/InkaLogic%20IO/1.0.3/InkaLogicIO-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jorgesilvaramos/library/MMJ_InkaBUS_AnalogInputs/1.0.0/MMJ_InkaBUS_AnalogInputs-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MMJ_InkaBUS_AnalogInputs-1.0.0.tar.gz",
+    "size_bytes": 17938,
+    "sha256": "0fbbae2b79fa97f186bbfcf81c85cc9213a7aeb2403203e5adaed2bbde866ed7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jorgesilvaramos/library/MMJ_InkaBUS_AnalogInputs/1.0.0/MMJ_InkaBUS_AnalogInputs-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jorgesilvaramos/library/MMJ_InkaBUS_AnalogInputs/1.0.0/MMJ_InkaBUS_AnalogInputs-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jorgesilvaramos/library/MMJ_InkaBUS_AnalogInputs/1.0.2/MMJ_InkaBUS_AnalogInputs-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MMJ_InkaBUS_AnalogInputs-1.0.2.tar.gz",
+    "size_bytes": 18125,
+    "sha256": "3410a25fc68746ddfc4f39dece1a2ecf625b7f411d076db72f1d59878547bc2a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jorgesilvaramos/library/MMJ_InkaBUS_AnalogInputs/1.0.2/MMJ_InkaBUS_AnalogInputs-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jorgesilvaramos/library/MMJ_InkaBUS_AnalogInputs/1.0.2/MMJ_InkaBUS_AnalogInputs-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jorgesilvaramos/library/MMJ_InkaBUS_AnalogOut/1.0.0/MMJ_InkaBUS_AnalogOut-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MMJ_InkaBUS_AnalogOut-1.0.0.tar.gz",
+    "size_bytes": 10675,
+    "sha256": "5d45cd9dcd8ad976c8dd1e2c4cf317f646f7a1739b9efaed57bafedab86015f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jorgesilvaramos/library/MMJ_InkaBUS_AnalogOut/1.0.0/MMJ_InkaBUS_AnalogOut-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jorgesilvaramos/library/MMJ_InkaBUS_AnalogOut/1.0.0/MMJ_InkaBUS_AnalogOut-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jorgesilvaramos/library/MMJ_InkaBUS_AnalogOut/1.0.2/MMJ_InkaBUS_AnalogOut-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MMJ_InkaBUS_AnalogOut-1.0.2.tar.gz",
+    "size_bytes": 10699,
+    "sha256": "75ada49b1a17d7950f2ce9fbccbe09fb6fb8be4bc1d51d2c5436b16ab826f2fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jorgesilvaramos/library/MMJ_InkaBUS_AnalogOut/1.0.2/MMJ_InkaBUS_AnalogOut-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jorgesilvaramos/library/MMJ_InkaBUS_AnalogOut/1.0.2/MMJ_InkaBUS_AnalogOut-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

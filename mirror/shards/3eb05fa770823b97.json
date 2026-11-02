@@ -1,0 +1,139 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rupakpoddar",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rupakpoddar/library/ConsumerKeyboard/1.0.0/ConsumerKeyboard-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ConsumerKeyboard-1.0.0.tar.gz",
+    "size_bytes": 3830,
+    "sha256": "ac02c98b7e7a68bc61555cf12d6f638841632484a232bdfb32030608354b7727",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rupakpoddar/library/ConsumerKeyboard/1.0.0/ConsumerKeyboard-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rupakpoddar/library/ConsumerKeyboard/1.0.0/ConsumerKeyboard-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rupakpoddar/library/ConsumerKeyboard/1.0.1/ConsumerKeyboard-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ConsumerKeyboard-1.0.1.tar.gz",
+    "size_bytes": 4000,
+    "sha256": "9d5b6dfa6ec5ef255331be2f6ef892edfbe80b9603e3d90e757033c4b2f19fbd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rupakpoddar/library/ConsumerKeyboard/1.0.1/ConsumerKeyboard-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/rupakpoddar/library/ConsumerKeyboard/1.0.1/ConsumerKeyboard-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rupakpoddar/library/ESP32%20Firebase/1.0.0/ESP32Firebase-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Firebase-1.0.0.tar.gz",
+    "size_bytes": 4814,
+    "sha256": "81284b44e34e735a285adaef2fe9a2e738c3a357bf25aec7adb7421859f578ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rupakpoddar/library/ESP32%2520Firebase/1.0.0/ESP32Firebase-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rupakpoddar/library/ESP32%20Firebase/1.0.0/ESP32Firebase-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rupakpoddar/library/ESP32%20Webhook/1.0.0/ESP32Webhook-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Webhook-1.0.0.tar.gz",
+    "size_bytes": 2570,
+    "sha256": "f9a45b2519dee3b9822d84c0d93b062d3e88429c638a0c27e7c894a5de7c8a65",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rupakpoddar/library/ESP32%2520Webhook/1.0.0/ESP32Webhook-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rupakpoddar/library/ESP32%20Webhook/1.0.0/ESP32Webhook-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rupakpoddar/library/ESP8266%20Firebase/1.3.1/ESP8266Firebase-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266Firebase-1.3.1.tar.gz",
+    "size_bytes": 4872,
+    "sha256": "ec391d861cb089f704cd1f559058ae3712948a25bae59b961dda1ed8654343f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rupakpoddar/library/ESP8266%2520Firebase/1.3.1/ESP8266Firebase-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/rupakpoddar/library/ESP8266%20Firebase/1.3.1/ESP8266Firebase-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rupakpoddar/library/ESP8266%20Webhook/1.3.0/ESP8266Webhook-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266Webhook-1.3.0.tar.gz",
+    "size_bytes": 2457,
+    "sha256": "107232650c2b9ad1ccd0b4a1ea0a53a9d9bd92ccf4ae5db18336285b89a125fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rupakpoddar/library/ESP8266%2520Webhook/1.3.0/ESP8266Webhook-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rupakpoddar/library/ESP8266%20Webhook/1.3.0/ESP8266Webhook-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rupakpoddar/library/Firebase/1.0.4/Firebase-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Firebase-1.0.4.tar.gz",
+    "size_bytes": 10670,
+    "sha256": "f4a427482f7a7fb48fc7cc46bb763a12917d51b5b975d861d4ce2babc83a17ff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rupakpoddar/library/Firebase/1.0.4/Firebase-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/rupakpoddar/library/Firebase/1.0.4/Firebase-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rupakpoddar/library/Firebase/1.0.5/Firebase-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Firebase-1.0.5.tar.gz",
+    "size_bytes": 10708,
+    "sha256": "9e3ee29c8545ff76ec28d949101e64ac9e920ae7069f2008bb0ddddaf3cef0e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rupakpoddar/library/Firebase/1.0.5/Firebase-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/rupakpoddar/library/Firebase/1.0.5/Firebase-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rupakpoddar/library/Sonos/1.0.0/Sonos-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sonos-1.0.0.tar.gz",
+    "size_bytes": 8679,
+    "sha256": "317856abdc69358ec45c6af338ec5ffe2bab868844a953eecf3630cee1d1313e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rupakpoddar/library/Sonos/1.0.0/Sonos-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rupakpoddar/library/Sonos/1.0.0/Sonos-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rupakpoddar/library/Sonos/1.0.1/Sonos-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sonos-1.0.1.tar.gz",
+    "size_bytes": 8671,
+    "sha256": "a46b3ebfb470866c032858fef046a713ec48a6bb53e513925c9843bfa6fa3cde",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rupakpoddar/library/Sonos/1.0.1/Sonos-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/rupakpoddar/library/Sonos/1.0.1/Sonos-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

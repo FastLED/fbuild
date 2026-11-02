@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-byrn",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-byrn/library/DigitalOutEx/0.0.0+sha.6f8ca7b70778/DigitalOutEx-0.0.0+sha.6f8ca7b70778.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DigitalOutEx-0.0.0+sha.6f8ca7b70778.tar.gz",
+    "size_bytes": 1768,
+    "sha256": "c8f9427aabc19ad57037a9709d4ac21a1b7670f4dcae7fdb067a167e506749a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-byrn/library/DigitalOutEx/0.0.0%2Bsha.6f8ca7b70778/DigitalOutEx-0.0.0%2Bsha.6f8ca7b70778.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-byrn/library/DigitalOutEx/0.0.0%2Bsha.6f8ca7b70778/DigitalOutEx-0.0.0%2Bsha.6f8ca7b70778.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-byrn/library/SSD1306/0.0.0+sha.1d9df877c90a/SSD1306-0.0.0+sha.1d9df877c90a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SSD1306-0.0.0+sha.1d9df877c90a.tar.gz",
+    "size_bytes": 8263,
+    "sha256": "d5e5da38ee759400213ededd14487f385b31b1e19163419a92af78ffd0208628",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-byrn/library/SSD1306/0.0.0%2Bsha.1d9df877c90a/SSD1306-0.0.0%2Bsha.1d9df877c90a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-byrn/library/SSD1306/0.0.0%2Bsha.1d9df877c90a/SSD1306-0.0.0%2Bsha.1d9df877c90a.tar.gz"
+    ]
+   }
+  }
+ ]
+}

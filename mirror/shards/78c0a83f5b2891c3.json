@@ -1,0 +1,451 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sstaub",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sstaub/library/AT24MAC402/1.1.0/AT24MAC402-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AT24MAC402-1.1.0.tar.gz",
+    "size_bytes": 3867,
+    "sha256": "67ffb3ce5350a26568bdf040c48193ad86236abe1bddae9a612bfa3f95de2c7f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sstaub/library/AT24MAC402/1.1.0/AT24MAC402-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sstaub/library/AT24MAC402/1.1.0/AT24MAC402-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sstaub/library/C12832A1Z/1.6.0/C12832A1Z-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "C12832A1Z-1.6.0.tar.gz",
+    "size_bytes": 38778,
+    "sha256": "99b70dac854dc09bf3110f4bcab291ba95d9fc161aa0855812a35c88d6a4d8ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sstaub/library/C12832A1Z/1.6.0/C12832A1Z-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sstaub/library/C12832A1Z/1.6.0/C12832A1Z-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sstaub/library/EADOG/1.0.1/EADOG-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EADOG-1.0.1.tar.gz",
+    "size_bytes": 39877,
+    "sha256": "601621177a15e11943ef865ccfa89ce275827ed811bb5d7c48a99b64323c97a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sstaub/library/EADOG/1.0.1/EADOG-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sstaub/library/EADOG/1.0.1/EADOG-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sstaub/library/Ethernet3/1.5.6/Ethernet3-1.5.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ethernet3-1.5.6.tar.gz",
+    "size_bytes": 46952,
+    "sha256": "c080451cec506083acb03746de219dcc5721274c27dfb0f396c0981b81e6cd72",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sstaub/library/Ethernet3/1.5.6/Ethernet3-1.5.6.tar.gz",
+     "https://dl.registry.platformio.org/download/sstaub/library/Ethernet3/1.5.6/Ethernet3-1.5.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sstaub/library/Ethernet3/1.6.0/Ethernet3-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ethernet3-1.6.0.tar.gz",
+    "size_bytes": 47211,
+    "sha256": "f2b749e665c9a66e75d9c87f8d18f19e76ddb8d2c85020146d89b34e9c8ebfd3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sstaub/library/Ethernet3/1.6.0/Ethernet3-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sstaub/library/Ethernet3/1.6.0/Ethernet3-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sstaub/library/IDToolsPico/1.0.0/IDToolsPico-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IDToolsPico-1.0.0.tar.gz",
+    "size_bytes": 3144,
+    "sha256": "bcb2ac455ae56f41b15adf9cbf3d7ee520453d87bc4c4d75be14818e1b3ae99f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sstaub/library/IDToolsPico/1.0.0/IDToolsPico-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sstaub/library/IDToolsPico/1.0.0/IDToolsPico-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sstaub/library/LCD%20I2C/1.0.0/LCDI2C-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCDI2C-1.0.0.tar.gz",
+    "size_bytes": 5603,
+    "sha256": "c40cde584606e8291a7f8b5cad99db0f463022e5f246c4ea10885535152040cf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sstaub/library/LCD%2520I2C/1.0.0/LCDI2C-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sstaub/library/LCD%20I2C/1.0.0/LCDI2C-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sstaub/library/LCD-HD44780/2.0.3/LCD-HD44780-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCD-HD44780-2.0.3.tar.gz",
+    "size_bytes": 6512,
+    "sha256": "271f4b0e29e9175f1e2b4984a31dca85e5f535f6f0beb3dc34da1bc27d8b7be4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sstaub/library/LCD-HD44780/2.0.3/LCD-HD44780-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/sstaub/library/LCD-HD44780/2.0.3/LCD-HD44780-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sstaub/library/LCD-I2C-HD44780/2.0.3/LCD-I2C-HD44780-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCD-I2C-HD44780-2.0.3.tar.gz",
+    "size_bytes": 6802,
+    "sha256": "00a5d1c53a3c5f1de7a4dea19254b9b13b34c4624ef001c04622c6e55d6b3391",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sstaub/library/LCD-I2C-HD44780/2.0.3/LCD-I2C-HD44780-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/sstaub/library/LCD-I2C-HD44780/2.0.3/LCD-I2C-HD44780-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sstaub/library/LCD/1.0.0/LCD-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCD-1.0.0.tar.gz",
+    "size_bytes": 5439,
+    "sha256": "8f257321bf0966533f8f39c408b923a8166048b0a39e569afa2cf8bae8bd2834",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sstaub/library/LCD/1.0.0/LCD-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sstaub/library/LCD/1.0.0/LCD-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sstaub/library/MCP_23017/1.0.0/MCP_23017-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP_23017-1.0.0.tar.gz",
+    "size_bytes": 4366,
+    "sha256": "5beb625ac8a5231b7ff90304d327479426c912207b45df774d60d6513eb77c40",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sstaub/library/MCP_23017/1.0.0/MCP_23017-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sstaub/library/MCP_23017/1.0.0/MCP_23017-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sstaub/library/MCP_3208/1.0.1/MCP_3208-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP_3208-1.0.1.tar.gz",
+    "size_bytes": 2642,
+    "sha256": "4c82c22a2f2b9276714352381d3dd34d457f83f3062490338e797c83d68573fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sstaub/library/MCP_3208/1.0.1/MCP_3208-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sstaub/library/MCP_3208/1.0.1/MCP_3208-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sstaub/library/NTP/1.6/NTP-1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NTP-1.6.tar.gz",
+    "size_bytes": 7411,
+    "sha256": "ba07b3c15e0d1618014997673a7d5e9ae694fa9d32b14aefec0bdd4a2c9cda4d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sstaub/library/NTP/1.6/NTP-1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/sstaub/library/NTP/1.6/NTP-1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sstaub/library/NTP3/1.0.0/NTP3-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NTP3-1.0.0.tar.gz",
+    "size_bytes": 15652,
+    "sha256": "bf54eb952250b2e9669dd9972334a91a15447b6e8024ec8ff7d159228c400ac1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sstaub/library/NTP3/1.0.0/NTP3-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sstaub/library/NTP3/1.0.0/NTP3-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sstaub/library/NextionX2/1.2.0/NextionX2-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NextionX2-1.2.0.tar.gz",
+    "size_bytes": 38360,
+    "sha256": "902c43f8829e674b368221cc3d6724fd1c1ac6176af9337bef6e530bd176b11a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sstaub/library/NextionX2/1.2.0/NextionX2-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sstaub/library/NextionX2/1.2.0/NextionX2-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sstaub/library/NextionX3/1.0.0/NextionX3-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NextionX3-1.0.0.tar.gz",
+    "size_bytes": 495158,
+    "sha256": "1935aaf9b935be2f8f3ca7aebeb6dac9f1687f6e8063d9043f9fb29210e5720e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sstaub/library/NextionX3/1.0.0/NextionX3-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sstaub/library/NextionX3/1.0.0/NextionX3-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sstaub/library/NextionX3/1.0.1/NextionX3-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NextionX3-1.0.1.tar.gz",
+    "size_bytes": 495189,
+    "sha256": "c8516c26ea9097f79e343d116e9c34637abeb21b6a78322518c6efee8228503d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sstaub/library/NextionX3/1.0.1/NextionX3-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sstaub/library/NextionX3/1.0.1/NextionX3-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sstaub/library/OSC/1.0.0/OSC-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSC-1.0.0.tar.gz",
+    "size_bytes": 3110,
+    "sha256": "bc2a00ffda8dcce6d168691f5341728e7a1a29b7e92421b032e52c73f34f3bed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sstaub/library/OSC/1.0.0/OSC-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sstaub/library/OSC/1.0.0/OSC-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sstaub/library/SSD1803A_I2C/1.0.2/SSD1803A_I2C-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SSD1803A_I2C-1.0.2.tar.gz",
+    "size_bytes": 6333,
+    "sha256": "aaeb7881d122a132702d934a79c859c70a9fd07d133634366952b4d6d9a03929",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sstaub/library/SSD1803A_I2C/1.0.2/SSD1803A_I2C-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sstaub/library/SSD1803A_I2C/1.0.2/SSD1803A_I2C-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sstaub/library/SSD1803A_I2C/2.0.6/SSD1803A_I2C-2.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SSD1803A_I2C-2.0.6.tar.gz",
+    "size_bytes": 7830,
+    "sha256": "7bdc0fa045b3fbeae98fb43b1b66996f83517ec0d72ff50de7fa357b0f4ce01c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sstaub/library/SSD1803A_I2C/2.0.6/SSD1803A_I2C-2.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/sstaub/library/SSD1803A_I2C/2.0.6/SSD1803A_I2C-2.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sstaub/library/ST7565DOG/1.0.0/ST7565DOG-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ST7565DOG-1.0.0.tar.gz",
+    "size_bytes": 39183,
+    "sha256": "a35a06ecd553e2ee280dd0db1faf4b0a338e0e755a225dccfe8c1aff08d8f35a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sstaub/library/ST7565DOG/1.0.0/ST7565DOG-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sstaub/library/ST7565DOG/1.0.0/ST7565DOG-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sstaub/library/Seesaw/1.0.0/Seesaw-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Seesaw-1.0.0.tar.gz",
+    "size_bytes": 4679,
+    "sha256": "bc7c662f2786a0a83514ae6742ff614758adbb0b2676d582b2e7df06c4f0a332",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sstaub/library/Seesaw/1.0.0/Seesaw-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sstaub/library/Seesaw/1.0.0/Seesaw-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sstaub/library/Seesaw/1.1.0/Seesaw-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Seesaw-1.1.0.tar.gz",
+    "size_bytes": 5338,
+    "sha256": "4cfeb8af33f7ffe1e2706863319124af674f0bec1b00c2b839121f9ce8614186",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sstaub/library/Seesaw/1.1.0/Seesaw-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sstaub/library/Seesaw/1.1.0/Seesaw-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sstaub/library/TeensyID/1.4.0/TeensyID-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TeensyID-1.4.0.tar.gz",
+    "size_bytes": 4476,
+    "sha256": "ad32cf5d37fb4655ffdd450e95443e7534717b9063a4a68181f02dd4e5b18298",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sstaub/library/TeensyID/1.4.0/TeensyID-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sstaub/library/TeensyID/1.4.0/TeensyID-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sstaub/library/TickTwo/4.4.0/TickTwo-4.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TickTwo-4.4.0.tar.gz",
+    "size_bytes": 6655,
+    "sha256": "76116e23d5b2c361af40c38548b6c9e6dd8b29f216dddda7e857fa7d06458e29",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sstaub/library/TickTwo/4.4.0/TickTwo-4.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sstaub/library/TickTwo/4.4.0/TickTwo-4.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sstaub/library/Ticker/3.2.0/Ticker-3.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ticker-3.2.0.tar.gz",
+    "size_bytes": 4832,
+    "sha256": "34636b5c073de386407db1644216f09507538855c94be95b4b9ec4c6b4f48fe7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sstaub/library/Ticker/3.2.0/Ticker-3.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sstaub/library/Ticker/3.2.0/Ticker-3.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sstaub/library/Ticker/4.4.0/Ticker-4.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ticker-4.4.0.tar.gz",
+    "size_bytes": 5995,
+    "sha256": "9f932e3d6b5aaf5812cdd498a901b60e8133f882f9c217eb9db09ea4dede33c5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sstaub/library/Ticker/4.4.0/Ticker-4.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sstaub/library/Ticker/4.4.0/Ticker-4.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sstaub/library/Tickers/3.2.0/Tickers-3.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Tickers-3.2.0.tar.gz",
+    "size_bytes": 4352,
+    "sha256": "c7fdb62836abbd4c559ac4c809b1b02cee5cf5ddf6a129768a712c46716eca4d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sstaub/library/Tickers/3.2.0/Tickers-3.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sstaub/library/Tickers/3.2.0/Tickers-3.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sstaub/library/Timer/1.2.1/Timer-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Timer-1.2.1.tar.gz",
+    "size_bytes": 3222,
+    "sha256": "54b1cc00ea80b14f3a2e616b1ee14776cc8bcf9344cce271fe2c14c7c2ec1178",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sstaub/library/Timer/1.2.1/Timer-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sstaub/library/Timer/1.2.1/Timer-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sstaub/library/eOS/1.2.0/eOS-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "eOS-1.2.0.tar.gz",
+    "size_bytes": 243224,
+    "sha256": "80b9b2e6b15ce7ab8502b101a5d3972fcc7eb4e1b5d8f6c2f738f426653f0562",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sstaub/library/eOS/1.2.0/eOS-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sstaub/library/eOS/1.2.0/eOS-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sstaub/library/eOS3/1.0.0/eOS3-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "eOS3-1.0.0.tar.gz",
+    "size_bytes": 44074,
+    "sha256": "e63d4e66d5e1f57bd818aa25eca270d19cb096febc7d8f7849e2006594cec83b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sstaub/library/eOS3/1.0.0/eOS3-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sstaub/library/eOS3/1.0.0/eOS3-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sstaub/library/gma3/4.0.0/gma3-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "gma3-4.0.0.tar.gz",
+    "size_bytes": 22227,
+    "sha256": "1f206d052fa9e0333fef68ae33b6832c11c0d4b119ee3fb6d84558d91b186da7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sstaub/library/gma3/4.0.0/gma3-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sstaub/library/gma3/4.0.0/gma3-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sstaub/library/sACN/1.1.0/sACN-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "sACN-1.1.0.tar.gz",
+    "size_bytes": 12932,
+    "sha256": "0fae51531a4254b167a96fca228f7f3cd4574030306ff507177996ac92a94cce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sstaub/library/sACN/1.1.0/sACN-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sstaub/library/sACN/1.1.0/sACN-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sstaub/library/stm32EEPROM/1.0.0/stm32EEPROM-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "stm32EEPROM-1.0.0.tar.gz",
+    "size_bytes": 2454,
+    "sha256": "39103ad8cfafd49098f59bb98030b80b1a18a94b1dc058d2ccb8796ac2ac65e3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sstaub/library/stm32EEPROM/1.0.0/stm32EEPROM-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sstaub/library/stm32EEPROM/1.0.0/stm32EEPROM-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

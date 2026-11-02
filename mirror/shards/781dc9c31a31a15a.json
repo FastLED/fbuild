@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nodaoli",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nodaoli/library/ArduinoUZlib/1.0.2/ArduinoUZlib-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoUZlib-1.0.2.tar.gz",
+    "size_bytes": 22449,
+    "sha256": "2e5fc3dd197c0b3fb8a86a19c7e429ccb85697bc9e6a819621710b42da409006",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nodaoli/library/ArduinoUZlib/1.0.2/ArduinoUZlib-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nodaoli/library/ArduinoUZlib/1.0.2/ArduinoUZlib-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nodaoli/library/qweather/1.0.2/qweather-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "qweather-1.0.2.tar.gz",
+    "size_bytes": 15015,
+    "sha256": "8f687d6955176591b1b307e3719cece3798f712b438710f3d61b0c3ba4c1ca3e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nodaoli/library/qweather/1.0.2/qweather-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nodaoli/library/qweather/1.0.2/qweather-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

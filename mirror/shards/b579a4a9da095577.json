@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/janlc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "janlc/library/HIH8100_I2C_multiplexer/1.0.0/HIH8100_I2C_multiplexer-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HIH8100_I2C_multiplexer-1.0.0.tar.gz",
+    "size_bytes": 2440,
+    "sha256": "0f7da42d5cdd826ea273198c1def931d5f820e7d9618a2e9dfd3d8ad6c0f8d69",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/janlc/library/HIH8100_I2C_multiplexer/1.0.0/HIH8100_I2C_multiplexer-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/janlc/library/HIH8100_I2C_multiplexer/1.0.0/HIH8100_I2C_multiplexer-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

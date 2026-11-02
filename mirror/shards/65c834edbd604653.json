@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gagulik",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gagulik/library/FluidNC_WebSocket/1.0.0/FluidNC_WebSocket-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FluidNC_WebSocket-1.0.0.tar.gz",
+    "size_bytes": 5340,
+    "sha256": "4962d1221c865ae6a8cc199316703fe2e98769629a3d0a36775e13d741beda90",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gagulik/library/FluidNC_WebSocket/1.0.0/FluidNC_WebSocket-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gagulik/library/FluidNC_WebSocket/1.0.0/FluidNC_WebSocket-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

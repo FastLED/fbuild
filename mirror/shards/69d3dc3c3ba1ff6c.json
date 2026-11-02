@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gooderfreed",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gooderfreed/library/easy_stack/1.1.2/easy_stack-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "easy_stack-1.1.2.tar.gz",
+    "size_bytes": 29284,
+    "sha256": "cbffa360ab59a1b90c5f169f31312c5f0f00de7352c4b9e321c0e73b90730ac6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gooderfreed/library/easy_stack/1.1.2/easy_stack-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gooderfreed/library/easy_stack/1.1.2/easy_stack-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gooderfreed/library/easy_stack/1.2.0/easy_stack-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "easy_stack-1.2.0.tar.gz",
+    "size_bytes": 31190,
+    "sha256": "10db3eb1984ce9321d5c6a1239b6cc6f54d40b37ed06787e6f57434ed1008c60",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gooderfreed/library/easy_stack/1.2.0/easy_stack-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gooderfreed/library/easy_stack/1.2.0/easy_stack-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gooderfreed/library/easy_stack/1.2.2/easy_stack-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "easy_stack-1.2.2.tar.gz",
+    "size_bytes": 32517,
+    "sha256": "a8a35bfc0196a78b61d981f283b400ead81fa9053d8573c3e6667ea55bd43ae2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gooderfreed/library/easy_stack/1.2.2/easy_stack-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gooderfreed/library/easy_stack/1.2.2/easy_stack-1.2.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

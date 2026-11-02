@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pixelbo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pixelbo/library/Pelco_And_Arduino/2.3.0/Pelco_And_Arduino-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pelco_And_Arduino-2.3.0.tar.gz",
+    "size_bytes": 12054,
+    "sha256": "fd2e596f9546582e5039b7be9f7c22f89c4b86a5f392ebcccf0051780f5d79a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pixelbo/library/Pelco_And_Arduino/2.3.0/Pelco_And_Arduino-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pixelbo/library/Pelco_And_Arduino/2.3.0/Pelco_And_Arduino-2.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

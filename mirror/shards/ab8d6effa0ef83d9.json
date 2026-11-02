@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/elpinjo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "elpinjo/library/Cumulocity%20IoT%20client/0.2.0/CumulocityIoTclient-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CumulocityIoTclient-0.2.0.tar.gz",
+    "size_bytes": 5671,
+    "sha256": "56a64b980ff688519f07992ab3bd1bec5e776b3acab89f35bb1cfeb269069fd1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/elpinjo/library/Cumulocity%2520IoT%2520client/0.2.0/CumulocityIoTclient-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/elpinjo/library/Cumulocity%20IoT%20client/0.2.0/CumulocityIoTclient-0.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

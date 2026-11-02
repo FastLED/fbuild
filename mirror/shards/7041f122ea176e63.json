@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-terrabots",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-terrabots/library/IMU/0.0.0+sha.ab08a70e0d7d/IMU-0.0.0+sha.ab08a70e0d7d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IMU-0.0.0+sha.ab08a70e0d7d.tar.gz",
+    "size_bytes": 1670,
+    "sha256": "41688f6fbb91287105a7c4a40e6d150ca14d1590cf0c10e354bede73700720c5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-terrabots/library/IMU/0.0.0%2Bsha.ab08a70e0d7d/IMU-0.0.0%2Bsha.ab08a70e0d7d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-terrabots/library/IMU/0.0.0%2Bsha.ab08a70e0d7d/IMU-0.0.0%2Bsha.ab08a70e0d7d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-terrabots/library/MotorV2/0.0.0+sha.e87768d3cd09/MotorV2-0.0.0+sha.e87768d3cd09.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MotorV2-0.0.0+sha.e87768d3cd09.tar.gz",
+    "size_bytes": 1403,
+    "sha256": "c11c4102b31b5986cbb81ce61d232f1625874621bbd9ab5877d28b6bf9ff307a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-terrabots/library/MotorV2/0.0.0%2Bsha.e87768d3cd09/MotorV2-0.0.0%2Bsha.e87768d3cd09.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-terrabots/library/MotorV2/0.0.0%2Bsha.e87768d3cd09/MotorV2-0.0.0%2Bsha.e87768d3cd09.tar.gz"
+    ]
+   }
+  }
+ ]
+}

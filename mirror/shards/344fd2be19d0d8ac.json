@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/maumolinavaldez-pixel",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "maumolinavaldez-pixel/library/BioLogic_Mini/1.0.0/BioLogic_Mini-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BioLogic_Mini-1.0.0.tar.gz",
+    "size_bytes": 3546,
+    "sha256": "437c24e3283d5740fc24008905d33ea1dba9e9548a8c7571121f29bcab2caf39",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maumolinavaldez-pixel/library/BioLogic_Mini/1.0.0/BioLogic_Mini-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/maumolinavaldez-pixel/library/BioLogic_Mini/1.0.0/BioLogic_Mini-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "maumolinavaldez-pixel/library/BioLogic_STM32/1.0.2/BioLogic_STM32-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BioLogic_STM32-1.0.2.tar.gz",
+    "size_bytes": 3586,
+    "sha256": "0d0014d52194cb169ecb5122c17477161c0d860f0a12f75ab8bb60209317f11c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maumolinavaldez-pixel/library/BioLogic_STM32/1.0.2/BioLogic_STM32-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/maumolinavaldez-pixel/library/BioLogic_STM32/1.0.2/BioLogic_STM32-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "maumolinavaldez-pixel/library/BioLogic_STM32/1.0.4/BioLogic_STM32-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BioLogic_STM32-1.0.4.tar.gz",
+    "size_bytes": 3767,
+    "sha256": "fa415f92cc9b93f8148eefaeb3745d3c11036a5b1e7f564cb612b1c992fa8fe7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maumolinavaldez-pixel/library/BioLogic_STM32/1.0.4/BioLogic_STM32-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/maumolinavaldez-pixel/library/BioLogic_STM32/1.0.4/BioLogic_STM32-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "maumolinavaldez-pixel/library/BioLogic_STM32/1.0.5/BioLogic_STM32-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BioLogic_STM32-1.0.5.tar.gz",
+    "size_bytes": 2839,
+    "sha256": "9694a9cdf608aee90508e2ca7c752a94b484b926b2f7f998ea14503fc5fd3356",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maumolinavaldez-pixel/library/BioLogic_STM32/1.0.5/BioLogic_STM32-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/maumolinavaldez-pixel/library/BioLogic_STM32/1.0.5/BioLogic_STM32-1.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

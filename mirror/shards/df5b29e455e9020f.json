@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-brunoalfano",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-brunoalfano/library/HSC_SPI/0.0.0+sha.0056857990b9/HSC_SPI-0.0.0+sha.0056857990b9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HSC_SPI-0.0.0+sha.0056857990b9.tar.gz",
+    "size_bytes": 1385,
+    "sha256": "7405fa19c6518882987bda60cbb5f91b4649ebd1f6813f903a54e21bc9adff13",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-brunoalfano/library/HSC_SPI/0.0.0%2Bsha.0056857990b9/HSC_SPI-0.0.0%2Bsha.0056857990b9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-brunoalfano/library/HSC_SPI/0.0.0%2Bsha.0056857990b9/HSC_SPI-0.0.0%2Bsha.0056857990b9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-brunoalfano/library/MPU6000_spi/0.0.0+sha.2edbd561b520/MPU6000_spi-0.0.0+sha.2edbd561b520.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPU6000_spi-0.0.0+sha.2edbd561b520.tar.gz",
+    "size_bytes": 3837,
+    "sha256": "015f36732528fcc85196945cf35cbece139ba953734c0e6b7134aaf68575b18b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-brunoalfano/library/MPU6000_spi/0.0.0%2Bsha.2edbd561b520/MPU6000_spi-0.0.0%2Bsha.2edbd561b520.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-brunoalfano/library/MPU6000_spi/0.0.0%2Bsha.2edbd561b520/MPU6000_spi-0.0.0%2Bsha.2edbd561b520.tar.gz"
+    ]
+   }
+  }
+ ]
+}

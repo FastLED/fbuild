@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/toasterforsale",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "toasterforsale/library/RideLinkBLE/0.4.2/RideLinkBLE-0.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RideLinkBLE-0.4.2.tar.gz",
+    "size_bytes": 13419,
+    "sha256": "fda8f850c61a0999263412340ab966296a550dbb9ab0154fd1dbd9dd8b666e9c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/toasterforsale/library/RideLinkBLE/0.4.2/RideLinkBLE-0.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/toasterforsale/library/RideLinkBLE/0.4.2/RideLinkBLE-0.4.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

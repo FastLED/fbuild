@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-trombettamichele",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-trombettamichele/library/Led7Seg/0.0.0+sha.78b3b8aefd3c/Led7Seg-0.0.0+sha.78b3b8aefd3c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Led7Seg-0.0.0+sha.78b3b8aefd3c.tar.gz",
+    "size_bytes": 1524,
+    "sha256": "bd41d41b8e15ad70a1b700f2e7cd91935ffb444426db57f848f8a168b9ecb1d9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-trombettamichele/library/Led7Seg/0.0.0%2Bsha.78b3b8aefd3c/Led7Seg-0.0.0%2Bsha.78b3b8aefd3c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-trombettamichele/library/Led7Seg/0.0.0%2Bsha.78b3b8aefd3c/Led7Seg-0.0.0%2Bsha.78b3b8aefd3c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-trombettamichele/library/Multi7Seg/0.0.0+sha.4ee2f3c3cf46/Multi7Seg-0.0.0+sha.4ee2f3c3cf46.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Multi7Seg-0.0.0+sha.4ee2f3c3cf46.tar.gz",
+    "size_bytes": 1901,
+    "sha256": "4fe63ec326b4ad11c397b496f62a150b98e74f2340d2612a11a080ee73af14eb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-trombettamichele/library/Multi7Seg/0.0.0%2Bsha.4ee2f3c3cf46/Multi7Seg-0.0.0%2Bsha.4ee2f3c3cf46.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-trombettamichele/library/Multi7Seg/0.0.0%2Bsha.4ee2f3c3cf46/Multi7Seg-0.0.0%2Bsha.4ee2f3c3cf46.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-trombettamichele/library/ttl_74HC595/0.0.0+sha.db4af8094f4c/ttl_74HC595-0.0.0+sha.db4af8094f4c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ttl_74HC595-0.0.0+sha.db4af8094f4c.tar.gz",
+    "size_bytes": 1191,
+    "sha256": "8d1843a193a82d95a1fa6e75198c7b187442fa924668e765870f9486e66b6daf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-trombettamichele/library/ttl_74HC595/0.0.0%2Bsha.db4af8094f4c/ttl_74HC595-0.0.0%2Bsha.db4af8094f4c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-trombettamichele/library/ttl_74HC595/0.0.0%2Bsha.db4af8094f4c/ttl_74HC595-0.0.0%2Bsha.db4af8094f4c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rom3odelta7",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rom3odelta7/library/LED3/1.2.1/LED3-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LED3-1.2.1.tar.gz",
+    "size_bytes": 3859,
+    "sha256": "1d645bd01efaba8906ba12b38d26bd81fbefe559b85f56bea6a6b73c76e19ff1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rom3odelta7/library/LED3/1.2.1/LED3-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/rom3odelta7/library/LED3/1.2.1/LED3-1.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

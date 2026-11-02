@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-rinosh2",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-rinosh2/library/IniFileLib/0.0.0+sha.4ae80a05f6ea/IniFileLib-0.0.0+sha.4ae80a05f6ea.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IniFileLib-0.0.0+sha.4ae80a05f6ea.tar.gz",
+    "size_bytes": 2793,
+    "sha256": "f8e0bdcd1565a2c4934038fccec3a9a4eafb9fe0b81291e5ab79ab506d5bb0c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rinosh2/library/IniFileLib/0.0.0%2Bsha.4ae80a05f6ea/IniFileLib-0.0.0%2Bsha.4ae80a05f6ea.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rinosh2/library/IniFileLib/0.0.0%2Bsha.4ae80a05f6ea/IniFileLib-0.0.0%2Bsha.4ae80a05f6ea.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-rinosh2/library/NJE10XCtrlLib/0.0.0+sha.fb1109a73ce9/NJE10XCtrlLib-0.0.0+sha.fb1109a73ce9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NJE10XCtrlLib-0.0.0+sha.fb1109a73ce9.tar.gz",
+    "size_bytes": 3088,
+    "sha256": "2f88affa9d455fb65d6f570fc2df13500db97e52653148bf0d5b0bf47daf382f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rinosh2/library/NJE10XCtrlLib/0.0.0%2Bsha.fb1109a73ce9/NJE10XCtrlLib-0.0.0%2Bsha.fb1109a73ce9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rinosh2/library/NJE10XCtrlLib/0.0.0%2Bsha.fb1109a73ce9/NJE10XCtrlLib-0.0.0%2Bsha.fb1109a73ce9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-rinosh2/library/NextTrainFileLib/0.0.0+sha.0aa41f709144/NextTrainFileLib-0.0.0+sha.0aa41f709144.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NextTrainFileLib-0.0.0+sha.0aa41f709144.tar.gz",
+    "size_bytes": 3590,
+    "sha256": "2967ff0dc92c0db283c010957b5db7263f39df9d19f4b5ced59861f28cb7a9dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rinosh2/library/NextTrainFileLib/0.0.0%2Bsha.0aa41f709144/NextTrainFileLib-0.0.0%2Bsha.0aa41f709144.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rinosh2/library/NextTrainFileLib/0.0.0%2Bsha.0aa41f709144/NextTrainFileLib-0.0.0%2Bsha.0aa41f709144.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-rinosh2/library/TrainInfoLib/0.0.0+sha.475be92c8304/TrainInfoLib-0.0.0+sha.475be92c8304.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TrainInfoLib-0.0.0+sha.475be92c8304.tar.gz",
+    "size_bytes": 2378,
+    "sha256": "5badd9767ac19e323f0869f968d53482ed5454b60490d5a81ae5da6fce311616",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rinosh2/library/TrainInfoLib/0.0.0%2Bsha.475be92c8304/TrainInfoLib-0.0.0%2Bsha.475be92c8304.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rinosh2/library/TrainInfoLib/0.0.0%2Bsha.475be92c8304/TrainInfoLib-0.0.0%2Bsha.475be92c8304.tar.gz"
+    ]
+   }
+  }
+ ]
+}

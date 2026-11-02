@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dusanstojkovic",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dusanstojkovic/library/Roomba%20SCI/0.1.0/RoombaSCI-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RoombaSCI-0.1.0.tar.gz",
+    "size_bytes": 2675,
+    "sha256": "06f0120b356e67480f553841a767f9bfe290a07614dc120e4eb08b835e99f8c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dusanstojkovic/library/Roomba%2520SCI/0.1.0/RoombaSCI-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dusanstojkovic/library/Roomba%20SCI/0.1.0/RoombaSCI-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

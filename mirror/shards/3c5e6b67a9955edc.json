@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-leigh-lbr",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-leigh-lbr/library/EaEpaper_EM027BS013/0.0.0+sha.46dfef41919b/EaEpaper_EM027BS013-0.0.0+sha.46dfef41919b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EaEpaper_EM027BS013-0.0.0+sha.46dfef41919b.tar.gz",
+    "size_bytes": 7991,
+    "sha256": "91b341a077560531ad94475437e893eee039a4ea593b83701beb0c87170e2624",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-leigh-lbr/library/EaEpaper_EM027BS013/0.0.0%2Bsha.46dfef41919b/EaEpaper_EM027BS013-0.0.0%2Bsha.46dfef41919b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-leigh-lbr/library/EaEpaper_EM027BS013/0.0.0%2Bsha.46dfef41919b/EaEpaper_EM027BS013-0.0.0%2Bsha.46dfef41919b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

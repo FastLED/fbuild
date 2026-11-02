@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/chill1",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "chill1/library/lnurl/0.4.1/lnurl-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lnurl-0.4.1.tar.gz",
+    "size_bytes": 66375,
+    "sha256": "3450c040b13025b56b2b5110800e15ac908ac0c04cf05283c594a927099f1c17",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chill1/library/lnurl/0.4.1/lnurl-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/chill1/library/lnurl/0.4.1/lnurl-0.4.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

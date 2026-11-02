@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dexon-foundation",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dexon-foundation/library/DEXON-Web3E/0.92/DEXON-Web3E-0.92.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DEXON-Web3E-0.92.tar.gz",
+    "size_bytes": 187617,
+    "sha256": "fe998e9896d0126bf54ddc87c45a7ffdd8b356e89a0597f352c9fa25b80658fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dexon-foundation/library/DEXON-Web3E/0.92/DEXON-Web3E-0.92.tar.gz",
+     "https://dl.registry.platformio.org/download/dexon-foundation/library/DEXON-Web3E/0.92/DEXON-Web3E-0.92.tar.gz"
+    ]
+   }
+  }
+ ]
+}

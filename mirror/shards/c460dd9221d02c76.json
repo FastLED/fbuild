@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/devxplained",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "devxplained/library/HTU21D%20Sensor%20Library/1.0.2/HTU21DSensorLibrary-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HTU21DSensorLibrary-1.0.2.tar.gz",
+    "size_bytes": 3780,
+    "sha256": "208d319b7998d68cf64b75fd6e32b798be482c97db395fbd749585d28d3e60a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/devxplained/library/HTU21D%2520Sensor%2520Library/1.0.2/HTU21DSensorLibrary-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/devxplained/library/HTU21D%20Sensor%20Library/1.0.2/HTU21DSensorLibrary-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "devxplained/library/MAX3010x%20Sensor%20Library/1.0.5/MAX3010xSensorLibrary-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX3010xSensorLibrary-1.0.5.tar.gz",
+    "size_bytes": 43342,
+    "sha256": "9293b52df8ffd79550f9e70ff2958a96e288dca02e67e4a3a9d29fca530b5c7f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/devxplained/library/MAX3010x%2520Sensor%2520Library/1.0.5/MAX3010xSensorLibrary-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/devxplained/library/MAX3010x%20Sensor%20Library/1.0.5/MAX3010xSensorLibrary-1.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

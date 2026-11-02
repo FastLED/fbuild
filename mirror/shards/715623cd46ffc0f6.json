@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nachtravevl",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nachtravevl/library/BY8X01-16P-Arduino/1.0.8/BY8X01-16P-Arduino-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BY8X01-16P-Arduino-1.0.8.tar.gz",
+    "size_bytes": 17264,
+    "sha256": "fe947438ebd033bcd96f67cc184f1f0bde083b2e90ac318b37604b5201a80a90",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nachtravevl/library/BY8X01-16P-Arduino/1.0.8/BY8X01-16P-Arduino-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/nachtravevl/library/BY8X01-16P-Arduino/1.0.8/BY8X01-16P-Arduino-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nachtravevl/library/Lepton-FLiR-Arduino/0.9.91/Lepton-FLiR-Arduino-0.9.91.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lepton-FLiR-Arduino-0.9.91.tar.gz",
+    "size_bytes": 336601,
+    "sha256": "93347d01a0600a9cfd9abff62ebc576a787b1fa66dc23070eb9411dd5915b3b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nachtravevl/library/Lepton-FLiR-Arduino/0.9.91/Lepton-FLiR-Arduino-0.9.91.tar.gz",
+     "https://dl.registry.platformio.org/download/nachtravevl/library/Lepton-FLiR-Arduino/0.9.91/Lepton-FLiR-Arduino-0.9.91.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nachtravevl/library/PCA9685-Arduino/1.2.15/PCA9685-Arduino-1.2.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCA9685-Arduino-1.2.15.tar.gz",
+    "size_bytes": 34900,
+    "sha256": "d457150e35ffc385b61f332a0de9f721ec51a0c44721961a5b5436de5303b6de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nachtravevl/library/PCA9685-Arduino/1.2.15/PCA9685-Arduino-1.2.15.tar.gz",
+     "https://dl.registry.platformio.org/download/nachtravevl/library/PCA9685-Arduino/1.2.15/PCA9685-Arduino-1.2.15.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nachtravevl/library/Simple-AstroTracker-Arduino/0.7.1.0/Simple-AstroTracker-Arduino-0.7.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Simple-AstroTracker-Arduino-0.7.1.0.tar.gz",
+    "size_bytes": 121006,
+    "sha256": "858069a8caa189d387f3cf47ee5e94467d04f6dd434325ad833dc64a8e04b3d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nachtravevl/library/Simple-AstroTracker-Arduino/0.7.1.0/Simple-AstroTracker-Arduino-0.7.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nachtravevl/library/Simple-AstroTracker-Arduino/0.7.1.0/Simple-AstroTracker-Arduino-0.7.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nachtravevl/library/Simple-Homestead-Arduino/0.7.1.0/Simple-Homestead-Arduino-0.7.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Simple-Homestead-Arduino-0.7.1.0.tar.gz",
+    "size_bytes": 104787,
+    "sha256": "66043fb83c9ce798a6216a5bd49572e306369ac5c6e3924e518526dcab64dd41",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nachtravevl/library/Simple-Homestead-Arduino/0.7.1.0/Simple-Homestead-Arduino-0.7.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nachtravevl/library/Simple-Homestead-Arduino/0.7.1.0/Simple-Homestead-Arduino-0.7.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nachtravevl/library/Simple-Homestead-Arduino/0.7.2/Simple-Homestead-Arduino-0.7.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Simple-Homestead-Arduino-0.7.2.tar.gz",
+    "size_bytes": 225805,
+    "sha256": "e7dd09762d84e4a247d4ae362c9eb20314c5a0ded5bd1ccf95b86b46e6f772c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nachtravevl/library/Simple-Homestead-Arduino/0.7.2/Simple-Homestead-Arduino-0.7.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nachtravevl/library/Simple-Homestead-Arduino/0.7.2/Simple-Homestead-Arduino-0.7.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nachtravevl/library/Simple-Hydroponics-Arduino/0.6.8.0/Simple-Hydroponics-Arduino-0.6.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Simple-Hydroponics-Arduino-0.6.8.0.tar.gz",
+    "size_bytes": 299054,
+    "sha256": "2bc233868344d0c42b4f74091b3e8494837756f3ac548dd073fac1418d3fbbd5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nachtravevl/library/Simple-Hydroponics-Arduino/0.6.8.0/Simple-Hydroponics-Arduino-0.6.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nachtravevl/library/Simple-Hydroponics-Arduino/0.6.8.0/Simple-Hydroponics-Arduino-0.6.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nachtravevl/library/Simple-SolarTracker-Arduino/0.6.8.0/Simple-SolarTracker-Arduino-0.6.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Simple-SolarTracker-Arduino-0.6.8.0.tar.gz",
+    "size_bytes": 264305,
+    "sha256": "41ab0119d5db0166a92ffe14a6f19d6c8a42a84a22d210229813de335ff2f731",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nachtravevl/library/Simple-SolarTracker-Arduino/0.6.8.0/Simple-SolarTracker-Arduino-0.6.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nachtravevl/library/Simple-SolarTracker-Arduino/0.6.8.0/Simple-SolarTracker-Arduino-0.6.8.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

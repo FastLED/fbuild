@@ -1,0 +1,971 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bestmodules-libraries",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bestmodules-libraries/library/BM12O2021-A/1.0.1/BM12O2021-A-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BM12O2021-A-1.0.1.tar.gz",
+    "size_bytes": 6471,
+    "sha256": "3a9eaf37e9369cd929566f1c39fd9c4e0094bf56c21d1170d4e34bfd1809e46f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BM12O2021-A/1.0.1/BM12O2021-A-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BM12O2021-A/1.0.1/BM12O2021-A-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BM12O2321-A/1.0.1/BM12O2321-A-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BM12O2321-A-1.0.1.tar.gz",
+    "size_bytes": 6413,
+    "sha256": "ca004f72c7cb06feb988a864c33300771eca9f4c1c1093f683a5655beb7a0cf0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BM12O2321-A/1.0.1/BM12O2321-A-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BM12O2321-A/1.0.1/BM12O2321-A-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BM2102-9x-1/1.0.1/BM2102-9x-1-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BM2102-9x-1-1.0.1.tar.gz",
+    "size_bytes": 5489,
+    "sha256": "a684f26e0bd9dd6a34f21675bd5dddc1e71b82e54ac069f0dda7ef232a91c626",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BM2102-9x-1/1.0.1/BM2102-9x-1-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BM2102-9x-1/1.0.1/BM2102-9x-1-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BM22S2021-1/1.0.2/BM22S2021-1-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BM22S2021-1-1.0.2.tar.gz",
+    "size_bytes": 8872,
+    "sha256": "1e453f8e4b2b82f68ff804f4c39538bd71eec4a5572da7f58ca4b8a23f5784cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BM22S2021-1/1.0.2/BM22S2021-1-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BM22S2021-1/1.0.2/BM22S2021-1-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BM22S3021-1/1.0.2/BM22S3021-1-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BM22S3021-1-1.0.2.tar.gz",
+    "size_bytes": 6940,
+    "sha256": "9e39063ac30f62d48c8f268dcabc506eac8206bce189eb67f31f5948d6397bf6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BM22S3021-1/1.0.2/BM22S3021-1-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BM22S3021-1/1.0.2/BM22S3021-1-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BM22S3031-1/1.0.1/BM22S3031-1-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BM22S3031-1-1.0.1.tar.gz",
+    "size_bytes": 7997,
+    "sha256": "9f19029e64b6372ec7020ef4fb818c7ec3b69814912101b04d666ac8194c00ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BM22S3031-1/1.0.1/BM22S3031-1-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BM22S3031-1/1.0.1/BM22S3031-1-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BM22S3221-1/1.0.2/BM22S3221-1-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BM22S3221-1-1.0.2.tar.gz",
+    "size_bytes": 7794,
+    "sha256": "6163186a59ce82d3bd4e1a0013a7c967d92d642e859c2e5b4880e443e9b1f90b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BM22S3221-1/1.0.2/BM22S3221-1-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BM22S3221-1/1.0.2/BM22S3221-1-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BM22S3421-1/1.0.1/BM22S3421-1-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BM22S3421-1-1.0.1.tar.gz",
+    "size_bytes": 6518,
+    "sha256": "b77d62799e94d687aab6b427fb31ec71b934b471c6dfe01c306c52f90913d90c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BM22S3421-1/1.0.1/BM22S3421-1-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BM22S3421-1/1.0.1/BM22S3421-1-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BM22S4221-1/1.0.2/BM22S4221-1-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BM22S4221-1-1.0.2.tar.gz",
+    "size_bytes": 7201,
+    "sha256": "37a769fa20deed1e041ace80a16843120927f7407df0c65f6822afa006a3950b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BM22S4221-1/1.0.2/BM22S4221-1-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BM22S4221-1/1.0.2/BM22S4221-1-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BM2302-9x-1/1.0.1/BM2302-9x-1-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BM2302-9x-1-1.0.1.tar.gz",
+    "size_bytes": 6219,
+    "sha256": "80d6eefa755fd64fc9e86dc7e600bdf2c1a619912d49fbbdeac87185be3bbf07",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BM2302-9x-1/1.0.1/BM2302-9x-1-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BM2302-9x-1/1.0.1/BM2302-9x-1-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BM25S2021-1/1.0.2/BM25S2021-1-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BM25S2021-1-1.0.2.tar.gz",
+    "size_bytes": 5592,
+    "sha256": "7a07e668f4fa6cbb3acd6c5a23966614ec88e469866d7fb88afc16b209747147",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BM25S2021-1/1.0.2/BM25S2021-1-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BM25S2021-1/1.0.2/BM25S2021-1-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BM25S2621-1/1.0.2/BM25S2621-1-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BM25S2621-1-1.0.2.tar.gz",
+    "size_bytes": 5877,
+    "sha256": "c413082a458dca5fe3594610a092a04758f72bb34747a95a331c768fdcdfaa5d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BM25S2621-1/1.0.2/BM25S2621-1-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BM25S2621-1/1.0.2/BM25S2621-1-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BM25S3221-1/1.0.2/BM25S3221-1-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BM25S3221-1-1.0.2.tar.gz",
+    "size_bytes": 6324,
+    "sha256": "a6af3861d178316162f31272c36d432aa2dc0dca9408efb267040b79fdad5370",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BM25S3221-1/1.0.2/BM25S3221-1-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BM25S3221-1/1.0.2/BM25S3221-1-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BM25S3321-1/1.0.2/BM25S3321-1-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BM25S3321-1-1.0.2.tar.gz",
+    "size_bytes": 5054,
+    "sha256": "24af570d9e95ab6694fc1675008e52faf6f43c1147551d76402be0c573b66302",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BM25S3321-1/1.0.2/BM25S3321-1-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BM25S3321-1/1.0.2/BM25S3321-1-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BM25S3421-1/1.0.1/BM25S3421-1-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BM25S3421-1-1.0.1.tar.gz",
+    "size_bytes": 6482,
+    "sha256": "a9d10c632695599a308b93df740c3842931aa8749af406c65640faaeaf04ab51",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BM25S3421-1/1.0.1/BM25S3421-1-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BM25S3421-1/1.0.1/BM25S3421-1-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BM25S4021-1/1.0.4/BM25S4021-1-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BM25S4021-1-1.0.4.tar.gz",
+    "size_bytes": 7008,
+    "sha256": "512ee120821ff3d68bae4d42020d4a07804a2d332d55e99e84e34d1ed4b2eaff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BM25S4021-1/1.0.4/BM25S4021-1-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BM25S4021-1/1.0.4/BM25S4021-1-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BM32O2531-A/1.0.1/BM32O2531-A-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BM32O2531-A-1.0.1.tar.gz",
+    "size_bytes": 8798,
+    "sha256": "0eab46418b347d7ecb166b4f90f2d5839fc458498d24ea01534b168fb020c3dc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BM32O2531-A/1.0.1/BM32O2531-A-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BM32O2531-A/1.0.1/BM32O2531-A-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BM32S2031-1/1.0.4/BM32S2031-1-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BM32S2031-1-1.0.4.tar.gz",
+    "size_bytes": 7425,
+    "sha256": "551dcd5a47b35fba51b96dae9d86951ec1d2fb3ffa5aa4b68892ea18334a7996",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BM32S2031-1/1.0.4/BM32S2031-1-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BM32S2031-1/1.0.4/BM32S2031-1-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BM32S3021-1/1.0.4/BM32S3021-1-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BM32S3021-1-1.0.4.tar.gz",
+    "size_bytes": 7505,
+    "sha256": "f4000043050f66ddb5081ef07f03f7a1d2dd3c0d58e95de4017c794e5b978576",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BM32S3021-1/1.0.4/BM32S3021-1-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BM32S3021-1/1.0.4/BM32S3021-1-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BM42S3021-1/1.0.1/BM42S3021-1-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BM42S3021-1-1.0.1.tar.gz",
+    "size_bytes": 4185,
+    "sha256": "aa3d4368fcb0ebbfdef0e93f697aff7d58ae295ac62fc19d86680d0abe8f7a1b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BM42S3021-1/1.0.1/BM42S3021-1-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BM42S3021-1/1.0.1/BM42S3021-1-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BM42S5321-1/1.0.1/BM42S5321-1-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BM42S5321-1-1.0.1.tar.gz",
+    "size_bytes": 7798,
+    "sha256": "b33cfb6de5677b05357810f10366c4e003c884e2a620973c5c09b2c2df898fb2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BM42S5321-1/1.0.1/BM42S5321-1-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BM42S5321-1/1.0.1/BM42S5321-1-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BM52D5021-1/1.0.1/BM52D5021-1-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BM52D5021-1-1.0.1.tar.gz",
+    "size_bytes": 4464,
+    "sha256": "2b0e792f3aef752ddbaa4b5f74db53f17a32c21aefe604c883dd1ffeac8e5861",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BM52D5021-1/1.0.1/BM52D5021-1-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BM52D5021-1/1.0.1/BM52D5021-1-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BM52D5121-1/1.0.1/BM52D5121-1-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BM52D5121-1-1.0.1.tar.gz",
+    "size_bytes": 7274,
+    "sha256": "626ff6ee65551696ad80c2011dbe4917084ebb58701b701d77fa9ab2d60ed73f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BM52D5121-1/1.0.1/BM52D5121-1-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BM52D5121-1/1.0.1/BM52D5121-1-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BM62S2201-1/1.0.1/BM62S2201-1-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BM62S2201-1-1.0.1.tar.gz",
+    "size_bytes": 5980,
+    "sha256": "cc310b7bd9d94bc724f9244d0749419dba3a8679571d78c6b7204a9b82af1e2c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BM62S2201-1/1.0.1/BM62S2201-1-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BM62S2201-1/1.0.1/BM62S2201-1-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BM62S2301-1/1.0.2/BM62S2301-1-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BM62S2301-1-1.0.2.tar.gz",
+    "size_bytes": 4640,
+    "sha256": "99ccc4a4d42f34fbec8e061b16828f835f1e84285094f97131cb8f9826e1a906",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BM62S2301-1/1.0.2/BM62S2301-1-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BM62S2301-1/1.0.2/BM62S2301-1-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BM62S6021-1/1.0.1/BM62S6021-1-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BM62S6021-1-1.0.1.tar.gz",
+    "size_bytes": 5211,
+    "sha256": "deca6f06c6f7779b096432e86f77fc8f0e7e242ee3ab7186a0486a631926da15",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BM62S6021-1/1.0.1/BM62S6021-1-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BM62S6021-1/1.0.1/BM62S6021-1-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BM7701-00-1/1.0.3/BM7701-00-1-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BM7701-00-1-1.0.3.tar.gz",
+    "size_bytes": 10810,
+    "sha256": "e8aee8a47bbee8712d1be075aa8f8a6fd18b05727281319ed1370e3495bad94c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BM7701-00-1/1.0.3/BM7701-00-1-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BM7701-00-1/1.0.3/BM7701-00-1-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BM92S2021-A/1.0.1/BM92S2021-A-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BM92S2021-A-1.0.1.tar.gz",
+    "size_bytes": 6736,
+    "sha256": "536a176273edad47edce02896c6f2743109c7eaa8d4c9ce6781ddb554685a98d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BM92S2021-A/1.0.1/BM92S2021-A-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BM92S2021-A/1.0.1/BM92S2021-A-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BM92S2222-A/1.0.1/BM92S2222-A-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BM92S2222-A-1.0.1.tar.gz",
+    "size_bytes": 6495,
+    "sha256": "c0d5cc5d132934e95acf336d011832cb9b84dfba529d7485e4033708846bcbfb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BM92S2222-A/1.0.1/BM92S2222-A-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BM92S2222-A/1.0.1/BM92S2222-A-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BM92S2231-1/1.0.2/BM92S2231-1-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BM92S2231-1-1.0.2.tar.gz",
+    "size_bytes": 7130,
+    "sha256": "4232352d36efe61ad52934c6323723ee8cc8aaf8216dae48ade1e4792136f4ec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BM92S2231-1/1.0.2/BM92S2231-1-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BM92S2231-1/1.0.2/BM92S2231-1-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BMB22M181A/1.0.1/BMB22M181A-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMB22M181A-1.0.1.tar.gz",
+    "size_bytes": 3936,
+    "sha256": "dd3dfc79938dc76f02d20902ce1c14fed07015426840546aaa618855b5eed2f5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BMB22M181A/1.0.1/BMB22M181A-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BMB22M181A/1.0.1/BMB22M181A-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BMB22M210/1.0.4/BMB22M210-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMB22M210-1.0.4.tar.gz",
+    "size_bytes": 7371,
+    "sha256": "dc7ab615aae71b5e29c9c88b8333b5fd1b25963c1fc9c94d620a94b87214129b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BMB22M210/1.0.4/BMB22M210-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BMB22M210/1.0.4/BMB22M210-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BMC11T001/1.0.2/BMC11T001-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMC11T001-1.0.2.tar.gz",
+    "size_bytes": 11537,
+    "sha256": "226c93181934a4e2a55649b49c7db5d94643a582032dc9054eb019a9acb2da2b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BMC11T001/1.0.2/BMC11T001-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BMC11T001/1.0.2/BMC11T001-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BMC36M0x1/1.0.2/BMC36M0x1-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMC36M0x1-1.0.2.tar.gz",
+    "size_bytes": 10527,
+    "sha256": "d68b9cc8e4cc6eb1279e06f07120f64da212d00aab1c8c9fc13d3ed9c70b628d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BMC36M0x1/1.0.2/BMC36M0x1-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BMC36M0x1/1.0.2/BMC36M0x1-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BMC56M001/1.0.3/BMC56M001-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMC56M001-1.0.3.tar.gz",
+    "size_bytes": 22039,
+    "sha256": "92449e0a90d0bb3ca13f2d3baf68e61ae8b05671b0c5caca910a5f9436ef881d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BMC56M001/1.0.3/BMC56M001-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BMC56M001/1.0.3/BMC56M001-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BMC81M001/1.0.5/BMC81M001-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMC81M001-1.0.5.tar.gz",
+    "size_bytes": 17300,
+    "sha256": "b023961578778fd663df7d3dc4682fc003483fb9adf269a7b789d55d5af7cf91",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BMC81M001/1.0.5/BMC81M001-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BMC81M001/1.0.5/BMC81M001-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BMD11M134/1.0.3/BMD11M134-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMD11M134-1.0.3.tar.gz",
+    "size_bytes": 6524,
+    "sha256": "011d05f4073800b4d5d4608d80f7476bc5d16d37954a8ec4f69830093294602f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BMD11M134/1.0.3/BMD11M134-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BMD11M134/1.0.3/BMD11M134-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BMD26M088/1.0.3/BMD26M088-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMD26M088-1.0.3.tar.gz",
+    "size_bytes": 10582,
+    "sha256": "1ca600f933464eb2e03470fd81be0053d39ccef8e435aa0d42f6128744166d25",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BMD26M088/1.0.3/BMD26M088-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BMD26M088/1.0.3/BMD26M088-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BMD31M090/1.0.3/BMD31M090-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMD31M090-1.0.3.tar.gz",
+    "size_bytes": 24007,
+    "sha256": "35804021c648e95c23a87ccbfaddf40c5fdd4150e9b0c63a10313824389c5657",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BMD31M090/1.0.3/BMD31M090-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BMD31M090/1.0.3/BMD31M090-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BMD58T280/1.0.4/BMD58T280-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMD58T280-1.0.4.tar.gz",
+    "size_bytes": 1561139,
+    "sha256": "14ba903e1655892f820da10de8b39325859a33b234e1ddc641a73d4abde8352e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BMD58T280/1.0.4/BMD58T280-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BMD58T280/1.0.4/BMD58T280-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BME34M101/1.0.1/BME34M101-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BME34M101-1.0.1.tar.gz",
+    "size_bytes": 5114,
+    "sha256": "cacde6886a99abc2cdca1b5d1feed3b2472809356b2792379a425d095f8a69df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BME34M101/1.0.1/BME34M101-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BME34M101/1.0.1/BME34M101-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BME36M280A/1.0.1/BME36M280A-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BME36M280A-1.0.1.tar.gz",
+    "size_bytes": 5107,
+    "sha256": "5c0f20bf8ec325d186b58443438cc4d071474b4348678089541e5a6ac022b0f3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BME36M280A/1.0.1/BME36M280A-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BME36M280A/1.0.1/BME36M280A-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BME63M001/1.0.2/BME63M001-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BME63M001-1.0.2.tar.gz",
+    "size_bytes": 5663,
+    "sha256": "cec68449f099b705e408d524eca358cf112fe8971622532f24884407ba15b4cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BME63M001/1.0.2/BME63M001-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BME63M001/1.0.2/BME63M001-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BME82M131/1.0.3/BME82M131-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BME82M131-1.0.3.tar.gz",
+    "size_bytes": 9597,
+    "sha256": "411481d079bba6b89984753d5e0c80bd2ddeb0bff6e34e101cecf41366b893e8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BME82M131/1.0.3/BME82M131-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BME82M131/1.0.3/BME82M131-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BMH06203/1.0.3/BMH06203-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMH06203-1.0.3.tar.gz",
+    "size_bytes": 5309,
+    "sha256": "72d7f0ab8ff3414e9fe61419192ec29d964dbc44350bfdda0eb56e648059c962",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BMH06203/1.0.3/BMH06203-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BMH06203/1.0.3/BMH06203-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BMH08002-4/1.0.2/BMH08002-4-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMH08002-4-1.0.2.tar.gz",
+    "size_bytes": 7095,
+    "sha256": "de6b6081f15058619eec53a6073be58c5e5366b76c940ec288fcbdb61e274018",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BMH08002-4/1.0.2/BMH08002-4-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BMH08002-4/1.0.2/BMH08002-4-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BMH08101/1.0.1/BMH08101-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMH08101-1.0.1.tar.gz",
+    "size_bytes": 8716,
+    "sha256": "444dd6197d333f53753fd3005c3305a354d711e3f86e6d154b9a6e6db7fa67d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BMH08101/1.0.1/BMH08101-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BMH08101/1.0.1/BMH08101-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BMH12M105/1.0.2/BMH12M105-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMH12M105-1.0.2.tar.gz",
+    "size_bytes": 5233,
+    "sha256": "149fffa802a1003a683db4e496e856da6a7df41f1f91e78ea71769e25bf76444",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BMH12M105/1.0.2/BMH12M105-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BMH12M105/1.0.2/BMH12M105-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BMH12M205/1.0.2/BMH12M205-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMH12M205-1.0.2.tar.gz",
+    "size_bytes": 7270,
+    "sha256": "b0c5b5ae3049ab04cf4b15e79ee2a056fbaeb541ea596035d7d2c7ba2bf6f658",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BMH12M205/1.0.2/BMH12M205-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BMH12M205/1.0.2/BMH12M205-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BMH23M001/1.0.1/BMH23M001-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMH23M001-1.0.1.tar.gz",
+    "size_bytes": 5767,
+    "sha256": "4ee6b0ca3f01e2139143a4ba1de5966a4e3f738e8676ffa0f2528287bcb7c00c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BMH23M001/1.0.1/BMH23M001-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BMH23M001/1.0.1/BMH23M001-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BMH23M002/1.0.2/BMH23M002-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMH23M002-1.0.2.tar.gz",
+    "size_bytes": 5811,
+    "sha256": "a8f979acb4b2250b2958999a29aae6d2c90aa33611fd80931db23aee55c99485",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BMH23M002/1.0.2/BMH23M002-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BMH23M002/1.0.2/BMH23M002-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BMK22M131/1.0.1/BMK22M131-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMK22M131-1.0.1.tar.gz",
+    "size_bytes": 5624,
+    "sha256": "ea8cfda864daa0a876d52d94d11ac789a5a2388fe174086b9f7315fff71718ac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BMK22M131/1.0.1/BMK22M131-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BMK22M131/1.0.1/BMK22M131-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BMK52M134/1.0.2/BMK52M134-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMK52M134-1.0.2.tar.gz",
+    "size_bytes": 6174,
+    "sha256": "52f4025438fd263457bcbada5faf382eafa3b81edb220410dcddaa473b7f7b9d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BMK52M134/1.0.2/BMK52M134-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BMK52M134/1.0.2/BMK52M134-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BMK52T016/1.0.3/BMK52T016-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMK52T016-1.0.3.tar.gz",
+    "size_bytes": 5462,
+    "sha256": "03a5c4b852caab31a846580ae0f1ec94f7fbed81f50116fe315d7aea7bc47730",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BMK52T016/1.0.3/BMK52T016-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BMK52T016/1.0.3/BMK52T016-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BMK54T004/1.0.3/BMK54T004-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMK54T004-1.0.3.tar.gz",
+    "size_bytes": 5433,
+    "sha256": "df998856df500cb9089734a3b3f217c4e0c152bb83d3290fc4c27d3b5539e1fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BMK54T004/1.0.3/BMK54T004-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BMK54T004/1.0.3/BMK54T004-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BMK56T004/1.0.3/BMK56T004-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMK56T004-1.0.3.tar.gz",
+    "size_bytes": 5354,
+    "sha256": "938befc5c6e6c98793adb92aaeeafeec739869f21f5792c3ad436f0b42d5ebb1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BMK56T004/1.0.3/BMK56T004-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BMK56T004/1.0.3/BMK56T004-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BML36M001/1.0.4/BML36M001-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BML36M001-1.0.4.tar.gz",
+    "size_bytes": 21450,
+    "sha256": "0b7ce065a4ee8025f0cf9e28789e19f6038e1f1252e531503ecdc6d88da64d63",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BML36M001/1.0.4/BML36M001-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BML36M001/1.0.4/BML36M001-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BMN31K522/1.0.2/BMN31K522-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMN31K522-1.0.2.tar.gz",
+    "size_bytes": 5636,
+    "sha256": "45e8210a99821dee4e407fa3734da2b507f308f8ed627594ba992a62d25ff7bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BMN31K522/1.0.2/BMN31K522-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BMN31K522/1.0.2/BMN31K522-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BMP73T102/1.0.1/BMP73T102-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMP73T102-1.0.1.tar.gz",
+    "size_bytes": 7520,
+    "sha256": "6ccf9b3f44b9c45d32573b6d9ebb3c78527df67490514ca63f4462b4f38c5572",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BMP73T102/1.0.1/BMP73T102-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BMP73T102/1.0.1/BMP73T102-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BMP73T104/1.0.2/BMP73T104-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMP73T104-1.0.2.tar.gz",
+    "size_bytes": 7931,
+    "sha256": "941c52d972a10762b6bb821f0a753a3a319f74e8dcadc9ff52d2d256808659d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BMP73T104/1.0.2/BMP73T104-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BMP73T104/1.0.2/BMP73T104-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BMP75M131/1.0.1/BMP75M131-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMP75M131-1.0.1.tar.gz",
+    "size_bytes": 4944,
+    "sha256": "f07daeaa75ecb80023f3c5946d35da9b614fafb23e674fa0df4663b746f84ae5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BMP75M131/1.0.1/BMP75M131-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BMP75M131/1.0.1/BMP75M131-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BMS26M833/1.0.1/BMS26M833-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMS26M833-1.0.1.tar.gz",
+    "size_bytes": 31040,
+    "sha256": "7822efc64fc17a2b1ac833f7eed83bb4e0e5520dc3ebcc0390a3cd3824715fc7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BMS26M833/1.0.1/BMS26M833-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BMS26M833/1.0.1/BMS26M833-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BMS33M332/1.0.1/BMS33M332-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMS33M332-1.0.1.tar.gz",
+    "size_bytes": 7628,
+    "sha256": "5defa37a24ca171685001826b65be2104bef1e26edb136204d2bd0d74969ab70",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BMS33M332/1.0.1/BMS33M332-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BMS33M332/1.0.1/BMS33M332-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BMS36T001/1.0.2/BMS36T001-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMS36T001-1.0.2.tar.gz",
+    "size_bytes": 6918,
+    "sha256": "676443bbd0108e85923fed2ebbd78f0f336f5d78f4267c2a61b56ec0d3a2e7e8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BMS36T001/1.0.2/BMS36T001-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BMS36T001/1.0.2/BMS36T001-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BMS56M206A/1.0.2/BMS56M206A-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMS56M206A-1.0.2.tar.gz",
+    "size_bytes": 9830,
+    "sha256": "72db555b83ee5e52901c912917d09a8a8d99111732e4d92a9eb62d01256da4ea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BMS56M206A/1.0.2/BMS56M206A-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BMS56M206A/1.0.2/BMS56M206A-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BMS56M605/1.0.1/BMS56M605-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMS56M605-1.0.1.tar.gz",
+    "size_bytes": 9828,
+    "sha256": "6d387c3e16eb0b08f076bbfb418a7cb1ab7d2056979aaf7a96e3d05b33af21d5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BMS56M605/1.0.1/BMS56M605-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BMS56M605/1.0.1/BMS56M605-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BMS81M001/1.0.2/BMS81M001-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMS81M001-1.0.2.tar.gz",
+    "size_bytes": 6123,
+    "sha256": "f185a20837f7c2d462795ee40dff050434327cd7a1b19bb222318d04f69cc48b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BMS81M001/1.0.2/BMS81M001-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BMS81M001/1.0.2/BMS81M001-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BMV23M001/1.0.3/BMV23M001-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMV23M001-1.0.3.tar.gz",
+    "size_bytes": 5662,
+    "sha256": "5cd7e683c0f1f9251f8b370901857c4f82124bdd7ee9ff391278d56ed4251dac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BMV23M001/1.0.3/BMV23M001-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BMV23M001/1.0.3/BMV23M001-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BMV31M304A/1.0.1/BMV31M304A-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMV31M304A-1.0.1.tar.gz",
+    "size_bytes": 4155,
+    "sha256": "bb491a841f71650ea3de28d6c01a5a92ffdedd5c88f114999cf804e83cfbca0f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BMV31M304A/1.0.1/BMV31M304A-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BMV31M304A/1.0.1/BMV31M304A-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BMV31T001/1.0.2/BMV31T001-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMV31T001-1.0.2.tar.gz",
+    "size_bytes": 1311374,
+    "sha256": "ac424ec16784e7fe40d5231f898a61d635fcb4be21c6f09d834402d374629401",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BMV31T001/1.0.2/BMV31T001-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BMV31T001/1.0.2/BMV31T001-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BMV36T001/1.0.1/BMV36T001-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMV36T001-1.0.1.tar.gz",
+    "size_bytes": 56033,
+    "sha256": "796c9ca9369851fe14f7416e7b38f60f934b990f0c7ae5f4efb2a99ea9ea09de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BMV36T001/1.0.1/BMV36T001-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BMV36T001/1.0.1/BMV36T001-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BMV51T001/1.0.2/BMV51T001-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMV51T001-1.0.2.tar.gz",
+    "size_bytes": 12825,
+    "sha256": "2dc70734c615b65cdeca9743912bf3ab2feb26d61c7bce4a60ca1ed301879d5d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BMV51T001/1.0.2/BMV51T001-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BMV51T001/1.0.2/BMV51T001-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BMV56T123/1.0.2/BMV56T123-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMV56T123-1.0.2.tar.gz",
+    "size_bytes": 4760,
+    "sha256": "c763c5c057a89f250b93f1a5bb3396ba741818792d5ff47770d168e3ebb7fc65",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BMV56T123/1.0.2/BMV56T123-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BMV56T123/1.0.2/BMV56T123-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bestmodules-libraries/library/BMduino_BW16/1.0.1/BMduino_BW16-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMduino_BW16-1.0.1.tar.gz",
+    "size_bytes": 12816,
+    "sha256": "ca1b05c5fca851ae1594305da66a001486589881a1a352478dc54de4912103e7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bestmodules-libraries/library/BMduino_BW16/1.0.1/BMduino_BW16-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bestmodules-libraries/library/BMduino_BW16/1.0.1/BMduino_BW16-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

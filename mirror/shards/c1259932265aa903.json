@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/weenachuangkud",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "weenachuangkud/library/XSegment_lib/1.0.0/XSegment_lib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XSegment_lib-1.0.0.tar.gz",
+    "size_bytes": 22747,
+    "sha256": "e6297797cf1cb7d36692107315cb3d53f2ec4d28426785e745b4b6978dccf85c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/weenachuangkud/library/XSegment_lib/1.0.0/XSegment_lib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/weenachuangkud/library/XSegment_lib/1.0.0/XSegment_lib-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-asee-2014",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-asee-2014/library/LineFollower/0.0.0+sha.88aa683f1c94/LineFollower-0.0.0+sha.88aa683f1c94.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LineFollower-0.0.0+sha.88aa683f1c94.tar.gz",
+    "size_bytes": 1800,
+    "sha256": "1d31d6ea2c48930a614231bb40be4a160bd7b735dde563a27f1b8d4839d6ada2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-asee-2014/library/LineFollower/0.0.0%2Bsha.88aa683f1c94/LineFollower-0.0.0%2Bsha.88aa683f1c94.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-asee-2014/library/LineFollower/0.0.0%2Bsha.88aa683f1c94/LineFollower-0.0.0%2Bsha.88aa683f1c94.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-asee-2014/library/Motor/0.0.0+sha.de727286a2a8/Motor-0.0.0+sha.de727286a2a8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Motor-0.0.0+sha.de727286a2a8.tar.gz",
+    "size_bytes": 1933,
+    "sha256": "ab35c730563cfd63628ec33e6677e7b26fc57ee8c8fdbfc66be1b3dea92f5ac1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-asee-2014/library/Motor/0.0.0%2Bsha.de727286a2a8/Motor-0.0.0%2Bsha.de727286a2a8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-asee-2014/library/Motor/0.0.0%2Bsha.de727286a2a8/Motor-0.0.0%2Bsha.de727286a2a8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

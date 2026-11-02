@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/moaaz-i",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "moaaz-i/library/FlareDom/1.2.0/FlareDom-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FlareDom-1.2.0.tar.gz",
+    "size_bytes": 22349,
+    "sha256": "b3c5e19dd1a1ef6a211374260b0759e6717d072c88b201e6bdae090b6b790ed8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moaaz-i/library/FlareDom/1.2.0/FlareDom-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/moaaz-i/library/FlareDom/1.2.0/FlareDom-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moaaz-i/library/FlareDom/2.0.0/FlareDom-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FlareDom-2.0.0.tar.gz",
+    "size_bytes": 28508,
+    "sha256": "6139d0a788fe51e1d9726ca45115deda70f7931752d67dd5be5e32de3493883b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moaaz-i/library/FlareDom/2.0.0/FlareDom-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/moaaz-i/library/FlareDom/2.0.0/FlareDom-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moaaz-i/library/MicroTaskX/1.1.0/UMOZ-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UMOZ-1.1.0.tar.gz",
+    "size_bytes": 6119,
+    "sha256": "cb906bb54278ca575b6f1b5f5e54daeb4f7091848fb5646e5887cdcb5e953551",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moaaz-i/library/MicroTaskX/1.1.0/UMOZ-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/moaaz-i/library/MicroTaskX/1.1.0/UMOZ-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moaaz-i/library/MicroTaskX/3.1.1/MicroTaskX-3.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MicroTaskX-3.1.1.tar.gz",
+    "size_bytes": 10924,
+    "sha256": "e22a2a6bec08eaa3918d7306c3590b830dca1bd007f1940c0cf69e6349f5b483",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moaaz-i/library/MicroTaskX/3.1.1/MicroTaskX-3.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/moaaz-i/library/MicroTaskX/3.1.1/MicroTaskX-3.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moaaz-i/library/MicroTaskX/4.0.0/MicroTaskX-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MicroTaskX-4.0.0.tar.gz",
+    "size_bytes": 15660,
+    "sha256": "28492ef5442cb4cd7e4321a556ccb3d1d01fe859bd5b298048f42f5e661523bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moaaz-i/library/MicroTaskX/4.0.0/MicroTaskX-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/moaaz-i/library/MicroTaskX/4.0.0/MicroTaskX-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moaaz-i/library/Ultra1602Ultimate/1.0.0/Ultra1602Ultimate-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ultra1602Ultimate-1.0.0.tar.gz",
+    "size_bytes": 4532,
+    "sha256": "c982d27f30c5e6138e4085dde713ff49c60f2fc62c0516aa377220905fd16c38",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moaaz-i/library/Ultra1602Ultimate/1.0.0/Ultra1602Ultimate-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/moaaz-i/library/Ultra1602Ultimate/1.0.0/Ultra1602Ultimate-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moaaz-i/library/Ultra1602Ultimate/2.0.0/Ultra1602Ultimate-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ultra1602Ultimate-2.0.0.tar.gz",
+    "size_bytes": 12297,
+    "sha256": "760b3044c788822433922f9be74a1dd6b4053648b2c0c543a4c95cf8d2db62c4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moaaz-i/library/Ultra1602Ultimate/2.0.0/Ultra1602Ultimate-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/moaaz-i/library/Ultra1602Ultimate/2.0.0/Ultra1602Ultimate-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

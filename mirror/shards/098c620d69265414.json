@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-clemente",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-clemente/library/ADNS2051lib/0.0.0+sha.462017ee2a5b/ADNS2051lib-0.0.0+sha.462017ee2a5b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADNS2051lib-0.0.0+sha.462017ee2a5b.tar.gz",
+    "size_bytes": 5601,
+    "sha256": "446bf5d58176289d714ca09ccb3c44655ab4a31413410f6fd71ecf5356c0ff37",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-clemente/library/ADNS2051lib/0.0.0%2Bsha.462017ee2a5b/ADNS2051lib-0.0.0%2Bsha.462017ee2a5b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-clemente/library/ADNS2051lib/0.0.0%2Bsha.462017ee2a5b/ADNS2051lib-0.0.0%2Bsha.462017ee2a5b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-clemente/library/FRDM_MMA8451Q/0.0.0+sha.13e2af71e2cf/FRDM_MMA8451Q-0.0.0+sha.13e2af71e2cf.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FRDM_MMA8451Q-0.0.0+sha.13e2af71e2cf.tar.gz",
+    "size_bytes": 7017,
+    "sha256": "050ee85db8d07b9b49601bb9f3de9df970aafc8eee6819631e2c54e34d196baf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-clemente/library/FRDM_MMA8451Q/0.0.0%2Bsha.13e2af71e2cf/FRDM_MMA8451Q-0.0.0%2Bsha.13e2af71e2cf.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-clemente/library/FRDM_MMA8451Q/0.0.0%2Bsha.13e2af71e2cf/FRDM_MMA8451Q-0.0.0%2Bsha.13e2af71e2cf.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-clemente/library/KL25Z_RTC/0.0.0+sha.3bd0dc0c2b2e/KL25Z_RTC-0.0.0+sha.3bd0dc0c2b2e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KL25Z_RTC-0.0.0+sha.3bd0dc0c2b2e.tar.gz",
+    "size_bytes": 2900,
+    "sha256": "814987258435596bdf7bee557b67641a679277ad55dc8f43955fb6fa2cc3afa0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-clemente/library/KL25Z_RTC/0.0.0%2Bsha.3bd0dc0c2b2e/KL25Z_RTC-0.0.0%2Bsha.3bd0dc0c2b2e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-clemente/library/KL25Z_RTC/0.0.0%2Bsha.3bd0dc0c2b2e/KL25Z_RTC-0.0.0%2Bsha.3bd0dc0c2b2e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-clemente/library/MI0283QTlib/0.0.0+sha.7ad454fed160/MI0283QTlib-0.0.0+sha.7ad454fed160.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MI0283QTlib-0.0.0+sha.7ad454fed160.tar.gz",
+    "size_bytes": 24086,
+    "sha256": "71bfcf285428a5282c5e72827227a71864d662b09256e581441cd0551e2579c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-clemente/library/MI0283QTlib/0.0.0%2Bsha.7ad454fed160/MI0283QTlib-0.0.0%2Bsha.7ad454fed160.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-clemente/library/MI0283QTlib/0.0.0%2Bsha.7ad454fed160/MI0283QTlib-0.0.0%2Bsha.7ad454fed160.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-clemente/library/MPL3115A2/0.0.0+sha.a5ce3ee460b6/MPL3115A2-0.0.0+sha.a5ce3ee460b6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPL3115A2-0.0.0+sha.a5ce3ee460b6.tar.gz",
+    "size_bytes": 5909,
+    "sha256": "007026d6c648ce8aa06e34c7850110159c6a31dc9c250dd66c26031ed6074608",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-clemente/library/MPL3115A2/0.0.0%2Bsha.a5ce3ee460b6/MPL3115A2-0.0.0%2Bsha.a5ce3ee460b6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-clemente/library/MPL3115A2/0.0.0%2Bsha.a5ce3ee460b6/MPL3115A2-0.0.0%2Bsha.a5ce3ee460b6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-clemente/library/VS1053lib/0.0.0+sha.399afe8151de/VS1053lib-0.0.0+sha.399afe8151de.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VS1053lib-0.0.0+sha.399afe8151de.tar.gz",
+    "size_bytes": 14254,
+    "sha256": "9ab614bf4abb3f8ac42cc6a99a0e56cefc50ad8bb115ba1608908cfb93bd15c3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-clemente/library/VS1053lib/0.0.0%2Bsha.399afe8151de/VS1053lib-0.0.0%2Bsha.399afe8151de.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-clemente/library/VS1053lib/0.0.0%2Bsha.399afe8151de/VS1053lib-0.0.0%2Bsha.399afe8151de.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-clemente/library/XMONlib/0.0.0+sha.ad2d25216a13/XMONlib-0.0.0+sha.ad2d25216a13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XMONlib-0.0.0+sha.ad2d25216a13.tar.gz",
+    "size_bytes": 3134,
+    "sha256": "5059b04c89e904c1541793494fcd8a9cdb913f027ac70b6bbefaec95597d991f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-clemente/library/XMONlib/0.0.0%2Bsha.ad2d25216a13/XMONlib-0.0.0%2Bsha.ad2d25216a13.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-clemente/library/XMONlib/0.0.0%2Bsha.ad2d25216a13/XMONlib-0.0.0%2Bsha.ad2d25216a13.tar.gz"
+    ]
+   }
+  }
+ ]
+}

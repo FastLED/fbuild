@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bisand",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bisand/library/AdminPortal/0.2.1/AdminPortal-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AdminPortal-0.2.1.tar.gz",
+    "size_bytes": 9157,
+    "sha256": "02069195c27e3e6b172e6cf0f9043968e5d7edfdc5a3f0025c0052cecfa6715d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bisand/library/AdminPortal/0.2.1/AdminPortal-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bisand/library/AdminPortal/0.2.1/AdminPortal-0.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

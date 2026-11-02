@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/atnic",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "atnic/library/GSM%20Library/0.7.4/GSMLibrary-0.7.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GSMLibrary-0.7.4.tar.gz",
+    "size_bytes": 21831,
+    "sha256": "15879397e846ae762c21275a49bce5bbf0c3709552870086864130fb25b7cc95",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/atnic/library/GSM%2520Library/0.7.4/GSMLibrary-0.7.4.tar.gz",
+     "https://dl.registry.platformio.org/download/atnic/library/GSM%20Library/0.7.4/GSMLibrary-0.7.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

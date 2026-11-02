@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bill-orange",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bill-orange/library/AskGemini/1.0.1/AskGemini-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AskGemini-1.0.1.tar.gz",
+    "size_bytes": 5089,
+    "sha256": "c944c64b4eadefc2ea30be3a40488c8470c27a79092fdfd0e0edad824d877042",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bill-orange/library/AskGemini/1.0.1/AskGemini-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bill-orange/library/AskGemini/1.0.1/AskGemini-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bill-orange/library/AskGemini/1.0.2/AskGemini-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AskGemini-1.0.2.tar.gz",
+    "size_bytes": 5107,
+    "sha256": "c76766b9db6757ce0aa72ddec13ac76a86cdf79e65022880fba0da4785ea6488",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bill-orange/library/AskGemini/1.0.2/AskGemini-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bill-orange/library/AskGemini/1.0.2/AskGemini-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

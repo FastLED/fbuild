@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nailbuster",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nailbuster/library/Adafruit_ILI9341esp/1.0.1/Adafruit_ILI9341esp-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Adafruit_ILI9341esp-1.0.1.tar.gz",
+    "size_bytes": 7928,
+    "sha256": "cd1ac83bc41e3bd9ba400b8f158731337c7c9fb4804a2500c5110ee6a6a1ea89",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nailbuster/library/Adafruit_ILI9341esp/1.0.1/Adafruit_ILI9341esp-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nailbuster/library/Adafruit_ILI9341esp/1.0.1/Adafruit_ILI9341esp-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nailbuster/library/ESP8266FtpServer/1.0.1/ESP8266FtpServer-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266FtpServer-1.0.1.tar.gz",
+    "size_bytes": 17873,
+    "sha256": "705dd80b4e3d8ea68b2ff0b1544b62c0559ba2de873f9d6acdb41185a02ad03b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nailbuster/library/ESP8266FtpServer/1.0.1/ESP8266FtpServer-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nailbuster/library/ESP8266FtpServer/1.0.1/ESP8266FtpServer-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nailbuster/library/myWebServerESP/1.0.1/myWebServerESP-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "myWebServerESP-1.0.1.tar.gz",
+    "size_bytes": 37499,
+    "sha256": "7c806a46b7ea8dbabb71d182a4de49d9e8d4b54082d15aa54d5ce7506f62f0ea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nailbuster/library/myWebServerESP/1.0.1/myWebServerESP-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nailbuster/library/myWebServerESP/1.0.1/myWebServerESP-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

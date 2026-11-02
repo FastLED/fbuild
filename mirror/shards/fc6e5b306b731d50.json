@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/wemos",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "wemos/library/LOLIN%20D1%20Examples/1.0.0/LOLIND1Examples-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LOLIND1Examples-1.0.0.tar.gz",
+    "size_bytes": 46679,
+    "sha256": "4165a6b67631b54c58d7050a9a655b426149e967b31acab3031978684f08f51c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wemos/library/LOLIN%2520D1%2520Examples/1.0.0/LOLIND1Examples-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/wemos/library/LOLIN%20D1%20Examples/1.0.0/LOLIND1Examples-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wemos/library/LOLIN_EPD/1.0.0/LOLIN_EPD-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LOLIN_EPD-1.0.0.tar.gz",
+    "size_bytes": 7639,
+    "sha256": "7253ce4bd516df2c7cf354b56f1ae61b0fcb3b24360f31617535c52fb816beda",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wemos/library/LOLIN_EPD/1.0.0/LOLIN_EPD-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/wemos/library/LOLIN_EPD/1.0.0/LOLIN_EPD-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wemos/library/WEMOS%20DHT12/1.0.0/WEMOSDHT12-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WEMOSDHT12-1.0.0.tar.gz",
+    "size_bytes": 1673,
+    "sha256": "c8105ed4588f4f4dc318333d8d9f12694b0919a6a5814429042914bb02755114",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wemos/library/WEMOS%2520DHT12/1.0.0/WEMOSDHT12-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/wemos/library/WEMOS%20DHT12/1.0.0/WEMOSDHT12-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wemos/library/WEMOS%20SHT3x/1.0.0/WEMOSSHT3x-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WEMOSSHT3x-1.0.0.tar.gz",
+    "size_bytes": 1775,
+    "sha256": "bb2761018d26d4a36941d8f257e95385e19df7a6142c0684fe60d44d43e4e72a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wemos/library/WEMOS%2520SHT3x/1.0.0/WEMOSSHT3x-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/wemos/library/WEMOS%20SHT3x/1.0.0/WEMOSSHT3x-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

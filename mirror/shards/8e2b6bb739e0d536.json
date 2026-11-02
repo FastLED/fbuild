@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/judiviga",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "judiviga/library/ROBLEX/1.1.1/ROBLEX-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ROBLEX-1.1.1.tar.gz",
+    "size_bytes": 17723,
+    "sha256": "7059a1e5d147b400612987375a0a109861045f2c0f6372b5342ed8f5bf6725ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/judiviga/library/ROBLEX/1.1.1/ROBLEX-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/judiviga/library/ROBLEX/1.1.1/ROBLEX-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "judiviga/library/ROBLEX/2.0.0/ROBLEX-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ROBLEX-2.0.0.tar.gz",
+    "size_bytes": 22569,
+    "sha256": "ef462e6a987e18f2d2ad39c5a9636b67930a9be074829dcaad1d1db28bd4fe5f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/judiviga/library/ROBLEX/2.0.0/ROBLEX-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/judiviga/library/ROBLEX/2.0.0/ROBLEX-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "judiviga/library/ROBLEX/2.0.1/ROBLEX-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ROBLEX-2.0.1.tar.gz",
+    "size_bytes": 22603,
+    "sha256": "3b9851bf07ee281fc35b5da014fb9a189d027aed95d982eb3d7377c1a5702268",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/judiviga/library/ROBLEX/2.0.1/ROBLEX-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/judiviga/library/ROBLEX/2.0.1/ROBLEX-2.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

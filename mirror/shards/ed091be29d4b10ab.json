@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/callmesetia",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "callmesetia/library/%20Basic%20PWM%20ESP32%20Custom%20Library%20v.1.0/1.0.0/BasicPWMESP32CustomLibraryv.1.0-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BasicPWMESP32CustomLibraryv.1.0-1.0.0.tar.gz",
+    "size_bytes": 1911,
+    "sha256": "db176e875275988f0d6599a1bb6aed7cdec8c5151fd8f9c1bf71c796d7a65715",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/callmesetia/library/%2520Basic%2520PWM%2520ESP32%2520Custom%2520Library%2520v.1.0/1.0.0/BasicPWMESP32CustomLibraryv.1.0-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/callmesetia/library/%20Basic%20PWM%20ESP32%20Custom%20Library%20v.1.0/1.0.0/BasicPWMESP32CustomLibraryv.1.0-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

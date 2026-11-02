@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-pruek",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-pruek/library/DigitDisplay/0.0.0+sha.b593c32bb21f/DigitDisplay-0.0.0+sha.b593c32bb21f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DigitDisplay-0.0.0+sha.b593c32bb21f.tar.gz",
+    "size_bytes": 3020,
+    "sha256": "168aa419888a060c0e913f881dd8154d479846b37566de13b241660542970704",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pruek/library/DigitDisplay/0.0.0%2Bsha.b593c32bb21f/DigitDisplay-0.0.0%2Bsha.b593c32bb21f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pruek/library/DigitDisplay/0.0.0%2Bsha.b593c32bb21f/DigitDisplay-0.0.0%2Bsha.b593c32bb21f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

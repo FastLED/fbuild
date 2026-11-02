@@ -1,0 +1,139 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/glinek",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "glinek/library/omniMath/1.0.0/omniMath-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "omniMath-1.0.0.tar.gz",
+    "size_bytes": 17451,
+    "sha256": "b80ae4525fa3786a26bac6c7eb753635720f7dce2b7eea0d336c05cd47ff460f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/glinek/library/omniMath/1.0.0/omniMath-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/glinek/library/omniMath/1.0.0/omniMath-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "glinek/library/omniMath/1.0.1/omniMath-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "omniMath-1.0.1.tar.gz",
+    "size_bytes": 17817,
+    "sha256": "641e316c6622685b4b2aac4f1421c3d587fe7e11fbfa1d2d85e1e450e38ec562",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/glinek/library/omniMath/1.0.1/omniMath-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/glinek/library/omniMath/1.0.1/omniMath-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "glinek/library/omniMath/1.0.2/omniMath-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "omniMath-1.0.2.tar.gz",
+    "size_bytes": 18072,
+    "sha256": "69f8d79e7d3694dec45261e4bf6e63d3306d4c7ebebd52eae34fc4ea0e33986f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/glinek/library/omniMath/1.0.2/omniMath-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/glinek/library/omniMath/1.0.2/omniMath-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "glinek/library/omniMath/1.0.3/omniMath-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "omniMath-1.0.3.tar.gz",
+    "size_bytes": 17749,
+    "sha256": "9ccbbd394eba7c9d637ab9418796497c6cb023c0a274e2cf48cd4afcc82f7798",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/glinek/library/omniMath/1.0.3/omniMath-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/glinek/library/omniMath/1.0.3/omniMath-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "glinek/library/omniMath/1.0.4/omniMath-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "omniMath-1.0.4.tar.gz",
+    "size_bytes": 17794,
+    "sha256": "3eba3f801040e5c5bb68e0518e7a6c9fa8b88d2828416672f52df54d25850e3b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/glinek/library/omniMath/1.0.4/omniMath-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/glinek/library/omniMath/1.0.4/omniMath-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "glinek/library/picoEEPROM/1.0.0/picoEEPROM-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "picoEEPROM-1.0.0.tar.gz",
+    "size_bytes": 12653,
+    "sha256": "f0c360387a01c4bcb9307258fbeb922b6497f83573092aaf49c723195a9262b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/glinek/library/picoEEPROM/1.0.0/picoEEPROM-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/glinek/library/picoEEPROM/1.0.0/picoEEPROM-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "glinek/library/picoEEPROM/1.0.1/picoEEPROM-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "picoEEPROM-1.0.1.tar.gz",
+    "size_bytes": 12643,
+    "sha256": "216a5874d518d1a20447754e1695300f69d53bd9b157bc34af7142901b0f8b81",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/glinek/library/picoEEPROM/1.0.1/picoEEPROM-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/glinek/library/picoEEPROM/1.0.1/picoEEPROM-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "glinek/library/picoEEPROM/1.0.3/picoEEPROM-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "picoEEPROM-1.0.3.tar.gz",
+    "size_bytes": 12637,
+    "sha256": "97acfb245951272d7f17407088ab26bc11f66ec5ba5dae108cd77818b1784ffd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/glinek/library/picoEEPROM/1.0.3/picoEEPROM-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/glinek/library/picoEEPROM/1.0.3/picoEEPROM-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "glinek/library/picoEEPROM/1.0.5/picoEEPROM-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "picoEEPROM-1.0.5.tar.gz",
+    "size_bytes": 12636,
+    "sha256": "95fd6dbeb24dd62a27e3a18cf0232f472df1d246ce79a3efe43f81e0bbd5b9ab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/glinek/library/picoEEPROM/1.0.5/picoEEPROM-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/glinek/library/picoEEPROM/1.0.5/picoEEPROM-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "glinek/library/picoEEPROM/1.0.6/picoEEPROM-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "picoEEPROM-1.0.6.tar.gz",
+    "size_bytes": 12663,
+    "sha256": "653d9d319eb105d3ac89347b2b791e43898b943c7b572a4a5369f0eb57209f12",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/glinek/library/picoEEPROM/1.0.6/picoEEPROM-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/glinek/library/picoEEPROM/1.0.6/picoEEPROM-1.0.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

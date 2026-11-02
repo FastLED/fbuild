@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cearto",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cearto/library/SlipPump/1.0.0/SlipPump-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SlipPump-1.0.0.tar.gz",
+    "size_bytes": 3334,
+    "sha256": "a6a825d932a017d5872f6e0791f804b02e8176e8e887b2bcda76c7215d50376b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cearto/library/SlipPump/1.0.0/SlipPump-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cearto/library/SlipPump/1.0.0/SlipPump-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cearto/library/ThingPlusBLEOSC/1.0.0/ThingPlusBLEOSC-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ThingPlusBLEOSC-1.0.0.tar.gz",
+    "size_bytes": 5465,
+    "sha256": "d9a64d77d10d15d468357115ca2affc9cdc7abd9b6e4081f7c30f91da63132b2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cearto/library/ThingPlusBLEOSC/1.0.0/ThingPlusBLEOSC-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cearto/library/ThingPlusBLEOSC/1.0.0/ThingPlusBLEOSC-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

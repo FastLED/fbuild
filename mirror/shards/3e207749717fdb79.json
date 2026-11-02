@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/paclema",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "paclema/library/LoRaWANClient/0.0.0/LoRaWANClient-0.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LoRaWANClient-0.0.0.tar.gz",
+    "size_bytes": 7260,
+    "sha256": "29cc371f582d377813946eabf5778819a271dd6e32a435c798d84c944ebedb85",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paclema/library/LoRaWANClient/0.0.0/LoRaWANClient-0.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/paclema/library/LoRaWANClient/0.0.0/LoRaWANClient-0.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "paclema/library/LoRaWANClient/0.0.1/LoRaWANClient-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LoRaWANClient-0.0.1.tar.gz",
+    "size_bytes": 10360,
+    "sha256": "2db728c577c59dd3e675f2197b097c96bd0a02fe0b7c45ad9e8441a97a48cba6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paclema/library/LoRaWANClient/0.0.1/LoRaWANClient-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/paclema/library/LoRaWANClient/0.0.1/LoRaWANClient-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "paclema/library/MQTTClient/1.1.0/MQTTClient-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQTTClient-1.1.0.tar.gz",
+    "size_bytes": 515355,
+    "sha256": "9f80c74fb89c18f23aa2ca24a3eea47d25f077251df9b9ec66b2d1b9c3fb4c16",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paclema/library/MQTTClient/1.1.0/MQTTClient-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/paclema/library/MQTTClient/1.1.0/MQTTClient-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "paclema/library/PowerManagement/0.2.0/PowerManagement-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PowerManagement-0.2.0.tar.gz",
+    "size_bytes": 7845,
+    "sha256": "9c9ad422e8c326536a023e5fce85f11c94eb759e97414e966d2b815069964683",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paclema/library/PowerManagement/0.2.0/PowerManagement-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/paclema/library/PowerManagement/0.2.0/PowerManagement-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "paclema/library/PowerManagement/0.2.1/PowerManagement-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PowerManagement-0.2.1.tar.gz",
+    "size_bytes": 7820,
+    "sha256": "e7c1ff908b46fcfceb5a0a568b1f4b50be887b7713828c6c8b80b48a3e9e8892",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paclema/library/PowerManagement/0.2.1/PowerManagement-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/paclema/library/PowerManagement/0.2.1/PowerManagement-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "paclema/library/PowerManagement/0.3.0/PowerManagement-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PowerManagement-0.3.0.tar.gz",
+    "size_bytes": 7909,
+    "sha256": "c38b26af754ee42bf79d78e93a944b739cafce83ab60cc68e68e20a1eb4a852e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paclema/library/PowerManagement/0.3.0/PowerManagement-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/paclema/library/PowerManagement/0.3.0/PowerManagement-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "paclema/library/WebConfigServer/3.2.1/WebConfigServer-3.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WebConfigServer-3.2.1.tar.gz",
+    "size_bytes": 1714692,
+    "sha256": "cdff0f5428d79ecb646cbf76b054b879acc78f904be752e07060322766339a39",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paclema/library/WebConfigServer/3.2.1/WebConfigServer-3.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/paclema/library/WebConfigServer/3.2.1/WebConfigServer-3.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "paclema/library/testActions/2.0.7/testActions-2.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "testActions-2.0.7.tar.gz",
+    "size_bytes": 1220892,
+    "sha256": "af2ffa3fc02acc63400b392bdedd3c6e574124346f10307101b5e3100d64f6c5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paclema/library/testActions/2.0.7/testActions-2.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/paclema/library/testActions/2.0.7/testActions-2.0.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/vchavezb",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "vchavezb/library/NoBlockEEPROM/0.0.1/NoBlockEEPROM-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NoBlockEEPROM-0.0.1.tar.gz",
+    "size_bytes": 15746,
+    "sha256": "13ca7f99ae39c1f81792986cd6ec043690c8abe6f87b997dc062c91028231da8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vchavezb/library/NoBlockEEPROM/0.0.1/NoBlockEEPROM-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vchavezb/library/NoBlockEEPROM/0.0.1/NoBlockEEPROM-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vchavezb/library/QPESP32/0.2.1/QPESP32-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QPESP32-0.2.1.tar.gz",
+    "size_bytes": 132064,
+    "sha256": "9ea268b948c9eca2a0ad1581859e689f764f02755906e83b87384f1ee8a9c611",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vchavezb/library/QPESP32/0.2.1/QPESP32-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vchavezb/library/QPESP32/0.2.1/QPESP32-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vchavezb/library/SimpleJ1939/0.0.3/SimpleJ1939-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleJ1939-0.0.3.tar.gz",
+    "size_bytes": 15265,
+    "sha256": "02109d6592bedf8ff54c5fa4e57ef04722f7b69f9d11b7f46ac90badb925b38a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vchavezb/library/SimpleJ1939/0.0.3/SimpleJ1939-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/vchavezb/library/SimpleJ1939/0.0.3/SimpleJ1939-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vchavezb/library/lwIP/1.0.0/lwIP-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lwIP-1.0.0.tar.gz",
+    "size_bytes": 982468,
+    "sha256": "4949bc7f737594ff3e1301e9c588afaa9ee406f3d78de7c671b3916231b0c812",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vchavezb/library/lwIP/1.0.0/lwIP-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vchavezb/library/lwIP/1.0.0/lwIP-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vchavezb/library/uCOS-III%20Arduino%20Due/0.0.1/uCOS-IIIArduinoDue-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uCOS-IIIArduinoDue-0.0.1.tar.gz",
+    "size_bytes": 241211,
+    "sha256": "46e983b1fe4bd17e8ca0b51911f4c68e62a3cafe806219288f889d83067659cf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vchavezb/library/uCOS-III%2520Arduino%2520Due/0.0.1/uCOS-IIIArduinoDue-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vchavezb/library/uCOS-III%20Arduino%20Due/0.0.1/uCOS-IIIArduinoDue-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

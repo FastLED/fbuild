@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pleasedontcode",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pleasedontcode/library/POTA/1.0.0/POTA-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "POTA-1.0.0.tar.gz",
+    "size_bytes": 12675,
+    "sha256": "0f4c5253afc7472d63c59f5cb8b032436d62c1ce08014d48407c150f3d004989",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pleasedontcode/library/POTA/1.0.0/POTA-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pleasedontcode/library/POTA/1.0.0/POTA-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pleasedontcode/library/POTA/2.0.0/POTA-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "POTA-2.0.0.tar.gz",
+    "size_bytes": 100317,
+    "sha256": "f77f746357d66ce10035f581573cace41bf1f6314579469e2791bfb02f861491",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pleasedontcode/library/POTA/2.0.0/POTA-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pleasedontcode/library/POTA/2.0.0/POTA-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pleasedontcode/library/POTA/2.1.0/POTA-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "POTA-2.1.0.tar.gz",
+    "size_bytes": 100085,
+    "sha256": "4b854ba948761dc3d8f37dd6bedf652d3ed234d75b572bba3c8b2e04fad7b295",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pleasedontcode/library/POTA/2.1.0/POTA-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pleasedontcode/library/POTA/2.1.0/POTA-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pleasedontcode/library/POTA/2.2.0/POTA-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "POTA-2.2.0.tar.gz",
+    "size_bytes": 100379,
+    "sha256": "919a1ae8178beb98b5090fe65418af9393e1987e3a15d65c7a8a15477f702b2f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pleasedontcode/library/POTA/2.2.0/POTA-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pleasedontcode/library/POTA/2.2.0/POTA-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pleasedontcode/library/POTA/2.3.0/POTA-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "POTA-2.3.0.tar.gz",
+    "size_bytes": 100711,
+    "sha256": "44b00d19e4bd39d797810980c6652dcc6b22faac195279edc5ed0fc0b152a94e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pleasedontcode/library/POTA/2.3.0/POTA-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pleasedontcode/library/POTA/2.3.0/POTA-2.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

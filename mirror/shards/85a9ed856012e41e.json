@@ -1,0 +1,607 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/superjupiter",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "superjupiter/library/SuperJupiterCalibration/0.1.0/SuperJupiterCalibration-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperJupiterCalibration-0.1.0.tar.gz",
+    "size_bytes": 13396,
+    "sha256": "f25352e80994430b6f405d95b3ab1b02a58a5f4b88a438895b3c9e3bc98e7aff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/superjupiter/library/SuperJupiterCalibration/0.1.0/SuperJupiterCalibration-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/superjupiter/library/SuperJupiterCalibration/0.1.0/SuperJupiterCalibration-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "superjupiter/library/SuperJupiterCalibration/0.1.1/SuperJupiterCalibration-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperJupiterCalibration-0.1.1.tar.gz",
+    "size_bytes": 15988,
+    "sha256": "11ee5db64c557debd7795ffeb449e64f49dde9aaaee22817b14e6dd8ad281db3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/superjupiter/library/SuperJupiterCalibration/0.1.1/SuperJupiterCalibration-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/superjupiter/library/SuperJupiterCalibration/0.1.1/SuperJupiterCalibration-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "superjupiter/library/SuperJupiterChannelAlign/0.1.0/SuperJupiterChannelAlign-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperJupiterChannelAlign-0.1.0.tar.gz",
+    "size_bytes": 13414,
+    "sha256": "2ce91b74fd130869d92cbf2aacc6316a477361d34f441aa1f31bf4fcf992ff7f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/superjupiter/library/SuperJupiterChannelAlign/0.1.0/SuperJupiterChannelAlign-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/superjupiter/library/SuperJupiterChannelAlign/0.1.0/SuperJupiterChannelAlign-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "superjupiter/library/SuperJupiterChannelAlign/0.1.1/SuperJupiterChannelAlign-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperJupiterChannelAlign-0.1.1.tar.gz",
+    "size_bytes": 15833,
+    "sha256": "a5b9d5fdc15524f23233407fba773f952cf27b56eb9cd177a9eb74e33c73d6c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/superjupiter/library/SuperJupiterChannelAlign/0.1.1/SuperJupiterChannelAlign-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/superjupiter/library/SuperJupiterChannelAlign/0.1.1/SuperJupiterChannelAlign-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "superjupiter/library/SuperJupiterConfigStore/0.1.0/SuperJupiterConfigStore-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperJupiterConfigStore-0.1.0.tar.gz",
+    "size_bytes": 15159,
+    "sha256": "aad9b416544918707f820b407c84f8db3f5b007be39f68a6d85ae07c1dafcceb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/superjupiter/library/SuperJupiterConfigStore/0.1.0/SuperJupiterConfigStore-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/superjupiter/library/SuperJupiterConfigStore/0.1.0/SuperJupiterConfigStore-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "superjupiter/library/SuperJupiterConfigStore/0.1.1/SuperJupiterConfigStore-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperJupiterConfigStore-0.1.1.tar.gz",
+    "size_bytes": 17773,
+    "sha256": "d05f2343d18fe7db50723f7a4474360cb54b48b91802a61a1835fbdbd20fdaab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/superjupiter/library/SuperJupiterConfigStore/0.1.1/SuperJupiterConfigStore-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/superjupiter/library/SuperJupiterConfigStore/0.1.1/SuperJupiterConfigStore-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "superjupiter/library/SuperJupiterDeviceHealth/0.1.0/SuperJupiterDeviceHealth-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperJupiterDeviceHealth-0.1.0.tar.gz",
+    "size_bytes": 13479,
+    "sha256": "58466859c5bd5b740efe367a2eb0ef5163df7e2390d75e3d446ba737e817a236",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/superjupiter/library/SuperJupiterDeviceHealth/0.1.0/SuperJupiterDeviceHealth-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/superjupiter/library/SuperJupiterDeviceHealth/0.1.0/SuperJupiterDeviceHealth-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "superjupiter/library/SuperJupiterDeviceHealth/0.1.1/SuperJupiterDeviceHealth-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperJupiterDeviceHealth-0.1.1.tar.gz",
+    "size_bytes": 15726,
+    "sha256": "c4d103c101eb2e30cc6ca3cf6c784d5ac039e242ef679080868b1f3d96fbc779",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/superjupiter/library/SuperJupiterDeviceHealth/0.1.1/SuperJupiterDeviceHealth-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/superjupiter/library/SuperJupiterDeviceHealth/0.1.1/SuperJupiterDeviceHealth-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "superjupiter/library/SuperJupiterEmbeddedReliability/0.1.0/SuperJupiterEmbeddedReliability-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperJupiterEmbeddedReliability-0.1.0.tar.gz",
+    "size_bytes": 29516,
+    "sha256": "27dca8b4432219c416db40f3117cbf8678acc7d864e014126b4616fd2492c649",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/superjupiter/library/SuperJupiterEmbeddedReliability/0.1.0/SuperJupiterEmbeddedReliability-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/superjupiter/library/SuperJupiterEmbeddedReliability/0.1.0/SuperJupiterEmbeddedReliability-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "superjupiter/library/SuperJupiterEventCapture/0.1.0/SuperJupiterEventCapture-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperJupiterEventCapture-0.1.0.tar.gz",
+    "size_bytes": 13309,
+    "sha256": "44c0503aad65ab0c42d94288706378cbc116c0876d6293abc302f448238d83fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/superjupiter/library/SuperJupiterEventCapture/0.1.0/SuperJupiterEventCapture-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/superjupiter/library/SuperJupiterEventCapture/0.1.0/SuperJupiterEventCapture-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "superjupiter/library/SuperJupiterEventCapture/0.1.1/SuperJupiterEventCapture-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperJupiterEventCapture-0.1.1.tar.gz",
+    "size_bytes": 15556,
+    "sha256": "572f51c8eab18b3fa86789d42d751340b116a7e31dd4c0d40d05ca2a97b52cf4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/superjupiter/library/SuperJupiterEventCapture/0.1.1/SuperJupiterEventCapture-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/superjupiter/library/SuperJupiterEventCapture/0.1.1/SuperJupiterEventCapture-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "superjupiter/library/SuperJupiterIntegration/0.1.0/SuperJupiterIntegration-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperJupiterIntegration-0.1.0.tar.gz",
+    "size_bytes": 13191,
+    "sha256": "c8db26776cbcb5a3d0cd9e01c7ce916a7559939f78efbc9aef1ecd40875564d5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/superjupiter/library/SuperJupiterIntegration/0.1.0/SuperJupiterIntegration-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/superjupiter/library/SuperJupiterIntegration/0.1.0/SuperJupiterIntegration-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "superjupiter/library/SuperJupiterIntegration/0.1.1/SuperJupiterIntegration-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperJupiterIntegration-0.1.1.tar.gz",
+    "size_bytes": 15660,
+    "sha256": "a6865c77d0d833706372fc155ae2014b70fc5c1cb27655ca3468a234ce13c196",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/superjupiter/library/SuperJupiterIntegration/0.1.1/SuperJupiterIntegration-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/superjupiter/library/SuperJupiterIntegration/0.1.1/SuperJupiterIntegration-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "superjupiter/library/SuperJupiterIntegration/0.1.2/SuperJupiterIntegration-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperJupiterIntegration-0.1.2.tar.gz",
+    "size_bytes": 16373,
+    "sha256": "3c78239727cf1f165f86d85029eba44044dd37eab351e13e170792d41d458fad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/superjupiter/library/SuperJupiterIntegration/0.1.2/SuperJupiterIntegration-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/superjupiter/library/SuperJupiterIntegration/0.1.2/SuperJupiterIntegration-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "superjupiter/library/SuperJupiterMachineState/0.1.0/SuperJupiterMachineState-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperJupiterMachineState-0.1.0.tar.gz",
+    "size_bytes": 13364,
+    "sha256": "45480d96e0cb0392f958b8e7412c5f18ff5d518d284cb9a371c2ecbe9b32fc82",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/superjupiter/library/SuperJupiterMachineState/0.1.0/SuperJupiterMachineState-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/superjupiter/library/SuperJupiterMachineState/0.1.0/SuperJupiterMachineState-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "superjupiter/library/SuperJupiterMachineState/0.1.1/SuperJupiterMachineState-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperJupiterMachineState-0.1.1.tar.gz",
+    "size_bytes": 15750,
+    "sha256": "811a8a1567d386bf8c17f48cf1efb7202f1e107f18d58a5b13408de9b8ecbe65",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/superjupiter/library/SuperJupiterMachineState/0.1.1/SuperJupiterMachineState-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/superjupiter/library/SuperJupiterMachineState/0.1.1/SuperJupiterMachineState-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "superjupiter/library/SuperJupiterPowerBudget/0.1.0/SuperJupiterPowerBudget-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperJupiterPowerBudget-0.1.0.tar.gz",
+    "size_bytes": 13104,
+    "sha256": "9e7cb8be934492d94545f9d5fce9a52899a9939afe7847aabd3c0aa72e5e4b53",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/superjupiter/library/SuperJupiterPowerBudget/0.1.0/SuperJupiterPowerBudget-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/superjupiter/library/SuperJupiterPowerBudget/0.1.0/SuperJupiterPowerBudget-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "superjupiter/library/SuperJupiterPowerBudget/0.1.1/SuperJupiterPowerBudget-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperJupiterPowerBudget-0.1.1.tar.gz",
+    "size_bytes": 15556,
+    "sha256": "8999639ad543e4a3b2ee0a31f9a759209b0174cd3807159ec5e6a1010d3b9d8d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/superjupiter/library/SuperJupiterPowerBudget/0.1.1/SuperJupiterPowerBudget-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/superjupiter/library/SuperJupiterPowerBudget/0.1.1/SuperJupiterPowerBudget-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "superjupiter/library/SuperJupiterPulseMetrics/0.1.0/SuperJupiterPulseMetrics-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperJupiterPulseMetrics-0.1.0.tar.gz",
+    "size_bytes": 13152,
+    "sha256": "4ff57f5fd8119ef598cc63e6e324aaa3d24a10b5092c57567fdb40cc6fe77a6e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/superjupiter/library/SuperJupiterPulseMetrics/0.1.0/SuperJupiterPulseMetrics-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/superjupiter/library/SuperJupiterPulseMetrics/0.1.0/SuperJupiterPulseMetrics-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "superjupiter/library/SuperJupiterPulseMetrics/0.1.1/SuperJupiterPulseMetrics-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperJupiterPulseMetrics-0.1.1.tar.gz",
+    "size_bytes": 15395,
+    "sha256": "78e0aad05920a12fb940994a9498e6b53b96d14a6d966ecc9e81136a5b8f14d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/superjupiter/library/SuperJupiterPulseMetrics/0.1.1/SuperJupiterPulseMetrics-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/superjupiter/library/SuperJupiterPulseMetrics/0.1.1/SuperJupiterPulseMetrics-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "superjupiter/library/SuperJupiterRecordJournal/0.1.0/SuperJupiterRecordJournal-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperJupiterRecordJournal-0.1.0.tar.gz",
+    "size_bytes": 14987,
+    "sha256": "a6167190b2925ad6e8b06d5d147c3fc9f425ae888b534d46a461e4c23f6149a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/superjupiter/library/SuperJupiterRecordJournal/0.1.0/SuperJupiterRecordJournal-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/superjupiter/library/SuperJupiterRecordJournal/0.1.0/SuperJupiterRecordJournal-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "superjupiter/library/SuperJupiterRecordJournal/0.1.1/SuperJupiterRecordJournal-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperJupiterRecordJournal-0.1.1.tar.gz",
+    "size_bytes": 17443,
+    "sha256": "5246c8d73a5303705adfb5fd412257366de6445c437aa9d2c5041d9455998b50",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/superjupiter/library/SuperJupiterRecordJournal/0.1.1/SuperJupiterRecordJournal-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/superjupiter/library/SuperJupiterRecordJournal/0.1.1/SuperJupiterRecordJournal-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "superjupiter/library/SuperJupiterSampleWindow/0.1.0/SuperJupiterSampleWindow-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperJupiterSampleWindow-0.1.0.tar.gz",
+    "size_bytes": 22866,
+    "sha256": "bec06623512fb560e1cff2c0e9dbbb24206d43b035953bd757f5ddf2e10d155e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/superjupiter/library/SuperJupiterSampleWindow/0.1.0/SuperJupiterSampleWindow-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/superjupiter/library/SuperJupiterSampleWindow/0.1.0/SuperJupiterSampleWindow-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "superjupiter/library/SuperJupiterSampleWindow/0.1.1/SuperJupiterSampleWindow-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperJupiterSampleWindow-0.1.1.tar.gz",
+    "size_bytes": 25313,
+    "sha256": "dd8e15ccf184f6800f20cf4179d89d3d16d54c6fdab59135bb8c6e87e18551b0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/superjupiter/library/SuperJupiterSampleWindow/0.1.1/SuperJupiterSampleWindow-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/superjupiter/library/SuperJupiterSampleWindow/0.1.1/SuperJupiterSampleWindow-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "superjupiter/library/SuperJupiterSensorAgreement/0.1.0/SuperJupiterSensorAgreement-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperJupiterSensorAgreement-0.1.0.tar.gz",
+    "size_bytes": 13279,
+    "sha256": "c14e9f7c38067809e663b7fc1e02503c3bbb9044e56aa2969c55464d666e80cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/superjupiter/library/SuperJupiterSensorAgreement/0.1.0/SuperJupiterSensorAgreement-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/superjupiter/library/SuperJupiterSensorAgreement/0.1.0/SuperJupiterSensorAgreement-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "superjupiter/library/SuperJupiterSensorAgreement/0.1.1/SuperJupiterSensorAgreement-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperJupiterSensorAgreement-0.1.1.tar.gz",
+    "size_bytes": 15680,
+    "sha256": "63b9772ee9df083600ceee46a1616f7cdc169c34d80ae9d5aa2a302b3778e2af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/superjupiter/library/SuperJupiterSensorAgreement/0.1.1/SuperJupiterSensorAgreement-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/superjupiter/library/SuperJupiterSensorAgreement/0.1.1/SuperJupiterSensorAgreement-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "superjupiter/library/SuperJupiterSensorQuality/0.1.1/SuperJupiterSensorQuality-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperJupiterSensorQuality-0.1.1.tar.gz",
+    "size_bytes": 15195,
+    "sha256": "3f03819b12ff1093e13ec913aff87507a732f803ad3b5bb263b2eded6bf331ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/superjupiter/library/SuperJupiterSensorQuality/0.1.1/SuperJupiterSensorQuality-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/superjupiter/library/SuperJupiterSensorQuality/0.1.1/SuperJupiterSensorQuality-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "superjupiter/library/SuperJupiterSensorQuality/0.1.2/SuperJupiterSensorQuality-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperJupiterSensorQuality-0.1.2.tar.gz",
+    "size_bytes": 15297,
+    "sha256": "f2ae6d565c2dbe430971c37ebc96e31e5fc5cd5cbb5e8122df5e5a1d82030096",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/superjupiter/library/SuperJupiterSensorQuality/0.1.2/SuperJupiterSensorQuality-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/superjupiter/library/SuperJupiterSensorQuality/0.1.2/SuperJupiterSensorQuality-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "superjupiter/library/SuperJupiterSensorQuality/0.2.0/SuperJupiterSensorQuality-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperJupiterSensorQuality-0.2.0.tar.gz",
+    "size_bytes": 24260,
+    "sha256": "b1a89f09c9b8bf452f648585b3d4005403624fd986a8dd74ea1b4258cb33211b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/superjupiter/library/SuperJupiterSensorQuality/0.2.0/SuperJupiterSensorQuality-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/superjupiter/library/SuperJupiterSensorQuality/0.2.0/SuperJupiterSensorQuality-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "superjupiter/library/SuperJupiterSensorQuality/0.2.1/SuperJupiterSensorQuality-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperJupiterSensorQuality-0.2.1.tar.gz",
+    "size_bytes": 26864,
+    "sha256": "2947b64bd6c64fe7c7ff1272669b7b625c524f27cff51a2e9667ee1adf3e4d46",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/superjupiter/library/SuperJupiterSensorQuality/0.2.1/SuperJupiterSensorQuality-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/superjupiter/library/SuperJupiterSensorQuality/0.2.1/SuperJupiterSensorQuality-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "superjupiter/library/SuperJupiterSensorReplay/0.1.0/SuperJupiterSensorReplay-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperJupiterSensorReplay-0.1.0.tar.gz",
+    "size_bytes": 13684,
+    "sha256": "bf24a4cb15479c16670abe19b96e1fa9d036e53c370fc2a37c6efeb96a215be8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/superjupiter/library/SuperJupiterSensorReplay/0.1.0/SuperJupiterSensorReplay-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/superjupiter/library/SuperJupiterSensorReplay/0.1.0/SuperJupiterSensorReplay-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "superjupiter/library/SuperJupiterSensorReplay/0.1.1/SuperJupiterSensorReplay-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperJupiterSensorReplay-0.1.1.tar.gz",
+    "size_bytes": 24578,
+    "sha256": "c052baf0976e58d277d6af3d25b4c0487efb23fc889be31530b1210294c16aa9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/superjupiter/library/SuperJupiterSensorReplay/0.1.1/SuperJupiterSensorReplay-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/superjupiter/library/SuperJupiterSensorReplay/0.1.1/SuperJupiterSensorReplay-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "superjupiter/library/SuperJupiterSensorReplay/0.1.2/SuperJupiterSensorReplay-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperJupiterSensorReplay-0.1.2.tar.gz",
+    "size_bytes": 25105,
+    "sha256": "9ca3f68831480795bc546da5c43d51f07557e47cb3b772e07a76ac3bd26614fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/superjupiter/library/SuperJupiterSensorReplay/0.1.2/SuperJupiterSensorReplay-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/superjupiter/library/SuperJupiterSensorReplay/0.1.2/SuperJupiterSensorReplay-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "superjupiter/library/SuperJupiterSensorToolkit/0.1.0/SuperJupiterSensorToolkit-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperJupiterSensorToolkit-0.1.0.tar.gz",
+    "size_bytes": 73768,
+    "sha256": "ced5334d2b306cda0b61884257965d3bbcdd148d8619ed11ea88b024b152e92f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/superjupiter/library/SuperJupiterSensorToolkit/0.1.0/SuperJupiterSensorToolkit-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/superjupiter/library/SuperJupiterSensorToolkit/0.1.0/SuperJupiterSensorToolkit-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "superjupiter/library/SuperJupiterSignalFilter/0.1.0/SuperJupiterSignalFilter-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperJupiterSignalFilter-0.1.0.tar.gz",
+    "size_bytes": 13015,
+    "sha256": "986a621de4010f345d67259e1e3d90c00affa50ed6d30bd96dee861c44a169b6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/superjupiter/library/SuperJupiterSignalFilter/0.1.0/SuperJupiterSignalFilter-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/superjupiter/library/SuperJupiterSignalFilter/0.1.0/SuperJupiterSignalFilter-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "superjupiter/library/SuperJupiterSignalFilter/0.1.1/SuperJupiterSignalFilter-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperJupiterSignalFilter-0.1.1.tar.gz",
+    "size_bytes": 15559,
+    "sha256": "4f2c8b9ee58365949f841ea1710e97032916e3e1856ade208ab701b60fdba75c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/superjupiter/library/SuperJupiterSignalFilter/0.1.1/SuperJupiterSignalFilter-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/superjupiter/library/SuperJupiterSignalFilter/0.1.1/SuperJupiterSignalFilter-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "superjupiter/library/SuperJupiterStoreForward/0.1.0/SuperJupiterStoreForward-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperJupiterStoreForward-0.1.0.tar.gz",
+    "size_bytes": 13409,
+    "sha256": "d3640a84739a9d03a6a67e39d7c69c82fae4039b85dcb306d64fc80acd418d9b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/superjupiter/library/SuperJupiterStoreForward/0.1.0/SuperJupiterStoreForward-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/superjupiter/library/SuperJupiterStoreForward/0.1.0/SuperJupiterStoreForward-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "superjupiter/library/SuperJupiterStoreForward/0.1.1/SuperJupiterStoreForward-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperJupiterStoreForward-0.1.1.tar.gz",
+    "size_bytes": 15742,
+    "sha256": "44a4b611c6ee080067ec603fc34914120e07f651a18c6cfbe88c76394db89c17",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/superjupiter/library/SuperJupiterStoreForward/0.1.1/SuperJupiterStoreForward-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/superjupiter/library/SuperJupiterStoreForward/0.1.1/SuperJupiterStoreForward-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "superjupiter/library/SuperJupiterThresholdEvents/0.1.0/SuperJupiterThresholdEvents-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperJupiterThresholdEvents-0.1.0.tar.gz",
+    "size_bytes": 13381,
+    "sha256": "4e49aef287a30cbea1bfbd7c93337d103a46f27e005093d6ec8d18e86acddd5b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/superjupiter/library/SuperJupiterThresholdEvents/0.1.0/SuperJupiterThresholdEvents-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/superjupiter/library/SuperJupiterThresholdEvents/0.1.0/SuperJupiterThresholdEvents-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "superjupiter/library/SuperJupiterThresholdEvents/0.1.1/SuperJupiterThresholdEvents-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperJupiterThresholdEvents-0.1.1.tar.gz",
+    "size_bytes": 15726,
+    "sha256": "f8df2a15ab49e326ddb90b59403c85b678f0a82694a57bb3f508933df03baed9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/superjupiter/library/SuperJupiterThresholdEvents/0.1.1/SuperJupiterThresholdEvents-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/superjupiter/library/SuperJupiterThresholdEvents/0.1.1/SuperJupiterThresholdEvents-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "superjupiter/library/SuperJupiterTimeAggregate/0.1.0/SuperJupiterTimeAggregate-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperJupiterTimeAggregate-0.1.0.tar.gz",
+    "size_bytes": 13517,
+    "sha256": "46fd9070858e91187cde880872a893f33d84a5892902899f7d1ebf901c4d302e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/superjupiter/library/SuperJupiterTimeAggregate/0.1.0/SuperJupiterTimeAggregate-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/superjupiter/library/SuperJupiterTimeAggregate/0.1.0/SuperJupiterTimeAggregate-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "superjupiter/library/SuperJupiterTimeAggregate/0.1.1/SuperJupiterTimeAggregate-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperJupiterTimeAggregate-0.1.1.tar.gz",
+    "size_bytes": 16045,
+    "sha256": "a9789d7ac9e0c20d3fc1caf0682b2588f52c86efd6cdb2ebccf164f0a7e100a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/superjupiter/library/SuperJupiterTimeAggregate/0.1.1/SuperJupiterTimeAggregate-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/superjupiter/library/SuperJupiterTimeAggregate/0.1.1/SuperJupiterTimeAggregate-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "superjupiter/library/SuperJupiterTimeAnchor/0.1.0/SuperJupiterTimeAnchor-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperJupiterTimeAnchor-0.1.0.tar.gz",
+    "size_bytes": 13173,
+    "sha256": "1a4284c419c944b9cc6a9c8856d36383369a3196ac012011eed8677c8566e306",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/superjupiter/library/SuperJupiterTimeAnchor/0.1.0/SuperJupiterTimeAnchor-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/superjupiter/library/SuperJupiterTimeAnchor/0.1.0/SuperJupiterTimeAnchor-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "superjupiter/library/SuperJupiterTimeAnchor/0.1.1/SuperJupiterTimeAnchor-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperJupiterTimeAnchor-0.1.1.tar.gz",
+    "size_bytes": 15350,
+    "sha256": "d70dbfa7e266b086d0eb079ca9a62d5603d91225fec00c03b42bc085c6e82d35",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/superjupiter/library/SuperJupiterTimeAnchor/0.1.1/SuperJupiterTimeAnchor-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/superjupiter/library/SuperJupiterTimeAnchor/0.1.1/SuperJupiterTimeAnchor-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "superjupiter/library/SuperJupiterTrend/0.1.0/SuperJupiterTrend-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperJupiterTrend-0.1.0.tar.gz",
+    "size_bytes": 13576,
+    "sha256": "79fb406f31e40cd1e90762de12b842ad67dfd7dea72e9611998aaeb3bc705b61",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/superjupiter/library/SuperJupiterTrend/0.1.0/SuperJupiterTrend-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/superjupiter/library/SuperJupiterTrend/0.1.0/SuperJupiterTrend-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "superjupiter/library/SuperJupiterTrend/0.1.1/SuperJupiterTrend-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperJupiterTrend-0.1.1.tar.gz",
+    "size_bytes": 15929,
+    "sha256": "9c9f3b575da5974995321dc9a26a50887db865956a6addfff22ba384005e9968",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/superjupiter/library/SuperJupiterTrend/0.1.1/SuperJupiterTrend-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/superjupiter/library/SuperJupiterTrend/0.1.1/SuperJupiterTrend-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

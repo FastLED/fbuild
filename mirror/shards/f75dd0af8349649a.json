@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/batuhantrkgl",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "batuhantrkgl/library/ESP8266%20SMTPClient/1.0.0/ESP8266SMTPClient-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266SMTPClient-1.0.0.tar.gz",
+    "size_bytes": 3275,
+    "sha256": "306dbb7bc87f724780bbce680a6bf4e53449f09d7cb4b281a23fa08ae957c4c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/batuhantrkgl/library/ESP8266%2520SMTPClient/1.0.0/ESP8266SMTPClient-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/batuhantrkgl/library/ESP8266%20SMTPClient/1.0.0/ESP8266SMTPClient-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

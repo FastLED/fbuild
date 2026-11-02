@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/crane-elec",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "crane-elec/library/EthernetSP/1.0.2/EthernetSP-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EthernetSP-1.0.2.tar.gz",
+    "size_bytes": 38299,
+    "sha256": "d72edf5186d67bd9adda2227b968ec1fd2876f24acff072a70f57a4252a84b35",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/crane-elec/library/EthernetSP/1.0.2/EthernetSP-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/crane-elec/library/EthernetSP/1.0.2/EthernetSP-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "crane-elec/library/WFAN920/0.1.0/WFAN920-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WFAN920-0.1.0.tar.gz",
+    "size_bytes": 81580,
+    "sha256": "d59a0f2f3bb613281be77739f19e2098f20df429ecc29ebe6d7a9561e09b50f9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/crane-elec/library/WFAN920/0.1.0/WFAN920-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/crane-elec/library/WFAN920/0.1.0/WFAN920-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "crane-elec/library/WFAN920/0.1.2/WFAN920-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WFAN920-0.1.2.tar.gz",
+    "size_bytes": 81838,
+    "sha256": "69c921ac02f7adf6e61df60347121cf51a9e85f4652ece8fa064334a78a71001",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/crane-elec/library/WFAN920/0.1.2/WFAN920-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/crane-elec/library/WFAN920/0.1.2/WFAN920-0.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

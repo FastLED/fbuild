@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-rolo644u",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-rolo644u/library/ST7735/0.0.0+sha.291ac9fb4d64/ST7735-0.0.0+sha.291ac9fb4d64.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ST7735-0.0.0+sha.291ac9fb4d64.tar.gz",
+    "size_bytes": 22822,
+    "sha256": "d43993bf6a510c5ac94b480d8eee942ad8bd2d9c0391e665f24abd9f7928bf62",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rolo644u/library/ST7735/0.0.0%2Bsha.291ac9fb4d64/ST7735-0.0.0%2Bsha.291ac9fb4d64.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rolo644u/library/ST7735/0.0.0%2Bsha.291ac9fb4d64/ST7735-0.0.0%2Bsha.291ac9fb4d64.tar.gz"
+    ]
+   }
+  }
+ ]
+}

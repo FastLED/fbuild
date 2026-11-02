@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/escapeautomate",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "escapeautomate/library/EscapeAutomate/0.0.29/EscapeAutomate-0.0.29.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EscapeAutomate-0.0.29.tar.gz",
+    "size_bytes": 50321,
+    "sha256": "df5e4f347a3d45731e194625822e7d4043fc756f9d326b3102346857f0414955",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/escapeautomate/library/EscapeAutomate/0.0.29/EscapeAutomate-0.0.29.tar.gz",
+     "https://dl.registry.platformio.org/download/escapeautomate/library/EscapeAutomate/0.0.29/EscapeAutomate-0.0.29.tar.gz"
+    ]
+   }
+  }
+ ]
+}

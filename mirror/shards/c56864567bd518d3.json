@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sunoc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sunoc/library/SOL4init/0.1.0/SOL4init-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SOL4init-0.1.0.tar.gz",
+    "size_bytes": 78052,
+    "sha256": "4a4dd793e89c47d39e0c9c79b244d256d950594442166c5c7abf2cefe35bac24",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sunoc/library/SOL4init/0.1.0/SOL4init-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sunoc/library/SOL4init/0.1.0/SOL4init-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sunoc/library/SOL4init/0.1.1/SOL4init-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SOL4init-0.1.1.tar.gz",
+    "size_bytes": 78148,
+    "sha256": "66f36e3ae869d34be2c7f712bf9ebdb447d60ad2005a0d3c6d03afd32595920d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sunoc/library/SOL4init/0.1.1/SOL4init-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sunoc/library/SOL4init/0.1.1/SOL4init-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sunoc/library/SOL4init/0.1.2/SOL4init-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SOL4init-0.1.2.tar.gz",
+    "size_bytes": 78118,
+    "sha256": "044a0ef5ee4b01b5223ca20f9d743cf7edd227afe75a26f4fdbeec9ac27ad427",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sunoc/library/SOL4init/0.1.2/SOL4init-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sunoc/library/SOL4init/0.1.2/SOL4init-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sunoc/library/SOL4init/0.1.3/SOL4init-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SOL4init-0.1.3.tar.gz",
+    "size_bytes": 81958,
+    "sha256": "fedf370f74722b904f68d30afc83e6260d951c8506ac5ae8d2bd1ff7cf2e2f30",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sunoc/library/SOL4init/0.1.3/SOL4init-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/sunoc/library/SOL4init/0.1.3/SOL4init-0.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sunoc/library/SOL4init/0.1.5/SOL4init-0.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SOL4init-0.1.5.tar.gz",
+    "size_bytes": 18289,
+    "sha256": "71bd3c3273d7b810bf9422f3eacfb9c070bdea5ef70f71693e7ec2747aa8f808",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sunoc/library/SOL4init/0.1.5/SOL4init-0.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/sunoc/library/SOL4init/0.1.5/SOL4init-0.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sunoc/library/SOL4init/0.1.6/SOL4init-0.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SOL4init-0.1.6.tar.gz",
+    "size_bytes": 18395,
+    "sha256": "06d2ac18b44ab0055731480c2f486c0965c1c5d6ba8c303cdd6ffe382e4c89ef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sunoc/library/SOL4init/0.1.6/SOL4init-0.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/sunoc/library/SOL4init/0.1.6/SOL4init-0.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sunoc/library/SOL4init/0.1.7/SOL4init-0.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SOL4init-0.1.7.tar.gz",
+    "size_bytes": 18393,
+    "sha256": "efe67255cb97f3ead4ca25222df49d3e76fba5cd8d81cff648b3658a227825be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sunoc/library/SOL4init/0.1.7/SOL4init-0.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/sunoc/library/SOL4init/0.1.7/SOL4init-0.1.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

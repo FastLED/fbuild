@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/1iot",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "1iot/library/OneIoT%20Connectivity/1.1.0/OneIoTConnectivity-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OneIoTConnectivity-1.1.0.tar.gz",
+    "size_bytes": 7349,
+    "sha256": "d02a0dadc058bd35d6835468d51f64fd9befe4e7788968011f71c31e5196392f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/1iot/library/OneIoT%2520Connectivity/1.1.0/OneIoTConnectivity-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/1iot/library/OneIoT%20Connectivity/1.1.0/OneIoTConnectivity-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

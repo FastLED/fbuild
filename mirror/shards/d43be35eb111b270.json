@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/masadaruma",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "masadaruma/library/TB67H450-arduino-library/1.0.1/TB67H450-arduino-library-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TB67H450-arduino-library-1.0.1.tar.gz",
+    "size_bytes": 2243,
+    "sha256": "398b2e4d3f2cc7930547e3f76cfccdd69b307992d15a9dc3600564889a05b8d5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/masadaruma/library/TB67H450-arduino-library/1.0.1/TB67H450-arduino-library-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/masadaruma/library/TB67H450-arduino-library/1.0.1/TB67H450-arduino-library-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

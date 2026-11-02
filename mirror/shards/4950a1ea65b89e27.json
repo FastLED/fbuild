@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ivankostov",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ivankostov/library/avr-logger/0.0.0-alpha+sha.52afa31624/avr-logger-0.0.0-alphasha.52afa31624.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "avr-logger-0.0.0-alphasha.52afa31624.tar.gz",
+    "size_bytes": 6111,
+    "sha256": "9b3b10c1d5638702736b325cfa8eda125bf8d2606fc4c87d89c5d7772c4260cd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ivankostov/library/avr-logger/0.0.0-alpha%2Bsha.52afa31624/avr-logger-0.0.0-alphasha.52afa31624.tar.gz",
+     "https://dl.registry.platformio.org/download/ivankostov/library/avr-logger/0.0.0-alpha%2Bsha.52afa31624/avr-logger-0.0.0-alphasha.52afa31624.tar.gz"
+    ]
+   }
+  }
+ ]
+}

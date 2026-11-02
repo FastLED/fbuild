@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/georgemihaila",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "georgemihaila/library/GalvoController/1.0.0/GalvoController-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GalvoController-1.0.0.tar.gz",
+    "size_bytes": 22968,
+    "sha256": "8be555de061948f229b3d346bce3a2803d91023c0b7cb8c55a7eda5e9bda1ddc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/georgemihaila/library/GalvoController/1.0.0/GalvoController-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/georgemihaila/library/GalvoController/1.0.0/GalvoController-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "georgemihaila/library/XY2-100/1.0.0/XY2-100-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XY2-100-1.0.0.tar.gz",
+    "size_bytes": 15391,
+    "sha256": "4c6675abc165207fd45416e8cd5b848a8a072a7bd62c132d20a964ed4764a7d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/georgemihaila/library/XY2-100/1.0.0/XY2-100-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/georgemihaila/library/XY2-100/1.0.0/XY2-100-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

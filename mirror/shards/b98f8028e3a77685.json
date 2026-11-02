@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/anaveo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "anaveo/library/KL1508CW/1.0.0/KL1508CW-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KL1508CW-1.0.0.tar.gz",
+    "size_bytes": 3445,
+    "sha256": "c7c74c507fee77cd06f14f2c47d4f24960ab1ff9f4847c9250a30142ac04627c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/anaveo/library/KL1508CW/1.0.0/KL1508CW-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/anaveo/library/KL1508CW/1.0.0/KL1508CW-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "anaveo/library/ParkingSensor/1.0.0/ParkingSensor-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ParkingSensor-1.0.0.tar.gz",
+    "size_bytes": 4420,
+    "sha256": "146e9308f7b75f45ac7170ba989fb514933b516386d24a88c487323d06a0ecbf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/anaveo/library/ParkingSensor/1.0.0/ParkingSensor-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/anaveo/library/ParkingSensor/1.0.0/ParkingSensor-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

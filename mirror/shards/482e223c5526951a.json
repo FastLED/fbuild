@@ -1,0 +1,167 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/apojomovsky",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "apojomovsky/platform/epic8/0.1.2/epic8-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "epic8-0.1.2.tar.gz",
+    "size_bytes": 214413,
+    "sha256": "a344879b4790ee185715789516ab0e447323dc18345ed6ff81f248e3cf717a34",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/apojomovsky/platform/epic8/0.1.2/epic8-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/apojomovsky/platform/epic8/0.1.2/epic8-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "apojomovsky/tool/framework-epichal/0.6.0+pio1/framework-epichal-0.6.0+pio1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "framework-epichal-0.6.0+pio1.tar.gz",
+    "size_bytes": 446288,
+    "sha256": "0558e5aa7d32256cbdd8e86530a304454ca6ddd47c15642277ab4c7ecfccd1ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/apojomovsky/tool/framework-epichal/0.6.0%2Bpio1/framework-epichal-0.6.0%2Bpio1.tar.gz",
+     "https://dl.registry.platformio.org/download/apojomovsky/tool/framework-epichal/0.6.0%2Bpio1/framework-epichal-0.6.0%2Bpio1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "apojomovsky/tool/tool-minipro/0.7.4+pio3/tool-minipro-linux_x86_64-0.7.4+pio3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-minipro-linux_x86_64-0.7.4+pio3.tar.gz",
+    "size_bytes": 1096373,
+    "sha256": "bceeee7797608fd917f7a67bb2bcf2d74cb3f8ce51c5c489960f1667da15be8e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/apojomovsky/tool/tool-minipro/0.7.4%2Bpio3/tool-minipro-linux_x86_64-0.7.4%2Bpio3.tar.gz",
+     "https://dl.registry.platformio.org/download/apojomovsky/tool/tool-minipro/0.7.4%2Bpio3/tool-minipro-linux_x86_64-0.7.4%2Bpio3.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
+    ]
+   }
+  },
+  {
+   "id": "apojomovsky/tool/tool-minipro/0.7.4+pio3/tool-minipro-windows_amd64-0.7.4+pio3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-minipro-windows_amd64-0.7.4+pio3.tar.gz",
+    "size_bytes": 1306731,
+    "sha256": "1e2cc4276c0a4a9cb9313dd2f1a9b38ef058f6db5ac67fb0813efc34a9085354",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/apojomovsky/tool/tool-minipro/0.7.4%2Bpio3/tool-minipro-windows_amd64-0.7.4%2Bpio3.tar.gz",
+     "https://dl.registry.platformio.org/download/apojomovsky/tool/tool-minipro/0.7.4%2Bpio3/tool-minipro-windows_amd64-0.7.4%2Bpio3.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_x86_64"
+    ]
+   }
+  },
+  {
+   "id": "apojomovsky/tool/tool-picpro/0.4.1+pio3/tool-picpro-linux_x86_64-0.4.1+pio3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-picpro-linux_x86_64-0.4.1+pio3.tar.gz",
+    "size_bytes": 996389,
+    "sha256": "0b8125064463e73f615eed143de5e1df74a3538c5d1715d639b6ee3ce8ed00f3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/apojomovsky/tool/tool-picpro/0.4.1%2Bpio3/tool-picpro-linux_x86_64-0.4.1%2Bpio3.tar.gz",
+     "https://dl.registry.platformio.org/download/apojomovsky/tool/tool-picpro/0.4.1%2Bpio3/tool-picpro-linux_x86_64-0.4.1%2Bpio3.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
+    ]
+   }
+  },
+  {
+   "id": "apojomovsky/tool/tool-picpro/0.4.1+pio3/tool-picpro-windows_amd64-0.4.1+pio3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-picpro-windows_amd64-0.4.1+pio3.tar.gz",
+    "size_bytes": 239465,
+    "sha256": "72cdad9e55ea4d2a1f850ff5ea3155f4361879389fe23c7a802dae5e1bd60b8d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/apojomovsky/tool/tool-picpro/0.4.1%2Bpio3/tool-picpro-windows_amd64-0.4.1%2Bpio3.tar.gz",
+     "https://dl.registry.platformio.org/download/apojomovsky/tool/tool-picpro/0.4.1%2Bpio3/tool-picpro-windows_amd64-0.4.1%2Bpio3.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_x86_64"
+    ]
+   }
+  },
+  {
+   "id": "apojomovsky/tool/tool-pk2cmd/1.27.1+pio2/tool-pk2cmd-linux_x86_64-1.27.1+pio2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-pk2cmd-linux_x86_64-1.27.1+pio2.tar.gz",
+    "size_bytes": 183526,
+    "sha256": "2f6986fc68f8453cf4a3f5cda19670cf440f4b9ba587f6bed530001e896739cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/apojomovsky/tool/tool-pk2cmd/1.27.1%2Bpio2/tool-pk2cmd-linux_x86_64-1.27.1%2Bpio2.tar.gz",
+     "https://dl.registry.platformio.org/download/apojomovsky/tool/tool-pk2cmd/1.27.1%2Bpio2/tool-pk2cmd-linux_x86_64-1.27.1%2Bpio2.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
+    ]
+   }
+  },
+  {
+   "id": "apojomovsky/tool/tool-pk2cmd/1.27.1+pio2/tool-pk2cmd-windows_amd64-1.27.1+pio2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-pk2cmd-windows_amd64-1.27.1+pio2.tar.gz",
+    "size_bytes": 318268,
+    "sha256": "e3b18051a0735c7b39034ce4fc4156b290b63a695ffa6c47ccc68eb5caf3b2de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/apojomovsky/tool/tool-pk2cmd/1.27.1%2Bpio2/tool-pk2cmd-windows_amd64-1.27.1%2Bpio2.tar.gz",
+     "https://dl.registry.platformio.org/download/apojomovsky/tool/tool-pk2cmd/1.27.1%2Bpio2/tool-pk2cmd-windows_amd64-1.27.1%2Bpio2.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_x86_64"
+    ]
+   }
+  },
+  {
+   "id": "apojomovsky/tool/toolchain-epiccc/0.5.0/toolchain-epiccc-linux_x86_64-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-epiccc-linux_x86_64-0.5.0.tar.gz",
+    "size_bytes": 130563153,
+    "sha256": "2d97035c8a70da766d5e52b882e8e6d1add45484b021f34ce49f5c7a35cd118f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/apojomovsky/tool/toolchain-epiccc/0.5.0/toolchain-epiccc-linux_x86_64-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/apojomovsky/tool/toolchain-epiccc/0.5.0/toolchain-epiccc-linux_x86_64-0.5.0.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
+    ]
+   }
+  },
+  {
+   "id": "apojomovsky/tool/toolchain-epiccc/0.5.0/toolchain-epiccc-windows_amd64-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-epiccc-windows_amd64-0.5.0.tar.gz",
+    "size_bytes": 191098065,
+    "sha256": "5bb41a8538d82b38739223a37f402b6b3e70598a1e3f004fccee56469bcab80a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/apojomovsky/tool/toolchain-epiccc/0.5.0/toolchain-epiccc-windows_amd64-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/apojomovsky/tool/toolchain-epiccc/0.5.0/toolchain-epiccc-windows_amd64-0.5.0.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_x86_64"
+    ]
+   }
+  }
+ ]
+}

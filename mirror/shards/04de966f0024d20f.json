@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tuliocarmona",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tuliocarmona/library/TeensyStepDriver/1.0.0/TeensyStepDriver-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TeensyStepDriver-1.0.0.tar.gz",
+    "size_bytes": 7850,
+    "sha256": "b3e8384447a46cb218d3b47b14bc3248e198d374d216041b6bcdb7e8426c69bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tuliocarmona/library/TeensyStepDriver/1.0.0/TeensyStepDriver-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tuliocarmona/library/TeensyStepDriver/1.0.0/TeensyStepDriver-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

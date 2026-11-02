@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ok2nmz",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ok2nmz/library/Whirpool/0.0.0+sha.3cbf10ed355c/Whirpool-0.0.0+sha.3cbf10ed355c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Whirpool-0.0.0+sha.3cbf10ed355c.tar.gz",
+    "size_bytes": 965,
+    "sha256": "681d1953cdb99a163d4e7054e49188612f468e83cbb551dad7df938b6d2b1a71",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ok2nmz/library/Whirpool/0.0.0%2Bsha.3cbf10ed355c/Whirpool-0.0.0%2Bsha.3cbf10ed355c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ok2nmz/library/Whirpool/0.0.0%2Bsha.3cbf10ed355c/Whirpool-0.0.0%2Bsha.3cbf10ed355c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

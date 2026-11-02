@@ -1,0 +1,3974 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/codewitch-honey-crisis",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "codewitch-honey-crisis/library/esp32_i2c/0.1.0/esp32_i2c-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32_i2c-0.1.0.tar.gz",
+    "size_bytes": 2727,
+    "sha256": "9b5d2d3b206acfcec94db92a1cacb45f982f7587e90dc5f042df14099fe38ef4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/esp32_i2c/0.1.0/esp32_i2c-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/esp32_i2c/0.1.0/esp32_i2c-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_base64/0.1.1/htcw_base64-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_base64-0.1.1.tar.gz",
+    "size_bytes": 5237,
+    "sha256": "7f58b04f7b81936754f022cd70318f5fa79e5bfa59bd8275d80d822c5014ce91",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_base64/0.1.1/htcw_base64-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_base64/0.1.1/htcw_base64-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_bits/1.0.16/htcw_bits-1.0.16.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_bits-1.0.16.tar.gz",
+    "size_bytes": 6303,
+    "sha256": "1e2b6552c23549698b411ec58f9d3151c4017bc7e43b4866c64f0880a119458a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_bits/1.0.16/htcw_bits-1.0.16.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_bits/1.0.16/htcw_bits-1.0.16.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_bits/1.0.17/htcw_bits-1.0.17.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_bits-1.0.17.tar.gz",
+    "size_bytes": 6453,
+    "sha256": "99e74f10251d4836781850565ab015a42def6476e2252c81c0683c0d37e5b194",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_bits/1.0.17/htcw_bits-1.0.17.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_bits/1.0.17/htcw_bits-1.0.17.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_bits/1.0.18/htcw_bits-1.0.18.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_bits-1.0.18.tar.gz",
+    "size_bytes": 6641,
+    "sha256": "fb3d80e05c1dfb674aa9ea2ba2ff7c17a138f02e127d8c52a9f49c2e75dfe42a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_bits/1.0.18/htcw_bits-1.0.18.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_bits/1.0.18/htcw_bits-1.0.18.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_bm8563/0.1.6/htcw_bm8563-0.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_bm8563-0.1.6.tar.gz",
+    "size_bytes": 4569,
+    "sha256": "050ec272a7436ab1234de55ef676e4196ead3691a6abe5065076c2327c31565b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_bm8563/0.1.6/htcw_bm8563-0.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_bm8563/0.1.6/htcw_bm8563-0.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_button/0.3.0/htcw_button-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_button-0.3.0.tar.gz",
+    "size_bytes": 5715,
+    "sha256": "ad3102f80b18557139becfdb3b5777e90e53f6c87e772cecfabdc211a0cb32dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_button/0.3.0/htcw_button-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_button/0.3.0/htcw_button-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_chess/0.3.0/htcw_chess-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_chess-0.3.0.tar.gz",
+    "size_bytes": 8914,
+    "sha256": "e1774cd62fc94876dd829becc38af2dd4bc4fb130d5e666a58af33673b3171b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_chess/0.3.0/htcw_chess-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_chess/0.3.0/htcw_chess-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_chess/0.3.1/htcw_chess-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_chess-0.3.1.tar.gz",
+    "size_bytes": 8895,
+    "sha256": "c97101837ac819ac7ce2ea61e40ab24e3f32501ad983d1168e61947153cf0810",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_chess/0.3.1/htcw_chess-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_chess/0.3.1/htcw_chess-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_chess/0.3.2/htcw_chess-0.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_chess-0.3.2.tar.gz",
+    "size_bytes": 9067,
+    "sha256": "95bc1807ea89479922f0854359b269eb58df6cabe096e57a8cf8009ca781f940",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_chess/0.3.2/htcw_chess-0.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_chess/0.3.2/htcw_chess-0.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_chess/0.3.3/htcw_chess-0.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_chess-0.3.3.tar.gz",
+    "size_bytes": 9089,
+    "sha256": "4cd27779b2f96622d28c6b2a0ff1bfdf3d02258d0ee5fd00f2d7fc625fa5eb75",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_chess/0.3.3/htcw_chess-0.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_chess/0.3.3/htcw_chess-0.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_chess/0.4.0/htcw_chess-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_chess-0.4.0.tar.gz",
+    "size_bytes": 9632,
+    "sha256": "8b2596ba3742f2599f26971bd97b721fc4dbba5ea688e3d9522629c714879f10",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_chess/0.4.0/htcw_chess-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_chess/0.4.0/htcw_chess-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_chess/0.5.0/htcw_chess-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_chess-0.5.0.tar.gz",
+    "size_bytes": 10207,
+    "sha256": "db0e2fac43ce2d2b8025656a5288cb1608d2d4ccd64df528e8d4ff33fbb7f83b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_chess/0.5.0/htcw_chess-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_chess/0.5.0/htcw_chess-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_chess/0.5.1/htcw_chess-0.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_chess-0.5.1.tar.gz",
+    "size_bytes": 9966,
+    "sha256": "72ba9eb0c28bf1a8db6df53027f14055e1e196440e6fcadfde3ba13eaf0191cd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_chess/0.5.1/htcw_chess-0.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_chess/0.5.1/htcw_chess-0.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_chess/0.5.2/htcw_chess-0.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_chess-0.5.2.tar.gz",
+    "size_bytes": 10361,
+    "sha256": "1c4a02b26c5d3df2d57837e9a53284f58cd55beba3bc6c9c9eab9cb14f886602",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_chess/0.5.2/htcw_chess-0.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_chess/0.5.2/htcw_chess-0.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_chess/0.5.3/htcw_chess-0.5.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_chess-0.5.3.tar.gz",
+    "size_bytes": 10491,
+    "sha256": "95987b18be27d6076d9e2233f9167496c64f407143499b7561241b40ccbbbb78",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_chess/0.5.3/htcw_chess-0.5.3.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_chess/0.5.3/htcw_chess-0.5.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_chsc6540/0.1.1/htcw_chsc6540-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_chsc6540-0.1.1.tar.gz",
+    "size_bytes": 4247,
+    "sha256": "07f37c38ca91930e5800bcfd6c883947712f4e09218d08d72b1cc041a2644da3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_chsc6540/0.1.1/htcw_chsc6540-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_chsc6540/0.1.1/htcw_chsc6540-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_cyd28/0.1.0/htcw_cyd28-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_cyd28-0.1.0.tar.gz",
+    "size_bytes": 7060,
+    "sha256": "6c412594eeb4ab7854d243335f6c96181b6a52631eadc7a943bb31575539dde4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_cyd28/0.1.0/htcw_cyd28-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_cyd28/0.1.0/htcw_cyd28-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_cyd28/0.1.1/htcw_cyd28-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_cyd28-0.1.1.tar.gz",
+    "size_bytes": 7383,
+    "sha256": "07143425c70ee92f3540cbe11779ae56395e169346705ce2c4d1cf09ac87c974",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_cyd28/0.1.1/htcw_cyd28-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_cyd28/0.1.1/htcw_cyd28-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_cyd28/0.1.10/htcw_cyd28-0.1.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_cyd28-0.1.10.tar.gz",
+    "size_bytes": 9400,
+    "sha256": "79244428dc505af6ffbec255a523fb8e325939c23861d2517ac8f6524cac9331",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_cyd28/0.1.10/htcw_cyd28-0.1.10.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_cyd28/0.1.10/htcw_cyd28-0.1.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_cyd28/0.1.2/htcw_cyd28-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_cyd28-0.1.2.tar.gz",
+    "size_bytes": 7721,
+    "sha256": "a85b3798f520e2a654d718fc7204f83ede7713f814968e2d4a59587403da585a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_cyd28/0.1.2/htcw_cyd28-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_cyd28/0.1.2/htcw_cyd28-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_cyd28/0.1.3/htcw_cyd28-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_cyd28-0.1.3.tar.gz",
+    "size_bytes": 7742,
+    "sha256": "85bbd41bba097fb4971bc81dd44bb28c2b025539c8fd03b4217c4903f082e87c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_cyd28/0.1.3/htcw_cyd28-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_cyd28/0.1.3/htcw_cyd28-0.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_cyd28/0.1.4/htcw_cyd28-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_cyd28-0.1.4.tar.gz",
+    "size_bytes": 7725,
+    "sha256": "dc52f21730f1e833d395c13b3457d606c5464219e9169e88b086bbe20d1a78a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_cyd28/0.1.4/htcw_cyd28-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_cyd28/0.1.4/htcw_cyd28-0.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_cyd28/0.1.5/htcw_cyd28-0.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_cyd28-0.1.5.tar.gz",
+    "size_bytes": 7720,
+    "sha256": "c8ed0f00149fa690ea06444c2e97d1d6164d0906fae30d2216f1509dd3c5678a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_cyd28/0.1.5/htcw_cyd28-0.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_cyd28/0.1.5/htcw_cyd28-0.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_cyd28/0.1.6/htcw_cyd28-0.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_cyd28-0.1.6.tar.gz",
+    "size_bytes": 8064,
+    "sha256": "1863769e4112f8d6711bdc0ce6c75f19815940470b2b8c7fc45f3dd9917eae67",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_cyd28/0.1.6/htcw_cyd28-0.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_cyd28/0.1.6/htcw_cyd28-0.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_cyd28/0.1.7/htcw_cyd28-0.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_cyd28-0.1.7.tar.gz",
+    "size_bytes": 8628,
+    "sha256": "a550e571efef7cb65a25613a6601802bd5b0a6cb20b94c153d635018ff3fb090",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_cyd28/0.1.7/htcw_cyd28-0.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_cyd28/0.1.7/htcw_cyd28-0.1.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_cyd28/0.1.8/htcw_cyd28-0.1.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_cyd28-0.1.8.tar.gz",
+    "size_bytes": 8837,
+    "sha256": "5e79380f8cb7a40e9838737151131276674921d1a57c5c238927e803fda839a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_cyd28/0.1.8/htcw_cyd28-0.1.8.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_cyd28/0.1.8/htcw_cyd28-0.1.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_cyd28/0.1.9/htcw_cyd28-0.1.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_cyd28-0.1.9.tar.gz",
+    "size_bytes": 8843,
+    "sha256": "aac00cb3f74b3cef583a5858cf3ebc6ae988a0312d2d7c9c2cc31a74c033c661",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_cyd28/0.1.9/htcw_cyd28-0.1.9.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_cyd28/0.1.9/htcw_cyd28-0.1.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_data/1.4.5/htcw_data-1.4.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_data-1.4.5.tar.gz",
+    "size_bytes": 6185,
+    "sha256": "32500f66664ca80162d06842994734c892a303a561a3b37c7bb7805b7ee4bf8b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_data/1.4.5/htcw_data-1.4.5.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_data/1.4.5/htcw_data-1.4.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_data/1.4.6/htcw_data-1.4.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_data-1.4.6.tar.gz",
+    "size_bytes": 6449,
+    "sha256": "cffd6171a5c87e14ea773b298741363d08d80046e2dd236b8ddcffa702464e86",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_data/1.4.6/htcw_data-1.4.6.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_data/1.4.6/htcw_data-1.4.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_ds1307/0.9.1/htcw_ds1307-0.9.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_ds1307-0.9.1.tar.gz",
+    "size_bytes": 3550,
+    "sha256": "a3f6e200ff26285f1ae8257ef2d5e666c0cd0af8e99a055f2af0b042a343582a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_ds1307/0.9.1/htcw_ds1307-0.9.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_ds1307/0.9.1/htcw_ds1307-0.9.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_encoder/0.1.2/htcw_encoder-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_encoder-0.1.2.tar.gz",
+    "size_bytes": 3379,
+    "sha256": "df43d53a98b0923deea593c3dd577bdca47b145f2a88feb234b440b406373195",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_encoder/0.1.2/htcw_encoder-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_encoder/0.1.2/htcw_encoder-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_i2c/0.1.1/htcw_esp_i2c-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_i2c-0.1.1.tar.gz",
+    "size_bytes": 2381,
+    "sha256": "2c7782e61af689de704c7d3074237184507f2994455cba9c913cada9acc521db",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_i2c/0.1.1/htcw_esp_i2c-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_i2c/0.1.1/htcw_esp_i2c-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_io_expander/0.1.0/htcw_esp_io_expander-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_io_expander-0.1.0.tar.gz",
+    "size_bytes": 4579,
+    "sha256": "3f697e6438e6284effd88c30a0f08d433aae6c1e6026a1416e5b9e4075e69c83",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_io_expander/0.1.0/htcw_esp_io_expander-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_io_expander/0.1.0/htcw_esp_io_expander-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_io_expander_tca9554/0.1.0/htcw_esp_io_expander_tca9554-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_io_expander_tca9554-0.1.0.tar.gz",
+    "size_bytes": 2701,
+    "sha256": "cd87e00be125a1258c2bf057aa2d175f0cc2a4048dd1c02105456771baecbc78",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_io_expander_tca9554/0.1.0/htcw_esp_io_expander_tca9554-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_io_expander_tca9554/0.1.0/htcw_esp_io_expander_tca9554-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_ip_loc/0.1.2/htcw_esp_ip_loc-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_ip_loc-0.1.2.tar.gz",
+    "size_bytes": 2520,
+    "sha256": "c371d71ea9fcfc0dfd226f746f7921a90dbde5bf53b56be55315ac1fcb334e30",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_ip_loc/0.1.2/htcw_esp_ip_loc-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_ip_loc/0.1.2/htcw_esp_ip_loc-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_lcd_io_additions/0.1.0/htcw_esp_lcd_io_additions-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_lcd_io_additions-0.1.0.tar.gz",
+    "size_bytes": 5332,
+    "sha256": "9e8b6966fe11e8072d3bba1a386b678886713814bf7bd89b5101709c92a1489d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_lcd_io_additions/0.1.0/htcw_esp_lcd_io_additions-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_lcd_io_additions/0.1.0/htcw_esp_lcd_io_additions-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_lcd_io_additions/0.1.1/htcw_esp_lcd_io_additions-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_lcd_io_additions-0.1.1.tar.gz",
+    "size_bytes": 5303,
+    "sha256": "f221786a501237b7ce288858c5a19d9c05cfb81af64b42a712c4bddafbabba0a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_lcd_io_additions/0.1.1/htcw_esp_lcd_io_additions-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_lcd_io_additions/0.1.1/htcw_esp_lcd_io_additions-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_lcd_panel_ili9341/0.3.0/htcw_esp_lcd_panel_ili9341-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_lcd_panel_ili9341-0.3.0.tar.gz",
+    "size_bytes": 5812,
+    "sha256": "29836aa5983793cd3aa1527b98834cd83bd023c5e7ee6cf9890d4bea2e9a9e06",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_lcd_panel_ili9341/0.3.0/htcw_esp_lcd_panel_ili9341-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_lcd_panel_ili9341/0.3.0/htcw_esp_lcd_panel_ili9341-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_lcd_panel_ili9341/0.4.0/htcw_esp_lcd_panel_ili9341-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_lcd_panel_ili9341-0.4.0.tar.gz",
+    "size_bytes": 5880,
+    "sha256": "5cb6e8db12b6f98be51e4505aa10e47d2ccec1bfea8e0e43de631598fa772ffb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_lcd_panel_ili9341/0.4.0/htcw_esp_lcd_panel_ili9341-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_lcd_panel_ili9341/0.4.0/htcw_esp_lcd_panel_ili9341-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_lcd_panel_ili9341/0.4.1/htcw_esp_lcd_panel_ili9341-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_lcd_panel_ili9341-0.4.1.tar.gz",
+    "size_bytes": 5913,
+    "sha256": "88e02eb216f08e5eff06956c1f1c71dec6fa0f3ef95dddfbc7e99b17e6412826",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_lcd_panel_ili9341/0.4.1/htcw_esp_lcd_panel_ili9341-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_lcd_panel_ili9341/0.4.1/htcw_esp_lcd_panel_ili9341-0.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_lcd_panel_ili9342/0.2.6/htcw_esp_lcd_panel_ili9342-0.2.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_lcd_panel_ili9342-0.2.6.tar.gz",
+    "size_bytes": 5366,
+    "sha256": "798b4842645446e4f50c7e88769d4d71d94187c8bbb1552f0755249f3012494b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_lcd_panel_ili9342/0.2.6/htcw_esp_lcd_panel_ili9342-0.2.6.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_lcd_panel_ili9342/0.2.6/htcw_esp_lcd_panel_ili9342-0.2.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_lcd_panel_ili9488/0.3.0/htcw_esp_lcd_panel_ili9488-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_lcd_panel_ili9488-0.3.0.tar.gz",
+    "size_bytes": 5173,
+    "sha256": "01d5f4632171e6d2745547b899bdeedb6cfc19dec0eb89696ad8e2352a20aa89",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_lcd_panel_ili9488/0.3.0/htcw_esp_lcd_panel_ili9488-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_lcd_panel_ili9488/0.3.0/htcw_esp_lcd_panel_ili9488-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_lcd_panel_ili9488/0.4.0/htcw_esp_lcd_panel_ili9488-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_lcd_panel_ili9488-0.4.0.tar.gz",
+    "size_bytes": 4842,
+    "sha256": "6d61d61953ab8fc665060f18240262a97d2a246a20386c1bcdba876d5c3a2d9a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_lcd_panel_ili9488/0.4.0/htcw_esp_lcd_panel_ili9488-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_lcd_panel_ili9488/0.4.0/htcw_esp_lcd_panel_ili9488-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_lcd_panel_io_swspi/0.1.0/htcw_esp_lcd_panel_io_swspi-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_lcd_panel_io_swspi-0.1.0.tar.gz",
+    "size_bytes": 5038,
+    "sha256": "649e395214ab382281e879fd66c8979e8adc4ed6c48d215aa042a90216327768",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_lcd_panel_io_swspi/0.1.0/htcw_esp_lcd_panel_io_swspi-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_lcd_panel_io_swspi/0.1.0/htcw_esp_lcd_panel_io_swspi-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_lcd_panel_io_swspi/0.1.1/htcw_esp_lcd_panel_io_swspi-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_lcd_panel_io_swspi-0.1.1.tar.gz",
+    "size_bytes": 8996,
+    "sha256": "067b60fd5206ff059dae0818ff9950f2b3e618d0632bd8f0b4a262af8e72af6e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_lcd_panel_io_swspi/0.1.1/htcw_esp_lcd_panel_io_swspi-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_lcd_panel_io_swspi/0.1.1/htcw_esp_lcd_panel_io_swspi-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_lcd_panel_io_swspi/0.1.2/htcw_esp_lcd_panel_io_swspi-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_lcd_panel_io_swspi-0.1.2.tar.gz",
+    "size_bytes": 9002,
+    "sha256": "415f9ee3f81260dccbeecac167e0a0e35e822449fdc11a99d1a5d3f3b0fdfc88",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_lcd_panel_io_swspi/0.1.2/htcw_esp_lcd_panel_io_swspi-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_lcd_panel_io_swspi/0.1.2/htcw_esp_lcd_panel_io_swspi-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_lcd_st7701/0.1.0/htcw_esp_lcd_st7701-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_lcd_st7701-0.1.0.tar.gz",
+    "size_bytes": 7812,
+    "sha256": "49eb136433d5891dc073dd5a6eabf653840ec195710febae624d5e6030c20166",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_lcd_st7701/0.1.0/htcw_esp_lcd_st7701-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_lcd_st7701/0.1.0/htcw_esp_lcd_st7701-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_lcd_st7701/0.1.1/htcw_esp_lcd_st7701-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_lcd_st7701-0.1.1.tar.gz",
+    "size_bytes": 7809,
+    "sha256": "2062810367867a6768931add4a0d6efe3d5c865291834402d19e783f648a00f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_lcd_st7701/0.1.1/htcw_esp_lcd_st7701-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_lcd_st7701/0.1.1/htcw_esp_lcd_st7701-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_lcd_st7703/0.1.0/htcw_esp_lcd_st7703-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_lcd_st7703-0.1.0.tar.gz",
+    "size_bytes": 5001,
+    "sha256": "c1c242a67a4bd20dfac0bc83f3fb727015a864dc442680b6744c8dc1ada3be2d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_lcd_st7703/0.1.0/htcw_esp_lcd_st7703-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_lcd_st7703/0.1.0/htcw_esp_lcd_st7703-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_lcd_st7703/0.1.1/htcw_esp_lcd_st7703-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_lcd_st7703-0.1.1.tar.gz",
+    "size_bytes": 4935,
+    "sha256": "72433ce6597ab0d4561c291218894add04495629d6925f1b678d89e37281d689",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_lcd_st7703/0.1.1/htcw_esp_lcd_st7703-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_lcd_st7703/0.1.1/htcw_esp_lcd_st7703-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_lcd_st7796/0.1.0/htcw_esp_lcd_st7796-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_lcd_st7796-0.1.0.tar.gz",
+    "size_bytes": 7631,
+    "sha256": "50954d4d09f87b3d040bed96a507570adb53eb1331ccf75265911afef7e50db5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_lcd_st7796/0.1.0/htcw_esp_lcd_st7796-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_lcd_st7796/0.1.0/htcw_esp_lcd_st7796-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_lcd_touch/0.1.0/htcw_esp_lcd_touch-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_lcd_touch-0.1.0.tar.gz",
+    "size_bytes": 3925,
+    "sha256": "bc685f716eb01b4fa206ece1ecd89b3028d4f552b7b8748de757abb36ba90d93",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_lcd_touch/0.1.0/htcw_esp_lcd_touch-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_lcd_touch/0.1.0/htcw_esp_lcd_touch-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_lcd_touch/0.1.1/htcw_esp_lcd_touch-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_lcd_touch-0.1.1.tar.gz",
+    "size_bytes": 3931,
+    "sha256": "b2c4718b3a31f3811e911e1707c532250aabe07a2b95811e88a22c28193bd2e7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_lcd_touch/0.1.1/htcw_esp_lcd_touch-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_lcd_touch/0.1.1/htcw_esp_lcd_touch-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_lcd_touch/0.1.2/htcw_esp_lcd_touch-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_lcd_touch-0.1.2.tar.gz",
+    "size_bytes": 8660,
+    "sha256": "db0263e08a62dab50a6d25a76ba4e15813b432f84de87248cabf2ff0e77cadb5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_lcd_touch/0.1.2/htcw_esp_lcd_touch-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_lcd_touch/0.1.2/htcw_esp_lcd_touch-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_lcd_touch_ft6x36/0.1.0/htcw_esp_lcd_touch_ft6x36-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_lcd_touch_ft6x36-0.1.0.tar.gz",
+    "size_bytes": 3986,
+    "sha256": "2efae6c001efc8f36ac48873ccb4c0c2ef52b8420d33d11a8c8f961fef4f45b2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_lcd_touch_ft6x36/0.1.0/htcw_esp_lcd_touch_ft6x36-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_lcd_touch_ft6x36/0.1.0/htcw_esp_lcd_touch_ft6x36-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_lcd_touch_ft6x36/0.1.1/htcw_esp_lcd_touch_ft6x36-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_lcd_touch_ft6x36-0.1.1.tar.gz",
+    "size_bytes": 3970,
+    "sha256": "a53ccd55d2e3bec841c75bc3c72e032d5cda5a81862fa3d1c49a0e34c91fe2d7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_lcd_touch_ft6x36/0.1.1/htcw_esp_lcd_touch_ft6x36-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_lcd_touch_ft6x36/0.1.1/htcw_esp_lcd_touch_ft6x36-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_lcd_touch_ft6x36/0.1.3/htcw_esp_lcd_touch_ft6x36-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_lcd_touch_ft6x36-0.1.3.tar.gz",
+    "size_bytes": 4981,
+    "sha256": "7b6776ccdca36a30c7309073103e91e0a64fd2e1c97b995dea278093ca7cc101",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_lcd_touch_ft6x36/0.1.3/htcw_esp_lcd_touch_ft6x36-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_lcd_touch_ft6x36/0.1.3/htcw_esp_lcd_touch_ft6x36-0.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_lcd_touch_gt911/0.1.0/htcw_esp_lcd_touch_gt911-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_lcd_touch_gt911-0.1.0.tar.gz",
+    "size_bytes": 4237,
+    "sha256": "79eafc3bd1abd76644ac92aec2507f572c4c7dacd9018fe41aa1bad4f541f169",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_lcd_touch_gt911/0.1.0/htcw_esp_lcd_touch_gt911-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_lcd_touch_gt911/0.1.0/htcw_esp_lcd_touch_gt911-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_lcd_touch_gt911/0.1.1/htcw_esp_lcd_touch_gt911-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_lcd_touch_gt911-0.1.1.tar.gz",
+    "size_bytes": 4235,
+    "sha256": "bde6b9ef9159a19920845177db01116b516a52e74681f45f0326d3e9fdece4b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_lcd_touch_gt911/0.1.1/htcw_esp_lcd_touch_gt911-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_lcd_touch_gt911/0.1.1/htcw_esp_lcd_touch_gt911-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_lcd_touch_gt911/0.1.2/htcw_esp_lcd_touch_gt911-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_lcd_touch_gt911-0.1.2.tar.gz",
+    "size_bytes": 4233,
+    "sha256": "668d599dc1d621e4a90bddeed3a3c165ac77e81809d5640b62ada54ff0e73529",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_lcd_touch_gt911/0.1.2/htcw_esp_lcd_touch_gt911-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_lcd_touch_gt911/0.1.2/htcw_esp_lcd_touch_gt911-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_lcd_touch_gt911/0.1.3/htcw_esp_lcd_touch_gt911-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_lcd_touch_gt911-0.1.3.tar.gz",
+    "size_bytes": 4252,
+    "sha256": "abea8f2dcc08dae99879b3979d24ecf8b8ac2396cf1c62555fc9d89bcc427296",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_lcd_touch_gt911/0.1.3/htcw_esp_lcd_touch_gt911-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_lcd_touch_gt911/0.1.3/htcw_esp_lcd_touch_gt911-0.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_lcd_touch_gt911/0.1.4/htcw_esp_lcd_touch_gt911-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_lcd_touch_gt911-0.1.4.tar.gz",
+    "size_bytes": 4252,
+    "sha256": "cebf6473558dabcf0b10db78f2c0a58aef8c96e3a33d9eb805f6ced41f4b9aee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_lcd_touch_gt911/0.1.4/htcw_esp_lcd_touch_gt911-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_lcd_touch_gt911/0.1.4/htcw_esp_lcd_touch_gt911-0.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_lcd_touch_gt911/0.1.5/htcw_esp_lcd_touch_gt911-0.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_lcd_touch_gt911-0.1.5.tar.gz",
+    "size_bytes": 4283,
+    "sha256": "1e9208e627aa936598bb8d15d60d6c5968e3e0be60e80334ecfda136d9c34429",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_lcd_touch_gt911/0.1.5/htcw_esp_lcd_touch_gt911-0.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_lcd_touch_gt911/0.1.5/htcw_esp_lcd_touch_gt911-0.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_lcd_touch_xpt2046/0.1.0/htcw_esp_lcd_touch_xpt2046-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_lcd_touch_xpt2046-0.1.0.tar.gz",
+    "size_bytes": 3878,
+    "sha256": "3b463635af1ec5952a170cf78b2d071723ae7f2ad99eda0e02bc4b332489c0ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_lcd_touch_xpt2046/0.1.0/htcw_esp_lcd_touch_xpt2046-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_lcd_touch_xpt2046/0.1.0/htcw_esp_lcd_touch_xpt2046-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_lcd_touch_xpt2046/0.1.1/htcw_esp_lcd_touch_xpt2046-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_lcd_touch_xpt2046-0.1.1.tar.gz",
+    "size_bytes": 3882,
+    "sha256": "afae28c1964add652325fa1e93aa2441625af7d634ca4b5911cc0fff1a68811c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_lcd_touch_xpt2046/0.1.1/htcw_esp_lcd_touch_xpt2046-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_lcd_touch_xpt2046/0.1.1/htcw_esp_lcd_touch_xpt2046-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_lcd_touch_xpt2046/0.1.2/htcw_esp_lcd_touch_xpt2046-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_lcd_touch_xpt2046-0.1.2.tar.gz",
+    "size_bytes": 3837,
+    "sha256": "09dc6cdbc0650b92c7b81c314586825b1617b1b7119d325fa6cda5791d975437",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_lcd_touch_xpt2046/0.1.2/htcw_esp_lcd_touch_xpt2046-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_lcd_touch_xpt2046/0.1.2/htcw_esp_lcd_touch_xpt2046-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_lcd_touch_xpt2046/0.1.3/htcw_esp_lcd_touch_xpt2046-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_lcd_touch_xpt2046-0.1.3.tar.gz",
+    "size_bytes": 3853,
+    "sha256": "8f5093deab44b80bb20baf8e62b62f9463fff2cba5563099f74367327dc23b55",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_lcd_touch_xpt2046/0.1.3/htcw_esp_lcd_touch_xpt2046-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_lcd_touch_xpt2046/0.1.3/htcw_esp_lcd_touch_xpt2046-0.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_lcd_touch_xpt2046/0.2.0/htcw_esp_lcd_touch_xpt2046-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_lcd_touch_xpt2046-0.2.0.tar.gz",
+    "size_bytes": 4302,
+    "sha256": "0b77c2359ce13925bda609a13949939517c13d1565f6c268513895d571859ead",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_lcd_touch_xpt2046/0.2.0/htcw_esp_lcd_touch_xpt2046-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_lcd_touch_xpt2046/0.2.0/htcw_esp_lcd_touch_xpt2046-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_lcd_touch_xpt2046/0.2.1/htcw_esp_lcd_touch_xpt2046-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_lcd_touch_xpt2046-0.2.1.tar.gz",
+    "size_bytes": 4312,
+    "sha256": "0acd6dc61f7839500a7cb49ac2f6237769eeef56ae0e033d4e5de1d17ed5e6e1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_lcd_touch_xpt2046/0.2.1/htcw_esp_lcd_touch_xpt2046-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_lcd_touch_xpt2046/0.2.1/htcw_esp_lcd_touch_xpt2046-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_lcd_touch_xpt2046/0.2.2/htcw_esp_lcd_touch_xpt2046-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_lcd_touch_xpt2046-0.2.2.tar.gz",
+    "size_bytes": 4323,
+    "sha256": "d23a313e98a0335d1c6960df0c3ce0d1e2dfd31a65ad9b9aaa0a8aeb0cc572f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_lcd_touch_xpt2046/0.2.2/htcw_esp_lcd_touch_xpt2046-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_lcd_touch_xpt2046/0.2.2/htcw_esp_lcd_touch_xpt2046-0.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_ntp_time/0.1.3/htcw_esp_ntp_time-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_ntp_time-0.1.3.tar.gz",
+    "size_bytes": 3301,
+    "sha256": "2ab418857e538ebf1a6535aaf64252cbd892aacb9aad5cc1938a321e973262dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_ntp_time/0.1.3/htcw_esp_ntp_time-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_ntp_time/0.1.3/htcw_esp_ntp_time-0.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_panel/0.1.0/htcw_esp_panel-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_panel-0.1.0.tar.gz",
+    "size_bytes": 21500,
+    "sha256": "21478a1677f2bfd5c17747a8a9a93158969dc1311e73275fe6239f3e06228de8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_panel/0.1.0/htcw_esp_panel-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_panel/0.1.0/htcw_esp_panel-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_panel/0.1.1/htcw_esp_panel-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_panel-0.1.1.tar.gz",
+    "size_bytes": 21462,
+    "sha256": "78d95dfc97aea11cc6351b91fcea5ac79cb37e9323740bb84949acb5fab8f355",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_panel/0.1.1/htcw_esp_panel-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_panel/0.1.1/htcw_esp_panel-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_panel/0.1.2/htcw_esp_panel-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_panel-0.1.2.tar.gz",
+    "size_bytes": 149439,
+    "sha256": "431518307a83272fca8fa1b9500356391d9b8a298337a6387cf6735308ec1fdb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_panel/0.1.2/htcw_esp_panel-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_panel/0.1.2/htcw_esp_panel-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_panel/0.1.3/htcw_esp_panel-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_panel-0.1.3.tar.gz",
+    "size_bytes": 151598,
+    "sha256": "9740857d2af0ff391d2fac562b8cc6506a333336084192df69021dd1ef590b4f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_panel/0.1.3/htcw_esp_panel-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_panel/0.1.3/htcw_esp_panel-0.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_panel/0.10.0/htcw_esp_panel-0.10.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_panel-0.10.0.tar.gz",
+    "size_bytes": 190231,
+    "sha256": "15d28df72f9eddfa8260b303af2b177779c4b11ff6d9c214e4f90372c1366a15",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_panel/0.10.0/htcw_esp_panel-0.10.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_panel/0.10.0/htcw_esp_panel-0.10.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_panel/0.11.0/htcw_esp_panel-0.11.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_panel-0.11.0.tar.gz",
+    "size_bytes": 190274,
+    "sha256": "770cb349448a4ff7295013d9bc96d44395407cf2d98b9aacff2a8031f5dc7d2d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_panel/0.11.0/htcw_esp_panel-0.11.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_panel/0.11.0/htcw_esp_panel-0.11.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_panel/0.11.1/htcw_esp_panel-0.11.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_panel-0.11.1.tar.gz",
+    "size_bytes": 190290,
+    "sha256": "798d0bc1232e1fff9f771dad2e2a474830055c0f2076688e1445f916e2e17eb5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_panel/0.11.1/htcw_esp_panel-0.11.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_panel/0.11.1/htcw_esp_panel-0.11.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_panel/0.11.2/htcw_esp_panel-0.11.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_panel-0.11.2.tar.gz",
+    "size_bytes": 190301,
+    "sha256": "7e38811c518fbbb764e9d81720b33482407a9211c4973fdbf6af17c240e68509",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_panel/0.11.2/htcw_esp_panel-0.11.2.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_panel/0.11.2/htcw_esp_panel-0.11.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_panel/0.12.0/htcw_esp_panel-0.12.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_panel-0.12.0.tar.gz",
+    "size_bytes": 190431,
+    "sha256": "c9329508d44cbf1c3a86aa2beda7a0485a6128e913db8127cbed439d1e4ef4e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_panel/0.12.0/htcw_esp_panel-0.12.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_panel/0.12.0/htcw_esp_panel-0.12.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_panel/0.12.1/htcw_esp_panel-0.12.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_panel-0.12.1.tar.gz",
+    "size_bytes": 190460,
+    "sha256": "ea44dcdd54df79b52ea58ef974cc9a53645d33ec2c36564eb7ac9d7900d81c4b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_panel/0.12.1/htcw_esp_panel-0.12.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_panel/0.12.1/htcw_esp_panel-0.12.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_panel/0.2.0/htcw_esp_panel-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_panel-0.2.0.tar.gz",
+    "size_bytes": 151642,
+    "sha256": "bcc3d617171479ba09a7689be428bcb1842c5b77bb72f471d2b1cba680ea11f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_panel/0.2.0/htcw_esp_panel-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_panel/0.2.0/htcw_esp_panel-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_panel/0.2.2/htcw_esp_panel-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_panel-0.2.2.tar.gz",
+    "size_bytes": 151950,
+    "sha256": "0b8e48cad9d7b42a4338933f7b4bbd77c5663cebb8edec64fd7596ac4af14463",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_panel/0.2.2/htcw_esp_panel-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_panel/0.2.2/htcw_esp_panel-0.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_panel/0.2.3/htcw_esp_panel-0.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_panel-0.2.3.tar.gz",
+    "size_bytes": 151955,
+    "sha256": "95c6a43c1dd08c049732c8bd5deefe35db1460f951a039e2ba01af381124964a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_panel/0.2.3/htcw_esp_panel-0.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_panel/0.2.3/htcw_esp_panel-0.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_panel/0.2.4/htcw_esp_panel-0.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_panel-0.2.4.tar.gz",
+    "size_bytes": 151976,
+    "sha256": "421e336f503f34fb472744582c690a0b315faa5766889313139a002bc5c4dba5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_panel/0.2.4/htcw_esp_panel-0.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_panel/0.2.4/htcw_esp_panel-0.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_panel/0.2.5/htcw_esp_panel-0.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_panel-0.2.5.tar.gz",
+    "size_bytes": 152108,
+    "sha256": "7fd3d3044f4d0ba91a1613d8c17cd3da59c25efc825ac5c5fb3f418ca1184449",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_panel/0.2.5/htcw_esp_panel-0.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_panel/0.2.5/htcw_esp_panel-0.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_panel/0.2.6/htcw_esp_panel-0.2.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_panel-0.2.6.tar.gz",
+    "size_bytes": 152185,
+    "sha256": "a7615b4723ebae187cb635647012d963b3e616d7e7e93a6a0c0dbabcdc24a1f5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_panel/0.2.6/htcw_esp_panel-0.2.6.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_panel/0.2.6/htcw_esp_panel-0.2.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_panel/0.2.7/htcw_esp_panel-0.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_panel-0.2.7.tar.gz",
+    "size_bytes": 152208,
+    "sha256": "f5bf28a06b9caab278f17f85702deb6e50d52a6557928e49d48ecbff2cde5fb3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_panel/0.2.7/htcw_esp_panel-0.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_panel/0.2.7/htcw_esp_panel-0.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_panel/0.3.0/htcw_esp_panel-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_panel-0.3.0.tar.gz",
+    "size_bytes": 164717,
+    "sha256": "c8f0dd5fa2542e1670d34940eceb849e662aa0987d91e0ebee88dad902e0d03d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_panel/0.3.0/htcw_esp_panel-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_panel/0.3.0/htcw_esp_panel-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_panel/0.3.1/htcw_esp_panel-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_panel-0.3.1.tar.gz",
+    "size_bytes": 164734,
+    "sha256": "69725827bdc3fbedb90a7dccf837de5aae34d6c063ef6ffd429021307647a32e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_panel/0.3.1/htcw_esp_panel-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_panel/0.3.1/htcw_esp_panel-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_panel/0.3.2/htcw_esp_panel-0.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_panel-0.3.2.tar.gz",
+    "size_bytes": 164882,
+    "sha256": "6858f165fc4582a1d45a004132614a31d53befa1d9371d54acc4c576bf146e42",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_panel/0.3.2/htcw_esp_panel-0.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_panel/0.3.2/htcw_esp_panel-0.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_panel/0.3.3/htcw_esp_panel-0.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_panel-0.3.3.tar.gz",
+    "size_bytes": 164971,
+    "sha256": "87559e5b73077ef660030d6eb1bc21641149686ff1716d792f451e5e38060b47",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_panel/0.3.3/htcw_esp_panel-0.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_panel/0.3.3/htcw_esp_panel-0.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_panel/0.3.4/htcw_esp_panel-0.3.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_panel-0.3.4.tar.gz",
+    "size_bytes": 166981,
+    "sha256": "4a00779513dcc02e75b3e345902cdbab11923edba65ab79e8ad7eedc893c9afb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_panel/0.3.4/htcw_esp_panel-0.3.4.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_panel/0.3.4/htcw_esp_panel-0.3.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_panel/0.3.5/htcw_esp_panel-0.3.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_panel-0.3.5.tar.gz",
+    "size_bytes": 166965,
+    "sha256": "6224de075f897dffe261b441307cf9c84f9c10bcf145a341b70131ed0f9efa5d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_panel/0.3.5/htcw_esp_panel-0.3.5.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_panel/0.3.5/htcw_esp_panel-0.3.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_panel/0.3.6/htcw_esp_panel-0.3.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_panel-0.3.6.tar.gz",
+    "size_bytes": 167014,
+    "sha256": "006cd8f1e487bd882dbf0532199408e20bce142252bd2becec8b3f530638f3d5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_panel/0.3.6/htcw_esp_panel-0.3.6.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_panel/0.3.6/htcw_esp_panel-0.3.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_panel/0.3.7/htcw_esp_panel-0.3.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_panel-0.3.7.tar.gz",
+    "size_bytes": 166991,
+    "sha256": "2970a9e8fdd0bf2791ce74d669019f70df61bb20e0c731012c7a493669bde3e3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_panel/0.3.7/htcw_esp_panel-0.3.7.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_panel/0.3.7/htcw_esp_panel-0.3.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_panel/0.4.0/htcw_esp_panel-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_panel-0.4.0.tar.gz",
+    "size_bytes": 167271,
+    "sha256": "dd50caebdf1af4043179b98665cd5ff5c6c2effa4fd97791f204cadceb13f43a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_panel/0.4.0/htcw_esp_panel-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_panel/0.4.0/htcw_esp_panel-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_panel/0.4.1/htcw_esp_panel-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_panel-0.4.1.tar.gz",
+    "size_bytes": 167273,
+    "sha256": "474967844c7c0cf7e0220eb2e43c2c3cc54d23047e865184e69e56c8e443d779",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_panel/0.4.1/htcw_esp_panel-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_panel/0.4.1/htcw_esp_panel-0.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_panel/0.4.4/htcw_esp_panel-0.4.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_panel-0.4.4.tar.gz",
+    "size_bytes": 167269,
+    "sha256": "1ae78839f0510f14da4307d04c4b09c0c8e76cce0a802dea84458dd47573da6b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_panel/0.4.4/htcw_esp_panel-0.4.4.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_panel/0.4.4/htcw_esp_panel-0.4.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_panel/0.5.0/htcw_esp_panel-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_panel-0.5.0.tar.gz",
+    "size_bytes": 167393,
+    "sha256": "73ad6788699744194f2e88fc52f791445fb15f777897271536e20b834a92d93f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_panel/0.5.0/htcw_esp_panel-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_panel/0.5.0/htcw_esp_panel-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_panel/0.5.1/htcw_esp_panel-0.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_panel-0.5.1.tar.gz",
+    "size_bytes": 167422,
+    "sha256": "58764fdad949e1953a25881519d05c258fbbb2cf25593a7ba3f7443422c0eaa5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_panel/0.5.1/htcw_esp_panel-0.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_panel/0.5.1/htcw_esp_panel-0.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_panel/0.5.2/htcw_esp_panel-0.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_panel-0.5.2.tar.gz",
+    "size_bytes": 167401,
+    "sha256": "12f86ae194612ae7326d3f510a36b3a210b2c499f2ed6003948dae46607f0add",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_panel/0.5.2/htcw_esp_panel-0.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_panel/0.5.2/htcw_esp_panel-0.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_panel/0.5.3/htcw_esp_panel-0.5.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_panel-0.5.3.tar.gz",
+    "size_bytes": 167405,
+    "sha256": "f80f162ebcbe85362c06b97bd851608110e8e447f9340a13fb78c563811e6d3d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_panel/0.5.3/htcw_esp_panel-0.5.3.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_panel/0.5.3/htcw_esp_panel-0.5.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_panel/0.6.0/htcw_esp_panel-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_panel-0.6.0.tar.gz",
+    "size_bytes": 174523,
+    "sha256": "00ce6f2b4c7903086b71fbd607ff613735c1f522a531b48e7f733762b2a817fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_panel/0.6.0/htcw_esp_panel-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_panel/0.6.0/htcw_esp_panel-0.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_panel/0.6.1/htcw_esp_panel-0.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_panel-0.6.1.tar.gz",
+    "size_bytes": 174575,
+    "sha256": "fd2bb128e31613f94ce510f61c38366978006a92ce875441d8e62683d6cddfb0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_panel/0.6.1/htcw_esp_panel-0.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_panel/0.6.1/htcw_esp_panel-0.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_panel/0.7.0/htcw_esp_panel-0.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_panel-0.7.0.tar.gz",
+    "size_bytes": 175004,
+    "sha256": "83398e4d65669ffe9c5ff065686bdbc76ffebd342ae414a7c75461ed523bbf12",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_panel/0.7.0/htcw_esp_panel-0.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_panel/0.7.0/htcw_esp_panel-0.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_panel/0.7.1/htcw_esp_panel-0.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_panel-0.7.1.tar.gz",
+    "size_bytes": 175055,
+    "sha256": "3e4134fa96fbf7cccf8dabd9e4f9e04b83e79a4d1446e4d6b65e3f10ad9e24c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_panel/0.7.1/htcw_esp_panel-0.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_panel/0.7.1/htcw_esp_panel-0.7.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_panel/0.7.2/htcw_esp_panel-0.7.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_panel-0.7.2.tar.gz",
+    "size_bytes": 175078,
+    "sha256": "bf7f135485885c27e7d2430c21f9dcbca06b68d6e176d52743a9136816a39a11",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_panel/0.7.2/htcw_esp_panel-0.7.2.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_panel/0.7.2/htcw_esp_panel-0.7.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_panel/0.7.3/htcw_esp_panel-0.7.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_panel-0.7.3.tar.gz",
+    "size_bytes": 188513,
+    "sha256": "2b85aa1a414a356be79e095a192db8cb9cc944d0b56c4ec49a627e0fd7856daa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_panel/0.7.3/htcw_esp_panel-0.7.3.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_panel/0.7.3/htcw_esp_panel-0.7.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_panel/0.7.5/htcw_esp_panel-0.7.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_panel-0.7.5.tar.gz",
+    "size_bytes": 573440,
+    "sha256": "6e64f4df9db6c550e4f605e66d159746d0d58ef9fb887c8195bd0d3f54f7abcc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_panel/0.7.5/htcw_esp_panel-0.7.5.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_panel/0.7.5/htcw_esp_panel-0.7.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_panel/0.8.0/htcw_esp_panel-0.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_panel-0.8.0.tar.gz",
+    "size_bytes": 189292,
+    "sha256": "4bd6012bdb159be50621df6033d07f9cba987c8d50ebfdae493a1c620a4e4f50",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_panel/0.8.0/htcw_esp_panel-0.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_panel/0.8.0/htcw_esp_panel-0.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_panel/0.8.5/htcw_esp_panel-0.8.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_panel-0.8.5.tar.gz",
+    "size_bytes": 189682,
+    "sha256": "908faa4ccf2b6df4b9c87d80eb66ef5bb7a0f7ea112733b59896212939f54c80",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_panel/0.8.5/htcw_esp_panel-0.8.5.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_panel/0.8.5/htcw_esp_panel-0.8.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_panel/0.9.0/htcw_esp_panel-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_panel-0.9.0.tar.gz",
+    "size_bytes": 189936,
+    "sha256": "b051ddeb3b891772b0d558b0c14c881911034f0e16ef5a30268089801d51bec8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_panel/0.9.0/htcw_esp_panel-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_panel/0.9.0/htcw_esp_panel-0.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_panel/0.9.1/htcw_esp_panel-0.9.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_panel-0.9.1.tar.gz",
+    "size_bytes": 189938,
+    "sha256": "43d36dc2635c1d64998d9ce977aad79864756aa8aa5744d8d105affe480385a3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_panel/0.9.1/htcw_esp_panel-0.9.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_panel/0.9.1/htcw_esp_panel-0.9.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_esp_wifi_manager/0.1.3/htcw_esp_wifi_manager-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_esp_wifi_manager-0.1.3.tar.gz",
+    "size_bytes": 2369,
+    "sha256": "9af7e70569e5e931f0da47b415f37034a7df5978e56f5aa548d5a5c3637c081d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_esp_wifi_manager/0.1.3/htcw_esp_wifi_manager-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_esp_wifi_manager/0.1.3/htcw_esp_wifi_manager-0.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_fan_controller/0.4.5/htcw_fan_controller-0.4.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_fan_controller-0.4.5.tar.gz",
+    "size_bytes": 7653,
+    "sha256": "a55b6e1c1a8baf9b8c5ce36b86565b214f0ed1c640dec4e8f3a28ed76386cf84",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_fan_controller/0.4.5/htcw_fan_controller-0.4.5.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_fan_controller/0.4.5/htcw_fan_controller-0.4.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_frame/0.1.0/htcw_frame-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_frame-0.1.0.tar.gz",
+    "size_bytes": 36882,
+    "sha256": "39dc781e5844d61aeab7596f7f201d78e1821104d8bcafec1b5248beff8806cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_frame/0.1.0/htcw_frame-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_frame/0.1.0/htcw_frame-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_frame/0.1.2/htcw_frame-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_frame-0.1.2.tar.gz",
+    "size_bytes": 192191,
+    "sha256": "1425804023d562f634dd60a9eb4cab0f2841c99a83dff21fecc409c19b8b2433",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_frame/0.1.2/htcw_frame-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_frame/0.1.2/htcw_frame-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_frame/0.1.3/htcw_frame-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_frame-0.1.3.tar.gz",
+    "size_bytes": 284032,
+    "sha256": "524978e072de99dc5bc7b4c91180ff1a27aac881ff7173e52b35f750dab355e7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_frame/0.1.3/htcw_frame-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_frame/0.1.3/htcw_frame-0.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_frame/0.1.4/htcw_frame-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_frame-0.1.4.tar.gz",
+    "size_bytes": 52088,
+    "sha256": "27cd8258ef32ccf4ff4a2756639e4450d2a7d0ebd2cdeb3bacc248c28d22ee45",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_frame/0.1.4/htcw_frame-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_frame/0.1.4/htcw_frame-0.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_frame/0.1.5/htcw_frame-0.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_frame-0.1.5.tar.gz",
+    "size_bytes": 52071,
+    "sha256": "403c3e498a263b8f68670366f78d656dce746ab26ad5b6fd7c9eb13624bcb291",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_frame/0.1.5/htcw_frame-0.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_frame/0.1.5/htcw_frame-0.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_frame/0.2.0/htcw_frame-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_frame-0.2.0.tar.gz",
+    "size_bytes": 52418,
+    "sha256": "47190f0a1cc9c5c5c51e39bf0813e0f2a264ffbe9d18562f68fea34d3ea45be0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_frame/0.2.0/htcw_frame-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_frame/0.2.0/htcw_frame-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_frame_arq/0.1.0/htcw_frame_arq-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_frame_arq-0.1.0.tar.gz",
+    "size_bytes": 50568,
+    "sha256": "40b6ee3e2667df50e6ca49ed1640cb6840acfadcee571f018a3f515d7e46a056",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_frame_arq/0.1.0/htcw_frame_arq-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_frame_arq/0.1.0/htcw_frame_arq-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_frame_arq/0.1.1/htcw_frame_arq-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_frame_arq-0.1.1.tar.gz",
+    "size_bytes": 50712,
+    "sha256": "1839be04c75c61f7178041a2573d0907594b6a944065434a360845f1e7147381",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_frame_arq/0.1.1/htcw_frame_arq-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_frame_arq/0.1.1/htcw_frame_arq-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_freertos_thread_pack/0.1.2/htcw_freertos_thread_pack-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_freertos_thread_pack-0.1.2.tar.gz",
+    "size_bytes": 6345,
+    "sha256": "1bc0d58239dc8b376571c835b008db18583aef64f25ebaec15672879bf94753c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_freertos_thread_pack/0.1.2/htcw_freertos_thread_pack-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_freertos_thread_pack/0.1.2/htcw_freertos_thread_pack-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_ft6206/0.2.1/htcw_ft6206-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_ft6206-0.2.1.tar.gz",
+    "size_bytes": 3825,
+    "sha256": "d4e15b70f926009e178f1aab4fbbfa4eafc1976469efc81ddb4fa6a0a3c09a1e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_ft6206/0.2.1/htcw_ft6206-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_ft6206/0.2.1/htcw_ft6206-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_ft6236/0.1.3/htcw_ft6236-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_ft6236-0.1.3.tar.gz",
+    "size_bytes": 3830,
+    "sha256": "87284d8fc76a897a10f0020015ef340361c274a08ecdf4608e07671a181ba621",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_ft6236/0.1.3/htcw_ft6236-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_ft6236/0.1.3/htcw_ft6236-0.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_ft6336/0.1.7/htcw_ft6336-0.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_ft6336-0.1.7.tar.gz",
+    "size_bytes": 4166,
+    "sha256": "70ec9f2fd59bcd5c7b3e0c70f47c51b917ec8ed30ce8d7022e702255fccbe516",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_ft6336/0.1.7/htcw_ft6336-0.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_ft6336/0.1.7/htcw_ft6336-0.1.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_gfx/2.10.0/htcw_gfx-2.10.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_gfx-2.10.0.tar.gz",
+    "size_bytes": 830906,
+    "sha256": "c60a0fce735cab9111559cb365017092a5369142aaecaa529b61ea425c1920ef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_gfx/2.10.0/htcw_gfx-2.10.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_gfx/2.10.0/htcw_gfx-2.10.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_gfx/2.2.10/htcw_gfx-2.2.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_gfx-2.2.10.tar.gz",
+    "size_bytes": 1582985,
+    "sha256": "7e9708abb70abbc2579d61c1245f61dcf3c5d4b96c707bc6f57494d17ea79ba6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_gfx/2.2.10/htcw_gfx-2.2.10.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_gfx/2.2.10/htcw_gfx-2.2.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_gfx/2.2.11/htcw_gfx-2.2.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_gfx-2.2.11.tar.gz",
+    "size_bytes": 1582911,
+    "sha256": "995bf84c19ab38bcaeddd581f7570aed917e4745c550d82c491fab9d4223f4f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_gfx/2.2.11/htcw_gfx-2.2.11.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_gfx/2.2.11/htcw_gfx-2.2.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_gfx/2.2.12/htcw_gfx-2.2.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_gfx-2.2.12.tar.gz",
+    "size_bytes": 1582864,
+    "sha256": "36bf276facf79644df6582093dd82179e542c29d8171b70ffa650e8fde0883ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_gfx/2.2.12/htcw_gfx-2.2.12.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_gfx/2.2.12/htcw_gfx-2.2.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_gfx/2.2.13/htcw_gfx-2.2.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_gfx-2.2.13.tar.gz",
+    "size_bytes": 791659,
+    "sha256": "d258b4693a23b86318da0a8fcae46a683897fcd3f13ebc7c31826f4b36000bef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_gfx/2.2.13/htcw_gfx-2.2.13.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_gfx/2.2.13/htcw_gfx-2.2.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_gfx/2.2.14/htcw_gfx-2.2.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_gfx-2.2.14.tar.gz",
+    "size_bytes": 1582790,
+    "sha256": "2c3827e71d44e7e2b3b5dbf8274e58dedaddeb4d7e03bd5e34b13b2bf1db31cf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_gfx/2.2.14/htcw_gfx-2.2.14.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_gfx/2.2.14/htcw_gfx-2.2.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_gfx/2.2.15/htcw_gfx-2.2.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_gfx-2.2.15.tar.gz",
+    "size_bytes": 1583539,
+    "sha256": "6a4ac570e6f45dedc13160d8796f179d8b2fee397cabd7ed5907feef0dc81817",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_gfx/2.2.15/htcw_gfx-2.2.15.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_gfx/2.2.15/htcw_gfx-2.2.15.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_gfx/2.2.16/htcw_gfx-2.2.16.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_gfx-2.2.16.tar.gz",
+    "size_bytes": 1584470,
+    "sha256": "644ea630b68538ea1c225f06712f458ea786acec2c3daa64c8fad013e52008de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_gfx/2.2.16/htcw_gfx-2.2.16.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_gfx/2.2.16/htcw_gfx-2.2.16.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_gfx/2.2.17/htcw_gfx-2.2.17.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_gfx-2.2.17.tar.gz",
+    "size_bytes": 1584558,
+    "sha256": "c231e4218a5efdfaff6418e98562d45b25c35bf2ae641ab0b3e9e2bb00e0bb5d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_gfx/2.2.17/htcw_gfx-2.2.17.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_gfx/2.2.17/htcw_gfx-2.2.17.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_gfx/2.2.5/htcw_gfx-2.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_gfx-2.2.5.tar.gz",
+    "size_bytes": 1582097,
+    "sha256": "76a6d433e32c5c9727f5397d2a355c9fb2813aa35e9bc36794958694f355c9af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_gfx/2.2.5/htcw_gfx-2.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_gfx/2.2.5/htcw_gfx-2.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_gfx/2.2.6/htcw_gfx-2.2.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_gfx-2.2.6.tar.gz",
+    "size_bytes": 1582219,
+    "sha256": "3fea39c00443be11406860cc751d8b5d2377108fa2336950e014f6a5b7c7dba5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_gfx/2.2.6/htcw_gfx-2.2.6.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_gfx/2.2.6/htcw_gfx-2.2.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_gfx/2.2.7/htcw_gfx-2.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_gfx-2.2.7.tar.gz",
+    "size_bytes": 3164834,
+    "sha256": "1dcb02405a44bf4a04ee7e648cab7c250ca38bd7fe157b1e86a176b70f5b5779",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_gfx/2.2.7/htcw_gfx-2.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_gfx/2.2.7/htcw_gfx-2.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_gfx/2.2.8/htcw_gfx-2.2.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_gfx-2.2.8.tar.gz",
+    "size_bytes": 1582668,
+    "sha256": "9d3f3cef0383f4b73827f4b87022d1991a318e31b4f6060ecbcfa1ba42f9d82c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_gfx/2.2.8/htcw_gfx-2.2.8.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_gfx/2.2.8/htcw_gfx-2.2.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_gfx/2.2.9/htcw_gfx-2.2.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_gfx-2.2.9.tar.gz",
+    "size_bytes": 1582693,
+    "sha256": "8eeb1aec6b598441754ab67ae091d747efe8428e46f9517e6a29d5ff4da8cf81",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_gfx/2.2.9/htcw_gfx-2.2.9.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_gfx/2.2.9/htcw_gfx-2.2.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_gfx/2.3.0/htcw_gfx-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_gfx-2.3.0.tar.gz",
+    "size_bytes": 1588327,
+    "sha256": "d67b57a0699099af0fbf303107ea3ff0653e3b8507d8d71e83084ea90887f21f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_gfx/2.3.0/htcw_gfx-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_gfx/2.3.0/htcw_gfx-2.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_gfx/2.3.1/htcw_gfx-2.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_gfx-2.3.1.tar.gz",
+    "size_bytes": 1588361,
+    "sha256": "fbf5f8e9d4e79c56e848b6b07ec5403cd1b441f08fe7755db1907c6cff423312",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_gfx/2.3.1/htcw_gfx-2.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_gfx/2.3.1/htcw_gfx-2.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_gfx/2.3.2/htcw_gfx-2.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_gfx-2.3.2.tar.gz",
+    "size_bytes": 1588289,
+    "sha256": "d9cca62aec6990685de93779265e725d3e767f1747bdb887a8ed65a3cc58d2d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_gfx/2.3.2/htcw_gfx-2.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_gfx/2.3.2/htcw_gfx-2.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_gfx/2.3.3/htcw_gfx-2.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_gfx-2.3.3.tar.gz",
+    "size_bytes": 1588404,
+    "sha256": "7272075d49f9f9889ef01ca14db52c9b82f1f0e6876c6f0d7561330532029dcc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_gfx/2.3.3/htcw_gfx-2.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_gfx/2.3.3/htcw_gfx-2.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_gfx/2.4.0/htcw_gfx-2.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_gfx-2.4.0.tar.gz",
+    "size_bytes": 814299,
+    "sha256": "795d262aebe78bfbaac79ba599f740c08b753178346480aadeebdd564d628fce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_gfx/2.4.0/htcw_gfx-2.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_gfx/2.4.0/htcw_gfx-2.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_gfx/2.4.1/htcw_gfx-2.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_gfx-2.4.1.tar.gz",
+    "size_bytes": 814234,
+    "sha256": "864f76aa48e525e95fb83552d396e1588abbba387dc22fbc2adbf04c2a20bd4d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_gfx/2.4.1/htcw_gfx-2.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_gfx/2.4.1/htcw_gfx-2.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_gfx/2.4.2/htcw_gfx-2.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_gfx-2.4.2.tar.gz",
+    "size_bytes": 815443,
+    "sha256": "789b54f36be4776b09ba73d7974e301d0f964be3cda7f9847f35ac8189bda9ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_gfx/2.4.2/htcw_gfx-2.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_gfx/2.4.2/htcw_gfx-2.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_gfx/2.4.3/htcw_gfx-2.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_gfx-2.4.3.tar.gz",
+    "size_bytes": 815798,
+    "sha256": "854d6cc03e0a37e9864f992429654c7a89d9d68fca6764d3f37c4b8dba99a169",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_gfx/2.4.3/htcw_gfx-2.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_gfx/2.4.3/htcw_gfx-2.4.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_gfx/2.4.4/htcw_gfx-2.4.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_gfx-2.4.4.tar.gz",
+    "size_bytes": 815893,
+    "sha256": "32b3221361d66d7afebb5db1567d85905efb3f9191a9dc9b3d5cc16395c8298a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_gfx/2.4.4/htcw_gfx-2.4.4.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_gfx/2.4.4/htcw_gfx-2.4.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_gfx/2.4.5/htcw_gfx-2.4.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_gfx-2.4.5.tar.gz",
+    "size_bytes": 815903,
+    "sha256": "2f841cea8e21929e3ec06f92018bd46a6ff0ac6cc462dcbc532c635ee4f4f34b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_gfx/2.4.5/htcw_gfx-2.4.5.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_gfx/2.4.5/htcw_gfx-2.4.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_gfx/2.4.6/htcw_gfx-2.4.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_gfx-2.4.6.tar.gz",
+    "size_bytes": 815898,
+    "sha256": "b7887bbf8b0f8d8dcec161ad0efaedd1312d4aede1f537dc5d02557053b5f43e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_gfx/2.4.6/htcw_gfx-2.4.6.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_gfx/2.4.6/htcw_gfx-2.4.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_gfx/2.4.7/htcw_gfx-2.4.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_gfx-2.4.7.tar.gz",
+    "size_bytes": 816273,
+    "sha256": "b86893630d1aa0e3ee9e833797543c9fec1725f6b4fd11f283df5dadc8487e11",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_gfx/2.4.7/htcw_gfx-2.4.7.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_gfx/2.4.7/htcw_gfx-2.4.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_gfx/2.4.8/htcw_gfx-2.4.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_gfx-2.4.8.tar.gz",
+    "size_bytes": 816946,
+    "sha256": "78c7f2c8212675ccb1f74e28ca23be1d8b8fe835c464703b42d1af83a1ef91f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_gfx/2.4.8/htcw_gfx-2.4.8.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_gfx/2.4.8/htcw_gfx-2.4.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_gfx/2.4.9/htcw_gfx-2.4.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_gfx-2.4.9.tar.gz",
+    "size_bytes": 817039,
+    "sha256": "8e8c9ca7105deac5520689fceefd759026fd18ebb2192afe1720500f28914679",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_gfx/2.4.9/htcw_gfx-2.4.9.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_gfx/2.4.9/htcw_gfx-2.4.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_gfx/2.5.0/htcw_gfx-2.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_gfx-2.5.0.tar.gz",
+    "size_bytes": 824355,
+    "sha256": "4bfe269206a4ee02bbadfe850050bd695ad29d407c5a760e27bb23033357a74c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_gfx/2.5.0/htcw_gfx-2.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_gfx/2.5.0/htcw_gfx-2.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_gfx/2.5.1/htcw_gfx-2.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_gfx-2.5.1.tar.gz",
+    "size_bytes": 824355,
+    "sha256": "6681d342042519fe8ab53536c1256a9e7c5abdcbb0118af01765ee1d57a0f0ba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_gfx/2.5.1/htcw_gfx-2.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_gfx/2.5.1/htcw_gfx-2.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_gfx/2.6.0/htcw_gfx-2.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_gfx-2.6.0.tar.gz",
+    "size_bytes": 826425,
+    "sha256": "d5b45452378cdeac0af77c28748012f53b378350b45ffbc77b97027e3b5d63c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_gfx/2.6.0/htcw_gfx-2.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_gfx/2.6.0/htcw_gfx-2.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_gfx/2.6.1/htcw_gfx-2.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_gfx-2.6.1.tar.gz",
+    "size_bytes": 826840,
+    "sha256": "b1d9e29ad7d050d558f5d8ed95e51caed802570e09f27ce95b2fea959dded8f3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_gfx/2.6.1/htcw_gfx-2.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_gfx/2.6.1/htcw_gfx-2.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_gfx/2.6.2/htcw_gfx-2.6.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_gfx-2.6.2.tar.gz",
+    "size_bytes": 889417,
+    "sha256": "e9dbb83e44d7e0ef36d3e9e331364670c12f3638af596f9ab76369bde9b267fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_gfx/2.6.2/htcw_gfx-2.6.2.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_gfx/2.6.2/htcw_gfx-2.6.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_gfx/2.6.3/htcw_gfx-2.6.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_gfx-2.6.3.tar.gz",
+    "size_bytes": 826822,
+    "sha256": "fbb6684f706975408a85e35eb5561266ba3727f9cd51c5514b5eab0093987cd4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_gfx/2.6.3/htcw_gfx-2.6.3.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_gfx/2.6.3/htcw_gfx-2.6.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_gfx/2.6.4/htcw_gfx-2.6.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_gfx-2.6.4.tar.gz",
+    "size_bytes": 828372,
+    "sha256": "99b6aca730f9a1eac83a3c9048056fd1cbe769623754364e1e852a411cf064eb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_gfx/2.6.4/htcw_gfx-2.6.4.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_gfx/2.6.4/htcw_gfx-2.6.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_gfx/2.7.0/htcw_gfx-2.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_gfx-2.7.0.tar.gz",
+    "size_bytes": 832642,
+    "sha256": "2f81e152178d1c51cc67a35ba50abeeebde99d135dedd7d6ee6aac7a10db70b6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_gfx/2.7.0/htcw_gfx-2.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_gfx/2.7.0/htcw_gfx-2.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_gfx/2.8.0/htcw_gfx-2.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_gfx-2.8.0.tar.gz",
+    "size_bytes": 907794,
+    "sha256": "4c45df21371d5a94fa03611b2f74721b34e04a524ed49f7a0d5b69ce431fd2e7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_gfx/2.8.0/htcw_gfx-2.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_gfx/2.8.0/htcw_gfx-2.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_gfx/2.8.1/htcw_gfx-2.8.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_gfx-2.8.1.tar.gz",
+    "size_bytes": 833179,
+    "sha256": "9d1aa8ccf3209a2bab234958b9f301e9f19c4cca5de1f340cb5151ade0f91f68",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_gfx/2.8.1/htcw_gfx-2.8.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_gfx/2.8.1/htcw_gfx-2.8.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_gfx/2.8.2/htcw_gfx-2.8.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_gfx-2.8.2.tar.gz",
+    "size_bytes": 833213,
+    "sha256": "e3b8dc66f9340f858a908cc3bde979614d1ce721c0b9299e6b32652b55553333",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_gfx/2.8.2/htcw_gfx-2.8.2.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_gfx/2.8.2/htcw_gfx-2.8.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_gfx/2.9.0/htcw_gfx-2.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_gfx-2.9.0.tar.gz",
+    "size_bytes": 830388,
+    "sha256": "45c8615aea852dd4044bc573621de839f324537fdfbb313b9783a10eefa9b3a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_gfx/2.9.0/htcw_gfx-2.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_gfx/2.9.0/htcw_gfx-2.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_gfx/2.9.1/htcw_gfx-2.9.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_gfx-2.9.1.tar.gz",
+    "size_bytes": 830476,
+    "sha256": "099e14de367b2177eaa11bc6def0b9236c6d167019807e3ac5791b7c23d69961",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_gfx/2.9.1/htcw_gfx-2.9.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_gfx/2.9.1/htcw_gfx-2.9.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_gfx/2.9.2/htcw_gfx-2.9.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_gfx-2.9.2.tar.gz",
+    "size_bytes": 830228,
+    "sha256": "1d48e568a93ccaebe138e65eda5bdbedd39c8d8efd3ad3cd8d6f1cd80102e7cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_gfx/2.9.2/htcw_gfx-2.9.2.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_gfx/2.9.2/htcw_gfx-2.9.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_gfx/2.9.3/htcw_gfx-2.9.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_gfx-2.9.3.tar.gz",
+    "size_bytes": 830307,
+    "sha256": "4334aa02a95cf43ea5f511c4ee339a16f6f9e75d9cb825d101af35dd5855c3a7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_gfx/2.9.3/htcw_gfx-2.9.3.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_gfx/2.9.3/htcw_gfx-2.9.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_gfx/2.9.4/htcw_gfx-2.9.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_gfx-2.9.4.tar.gz",
+    "size_bytes": 830300,
+    "sha256": "cf6f588a892f57a2d09e924df7ca801accfcd8103f003f128fa064a88a033bc1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_gfx/2.9.4/htcw_gfx-2.9.4.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_gfx/2.9.4/htcw_gfx-2.9.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_gt911/0.1.0/htcw_gt911-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_gt911-0.1.0.tar.gz",
+    "size_bytes": 3640,
+    "sha256": "c3bf0ae3c6d30533bdea53cfb55b085c039cbb47a863b77edba4464fd1daf12f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_gt911/0.1.0/htcw_gt911-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_gt911/0.1.0/htcw_gt911-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_i2s_audio/0.1.3/htcw_i2s_audio-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_i2s_audio-0.1.3.tar.gz",
+    "size_bytes": 3479,
+    "sha256": "210d530aae060bebb67f3184038f3fa73f57b28816fbe34b29d4fb7b4e52b39a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_i2s_audio/0.1.3/htcw_i2s_audio-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_i2s_audio/0.1.3/htcw_i2s_audio-0.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_ili9341/1.3.31/htcw_ili9341-1.3.31.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_ili9341-1.3.31.tar.gz",
+    "size_bytes": 251014,
+    "sha256": "e947227c799ec2b82529645610a384c0b9ba7d970e03ac621cbd062263290811",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_ili9341/1.3.31/htcw_ili9341-1.3.31.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_ili9341/1.3.31/htcw_ili9341-1.3.31.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_ili9488/0.9.1/htcw_ili9488-0.9.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_ili9488-0.9.1.tar.gz",
+    "size_bytes": 250082,
+    "sha256": "4ed9ae44a16348dd42df9f59d2a15b4b738817db2628264d99a23e05bba74196",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_ili9488/0.9.1/htcw_ili9488-0.9.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_ili9488/0.9.1/htcw_ili9488-0.9.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_io/1.4.0/htcw_io-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_io-1.4.0.tar.gz",
+    "size_bytes": 8759,
+    "sha256": "7ad7dbc3a6c76f845db115d15280c8b87113c1dc96572b4be811b7b09849d35e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_io/1.4.0/htcw_io-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_io/1.4.0/htcw_io-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_io/1.4.1/htcw_io-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_io-1.4.1.tar.gz",
+    "size_bytes": 8974,
+    "sha256": "770688b08756b247b849aa98ad3cf3fcb9e64cf0c802ca00f130b64304b28b7f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_io/1.4.1/htcw_io-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_io/1.4.1/htcw_io-1.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_io/1.4.2/htcw_io-1.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_io-1.4.2.tar.gz",
+    "size_bytes": 9200,
+    "sha256": "48eee9f00f69b318488a64621209899a83450b781d92107c7969d6ccd1669125",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_io/1.4.2/htcw_io-1.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_io/1.4.2/htcw_io-1.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_io/1.4.3/htcw_io-1.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_io-1.4.3.tar.gz",
+    "size_bytes": 9201,
+    "sha256": "70c3e0d4694885fc1ecaa3196d5203f2c512797e32a3cf232504e1b15bda82bd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_io/1.4.3/htcw_io-1.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_io/1.4.3/htcw_io-1.4.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_ip5306/0.1.2/htcw_ip5306-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_ip5306-0.1.2.tar.gz",
+    "size_bytes": 4368,
+    "sha256": "0be4108ff42476cc438c0d92b7f16c88a2f08ce4c651b4d7f4a7529773d524cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_ip5306/0.1.2/htcw_ip5306-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_ip5306/0.1.2/htcw_ip5306-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_json/0.2.6/htcw_json-0.2.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_json-0.2.6.tar.gz",
+    "size_bytes": 39064,
+    "sha256": "d838d24eb88d99cc0c04c57828640450397d44a41fe3ed6f29b2e968bf08f6be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_json/0.2.6/htcw_json-0.2.6.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_json/0.2.6/htcw_json-0.2.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_json/0.2.7/htcw_json-0.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_json-0.2.7.tar.gz",
+    "size_bytes": 38981,
+    "sha256": "131aff12f35801830a5cdef713f2a800733d117281315a9e0a046b38fc810589",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_json/0.2.7/htcw_json-0.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_json/0.2.7/htcw_json-0.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_lcd_miser/0.2.2/htcw_lcd_miser-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_lcd_miser-0.2.2.tar.gz",
+    "size_bytes": 4523,
+    "sha256": "f22c0ef18591383fd983fcd925c45c5f42ece7a0faa9163604e8fcfd7d2b149b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_lcd_miser/0.2.2/htcw_lcd_miser-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_lcd_miser/0.2.2/htcw_lcd_miser-0.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_lilygot54in7/1.0.2/htcw_lilygot54in7-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_lilygot54in7-1.0.2.tar.gz",
+    "size_bytes": 292852,
+    "sha256": "977ec1ed325924fd83d7df24251e69e14dc8a9fe0b04afc528588b2d4600b51a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_lilygot54in7/1.0.2/htcw_lilygot54in7-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_lilygot54in7/1.0.2/htcw_lilygot54in7-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_m5_stack_core2_power/0.1.0/htcw_m5_stack_core2_power-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_m5_stack_core2_power-0.1.0.tar.gz",
+    "size_bytes": 6497,
+    "sha256": "e04510eb32739708dadb48c467dc3672b0cb3114786aa46ee877e82c821c8e0c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_m5_stack_core2_power/0.1.0/htcw_m5_stack_core2_power-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_m5_stack_core2_power/0.1.0/htcw_m5_stack_core2_power-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_m5_stack_core2_power/0.1.1/htcw_m5_stack_core2_power-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_m5_stack_core2_power-0.1.1.tar.gz",
+    "size_bytes": 6515,
+    "sha256": "a54ceeb44830a2ccd90f6fe6d60aafc2f9d104ebb335a270d9a434e7fada85b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_m5_stack_core2_power/0.1.1/htcw_m5_stack_core2_power-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_m5_stack_core2_power/0.1.1/htcw_m5_stack_core2_power-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_m5core2_power/0.1.4/htcw_m5core2_power-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_m5core2_power-0.1.4.tar.gz",
+    "size_bytes": 6690,
+    "sha256": "f66f6554f193cde66a77e5597cee8aca2df8b01d0625c868aea3967360650bab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_m5core2_power/0.1.4/htcw_m5core2_power-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_m5core2_power/0.1.4/htcw_m5core2_power-0.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_m5tough_power/0.1.1/htcw_m5tough_power-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_m5tough_power-0.1.1.tar.gz",
+    "size_bytes": 6832,
+    "sha256": "851e215ff30ff4dfbe840283432d22f975a54124247c157e9aba7a9c9b7607b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_m5tough_power/0.1.1/htcw_m5tough_power-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_m5tough_power/0.1.1/htcw_m5tough_power-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_max7219/2.0.0/htcw_max7219-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_max7219-2.0.0.tar.gz",
+    "size_bytes": 8447,
+    "sha256": "1f98bad5c600bfe9f7a838a26984c07210e950aae2ad4b213cff3a423e725abd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_max7219/2.0.0/htcw_max7219-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_max7219/2.0.0/htcw_max7219-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_ml/0.2.10/htcw_ml-0.2.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_ml-0.2.10.tar.gz",
+    "size_bytes": 22833,
+    "sha256": "fe25138cd39215df7dcc94a4c1d6dc45a80ec0673b87e9d5018b11c67d33580b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_ml/0.2.10/htcw_ml-0.2.10.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_ml/0.2.10/htcw_ml-0.2.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_ml/0.2.7/htcw_ml-0.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_ml-0.2.7.tar.gz",
+    "size_bytes": 22349,
+    "sha256": "0dfbc8ae096bdd47efa7c0d80a4d584b32f97bfb6c87df015016f40f3f0e03bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_ml/0.2.7/htcw_ml-0.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_ml/0.2.7/htcw_ml-0.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_ml/0.2.8/htcw_ml-0.2.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_ml-0.2.8.tar.gz",
+    "size_bytes": 22300,
+    "sha256": "7d2d648373f1f3233d242a612dd2a3f0c9b127609b54d6eba5fa148332f3bb2b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_ml/0.2.8/htcw_ml-0.2.8.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_ml/0.2.8/htcw_ml-0.2.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_ml/0.2.9/htcw_ml-0.2.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_ml-0.2.9.tar.gz",
+    "size_bytes": 22498,
+    "sha256": "eac8f8c7ced286137e8298903ecd82243d16e370b74096160c6deff239cfbdda",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_ml/0.2.9/htcw_ml-0.2.9.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_ml/0.2.9/htcw_ml-0.2.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_mpm_parser/0.3.0/htcw_mpm_parser-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_mpm_parser-0.3.0.tar.gz",
+    "size_bytes": 6777,
+    "sha256": "abf088941314ac83bfd5081d072b214a301c8eb23ed53fbcffa01e07cd363dfe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_mpm_parser/0.3.0/htcw_mpm_parser-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_mpm_parser/0.3.0/htcw_mpm_parser-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_mpu6886/0.1.9/htcw_mpu6886-0.1.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_mpu6886-0.1.9.tar.gz",
+    "size_bytes": 32675,
+    "sha256": "6cf4c532e2b3d760207441311adea8be8d130fe79534d38dee32aa1562895137",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_mpu6886/0.1.9/htcw_mpu6886-0.1.9.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_mpu6886/0.1.9/htcw_mpu6886-0.1.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_multibutton/0.1.0/htcw_multibutton-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_multibutton-0.1.0.tar.gz",
+    "size_bytes": 5144,
+    "sha256": "8a2883ec1f1f093591c8911c4517eb7b22639523d646b62ea554f4ff4f2c98a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_multibutton/0.1.0/htcw_multibutton-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_multibutton/0.1.0/htcw_multibutton-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_player/0.1.8/htcw_player-0.1.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_player-0.1.8.tar.gz",
+    "size_bytes": 496649,
+    "sha256": "09c25dae9846a55fcdcd6d4af997889f3aee174351aab371142b6070afd1bc24",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_player/0.1.8/htcw_player-0.1.8.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_player/0.1.8/htcw_player-0.1.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_pool/0.3.6/htcw_pool-0.3.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_pool-0.3.6.tar.gz",
+    "size_bytes": 4694,
+    "sha256": "78269e5b65d5c06f557f63ff60f13d24df79e030f610ffecfd05b84be66ef74c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_pool/0.3.6/htcw_pool-0.3.6.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_pool/0.3.6/htcw_pool-0.3.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_pwm/1.1.1/htcw_pwm-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_pwm-1.1.1.tar.gz",
+    "size_bytes": 3635,
+    "sha256": "641d4e80b03ad05b66db45c47eb163c645990ba1b689294f31faf623585c918d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_pwm/1.1.1/htcw_pwm-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_pwm/1.1.1/htcw_pwm-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_ra8875/0.9.94/htcw_ra8875-0.9.94.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_ra8875-0.9.94.tar.gz",
+    "size_bytes": 249999,
+    "sha256": "37b73064b25cb65d287e2754d520c207749e550bd53d3e0a27f8e800277befd8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_ra8875/0.9.94/htcw_ra8875-0.9.94.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_ra8875/0.9.94/htcw_ra8875-0.9.94.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_ramp/0.1.2/htcw_ramp-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_ramp-0.1.2.tar.gz",
+    "size_bytes": 2627,
+    "sha256": "5c549c8818679227ea956f9bfe265b1e64e050c0813d2707cede54d7812ec0f5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_ramp/0.1.2/htcw_ramp-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_ramp/0.1.2/htcw_ramp-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_render_stats/0.1.0/htcw_render_stats-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_render_stats-0.1.0.tar.gz",
+    "size_bytes": 23793,
+    "sha256": "e2808471d2bb4848ab1591e3dcf7dde6c4e4f84220c17f734bb71c0ebe84e2fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_render_stats/0.1.0/htcw_render_stats-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_render_stats/0.1.0/htcw_render_stats-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_rgb_pwm/1.1.1/htcw_rgb_pwm-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_rgb_pwm-1.1.1.tar.gz",
+    "size_bytes": 4263,
+    "sha256": "01cd03fcbdf3809996688a07b191330a83c12d29b18e5646551434d77e6bcd16",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_rgb_pwm/1.1.1/htcw_rgb_pwm-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_rgb_pwm/1.1.1/htcw_rgb_pwm-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_rmt_ir/0.1.0/htcw_rmt_ir-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_rmt_ir-0.1.0.tar.gz",
+    "size_bytes": 6546,
+    "sha256": "9b2fc809c89ac4e4e645d4cd08a85083fd22474e93f787bee3af261c0941ccf0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_rmt_ir/0.1.0/htcw_rmt_ir-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_rmt_ir/0.1.0/htcw_rmt_ir-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_rmt_ir/0.2.0/htcw_rmt_ir-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_rmt_ir-0.2.0.tar.gz",
+    "size_bytes": 7425,
+    "sha256": "4fc22ffbcb6a4ba5f3ec24907f7e882d2af940170e903d20afd993ca2863ff72",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_rmt_ir/0.2.0/htcw_rmt_ir-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_rmt_ir/0.2.0/htcw_rmt_ir-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_rmt_ir/0.2.1/htcw_rmt_ir-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_rmt_ir-0.2.1.tar.gz",
+    "size_bytes": 7433,
+    "sha256": "36a0333f85524e7ecaf177009293e20e1de3ba52caf88d45948ecfafc240a2a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_rmt_ir/0.2.1/htcw_rmt_ir-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_rmt_ir/0.2.1/htcw_rmt_ir-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_rmt_led_strip/0.2.2/htcw_rmt_led_strip-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_rmt_led_strip-0.2.2.tar.gz",
+    "size_bytes": 9549,
+    "sha256": "e7f987b6ec3d6c59772504edec7af846f237d9110709ee03efbe7cb2b2755191",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_rmt_led_strip/0.2.2/htcw_rmt_led_strip-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_rmt_led_strip/0.2.2/htcw_rmt_led_strip-0.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_sfx/0.8.5/htcw_sfx-0.8.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_sfx-0.8.5.tar.gz",
+    "size_bytes": 20564,
+    "sha256": "ecdda88b576bd68fba33097047d1138869ec99c5d6dc2d7980d85e060335f886",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_sfx/0.8.5/htcw_sfx-0.8.5.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_sfx/0.8.5/htcw_sfx-0.8.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_ssd1306/1.2.4/htcw_ssd1306-1.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_ssd1306-1.2.4.tar.gz",
+    "size_bytes": 53297,
+    "sha256": "5014b659ac734faa699f0a1a3e0dc1c41ef0c4a55dbe2f6e6af80baba8860ce9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_ssd1306/1.2.4/htcw_ssd1306-1.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_ssd1306/1.2.4/htcw_ssd1306-1.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_ssd1351/1.1.0/htcw_ssd1351-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_ssd1351-1.1.0.tar.gz",
+    "size_bytes": 247624,
+    "sha256": "e93a71c922e44c0dc66a44c351bacc58accb6b7eec6169bd49fc3a29166c2919",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_ssd1351/1.1.0/htcw_ssd1351-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_ssd1351/1.1.0/htcw_ssd1351-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_st7735/1.1.1/htcw_st7735-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_st7735-1.1.1.tar.gz",
+    "size_bytes": 251151,
+    "sha256": "83dc5cc36eac8e8190ecb2e7efd2ac550c10fd3b200b4d8616372c2bf769c48f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_st7735/1.1.1/htcw_st7735-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_st7735/1.1.1/htcw_st7735-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_st7789/1.3.1/htcw_st7789-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_st7789-1.3.1.tar.gz",
+    "size_bytes": 250471,
+    "sha256": "8506789b251ff8eea84728cc8243e02789ab9f8049635fed67852e9bf17992e7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_st7789/1.3.1/htcw_st7789-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_st7789/1.3.1/htcw_st7789-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_tft_io/1.1.53/htcw_tft_io-1.1.53.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_tft_io-1.1.53.tar.gz",
+    "size_bytes": 12273,
+    "sha256": "8f77718d25fe3814e58e05bd9f189ef27bf0504befcd592dc3b2bdd72e50792c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_tft_io/1.1.53/htcw_tft_io-1.1.53.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_tft_io/1.1.53/htcw_tft_io-1.1.53.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_timer/0.1.0/htcw_timer-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_timer-0.1.0.tar.gz",
+    "size_bytes": 2131,
+    "sha256": "d9621b9f2d9e3ab4b46c93375e28cda44fdbf05fcf387e0e1fa7500e26dedf32",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_timer/0.1.0/htcw_timer-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_timer/0.1.0/htcw_timer-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_ttgo/0.1.0/htcw_ttgo-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_ttgo-0.1.0.tar.gz",
+    "size_bytes": 21961,
+    "sha256": "5da1663df4248762d323ca4a40a2e70dc5cf56291e3662995e34b8ab34194756",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_ttgo/0.1.0/htcw_ttgo-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_ttgo/0.1.0/htcw_ttgo-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_ttgo/0.2.0/htcw_ttgo-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_ttgo-0.2.0.tar.gz",
+    "size_bytes": 3017,
+    "sha256": "9ef12a1588f9f237d1b8d79bd86bb0891ee6116fc45ada6f580ee910dc1fc936",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_ttgo/0.2.0/htcw_ttgo-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_ttgo/0.2.0/htcw_ttgo-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_ttgo/0.2.1/htcw_ttgo-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_ttgo-0.2.1.tar.gz",
+    "size_bytes": 3040,
+    "sha256": "f532f01d739c3fdde6157ba66df498ba9f2066f8fef4e3795e91301e85e2a3f5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_ttgo/0.2.1/htcw_ttgo-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_ttgo/0.2.1/htcw_ttgo-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_ttgo/0.2.10/htcw_ttgo-0.2.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_ttgo-0.2.10.tar.gz",
+    "size_bytes": 7536,
+    "sha256": "f1ee2ae56c25bf7a757a69e5ed63a28d6793d42420699531c5552c7529727042",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_ttgo/0.2.10/htcw_ttgo-0.2.10.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_ttgo/0.2.10/htcw_ttgo-0.2.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_ttgo/0.2.11/htcw_ttgo-0.2.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_ttgo-0.2.11.tar.gz",
+    "size_bytes": 7544,
+    "sha256": "df8b9df5022f9b87836c007107e21b52c9a8cca50e60332800a751e2b2c5a187",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_ttgo/0.2.11/htcw_ttgo-0.2.11.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_ttgo/0.2.11/htcw_ttgo-0.2.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_ttgo/0.2.14/htcw_ttgo-0.2.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_ttgo-0.2.14.tar.gz",
+    "size_bytes": 7950,
+    "sha256": "241eecda0159f074cdcacbea73bcf218c70ca8d009e16014bf2fa0c37a918582",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_ttgo/0.2.14/htcw_ttgo-0.2.14.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_ttgo/0.2.14/htcw_ttgo-0.2.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_ttgo/0.2.15/htcw_ttgo-0.2.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_ttgo-0.2.15.tar.gz",
+    "size_bytes": 7952,
+    "sha256": "b3e57dac28c7f82617afbaad31f5ad8a883cb6b3aa14527caf3708f6829c2035",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_ttgo/0.2.15/htcw_ttgo-0.2.15.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_ttgo/0.2.15/htcw_ttgo-0.2.15.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_ttgo/0.2.16/htcw_ttgo-0.2.16.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_ttgo-0.2.16.tar.gz",
+    "size_bytes": 8645,
+    "sha256": "02582bd87ac5c73e31decc7844dfd824002ec52cf72e31ca2dadacde0434fad7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_ttgo/0.2.16/htcw_ttgo-0.2.16.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_ttgo/0.2.16/htcw_ttgo-0.2.16.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_ttgo/0.2.2/htcw_ttgo-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_ttgo-0.2.2.tar.gz",
+    "size_bytes": 3043,
+    "sha256": "f82638246e9ea3a734317910c92c83841e0934d8ea27fbb96c44cef09e81d9f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_ttgo/0.2.2/htcw_ttgo-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_ttgo/0.2.2/htcw_ttgo-0.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_ttgo/0.2.3/htcw_ttgo-0.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_ttgo-0.2.3.tar.gz",
+    "size_bytes": 3772,
+    "sha256": "3605dff723aea397bc6f99fa0f934d3cc986c04005889e1f8487a96cbeb819d2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_ttgo/0.2.3/htcw_ttgo-0.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_ttgo/0.2.3/htcw_ttgo-0.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_ttgo/0.2.4/htcw_ttgo-0.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_ttgo-0.2.4.tar.gz",
+    "size_bytes": 4848,
+    "sha256": "5312d3d7603da6022b96ee52a2b0933f6b937aa0450c5f0c3e3e8745d25cd08c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_ttgo/0.2.4/htcw_ttgo-0.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_ttgo/0.2.4/htcw_ttgo-0.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_ttgo/0.2.5/htcw_ttgo-0.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_ttgo-0.2.5.tar.gz",
+    "size_bytes": 4903,
+    "sha256": "cc0753f73c909231659114da9ec1ae1bc1581576ed1c67b26535a39cbf18607b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_ttgo/0.2.5/htcw_ttgo-0.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_ttgo/0.2.5/htcw_ttgo-0.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_ttgo/0.2.6/htcw_ttgo-0.2.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_ttgo-0.2.6.tar.gz",
+    "size_bytes": 7395,
+    "sha256": "eb1f1037bb0fa803696ed6462a28f12cd788e92f9d045c83914d1eab6d1ef1b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_ttgo/0.2.6/htcw_ttgo-0.2.6.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_ttgo/0.2.6/htcw_ttgo-0.2.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_ttgo/0.2.7/htcw_ttgo-0.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_ttgo-0.2.7.tar.gz",
+    "size_bytes": 7387,
+    "sha256": "6b1eed441a02922c4dea10f95603ea83cf25028b4f0d4aff536b07cd7fb9a172",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_ttgo/0.2.7/htcw_ttgo-0.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_ttgo/0.2.7/htcw_ttgo-0.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_ttgo/0.2.8/htcw_ttgo-0.2.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_ttgo-0.2.8.tar.gz",
+    "size_bytes": 7390,
+    "sha256": "46b61be3151b1b6ca3af6b55686531b064fb440626224f8ac4840766f510f841",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_ttgo/0.2.8/htcw_ttgo-0.2.8.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_ttgo/0.2.8/htcw_ttgo-0.2.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_ttgo/0.2.9/htcw_ttgo-0.2.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_ttgo-0.2.9.tar.gz",
+    "size_bytes": 7460,
+    "sha256": "6d66342b86e01df565b49bd5f09cb8be1ab157109f5ca4a4c9e3201cf4f52d7e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_ttgo/0.2.9/htcw_ttgo-0.2.9.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_ttgo/0.2.9/htcw_ttgo-0.2.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_ttgo_power/0.1.0/htcw_ttgo_power-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_ttgo_power-0.1.0.tar.gz",
+    "size_bytes": 3180,
+    "sha256": "b59a970c8b562b46ebd6f593de64460f71bc070055ff25e99678726af0e08e2a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_ttgo_power/0.1.0/htcw_ttgo_power-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_ttgo_power/0.1.0/htcw_ttgo_power-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_ttgo_power/0.1.1/htcw_ttgo_power-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_ttgo_power-0.1.1.tar.gz",
+    "size_bytes": 3191,
+    "sha256": "d862a2c8ea6080e7f9e8aff96ee8584d8f7a202aadada062d75af2bf2a1317e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_ttgo_power/0.1.1/htcw_ttgo_power-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_ttgo_power/0.1.1/htcw_ttgo_power-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_ttgo_power/0.1.2/htcw_ttgo_power-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_ttgo_power-0.1.2.tar.gz",
+    "size_bytes": 3195,
+    "sha256": "52e87806ab3f187d2e9c5e66583fefdb16864b359bedcb99f8822bde25ed1dad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_ttgo_power/0.1.2/htcw_ttgo_power-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_ttgo_power/0.1.2/htcw_ttgo_power-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.10.0/htcw_uix-1.10.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.10.0.tar.gz",
+    "size_bytes": 181015,
+    "sha256": "70e2a64a997fb8171a1a443ec7d655bb7246687e928a47b6e9a95c65fe81b68e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.10.0/htcw_uix-1.10.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.10.0/htcw_uix-1.10.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.10.1/htcw_uix-1.10.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.10.1.tar.gz",
+    "size_bytes": 181019,
+    "sha256": "83fd2f4ac8c28725355a09600e35e6db0c16d93ca32e7984e6b01027031de1ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.10.1/htcw_uix-1.10.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.10.1/htcw_uix-1.10.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.10.2/htcw_uix-1.10.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.10.2.tar.gz",
+    "size_bytes": 181020,
+    "sha256": "b9a63c928a35163a8a51c4890c9c5e4cda8547c76981f2c816a0f4468a2d1d55",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.10.2/htcw_uix-1.10.2.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.10.2/htcw_uix-1.10.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.10.4/htcw_uix-1.10.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.10.4.tar.gz",
+    "size_bytes": 181004,
+    "sha256": "887f72a10f0d98081f13404522b1c22908d1452a0f9addfd785b98e005303e1d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.10.4/htcw_uix-1.10.4.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.10.4/htcw_uix-1.10.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.11.0/htcw_uix-1.11.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.11.0.tar.gz",
+    "size_bytes": 181019,
+    "sha256": "e8ee38f4ba9fbaa62f6ac69877a2dc55fb806be7fb34e56e0d0aed277434c5c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.11.0/htcw_uix-1.11.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.11.0/htcw_uix-1.11.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.11.1/htcw_uix-1.11.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.11.1.tar.gz",
+    "size_bytes": 181024,
+    "sha256": "5b34ec6142fa6abaced89fb5fca3fc3bb4bfa865d29bef14dcef1820f093bec5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.11.1/htcw_uix-1.11.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.11.1/htcw_uix-1.11.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.11.2/htcw_uix-1.11.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.11.2.tar.gz",
+    "size_bytes": 181018,
+    "sha256": "f168c95fd48ac8dedc082142d6653505f1e0b3a26afcc833de290a89c4df4e78",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.11.2/htcw_uix-1.11.2.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.11.2/htcw_uix-1.11.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.11.3/htcw_uix-1.11.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.11.3.tar.gz",
+    "size_bytes": 181022,
+    "sha256": "b35a218cf89de32a93f362b50d64599c2b1d0a4e8031c6ab1026d7812988d475",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.11.3/htcw_uix-1.11.3.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.11.3/htcw_uix-1.11.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.11.4/htcw_uix-1.11.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.11.4.tar.gz",
+    "size_bytes": 181019,
+    "sha256": "b1a55a8c0b4699733e94b601f27e979593851cf214f8fc383efe1283e497223e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.11.4/htcw_uix-1.11.4.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.11.4/htcw_uix-1.11.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.11.5/htcw_uix-1.11.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.11.5.tar.gz",
+    "size_bytes": 181028,
+    "sha256": "fa2bf82537005c5082922dbc3861ebfd2436966c767f69768de0defb2ec0cfa3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.11.5/htcw_uix-1.11.5.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.11.5/htcw_uix-1.11.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.11.6/htcw_uix-1.11.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.11.6.tar.gz",
+    "size_bytes": 181273,
+    "sha256": "5f9b7341f299d6f563a6d0a9290ffa32c1ac4c741fe93e7c40eea99d0ac25ad4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.11.6/htcw_uix-1.11.6.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.11.6/htcw_uix-1.11.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.11.7/htcw_uix-1.11.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.11.7.tar.gz",
+    "size_bytes": 181317,
+    "sha256": "7448238b75a5de8d24f89646696f26c8cb7a106daa4a99a297710acc7528cfb1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.11.7/htcw_uix-1.11.7.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.11.7/htcw_uix-1.11.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.11.8/htcw_uix-1.11.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.11.8.tar.gz",
+    "size_bytes": 181285,
+    "sha256": "3028b4f668b12794c10212bd16aa40b87b23438dd21d6241e1d1f5197766f1ca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.11.8/htcw_uix-1.11.8.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.11.8/htcw_uix-1.11.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.11.9/htcw_uix-1.11.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.11.9.tar.gz",
+    "size_bytes": 181305,
+    "sha256": "e307a82958db7ac6381050590109b62b743baca531a9c9b55484f38bb14b01b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.11.9/htcw_uix-1.11.9.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.11.9/htcw_uix-1.11.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.12.0/htcw_uix-1.12.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.12.0.tar.gz",
+    "size_bytes": 181312,
+    "sha256": "18f2211f2b693dd422e7ea02318ca4ea564d2eedf46b1be78bd13d5f4eaeb00b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.12.0/htcw_uix-1.12.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.12.0/htcw_uix-1.12.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.12.1/htcw_uix-1.12.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.12.1.tar.gz",
+    "size_bytes": 181317,
+    "sha256": "d48b9efcb9349c8b4acc9f205adbc9f43b1d79b5e6dbf23f1b0c489616ddbffd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.12.1/htcw_uix-1.12.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.12.1/htcw_uix-1.12.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.13.0/htcw_uix-1.13.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.13.0.tar.gz",
+    "size_bytes": 181310,
+    "sha256": "46fae77d4bef5f77a760730f112d9c293f05569e106cc1b12f8b982a43f770da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.13.0/htcw_uix-1.13.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.13.0/htcw_uix-1.13.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.13.1/htcw_uix-1.13.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.13.1.tar.gz",
+    "size_bytes": 181383,
+    "sha256": "f80a2aadc87e2ca561137a57842df9a7b65cb0815f871304ccc42831c9c16e18",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.13.1/htcw_uix-1.13.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.13.1/htcw_uix-1.13.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.13.2/htcw_uix-1.13.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.13.2.tar.gz",
+    "size_bytes": 181399,
+    "sha256": "af3a74a2e5322bd1ab0761e997e1cf2324ecbdc46ff967224cffa1dabd586fd1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.13.2/htcw_uix-1.13.2.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.13.2/htcw_uix-1.13.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.14.0/htcw_uix-1.14.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.14.0.tar.gz",
+    "size_bytes": 183386,
+    "sha256": "c48eb8551b0b08318dc0da163665d86df1b4a096f4f1dc4ebe3dc8f511686c18",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.14.0/htcw_uix-1.14.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.14.0/htcw_uix-1.14.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.14.1/htcw_uix-1.14.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.14.1.tar.gz",
+    "size_bytes": 183390,
+    "sha256": "b6bc18e2c37c5c98dfda5e018bfee9573eed6888f489a8aa23d6331422a386d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.14.1/htcw_uix-1.14.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.14.1/htcw_uix-1.14.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.14.2/htcw_uix-1.14.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.14.2.tar.gz",
+    "size_bytes": 183396,
+    "sha256": "6094406db31d592343893fbeb9be0db33677fee0bbdca1146bc0cb1252af654c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.14.2/htcw_uix-1.14.2.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.14.2/htcw_uix-1.14.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.15.0/htcw_uix-1.15.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.15.0.tar.gz",
+    "size_bytes": 183394,
+    "sha256": "8595636bda7eb4fbf8a1b422abf6d28e7f0ff9cfc2fc5c9c0e15c95f5ce417f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.15.0/htcw_uix-1.15.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.15.0/htcw_uix-1.15.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.16.0/htcw_uix-1.16.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.16.0.tar.gz",
+    "size_bytes": 183386,
+    "sha256": "4a339238bbf33b64ed9dcebec620bb53a5232b40386be302ca2dc2731a134939",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.16.0/htcw_uix-1.16.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.16.0/htcw_uix-1.16.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.16.1/htcw_uix-1.16.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.16.1.tar.gz",
+    "size_bytes": 183382,
+    "sha256": "fccc7fdbda7f99ccdcc8b0cd751c10923967cf1907caa759bd44eeebc7a5e0c1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.16.1/htcw_uix-1.16.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.16.1/htcw_uix-1.16.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.16.2/htcw_uix-1.16.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.16.2.tar.gz",
+    "size_bytes": 183380,
+    "sha256": "147075a0819b1d98456bf915e1904b4e70f8401bde6ad2b1f2ddae8b7ced8fb0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.16.2/htcw_uix-1.16.2.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.16.2/htcw_uix-1.16.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.17.0/htcw_uix-1.17.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.17.0.tar.gz",
+    "size_bytes": 183690,
+    "sha256": "293322abdbe97dd33920f2c27ccc289986a9ea8a7e5a3c7c055ad5f14d56c5e1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.17.0/htcw_uix-1.17.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.17.0/htcw_uix-1.17.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.17.1/htcw_uix-1.17.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.17.1.tar.gz",
+    "size_bytes": 183671,
+    "sha256": "68f9b8eda73f1dcb417f4e97849bb929c1eff507fdbade8661df1cf28a3bce21",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.17.1/htcw_uix-1.17.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.17.1/htcw_uix-1.17.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.18.0/htcw_uix-1.18.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.18.0.tar.gz",
+    "size_bytes": 182926,
+    "sha256": "cd0196c1bdf30bed89742ba581ee2b45d021c08f22ee5a173b7b5281ab144335",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.18.0/htcw_uix-1.18.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.18.0/htcw_uix-1.18.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.19.0/htcw_uix-1.19.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.19.0.tar.gz",
+    "size_bytes": 183441,
+    "sha256": "2125e820b886b36dc80a41f3efbd9cc5e6d437d57af96a84b6e8818fb967da00",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.19.0/htcw_uix-1.19.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.19.0/htcw_uix-1.19.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.20.0/htcw_uix-1.20.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.20.0.tar.gz",
+    "size_bytes": 191011,
+    "sha256": "99baf209518ebe6b73b0bca54de2a1c8faeb0036caede3bb51aea205ee69fe06",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.20.0/htcw_uix-1.20.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.20.0/htcw_uix-1.20.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.20.1/htcw_uix-1.20.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.20.1.tar.gz",
+    "size_bytes": 191043,
+    "sha256": "add2a5eadd36b94ac592ba0e0ed5ba0c2b57a96a8e7ba51b94a3e332983fff53",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.20.1/htcw_uix-1.20.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.20.1/htcw_uix-1.20.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.7.0/htcw_uix-1.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.7.0.tar.gz",
+    "size_bytes": 181599,
+    "sha256": "24ae0d85662bf28cf282c98935eed68bdbda334ba9b0e41447cd0dd66f31676f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.7.0/htcw_uix-1.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.7.0/htcw_uix-1.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.7.1/htcw_uix-1.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.7.1.tar.gz",
+    "size_bytes": 181437,
+    "sha256": "9eae7cbc1e27e2646accfbe5b0e25767cfe74c83290078fc52beff3ac2d2d8b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.7.1/htcw_uix-1.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.7.1/htcw_uix-1.7.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.7.2/htcw_uix-1.7.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.7.2.tar.gz",
+    "size_bytes": 181516,
+    "sha256": "414e97ff0f4a3b49cae344717336c173570a8976d5d9cbe87feb5ca6b31cbc83",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.7.2/htcw_uix-1.7.2.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.7.2/htcw_uix-1.7.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.7.3/htcw_uix-1.7.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.7.3.tar.gz",
+    "size_bytes": 181527,
+    "sha256": "93de4e5a3c0dadf66e88a8a779ac4f68dba99a1b66ddc07a4b6733c01f20ef91",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.7.3/htcw_uix-1.7.3.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.7.3/htcw_uix-1.7.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.7.4/htcw_uix-1.7.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.7.4.tar.gz",
+    "size_bytes": 12926560,
+    "sha256": "60e5dc7423f72ce1aba19d0d030b66b2901d4fc9918ca5886c2d010ecf60e6e7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.7.4/htcw_uix-1.7.4.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.7.4/htcw_uix-1.7.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.7.5/htcw_uix-1.7.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.7.5.tar.gz",
+    "size_bytes": 12934799,
+    "sha256": "9fa8dea5c1920c56d16dbe8c2e23f4423b52412069f0bdd3462b0bed5907d373",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.7.5/htcw_uix-1.7.5.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.7.5/htcw_uix-1.7.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.7.6/htcw_uix-1.7.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.7.6.tar.gz",
+    "size_bytes": 12952191,
+    "sha256": "6bb5821e5071897848b3224fea27543824e473a4436e6c973e8ee497e7d68793",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.7.6/htcw_uix-1.7.6.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.7.6/htcw_uix-1.7.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.7.7/htcw_uix-1.7.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.7.7.tar.gz",
+    "size_bytes": 12939066,
+    "sha256": "4da1b5a5df061c735bc5b16659536544b71271d65478d63704fee7e270432560",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.7.7/htcw_uix-1.7.7.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.7.7/htcw_uix-1.7.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.7.8/htcw_uix-1.7.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.7.8.tar.gz",
+    "size_bytes": 12939114,
+    "sha256": "7a5b6b9c44c2229583196ae8c97e4358d6a5935d1d5efcfa2296a35bcb549873",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.7.8/htcw_uix-1.7.8.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.7.8/htcw_uix-1.7.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.8.0/htcw_uix-1.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.8.0.tar.gz",
+    "size_bytes": 12939238,
+    "sha256": "34d120cd22cf894a97bdd6dee26343039b781f2119db1027e09eeb84f1138798",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.8.0/htcw_uix-1.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.8.0/htcw_uix-1.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.8.1/htcw_uix-1.8.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.8.1.tar.gz",
+    "size_bytes": 12941316,
+    "sha256": "97c05fc7ab73edb09a6f3a5f248ac6616b59d15f6994103d731006967c03b305",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.8.1/htcw_uix-1.8.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.8.1/htcw_uix-1.8.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.8.10/htcw_uix-1.8.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.8.10.tar.gz",
+    "size_bytes": 179039,
+    "sha256": "acb3fe80ea29e87eef0180e12b41a66c2044330f2101e96eec01d49fd8b6a4df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.8.10/htcw_uix-1.8.10.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.8.10/htcw_uix-1.8.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.8.11/htcw_uix-1.8.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.8.11.tar.gz",
+    "size_bytes": 179039,
+    "sha256": "eccb2f7a42ebb2695f7515724597544a1009f964003c4bae606c1034488dc1b2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.8.11/htcw_uix-1.8.11.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.8.11/htcw_uix-1.8.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.8.12/htcw_uix-1.8.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.8.12.tar.gz",
+    "size_bytes": 179282,
+    "sha256": "a3578f0b104185cfe97be9a945efca291e79433fd8fac5931f95cd2af93cc513",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.8.12/htcw_uix-1.8.12.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.8.12/htcw_uix-1.8.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.8.13/htcw_uix-1.8.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.8.13.tar.gz",
+    "size_bytes": 179297,
+    "sha256": "717fcd319edd5babf37d33d3c0c277fc31125721dacfc81bd1c85bf3db0857cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.8.13/htcw_uix-1.8.13.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.8.13/htcw_uix-1.8.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.8.14/htcw_uix-1.8.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.8.14.tar.gz",
+    "size_bytes": 179290,
+    "sha256": "92e267e10d2f6a3215ba68f950f8e03b28cd3bc69f1ac4bac73d315f3c64999a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.8.14/htcw_uix-1.8.14.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.8.14/htcw_uix-1.8.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.8.15/htcw_uix-1.8.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.8.15.tar.gz",
+    "size_bytes": 179265,
+    "sha256": "2d9e21b2b5e4fa6ea2f40670a9c1d560ed62752503135b8e20ef251c86037e9f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.8.15/htcw_uix-1.8.15.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.8.15/htcw_uix-1.8.15.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.8.2/htcw_uix-1.8.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.8.2.tar.gz",
+    "size_bytes": 183486,
+    "sha256": "42c7d315cd24f1bc37286bd7622f2e391c612eb0b0f1e33ddc131b75e0793b01",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.8.2/htcw_uix-1.8.2.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.8.2/htcw_uix-1.8.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.8.3/htcw_uix-1.8.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.8.3.tar.gz",
+    "size_bytes": 183603,
+    "sha256": "fcab083efdb87ccebb86979d99c107eaacbd3779b2f633bad38d7cd0b3336522",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.8.3/htcw_uix-1.8.3.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.8.3/htcw_uix-1.8.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.8.4/htcw_uix-1.8.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.8.4.tar.gz",
+    "size_bytes": 183712,
+    "sha256": "611d77bd44d185c22217525fc732af7e4bf8204d9986766a35472df07f4f8909",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.8.4/htcw_uix-1.8.4.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.8.4/htcw_uix-1.8.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.8.5/htcw_uix-1.8.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.8.5.tar.gz",
+    "size_bytes": 183711,
+    "sha256": "b929a023d7a882753df8238e0a919c814399466e30d18657e30ba7e4948e2d56",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.8.5/htcw_uix-1.8.5.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.8.5/htcw_uix-1.8.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.8.6/htcw_uix-1.8.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.8.6.tar.gz",
+    "size_bytes": 183706,
+    "sha256": "27cbe3b820fbf02bb464947a9c7a8ef76523d53637bbddd6ebc17682caeb3202",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.8.6/htcw_uix-1.8.6.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.8.6/htcw_uix-1.8.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.8.7/htcw_uix-1.8.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.8.7.tar.gz",
+    "size_bytes": 183722,
+    "sha256": "b3f1fea6e4cb8ebaa2cb861a607a24dc0436dcbc856861af3cdf7456f63f37f9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.8.7/htcw_uix-1.8.7.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.8.7/htcw_uix-1.8.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_uix/1.8.9/htcw_uix-1.8.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_uix-1.8.9.tar.gz",
+    "size_bytes": 183721,
+    "sha256": "1a234cb659805cc1521cfa5835613b1f7349efb972e928f866f048be9011ec56",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_uix/1.8.9/htcw_uix-1.8.9.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_uix/1.8.9/htcw_uix-1.8.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_w2812/0.1.4/htcw_w2812-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_w2812-0.1.4.tar.gz",
+    "size_bytes": 2461,
+    "sha256": "25a972db7145a5b103a480e784102eba681f0ea4c27f2fa9598f86fe2f7e372c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_w2812/0.1.4/htcw_w2812-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_w2812/0.1.4/htcw_w2812-0.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_waveshare1in54bv2/0.9.92/htcw_waveshare1in54bv2-0.9.92.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_waveshare1in54bv2-0.9.92.tar.gz",
+    "size_bytes": 242993,
+    "sha256": "73da6c04d4aa0fbb6169b3cfefa744b87585b402474ae8c61a816085fc404bf9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_waveshare1in54bv2/0.9.92/htcw_waveshare1in54bv2-0.9.92.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_waveshare1in54bv2/0.9.92/htcw_waveshare1in54bv2-0.9.92.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_waveshare2in13b/0.9.92/htcw_waveshare2in13b-0.9.92.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_waveshare2in13b-0.9.92.tar.gz",
+    "size_bytes": 242843,
+    "sha256": "26b151264b087c5f050f4883a3d50db3e3ece4449ac2f37f2c2116c6564b573e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_waveshare2in13b/0.9.92/htcw_waveshare2in13b-0.9.92.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_waveshare2in13b/0.9.92/htcw_waveshare2in13b-0.9.92.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_waveshare4in2gsc/0.9.92/htcw_waveshare4in2gsc-0.9.92.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_waveshare4in2gsc-0.9.92.tar.gz",
+    "size_bytes": 332988,
+    "sha256": "adf219fa17cdfaa68dbf445a3ba83a976a9a8730e8fe4b1660383c89285df38c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_waveshare4in2gsc/0.9.92/htcw_waveshare4in2gsc-0.9.92.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_waveshare4in2gsc/0.9.92/htcw_waveshare4in2gsc-0.9.92.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_waveshare5in65f/1.1.5/htcw_waveshare5in65f-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_waveshare5in65f-1.1.5.tar.gz",
+    "size_bytes": 330812,
+    "sha256": "6348cb82ce15f73741603629a23fb92a59a67e781f2ebd04ceb509b1acadbc6e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_waveshare5in65f/1.1.5/htcw_waveshare5in65f-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_waveshare5in65f/1.1.5/htcw_waveshare5in65f-1.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_wio_terminal/0.1.34/htcw_wio_terminal-0.1.34.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_wio_terminal-0.1.34.tar.gz",
+    "size_bytes": 24897,
+    "sha256": "dffe570ac2dac689cb70e7418fd049d784a9e6c65d163f23b53be43e8fb65fa7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_wio_terminal/0.1.34/htcw_wio_terminal-0.1.34.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_wio_terminal/0.1.34/htcw_wio_terminal-0.1.34.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_ws565f/0.1.0/htcw_ws565f-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_ws565f-0.1.0.tar.gz",
+    "size_bytes": 7654,
+    "sha256": "d3e981cdff5e06810156167f31876470e8cefe76059c61abdb242385234db0bd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_ws565f/0.1.0/htcw_ws565f-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_ws565f/0.1.0/htcw_ws565f-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_ws565f/0.2.0/htcw_ws565f-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_ws565f-0.2.0.tar.gz",
+    "size_bytes": 179502,
+    "sha256": "57c90a332834990252a91522e41687d0194fd5cf9ea426016f563e627fc7dbae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_ws565f/0.2.0/htcw_ws565f-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_ws565f/0.2.0/htcw_ws565f-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_ws565f/0.3.0/htcw_ws565f-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_ws565f-0.3.0.tar.gz",
+    "size_bytes": 180453,
+    "sha256": "f3bfe3445bf24e2e395e3dea390b72de6fc836f1e3cb9097678d68b706bb5fa2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_ws565f/0.3.0/htcw_ws565f-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_ws565f/0.3.0/htcw_ws565f-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_ws565f/0.3.1/htcw_ws565f-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_ws565f-0.3.1.tar.gz",
+    "size_bytes": 180535,
+    "sha256": "dded66e90e8b984686d6d27a4b5f5688d1e59c55b880a41c15d4da2238357ddd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_ws565f/0.3.1/htcw_ws565f-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_ws565f/0.3.1/htcw_ws565f-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_xpt2046/1.0.0/htcw_xpt2046-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_xpt2046-1.0.0.tar.gz",
+    "size_bytes": 4119,
+    "sha256": "43d5a03372abf45e9866cea1cdaa4a36192c5011ca76c8ac0e9f12503eea9641",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_xpt2046/1.0.0/htcw_xpt2046-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_xpt2046/1.0.0/htcw_xpt2046-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/htcw_zip/1.1.1/htcw_zip-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "htcw_zip-1.1.1.tar.gz",
+    "size_bytes": 7791,
+    "sha256": "e432b239a1ce35875519a761ea7c899c7e4e6df249cd463a1e22d62f93158fff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/htcw_zip/1.1.1/htcw_zip-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/htcw_zip/1.1.1/htcw_zip-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/rtc_ds1307/0.1.1/rtc_ds1307-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "rtc_ds1307-0.1.1.tar.gz",
+    "size_bytes": 3183,
+    "sha256": "d4ded97d0323102f93ce4ee48ab34a34d494bcfbbc37ee4ac54ad4f368f1a764",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/rtc_ds1307/0.1.1/rtc_ds1307-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/rtc_ds1307/0.1.1/rtc_ds1307-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codewitch-honey-crisis/library/tiny_ttf/0.1.0/tiny_ttf-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tiny_ttf-0.1.0.tar.gz",
+    "size_bytes": 60697,
+    "sha256": "3cfac22f30f8ecf2df947b223471518736f65ad51c63065266fdd8d30511d20f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewitch-honey-crisis/library/tiny_ttf/0.1.0/tiny_ttf-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codewitch-honey-crisis/library/tiny_ttf/0.1.0/tiny_ttf-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

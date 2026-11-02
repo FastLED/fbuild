@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hakkanr",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hakkanr/library/SSD1306TUR/1.0.0/SSD1306TUR-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SSD1306TUR-1.0.0.tar.gz",
+    "size_bytes": 8908,
+    "sha256": "191778212ff2553ed23516cb1dd10a2d4bbe14955080e3eb56102bea24eb7729",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hakkanr/library/SSD1306TUR/1.0.0/SSD1306TUR-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hakkanr/library/SSD1306TUR/1.0.0/SSD1306TUR-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hakkanr/library/slowAES/1.0.0/slowAES-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "slowAES-1.0.0.tar.gz",
+    "size_bytes": 19834,
+    "sha256": "02109e5d81f01b750c2a0690d43cf3728f20ef6a46d2540e1e3302f6ff49b7fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hakkanr/library/slowAES/1.0.0/slowAES-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hakkanr/library/slowAES/1.0.0/slowAES-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

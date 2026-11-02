@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-priaditeguh",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-priaditeguh/library/Gyroscope/0.0.0+sha.f83506e53d85/Gyroscope-0.0.0+sha.f83506e53d85.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Gyroscope-0.0.0+sha.f83506e53d85.tar.gz",
+    "size_bytes": 1810,
+    "sha256": "f9c3e22fb70abb0ff7b15212d409412a4ce0bf6c78fb5d2a34db9de8a8ced80c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-priaditeguh/library/Gyroscope/0.0.0%2Bsha.f83506e53d85/Gyroscope-0.0.0%2Bsha.f83506e53d85.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-priaditeguh/library/Gyroscope/0.0.0%2Bsha.f83506e53d85/Gyroscope-0.0.0%2Bsha.f83506e53d85.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-priaditeguh/library/KalmanFilter/0.0.0+sha.907c08d180d2/KalmanFilter-0.0.0+sha.907c08d180d2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KalmanFilter-0.0.0+sha.907c08d180d2.tar.gz",
+    "size_bytes": 1387,
+    "sha256": "af061a0f924925246f1b38e1c78998a36a7b4147024fccca39b05b43eb63527c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-priaditeguh/library/KalmanFilter/0.0.0%2Bsha.907c08d180d2/KalmanFilter-0.0.0%2Bsha.907c08d180d2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-priaditeguh/library/KalmanFilter/0.0.0%2Bsha.907c08d180d2/KalmanFilter-0.0.0%2Bsha.907c08d180d2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

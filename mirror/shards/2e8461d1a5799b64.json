@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-s-konbu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-s-konbu/library/SO1602A/0.0.0+sha.1ce120d85ab2/SO1602A-0.0.0+sha.1ce120d85ab2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SO1602A-0.0.0+sha.1ce120d85ab2.tar.gz",
+    "size_bytes": 1475,
+    "sha256": "c92a3e3dfa1ca989328e8a19cf34a2506849f319925b79d9ef5e8bf2dfc90c5b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-s-konbu/library/SO1602A/0.0.0%2Bsha.1ce120d85ab2/SO1602A-0.0.0%2Bsha.1ce120d85ab2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-s-konbu/library/SO1602A/0.0.0%2Bsha.1ce120d85ab2/SO1602A-0.0.0%2Bsha.1ce120d85ab2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

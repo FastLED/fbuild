@@ -1,0 +1,165 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/attermann",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "attermann/library/microReticulum/0.2.2/microReticulum-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "microReticulum-0.2.2.tar.gz",
+    "size_bytes": 192144,
+    "sha256": "0969d49f418885b764a41bb04a60902b703fdd66adcfb4a07b874b5676a595f9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/attermann/library/microReticulum/0.2.2/microReticulum-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/attermann/library/microReticulum/0.2.2/microReticulum-0.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "attermann/library/microReticulum/0.2.4/microReticulum-0.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "microReticulum-0.2.4.tar.gz",
+    "size_bytes": 198190,
+    "sha256": "49d8730771f4d8825ff7e38a1b1564d93a2cc34839cd723c5ef7af0b8b55d511",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/attermann/library/microReticulum/0.2.4/microReticulum-0.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/attermann/library/microReticulum/0.2.4/microReticulum-0.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "attermann/library/microReticulum/0.2.5/microReticulum-0.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "microReticulum-0.2.5.tar.gz",
+    "size_bytes": 201170,
+    "sha256": "06931bedcaca3788f8f57999c755cc770950f58c477c7b72d3995108346cdef0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/attermann/library/microReticulum/0.2.5/microReticulum-0.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/attermann/library/microReticulum/0.2.5/microReticulum-0.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "attermann/library/microReticulum/0.2.6/microReticulum-0.2.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "microReticulum-0.2.6.tar.gz",
+    "size_bytes": 202284,
+    "sha256": "50bee9f8920bcf037f4921d988fbad4eb0668f4b9bf933e2174f8800cefc67d2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/attermann/library/microReticulum/0.2.6/microReticulum-0.2.6.tar.gz",
+     "https://dl.registry.platformio.org/download/attermann/library/microReticulum/0.2.6/microReticulum-0.2.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "attermann/library/microReticulum/0.2.7/microReticulum-0.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "microReticulum-0.2.7.tar.gz",
+    "size_bytes": 223925,
+    "sha256": "ab7267c7234e9405165a1f90a5c10ea23e6169561faa61600aed77ee8ebc3d3e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/attermann/library/microReticulum/0.2.7/microReticulum-0.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/attermann/library/microReticulum/0.2.7/microReticulum-0.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "attermann/library/microReticulum/0.2.8/microReticulum-0.2.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "microReticulum-0.2.8.tar.gz",
+    "size_bytes": 224360,
+    "sha256": "35d0db34697128959f85109477344cb61927052d8b76a3290fa43ed9687cb12e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/attermann/library/microReticulum/0.2.8/microReticulum-0.2.8.tar.gz",
+     "https://dl.registry.platformio.org/download/attermann/library/microReticulum/0.2.8/microReticulum-0.2.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "attermann/library/microReticulum/0.2.9/microReticulum-0.2.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "microReticulum-0.2.9.tar.gz",
+    "size_bytes": 224788,
+    "sha256": "5c4eb95257fb59635f428853f5ab414b3d013cfc1d12f79cb2f9ab72875018b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/attermann/library/microReticulum/0.2.9/microReticulum-0.2.9.tar.gz",
+     "https://dl.registry.platformio.org/download/attermann/library/microReticulum/0.2.9/microReticulum-0.2.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "attermann/library/microReticulum/0.3.0/microReticulum-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "microReticulum-0.3.0.tar.gz",
+    "size_bytes": 227306,
+    "sha256": "53713eae616bc5c551e159dab65334417234cb831c5d8ac278b03ee39ca44d25",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/attermann/library/microReticulum/0.3.0/microReticulum-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/attermann/library/microReticulum/0.3.0/microReticulum-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "attermann/library/microReticulum/0.4.0/microReticulum-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "microReticulum-0.4.0.tar.gz",
+    "size_bytes": 28869603,
+    "sha256": "e65109d0aabbab0f9f3814abef7b572f404e0d9de4b7bdf9d4f645a3f60fa436",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/attermann/library/microReticulum/0.4.0/microReticulum-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/attermann/library/microReticulum/0.4.0/microReticulum-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "attermann/library/microReticulum/0.4.1/microReticulum-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "microReticulum-0.4.1.tar.gz",
+    "size_bytes": 206505,
+    "sha256": "ae89ebdc7f4fb8c322ec174fe5f05da3e6c6f927b12f966cb217158f25d322df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/attermann/library/microReticulum/0.4.1/microReticulum-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/attermann/library/microReticulum/0.4.1/microReticulum-0.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "attermann/library/microReticulum/0.5.0/microReticulum-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "microReticulum-0.5.0.tar.gz",
+    "size_bytes": 249890,
+    "sha256": "6c0ed3f6035681f24f62e020c2cee3acb1c8b79e12ff88ac4e9148c92922bc9f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/attermann/library/microReticulum/0.5.0/microReticulum-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/attermann/library/microReticulum/0.5.0/microReticulum-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "attermann/library/microStore/0.1.7/microStore-0.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "microStore-0.1.7.tar.gz",
+    "size_bytes": 62868,
+    "sha256": "d619bf1084e9a970deb509d5b89c3cf97c775f779b1ccfca6cdc7c5d48f94988",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/attermann/library/microStore/0.1.7/microStore-0.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/attermann/library/microStore/0.1.7/microStore-0.1.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

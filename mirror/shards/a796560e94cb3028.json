@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/droidbane",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "droidbane/library/ESPWiFiManagerByDroidbane/2.0.0/ESPWiFiManagerByDroidbane-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPWiFiManagerByDroidbane-2.0.0.tar.gz",
+    "size_bytes": 7099,
+    "sha256": "fabf29c0352e9f6d3e6cd7b546d5fb78bd23d8a433e6a4ea3affad4c8a5963f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/droidbane/library/ESPWiFiManagerByDroidbane/2.0.0/ESPWiFiManagerByDroidbane-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/droidbane/library/ESPWiFiManagerByDroidbane/2.0.0/ESPWiFiManagerByDroidbane-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "droidbane/library/ESPWiFiManagerByDroidbane/3.0.1/ESPWiFiManagerByDroidbane-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPWiFiManagerByDroidbane-3.0.1.tar.gz",
+    "size_bytes": 8535,
+    "sha256": "8f80f609f8bc4aa263e82f1dc2985a4658f59735dbddb3040542f5fae3f92f19",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/droidbane/library/ESPWiFiManagerByDroidbane/3.0.1/ESPWiFiManagerByDroidbane-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/droidbane/library/ESPWiFiManagerByDroidbane/3.0.1/ESPWiFiManagerByDroidbane-3.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

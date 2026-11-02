@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/arsalearn",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "arsalearn/library/ArsaLearn/1.0.0/ArsaLearn-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArsaLearn-1.0.0.tar.gz",
+    "size_bytes": 9012,
+    "sha256": "58a780179b57486fbef781e47ba982be42eded1dcd395a94337f12ef9820d53f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arsalearn/library/ArsaLearn/1.0.0/ArsaLearn-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arsalearn/library/ArsaLearn/1.0.0/ArsaLearn-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

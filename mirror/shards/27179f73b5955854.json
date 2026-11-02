@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-edodm85",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-edodm85/library/LM75A/0.0.0+sha.19dc98c810a5/LM75A-0.0.0+sha.19dc98c810a5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LM75A-0.0.0+sha.19dc98c810a5.tar.gz",
+    "size_bytes": 2293,
+    "sha256": "95a6417b6cf68658e3eb7ca05cd529ae646c57a4ef90b27e1e01a6610f20d05f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-edodm85/library/LM75A/0.0.0%2Bsha.19dc98c810a5/LM75A-0.0.0%2Bsha.19dc98c810a5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-edodm85/library/LM75A/0.0.0%2Bsha.19dc98c810a5/LM75A-0.0.0%2Bsha.19dc98c810a5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-edodm85/library/MMA7660FC/0.0.0+sha.2cc4a317402d/MMA7660FC-0.0.0+sha.2cc4a317402d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MMA7660FC-0.0.0+sha.2cc4a317402d.tar.gz",
+    "size_bytes": 4100,
+    "sha256": "97889088998f9ed45dfef562e3e0f77389382ba01fa6b19b83080e57622e430c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-edodm85/library/MMA7660FC/0.0.0%2Bsha.2cc4a317402d/MMA7660FC-0.0.0%2Bsha.2cc4a317402d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-edodm85/library/MMA7660FC/0.0.0%2Bsha.2cc4a317402d/MMA7660FC-0.0.0%2Bsha.2cc4a317402d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-edodm85/library/TEA5767/0.0.0+sha.d7804b4d7fa5/TEA5767-0.0.0+sha.d7804b4d7fa5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TEA5767-0.0.0+sha.d7804b4d7fa5.tar.gz",
+    "size_bytes": 2351,
+    "sha256": "6dc6224309774a9aea9d793be835ed4404ef00a4d44475cb7f5f48ade3a1d5db",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-edodm85/library/TEA5767/0.0.0%2Bsha.d7804b4d7fa5/TEA5767-0.0.0%2Bsha.d7804b4d7fa5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-edodm85/library/TEA5767/0.0.0%2Bsha.d7804b4d7fa5/TEA5767-0.0.0%2Bsha.d7804b4d7fa5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-edodm85/library/ov7670/0.0.0+sha.119b4c04a4ed/ov7670-0.0.0+sha.119b4c04a4ed.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ov7670-0.0.0+sha.119b4c04a4ed.tar.gz",
+    "size_bytes": 6585,
+    "sha256": "882d87d9b1bdb8150ddf6919fa44892499789daf75bca3673245f747386b4a5e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-edodm85/library/ov7670/0.0.0%2Bsha.119b4c04a4ed/ov7670-0.0.0%2Bsha.119b4c04a4ed.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-edodm85/library/ov7670/0.0.0%2Bsha.119b4c04a4ed/ov7670-0.0.0%2Bsha.119b4c04a4ed.tar.gz"
+    ]
+   }
+  }
+ ]
+}

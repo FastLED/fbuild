@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-sly-fox",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-sly-fox/library/DHT/0.0.0+sha.cce2105f7365/DHT-0.0.0+sha.cce2105f7365.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DHT-0.0.0+sha.cce2105f7365.tar.gz",
+    "size_bytes": 3832,
+    "sha256": "f8d8cf74e6f3ce5713536ac12efd3987f19a9b0dd2b307e21a3b6600b948edf0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sly-fox/library/DHT/0.0.0%2Bsha.cce2105f7365/DHT-0.0.0%2Bsha.cce2105f7365.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sly-fox/library/DHT/0.0.0%2Bsha.cce2105f7365/DHT-0.0.0%2Bsha.cce2105f7365.tar.gz"
+    ]
+   }
+  }
+ ]
+}

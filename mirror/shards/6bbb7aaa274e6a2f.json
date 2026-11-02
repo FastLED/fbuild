@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/thefidax",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "thefidax/library/Rcn600/1.5.8/Rcn600-1.5.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Rcn600-1.5.8.tar.gz",
+    "size_bytes": 42141,
+    "sha256": "f0a7a9f8391d4a1473d888764a8fe77f29228d641b54a1babb1539197df1644c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thefidax/library/Rcn600/1.5.8/Rcn600-1.5.8.tar.gz",
+     "https://dl.registry.platformio.org/download/thefidax/library/Rcn600/1.5.8/Rcn600-1.5.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thefidax/library/WireSusi/0.1.6/WireSusi-0.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WireSusi-0.1.6.tar.gz",
+    "size_bytes": 40839,
+    "sha256": "efaad65ca7ce8b0cdef2bb1570fba690ca1037d0c17fa34656cf85a80c30147f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thefidax/library/WireSusi/0.1.6/WireSusi-0.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/thefidax/library/WireSusi/0.1.6/WireSusi-0.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thefidax/library/digitalPinFast/1.0.3/digitalPinFast-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "digitalPinFast-1.0.3.tar.gz",
+    "size_bytes": 16455,
+    "sha256": "08e8c2919116eec634f7c3b01b2121e1243e31be26e51fef92710c3788a80ffd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thefidax/library/digitalPinFast/1.0.3/digitalPinFast-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/thefidax/library/digitalPinFast/1.0.3/digitalPinFast-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

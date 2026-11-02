@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rakutentech",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rakutentech/library/BLV640-Arduino/1.0/BLV640-Arduino-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLV640-Arduino-1.0.tar.gz",
+    "size_bytes": 16131,
+    "sha256": "b641b288b10cc7bf27db71483434a30f18b2e49a0f236ae82c5c6bc02978deaa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rakutentech/library/BLV640-Arduino/1.0/BLV640-Arduino-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rakutentech/library/BLV640-Arduino/1.0/BLV640-Arduino-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

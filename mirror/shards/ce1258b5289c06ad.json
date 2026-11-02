@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-adavidkhowantolim",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-adavidkhowantolim/library/ADS1115/0.0.0+sha.441bc773778a/ADS1115-0.0.0+sha.441bc773778a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADS1115-0.0.0+sha.441bc773778a.tar.gz",
+    "size_bytes": 5008,
+    "sha256": "4887981ffb7fe4c326672b3eb46a1f9bc64f3f8b2d6fc783dc9be3d9d96c280c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-adavidkhowantolim/library/ADS1115/0.0.0%2Bsha.441bc773778a/ADS1115-0.0.0%2Bsha.441bc773778a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-adavidkhowantolim/library/ADS1115/0.0.0%2Bsha.441bc773778a/ADS1115-0.0.0%2Bsha.441bc773778a.tar.gz"
+    ]
+   }
+  }
+ ]
+}

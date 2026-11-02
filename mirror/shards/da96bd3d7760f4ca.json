@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/electromagus",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "electromagus/library/ESPMX1508/1.0.5/ESPMX1508-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPMX1508-1.0.5.tar.gz",
+    "size_bytes": 3728,
+    "sha256": "d2ac1234485092d3b59852c9fe611cf8b237cbf95365facec48ba60bcf256725",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/electromagus/library/ESPMX1508/1.0.5/ESPMX1508-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/electromagus/library/ESPMX1508/1.0.5/ESPMX1508-1.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

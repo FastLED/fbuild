@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/0xcafedecaf",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "0xcafedecaf/library/VanBus/0.4.2/VanBus-0.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VanBus-0.4.2.tar.gz",
+    "size_bytes": 138684,
+    "sha256": "7e0b02e71311830a6d4670cb3f8b9c06acb7454dcd51e410954d144216a8cf6e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/0xcafedecaf/library/VanBus/0.4.2/VanBus-0.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/0xcafedecaf/library/VanBus/0.4.2/VanBus-0.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "0xcafedecaf/library/VanBus/0.5.0/VanBus-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VanBus-0.5.0.tar.gz",
+    "size_bytes": 141547,
+    "sha256": "fc89ef8cc1a10daaf324b69f3610e693afbb9aee3a5216b2d94fd4965ecac157",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/0xcafedecaf/library/VanBus/0.5.0/VanBus-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/0xcafedecaf/library/VanBus/0.5.0/VanBus-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "0xcafedecaf/library/VanBus/0.5.1/VanBus-0.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VanBus-0.5.1.tar.gz",
+    "size_bytes": 142201,
+    "sha256": "3e56bbd2b4091ce552399f7b55e46d5341d0a78f94d13e1e3ded6745352a7902",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/0xcafedecaf/library/VanBus/0.5.1/VanBus-0.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/0xcafedecaf/library/VanBus/0.5.1/VanBus-0.5.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

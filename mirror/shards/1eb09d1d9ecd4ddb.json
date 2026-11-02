@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/openevse",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "openevse/library/OpenEVSE/0.0.19/OpenEVSE-0.0.19.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OpenEVSE-0.0.19.tar.gz",
+    "size_bytes": 17908,
+    "sha256": "7aa5ca7dbf9b5c19df553c78f1dfec8967ca3a4a7b5749d785a83af0f3ff9c68",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/openevse/library/OpenEVSE/0.0.19/OpenEVSE-0.0.19.tar.gz",
+     "https://dl.registry.platformio.org/download/openevse/library/OpenEVSE/0.0.19/OpenEVSE-0.0.19.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "openevse/library/OpenEVSE/0.0.20/OpenEVSE-0.0.20.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OpenEVSE-0.0.20.tar.gz",
+    "size_bytes": 21397,
+    "sha256": "72b7a381a1e412ee152ae43dba28c17ca67f88f8c7d4f2923de7c356e845a762",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/openevse/library/OpenEVSE/0.0.20/OpenEVSE-0.0.20.tar.gz",
+     "https://dl.registry.platformio.org/download/openevse/library/OpenEVSE/0.0.20/OpenEVSE-0.0.20.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "openevse/library/OpenEVSE/0.0.21/OpenEVSE-0.0.21.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OpenEVSE-0.0.21.tar.gz",
+    "size_bytes": 22648,
+    "sha256": "ed104e4db763ffce3645806aeb561236446f49cdf5b9d0c930e3e226d14d1c23",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/openevse/library/OpenEVSE/0.0.21/OpenEVSE-0.0.21.tar.gz",
+     "https://dl.registry.platformio.org/download/openevse/library/OpenEVSE/0.0.21/OpenEVSE-0.0.21.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "openevse/library/OpenEVSE/0.0.22/OpenEVSE-0.0.22.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OpenEVSE-0.0.22.tar.gz",
+    "size_bytes": 23360,
+    "sha256": "57a2d777556f160945f81b072fd770611aded186ffcf1a2a9f6c5d9f52455796",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/openevse/library/OpenEVSE/0.0.22/OpenEVSE-0.0.22.tar.gz",
+     "https://dl.registry.platformio.org/download/openevse/library/OpenEVSE/0.0.22/OpenEVSE-0.0.22.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "openevse/library/OpenEVSE/0.0.23/OpenEVSE-0.0.23.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OpenEVSE-0.0.23.tar.gz",
+    "size_bytes": 26450,
+    "sha256": "07fdc99cb2945ea749ce0c673949875bd898524aab967ba55e7996f74e681c6f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/openevse/library/OpenEVSE/0.0.23/OpenEVSE-0.0.23.tar.gz",
+     "https://dl.registry.platformio.org/download/openevse/library/OpenEVSE/0.0.23/OpenEVSE-0.0.23.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "openevse/library/OpenEVSE/0.0.24/OpenEVSE-0.0.24.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OpenEVSE-0.0.24.tar.gz",
+    "size_bytes": 26561,
+    "sha256": "333294562848350aacbd8cb2decd12ff3132fbb3beab606c01c5a343fbdb3062",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/openevse/library/OpenEVSE/0.0.24/OpenEVSE-0.0.24.tar.gz",
+     "https://dl.registry.platformio.org/download/openevse/library/OpenEVSE/0.0.24/OpenEVSE-0.0.24.tar.gz"
+    ]
+   }
+  }
+ ]
+}

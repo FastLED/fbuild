@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/riraosan",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "riraosan/library/ESP32MSGraph/0.0.2/ESP32MSGraph-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32MSGraph-0.0.2.tar.gz",
+    "size_bytes": 15424,
+    "sha256": "00ef4bc19b99660bcc06786c766e716d1ba5294e49fe7cf6b6997137ca47f758",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/riraosan/library/ESP32MSGraph/0.0.2/ESP32MSGraph-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/riraosan/library/ESP32MSGraph/0.0.2/ESP32MSGraph-0.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

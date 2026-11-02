@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bnorth12",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bnorth12/library/LC29H_GNSS/0.1.2/LC29H_GNSS-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC29H_GNSS-0.1.2.tar.gz",
+    "size_bytes": 44491,
+    "sha256": "70ae8e923c3fc8b139c6c98b48593954e1766a1f21d4eb0f8c0b70ff23560f49",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bnorth12/library/LC29H_GNSS/0.1.2/LC29H_GNSS-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bnorth12/library/LC29H_GNSS/0.1.2/LC29H_GNSS-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bnorth12/library/LC29H_GNSS/0.2.1/LC29H_GNSS-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC29H_GNSS-0.2.1.tar.gz",
+    "size_bytes": 58425,
+    "sha256": "7f837f1c5062e2d4c9e420812e68b52a3e7da30af2b9d1848a1a3a198e9c6cd4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bnorth12/library/LC29H_GNSS/0.2.1/LC29H_GNSS-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bnorth12/library/LC29H_GNSS/0.2.1/LC29H_GNSS-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bnorth12/library/LC29H_GNSS/0.2.13/LC29H_GNSS-0.2.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC29H_GNSS-0.2.13.tar.gz",
+    "size_bytes": 86578,
+    "sha256": "50f244118d03d7fefff6ca0506219d4ba7ed097dd7ddb971eb46af39a4c51504",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bnorth12/library/LC29H_GNSS/0.2.13/LC29H_GNSS-0.2.13.tar.gz",
+     "https://dl.registry.platformio.org/download/bnorth12/library/LC29H_GNSS/0.2.13/LC29H_GNSS-0.2.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bnorth12/library/LC29H_GNSS/0.2.14/LC29H_GNSS-0.2.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC29H_GNSS-0.2.14.tar.gz",
+    "size_bytes": 87036,
+    "sha256": "e78f3f0e334d2b78dbace02122e6877e5d19bb486fa800ebba14165b1e85d1d5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bnorth12/library/LC29H_GNSS/0.2.14/LC29H_GNSS-0.2.14.tar.gz",
+     "https://dl.registry.platformio.org/download/bnorth12/library/LC29H_GNSS/0.2.14/LC29H_GNSS-0.2.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bnorth12/library/LC29H_GNSS/0.2.15/LC29H_GNSS-0.2.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC29H_GNSS-0.2.15.tar.gz",
+    "size_bytes": 104659,
+    "sha256": "2daa98d0b1723ae6f8845b59060ed5b20ec588492b276199838eeb241719cf14",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bnorth12/library/LC29H_GNSS/0.2.15/LC29H_GNSS-0.2.15.tar.gz",
+     "https://dl.registry.platformio.org/download/bnorth12/library/LC29H_GNSS/0.2.15/LC29H_GNSS-0.2.15.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bnorth12/library/LC29H_GNSS/0.2.16/LC29H_GNSS-0.2.16.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC29H_GNSS-0.2.16.tar.gz",
+    "size_bytes": 104771,
+    "sha256": "d35e6f6f8ec759f2fa9f92ee66421ebf34ad57239dcd425233034d71c31defb1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bnorth12/library/LC29H_GNSS/0.2.16/LC29H_GNSS-0.2.16.tar.gz",
+     "https://dl.registry.platformio.org/download/bnorth12/library/LC29H_GNSS/0.2.16/LC29H_GNSS-0.2.16.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bnorth12/library/LC29H_GNSS/0.2.2/LC29H_GNSS-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC29H_GNSS-0.2.2.tar.gz",
+    "size_bytes": 58536,
+    "sha256": "01efc7460e5dacba336bd7044eff269c6d8db2b097afedcc3b85d406569c39a0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bnorth12/library/LC29H_GNSS/0.2.2/LC29H_GNSS-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bnorth12/library/LC29H_GNSS/0.2.2/LC29H_GNSS-0.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bnorth12/library/LC29H_GNSS/0.2.6/LC29H_GNSS-0.2.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC29H_GNSS-0.2.6.tar.gz",
+    "size_bytes": 60993,
+    "sha256": "1dc50f70e47f6846fd812b7089beea3ee47d3f1b47473b561422752c9c3d88f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bnorth12/library/LC29H_GNSS/0.2.6/LC29H_GNSS-0.2.6.tar.gz",
+     "https://dl.registry.platformio.org/download/bnorth12/library/LC29H_GNSS/0.2.6/LC29H_GNSS-0.2.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

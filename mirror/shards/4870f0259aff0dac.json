@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-avnisha",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-avnisha/library/MODDMA/0.0.0+sha.0c13ac53e36d/MODDMA-0.0.0+sha.0c13ac53e36d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MODDMA-0.0.0+sha.0c13ac53e36d.tar.gz",
+    "size_bytes": 18339,
+    "sha256": "e8da79ba7cd35c87c85884e11135771d9f9127f5c039fd39e7dad0a4002cba2e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-avnisha/library/MODDMA/0.0.0%2Bsha.0c13ac53e36d/MODDMA-0.0.0%2Bsha.0c13ac53e36d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-avnisha/library/MODDMA/0.0.0%2Bsha.0c13ac53e36d/MODDMA-0.0.0%2Bsha.0c13ac53e36d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-avnisha/library/USBMSD_SD/0.0.0+sha.dbd7383533e6/USBMSD_SD-0.0.0+sha.dbd7383533e6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "USBMSD_SD-0.0.0+sha.dbd7383533e6.tar.gz",
+    "size_bytes": 6457,
+    "sha256": "c66eb98991f0bd52e2ec08c8e64b99e331353fb27df2b5477f786b7c11b25c52",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-avnisha/library/USBMSD_SD/0.0.0%2Bsha.dbd7383533e6/USBMSD_SD-0.0.0%2Bsha.dbd7383533e6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-avnisha/library/USBMSD_SD/0.0.0%2Bsha.dbd7383533e6/USBMSD_SD-0.0.0%2Bsha.dbd7383533e6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

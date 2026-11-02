@@ -1,0 +1,152 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/apechinsky",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "apechinsky/library/AtCommandDevice/0.4.0/AtCommandDevice-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AtCommandDevice-0.4.0.tar.gz",
+    "size_bytes": 2757,
+    "sha256": "47cbcb13bfdee87639d12ea5e957a98613e9d8455a50885b174a2b368e0d3c3c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/apechinsky/library/AtCommandDevice/0.4.0/AtCommandDevice-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/apechinsky/library/AtCommandDevice/0.4.0/AtCommandDevice-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "apechinsky/library/Button/1.0.0/Button-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Button-1.0.0.tar.gz",
+    "size_bytes": 3455,
+    "sha256": "7211edaa015e3545dc609c5f66d786c1c91f20fade8e9addc59996c84455b533",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/apechinsky/library/Button/1.0.0/Button-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/apechinsky/library/Button/1.0.0/Button-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "apechinsky/library/ButtonSet/0.3.0/ButtonSet-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ButtonSet-0.3.0.tar.gz",
+    "size_bytes": 2388,
+    "sha256": "6e791a57051ec63c88fe072f9780078e61f961d28d620335d75a624f0a73a76b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/apechinsky/library/ButtonSet/0.3.0/ButtonSet-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/apechinsky/library/ButtonSet/0.3.0/ButtonSet-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "apechinsky/library/CircularBuffer/0.3.0/CircularBuffer-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CircularBuffer-0.3.0.tar.gz",
+    "size_bytes": 2635,
+    "sha256": "1570f57f3b57ad1a695a6d11ddcc31500acf63b890f3af6285a4fa6005a53404",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/apechinsky/library/CircularBuffer/0.3.0/CircularBuffer-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/apechinsky/library/CircularBuffer/0.3.0/CircularBuffer-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "apechinsky/library/CsSim800/0.3.0/CsSim800-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CsSim800-0.3.0.tar.gz",
+    "size_bytes": 4065,
+    "sha256": "6f9cdf5fc407d04206f28553383945f2bcf9f2fb5d195b891c3efd24a87c77af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/apechinsky/library/CsSim800/0.3.0/CsSim800-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/apechinsky/library/CsSim800/0.3.0/CsSim800-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "apechinsky/library/Debouncer/0.4.0/Debouncer-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Debouncer-0.4.0.tar.gz",
+    "size_bytes": 1896,
+    "sha256": "3d6411fd8f3fda7b6b62d1534014d8b180b4745cb1214099f1c4db87140106d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/apechinsky/library/Debouncer/0.4.0/Debouncer-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/apechinsky/library/Debouncer/0.4.0/Debouncer-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "apechinsky/library/DigitalDevice/0.3.0/DigitalDevice-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DigitalDevice-0.3.0.tar.gz",
+    "size_bytes": 1669,
+    "sha256": "c35499b72af9cdf1bbdece162df5300caa1728c4ef7e13803f2f1139138fe1a6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/apechinsky/library/DigitalDevice/0.3.0/DigitalDevice-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/apechinsky/library/DigitalDevice/0.3.0/DigitalDevice-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "apechinsky/library/HttpClient/0.3.0/HttpClient-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HttpClient-0.3.0.tar.gz",
+    "size_bytes": 674,
+    "sha256": "fce4496638e865211a9d8b51c8575694b23bb4cfaded5a1d21c4c27652a1545e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/apechinsky/library/HttpClient/0.3.0/HttpClient-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/apechinsky/library/HttpClient/0.3.0/HttpClient-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "apechinsky/library/MHZ19/0.3.0/MHZ19-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MHZ19-0.3.0.tar.gz",
+    "size_bytes": 1817,
+    "sha256": "e6bd1c7676ac10c24e73ba815b9d1262bcf81dc6f2c43a11ee41e3be78f51331",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/apechinsky/library/MHZ19/0.3.0/MHZ19-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/apechinsky/library/MHZ19/0.3.0/MHZ19-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "apechinsky/library/MemoryFree/0.3.0/MemoryFree-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MemoryFree-0.3.0.tar.gz",
+    "size_bytes": 1053,
+    "sha256": "498c6ebc6c58708569dd8b63b8d0c4bcbd4a13755db6358a5c04bca43fc3e389",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/apechinsky/library/MemoryFree/0.3.0/MemoryFree-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/apechinsky/library/MemoryFree/0.3.0/MemoryFree-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "apechinsky/library/ThingSpeak/0.4.0/ThingSpeak-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ThingSpeak-0.4.0.tar.gz",
+    "size_bytes": 1242,
+    "sha256": "5e0440847bfd565aeeffc483d84cdd76711d654cffda503cf5be17f5de8fc032",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/apechinsky/library/ThingSpeak/0.4.0/ThingSpeak-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/apechinsky/library/ThingSpeak/0.4.0/ThingSpeak-0.4.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

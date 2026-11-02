@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/matteo-colombo-kernel",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "matteo-colombo-kernel/library/SimpleConnect/1.0.2/SimpleConnect-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleConnect-1.0.2.tar.gz",
+    "size_bytes": 20965,
+    "sha256": "ac08b79bd7440eeae65af0ad5072a406afba553dc71dd57ebaa176bb53522d90",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matteo-colombo-kernel/library/SimpleConnect/1.0.2/SimpleConnect-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/matteo-colombo-kernel/library/SimpleConnect/1.0.2/SimpleConnect-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

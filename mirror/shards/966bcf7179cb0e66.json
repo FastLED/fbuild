@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bytebeamio",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bytebeamio/library/BytebeamArduino/1.0.2/BytebeamArduino-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BytebeamArduino-1.0.2.tar.gz",
+    "size_bytes": 47152,
+    "sha256": "9fa75576fc8ba0e9a6f407de55106e4df7c0ecaddf05031859e3901439a4dafc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bytebeamio/library/BytebeamArduino/1.0.2/BytebeamArduino-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bytebeamio/library/BytebeamArduino/1.0.2/BytebeamArduino-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bytebeamio/library/bytebeam-esp-idf-sdk/1.0.1/bytebeam-esp-idf-sdk-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bytebeam-esp-idf-sdk-1.0.1.tar.gz",
+    "size_bytes": 162912,
+    "sha256": "c45746597b2f2b4716d5565130fcd631ff5222a130304f2d15e00969753451c9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bytebeamio/library/bytebeam-esp-idf-sdk/1.0.1/bytebeam-esp-idf-sdk-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bytebeamio/library/bytebeam-esp-idf-sdk/1.0.1/bytebeam-esp-idf-sdk-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

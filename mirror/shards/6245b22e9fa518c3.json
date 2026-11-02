@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/flash62au",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "flash62au/library/WiThrottleProtocol/1.1.27/WiThrottleProtocol-1.1.27.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiThrottleProtocol-1.1.27.tar.gz",
+    "size_bytes": 74373,
+    "sha256": "add230d6f2e6d0db8dbcc617d82dd7338acd9a188764de366d607b302dab6284",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/flash62au/library/WiThrottleProtocol/1.1.27/WiThrottleProtocol-1.1.27.tar.gz",
+     "https://dl.registry.platformio.org/download/flash62au/library/WiThrottleProtocol/1.1.27/WiThrottleProtocol-1.1.27.tar.gz"
+    ]
+   }
+  }
+ ]
+}

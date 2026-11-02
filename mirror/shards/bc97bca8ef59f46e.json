@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/arenamovediza",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "arenamovediza/library/SerialToPlot/1.0.1/SerialToPlot-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialToPlot-1.0.1.tar.gz",
+    "size_bytes": 1975,
+    "sha256": "576a3b97aa6a538fd3230a10fee6aa274125f47dfa98d7291677bc6b5edc7990",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arenamovediza/library/SerialToPlot/1.0.1/SerialToPlot-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arenamovediza/library/SerialToPlot/1.0.1/SerialToPlot-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arenamovediza/library/Sharp/1.0.1/Sharp-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sharp-1.0.1.tar.gz",
+    "size_bytes": 2143,
+    "sha256": "6dfa53b2c00358921bf3621281a09fd807552471a76791bee1093bbf00551c36",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arenamovediza/library/Sharp/1.0.1/Sharp-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arenamovediza/library/Sharp/1.0.1/Sharp-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arenamovediza/library/UltrasonicA/1.0.2/UltrasonicA-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UltrasonicA-1.0.2.tar.gz",
+    "size_bytes": 1648,
+    "sha256": "1b323af3d97e53629c2e09f6594ff73e5943cf10f9155ede40d5ff5b0969100d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arenamovediza/library/UltrasonicA/1.0.2/UltrasonicA-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/arenamovediza/library/UltrasonicA/1.0.2/UltrasonicA-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

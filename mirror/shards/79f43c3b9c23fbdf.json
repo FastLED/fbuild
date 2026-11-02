@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/azure",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "azure/library/Azure%20SDK%20for%20C/1.1.6/AzureSDKforC-1.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AzureSDKforC-1.1.6.tar.gz",
+    "size_bytes": 301836,
+    "sha256": "755573db2ed55f137988fa31cc4e9b7cfe6acfab4c0680ceb09fc56ca9bba85d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/azure/library/Azure%2520SDK%2520for%2520C/1.1.6/AzureSDKforC-1.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/azure/library/Azure%20SDK%20for%20C/1.1.6/AzureSDKforC-1.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "azure/library/Azure%20SDK%20for%20C/1.1.8/AzureSDKforC-1.1.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AzureSDKforC-1.1.8.tar.gz",
+    "size_bytes": 302638,
+    "sha256": "bede7bbd6ed704f7f26c73f99340a7c96e6b3988c2c31ed461eaeb81c72d988a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/azure/library/Azure%2520SDK%2520for%2520C/1.1.8/AzureSDKforC-1.1.8.tar.gz",
+     "https://dl.registry.platformio.org/download/azure/library/Azure%20SDK%20for%20C/1.1.8/AzureSDKforC-1.1.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "azure/library/AzureIoTProtocol_HTTP/1.6.1/AzureIoTProtocol_HTTP-1.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AzureIoTProtocol_HTTP-1.6.1.tar.gz",
+    "size_bytes": 12494,
+    "sha256": "16fd2355efe508eabc6d495213b52d33355d171f36a2df795cf49bb916f8ff45",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/azure/library/AzureIoTProtocol_HTTP/1.6.1/AzureIoTProtocol_HTTP-1.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/azure/library/AzureIoTProtocol_HTTP/1.6.1/AzureIoTProtocol_HTTP-1.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "azure/library/AzureIoTProtocol_MQTT/1.6.1/AzureIoTProtocol_MQTT-1.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AzureIoTProtocol_MQTT-1.6.1.tar.gz",
+    "size_bytes": 19356,
+    "sha256": "40fcd42203b7be7b2239e5604c38fb625c35c93c7ab577c885c9b0492b530bb5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/azure/library/AzureIoTProtocol_MQTT/1.6.1/AzureIoTProtocol_MQTT-1.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/azure/library/AzureIoTProtocol_MQTT/1.6.1/AzureIoTProtocol_MQTT-1.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "azure/library/AzureIoTSocket_WiFi/1.0.3/AzureIoTSocket_WiFi-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AzureIoTSocket_WiFi-1.0.3.tar.gz",
+    "size_bytes": 8038,
+    "sha256": "7c9523f3f4d2b251ec764bd9d75694caf866e9b80a12df4072f45f8143e63cca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/azure/library/AzureIoTSocket_WiFi/1.0.3/AzureIoTSocket_WiFi-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/azure/library/AzureIoTSocket_WiFi/1.0.3/AzureIoTSocket_WiFi-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "azure/library/AzureIoTUtility/1.6.2/AzureIoTUtility-1.6.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AzureIoTUtility-1.6.2.tar.gz",
+    "size_bytes": 353419,
+    "sha256": "3ba0d953cc313140351ebbadd6ce9b4858f21c090405a8c1d0fa66c78f3aaec7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/azure/library/AzureIoTUtility/1.6.2/AzureIoTUtility-1.6.2.tar.gz",
+     "https://dl.registry.platformio.org/download/azure/library/AzureIoTUtility/1.6.2/AzureIoTUtility-1.6.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

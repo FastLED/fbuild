@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/chijesusboy2004-crypto",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "chijesusboy2004-crypto/library/AxonSDK/1.0.1/AxonSDK-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AxonSDK-1.0.1.tar.gz",
+    "size_bytes": 9149,
+    "sha256": "2bf787e7a79414005d2c7ec8a0b4ddcb229f31001cc96f3da3e800e775208746",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chijesusboy2004-crypto/library/AxonSDK/1.0.1/AxonSDK-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/chijesusboy2004-crypto/library/AxonSDK/1.0.1/AxonSDK-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chijesusboy2004-crypto/library/Omiru%20IoT%20Platform/1.0.0/OmiruIoTPlatform-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OmiruIoTPlatform-1.0.0.tar.gz",
+    "size_bytes": 5635,
+    "sha256": "21f6e28e346d57dadec6625917947e6e2db084e271ab912724d61811da6bf5a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chijesusboy2004-crypto/library/Omiru%2520IoT%2520Platform/1.0.0/OmiruIoTPlatform-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chijesusboy2004-crypto/library/Omiru%20IoT%20Platform/1.0.0/OmiruIoTPlatform-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nextleveltiming",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nextleveltiming/library/NeonTiming/1.0.13/NeonTiming-1.0.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeonTiming-1.0.13.tar.gz",
+    "size_bytes": 4962,
+    "sha256": "6adac3c4ec0997027923aa0f07f648fcd8cf7e3f802ae182467ae36c2dae7645",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nextleveltiming/library/NeonTiming/1.0.13/NeonTiming-1.0.13.tar.gz",
+     "https://dl.registry.platformio.org/download/nextleveltiming/library/NeonTiming/1.0.13/NeonTiming-1.0.13.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/michaelkamprath",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "michaelkamprath/library/Shift%20Register%20LED%20Matrix%20Lib/2.1.0/ShiftRegisterLEDMatrixLib-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ShiftRegisterLEDMatrixLib-2.1.0.tar.gz",
+    "size_bytes": 47205,
+    "sha256": "28c31e53bb08cd11d478c8e2f1e268040602b3e6a86fd34389cb54e4868a5ae8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/michaelkamprath/library/Shift%2520Register%2520LED%2520Matrix%2520Lib/2.1.0/ShiftRegisterLEDMatrixLib-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/michaelkamprath/library/Shift%20Register%20LED%20Matrix%20Lib/2.1.0/ShiftRegisterLEDMatrixLib-2.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

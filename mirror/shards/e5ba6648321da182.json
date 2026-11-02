@@ -1,0 +1,425 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/wollewald",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "wollewald/library/ADS1115_WE/1.5.4/ADS1115_WE-1.5.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADS1115_WE-1.5.4.tar.gz",
+    "size_bytes": 16494,
+    "sha256": "4489c303edaf3df3893f9742cddb7d453e9ac6933800e1a344bc857d38744395",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wollewald/library/ADS1115_WE/1.5.4/ADS1115_WE-1.5.4.tar.gz",
+     "https://dl.registry.platformio.org/download/wollewald/library/ADS1115_WE/1.5.4/ADS1115_WE-1.5.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wollewald/library/ADS1115_WE/1.5.5/ADS1115_WE-1.5.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADS1115_WE-1.5.5.tar.gz",
+    "size_bytes": 16588,
+    "sha256": "6aae1b73d8b43edbc8f74719ea362a5e82738cfdb9949d7e20e0cf794684ec59",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wollewald/library/ADS1115_WE/1.5.5/ADS1115_WE-1.5.5.tar.gz",
+     "https://dl.registry.platformio.org/download/wollewald/library/ADS1115_WE/1.5.5/ADS1115_WE-1.5.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wollewald/library/ADS1115_WE/1.5.6/ADS1115_WE-1.5.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADS1115_WE-1.5.6.tar.gz",
+    "size_bytes": 16600,
+    "sha256": "204971647ea038660ec41aa4ea3f31b44f0acf71a5bf0b2b6f7c3bd2c7db2f1e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wollewald/library/ADS1115_WE/1.5.6/ADS1115_WE-1.5.6.tar.gz",
+     "https://dl.registry.platformio.org/download/wollewald/library/ADS1115_WE/1.5.6/ADS1115_WE-1.5.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wollewald/library/ADS1115_WE/1.5.7/ADS1115_WE-1.5.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADS1115_WE-1.5.7.tar.gz",
+    "size_bytes": 17435,
+    "sha256": "e4cfcc6a7dc4b754bc43ec8a0834da74c60c80667d04d44b95daec4029f95ef3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wollewald/library/ADS1115_WE/1.5.7/ADS1115_WE-1.5.7.tar.gz",
+     "https://dl.registry.platformio.org/download/wollewald/library/ADS1115_WE/1.5.7/ADS1115_WE-1.5.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wollewald/library/ADS1115_WE/1.5.8/ADS1115_WE-1.5.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADS1115_WE-1.5.8.tar.gz",
+    "size_bytes": 17445,
+    "sha256": "a206c0253ed1a48c0c8152e18f0557a1f3cf4f9afe3c29d74ca3ae8038586c12",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wollewald/library/ADS1115_WE/1.5.8/ADS1115_WE-1.5.8.tar.gz",
+     "https://dl.registry.platformio.org/download/wollewald/library/ADS1115_WE/1.5.8/ADS1115_WE-1.5.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wollewald/library/ADS1220_WE/1.0.22/ADS1220_WE-1.0.22.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADS1220_WE-1.0.22.tar.gz",
+    "size_bytes": 13725,
+    "sha256": "bf101c0a9ae0f143a2e181b4ea84818579ef1bc817c70b25fa8472b224552c87",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wollewald/library/ADS1220_WE/1.0.22/ADS1220_WE-1.0.22.tar.gz",
+     "https://dl.registry.platformio.org/download/wollewald/library/ADS1220_WE/1.0.22/ADS1220_WE-1.0.22.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wollewald/library/ADS1220_WE/1.0.23/ADS1220_WE-1.0.23.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADS1220_WE-1.0.23.tar.gz",
+    "size_bytes": 14221,
+    "sha256": "c77aaa6465fe0f7d6f680d787308be92e0ecedcb7c1fb8b9e0f3142e1dff844b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wollewald/library/ADS1220_WE/1.0.23/ADS1220_WE-1.0.23.tar.gz",
+     "https://dl.registry.platformio.org/download/wollewald/library/ADS1220_WE/1.0.23/ADS1220_WE-1.0.23.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wollewald/library/ADS1220_WE/1.0.24/ADS1220_WE-1.0.24.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADS1220_WE-1.0.24.tar.gz",
+    "size_bytes": 14235,
+    "sha256": "9e7523790d6ecad783b33135da4e1f241d948e2ffc5625bef942b93b9a9b7817",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wollewald/library/ADS1220_WE/1.0.24/ADS1220_WE-1.0.24.tar.gz",
+     "https://dl.registry.platformio.org/download/wollewald/library/ADS1220_WE/1.0.24/ADS1220_WE-1.0.24.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wollewald/library/ADS1220_WE/1.0.25/ADS1220_WE-1.0.25.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADS1220_WE-1.0.25.tar.gz",
+    "size_bytes": 14330,
+    "sha256": "e9cfdb324804bf6a9d3d4ccf719d1693e277642501bf33bc8b0b69fc45e1d936",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wollewald/library/ADS1220_WE/1.0.25/ADS1220_WE-1.0.25.tar.gz",
+     "https://dl.registry.platformio.org/download/wollewald/library/ADS1220_WE/1.0.25/ADS1220_WE-1.0.25.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wollewald/library/ADXL345_WE/3.1.0/ADXL345_WE-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADXL345_WE-3.1.0.tar.gz",
+    "size_bytes": 22494,
+    "sha256": "09884bd990a9cec20d7bb9acf8f524c6d17f7af17f1c3995b8a4cdb2acfe9909",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wollewald/library/ADXL345_WE/3.1.0/ADXL345_WE-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/wollewald/library/ADXL345_WE/3.1.0/ADXL345_WE-3.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wollewald/library/AP3216_WE/1.2.2/AP3216_WE-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AP3216_WE-1.2.2.tar.gz",
+    "size_bytes": 7407,
+    "sha256": "443211b2ef1102aa1001d59cc6f112877b86356c7cd53091d7c2cde4577417d3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wollewald/library/AP3216_WE/1.2.2/AP3216_WE-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/wollewald/library/AP3216_WE/1.2.2/AP3216_WE-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wollewald/library/BH1750_WE/1.1.10/BH1750_WE-1.1.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BH1750_WE-1.1.10.tar.gz",
+    "size_bytes": 3797,
+    "sha256": "a1515e880e1ac07cd9e5dc50182984aa2b02403fcfa9f597d514cf93a5dc50e5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wollewald/library/BH1750_WE/1.1.10/BH1750_WE-1.1.10.tar.gz",
+     "https://dl.registry.platformio.org/download/wollewald/library/BH1750_WE/1.1.10/BH1750_WE-1.1.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wollewald/library/EEPROM_SPI_WE/1.1.6/EEPROM_SPI_WE-1.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EEPROM_SPI_WE-1.1.6.tar.gz",
+    "size_bytes": 8858,
+    "sha256": "440f76bf383bef25d907d4791dbed1f7c8bd771b76411e5957d66cd1ed473087",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wollewald/library/EEPROM_SPI_WE/1.1.6/EEPROM_SPI_WE-1.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/wollewald/library/EEPROM_SPI_WE/1.1.6/EEPROM_SPI_WE-1.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wollewald/library/ICM20948_WE/1.2.5/ICM20948_WE-1.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM20948_WE-1.2.5.tar.gz",
+    "size_bytes": 23209,
+    "sha256": "c7ff4aaa31cab4107fbe0057c488461c5e58efac4694b24537be89c260e0baf8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wollewald/library/ICM20948_WE/1.2.5/ICM20948_WE-1.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/wollewald/library/ICM20948_WE/1.2.5/ICM20948_WE-1.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wollewald/library/ICM20948_WE/1.2.6/ICM20948_WE-1.2.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM20948_WE-1.2.6.tar.gz",
+    "size_bytes": 25094,
+    "sha256": "1a47a9a921eee0516a39fd94bda07c714a0df0387aad3b0596fc99c6ac5e28a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wollewald/library/ICM20948_WE/1.2.6/ICM20948_WE-1.2.6.tar.gz",
+     "https://dl.registry.platformio.org/download/wollewald/library/ICM20948_WE/1.2.6/ICM20948_WE-1.2.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wollewald/library/ICM20948_WE/1.2.7/ICM20948_WE-1.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM20948_WE-1.2.7.tar.gz",
+    "size_bytes": 25217,
+    "sha256": "accaf7606ac4fb75b64491a31ea27f06a394d13f97147cce92a4334791f7633b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wollewald/library/ICM20948_WE/1.2.7/ICM20948_WE-1.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/wollewald/library/ICM20948_WE/1.2.7/ICM20948_WE-1.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wollewald/library/ICM20948_WE/1.2.8/ICM20948_WE-1.2.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM20948_WE-1.2.8.tar.gz",
+    "size_bytes": 25290,
+    "sha256": "3f78860566c8a99dce7ccbd13b67323db247ccadcec402e747556ca48574aead",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wollewald/library/ICM20948_WE/1.2.8/ICM20948_WE-1.2.8.tar.gz",
+     "https://dl.registry.platformio.org/download/wollewald/library/ICM20948_WE/1.2.8/ICM20948_WE-1.2.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wollewald/library/ICM20948_WE/1.2.9/ICM20948_WE-1.2.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM20948_WE-1.2.9.tar.gz",
+    "size_bytes": 25883,
+    "sha256": "8e60ae49131085bd35200580a1bd96c641b700dc5704675f56d25c502560a755",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wollewald/library/ICM20948_WE/1.2.9/ICM20948_WE-1.2.9.tar.gz",
+     "https://dl.registry.platformio.org/download/wollewald/library/ICM20948_WE/1.2.9/ICM20948_WE-1.2.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wollewald/library/INA219_WE/1.3.8/INA219_WE-1.3.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "INA219_WE-1.3.8.tar.gz",
+    "size_bytes": 7472,
+    "sha256": "1e15df103b5173e177e3bbb16859554334c90073faa5cbaa17d0f295112726b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wollewald/library/INA219_WE/1.3.8/INA219_WE-1.3.8.tar.gz",
+     "https://dl.registry.platformio.org/download/wollewald/library/INA219_WE/1.3.8/INA219_WE-1.3.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wollewald/library/INA219_WE/1.4.0/INA219_WE-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "INA219_WE-1.4.0.tar.gz",
+    "size_bytes": 8301,
+    "sha256": "c607a7c6bfcdacad22adc3b9871cdb1e722bf7ef9b1f0fb1f6f7e7136ff7e586",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wollewald/library/INA219_WE/1.4.0/INA219_WE-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/wollewald/library/INA219_WE/1.4.0/INA219_WE-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wollewald/library/INA219_WE/1.4.1/INA219_WE-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "INA219_WE-1.4.1.tar.gz",
+    "size_bytes": 8035,
+    "sha256": "0cb2bd05cc2abbdbe9fb22da3f7a1c4b7c9986aea54f8a219b0d4c3d6ca01737",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wollewald/library/INA219_WE/1.4.1/INA219_WE-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/wollewald/library/INA219_WE/1.4.1/INA219_WE-1.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wollewald/library/INA226_WE/1.2.12/INA226_WE-1.2.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "INA226_WE-1.2.12.tar.gz",
+    "size_bytes": 10084,
+    "sha256": "423ada74db74feda527c873541d2922a6cb0e6534d800012e18459dbc4d54431",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wollewald/library/INA226_WE/1.2.12/INA226_WE-1.2.12.tar.gz",
+     "https://dl.registry.platformio.org/download/wollewald/library/INA226_WE/1.2.12/INA226_WE-1.2.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wollewald/library/INA226_WE/1.3.0/INA226_WE-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "INA226_WE-1.3.0.tar.gz",
+    "size_bytes": 11249,
+    "sha256": "7d362eced91ad1bd96cb82cf3a86e70836e5a74eb3877f646d975c8ea2f9dd66",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wollewald/library/INA226_WE/1.3.0/INA226_WE-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/wollewald/library/INA226_WE/1.3.0/INA226_WE-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wollewald/library/MCP23017_WE/1.6.10/MCP23017_WE-1.6.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP23017_WE-1.6.10.tar.gz",
+    "size_bytes": 10221,
+    "sha256": "a71f6ab03a5b7a23e662fb0466616a781b9b58a90aab99b3b7ad556ae37bf254",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wollewald/library/MCP23017_WE/1.6.10/MCP23017_WE-1.6.10.tar.gz",
+     "https://dl.registry.platformio.org/download/wollewald/library/MCP23017_WE/1.6.10/MCP23017_WE-1.6.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wollewald/library/MCP23017_WE/1.6.11/MCP23017_WE-1.6.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP23017_WE-1.6.11.tar.gz",
+    "size_bytes": 10418,
+    "sha256": "8e60f997355c42dd1719d8ac5ece77c61fa17fd1e8d37590438466b947bdc0d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wollewald/library/MCP23017_WE/1.6.11/MCP23017_WE-1.6.11.tar.gz",
+     "https://dl.registry.platformio.org/download/wollewald/library/MCP23017_WE/1.6.11/MCP23017_WE-1.6.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wollewald/library/MCP23017_WE/1.6.12/MCP23017_WE-1.6.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP23017_WE-1.6.12.tar.gz",
+    "size_bytes": 10478,
+    "sha256": "2b50b67b9abd981b6214fc86c9988951fa58e65bccff96e536b20524ed69416c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wollewald/library/MCP23017_WE/1.6.12/MCP23017_WE-1.6.12.tar.gz",
+     "https://dl.registry.platformio.org/download/wollewald/library/MCP23017_WE/1.6.12/MCP23017_WE-1.6.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wollewald/library/MCP23017_WE/2.0.0/MCP23017_WE-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP23017_WE-2.0.0.tar.gz",
+    "size_bytes": 11059,
+    "sha256": "e4566a0001a544d2732db14e749c70603877347dcd2eb1421c72d82fa4a2d83f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wollewald/library/MCP23017_WE/2.0.0/MCP23017_WE-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/wollewald/library/MCP23017_WE/2.0.0/MCP23017_WE-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wollewald/library/MPU9250_WE/1.2.15/MPU9250_WE-1.2.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPU9250_WE-1.2.15.tar.gz",
+    "size_bytes": 29597,
+    "sha256": "fb7694280f2acc6dbd4cd22d0b70a51977ea70246b3f514ad5a5197090437307",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wollewald/library/MPU9250_WE/1.2.15/MPU9250_WE-1.2.15.tar.gz",
+     "https://dl.registry.platformio.org/download/wollewald/library/MPU9250_WE/1.2.15/MPU9250_WE-1.2.15.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wollewald/library/MPU9250_WE/1.2.16/MPU9250_WE-1.2.16.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPU9250_WE-1.2.16.tar.gz",
+    "size_bytes": 29673,
+    "sha256": "47b56bfac571a54149654af574893659daba49924fb149654d489796a2c62a11",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wollewald/library/MPU9250_WE/1.2.16/MPU9250_WE-1.2.16.tar.gz",
+     "https://dl.registry.platformio.org/download/wollewald/library/MPU9250_WE/1.2.16/MPU9250_WE-1.2.16.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wollewald/library/MPU9250_WE/1.2.17/MPU9250_WE-1.2.17.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPU9250_WE-1.2.17.tar.gz",
+    "size_bytes": 29679,
+    "sha256": "96603caf38701e070e15afba84370b3b80fb5fd136ca348421362b4b1f2e25b4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wollewald/library/MPU9250_WE/1.2.17/MPU9250_WE-1.2.17.tar.gz",
+     "https://dl.registry.platformio.org/download/wollewald/library/MPU9250_WE/1.2.17/MPU9250_WE-1.2.17.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wollewald/library/SI1145_WE/1.1.7/SI1145_WE-1.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SI1145_WE-1.1.7.tar.gz",
+    "size_bytes": 8049,
+    "sha256": "536b42eb37939ff4ae11e2af185473b5aced698a3991e8168a09693124658894",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wollewald/library/SI1145_WE/1.1.7/SI1145_WE-1.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/wollewald/library/SI1145_WE/1.1.7/SI1145_WE-1.1.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wollewald/library/VL6180X_WE/1.1.10/VL6180X_WE-1.1.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VL6180X_WE-1.1.10.tar.gz",
+    "size_bytes": 7812,
+    "sha256": "13e19b59b2f74236666e7dd635e8589504c1da88254f333487732f366668dfd1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wollewald/library/VL6180X_WE/1.1.10/VL6180X_WE-1.1.10.tar.gz",
+     "https://dl.registry.platformio.org/download/wollewald/library/VL6180X_WE/1.1.10/VL6180X_WE-1.1.10.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/marhar",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "marhar/library/ArrbotMonitor/1.1/ArrbotMonitor-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArrbotMonitor-1.1.tar.gz",
+    "size_bytes": 2685,
+    "sha256": "ef9ebc7d44037f6574ba3f92f18db3b4d79ccf3dcd296c0910a4ab40115a3c33",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marhar/library/ArrbotMonitor/1.1/ArrbotMonitor-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/marhar/library/ArrbotMonitor/1.1/ArrbotMonitor-1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

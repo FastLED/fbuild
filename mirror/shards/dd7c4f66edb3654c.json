@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/vktrsansara",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "vktrsansara/library/LedBasic/1.2.0/LedBasic-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LedBasic-1.2.0.tar.gz",
+    "size_bytes": 27061,
+    "sha256": "54a5be8d0bcd51433c4169daa52fe7678b343c11104538b8b9e057720fb71abe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vktrsansara/library/LedBasic/1.2.0/LedBasic-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vktrsansara/library/LedBasic/1.2.0/LedBasic-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

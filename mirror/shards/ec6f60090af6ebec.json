@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-alipford3",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-alipford3/library/HTU21D/0.0.0+sha.4fd07be6bad8/HTU21D-0.0.0+sha.4fd07be6bad8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HTU21D-0.0.0+sha.4fd07be6bad8.tar.gz",
+    "size_bytes": 2413,
+    "sha256": "835e164f4b8c025e0f34ca0d67c5d5418aa84f9ae0b504268bfd99a2ef73d331",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-alipford3/library/HTU21D/0.0.0%2Bsha.4fd07be6bad8/HTU21D-0.0.0%2Bsha.4fd07be6bad8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-alipford3/library/HTU21D/0.0.0%2Bsha.4fd07be6bad8/HTU21D-0.0.0%2Bsha.4fd07be6bad8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

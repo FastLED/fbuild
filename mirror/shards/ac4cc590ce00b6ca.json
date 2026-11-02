@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-nimbusgb",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-nimbusgb/library/ADXL345_I2C/0.0.0+sha.92fa975dab32/ADXL345_I2C-0.0.0+sha.92fa975dab32.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADXL345_I2C-0.0.0+sha.92fa975dab32.tar.gz",
+    "size_bytes": 5697,
+    "sha256": "314a31193a752d349b726b47885a18ce57a05ca8458dcb7350275fb96fa2ca02",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nimbusgb/library/ADXL345_I2C/0.0.0%2Bsha.92fa975dab32/ADXL345_I2C-0.0.0%2Bsha.92fa975dab32.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nimbusgb/library/ADXL345_I2C/0.0.0%2Bsha.92fa975dab32/ADXL345_I2C-0.0.0%2Bsha.92fa975dab32.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nimbusgb/library/IMUfilter/0.0.0+sha.202906c5fadd/IMUfilter-0.0.0+sha.202906c5fadd.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IMUfilter-0.0.0+sha.202906c5fadd.tar.gz",
+    "size_bytes": 3648,
+    "sha256": "b5500102858e93228599a9d7ff34b2266981a0ac1ff65bd384f6328148ee97d2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nimbusgb/library/IMUfilter/0.0.0%2Bsha.202906c5fadd/IMUfilter-0.0.0%2Bsha.202906c5fadd.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nimbusgb/library/IMUfilter/0.0.0%2Bsha.202906c5fadd/IMUfilter-0.0.0%2Bsha.202906c5fadd.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nimbusgb/library/SHT75/0.0.0+sha.db6b417dfa74/SHT75-0.0.0+sha.db6b417dfa74.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SHT75-0.0.0+sha.db6b417dfa74.tar.gz",
+    "size_bytes": 3519,
+    "sha256": "faea436d149760f76831d63abf2dc497bba25b3398ef88c43b80120c3c07d585",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nimbusgb/library/SHT75/0.0.0%2Bsha.db6b417dfa74/SHT75-0.0.0%2Bsha.db6b417dfa74.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nimbusgb/library/SHT75/0.0.0%2Bsha.db6b417dfa74/SHT75-0.0.0%2Bsha.db6b417dfa74.tar.gz"
+    ]
+   }
+  }
+ ]
+}

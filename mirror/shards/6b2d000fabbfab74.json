@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hieromon",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hieromon/library/AutoConnect/1.4.2/AutoConnect-1.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AutoConnect-1.4.2.tar.gz",
+    "size_bytes": 254018,
+    "sha256": "f2bc130d489f56a36689ca7a622b1cf7bff20c07f3c6368fc9774ae7aab109ec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hieromon/library/AutoConnect/1.4.2/AutoConnect-1.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/hieromon/library/AutoConnect/1.4.2/AutoConnect-1.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hieromon/library/PageBuilder/1.5.6/PageBuilder-1.5.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PageBuilder-1.5.6.tar.gz",
+    "size_bytes": 35651,
+    "sha256": "98d0c9078dc0685411c408e7b87d3f3c512c81bc9038c92170566fb24c4ba7c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hieromon/library/PageBuilder/1.5.6/PageBuilder-1.5.6.tar.gz",
+     "https://dl.registry.platformio.org/download/hieromon/library/PageBuilder/1.5.6/PageBuilder-1.5.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

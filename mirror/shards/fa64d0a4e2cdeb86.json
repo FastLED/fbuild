@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-sergunb",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-sergunb/library/1/0.0.0+sha.8918a71cdbe9/1-0.0.0+sha.8918a71cdbe9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "1-0.0.0+sha.8918a71cdbe9.tar.gz",
+    "size_bytes": 1101675,
+    "sha256": "cd8d4d2825bd2f1dc72f6adde5f91d6a596cb6cd0fae10caaefddabc92b57faa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sergunb/library/1/0.0.0%2Bsha.8918a71cdbe9/1-0.0.0%2Bsha.8918a71cdbe9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sergunb/library/1/0.0.0%2Bsha.8918a71cdbe9/1-0.0.0%2Bsha.8918a71cdbe9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sergunb/library/main/0.0.0+sha.21b85706ec2f/main-0.0.0+sha.21b85706ec2f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "main-0.0.0+sha.21b85706ec2f.tar.gz",
+    "size_bytes": 8481,
+    "sha256": "68bbc47f3cf3f3bc0387ac761ba283152d0f956fc773d3f2cb1b9757da5182ff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sergunb/library/main/0.0.0%2Bsha.21b85706ec2f/main-0.0.0%2Bsha.21b85706ec2f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sergunb/library/main/0.0.0%2Bsha.21b85706ec2f/main-0.0.0%2Bsha.21b85706ec2f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

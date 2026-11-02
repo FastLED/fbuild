@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kiselevivan",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kiselevivan/library/kidLibrary/1.0.2/kidLibrary-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "kidLibrary-1.0.2.tar.gz",
+    "size_bytes": 10247,
+    "sha256": "88297c64e6f909199f84f5697cee2dcfe2a163fcaa323404f7e07e3b3892a4d5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kiselevivan/library/kidLibrary/1.0.2/kidLibrary-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/kiselevivan/library/kidLibrary/1.0.2/kidLibrary-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

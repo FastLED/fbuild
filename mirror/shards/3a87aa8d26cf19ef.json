@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-mbed-x",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-mbed-x/library/SimpleBLE-mbed-os-5/0.0.0+sha.450b780bb1de/SimpleBLE-mbed-os-5-0.0.0+sha.450b780bb1de.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleBLE-mbed-os-5-0.0.0+sha.450b780bb1de.tar.gz",
+    "size_bytes": 4022,
+    "sha256": "6f9e0ad2cbb8d40667d196cd9d977b74b752fce3f19826e4c8b60240d8e76854",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mbed-x/library/SimpleBLE-mbed-os-5/0.0.0%2Bsha.450b780bb1de/SimpleBLE-mbed-os-5-0.0.0%2Bsha.450b780bb1de.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mbed-x/library/SimpleBLE-mbed-os-5/0.0.0%2Bsha.450b780bb1de/SimpleBLE-mbed-os-5-0.0.0%2Bsha.450b780bb1de.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-mbed-x/library/SimpleBLE/0.0.0+sha.953b3164e80f/SimpleBLE-0.0.0+sha.953b3164e80f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleBLE-0.0.0+sha.953b3164e80f.tar.gz",
+    "size_bytes": 4176,
+    "sha256": "5c2007142e377b5bead8a80cb0f6bfe5dc418e28f01875ece48fd568066265c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mbed-x/library/SimpleBLE/0.0.0%2Bsha.953b3164e80f/SimpleBLE-0.0.0%2Bsha.953b3164e80f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mbed-x/library/SimpleBLE/0.0.0%2Bsha.953b3164e80f/SimpleBLE-0.0.0%2Bsha.953b3164e80f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

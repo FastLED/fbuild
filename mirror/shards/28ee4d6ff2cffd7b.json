@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pierretek",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pierretek/library/SimpleMPU6050/1.0.0/SimpleMPU6050-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleMPU6050-1.0.0.tar.gz",
+    "size_bytes": 10024,
+    "sha256": "dc3c0c787f128c882a2eb99fabfdcbdb1f278b949934d38ab5dd6a89d330ab6c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pierretek/library/SimpleMPU6050/1.0.0/SimpleMPU6050-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pierretek/library/SimpleMPU6050/1.0.0/SimpleMPU6050-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

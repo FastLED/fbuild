@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ntruchsess",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ntruchsess/library/UIPEthernet/1.04/UIPEthernet-1.04.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UIPEthernet-1.04.tar.gz",
+    "size_bytes": 72828,
+    "sha256": "8113a5fab538a8aa269b76b85e5eeb9be01b4481a797b50a6f58ba03cec4d550",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ntruchsess/library/UIPEthernet/1.04/UIPEthernet-1.04.tar.gz",
+     "https://dl.registry.platformio.org/download/ntruchsess/library/UIPEthernet/1.04/UIPEthernet-1.04.tar.gz"
+    ]
+   }
+  }
+ ]
+}

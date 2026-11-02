@@ -1,0 +1,269 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/arkhipenko",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "arkhipenko/library/Dictionary/3.5.0/Dictionary-3.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Dictionary-3.5.0.tar.gz",
+    "size_bytes": 50576,
+    "sha256": "c5c9aedab135c54ee9431820807247c22efd76b6868fb5851a40c27437af5be4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arkhipenko/library/Dictionary/3.5.0/Dictionary-3.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arkhipenko/library/Dictionary/3.5.0/Dictionary-3.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arkhipenko/library/Dictionary/3.6.0/Dictionary-3.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Dictionary-3.6.0.tar.gz",
+    "size_bytes": 58437,
+    "sha256": "ecc969b1029266f2af7c8568ed46586bbb9a6447151ae6b6a04a7febaffa1605",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arkhipenko/library/Dictionary/3.6.0/Dictionary-3.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arkhipenko/library/Dictionary/3.6.0/Dictionary-3.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arkhipenko/library/Dictionary/4.0.0/Dictionary-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Dictionary-4.0.0.tar.gz",
+    "size_bytes": 42553,
+    "sha256": "e02b4d0902c07c875eebff24ea053a7fdb22d658a747c1b1c8a1e34e09032356",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arkhipenko/library/Dictionary/4.0.0/Dictionary-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arkhipenko/library/Dictionary/4.0.0/Dictionary-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arkhipenko/library/EspBootstrap/2.3.2/EspBootstrap-2.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspBootstrap-2.3.2.tar.gz",
+    "size_bytes": 26623,
+    "sha256": "aebbf4c389d4fce1f5e1503167cc3e6794059588689b58d4f6e51dbcd9d06625",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arkhipenko/library/EspBootstrap/2.3.2/EspBootstrap-2.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/arkhipenko/library/EspBootstrap/2.3.2/EspBootstrap-2.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arkhipenko/library/PersistentQueue/1.0.0/PersistentQueue-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PersistentQueue-1.0.0.tar.gz",
+    "size_bytes": 7245,
+    "sha256": "c02258c44173e05ed38d66b3eec88a4148825d61dd4314c3ad05fedd5d7abde8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arkhipenko/library/PersistentQueue/1.0.0/PersistentQueue-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arkhipenko/library/PersistentQueue/1.0.0/PersistentQueue-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arkhipenko/library/PersistentQueue/1.2.1/PersistentQueue-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PersistentQueue-1.2.1.tar.gz",
+    "size_bytes": 16443,
+    "sha256": "869151615c3c9559eabc9e315f1b8ce621fa6b06adbe0e47ec41f9b77834f7b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arkhipenko/library/PersistentQueue/1.2.1/PersistentQueue-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arkhipenko/library/PersistentQueue/1.2.1/PersistentQueue-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arkhipenko/library/StateMachineFramework/1.0.1/StateMachineFramework-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StateMachineFramework-1.0.1.tar.gz",
+    "size_bytes": 20223,
+    "sha256": "b42287b71cad88898c623c5ab49748a1da6d72c9841af64c4b0c75ea3a0712ca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arkhipenko/library/StateMachineFramework/1.0.1/StateMachineFramework-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arkhipenko/library/StateMachineFramework/1.0.1/StateMachineFramework-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arkhipenko/library/TM1650/1.1.0/TM1650-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TM1650-1.1.0.tar.gz",
+    "size_bytes": 4382,
+    "sha256": "22cd9b5576d5d4f2652ec55f994824bbd60be1d6705c90ae1fb0a7f828356dd1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arkhipenko/library/TM1650/1.1.0/TM1650-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arkhipenko/library/TM1650/1.1.0/TM1650-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arkhipenko/library/TaskScheduler/3.7.0/TaskScheduler-3.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TaskScheduler-3.7.0.tar.gz",
+    "size_bytes": 54015,
+    "sha256": "edea909d91656c8705c99f60ba7bd350f5eedb2cd51eff22c2b2a471a343160b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arkhipenko/library/TaskScheduler/3.7.0/TaskScheduler-3.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arkhipenko/library/TaskScheduler/3.7.0/TaskScheduler-3.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arkhipenko/library/TaskScheduler/3.8.5/TaskScheduler-3.8.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TaskScheduler-3.8.5.tar.gz",
+    "size_bytes": 56885,
+    "sha256": "74776d3e6e507fcd928c5d6c79b9d8468a6636dff16bf294c04f249085fa05c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arkhipenko/library/TaskScheduler/3.8.5/TaskScheduler-3.8.5.tar.gz",
+     "https://dl.registry.platformio.org/download/arkhipenko/library/TaskScheduler/3.8.5/TaskScheduler-3.8.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arkhipenko/library/TaskScheduler/4.0.0/TaskScheduler-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TaskScheduler-4.0.0.tar.gz",
+    "size_bytes": 93968,
+    "sha256": "d6fbc3a3822e7d8a2d20cdcd647755de0e1af223f967092b9934576ab6a19210",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arkhipenko/library/TaskScheduler/4.0.0/TaskScheduler-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arkhipenko/library/TaskScheduler/4.0.0/TaskScheduler-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arkhipenko/library/TaskScheduler/4.0.1/TaskScheduler-4.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TaskScheduler-4.0.1.tar.gz",
+    "size_bytes": 95735,
+    "sha256": "a2c927646311ff720441f83d1e12bd1f3123e3a202810ef5186e1cc1680b0905",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arkhipenko/library/TaskScheduler/4.0.1/TaskScheduler-4.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arkhipenko/library/TaskScheduler/4.0.1/TaskScheduler-4.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arkhipenko/library/TaskScheduler/4.0.2/TaskScheduler-4.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TaskScheduler-4.0.2.tar.gz",
+    "size_bytes": 95975,
+    "sha256": "98300be516c2eb0ab6f8caa6297e69a38035ad09e134230c00c9f834ffa12c66",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arkhipenko/library/TaskScheduler/4.0.2/TaskScheduler-4.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/arkhipenko/library/TaskScheduler/4.0.2/TaskScheduler-4.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arkhipenko/library/TaskScheduler/4.0.3/TaskScheduler-4.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TaskScheduler-4.0.3.tar.gz",
+    "size_bytes": 96111,
+    "sha256": "6baa9482152673b7a73ace0409577b2790fac03947145bea84c472bfab811758",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arkhipenko/library/TaskScheduler/4.0.3/TaskScheduler-4.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/arkhipenko/library/TaskScheduler/4.0.3/TaskScheduler-4.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arkhipenko/library/TaskScheduler/4.0.4/TaskScheduler-4.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TaskScheduler-4.0.4.tar.gz",
+    "size_bytes": 96154,
+    "sha256": "18d12bdb2a569cbfa53832760825a1a5f22b95cc446221e560a78cce680cedd7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arkhipenko/library/TaskScheduler/4.0.4/TaskScheduler-4.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/arkhipenko/library/TaskScheduler/4.0.4/TaskScheduler-4.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arkhipenko/library/TaskScheduler/4.0.5/TaskScheduler-4.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TaskScheduler-4.0.5.tar.gz",
+    "size_bytes": 97945,
+    "sha256": "19886a940f4ec26151166f8c2f72ee22910ea780a3df4f2c1665dba13470c5ef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arkhipenko/library/TaskScheduler/4.0.5/TaskScheduler-4.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/arkhipenko/library/TaskScheduler/4.0.5/TaskScheduler-4.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arkhipenko/library/TaskScheduler/4.0.7/TaskScheduler-4.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TaskScheduler-4.0.7.tar.gz",
+    "size_bytes": 98541,
+    "sha256": "8f7f1ad0188a1480ae9b0e331acf426dd0e7feb9e10f84e6d0c4ecc851144ced",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arkhipenko/library/TaskScheduler/4.0.7/TaskScheduler-4.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/arkhipenko/library/TaskScheduler/4.0.7/TaskScheduler-4.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arkhipenko/library/TaskScheduler/4.0.8/TaskScheduler-4.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TaskScheduler-4.0.8.tar.gz",
+    "size_bytes": 98848,
+    "sha256": "a8e5bfe45747b1c0b811d16bbf9a30e53ce8754e0812de736792eb5c8146e41f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arkhipenko/library/TaskScheduler/4.0.8/TaskScheduler-4.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/arkhipenko/library/TaskScheduler/4.0.8/TaskScheduler-4.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arkhipenko/library/TaskScheduler/4.1.0/TaskScheduler-4.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TaskScheduler-4.1.0.tar.gz",
+    "size_bytes": 105421,
+    "sha256": "2207a7a9b694cce49d3dcb9852b7a8753fdd7f1456d0d2d8422182bb42ea6091",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arkhipenko/library/TaskScheduler/4.1.0/TaskScheduler-4.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arkhipenko/library/TaskScheduler/4.1.0/TaskScheduler-4.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arkhipenko/library/TaskScheduler/4.1.1/TaskScheduler-4.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TaskScheduler-4.1.1.tar.gz",
+    "size_bytes": 108045,
+    "sha256": "ee6d4f80a1f9c4d8bddf8c181cff3bdf27446e17c52279dc48dc889928a376f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arkhipenko/library/TaskScheduler/4.1.1/TaskScheduler-4.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arkhipenko/library/TaskScheduler/4.1.1/TaskScheduler-4.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

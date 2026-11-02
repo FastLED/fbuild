@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-dom952",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-dom952/library/Led_Lcd/0.0.0+sha.2459f0b51846/Led_Lcd-0.0.0+sha.2459f0b51846.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Led_Lcd-0.0.0+sha.2459f0b51846.tar.gz",
+    "size_bytes": 1052,
+    "sha256": "034fa87e723754ca1c90333e7446a88fbcff84e0ea7e0a2d845c0d4d8dfdb4c3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dom952/library/Led_Lcd/0.0.0%2Bsha.2459f0b51846/Led_Lcd-0.0.0%2Bsha.2459f0b51846.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dom952/library/Led_Lcd/0.0.0%2Bsha.2459f0b51846/Led_Lcd-0.0.0%2Bsha.2459f0b51846.tar.gz"
+    ]
+   }
+  }
+ ]
+}

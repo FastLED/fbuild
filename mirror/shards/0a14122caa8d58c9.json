@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/collin80",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "collin80/library/can_common/0.4.0/can_common-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "can_common-0.4.0.tar.gz",
+    "size_bytes": 16058,
+    "sha256": "417501f373745b38356882b5d60240b47196ec17ee38af2415a392217ae892c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/collin80/library/can_common/0.4.0/can_common-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/collin80/library/can_common/0.4.0/can_common-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "collin80/library/due_can/2.1.6/due_can-2.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "due_can-2.1.6.tar.gz",
+    "size_bytes": 32459,
+    "sha256": "a96c0b9b35daebf15377b908b2624f6f96d7c3d569a141c02e0944d2e01f9ba0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/collin80/library/due_can/2.1.6/due_can-2.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/collin80/library/due_can/2.1.6/due_can-2.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "collin80/library/due_wire/1.0.0/due_wire-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "due_wire-1.0.0.tar.gz",
+    "size_bytes": 6570,
+    "sha256": "2135e288a13b5546035932d496a3c040a1188829c7ae957c291083cf7e950f5e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/collin80/library/due_wire/1.0.0/due_wire-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/collin80/library/due_wire/1.0.0/due_wire-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

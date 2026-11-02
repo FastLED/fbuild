@@ -1,0 +1,451 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/johboh",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "johboh/library/ConnectionHelper/3.0.13/ConnectionHelper-3.0.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ConnectionHelper-3.0.13.tar.gz",
+    "size_bytes": 25540,
+    "sha256": "4db158570299667657cdd8117dc763ec356637ad928e20ec8ae3af6e76644025",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/johboh/library/ConnectionHelper/3.0.13/ConnectionHelper-3.0.13.tar.gz",
+     "https://dl.registry.platformio.org/download/johboh/library/ConnectionHelper/3.0.13/ConnectionHelper-3.0.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "johboh/library/ConnectionHelper/3.0.14/ConnectionHelper-3.0.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ConnectionHelper-3.0.14.tar.gz",
+    "size_bytes": 25626,
+    "sha256": "767697d9b56af877582e2ca715e5d3ff9221fe998c8811e661a8a2de4f9fdeb9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/johboh/library/ConnectionHelper/3.0.14/ConnectionHelper-3.0.14.tar.gz",
+     "https://dl.registry.platformio.org/download/johboh/library/ConnectionHelper/3.0.14/ConnectionHelper-3.0.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "johboh/library/ConnectionHelper/3.0.15/ConnectionHelper-3.0.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ConnectionHelper-3.0.15.tar.gz",
+    "size_bytes": 25858,
+    "sha256": "f102c2be9043e676868493cef07e6a1e92c8b46d3e55e71971e31548e8197b74",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/johboh/library/ConnectionHelper/3.0.15/ConnectionHelper-3.0.15.tar.gz",
+     "https://dl.registry.platformio.org/download/johboh/library/ConnectionHelper/3.0.15/ConnectionHelper-3.0.15.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "johboh/library/ConnectionHelper/3.0.16/ConnectionHelper-3.0.16.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ConnectionHelper-3.0.16.tar.gz",
+    "size_bytes": 25984,
+    "sha256": "3e69208fd403285f51322c3e192c1c99412b18a66fa0f8657235e42fd4d66c32",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/johboh/library/ConnectionHelper/3.0.16/ConnectionHelper-3.0.16.tar.gz",
+     "https://dl.registry.platformio.org/download/johboh/library/ConnectionHelper/3.0.16/ConnectionHelper-3.0.16.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "johboh/library/EspNowNetwork/0.7.1/EspNowNetwork-0.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspNowNetwork-0.7.1.tar.gz",
+    "size_bytes": 6770,
+    "sha256": "22d01cc8c030e03627f9c2b997825677e3e4c54ab8e4b4f7c4690538eab0a09b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/johboh/library/EspNowNetwork/0.7.1/EspNowNetwork-0.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/johboh/library/EspNowNetwork/0.7.1/EspNowNetwork-0.7.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "johboh/library/EspNowNetworkHost/0.8.2/EspNowNetworkHost-0.8.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspNowNetworkHost-0.8.2.tar.gz",
+    "size_bytes": 25209,
+    "sha256": "4b118204c526b4f23bdd05ffcfe5cb93c6ce130db6f2bf06dbf1cbaf5de13464",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/johboh/library/EspNowNetworkHost/0.8.2/EspNowNetworkHost-0.8.2.tar.gz",
+     "https://dl.registry.platformio.org/download/johboh/library/EspNowNetworkHost/0.8.2/EspNowNetworkHost-0.8.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "johboh/library/EspNowNetworkHostDriver/0.7.6/EspNowNetworkHostDriver-0.7.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspNowNetworkHostDriver-0.7.6.tar.gz",
+    "size_bytes": 31458,
+    "sha256": "581b8332a0db6f70640dc8a03fed2a6d976aaa54efc5690c16c988177f771069",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/johboh/library/EspNowNetworkHostDriver/0.7.6/EspNowNetworkHostDriver-0.7.6.tar.gz",
+     "https://dl.registry.platformio.org/download/johboh/library/EspNowNetworkHostDriver/0.7.6/EspNowNetworkHostDriver-0.7.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "johboh/library/EspNowNetworkNode/0.8.3/EspNowNetworkNode-0.8.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspNowNetworkNode-0.8.3.tar.gz",
+    "size_bytes": 35585,
+    "sha256": "1f5c3bd2a9acd94076621c9504c0d230b40a15b7724f0b35554a50ed4d19b2fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/johboh/library/EspNowNetworkNode/0.8.3/EspNowNetworkNode-0.8.3.tar.gz",
+     "https://dl.registry.platformio.org/download/johboh/library/EspNowNetworkNode/0.8.3/EspNowNetworkNode-0.8.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "johboh/library/EspNowNetworkShared/1.0.4/EspNowNetworkShared-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspNowNetworkShared-1.0.4.tar.gz",
+    "size_bytes": 17912,
+    "sha256": "56c4fbc2a2a05ac40d223eca77c885333e453c12ec3f39f4d967e651640523d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/johboh/library/EspNowNetworkShared/1.0.4/EspNowNetworkShared-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/johboh/library/EspNowNetworkShared/1.0.4/EspNowNetworkShared-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "johboh/library/GCMEncryption/0.5.3/GCMEncryption-0.5.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GCMEncryption-0.5.3.tar.gz",
+    "size_bytes": 20458,
+    "sha256": "b0059fc3be3a7a86d60a502a13240c7a8674771e7a14694e42ce52982c84ae48",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/johboh/library/GCMEncryption/0.5.3/GCMEncryption-0.5.3.tar.gz",
+     "https://dl.registry.platformio.org/download/johboh/library/GCMEncryption/0.5.3/GCMEncryption-0.5.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "johboh/library/HomeAssistantEntities/8.0.15/HomeAssistantEntities-8.0.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HomeAssistantEntities-8.0.15.tar.gz",
+    "size_bytes": 40566,
+    "sha256": "bb4b25cb721153788a4c7b6b888e0d2a9f14804d47b5cbc6947a650acf442ed8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/johboh/library/HomeAssistantEntities/8.0.15/HomeAssistantEntities-8.0.15.tar.gz",
+     "https://dl.registry.platformio.org/download/johboh/library/HomeAssistantEntities/8.0.15/HomeAssistantEntities-8.0.15.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "johboh/library/HomeAssistantEntities/8.0.16/HomeAssistantEntities-8.0.16.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HomeAssistantEntities-8.0.16.tar.gz",
+    "size_bytes": 40854,
+    "sha256": "9b0a5aa2eee7fc3db4bc20579dd63b7462a7968e91b82d433de9f6461e091b28",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/johboh/library/HomeAssistantEntities/8.0.16/HomeAssistantEntities-8.0.16.tar.gz",
+     "https://dl.registry.platformio.org/download/johboh/library/HomeAssistantEntities/8.0.16/HomeAssistantEntities-8.0.16.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "johboh/library/HomeAssistantEntities/8.0.17/HomeAssistantEntities-8.0.17.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HomeAssistantEntities-8.0.17.tar.gz",
+    "size_bytes": 40868,
+    "sha256": "5179010eb9d152ba4492c734868f8422e330552a7a73fca2aec734d9ad2f39e8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/johboh/library/HomeAssistantEntities/8.0.17/HomeAssistantEntities-8.0.17.tar.gz",
+     "https://dl.registry.platformio.org/download/johboh/library/HomeAssistantEntities/8.0.17/HomeAssistantEntities-8.0.17.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "johboh/library/HomeAssistantEntities/8.0.19/HomeAssistantEntities-8.0.19.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HomeAssistantEntities-8.0.19.tar.gz",
+    "size_bytes": 42012,
+    "sha256": "4c6d7bb8e00aaba958404a7a059f724703f636839185d22cf53fb33d0f99be59",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/johboh/library/HomeAssistantEntities/8.0.19/HomeAssistantEntities-8.0.19.tar.gz",
+     "https://dl.registry.platformio.org/download/johboh/library/HomeAssistantEntities/8.0.19/HomeAssistantEntities-8.0.19.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "johboh/library/HomeAssistantEntities/8.0.20/HomeAssistantEntities-8.0.20.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HomeAssistantEntities-8.0.20.tar.gz",
+    "size_bytes": 42420,
+    "sha256": "ead7658c3d9d8acb3fb5c14b4deeecc806e2872fe941410bf18a24d8a384a028",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/johboh/library/HomeAssistantEntities/8.0.20/HomeAssistantEntities-8.0.20.tar.gz",
+     "https://dl.registry.platformio.org/download/johboh/library/HomeAssistantEntities/8.0.20/HomeAssistantEntities-8.0.20.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "johboh/library/HomeAssistantEntities/8.0.21/HomeAssistantEntities-8.0.21.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HomeAssistantEntities-8.0.21.tar.gz",
+    "size_bytes": 42711,
+    "sha256": "a3995f614013a07417935183bfb66a79ee5d2569b83315157b8f778e065516b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/johboh/library/HomeAssistantEntities/8.0.21/HomeAssistantEntities-8.0.21.tar.gz",
+     "https://dl.registry.platformio.org/download/johboh/library/HomeAssistantEntities/8.0.21/HomeAssistantEntities-8.0.21.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "johboh/library/HomeAssistantEntities/8.0.22/HomeAssistantEntities-8.0.22.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HomeAssistantEntities-8.0.22.tar.gz",
+    "size_bytes": 42753,
+    "sha256": "cbaddd3ecf438fa51a417531fb1b243b4fbe3b6c22082a1ade3831e080d34a97",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/johboh/library/HomeAssistantEntities/8.0.22/HomeAssistantEntities-8.0.22.tar.gz",
+     "https://dl.registry.platformio.org/download/johboh/library/HomeAssistantEntities/8.0.22/HomeAssistantEntities-8.0.22.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "johboh/library/MQTTRemote/4.0.6/MQTTRemote-4.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQTTRemote-4.0.6.tar.gz",
+    "size_bytes": 12707,
+    "sha256": "7a050034f20cd480097e6198f68b7650ba00071702429a80e9ea55dec6d9d095",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/johboh/library/MQTTRemote/4.0.6/MQTTRemote-4.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/johboh/library/MQTTRemote/4.0.6/MQTTRemote-4.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "johboh/library/MQTTRemote/6.0.3/MQTTRemote-6.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQTTRemote-6.0.3.tar.gz",
+    "size_bytes": 20587,
+    "sha256": "bafc4a41e5163858b3e32710f3a9f4d4e7fe9868cac89a84dd30a7e5fa68486a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/johboh/library/MQTTRemote/6.0.3/MQTTRemote-6.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/johboh/library/MQTTRemote/6.0.3/MQTTRemote-6.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "johboh/library/MQTTRemote/6.0.4/MQTTRemote-6.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQTTRemote-6.0.4.tar.gz",
+    "size_bytes": 20588,
+    "sha256": "6bc6bcb0717ee6a73d46aa177232817bd97f03ef7c15222f2b898a54edceb748",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/johboh/library/MQTTRemote/6.0.4/MQTTRemote-6.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/johboh/library/MQTTRemote/6.0.4/MQTTRemote-6.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "johboh/library/MQTTRemote8266/6.0.3/MQTTRemote8266-6.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQTTRemote8266-6.0.3.tar.gz",
+    "size_bytes": 20511,
+    "sha256": "1a3104481a5d643300e4ed260651158e6ae0a5f4125a66dc36c845fe2de4d65d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/johboh/library/MQTTRemote8266/6.0.3/MQTTRemote8266-6.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/johboh/library/MQTTRemote8266/6.0.3/MQTTRemote8266-6.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "johboh/library/MQTTRemote8266/6.0.4/MQTTRemote8266-6.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQTTRemote8266-6.0.4.tar.gz",
+    "size_bytes": 20489,
+    "sha256": "d7bf9ad555e018392d29f48d17389c0361c133e2c6af60fe46d1734a5506d3fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/johboh/library/MQTTRemote8266/6.0.4/MQTTRemote8266-6.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/johboh/library/MQTTRemote8266/6.0.4/MQTTRemote8266-6.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "johboh/library/ieee-802_15_4-network-host/0.1.2/ieee-802_15_4-network-host-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ieee-802_15_4-network-host-0.1.2.tar.gz",
+    "size_bytes": 24368,
+    "sha256": "b46e829c078246ea96bb88e1e7ddf5ff4a990c6f0a718714b746e2f8b6a6ac53",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/johboh/library/ieee-802_15_4-network-host/0.1.2/ieee-802_15_4-network-host-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/johboh/library/ieee-802_15_4-network-host/0.1.2/ieee-802_15_4-network-host-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "johboh/library/ieee-802_15_4-network-host/0.1.3/ieee-802_15_4-network-host-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ieee-802_15_4-network-host-0.1.3.tar.gz",
+    "size_bytes": 22317,
+    "sha256": "a07f4038506b8762bdf0ab61f5a4d4b0f3eaaaf09d747682f1bb714f8261c534",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/johboh/library/ieee-802_15_4-network-host/0.1.3/ieee-802_15_4-network-host-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/johboh/library/ieee-802_15_4-network-host/0.1.3/ieee-802_15_4-network-host-0.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "johboh/library/ieee-802_15_4-network-node/0.2.1/ieee-802_15_4-network-node-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ieee-802_15_4-network-node-0.2.1.tar.gz",
+    "size_bytes": 25627,
+    "sha256": "a7ee315bb7b4ba478106c60f655269f1f93efebe61f44a1b60b22090ce9b52e8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/johboh/library/ieee-802_15_4-network-node/0.2.1/ieee-802_15_4-network-node-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/johboh/library/ieee-802_15_4-network-node/0.2.1/ieee-802_15_4-network-node-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "johboh/library/ieee-802_15_4-network-node/0.2.2/ieee-802_15_4-network-node-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ieee-802_15_4-network-node-0.2.2.tar.gz",
+    "size_bytes": 24759,
+    "sha256": "2ce047daa5bd6a9ce43a7f1a9f842fdbe1644ef039dc5a072e5266999948e0ef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/johboh/library/ieee-802_15_4-network-node/0.2.2/ieee-802_15_4-network-node-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/johboh/library/ieee-802_15_4-network-node/0.2.2/ieee-802_15_4-network-node-0.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "johboh/library/ieee-802_15_4-network-shared/0.6.3/ieee-802_15_4-network-shared-0.6.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ieee-802_15_4-network-shared-0.6.3.tar.gz",
+    "size_bytes": 17914,
+    "sha256": "eb23c0bc53e0b60b1e7965f84e202019af7e38116920d0ebb3666cef1b848ac1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/johboh/library/ieee-802_15_4-network-shared/0.6.3/ieee-802_15_4-network-shared-0.6.3.tar.gz",
+     "https://dl.registry.platformio.org/download/johboh/library/ieee-802_15_4-network-shared/0.6.3/ieee-802_15_4-network-shared-0.6.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "johboh/library/ieee-802_15_4-network-shared/0.6.4/ieee-802_15_4-network-shared-0.6.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ieee-802_15_4-network-shared-0.6.4.tar.gz",
+    "size_bytes": 17966,
+    "sha256": "88458c5bf41631cb80b48d6dc39f093cac5f0ebd92ea16904ec14ed652704692",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/johboh/library/ieee-802_15_4-network-shared/0.6.4/ieee-802_15_4-network-shared-0.6.4.tar.gz",
+     "https://dl.registry.platformio.org/download/johboh/library/ieee-802_15_4-network-shared/0.6.4/ieee-802_15_4-network-shared-0.6.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "johboh/library/ieee-802_15_4-network-shared/0.6.5/ieee-802_15_4-network-shared-0.6.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ieee-802_15_4-network-shared-0.6.5.tar.gz",
+    "size_bytes": 18056,
+    "sha256": "b9a5805805c633a8f80e483715e2604d4cb23c2da856e195abd12cc8aa25ad99",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/johboh/library/ieee-802_15_4-network-shared/0.6.5/ieee-802_15_4-network-shared-0.6.5.tar.gz",
+     "https://dl.registry.platformio.org/download/johboh/library/ieee-802_15_4-network-shared/0.6.5/ieee-802_15_4-network-shared-0.6.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "johboh/library/ieee-802_15_4-network-shared/0.6.6/ieee-802_15_4-network-shared-0.6.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ieee-802_15_4-network-shared-0.6.6.tar.gz",
+    "size_bytes": 17815,
+    "sha256": "b2757804cfda7ca69d25252669145bd67dea6b9269c819058a71ad210feda2e3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/johboh/library/ieee-802_15_4-network-shared/0.6.6/ieee-802_15_4-network-shared-0.6.6.tar.gz",
+     "https://dl.registry.platformio.org/download/johboh/library/ieee-802_15_4-network-shared/0.6.6/ieee-802_15_4-network-shared-0.6.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "johboh/library/ieee-802_15_4-network-shared/0.6.7/ieee-802_15_4-network-shared-0.6.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ieee-802_15_4-network-shared-0.6.7.tar.gz",
+    "size_bytes": 17956,
+    "sha256": "632518fafbc6638ae43abdd39bddfbefff67e046f069860f75d298d414ce76b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/johboh/library/ieee-802_15_4-network-shared/0.6.7/ieee-802_15_4-network-shared-0.6.7.tar.gz",
+     "https://dl.registry.platformio.org/download/johboh/library/ieee-802_15_4-network-shared/0.6.7/ieee-802_15_4-network-shared-0.6.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "johboh/library/ieee-802_15_4/0.5.7/ieee-802_15_4-0.5.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ieee-802_15_4-0.5.7.tar.gz",
+    "size_bytes": 26547,
+    "sha256": "c2db5c3b53f088679ec60e0b095521c4cb708e1cf071ce370fd9a3845b63e62c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/johboh/library/ieee-802_15_4/0.5.7/ieee-802_15_4-0.5.7.tar.gz",
+     "https://dl.registry.platformio.org/download/johboh/library/ieee-802_15_4/0.5.7/ieee-802_15_4-0.5.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "johboh/library/ieee-802_15_4/0.5.8/ieee-802_15_4-0.5.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ieee-802_15_4-0.5.8.tar.gz",
+    "size_bytes": 26622,
+    "sha256": "8ebcdb6c22e23a15e2370e383782521355d199392ca0504c707e8487d2284222",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/johboh/library/ieee-802_15_4/0.5.8/ieee-802_15_4-0.5.8.tar.gz",
+     "https://dl.registry.platformio.org/download/johboh/library/ieee-802_15_4/0.5.8/ieee-802_15_4-0.5.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "johboh/library/nlohmann-json/3.12.0/nlohmann-json-3.12.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nlohmann-json-3.12.0.tar.gz",
+    "size_bytes": 482930,
+    "sha256": "0eae4491c2b860d1e7e574d4d2c25675225e0ac1955cba5f2d3a4c6d95b2edbe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/johboh/library/nlohmann-json/3.12.0/nlohmann-json-3.12.0.tar.gz",
+     "https://dl.registry.platformio.org/download/johboh/library/nlohmann-json/3.12.0/nlohmann-json-3.12.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

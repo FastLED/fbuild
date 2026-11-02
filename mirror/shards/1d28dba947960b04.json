@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-eembed",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-eembed/library/rtos/0.0.0+sha.b270f864114f/rtos-0.0.0+sha.b270f864114f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "rtos-0.0.0+sha.b270f864114f.tar.gz",
+    "size_bytes": 63318,
+    "sha256": "8c511652790af804cc082a344a556f3fa35b393bf530554ee2d07e216db3ee5e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-eembed/library/rtos/0.0.0%2Bsha.b270f864114f/rtos-0.0.0%2Bsha.b270f864114f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-eembed/library/rtos/0.0.0%2Bsha.b270f864114f/rtos-0.0.0%2Bsha.b270f864114f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

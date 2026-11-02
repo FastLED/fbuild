@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/angelointj",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "angelointj/library/BuzzerPIO_RP2040/2.1.0/BuzzerPIO_RP2040-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BuzzerPIO_RP2040-2.1.0.tar.gz",
+    "size_bytes": 17122,
+    "sha256": "4ea1037db558ee5563a1a87a5a2a7291e9422adb0e55113188500e25fb503a57",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/angelointj/library/BuzzerPIO_RP2040/2.1.0/BuzzerPIO_RP2040-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/angelointj/library/BuzzerPIO_RP2040/2.1.0/BuzzerPIO_RP2040-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "angelointj/library/BuzzerPIO_RP2040/2.5.0/BuzzerPIO_RP2040-2.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BuzzerPIO_RP2040-2.5.0.tar.gz",
+    "size_bytes": 29960,
+    "sha256": "ca701aaceaf4a3e706bae713b60aa17c68319170ef5dbbb369c87fcf8c367b9f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/angelointj/library/BuzzerPIO_RP2040/2.5.0/BuzzerPIO_RP2040-2.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/angelointj/library/BuzzerPIO_RP2040/2.5.0/BuzzerPIO_RP2040-2.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "angelointj/library/DHT22PIO_RP2040/1.0.0/DHT22PIO_RP2040-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DHT22PIO_RP2040-1.0.0.tar.gz",
+    "size_bytes": 15816,
+    "sha256": "f52079d0eefdbe70d0f16bdd3e71c7017877d9f354ab93c2c07f60c904921247",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/angelointj/library/DHT22PIO_RP2040/1.0.0/DHT22PIO_RP2040-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/angelointj/library/DHT22PIO_RP2040/1.0.0/DHT22PIO_RP2040-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "angelointj/library/OneWirePIO_RP2040/1.0.0/OneWirePIO_RP2040-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OneWirePIO_RP2040-1.0.0.tar.gz",
+    "size_bytes": 16547,
+    "sha256": "8dd9cb834de4694bb5f46306f9a73436d6b502e621977ffe345d613de00d4c7f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/angelointj/library/OneWirePIO_RP2040/1.0.0/OneWirePIO_RP2040-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/angelointj/library/OneWirePIO_RP2040/1.0.0/OneWirePIO_RP2040-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "angelointj/library/PicoENC28J60/1.3.1/PicoENC28J60-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PicoENC28J60-1.3.1.tar.gz",
+    "size_bytes": 300838,
+    "sha256": "0f0378618685aeaf45c0a3c5ef42559864500551faf35d2c19c434e08b8f24ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/angelointj/library/PicoENC28J60/1.3.1/PicoENC28J60-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/angelointj/library/PicoENC28J60/1.3.1/PicoENC28J60-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "angelointj/library/USBSnifferPIO_RP2040/1.0.0/USBSnifferPIO_RP2040-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "USBSnifferPIO_RP2040-1.0.0.tar.gz",
+    "size_bytes": 40148,
+    "sha256": "9e71f82dc9ff033fab9148fc888621b78c7ef1b8b7239b850e31b71610698162",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/angelointj/library/USBSnifferPIO_RP2040/1.0.0/USBSnifferPIO_RP2040-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/angelointj/library/USBSnifferPIO_RP2040/1.0.0/USBSnifferPIO_RP2040-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "angelointj/library/WirePIO/1.3.4/WirePIO-1.3.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WirePIO-1.3.4.tar.gz",
+    "size_bytes": 27505,
+    "sha256": "969ec2fb912cde9a0e741322f438eb4b87ae8556b969e3f2b53aabd73c5a0e17",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/angelointj/library/WirePIO/1.3.4/WirePIO-1.3.4.tar.gz",
+     "https://dl.registry.platformio.org/download/angelointj/library/WirePIO/1.3.4/WirePIO-1.3.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "angelointj/library/WirePIO/1.3.5/WirePIO-1.3.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WirePIO-1.3.5.tar.gz",
+    "size_bytes": 27523,
+    "sha256": "52bc6fb00b2c7b4b066442a81e9376971e04de180b01e9b5fe338878de142d73",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/angelointj/library/WirePIO/1.3.5/WirePIO-1.3.5.tar.gz",
+     "https://dl.registry.platformio.org/download/angelointj/library/WirePIO/1.3.5/WirePIO-1.3.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

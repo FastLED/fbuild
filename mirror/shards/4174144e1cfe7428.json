@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-leliep",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-leliep/library/TextLCD_ST7036/0.0.0+sha.45d99cae5a1d/TextLCD_ST7036-0.0.0+sha.45d99cae5a1d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TextLCD_ST7036-0.0.0+sha.45d99cae5a1d.tar.gz",
+    "size_bytes": 3171,
+    "sha256": "47ba96a77c339f7e410dfa408a6264c691ff1781c8c14d890fa21ca75046dc9d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-leliep/library/TextLCD_ST7036/0.0.0%2Bsha.45d99cae5a1d/TextLCD_ST7036-0.0.0%2Bsha.45d99cae5a1d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-leliep/library/TextLCD_ST7036/0.0.0%2Bsha.45d99cae5a1d/TextLCD_ST7036-0.0.0%2Bsha.45d99cae5a1d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

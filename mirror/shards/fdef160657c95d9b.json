@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/juangallostra",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "juangallostra/library/AltitudeEstimation/0.2/AltitudeEstimation-0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AltitudeEstimation-0.2.tar.gz",
+    "size_bytes": 13662,
+    "sha256": "452bfb41b5cd70757679e03e9cb1a24c404f34eee78803e7f3a95890908e6d89",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/juangallostra/library/AltitudeEstimation/0.2/AltitudeEstimation-0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/juangallostra/library/AltitudeEstimation/0.2/AltitudeEstimation-0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,126 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-azureiotclient",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-azureiotclient/library/azure_c_shared_utility/0.0.0+sha.6bb8b9a66642/azure_c_shared_utility-0.0.0+sha.6bb8b9a66642.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "azure_c_shared_utility-0.0.0+sha.6bb8b9a66642.tar.gz",
+    "size_bytes": 159935,
+    "sha256": "c82bec1065b4aa9ffcb339dc9b2a9645217c5a7254f23c5fefedf399b1644924",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-azureiotclient/library/azure_c_shared_utility/0.0.0%2Bsha.6bb8b9a66642/azure_c_shared_utility-0.0.0%2Bsha.6bb8b9a66642.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-azureiotclient/library/azure_c_shared_utility/0.0.0%2Bsha.6bb8b9a66642/azure_c_shared_utility-0.0.0%2Bsha.6bb8b9a66642.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-azureiotclient/library/azure_uamqp_c/0.0.0+sha.365a93fdb5bb/azure_uamqp_c-0.0.0+sha.365a93fdb5bb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "azure_uamqp_c-0.0.0+sha.365a93fdb5bb.tar.gz",
+    "size_bytes": 160197,
+    "sha256": "59e8c7af8589fe18f8de4b0d88054de760b1ca671e2134e5ec3467c99ccf202a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-azureiotclient/library/azure_uamqp_c/0.0.0%2Bsha.365a93fdb5bb/azure_uamqp_c-0.0.0%2Bsha.365a93fdb5bb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-azureiotclient/library/azure_uamqp_c/0.0.0%2Bsha.365a93fdb5bb/azure_uamqp_c-0.0.0%2Bsha.365a93fdb5bb.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-azureiotclient/library/azure_umqtt_c/0.0.0+sha.712bcbf21afa/azure_umqtt_c-0.0.0+sha.712bcbf21afa.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "azure_umqtt_c-0.0.0+sha.712bcbf21afa.tar.gz",
+    "size_bytes": 17716,
+    "sha256": "b64898377185a29d92e470ea5e35b68e1bd6eb955b1c7202c60c3800c4beebeb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-azureiotclient/library/azure_umqtt_c/0.0.0%2Bsha.712bcbf21afa/azure_umqtt_c-0.0.0%2Bsha.712bcbf21afa.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-azureiotclient/library/azure_umqtt_c/0.0.0%2Bsha.712bcbf21afa/azure_umqtt_c-0.0.0%2Bsha.712bcbf21afa.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-azureiotclient/library/iothub_amqp_transport/0.0.0+sha.56ac1346c70d/iothub_amqp_transport-0.0.0+sha.56ac1346c70d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iothub_amqp_transport-0.0.0+sha.56ac1346c70d.tar.gz",
+    "size_bytes": 108754,
+    "sha256": "de0e11a4b6c7723ad97b73db51c572706a6ca46ddb0b860da5efdc5aef42642f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-azureiotclient/library/iothub_amqp_transport/0.0.0%2Bsha.56ac1346c70d/iothub_amqp_transport-0.0.0%2Bsha.56ac1346c70d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-azureiotclient/library/iothub_amqp_transport/0.0.0%2Bsha.56ac1346c70d/iothub_amqp_transport-0.0.0%2Bsha.56ac1346c70d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-azureiotclient/library/iothub_client/0.0.0+sha.7c0bbb86b167/iothub_client-0.0.0+sha.7c0bbb86b167.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iothub_client-0.0.0+sha.7c0bbb86b167.tar.gz",
+    "size_bytes": 105077,
+    "sha256": "c288bb2049fb22ad51b6dd41c2a167c03f93c9678f3786b8c721c1a55772f0f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-azureiotclient/library/iothub_client/0.0.0%2Bsha.7c0bbb86b167/iothub_client-0.0.0%2Bsha.7c0bbb86b167.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-azureiotclient/library/iothub_client/0.0.0%2Bsha.7c0bbb86b167/iothub_client-0.0.0%2Bsha.7c0bbb86b167.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-azureiotclient/library/iothub_http_transport/0.0.0+sha.bc04888bf292/iothub_http_transport-0.0.0+sha.bc04888bf292.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iothub_http_transport-0.0.0+sha.bc04888bf292.tar.gz",
+    "size_bytes": 20131,
+    "sha256": "dac13799025fbda3bf1b71dfb00b0f2a0ec715ff291c9fab2884c796f7ccd81c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-azureiotclient/library/iothub_http_transport/0.0.0%2Bsha.bc04888bf292/iothub_http_transport-0.0.0%2Bsha.bc04888bf292.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-azureiotclient/library/iothub_http_transport/0.0.0%2Bsha.bc04888bf292/iothub_http_transport-0.0.0%2Bsha.bc04888bf292.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-azureiotclient/library/iothub_ll_telemetry_sample/0.0.0+sha.f08837288a37/iothub_ll_telemetry_sample-0.0.0+sha.f08837288a37.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iothub_ll_telemetry_sample-0.0.0+sha.f08837288a37.tar.gz",
+    "size_bytes": 7669,
+    "sha256": "bb440630ba05477ffcd9ef542e4905cb26272127b7dc309ff7b02243b8b2b5ec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-azureiotclient/library/iothub_ll_telemetry_sample/0.0.0%2Bsha.f08837288a37/iothub_ll_telemetry_sample-0.0.0%2Bsha.f08837288a37.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-azureiotclient/library/iothub_ll_telemetry_sample/0.0.0%2Bsha.f08837288a37/iothub_ll_telemetry_sample-0.0.0%2Bsha.f08837288a37.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-azureiotclient/library/iothub_mqtt_transport/0.0.0+sha.410450f16a9f/iothub_mqtt_transport-0.0.0+sha.410450f16a9f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iothub_mqtt_transport-0.0.0+sha.410450f16a9f.tar.gz",
+    "size_bytes": 31497,
+    "sha256": "62ee641f93f6693c8fe5ad34312a2028d831d9538f8b04297e25da7dc8ffeebb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-azureiotclient/library/iothub_mqtt_transport/0.0.0%2Bsha.410450f16a9f/iothub_mqtt_transport-0.0.0%2Bsha.410450f16a9f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-azureiotclient/library/iothub_mqtt_transport/0.0.0%2Bsha.410450f16a9f/iothub_mqtt_transport-0.0.0%2Bsha.410450f16a9f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-azureiotclient/library/serializer/0.0.0+sha.7d12a5386197/serializer-0.0.0+sha.7d12a5386197.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "serializer-0.0.0+sha.7d12a5386197.tar.gz",
+    "size_bytes": 100781,
+    "sha256": "e7770097f973c7a01489f90a87576986ee5ae27c8e7747a193e62e8fb3a69de3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-azureiotclient/library/serializer/0.0.0%2Bsha.7d12a5386197/serializer-0.0.0%2Bsha.7d12a5386197.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-azureiotclient/library/serializer/0.0.0%2Bsha.7d12a5386197/serializer-0.0.0%2Bsha.7d12a5386197.tar.gz"
+    ]
+   }
+  }
+ ]
+}

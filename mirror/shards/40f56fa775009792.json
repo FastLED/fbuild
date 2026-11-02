@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jiribilek",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jiribilek/library/WiFiSpi/0.3.0/WiFiSpi-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFiSpi-0.3.0.tar.gz",
+    "size_bytes": 35013,
+    "sha256": "68230e04660e8ad42d2a5fb374a56510c330d6c45add3e9924ada9a1f73a090e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jiribilek/library/WiFiSpi/0.3.0/WiFiSpi-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jiribilek/library/WiFiSpi/0.3.0/WiFiSpi-0.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

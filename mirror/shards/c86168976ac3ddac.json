@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cdfer",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cdfer/library/ltr303-light/1.1.0/ltr303-light-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ltr303-light-1.1.0.tar.gz",
+    "size_bytes": 11365,
+    "sha256": "dc82883b2aad2d983037d9b5461c7475e64e23efd33e48e43621c7ea2e3b966d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cdfer/library/ltr303-light/1.1.0/ltr303-light-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cdfer/library/ltr303-light/1.1.0/ltr303-light-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cdfer/library/pcf8563-rtc/1.3.0/pcf8563-rtc-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pcf8563-rtc-1.3.0.tar.gz",
+    "size_bytes": 12752,
+    "sha256": "dba89d14cac56ed2fe41743c1ecec7ebfccb9e90c854245371ea2ff6d24cadd1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cdfer/library/pcf8563-rtc/1.3.0/pcf8563-rtc-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cdfer/library/pcf8563-rtc/1.3.0/pcf8563-rtc-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cdfer/library/scd4x-CO2/1.3.0/scd4x-CO2-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "scd4x-CO2-1.3.0.tar.gz",
+    "size_bytes": 9945,
+    "sha256": "cde8899acc5355dcbb7b909a59274cb40774946a7638877571046432c5c3cce9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cdfer/library/scd4x-CO2/1.3.0/scd4x-CO2-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cdfer/library/scd4x-CO2/1.3.0/scd4x-CO2-1.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

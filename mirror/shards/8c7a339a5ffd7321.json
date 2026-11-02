@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-bobbery",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-bobbery/library/ETL/0.0.0+sha.b47c2a7920c2/ETL-0.0.0+sha.b47c2a7920c2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ETL-0.0.0+sha.b47c2a7920c2.tar.gz",
+    "size_bytes": 265265,
+    "sha256": "17314cdb0c3a526fd6f0acd86e7df94f0311622de9f3ce3cfdb4cd4efceae907",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bobbery/library/ETL/0.0.0%2Bsha.b47c2a7920c2/ETL-0.0.0%2Bsha.b47c2a7920c2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bobbery/library/ETL/0.0.0%2Bsha.b47c2a7920c2/ETL-0.0.0%2Bsha.b47c2a7920c2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

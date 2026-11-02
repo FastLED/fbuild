@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/moonmangit",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "moonmangit/library/List/1.0.2/List-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "List-1.0.2.tar.gz",
+    "size_bytes": 5747,
+    "sha256": "51fb3c41b9493180a35a2569577d4cf236cb742869b11dbdbf2516fefb328465",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moonmangit/library/List/1.0.2/List-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/moonmangit/library/List/1.0.2/List-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moonmangit/library/ParenthLogger/1.1.0/ParenthLogger-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ParenthLogger-1.1.0.tar.gz",
+    "size_bytes": 4028,
+    "sha256": "80c0c8b7647ceb26f1bf679140b3e5a40fc9864ab9d0276ab735d638a5dc32ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moonmangit/library/ParenthLogger/1.1.0/ParenthLogger-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/moonmangit/library/ParenthLogger/1.1.0/ParenthLogger-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moonmangit/library/m2list/1.0.0/m2list-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "m2list-1.0.0.tar.gz",
+    "size_bytes": 5938,
+    "sha256": "79440734ff0beeb7dea10040c5571578d2688b6a456a79d9ce8a8e9b9fab8578",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moonmangit/library/m2list/1.0.0/m2list-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/moonmangit/library/m2list/1.0.0/m2list-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

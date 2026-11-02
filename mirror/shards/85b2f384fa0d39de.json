@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-giryan",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-giryan/library/TextDisplays/0.0.0+sha.0e729fc7275a/TextDisplays-0.0.0+sha.0e729fc7275a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TextDisplays-0.0.0+sha.0e729fc7275a.tar.gz",
+    "size_bytes": 3833,
+    "sha256": "1a2860ac11fefb7a33174740f5222c4610995a51a8e4f33c599e24b0e550cd9a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-giryan/library/TextDisplays/0.0.0%2Bsha.0e729fc7275a/TextDisplays-0.0.0%2Bsha.0e729fc7275a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-giryan/library/TextDisplays/0.0.0%2Bsha.0e729fc7275a/TextDisplays-0.0.0%2Bsha.0e729fc7275a.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/m0n7y5",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "m0n7y5/library/LimetOS/10.2.1/LimetOS-10.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LimetOS-10.2.1.tar.gz",
+    "size_bytes": 276461,
+    "sha256": "73c528498d8cfdf703600d53bcd19a1d660943362e666c629221487b5a37d7a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m0n7y5/library/LimetOS/10.2.1/LimetOS-10.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m0n7y5/library/LimetOS/10.2.1/LimetOS-10.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

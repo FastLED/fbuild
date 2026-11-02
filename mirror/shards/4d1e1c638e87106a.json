@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/konnekting",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "konnekting/library/KONNEKTING%20Device%20Library/1.0.0-BETA5/KONNEKTINGDeviceLibrary-1.0.0-BETA5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KONNEKTINGDeviceLibrary-1.0.0-BETA5.tar.gz",
+    "size_bytes": 63026,
+    "sha256": "e36539c4ccca1a814c9416ad8ee6f47ce7c7e01b8cd99317cf50dbdcdf952b98",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/konnekting/library/KONNEKTING%2520Device%2520Library/1.0.0-BETA5/KONNEKTINGDeviceLibrary-1.0.0-BETA5.tar.gz",
+     "https://dl.registry.platformio.org/download/konnekting/library/KONNEKTING%20Device%20Library/1.0.0-BETA5/KONNEKTINGDeviceLibrary-1.0.0-BETA5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

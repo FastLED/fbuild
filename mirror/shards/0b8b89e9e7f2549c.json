@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/awesomeshield",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "awesomeshield/library/Awesome/1.1.0/Awesome-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Awesome-1.1.0.tar.gz",
+    "size_bytes": 33577,
+    "sha256": "47e73d4c031faeec35bad470ba5ef3fe491b9c5c7372fec3fdabd695bd12404a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/awesomeshield/library/Awesome/1.1.0/Awesome-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/awesomeshield/library/Awesome/1.1.0/Awesome-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

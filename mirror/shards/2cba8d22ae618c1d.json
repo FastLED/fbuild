@@ -1,0 +1,477 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/madhephaestus",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "madhephaestus/library/BNO055SimplePacketComs/0.4.0/BNO055SimplePacketComs-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BNO055SimplePacketComs-0.4.0.tar.gz",
+    "size_bytes": 2643,
+    "sha256": "a0b29bc5d7cdea4df3476b7f4196949153da89f432917ddcbbaab0372ced1e5e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/madhephaestus/library/BNO055SimplePacketComs/0.4.0/BNO055SimplePacketComs-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/madhephaestus/library/BNO055SimplePacketComs/0.4.0/BNO055SimplePacketComs-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "madhephaestus/library/ESP32AnalogRead/0.2.2/ESP32AnalogRead-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32AnalogRead-0.2.2.tar.gz",
+    "size_bytes": 2885,
+    "sha256": "05c8fc81fbeb6479307097885246a74bc27c166bb608ca3b57579053e67e520f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/madhephaestus/library/ESP32AnalogRead/0.2.2/ESP32AnalogRead-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/madhephaestus/library/ESP32AnalogRead/0.2.2/ESP32AnalogRead-0.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "madhephaestus/library/ESP32AnalogRead/0.3.0/ESP32AnalogRead-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32AnalogRead-0.3.0.tar.gz",
+    "size_bytes": 2949,
+    "sha256": "4a253810999a6e22154323602d6055a9c930240b7b9e46cd77cf2ee39852c83d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/madhephaestus/library/ESP32AnalogRead/0.3.0/ESP32AnalogRead-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/madhephaestus/library/ESP32AnalogRead/0.3.0/ESP32AnalogRead-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "madhephaestus/library/ESP32Encoder/0.10.2/ESP32Encoder-0.10.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Encoder-0.10.2.tar.gz",
+    "size_bytes": 8717,
+    "sha256": "922f6291d71ec579ec8d517fd509c9267b6db4e1f4f563beff3950ddabe1d97e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/madhephaestus/library/ESP32Encoder/0.10.2/ESP32Encoder-0.10.2.tar.gz",
+     "https://dl.registry.platformio.org/download/madhephaestus/library/ESP32Encoder/0.10.2/ESP32Encoder-0.10.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "madhephaestus/library/ESP32Encoder/0.11.7/ESP32Encoder-0.11.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Encoder-0.11.7.tar.gz",
+    "size_bytes": 9571,
+    "sha256": "039d1c19c2aeacc5c4aec34d783db5d88906ac8b9f4d18040b68275aff3f15f9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/madhephaestus/library/ESP32Encoder/0.11.7/ESP32Encoder-0.11.7.tar.gz",
+     "https://dl.registry.platformio.org/download/madhephaestus/library/ESP32Encoder/0.11.7/ESP32Encoder-0.11.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "madhephaestus/library/ESP32Encoder/0.11.8/ESP32Encoder-0.11.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Encoder-0.11.8.tar.gz",
+    "size_bytes": 9569,
+    "sha256": "0f2f6a8c98b5b86ac2e341421ec005c5e053fd4831a5bf993f685556f16d157c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/madhephaestus/library/ESP32Encoder/0.11.8/ESP32Encoder-0.11.8.tar.gz",
+     "https://dl.registry.platformio.org/download/madhephaestus/library/ESP32Encoder/0.11.8/ESP32Encoder-0.11.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "madhephaestus/library/ESP32Encoder/0.12.0/ESP32Encoder-0.12.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Encoder-0.12.0.tar.gz",
+    "size_bytes": 9598,
+    "sha256": "a16546172abf581843bb53f1edc651981300cd4be63ddcaee6f28660917578eb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/madhephaestus/library/ESP32Encoder/0.12.0/ESP32Encoder-0.12.0.tar.gz",
+     "https://dl.registry.platformio.org/download/madhephaestus/library/ESP32Encoder/0.12.0/ESP32Encoder-0.12.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "madhephaestus/library/ESP32Encoder/0.9.2/ESP32Encoder-0.9.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Encoder-0.9.2.tar.gz",
+    "size_bytes": 7608,
+    "sha256": "d809f9313ff3b58a438f774dc9a643be9fb3810a32bfb5bb64239b296ad9b2d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/madhephaestus/library/ESP32Encoder/0.9.2/ESP32Encoder-0.9.2.tar.gz",
+     "https://dl.registry.platformio.org/download/madhephaestus/library/ESP32Encoder/0.9.2/ESP32Encoder-0.9.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "madhephaestus/library/ESP32Encoder/5.0.0/ESP32Encoder-5.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Encoder-5.0.0.tar.gz",
+    "size_bytes": 10762,
+    "sha256": "aa6864c9fe69932d77fe9e5b22de87aa97b6bf174bdd6e660d8e5da4385054bf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/madhephaestus/library/ESP32Encoder/5.0.0/ESP32Encoder-5.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/madhephaestus/library/ESP32Encoder/5.0.0/ESP32Encoder-5.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "madhephaestus/library/ESP32Servo/0.11.0/ESP32Servo-0.11.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Servo-0.11.0.tar.gz",
+    "size_bytes": 15146,
+    "sha256": "82cb311823ddb54f53785fbe5957019b6457928a0e5b71971f6d7b1ecde561d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/madhephaestus/library/ESP32Servo/0.11.0/ESP32Servo-0.11.0.tar.gz",
+     "https://dl.registry.platformio.org/download/madhephaestus/library/ESP32Servo/0.11.0/ESP32Servo-0.11.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "madhephaestus/library/ESP32Servo/0.12.1/ESP32Servo-0.12.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Servo-0.12.1.tar.gz",
+    "size_bytes": 15222,
+    "sha256": "3095ba63cf2a77dd1a885815ea482f30b6fd3879dc59a4f3218946280a907898",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/madhephaestus/library/ESP32Servo/0.12.1/ESP32Servo-0.12.1.tar.gz",
+     "https://dl.registry.platformio.org/download/madhephaestus/library/ESP32Servo/0.12.1/ESP32Servo-0.12.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "madhephaestus/library/ESP32Servo/0.13.0/ESP32Servo-0.13.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Servo-0.13.0.tar.gz",
+    "size_bytes": 15537,
+    "sha256": "c17a28621745d1356be79657f2443ae93b9705a876d1b7dc75b80663f1b4ee2e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/madhephaestus/library/ESP32Servo/0.13.0/ESP32Servo-0.13.0.tar.gz",
+     "https://dl.registry.platformio.org/download/madhephaestus/library/ESP32Servo/0.13.0/ESP32Servo-0.13.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "madhephaestus/library/ESP32Servo/0.9.0/ESP32Servo-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Servo-0.9.0.tar.gz",
+    "size_bytes": 14840,
+    "sha256": "eed9211084f048aeaf0ed6055089cd0a36a497a2b94b9c4a9e434f7307f441f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/madhephaestus/library/ESP32Servo/0.9.0/ESP32Servo-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/madhephaestus/library/ESP32Servo/0.9.0/ESP32Servo-0.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "madhephaestus/library/ESP32Servo/1.1.0/ESP32Servo-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Servo-1.1.0.tar.gz",
+    "size_bytes": 14810,
+    "sha256": "17340a07ec21e2fc111a494239e426371a3c633da6a8cfd9853e90255b872065",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/madhephaestus/library/ESP32Servo/1.1.0/ESP32Servo-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/madhephaestus/library/ESP32Servo/1.1.0/ESP32Servo-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "madhephaestus/library/ESP32Servo/1.1.1/ESP32Servo-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Servo-1.1.1.tar.gz",
+    "size_bytes": 14813,
+    "sha256": "2f5c3ccd43c194760d1d327933dcf9338cae25283dd9e13405d84fc6cd153e26",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/madhephaestus/library/ESP32Servo/1.1.1/ESP32Servo-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/madhephaestus/library/ESP32Servo/1.1.1/ESP32Servo-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "madhephaestus/library/ESP32Servo/1.2.1/ESP32Servo-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Servo-1.2.1.tar.gz",
+    "size_bytes": 14975,
+    "sha256": "b22eb82e4f848caa815807ffba197f5d6f44e1546d47d426fffce94fbf1b7254",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/madhephaestus/library/ESP32Servo/1.2.1/ESP32Servo-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/madhephaestus/library/ESP32Servo/1.2.1/ESP32Servo-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "madhephaestus/library/ESP32Servo/3.0.5/ESP32Servo-3.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Servo-3.0.5.tar.gz",
+    "size_bytes": 15435,
+    "sha256": "69237f50131820fbaa510e164f24925f934598d7e81b1effe53c276944754e1a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/madhephaestus/library/ESP32Servo/3.0.5/ESP32Servo-3.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/madhephaestus/library/ESP32Servo/3.0.5/ESP32Servo-3.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "madhephaestus/library/ESP32Servo/3.0.6/ESP32Servo-3.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Servo-3.0.6.tar.gz",
+    "size_bytes": 15481,
+    "sha256": "1a14c3b85abdcaf844477342848abcd0a033d0345717bc549647e0549fd9a594",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/madhephaestus/library/ESP32Servo/3.0.6/ESP32Servo-3.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/madhephaestus/library/ESP32Servo/3.0.6/ESP32Servo-3.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "madhephaestus/library/ESP32Servo/3.0.8/ESP32Servo-3.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Servo-3.0.8.tar.gz",
+    "size_bytes": 15513,
+    "sha256": "c55f0695d5a0120a9875b8075c8e77ecc078908a50119c8d5870db26510b477c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/madhephaestus/library/ESP32Servo/3.0.8/ESP32Servo-3.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/madhephaestus/library/ESP32Servo/3.0.8/ESP32Servo-3.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "madhephaestus/library/ESP32Servo/3.0.9/ESP32Servo-3.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Servo-3.0.9.tar.gz",
+    "size_bytes": 15518,
+    "sha256": "61b3b39b6f3af1808b53fe14abb9afed2290a5071bb702fde58917b7eb312613",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/madhephaestus/library/ESP32Servo/3.0.9/ESP32Servo-3.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/madhephaestus/library/ESP32Servo/3.0.9/ESP32Servo-3.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "madhephaestus/library/ESP32Servo/3.1.1/ESP32Servo-3.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Servo-3.1.1.tar.gz",
+    "size_bytes": 18711,
+    "sha256": "0e1e625fd45179d719f1398aefa87ec0dc9c85b882ab4e64814f9500d69d3236",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/madhephaestus/library/ESP32Servo/3.1.1/ESP32Servo-3.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/madhephaestus/library/ESP32Servo/3.1.1/ESP32Servo-3.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "madhephaestus/library/ESP32Servo/3.1.2/ESP32Servo-3.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Servo-3.1.2.tar.gz",
+    "size_bytes": 18884,
+    "sha256": "8f330254a5ced6edec1c14d2832e8ce561fcee9bd0838a164841f67c7f65fed6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/madhephaestus/library/ESP32Servo/3.1.2/ESP32Servo-3.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/madhephaestus/library/ESP32Servo/3.1.2/ESP32Servo-3.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "madhephaestus/library/ESP32Servo/3.1.3/ESP32Servo-3.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Servo-3.1.3.tar.gz",
+    "size_bytes": 18900,
+    "sha256": "f688e48626211630eb39288eb552521df77addd16ae732a5cfe61fab7f7dbe82",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/madhephaestus/library/ESP32Servo/3.1.3/ESP32Servo-3.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/madhephaestus/library/ESP32Servo/3.1.3/ESP32Servo-3.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "madhephaestus/library/ESP32Servo/3.2.0/ESP32Servo-3.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Servo-3.2.0.tar.gz",
+    "size_bytes": 19206,
+    "sha256": "385e4cf2d5b5763244bf893ccfe61fba566ea146fd01aca7537b584a54f09c4d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/madhephaestus/library/ESP32Servo/3.2.0/ESP32Servo-3.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/madhephaestus/library/ESP32Servo/3.2.0/ESP32Servo-3.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "madhephaestus/library/ESP32Servo/3.2.1/ESP32Servo-3.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Servo-3.2.1.tar.gz",
+    "size_bytes": 19212,
+    "sha256": "c9a0f645411658eb9f95f00fc2b67c05d5e37ab67961f6f086972b309a3b9645",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/madhephaestus/library/ESP32Servo/3.2.1/ESP32Servo-3.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/madhephaestus/library/ESP32Servo/3.2.1/ESP32Servo-3.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "madhephaestus/library/ESP32WebRemoteControl/1.0.0/ESP32WebRemoteControl-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32WebRemoteControl-1.0.0.tar.gz",
+    "size_bytes": 115406,
+    "sha256": "1b78c861abc861e7866f3d762f256fd99a7576b7fbd179b399267649d422f87a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/madhephaestus/library/ESP32WebRemoteControl/1.0.0/ESP32WebRemoteControl-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/madhephaestus/library/ESP32WebRemoteControl/1.0.0/ESP32WebRemoteControl-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "madhephaestus/library/EasyBNO055%20ESP/0.0.3/EasyBNO055ESP-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyBNO055ESP-0.0.3.tar.gz",
+    "size_bytes": 4828,
+    "sha256": "f2ddbdd06ab88c4dd5cea6aa77cdf2da80757171d950905ae44fcda7d7c6a10b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/madhephaestus/library/EasyBNO055%2520ESP/0.0.3/EasyBNO055ESP-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/madhephaestus/library/EasyBNO055%20ESP/0.0.3/EasyBNO055ESP-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "madhephaestus/library/Esp32SimplePacketComs/3.0.2/Esp32SimplePacketComs-3.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Esp32SimplePacketComs-3.0.2.tar.gz",
+    "size_bytes": 19888,
+    "sha256": "33e1d01bd5ac6127724aec9d6ba47a2b95b546c615f593518ad4b93d58a4ea19",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/madhephaestus/library/Esp32SimplePacketComs/3.0.2/Esp32SimplePacketComs-3.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/madhephaestus/library/Esp32SimplePacketComs/3.0.2/Esp32SimplePacketComs-3.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "madhephaestus/library/Esp32WifiManager/1.0.0/Esp32WifiManager-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Esp32WifiManager-1.0.0.tar.gz",
+    "size_bytes": 19468,
+    "sha256": "2b150f03b2678c355bb14215528b53a5742a0cf55a8d0030aa11f146aa99bb78",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/madhephaestus/library/Esp32WifiManager/1.0.0/Esp32WifiManager-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/madhephaestus/library/Esp32WifiManager/1.0.0/Esp32WifiManager-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "madhephaestus/library/EspWii/0.4.0/EspWii-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspWii-0.4.0.tar.gz",
+    "size_bytes": 20979,
+    "sha256": "fc801e5823500c3477f2f5cf9716b3a0f13deda79b0b6147784f1931f175a99f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/madhephaestus/library/EspWii/0.4.0/EspWii-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/madhephaestus/library/EspWii/0.4.0/EspWii-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "madhephaestus/library/PVision/0.0.4/PVision-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PVision-0.0.4.tar.gz",
+    "size_bytes": 2944,
+    "sha256": "41f2b3443e6ac823ad920e807da397618836f3a9199054558189ffec8dc84889",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/madhephaestus/library/PVision/0.0.4/PVision-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/madhephaestus/library/PVision/0.0.4/PVision-0.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "madhephaestus/library/SimplePacketComs/1.0.1/SimplePacketComs-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimplePacketComs-1.0.1.tar.gz",
+    "size_bytes": 7176,
+    "sha256": "8f13faa92b7df6668bdedd68b38b8849c3e4d67c954dcb3af0d4f276c755f4b4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/madhephaestus/library/SimplePacketComs/1.0.1/SimplePacketComs-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/madhephaestus/library/SimplePacketComs/1.0.1/SimplePacketComs-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "madhephaestus/library/TeensySimplePacketComs/0.2.0/TeensySimplePacketComs-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TeensySimplePacketComs-0.2.0.tar.gz",
+    "size_bytes": 14176,
+    "sha256": "374a23a0ea300adab53d73e4f9af955f97ee59024531237d1c4379e8a9c85030",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/madhephaestus/library/TeensySimplePacketComs/0.2.0/TeensySimplePacketComs-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/madhephaestus/library/TeensySimplePacketComs/0.2.0/TeensySimplePacketComs-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "madhephaestus/library/TinyUSBSimplePacketComs/0.0.1/TinyUSBSimplePacketComs-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyUSBSimplePacketComs-0.0.1.tar.gz",
+    "size_bytes": 14074,
+    "sha256": "9be209103f6a1679a128256c0f9236d40f2c45cf8e8e48ab13896852807112c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/madhephaestus/library/TinyUSBSimplePacketComs/0.0.1/TinyUSBSimplePacketComs-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/madhephaestus/library/TinyUSBSimplePacketComs/0.0.1/TinyUSBSimplePacketComs-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "madhephaestus/library/WiiChuck/0.4.1/WiiChuck-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiiChuck-0.4.1.tar.gz",
+    "size_bytes": 14921,
+    "sha256": "74e9f99c01ef03e1a15b4769f96288637cd3c6f2760c4e34b752b924ce28d699",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/madhephaestus/library/WiiChuck/0.4.1/WiiChuck-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/madhephaestus/library/WiiChuck/0.4.1/WiiChuck-0.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "madhephaestus/library/lx16a-servo/0.9.3/lx16a-servo-0.9.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lx16a-servo-0.9.3.tar.gz",
+    "size_bytes": 11030,
+    "sha256": "c4da33b12646025b1e24bd1bdd407bfe729e68f58dee14c9d08fa039d76185d9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/madhephaestus/library/lx16a-servo/0.9.3/lx16a-servo-0.9.3.tar.gz",
+     "https://dl.registry.platformio.org/download/madhephaestus/library/lx16a-servo/0.9.3/lx16a-servo-0.9.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,191 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tmrh20",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tmrh20/library/microDecoder/1.0.1/microDecoder-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "microDecoder-1.0.1.tar.gz",
+    "size_bytes": 212110,
+    "sha256": "d72d93dfaa3066e0e5e63e262cbd5a03ba85f2884449bdaef5bd0c44db3c6ea7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tmrh20/library/microDecoder/1.0.1/microDecoder-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tmrh20/library/microDecoder/1.0.1/microDecoder-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tmrh20/library/nrf_to_nrf/1.3.1/nrf_to_nrf-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nrf_to_nrf-1.3.1.tar.gz",
+    "size_bytes": 67822,
+    "sha256": "da1022aa331449cd31f349e4e75a0805e869e0c1fdb43fad9d61f00c3715e85b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tmrh20/library/nrf_to_nrf/1.3.1/nrf_to_nrf-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tmrh20/library/nrf_to_nrf/1.3.1/nrf_to_nrf-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tmrh20/library/nrf_to_nrf/1.3/nrf_to_nrf-1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nrf_to_nrf-1.3.tar.gz",
+    "size_bytes": 67815,
+    "sha256": "2cc91112af6f9f22263987800184dc8db8fc09b70af0e84d363a11c2542181a3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tmrh20/library/nrf_to_nrf/1.3/nrf_to_nrf-1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tmrh20/library/nrf_to_nrf/1.3/nrf_to_nrf-1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tmrh20/library/nrf_to_nrf/1.4.0/nrf_to_nrf-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nrf_to_nrf-1.4.0.tar.gz",
+    "size_bytes": 68827,
+    "sha256": "3d47f4defe76d11ee24c8b16516c15d96e5f0be635881fcdbc2c99e52f15f77e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tmrh20/library/nrf_to_nrf/1.4.0/nrf_to_nrf-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tmrh20/library/nrf_to_nrf/1.4.0/nrf_to_nrf-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tmrh20/library/nrf_to_nrf/1.4.1/nrf_to_nrf-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nrf_to_nrf-1.4.1.tar.gz",
+    "size_bytes": 68975,
+    "sha256": "598e73965b7c8cace12bc2d85d7bf3736f6d9895a0ab09e5a42fced6aad793ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tmrh20/library/nrf_to_nrf/1.4.1/nrf_to_nrf-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tmrh20/library/nrf_to_nrf/1.4.1/nrf_to_nrf-1.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tmrh20/library/nrf_to_nrf/1.4.2/nrf_to_nrf-1.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nrf_to_nrf-1.4.2.tar.gz",
+    "size_bytes": 68962,
+    "sha256": "e73f397c12dab4dcba07838cc63a92b4906985ef46ed9cae85c7704081fb2764",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tmrh20/library/nrf_to_nrf/1.4.2/nrf_to_nrf-1.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tmrh20/library/nrf_to_nrf/1.4.2/nrf_to_nrf-1.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tmrh20/library/nrf_to_nrf/1.4.3/nrf_to_nrf-1.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nrf_to_nrf-1.4.3.tar.gz",
+    "size_bytes": 68953,
+    "sha256": "044265edfb283f3b4826394ab0e48d47d76d984b48755782e92025508907c815",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tmrh20/library/nrf_to_nrf/1.4.3/nrf_to_nrf-1.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tmrh20/library/nrf_to_nrf/1.4.3/nrf_to_nrf-1.4.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tmrh20/library/nrf_to_nrf/1.4.4/nrf_to_nrf-1.4.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nrf_to_nrf-1.4.4.tar.gz",
+    "size_bytes": 68968,
+    "sha256": "66d9c43ca6606aaa46db13c4afba435ee7c6de23dc44c277917e5e90c62853cd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tmrh20/library/nrf_to_nrf/1.4.4/nrf_to_nrf-1.4.4.tar.gz",
+     "https://dl.registry.platformio.org/download/tmrh20/library/nrf_to_nrf/1.4.4/nrf_to_nrf-1.4.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tmrh20/library/nrf_to_nrf/1.4.5/nrf_to_nrf-1.4.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nrf_to_nrf-1.4.5.tar.gz",
+    "size_bytes": 69016,
+    "sha256": "e1a7705b3a60a81739ea575e25c62b330d72e523ef2173c207907d802835f737",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tmrh20/library/nrf_to_nrf/1.4.5/nrf_to_nrf-1.4.5.tar.gz",
+     "https://dl.registry.platformio.org/download/tmrh20/library/nrf_to_nrf/1.4.5/nrf_to_nrf-1.4.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tmrh20/library/nrf_to_nrf/1.4.6/nrf_to_nrf-1.4.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nrf_to_nrf-1.4.6.tar.gz",
+    "size_bytes": 69013,
+    "sha256": "1aceb2dd928ae16b8a8ac52d3046a706f73072b95fa671043ae8e427803c83d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tmrh20/library/nrf_to_nrf/1.4.6/nrf_to_nrf-1.4.6.tar.gz",
+     "https://dl.registry.platformio.org/download/tmrh20/library/nrf_to_nrf/1.4.6/nrf_to_nrf-1.4.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tmrh20/library/nrf_to_nrf/1.4.7/nrf_to_nrf-1.4.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nrf_to_nrf-1.4.7.tar.gz",
+    "size_bytes": 69018,
+    "sha256": "693d732854197d31c9e623ba4bd88aa8b5f50aafad2f4ff786f882ac277df966",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tmrh20/library/nrf_to_nrf/1.4.7/nrf_to_nrf-1.4.7.tar.gz",
+     "https://dl.registry.platformio.org/download/tmrh20/library/nrf_to_nrf/1.4.7/nrf_to_nrf-1.4.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tmrh20/library/nrf_to_nrf/1.5.0/nrf_to_nrf-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nrf_to_nrf-1.5.0.tar.gz",
+    "size_bytes": 69082,
+    "sha256": "f92e1961e81cd12f324b0ef2996d7eb0287ee2d102b33490327c900f51a0d508",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tmrh20/library/nrf_to_nrf/1.5.0/nrf_to_nrf-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tmrh20/library/nrf_to_nrf/1.5.0/nrf_to_nrf-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tmrh20/library/nrf_to_nrf/1.5.1/nrf_to_nrf-1.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nrf_to_nrf-1.5.1.tar.gz",
+    "size_bytes": 69075,
+    "sha256": "2ef00016abd80b95a8a0f2210527aaaaaedf65a10d20970b0715cd1a583e3bf8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tmrh20/library/nrf_to_nrf/1.5.1/nrf_to_nrf-1.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tmrh20/library/nrf_to_nrf/1.5.1/nrf_to_nrf-1.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tmrh20/library/nrf_to_nrf/1.6.0/nrf_to_nrf-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nrf_to_nrf-1.6.0.tar.gz",
+    "size_bytes": 69713,
+    "sha256": "ad536ff7b4360a82fb4603c68fce465fdd9a03e736a673d1eb9ad5c1107493e3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tmrh20/library/nrf_to_nrf/1.6.0/nrf_to_nrf-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tmrh20/library/nrf_to_nrf/1.6.0/nrf_to_nrf-1.6.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

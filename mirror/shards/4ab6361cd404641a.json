@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-sravet",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-sravet/library/fixedpoint/0.0.0+sha.aa2871c4c041/fixedpoint-0.0.0+sha.aa2871c4c041.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "fixedpoint-0.0.0+sha.aa2871c4c041.tar.gz",
+    "size_bytes": 18616,
+    "sha256": "4029e857983bb4d04cde56e6c1357502cd74da260342e1c4ab02c42a273d5e2d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sravet/library/fixedpoint/0.0.0%2Bsha.aa2871c4c041/fixedpoint-0.0.0%2Bsha.aa2871c4c041.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sravet/library/fixedpoint/0.0.0%2Bsha.aa2871c4c041/fixedpoint-0.0.0%2Bsha.aa2871c4c041.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sravet/library/wave_player/0.0.0+sha.acc3e18e77ad/wave_player-0.0.0+sha.acc3e18e77ad.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "wave_player-0.0.0+sha.acc3e18e77ad.tar.gz",
+    "size_bytes": 3947,
+    "sha256": "8b85bbb1d9bd7e6c50c90745bea36a7410b5a889a2f75741e20628f61a6aee0d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sravet/library/wave_player/0.0.0%2Bsha.acc3e18e77ad/wave_player-0.0.0%2Bsha.acc3e18e77ad.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sravet/library/wave_player/0.0.0%2Bsha.acc3e18e77ad/wave_player-0.0.0%2Bsha.acc3e18e77ad.tar.gz"
+    ]
+   }
+  }
+ ]
+}

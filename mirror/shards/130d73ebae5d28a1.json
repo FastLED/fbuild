@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/leaphy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "leaphy/library/TeachableAudio/1.0.0/TeachableAudio-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TeachableAudio-1.0.0.tar.gz",
+    "size_bytes": 9732,
+    "sha256": "f68ae738103ddb834c477647ba31c325641b0a8a6e47b5fc2d2763a2bb0c0edd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leaphy/library/TeachableAudio/1.0.0/TeachableAudio-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leaphy/library/TeachableAudio/1.0.0/TeachableAudio-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leaphy/library/TeachableAudio/1.0.1/TeachableAudio-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TeachableAudio-1.0.1.tar.gz",
+    "size_bytes": 9933,
+    "sha256": "5d94a9b1c01b0ca4928e77774fde026b76557a0960bfacce16e30b498c8e0a60",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leaphy/library/TeachableAudio/1.0.1/TeachableAudio-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/leaphy/library/TeachableAudio/1.0.1/TeachableAudio-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

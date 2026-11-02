@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-co838-app56",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-co838-app56/library/IO/0.0.0+sha.50e2aefe516b/IO-0.0.0+sha.50e2aefe516b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IO-0.0.0+sha.50e2aefe516b.tar.gz",
+    "size_bytes": 5285,
+    "sha256": "8fb8f1cd26dd4fe9d3cfecd94331f79e4582f322e11196c4ffb3c14983a8631f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-co838-app56/library/IO/0.0.0%2Bsha.50e2aefe516b/IO-0.0.0%2Bsha.50e2aefe516b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-co838-app56/library/IO/0.0.0%2Bsha.50e2aefe516b/IO-0.0.0%2Bsha.50e2aefe516b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

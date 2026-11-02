@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/luoluomeng",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "luoluomeng/library/HUSB238Driver/1.0.3/HUSB238Driver-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HUSB238Driver-1.0.3.tar.gz",
+    "size_bytes": 6358,
+    "sha256": "b0d4105e64b1076ad760445d73b911e91084da7c3e5488179844af40ef5a3d95",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luoluomeng/library/HUSB238Driver/1.0.3/HUSB238Driver-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/luoluomeng/library/HUSB238Driver/1.0.3/HUSB238Driver-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "luoluomeng/library/NST1001Driver/1.0.2/NST1001Driver-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NST1001Driver-1.0.2.tar.gz",
+    "size_bytes": 4091,
+    "sha256": "7fe20e57c93c6a092dd2e1c849b3ad4b83f9b44b9e73c640bf0d7184ba9ed2c3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luoluomeng/library/NST1001Driver/1.0.2/NST1001Driver-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/luoluomeng/library/NST1001Driver/1.0.2/NST1001Driver-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

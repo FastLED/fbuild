@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-marcospostemsky",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-marcospostemsky/library/LCD-Ecompass-Postemsky/0.0.0+sha.072627dbcbc1/LCD-Ecompass-Postemsky-0.0.0+sha.072627dbcbc1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCD-Ecompass-Postemsky-0.0.0+sha.072627dbcbc1.tar.gz",
+    "size_bytes": 2736,
+    "sha256": "cef6632e86576b62cb433c81b6e9103baac00d5ef0717acbbca84be6f1d8cf15",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-marcospostemsky/library/LCD-Ecompass-Postemsky/0.0.0%2Bsha.072627dbcbc1/LCD-Ecompass-Postemsky-0.0.0%2Bsha.072627dbcbc1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-marcospostemsky/library/LCD-Ecompass-Postemsky/0.0.0%2Bsha.072627dbcbc1/LCD-Ecompass-Postemsky-0.0.0%2Bsha.072627dbcbc1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

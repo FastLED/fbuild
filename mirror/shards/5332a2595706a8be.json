@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/legion2",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "legion2/library/Corsair%20Lighting%20Protocol/0.15.0/CorsairLightingProtocol-0.15.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CorsairLightingProtocol-0.15.0.tar.gz",
+    "size_bytes": 50899,
+    "sha256": "2d1a05385e3abd88e5add813a31efe5b265491355a7cb7b32e8189e71d6ce35b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/legion2/library/Corsair%2520Lighting%2520Protocol/0.15.0/CorsairLightingProtocol-0.15.0.tar.gz",
+     "https://dl.registry.platformio.org/download/legion2/library/Corsair%20Lighting%20Protocol/0.15.0/CorsairLightingProtocol-0.15.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "legion2/library/Somfy_Remote_Lib/0.3.0/Somfy_Remote_Lib-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Somfy_Remote_Lib-0.3.0.tar.gz",
+    "size_bytes": 10068,
+    "sha256": "f0487c64c82d5a1b80e66941949c181fb5cb763a3609ef22fcd62d48be38957c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/legion2/library/Somfy_Remote_Lib/0.3.0/Somfy_Remote_Lib-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/legion2/library/Somfy_Remote_Lib/0.3.0/Somfy_Remote_Lib-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "legion2/library/Somfy_Remote_Lib/0.5.0/Somfy_Remote_Lib-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Somfy_Remote_Lib-0.5.0.tar.gz",
+    "size_bytes": 11660,
+    "sha256": "534b45ca790e7360741caad91e9fc1df36c63f2c38b6a51a0b4312125e2a893c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/legion2/library/Somfy_Remote_Lib/0.5.0/Somfy_Remote_Lib-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/legion2/library/Somfy_Remote_Lib/0.5.0/Somfy_Remote_Lib-0.5.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

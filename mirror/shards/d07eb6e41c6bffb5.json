@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/piglet0",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "piglet0/library/Haier2Supla/0.8.0/Haier2Supla-0.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Haier2Supla-0.8.0.tar.gz",
+    "size_bytes": 35008,
+    "sha256": "7e75424ad968149f380b641d9049b9c4c2e787a93efb636e7fd6d0701dd573ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/piglet0/library/Haier2Supla/0.8.0/Haier2Supla-0.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/piglet0/library/Haier2Supla/0.8.0/Haier2Supla-0.8.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rgrr",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rgrr/library/ContikiCoreForArduino/0.0.9/ContikiCoreForArduino-0.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ContikiCoreForArduino-0.0.9.tar.gz",
+    "size_bytes": 28733,
+    "sha256": "4588dc39d65e3bec3c28d348810e5b339ff4ad384cfc8835415083e71254d1fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rgrr/library/ContikiCoreForArduino/0.0.9/ContikiCoreForArduino-0.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/rgrr/library/ContikiCoreForArduino/0.0.9/ContikiCoreForArduino-0.0.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

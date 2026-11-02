@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ivanseidel",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ivanseidel/library/ArduinoSensors/1.3/ArduinoSensors-1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoSensors-1.3.tar.gz",
+    "size_bytes": 70369,
+    "sha256": "975bcb0e58076b49c4ab8ef932853d7b732c24f0fd706d9fee35dd56220a43ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ivanseidel/library/ArduinoSensors/1.3/ArduinoSensors-1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/ivanseidel/library/ArduinoSensors/1.3/ArduinoSensors-1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ivanseidel/library/ArduinoThread/2.1.1/ArduinoThread-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoThread-2.1.1.tar.gz",
+    "size_bytes": 13076,
+    "sha256": "3c3b2ff285bb98821f1c2ea4ddd762ee5591d374717e0c4875d71593fc53630d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ivanseidel/library/ArduinoThread/2.1.1/ArduinoThread-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ivanseidel/library/ArduinoThread/2.1.1/ArduinoThread-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ivanseidel/library/DueTimer/1.4.8/DueTimer-1.4.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DueTimer-1.4.8.tar.gz",
+    "size_bytes": 8671,
+    "sha256": "55401d96609ba0b45f5f04dcf51328dfd1cca6d7fe2e2c7e99a487746542eccc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ivanseidel/library/DueTimer/1.4.8/DueTimer-1.4.8.tar.gz",
+     "https://dl.registry.platformio.org/download/ivanseidel/library/DueTimer/1.4.8/DueTimer-1.4.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ivanseidel/library/Gaussian/0.0.0-alpha+sha.e891a2a01f/Gaussian-0.0.0-alphasha.e891a2a01f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Gaussian-0.0.0-alphasha.e891a2a01f.tar.gz",
+    "size_bytes": 7494,
+    "sha256": "b5da189d9fbfff30a2ac0980790ecfa517b24e77dd91813d8ea8f0e9b0f68711",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ivanseidel/library/Gaussian/0.0.0-alpha%2Bsha.e891a2a01f/Gaussian-0.0.0-alphasha.e891a2a01f.tar.gz",
+     "https://dl.registry.platformio.org/download/ivanseidel/library/Gaussian/0.0.0-alpha%2Bsha.e891a2a01f/Gaussian-0.0.0-alphasha.e891a2a01f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ivanseidel/library/LinkedList/0.0.0-alpha+sha.dac3874d28/LinkedList-0.0.0-alphasha.dac3874d28.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LinkedList-0.0.0-alphasha.dac3874d28.tar.gz",
+    "size_bytes": 9679,
+    "sha256": "a0f468a1e52ee6ddad6a6ba0a9014ce65c08f80ca5aebe21565f376eeecc0746",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ivanseidel/library/LinkedList/0.0.0-alpha%2Bsha.dac3874d28/LinkedList-0.0.0-alphasha.dac3874d28.tar.gz",
+     "https://dl.registry.platformio.org/download/ivanseidel/library/LinkedList/0.0.0-alpha%2Bsha.dac3874d28/LinkedList-0.0.0-alphasha.dac3874d28.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ivanseidel/library/Thread/0.0.0-alpha+sha.1a4e504c5f/Thread-0.0.0-alphasha.1a4e504c5f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Thread-0.0.0-alphasha.1a4e504c5f.tar.gz",
+    "size_bytes": 13015,
+    "sha256": "9db97d80b5698b1dcfae30831161af8185a70de08a2e9732089a9fa70b1e6ae0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ivanseidel/library/Thread/0.0.0-alpha%2Bsha.1a4e504c5f/Thread-0.0.0-alphasha.1a4e504c5f.tar.gz",
+     "https://dl.registry.platformio.org/download/ivanseidel/library/Thread/0.0.0-alpha%2Bsha.1a4e504c5f/Thread-0.0.0-alphasha.1a4e504c5f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

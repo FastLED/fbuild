@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/andremmfaria",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "andremmfaria/library/ESP32Wiimote/1.0.0/ESP32Wiimote-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Wiimote-1.0.0.tar.gz",
+    "size_bytes": 35435,
+    "sha256": "a7d0df32093016a6b5588497cff2e208c5d497adc7b550b88ec21292ef7abe57",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/andremmfaria/library/ESP32Wiimote/1.0.0/ESP32Wiimote-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/andremmfaria/library/ESP32Wiimote/1.0.0/ESP32Wiimote-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "andremmfaria/library/ESP32Wiimote/1.5.0/ESP32Wiimote-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Wiimote-1.5.0.tar.gz",
+    "size_bytes": 47333,
+    "sha256": "26f1df3b3a03b868b2f7a3d265a254337162c6d1600996dcd9c3997113910676",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/andremmfaria/library/ESP32Wiimote/1.5.0/ESP32Wiimote-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/andremmfaria/library/ESP32Wiimote/1.5.0/ESP32Wiimote-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "andremmfaria/library/ESP32Wiimote/1.5.3/ESP32Wiimote-1.5.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Wiimote-1.5.3.tar.gz",
+    "size_bytes": 69652,
+    "sha256": "5fb8443b29a232f84e19e72cb302e4c98f857ec6c87a2653cc045bd8c27730c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/andremmfaria/library/ESP32Wiimote/1.5.3/ESP32Wiimote-1.5.3.tar.gz",
+     "https://dl.registry.platformio.org/download/andremmfaria/library/ESP32Wiimote/1.5.3/ESP32Wiimote-1.5.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "andremmfaria/library/ESP32Wiimote/1.6.0/ESP32Wiimote-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Wiimote-1.6.0.tar.gz",
+    "size_bytes": 96116,
+    "sha256": "656f61a970a20786b8495fb04469a3bc60bf475770ff1c56231a5a39a7af18eb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/andremmfaria/library/ESP32Wiimote/1.6.0/ESP32Wiimote-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/andremmfaria/library/ESP32Wiimote/1.6.0/ESP32Wiimote-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "andremmfaria/library/ESP32Wiimote/2.0.0/ESP32Wiimote-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Wiimote-2.0.0.tar.gz",
+    "size_bytes": 81747,
+    "sha256": "f45b039283d484bf9f778a5b8167e50bfc3ebd761fbd20ed51222d2a6bfc0c6d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/andremmfaria/library/ESP32Wiimote/2.0.0/ESP32Wiimote-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/andremmfaria/library/ESP32Wiimote/2.0.0/ESP32Wiimote-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

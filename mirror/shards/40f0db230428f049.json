@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-b50132",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-b50132/library/MMA8451Q/0.0.0+sha.204db61f9c8f/MMA8451Q-0.0.0+sha.204db61f9c8f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MMA8451Q-0.0.0+sha.204db61f9c8f.tar.gz",
+    "size_bytes": 2416,
+    "sha256": "81365628b460afbb37938a0b7fd3a5de3c43110e958f0134be1a0f2bf5268ff0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-b50132/library/MMA8451Q/0.0.0%2Bsha.204db61f9c8f/MMA8451Q-0.0.0%2Bsha.204db61f9c8f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-b50132/library/MMA8451Q/0.0.0%2Bsha.204db61f9c8f/MMA8451Q-0.0.0%2Bsha.204db61f9c8f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

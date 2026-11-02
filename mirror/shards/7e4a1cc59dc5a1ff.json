@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ivanmari",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ivanmari/library/BarePoller/1.0.0/BarePoller-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BarePoller-1.0.0.tar.gz",
+    "size_bytes": 3861,
+    "sha256": "453a85e8fe3c4c305011ecd9f679ad9809f9dbe15d5fa4451c78fde382edb231",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ivanmari/library/BarePoller/1.0.0/BarePoller-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ivanmari/library/BarePoller/1.0.0/BarePoller-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

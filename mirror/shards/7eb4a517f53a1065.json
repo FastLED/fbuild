@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/antonded",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "antonded/library/NewTone/0.0.0-alpha+sha.100a3ff4be/NewTone-0.0.0-alphasha.100a3ff4be.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NewTone-0.0.0-alphasha.100a3ff4be.tar.gz",
+    "size_bytes": 2432,
+    "sha256": "48f5d5101cf41bb01b1dea5b89722e7f949993ad57a120dc6c20d9a74d5cfc20",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/antonded/library/NewTone/0.0.0-alpha%2Bsha.100a3ff4be/NewTone-0.0.0-alphasha.100a3ff4be.tar.gz",
+     "https://dl.registry.platformio.org/download/antonded/library/NewTone/0.0.0-alpha%2Bsha.100a3ff4be/NewTone-0.0.0-alphasha.100a3ff4be.tar.gz"
+    ]
+   }
+  }
+ ]
+}

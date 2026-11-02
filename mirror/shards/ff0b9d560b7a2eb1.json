@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-rajeshnielit",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-rajeshnielit/library/PCF8591_ADC_LPC11U24_Rajesh_NIELIT_Calicut/0.0.0+sha.3c4cd2f477ea/PCF8591_ADC_LPC11U24_Rajesh_NIELIT_Calicut-0.0.0+sha.3c4cd2f477ea.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCF8591_ADC_LPC11U24_Rajesh_NIELIT_Calicut-0.0.0+sha.3c4cd2f477ea.tar.gz",
+    "size_bytes": 1147,
+    "sha256": "66f0ae45a27494537ea5e31db430a96a4d7d78e1c58309f954de26d394beb2f9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rajeshnielit/library/PCF8591_ADC_LPC11U24_Rajesh_NIELIT_Calicut/0.0.0%2Bsha.3c4cd2f477ea/PCF8591_ADC_LPC11U24_Rajesh_NIELIT_Calicut-0.0.0%2Bsha.3c4cd2f477ea.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rajeshnielit/library/PCF8591_ADC_LPC11U24_Rajesh_NIELIT_Calicut/0.0.0%2Bsha.3c4cd2f477ea/PCF8591_ADC_LPC11U24_Rajesh_NIELIT_Calicut-0.0.0%2Bsha.3c4cd2f477ea.tar.gz"
+    ]
+   }
+  }
+ ]
+}

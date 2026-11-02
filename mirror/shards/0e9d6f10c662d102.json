@@ -1,0 +1,802 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/unit-electronics-mx",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "unit-electronics-mx/library/BME68x_UNIT_Electronics/1.4.0/BME68x_UNIT_Electronics-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BME68x_UNIT_Electronics-1.4.0.tar.gz",
+    "size_bytes": 54782,
+    "sha256": "b68438c96b7d06d7620f37f15158aeacd2151f02d47a3629cf30b933d6795571",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/BME68x_UNIT_Electronics/1.4.0/BME68x_UNIT_Electronics-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/BME68x_UNIT_Electronics/1.4.0/BME68x_UNIT_Electronics-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/DevLab%20DVIPIO%20Graphics/1.0.0/DevLabDVIPIOGraphics-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevLabDVIPIOGraphics-1.0.0.tar.gz",
+    "size_bytes": 6677732,
+    "sha256": "800bc0034b9a2e7009f2646f34879fa2a01ca444922afc5a9f1b8ab9e0d92ab0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/DevLab%2520DVIPIO%2520Graphics/1.0.0/DevLabDVIPIOGraphics-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/DevLab%20DVIPIO%20Graphics/1.0.0/DevLabDVIPIOGraphics-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/DevLabDDP/1.0.1/DevLabDDP-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevLabDDP-1.0.1.tar.gz",
+    "size_bytes": 19837,
+    "sha256": "8bf3b6adec33d40c0ac4ba6f684ca94edd202f32d40e3c57c7a33b5227286dd7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/DevLabDDP/1.0.1/DevLabDDP-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/DevLabDDP/1.0.1/DevLabDDP-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/DevLabDDP/1.0.2/DevLabDDP-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevLabDDP-1.0.2.tar.gz",
+    "size_bytes": 19900,
+    "sha256": "dd6d139a7b2b59c9ba7edd9a8c1e788f822f157bb2d9db8e7591c2f68b603f5b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/DevLabDDP/1.0.2/DevLabDDP-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/DevLabDDP/1.0.2/DevLabDDP-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/DevLabDDP/1.0.6/DevLabDDP-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevLabDDP-1.0.6.tar.gz",
+    "size_bytes": 20276,
+    "sha256": "f4b18a9fe616a982b52ba0d4bc261a53f1d438286bce29f2c42bca5f054bba3d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/DevLabDDP/1.0.6/DevLabDDP-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/DevLabDDP/1.0.6/DevLabDDP-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/DevLabDDP/1.0.8/DevLabDDP-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevLabDDP-1.0.8.tar.gz",
+    "size_bytes": 20400,
+    "sha256": "b407949bcf68695aedf7b0976563f9011e86de45aa4b65833b54692d05323826",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/DevLabDDP/1.0.8/DevLabDDP-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/DevLabDDP/1.0.8/DevLabDDP-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/DevLabDDP/1.0.9/DevLabDDP-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevLabDDP-1.0.9.tar.gz",
+    "size_bytes": 20448,
+    "sha256": "f5adae866a9c2a130afee13a34901757ee95d36a88806493eab086adcc68a1b4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/DevLabDDP/1.0.9/DevLabDDP-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/DevLabDDP/1.0.9/DevLabDDP-1.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/DevLab_AudioDriver/0.3.1/DevLab_AudioDriver-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevLab_AudioDriver-0.3.1.tar.gz",
+    "size_bytes": 225327,
+    "sha256": "45b4f1360de416f7745e6c68df30dc47d1bb54f4d72cbf4d68966d2aab2d94a6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/DevLab_AudioDriver/0.3.1/DevLab_AudioDriver-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/DevLab_AudioDriver/0.3.1/DevLab_AudioDriver-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/DevLab_AudioTools/1.2.6/DevLab_AudioTools-1.2.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevLab_AudioTools-1.2.6.tar.gz",
+    "size_bytes": 13533550,
+    "sha256": "5d506f9688f5e2849fcf66787f0bbd301eeaa46b9444c014b6fade3d81efd217",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/DevLab_AudioTools/1.2.6/DevLab_AudioTools-1.2.6.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/DevLab_AudioTools/1.2.6/DevLab_AudioTools-1.2.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/DevLab_BL/1.0.0/DevLab_BL-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevLab_BL-1.0.0.tar.gz",
+    "size_bytes": 20229,
+    "sha256": "ce9ec6bf56d7eaf86ce3a6e9b6e690d67e0b2af81cc6f8a48044466290d8482c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/DevLab_BL/1.0.0/DevLab_BL-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/DevLab_BL/1.0.0/DevLab_BL-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/DevLab_BL/1.0.3/DevLab_BL-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevLab_BL-1.0.3.tar.gz",
+    "size_bytes": 28403,
+    "sha256": "4b26c1f25da10424976e551b808408d7c057141e125088c91fd07d6ada213bdf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/DevLab_BL/1.0.3/DevLab_BL-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/DevLab_BL/1.0.3/DevLab_BL-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/DevLab_BL/1.1.0/DevLab_BL-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevLab_BL-1.1.0.tar.gz",
+    "size_bytes": 29270,
+    "sha256": "1f096e8e46da31ed7130c66b531e2f6f7aea51e7df7be3835c623f75f1260a2b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/DevLab_BL/1.1.0/DevLab_BL-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/DevLab_BL/1.1.0/DevLab_BL-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/DevLab_BMI323/1.0.0/DevLab_BMI323-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevLab_BMI323-1.0.0.tar.gz",
+    "size_bytes": 4540,
+    "sha256": "5937c947ef5511179143312d29b7933ff04e1150e84063eb029245f0a3fc167b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/DevLab_BMI323/1.0.0/DevLab_BMI323-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/DevLab_BMI323/1.0.0/DevLab_BMI323-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/DevLab_BMI323/1.0.1/DevLab_BMI323-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevLab_BMI323-1.0.1.tar.gz",
+    "size_bytes": 12764,
+    "sha256": "eb4970c07e9fa58df3983e1ee3d163dc1a4d20dd6c13736ca33bb324d3683e95",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/DevLab_BMI323/1.0.1/DevLab_BMI323-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/DevLab_BMI323/1.0.1/DevLab_BMI323-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/DevLab_BMI323/1.0.2/DevLab_BMI323-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevLab_BMI323-1.0.2.tar.gz",
+    "size_bytes": 12761,
+    "sha256": "ad8a6ff5febb987b8383dfaf8d0c3cd7fd5b7799a0b4268145dc8b969333136f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/DevLab_BMI323/1.0.2/DevLab_BMI323-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/DevLab_BMI323/1.0.2/DevLab_BMI323-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/DevLab_BMI323/1.0.3/DevLab_BMI323-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevLab_BMI323-1.0.3.tar.gz",
+    "size_bytes": 12819,
+    "sha256": "294a8181702119473eca357103e27ddc6c30678d6d5a111426d9789242414da8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/DevLab_BMI323/1.0.3/DevLab_BMI323-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/DevLab_BMI323/1.0.3/DevLab_BMI323-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/DevLab_Button/1.0.0/DevLab_Button-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevLab_Button-1.0.0.tar.gz",
+    "size_bytes": 6008,
+    "sha256": "5cc91678efc087533df4a17da4597bb27b2d4acf5b1bb6b8453bbe9b807c12b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/DevLab_Button/1.0.0/DevLab_Button-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/DevLab_Button/1.0.0/DevLab_Button-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/DevLab_Codec_ES/0.1.0/DevLab_Codec_ES-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevLab_Codec_ES-0.1.0.tar.gz",
+    "size_bytes": 57485,
+    "sha256": "03da45d57b55920b8c7ea8f1c95d917df02f82c232788246ff25925c7ba9ce1e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/DevLab_Codec_ES/0.1.0/DevLab_Codec_ES-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/DevLab_Codec_ES/0.1.0/DevLab_Codec_ES-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/DevLab_DPad/1.0.0/DevLab_DPad-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevLab_DPad-1.0.0.tar.gz",
+    "size_bytes": 6134,
+    "sha256": "7895fb2375348cf79f4bbfaae14d69e606c64c7b52e0c6b8b562a1473d52dc71",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/DevLab_DPad/1.0.0/DevLab_DPad-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/DevLab_DPad/1.0.0/DevLab_DPad-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/DevLab_GT365xx/1.0.1/DevLab_GT365xx-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevLab_GT365xx-1.0.1.tar.gz",
+    "size_bytes": 7315,
+    "sha256": "e5aa3547d02a54e653f842f9d7efe8a992bafdd81a0242d0062da2e05b306677",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/DevLab_GT365xx/1.0.1/DevLab_GT365xx-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/DevLab_GT365xx/1.0.1/DevLab_GT365xx-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/DevLab_GT365xx/1.0.2/DevLab_GT365xx-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevLab_GT365xx-1.0.2.tar.gz",
+    "size_bytes": 7466,
+    "sha256": "f752fcf7dcaef2b2433e9d984ff00332b998049401efcc4078de03dca52b985a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/DevLab_GT365xx/1.0.2/DevLab_GT365xx-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/DevLab_GT365xx/1.0.2/DevLab_GT365xx-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/DevLab_HallEffect/1.0.1/DevLab_HallEffect-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevLab_HallEffect-1.0.1.tar.gz",
+    "size_bytes": 5746,
+    "sha256": "421c086a1a94d9d9a6ec3a3f691998cca19cc57a6c3fd66c27d36824cadfd9ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/DevLab_HallEffect/1.0.1/DevLab_HallEffect-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/DevLab_HallEffect/1.0.1/DevLab_HallEffect-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/DevLab_ICM20948/1.0.2/DevLab_ICM20948-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevLab_ICM20948-1.0.2.tar.gz",
+    "size_bytes": 76240,
+    "sha256": "43c023d90e34325fa75026882165e40acdf2ee6ea26041e67f6310609f6bfc80",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/DevLab_ICM20948/1.0.2/DevLab_ICM20948-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/DevLab_ICM20948/1.0.2/DevLab_ICM20948-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/DevLab_ICM20948/1.1.1/DevLab_ICM20948-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevLab_ICM20948-1.1.1.tar.gz",
+    "size_bytes": 78131,
+    "sha256": "f559ae722f41b033dfdcd8130ffbf1e75e1275c44b36382498a4ec1aafb8d402",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/DevLab_ICM20948/1.1.1/DevLab_ICM20948-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/DevLab_ICM20948/1.1.1/DevLab_ICM20948-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/DevLab_IR/1.0.0/DevLab_IR-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevLab_IR-1.0.0.tar.gz",
+    "size_bytes": 7245,
+    "sha256": "7610847bc346ece2553ca7496e86bedf37a8772fcca698c526bd18cdbfebf6f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/DevLab_IR/1.0.0/DevLab_IR-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/DevLab_IR/1.0.0/DevLab_IR-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/DevLab_IR/1.0.1/DevLab_IR-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevLab_IR-1.0.1.tar.gz",
+    "size_bytes": 7238,
+    "sha256": "a5feed0d4824787664bcb5297d75bc58b89ba4e01b10520852928fe22c5fc2f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/DevLab_IR/1.0.1/DevLab_IR-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/DevLab_IR/1.0.1/DevLab_IR-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/DevLab_IR/1.0.3/DevLab_IR-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevLab_IR-1.0.3.tar.gz",
+    "size_bytes": 9456,
+    "sha256": "31bdce591f5d1a0e18e5541816fc9a60325a26c90887b713eac0af79e6d7d1c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/DevLab_IR/1.0.3/DevLab_IR-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/DevLab_IR/1.0.3/DevLab_IR-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/DevLab_Interface/1.0.0/DevLab_Interface-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevLab_Interface-1.0.0.tar.gz",
+    "size_bytes": 8304,
+    "sha256": "fea12fce9469eaf9571de02e9f650f674735b713c6be60c8aeca3e5c2a505dcc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/DevLab_Interface/1.0.0/DevLab_Interface-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/DevLab_Interface/1.0.0/DevLab_Interface-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/DevLab_Interface/1.1.1/DevLab_Interface-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevLab_Interface-1.1.1.tar.gz",
+    "size_bytes": 11941,
+    "sha256": "15b1ebd6f0c5dc309280878046b9ed3e03d1b9f1429107e414359c4db8348d99",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/DevLab_Interface/1.1.1/DevLab_Interface-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/DevLab_Interface/1.1.1/DevLab_Interface-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/DevLab_Interface/1.1.2/DevLab_Interface-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevLab_Interface-1.1.2.tar.gz",
+    "size_bytes": 11978,
+    "sha256": "105d4a26e83996b173265cccf0510f8de4a1b2d0e6e22880258667521f950812",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/DevLab_Interface/1.1.2/DevLab_Interface-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/DevLab_Interface/1.1.2/DevLab_Interface-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/DevLab_Interface/1.2.1/DevLab_Interface-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevLab_Interface-1.2.1.tar.gz",
+    "size_bytes": 12295,
+    "sha256": "793d8805597beeaf64e692071472f63c56694294b6b9cb13845333959b89f461",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/DevLab_Interface/1.2.1/DevLab_Interface-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/DevLab_Interface/1.2.1/DevLab_Interface-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/DevLab_JoystickController/1.0.0/DevLab_JoystickController-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevLab_JoystickController-1.0.0.tar.gz",
+    "size_bytes": 9684,
+    "sha256": "77217f7f13c1452da0878fee6fa34a694c719e24dedad281d1ddaaff7e87a3f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/DevLab_JoystickController/1.0.0/DevLab_JoystickController-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/DevLab_JoystickController/1.0.0/DevLab_JoystickController-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/DevLab_LM35/1.0.0/DevLab_LM35-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevLab_LM35-1.0.0.tar.gz",
+    "size_bytes": 6338,
+    "sha256": "ceb3abf9bee09510684aa6a93534dc2ba24b6b27e0f57323a3a3ec5f25ffa99d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/DevLab_LM35/1.0.0/DevLab_LM35-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/DevLab_LM35/1.0.0/DevLab_LM35-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/DevLab_LibHelix/0.9.4/DevLab_LibHelix-0.9.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevLab_LibHelix-0.9.4.tar.gz",
+    "size_bytes": 2043418,
+    "sha256": "31d36e3b12b1c3358d0fa540a4036c9dacaae6cea3e01d63c89f51fa223fd773",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/DevLab_LibHelix/0.9.4/DevLab_LibHelix-0.9.4.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/DevLab_LibHelix/0.9.4/DevLab_LibHelix-0.9.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/DevLab_MAX30102/1.0.0/DevLab_MAX30102-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevLab_MAX30102-1.0.0.tar.gz",
+    "size_bytes": 24296,
+    "sha256": "eeb73dbf1a72ac85a4deaaae3c7e1611b6d041f5cf309d298a8bbfc45fb0b28e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/DevLab_MAX30102/1.0.0/DevLab_MAX30102-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/DevLab_MAX30102/1.0.0/DevLab_MAX30102-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/DevLab_MPU6050/1.0.1/DevLab_MPU6050-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevLab_MPU6050-1.0.1.tar.gz",
+    "size_bytes": 4215,
+    "sha256": "6c6a0cde7298ca51411b2d07446d967f5e293df3334305439cbf9515e9c5df0d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/DevLab_MPU6050/1.0.1/DevLab_MPU6050-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/DevLab_MPU6050/1.0.1/DevLab_MPU6050-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/DevLab_MPU6050/2.0.1/DevLab_MPU6050-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevLab_MPU6050-2.0.1.tar.gz",
+    "size_bytes": 8461,
+    "sha256": "769108fa584e874cd255bfb17db312da576c775ddff08f9f1453efb8c2f0bd49",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/DevLab_MPU6050/2.0.1/DevLab_MPU6050-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/DevLab_MPU6050/2.0.1/DevLab_MPU6050-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/DevLab_MPU6050/2.1.1/DevLab_MPU6050-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevLab_MPU6050-2.1.1.tar.gz",
+    "size_bytes": 604780,
+    "sha256": "58b29dcb858a57e5aca194023aa00dd130632136866aa767a7a562ef7718bab7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/DevLab_MPU6050/2.1.1/DevLab_MPU6050-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/DevLab_MPU6050/2.1.1/DevLab_MPU6050-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/DevLab_PhotoInterrupter/1.0.0/DevLab_PhotoInterrupter-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevLab_PhotoInterrupter-1.0.0.tar.gz",
+    "size_bytes": 7833,
+    "sha256": "d0a6a5fb538b456acb56a168625a32c24fcab0e5d294741954dc6c983f08bf87",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/DevLab_PhotoInterrupter/1.0.0/DevLab_PhotoInterrupter-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/DevLab_PhotoInterrupter/1.0.0/DevLab_PhotoInterrupter-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/DevLab_PhotoInterrupter/1.0.1/DevLab_PhotoInterrupter-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevLab_PhotoInterrupter-1.0.1.tar.gz",
+    "size_bytes": 7834,
+    "sha256": "24e4f39e9ae413ea3c0eba80ab42f6ad379dc62733541032d49316cfdf889e2f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/DevLab_PhotoInterrupter/1.0.1/DevLab_PhotoInterrupter-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/DevLab_PhotoInterrupter/1.0.1/DevLab_PhotoInterrupter-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/DevLab_Relay/1.0.0/DevLab_Relay-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevLab_Relay-1.0.0.tar.gz",
+    "size_bytes": 5531,
+    "sha256": "87b4501d24c650eb6c858aa4114e2e2df970197fb7824b0e48e1e8438a5522b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/DevLab_Relay/1.0.0/DevLab_Relay-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/DevLab_Relay/1.0.0/DevLab_Relay-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/DevLab_TCAN1051HVD/1.0.0/DevLab_TCAN1051HVD-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevLab_TCAN1051HVD-1.0.0.tar.gz",
+    "size_bytes": 5220,
+    "sha256": "94d17b1e35bb03e9f3a66f6d90f395d3cf6f6f81df66c4a1e460b562f61f33e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/DevLab_TCAN1051HVD/1.0.0/DevLab_TCAN1051HVD-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/DevLab_TCAN1051HVD/1.0.0/DevLab_TCAN1051HVD-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/DevLab_TEMT6000/1.0.1/DevLab_TEMT6000-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevLab_TEMT6000-1.0.1.tar.gz",
+    "size_bytes": 9557,
+    "sha256": "f4630cb898674bbfe5779e1daf3bce5a3d3d554035de95f1cce2ab44728fb701",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/DevLab_TEMT6000/1.0.1/DevLab_TEMT6000-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/DevLab_TEMT6000/1.0.1/DevLab_TEMT6000-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/DevLab_TEMT6000/1.0.2/DevLab_TEMT6000-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevLab_TEMT6000-1.0.2.tar.gz",
+    "size_bytes": 10100,
+    "sha256": "067933859db47989916d5024120929e6a4a93907232299df88f6c8c8328b0b43",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/DevLab_TEMT6000/1.0.2/DevLab_TEMT6000-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/DevLab_TEMT6000/1.0.2/DevLab_TEMT6000-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/DevLab_TEMT6000/2.0.0/DevLab_TEMT6000-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevLab_TEMT6000-2.0.0.tar.gz",
+    "size_bytes": 10167,
+    "sha256": "9cbe2946a04c9587ef4a63ee996d2005dcf5390018eb66e54ff4686d5aaa1fc8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/DevLab_TEMT6000/2.0.0/DevLab_TEMT6000-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/DevLab_TEMT6000/2.0.0/DevLab_TEMT6000-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/DevLab_TEMT6000/2.0.2/DevLab_TEMT6000-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevLab_TEMT6000-2.0.2.tar.gz",
+    "size_bytes": 11048,
+    "sha256": "c89023b454c509316a4743c7447044eb42c366bfaa04a8c56d153775537cc0f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/DevLab_TEMT6000/2.0.2/DevLab_TEMT6000-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/DevLab_TEMT6000/2.0.2/DevLab_TEMT6000-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/DevLab_TEMT6000/2.0.4/DevLab_TEMT6000-2.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevLab_TEMT6000-2.0.4.tar.gz",
+    "size_bytes": 11156,
+    "sha256": "6ee55e269960eb57340416c6fe82b9999c2801ab0c1c80a36764fdb7e4fa83ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/DevLab_TEMT6000/2.0.4/DevLab_TEMT6000-2.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/DevLab_TEMT6000/2.0.4/DevLab_TEMT6000-2.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/DevLab_TEMT6000/2.0.6/DevLab_TEMT6000-2.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevLab_TEMT6000-2.0.6.tar.gz",
+    "size_bytes": 12149,
+    "sha256": "aee7d50d53e963c3a44f6382ab11f3b43e6967b1a1dca6dcb449231920e66dcc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/DevLab_TEMT6000/2.0.6/DevLab_TEMT6000-2.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/DevLab_TEMT6000/2.0.6/DevLab_TEMT6000-2.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/DevLab_TrafficLights/1.0.0/DevLab_TrafficLights-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevLab_TrafficLights-1.0.0.tar.gz",
+    "size_bytes": 15872,
+    "sha256": "a9ba81ac44931dec00954fe97d7d0cc292282412ec50be44c702cf5a34b0cb95",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/DevLab_TrafficLights/1.0.0/DevLab_TrafficLights-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/DevLab_TrafficLights/1.0.0/DevLab_TrafficLights-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/DevLab_VEML3328/1.2.0/DevLab_VEML3328-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevLab_VEML3328-1.2.0.tar.gz",
+    "size_bytes": 5229,
+    "sha256": "56eb13f55fe52f8a553a4152c9e22982868b687ec61e6e3a99b136af39620dbe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/DevLab_VEML3328/1.2.0/DevLab_VEML3328-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/DevLab_VEML3328/1.2.0/DevLab_VEML3328-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/DevLab_VEML7700/2.1.6/DevLab_VEML7700-2.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevLab_VEML7700-2.1.6.tar.gz",
+    "size_bytes": 10828,
+    "sha256": "6432280df6b54b26a4551c154d1bb45c44d5681c87ffd0f8c9df874da3b4fb8e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/DevLab_VEML7700/2.1.6/DevLab_VEML7700-2.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/DevLab_VEML7700/2.1.6/DevLab_VEML7700-2.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/Devlab_TSL2591/1.4.5/Devlab_TSL2591-1.4.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Devlab_TSL2591-1.4.5.tar.gz",
+    "size_bytes": 9260,
+    "sha256": "9cc3390a84208733c659ea5be6b42cc264fe15cf104499d461479ffe807e595b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/Devlab_TSL2591/1.4.5/Devlab_TSL2591-1.4.5.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/Devlab_TSL2591/1.4.5/Devlab_TSL2591-1.4.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/UANIMA/1.0.0/UANIMA-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UANIMA-1.0.0.tar.gz",
+    "size_bytes": 6130,
+    "sha256": "ce4a0f77b5a7165ce1e4b0e37c2d17b95f47353a86190637f5a4a59bed98bb33",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/UANIMA/1.0.0/UANIMA-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/UANIMA/1.0.0/UANIMA-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/UANIMA/2.0.0/DevLab_UANIMA-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevLab_UANIMA-2.0.0.tar.gz",
+    "size_bytes": 14088,
+    "sha256": "d2aba156de6adc492060f11645bb28e0e9d4491df1c88cf727d78e9bfd0be1d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/UANIMA/2.0.0/DevLab_UANIMA-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/UANIMA/2.0.0/DevLab_UANIMA-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/UANIMA/2.0.1/UANIMA-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UANIMA-2.0.1.tar.gz",
+    "size_bytes": 14223,
+    "sha256": "363df70ba0662c74a98c7dee128ab6389616b27ea7282be82f5e29431a26a48f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/UANIMA/2.0.1/UANIMA-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/UANIMA/2.0.1/UANIMA-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/UBMA250/1.0.0/UBMA250-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UBMA250-1.0.0.tar.gz",
+    "size_bytes": 7126,
+    "sha256": "f8109896355f12214a01679bad345a34d5ef0b8e88d6f9366e74f61f0a13ada1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/UBMA250/1.0.0/UBMA250-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/UBMA250/1.0.0/UBMA250-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/URP2_DVI_HSTX/1.0.1/URP2_DVI_HSTX-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "URP2_DVI_HSTX-1.0.1.tar.gz",
+    "size_bytes": 124331,
+    "sha256": "ecd18ee48a07a4534dc7824e501f3f0647b0c8e58ffc8e55b8e5e75deb4f4e70",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/URP2_DVI_HSTX/1.0.1/URP2_DVI_HSTX-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/URP2_DVI_HSTX/1.0.1/URP2_DVI_HSTX-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/UnitCMSISDAP/0.1.1/UnitCMSISDAP-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UnitCMSISDAP-0.1.1.tar.gz",
+    "size_bytes": 28992,
+    "sha256": "1e444a4143025fae03a4defdb35c6b5cf033a0c20f2d9d27de37eabcc93e1883",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/UnitCMSISDAP/0.1.1/UnitCMSISDAP-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/UnitCMSISDAP/0.1.1/UnitCMSISDAP-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/udvi_hstx/1.0.0/udvi_hstx-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "udvi_hstx-1.0.0.tar.gz",
+    "size_bytes": 124670,
+    "sha256": "683277bf10897cb37215225e7ce418ae40033fde3a9584e514ee682de4536fa3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/udvi_hstx/1.0.0/udvi_hstx-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/udvi_hstx/1.0.0/udvi_hstx-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/ue_i2c_icp_10111_sen/1.2.0/ue_i2c_icp_10111_sen-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ue_i2c_icp_10111_sen-1.2.0.tar.gz",
+    "size_bytes": 8992,
+    "sha256": "a233873a0c2ae5e8b53319b0d66a5219846c4132727afd1639579323d9482a18",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/ue_i2c_icp_10111_sen/1.2.0/ue_i2c_icp_10111_sen-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/ue_i2c_icp_10111_sen/1.2.0/ue_i2c_icp_10111_sen-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unit-electronics-mx/library/upicodvi/1.3.2/upicodvi-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "upicodvi-1.3.2.tar.gz",
+    "size_bytes": 6108019,
+    "sha256": "ba7205dc2066435fd8c2d647f449275cb096d802cf0d029ae03e103a5dae0e65",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unit-electronics-mx/library/upicodvi/1.3.2/upicodvi-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/unit-electronics-mx/library/upicodvi/1.3.2/upicodvi-1.3.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

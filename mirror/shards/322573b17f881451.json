@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jardapajskr",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jardapajskr/library/freemaster_lib/0.0.0+sha.355a9738a180/freemaster_lib-0.0.0+sha.355a9738a180.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "freemaster_lib-0.0.0+sha.355a9738a180.tar.gz",
+    "size_bytes": 35264,
+    "sha256": "76b169f71c2fe61e4e872b80a52b0f2d044ab64cb00bd7236a166b021a034669",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jardapajskr/library/freemaster_lib/0.0.0%2Bsha.355a9738a180/freemaster_lib-0.0.0%2Bsha.355a9738a180.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jardapajskr/library/freemaster_lib/0.0.0%2Bsha.355a9738a180/freemaster_lib-0.0.0%2Bsha.355a9738a180.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-gellmish",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-gellmish/library/Pozyx-Arduino-library-master_v2/0.0.0+sha.16d948f656fe/Pozyx-Arduino-library-master_v2-0.0.0+sha.16d948f656fe.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pozyx-Arduino-library-master_v2-0.0.0+sha.16d948f656fe.tar.gz",
+    "size_bytes": 41608,
+    "sha256": "5d7f2198c9b09bee038040e67ba5a212a5110309b5b673a927f8247bcd84ca80",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-gellmish/library/Pozyx-Arduino-library-master_v2/0.0.0%2Bsha.16d948f656fe/Pozyx-Arduino-library-master_v2-0.0.0%2Bsha.16d948f656fe.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-gellmish/library/Pozyx-Arduino-library-master_v2/0.0.0%2Bsha.16d948f656fe/Pozyx-Arduino-library-master_v2-0.0.0%2Bsha.16d948f656fe.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-gellmish/library/Pozyx-Arduino-library-master_v5_1/0.0.0+sha.f0d0d288fac9/Pozyx-Arduino-library-master_v5_1-0.0.0+sha.f0d0d288fac9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pozyx-Arduino-library-master_v5_1-0.0.0+sha.f0d0d288fac9.tar.gz",
+    "size_bytes": 46152,
+    "sha256": "127d7097846375a2d409e106f1b9be7a94e6506e098f5699b428790dd40a3a3d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-gellmish/library/Pozyx-Arduino-library-master_v5_1/0.0.0%2Bsha.f0d0d288fac9/Pozyx-Arduino-library-master_v5_1-0.0.0%2Bsha.f0d0d288fac9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-gellmish/library/Pozyx-Arduino-library-master_v5_1/0.0.0%2Bsha.f0d0d288fac9/Pozyx-Arduino-library-master_v5_1-0.0.0%2Bsha.f0d0d288fac9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kosme",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kosme/library/arduinoFFT/1.5.6/arduinoFFT-1.5.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arduinoFFT-1.5.6.tar.gz",
+    "size_bytes": 22741,
+    "sha256": "66212f73c835c3b20c3cddef74d31b5638779fc21f1951b5a75dbed15bb45cac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kosme/library/arduinoFFT/1.5.6/arduinoFFT-1.5.6.tar.gz",
+     "https://dl.registry.platformio.org/download/kosme/library/arduinoFFT/1.5.6/arduinoFFT-1.5.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kosme/library/arduinoFFT/1.6.1/arduinoFFT-1.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arduinoFFT-1.6.1.tar.gz",
+    "size_bytes": 23612,
+    "sha256": "3b8a96ce716d46cfe39e64485beeca590907777170e942a8d5a765af1cf1488d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kosme/library/arduinoFFT/1.6.1/arduinoFFT-1.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/kosme/library/arduinoFFT/1.6.1/arduinoFFT-1.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kosme/library/arduinoFFT/1.6.2/arduinoFFT-1.6.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arduinoFFT-1.6.2.tar.gz",
+    "size_bytes": 23674,
+    "sha256": "f22fb580e1c495b5d61accd16ca97d8c09f88a70bdb8f237c1e2b0a03d2edde9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kosme/library/arduinoFFT/1.6.2/arduinoFFT-1.6.2.tar.gz",
+     "https://dl.registry.platformio.org/download/kosme/library/arduinoFFT/1.6.2/arduinoFFT-1.6.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kosme/library/arduinoFFT/2.0.1/arduinoFFT-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arduinoFFT-2.0.1.tar.gz",
+    "size_bytes": 24561,
+    "sha256": "2c0443ff9d92e3fa149a5e5cf72da0e2e5597193d7f61441bb68b2d5e98b0e0e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kosme/library/arduinoFFT/2.0.1/arduinoFFT-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/kosme/library/arduinoFFT/2.0.1/arduinoFFT-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kosme/library/arduinoFFT/2.0.4/arduinoFFT-2.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arduinoFFT-2.0.4.tar.gz",
+    "size_bytes": 24873,
+    "sha256": "93b5800a1bb7395f551dea60c21797df6da558d39172639ce50de71651d94955",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kosme/library/arduinoFFT/2.0.4/arduinoFFT-2.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/kosme/library/arduinoFFT/2.0.4/arduinoFFT-2.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kosme/library/fix_fft/1.0/fix_fft-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "fix_fft-1.0.tar.gz",
+    "size_bytes": 3928,
+    "sha256": "bf9d6fad42d59b559c687ae164b2f3fccd947498d5df6390605984662a90dfe8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kosme/library/fix_fft/1.0/fix_fft-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kosme/library/fix_fft/1.0/fix_fft-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kosme/library/flex_DST/1.0.1/flex_DST-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "flex_DST-1.0.1.tar.gz",
+    "size_bytes": 15636,
+    "sha256": "e7a1e9098c10888c3927998026267be3e1f5eb80c9e93131ad93dd3f7601a671",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kosme/library/flex_DST/1.0.1/flex_DST-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/kosme/library/flex_DST/1.0.1/flex_DST-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kosme/library/timestamp32bits/1.1/timestamp32bits-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "timestamp32bits-1.1.tar.gz",
+    "size_bytes": 5800,
+    "sha256": "a709220dd379fdac08b6a074fa93878de913b806ac542c9abe4b565b46696c8d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kosme/library/timestamp32bits/1.1/timestamp32bits-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/kosme/library/timestamp32bits/1.1/timestamp32bits-1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

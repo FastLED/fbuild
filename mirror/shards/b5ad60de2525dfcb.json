@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/thingsboard",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "thingsboard/library/TBPubSubClient/2.12.1/TBPubSubClient-2.12.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TBPubSubClient-2.12.1.tar.gz",
+    "size_bytes": 14206,
+    "sha256": "16baf790cd6714b787ecfa919d4097f86543056b54902b6d46a66a69d8433b89",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thingsboard/library/TBPubSubClient/2.12.1/TBPubSubClient-2.12.1.tar.gz",
+     "https://dl.registry.platformio.org/download/thingsboard/library/TBPubSubClient/2.12.1/TBPubSubClient-2.12.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thingsboard/library/ThingsBoard/0.10.2/ThingsBoard-0.10.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ThingsBoard-0.10.2.tar.gz",
+    "size_bytes": 59787,
+    "sha256": "2bcee4ea2a46d95bb8f4937a98309a04cb90d23cc9dc41cd65728ec25e3abc85",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thingsboard/library/ThingsBoard/0.10.2/ThingsBoard-0.10.2.tar.gz",
+     "https://dl.registry.platformio.org/download/thingsboard/library/ThingsBoard/0.10.2/ThingsBoard-0.10.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thingsboard/library/ThingsBoard/0.12.2/ThingsBoard-0.12.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ThingsBoard-0.12.2.tar.gz",
+    "size_bytes": 106277,
+    "sha256": "5325869fd6ca084cf0277ace5c768f05fce03d65338ca67696b88042675ea53d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thingsboard/library/ThingsBoard/0.12.2/ThingsBoard-0.12.2.tar.gz",
+     "https://dl.registry.platformio.org/download/thingsboard/library/ThingsBoard/0.12.2/ThingsBoard-0.12.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thingsboard/library/ThingsBoard/0.13.0/ThingsBoard-0.13.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ThingsBoard-0.13.0.tar.gz",
+    "size_bytes": 127259,
+    "sha256": "fc044dfe443f89a1a14cf1d156667f7fdf5df7f8a2b36c6e585f1a54b5455e26",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thingsboard/library/ThingsBoard/0.13.0/ThingsBoard-0.13.0.tar.gz",
+     "https://dl.registry.platformio.org/download/thingsboard/library/ThingsBoard/0.13.0/ThingsBoard-0.13.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thingsboard/library/ThingsBoard/0.14.0/ThingsBoard-0.14.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ThingsBoard-0.14.0.tar.gz",
+    "size_bytes": 155013,
+    "sha256": "80118968dd45b35338f11706c1e40d6490f425e9a92ea024330146bcd85201d4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thingsboard/library/ThingsBoard/0.14.0/ThingsBoard-0.14.0.tar.gz",
+     "https://dl.registry.platformio.org/download/thingsboard/library/ThingsBoard/0.14.0/ThingsBoard-0.14.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thingsboard/library/ThingsBoard/0.15.0/ThingsBoard-0.15.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ThingsBoard-0.15.0.tar.gz",
+    "size_bytes": 160971,
+    "sha256": "ac031f331acbdb716b4477512e35f56d7e36f60076fd7b9ea07f68c326ca4a86",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thingsboard/library/ThingsBoard/0.15.0/ThingsBoard-0.15.0.tar.gz",
+     "https://dl.registry.platformio.org/download/thingsboard/library/ThingsBoard/0.15.0/ThingsBoard-0.15.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

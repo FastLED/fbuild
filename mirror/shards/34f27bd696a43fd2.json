@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/muki01",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "muki01/library/BMW%20IBus%20KBus/1.0.3/BMWIBusKBus-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMWIBusKBus-1.0.3.tar.gz",
+    "size_bytes": 34404,
+    "sha256": "b45a59c8a8ec46edd2b37c0c71f6217433847866a99ae81dddc10699710a9a8f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/muki01/library/BMW%2520IBus%2520KBus/1.0.3/BMWIBusKBus-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/muki01/library/BMW%20IBus%20KBus/1.0.3/BMWIBusKBus-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "muki01/library/OBD2%20CanBus/1.0.1/OBD2CanBus-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OBD2CanBus-1.0.1.tar.gz",
+    "size_bytes": 11696,
+    "sha256": "9af837f88f3bbd5b9e0c9fc4560e1cf764c41f7e783a67bc0f884627aac9721f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/muki01/library/OBD2%2520CanBus/1.0.1/OBD2CanBus-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/muki01/library/OBD2%20CanBus/1.0.1/OBD2CanBus-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "muki01/library/OBD2%20K-Line/1.0.4/OBD2K-Line-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OBD2K-Line-1.0.4.tar.gz",
+    "size_bytes": 12488,
+    "sha256": "e1cb4cb319809e57a7e0bc77032af81a95a7a3bcb9515eb446c2597e07fc48fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/muki01/library/OBD2%2520K-Line/1.0.4/OBD2K-Line-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/muki01/library/OBD2%20K-Line/1.0.4/OBD2K-Line-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "muki01/library/OBD2%20K-Line/1.0.5/OBD2K-Line-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OBD2K-Line-1.0.5.tar.gz",
+    "size_bytes": 12541,
+    "sha256": "b5bdde62e7b900e8a5041ea95d9e33849358587ed85a2b763bccd94b8ad49f3d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/muki01/library/OBD2%2520K-Line/1.0.5/OBD2K-Line-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/muki01/library/OBD2%20K-Line/1.0.5/OBD2K-Line-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "muki01/library/OBD2%20K-Line/1.0.6/OBD2K-Line-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OBD2K-Line-1.0.6.tar.gz",
+    "size_bytes": 21016,
+    "sha256": "c3f6cd55fe61d9c0aeda42a6e78dba3ba52907f3da92d287b15942acd2086ddd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/muki01/library/OBD2%2520K-Line/1.0.6/OBD2K-Line-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/muki01/library/OBD2%20K-Line/1.0.6/OBD2K-Line-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "muki01/library/OBD2%20K-Line/1.1.0/OBD2K-Line-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OBD2K-Line-1.1.0.tar.gz",
+    "size_bytes": 21261,
+    "sha256": "cdf4ddcfda5c781fd6ec65e62ac8580c76358b7e430f54c18d28b67407963d64",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/muki01/library/OBD2%2520K-Line/1.1.0/OBD2K-Line-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/muki01/library/OBD2%20K-Line/1.1.0/OBD2K-Line-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

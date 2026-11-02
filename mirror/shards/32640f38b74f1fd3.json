@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/yishii",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "yishii/library/Meiro/0.0.13/Meiro-0.0.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Meiro-0.0.13.tar.gz",
+    "size_bytes": 5577,
+    "sha256": "d1c9720ef01ab8df3493a074f776bbf7e56ecead998a9c4ec66c291f5e9cf563",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yishii/library/Meiro/0.0.13/Meiro-0.0.13.tar.gz",
+     "https://dl.registry.platformio.org/download/yishii/library/Meiro/0.0.13/Meiro-0.0.13.tar.gz"
+    ]
+   }
+  }
+ ]
+}

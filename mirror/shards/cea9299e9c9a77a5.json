@@ -1,0 +1,126 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jaster-prj",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jaster-prj/library/BQ24295/0.1.1/BQ24295-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BQ24295-0.1.1.tar.gz",
+    "size_bytes": 13835,
+    "sha256": "3625278529e971e70cc44cffd03efebed7a97b2d01a94aac69a65109e353d0a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jaster-prj/library/BQ24295/0.1.1/BQ24295-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jaster-prj/library/BQ24295/0.1.1/BQ24295-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jaster-prj/library/DS3231/0.1.2/DS3231-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS3231-0.1.2.tar.gz",
+    "size_bytes": 6006,
+    "sha256": "a81f8bd34bb94a94a73bca7dd7ac0311c2dbeacdeec626b19e7445fa72da6a5f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jaster-prj/library/DS3231/0.1.2/DS3231-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jaster-prj/library/DS3231/0.1.2/DS3231-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jaster-prj/library/GPIOLib/0.1.1/GPIOLib-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GPIOLib-0.1.1.tar.gz",
+    "size_bytes": 12834,
+    "sha256": "5ec15a8999b15b18f287f3c2a3d5a21a2787b317a2eb8ce5d597984642f8f49a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jaster-prj/library/GPIOLib/0.1.1/GPIOLib-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jaster-prj/library/GPIOLib/0.1.1/GPIOLib-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jaster-prj/library/LinkedList/0.1.1/LinkedList-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LinkedList-0.1.1.tar.gz",
+    "size_bytes": 6677,
+    "sha256": "fdccaa1eeb6268ef0ccd57fe6824720f1986d01f859081a6c58d6224941ed695",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jaster-prj/library/LinkedList/0.1.1/LinkedList-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jaster-prj/library/LinkedList/0.1.1/LinkedList-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jaster-prj/library/MAX1704x/0.1.1/MAX1704x-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX1704x-0.1.1.tar.gz",
+    "size_bytes": 11821,
+    "sha256": "98b438a7ca6de887f5a28d97c17fca63cf7a3059e8f41765f400b2bd393c2fd5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jaster-prj/library/MAX1704x/0.1.1/MAX1704x-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jaster-prj/library/MAX1704x/0.1.1/MAX1704x-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jaster-prj/library/MCP23017/0.1.2/MCP23017-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP23017-0.1.2.tar.gz",
+    "size_bytes": 8677,
+    "sha256": "3148caf8d1f7df926f3fe0b5f0afae26949c170142314d23c36feeff4c6b92f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jaster-prj/library/MCP23017/0.1.2/MCP23017-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jaster-prj/library/MCP23017/0.1.2/MCP23017-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jaster-prj/library/Persistence/0.1.1/Persistence-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Persistence-0.1.1.tar.gz",
+    "size_bytes": 2522,
+    "sha256": "e7cd7857dc5907a14e637b1efb74210247caf1ce667a019b60d906293b14690a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jaster-prj/library/Persistence/0.1.1/Persistence-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jaster-prj/library/Persistence/0.1.1/Persistence-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jaster-prj/library/T6963/0.1.2/T6963-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "T6963-0.1.2.tar.gz",
+    "size_bytes": 6796,
+    "sha256": "7f00d0ad6cc7bb4761fc420507e08c180ac6f77c2a358b19b691158fb4a1d7d4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jaster-prj/library/T6963/0.1.2/T6963-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jaster-prj/library/T6963/0.1.2/T6963-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jaster-prj/library/UartKeyboard/0.1.1/UartKeyboard-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UartKeyboard-0.1.1.tar.gz",
+    "size_bytes": 5894,
+    "sha256": "385e2cdcda23da36cfa93e2497f1d08e7c6fec4b52cabbc97cbb02f0e092232d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jaster-prj/library/UartKeyboard/0.1.1/UartKeyboard-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jaster-prj/library/UartKeyboard/0.1.1/UartKeyboard-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-steiger",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-steiger/library/tinyxml/0.0.0+sha.7c97dcef700c/tinyxml-0.0.0+sha.7c97dcef700c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tinyxml-0.0.0+sha.7c97dcef700c.tar.gz",
+    "size_bytes": 37791,
+    "sha256": "7667a17799f7468b6f0e37b57a837a8e19e218bf3fddab1388ba1a29aecdced9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-steiger/library/tinyxml/0.0.0%2Bsha.7c97dcef700c/tinyxml-0.0.0%2Bsha.7c97dcef700c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-steiger/library/tinyxml/0.0.0%2Bsha.7c97dcef700c/tinyxml-0.0.0%2Bsha.7c97dcef700c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

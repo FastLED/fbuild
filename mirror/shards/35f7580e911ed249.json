@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jlrapter",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jlrapter/library/MySCPI/0.0.0+sha.0a12f558eb8d/MySCPI-0.0.0+sha.0a12f558eb8d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MySCPI-0.0.0+sha.0a12f558eb8d.tar.gz",
+    "size_bytes": 3028,
+    "sha256": "2dd9ea38cb733626360043b073242340ac0a3453680a5c588c4e71cd2203a7be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jlrapter/library/MySCPI/0.0.0%2Bsha.0a12f558eb8d/MySCPI-0.0.0%2Bsha.0a12f558eb8d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jlrapter/library/MySCPI/0.0.0%2Bsha.0a12f558eb8d/MySCPI-0.0.0%2Bsha.0a12f558eb8d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

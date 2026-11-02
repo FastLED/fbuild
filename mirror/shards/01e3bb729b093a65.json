@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/evotodi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "evotodi/library/TLogPlus/1.1.6/TLogPlus-1.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TLogPlus-1.1.6.tar.gz",
+    "size_bytes": 10322,
+    "sha256": "c95a1b7b126df41a66bac937d7a024e2addd290d11160a3f04e18ad65e5a3150",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/evotodi/library/TLogPlus/1.1.6/TLogPlus-1.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/evotodi/library/TLogPlus/1.1.6/TLogPlus-1.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "evotodi/library/TLogPlusMqttStream/1.0.3/TLogPlusMqttStream-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TLogPlusMqttStream-1.0.3.tar.gz",
+    "size_bytes": 2305,
+    "sha256": "db2c2d25553e1c8c05b9b53a4b4f8c68e129ce2640706f641e349172e3a9cde2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/evotodi/library/TLogPlusMqttStream/1.0.3/TLogPlusMqttStream-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/evotodi/library/TLogPlusMqttStream/1.0.3/TLogPlusMqttStream-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "evotodi/library/TLogPlusSyslogStream/1.0.3/TLogPlusSyslogStream-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TLogPlusSyslogStream-1.0.3.tar.gz",
+    "size_bytes": 1914,
+    "sha256": "7764d230b7d3c83ebd3421b6df3206922d26d9165e68c91c207e1ba8c4fc9658",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/evotodi/library/TLogPlusSyslogStream/1.0.3/TLogPlusSyslogStream-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/evotodi/library/TLogPlusSyslogStream/1.0.3/TLogPlusSyslogStream-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "evotodi/library/TLogPlusTelnetStream/1.0.3/TLogPlusTelnetStream-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TLogPlusTelnetStream-1.0.3.tar.gz",
+    "size_bytes": 2825,
+    "sha256": "8c985a0996dc53cec0ea9de535440b5951df2e5c72fb8aec75997188495c8370",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/evotodi/library/TLogPlusTelnetStream/1.0.3/TLogPlusTelnetStream-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/evotodi/library/TLogPlusTelnetStream/1.0.3/TLogPlusTelnetStream-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "evotodi/library/TLogPlusWebSerialStream/1.0.4/TLogPlusWebSerialStream-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TLogPlusWebSerialStream-1.0.4.tar.gz",
+    "size_bytes": 2560,
+    "sha256": "5ed699fa21e45cc55b47c8b884c21f936e89450b8137432869121b61d6d24e4b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/evotodi/library/TLogPlusWebSerialStream/1.0.4/TLogPlusWebSerialStream-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/evotodi/library/TLogPlusWebSerialStream/1.0.4/TLogPlusWebSerialStream-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

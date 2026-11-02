@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/winghoko",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "winghoko/library/simpleEvents/1.0.0/simpleEvents-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "simpleEvents-1.0.0.tar.gz",
+    "size_bytes": 13184,
+    "sha256": "32eaae603b60822b898fff6e997e97e7e981eb70f2e3d54200ff8ed1bdf233ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/winghoko/library/simpleEvents/1.0.0/simpleEvents-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/winghoko/library/simpleEvents/1.0.0/simpleEvents-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-deepti",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-deepti/library/Envt_Shield_API/0.0.0+sha.d37d15b70bc5/Envt_Shield_API-0.0.0+sha.d37d15b70bc5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Envt_Shield_API-0.0.0+sha.d37d15b70bc5.tar.gz",
+    "size_bytes": 21791,
+    "sha256": "5ff36d96f5f97f615c999b73421d87ece14c999a58114ebb3c581cad18d001c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-deepti/library/Envt_Shield_API/0.0.0%2Bsha.d37d15b70bc5/Envt_Shield_API-0.0.0%2Bsha.d37d15b70bc5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-deepti/library/Envt_Shield_API/0.0.0%2Bsha.d37d15b70bc5/Envt_Shield_API-0.0.0%2Bsha.d37d15b70bc5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-deepti/library/Envt_Shield_F4_API/0.0.0+sha.9e645e6ed2ce/Envt_Shield_F4_API-0.0.0+sha.9e645e6ed2ce.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Envt_Shield_F4_API-0.0.0+sha.9e645e6ed2ce.tar.gz",
+    "size_bytes": 21758,
+    "sha256": "e6255baa6a106f871822ba0d6372313d01740391b94e07beee57995cc8458f8c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-deepti/library/Envt_Shield_F4_API/0.0.0%2Bsha.9e645e6ed2ce/Envt_Shield_F4_API-0.0.0%2Bsha.9e645e6ed2ce.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-deepti/library/Envt_Shield_F4_API/0.0.0%2Bsha.9e645e6ed2ce/Envt_Shield_F4_API-0.0.0%2Bsha.9e645e6ed2ce.tar.gz"
+    ]
+   }
+  }
+ ]
+}

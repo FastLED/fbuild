@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/andrewhe-princeton",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "andrewhe-princeton/library/IridiumGPP/0.1/IridiumGPP-0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IridiumGPP-0.1.tar.gz",
+    "size_bytes": 2096,
+    "sha256": "633f0b170e13de014369214128a9fb29c41ffaed51741c1c3c2575cb1f79780b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/andrewhe-princeton/library/IridiumGPP/0.1/IridiumGPP-0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/andrewhe-princeton/library/IridiumGPP/0.1/IridiumGPP-0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

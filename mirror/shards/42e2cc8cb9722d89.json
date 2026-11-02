@@ -1,0 +1,295 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/derdoktor667",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "derdoktor667/library/DShotRMT/0.6.0/DShotRMT-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DShotRMT-0.6.0.tar.gz",
+    "size_bytes": 9304,
+    "sha256": "3a8c9d29079604ceffae01b821c35880a64bc86f84604c413e6bb8cd0e155cc6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/derdoktor667/library/DShotRMT/0.6.0/DShotRMT-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/derdoktor667/library/DShotRMT/0.6.0/DShotRMT-0.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "derdoktor667/library/DShotRMT/0.6.1/DShotRMT-0.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DShotRMT-0.6.1.tar.gz",
+    "size_bytes": 10245,
+    "sha256": "bf34bb790bb9c1c35b7cb541fe516881df8bc0a04d0f1c1692c4a827102dbf46",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/derdoktor667/library/DShotRMT/0.6.1/DShotRMT-0.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/derdoktor667/library/DShotRMT/0.6.1/DShotRMT-0.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "derdoktor667/library/DShotRMT/0.6.3/DShotRMT-0.6.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DShotRMT-0.6.3.tar.gz",
+    "size_bytes": 11221,
+    "sha256": "04c0700352798fa6f5f09159611715a5af6ab82890d2362b83b542779c58587b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/derdoktor667/library/DShotRMT/0.6.3/DShotRMT-0.6.3.tar.gz",
+     "https://dl.registry.platformio.org/download/derdoktor667/library/DShotRMT/0.6.3/DShotRMT-0.6.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "derdoktor667/library/DShotRMT/0.6.6/DShotRMT-0.6.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DShotRMT-0.6.6.tar.gz",
+    "size_bytes": 12172,
+    "sha256": "cd97c2fbba07022383dbe3482f0b2df7502e228ca475a8c0ed6dc7636c12f6b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/derdoktor667/library/DShotRMT/0.6.6/DShotRMT-0.6.6.tar.gz",
+     "https://dl.registry.platformio.org/download/derdoktor667/library/DShotRMT/0.6.6/DShotRMT-0.6.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "derdoktor667/library/DShotRMT/0.7.0/DShotRMT-0.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DShotRMT-0.7.0.tar.gz",
+    "size_bytes": 18424,
+    "sha256": "c2daa828a91095e5ecf700b482933794234799837c5502e1ace108162d1d5b31",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/derdoktor667/library/DShotRMT/0.7.0/DShotRMT-0.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/derdoktor667/library/DShotRMT/0.7.0/DShotRMT-0.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "derdoktor667/library/DShotRMT/0.7.1/DShotRMT-0.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DShotRMT-0.7.1.tar.gz",
+    "size_bytes": 19461,
+    "sha256": "62ca8895c2177367b56361095853dc23b187918f3bf33cd91adad52657f2775c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/derdoktor667/library/DShotRMT/0.7.1/DShotRMT-0.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/derdoktor667/library/DShotRMT/0.7.1/DShotRMT-0.7.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "derdoktor667/library/DShotRMT/0.7.2/DShotRMT-0.7.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DShotRMT-0.7.2.tar.gz",
+    "size_bytes": 19339,
+    "sha256": "f7a11c2eb96dfb2d31f8e5c37968e542c572eb3e0db2692dd5176903bf8119dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/derdoktor667/library/DShotRMT/0.7.2/DShotRMT-0.7.2.tar.gz",
+     "https://dl.registry.platformio.org/download/derdoktor667/library/DShotRMT/0.7.2/DShotRMT-0.7.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "derdoktor667/library/DShotRMT/0.7.6/DShotRMT-0.7.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DShotRMT-0.7.6.tar.gz",
+    "size_bytes": 25904,
+    "sha256": "a99ee5714bb16a589f38764051cd2e431d61f361a19b8bdc03a8bbde42a636bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/derdoktor667/library/DShotRMT/0.7.6/DShotRMT-0.7.6.tar.gz",
+     "https://dl.registry.platformio.org/download/derdoktor667/library/DShotRMT/0.7.6/DShotRMT-0.7.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "derdoktor667/library/DShotRMT/0.8.0/DShotRMT-0.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DShotRMT-0.8.0.tar.gz",
+    "size_bytes": 25735,
+    "sha256": "a10c1cbd37fc87e2c61918b7c91b1aae0d339d60fcede707fa68e400dabc35c9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/derdoktor667/library/DShotRMT/0.8.0/DShotRMT-0.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/derdoktor667/library/DShotRMT/0.8.0/DShotRMT-0.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "derdoktor667/library/DShotRMT/0.8.3/DShotRMT-0.8.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DShotRMT-0.8.3.tar.gz",
+    "size_bytes": 23423,
+    "sha256": "25c00ab16a831ca30d7dba0cf01b28d810624a9756bb1a61aa21a8de4a7e967e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/derdoktor667/library/DShotRMT/0.8.3/DShotRMT-0.8.3.tar.gz",
+     "https://dl.registry.platformio.org/download/derdoktor667/library/DShotRMT/0.8.3/DShotRMT-0.8.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "derdoktor667/library/DShotRMT/0.8.6/DShotRMT-0.8.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DShotRMT-0.8.6.tar.gz",
+    "size_bytes": 24667,
+    "sha256": "ca9ef8066ef4984c07dbc5828ee58120b1bddd31ca311bb9e0b213d8ebec739d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/derdoktor667/library/DShotRMT/0.8.6/DShotRMT-0.8.6.tar.gz",
+     "https://dl.registry.platformio.org/download/derdoktor667/library/DShotRMT/0.8.6/DShotRMT-0.8.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "derdoktor667/library/DShotRMT/0.8.7/DShotRMT-0.8.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DShotRMT-0.8.7.tar.gz",
+    "size_bytes": 24365,
+    "sha256": "e461e0b37c7ed47cb2044b8eb9bb0e87cdd89fada8feab608b0d1780aa8eefd1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/derdoktor667/library/DShotRMT/0.8.7/DShotRMT-0.8.7.tar.gz",
+     "https://dl.registry.platformio.org/download/derdoktor667/library/DShotRMT/0.8.7/DShotRMT-0.8.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "derdoktor667/library/DShotRMT/0.8.9/DShotRMT-0.8.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DShotRMT-0.8.9.tar.gz",
+    "size_bytes": 24129,
+    "sha256": "ce29c8d8cec0b8d352db2e4612d826a7e7004b6b97ab39ae3a476e0113a6c0af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/derdoktor667/library/DShotRMT/0.8.9/DShotRMT-0.8.9.tar.gz",
+     "https://dl.registry.platformio.org/download/derdoktor667/library/DShotRMT/0.8.9/DShotRMT-0.8.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "derdoktor667/library/DShotRMT/0.9.0/DShotRMT-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DShotRMT-0.9.0.tar.gz",
+    "size_bytes": 24979,
+    "sha256": "59de3de50192099e57916b1e38d215fbbc243ef5057b309a489b0c521801c74e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/derdoktor667/library/DShotRMT/0.9.0/DShotRMT-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/derdoktor667/library/DShotRMT/0.9.0/DShotRMT-0.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "derdoktor667/library/DShotRMT/0.9.1/DShotRMT-0.9.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DShotRMT-0.9.1.tar.gz",
+    "size_bytes": 25297,
+    "sha256": "9420ab01da87a848a4a80ff50b253e68810bcc6a2522b0271d3200c4e19f7ac6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/derdoktor667/library/DShotRMT/0.9.1/DShotRMT-0.9.1.tar.gz",
+     "https://dl.registry.platformio.org/download/derdoktor667/library/DShotRMT/0.9.1/DShotRMT-0.9.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "derdoktor667/library/DShotRMT/0.9.5/DShotRMT-0.9.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DShotRMT-0.9.5.tar.gz",
+    "size_bytes": 29361,
+    "sha256": "8f4771f4d1b48cf61f729a2b907b426e42d662b99878ec827d7fd28cc1860cde",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/derdoktor667/library/DShotRMT/0.9.5/DShotRMT-0.9.5.tar.gz",
+     "https://dl.registry.platformio.org/download/derdoktor667/library/DShotRMT/0.9.5/DShotRMT-0.9.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "derdoktor667/library/FlyskyIBUS/0.5.0/FlyskyIBUS-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FlyskyIBUS-0.5.0.tar.gz",
+    "size_bytes": 9073,
+    "sha256": "c9e5469666a03b80a40fac67c3e91bff6636fe8205581b54719f19e39bca03c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/derdoktor667/library/FlyskyIBUS/0.5.0/FlyskyIBUS-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/derdoktor667/library/FlyskyIBUS/0.5.0/FlyskyIBUS-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "derdoktor667/library/FlyskyIBUS/0.6.0/FlyskyIBUS-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FlyskyIBUS-0.6.0.tar.gz",
+    "size_bytes": 11170,
+    "sha256": "56bc9b6b089fd2029a8fa3e2a05e866ac0d502f76499530affbf6712b87402bd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/derdoktor667/library/FlyskyIBUS/0.6.0/FlyskyIBUS-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/derdoktor667/library/FlyskyIBUS/0.6.0/FlyskyIBUS-0.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "derdoktor667/library/FlyskyIBUS/0.6.1/FlyskyIBUS-0.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FlyskyIBUS-0.6.1.tar.gz",
+    "size_bytes": 9960,
+    "sha256": "21be2a56ad96cac0faadb1a9e6468f8b724342545df9284e400765cb08b487e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/derdoktor667/library/FlyskyIBUS/0.6.1/FlyskyIBUS-0.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/derdoktor667/library/FlyskyIBUS/0.6.1/FlyskyIBUS-0.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "derdoktor667/library/FlyskyIBUS/0.7.0/FlyskyIBUS-0.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FlyskyIBUS-0.7.0.tar.gz",
+    "size_bytes": 9941,
+    "sha256": "c3d872aa1f86cf9acb48c39236d34d6ad6765541c42900c1578f8d8883c65392",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/derdoktor667/library/FlyskyIBUS/0.7.0/FlyskyIBUS-0.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/derdoktor667/library/FlyskyIBUS/0.7.0/FlyskyIBUS-0.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "derdoktor667/library/FlyskyIBUS/0.8.0/FlyskyIBUS-0.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FlyskyIBUS-0.8.0.tar.gz",
+    "size_bytes": 10100,
+    "sha256": "693b2fac4dee41554ee3045a1a726bbbea27c883c3cb6a51cbbb8a89dc3be7a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/derdoktor667/library/FlyskyIBUS/0.8.0/FlyskyIBUS-0.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/derdoktor667/library/FlyskyIBUS/0.8.0/FlyskyIBUS-0.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "derdoktor667/library/FlyskyIBUS/0.8.1/FlyskyIBUS-0.8.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FlyskyIBUS-0.8.1.tar.gz",
+    "size_bytes": 10961,
+    "sha256": "5e326c2f1f1d5b830bc78ce6ba0ec59095f638d84f5f9013e60fa02860382e28",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/derdoktor667/library/FlyskyIBUS/0.8.1/FlyskyIBUS-0.8.1.tar.gz",
+     "https://dl.registry.platformio.org/download/derdoktor667/library/FlyskyIBUS/0.8.1/FlyskyIBUS-0.8.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

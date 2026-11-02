@@ -1,0 +1,126 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sava-74",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sava-74/library/SavaButton/1.0.2/SavaButton-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SavaButton-1.0.2.tar.gz",
+    "size_bytes": 7811,
+    "sha256": "d5e4cd4d8aa908462a755e392fce259855a74bbecff8f9165b65d0f7d9bde07e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sava-74/library/SavaButton/1.0.2/SavaButton-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sava-74/library/SavaButton/1.0.2/SavaButton-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sava-74/library/SavaButton/2.0.0/SavaButton-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SavaButton-2.0.0.tar.gz",
+    "size_bytes": 8977,
+    "sha256": "491ae7418e7972d9549206a1f8bafdefaf9d310bac3bfa0b2150af1169ce14ac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sava-74/library/SavaButton/2.0.0/SavaButton-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sava-74/library/SavaButton/2.0.0/SavaButton-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sava-74/library/SavaButton/2.0.1/SavaButton-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SavaButton-2.0.1.tar.gz",
+    "size_bytes": 9291,
+    "sha256": "b81d13694e78388bb457e1ae56c91e06072a9daf0fc3e70afdab3e2bca0c9e06",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sava-74/library/SavaButton/2.0.1/SavaButton-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sava-74/library/SavaButton/2.0.1/SavaButton-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sava-74/library/SavaLED_ESP32/2.1.0/SavaLED_ESP32-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SavaLED_ESP32-2.1.0.tar.gz",
+    "size_bytes": 26974,
+    "sha256": "c3f68dbede1a25e7061d090f34028423749c07eab30fc361866dd8df2888aca7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sava-74/library/SavaLED_ESP32/2.1.0/SavaLED_ESP32-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sava-74/library/SavaLED_ESP32/2.1.0/SavaLED_ESP32-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sava-74/library/SavaLED_ESP32/2.1.1/SavaLED_ESP32-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SavaLED_ESP32-2.1.1.tar.gz",
+    "size_bytes": 26894,
+    "sha256": "aded3488e0d77ec4b7aab5fb20f18ebd6be17ea8e2fb4c9d4e6045b1a57e76fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sava-74/library/SavaLED_ESP32/2.1.1/SavaLED_ESP32-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sava-74/library/SavaLED_ESP32/2.1.1/SavaLED_ESP32-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sava-74/library/SavaOLED_ESP32/1.1.0/SavaOLED_ESP32-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SavaOLED_ESP32-1.1.0.tar.gz",
+    "size_bytes": 39191,
+    "sha256": "c3c7ac95cee50f67a48cd89380c2e391c679e0ef98fde50e26704a743e55c4ec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sava-74/library/SavaOLED_ESP32/1.1.0/SavaOLED_ESP32-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sava-74/library/SavaOLED_ESP32/1.1.0/SavaOLED_ESP32-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sava-74/library/SavaOLED_ESP32/1.1.1/SavaOLED_ESP32-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SavaOLED_ESP32-1.1.1.tar.gz",
+    "size_bytes": 46440,
+    "sha256": "fb24ca6a07b960d5600d2ebdb3bf508bf73743889604db01a1e3eed5a09a8827",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sava-74/library/SavaOLED_ESP32/1.1.1/SavaOLED_ESP32-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sava-74/library/SavaOLED_ESP32/1.1.1/SavaOLED_ESP32-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sava-74/library/SavaTime/1.0.2/SavaTime-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SavaTime-1.0.2.tar.gz",
+    "size_bytes": 10301,
+    "sha256": "2a08c99f346f1121a09610cbfb84520060440f5eeaef6b1914985a6f71ac908c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sava-74/library/SavaTime/1.0.2/SavaTime-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sava-74/library/SavaTime/1.0.2/SavaTime-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sava-74/library/SavaTrig/1.0.1/SavaTrig-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SavaTrig-1.0.1.tar.gz",
+    "size_bytes": 6876,
+    "sha256": "42511818e4afaad415424876db1485d88f5b8f7ff1fee35250d944f5ff8a16b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sava-74/library/SavaTrig/1.0.1/SavaTrig-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sava-74/library/SavaTrig/1.0.1/SavaTrig-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

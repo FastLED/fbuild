@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/opensensinglab",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "opensensinglab/library/TFMini/0.1.0/TFMini-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFMini-0.1.0.tar.gz",
+    "size_bytes": 4400,
+    "sha256": "67751da9c6a9098604b54c67fde3cf9e0cadf9dd08b808f636fb7c98a5d84d82",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/opensensinglab/library/TFMini/0.1.0/TFMini-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/opensensinglab/library/TFMini/0.1.0/TFMini-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

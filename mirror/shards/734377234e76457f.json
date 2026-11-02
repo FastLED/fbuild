@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-acracan",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-acracan/library/CenteredPwmOut/0.0.0+sha.7200daf08b56/CenteredPwmOut-0.0.0+sha.7200daf08b56.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CenteredPwmOut-0.0.0+sha.7200daf08b56.tar.gz",
+    "size_bytes": 1603,
+    "sha256": "232bc3c4d4ae796f8582f2a35932aa66c6a610fbc4064aa4a3d796e065ab4d50",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-acracan/library/CenteredPwmOut/0.0.0%2Bsha.7200daf08b56/CenteredPwmOut-0.0.0%2Bsha.7200daf08b56.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-acracan/library/CenteredPwmOut/0.0.0%2Bsha.7200daf08b56/CenteredPwmOut-0.0.0%2Bsha.7200daf08b56.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-acracan/library/HMC5983/0.0.0+sha.c2cd6cc71ee2/HMC5983-0.0.0+sha.c2cd6cc71ee2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HMC5983-0.0.0+sha.c2cd6cc71ee2.tar.gz",
+    "size_bytes": 4385,
+    "sha256": "dc25ac31ef027c0a007fb9ae9504e2888bdb82c9eacfdde01d4085411a43a40f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-acracan/library/HMC5983/0.0.0%2Bsha.c2cd6cc71ee2/HMC5983-0.0.0%2Bsha.c2cd6cc71ee2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-acracan/library/HMC5983/0.0.0%2Bsha.c2cd6cc71ee2/HMC5983-0.0.0%2Bsha.c2cd6cc71ee2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-acracan/library/Helios/0.0.0+sha.ad31da30ae64/Helios-0.0.0+sha.ad31da30ae64.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Helios-0.0.0+sha.ad31da30ae64.tar.gz",
+    "size_bytes": 3370,
+    "sha256": "6a41cab28fdb70eabaeb1b532a248f550e3564563f50a22736a2e4728c0b9a88",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-acracan/library/Helios/0.0.0%2Bsha.ad31da30ae64/Helios-0.0.0%2Bsha.ad31da30ae64.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-acracan/library/Helios/0.0.0%2Bsha.ad31da30ae64/Helios-0.0.0%2Bsha.ad31da30ae64.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-acracan/library/ThreePhaseBridge/0.0.0+sha.ba7889accd61/ThreePhaseBridge-0.0.0+sha.ba7889accd61.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ThreePhaseBridge-0.0.0+sha.ba7889accd61.tar.gz",
+    "size_bytes": 2037,
+    "sha256": "4d0c6dde2f44cc7f4905c1739be8c991726aecf4b1d6a273bff88052bcba088d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-acracan/library/ThreePhaseBridge/0.0.0%2Bsha.ba7889accd61/ThreePhaseBridge-0.0.0%2Bsha.ba7889accd61.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-acracan/library/ThreePhaseBridge/0.0.0%2Bsha.ba7889accd61/ThreePhaseBridge-0.0.0%2Bsha.ba7889accd61.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-acracan/library/pixy/0.0.0+sha.ed8dc4531ac1/pixy-0.0.0+sha.ed8dc4531ac1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pixy-0.0.0+sha.ed8dc4531ac1.tar.gz",
+    "size_bytes": 2876,
+    "sha256": "80e56c9602d9d555ef5e254950fe208acfbbe686ba53b73bf7f50cf27782f4f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-acracan/library/pixy/0.0.0%2Bsha.ed8dc4531ac1/pixy-0.0.0%2Bsha.ed8dc4531ac1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-acracan/library/pixy/0.0.0%2Bsha.ed8dc4531ac1/pixy-0.0.0%2Bsha.ed8dc4531ac1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hapbeat",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hapbeat/library/arduino/0.1.0/arduino-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arduino-0.1.0.tar.gz",
+    "size_bytes": 13324,
+    "sha256": "14cd0c3966f221a4eba8d883ec74256bedae69a4a42a1958b0e56594e45dac55",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hapbeat/library/arduino/0.1.0/arduino-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hapbeat/library/arduino/0.1.0/arduino-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

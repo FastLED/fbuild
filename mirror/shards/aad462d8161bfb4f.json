@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/awulokune",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "awulokune/library/ESP32_ST7789_Fast/1.0.0/ESP32_ST7789_Fast-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_ST7789_Fast-1.0.0.tar.gz",
+    "size_bytes": 8015,
+    "sha256": "b898d8e0b589161f1e3681fd13b4d8cc34634f48ba40487ab1bed6d67b5c3907",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/awulokune/library/ESP32_ST7789_Fast/1.0.0/ESP32_ST7789_Fast-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/awulokune/library/ESP32_ST7789_Fast/1.0.0/ESP32_ST7789_Fast-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

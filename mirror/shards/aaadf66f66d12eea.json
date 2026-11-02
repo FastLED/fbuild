@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lansium-dev",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lansium-dev/library/lansium-arduino/1.0.3/lansium-arduino-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lansium-arduino-1.0.3.tar.gz",
+    "size_bytes": 3966,
+    "sha256": "a6646beaf6359c1eda1d4d9a66ada4c807e200e918e88d090d182f1d710601b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lansium-dev/library/lansium-arduino/1.0.3/lansium-arduino-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/lansium-dev/library/lansium-arduino/1.0.3/lansium-arduino-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

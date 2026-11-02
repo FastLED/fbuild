@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mulmer89",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mulmer89/library/ESP%20UUID/0.0.1/ESPUUID-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPUUID-0.0.1.tar.gz",
+    "size_bytes": 4320,
+    "sha256": "2bef8da934536eee4090fecad6a7e020de078895ce755b1e7ca23a2ba3593d50",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mulmer89/library/ESP%2520UUID/0.0.1/ESPUUID-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mulmer89/library/ESP%20UUID/0.0.1/ESPUUID-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mulmer89/library/ESPRandom/1.5.0/ESPRandom-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPRandom-1.5.0.tar.gz",
+    "size_bytes": 6976,
+    "sha256": "8c8cd5edba7d5d1006483e0a3c31977ccfc7d9cc6e94b85c384920e72451a1f5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mulmer89/library/ESPRandom/1.5.0/ESPRandom-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mulmer89/library/ESPRandom/1.5.0/ESPRandom-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mulmer89/library/EZO%20I2C%20Sensors/2.0.0+640de15/EZOI2CSensors-2.0.0+640de15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EZOI2CSensors-2.0.0+640de15.tar.gz",
+    "size_bytes": 22790,
+    "sha256": "6c5e793f1d254194b1aa033a72fbb3dede18ecfa2b6350864763f6662c3e6d57",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mulmer89/library/EZO%2520I2C%2520Sensors/2.0.0%2B640de15/EZOI2CSensors-2.0.0%2B640de15.tar.gz",
+     "https://dl.registry.platformio.org/download/mulmer89/library/EZO%20I2C%20Sensors/2.0.0%2B640de15/EZOI2CSensors-2.0.0%2B640de15.tar.gz"
+    ]
+   }
+  }
+ ]
+}

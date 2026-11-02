@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/leowatti99",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "leowatti99/library/CANTramFramework/1.0.0/CANTramFramework-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CANTramFramework-1.0.0.tar.gz",
+    "size_bytes": 64223,
+    "sha256": "6b524d6eb417d5b617e07cf452f1b8f370a1e279e69424fed9254a23a1f11539",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leowatti99/library/CANTramFramework/1.0.0/CANTramFramework-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leowatti99/library/CANTramFramework/1.0.0/CANTramFramework-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leowatti99/library/CANTramFramework/1.0.1/CANTramFramework-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CANTramFramework-1.0.1.tar.gz",
+    "size_bytes": 65539,
+    "sha256": "73a2f8753ceb9c712c7b5d92d02c864c4a385117b94ed7e8104a2c4e9bce598c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leowatti99/library/CANTramFramework/1.0.1/CANTramFramework-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/leowatti99/library/CANTramFramework/1.0.1/CANTramFramework-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

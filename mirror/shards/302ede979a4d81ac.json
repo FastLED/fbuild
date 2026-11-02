@@ -1,0 +1,438 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/alkonosst",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "alkonosst/library/ADS1115/1.0.1/ADS1115-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADS1115-1.0.1.tar.gz",
+    "size_bytes": 233471,
+    "sha256": "8be6c1dc503706d67cd1b96931ba7e976b56f42bf9d0ef328920d411217c7583",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alkonosst/library/ADS1115/1.0.1/ADS1115-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/alkonosst/library/ADS1115/1.0.1/ADS1115-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alkonosst/library/ADS1115/1.0.2/ADS1115-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADS1115-1.0.2.tar.gz",
+    "size_bytes": 234391,
+    "sha256": "200c3b6ab1636b368ce2363462b801368eb46f79e9a3f3e4ca40c6d2bc49c30d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alkonosst/library/ADS1115/1.0.2/ADS1115-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/alkonosst/library/ADS1115/1.0.2/ADS1115-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alkonosst/library/AdvancedCLI/0.1.0/AdvancedCLI-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AdvancedCLI-0.1.0.tar.gz",
+    "size_bytes": 33142,
+    "sha256": "7e8b88bc3054976e586370bf57d41d5fffb1587e83f0384e948e055e01f28c3d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alkonosst/library/AdvancedCLI/0.1.0/AdvancedCLI-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alkonosst/library/AdvancedCLI/0.1.0/AdvancedCLI-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alkonosst/library/AdvancedCLI/0.2.0/AdvancedCLI-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AdvancedCLI-0.2.0.tar.gz",
+    "size_bytes": 34670,
+    "sha256": "81bce8ce36aeec7f1a1b6a67410e383bd0f64aa89f38a2454de601ae62f15430",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alkonosst/library/AdvancedCLI/0.2.0/AdvancedCLI-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alkonosst/library/AdvancedCLI/0.2.0/AdvancedCLI-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alkonosst/library/AdvancedCLI/0.3.0/AdvancedCLI-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AdvancedCLI-0.3.0.tar.gz",
+    "size_bytes": 38880,
+    "sha256": "8025612f3fbc1028fcd3e1e733b40e360f1a40f6df51279e1c9c4b04aea11cb3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alkonosst/library/AdvancedCLI/0.3.0/AdvancedCLI-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alkonosst/library/AdvancedCLI/0.3.0/AdvancedCLI-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alkonosst/library/AdvancedCLI/0.3.1/AdvancedCLI-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AdvancedCLI-0.3.1.tar.gz",
+    "size_bytes": 38861,
+    "sha256": "b4d8b239262b5546781ed459f58b4da9d5fc4f970280cfc5c805b017be45fb99",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alkonosst/library/AdvancedCLI/0.3.1/AdvancedCLI-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/alkonosst/library/AdvancedCLI/0.3.1/AdvancedCLI-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alkonosst/library/AdvancedCLI/0.4.0/AdvancedCLI-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AdvancedCLI-0.4.0.tar.gz",
+    "size_bytes": 40714,
+    "sha256": "c40dd62c366e111c02d12e43c1e69d1dde3820e77eacfb795f69fd6d2d5bf6eb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alkonosst/library/AdvancedCLI/0.4.0/AdvancedCLI-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alkonosst/library/AdvancedCLI/0.4.0/AdvancedCLI-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alkonosst/library/AdvancedCLI/0.5.0/AdvancedCLI-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AdvancedCLI-0.5.0.tar.gz",
+    "size_bytes": 41119,
+    "sha256": "1bab75fea377bcbe78ac5bef0184fa7919a10754c4377475c1c07f91eb46256e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alkonosst/library/AdvancedCLI/0.5.0/AdvancedCLI-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alkonosst/library/AdvancedCLI/0.5.0/AdvancedCLI-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alkonosst/library/AdvancedCLI/0.6.0/AdvancedCLI-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AdvancedCLI-0.6.0.tar.gz",
+    "size_bytes": 55096,
+    "sha256": "277029dd87bb2ee6f4d8d248db9113cd0936ba9da846d2691a885a5d0fadbf82",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alkonosst/library/AdvancedCLI/0.6.0/AdvancedCLI-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alkonosst/library/AdvancedCLI/0.6.0/AdvancedCLI-0.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alkonosst/library/ByteFrame/0.1.0/ByteFrame-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ByteFrame-0.1.0.tar.gz",
+    "size_bytes": 19340,
+    "sha256": "d28ebbb58de7c49005de2884711ca58148b9ad21e02875e1f11d5558d8e1f0aa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alkonosst/library/ByteFrame/0.1.0/ByteFrame-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alkonosst/library/ByteFrame/0.1.0/ByteFrame-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alkonosst/library/ByteFrame/0.2.0/ByteFrame-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ByteFrame-0.2.0.tar.gz",
+    "size_bytes": 26807,
+    "sha256": "ae95abd3afed8a87b44c713b35fec943895d5b227eaa12cb7218ef67f41d5273",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alkonosst/library/ByteFrame/0.2.0/ByteFrame-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alkonosst/library/ByteFrame/0.2.0/ByteFrame-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alkonosst/library/BytePack/0.1.0/BytePack-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BytePack-0.1.0.tar.gz",
+    "size_bytes": 24047,
+    "sha256": "82936cceeb1a7685ea95e8325a16167d1d17fb81dce70d11eeda84a0ac93857a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alkonosst/library/BytePack/0.1.0/BytePack-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alkonosst/library/BytePack/0.1.0/BytePack-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alkonosst/library/BytePack/0.2.0/BytePack-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BytePack-0.2.0.tar.gz",
+    "size_bytes": 30784,
+    "sha256": "1a2e36137a19d742b764cec5edc57db5c250b87be63a82d9014f28f2e6ac53e2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alkonosst/library/BytePack/0.2.0/BytePack-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alkonosst/library/BytePack/0.2.0/BytePack-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alkonosst/library/LoRa-E22T/0.1.0/LoRa-E22T-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LoRa-E22T-0.1.0.tar.gz",
+    "size_bytes": 30935,
+    "sha256": "ababcc857b17f0f630e9dd2297acee14c51df844daee9e2470f03ee6a970812a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alkonosst/library/LoRa-E22T/0.1.0/LoRa-E22T-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alkonosst/library/LoRa-E22T/0.1.0/LoRa-E22T-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alkonosst/library/LoRa-E22T/0.1.1/LoRa-E22T-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LoRa-E22T-0.1.1.tar.gz",
+    "size_bytes": 31088,
+    "sha256": "a117a21ff580a6aba7955546e7603a8690a67dc727481214f5da6276448d30b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alkonosst/library/LoRa-E22T/0.1.1/LoRa-E22T-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/alkonosst/library/LoRa-E22T/0.1.1/LoRa-E22T-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alkonosst/library/MCP23017_MR/1.0.3/MCP23017_MR-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP23017_MR-1.0.3.tar.gz",
+    "size_bytes": 362127,
+    "sha256": "7068fb75efcda4085d275479d29a8f7b71dd1383af9ae82e728f6b8e4254a428",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alkonosst/library/MCP23017_MR/1.0.3/MCP23017_MR-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/alkonosst/library/MCP23017_MR/1.0.3/MCP23017_MR-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alkonosst/library/MCP23017_MR/1.0.4/MCP23017_MR-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP23017_MR-1.0.4.tar.gz",
+    "size_bytes": 363194,
+    "sha256": "107dd48b80977833c2ca3d51775f5349be5cb3d7e4dc70415bd40fc2ebff671b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alkonosst/library/MCP23017_MR/1.0.4/MCP23017_MR-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/alkonosst/library/MCP23017_MR/1.0.4/MCP23017_MR-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alkonosst/library/RTOScppESP32/1.0.2/RTOScppESP32-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RTOScppESP32-1.0.2.tar.gz",
+    "size_bytes": 46091,
+    "sha256": "54443fbf82b628e8f72208a6c19133d2c52230a5c88a2f92cf9830764308ba69",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alkonosst/library/RTOScppESP32/1.0.2/RTOScppESP32-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/alkonosst/library/RTOScppESP32/1.0.2/RTOScppESP32-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alkonosst/library/RTOScppESP32/1.1.0/RTOScppESP32-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RTOScppESP32-1.1.0.tar.gz",
+    "size_bytes": 46948,
+    "sha256": "33d0478dee7b5b3afaa188ed7fc1404e5f2a2d88fbdb3f9118ea4af320da5727",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alkonosst/library/RTOScppESP32/1.1.0/RTOScppESP32-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alkonosst/library/RTOScppESP32/1.1.0/RTOScppESP32-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alkonosst/library/RTOScppESP32/1.1.1/RTOScppESP32-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RTOScppESP32-1.1.1.tar.gz",
+    "size_bytes": 46970,
+    "sha256": "af622c3503c902a6f075b80eaa139ac0982de5696983c7e0f35ab76fcf82b139",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alkonosst/library/RTOScppESP32/1.1.1/RTOScppESP32-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/alkonosst/library/RTOScppESP32/1.1.1/RTOScppESP32-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alkonosst/library/RTOScppESP32/1.2.0/RTOScppESP32-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RTOScppESP32-1.2.0.tar.gz",
+    "size_bytes": 48965,
+    "sha256": "50374df16b53b64f32ae84ddc626cae4ae941bba336a024da2d4e5f58a403389",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alkonosst/library/RTOScppESP32/1.2.0/RTOScppESP32-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alkonosst/library/RTOScppESP32/1.2.0/RTOScppESP32-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alkonosst/library/ReactiveESP32/0.1.0/ReactiveESP32-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ReactiveESP32-0.1.0.tar.gz",
+    "size_bytes": 75249,
+    "sha256": "cf8f5615246bb7c2ce88ca1a03b7fcb3678f78b23c709267734c131f3f4c229e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alkonosst/library/ReactiveESP32/0.1.0/ReactiveESP32-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alkonosst/library/ReactiveESP32/0.1.0/ReactiveESP32-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alkonosst/library/ReactiveESP32/0.2.0/ReactiveESP32-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ReactiveESP32-0.2.0.tar.gz",
+    "size_bytes": 78850,
+    "sha256": "701d9a5b4b6aefb7e6eb45343a369ad7afdbf45217924a96fa3af5b73e7f6eef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alkonosst/library/ReactiveESP32/0.2.0/ReactiveESP32-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alkonosst/library/ReactiveESP32/0.2.0/ReactiveESP32-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alkonosst/library/SIM7600Module/1.0.1/SIM7600Module-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SIM7600Module-1.0.1.tar.gz",
+    "size_bytes": 85995,
+    "sha256": "0ad3222f0961eb90c1ebfed83a779209e4132cc58a1963ec9544707377005c78",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alkonosst/library/SIM7600Module/1.0.1/SIM7600Module-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/alkonosst/library/SIM7600Module/1.0.1/SIM7600Module-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alkonosst/library/SIM7600Module/1.0.2/SIM7600Module-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SIM7600Module-1.0.2.tar.gz",
+    "size_bytes": 86019,
+    "sha256": "646446b76f64f6084f06f98559dd836c1fd589168b94db406343457f1e18f891",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alkonosst/library/SIM7600Module/1.0.2/SIM7600Module-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/alkonosst/library/SIM7600Module/1.0.2/SIM7600Module-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alkonosst/library/SIM7600Module/1.2.0/SIM7600Module-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SIM7600Module-1.2.0.tar.gz",
+    "size_bytes": 88182,
+    "sha256": "763792033ea5ac3801de2018418b5d83fbdcdb57e9a999503b07ca2d98872ec2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alkonosst/library/SIM7600Module/1.2.0/SIM7600Module-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alkonosst/library/SIM7600Module/1.2.0/SIM7600Module-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alkonosst/library/SSLClient/2.0.0/SSLClient-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SSLClient-2.0.0.tar.gz",
+    "size_bytes": 62581,
+    "sha256": "e33852c9cd9d584cdabd36ed7bf4ace351adb8b70bb5879f63f67e126a0f2724",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alkonosst/library/SSLClient/2.0.0/SSLClient-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alkonosst/library/SSLClient/2.0.0/SSLClient-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alkonosst/library/SSLClientESP32/2.0.3/SSLClientESP32-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SSLClientESP32-2.0.3.tar.gz",
+    "size_bytes": 39543,
+    "sha256": "010809e0e81d5e2d2bef3a0108e743f20cf9afbdbebbeee05f1632ddebd91e5d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alkonosst/library/SSLClientESP32/2.0.3/SSLClientESP32-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/alkonosst/library/SSLClientESP32/2.0.3/SSLClientESP32-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alkonosst/library/SettingsManagerESP32/3.0.1/SettingsManagerESP32-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SettingsManagerESP32-3.0.1.tar.gz",
+    "size_bytes": 57990,
+    "sha256": "61ec4b4ac14aaf8b776697c871d372a9abacbb80193bbbcd8c7c5f34ec8d2797",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alkonosst/library/SettingsManagerESP32/3.0.1/SettingsManagerESP32-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/alkonosst/library/SettingsManagerESP32/3.0.1/SettingsManagerESP32-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alkonosst/library/SettingsManagerESP32/3.1.0/SettingsManagerESP32-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SettingsManagerESP32-3.1.0.tar.gz",
+    "size_bytes": 59534,
+    "sha256": "ed3d42123d6ad108a7af195cd447be387383f43e29ba6f1ceb00f9287d89f110",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alkonosst/library/SettingsManagerESP32/3.1.0/SettingsManagerESP32-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alkonosst/library/SettingsManagerESP32/3.1.0/SettingsManagerESP32-3.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alkonosst/library/SettingsManagerESP32/4.0.0/SettingsManagerESP32-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SettingsManagerESP32-4.0.0.tar.gz",
+    "size_bytes": 70194,
+    "sha256": "babed6a4103756691cf6395b9ee83eb7e82ad762a0499b8eeb40b38b4dfe3a24",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alkonosst/library/SettingsManagerESP32/4.0.0/SettingsManagerESP32-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alkonosst/library/SettingsManagerESP32/4.0.0/SettingsManagerESP32-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alkonosst/library/Statechart/0.1.0/Statechart-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Statechart-0.1.0.tar.gz",
+    "size_bytes": 26426,
+    "sha256": "c8c0cd06f0d1afde30436b0aab2ae800ff85d7c270786e309066fd1e921f7983",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alkonosst/library/Statechart/0.1.0/Statechart-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alkonosst/library/Statechart/0.1.0/Statechart-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alkonosst/library/Statechart/0.2.0/Statechart-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Statechart-0.2.0.tar.gz",
+    "size_bytes": 36118,
+    "sha256": "d51ae4f62ecd7fc8c2df67d487fdc1d57cc4e3fe6c45baceebf0e18dabcae2f9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alkonosst/library/Statechart/0.2.0/Statechart-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alkonosst/library/Statechart/0.2.0/Statechart-0.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

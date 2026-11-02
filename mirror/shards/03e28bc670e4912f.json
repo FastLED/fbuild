@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/br3ttb",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "br3ttb/library/PID-AutoTune/1.0.0/PID-AutoTune-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PID-AutoTune-1.0.0.tar.gz",
+    "size_bytes": 3654,
+    "sha256": "0021f019873b6126bd91002c3468cad1bfafd5fb01c73728b0f11031a319e0d3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/br3ttb/library/PID-AutoTune/1.0.0/PID-AutoTune-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/br3ttb/library/PID-AutoTune/1.0.0/PID-AutoTune-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "br3ttb/library/PID/1.2.1/PID-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PID-1.2.1.tar.gz",
+    "size_bytes": 6071,
+    "sha256": "aa55186e70ce26ae2dd4fbc4b7a8c5d6718d8745de51881a031ae203b3201e3b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/br3ttb/library/PID/1.2.1/PID-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/br3ttb/library/PID/1.2.1/PID-1.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

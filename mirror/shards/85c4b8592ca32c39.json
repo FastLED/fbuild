@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dersimn",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dersimn/library/ArduinoThreadRunOnce/0.1/ArduinoThreadRunOnce-0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoThreadRunOnce-0.1.tar.gz",
+    "size_bytes": 1958,
+    "sha256": "95922e454e518e3e73274b0309a7efe8944b1e937dd8c8d49e6d5258ab53bef7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dersimn/library/ArduinoThreadRunOnce/0.1/ArduinoThreadRunOnce-0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dersimn/library/ArduinoThreadRunOnce/0.1/ArduinoThreadRunOnce-0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dersimn/library/PubSubClientTools/0.6/PubSubClientTools-0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PubSubClientTools-0.6.tar.gz",
+    "size_bytes": 3244,
+    "sha256": "2320d11b563c73b6d6a9345b2c5213564b7191d4e697e0fc46aa7598f77536ff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dersimn/library/PubSubClientTools/0.6/PubSubClientTools-0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/dersimn/library/PubSubClientTools/0.6/PubSubClientTools-0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dersimn/library/Unified%20Log/0.5/UnifiedLog-0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UnifiedLog-0.5.tar.gz",
+    "size_bytes": 4911,
+    "sha256": "775f630b0801a64b564f2622b09b03a9e6b39ee5c7960faf7779d5b67bfc5409",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dersimn/library/Unified%2520Log/0.5/UnifiedLog-0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/dersimn/library/Unified%20Log/0.5/UnifiedLog-0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

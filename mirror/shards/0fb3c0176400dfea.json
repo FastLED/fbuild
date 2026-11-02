@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-nordic-semiconductor",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-nordic-semiconductor/library/nRF51822/0.0.0+sha.c90ae1400bf2/nRF51822-0.0.0+sha.c90ae1400bf2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nRF51822-0.0.0+sha.c90ae1400bf2.tar.gz",
+    "size_bytes": 404749,
+    "sha256": "b6fc07d4c6e9944d512a3e48e8bba8372aacc83e5dd34c4164c270ebea30a453",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nordic-semiconductor/library/nRF51822/0.0.0%2Bsha.c90ae1400bf2/nRF51822-0.0.0%2Bsha.c90ae1400bf2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nordic-semiconductor/library/nRF51822/0.0.0%2Bsha.c90ae1400bf2/nRF51822-0.0.0%2Bsha.c90ae1400bf2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nordic-semiconductor/library/nrf51-sdk/0.0.0+sha.4a80ff6428ab/nrf51-sdk-0.0.0+sha.4a80ff6428ab.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nrf51-sdk-0.0.0+sha.4a80ff6428ab.tar.gz",
+    "size_bytes": 290578,
+    "sha256": "b9d19e72802de70701aa18176f003f256da14795a13fa87cf7319243cb0cc616",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nordic-semiconductor/library/nrf51-sdk/0.0.0%2Bsha.4a80ff6428ab/nrf51-sdk-0.0.0%2Bsha.4a80ff6428ab.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nordic-semiconductor/library/nrf51-sdk/0.0.0%2Bsha.4a80ff6428ab/nrf51-sdk-0.0.0%2Bsha.4a80ff6428ab.tar.gz"
+    ]
+   }
+  }
+ ]
+}

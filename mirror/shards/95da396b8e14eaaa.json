@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tektitebiz",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tektitebiz/library/Tektite%20RotEv%20Controller/0.1.2/TektiteRotEvController-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TektiteRotEvController-0.1.2.tar.gz",
+    "size_bytes": 3684129,
+    "sha256": "bc86d7efd4abf5fb45ebb20c626b116662164d3acfcb9c04e6c3291af5433d27",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tektitebiz/library/Tektite%2520RotEv%2520Controller/0.1.2/TektiteRotEvController-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tektitebiz/library/Tektite%20RotEv%20Controller/0.1.2/TektiteRotEvController-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tektitebiz/library/Tektite%20RotEv%20Controller/0.1.3/TektiteRotEvController-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TektiteRotEvController-0.1.3.tar.gz",
+    "size_bytes": 3684154,
+    "sha256": "f3844bad0b14558230203a9378a3f4beabea7cf6d967c44d49536b5c2fa3c359",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tektitebiz/library/Tektite%2520RotEv%2520Controller/0.1.3/TektiteRotEvController-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tektitebiz/library/Tektite%20RotEv%20Controller/0.1.3/TektiteRotEvController-0.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tektitebiz/library/Tektite%20RotEv%20Controller/0.1.4/TektiteRotEvController-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TektiteRotEvController-0.1.4.tar.gz",
+    "size_bytes": 3684766,
+    "sha256": "c4c0a18aac79c8642bba39585b50730a66b996d7d8295aa50981926b0feeedce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tektitebiz/library/Tektite%2520RotEv%2520Controller/0.1.4/TektiteRotEvController-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/tektitebiz/library/Tektite%20RotEv%20Controller/0.1.4/TektiteRotEvController-0.1.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

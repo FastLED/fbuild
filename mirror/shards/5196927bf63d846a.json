@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-fpucher",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-fpucher/library/PCF8563/0.0.0+sha.39c99dbc6368/PCF8563-0.0.0+sha.39c99dbc6368.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCF8563-0.0.0+sha.39c99dbc6368.tar.gz",
+    "size_bytes": 2242,
+    "sha256": "836d8aa6756a892b0ca69ccd20ce81f2715d47964529df2a0414f55f2ab36e7c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-fpucher/library/PCF8563/0.0.0%2Bsha.39c99dbc6368/PCF8563-0.0.0%2Bsha.39c99dbc6368.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-fpucher/library/PCF8563/0.0.0%2Bsha.39c99dbc6368/PCF8563-0.0.0%2Bsha.39c99dbc6368.tar.gz"
+    ]
+   }
+  }
+ ]
+}

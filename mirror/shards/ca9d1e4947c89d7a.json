@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-brummel",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-brummel/library/BournsAce128Encoder/0.0.0+sha.54b11d25866b/BournsAce128Encoder-0.0.0+sha.54b11d25866b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BournsAce128Encoder-0.0.0+sha.54b11d25866b.tar.gz",
+    "size_bytes": 2378,
+    "sha256": "7e95ee2c3afc47852d9566d2cd2ba5d2392eead9e4ff1277c04037c08946eabe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-brummel/library/BournsAce128Encoder/0.0.0%2Bsha.54b11d25866b/BournsAce128Encoder-0.0.0%2Bsha.54b11d25866b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-brummel/library/BournsAce128Encoder/0.0.0%2Bsha.54b11d25866b/BournsAce128Encoder-0.0.0%2Bsha.54b11d25866b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/leogaggl",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "leogaggl/library/ProDinoMKRZero/1.2.0/ProDinoMKRZero-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProDinoMKRZero-1.2.0.tar.gz",
+    "size_bytes": 14113,
+    "sha256": "9b5cef3b9ba29cd4f456530cdc8894167518b2f96a147b66c2b76228f1af84bd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leogaggl/library/ProDinoMKRZero/1.2.0/ProDinoMKRZero-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leogaggl/library/ProDinoMKRZero/1.2.0/ProDinoMKRZero-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leogaggl/library/VeDirectDecode/1.0.0/VeDirectDecode-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VeDirectDecode-1.0.0.tar.gz",
+    "size_bytes": 78435,
+    "sha256": "34c14b7f20d98c127a8be1c3184b1c4b659464166bbec4220e10c96aed3bb5e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leogaggl/library/VeDirectDecode/1.0.0/VeDirectDecode-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leogaggl/library/VeDirectDecode/1.0.0/VeDirectDecode-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

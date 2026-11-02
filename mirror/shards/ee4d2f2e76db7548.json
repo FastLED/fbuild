@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/affanhanifathtarech",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "affanhanifathtarech/library/DS3231_RTC/1.1.0/DS3231_RTC-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS3231_RTC-1.1.0.tar.gz",
+    "size_bytes": 11887,
+    "sha256": "96b9e174206f70bbf8e5c6a37d30cf7ddde637c85eb0a7dbd416f3059c7b6903",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/affanhanifathtarech/library/DS3231_RTC/1.1.0/DS3231_RTC-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/affanhanifathtarech/library/DS3231_RTC/1.1.0/DS3231_RTC-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

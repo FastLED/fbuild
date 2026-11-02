@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kakakabu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kakakabu/library/STM32F1_SPL/1.0.0/STM32F1_SPL-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32F1_SPL-1.0.0.tar.gz",
+    "size_bytes": 196866,
+    "sha256": "ee0e10d91214cb427b288285f23024f71819297a25bb2cb96365f4877ffebb1d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kakakabu/library/STM32F1_SPL/1.0.0/STM32F1_SPL-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kakakabu/library/STM32F1_SPL/1.0.0/STM32F1_SPL-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/turing-complete-labs",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "turing-complete-labs/library/LCDDisplay10/1.0.2/LCDDisplay10-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCDDisplay10-1.0.2.tar.gz",
+    "size_bytes": 3600,
+    "sha256": "e944b0eb3434df856623e663cb440bb1b5686bbcf8b9a2a5bda1eea9c678e58b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/turing-complete-labs/library/LCDDisplay10/1.0.2/LCDDisplay10-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/turing-complete-labs/library/LCDDisplay10/1.0.2/LCDDisplay10-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

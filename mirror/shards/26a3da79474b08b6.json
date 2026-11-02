@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-cbayley",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-cbayley/library/Terminal/0.0.0+sha.543e8e498e09/Terminal-0.0.0+sha.543e8e498e09.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Terminal-0.0.0+sha.543e8e498e09.tar.gz",
+    "size_bytes": 2270,
+    "sha256": "34635668a8a2009da52bee9a0660ab86a7cc32d41fe3ed1ffeeeff7a7e044c11",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-cbayley/library/Terminal/0.0.0%2Bsha.543e8e498e09/Terminal-0.0.0%2Bsha.543e8e498e09.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-cbayley/library/Terminal/0.0.0%2Bsha.543e8e498e09/Terminal-0.0.0%2Bsha.543e8e498e09.tar.gz"
+    ]
+   }
+  }
+ ]
+}

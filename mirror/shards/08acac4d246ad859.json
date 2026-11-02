@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/helicocrasher",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "helicocrasher/library/SmartPortSlave/0.1.0/SmartPortSlave-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartPortSlave-0.1.0.tar.gz",
+    "size_bytes": 8815,
+    "sha256": "fc40c29d2a7c2465fd1cc89e93069d6d916ce8926bfcc606665594c755f2ebf0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/helicocrasher/library/SmartPortSlave/0.1.0/SmartPortSlave-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/helicocrasher/library/SmartPortSlave/0.1.0/SmartPortSlave-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "helicocrasher/library/SmartPortSlave/0.2.0/SmartPortSlave-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartPortSlave-0.2.0.tar.gz",
+    "size_bytes": 9622,
+    "sha256": "7a7152805a608784e16e5b1b5b092987fba5bdab115b12341c30c0ddf00d6aba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/helicocrasher/library/SmartPortSlave/0.2.0/SmartPortSlave-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/helicocrasher/library/SmartPortSlave/0.2.0/SmartPortSlave-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "helicocrasher/library/SmartPortSlave/0.3.0/SmartPortSlave-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartPortSlave-0.3.0.tar.gz",
+    "size_bytes": 9705,
+    "sha256": "c25e4db2afac99dc14beff5416d53ab19d47e30bfe4c7088ef087b9ad58a11fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/helicocrasher/library/SmartPortSlave/0.3.0/SmartPortSlave-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/helicocrasher/library/SmartPortSlave/0.3.0/SmartPortSlave-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "helicocrasher/library/SmartPortSlave/0.3.1/SmartPortSlave-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartPortSlave-0.3.1.tar.gz",
+    "size_bytes": 9703,
+    "sha256": "8f34d00e06e347404fba0cbb121a4fd98a99307e7bdf6158e83c874e956f751f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/helicocrasher/library/SmartPortSlave/0.3.1/SmartPortSlave-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/helicocrasher/library/SmartPortSlave/0.3.1/SmartPortSlave-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "helicocrasher/library/SmartPortSlave/0.3.2/SmartPortSlave-0.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartPortSlave-0.3.2.tar.gz",
+    "size_bytes": 9691,
+    "sha256": "c66708fb38d827848f81f0de65bf2e553bdc923f57d9185a5707b79dee8716b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/helicocrasher/library/SmartPortSlave/0.3.2/SmartPortSlave-0.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/helicocrasher/library/SmartPortSlave/0.3.2/SmartPortSlave-0.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "helicocrasher/library/SmartPortSlave/0.4.0/SmartPortSlave-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartPortSlave-0.4.0.tar.gz",
+    "size_bytes": 9703,
+    "sha256": "982239723bc5796ef959bf47f5ea829f8c6fe9f4c991846b735d7e9162d2f1d5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/helicocrasher/library/SmartPortSlave/0.4.0/SmartPortSlave-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/helicocrasher/library/SmartPortSlave/0.4.0/SmartPortSlave-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "helicocrasher/library/SmartPortSlave/0.4.1/SmartPortSlave-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartPortSlave-0.4.1.tar.gz",
+    "size_bytes": 9695,
+    "sha256": "7ea454f8dfa2ece580c4ce856535bb8aa7d915dc38551748d4fcbb09baea7021",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/helicocrasher/library/SmartPortSlave/0.4.1/SmartPortSlave-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/helicocrasher/library/SmartPortSlave/0.4.1/SmartPortSlave-0.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "helicocrasher/library/SmartPortSlave/0.4.2/SmartPortSlave-0.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartPortSlave-0.4.2.tar.gz",
+    "size_bytes": 9707,
+    "sha256": "a24a7be8d31ac768ac21b7b850ead88815d2f286d8753cdf82e098f8233ff42e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/helicocrasher/library/SmartPortSlave/0.4.2/SmartPortSlave-0.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/helicocrasher/library/SmartPortSlave/0.4.2/SmartPortSlave-0.4.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

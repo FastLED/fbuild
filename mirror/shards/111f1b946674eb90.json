@@ -1,0 +1,217 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/xorlent",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "xorlent/library/Async%20SHT4x/1.2.0/AsyncSHT4x-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncSHT4x-1.2.0.tar.gz",
+    "size_bytes": 10053,
+    "sha256": "e8bfb88d09dc268fa329d4339671af2db604f5f766724a3ba6bc28eb5c4ccdc4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xorlent/library/Async%2520SHT4x/1.2.0/AsyncSHT4x-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xorlent/library/Async%20SHT4x/1.2.0/AsyncSHT4x-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xorlent/library/ESP32-EasyWolfSSL/1.0.0/ESP32-EasyWolfSSL-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-EasyWolfSSL-1.0.0.tar.gz",
+    "size_bytes": 36093,
+    "sha256": "2e2d7b27c4555aaf60ab568f33f0ac1d2ad34685b17f9a145c6d9fe405f4e27b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xorlent/library/ESP32-EasyWolfSSL/1.0.0/ESP32-EasyWolfSSL-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xorlent/library/ESP32-EasyWolfSSL/1.0.0/ESP32-EasyWolfSSL-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xorlent/library/ESP32AI%20Voice%20Command/1.0.1/ESP32AIVoiceCommand-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32AIVoiceCommand-1.0.1.tar.gz",
+    "size_bytes": 26325,
+    "sha256": "fdb25f484a905609db1fc749f3883a60eb851ad5b6f63ed562501c98cfed8950",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xorlent/library/ESP32AI%2520Voice%2520Command/1.0.1/ESP32AIVoiceCommand-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/xorlent/library/ESP32AI%20Voice%20Command/1.0.1/ESP32AIVoiceCommand-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xorlent/library/ESP32AI%20Voice%20Command/1.0.2/ESP32AIVoiceCommand-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32AIVoiceCommand-1.0.2.tar.gz",
+    "size_bytes": 26384,
+    "sha256": "fee67a73b13e7fb3bb1a5d307078361eeaa3f7415d964c20082e5d282f81aaea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xorlent/library/ESP32AI%2520Voice%2520Command/1.0.2/ESP32AIVoiceCommand-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/xorlent/library/ESP32AI%20Voice%20Command/1.0.2/ESP32AIVoiceCommand-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xorlent/library/ESP32AI%20Voice%20Command/1.0.3/ESP32AIVoiceCommand-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32AIVoiceCommand-1.0.3.tar.gz",
+    "size_bytes": 26660,
+    "sha256": "30b44e3421fb679cc4a6d078de3d1939ef0de39eebd62e3e5f497d813de31001",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xorlent/library/ESP32AI%2520Voice%2520Command/1.0.3/ESP32AIVoiceCommand-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/xorlent/library/ESP32AI%20Voice%20Command/1.0.3/ESP32AIVoiceCommand-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xorlent/library/ESP32IMDB/1.1.0/ESP32IMDB-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32IMDB-1.1.0.tar.gz",
+    "size_bytes": 35441,
+    "sha256": "b8cca077725724aba06666cef313e1dd3bcfd1e42ca7db35978275126d725f1e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xorlent/library/ESP32IMDB/1.1.0/ESP32IMDB-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xorlent/library/ESP32IMDB/1.1.0/ESP32IMDB-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xorlent/library/ESP32IMDB/1.1.3/ESP32IMDB-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32IMDB-1.1.3.tar.gz",
+    "size_bytes": 36886,
+    "sha256": "464d0ba14a5990734602f2b069711c6830b0272a98ea6433541e087d529eb2df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xorlent/library/ESP32IMDB/1.1.3/ESP32IMDB-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/xorlent/library/ESP32IMDB/1.1.3/ESP32IMDB-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xorlent/library/ESP32P4_ULP/0.0.1/ESP32P4_ULP-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32P4_ULP-0.0.1.tar.gz",
+    "size_bytes": 28742,
+    "sha256": "ab8537bb42ea2bd99a1983a58f7dd36115de9d060d03fc514cf36945bc67e1b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xorlent/library/ESP32P4_ULP/0.0.1/ESP32P4_ULP-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/xorlent/library/ESP32P4_ULP/0.0.1/ESP32P4_ULP-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xorlent/library/ESP32_WS2812B/1.0.0/ESP32_WS2812B-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_WS2812B-1.0.0.tar.gz",
+    "size_bytes": 5927,
+    "sha256": "cd1aafd0fe9e60d39a433437faf466288837852f5ee5a151a284de9d6e63acbf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xorlent/library/ESP32_WS2812B/1.0.0/ESP32_WS2812B-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xorlent/library/ESP32_WS2812B/1.0.0/ESP32_WS2812B-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xorlent/library/ESP32_WS2812B/1.0.1/ESP32_WS2812B-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_WS2812B-1.0.1.tar.gz",
+    "size_bytes": 5936,
+    "sha256": "9d04c078c22b34ab1c3689ecc35406cb2399592ee5e28dbd6de0bf3c329a79a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xorlent/library/ESP32_WS2812B/1.0.1/ESP32_WS2812B-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/xorlent/library/ESP32_WS2812B/1.0.1/ESP32_WS2812B-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xorlent/library/ESP32_WS2812B/1.0.3/ESP32_WS2812B-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_WS2812B-1.0.3.tar.gz",
+    "size_bytes": 6312,
+    "sha256": "9860435db9d72a7667f1d36a330627f52c56666f642bcfb743530a99d4952cc5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xorlent/library/ESP32_WS2812B/1.0.3/ESP32_WS2812B-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/xorlent/library/ESP32_WS2812B/1.0.3/ESP32_WS2812B-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xorlent/library/ESP32_WS2812B/1.0.5/ESP32_WS2812B-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_WS2812B-1.0.5.tar.gz",
+    "size_bytes": 6270,
+    "sha256": "ae973a0e783357b6af1c7032a76e1a681cd8a5f98dfbec8372dea71d89a24e7b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xorlent/library/ESP32_WS2812B/1.0.5/ESP32_WS2812B-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/xorlent/library/ESP32_WS2812B/1.0.5/ESP32_WS2812B-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xorlent/library/SAMD21_WS2812B/1.0.0/SAMD21_WS2812B-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SAMD21_WS2812B-1.0.0.tar.gz",
+    "size_bytes": 5908,
+    "sha256": "4481a4d06c37b5e06de30a0b73cf221e9348b70a8fb4dd14f624b7e22be6c1ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xorlent/library/SAMD21_WS2812B/1.0.0/SAMD21_WS2812B-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xorlent/library/SAMD21_WS2812B/1.0.0/SAMD21_WS2812B-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xorlent/library/SAMD21_WS2812B/1.0.5/SAMD21_WS2812B-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SAMD21_WS2812B-1.0.5.tar.gz",
+    "size_bytes": 6132,
+    "sha256": "d658d17a2a36fe25ec9b9246f9c09690677c902b4fc6b23d88d8e8153ce57fe1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xorlent/library/SAMD21_WS2812B/1.0.5/SAMD21_WS2812B-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/xorlent/library/SAMD21_WS2812B/1.0.5/SAMD21_WS2812B-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xorlent/library/SAMD_SafeFlashStorage/0.1.1/SAMD_SafeFlashStorage-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SAMD_SafeFlashStorage-0.1.1.tar.gz",
+    "size_bytes": 18627,
+    "sha256": "d7f110f23fe498b2ded3efe3bedccd3544e415b86c5c60cf0aa7591dd982c1d2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xorlent/library/SAMD_SafeFlashStorage/0.1.1/SAMD_SafeFlashStorage-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/xorlent/library/SAMD_SafeFlashStorage/0.1.1/SAMD_SafeFlashStorage-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xorlent/library/SAMD_SafeFlashStorage/1.0.2/SAMD_SafeFlashStorage-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SAMD_SafeFlashStorage-1.0.2.tar.gz",
+    "size_bytes": 19349,
+    "sha256": "8bffe67d67de29e39afc5dbd2e3f80081639bec5535169a987d2ef396de4a9f5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xorlent/library/SAMD_SafeFlashStorage/1.0.2/SAMD_SafeFlashStorage-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/xorlent/library/SAMD_SafeFlashStorage/1.0.2/SAMD_SafeFlashStorage-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ericwieser",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ericwieser/library/BarChart/0.0.0+sha.6b38423b75db/BarChart-0.0.0+sha.6b38423b75db.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BarChart-0.0.0+sha.6b38423b75db.tar.gz",
+    "size_bytes": 1962,
+    "sha256": "cbcd44d9ea48a2071b588d9f02fad8ca89e79d0a0c46106e50edba9d6d2828d2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ericwieser/library/BarChart/0.0.0%2Bsha.6b38423b75db/BarChart-0.0.0%2Bsha.6b38423b75db.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ericwieser/library/BarChart/0.0.0%2Bsha.6b38423b75db/BarChart-0.0.0%2Bsha.6b38423b75db.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ericwieser/library/LEDMatrix/0.0.0+sha.44819562ea31/LEDMatrix-0.0.0+sha.44819562ea31.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LEDMatrix-0.0.0+sha.44819562ea31.tar.gz",
+    "size_bytes": 2582,
+    "sha256": "813d2d3942945d644af06ce0bc1932c5713639c834b713839f4b128c4bfb89c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ericwieser/library/LEDMatrix/0.0.0%2Bsha.44819562ea31/LEDMatrix-0.0.0%2Bsha.44819562ea31.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ericwieser/library/LEDMatrix/0.0.0%2Bsha.44819562ea31/LEDMatrix-0.0.0%2Bsha.44819562ea31.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-gregeric",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-gregeric/library/SPI_TFT_ILI9341/0.0.0+sha.8794e2eadd8d/SPI_TFT_ILI9341-0.0.0+sha.8794e2eadd8d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SPI_TFT_ILI9341-0.0.0+sha.8794e2eadd8d.tar.gz",
+    "size_bytes": 18916,
+    "sha256": "3f2b1e71a3dc10e0ec2dfb44e97e5ed95306740eba3fcbcb8534644630188d7d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-gregeric/library/SPI_TFT_ILI9341/0.0.0%2Bsha.8794e2eadd8d/SPI_TFT_ILI9341-0.0.0%2Bsha.8794e2eadd8d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-gregeric/library/SPI_TFT_ILI9341/0.0.0%2Bsha.8794e2eadd8d/SPI_TFT_ILI9341-0.0.0%2Bsha.8794e2eadd8d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-gregeric/library/TFT_fonts/0.0.0+sha.455244d71b60/TFT_fonts-0.0.0+sha.455244d71b60.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFT_fonts-0.0.0+sha.455244d71b60.tar.gz",
+    "size_bytes": 44873,
+    "sha256": "5537beeef45c1740127bf9823b79041ef0c3f556df46336005d074b4d40c0a97",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-gregeric/library/TFT_fonts/0.0.0%2Bsha.455244d71b60/TFT_fonts-0.0.0%2Bsha.455244d71b60.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-gregeric/library/TFT_fonts/0.0.0%2Bsha.455244d71b60/TFT_fonts-0.0.0%2Bsha.455244d71b60.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-gregeric/library/stepper/0.0.0+sha.75fcbd49d49f/stepper-0.0.0+sha.75fcbd49d49f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "stepper-0.0.0+sha.75fcbd49d49f.tar.gz",
+    "size_bytes": 4270,
+    "sha256": "4519b3a145a287207b4eb59639e8b9c456aa561b01777d7e53cc931349ff4c66",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-gregeric/library/stepper/0.0.0%2Bsha.75fcbd49d49f/stepper-0.0.0%2Bsha.75fcbd49d49f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-gregeric/library/stepper/0.0.0%2Bsha.75fcbd49d49f/stepper-0.0.0%2Bsha.75fcbd49d49f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

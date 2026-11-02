@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/michael-kd",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "michael-kd/library/reyax_lora/1.0.0/reyax_lora-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "reyax_lora-1.0.0.tar.gz",
+    "size_bytes": 1447,
+    "sha256": "ae800bf5fdcc5c9b210b80f5ace502e5a4224479e6fcf698b5735aa92a637053",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/michael-kd/library/reyax_lora/1.0.0/reyax_lora-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/michael-kd/library/reyax_lora/1.0.0/reyax_lora-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

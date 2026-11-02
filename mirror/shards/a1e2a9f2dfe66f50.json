@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-todotani",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-todotani/library/nRF51822-hrm1017/0.0.0+sha.eb36b5b876a3/nRF51822-hrm1017-0.0.0+sha.eb36b5b876a3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nRF51822-hrm1017-0.0.0+sha.eb36b5b876a3.tar.gz",
+    "size_bytes": 182004,
+    "sha256": "511e54f7e148ba0cf6b658e05d5f7c838e3eb0fedb086042779b930950fd92b2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-todotani/library/nRF51822-hrm1017/0.0.0%2Bsha.eb36b5b876a3/nRF51822-hrm1017-0.0.0%2Bsha.eb36b5b876a3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-todotani/library/nRF51822-hrm1017/0.0.0%2Bsha.eb36b5b876a3/nRF51822-hrm1017-0.0.0%2Bsha.eb36b5b876a3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-todotani/library/nRF51822/0.0.0+sha.f3badab88f02/nRF51822-0.0.0+sha.f3badab88f02.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nRF51822-0.0.0+sha.f3badab88f02.tar.gz",
+    "size_bytes": 186409,
+    "sha256": "358663ce0194aa4d2fc3b4847c576f7aa3ca16781f1daa2013098a9db08c5028",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-todotani/library/nRF51822/0.0.0%2Bsha.f3badab88f02/nRF51822-0.0.0%2Bsha.f3badab88f02.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-todotani/library/nRF51822/0.0.0%2Bsha.f3badab88f02/nRF51822-0.0.0%2Bsha.f3badab88f02.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cygig",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cygig/library/AlmostRandom/0.21.0/AlmostRandom-0.21.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlmostRandom-0.21.0.tar.gz",
+    "size_bytes": 30374,
+    "sha256": "c12765f3526e648f0516e468b836770e63aa00aae067e93e60ad6b58b76dc827",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cygig/library/AlmostRandom/0.21.0/AlmostRandom-0.21.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cygig/library/AlmostRandom/0.21.0/AlmostRandom-0.21.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cygig/library/DailyStruggleButton/0.5.1/DailyStruggleButton-0.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DailyStruggleButton-0.5.1.tar.gz",
+    "size_bytes": 5608,
+    "sha256": "a752019a239fada11cf2bae0bf5f989efe11f13cc72494794aaedc2b07fc8abd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cygig/library/DailyStruggleButton/0.5.1/DailyStruggleButton-0.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cygig/library/DailyStruggleButton/0.5.1/DailyStruggleButton-0.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cygig/library/MCUVoltage/0.4.4/MCUVoltage-0.4.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCUVoltage-0.4.4.tar.gz",
+    "size_bytes": 17231,
+    "sha256": "0cd65741199d10db5c7a3d22b036b408b5f46c3b770dc0bc335ee11a42635036",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cygig/library/MCUVoltage/0.4.4/MCUVoltage-0.4.4.tar.gz",
+     "https://dl.registry.platformio.org/download/cygig/library/MCUVoltage/0.4.4/MCUVoltage-0.4.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cygig/library/MonteCarloPi/0.8.3/MonteCarloPi-0.8.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MonteCarloPi-0.8.3.tar.gz",
+    "size_bytes": 12439,
+    "sha256": "a1d105e30349fdf7296ce6215ee9ded8fe3c004f0588400e6da51b797e28e59b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cygig/library/MonteCarloPi/0.8.3/MonteCarloPi-0.8.3.tar.gz",
+     "https://dl.registry.platformio.org/download/cygig/library/MonteCarloPi/0.8.3/MonteCarloPi-0.8.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cygig/library/SDConfigCommand/0.25/SDConfigCommand-0.25.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SDConfigCommand-0.25.tar.gz",
+    "size_bytes": 13031,
+    "sha256": "6e8962df96c642c4871fddbcdeeb63b4ad51a0f246d42fdf034b50434176d4d3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cygig/library/SDConfigCommand/0.25/SDConfigCommand-0.25.tar.gz",
+     "https://dl.registry.platformio.org/download/cygig/library/SDConfigCommand/0.25/SDConfigCommand-0.25.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cygig/library/SerialConfigCommand/0.7.0/SerialConfigCommand-0.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialConfigCommand-0.7.0.tar.gz",
+    "size_bytes": 4943,
+    "sha256": "a90d74f932e6da1445efe185dbb758e77dbe6cc930c27674331048b981c3be90",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cygig/library/SerialConfigCommand/0.7.0/SerialConfigCommand-0.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cygig/library/SerialConfigCommand/0.7.0/SerialConfigCommand-0.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cygig/library/TimerEvent/0.5.0/TimerEvent-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TimerEvent-0.5.0.tar.gz",
+    "size_bytes": 2729,
+    "sha256": "658ff4e8baa76694bc606d3249443c0ef4157356a9b7a1eb4e486c57b478e9b2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cygig/library/TimerEvent/0.5.0/TimerEvent-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cygig/library/TimerEvent/0.5.0/TimerEvent-0.5.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

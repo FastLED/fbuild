@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/akira215",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "akira215/library/DynamixelArduino/1.2.0/DynamixelArduino-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DynamixelArduino-1.2.0.tar.gz",
+    "size_bytes": 11839,
+    "sha256": "c9c88d89945bd85427f2a740353e3e52a5ac470b62ea67fe8915089fb1fbd001",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/akira215/library/DynamixelArduino/1.2.0/DynamixelArduino-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/akira215/library/DynamixelArduino/1.2.0/DynamixelArduino-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

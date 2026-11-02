@@ -1,0 +1,139 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tbekas",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tbekas/library/BLE-Gamepad-Client/0.10.0/BLE-Gamepad-Client-0.10.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLE-Gamepad-Client-0.10.0.tar.gz",
+    "size_bytes": 230938,
+    "sha256": "6373bd54c6bcae228af66d795127f8edcb78915c0ea3dfae30c0f8a880d76896",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tbekas/library/BLE-Gamepad-Client/0.10.0/BLE-Gamepad-Client-0.10.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tbekas/library/BLE-Gamepad-Client/0.10.0/BLE-Gamepad-Client-0.10.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tbekas/library/BLE-Gamepad-Client/0.11.0/BLE-Gamepad-Client-0.11.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLE-Gamepad-Client-0.11.0.tar.gz",
+    "size_bytes": 233551,
+    "sha256": "cf62594349e43cac0d29f41cb7cf511acd351820098501815ecb8d141925cf99",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tbekas/library/BLE-Gamepad-Client/0.11.0/BLE-Gamepad-Client-0.11.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tbekas/library/BLE-Gamepad-Client/0.11.0/BLE-Gamepad-Client-0.11.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tbekas/library/BLE-Gamepad-Client/0.12.0/BLE-Gamepad-Client-0.12.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLE-Gamepad-Client-0.12.0.tar.gz",
+    "size_bytes": 237013,
+    "sha256": "63bfab6e2064f474ca0725a0150da6002c2a15662f404eddd7197ca91e64101c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tbekas/library/BLE-Gamepad-Client/0.12.0/BLE-Gamepad-Client-0.12.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tbekas/library/BLE-Gamepad-Client/0.12.0/BLE-Gamepad-Client-0.12.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tbekas/library/BLE-Gamepad-Client/0.12.1/BLE-Gamepad-Client-0.12.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLE-Gamepad-Client-0.12.1.tar.gz",
+    "size_bytes": 237012,
+    "sha256": "e629e696bf6cb5f034847ac7e7466683002e4128276824942611b401572a6c16",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tbekas/library/BLE-Gamepad-Client/0.12.1/BLE-Gamepad-Client-0.12.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tbekas/library/BLE-Gamepad-Client/0.12.1/BLE-Gamepad-Client-0.12.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tbekas/library/BLE-Gamepad-Client/0.5.0/BLE-Gamepad-Client-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLE-Gamepad-Client-0.5.0.tar.gz",
+    "size_bytes": 17652,
+    "sha256": "30b999ed21666c0027610423294e536aede0a6cd928f1a807031143b3b9ae79e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tbekas/library/BLE-Gamepad-Client/0.5.0/BLE-Gamepad-Client-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tbekas/library/BLE-Gamepad-Client/0.5.0/BLE-Gamepad-Client-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tbekas/library/BLE-Gamepad-Client/0.6.0/BLE-Gamepad-Client-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLE-Gamepad-Client-0.6.0.tar.gz",
+    "size_bytes": 20573,
+    "sha256": "f9892eb9b1554c24dfc938b5c897d408cc901eae678856b4dadc5da3a642d8b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tbekas/library/BLE-Gamepad-Client/0.6.0/BLE-Gamepad-Client-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tbekas/library/BLE-Gamepad-Client/0.6.0/BLE-Gamepad-Client-0.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tbekas/library/BLE-Gamepad-Client/0.7.0/BLE-Gamepad-Client-0.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLE-Gamepad-Client-0.7.0.tar.gz",
+    "size_bytes": 21633,
+    "sha256": "a3a31d66b34c7e91d642e623c761e09ebb87d445175f8a5240b9ab12cb849959",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tbekas/library/BLE-Gamepad-Client/0.7.0/BLE-Gamepad-Client-0.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tbekas/library/BLE-Gamepad-Client/0.7.0/BLE-Gamepad-Client-0.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tbekas/library/BLE-Gamepad-Client/0.8.0/BLE-Gamepad-Client-0.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLE-Gamepad-Client-0.8.0.tar.gz",
+    "size_bytes": 21052,
+    "sha256": "6d9b663fd6cd1be16b1312b28e9fe3a8c4a80391158eae8d17826b49f3204882",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tbekas/library/BLE-Gamepad-Client/0.8.0/BLE-Gamepad-Client-0.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tbekas/library/BLE-Gamepad-Client/0.8.0/BLE-Gamepad-Client-0.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tbekas/library/BLE-Gamepad-Client/0.8.1/BLE-Gamepad-Client-0.8.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLE-Gamepad-Client-0.8.1.tar.gz",
+    "size_bytes": 228323,
+    "sha256": "5ac974ebaefe7f805cb4a0054e5978100218f2fbfaaa8fddb731e5f0c8c0ec04",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tbekas/library/BLE-Gamepad-Client/0.8.1/BLE-Gamepad-Client-0.8.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tbekas/library/BLE-Gamepad-Client/0.8.1/BLE-Gamepad-Client-0.8.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tbekas/library/BLE-Gamepad-Client/0.9.0/BLE-Gamepad-Client-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLE-Gamepad-Client-0.9.0.tar.gz",
+    "size_bytes": 229117,
+    "sha256": "34077617e75767f87aa45909c173d04ff09d9a378c12735f78ba547f77060c85",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tbekas/library/BLE-Gamepad-Client/0.9.0/BLE-Gamepad-Client-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tbekas/library/BLE-Gamepad-Client/0.9.0/BLE-Gamepad-Client-0.9.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

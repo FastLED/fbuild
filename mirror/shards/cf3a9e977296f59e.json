@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/phlpjo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "phlpjo/library/MkrGsm1400IoT/1.1/MkrGsm1400IoT-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MkrGsm1400IoT-1.1.tar.gz",
+    "size_bytes": 12744,
+    "sha256": "8d969a82ce6ffad41fac3d737831903352d5532918b21019acec3ac64ddc307d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/phlpjo/library/MkrGsm1400IoT/1.1/MkrGsm1400IoT-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/phlpjo/library/MkrGsm1400IoT/1.1/MkrGsm1400IoT-1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

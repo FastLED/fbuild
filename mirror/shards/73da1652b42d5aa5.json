@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/baiyuechu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "baiyuechu/library/IoTX/1.0.0/IoTX-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTX-1.0.0.tar.gz",
+    "size_bytes": 6048,
+    "sha256": "a91808d1847cd340175afe9820e20b58356fc4f5aeb32c6dd0378c0add7a402f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/baiyuechu/library/IoTX/1.0.0/IoTX-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/baiyuechu/library/IoTX/1.0.0/IoTX-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "baiyuechu/library/IoTX/1.0.1/IoTX-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTX-1.0.1.tar.gz",
+    "size_bytes": 5684,
+    "sha256": "87707f4c1763177443fa75e848b48df3e1fcbe0b59e15b86e64a1e6c6a1e835a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/baiyuechu/library/IoTX/1.0.1/IoTX-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/baiyuechu/library/IoTX/1.0.1/IoTX-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "baiyuechu/library/IoTX/1.0.2/IoTX-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTX-1.0.2.tar.gz",
+    "size_bytes": 5923,
+    "sha256": "862342334e8e1a06a5cab6301f53721862697de5cd795f87b801c53deaac1532",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/baiyuechu/library/IoTX/1.0.2/IoTX-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/baiyuechu/library/IoTX/1.0.2/IoTX-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "baiyuechu/library/IoTX/1.0.3/IoTX-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTX-1.0.3.tar.gz",
+    "size_bytes": 6476,
+    "sha256": "4ae68a3016975872d5f0f1849bcc651125b710f9b0446c1aa310e48229a88dae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/baiyuechu/library/IoTX/1.0.3/IoTX-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/baiyuechu/library/IoTX/1.0.3/IoTX-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "baiyuechu/library/IoTX/1.0.4/IoTX-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTX-1.0.4.tar.gz",
+    "size_bytes": 6546,
+    "sha256": "ace87249f6c0511aea2770bc8d2a6ccc6313994dabf96bb219a238ff2e1dd76f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/baiyuechu/library/IoTX/1.0.4/IoTX-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/baiyuechu/library/IoTX/1.0.4/IoTX-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

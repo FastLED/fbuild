@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-atsushi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-atsushi/library/LogDigitalOut/0.0.0+sha.e03cb5ec8912/LogDigitalOut-0.0.0+sha.e03cb5ec8912.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LogDigitalOut-0.0.0+sha.e03cb5ec8912.tar.gz",
+    "size_bytes": 1359,
+    "sha256": "cdf20a5ec2ba43aebb687275b81e7356f773b6149c617fc5bae9f1dffd6a5d9e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-atsushi/library/LogDigitalOut/0.0.0%2Bsha.e03cb5ec8912/LogDigitalOut-0.0.0%2Bsha.e03cb5ec8912.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-atsushi/library/LogDigitalOut/0.0.0%2Bsha.e03cb5ec8912/LogDigitalOut-0.0.0%2Bsha.e03cb5ec8912.tar.gz"
+    ]
+   }
+  }
+ ]
+}

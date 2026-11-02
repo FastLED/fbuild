@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pts93",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pts93/library/Stator/0.6.1/Stator-0.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Stator-0.6.1.tar.gz",
+    "size_bytes": 4381,
+    "sha256": "8ab0f559cb87c1400af995ba9d6e9be8a5942d6a05b2fa135b8a3dd4eab397fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pts93/library/Stator/0.6.1/Stator-0.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pts93/library/Stator/0.6.1/Stator-0.6.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

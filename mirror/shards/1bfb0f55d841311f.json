@@ -1,0 +1,243 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/elecfreaks",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "elecfreaks/library/nezha_for_esp32/1.0.0/nezha_for_esp32-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nezha_for_esp32-1.0.0.tar.gz",
+    "size_bytes": 33422021,
+    "sha256": "468450f65d4cc3d4a152d55a394ab2b483a27c06f09fa72e10a7bec84b176003",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/elecfreaks/library/nezha_for_esp32/1.0.0/nezha_for_esp32-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/elecfreaks/library/nezha_for_esp32/1.0.0/nezha_for_esp32-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "elecfreaks/library/nezha_for_esp32/1.0.6/nezha_for_esp32-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nezha_for_esp32-1.0.6.tar.gz",
+    "size_bytes": 33154101,
+    "sha256": "ad6fcfa29d2136b30c24f414af6d0b86f1d97b9b69c0053973b25aa05093d46d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/elecfreaks/library/nezha_for_esp32/1.0.6/nezha_for_esp32-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/elecfreaks/library/nezha_for_esp32/1.0.6/nezha_for_esp32-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "elecfreaks/library/nezha_for_esp32/1.0.7/nezha_for_esp32-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nezha_for_esp32-1.0.7.tar.gz",
+    "size_bytes": 33160148,
+    "sha256": "bb37cd7f95b33a5af1bb6ca3d6f0ce04a9edf79ebd3b3e5ef7fbf47ba4707eae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/elecfreaks/library/nezha_for_esp32/1.0.7/nezha_for_esp32-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/elecfreaks/library/nezha_for_esp32/1.0.7/nezha_for_esp32-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "elecfreaks/library/nezha_for_esp32/1.0.8/nezha_for_esp32-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nezha_for_esp32-1.0.8.tar.gz",
+    "size_bytes": 33475442,
+    "sha256": "0188af790845182ada5b02566b6de1f2bed2b9ddc89b40cc6adec0f6efb0c383",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/elecfreaks/library/nezha_for_esp32/1.0.8/nezha_for_esp32-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/elecfreaks/library/nezha_for_esp32/1.0.8/nezha_for_esp32-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "elecfreaks/library/nezha_for_esp32/1.0.9/nezha_for_esp32-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nezha_for_esp32-1.0.9.tar.gz",
+    "size_bytes": 33746143,
+    "sha256": "e15642c9d308a8a8bb94b31074cf8f104cd2b68cac77d1944e52641c0f9c597e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/elecfreaks/library/nezha_for_esp32/1.0.9/nezha_for_esp32-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/elecfreaks/library/nezha_for_esp32/1.0.9/nezha_for_esp32-1.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "elecfreaks/library/nezha_for_esp32/1.1.0/nezha_for_esp32-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nezha_for_esp32-1.1.0.tar.gz",
+    "size_bytes": 33789689,
+    "sha256": "9f171df3c9d7260bbd047e0c4de6be668f854f69dbe4061720e013f6fc04169a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/elecfreaks/library/nezha_for_esp32/1.1.0/nezha_for_esp32-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/elecfreaks/library/nezha_for_esp32/1.1.0/nezha_for_esp32-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "elecfreaks/library/nezha_for_esp32/1.1.1/nezha_for_esp32-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nezha_for_esp32-1.1.1.tar.gz",
+    "size_bytes": 33879777,
+    "sha256": "c43c5f0699a4b06c9db528a5c0964c9c8d277fc40785a75bcba6dfe63d27d7a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/elecfreaks/library/nezha_for_esp32/1.1.1/nezha_for_esp32-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/elecfreaks/library/nezha_for_esp32/1.1.1/nezha_for_esp32-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "elecfreaks/library/nezha_for_esp32/1.1.2/nezha_for_esp32-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nezha_for_esp32-1.1.2.tar.gz",
+    "size_bytes": 33920714,
+    "sha256": "6e8ae987942ff52c96470cee30178d7e2f6b748f848518f9b2aa649f272afd93",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/elecfreaks/library/nezha_for_esp32/1.1.2/nezha_for_esp32-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/elecfreaks/library/nezha_for_esp32/1.1.2/nezha_for_esp32-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "elecfreaks/library/nezha_for_esp32/1.1.3/nezha_for_esp32-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nezha_for_esp32-1.1.3.tar.gz",
+    "size_bytes": 33965119,
+    "sha256": "4859dd72d945f1fb2e1c471448bc0ed73d615d8129bd10864718f4101fd71dba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/elecfreaks/library/nezha_for_esp32/1.1.3/nezha_for_esp32-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/elecfreaks/library/nezha_for_esp32/1.1.3/nezha_for_esp32-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "elecfreaks/library/nezha_for_esp32/1.1.4/nezha_for_esp32-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nezha_for_esp32-1.1.4.tar.gz",
+    "size_bytes": 33972474,
+    "sha256": "714bb514003df9dad299f71af6439ed1658651e4e1d92c0701fa3d309a89518e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/elecfreaks/library/nezha_for_esp32/1.1.4/nezha_for_esp32-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/elecfreaks/library/nezha_for_esp32/1.1.4/nezha_for_esp32-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "elecfreaks/library/nezha_for_esp32_microblocks/1.0.0/nezha_for_esp32_microblocks-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nezha_for_esp32_microblocks-1.0.0.tar.gz",
+    "size_bytes": 238902,
+    "sha256": "de6d5ff1a8b1562697835b424402a5d2b8e1a9e6d73efb23cecd1ec8dc80221b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/elecfreaks/library/nezha_for_esp32_microblocks/1.0.0/nezha_for_esp32_microblocks-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/elecfreaks/library/nezha_for_esp32_microblocks/1.0.0/nezha_for_esp32_microblocks-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "elecfreaks/library/nezha_for_esp32_microblocks/1.0.1/nezha_for_esp32_microblocks-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nezha_for_esp32_microblocks-1.0.1.tar.gz",
+    "size_bytes": 126332,
+    "sha256": "3fd3c6a81cf7177db8bb3b1fadb7f5c8f22876d3da0827441b0074768b89c8e2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/elecfreaks/library/nezha_for_esp32_microblocks/1.0.1/nezha_for_esp32_microblocks-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/elecfreaks/library/nezha_for_esp32_microblocks/1.0.1/nezha_for_esp32_microblocks-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "elecfreaks/library/nezha_for_esp32_microblocks/1.0.2/nezha_for_esp32_microblocks-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nezha_for_esp32_microblocks-1.0.2.tar.gz",
+    "size_bytes": 6278925,
+    "sha256": "cc30f3dec981cb31b712fd981b239f673f365bb180c03f02213400d2c69ed60c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/elecfreaks/library/nezha_for_esp32_microblocks/1.0.2/nezha_for_esp32_microblocks-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/elecfreaks/library/nezha_for_esp32_microblocks/1.0.2/nezha_for_esp32_microblocks-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "elecfreaks/library/nezha_for_esp32_microblocks/1.0.3/nezha_for_esp32_microblocks-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nezha_for_esp32_microblocks-1.0.3.tar.gz",
+    "size_bytes": 8197847,
+    "sha256": "706610f9602160642f44f82564a23be6b5bde181283c3a06f925bbab369d6d11",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/elecfreaks/library/nezha_for_esp32_microblocks/1.0.3/nezha_for_esp32_microblocks-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/elecfreaks/library/nezha_for_esp32_microblocks/1.0.3/nezha_for_esp32_microblocks-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "elecfreaks/library/nezha_for_esp32_microblocks/1.0.4/nezha_for_esp32_microblocks-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nezha_for_esp32_microblocks-1.0.4.tar.gz",
+    "size_bytes": 8197380,
+    "sha256": "7d715981e137151ade54ccbe548cd7beccc107f61961512dd422e12a7d8d1595",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/elecfreaks/library/nezha_for_esp32_microblocks/1.0.4/nezha_for_esp32_microblocks-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/elecfreaks/library/nezha_for_esp32_microblocks/1.0.4/nezha_for_esp32_microblocks-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "elecfreaks/library/nezha_for_esp32_microblocks/1.0.5/nezha_for_esp32_microblocks-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nezha_for_esp32_microblocks-1.0.5.tar.gz",
+    "size_bytes": 8197389,
+    "sha256": "df36c88f72904251681a38bb43e84cfefc5d7139b55f757482a8295fdd97054b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/elecfreaks/library/nezha_for_esp32_microblocks/1.0.5/nezha_for_esp32_microblocks-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/elecfreaks/library/nezha_for_esp32_microblocks/1.0.5/nezha_for_esp32_microblocks-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "elecfreaks/library/nezha_for_esp32_microblocks/1.0.6/nezha_for_esp32_microblocks-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nezha_for_esp32_microblocks-1.0.6.tar.gz",
+    "size_bytes": 8176735,
+    "sha256": "0ca5f06f8fea55f523700bd2effcb1e7a827aa3d1c62794080bebc617bba8a2f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/elecfreaks/library/nezha_for_esp32_microblocks/1.0.6/nezha_for_esp32_microblocks-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/elecfreaks/library/nezha_for_esp32_microblocks/1.0.6/nezha_for_esp32_microblocks-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "elecfreaks/library/nezha_for_esp32_microblocks/1.0.7/nezha_for_esp32_microblocks-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nezha_for_esp32_microblocks-1.0.7.tar.gz",
+    "size_bytes": 8213123,
+    "sha256": "4ec9f923088214c38a43ad46dc75fe28f8b154659f3a7b74798228203c90581c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/elecfreaks/library/nezha_for_esp32_microblocks/1.0.7/nezha_for_esp32_microblocks-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/elecfreaks/library/nezha_for_esp32_microblocks/1.0.7/nezha_for_esp32_microblocks-1.0.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

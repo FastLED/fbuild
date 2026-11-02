@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/juano2310",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "juano2310/library/SuperCANBus/1.0.0/SuperCAN-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperCAN-1.0.0.tar.gz",
+    "size_bytes": 34123,
+    "sha256": "1128908dcc6fd64b0d883a179dc1a3168e06da43c206fda9ffae95a6e727170e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/juano2310/library/SuperCANBus/1.0.0/SuperCAN-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/juano2310/library/SuperCANBus/1.0.0/SuperCAN-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "juano2310/library/SuperCANBus/1.0.10/SuperCANBus-1.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperCANBus-1.0.10.tar.gz",
+    "size_bytes": 53924,
+    "sha256": "e62e689ce41c087d58bbb5cf38173d4b160611c6e9829953df924d5e8cf9507e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/juano2310/library/SuperCANBus/1.0.10/SuperCANBus-1.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/juano2310/library/SuperCANBus/1.0.10/SuperCANBus-1.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "juano2310/library/SuperCANBus/1.0.3/SuperCAN-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperCAN-1.0.3.tar.gz",
+    "size_bytes": 43874,
+    "sha256": "b3ebdabf42ee9028ef693394f988859afdaf0404fc47341f0d14429944f794fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/juano2310/library/SuperCANBus/1.0.3/SuperCAN-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/juano2310/library/SuperCANBus/1.0.3/SuperCAN-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "juano2310/library/SuperCANBus/1.0.4/SuperCANBus-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperCANBus-1.0.4.tar.gz",
+    "size_bytes": 43909,
+    "sha256": "a960906bc6e5099af3131e8925c6e7cff59901a24fd4e27bf30dd3ed16d3efaf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/juano2310/library/SuperCANBus/1.0.4/SuperCANBus-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/juano2310/library/SuperCANBus/1.0.4/SuperCANBus-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "juano2310/library/SuperCANBus/1.0.5/SuperCANBus-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperCANBus-1.0.5.tar.gz",
+    "size_bytes": 51073,
+    "sha256": "3fb84cea35e8af5ec062f8283c102ecc9a29474fb9a484a3ce0dd8be48d1d8c4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/juano2310/library/SuperCANBus/1.0.5/SuperCANBus-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/juano2310/library/SuperCANBus/1.0.5/SuperCANBus-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "juano2310/library/SuperCANBus/1.0.7/SuperCANBus-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuperCANBus-1.0.7.tar.gz",
+    "size_bytes": 51758,
+    "sha256": "0e9d01acd478311b23a6c3c71b1d16e8b1d3b1a25ad75caeae4c0bde9610558e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/juano2310/library/SuperCANBus/1.0.7/SuperCANBus-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/juano2310/library/SuperCANBus/1.0.7/SuperCANBus-1.0.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

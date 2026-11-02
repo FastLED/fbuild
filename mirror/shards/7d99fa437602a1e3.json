@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-rcj2015tessecraft",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-rcj2015tessecraft/library/WS2822S/0.0.0+sha.2fc093733833/WS2822S-0.0.0+sha.2fc093733833.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WS2822S-0.0.0+sha.2fc093733833.tar.gz",
+    "size_bytes": 2523,
+    "sha256": "8dfb6f504c16fafd31e76cf86b5a1776eb023d024585697e088db94befcc193e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rcj2015tessecraft/library/WS2822S/0.0.0%2Bsha.2fc093733833/WS2822S-0.0.0%2Bsha.2fc093733833.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rcj2015tessecraft/library/WS2822S/0.0.0%2Bsha.2fc093733833/WS2822S-0.0.0%2Bsha.2fc093733833.tar.gz"
+    ]
+   }
+  }
+ ]
+}

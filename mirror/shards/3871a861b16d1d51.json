@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-smultron1977",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-smultron1977/library/ST7735_TFT/0.0.0+sha.967235e6fd48/ST7735_TFT-0.0.0+sha.967235e6fd48.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ST7735_TFT-0.0.0+sha.967235e6fd48.tar.gz",
+    "size_bytes": 11865,
+    "sha256": "86e9c58e124282b35770532bb5db06f8c9107c0ae536f8fbe4fad0b26d93245b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-smultron1977/library/ST7735_TFT/0.0.0%2Bsha.967235e6fd48/ST7735_TFT-0.0.0%2Bsha.967235e6fd48.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-smultron1977/library/ST7735_TFT/0.0.0%2Bsha.967235e6fd48/ST7735_TFT-0.0.0%2Bsha.967235e6fd48.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cerebro11101",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cerebro11101/library/Cerebro/1.0.0/Cerebro-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Cerebro-1.0.0.tar.gz",
+    "size_bytes": 37240,
+    "sha256": "05bfa60afea0d4f90515f59c14fe16193121b3f6cfd286199dfe2a55d8355fc9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cerebro11101/library/Cerebro/1.0.0/Cerebro-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cerebro11101/library/Cerebro/1.0.0/Cerebro-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

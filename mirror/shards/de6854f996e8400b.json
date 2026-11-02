@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/koromelodev",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "koromelodev/library/DisplayMenu/1.0.0/DisplayMenu-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DisplayMenu-1.0.0.tar.gz",
+    "size_bytes": 32814,
+    "sha256": "ccac44581b51686e4b7923c1aa608ee55526b85b8a489513d44490e71d4395e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/koromelodev/library/DisplayMenu/1.0.0/DisplayMenu-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/koromelodev/library/DisplayMenu/1.0.0/DisplayMenu-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "koromelodev/library/DisplayMenu/1.1.2/DisplayMenu-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DisplayMenu-1.1.2.tar.gz",
+    "size_bytes": 32926,
+    "sha256": "981af4f9d166bbe6ff72c413789d5e0dcca813c3720fba030bd1bdfebe7aeb7d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/koromelodev/library/DisplayMenu/1.1.2/DisplayMenu-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/koromelodev/library/DisplayMenu/1.1.2/DisplayMenu-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "koromelodev/library/DisplayMenu/1.1.3/DisplayMenu-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DisplayMenu-1.1.3.tar.gz",
+    "size_bytes": 34675,
+    "sha256": "214e3f2b00849a12fca3b4109deba75f301f56b78f856d6b217beb073c44a770",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/koromelodev/library/DisplayMenu/1.1.3/DisplayMenu-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/koromelodev/library/DisplayMenu/1.1.3/DisplayMenu-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "koromelodev/library/DisplayMenu/1.2.1/DisplayMenu-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DisplayMenu-1.2.1.tar.gz",
+    "size_bytes": 35961,
+    "sha256": "3934f4aaeb2005b9b212ef8b73071912afb501936680173a23e5f8e1fd71766c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/koromelodev/library/DisplayMenu/1.2.1/DisplayMenu-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/koromelodev/library/DisplayMenu/1.2.1/DisplayMenu-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "koromelodev/library/DisplayMenu/1.2.2/DisplayMenu-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DisplayMenu-1.2.2.tar.gz",
+    "size_bytes": 35993,
+    "sha256": "4e623878558e547a4c6fd479ffc294ed4b9fee8819af015ec9cc5b057399075f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/koromelodev/library/DisplayMenu/1.2.2/DisplayMenu-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/koromelodev/library/DisplayMenu/1.2.2/DisplayMenu-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "koromelodev/library/DisplayMenu/1.2.3/DisplayMenu-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DisplayMenu-1.2.3.tar.gz",
+    "size_bytes": 35992,
+    "sha256": "5560ef4df0b1d180a997eb778e018ea95f2a7ddcb1b5da4af6e3aecc8aeb27c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/koromelodev/library/DisplayMenu/1.2.3/DisplayMenu-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/koromelodev/library/DisplayMenu/1.2.3/DisplayMenu-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "koromelodev/library/DisplayMenu/1.2.4/DisplayMenu-1.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DisplayMenu-1.2.4.tar.gz",
+    "size_bytes": 36114,
+    "sha256": "249b72ecfbb89b85319c6fa1151b63579376e9833c08bcf12622111fc92d3d5d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/koromelodev/library/DisplayMenu/1.2.4/DisplayMenu-1.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/koromelodev/library/DisplayMenu/1.2.4/DisplayMenu-1.2.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

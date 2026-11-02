@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pascalkern",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pascalkern/library/AvrLib-fork/0.0.1+latest/AvrLib-fork-0.0.1latest.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AvrLib-fork-0.0.1latest.tar.gz",
+    "size_bytes": 75902,
+    "sha256": "8d6b7071e4c9d17e06327ae18166a93df9795c6952afaea91843029a22e6741d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pascalkern/library/AvrLib-fork/0.0.1%2Blatest/AvrLib-fork-0.0.1latest.tar.gz",
+     "https://dl.registry.platformio.org/download/pascalkern/library/AvrLib-fork/0.0.1%2Blatest/AvrLib-fork-0.0.1latest.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,386 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tirus",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tirus/library/BLE%20Remote/0.10.0/BLERemote-0.10.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLERemote-0.10.0.tar.gz",
+    "size_bytes": 15931,
+    "sha256": "045a4b5e3b046d7852ecd46ee14c44900b1bfaa0d0045068dcdcd75383024e0e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tirus/library/BLE%2520Remote/0.10.0/BLERemote-0.10.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tirus/library/BLE%20Remote/0.10.0/BLERemote-0.10.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tirus/library/BLE%20Remote/0.10.1/BLERemote-0.10.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLERemote-0.10.1.tar.gz",
+    "size_bytes": 15799,
+    "sha256": "125fb989ea31ff1503bf74d2c53223f829be3acb29a36a87cac9159c1f8c575c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tirus/library/BLE%2520Remote/0.10.1/BLERemote-0.10.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tirus/library/BLE%20Remote/0.10.1/BLERemote-0.10.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tirus/library/BLE%20Remote/0.10.2/BLERemote-0.10.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLERemote-0.10.2.tar.gz",
+    "size_bytes": 15908,
+    "sha256": "5af3ed01a9e66aec0222c710561e5343335acdd914db32bc0da8a1ed643b5330",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tirus/library/BLE%2520Remote/0.10.2/BLERemote-0.10.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tirus/library/BLE%20Remote/0.10.2/BLERemote-0.10.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tirus/library/BLE%20Remote/0.11.0/BLERemote-0.11.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLERemote-0.11.0.tar.gz",
+    "size_bytes": 16658,
+    "sha256": "5dc3a635ee18dfa0d8daede9cb60a5f6814e010b96b16b086fb20d44fe09c80a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tirus/library/BLE%2520Remote/0.11.0/BLERemote-0.11.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tirus/library/BLE%20Remote/0.11.0/BLERemote-0.11.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tirus/library/BLE%20Remote/0.11.1/BLERemote-0.11.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLERemote-0.11.1.tar.gz",
+    "size_bytes": 16671,
+    "sha256": "d183e71745cde3663456e813868286af5176477580af3bf93f781ff81008c912",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tirus/library/BLE%2520Remote/0.11.1/BLERemote-0.11.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tirus/library/BLE%20Remote/0.11.1/BLERemote-0.11.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tirus/library/BLE%20Remote/0.11.2/BLERemote-0.11.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLERemote-0.11.2.tar.gz",
+    "size_bytes": 16681,
+    "sha256": "84268fa36761d38e77290ef99fb175de31102b452b977c1ccc4d4168089ed0fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tirus/library/BLE%2520Remote/0.11.2/BLERemote-0.11.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tirus/library/BLE%20Remote/0.11.2/BLERemote-0.11.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tirus/library/BLE%20Remote/0.12.0/BLERemote-0.12.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLERemote-0.12.0.tar.gz",
+    "size_bytes": 16578,
+    "sha256": "8b74c1454fb27ed6336e3d88899b2f96e63b0423c2b873432843337f2cca1b75",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tirus/library/BLE%2520Remote/0.12.0/BLERemote-0.12.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tirus/library/BLE%20Remote/0.12.0/BLERemote-0.12.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tirus/library/BLE%20Remote/0.12.1/BLERemote-0.12.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLERemote-0.12.1.tar.gz",
+    "size_bytes": 16588,
+    "sha256": "568d7d87e58ad9d2c154494cb79930a2aaf93d813e6d1b43f64aaca625e1ec0c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tirus/library/BLE%2520Remote/0.12.1/BLERemote-0.12.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tirus/library/BLE%20Remote/0.12.1/BLERemote-0.12.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tirus/library/BLE%20Remote/0.12.2/BLERemote-0.12.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLERemote-0.12.2.tar.gz",
+    "size_bytes": 16601,
+    "sha256": "29bd77ef147d0f8fdaa241aa925c1e67a1d86463ed9e00af5618e6385ab6622c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tirus/library/BLE%2520Remote/0.12.2/BLERemote-0.12.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tirus/library/BLE%20Remote/0.12.2/BLERemote-0.12.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tirus/library/BLE%20Remote/0.12.3/BLERemote-0.12.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLERemote-0.12.3.tar.gz",
+    "size_bytes": 16948,
+    "sha256": "691c13404e51bdfb3657c56abaaedfba07d6cb90b25fb9abc917a547f6736c7e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tirus/library/BLE%2520Remote/0.12.3/BLERemote-0.12.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tirus/library/BLE%20Remote/0.12.3/BLERemote-0.12.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tirus/library/BLE%20Remote/0.13.0/BLERemote-0.13.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLERemote-0.13.0.tar.gz",
+    "size_bytes": 17407,
+    "sha256": "f8742a407a5725e2870f6ab17e03cc440b8191263f15f13a702c089fdcf77092",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tirus/library/BLE%2520Remote/0.13.0/BLERemote-0.13.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tirus/library/BLE%20Remote/0.13.0/BLERemote-0.13.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tirus/library/BLE%20Remote/0.14.0/BLERemote-0.14.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLERemote-0.14.0.tar.gz",
+    "size_bytes": 17524,
+    "sha256": "91f8aa1812b57a894383c225e9b87d428c984c1678a95ac4e72f04d681842982",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tirus/library/BLE%2520Remote/0.14.0/BLERemote-0.14.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tirus/library/BLE%20Remote/0.14.0/BLERemote-0.14.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tirus/library/BLE%20Remote/0.7.0/BLERemote-0.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLERemote-0.7.0.tar.gz",
+    "size_bytes": 15137,
+    "sha256": "9d153bf60eaa40a3bf3fedcfe76a760f69ad8ca008c3b7526fb909664695a3fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tirus/library/BLE%2520Remote/0.7.0/BLERemote-0.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tirus/library/BLE%20Remote/0.7.0/BLERemote-0.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tirus/library/BLE%20Remote/0.8.0/BLERemote-0.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLERemote-0.8.0.tar.gz",
+    "size_bytes": 15383,
+    "sha256": "87113ea94e0020d4f8fb3b052b01f6147065e25366e119dbff3fdedf69d35e31",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tirus/library/BLE%2520Remote/0.8.0/BLERemote-0.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tirus/library/BLE%20Remote/0.8.0/BLERemote-0.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tirus/library/BLE%20Remote/0.9.0/BLERemote-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLERemote-0.9.0.tar.gz",
+    "size_bytes": 15497,
+    "sha256": "9c9f344d0f80c17748fd1cf8b2c726979dc107d0e3afc990fa8e4581206e6206",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tirus/library/BLE%2520Remote/0.9.0/BLERemote-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tirus/library/BLE%20Remote/0.9.0/BLERemote-0.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tirus/library/CiString/1.0.3/CiString-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CiString-1.0.3.tar.gz",
+    "size_bytes": 1961,
+    "sha256": "b37867aba1bd39503327500901277716b4df3bf7bc5e493639b4c0cdbada9f7b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tirus/library/CiString/1.0.3/CiString-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tirus/library/CiString/1.0.3/CiString-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tirus/library/CommandLineServer/1.2.0/CommandLineServer-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CommandLineServer-1.2.0.tar.gz",
+    "size_bytes": 4534,
+    "sha256": "15f8a234ec0007c763bd0cbd0bb30521e691950c36bf1d77a2c7c9b3c25e4f5a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tirus/library/CommandLineServer/1.2.0/CommandLineServer-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tirus/library/CommandLineServer/1.2.0/CommandLineServer-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tirus/library/FunctionExecutionQueue/1.0.0/FunctionExecutionQueue-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FunctionExecutionQueue-1.0.0.tar.gz",
+    "size_bytes": 1126,
+    "sha256": "1d7de6c5ed4f98886501fb6d29908030132c2184c402a7015f8bcf7b4bb64682",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tirus/library/FunctionExecutionQueue/1.0.0/FunctionExecutionQueue-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tirus/library/FunctionExecutionQueue/1.0.0/FunctionExecutionQueue-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tirus/library/LedControlAndAnimation/1.5.0/LedControlAndAnimation-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LedControlAndAnimation-1.5.0.tar.gz",
+    "size_bytes": 11048,
+    "sha256": "a8f4410a2af9262a181cfd6f3cdcf73f58de536704e438a0eb9bf9c5bad325ff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tirus/library/LedControlAndAnimation/1.5.0/LedControlAndAnimation-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tirus/library/LedControlAndAnimation/1.5.0/LedControlAndAnimation-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tirus/library/LedControlAndAnimation/1.5.1/LedControlAndAnimation-1.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LedControlAndAnimation-1.5.1.tar.gz",
+    "size_bytes": 11051,
+    "sha256": "293131471136640b73020c857bc7ab18e60dd6ab24e0abbd82882969766d64c4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tirus/library/LedControlAndAnimation/1.5.1/LedControlAndAnimation-1.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tirus/library/LedControlAndAnimation/1.5.1/LedControlAndAnimation-1.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tirus/library/LedControlAndAnimation/1.5.2/LedControlAndAnimation-1.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LedControlAndAnimation-1.5.2.tar.gz",
+    "size_bytes": 11061,
+    "sha256": "e3acdd14460367fe4dabb7bbad33ad23cf45feb0e3b3f7d7ae38aa8f91dd4a9a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tirus/library/LedControlAndAnimation/1.5.2/LedControlAndAnimation-1.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tirus/library/LedControlAndAnimation/1.5.2/LedControlAndAnimation-1.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tirus/library/LedControlAndAnimation/1.6.0/LedControlAndAnimation-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LedControlAndAnimation-1.6.0.tar.gz",
+    "size_bytes": 10375,
+    "sha256": "109977b82afea9d2d1b24aea9d541b97668380e3cf90c8ad63383eeef83605d3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tirus/library/LedControlAndAnimation/1.6.0/LedControlAndAnimation-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tirus/library/LedControlAndAnimation/1.6.0/LedControlAndAnimation-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tirus/library/LedControlAndAnimation/1.7.0/LedControlAndAnimation-1.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LedControlAndAnimation-1.7.0.tar.gz",
+    "size_bytes": 12123,
+    "sha256": "f53a027a3cf8377b84704fefb78b745c0b6f6b96e8762db15d7a250bf1d3b199",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tirus/library/LedControlAndAnimation/1.7.0/LedControlAndAnimation-1.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tirus/library/LedControlAndAnimation/1.7.0/LedControlAndAnimation-1.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tirus/library/LedControlAndAnimation/1.7.1/LedControlAndAnimation-1.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LedControlAndAnimation-1.7.1.tar.gz",
+    "size_bytes": 10545,
+    "sha256": "2308e66c1e77d0837a5600792509d00a8cdeadffb38800706b828e3fb2bf88ca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tirus/library/LedControlAndAnimation/1.7.1/LedControlAndAnimation-1.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tirus/library/LedControlAndAnimation/1.7.1/LedControlAndAnimation-1.7.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tirus/library/MultiWiFiManager/0.9.4/MultiWiFiManager-0.9.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MultiWiFiManager-0.9.4.tar.gz",
+    "size_bytes": 10516,
+    "sha256": "09c5a6fa90db7fd5e86ced6f05a5189ad41d34c1ad0161c28291dacb1e246f62",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tirus/library/MultiWiFiManager/0.9.4/MultiWiFiManager-0.9.4.tar.gz",
+     "https://dl.registry.platformio.org/download/tirus/library/MultiWiFiManager/0.9.4/MultiWiFiManager-0.9.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tirus/library/NeoPixelBusIdf5Rmt/1.0.0/NeoPixelBusIdf5Rmt-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeoPixelBusIdf5Rmt-1.0.0.tar.gz",
+    "size_bytes": 6064,
+    "sha256": "c0a0adeb984463d40f3291c9e850d2513cd2da8e7e788bf32a060daa2bbb2ad1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tirus/library/NeoPixelBusIdf5Rmt/1.0.0/NeoPixelBusIdf5Rmt-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tirus/library/NeoPixelBusIdf5Rmt/1.0.0/NeoPixelBusIdf5Rmt-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tirus/library/NeoPixelBusIdf5Rmt/1.1.0/NeoPixelBusIdf5Rmt-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeoPixelBusIdf5Rmt-1.1.0.tar.gz",
+    "size_bytes": 10048,
+    "sha256": "11fa5587809515cb0f1a7c143253d32b62c295b629075fcdf0cf94600967a1f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tirus/library/NeoPixelBusIdf5Rmt/1.1.0/NeoPixelBusIdf5Rmt-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tirus/library/NeoPixelBusIdf5Rmt/1.1.0/NeoPixelBusIdf5Rmt-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tirus/library/OTAUpdate/1.0.0/OTAUpdate-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OTAUpdate-1.0.0.tar.gz",
+    "size_bytes": 2034,
+    "sha256": "74988a9a2cd909402a551e5e6b36e2bd5cb7f1a576e0c622ef693ee67237d936",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tirus/library/OTAUpdate/1.0.0/OTAUpdate-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tirus/library/OTAUpdate/1.0.0/OTAUpdate-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tirus/library/UUID/1.0.1/UUID-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UUID-1.0.1.tar.gz",
+    "size_bytes": 1500,
+    "sha256": "d14d947f0a4f18644c001c361bde4a56ca3800096010346c64ff9f0bf4c08cb7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tirus/library/UUID/1.0.1/UUID-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tirus/library/UUID/1.0.1/UUID-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

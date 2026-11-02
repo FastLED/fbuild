@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/outlookhazy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "outlookhazy/library/SyntropicOS/2026.6.1/SyntropicOS-2026.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SyntropicOS-2026.6.1.tar.gz",
+    "size_bytes": 303056,
+    "sha256": "82fabdff0441a4c2be38b0eb576a64be5cfc46a02e7ef5093449474b4c04a607",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/outlookhazy/library/SyntropicOS/2026.6.1/SyntropicOS-2026.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/outlookhazy/library/SyntropicOS/2026.6.1/SyntropicOS-2026.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "outlookhazy/library/SyntropicOS/2026.7.0/SyntropicOS-2026.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SyntropicOS-2026.7.0.tar.gz",
+    "size_bytes": 456100,
+    "sha256": "8215390af1e1e3a1134276ab8162fb2f3c0eace5fdd9388258bf3e1451231a76",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/outlookhazy/library/SyntropicOS/2026.7.0/SyntropicOS-2026.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/outlookhazy/library/SyntropicOS/2026.7.0/SyntropicOS-2026.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "outlookhazy/library/SyntropicOS/2026.7.1/SyntropicOS-2026.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SyntropicOS-2026.7.1.tar.gz",
+    "size_bytes": 507950,
+    "sha256": "b80131907d4a3c12e4418b30cf15ba5eefb4ee2827c8db704fa86342347a8156",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/outlookhazy/library/SyntropicOS/2026.7.1/SyntropicOS-2026.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/outlookhazy/library/SyntropicOS/2026.7.1/SyntropicOS-2026.7.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "outlookhazy/library/SyntropicOS/2026.7.2/SyntropicOS-2026.7.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SyntropicOS-2026.7.2.tar.gz",
+    "size_bytes": 551127,
+    "sha256": "b21bea82c79fad28fc49d3b65b17032f72baa38ce62478c380f5309fd709eacf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/outlookhazy/library/SyntropicOS/2026.7.2/SyntropicOS-2026.7.2.tar.gz",
+     "https://dl.registry.platformio.org/download/outlookhazy/library/SyntropicOS/2026.7.2/SyntropicOS-2026.7.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "outlookhazy/library/SyntropicOS/2026.7.4/SyntropicOS-2026.7.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SyntropicOS-2026.7.4.tar.gz",
+    "size_bytes": 609445,
+    "sha256": "ba4344568f14800cbe3c8c4c341282616b18600dcdacc65fde9c2463c2f33e06",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/outlookhazy/library/SyntropicOS/2026.7.4/SyntropicOS-2026.7.4.tar.gz",
+     "https://dl.registry.platformio.org/download/outlookhazy/library/SyntropicOS/2026.7.4/SyntropicOS-2026.7.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "outlookhazy/library/SyntropicOS/2026.8.0/SyntropicOS-2026.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SyntropicOS-2026.8.0.tar.gz",
+    "size_bytes": 985887,
+    "sha256": "c908e930994d847ba47c563b952486d362659ec9afb8987e841ee7a4606e9470",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/outlookhazy/library/SyntropicOS/2026.8.0/SyntropicOS-2026.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/outlookhazy/library/SyntropicOS/2026.8.0/SyntropicOS-2026.8.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

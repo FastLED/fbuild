@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-pwensing",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-pwensing/library/ExperimentServer/0.0.0+sha.20f31902ac9f/ExperimentServer-0.0.0+sha.20f31902ac9f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ExperimentServer-0.0.0+sha.20f31902ac9f.tar.gz",
+    "size_bytes": 2793,
+    "sha256": "3b1b21a27665cc98f54fd8407abb5ebb58edfdecbae0446e48734e1ead9c38b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pwensing/library/ExperimentServer/0.0.0%2Bsha.20f31902ac9f/ExperimentServer-0.0.0%2Bsha.20f31902ac9f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pwensing/library/ExperimentServer/0.0.0%2Bsha.20f31902ac9f/ExperimentServer-0.0.0%2Bsha.20f31902ac9f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-pwensing/library/QEI_pmw/0.0.0+sha.58a3c9c9e956/QEI_pmw-0.0.0+sha.58a3c9c9e956.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QEI_pmw-0.0.0+sha.58a3c9c9e956.tar.gz",
+    "size_bytes": 4949,
+    "sha256": "381e1b2946edecf6bab3f33b3259af9cb1eb8a550ae8279eb273951d9231f7cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pwensing/library/QEI_pmw/0.0.0%2Bsha.58a3c9c9e956/QEI_pmw-0.0.0%2Bsha.58a3c9c9e956.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pwensing/library/QEI_pmw/0.0.0%2Bsha.58a3c9c9e956/QEI_pmw-0.0.0%2Bsha.58a3c9c9e956.tar.gz"
+    ]
+   }
+  }
+ ]
+}

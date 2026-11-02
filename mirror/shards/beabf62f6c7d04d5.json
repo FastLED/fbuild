@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lal12",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lal12/library/RgbIrLed/0.0.1/RgbIrLed-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RgbIrLed-0.0.1.tar.gz",
+    "size_bytes": 3186,
+    "sha256": "7d64129ec3636480ea768c6fe85d0a0c833eb8b0ad90e0487c4193c39d97a328",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lal12/library/RgbIrLed/0.0.1/RgbIrLed-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lal12/library/RgbIrLed/0.0.1/RgbIrLed-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

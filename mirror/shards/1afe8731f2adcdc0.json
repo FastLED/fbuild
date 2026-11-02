@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/duinolibs",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "duinolibs/library/Sbutton/0.1.2/Sbutton-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sbutton-0.1.2.tar.gz",
+    "size_bytes": 3057,
+    "sha256": "b942b3bcfb6e255b8d742a7c4993f553a323399d6cc462ce90e82a8dfade2ef3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/duinolibs/library/Sbutton/0.1.2/Sbutton-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/duinolibs/library/Sbutton/0.1.2/Sbutton-0.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

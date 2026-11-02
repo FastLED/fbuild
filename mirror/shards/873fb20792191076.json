@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cbm80amiga",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cbm80amiga/library/DigiFont/1.1.0/DigiFont-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DigiFont-1.1.0.tar.gz",
+    "size_bytes": 26428,
+    "sha256": "ec5abbb2b3ffd2c92edfd479fe36025ec31d5f1a21d2c046fed33017bc2a41a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cbm80amiga/library/DigiFont/1.1.0/DigiFont-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cbm80amiga/library/DigiFont/1.1.0/DigiFont-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cbm80amiga/library/GC9A01A%20AVR/1.2.1/GC9A01AAVR-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GC9A01AAVR-1.2.1.tar.gz",
+    "size_bytes": 93609,
+    "sha256": "46a7268c0be6b55f7dd8c3109079ebbb5a4af78bd460922c2378afa8ea22c826",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cbm80amiga/library/GC9A01A%2520AVR/1.2.1/GC9A01AAVR-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cbm80amiga/library/GC9A01A%20AVR/1.2.1/GC9A01AAVR-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cbm80amiga/library/RRE%20Font%20Library/1.2.2/RREFontLibrary-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RREFontLibrary-1.2.2.tar.gz",
+    "size_bytes": 302227,
+    "sha256": "b4bb7c1a4ffd51c489b8420f68013c60354d5f4fd6b1c57023c7a007b2774a91",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cbm80amiga/library/RRE%2520Font%2520Library/1.2.2/RREFontLibrary-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cbm80amiga/library/RRE%20Font%20Library/1.2.2/RREFontLibrary-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cbm80amiga/library/ST7789%20AVR/1.2.1/ST7789AVR-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ST7789AVR-1.2.1.tar.gz",
+    "size_bytes": 99423,
+    "sha256": "8c15e6475712a25c113e853ab56e4626b47ccda6090a0ff4f8629b69026a3065",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cbm80amiga/library/ST7789%2520AVR/1.2.1/ST7789AVR-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cbm80amiga/library/ST7789%20AVR/1.2.1/ST7789AVR-1.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

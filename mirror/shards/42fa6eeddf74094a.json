@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lukaswagner",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lukaswagner/library/Multi-Partition%20Spiffs/1.0.1/Multi-PartitionSpiffs-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Multi-PartitionSpiffs-1.0.1.tar.gz",
+    "size_bytes": 7934,
+    "sha256": "cfae2bae3a6023b93efc9d92aa2e230b03af21cc58239da0f2696ca78facb370",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lukaswagner/library/Multi-Partition%2520Spiffs/1.0.1/Multi-PartitionSpiffs-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lukaswagner/library/Multi-Partition%20Spiffs/1.0.1/Multi-PartitionSpiffs-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

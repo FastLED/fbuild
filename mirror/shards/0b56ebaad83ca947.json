@@ -1,0 +1,269 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pba3h11aso",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pba3h11aso/library/%C2%B5TBits/0.5.0/TBits-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TBits-0.5.0.tar.gz",
+    "size_bytes": 26601,
+    "sha256": "a93fd58ab0c30a49a2948251b4f65f467f8a97321bfb46b2a0813af21ef9f23f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pba3h11aso/library/%25C2%25B5TBits/0.5.0/TBits-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pba3h11aso/library/%C2%B5TBits/0.5.0/TBits-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pba3h11aso/library/%C2%B5TBits/0.5.1/TBits-0.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TBits-0.5.1.tar.gz",
+    "size_bytes": 26868,
+    "sha256": "4bbed187cfdb626f85ddbb7c62419b732198934a6ebd512ea41eb5d698d050d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pba3h11aso/library/%25C2%25B5TBits/0.5.1/TBits-0.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pba3h11aso/library/%C2%B5TBits/0.5.1/TBits-0.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pba3h11aso/library/%C2%B5TBits/0.5.2/TBits-0.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TBits-0.5.2.tar.gz",
+    "size_bytes": 26862,
+    "sha256": "777dcbc7ab4bdea208cc26bf277ce1fead2179bfa7e31c3ad63b08bdb54e5f5e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pba3h11aso/library/%25C2%25B5TBits/0.5.2/TBits-0.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/pba3h11aso/library/%C2%B5TBits/0.5.2/TBits-0.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pba3h11aso/library/%C2%B5TBits/0.6.2/TBits-0.6.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TBits-0.6.2.tar.gz",
+    "size_bytes": 33509,
+    "sha256": "b556b78a2414a3e75fd4dacbe31a36ee29f078d4583e0b319a5cfb87b84defb2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pba3h11aso/library/%25C2%25B5TBits/0.6.2/TBits-0.6.2.tar.gz",
+     "https://dl.registry.platformio.org/download/pba3h11aso/library/%C2%B5TBits/0.6.2/TBits-0.6.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pba3h11aso/library/%C2%B5TBits/0.6.21/TBits-0.6.21.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TBits-0.6.21.tar.gz",
+    "size_bytes": 33513,
+    "sha256": "d84f6a7fdb640f98912ae46757b53b658629268327c25b86b8ea7e75bc52b3ab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pba3h11aso/library/%25C2%25B5TBits/0.6.21/TBits-0.6.21.tar.gz",
+     "https://dl.registry.platformio.org/download/pba3h11aso/library/%C2%B5TBits/0.6.21/TBits-0.6.21.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pba3h11aso/library/%C2%B5TBits/0.6.22/TBits-0.6.22.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TBits-0.6.22.tar.gz",
+    "size_bytes": 33512,
+    "sha256": "47f5e1f942699214514b57263e14436a6cb37759a989fc25ee4754eacdcc05ec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pba3h11aso/library/%25C2%25B5TBits/0.6.22/TBits-0.6.22.tar.gz",
+     "https://dl.registry.platformio.org/download/pba3h11aso/library/%C2%B5TBits/0.6.22/TBits-0.6.22.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pba3h11aso/library/%C2%B5TBits/1.1.0/TBits-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TBits-1.1.0.tar.gz",
+    "size_bytes": 33503,
+    "sha256": "7f88ea99379787947e0ba52ea819ff84586adebc0fd7c1dfbdc8f7f74952c489",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pba3h11aso/library/%25C2%25B5TBits/1.1.0/TBits-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pba3h11aso/library/%C2%B5TBits/1.1.0/TBits-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pba3h11aso/library/%C2%B5TBits/1.8.0/TBits-1.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TBits-1.8.0.tar.gz",
+    "size_bytes": 44873,
+    "sha256": "97c2af28ff8980803c5131d62b2b5d5c800703d737f1fd6c0738681977f4fe50",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pba3h11aso/library/%25C2%25B5TBits/1.8.0/TBits-1.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pba3h11aso/library/%C2%B5TBits/1.8.0/TBits-1.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pba3h11aso/library/%C2%B5TBits/1.8.5/TBits-1.8.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TBits-1.8.5.tar.gz",
+    "size_bytes": 55823,
+    "sha256": "371951a9e9cf3d3a9bdfc8b3c410e69bbe64b8c63ecf4925e6e55830921fc6f9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pba3h11aso/library/%25C2%25B5TBits/1.8.5/TBits-1.8.5.tar.gz",
+     "https://dl.registry.platformio.org/download/pba3h11aso/library/%C2%B5TBits/1.8.5/TBits-1.8.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pba3h11aso/library/%C2%B5TBits/1.8.6/TBits-1.8.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TBits-1.8.6.tar.gz",
+    "size_bytes": 56264,
+    "sha256": "6cf223198d0c77ad4ebb41fe91d61e9b46b96a7698dffadc43e3fbfbea644476",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pba3h11aso/library/%25C2%25B5TBits/1.8.6/TBits-1.8.6.tar.gz",
+     "https://dl.registry.platformio.org/download/pba3h11aso/library/%C2%B5TBits/1.8.6/TBits-1.8.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pba3h11aso/library/AUI/0.1.0/AUI-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AUI-0.1.0.tar.gz",
+    "size_bytes": 14054,
+    "sha256": "d2087f523b042364c14ba5235212c4597676761274812a25836e0ca0ab977da0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pba3h11aso/library/AUI/0.1.0/AUI-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pba3h11aso/library/AUI/0.1.0/AUI-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pba3h11aso/library/AUI/0.1.1/AUI-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AUI-0.1.1.tar.gz",
+    "size_bytes": 14093,
+    "sha256": "4c9cb41b0673ac2ee80d28fec097476cc8ba49ca09b60ac5c1a2abba9e3fcb5e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pba3h11aso/library/AUI/0.1.1/AUI-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pba3h11aso/library/AUI/0.1.1/AUI-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pba3h11aso/library/AUI/0.3.13/AUI-0.3.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AUI-0.3.13.tar.gz",
+    "size_bytes": 22126,
+    "sha256": "79be2d94bbce5c598a36c05af6cf463d8760003497db3eb145be3462da692c4f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pba3h11aso/library/AUI/0.3.13/AUI-0.3.13.tar.gz",
+     "https://dl.registry.platformio.org/download/pba3h11aso/library/AUI/0.3.13/AUI-0.3.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pba3h11aso/library/AUI/0.3.14/AUI-0.3.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AUI-0.3.14.tar.gz",
+    "size_bytes": 24727,
+    "sha256": "07658a20f26d33109a05863f81f7cc5cfbddda9ffb1477aef92460d6773ba7f5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pba3h11aso/library/AUI/0.3.14/AUI-0.3.14.tar.gz",
+     "https://dl.registry.platformio.org/download/pba3h11aso/library/AUI/0.3.14/AUI-0.3.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pba3h11aso/library/AUI/0.3.86/AUI-0.3.86.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AUI-0.3.86.tar.gz",
+    "size_bytes": 39644,
+    "sha256": "a601ddbe8a4f95e6580f53ba4f7113ab0619b8b8f32211994425fca004db25f3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pba3h11aso/library/AUI/0.3.86/AUI-0.3.86.tar.gz",
+     "https://dl.registry.platformio.org/download/pba3h11aso/library/AUI/0.3.86/AUI-0.3.86.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pba3h11aso/library/adaptive_type/0.2.3/adaptive_type-0.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "adaptive_type-0.2.3.tar.gz",
+    "size_bytes": 18503,
+    "sha256": "a5fe78940ea8b9ada5716a9a496cf64a582b415e1089799c5d4a6287068822ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pba3h11aso/library/adaptive_type/0.2.3/adaptive_type-0.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/pba3h11aso/library/adaptive_type/0.2.3/adaptive_type-0.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pba3h11aso/library/ew32_base/0.0.2/ew32_base-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ew32_base-0.0.2.tar.gz",
+    "size_bytes": 6542,
+    "sha256": "ffd05e4a71b49e6b12017d8c36a6bf6ed1eccac60c6cb34d013f6f1fa379c869",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pba3h11aso/library/ew32_base/0.0.2/ew32_base-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/pba3h11aso/library/ew32_base/0.0.2/ew32_base-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pba3h11aso/library/ew32_devicem/0.0.2/ew32_devicem-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ew32_devicem-0.0.2.tar.gz",
+    "size_bytes": 19341,
+    "sha256": "e11007053cab20f2f7f22eb399d428c7b9606037e10fca410904e0fca9a962ca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pba3h11aso/library/ew32_devicem/0.0.2/ew32_devicem-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/pba3h11aso/library/ew32_devicem/0.0.2/ew32_devicem-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pba3h11aso/library/ew32_devicem/0.0.3/ew32_devicem-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ew32_devicem-0.0.3.tar.gz",
+    "size_bytes": 19342,
+    "sha256": "a457b64e140f781f4adabe730aa3cbc16fa0b9ebcdbb2ce02597aea13004d3a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pba3h11aso/library/ew32_devicem/0.0.3/ew32_devicem-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/pba3h11aso/library/ew32_devicem/0.0.3/ew32_devicem-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pba3h11aso/library/ew32_devicem/0.0.4/ew32_devicem-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ew32_devicem-0.0.4.tar.gz",
+    "size_bytes": 20161,
+    "sha256": "a9ad6c80405177bf4e6571799675e715107ec474488cc6ab868098e8161d3402",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pba3h11aso/library/ew32_devicem/0.0.4/ew32_devicem-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/pba3h11aso/library/ew32_devicem/0.0.4/ew32_devicem-0.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

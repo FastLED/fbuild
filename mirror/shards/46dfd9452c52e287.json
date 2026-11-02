@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dobotopensource",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dobotopensource/library/AIStarter/1.0.1/AIStarter-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AIStarter-1.0.1.tar.gz",
+    "size_bytes": 23201,
+    "sha256": "7a6d544e013ec0733b18f639b4cce6a98f29d32dacf1b7145dfb76c8bccc7c5e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dobotopensource/library/AIStarter/1.0.1/AIStarter-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dobotopensource/library/AIStarter/1.0.1/AIStarter-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

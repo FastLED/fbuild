@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/danielsaromo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "danielsaromo/library/PyDuinoBridge/1.0.0/PyDuinoBridge-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PyDuinoBridge-1.0.0.tar.gz",
+    "size_bytes": 14076,
+    "sha256": "9b384f6a46058176507d5a45809edd51d1a7882d4f323b92af78829b9ec2840c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/danielsaromo/library/PyDuinoBridge/1.0.0/PyDuinoBridge-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/danielsaromo/library/PyDuinoBridge/1.0.0/PyDuinoBridge-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

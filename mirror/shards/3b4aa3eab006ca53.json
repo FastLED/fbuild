@@ -1,0 +1,165 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/svenrosvall",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "svenrosvall/library/SignalControl/2.3.0/SignalControl-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SignalControl-2.3.0.tar.gz",
+    "size_bytes": 12524,
+    "sha256": "888559682f79c62a964fb2d0bb697757ce18d90bb68cb89a40935314a2231af0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/svenrosvall/library/SignalControl/2.3.0/SignalControl-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/svenrosvall/library/SignalControl/2.3.0/SignalControl-2.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "svenrosvall/library/VCAN2515/3.0.0/VCAN2515-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VCAN2515-3.0.0.tar.gz",
+    "size_bytes": 13397,
+    "sha256": "71e181c31360ec58213b926304db0954c4eb27f32a160b9837c7bb4982cc953f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/svenrosvall/library/VCAN2515/3.0.0/VCAN2515-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/svenrosvall/library/VCAN2515/3.0.0/VCAN2515-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "svenrosvall/library/VCAN2515/3.1.0/VCAN2515-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VCAN2515-3.1.0.tar.gz",
+    "size_bytes": 13944,
+    "sha256": "0242e5bfeed8dc225644660f849172aa623395e39b9478986adf49b5ade48091",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/svenrosvall/library/VCAN2515/3.1.0/VCAN2515-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/svenrosvall/library/VCAN2515/3.1.0/VCAN2515-3.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "svenrosvall/library/VLCB/1.0/VLCB-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VLCB-1.0.tar.gz",
+    "size_bytes": 70164,
+    "sha256": "37b49995c91fecfe589eedceb7214cdeedb1241620f93b86a77cd9bd09a9b33c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/svenrosvall/library/VLCB/1.0/VLCB-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/svenrosvall/library/VLCB/1.0/VLCB-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "svenrosvall/library/VLCB/1.1.0/VLCB-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VLCB-1.1.0.tar.gz",
+    "size_bytes": 70789,
+    "sha256": "9bb20532dd054fa9c0d3a635a6a1c5622294c68e82c2d3841b06fdcb0d472d6b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/svenrosvall/library/VLCB/1.1.0/VLCB-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/svenrosvall/library/VLCB/1.1.0/VLCB-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "svenrosvall/library/VLCB/2.0.0/VLCB-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VLCB-2.0.0.tar.gz",
+    "size_bytes": 72722,
+    "sha256": "cb7e51bc8772fd1391e243817fbb31314f669f83beb259542ddb6fc5c81db1f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/svenrosvall/library/VLCB/2.0.0/VLCB-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/svenrosvall/library/VLCB/2.0.0/VLCB-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "svenrosvall/library/VLCB/2.1.0/VLCB-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VLCB-2.1.0.tar.gz",
+    "size_bytes": 73134,
+    "sha256": "4cafb246f0178f9b0ae068cfc94d9123736b1995f49ae8de1fda5753b893808f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/svenrosvall/library/VLCB/2.1.0/VLCB-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/svenrosvall/library/VLCB/2.1.0/VLCB-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "svenrosvall/library/VLCB/2.2.0/VLCB-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VLCB-2.2.0.tar.gz",
+    "size_bytes": 75317,
+    "sha256": "76e6af420cf0030a591b4467e64843e230798d201180f40a5e9281c99a8aa28b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/svenrosvall/library/VLCB/2.2.0/VLCB-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/svenrosvall/library/VLCB/2.2.0/VLCB-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "svenrosvall/library/VLCB/3.0.0/VLCB-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VLCB-3.0.0.tar.gz",
+    "size_bytes": 152867,
+    "sha256": "bb052c487fd8a4185eb61f2f28f490ba62ce56ff04f0c727fc4ccc1276202bec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/svenrosvall/library/VLCB/3.0.0/VLCB-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/svenrosvall/library/VLCB/3.0.0/VLCB-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "svenrosvall/library/VLCB/3.0.1/VLCB-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VLCB-3.0.1.tar.gz",
+    "size_bytes": 152894,
+    "sha256": "6290d953a6af6170beaa25a234b14bf4c78b771752a499a87acae6fb30650f6e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/svenrosvall/library/VLCB/3.0.1/VLCB-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/svenrosvall/library/VLCB/3.0.1/VLCB-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "svenrosvall/library/VLCB/3.1.0/VLCB-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VLCB-3.1.0.tar.gz",
+    "size_bytes": 154567,
+    "sha256": "770c594f928bd14be6e67379be48d6f1a4799349495755e18200ec987fdf44e7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/svenrosvall/library/VLCB/3.1.0/VLCB-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/svenrosvall/library/VLCB/3.1.0/VLCB-3.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "svenrosvall/library/VLCB/3.2.0/VLCB-3.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VLCB-3.2.0.tar.gz",
+    "size_bytes": 154868,
+    "sha256": "7d3c0a212a6bc24003c01f49047047d884765606dc107f50932bc4378d69c41f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/svenrosvall/library/VLCB/3.2.0/VLCB-3.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/svenrosvall/library/VLCB/3.2.0/VLCB-3.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

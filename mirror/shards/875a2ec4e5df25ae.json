@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-lipoyang",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-lipoyang/library/BLE_API/0.0.0+sha.f2de8009b969/BLE_API-0.0.0+sha.f2de8009b969.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLE_API-0.0.0+sha.f2de8009b969.tar.gz",
+    "size_bytes": 22620,
+    "sha256": "420d214a6d543f80c1b8b8d82ec545360698aaedcd059469f95450dae2fa812c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-lipoyang/library/BLE_API/0.0.0%2Bsha.f2de8009b969/BLE_API-0.0.0%2Bsha.f2de8009b969.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-lipoyang/library/BLE_API/0.0.0%2Bsha.f2de8009b969/BLE_API-0.0.0%2Bsha.f2de8009b969.tar.gz"
+    ]
+   }
+  }
+ ]
+}

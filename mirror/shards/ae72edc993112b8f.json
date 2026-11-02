@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/morcibacsi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "morcibacsi/library/Atmel%20TSS463C%20VAN%20bus%20Datalink%20Controller%20library/2.0.2/AtmelTSS463CVANbusDatalinkControllerlibrary-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AtmelTSS463CVANbusDatalinkControllerlibrary-2.0.2.tar.gz",
+    "size_bytes": 33762,
+    "sha256": "0e6e63736014f11e67cc4a0db30404c4bf237b55d4f805f0947260cbd9e4d983",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/morcibacsi/library/Atmel%2520TSS463C%2520VAN%2520bus%2520Datalink%2520Controller%2520library/2.0.2/AtmelTSS463CVANbusDatalinkControllerlibrary-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/morcibacsi/library/Atmel%20TSS463C%20VAN%20bus%20Datalink%20Controller%20library/2.0.2/AtmelTSS463CVANbusDatalinkControllerlibrary-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "morcibacsi/library/Atmel%20TSS463C%20VAN%20bus%20Datalink%20Controller%20library/2.0.3/AtmelTSS463CVANbusDatalinkControllerlibrary-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AtmelTSS463CVANbusDatalinkControllerlibrary-2.0.3.tar.gz",
+    "size_bytes": 33783,
+    "sha256": "dcbf766fbb5a20c677e690f4c519fe62906772d80f760e28c787c1f04f1ed58e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/morcibacsi/library/Atmel%2520TSS463C%2520VAN%2520bus%2520Datalink%2520Controller%2520library/2.0.3/AtmelTSS463CVANbusDatalinkControllerlibrary-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/morcibacsi/library/Atmel%20TSS463C%20VAN%20bus%20Datalink%20Controller%20library/2.0.3/AtmelTSS463CVANbusDatalinkControllerlibrary-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "morcibacsi/library/ESP32%20RMT%20Peripheral%20VAN%20bus%20reader%20library/2.0.2/ESP32RMTPeripheralVANbusreaderlibrary-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32RMTPeripheralVANbusreaderlibrary-2.0.2.tar.gz",
+    "size_bytes": 6531,
+    "sha256": "dd57666c33306a4bfcefa89c5c15a19f578cf830d638502e021e4f0e5f7b4214",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/morcibacsi/library/ESP32%2520RMT%2520Peripheral%2520VAN%2520bus%2520reader%2520library/2.0.2/ESP32RMTPeripheralVANbusreaderlibrary-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/morcibacsi/library/ESP32%20RMT%20Peripheral%20VAN%20bus%20reader%20library/2.0.2/ESP32RMTPeripheralVANbusreaderlibrary-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "morcibacsi/library/Midea%20AC%20infrared%20remote%20controller%20with%20ESP32%20RMT%20Peripheral/1.0.0/MideaACinfraredremotecontrollerwithESP32RMTPeripheral-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MideaACinfraredremotecontrollerwithESP32RMTPeripheral-1.0.0.tar.gz",
+    "size_bytes": 17029,
+    "sha256": "3b2b96a1d4dbb04b50a721ad9020ac4d9031cd2a7fdafb2b9c7e5073a480fd21",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/morcibacsi/library/Midea%2520AC%2520infrared%2520remote%2520controller%2520with%2520ESP32%2520RMT%2520Peripheral/1.0.0/MideaACinfraredremotecontrollerwithESP32RMTPeripheral-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/morcibacsi/library/Midea%20AC%20infrared%20remote%20controller%20with%20ESP32%20RMT%20Peripheral/1.0.0/MideaACinfraredremotecontrollerwithESP32RMTPeripheral-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

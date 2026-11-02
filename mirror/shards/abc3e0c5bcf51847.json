@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ilkaykozak",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ilkaykozak/library/RadioHead-148/0.0.0+sha.b7641da2b203/RadioHead-148-0.0.0+sha.b7641da2b203.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RadioHead-148-0.0.0+sha.b7641da2b203.tar.gz",
+    "size_bytes": 151170,
+    "sha256": "fdc42a54fe811002193ae6138d029e96891e8e3a5eabb8a4bdd0d121ea261ba0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ilkaykozak/library/RadioHead-148/0.0.0%2Bsha.b7641da2b203/RadioHead-148-0.0.0%2Bsha.b7641da2b203.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ilkaykozak/library/RadioHead-148/0.0.0%2Bsha.b7641da2b203/RadioHead-148-0.0.0%2Bsha.b7641da2b203.tar.gz"
+    ]
+   }
+  }
+ ]
+}

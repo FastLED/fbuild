@@ -1,0 +1,230 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-wiredhome",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-wiredhome/library/CANMessage/0.0.0-alpha+sha.f0ce97992c/CANMessage-0.0.0-alphasha.f0ce97992c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CANMessage-0.0.0-alphasha.f0ce97992c.tar.gz",
+    "size_bytes": 3311,
+    "sha256": "fd792802cbd62e80a4620e598679335febede29e745bd8f8351463bc9a05f16f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wiredhome/library/CANMessage/0.0.0-alpha%2Bsha.f0ce97992c/CANMessage-0.0.0-alphasha.f0ce97992c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wiredhome/library/CANMessage/0.0.0-alpha%2Bsha.f0ce97992c/CANMessage-0.0.0-alphasha.f0ce97992c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wiredhome/library/CANPort/0.0.0-alpha+sha.7b81b19d9b/CANPort-0.0.0-alphasha.7b81b19d9b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CANPort-0.0.0-alphasha.7b81b19d9b.tar.gz",
+    "size_bytes": 5614,
+    "sha256": "b98d9fe0652409c064db24f15b3b1b614c044e34f328bf798e9d3f42935949c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wiredhome/library/CANPort/0.0.0-alpha%2Bsha.7b81b19d9b/CANPort-0.0.0-alphasha.7b81b19d9b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wiredhome/library/CANPort/0.0.0-alpha%2Bsha.7b81b19d9b/CANPort-0.0.0-alphasha.7b81b19d9b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wiredhome/library/CANQueue/0.0.0-alpha+sha.7cf2326033/CANQueue-0.0.0-alphasha.7cf2326033.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CANQueue-0.0.0-alphasha.7cf2326033.tar.gz",
+    "size_bytes": 2457,
+    "sha256": "2b3c28429ce5daa69715a07a2f54fd4affaba1d0496fce901da8b5885fa3ea9a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wiredhome/library/CANQueue/0.0.0-alpha%2Bsha.7cf2326033/CANQueue-0.0.0-alphasha.7cf2326033.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wiredhome/library/CANQueue/0.0.0-alpha%2Bsha.7cf2326033/CANQueue-0.0.0-alphasha.7cf2326033.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wiredhome/library/CANUtilities/0.0.0-alpha+sha.446f88747e/CANUtilities-0.0.0-alphasha.446f88747e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CANUtilities-0.0.0-alphasha.446f88747e.tar.gz",
+    "size_bytes": 884,
+    "sha256": "221aa66e736de92ac037759dcf402e18bb556095e645b8054af9a52a3fc4e870",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wiredhome/library/CANUtilities/0.0.0-alpha%2Bsha.446f88747e/CANUtilities-0.0.0-alphasha.446f88747e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wiredhome/library/CANUtilities/0.0.0-alpha%2Bsha.446f88747e/CANUtilities-0.0.0-alphasha.446f88747e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wiredhome/library/CommandProcessor/0.0.0+sha.abba63b079fb/CommandProcessor-0.0.0+sha.abba63b079fb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CommandProcessor-0.0.0+sha.abba63b079fb.tar.gz",
+    "size_bytes": 11863,
+    "sha256": "2579c2e77364bddd05475920cf5e3a5b3001066439f35dcd7456abd08ba41892",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wiredhome/library/CommandProcessor/0.0.0%2Bsha.abba63b079fb/CommandProcessor-0.0.0%2Bsha.abba63b079fb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wiredhome/library/CommandProcessor/0.0.0%2Bsha.abba63b079fb/CommandProcessor-0.0.0%2Bsha.abba63b079fb.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wiredhome/library/FlashFileSystem/0.0.0+sha.689c997b57bb/FlashFileSystem-0.0.0+sha.689c997b57bb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FlashFileSystem-0.0.0+sha.689c997b57bb.tar.gz",
+    "size_bytes": 9163,
+    "sha256": "46dbabbbb33a255089b1e357c26ed632761a0d282af1cf1cc6b1dd698896c5de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wiredhome/library/FlashFileSystem/0.0.0%2Bsha.689c997b57bb/FlashFileSystem-0.0.0%2Bsha.689c997b57bb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wiredhome/library/FlashFileSystem/0.0.0%2Bsha.689c997b57bb/FlashFileSystem-0.0.0%2Bsha.689c997b57bb.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wiredhome/library/IniManager/0.0.0+sha.4e7fc08a0fea/IniManager-0.0.0+sha.4e7fc08a0fea.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IniManager-0.0.0+sha.4e7fc08a0fea.tar.gz",
+    "size_bytes": 8033,
+    "sha256": "4fba43fe65af24d52952f379e91be7bf7a01638d1b7029a5f6c4ce2996973b8d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wiredhome/library/IniManager/0.0.0%2Bsha.4e7fc08a0fea/IniManager-0.0.0%2Bsha.4e7fc08a0fea.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wiredhome/library/IniManager/0.0.0%2Bsha.4e7fc08a0fea/IniManager-0.0.0%2Bsha.4e7fc08a0fea.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wiredhome/library/LifeRules/0.0.0+sha.860ae49fedb7/LifeRules-0.0.0+sha.860ae49fedb7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LifeRules-0.0.0+sha.860ae49fedb7.tar.gz",
+    "size_bytes": 4295,
+    "sha256": "62ea10839e839d225a53466d0f01ba4a608cc65749780e6e870d5c8697a0a671",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wiredhome/library/LifeRules/0.0.0%2Bsha.860ae49fedb7/LifeRules-0.0.0%2Bsha.860ae49fedb7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wiredhome/library/LifeRules/0.0.0%2Bsha.860ae49fedb7/LifeRules-0.0.0%2Bsha.860ae49fedb7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wiredhome/library/MSCFileSystem/0.0.0+sha.4072b4b1c6f4/MSCFileSystem-0.0.0+sha.4072b4b1c6f4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MSCFileSystem-0.0.0+sha.4072b4b1c6f4.tar.gz",
+    "size_bytes": 12624,
+    "sha256": "df057bd88696e3aded802e39f898e43f3056dc462b5c215f625a17b5375a54fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wiredhome/library/MSCFileSystem/0.0.0%2Bsha.4072b4b1c6f4/MSCFileSystem-0.0.0%2Bsha.4072b4b1c6f4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wiredhome/library/MSCFileSystem/0.0.0%2Bsha.4072b4b1c6f4/MSCFileSystem-0.0.0%2Bsha.4072b4b1c6f4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wiredhome/library/NWSWeather/0.0.0+sha.29257dc4c7aa/NWSWeather-0.0.0+sha.29257dc4c7aa.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NWSWeather-0.0.0+sha.29257dc4c7aa.tar.gz",
+    "size_bytes": 7697,
+    "sha256": "3aadf69ecf35ba0bd51d242b8acc6024c14355dddd938eda110ac0a26f290126",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wiredhome/library/NWSWeather/0.0.0%2Bsha.29257dc4c7aa/NWSWeather-0.0.0%2Bsha.29257dc4c7aa.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wiredhome/library/NWSWeather/0.0.0%2Bsha.29257dc4c7aa/NWSWeather-0.0.0%2Bsha.29257dc4c7aa.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wiredhome/library/SWUpdate/0.0.0+sha.f67a7f54c173/SWUpdate-0.0.0+sha.f67a7f54c173.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SWUpdate-0.0.0+sha.f67a7f54c173.tar.gz",
+    "size_bytes": 7279,
+    "sha256": "48de8ac9b600f2560ceab5a8f2d162698c4f690ab1837e0b7f8cff81dcd05436",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wiredhome/library/SWUpdate/0.0.0%2Bsha.f67a7f54c173/SWUpdate-0.0.0%2Bsha.f67a7f54c173.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wiredhome/library/SWUpdate/0.0.0%2Bsha.f67a7f54c173/SWUpdate-0.0.0%2Bsha.f67a7f54c173.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wiredhome/library/TimeInterface/0.0.0+sha.e49b25bdbfa5/TimeInterface-0.0.0+sha.e49b25bdbfa5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TimeInterface-0.0.0+sha.e49b25bdbfa5.tar.gz",
+    "size_bytes": 17946,
+    "sha256": "903913223ec4f595cd572e3e91c6eca3c5da99c6907c6545fd60aa7a47874e9d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wiredhome/library/TimeInterface/0.0.0%2Bsha.e49b25bdbfa5/TimeInterface-0.0.0%2Bsha.e49b25bdbfa5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wiredhome/library/TimeInterface/0.0.0%2Bsha.e49b25bdbfa5/TimeInterface-0.0.0%2Bsha.e49b25bdbfa5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wiredhome/library/TimeManagement/0.0.0+sha.a517fee06e2e/TimeManagement-0.0.0+sha.a517fee06e2e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TimeManagement-0.0.0+sha.a517fee06e2e.tar.gz",
+    "size_bytes": 5519,
+    "sha256": "c24bf1b5de235d9c1f903276b97424d78b993488ad173ee538f66cd41fb6d39f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wiredhome/library/TimeManagement/0.0.0%2Bsha.a517fee06e2e/TimeManagement-0.0.0%2Bsha.a517fee06e2e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wiredhome/library/TimeManagement/0.0.0%2Bsha.a517fee06e2e/TimeManagement-0.0.0%2Bsha.a517fee06e2e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wiredhome/library/Utilities/0.0.0+sha.7c744796fa67/Utilities-0.0.0+sha.7c744796fa67.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Utilities-0.0.0+sha.7c744796fa67.tar.gz",
+    "size_bytes": 3549,
+    "sha256": "255afbfe6f4aae021a5f67db86864bf9dbf013d020ac4abacee8e883979c13da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wiredhome/library/Utilities/0.0.0%2Bsha.7c744796fa67/Utilities-0.0.0%2Bsha.7c744796fa67.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wiredhome/library/Utilities/0.0.0%2Bsha.7c744796fa67/Utilities-0.0.0%2Bsha.7c744796fa67.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wiredhome/library/Watchdog/0.0.0+sha.e0f547e22dd5/Watchdog-0.0.0+sha.e0f547e22dd5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Watchdog-0.0.0+sha.e0f547e22dd5.tar.gz",
+    "size_bytes": 2931,
+    "sha256": "cdfc2c185d342331b104b7f172b4f3c1f454238c081cd94cf0c080ca91afa284",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wiredhome/library/Watchdog/0.0.0%2Bsha.e0f547e22dd5/Watchdog-0.0.0%2Bsha.e0f547e22dd5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wiredhome/library/Watchdog/0.0.0%2Bsha.e0f547e22dd5/Watchdog-0.0.0%2Bsha.e0f547e22dd5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wiredhome/library/WiflyInterface/0.0.0+sha.a03a5dade5b5/WiflyInterface-0.0.0+sha.a03a5dade5b5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiflyInterface-0.0.0+sha.a03a5dade5b5.tar.gz",
+    "size_bytes": 19383,
+    "sha256": "136952bdb9b1a7e0d2cb0ed8e93d82c0a61c8f60d8b089eb6f638f613295e8da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wiredhome/library/WiflyInterface/0.0.0%2Bsha.a03a5dade5b5/WiflyInterface-0.0.0%2Bsha.a03a5dade5b5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wiredhome/library/WiflyInterface/0.0.0%2Bsha.a03a5dade5b5/WiflyInterface-0.0.0%2Bsha.a03a5dade5b5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wiredhome/library/menu/0.0.0+sha.b59d6f7c1e68/menu-0.0.0+sha.b59d6f7c1e68.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "menu-0.0.0+sha.b59d6f7c1e68.tar.gz",
+    "size_bytes": 4656,
+    "sha256": "bf28974208bd7830ffa9e5cfd929ce67081f4749c3603e953d149e1321657289",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wiredhome/library/menu/0.0.0%2Bsha.b59d6f7c1e68/menu-0.0.0%2Bsha.b59d6f7c1e68.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wiredhome/library/menu/0.0.0%2Bsha.b59d6f7c1e68/menu-0.0.0%2Bsha.b59d6f7c1e68.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mh-tobi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mh-tobi/library/MCP2515/2.0.0/MCP2515-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP2515-2.0.0.tar.gz",
+    "size_bytes": 33502,
+    "sha256": "cbffa687b5636dce3d687e3cea6c9208b273a3959bc713c78ec6ac528b41f2a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mh-tobi/library/MCP2515/2.0.0/MCP2515-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mh-tobi/library/MCP2515/2.0.0/MCP2515-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mh-tobi/library/MCP2515/2.0.1/MCP2515-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP2515-2.0.1.tar.gz",
+    "size_bytes": 33437,
+    "sha256": "0ebb45a187646c0494f9500f2dffe17d90e04ae3cf8646d2d0c9e8765045551e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mh-tobi/library/MCP2515/2.0.1/MCP2515-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mh-tobi/library/MCP2515/2.0.1/MCP2515-2.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

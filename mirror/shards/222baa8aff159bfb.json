@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-narshu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-narshu/library/Eurobot_2012_shared/0.0.0+sha.434fd09723be/Eurobot_2012_shared-0.0.0+sha.434fd09723be.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Eurobot_2012_shared-0.0.0+sha.434fd09723be.tar.gz",
+    "size_bytes": 20419,
+    "sha256": "dfa895ea58ecabff18e953591e08915c640692ff8ea371d234e4a836379656f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-narshu/library/Eurobot_2012_shared/0.0.0%2Bsha.434fd09723be/Eurobot_2012_shared-0.0.0%2Bsha.434fd09723be.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-narshu/library/Eurobot_2012_shared/0.0.0%2Bsha.434fd09723be/Eurobot_2012_shared-0.0.0%2Bsha.434fd09723be.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-narshu/library/Kalman/0.0.0+sha.8aa491f77a0b/Kalman-0.0.0+sha.8aa491f77a0b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Kalman-0.0.0+sha.8aa491f77a0b.tar.gz",
+    "size_bytes": 15452,
+    "sha256": "6c28e6a6681a1daeed3e6e87ad1fad82dcf2c24b9e5abbaa48f7b393df7a4446",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-narshu/library/Kalman/0.0.0%2Bsha.8aa491f77a0b/Kalman-0.0.0%2Bsha.8aa491f77a0b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-narshu/library/Kalman/0.0.0%2Bsha.8aa491f77a0b/Kalman-0.0.0%2Bsha.8aa491f77a0b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-narshu/library/Sonar/0.0.0+sha.0370ea94b64a/Sonar-0.0.0+sha.0370ea94b64a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sonar-0.0.0+sha.0370ea94b64a.tar.gz",
+    "size_bytes": 10594,
+    "sha256": "2c95fd03942647853fa0cbec7cb7d179320b497a9cca5a5fc3419573f477469e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-narshu/library/Sonar/0.0.0%2Bsha.0370ea94b64a/Sonar-0.0.0%2Bsha.0370ea94b64a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-narshu/library/Sonar/0.0.0%2Bsha.0370ea94b64a/Sonar-0.0.0%2Bsha.0370ea94b64a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-narshu/library/geometryfuncs/0.0.0+sha.886118d8488d/geometryfuncs-0.0.0+sha.886118d8488d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "geometryfuncs-0.0.0+sha.886118d8488d.tar.gz",
+    "size_bytes": 878,
+    "sha256": "d8f327b258f8ba6ed56fe90414d1f439ebe2cee7e3996bbc322829431f98b482",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-narshu/library/geometryfuncs/0.0.0%2Bsha.886118d8488d/geometryfuncs-0.0.0%2Bsha.886118d8488d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-narshu/library/geometryfuncs/0.0.0%2Bsha.886118d8488d/geometryfuncs-0.0.0%2Bsha.886118d8488d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-narshu/library/rtos/0.0.0+sha.e477ba491a3b/rtos-0.0.0+sha.e477ba491a3b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "rtos-0.0.0+sha.e477ba491a3b.tar.gz",
+    "size_bytes": 63343,
+    "sha256": "59ee1e26a6fb6819fd1f845a9180e2f052803d396428924a61e3920eb4815ff7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-narshu/library/rtos/0.0.0%2Bsha.e477ba491a3b/rtos-0.0.0%2Bsha.e477ba491a3b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-narshu/library/rtos/0.0.0%2Bsha.e477ba491a3b/rtos-0.0.0%2Bsha.e477ba491a3b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-narshu/library/system/0.0.0+sha.b35c6c9aad45/system-0.0.0+sha.b35c6c9aad45.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "system-0.0.0+sha.b35c6c9aad45.tar.gz",
+    "size_bytes": 1353,
+    "sha256": "99cfed3c6ab71ce81916531790dadf8cd2e88a5a337ea31c564fcb0b85ed637c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-narshu/library/system/0.0.0%2Bsha.b35c6c9aad45/system-0.0.0%2Bsha.b35c6c9aad45.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-narshu/library/system/0.0.0%2Bsha.b35c6c9aad45/system-0.0.0%2Bsha.b35c6c9aad45.tar.gz"
+    ]
+   }
+  }
+ ]
+}

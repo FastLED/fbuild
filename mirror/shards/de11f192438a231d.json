@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/msquirogac",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "msquirogac/library/pio-debug/1.0/pio-debug-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pio-debug-1.0.tar.gz",
+    "size_bytes": 662,
+    "sha256": "b063791eac35288e3a0e35fa344861f79feae6650de752ca00b2a1c1a40c61d7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/msquirogac/library/pio-debug/1.0/pio-debug-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/msquirogac/library/pio-debug/1.0/pio-debug-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

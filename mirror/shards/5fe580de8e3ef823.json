@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/neittien0110",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "neittien0110/library/Soict_IoT_Labs/1.1.1/Soict_IoT_Labs-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Soict_IoT_Labs-1.1.1.tar.gz",
+    "size_bytes": 21863,
+    "sha256": "bbb905076bef15af156b9765c522d170db91b3f3ff9957dac0218512cdadca62",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/neittien0110/library/Soict_IoT_Labs/1.1.1/Soict_IoT_Labs-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/neittien0110/library/Soict_IoT_Labs/1.1.1/Soict_IoT_Labs-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "neittien0110/library/siot_core_lib/2.2.0/siot_core_lib-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "siot_core_lib-2.2.0.tar.gz",
+    "size_bytes": 13698,
+    "sha256": "6d7b282251ef09aa30ddf58bd610fea0a2eb795e6fea81732b31cf340e44b8d7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/neittien0110/library/siot_core_lib/2.2.0/siot_core_lib-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/neittien0110/library/siot_core_lib/2.2.0/siot_core_lib-2.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

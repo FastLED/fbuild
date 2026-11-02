@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/shourov-paul",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "shourov-paul/library/AnimatedroboEye/1.0.0/AnimatedroboEye-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AnimatedroboEye-1.0.0.tar.gz",
+    "size_bytes": 17195,
+    "sha256": "4d90775a7cba57742482a331c1e24eed1a822407c14dec09684bac9369604362",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shourov-paul/library/AnimatedroboEye/1.0.0/AnimatedroboEye-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/shourov-paul/library/AnimatedroboEye/1.0.0/AnimatedroboEye-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shourov-paul/library/AnimatedroboEye/1.2.1/AnimatedroboEye-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AnimatedroboEye-1.2.1.tar.gz",
+    "size_bytes": 18842,
+    "sha256": "fe3ef8fd1753bcffb037c40bbf5d46e6f2e0b6046ccc7a2bea22b9583ce14ad5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shourov-paul/library/AnimatedroboEye/1.2.1/AnimatedroboEye-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/shourov-paul/library/AnimatedroboEye/1.2.1/AnimatedroboEye-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shourov-paul/library/TFT_RoboEyes/1.0.0/TFT_RoboEyes-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFT_RoboEyes-1.0.0.tar.gz",
+    "size_bytes": 27201,
+    "sha256": "69110bb531745442ab2515773508909ff3ab54cf79833b6ab2c460a2de2bf892",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shourov-paul/library/TFT_RoboEyes/1.0.0/TFT_RoboEyes-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/shourov-paul/library/TFT_RoboEyes/1.0.0/TFT_RoboEyes-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/verdanatech",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "verdanatech/library/glpi_esp8266/0.0.2/glpi_esp8266-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "glpi_esp8266-0.0.2.tar.gz",
+    "size_bytes": 17359,
+    "sha256": "bfed199d9e0f910f3770a302d5c05a63088b4d45c8e0336ee2110c33769eac1e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/verdanatech/library/glpi_esp8266/0.0.2/glpi_esp8266-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/verdanatech/library/glpi_esp8266/0.0.2/glpi_esp8266-0.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

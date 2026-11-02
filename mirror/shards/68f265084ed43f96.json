@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/corex-iot",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "corex-iot/library/CoreX/1.2.6/CoreX-1.2.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CoreX-1.2.6.tar.gz",
+    "size_bytes": 33911,
+    "sha256": "abb7f57b28b26a632970dae9a01da5ba3105f6639923b11d8378c012c7b80d88",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/corex-iot/library/CoreX/1.2.6/CoreX-1.2.6.tar.gz",
+     "https://dl.registry.platformio.org/download/corex-iot/library/CoreX/1.2.6/CoreX-1.2.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

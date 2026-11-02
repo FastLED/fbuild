@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/iavorvel",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "iavorvel/library/MyLD2410/1.0.13/MyLD2410-1.0.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MyLD2410-1.0.13.tar.gz",
+    "size_bytes": 11351,
+    "sha256": "eabc143363615078b59a8073d6791127685fa24eb916254ce414eb5bd32d5270",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iavorvel/library/MyLD2410/1.0.13/MyLD2410-1.0.13.tar.gz",
+     "https://dl.registry.platformio.org/download/iavorvel/library/MyLD2410/1.0.13/MyLD2410-1.0.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "iavorvel/library/MyLD2410/1.2.5/MyLD2410-1.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MyLD2410-1.2.5.tar.gz",
+    "size_bytes": 14068,
+    "sha256": "33f53aae957421b221a8e4cfb841f5cbc39e9b0c5c2cfdd2a2b846d520979ae3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iavorvel/library/MyLD2410/1.2.5/MyLD2410-1.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/iavorvel/library/MyLD2410/1.2.5/MyLD2410-1.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "iavorvel/library/MyLD2410/1.2.6/MyLD2410-1.2.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MyLD2410-1.2.6.tar.gz",
+    "size_bytes": 14125,
+    "sha256": "aa849bb8df27a90dad65e07a1ee8c0642c943743f78bf3a733e4134a31826053",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iavorvel/library/MyLD2410/1.2.6/MyLD2410-1.2.6.tar.gz",
+     "https://dl.registry.platformio.org/download/iavorvel/library/MyLD2410/1.2.6/MyLD2410-1.2.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "iavorvel/library/MyLD2410/1.2.7/MyLD2410-1.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MyLD2410-1.2.7.tar.gz",
+    "size_bytes": 15046,
+    "sha256": "2550de58087171bc52a03d21a82f0e0116e8726509692ed93be280507b17d181",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iavorvel/library/MyLD2410/1.2.7/MyLD2410-1.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/iavorvel/library/MyLD2410/1.2.7/MyLD2410-1.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "iavorvel/library/MyLD2410/1.2.8/MyLD2410-1.2.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MyLD2410-1.2.8.tar.gz",
+    "size_bytes": 15206,
+    "sha256": "c72c38d14e1e16270cb852957d3a79078e1042dcf2f69504e24685f612c4efae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iavorvel/library/MyLD2410/1.2.8/MyLD2410-1.2.8.tar.gz",
+     "https://dl.registry.platformio.org/download/iavorvel/library/MyLD2410/1.2.8/MyLD2410-1.2.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "iavorvel/library/My_Button/1.0.3/My_Button-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "My_Button-1.0.3.tar.gz",
+    "size_bytes": 4302,
+    "sha256": "50d244e2416d6848b047393fba1b6f622e9c299b2f4c0d0c734da027b9074ee9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iavorvel/library/My_Button/1.0.3/My_Button-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/iavorvel/library/My_Button/1.0.3/My_Button-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

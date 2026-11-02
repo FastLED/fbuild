@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/neuropawn",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "neuropawn/library/NeuroPawn/1.0.0/NeuroPawn-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeuroPawn-1.0.0.tar.gz",
+    "size_bytes": 19026,
+    "sha256": "dbcc5b57879b9d39250457012d8a2e1d09f6d2eb3d0171c535f6f2381709358b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/neuropawn/library/NeuroPawn/1.0.0/NeuroPawn-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/neuropawn/library/NeuroPawn/1.0.0/NeuroPawn-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "neuropawn/library/NeuroPawn/1.0.1/NeuroPawn-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeuroPawn-1.0.1.tar.gz",
+    "size_bytes": 19259,
+    "sha256": "3d5dbbdb52de0d9b3ad445420c75a35a43b0928bedfa441e1954d8f2d5c9e002",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/neuropawn/library/NeuroPawn/1.0.1/NeuroPawn-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/neuropawn/library/NeuroPawn/1.0.1/NeuroPawn-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "neuropawn/library/NeuroPawn/1.0.2/NeuroPawn-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeuroPawn-1.0.2.tar.gz",
+    "size_bytes": 19430,
+    "sha256": "11fc4c4206a2c24b9d629d74932b8bd1854f6778fd56cbdffea1b3f5f8703111",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/neuropawn/library/NeuroPawn/1.0.2/NeuroPawn-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/neuropawn/library/NeuroPawn/1.0.2/NeuroPawn-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "neuropawn/library/NeuroPawn/1.2.0/NeuroPawn-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeuroPawn-1.2.0.tar.gz",
+    "size_bytes": 23046,
+    "sha256": "2568abffc23a945720f0db52e79bc09a06ac24b445347d05f5fb378c2672bef3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/neuropawn/library/NeuroPawn/1.2.0/NeuroPawn-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/neuropawn/library/NeuroPawn/1.2.0/NeuroPawn-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

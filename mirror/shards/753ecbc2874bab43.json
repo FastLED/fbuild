@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-lucianovici",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-lucianovici/library/MAX44009/0.0.0+sha.1799f106738d/MAX44009-0.0.0+sha.1799f106738d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX44009-0.0.0+sha.1799f106738d.tar.gz",
+    "size_bytes": 2691,
+    "sha256": "3500979696865e88b4854f680ed4cd826fdf1f46e9c84514b8de7f6b7c66888b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-lucianovici/library/MAX44009/0.0.0%2Bsha.1799f106738d/MAX44009-0.0.0%2Bsha.1799f106738d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-lucianovici/library/MAX44009/0.0.0%2Bsha.1799f106738d/MAX44009-0.0.0%2Bsha.1799f106738d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-lucianovici/library/grove-air-quality-sensor/0.0.0+sha.38425a51906f/grove-air-quality-sensor-0.0.0+sha.38425a51906f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "grove-air-quality-sensor-0.0.0+sha.38425a51906f.tar.gz",
+    "size_bytes": 2459,
+    "sha256": "ef381ef384783f66d52e4d47ddf48a3bb5995ef188e51c705bac4e253c93e295",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-lucianovici/library/grove-air-quality-sensor/0.0.0%2Bsha.38425a51906f/grove-air-quality-sensor-0.0.0%2Bsha.38425a51906f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-lucianovici/library/grove-air-quality-sensor/0.0.0%2Bsha.38425a51906f/grove-air-quality-sensor-0.0.0%2Bsha.38425a51906f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jfredine",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jfredine/library/Adafruit%20MPU9250/1.0.0/AdafruitMPU9250-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AdafruitMPU9250-1.0.0.tar.gz",
+    "size_bytes": 15477,
+    "sha256": "1a265c4fe3297136c85ad200f2919e03e9050e434b5ae7a14a9ef7637f2d5c77",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jfredine/library/Adafruit%2520MPU9250/1.0.0/AdafruitMPU9250-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jfredine/library/Adafruit%20MPU9250/1.0.0/AdafruitMPU9250-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

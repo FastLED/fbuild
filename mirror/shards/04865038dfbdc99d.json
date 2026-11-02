@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/stubbydevs",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "stubbydevs/library/SM16380_DMA/0.2.0/SM16380_DMA-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SM16380_DMA-0.2.0.tar.gz",
+    "size_bytes": 2221373,
+    "sha256": "3c2eba65b9ffeab37215177b65ef610873c0038913c2e23c91f085c3a425d483",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stubbydevs/library/SM16380_DMA/0.2.0/SM16380_DMA-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stubbydevs/library/SM16380_DMA/0.2.0/SM16380_DMA-0.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

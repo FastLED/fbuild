@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/avdovin",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "avdovin/library/ESP%20MQTT%20Client/1.14.0/ESPMQTTClient-1.14.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPMQTTClient-1.14.0.tar.gz",
+    "size_bytes": 25676,
+    "sha256": "222e40174321415e69e464d8ee5fb69c1c548fa316ab2b7932de08822d9dd447",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/avdovin/library/ESP%2520MQTT%2520Client/1.14.0/ESPMQTTClient-1.14.0.tar.gz",
+     "https://dl.registry.platformio.org/download/avdovin/library/ESP%20MQTT%20Client/1.14.0/ESPMQTTClient-1.14.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "avdovin/library/HA%20MQTT%20Library/1.2.2/HAMQTTLibrary-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HAMQTTLibrary-1.2.2.tar.gz",
+    "size_bytes": 7370,
+    "sha256": "e7a23cb25c5500c924c4a65d92b418dbcf94cc0ec7ad17d6bc1763bd0ef5c4f3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/avdovin/library/HA%2520MQTT%2520Library/1.2.2/HAMQTTLibrary-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/avdovin/library/HA%20MQTT%20Library/1.2.2/HAMQTTLibrary-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "avdovin/library/MCP23017%20Arduino%20Library/1.1.1/MCP23017ArduinoLibrary-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP23017ArduinoLibrary-1.1.1.tar.gz",
+    "size_bytes": 10171,
+    "sha256": "a35a1450d0e23fec410e7a2edf557c8079d5a155ce48521abe636c30db0bd055",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/avdovin/library/MCP23017%2520Arduino%2520Library/1.1.1/MCP23017ArduinoLibrary-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/avdovin/library/MCP23017%20Arduino%20Library/1.1.1/MCP23017ArduinoLibrary-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "avdovin/library/MQTT%20Client/2.9/MQTTClient-2.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQTTClient-2.9.tar.gz",
+    "size_bytes": 13467,
+    "sha256": "69fbbc209684552445cecc4f5ff5847e6c3e300bf513eef8d2b8f575646eda24",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/avdovin/library/MQTT%2520Client/2.9/MQTTClient-2.9.tar.gz",
+     "https://dl.registry.platformio.org/download/avdovin/library/MQTT%20Client/2.9/MQTTClient-2.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

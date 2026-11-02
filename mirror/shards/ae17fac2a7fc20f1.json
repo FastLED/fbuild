@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/4211421036",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "4211421036/library/YF-S201%20Water%20Flow/1.0.0/YF-S201WaterFlow-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YF-S201WaterFlow-1.0.0.tar.gz",
+    "size_bytes": 3783,
+    "sha256": "be60b60a321378b2c36c1a71e48c5fdad54f7bacf4abe1e0ff61a5fd9b653cfa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/4211421036/library/YF-S201%2520Water%2520Flow/1.0.0/YF-S201WaterFlow-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/4211421036/library/YF-S201%20Water%20Flow/1.0.0/YF-S201WaterFlow-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "4211421036/library/githubiot/1.0.0/githubiot-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "githubiot-1.0.0.tar.gz",
+    "size_bytes": 11906,
+    "sha256": "850877603830428163891e0714eba6a45d78c95a8b4f6f5709e7b9d994404ecc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/4211421036/library/githubiot/1.0.0/githubiot-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/4211421036/library/githubiot/1.0.0/githubiot-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-haseeb63",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-haseeb63/library/Sensirion%20ESS/0.0.0+sha.3e97001a43f8/SensirionESS-0.0.0+sha.3e97001a43f8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionESS-0.0.0+sha.3e97001a43f8.tar.gz",
+    "size_bytes": 3806,
+    "sha256": "5c6890d369cc237ed5b0e82d5d42bb56ad12db0e5bff34cb9dfe5591aa5da416",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-haseeb63/library/Sensirion%2520ESS/0.0.0%2Bsha.3e97001a43f8/SensirionESS-0.0.0%2Bsha.3e97001a43f8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-haseeb63/library/Sensirion%20ESS/0.0.0%2Bsha.3e97001a43f8/SensirionESS-0.0.0%2Bsha.3e97001a43f8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

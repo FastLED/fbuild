@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dvarrel",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dvarrel/library/AHT20/1.0.2/AHT20-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AHT20-1.0.2.tar.gz",
+    "size_bytes": 5428,
+    "sha256": "9cd6ede17af3013835f1e7db6ec600f44036de2a0b27c3d70f4853c18b62edab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dvarrel/library/AHT20/1.0.2/AHT20-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dvarrel/library/AHT20/1.0.2/AHT20-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dvarrel/library/ESPping/1.0.5/ESPping-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPping-1.0.5.tar.gz",
+    "size_bytes": 11478,
+    "sha256": "4b532c39f081ede83828e5735375360a56932f86bbdadc32cdd59bdc781236aa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dvarrel/library/ESPping/1.0.5/ESPping-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/dvarrel/library/ESPping/1.0.5/ESPping-1.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

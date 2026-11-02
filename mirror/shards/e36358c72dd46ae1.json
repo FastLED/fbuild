@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/benemenn",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "benemenn/library/BasicNeopixelController/1.0.1/BasicNeopixelController-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BasicNeopixelController-1.0.1.tar.gz",
+    "size_bytes": 7370,
+    "sha256": "abe12f866cd1bc115a09064f2a0333bffe9c35aba773cfc973d2c2d337a00b5e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benemenn/library/BasicNeopixelController/1.0.1/BasicNeopixelController-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/benemenn/library/BasicNeopixelController/1.0.1/BasicNeopixelController-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

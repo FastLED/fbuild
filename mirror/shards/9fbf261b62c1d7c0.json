@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/microsoft",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "microsoft/library/Microsoft_HidForWindows/1.3.0/Microsoft_HidForWindows-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Microsoft_HidForWindows-1.3.0.tar.gz",
+    "size_bytes": 34167,
+    "sha256": "eb9538509579d13968d9790d1e65fc4b0a7a329cf3cddf205bb6163705ca9283",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/microsoft/library/Microsoft_HidForWindows/1.3.0/Microsoft_HidForWindows-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/microsoft/library/Microsoft_HidForWindows/1.3.0/Microsoft_HidForWindows-1.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

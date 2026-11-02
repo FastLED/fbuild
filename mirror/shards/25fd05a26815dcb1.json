@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/technikengr",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "technikengr/library/ErovoutikaErobot/1.0.0/ErovoutikaErobot-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ErovoutikaErobot-1.0.0.tar.gz",
+    "size_bytes": 12918,
+    "sha256": "9b4302fb6e6aaf21922d8a0a98dde74aaae288bd795a0373d70c5f0dd7dde8ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/technikengr/library/ErovoutikaErobot/1.0.0/ErovoutikaErobot-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/technikengr/library/ErovoutikaErobot/1.0.0/ErovoutikaErobot-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

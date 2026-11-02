@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/robertsonics",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "robertsonics/library/SparkFun%20WAV%20Trigger%20Pro%20Qwiic/1.0.1/SparkFunWAVTriggerProQwiic-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunWAVTriggerProQwiic-1.0.1.tar.gz",
+    "size_bytes": 8154,
+    "sha256": "0eae6f04aca5f3165595d50b22c1367e10120baff3ab7127415cafc3993b6658",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robertsonics/library/SparkFun%2520WAV%2520Trigger%2520Pro%2520Qwiic/1.0.1/SparkFunWAVTriggerProQwiic-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/robertsonics/library/SparkFun%20WAV%20Trigger%20Pro%20Qwiic/1.0.1/SparkFunWAVTriggerProQwiic-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

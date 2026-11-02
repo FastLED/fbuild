@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/majenko",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "majenko/library/MCP23S17/1.1.5/MCP23S17-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP23S17-1.1.5.tar.gz",
+    "size_bytes": 38034,
+    "sha256": "3c2820994da71f2370f894a0ed0300997283623d3d97f214cbe3eed45c7aae56",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majenko/library/MCP23S17/1.1.5/MCP23S17-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/majenko/library/MCP23S17/1.1.5/MCP23S17-1.1.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

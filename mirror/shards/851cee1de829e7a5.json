@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/contrem",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "contrem/library/arduino-timer/2.3.1/arduino-timer-2.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arduino-timer-2.3.1.tar.gz",
+    "size_bytes": 8687,
+    "sha256": "bb34d4c3d0c11648991e38fed045757eb4af67caf79544e7f3f873c75b17b206",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/contrem/library/arduino-timer/2.3.1/arduino-timer-2.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/contrem/library/arduino-timer/2.3.1/arduino-timer-2.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "contrem/library/arduino-timer/3.0.1/arduino-timer-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arduino-timer-3.0.1.tar.gz",
+    "size_bytes": 8554,
+    "sha256": "ffad1b1a8f8330a4b4baa746f2654da3fb570b2c65b7fcd4be63a3a74fbe1cb1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/contrem/library/arduino-timer/3.0.1/arduino-timer-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/contrem/library/arduino-timer/3.0.1/arduino-timer-3.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

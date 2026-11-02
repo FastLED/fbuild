@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/grandeurtech",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "grandeurtech/library/Grandeur/1.0.6/Grandeur-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Grandeur-1.0.6.tar.gz",
+    "size_bytes": 96678,
+    "sha256": "12d0bb29417824b144bf09aebfb60cc514f5115b0d3efeafcdffe1cb8e4afc1b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/grandeurtech/library/Grandeur/1.0.6/Grandeur-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/grandeurtech/library/Grandeur/1.0.6/Grandeur-1.0.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

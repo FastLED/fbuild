@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/newdigate",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "newdigate/library/TeensyAudioFlashLoader/1.0.8/TeensyAudioFlashLoader-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TeensyAudioFlashLoader-1.0.8.tar.gz",
+    "size_bytes": 4117,
+    "sha256": "4a3a34dbb91a17fd37e6e8d4dca906d942d3633925ba8bd77ee1e5ae23fb52e7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/newdigate/library/TeensyAudioFlashLoader/1.0.8/TeensyAudioFlashLoader-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/newdigate/library/TeensyAudioFlashLoader/1.0.8/TeensyAudioFlashLoader-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "newdigate/library/TeensyAudioLaunchCtrl/1.0.0/TeensyAudioLaunchCtrl-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TeensyAudioLaunchCtrl-1.0.0.tar.gz",
+    "size_bytes": 13518,
+    "sha256": "1bd4545ad4bae6b6d539e2fb30d3679f1671a84eb6ef56fecd0a4b9cd8e337b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/newdigate/library/TeensyAudioLaunchCtrl/1.0.0/TeensyAudioLaunchCtrl-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/newdigate/library/TeensyAudioLaunchCtrl/1.0.0/TeensyAudioLaunchCtrl-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "newdigate/library/TeensyPolyphony/1.1.0/TeensyPolyphony-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TeensyPolyphony-1.1.0.tar.gz",
+    "size_bytes": 501460,
+    "sha256": "19a3d77a06d2e956325eb5ae86f409859d61dfa57fb2fe4be096ff8254f01b8e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/newdigate/library/TeensyPolyphony/1.1.0/TeensyPolyphony-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/newdigate/library/TeensyPolyphony/1.1.0/TeensyPolyphony-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "newdigate/library/TeensyVariablePlayback/1.1.0/TeensyVariablePlayback-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TeensyVariablePlayback-1.1.0.tar.gz",
+    "size_bytes": 11010806,
+    "sha256": "47b7c9fb81b50befaff5e05ca3f62041ec6663885a16a16b5cfd4fd5bc898b1c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/newdigate/library/TeensyVariablePlayback/1.1.0/TeensyVariablePlayback-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/newdigate/library/TeensyVariablePlayback/1.1.0/TeensyVariablePlayback-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

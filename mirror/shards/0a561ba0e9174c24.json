@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sayyidyofa",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sayyidyofa/library/ArduinoPing/3.0/ArduinoPing-3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoPing-3.0.tar.gz",
+    "size_bytes": 9598,
+    "sha256": "7cdd4a2c1d827a3160189319d60161c68f3ad3b26864e8ce0e798d0ca0fcd691",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sayyidyofa/library/ArduinoPing/3.0/ArduinoPing-3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sayyidyofa/library/ArduinoPing/3.0/ArduinoPing-3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

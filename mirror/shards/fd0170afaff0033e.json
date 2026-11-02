@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/vincentlim",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "vincentlim/library/TimerFive/1.1/TimerFive-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TimerFive-1.1.tar.gz",
+    "size_bytes": 4269,
+    "sha256": "eb4b3bd1342faa7e4cd52c8775bf09d08636973649c74c1bed3994474f0045d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vincentlim/library/TimerFive/1.1/TimerFive-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vincentlim/library/TimerFive/1.1/TimerFive-1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vincentlim/library/TimerFour/1.1/TimerFour-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TimerFour-1.1.tar.gz",
+    "size_bytes": 4296,
+    "sha256": "7757170a3184fb91188bb84abe37d6c6b6f44eac3ab47ba6a82fe4a615277411",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vincentlim/library/TimerFour/1.1/TimerFour-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vincentlim/library/TimerFour/1.1/TimerFour-1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

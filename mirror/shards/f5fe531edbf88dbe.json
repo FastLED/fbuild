@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-guitarcraftminer",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-guitarcraftminer/library/Adafruit_LEDBackpack/0.0.0+sha.403251cd6392/Adafruit_LEDBackpack-0.0.0+sha.403251cd6392.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Adafruit_LEDBackpack-0.0.0+sha.403251cd6392.tar.gz",
+    "size_bytes": 7655,
+    "sha256": "cb581251084b7e600ac4d36ccac176ba51928b3b357f0bdc34faed10c7722618",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-guitarcraftminer/library/Adafruit_LEDBackpack/0.0.0%2Bsha.403251cd6392/Adafruit_LEDBackpack-0.0.0%2Bsha.403251cd6392.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-guitarcraftminer/library/Adafruit_LEDBackpack/0.0.0%2Bsha.403251cd6392/Adafruit_LEDBackpack-0.0.0%2Bsha.403251cd6392.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cesanta",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cesanta/library/elk/3.0.0/elk-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "elk-3.0.0.tar.gz",
+    "size_bytes": 92093,
+    "sha256": "326e8e58b0a50b3fd785bad51c76b60fa58a07edffa7b3aa584335e9c29ba063",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cesanta/library/elk/3.0.0/elk-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cesanta/library/elk/3.0.0/elk-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cesanta/library/mDash/1.2.17/mDash-1.2.17.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mDash-1.2.17.tar.gz",
+    "size_bytes": 359506,
+    "sha256": "d555b50e120d723fd05a6c19605b6d165b3b095e1146828307157306a7d08768",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cesanta/library/mDash/1.2.17/mDash-1.2.17.tar.gz",
+     "https://dl.registry.platformio.org/download/cesanta/library/mDash/1.2.17/mDash-1.2.17.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cesanta/library/mjson/1.2.7/mjson-1.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mjson-1.2.7.tar.gz",
+    "size_bytes": 18133,
+    "sha256": "abbba0a486edc538349f61a39b1b00592e57d1c692b6e9cbcc17a613af30aa62",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cesanta/library/mjson/1.2.7/mjson-1.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/cesanta/library/mjson/1.2.7/mjson-1.2.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

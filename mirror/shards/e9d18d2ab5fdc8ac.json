@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/austin207",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "austin207/library/CalculusCore/1.0.0/CalculusCore-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CalculusCore-1.0.0.tar.gz",
+    "size_bytes": 3285,
+    "sha256": "acc6efb94c707ede3f1a7c53d59ee7127b4731be3547372c3a66b2d38fd633c9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/austin207/library/CalculusCore/1.0.0/CalculusCore-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/austin207/library/CalculusCore/1.0.0/CalculusCore-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

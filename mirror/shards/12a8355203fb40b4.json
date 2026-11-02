@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sapteinkabeltann",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sapteinkabeltann/library/Lua%205.1%20for%20ESP32/1.0.1/Lua5.1forESP32-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lua5.1forESP32-1.0.1.tar.gz",
+    "size_bytes": 114373,
+    "sha256": "ac396f29128a42b6c8f1268ddb231745b7d2fae7d249638c94e40b7051f45dc4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sapteinkabeltann/library/Lua%25205.1%2520for%2520ESP32/1.0.1/Lua5.1forESP32-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sapteinkabeltann/library/Lua%205.1%20for%20ESP32/1.0.1/Lua5.1forESP32-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sapteinkabeltann/library/Lua%205.1%20for%20ESP32/5.1.5/Lua5.1forESP32-5.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lua5.1forESP32-5.1.5.tar.gz",
+    "size_bytes": 114364,
+    "sha256": "474210e6901c641ecd882df7bfe2cceefbe5a6e939b671d1fae36c46b4fcadb2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sapteinkabeltann/library/Lua%25205.1%2520for%2520ESP32/5.1.5/Lua5.1forESP32-5.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/sapteinkabeltann/library/Lua%205.1%20for%20ESP32/5.1.5/Lua5.1forESP32-5.1.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

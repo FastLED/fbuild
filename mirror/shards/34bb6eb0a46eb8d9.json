@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-carlos-nascimento08",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-carlos-nascimento08/library/MSCFileSystem/0.0.0+sha.59daf2b48180/MSCFileSystem-0.0.0+sha.59daf2b48180.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MSCFileSystem-0.0.0+sha.59daf2b48180.tar.gz",
+    "size_bytes": 12270,
+    "sha256": "f9c6d985147fe52b934c2f9ac72d8e5bc74455d56e8d13ec7e8b426cb73f7681",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-carlos-nascimento08/library/MSCFileSystem/0.0.0%2Bsha.59daf2b48180/MSCFileSystem-0.0.0%2Bsha.59daf2b48180.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-carlos-nascimento08/library/MSCFileSystem/0.0.0%2Bsha.59daf2b48180/MSCFileSystem-0.0.0%2Bsha.59daf2b48180.tar.gz"
+    ]
+   }
+  }
+ ]
+}

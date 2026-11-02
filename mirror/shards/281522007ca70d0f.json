@@ -1,0 +1,139 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/zoubworldarduino",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "zoubworldarduino/library/PinExtender%20Library/1.0.0/PinExtenderLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PinExtenderLibrary-1.0.0.tar.gz",
+    "size_bytes": 14450,
+    "sha256": "05af49ffda9f11511ab3555eedb93de8f521bd35fad49da49b506a6f5cb7cc5d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zoubworldarduino/library/PinExtender%2520Library/1.0.0/PinExtenderLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/zoubworldarduino/library/PinExtender%20Library/1.0.0/PinExtenderLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zoubworldarduino/library/WireUtility%20Library/1.0.0/WireUtilityLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WireUtilityLibrary-1.0.0.tar.gz",
+    "size_bytes": 14774,
+    "sha256": "aaf2e0874e213e5787963fb7e428a506932c0a928f8a767e23a5b5df590aeaa1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zoubworldarduino/library/WireUtility%2520Library/1.0.0/WireUtilityLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/zoubworldarduino/library/WireUtility%20Library/1.0.0/WireUtilityLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zoubworldarduino/library/ZEeprom/1.0.0/ZEeprom-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ZEeprom-1.0.0.tar.gz",
+    "size_bytes": 43268,
+    "sha256": "23061ddfc6e8a8b3fdeb4b0001d6863effdcc47cb82f6198dac975d3a0418f7a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zoubworldarduino/library/ZEeprom/1.0.0/ZEeprom-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/zoubworldarduino/library/ZEeprom/1.0.0/ZEeprom-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zoubworldarduino/library/ZEncoder/1.2.0/ZEncoder-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ZEncoder-1.2.0.tar.gz",
+    "size_bytes": 17938,
+    "sha256": "68da57403f87dc600bcb2a820258d49b7381ec8ee2573557b57f937f7fff90cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zoubworldarduino/library/ZEncoder/1.2.0/ZEncoder-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/zoubworldarduino/library/ZEncoder/1.2.0/ZEncoder-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zoubworldarduino/library/ZMCP23017%20Library/1.0.0/ZMCP23017Library-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ZMCP23017Library-1.0.0.tar.gz",
+    "size_bytes": 5089,
+    "sha256": "754fb38e18721dd886960ceb7a392e9cec0da440310e5b403f5cfbd7875961af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zoubworldarduino/library/ZMCP23017%2520Library/1.0.0/ZMCP23017Library-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/zoubworldarduino/library/ZMCP23017%20Library/1.0.0/ZMCP23017Library-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zoubworldarduino/library/ZMotor2%20Library/1.0.0/ZMotor2Library-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ZMotor2Library-1.0.0.tar.gz",
+    "size_bytes": 14920,
+    "sha256": "f00fdde134fab640b0d883c75a4503cd38483b614831d6bae77d7fb39884336f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zoubworldarduino/library/ZMotor2%2520Library/1.0.0/ZMotor2Library-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/zoubworldarduino/library/ZMotor2%20Library/1.0.0/ZMotor2Library-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zoubworldarduino/library/ZMotor3Library/1.0.0/ZMotor3Library-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ZMotor3Library-1.0.0.tar.gz",
+    "size_bytes": 14942,
+    "sha256": "02a971ffce878dd1e80f412ca997d03d7b5e6a2541e5682a929b5bc79e0a99f3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zoubworldarduino/library/ZMotor3Library/1.0.0/ZMotor3Library-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/zoubworldarduino/library/ZMotor3Library/1.0.0/ZMotor3Library-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zoubworldarduino/library/ZPCA9685%20Library/1.0.0/ZPCA9685Library-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ZPCA9685Library-1.0.0.tar.gz",
+    "size_bytes": 18176,
+    "sha256": "90c1981c95455078078d003ad6d08e1cc58a96997a9563cf34f0dc95b5e0d5dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zoubworldarduino/library/ZPCA9685%2520Library/1.0.0/ZPCA9685Library-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/zoubworldarduino/library/ZPCA9685%20Library/1.0.0/ZPCA9685Library-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zoubworldarduino/library/ZSharpIR%20Library/1.1.0/ZSharpIRLibrary-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ZSharpIRLibrary-1.1.0.tar.gz",
+    "size_bytes": 16961,
+    "sha256": "4a19a52883164ec5186999fb95fa8b5e8c820be936cb5d17a3cc63a84530698a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zoubworldarduino/library/ZSharpIR%2520Library/1.1.0/ZSharpIRLibrary-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/zoubworldarduino/library/ZSharpIR%20Library/1.1.0/ZSharpIRLibrary-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zoubworldarduino/library/ZcmdMotor%20Library/1.0.0/ZcmdMotorLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ZcmdMotorLibrary-1.0.0.tar.gz",
+    "size_bytes": 15149,
+    "sha256": "7d657c55517806f6841fdd142814fcc62c78ecba884ccba730cb5e01723fc8cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zoubworldarduino/library/ZcmdMotor%2520Library/1.0.0/ZcmdMotorLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/zoubworldarduino/library/ZcmdMotor%20Library/1.0.0/ZcmdMotorLibrary-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

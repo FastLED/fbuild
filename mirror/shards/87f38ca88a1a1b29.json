@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/x385832",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "x385832/library/ERPC/1.0.1/ERPC-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ERPC-1.0.1.tar.gz",
+    "size_bytes": 12352,
+    "sha256": "6bdf590b89a94f1925c53dc748c32be6ef7a00864e4c714f7671e51a22825aa7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/x385832/library/ERPC/1.0.1/ERPC-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/x385832/library/ERPC/1.0.1/ERPC-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "x385832/library/EasyLogger/1.1.4/EasyLogger-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyLogger-1.1.4.tar.gz",
+    "size_bytes": 9980,
+    "sha256": "6ad456a7e783ab1c6852c5dddc6c42eb7b37feda7cf2e8b3cd14594dc98a9f61",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/x385832/library/EasyLogger/1.1.4/EasyLogger-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/x385832/library/EasyLogger/1.1.4/EasyLogger-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "x385832/library/Elog/2.0.10/Elog-2.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Elog-2.0.10.tar.gz",
+    "size_bytes": 44386,
+    "sha256": "f507ae566bb7726af3f7691132f20ae6db689507e252ac23183bd503f004c2df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/x385832/library/Elog/2.0.10/Elog-2.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/x385832/library/Elog/2.0.10/Elog-2.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "x385832/library/Elog/2.0.13/Elog-2.0.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Elog-2.0.13.tar.gz",
+    "size_bytes": 46050,
+    "sha256": "f0de61c563b15af0f10600be2405f87952aed0d2d83d92c79ab494cb6915934e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/x385832/library/Elog/2.0.13/Elog-2.0.13.tar.gz",
+     "https://dl.registry.platformio.org/download/x385832/library/Elog/2.0.13/Elog-2.0.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "x385832/library/Elog/2.0.14/Elog-2.0.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Elog-2.0.14.tar.gz",
+    "size_bytes": 48425,
+    "sha256": "5a8335211cf16a6b878832e9bf543b06fcd8354f9c139d0a4a5a0ead7f811aa2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/x385832/library/Elog/2.0.14/Elog-2.0.14.tar.gz",
+     "https://dl.registry.platformio.org/download/x385832/library/Elog/2.0.14/Elog-2.0.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "x385832/library/Elog/2.0.15/Elog-2.0.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Elog-2.0.15.tar.gz",
+    "size_bytes": 48636,
+    "sha256": "bd92b673685d9395e0f44a25ab78fc412e1718b309faaa09c7c76c471da1afe8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/x385832/library/Elog/2.0.15/Elog-2.0.15.tar.gz",
+     "https://dl.registry.platformio.org/download/x385832/library/Elog/2.0.15/Elog-2.0.15.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "x385832/library/Elog/2.0.16/Elog-2.0.16.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Elog-2.0.16.tar.gz",
+    "size_bytes": 48864,
+    "sha256": "7ba465f600d61add566b56ad7853b7a93685c10715932ab254df894df46899ef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/x385832/library/Elog/2.0.16/Elog-2.0.16.tar.gz",
+     "https://dl.registry.platformio.org/download/x385832/library/Elog/2.0.16/Elog-2.0.16.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "x385832/library/Elog/2.0.17/Elog-2.0.17.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Elog-2.0.17.tar.gz",
+    "size_bytes": 49162,
+    "sha256": "714fffb81f2ad89c4029633961416cb2c60aea6de3e9d666586c9d08877b9a18",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/x385832/library/Elog/2.0.17/Elog-2.0.17.tar.gz",
+     "https://dl.registry.platformio.org/download/x385832/library/Elog/2.0.17/Elog-2.0.17.tar.gz"
+    ]
+   }
+  }
+ ]
+}

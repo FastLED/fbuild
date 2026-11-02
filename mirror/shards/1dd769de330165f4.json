@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/citycafe578",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "citycafe578/library/FixedPID/1.0.0/FixedPID-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FixedPID-1.0.0.tar.gz",
+    "size_bytes": 13809,
+    "sha256": "de94fdd814558d32fb22dae5f03f52effbcb2a546f01e6b2897444dd4575dd8d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/citycafe578/library/FixedPID/1.0.0/FixedPID-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/citycafe578/library/FixedPID/1.0.0/FixedPID-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "citycafe578/library/FixedPID/1.1.0/FixedPID-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FixedPID-1.1.0.tar.gz",
+    "size_bytes": 14966,
+    "sha256": "14fa37b4e85681ede6a2e6d672c4cffdbbe06b6b97d49d6888c95f8b49ef2e50",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/citycafe578/library/FixedPID/1.1.0/FixedPID-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/citycafe578/library/FixedPID/1.1.0/FixedPID-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

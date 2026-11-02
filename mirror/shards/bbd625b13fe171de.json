@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/llschall",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "llschall/library/Ardwloop/0.3.5/Ardwloop-0.3.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ardwloop-0.3.5.tar.gz",
+    "size_bytes": 10202,
+    "sha256": "86a25763a06adb6657912c9d85d40966b03748fa5b77c2f7ad59e7889ed44b31",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/llschall/library/Ardwloop/0.3.5/Ardwloop-0.3.5.tar.gz",
+     "https://dl.registry.platformio.org/download/llschall/library/Ardwloop/0.3.5/Ardwloop-0.3.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "llschall/library/Ardwloop/0.3.6/Ardwloop-0.3.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ardwloop-0.3.6.tar.gz",
+    "size_bytes": 10205,
+    "sha256": "9dcf3c8a06cb347b4dd9dc79d72ef2595288a69c34d124df492443d87fd1c570",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/llschall/library/Ardwloop/0.3.6/Ardwloop-0.3.6.tar.gz",
+     "https://dl.registry.platformio.org/download/llschall/library/Ardwloop/0.3.6/Ardwloop-0.3.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "llschall/library/Ardwloop/0.3.7/Ardwloop-0.3.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ardwloop-0.3.7.tar.gz",
+    "size_bytes": 10333,
+    "sha256": "cd855b7fd17a2f861d89fde26e4c18d0e071985eb702845cb1f4ae95f850da36",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/llschall/library/Ardwloop/0.3.7/Ardwloop-0.3.7.tar.gz",
+     "https://dl.registry.platformio.org/download/llschall/library/Ardwloop/0.3.7/Ardwloop-0.3.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "llschall/library/Ardwloop/0.3.9/Ardwloop-0.3.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ardwloop-0.3.9.tar.gz",
+    "size_bytes": 10327,
+    "sha256": "9c540316841c02c03c94fd0df6bab9ac73be275602025fe83b673d22e1f876e1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/llschall/library/Ardwloop/0.3.9/Ardwloop-0.3.9.tar.gz",
+     "https://dl.registry.platformio.org/download/llschall/library/Ardwloop/0.3.9/Ardwloop-0.3.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "llschall/library/Ardwloop/0.4.0/Ardwloop-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ardwloop-0.4.0.tar.gz",
+    "size_bytes": 10331,
+    "sha256": "c4aedd615328b1af4d29166e9a7e0087aa0a6a0bb027536931c6481a5b742151",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/llschall/library/Ardwloop/0.4.0/Ardwloop-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/llschall/library/Ardwloop/0.4.0/Ardwloop-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "llschall/library/Ardwloop/0.4.1/Ardwloop-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ardwloop-0.4.1.tar.gz",
+    "size_bytes": 10287,
+    "sha256": "c316513b56a954162e902fbd772e18ca305f7bc0db5f590a5fae82e38cd8dbba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/llschall/library/Ardwloop/0.4.1/Ardwloop-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/llschall/library/Ardwloop/0.4.1/Ardwloop-0.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "llschall/library/RGBRibbon/0.1.1/RGBRibbon-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RGBRibbon-0.1.1.tar.gz",
+    "size_bytes": 5632,
+    "sha256": "8e79eccf4d15f3bcac0ab48fad50ae0ac9e9b49dcd2a4d89ff2bedc6eedfab20",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/llschall/library/RGBRibbon/0.1.1/RGBRibbon-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/llschall/library/RGBRibbon/0.1.1/RGBRibbon-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "llschall/library/RGBRibbon/0.1.5/RGBRibbon-0.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RGBRibbon-0.1.5.tar.gz",
+    "size_bytes": 5696,
+    "sha256": "f21a191bf8d382ab6c9a0d4bf104965af610802f77176e8b22ad4735187cae68",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/llschall/library/RGBRibbon/0.1.5/RGBRibbon-0.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/llschall/library/RGBRibbon/0.1.5/RGBRibbon-0.1.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

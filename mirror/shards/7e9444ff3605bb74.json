@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/alexzappy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "alexzappy/library/ClockTimer/1.0.0/ClockTimer-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ClockTimer-1.0.0.tar.gz",
+    "size_bytes": 18535,
+    "sha256": "df2d4bd8c517a775d76797152697f36cb5558b57bc7375caa409e9ac91bf8cd3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alexzappy/library/ClockTimer/1.0.0/ClockTimer-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alexzappy/library/ClockTimer/1.0.0/ClockTimer-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

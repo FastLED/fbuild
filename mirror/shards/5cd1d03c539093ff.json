@@ -1,0 +1,204 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sciosense",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sciosense/library/ScioSense_APC1/2.0.2/ScioSense_APC1-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ScioSense_APC1-2.0.2.tar.gz",
+    "size_bytes": 13026,
+    "sha256": "33a10c6990d22eced4350baad944badd80f42d496999607bdc637942b6d6b6f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sciosense/library/ScioSense_APC1/2.0.2/ScioSense_APC1-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sciosense/library/ScioSense_APC1/2.0.2/ScioSense_APC1-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sciosense/library/ScioSense_AS60XX/1.0.0/ScioSense_AS60XX-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ScioSense_AS60XX-1.0.0.tar.gz",
+    "size_bytes": 63501,
+    "sha256": "4863c6a133b23fcdab4895c44d7f561c6015b4bdb3980d79ddb66ce87e33ca7b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sciosense/library/ScioSense_AS60XX/1.0.0/ScioSense_AS60XX-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sciosense/library/ScioSense_AS60XX/1.0.0/ScioSense_AS60XX-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sciosense/library/ScioSense_ENS16x/1.0.0/ScioSense_ENS16x-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ScioSense_ENS16x-1.0.0.tar.gz",
+    "size_bytes": 11295,
+    "sha256": "8f9609703311a196c803b637fe697f51562edfae27e953fb74a965550f76105b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sciosense/library/ScioSense_ENS16x/1.0.0/ScioSense_ENS16x-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sciosense/library/ScioSense_ENS16x/1.0.0/ScioSense_ENS16x-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sciosense/library/ScioSense_ENS16x/2.0.5/ScioSense_ENS16x-2.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ScioSense_ENS16x-2.0.5.tar.gz",
+    "size_bytes": 14158,
+    "sha256": "6aac0613b3e5f0a6c374f41592af3b7e6b452f1b395beb98dea051d1d980ce56",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sciosense/library/ScioSense_ENS16x/2.0.5/ScioSense_ENS16x-2.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/sciosense/library/ScioSense_ENS16x/2.0.5/ScioSense_ENS16x-2.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sciosense/library/ScioSense_ENS17x/1.0.0/ScioSense_ENS17x-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ScioSense_ENS17x-1.0.0.tar.gz",
+    "size_bytes": 9624,
+    "sha256": "edd63c155af9a7a5822c7165c88597757d11160f877fa0069f66b4e35ce41615",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sciosense/library/ScioSense_ENS17x/1.0.0/ScioSense_ENS17x-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sciosense/library/ScioSense_ENS17x/1.0.0/ScioSense_ENS17x-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sciosense/library/ScioSense_ENS17x/1.0.1/ScioSense_ENS17x-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ScioSense_ENS17x-1.0.1.tar.gz",
+    "size_bytes": 9624,
+    "sha256": "197d35e2cbba4891804ebca78f40002bb02b1625036517b5ab9fc2c0ec8340ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sciosense/library/ScioSense_ENS17x/1.0.1/ScioSense_ENS17x-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sciosense/library/ScioSense_ENS17x/1.0.1/ScioSense_ENS17x-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sciosense/library/ScioSense_ENS190/1.1.1/ScioSense_ENS190-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ScioSense_ENS190-1.1.1.tar.gz",
+    "size_bytes": 9563,
+    "sha256": "23d7c60504384e3d4800e5effd1b7be130cbfc2f1ab077dc3285ac6d43162fb5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sciosense/library/ScioSense_ENS190/1.1.1/ScioSense_ENS190-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sciosense/library/ScioSense_ENS190/1.1.1/ScioSense_ENS190-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sciosense/library/ScioSense_ENS21x/2.0.0/ScioSense_ENS21x-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ScioSense_ENS21x-2.0.0.tar.gz",
+    "size_bytes": 12140,
+    "sha256": "9b1475a7db17176084c59d896f238ea39627eff89c46de9785c5cb27834fb9df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sciosense/library/ScioSense_ENS21x/2.0.0/ScioSense_ENS21x-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sciosense/library/ScioSense_ENS21x/2.0.0/ScioSense_ENS21x-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sciosense/library/ScioSense_ENS220/2.0.1/ScioSense_ENS220-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ScioSense_ENS220-2.0.1.tar.gz",
+    "size_bytes": 28632,
+    "sha256": "90bba67d5f81cd5fb4fd2e4ff400b75c9d3e12ebcdab11ead7453affac32c6cf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sciosense/library/ScioSense_ENS220/2.0.1/ScioSense_ENS220-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sciosense/library/ScioSense_ENS220/2.0.1/ScioSense_ENS220-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sciosense/library/ScioSense_UFC23/1.0.0/ScioSense_UFC23-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ScioSense_UFC23-1.0.0.tar.gz",
+    "size_bytes": 47255,
+    "sha256": "27d8732ddb51d320c52f977c70958f3618ad6cc60d6d2ef2ef013e763dbb6f41",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sciosense/library/ScioSense_UFC23/1.0.0/ScioSense_UFC23-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sciosense/library/ScioSense_UFC23/1.0.0/ScioSense_UFC23-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sciosense/library/ScioSense_UFC23/1.1.0/ScioSense_UFC23-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ScioSense_UFC23-1.1.0.tar.gz",
+    "size_bytes": 51721,
+    "sha256": "68bc48a1c25a384617ff9a51bc206bae83b4fe85d239b92e93e027816cebdc85",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sciosense/library/ScioSense_UFC23/1.1.0/ScioSense_UFC23-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sciosense/library/ScioSense_UFC23/1.1.0/ScioSense_UFC23-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sciosense/library/ScioSense_UFC23/1.2.0/ScioSense_UFC23-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ScioSense_UFC23-1.2.0.tar.gz",
+    "size_bytes": 53816,
+    "sha256": "d754d2eabceb85f976367ddf06545050413edbb555cf52c808590de65b0a2939",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sciosense/library/ScioSense_UFC23/1.2.0/ScioSense_UFC23-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sciosense/library/ScioSense_UFC23/1.2.0/ScioSense_UFC23-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sciosense/library/ScioSense_UFM01/1.1.0/ScioSense_UFM01-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ScioSense_UFM01-1.1.0.tar.gz",
+    "size_bytes": 16160,
+    "sha256": "a4e7a9e2937446226463ed327444a46a604454903681412fb5ffe4eaecd45d27",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sciosense/library/ScioSense_UFM01/1.1.0/ScioSense_UFM01-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sciosense/library/ScioSense_UFM01/1.1.0/ScioSense_UFM01-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sciosense/library/ScioSense_UFM01/1.1.1/ScioSense_UFM01-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ScioSense_UFM01-1.1.1.tar.gz",
+    "size_bytes": 16160,
+    "sha256": "ff66cefbf4b810d02f138746689bea4dddaa205a590108850fe537dd701b7f30",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sciosense/library/ScioSense_UFM01/1.1.1/ScioSense_UFM01-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sciosense/library/ScioSense_UFM01/1.1.1/ScioSense_UFM01-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sciosense/library/ScioSense_UFM02/1.0.0/ScioSense_UFM02-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ScioSense_UFM02-1.0.0.tar.gz",
+    "size_bytes": 15447,
+    "sha256": "afbc77f103bf0311999affc6969ec174dd7750e4f8f0766219ff4059d23ee49f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sciosense/library/ScioSense_UFM02/1.0.0/ScioSense_UFM02-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sciosense/library/ScioSense_UFM02/1.0.0/ScioSense_UFM02-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

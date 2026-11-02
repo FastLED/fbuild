@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bavathd",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bavathd/library/Tago%20ESP32/0.0.1/TagoESP32-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TagoESP32-0.0.1.tar.gz",
+    "size_bytes": 3056,
+    "sha256": "ab02783a43122108677009b4e3780a10c84c82b7b2ab629ffdb760827d4b7865",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bavathd/library/Tago%2520ESP32/0.0.1/TagoESP32-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bavathd/library/Tago%20ESP32/0.0.1/TagoESP32-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

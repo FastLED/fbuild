@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jaimi5",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jaimi5/library/LoRaMesher/0.0.10/LoRaMesher-0.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LoRaMesher-0.0.10.tar.gz",
+    "size_bytes": 55399,
+    "sha256": "c664540d3754ac12857bef032a2b226ff178b911c08817849a9dfdcf1f4632f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jaimi5/library/LoRaMesher/0.0.10/LoRaMesher-0.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/jaimi5/library/LoRaMesher/0.0.10/LoRaMesher-0.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jaimi5/library/LoRaMesher/0.0.11/LoRaMesher-0.0.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LoRaMesher-0.0.11.tar.gz",
+    "size_bytes": 56914,
+    "sha256": "b627c693202a24e19a1636a04bcf848a09e0ec557fd16709ef96bdd5aacc4f06",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jaimi5/library/LoRaMesher/0.0.11/LoRaMesher-0.0.11.tar.gz",
+     "https://dl.registry.platformio.org/download/jaimi5/library/LoRaMesher/0.0.11/LoRaMesher-0.0.11.tar.gz"
+    ]
+   }
+  }
+ ]
+}

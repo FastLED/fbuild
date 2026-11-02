@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/go01260",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "go01260/library/uMT/2.6.0/uMT-2.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uMT-2.6.0.tar.gz",
+    "size_bytes": 92408,
+    "sha256": "c872fd7c651ea58e493c0788a31ead4d003dbe2d73fdd1b2a128c7c98a918a93",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/go01260/library/uMT/2.6.0/uMT-2.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/go01260/library/uMT/2.6.0/uMT-2.6.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

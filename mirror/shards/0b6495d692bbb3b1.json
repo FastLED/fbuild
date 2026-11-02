@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-michaeljkoster",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-michaeljkoster/library/PololuLedStrip-K64F/0.0.0+sha.3b22d6d32a7a/PololuLedStrip-K64F-0.0.0+sha.3b22d6d32a7a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PololuLedStrip-K64F-0.0.0+sha.3b22d6d32a7a.tar.gz",
+    "size_bytes": 3942,
+    "sha256": "9427d774c9f387ee571727dab492e170180ca28654e3f818e84a6504754e28db",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-michaeljkoster/library/PololuLedStrip-K64F/0.0.0%2Bsha.3b22d6d32a7a/PololuLedStrip-K64F-0.0.0%2Bsha.3b22d6d32a7a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-michaeljkoster/library/PololuLedStrip-K64F/0.0.0%2Bsha.3b22d6d32a7a/PololuLedStrip-K64F-0.0.0%2Bsha.3b22d6d32a7a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-michaeljkoster/library/PololuLedStrip/0.0.0+sha.bda8af613d4d/PololuLedStrip-0.0.0+sha.bda8af613d4d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PololuLedStrip-0.0.0+sha.bda8af613d4d.tar.gz",
+    "size_bytes": 3615,
+    "sha256": "5b4ca39461b52e5ef1938d233002714b02244701c13bd75173bb0967c522f658",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-michaeljkoster/library/PololuLedStrip/0.0.0%2Bsha.bda8af613d4d/PololuLedStrip-0.0.0%2Bsha.bda8af613d4d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-michaeljkoster/library/PololuLedStrip/0.0.0%2Bsha.bda8af613d4d/PololuLedStrip-0.0.0%2Bsha.bda8af613d4d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

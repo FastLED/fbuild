@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/almtzr",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "almtzr/library/PedroFirmware/1.0.0/PedroRobot-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PedroRobot-1.0.0.tar.gz",
+    "size_bytes": 14907,
+    "sha256": "f864839730b52a20fdef31933ed59c74b28142d8e377c9e41a8fe6cead1c3de1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/almtzr/library/PedroFirmware/1.0.0/PedroRobot-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/almtzr/library/PedroFirmware/1.0.0/PedroRobot-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "almtzr/library/PedroFirmware/1.0.2/PedroRobot-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PedroRobot-1.0.2.tar.gz",
+    "size_bytes": 14901,
+    "sha256": "93028e7a9f702ddd7b033f41d0cca07cc306c1fd059922642e9e56a42d543d1d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/almtzr/library/PedroFirmware/1.0.2/PedroRobot-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/almtzr/library/PedroFirmware/1.0.2/PedroRobot-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "almtzr/library/PedroFirmware/1.0.3/PedroRobot-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PedroRobot-1.0.3.tar.gz",
+    "size_bytes": 15535,
+    "sha256": "b6714b7a1acf3167fb7bd5968256dbb0918605a8fb406a2faafdfce78e770ab7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/almtzr/library/PedroFirmware/1.0.3/PedroRobot-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/almtzr/library/PedroFirmware/1.0.3/PedroRobot-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "almtzr/library/PedroFirmware/1.0.4/PedroRobot-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PedroRobot-1.0.4.tar.gz",
+    "size_bytes": 13438,
+    "sha256": "f3f48e0a4db8697ca4e3220863c4323c6cf27dde1276bf4cf15785bfd7e232bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/almtzr/library/PedroFirmware/1.0.4/PedroRobot-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/almtzr/library/PedroFirmware/1.0.4/PedroRobot-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "almtzr/library/PedroFirmware/1.0.5/PedroFirmware-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PedroFirmware-1.0.5.tar.gz",
+    "size_bytes": 16297,
+    "sha256": "8135ebaf6af755cb992c69753db8c60ec6eb072c050b31102eb8a83554ecd3dc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/almtzr/library/PedroFirmware/1.0.5/PedroFirmware-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/almtzr/library/PedroFirmware/1.0.5/PedroFirmware-1.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

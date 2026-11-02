@@ -1,0 +1,529 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/littlemanbuilds",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "littlemanbuilds/library/ESP32_MCPWM/1.0.0/ESP32_MCPWM-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_MCPWM-1.0.0.tar.gz",
+    "size_bytes": 20871,
+    "sha256": "39a3b6e8c22f1c3cef3e3fc97fd8baa3e3e193da64315ae79371e1f523b17ce7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/littlemanbuilds/library/ESP32_MCPWM/1.0.0/ESP32_MCPWM-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/littlemanbuilds/library/ESP32_MCPWM/1.0.0/ESP32_MCPWM-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "littlemanbuilds/library/ESP32_MCPWM/1.1.0/ESP32_MCPWM-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_MCPWM-1.1.0.tar.gz",
+    "size_bytes": 21951,
+    "sha256": "f53da9650f218809a3758aec1eaa911d68cbb49ff3f27f432dffff703e898d2b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/littlemanbuilds/library/ESP32_MCPWM/1.1.0/ESP32_MCPWM-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/littlemanbuilds/library/ESP32_MCPWM/1.1.0/ESP32_MCPWM-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "littlemanbuilds/library/ESP32_MCPWM/1.1.1/ESP32_MCPWM-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_MCPWM-1.1.1.tar.gz",
+    "size_bytes": 21824,
+    "sha256": "3de965153e4be9e8488bab2527f55361759cb4d9a77c1b8edbf9205c224abaac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/littlemanbuilds/library/ESP32_MCPWM/1.1.1/ESP32_MCPWM-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/littlemanbuilds/library/ESP32_MCPWM/1.1.1/ESP32_MCPWM-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "littlemanbuilds/library/ESP32_MCPWM/1.2.0/ESP32_MCPWM-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_MCPWM-1.2.0.tar.gz",
+    "size_bytes": 22370,
+    "sha256": "da04b36d32464593ed3627439c655b2970f62a71b42d51910c6af6081b9a8a90",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/littlemanbuilds/library/ESP32_MCPWM/1.2.0/ESP32_MCPWM-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/littlemanbuilds/library/ESP32_MCPWM/1.2.0/ESP32_MCPWM-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "littlemanbuilds/library/ESP32_MCPWM/1.3.0/ESP32_MCPWM-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_MCPWM-1.3.0.tar.gz",
+    "size_bytes": 32154,
+    "sha256": "e52717f1663fc3df33b0058fa4a8818c16d5c6ac5d2e0b5424b75b997209fc99",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/littlemanbuilds/library/ESP32_MCPWM/1.3.0/ESP32_MCPWM-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/littlemanbuilds/library/ESP32_MCPWM/1.3.0/ESP32_MCPWM-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "littlemanbuilds/library/ESP32_MCPWM/2.0.0/ESP32_MCPWM-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_MCPWM-2.0.0.tar.gz",
+    "size_bytes": 44918,
+    "sha256": "e95c27967eb649596ced784c4a3bb7acddbe2624b54ce31cd5888f7fcc0132aa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/littlemanbuilds/library/ESP32_MCPWM/2.0.0/ESP32_MCPWM-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/littlemanbuilds/library/ESP32_MCPWM/2.0.0/ESP32_MCPWM-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "littlemanbuilds/library/PotIO/1.0.0/PotIO-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PotIO-1.0.0.tar.gz",
+    "size_bytes": 27802,
+    "sha256": "ca4b01179eeeab291fac4c40b93f7226dfe66fc73343c39492823ca3d1845271",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/littlemanbuilds/library/PotIO/1.0.0/PotIO-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/littlemanbuilds/library/PotIO/1.0.0/PotIO-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "littlemanbuilds/library/PotIO/1.1.0/PotIO-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PotIO-1.1.0.tar.gz",
+    "size_bytes": 290715,
+    "sha256": "da187a0dd7e60925f47e77319576a9a2ad3ed205f4804be3a3f026d8f923114a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/littlemanbuilds/library/PotIO/1.1.0/PotIO-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/littlemanbuilds/library/PotIO/1.1.0/PotIO-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "littlemanbuilds/library/RCLink/1.0.0/RCLink-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RCLink-1.0.0.tar.gz",
+    "size_bytes": 36039,
+    "sha256": "87ff946b59af9e0bcc1f84d7453cc9cc41729b9ccfb26f52a7677d6870a359e7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/littlemanbuilds/library/RCLink/1.0.0/RCLink-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/littlemanbuilds/library/RCLink/1.0.0/RCLink-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "littlemanbuilds/library/RCLink/1.0.1/RCLink-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RCLink-1.0.1.tar.gz",
+    "size_bytes": 35903,
+    "sha256": "88a1a8d7884c5440b6e69dedb322b0a56908d3408e75c57ed7044400f0d4d0bf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/littlemanbuilds/library/RCLink/1.0.1/RCLink-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/littlemanbuilds/library/RCLink/1.0.1/RCLink-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "littlemanbuilds/library/RCLink/1.0.2/RCLink-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RCLink-1.0.2.tar.gz",
+    "size_bytes": 35879,
+    "sha256": "361a0db8a9f563200da6856a8f287921f308ee6d4e55f3e5bae63be249aa703d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/littlemanbuilds/library/RCLink/1.0.2/RCLink-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/littlemanbuilds/library/RCLink/1.0.2/RCLink-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "littlemanbuilds/library/RCLink/1.0.3/RCLink-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RCLink-1.0.3.tar.gz",
+    "size_bytes": 35881,
+    "sha256": "e3aab567eb4c191f925e5e5b12ea47cd5d6b5d53ce2443f476f2236c18d0cc98",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/littlemanbuilds/library/RCLink/1.0.3/RCLink-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/littlemanbuilds/library/RCLink/1.0.3/RCLink-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "littlemanbuilds/library/RCLink/1.0.4/RCLink-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RCLink-1.0.4.tar.gz",
+    "size_bytes": 35944,
+    "sha256": "da135d8014c1f097404176e964649a0b68d46d0b8f2c627938dfe42306064eb3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/littlemanbuilds/library/RCLink/1.0.4/RCLink-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/littlemanbuilds/library/RCLink/1.0.4/RCLink-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "littlemanbuilds/library/RCLink/1.1.0/RCLink-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RCLink-1.1.0.tar.gz",
+    "size_bytes": 35301,
+    "sha256": "08502ccdbdc606f335fba706782973fd4b707c44c248ff098cf0178844c7f9b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/littlemanbuilds/library/RCLink/1.1.0/RCLink-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/littlemanbuilds/library/RCLink/1.1.0/RCLink-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "littlemanbuilds/library/RCLink/1.2.0/RCLink-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RCLink-1.2.0.tar.gz",
+    "size_bytes": 423025,
+    "sha256": "cad032b828cdcff322e0dc392ca6627872f4ceac4d4cbc5307ac0ae8caa33482",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/littlemanbuilds/library/RCLink/1.2.0/RCLink-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/littlemanbuilds/library/RCLink/1.2.0/RCLink-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "littlemanbuilds/library/SnapshotBus/1.0.0/SnapshotBus-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SnapshotBus-1.0.0.tar.gz",
+    "size_bytes": 8877,
+    "sha256": "54d3ad5fb9d567d10649dea5d1808bbb58e8a358dba2e27d953ee16d84b0a3fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/littlemanbuilds/library/SnapshotBus/1.0.0/SnapshotBus-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/littlemanbuilds/library/SnapshotBus/1.0.0/SnapshotBus-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "littlemanbuilds/library/SnapshotBus/1.0.1/SnapshotBus-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SnapshotBus-1.0.1.tar.gz",
+    "size_bytes": 8788,
+    "sha256": "04263b194d1956f433dc24aa46c9d24cddc9733fb5e5034659395469c5e3f830",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/littlemanbuilds/library/SnapshotBus/1.0.1/SnapshotBus-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/littlemanbuilds/library/SnapshotBus/1.0.1/SnapshotBus-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "littlemanbuilds/library/SnapshotBus/1.1.0/SnapshotBus-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SnapshotBus-1.1.0.tar.gz",
+    "size_bytes": 17392,
+    "sha256": "da2bfe0d0f5ce4e77bf30b27e39533bcd6c906fbe3471fa8804a730761d81e67",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/littlemanbuilds/library/SnapshotBus/1.1.0/SnapshotBus-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/littlemanbuilds/library/SnapshotBus/1.1.0/SnapshotBus-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "littlemanbuilds/library/SnapshotBus/1.1.1/SnapshotBus-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SnapshotBus-1.1.1.tar.gz",
+    "size_bytes": 18214,
+    "sha256": "a1e1134ef7dddd4fedbfbd0b6c5eeae0c0ed724fb3f1ee83f27b22dab6e76445",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/littlemanbuilds/library/SnapshotBus/1.1.1/SnapshotBus-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/littlemanbuilds/library/SnapshotBus/1.1.1/SnapshotBus-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "littlemanbuilds/library/SnapshotBus/1.2.0/SnapshotBus-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SnapshotBus-1.2.0.tar.gz",
+    "size_bytes": 34623,
+    "sha256": "aa241faa081edfbcb75b33306c6659cc04a45793cfb4a79986e40596c2d0e53f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/littlemanbuilds/library/SnapshotBus/1.2.0/SnapshotBus-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/littlemanbuilds/library/SnapshotBus/1.2.0/SnapshotBus-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "littlemanbuilds/library/SnapshotBus/1.3.0/SnapshotBus-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SnapshotBus-1.3.0.tar.gz",
+    "size_bytes": 33911,
+    "sha256": "f6cdea5abd59d1e6e2b95856e3c00c2692572ab334789b849e9d2190eafdfde2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/littlemanbuilds/library/SnapshotBus/1.3.0/SnapshotBus-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/littlemanbuilds/library/SnapshotBus/1.3.0/SnapshotBus-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "littlemanbuilds/library/SnapshotBus/1.4.0/SnapshotBus-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SnapshotBus-1.4.0.tar.gz",
+    "size_bytes": 46954,
+    "sha256": "5a57c555c4332646126aa89b3278aa24ff27ef12e0cebbfaeaaa5ee359bc18cd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/littlemanbuilds/library/SnapshotBus/1.4.0/SnapshotBus-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/littlemanbuilds/library/SnapshotBus/1.4.0/SnapshotBus-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "littlemanbuilds/library/SwitchBank/1.0.0/SwitchBank-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SwitchBank-1.0.0.tar.gz",
+    "size_bytes": 21520,
+    "sha256": "230b6c0a6dfccbd5c49b909560d54dd16c36509cff5b2a0545d5c9af492ff62f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/littlemanbuilds/library/SwitchBank/1.0.0/SwitchBank-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/littlemanbuilds/library/SwitchBank/1.0.0/SwitchBank-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "littlemanbuilds/library/SwitchBank/1.0.1/SwitchBank-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SwitchBank-1.0.1.tar.gz",
+    "size_bytes": 22826,
+    "sha256": "647c6b027528eb170d53c98fa400192afc33e72910878184a0333dfbd9568143",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/littlemanbuilds/library/SwitchBank/1.0.1/SwitchBank-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/littlemanbuilds/library/SwitchBank/1.0.1/SwitchBank-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "littlemanbuilds/library/SwitchBank/1.0.2/SwitchBank-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SwitchBank-1.0.2.tar.gz",
+    "size_bytes": 22323,
+    "sha256": "42ae44f7dcae065a80571d3fab51b6d5767a7eb2e2967f58e00a3f0baaf90fbb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/littlemanbuilds/library/SwitchBank/1.0.2/SwitchBank-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/littlemanbuilds/library/SwitchBank/1.0.2/SwitchBank-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "littlemanbuilds/library/SwitchBank/1.1.0/SwitchBank-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SwitchBank-1.1.0.tar.gz",
+    "size_bytes": 22136,
+    "sha256": "aad7b0e9246a43f64ccac32efc06ae4cb63fd1624ef71c8b9819dc307ac8e0fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/littlemanbuilds/library/SwitchBank/1.1.0/SwitchBank-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/littlemanbuilds/library/SwitchBank/1.1.0/SwitchBank-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "littlemanbuilds/library/SwitchBank/1.2.0/SwitchBank-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SwitchBank-1.2.0.tar.gz",
+    "size_bytes": 126948,
+    "sha256": "a2755527cc929b9b03219ca6f910c587788691e7d5a353ee9ceefba29b1da308",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/littlemanbuilds/library/SwitchBank/1.2.0/SwitchBank-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/littlemanbuilds/library/SwitchBank/1.2.0/SwitchBank-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "littlemanbuilds/library/Universal_Button/1.0.0/Universal_Button-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Universal_Button-1.0.0.tar.gz",
+    "size_bytes": 16534,
+    "sha256": "454cc8836ee1ced35354542ae95dbaaeed0d3b7405ef2ff2f3858b419783806f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/littlemanbuilds/library/Universal_Button/1.0.0/Universal_Button-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/littlemanbuilds/library/Universal_Button/1.0.0/Universal_Button-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "littlemanbuilds/library/Universal_Button/1.1.0/Universal_Button-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Universal_Button-1.1.0.tar.gz",
+    "size_bytes": 16670,
+    "sha256": "7c3a1823dae9650c088736d0c8c37a2af1e33b6fc4cd43ac67803f180927bcf5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/littlemanbuilds/library/Universal_Button/1.1.0/Universal_Button-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/littlemanbuilds/library/Universal_Button/1.1.0/Universal_Button-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "littlemanbuilds/library/Universal_Button/1.2.0/Universal_Button-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Universal_Button-1.2.0.tar.gz",
+    "size_bytes": 17059,
+    "sha256": "c8118bd47bbe9d60510c1065e750c874e05f10edd6df94c8075b14fe642b41ea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/littlemanbuilds/library/Universal_Button/1.2.0/Universal_Button-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/littlemanbuilds/library/Universal_Button/1.2.0/Universal_Button-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "littlemanbuilds/library/Universal_Button/1.3.0/Universal_Button-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Universal_Button-1.3.0.tar.gz",
+    "size_bytes": 18188,
+    "sha256": "7c99b70c34bfac529197ffc8b0a9922f948198b9c9205610fbbe0919c5234b95",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/littlemanbuilds/library/Universal_Button/1.3.0/Universal_Button-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/littlemanbuilds/library/Universal_Button/1.3.0/Universal_Button-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "littlemanbuilds/library/Universal_Button/1.4.0/Universal_Button-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Universal_Button-1.4.0.tar.gz",
+    "size_bytes": 18087,
+    "sha256": "88c83950a72a9de49fae6602cec1d5a74d5a05694e68d9d0720f30d5b5124483",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/littlemanbuilds/library/Universal_Button/1.4.0/Universal_Button-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/littlemanbuilds/library/Universal_Button/1.4.0/Universal_Button-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "littlemanbuilds/library/Universal_Button/1.4.1/Universal_Button-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Universal_Button-1.4.1.tar.gz",
+    "size_bytes": 17906,
+    "sha256": "015a3b20e5da9447d91aa0517b8b3be5a99a30cf59a6ed60ae7aa371f0de2ff5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/littlemanbuilds/library/Universal_Button/1.4.1/Universal_Button-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/littlemanbuilds/library/Universal_Button/1.4.1/Universal_Button-1.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "littlemanbuilds/library/Universal_Button/1.5.0/Universal_Button-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Universal_Button-1.5.0.tar.gz",
+    "size_bytes": 18993,
+    "sha256": "35c09bba278fe81671867bb5cfe3d35092da743a755c843270eb3176ba55608c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/littlemanbuilds/library/Universal_Button/1.5.0/Universal_Button-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/littlemanbuilds/library/Universal_Button/1.5.0/Universal_Button-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "littlemanbuilds/library/Universal_Button/1.6.1/Universal_Button-1.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Universal_Button-1.6.1.tar.gz",
+    "size_bytes": 24036,
+    "sha256": "e8b6176d57cb11dcf8b954210eee044e9edc48d0107794ca3472f2bf0e3771eb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/littlemanbuilds/library/Universal_Button/1.6.1/Universal_Button-1.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/littlemanbuilds/library/Universal_Button/1.6.1/Universal_Button-1.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "littlemanbuilds/library/Universal_Button/1.6.2/Universal_Button-1.6.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Universal_Button-1.6.2.tar.gz",
+    "size_bytes": 26238,
+    "sha256": "b060a148cd1523ded6c8439e2e5b769db4a2c5b6079767619028975a9168c346",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/littlemanbuilds/library/Universal_Button/1.6.2/Universal_Button-1.6.2.tar.gz",
+     "https://dl.registry.platformio.org/download/littlemanbuilds/library/Universal_Button/1.6.2/Universal_Button-1.6.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "littlemanbuilds/library/Universal_Button/1.6.3/Universal_Button-1.6.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Universal_Button-1.6.3.tar.gz",
+    "size_bytes": 27609,
+    "sha256": "c0f069b8b56472836db524207fd4c9c7850239122f02c1bf5a362b439c2c757d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/littlemanbuilds/library/Universal_Button/1.6.3/Universal_Button-1.6.3.tar.gz",
+     "https://dl.registry.platformio.org/download/littlemanbuilds/library/Universal_Button/1.6.3/Universal_Button-1.6.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "littlemanbuilds/library/Universal_Button/1.7.0/Universal_Button-1.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Universal_Button-1.7.0.tar.gz",
+    "size_bytes": 29231,
+    "sha256": "bbdf1a85531991cb9b0c7d687357bbc132dea4972bd68dd36f75b38e33dd254b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/littlemanbuilds/library/Universal_Button/1.7.0/Universal_Button-1.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/littlemanbuilds/library/Universal_Button/1.7.0/Universal_Button-1.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "littlemanbuilds/library/Universal_Button/2.0.0/Universal_Button-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Universal_Button-2.0.0.tar.gz",
+    "size_bytes": 149424,
+    "sha256": "5e676934fb6fb8a327c45c291e2c084ae45b399c05074e91bb8bf147a7f8d5ef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/littlemanbuilds/library/Universal_Button/2.0.0/Universal_Button-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/littlemanbuilds/library/Universal_Button/2.0.0/Universal_Button-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "littlemanbuilds/library/Universal_Button/2.0.2/Universal_Button-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Universal_Button-2.0.2.tar.gz",
+    "size_bytes": 1117243,
+    "sha256": "7efb9927314354ec7183a6e8de65e97d052c83328accf8dd1680f1ac783ee32a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/littlemanbuilds/library/Universal_Button/2.0.2/Universal_Button-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/littlemanbuilds/library/Universal_Button/2.0.2/Universal_Button-2.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

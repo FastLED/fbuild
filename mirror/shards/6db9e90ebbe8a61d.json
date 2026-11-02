@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/boriasrazor",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "boriasrazor/library/oled_ssd1315/2.1.1/oled_ssd1315-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "oled_ssd1315-2.1.1.tar.gz",
+    "size_bytes": 45009,
+    "sha256": "c958567bbcaeab43af27063b2bc5a52da57859e652d061259b54fa9e36b59035",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/boriasrazor/library/oled_ssd1315/2.1.1/oled_ssd1315-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/boriasrazor/library/oled_ssd1315/2.1.1/oled_ssd1315-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "boriasrazor/library/oled_ssd1315/2.1.2/oled_ssd1315-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "oled_ssd1315-2.1.2.tar.gz",
+    "size_bytes": 45321,
+    "sha256": "aa0b5244117412a377f7efd305fc246b713e14e4c68e999d811f0ce09207da1e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/boriasrazor/library/oled_ssd1315/2.1.2/oled_ssd1315-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/boriasrazor/library/oled_ssd1315/2.1.2/oled_ssd1315-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "boriasrazor/library/oled_ssd1315/3.0.0/oled_ssd1315-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "oled_ssd1315-3.0.0.tar.gz",
+    "size_bytes": 42826,
+    "sha256": "351a1d83cc907cf6c98064ea489c6462b2fd2147d4d7708f83de410015b53f97",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/boriasrazor/library/oled_ssd1315/3.0.0/oled_ssd1315-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/boriasrazor/library/oled_ssd1315/3.0.0/oled_ssd1315-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "boriasrazor/library/oled_ssd1315/3.0.1/oled_ssd1315-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "oled_ssd1315-3.0.1.tar.gz",
+    "size_bytes": 42834,
+    "sha256": "f779b889386c48dcc098e6b24a042c8b66cf43f5e5cdc148092d0e3bd702f547",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/boriasrazor/library/oled_ssd1315/3.0.1/oled_ssd1315-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/boriasrazor/library/oled_ssd1315/3.0.1/oled_ssd1315-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "boriasrazor/library/usb_composite/3.1.0/usb_composite-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "usb_composite-3.1.0.tar.gz",
+    "size_bytes": 14917,
+    "sha256": "4362092159114e55de4b5a30f176d8578d039ebc4579fd8771d03b022ba58496",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/boriasrazor/library/usb_composite/3.1.0/usb_composite-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/boriasrazor/library/usb_composite/3.1.0/usb_composite-3.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "boriasrazor/library/usb_composite/3.1.1/usb_composite-3.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "usb_composite-3.1.1.tar.gz",
+    "size_bytes": 27886,
+    "sha256": "bad667805933de92fd1ba21af552a460de8362792b73aaeca3f853b0aea7929f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/boriasrazor/library/usb_composite/3.1.1/usb_composite-3.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/boriasrazor/library/usb_composite/3.1.1/usb_composite-3.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "boriasrazor/library/usb_composite/3.1.3/usb_composite-3.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "usb_composite-3.1.3.tar.gz",
+    "size_bytes": 33997,
+    "sha256": "0510e15b0670304b19b875cb8c0f29e986f20bf013ac18b475d52726ba9b270c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/boriasrazor/library/usb_composite/3.1.3/usb_composite-3.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/boriasrazor/library/usb_composite/3.1.3/usb_composite-3.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "boriasrazor/library/usb_composite/3.2.0/usb_composite-3.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "usb_composite-3.2.0.tar.gz",
+    "size_bytes": 34312,
+    "sha256": "74380eb798dec591bdfbee7abc10054dd72fed5446586f3eed440e25db4b9fc8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/boriasrazor/library/usb_composite/3.2.0/usb_composite-3.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/boriasrazor/library/usb_composite/3.2.0/usb_composite-3.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

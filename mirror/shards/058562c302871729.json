@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/costellotechnical",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "costellotechnical/library/DN24F08/1.1.3/DN24F08-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DN24F08-1.1.3.tar.gz",
+    "size_bytes": 12510,
+    "sha256": "1d54aba4951896b9fc6999666a2b1c6feb7e00b03642853db54378b5379864d2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/costellotechnical/library/DN24F08/1.1.3/DN24F08-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/costellotechnical/library/DN24F08/1.1.3/DN24F08-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "costellotechnical/library/ESC3B04/1.0.0/ESC3B04-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESC3B04-1.0.0.tar.gz",
+    "size_bytes": 11305,
+    "sha256": "f3a04e72a56f0486075578b2f174e8098881841cef4425a7f030f5d84b88c829",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/costellotechnical/library/ESC3B04/1.0.0/ESC3B04-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/costellotechnical/library/ESC3B04/1.0.0/ESC3B04-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

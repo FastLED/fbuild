@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-srsmitherman",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-srsmitherman/library/PololuQik2/0.0.0+sha.511d65ef1276/PololuQik2-0.0.0+sha.511d65ef1276.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PololuQik2-0.0.0+sha.511d65ef1276.tar.gz",
+    "size_bytes": 5114,
+    "sha256": "0430c7191d827978ef9ea0eeed662b7b2c99655bb3fc28d59d318c3787e0b35e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-srsmitherman/library/PololuQik2/0.0.0%2Bsha.511d65ef1276/PololuQik2-0.0.0%2Bsha.511d65ef1276.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-srsmitherman/library/PololuQik2/0.0.0%2Bsha.511d65ef1276/PololuQik2-0.0.0%2Bsha.511d65ef1276.tar.gz"
+    ]
+   }
+  }
+ ]
+}

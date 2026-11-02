@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-casval",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-casval/library/TFTLCD_Landtiger/0.0.0+sha.1a3dd94e13cf/TFTLCD_Landtiger-0.0.0+sha.1a3dd94e13cf.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFTLCD_Landtiger-0.0.0+sha.1a3dd94e13cf.tar.gz",
+    "size_bytes": 22753,
+    "sha256": "1dd3f3eb77fdb08ffb265428843fc23a98cf0fb0d39be1ddd556a1f8ca90c13f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-casval/library/TFTLCD_Landtiger/0.0.0%2Bsha.1a3dd94e13cf/TFTLCD_Landtiger-0.0.0%2Bsha.1a3dd94e13cf.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-casval/library/TFTLCD_Landtiger/0.0.0%2Bsha.1a3dd94e13cf/TFTLCD_Landtiger-0.0.0%2Bsha.1a3dd94e13cf.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-orivant",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-orivant/library/LcdAcm1602ni/0.0.0+sha.b5829a58bbaf/LcdAcm1602ni-0.0.0+sha.b5829a58bbaf.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LcdAcm1602ni-0.0.0+sha.b5829a58bbaf.tar.gz",
+    "size_bytes": 4748,
+    "sha256": "58ade9e85d228397db3331c78160f5744ea98d3e03ca7951cf6af9a8d15270c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-orivant/library/LcdAcm1602ni/0.0.0%2Bsha.b5829a58bbaf/LcdAcm1602ni-0.0.0%2Bsha.b5829a58bbaf.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-orivant/library/LcdAcm1602ni/0.0.0%2Bsha.b5829a58bbaf/LcdAcm1602ni-0.0.0%2Bsha.b5829a58bbaf.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-orivant/library/LcdAqm0802/0.0.0+sha.9ac3c6f45e84/LcdAqm0802-0.0.0+sha.9ac3c6f45e84.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LcdAqm0802-0.0.0+sha.9ac3c6f45e84.tar.gz",
+    "size_bytes": 5924,
+    "sha256": "f18e424e02dbb418e2158d2a377a13f560c3ad3dcf610c27b26b14c310dda391",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-orivant/library/LcdAqm0802/0.0.0%2Bsha.9ac3c6f45e84/LcdAqm0802-0.0.0%2Bsha.9ac3c6f45e84.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-orivant/library/LcdAqm0802/0.0.0%2Bsha.9ac3c6f45e84/LcdAqm0802-0.0.0%2Bsha.9ac3c6f45e84.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,334 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bodmer",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bodmer/library/DarkSkyWeather/0.1.2/DarkSkyWeather-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DarkSkyWeather-0.1.2.tar.gz",
+    "size_bytes": 165009,
+    "sha256": "0406746f3b6f06d793a43b812ffbfc18f84e7360743932aa65f5b6adabab47f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bodmer/library/DarkSkyWeather/0.1.2/DarkSkyWeather-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bodmer/library/DarkSkyWeather/0.1.2/DarkSkyWeather-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bodmer/library/JPEGDecoder/1.8.1/JPEGDecoder-1.8.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JPEGDecoder-1.8.1.tar.gz",
+    "size_bytes": 195164,
+    "sha256": "6410e7edcf7b890fd895d37af5fadb372663c66ec001706d2dd7b8dd53746d1f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bodmer/library/JPEGDecoder/1.8.1/JPEGDecoder-1.8.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bodmer/library/JPEGDecoder/1.8.1/JPEGDecoder-1.8.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bodmer/library/JPEGDecoder/2.0.0/JPEGDecoder-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JPEGDecoder-2.0.0.tar.gz",
+    "size_bytes": 195072,
+    "sha256": "ee58dee4acd23cb552657cb496437ab0ae28b646c346e551126f3ada6abcd68a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bodmer/library/JPEGDecoder/2.0.0/JPEGDecoder-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bodmer/library/JPEGDecoder/2.0.0/JPEGDecoder-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bodmer/library/JSON_Decoder/0.0.7/JSON_Decoder-0.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JSON_Decoder-0.0.7.tar.gz",
+    "size_bytes": 13324,
+    "sha256": "ed3895f925de4671f64ffd624118e41d2f58fb8395b3e84042212078bc2ac7d3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bodmer/library/JSON_Decoder/0.0.7/JSON_Decoder-0.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/bodmer/library/JSON_Decoder/0.0.7/JSON_Decoder-0.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bodmer/library/TFT_HX8357_Due/0.29/TFT_HX8357_Due-0.29.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFT_HX8357_Due-0.29.tar.gz",
+    "size_bytes": 320842,
+    "sha256": "7a60a05a43a25968b157e40e2e2da7a68d88182de892d954bef77a5f333a670e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bodmer/library/TFT_HX8357_Due/0.29/TFT_HX8357_Due-0.29.tar.gz",
+     "https://dl.registry.platformio.org/download/bodmer/library/TFT_HX8357_Due/0.29/TFT_HX8357_Due-0.29.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bodmer/library/TFT_ILI9341/0.17/TFT_ILI9341-0.17.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFT_ILI9341-0.17.tar.gz",
+    "size_bytes": 76408,
+    "sha256": "290af600cdc4577ba072ad3146cf5ab9e203fc9239fbb2edaa54ba9119ffc0c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bodmer/library/TFT_ILI9341/0.17/TFT_ILI9341-0.17.tar.gz",
+     "https://dl.registry.platformio.org/download/bodmer/library/TFT_ILI9341/0.17/TFT_ILI9341-0.17.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bodmer/library/TFT_ILI9341_ESP/0.16.0/TFT_ILI9341_ESP-0.16.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFT_ILI9341_ESP-0.16.0.tar.gz",
+    "size_bytes": 341578,
+    "sha256": "8d0f477a29c0b4b8acc6f04ff7e27656850f55aa71d8730df95105f68c47ac35",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bodmer/library/TFT_ILI9341_ESP/0.16.0/TFT_ILI9341_ESP-0.16.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bodmer/library/TFT_ILI9341_ESP/0.16.0/TFT_ILI9341_ESP-0.16.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bodmer/library/TFT_ST7735/0.17/TFT_ST7735-0.17.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFT_ST7735-0.17.tar.gz",
+    "size_bytes": 64388,
+    "sha256": "37f012608d67f31ffbe3d7c8186a44294b1dd8725e2afacf88146f454ff5add4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bodmer/library/TFT_ST7735/0.17/TFT_ST7735-0.17.tar.gz",
+     "https://dl.registry.platformio.org/download/bodmer/library/TFT_ST7735/0.17/TFT_ST7735-0.17.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bodmer/library/TFT_Touch/0.3/TFT_Touch-0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFT_Touch-0.3.tar.gz",
+    "size_bytes": 7876,
+    "sha256": "f902eb3c31c34f2236b141baf49af398756a85ee783fa8a0af3e38cd0924d1cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bodmer/library/TFT_Touch/0.3/TFT_Touch-0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/bodmer/library/TFT_Touch/0.3/TFT_Touch-0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bodmer/library/TFT_eFEX/0.0.8/TFT_eFEX-0.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFT_eFEX-0.0.8.tar.gz",
+    "size_bytes": 128239,
+    "sha256": "6e9659124bfc33e83685ef42ea60be59ce3fbf0d57c055c049710d5e48b57a40",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bodmer/library/TFT_eFEX/0.0.8/TFT_eFEX-0.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/bodmer/library/TFT_eFEX/0.0.8/TFT_eFEX-0.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bodmer/library/TFT_eFX/0.0.2/TFT_eFX-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFT_eFX-0.0.2.tar.gz",
+    "size_bytes": 4475,
+    "sha256": "85c6b9d4d9b2b9aea70e9a80ede1947a88c41c8d11dcb1dd74e617b159ee217c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bodmer/library/TFT_eFX/0.0.2/TFT_eFX-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bodmer/library/TFT_eFX/0.0.2/TFT_eFX-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bodmer/library/TFT_eSPI/2.4.25/TFT_eSPI-2.4.25.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFT_eSPI-2.4.25.tar.gz",
+    "size_bytes": 4115291,
+    "sha256": "7292b8eb7cb4f2c0cb809d55e5c6581132b81937c3020d137f4e6e3ddcf0940c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bodmer/library/TFT_eSPI/2.4.25/TFT_eSPI-2.4.25.tar.gz",
+     "https://dl.registry.platformio.org/download/bodmer/library/TFT_eSPI/2.4.25/TFT_eSPI-2.4.25.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bodmer/library/TFT_eSPI/2.4.79/TFT_eSPI-2.4.79.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFT_eSPI-2.4.79.tar.gz",
+    "size_bytes": 4471670,
+    "sha256": "3f1a03b6f17ea0f9cc650309bfc97f09ce0faa1ad4cc8b22b7dd25238740662b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bodmer/library/TFT_eSPI/2.4.79/TFT_eSPI-2.4.79.tar.gz",
+     "https://dl.registry.platformio.org/download/bodmer/library/TFT_eSPI/2.4.79/TFT_eSPI-2.4.79.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bodmer/library/TFT_eSPI/2.5.0/TFT_eSPI-2.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFT_eSPI-2.5.0.tar.gz",
+    "size_bytes": 4483978,
+    "sha256": "46b131feaab290a330c08605fbb01a41d39a20cadb4d38bd7e948faba381c712",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bodmer/library/TFT_eSPI/2.5.0/TFT_eSPI-2.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bodmer/library/TFT_eSPI/2.5.0/TFT_eSPI-2.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bodmer/library/TFT_eSPI/2.5.23/TFT_eSPI-2.5.23.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFT_eSPI-2.5.23.tar.gz",
+    "size_bytes": 4522671,
+    "sha256": "7b384a1ab1a8921efa5b9ba682e1cfdb0c44f4ddc12dc3bf0dd2167bbf906c5c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bodmer/library/TFT_eSPI/2.5.23/TFT_eSPI-2.5.23.tar.gz",
+     "https://dl.registry.platformio.org/download/bodmer/library/TFT_eSPI/2.5.23/TFT_eSPI-2.5.23.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bodmer/library/TFT_eSPI/2.5.30/TFT_eSPI-2.5.30.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFT_eSPI-2.5.30.tar.gz",
+    "size_bytes": 4553251,
+    "sha256": "78757b644818facb3d95d74aed8c748f8221a82b5684cadf5ca2f816c40ccc1c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bodmer/library/TFT_eSPI/2.5.30/TFT_eSPI-2.5.30.tar.gz",
+     "https://dl.registry.platformio.org/download/bodmer/library/TFT_eSPI/2.5.30/TFT_eSPI-2.5.30.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bodmer/library/TFT_eSPI/2.5.31/TFT_eSPI-2.5.31.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFT_eSPI-2.5.31.tar.gz",
+    "size_bytes": 4542512,
+    "sha256": "c055ec504e912c111ee95e0cec30c98b068c132bca4975e0da8fd38a5889e44f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bodmer/library/TFT_eSPI/2.5.31/TFT_eSPI-2.5.31.tar.gz",
+     "https://dl.registry.platformio.org/download/bodmer/library/TFT_eSPI/2.5.31/TFT_eSPI-2.5.31.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bodmer/library/TFT_eSPI/2.5.33/TFT_eSPI-2.5.33.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFT_eSPI-2.5.33.tar.gz",
+    "size_bytes": 4543372,
+    "sha256": "3dd9ff95190064a232bc754db5e9785a66ae639937274cf428cf1c3415b6a7be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bodmer/library/TFT_eSPI/2.5.33/TFT_eSPI-2.5.33.tar.gz",
+     "https://dl.registry.platformio.org/download/bodmer/library/TFT_eSPI/2.5.33/TFT_eSPI-2.5.33.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bodmer/library/TFT_eSPI/2.5.34/TFT_eSPI-2.5.34.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFT_eSPI-2.5.34.tar.gz",
+    "size_bytes": 4543583,
+    "sha256": "d4e221d852b736e8c5f835d9e3dcdff2ef7d3e7a04c3a48d98ec26d57fd1847a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bodmer/library/TFT_eSPI/2.5.34/TFT_eSPI-2.5.34.tar.gz",
+     "https://dl.registry.platformio.org/download/bodmer/library/TFT_eSPI/2.5.34/TFT_eSPI-2.5.34.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bodmer/library/TFT_eSPI/2.5.40/TFT_eSPI-2.5.40.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFT_eSPI-2.5.40.tar.gz",
+    "size_bytes": 4543999,
+    "sha256": "229a0fbbb5562799c697649c3b793728a666a565a91372ed4e3c4e702cb592ca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bodmer/library/TFT_eSPI/2.5.40/TFT_eSPI-2.5.40.tar.gz",
+     "https://dl.registry.platformio.org/download/bodmer/library/TFT_eSPI/2.5.40/TFT_eSPI-2.5.40.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bodmer/library/TFT_eSPI/2.5.42/TFT_eSPI-2.5.42.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFT_eSPI-2.5.42.tar.gz",
+    "size_bytes": 4546100,
+    "sha256": "5b04743e31aaf29ec6c49fea5a663a23649d171d97b7bc057186eadece4162db",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bodmer/library/TFT_eSPI/2.5.42/TFT_eSPI-2.5.42.tar.gz",
+     "https://dl.registry.platformio.org/download/bodmer/library/TFT_eSPI/2.5.42/TFT_eSPI-2.5.42.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bodmer/library/TFT_eSPI/2.5.43/TFT_eSPI-2.5.43.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFT_eSPI-2.5.43.tar.gz",
+    "size_bytes": 4545925,
+    "sha256": "2dc365e1ab8731c439bccfc10649a6952eb1766ebe67b7413a075996d0af8131",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bodmer/library/TFT_eSPI/2.5.43/TFT_eSPI-2.5.43.tar.gz",
+     "https://dl.registry.platformio.org/download/bodmer/library/TFT_eSPI/2.5.43/TFT_eSPI-2.5.43.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bodmer/library/TFT_eWidget/0.0.6/TFT_eWidget-0.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFT_eWidget-0.0.6.tar.gz",
+    "size_bytes": 21493,
+    "sha256": "c53d3b957daaa85a1bf47fc67552bf9632f679d2f3239256e9291e70a07c8fc5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bodmer/library/TFT_eWidget/0.0.6/TFT_eWidget-0.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/bodmer/library/TFT_eWidget/0.0.6/TFT_eWidget-0.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bodmer/library/TJpg_Decoder/1.0.8/TJpg_Decoder-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TJpg_Decoder-1.0.8.tar.gz",
+    "size_bytes": 90548,
+    "sha256": "a75303cabd020bb1dfb377db5fe1117333760ad3b268d88374aa0f8a07147a48",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bodmer/library/TJpg_Decoder/1.0.8/TJpg_Decoder-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/bodmer/library/TJpg_Decoder/1.0.8/TJpg_Decoder-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bodmer/library/TJpg_Decoder/1.1.0/TJpg_Decoder-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TJpg_Decoder-1.1.0.tar.gz",
+    "size_bytes": 90557,
+    "sha256": "9ea2c89ead3e9bf343d8001b3ea6642103359d37096dc63b4c0f5f61739d30cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bodmer/library/TJpg_Decoder/1.1.0/TJpg_Decoder-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bodmer/library/TJpg_Decoder/1.1.0/TJpg_Decoder-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

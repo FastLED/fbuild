@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/addibble",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "addibble/library/SoftwareSerial9/1.0/SoftwareSerial9-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SoftwareSerial9-1.0.tar.gz",
+    "size_bytes": 7304,
+    "sha256": "774ce117cb71f14a885e456a41a4578ad82f8caef62074ba87645c37bb92b79c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/addibble/library/SoftwareSerial9/1.0/SoftwareSerial9-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/addibble/library/SoftwareSerial9/1.0/SoftwareSerial9-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/denxhun",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "denxhun/library/Computherm%20RF%20Library/0.1.2/ComputhermRFLibrary-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ComputhermRFLibrary-0.1.2.tar.gz",
+    "size_bytes": 4026,
+    "sha256": "da3c788ab4355285b858ebc1941b0589e0322468811ae2d3a17ad099469ef676",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/denxhun/library/Computherm%2520RF%2520Library/0.1.2/ComputhermRFLibrary-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/denxhun/library/Computherm%20RF%20Library/0.1.2/ComputhermRFLibrary-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "denxhun/library/TFA%20433%20Receiver/0.1.1/TFA433Receiver-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFA433Receiver-0.1.1.tar.gz",
+    "size_bytes": 3329,
+    "sha256": "e04fc6ae91108815ae1b938add1223d24383f71d88207c725d59b122638ac20f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/denxhun/library/TFA%2520433%2520Receiver/0.1.1/TFA433Receiver-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/denxhun/library/TFA%20433%20Receiver/0.1.1/TFA433Receiver-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

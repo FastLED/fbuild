@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dikibhuyan",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dikibhuyan/library/MCP251863/3.0.0/MCP251863-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP251863-3.0.0.tar.gz",
+    "size_bytes": 7514,
+    "sha256": "61bd85f28093a819ae2f469f34a6e0167fdc0caeb769353e3073f0401ad6c6e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dikibhuyan/library/MCP251863/3.0.0/MCP251863-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dikibhuyan/library/MCP251863/3.0.0/MCP251863-3.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

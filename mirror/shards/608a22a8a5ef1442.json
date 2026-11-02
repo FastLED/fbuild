@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/osteele",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "osteele/library/SerialRecord/0.3.6/SerialRecord-0.3.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialRecord-0.3.6.tar.gz",
+    "size_bytes": 17613,
+    "sha256": "2f6fcf90225ad453ca8772fdb057e5456d6a45c6dd63b017b19397005274ed4b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/osteele/library/SerialRecord/0.3.6/SerialRecord-0.3.6.tar.gz",
+     "https://dl.registry.platformio.org/download/osteele/library/SerialRecord/0.3.6/SerialRecord-0.3.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

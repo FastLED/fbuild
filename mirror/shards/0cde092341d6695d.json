@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-eduardog26",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-eduardog26/library/Arduino/0.0.0+sha.abbc3308dfa1/Arduino-0.0.0+sha.abbc3308dfa1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino-0.0.0+sha.abbc3308dfa1.tar.gz",
+    "size_bytes": 2077,
+    "sha256": "a9c5527df771a637163da734db70d04f34290f2c5a06503b0c80b06bda0e8d83",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-eduardog26/library/Arduino/0.0.0%2Bsha.abbc3308dfa1/Arduino-0.0.0%2Bsha.abbc3308dfa1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-eduardog26/library/Arduino/0.0.0%2Bsha.abbc3308dfa1/Arduino-0.0.0%2Bsha.abbc3308dfa1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-eduardog26/library/UIEncoder/0.0.0+sha.3086ea6466d1/UIEncoder-0.0.0+sha.3086ea6466d1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UIEncoder-0.0.0+sha.3086ea6466d1.tar.gz",
+    "size_bytes": 3138,
+    "sha256": "ececbcb64b69787a8d3530a36e6567a5e6aebab068b6c5da37b4d7c9c962c643",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-eduardog26/library/UIEncoder/0.0.0%2Bsha.3086ea6466d1/UIEncoder-0.0.0%2Bsha.3086ea6466d1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-eduardog26/library/UIEncoder/0.0.0%2Bsha.3086ea6466d1/UIEncoder-0.0.0%2Bsha.3086ea6466d1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/recepsenbas",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "recepsenbas/library/DWIN%20Unified/1.0.0/DWINUnified-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DWINUnified-1.0.0.tar.gz",
+    "size_bytes": 24188,
+    "sha256": "b319a003882738440c76054a5e5175987c2a8dc58854c28b2e37705dca6dc8e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/recepsenbas/library/DWIN%2520Unified/1.0.0/DWINUnified-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/recepsenbas/library/DWIN%20Unified/1.0.0/DWINUnified-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "recepsenbas/library/DWIN%20Unified/1.0.1/DWINUnified-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DWINUnified-1.0.1.tar.gz",
+    "size_bytes": 105848,
+    "sha256": "f1cbf6b297b91c130096381aa97bb392e24f6a00cfcdf7069b57ba93020c20e2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/recepsenbas/library/DWIN%2520Unified/1.0.1/DWINUnified-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/recepsenbas/library/DWIN%20Unified/1.0.1/DWINUnified-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "recepsenbas/library/DWIN%20Unified/1.0.2/DWINUnified-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DWINUnified-1.0.2.tar.gz",
+    "size_bytes": 104396,
+    "sha256": "b1770d9d14a3fb24a08a830da98d1d6d1a9bd32c360d03f710271353544bd8b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/recepsenbas/library/DWIN%2520Unified/1.0.2/DWINUnified-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/recepsenbas/library/DWIN%20Unified/1.0.2/DWINUnified-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-semtech",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-semtech/library/LoRaWAN-lib-dev/0.0.0+sha.76f59096e3a7/LoRaWAN-lib-dev-0.0.0+sha.76f59096e3a7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LoRaWAN-lib-dev-0.0.0+sha.76f59096e3a7.tar.gz",
+    "size_bytes": 37843,
+    "sha256": "beede76ba44072a942a91d8bcf91d37dad412fe3b85c043e8d5706170afc3beb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-semtech/library/LoRaWAN-lib-dev/0.0.0%2Bsha.76f59096e3a7/LoRaWAN-lib-dev-0.0.0%2Bsha.76f59096e3a7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-semtech/library/LoRaWAN-lib-dev/0.0.0%2Bsha.76f59096e3a7/LoRaWAN-lib-dev-0.0.0%2Bsha.76f59096e3a7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-semtech/library/LoRaWAN-lib/0.0.0+sha.2426a05fe29e/LoRaWAN-lib-0.0.0+sha.2426a05fe29e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LoRaWAN-lib-0.0.0+sha.2426a05fe29e.tar.gz",
+    "size_bytes": 37622,
+    "sha256": "1a5daf5b3774232181fd5b88dc7c918e7fff8ad7b93bc286a5f3d7a5656698ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-semtech/library/LoRaWAN-lib/0.0.0%2Bsha.2426a05fe29e/LoRaWAN-lib-0.0.0%2Bsha.2426a05fe29e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-semtech/library/LoRaWAN-lib/0.0.0%2Bsha.2426a05fe29e/LoRaWAN-lib-0.0.0%2Bsha.2426a05fe29e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-semtech/library/SX126xLib/0.0.0+sha.1e2345700991/SX126xLib-0.0.0+sha.1e2345700991.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SX126xLib-0.0.0+sha.1e2345700991.tar.gz",
+    "size_bytes": 18706,
+    "sha256": "cf7e1d07624e73e40402ccef763dc37100a78c66863b6dc9c0ab61515efd7517",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-semtech/library/SX126xLib/0.0.0%2Bsha.1e2345700991/SX126xLib-0.0.0%2Bsha.1e2345700991.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-semtech/library/SX126xLib/0.0.0%2Bsha.1e2345700991/SX126xLib-0.0.0%2Bsha.1e2345700991.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-semtech/library/SX1272Lib/0.0.0+sha.b988b60083a1/SX1272Lib-0.0.0+sha.b988b60083a1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SX1272Lib-0.0.0+sha.b988b60083a1.tar.gz",
+    "size_bytes": 30232,
+    "sha256": "29e2b15815723c6dc6999659e8e9dacf6b3ba01cdc5d701c619f6c06cd9d1da3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-semtech/library/SX1272Lib/0.0.0%2Bsha.b988b60083a1/SX1272Lib-0.0.0%2Bsha.b988b60083a1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-semtech/library/SX1272Lib/0.0.0%2Bsha.b988b60083a1/SX1272Lib-0.0.0%2Bsha.b988b60083a1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-semtech/library/SX1276Lib/0.0.0+sha.737e89f8d4f3/SX1276Lib-0.0.0+sha.737e89f8d4f3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SX1276Lib-0.0.0+sha.737e89f8d4f3.tar.gz",
+    "size_bytes": 29535,
+    "sha256": "dcae2bac56d304c23cdc696dfa2201cca1188d694695c31a3839734815783dc9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-semtech/library/SX1276Lib/0.0.0%2Bsha.737e89f8d4f3/SX1276Lib-0.0.0%2Bsha.737e89f8d4f3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-semtech/library/SX1276Lib/0.0.0%2Bsha.737e89f8d4f3/SX1276Lib-0.0.0%2Bsha.737e89f8d4f3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-semtech/library/SX1280Lib/0.0.0+sha.c4f110f3fe3e/SX1280Lib-0.0.0+sha.c4f110f3fe3e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SX1280Lib-0.0.0+sha.c4f110f3fe3e.tar.gz",
+    "size_bytes": 32608,
+    "sha256": "14e28f997af9d7582b736986fa640af3ce1b4b12c73e4b70f67661e4cd6bdd04",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-semtech/library/SX1280Lib/0.0.0%2Bsha.c4f110f3fe3e/SX1280Lib-0.0.0%2Bsha.c4f110f3fe3e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-semtech/library/SX1280Lib/0.0.0%2Bsha.c4f110f3fe3e/SX1280Lib-0.0.0%2Bsha.c4f110f3fe3e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

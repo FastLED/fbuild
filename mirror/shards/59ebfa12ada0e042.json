@@ -1,0 +1,139 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/yellobyte",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "yellobyte/library/DacESP32/1.1.1/DacESP32-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DacESP32-1.1.1.tar.gz",
+    "size_bytes": 13276,
+    "sha256": "67866176139c89dd7149332e5942a9b83cbb0ac6a3d9b00a9d96c9378e9cff9b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yellobyte/library/DacESP32/1.1.1/DacESP32-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/yellobyte/library/DacESP32/1.1.1/DacESP32-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "yellobyte/library/DacESP32/2.1.2/DacESP32-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DacESP32-2.1.2.tar.gz",
+    "size_bytes": 15938,
+    "sha256": "7e343f09e403b285c003fe6a82c20a685cd5114bf323843325332b77261ffe2d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yellobyte/library/DacESP32/2.1.2/DacESP32-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/yellobyte/library/DacESP32/2.1.2/DacESP32-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "yellobyte/library/SoapESP32/1.4.3/SoapESP32-1.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SoapESP32-1.4.3.tar.gz",
+    "size_bytes": 42466,
+    "sha256": "e5508b8da5326733f56a145efd052a1b7520f491e90ffecd379215310f0aad9d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yellobyte/library/SoapESP32/1.4.3/SoapESP32-1.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/yellobyte/library/SoapESP32/1.4.3/SoapESP32-1.4.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "yellobyte/library/TLV320DAC3101/1.0.0/TLV320DAC3101-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TLV320DAC3101-1.0.0.tar.gz",
+    "size_bytes": 1181818,
+    "sha256": "8f84c689cd02b440e1231d156e1943af13b2c47432c9da8b1f2fa697c126ca60",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yellobyte/library/TLV320DAC3101/1.0.0/TLV320DAC3101-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/yellobyte/library/TLV320DAC3101/1.0.0/TLV320DAC3101-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "yellobyte/library/TLV320DAC3101/1.1.0/TLV320DAC3101-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TLV320DAC3101-1.1.0.tar.gz",
+    "size_bytes": 1183116,
+    "sha256": "4c53ccc9800b40e004541c88c49371ec41d7851b0414abc7d9cc0376cb485c41",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yellobyte/library/TLV320DAC3101/1.1.0/TLV320DAC3101-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/yellobyte/library/TLV320DAC3101/1.1.0/TLV320DAC3101-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "yellobyte/library/TLV320DAC3101/1.2.0/TLV320DAC3101-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TLV320DAC3101-1.2.0.tar.gz",
+    "size_bytes": 1184836,
+    "sha256": "fd67b6cd69c2df89cc45ce55af2a1f4b1b31efe40fe30198eddc86804d08fb5c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yellobyte/library/TLV320DAC3101/1.2.0/TLV320DAC3101-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/yellobyte/library/TLV320DAC3101/1.2.0/TLV320DAC3101-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "yellobyte/library/TLV320DAC3101/1.3.0/TLV320DAC3101-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TLV320DAC3101-1.3.0.tar.gz",
+    "size_bytes": 1330587,
+    "sha256": "26e62edfa12b23cae74964d93eba4c7f1aabd73ec9faf9312591518f57d15f4b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yellobyte/library/TLV320DAC3101/1.3.0/TLV320DAC3101-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/yellobyte/library/TLV320DAC3101/1.3.0/TLV320DAC3101-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "yellobyte/library/TLV320DAC3101/1.3.1/TLV320DAC3101-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TLV320DAC3101-1.3.1.tar.gz",
+    "size_bytes": 1330600,
+    "sha256": "34b52f3e029209561aef0cc328bd6ad41197de8204f59e07433ce921bf3bdc65",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yellobyte/library/TLV320DAC3101/1.3.1/TLV320DAC3101-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/yellobyte/library/TLV320DAC3101/1.3.1/TLV320DAC3101-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "yellobyte/library/TLV320DAC3101/1.4.0/TLV320DAC3101-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TLV320DAC3101-1.4.0.tar.gz",
+    "size_bytes": 1330846,
+    "sha256": "80b6b3153e4cc33c16093b6ffd45d58af497d7246dc2b3cf9715659f624f1e91",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yellobyte/library/TLV320DAC3101/1.4.0/TLV320DAC3101-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/yellobyte/library/TLV320DAC3101/1.4.0/TLV320DAC3101-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "yellobyte/library/TLV320DAC3101/1.4.1/TLV320DAC3101-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TLV320DAC3101-1.4.1.tar.gz",
+    "size_bytes": 1331103,
+    "sha256": "051033005d0e1bf7edc3a5bb428025792792e45aab5a05ef42c8697c10268493",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yellobyte/library/TLV320DAC3101/1.4.1/TLV320DAC3101-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/yellobyte/library/TLV320DAC3101/1.4.1/TLV320DAC3101-1.4.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

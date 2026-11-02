@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ecesat",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ecesat/library/Accelerometer/0.0.0+sha.d16cb9edd410/Accelerometer-0.0.0+sha.d16cb9edd410.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Accelerometer-0.0.0+sha.d16cb9edd410.tar.gz",
+    "size_bytes": 1371,
+    "sha256": "aed5348ba88f4e6a81505d05f94148485988b025e70a2118177044439ca49835",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ecesat/library/Accelerometer/0.0.0%2Bsha.d16cb9edd410/Accelerometer-0.0.0%2Bsha.d16cb9edd410.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ecesat/library/Accelerometer/0.0.0%2Bsha.d16cb9edd410/Accelerometer-0.0.0%2Bsha.d16cb9edd410.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ecesat/library/Cansat_GPS/0.0.0+sha.572c3ee763f3/Cansat_GPS-0.0.0+sha.572c3ee763f3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Cansat_GPS-0.0.0+sha.572c3ee763f3.tar.gz",
+    "size_bytes": 1949,
+    "sha256": "49e9a04c6cf0fbdd0f4b03339cf6209db93c5678a72c94129b364a74e356f9dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ecesat/library/Cansat_GPS/0.0.0%2Bsha.572c3ee763f3/Cansat_GPS-0.0.0%2Bsha.572c3ee763f3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ecesat/library/Cansat_GPS/0.0.0%2Bsha.572c3ee763f3/Cansat_GPS-0.0.0%2Bsha.572c3ee763f3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ecesat/library/GPSlib/0.0.0+sha.a37ecf7730aa/GPSlib-0.0.0+sha.a37ecf7730aa.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GPSlib-0.0.0+sha.a37ecf7730aa.tar.gz",
+    "size_bytes": 2247,
+    "sha256": "a89e0a64be7e72fd37035ed070175a2d02fa3918272453c5ba8215aa581eb38d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ecesat/library/GPSlib/0.0.0%2Bsha.a37ecf7730aa/GPSlib-0.0.0%2Bsha.a37ecf7730aa.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ecesat/library/GPSlib/0.0.0%2Bsha.a37ecf7730aa/GPSlib-0.0.0%2Bsha.a37ecf7730aa.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ecesat/library/xbee/0.0.0+sha.1f888bf1fc1b/xbee-0.0.0+sha.1f888bf1fc1b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "xbee-0.0.0+sha.1f888bf1fc1b.tar.gz",
+    "size_bytes": 2526,
+    "sha256": "4327f5daf4c9071e3e9ad8b7c6cf89137797bcdd3f7e82d5d2af255b48ff59ea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ecesat/library/xbee/0.0.0%2Bsha.1f888bf1fc1b/xbee-0.0.0%2Bsha.1f888bf1fc1b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ecesat/library/xbee/0.0.0%2Bsha.1f888bf1fc1b/xbee-0.0.0%2Bsha.1f888bf1fc1b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

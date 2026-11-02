@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cheind",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cheind/library/IoT-Scopes/1.0.1/IoT-Scopes-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoT-Scopes-1.0.1.tar.gz",
+    "size_bytes": 101832,
+    "sha256": "479a18176fbda3c82595c0c5ae2cefa3c196e8d1df0632c27490eccdd669cc7e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cheind/library/IoT-Scopes/1.0.1/IoT-Scopes-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cheind/library/IoT-Scopes/1.0.1/IoT-Scopes-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

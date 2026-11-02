@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-kerpower",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-kerpower/library/4DGL/0.0.0+sha.b95348b8030e/4DGL-0.0.0+sha.b95348b8030e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "4DGL-0.0.0+sha.b95348b8030e.tar.gz",
+    "size_bytes": 7347,
+    "sha256": "6279a8b5bfff106f42ac3c78ead8e5c3bc4b8649f296333b014f639c269c64cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kerpower/library/4DGL/0.0.0%2Bsha.b95348b8030e/4DGL-0.0.0%2Bsha.b95348b8030e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kerpower/library/4DGL/0.0.0%2Bsha.b95348b8030e/4DGL-0.0.0%2Bsha.b95348b8030e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

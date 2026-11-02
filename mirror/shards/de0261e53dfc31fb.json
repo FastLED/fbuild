@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-hnct-robocon",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-hnct-robocon/library/MotorControll/0.0.0+sha.c9970769436f/MotorControll-0.0.0+sha.c9970769436f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MotorControll-0.0.0+sha.c9970769436f.tar.gz",
+    "size_bytes": 2010,
+    "sha256": "c9611eacdb0948c5fbfce51430f5d3473fb39e406d50e4e1a24c7adc38154383",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hnct-robocon/library/MotorControll/0.0.0%2Bsha.c9970769436f/MotorControll-0.0.0%2Bsha.c9970769436f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hnct-robocon/library/MotorControll/0.0.0%2Bsha.c9970769436f/MotorControll-0.0.0%2Bsha.c9970769436f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hnct-robocon/library/QEI/0.0.0+sha.b8bec4b76016/QEI-0.0.0+sha.b8bec4b76016.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QEI-0.0.0+sha.b8bec4b76016.tar.gz",
+    "size_bytes": 4493,
+    "sha256": "8a11164b876f18a2511fbb9045e10796dd6f854a30838985fc98cae016a3302b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hnct-robocon/library/QEI/0.0.0%2Bsha.b8bec4b76016/QEI-0.0.0%2Bsha.b8bec4b76016.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hnct-robocon/library/QEI/0.0.0%2Bsha.b8bec4b76016/QEI-0.0.0%2Bsha.b8bec4b76016.tar.gz"
+    ]
+   }
+  }
+ ]
+}

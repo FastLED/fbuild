@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kodediy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kodediy/library/kode_MAX31329/1.0.1/kode_MAX31329-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "kode_MAX31329-1.0.1.tar.gz",
+    "size_bytes": 13022,
+    "sha256": "384f6cd1a800abe817ad4679e3fb415aab52082474e563fbbc5141ffa712365d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kodediy/library/kode_MAX31329/1.0.1/kode_MAX31329-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/kodediy/library/kode_MAX31329/1.0.1/kode_MAX31329-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kodediy/library/kode_bq27220/1.0.0/kode_bq27220-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "kode_bq27220-1.0.0.tar.gz",
+    "size_bytes": 10360,
+    "sha256": "20eef7a0819390b948d7348181686018c2c0bae2ded9c60c0dd5ba80239e1bd6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kodediy/library/kode_bq27220/1.0.0/kode_bq27220-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kodediy/library/kode_bq27220/1.0.0/kode_bq27220-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

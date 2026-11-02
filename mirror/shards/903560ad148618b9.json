@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/msnicklous",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "msnicklous/library/BufferedTrace/1.1.0/BufferedTrace-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BufferedTrace-1.1.0.tar.gz",
+    "size_bytes": 5738,
+    "sha256": "9d40fa2142f000e2605e3ab7c2f34c403b1fe59df4c2a8284cb51bbc2ef5fc19",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/msnicklous/library/BufferedTrace/1.1.0/BufferedTrace-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/msnicklous/library/BufferedTrace/1.1.0/BufferedTrace-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "msnicklous/library/BufferedTrace/1.2.0/BufferedTrace-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BufferedTrace-1.2.0.tar.gz",
+    "size_bytes": 5941,
+    "sha256": "7392ac9afdaa21ec4ba5b6512bf275194a2eb63adbf094e10c7c30f0fadfff2a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/msnicklous/library/BufferedTrace/1.2.0/BufferedTrace-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/msnicklous/library/BufferedTrace/1.2.0/BufferedTrace-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "msnicklous/library/BufferedTrace/1.2.1/BufferedTrace-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BufferedTrace-1.2.1.tar.gz",
+    "size_bytes": 6057,
+    "sha256": "88bee7c1bdfc227a358875b33f78bd8bd10c5a32607287978c95689ee0e00ddf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/msnicklous/library/BufferedTrace/1.2.1/BufferedTrace-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/msnicklous/library/BufferedTrace/1.2.1/BufferedTrace-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "msnicklous/library/CommandCatcher/1.1.0/CommandCatcher-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CommandCatcher-1.1.0.tar.gz",
+    "size_bytes": 8091,
+    "sha256": "6284cdc5cbba87a360701baaf14de0d3183f6bb4f3264b2f3ca3a11003af3d7a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/msnicklous/library/CommandCatcher/1.1.0/CommandCatcher-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/msnicklous/library/CommandCatcher/1.1.0/CommandCatcher-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "msnicklous/library/DYSV17Fmp3/1.0.0/DYSV17Fmp3-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DYSV17Fmp3-1.0.0.tar.gz",
+    "size_bytes": 7403,
+    "sha256": "70e9f429d86d81ce71258750e688b5588ad15e4f4ef63e257286f66589f00117",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/msnicklous/library/DYSV17Fmp3/1.0.0/DYSV17Fmp3-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/msnicklous/library/DYSV17Fmp3/1.0.0/DYSV17Fmp3-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-dansummers",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-dansummers/library/ANSITerm/0.0.0+sha.e3403c93f864/ANSITerm-0.0.0+sha.e3403c93f864.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ANSITerm-0.0.0+sha.e3403c93f864.tar.gz",
+    "size_bytes": 6606,
+    "sha256": "ad53bc6422642476e9170038247b73eb8de90e491a796f4bd4d9b056c87e0d03",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dansummers/library/ANSITerm/0.0.0%2Bsha.e3403c93f864/ANSITerm-0.0.0%2Bsha.e3403c93f864.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dansummers/library/ANSITerm/0.0.0%2Bsha.e3403c93f864/ANSITerm-0.0.0%2Bsha.e3403c93f864.tar.gz"
+    ]
+   }
+  }
+ ]
+}

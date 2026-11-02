@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bitworx-cz",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bitworx-cz/library/Updater/1.0.0/Updater-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Updater-1.0.0.tar.gz",
+    "size_bytes": 3557,
+    "sha256": "49dbfe6557c0d0c3bb89b18d16a1cb556142664bb20958e1f3d2a019358efb70",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitworx-cz/library/Updater/1.0.0/Updater-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bitworx-cz/library/Updater/1.0.0/Updater-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitworx-cz/library/Updater/1.1.0/Updater-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Updater-1.1.0.tar.gz",
+    "size_bytes": 4163,
+    "sha256": "fd84a1b28906610531969aadc771bd3ca530b697074cb7feeef94829f093309d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitworx-cz/library/Updater/1.1.0/Updater-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bitworx-cz/library/Updater/1.1.0/Updater-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitworx-cz/library/Updater/1.2.0/Updater-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Updater-1.2.0.tar.gz",
+    "size_bytes": 4148,
+    "sha256": "164e11d5da7091e85c04eb8e913b4236ed75f3f8f4e9e12038723c2ef80acba2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitworx-cz/library/Updater/1.2.0/Updater-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bitworx-cz/library/Updater/1.2.0/Updater-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

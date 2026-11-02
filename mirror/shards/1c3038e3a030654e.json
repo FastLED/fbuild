@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ramadhanafif",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ramadhanafif/library/ESP32-W5500-Ethernet2/1.0.4/ESP32-W5500-Ethernet2-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-W5500-Ethernet2-1.0.4.tar.gz",
+    "size_bytes": 46380,
+    "sha256": "5c0f4c04c875102449a527eb7f33c9c79704debb32d83564cf6c115abef3f1e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ramadhanafif/library/ESP32-W5500-Ethernet2/1.0.4/ESP32-W5500-Ethernet2-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/ramadhanafif/library/ESP32-W5500-Ethernet2/1.0.4/ESP32-W5500-Ethernet2-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ramadhanafif/library/Ethernet2-W5500-ESP32/1.0.4/Ethernet2-W5500-ESP32-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ethernet2-W5500-ESP32-1.0.4.tar.gz",
+    "size_bytes": 46088,
+    "sha256": "5a6142e0ddf5138e5a8ebc680a8d160e07b2759ac769dd58451e21ef25f5df5c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ramadhanafif/library/Ethernet2-W5500-ESP32/1.0.4/Ethernet2-W5500-ESP32-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/ramadhanafif/library/Ethernet2-W5500-ESP32/1.0.4/Ethernet2-W5500-ESP32-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

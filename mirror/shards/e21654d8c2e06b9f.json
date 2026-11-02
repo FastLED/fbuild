@@ -1,0 +1,477 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pribanosati",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pribanosati/library/mrm-8x8a/0.0.8/mrm-8x8a-0.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mrm-8x8a-0.0.8.tar.gz",
+    "size_bytes": 8457,
+    "sha256": "9bf2ced48f3ff4a857e6709764313e5dc5154da73c20cf452907bffce752a6b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pribanosati/library/mrm-8x8a/0.0.8/mrm-8x8a-0.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/pribanosati/library/mrm-8x8a/0.0.8/mrm-8x8a-0.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pribanosati/library/mrm-bldc2x50/0.0.7/mrm-bldc2x50-0.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mrm-bldc2x50-0.0.7.tar.gz",
+    "size_bytes": 3354,
+    "sha256": "2136d650236d898eeaa90c1d3f73acafa56be7fe94e86a0e3446810e61216478",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pribanosati/library/mrm-bldc2x50/0.0.7/mrm-bldc2x50-0.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/pribanosati/library/mrm-bldc2x50/0.0.7/mrm-bldc2x50-0.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pribanosati/library/mrm-bldc4x2.5/0.0.5/mrm-bldc4x2.5-0.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mrm-bldc4x2.5-0.0.5.tar.gz",
+    "size_bytes": 2669,
+    "sha256": "5e2887884dde4e2cdd0507ae38d42ef2a4f1f329033d0a4f8fb39c93b4e36312",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pribanosati/library/mrm-bldc4x2.5/0.0.5/mrm-bldc4x2.5-0.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/pribanosati/library/mrm-bldc4x2.5/0.0.5/mrm-bldc4x2.5-0.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pribanosati/library/mrm-board/0.0.14/mrm-board-0.0.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mrm-board-0.0.14.tar.gz",
+    "size_bytes": 12640,
+    "sha256": "4be29c92518119ac8f7280c0913b3e54360e95a5e66dc2c267b14a52d7e78fd3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pribanosati/library/mrm-board/0.0.14/mrm-board-0.0.14.tar.gz",
+     "https://dl.registry.platformio.org/download/pribanosati/library/mrm-board/0.0.14/mrm-board-0.0.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pribanosati/library/mrm-board/0.0.15/mrm-board-0.0.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mrm-board-0.0.15.tar.gz",
+    "size_bytes": 12653,
+    "sha256": "a47a72c92fb31262455236ede5a59d87dc9718484db46240e43f460316425698",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pribanosati/library/mrm-board/0.0.15/mrm-board-0.0.15.tar.gz",
+     "https://dl.registry.platformio.org/download/pribanosati/library/mrm-board/0.0.15/mrm-board-0.0.15.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pribanosati/library/mrm-can-bus/0.0.7/mrm-can-bus-0.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mrm-can-bus-0.0.7.tar.gz",
+    "size_bytes": 3053,
+    "sha256": "956cc065229f0939d0dee82fac76b2c1eed9375f1829128e228801318bf0ef40",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pribanosati/library/mrm-can-bus/0.0.7/mrm-can-bus-0.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/pribanosati/library/mrm-can-bus/0.0.7/mrm-can-bus-0.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pribanosati/library/mrm-col-b/0.0.4/mrm-col-b-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mrm-col-b-0.0.4.tar.gz",
+    "size_bytes": 6354,
+    "sha256": "4008d7b84555886c517e43ea22581b402e46251640287e2faa7909165d90b1da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pribanosati/library/mrm-col-b/0.0.4/mrm-col-b-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/pribanosati/library/mrm-col-b/0.0.4/mrm-col-b-0.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pribanosati/library/mrm-col-b/0.0.5/mrm-col-b-0.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mrm-col-b-0.0.5.tar.gz",
+    "size_bytes": 5168,
+    "sha256": "552b10e5d33ee84ff7dfa84c5e42041be14323111430f724ebe1c23dce4b01fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pribanosati/library/mrm-col-b/0.0.5/mrm-col-b-0.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/pribanosati/library/mrm-col-b/0.0.5/mrm-col-b-0.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pribanosati/library/mrm-col-can/0.0.10/mrm-col-can-0.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mrm-col-can-0.0.10.tar.gz",
+    "size_bytes": 6077,
+    "sha256": "d38c6ea4d1342eb894ad8b0d404a02264a3d007865a444f774ce85c3a5f21489",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pribanosati/library/mrm-col-can/0.0.10/mrm-col-can-0.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/pribanosati/library/mrm-col-can/0.0.10/mrm-col-can-0.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pribanosati/library/mrm-common/0.0.15/mrm-common-0.0.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mrm-common-0.0.15.tar.gz",
+    "size_bytes": 3145,
+    "sha256": "c1b6faae2ce06feb83c0999bf683c6cf6b0fab2a7eb71e09b5216c161cafd5e8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pribanosati/library/mrm-common/0.0.15/mrm-common-0.0.15.tar.gz",
+     "https://dl.registry.platformio.org/download/pribanosati/library/mrm-common/0.0.15/mrm-common-0.0.15.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pribanosati/library/mrm-fet-can/0.0.10/mrm-fet-can-0.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mrm-fet-can-0.0.10.tar.gz",
+    "size_bytes": 2811,
+    "sha256": "29b074517a51b793517d300244d18a3b2d05ed85467579202966de7c75bdca01",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pribanosati/library/mrm-fet-can/0.0.10/mrm-fet-can-0.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/pribanosati/library/mrm-fet-can/0.0.10/mrm-fet-can-0.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pribanosati/library/mrm-imu/0.0.7/mrm-imu-0.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mrm-imu-0.0.7.tar.gz",
+    "size_bytes": 61400,
+    "sha256": "9df24e6911d58abe9d4942592aaad69983d1d8260f7fb2ef05e5282b061f08ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pribanosati/library/mrm-imu/0.0.7/mrm-imu-0.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/pribanosati/library/mrm-imu/0.0.7/mrm-imu-0.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pribanosati/library/mrm-ir-finder-can/0.0.2/mrm-ir-finder-can-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mrm-ir-finder-can-0.0.2.tar.gz",
+    "size_bytes": 2773,
+    "sha256": "bb6a0f430157830224daed036953c767939661a4077d9ef2a61cd0e271b2b5eb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pribanosati/library/mrm-ir-finder-can/0.0.2/mrm-ir-finder-can-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/pribanosati/library/mrm-ir-finder-can/0.0.2/mrm-ir-finder-can-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pribanosati/library/mrm-ir-finder2/0.0.4/mrm-ir-finder2-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mrm-ir-finder2-0.0.4.tar.gz",
+    "size_bytes": 2426,
+    "sha256": "80b0057e7aaed3d992b2c427d5cf71ef478a9a43e001ee788a85a3d4d5c925d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pribanosati/library/mrm-ir-finder2/0.0.4/mrm-ir-finder2-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/pribanosati/library/mrm-ir-finder2/0.0.4/mrm-ir-finder2-0.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pribanosati/library/mrm-ir-finder3/0.0.10/mrm-ir-finder3-0.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mrm-ir-finder3-0.0.10.tar.gz",
+    "size_bytes": 5559,
+    "sha256": "2bf017dc29aea779a35b429445cdf356811d06e4d8fe4d89449ea3b70b57ab3b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pribanosati/library/mrm-ir-finder3/0.0.10/mrm-ir-finder3-0.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/pribanosati/library/mrm-ir-finder3/0.0.10/mrm-ir-finder3-0.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pribanosati/library/mrm-lid-can-b/0.0.9/mrm-lid-can-b-0.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mrm-lid-can-b-0.0.9.tar.gz",
+    "size_bytes": 4809,
+    "sha256": "d2ebbd5599cd7a2e53b377a50c68d90edc9d7a1375814e519fbdf48a1f12052a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pribanosati/library/mrm-lid-can-b/0.0.9/mrm-lid-can-b-0.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/pribanosati/library/mrm-lid-can-b/0.0.9/mrm-lid-can-b-0.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pribanosati/library/mrm-lid-can-b2/0.0.10/mrm-lid-can-b2-0.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mrm-lid-can-b2-0.0.10.tar.gz",
+    "size_bytes": 5337,
+    "sha256": "5806c7e2adb20a177a62b7ffe36d844e77a7f185f89076b479c3380b9d843707",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pribanosati/library/mrm-lid-can-b2/0.0.10/mrm-lid-can-b2-0.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/pribanosati/library/mrm-lid-can-b2/0.0.10/mrm-lid-can-b2-0.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pribanosati/library/mrm-lid-d/0.0.2/mrm-lid-d-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mrm-lid-d-0.0.2.tar.gz",
+    "size_bytes": 5298,
+    "sha256": "b09e634ebe926b3cc189ba514e668759dfc5b7a46b96f6b711bb86745a94240d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pribanosati/library/mrm-lid-d/0.0.2/mrm-lid-d-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/pribanosati/library/mrm-lid-d/0.0.2/mrm-lid-d-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pribanosati/library/mrm-lid1/0.0.3/mrm-lid1-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mrm-lid1-0.0.3.tar.gz",
+    "size_bytes": 65710,
+    "sha256": "8475967832eba2608ba9aa5a1bdc1243613f889e3499d743018f1591a9cbdab6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pribanosati/library/mrm-lid1/0.0.3/mrm-lid1-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/pribanosati/library/mrm-lid1/0.0.3/mrm-lid1-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pribanosati/library/mrm-lid2/0.0.3/mrm-lid2-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mrm-lid2-0.0.3.tar.gz",
+    "size_bytes": 15763,
+    "sha256": "3be957de3645885aa70343e81c5c9ec3ab63b2ea3ec6a71583c4e8d9727cc03f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pribanosati/library/mrm-lid2/0.0.3/mrm-lid2-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/pribanosati/library/mrm-lid2/0.0.3/mrm-lid2-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pribanosati/library/mrm-mot2x50/0.0.6/mrm-mot2x50-0.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mrm-mot2x50-0.0.6.tar.gz",
+    "size_bytes": 2249,
+    "sha256": "dc19d45fbccb429d93b1f3a0e4bae1db6e3a27f1c52daccdc1d2796797d3f704",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pribanosati/library/mrm-mot2x50/0.0.6/mrm-mot2x50-0.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/pribanosati/library/mrm-mot2x50/0.0.6/mrm-mot2x50-0.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pribanosati/library/mrm-mot4x10/0.0.6/mrm-mot4x10-0.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mrm-mot4x10-0.0.6.tar.gz",
+    "size_bytes": 2276,
+    "sha256": "c5cc76fa9ece64648987f60eafa19af532eb0dd486ea123bf8bdee1320cb36ef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pribanosati/library/mrm-mot4x10/0.0.6/mrm-mot4x10-0.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/pribanosati/library/mrm-mot4x10/0.0.6/mrm-mot4x10-0.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pribanosati/library/mrm-mot4x3.6can/0.0.6/mrm-mot4x3.6can-0.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mrm-mot4x3.6can-0.0.6.tar.gz",
+    "size_bytes": 2265,
+    "sha256": "46c0d93da776382a75602c92b85ed4f981319bc55a00912d13077b47ad34b726",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pribanosati/library/mrm-mot4x3.6can/0.0.6/mrm-mot4x3.6can-0.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/pribanosati/library/mrm-mot4x3.6can/0.0.6/mrm-mot4x3.6can-0.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pribanosati/library/mrm-node/0.0.8/mrm-node-0.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mrm-node-0.0.8.tar.gz",
+    "size_bytes": 3574,
+    "sha256": "aeb20fbec56ee755a3b369e8c301464f11615f7f395c6baa967280375ac3654e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pribanosati/library/mrm-node/0.0.8/mrm-node-0.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/pribanosati/library/mrm-node/0.0.8/mrm-node-0.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pribanosati/library/mrm-pid/0.0.5/mrm-pid-0.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mrm-pid-0.0.5.tar.gz",
+    "size_bytes": 2238,
+    "sha256": "8b2795c16adc0b85f968d3786bd46c22cc248b2291328eed3893bab4bf022bb3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pribanosati/library/mrm-pid/0.0.5/mrm-pid-0.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/pribanosati/library/mrm-pid/0.0.5/mrm-pid-0.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pribanosati/library/mrm-ref-can/0.0.10/mrm-ref-can-0.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mrm-ref-can-0.0.10.tar.gz",
+    "size_bytes": 7164,
+    "sha256": "8af10dc5664cdd78c5057c94721af81c5bcef3e488270e4d72739c3214bcd032",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pribanosati/library/mrm-ref-can/0.0.10/mrm-ref-can-0.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/pribanosati/library/mrm-ref-can/0.0.10/mrm-ref-can-0.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pribanosati/library/mrm-robot/0.0.23/mrm-robot-0.0.23.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mrm-robot-0.0.23.tar.gz",
+    "size_bytes": 19755,
+    "sha256": "758c9ba9245e9e2dab4e774c99debfcacb127b41b269cee768fd48f310d4085b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pribanosati/library/mrm-robot/0.0.23/mrm-robot-0.0.23.tar.gz",
+     "https://dl.registry.platformio.org/download/pribanosati/library/mrm-robot/0.0.23/mrm-robot-0.0.23.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pribanosati/library/mrm-robot/0.0.24/mrm-robot-0.0.24.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mrm-robot-0.0.24.tar.gz",
+    "size_bytes": 19964,
+    "sha256": "8e2a0eef4e8cd09d89e34095702d881c7fd9b56cf7b3ab580c8138f1f8d58a3d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pribanosati/library/mrm-robot/0.0.24/mrm-robot-0.0.24.tar.gz",
+     "https://dl.registry.platformio.org/download/pribanosati/library/mrm-robot/0.0.24/mrm-robot-0.0.24.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pribanosati/library/mrm-servo/0.0.10/mrm-servo-0.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mrm-servo-0.0.10.tar.gz",
+    "size_bytes": 3770,
+    "sha256": "170b9a66c3e3cca0a87f4b52499eefb13922543d15e5c300bd57c9cc265f894d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pribanosati/library/mrm-servo/0.0.10/mrm-servo-0.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/pribanosati/library/mrm-servo/0.0.10/mrm-servo-0.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pribanosati/library/mrm-servo/0.0.11/mrm-servo-0.0.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mrm-servo-0.0.11.tar.gz",
+    "size_bytes": 3738,
+    "sha256": "abe00593f091a93cd287c8a52bb3f12eb8dd7fe6b891271b385a7f3f1be5b309",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pribanosati/library/mrm-servo/0.0.11/mrm-servo-0.0.11.tar.gz",
+     "https://dl.registry.platformio.org/download/pribanosati/library/mrm-servo/0.0.11/mrm-servo-0.0.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pribanosati/library/mrm-servo/0.0.12/mrm-servo-0.0.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mrm-servo-0.0.12.tar.gz",
+    "size_bytes": 3890,
+    "sha256": "4baade5f3c338be77eb59ad8a473fdb4f1cf4472fa40b4139287619e3db3877a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pribanosati/library/mrm-servo/0.0.12/mrm-servo-0.0.12.tar.gz",
+     "https://dl.registry.platformio.org/download/pribanosati/library/mrm-servo/0.0.12/mrm-servo-0.0.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pribanosati/library/mrm-servo/0.0.13/mrm-servo-0.0.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mrm-servo-0.0.13.tar.gz",
+    "size_bytes": 3919,
+    "sha256": "dd3bfcf8e7d54bf5fbde0331a860936402264b0120471e867047338399d3a06a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pribanosati/library/mrm-servo/0.0.13/mrm-servo-0.0.13.tar.gz",
+     "https://dl.registry.platformio.org/download/pribanosati/library/mrm-servo/0.0.13/mrm-servo-0.0.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pribanosati/library/mrm-switch/0.0.6/mrm-switch-0.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mrm-switch-0.0.6.tar.gz",
+    "size_bytes": 2022,
+    "sha256": "c40e2e0aca7909c0c04a0b21aab915dc61843227f90e242e54694d1508af1b91",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pribanosati/library/mrm-switch/0.0.6/mrm-switch-0.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/pribanosati/library/mrm-switch/0.0.6/mrm-switch-0.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pribanosati/library/mrm-therm-b-can/0.0.8/mrm-therm-b-can-0.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mrm-therm-b-can-0.0.8.tar.gz",
+    "size_bytes": 3095,
+    "sha256": "2b5af3a17142022f0d33fa9050124956a0b553034d430a702bb59b5eceb7745f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pribanosati/library/mrm-therm-b-can/0.0.8/mrm-therm-b-can-0.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/pribanosati/library/mrm-therm-b-can/0.0.8/mrm-therm-b-can-0.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pribanosati/library/mrm-us-b/0.0.6/mrm-us-b-0.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mrm-us-b-0.0.6.tar.gz",
+    "size_bytes": 3069,
+    "sha256": "8edeb471ed621070ebd72929ea7f3f9d935e8d722d1289683052053abecc61e8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pribanosati/library/mrm-us-b/0.0.6/mrm-us-b-0.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/pribanosati/library/mrm-us-b/0.0.6/mrm-us-b-0.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pribanosati/library/mrm-us1/0.0.5/mrm-us1-0.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mrm-us1-0.0.5.tar.gz",
+    "size_bytes": 3060,
+    "sha256": "9961d5aec884d420cb5f1d10d1ebf3168b2c5a8132f5b188cddb9e86f32edeac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pribanosati/library/mrm-us1/0.0.5/mrm-us1-0.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/pribanosati/library/mrm-us1/0.0.5/mrm-us1-0.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

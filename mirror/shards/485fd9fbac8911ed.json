@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/igvina",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "igvina/library/ArdBitmap/2.0.3/ArdBitmap-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArdBitmap-2.0.3.tar.gz",
+    "size_bytes": 20704,
+    "sha256": "604ffbfb5b43eaa325c0b93ad89f41fe508185a9ce474683701e4d72dcdff785",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/igvina/library/ArdBitmap/2.0.3/ArdBitmap-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/igvina/library/ArdBitmap/2.0.3/ArdBitmap-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "igvina/library/ArdVoice/0.1.1/ArdVoice-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArdVoice-0.1.1.tar.gz",
+    "size_bytes": 38215,
+    "sha256": "da51bf8ce0438ef15df4958fa2053cbbb74f8de615b855bb722bafad06a5afbc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/igvina/library/ArdVoice/0.1.1/ArdVoice-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/igvina/library/ArdVoice/0.1.1/ArdVoice-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

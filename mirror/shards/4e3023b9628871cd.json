@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pcbcupid",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pcbcupid/library/PCBCUPID%20QMC6309/1.0.0/PCBCUPIDQMC6309-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCBCUPIDQMC6309-1.0.0.tar.gz",
+    "size_bytes": 8237,
+    "sha256": "ff9e5d2cf66b63e046a62b30f8af0757cf8d839f8925b949e7b90e12ae640e21",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pcbcupid/library/PCBCUPID%2520QMC6309/1.0.0/PCBCUPIDQMC6309-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pcbcupid/library/PCBCUPID%20QMC6309/1.0.0/PCBCUPIDQMC6309-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pcbcupid/library/PCBCUPID-Cypher/1.0.1/PCBCUPID-Cypher-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCBCUPID-Cypher-1.0.1.tar.gz",
+    "size_bytes": 23602,
+    "sha256": "33db6e96a475d3a88b8bf453e8d96549a13bdd7f1499158344623da5cdc0739b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pcbcupid/library/PCBCUPID-Cypher/1.0.1/PCBCUPID-Cypher-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pcbcupid/library/PCBCUPID-Cypher/1.0.1/PCBCUPID-Cypher-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pcbcupid/library/PCBCUPID-NAU8325/1.0.0/PCBCUPID-NAU8325-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCBCUPID-NAU8325-1.0.0.tar.gz",
+    "size_bytes": 16866,
+    "sha256": "8b554efbeac8d201d34013ada28f14d04963920113ed067ec2371f7ef522b59c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pcbcupid/library/PCBCUPID-NAU8325/1.0.0/PCBCUPID-NAU8325-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pcbcupid/library/PCBCUPID-NAU8325/1.0.0/PCBCUPID-NAU8325-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pcbcupid/library/PCBCUPID_MCP79412RTC/1.0.0/PCBCUPID_MCP79412RTC-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCBCUPID_MCP79412RTC-1.0.0.tar.gz",
+    "size_bytes": 30242,
+    "sha256": "1e3966fd4452839d5020771bc26489f1c9ae494fc5565bb0e8e2df4dff1424bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pcbcupid/library/PCBCUPID_MCP79412RTC/1.0.0/PCBCUPID_MCP79412RTC-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pcbcupid/library/PCBCUPID_MCP79412RTC/1.0.0/PCBCUPID_MCP79412RTC-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pcbcupid/library/PCBCUPID_PLAYERS/1.0.0/PCBCUPID_PLAYERS-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCBCUPID_PLAYERS-1.0.0.tar.gz",
+    "size_bytes": 13908,
+    "sha256": "6335535ab2f37f4514e6e1368aa72bcdb11cce683c5172546776dbcd39871eac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pcbcupid/library/PCBCUPID_PLAYERS/1.0.0/PCBCUPID_PLAYERS-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pcbcupid/library/PCBCUPID_PLAYERS/1.0.0/PCBCUPID_PLAYERS-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pcbcupid/library/PCBCUPID_PLAYERS/1.0.1/PCBCUPID_PLAYERS-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCBCUPID_PLAYERS-1.0.1.tar.gz",
+    "size_bytes": 14135,
+    "sha256": "d5c018a3fc09683cb33af58c67e8af153c5de7826690941658cf2469d2516b96",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pcbcupid/library/PCBCUPID_PLAYERS/1.0.1/PCBCUPID_PLAYERS-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pcbcupid/library/PCBCUPID_PLAYERS/1.0.1/PCBCUPID_PLAYERS-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pcbcupid/library/PCBCUPID_PLAYERS/1.0.2/PCBCUPID_PLAYERS-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCBCUPID_PLAYERS-1.0.2.tar.gz",
+    "size_bytes": 14134,
+    "sha256": "aebae4a84c7d6a45121262f72be9c1774b56da2fcb8f0e292359d348844fa238",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pcbcupid/library/PCBCUPID_PLAYERS/1.0.2/PCBCUPID_PLAYERS-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/pcbcupid/library/PCBCUPID_PLAYERS/1.0.2/PCBCUPID_PLAYERS-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

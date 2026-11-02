@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-tvatroy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-tvatroy/library/ModelViewController/0.0.0+sha.f2200f7ac989/ModelViewController-0.0.0+sha.f2200f7ac989.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ModelViewController-0.0.0+sha.f2200f7ac989.tar.gz",
+    "size_bytes": 2422,
+    "sha256": "11317c6bd2ee997d8cb81205fef550ac203e4251af8df1c288220240dd19db83",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tvatroy/library/ModelViewController/0.0.0%2Bsha.f2200f7ac989/ModelViewController-0.0.0%2Bsha.f2200f7ac989.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tvatroy/library/ModelViewController/0.0.0%2Bsha.f2200f7ac989/ModelViewController-0.0.0%2Bsha.f2200f7ac989.tar.gz"
+    ]
+   }
+  }
+ ]
+}

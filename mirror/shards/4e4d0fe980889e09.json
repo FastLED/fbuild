@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gruppio",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gruppio/library/Throttle/1.0.0/Throttle-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Throttle-1.0.0.tar.gz",
+    "size_bytes": 2418,
+    "sha256": "d5ef3fbdd314978127669ac9d3b07c1ede301a2989fbc639f39b12a411212bed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gruppio/library/Throttle/1.0.0/Throttle-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gruppio/library/Throttle/1.0.0/Throttle-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

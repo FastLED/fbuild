@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gjorgjevikj",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gjorgjevikj/library/SmoothProgress/1.0.1/SmoothProgress-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmoothProgress-1.0.1.tar.gz",
+    "size_bytes": 30020,
+    "sha256": "174cd08a4ffddff034fbbf6063aa8a66c0f741f197b703647e970de0c1f45dc3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gjorgjevikj/library/SmoothProgress/1.0.1/SmoothProgress-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gjorgjevikj/library/SmoothProgress/1.0.1/SmoothProgress-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

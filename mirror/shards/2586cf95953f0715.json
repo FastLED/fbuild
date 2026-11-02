@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jackhat1",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jackhat1/library/MT07_CAN_Library/1.0.2/MT07_CAN-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MT07_CAN-1.0.2.tar.gz",
+    "size_bytes": 6840,
+    "sha256": "34b8b333b0d71dee62c600cd4a83035208ad1ca066d2ccf23387fb3588dbb06a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jackhat1/library/MT07_CAN_Library/1.0.2/MT07_CAN-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jackhat1/library/MT07_CAN_Library/1.0.2/MT07_CAN-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jackhat1/library/MT07_CAN_Library/1.0.3/MT07_CAN_Library-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MT07_CAN_Library-1.0.3.tar.gz",
+    "size_bytes": 6827,
+    "sha256": "802f4e150fb7d3faaeae67a65fd77a965bb4fd241c2187d0d6fb50018623964d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jackhat1/library/MT07_CAN_Library/1.0.3/MT07_CAN_Library-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/jackhat1/library/MT07_CAN_Library/1.0.3/MT07_CAN_Library-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

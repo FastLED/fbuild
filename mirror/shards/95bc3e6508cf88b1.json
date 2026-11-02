@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-gagarcr",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-gagarcr/library/SoftPwmOut/0.0.0+sha.813ee8141cdd/SoftPwmOut-0.0.0+sha.813ee8141cdd.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SoftPwmOut-0.0.0+sha.813ee8141cdd.tar.gz",
+    "size_bytes": 1430,
+    "sha256": "297c70cd0af8ebd237eee3136731974dac0a90088dd4f308997d6549b626d603",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-gagarcr/library/SoftPwmOut/0.0.0%2Bsha.813ee8141cdd/SoftPwmOut-0.0.0%2Bsha.813ee8141cdd.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-gagarcr/library/SoftPwmOut/0.0.0%2Bsha.813ee8141cdd/SoftPwmOut-0.0.0%2Bsha.813ee8141cdd.tar.gz"
+    ]
+   }
+  }
+ ]
+}

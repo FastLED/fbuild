@@ -1,0 +1,204 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nils-ost",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nils-ost/library/NAHS-Bricks-Lib-CoIC/1.1.0/NAHS-Bricks-Lib-CoIC-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NAHS-Bricks-Lib-CoIC-1.1.0.tar.gz",
+    "size_bytes": 18744,
+    "sha256": "58992516baa0a40525576d68c8a14af7603ca7e9b7a3f14793b21a2e004f62aa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nils-ost/library/NAHS-Bricks-Lib-CoIC/1.1.0/NAHS-Bricks-Lib-CoIC-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nils-ost/library/NAHS-Bricks-Lib-CoIC/1.1.0/NAHS-Bricks-Lib-CoIC-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nils-ost/library/nahs-Bricks-Feature-All/1.3.1/nahs-Bricks-Feature-All-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nahs-Bricks-Feature-All-1.3.1.tar.gz",
+    "size_bytes": 17206,
+    "sha256": "0f22465e43ce90b67abcf8cb07b33842e2ce0e197d03ba3274f201584e6a9e61",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nils-ost/library/nahs-Bricks-Feature-All/1.3.1/nahs-Bricks-Feature-All-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nils-ost/library/nahs-Bricks-Feature-All/1.3.1/nahs-Bricks-Feature-All-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nils-ost/library/nahs-Bricks-Feature-Bat/1.3.2/nahs-Bricks-Feature-Bat-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nahs-Bricks-Feature-Bat-1.3.2.tar.gz",
+    "size_bytes": 16103,
+    "sha256": "54e74545a09c41b5ffd2d6b7106c1fbb3246ab93487ba67752d5e22aecb97230",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nils-ost/library/nahs-Bricks-Feature-Bat/1.3.2/nahs-Bricks-Feature-Bat-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nils-ost/library/nahs-Bricks-Feature-Bat/1.3.2/nahs-Bricks-Feature-Bat-1.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nils-ost/library/nahs-Bricks-Feature-Heat/1.0.0/nahs-Bricks-Feature-Heat-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nahs-Bricks-Feature-Heat-1.0.0.tar.gz",
+    "size_bytes": 16966,
+    "sha256": "3f7cffe1b7ee74bab257a94f9bad98b981b2b8a1df8ba12c204ac60a35664a9d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nils-ost/library/nahs-Bricks-Feature-Heat/1.0.0/nahs-Bricks-Feature-Heat-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nils-ost/library/nahs-Bricks-Feature-Heat/1.0.0/nahs-Bricks-Feature-Heat-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nils-ost/library/nahs-Bricks-Feature-Humid/1.1.1/nahs-Bricks-Feature-Humid-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nahs-Bricks-Feature-Humid-1.1.1.tar.gz",
+    "size_bytes": 15874,
+    "sha256": "e160babeb08315d80175c2ff77a29d639a2642a192a561afed3de7fd15d3a892",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nils-ost/library/nahs-Bricks-Feature-Humid/1.1.1/nahs-Bricks-Feature-Humid-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nils-ost/library/nahs-Bricks-Feature-Humid/1.1.1/nahs-Bricks-Feature-Humid-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nils-ost/library/nahs-Bricks-Feature-Latch/1.0.2/nahs-Bricks-Feature-Latch-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nahs-Bricks-Feature-Latch-1.0.2.tar.gz",
+    "size_bytes": 15310,
+    "sha256": "df1b0728892597c4c7491c758354ab1419688fd0b4108054b98a1c611f0b648f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nils-ost/library/nahs-Bricks-Feature-Latch/1.0.2/nahs-Bricks-Feature-Latch-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nils-ost/library/nahs-Bricks-Feature-Latch/1.0.2/nahs-Bricks-Feature-Latch-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nils-ost/library/nahs-Bricks-Feature-Signal/1.0.7/nahs-Bricks-Feature-Signal-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nahs-Bricks-Feature-Signal-1.0.7.tar.gz",
+    "size_bytes": 16167,
+    "sha256": "e04bf4364ed51992eddddb4feb2425218e152186c24a6a4ca28a6505028a5312",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nils-ost/library/nahs-Bricks-Feature-Signal/1.0.7/nahs-Bricks-Feature-Signal-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/nils-ost/library/nahs-Bricks-Feature-Signal/1.0.7/nahs-Bricks-Feature-Signal-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nils-ost/library/nahs-Bricks-Feature-Sleep/1.1.4/nahs-Bricks-Feature-Sleep-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nahs-Bricks-Feature-Sleep-1.1.4.tar.gz",
+    "size_bytes": 14972,
+    "sha256": "07b536f6c54f47f3243f187b0985e1b8a5653c598ce0d3b13a466e1af60e714d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nils-ost/library/nahs-Bricks-Feature-Sleep/1.1.4/nahs-Bricks-Feature-Sleep-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/nils-ost/library/nahs-Bricks-Feature-Sleep/1.1.4/nahs-Bricks-Feature-Sleep-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nils-ost/library/nahs-Bricks-Feature-Temp/1.3.3/nahs-Bricks-Feature-Temp-1.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nahs-Bricks-Feature-Temp-1.3.3.tar.gz",
+    "size_bytes": 17809,
+    "sha256": "a1bfea9022ca9019754cc73dccea772af1bfe21d7500bb061e5432c6a6dcb520",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nils-ost/library/nahs-Bricks-Feature-Temp/1.3.3/nahs-Bricks-Feature-Temp-1.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/nils-ost/library/nahs-Bricks-Feature-Temp/1.3.3/nahs-Bricks-Feature-Temp-1.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nils-ost/library/nahs-Bricks-Lib-FSmem/1.1.1/nahs-Bricks-Lib-FSmem-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nahs-Bricks-Lib-FSmem-1.1.1.tar.gz",
+    "size_bytes": 14943,
+    "sha256": "832bd5212a5a224ef86cfae288298ec3976ab4f520a1b401ad7435b0f2bf53fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nils-ost/library/nahs-Bricks-Lib-FSmem/1.1.1/nahs-Bricks-Lib-FSmem-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nils-ost/library/nahs-Bricks-Lib-FSmem/1.1.1/nahs-Bricks-Lib-FSmem-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nils-ost/library/nahs-Bricks-Lib-HDC1080/1.0.0/nahs-Bricks-Lib-HDC1080-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nahs-Bricks-Lib-HDC1080-1.0.0.tar.gz",
+    "size_bytes": 14118,
+    "sha256": "628a69b5b32637d37533b13958b1dc1a9d4adb29b1eeb5f42b5bb50f0c97bb82",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nils-ost/library/nahs-Bricks-Lib-HDC1080/1.0.0/nahs-Bricks-Lib-HDC1080-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nils-ost/library/nahs-Bricks-Lib-HDC1080/1.0.0/nahs-Bricks-Lib-HDC1080-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nils-ost/library/nahs-Bricks-Lib-RTCmem/1.1.2/nahs-Bricks-Lib-RTCmem-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nahs-Bricks-Lib-RTCmem-1.1.2.tar.gz",
+    "size_bytes": 15349,
+    "sha256": "5c93db479cd4761f4bf1f6f55f586f1d321a779c4ae7f32305c272d1603ea6fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nils-ost/library/nahs-Bricks-Lib-RTCmem/1.1.2/nahs-Bricks-Lib-RTCmem-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nils-ost/library/nahs-Bricks-Lib-RTCmem/1.1.2/nahs-Bricks-Lib-RTCmem-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nils-ost/library/nahs-Bricks-Lib-SHT4x/1.0.0/nahs-Bricks-Lib-SHT4x-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nahs-Bricks-Lib-SHT4x-1.0.0.tar.gz",
+    "size_bytes": 14179,
+    "sha256": "70853d870c2fd1eaaa10a7f1ecad4ea54e5355035569f3ed53b956f2fc86b119",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nils-ost/library/nahs-Bricks-Lib-SHT4x/1.0.0/nahs-Bricks-Lib-SHT4x-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nils-ost/library/nahs-Bricks-Lib-SHT4x/1.0.0/nahs-Bricks-Lib-SHT4x-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nils-ost/library/nahs-Bricks-Lib-SerHelp/1.0.0/nahs-Bricks-Lib-SerHelp-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nahs-Bricks-Lib-SerHelp-1.0.0.tar.gz",
+    "size_bytes": 14044,
+    "sha256": "8b6a052d60464fa00ba1befd9b7f24a8e0dbf69b3e4fa24b4fe5773d42da9c64",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nils-ost/library/nahs-Bricks-Lib-SerHelp/1.0.0/nahs-Bricks-Lib-SerHelp-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nils-ost/library/nahs-Bricks-Lib-SerHelp/1.0.0/nahs-Bricks-Lib-SerHelp-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nils-ost/library/nahs-Bricks-OS/1.6.0/nahs-Bricks-OS-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nahs-Bricks-OS-1.6.0.tar.gz",
+    "size_bytes": 19007,
+    "sha256": "1fd8f62b5a924dc5bb9fe2b9eeae11e88e70258ad22e68639930c65c3e309fc4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nils-ost/library/nahs-Bricks-OS/1.6.0/nahs-Bricks-OS-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nils-ost/library/nahs-Bricks-OS/1.6.0/nahs-Bricks-OS-1.6.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

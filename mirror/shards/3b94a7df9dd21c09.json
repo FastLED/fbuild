@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jjzak",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jjzak/library/MODSERIAL/0.0.0+sha.99984a86bf3b/MODSERIAL-0.0.0+sha.99984a86bf3b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MODSERIAL-0.0.0+sha.99984a86bf3b.tar.gz",
+    "size_bytes": 20021,
+    "sha256": "4dfb5dcae7c6e58ed4bab87eace289c710d4997fb118c3ce07c2e0a1466ff5e8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jjzak/library/MODSERIAL/0.0.0%2Bsha.99984a86bf3b/MODSERIAL-0.0.0%2Bsha.99984a86bf3b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jjzak/library/MODSERIAL/0.0.0%2Bsha.99984a86bf3b/MODSERIAL-0.0.0%2Bsha.99984a86bf3b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jjzak/library/rosserial_mbed_lib/0.0.0+sha.3c54bc7badd4/rosserial_mbed_lib-0.0.0+sha.3c54bc7badd4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "rosserial_mbed_lib-0.0.0+sha.3c54bc7badd4.tar.gz",
+    "size_bytes": 43271,
+    "sha256": "ffcc12a860ed89fd4e887d09a846bb481dea3222eff6094427f33b63c7c99dba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jjzak/library/rosserial_mbed_lib/0.0.0%2Bsha.3c54bc7badd4/rosserial_mbed_lib-0.0.0%2Bsha.3c54bc7badd4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jjzak/library/rosserial_mbed_lib/0.0.0%2Bsha.3c54bc7badd4/rosserial_mbed_lib-0.0.0%2Bsha.3c54bc7badd4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

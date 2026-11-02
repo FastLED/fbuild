@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/christosneg",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "christosneg/library/concurrentPID/1.0.0/concurrentPID-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "concurrentPID-1.0.0.tar.gz",
+    "size_bytes": 5211,
+    "sha256": "5da15bd3b59e5189ddb42b24d30ec871b9e16f0fd1f57f850115d986a84ad2ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/christosneg/library/concurrentPID/1.0.0/concurrentPID-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/christosneg/library/concurrentPID/1.0.0/concurrentPID-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-splast",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-splast/library/SSD1306_128x64_I2C_frank/0.0.0+sha.46dcbaa430f4/SSD1306_128x64_I2C_frank-0.0.0+sha.46dcbaa430f4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SSD1306_128x64_I2C_frank-0.0.0+sha.46dcbaa430f4.tar.gz",
+    "size_bytes": 987,
+    "sha256": "aa4bd9fd839d5c477428fd77731630274f13fc304af8b15e46a57ea578dc5f05",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-splast/library/SSD1306_128x64_I2C_frank/0.0.0%2Bsha.46dcbaa430f4/SSD1306_128x64_I2C_frank-0.0.0%2Bsha.46dcbaa430f4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-splast/library/SSD1306_128x64_I2C_frank/0.0.0%2Bsha.46dcbaa430f4/SSD1306_128x64_I2C_frank-0.0.0%2Bsha.46dcbaa430f4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

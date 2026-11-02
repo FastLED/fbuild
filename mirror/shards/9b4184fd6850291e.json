@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gitlab-mislibrerias",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gitlab-mislibrerias/library/DualWheelControl_JD/1.1.0/DualWheelControl_JD-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DualWheelControl_JD-1.1.0.tar.gz",
+    "size_bytes": 3674,
+    "sha256": "a2e885577584314d7ae9759a761cca2cb18338a7d931ae5972818c3059f4724d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gitlab-mislibrerias/library/DualWheelControl_JD/1.1.0/DualWheelControl_JD-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gitlab-mislibrerias/library/DualWheelControl_JD/1.1.0/DualWheelControl_JD-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

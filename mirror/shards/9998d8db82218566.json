@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lnlp",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lnlp/library/EasyLed/1.1.0/EasyLed-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyLed-1.1.0.tar.gz",
+    "size_bytes": 6676,
+    "sha256": "1ce6b704ab4de1c930ea4480c975d74080ed845d48dc71d7a798a54b9ee36265",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lnlp/library/EasyLed/1.1.0/EasyLed-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lnlp/library/EasyLed/1.1.0/EasyLed-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

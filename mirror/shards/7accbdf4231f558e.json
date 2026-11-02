@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-gobertpierre",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-gobertpierre/library/MCP23017/0.0.0+sha.d76c38ee24ab/MCP23017-0.0.0+sha.d76c38ee24ab.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP23017-0.0.0+sha.d76c38ee24ab.tar.gz",
+    "size_bytes": 3692,
+    "sha256": "9da9ec70e05a6cbfeb43fe3023dee6dea102c75a0044a481a740b73e139d5afa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-gobertpierre/library/MCP23017/0.0.0%2Bsha.d76c38ee24ab/MCP23017-0.0.0%2Bsha.d76c38ee24ab.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-gobertpierre/library/MCP23017/0.0.0%2Bsha.d76c38ee24ab/MCP23017-0.0.0%2Bsha.d76c38ee24ab.tar.gz"
+    ]
+   }
+  }
+ ]
+}

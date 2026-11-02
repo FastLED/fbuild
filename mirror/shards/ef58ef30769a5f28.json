@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/zaddi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "zaddi/library/MkWifiDev/1.0.0/MkWifiDev-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MkWifiDev-1.0.0.tar.gz",
+    "size_bytes": 18337,
+    "sha256": "7c0092436f3e6951b9cd452be9a6357cf0ee43212779ff874bc2dc8b07460ad0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zaddi/library/MkWifiDev/1.0.0/MkWifiDev-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/zaddi/library/MkWifiDev/1.0.0/MkWifiDev-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

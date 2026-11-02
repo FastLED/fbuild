@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/chrispbarlow",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "chrispbarlow/library/arduino-tasks/1.0.0/arduino-tasks-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arduino-tasks-1.0.0.tar.gz",
+    "size_bytes": 7433,
+    "sha256": "e4b551be76e2b4c2e5b35b734b742c2939372462900dd0c99474d5d99e5c5191",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrispbarlow/library/arduino-tasks/1.0.0/arduino-tasks-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chrispbarlow/library/arduino-tasks/1.0.0/arduino-tasks-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

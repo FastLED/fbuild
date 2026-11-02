@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tekk",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tekk/library/HLK-LD2413/1.0.0/HLK-LD2413-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HLK-LD2413-1.0.0.tar.gz",
+    "size_bytes": 6746,
+    "sha256": "f4734c66fa378232ee4819a8810f18a7198a017702ca714335aed5ad1e7b6c3d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tekk/library/HLK-LD2413/1.0.0/HLK-LD2413-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tekk/library/HLK-LD2413/1.0.0/HLK-LD2413-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tekk/library/HLK-LD2413/1.0.1/HLK-LD2413-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HLK-LD2413-1.0.1.tar.gz",
+    "size_bytes": 6820,
+    "sha256": "c5c05cc89b55699950bc9fa34007c1f25c5c3d6b71344826bb3f99a03a555c4f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tekk/library/HLK-LD2413/1.0.1/HLK-LD2413-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tekk/library/HLK-LD2413/1.0.1/HLK-LD2413-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tekk/library/HLK-LD2413/1.0.2/HLK-LD2413-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HLK-LD2413-1.0.2.tar.gz",
+    "size_bytes": 7034,
+    "sha256": "724ae633c72fb316022643790c76818f2c3e87a5107e568635761f31a7780e4b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tekk/library/HLK-LD2413/1.0.2/HLK-LD2413-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tekk/library/HLK-LD2413/1.0.2/HLK-LD2413-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

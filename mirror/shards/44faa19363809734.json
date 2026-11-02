@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pujolbello",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pujolbello/library/SmartMod/0.1.0/SmartMod-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartMod-0.1.0.tar.gz",
+    "size_bytes": 26213,
+    "sha256": "ebfbbd8d25024161a436d3b5bf700735b408e93f7cc7506eeed948fba15584a1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pujolbello/library/SmartMod/0.1.0/SmartMod-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pujolbello/library/SmartMod/0.1.0/SmartMod-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pujolbello/library/SmartMod/0.1.1/SmartMod-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartMod-0.1.1.tar.gz",
+    "size_bytes": 26164,
+    "sha256": "e2e701b4da13088c2823649c57606cc5cf6809f16c6deaf9c3d4b8f89e8cbcd1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pujolbello/library/SmartMod/0.1.1/SmartMod-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pujolbello/library/SmartMod/0.1.1/SmartMod-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

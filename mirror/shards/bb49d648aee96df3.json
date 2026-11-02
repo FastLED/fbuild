@@ -1,0 +1,659 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/beegee-tokyo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "beegee-tokyo/library/%20RAK14014-FT6336U/1.0.0/RAK14014-FT6336U-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RAK14014-FT6336U-1.0.0.tar.gz",
+    "size_bytes": 6909,
+    "sha256": "3601e20e4d8c564fa23f1255cd7ef16662ae63eefae2ee5344cd33ef45d087c4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beegee-tokyo/library/%2520RAK14014-FT6336U/1.0.0/RAK14014-FT6336U-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/beegee-tokyo/library/%20RAK14014-FT6336U/1.0.0/RAK14014-FT6336U-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beegee-tokyo/library/Arduino%20CAP1293%20Touch%20Pad%20library/1.0.0/ArduinoCAP1293TouchPadlibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoCAP1293TouchPadlibrary-1.0.0.tar.gz",
+    "size_bytes": 10854,
+    "sha256": "2d6173e6177ab6025eaa4db145eee543cc0dbcef42119062015af97e79706b16",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beegee-tokyo/library/Arduino%2520CAP1293%2520Touch%2520Pad%2520library/1.0.0/ArduinoCAP1293TouchPadlibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/beegee-tokyo/library/Arduino%20CAP1293%20Touch%20Pad%20library/1.0.0/ArduinoCAP1293TouchPadlibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beegee-tokyo/library/Blues-Minimal-I2C/0.0.4/Blues-Minimal-I2C-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Blues-Minimal-I2C-0.0.4.tar.gz",
+    "size_bytes": 32652,
+    "sha256": "aba67c8db6d5a7f91017e256ab517f2fb65ed4d88e93d22f01ff41de302b4df0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beegee-tokyo/library/Blues-Minimal-I2C/0.0.4/Blues-Minimal-I2C-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/beegee-tokyo/library/Blues-Minimal-I2C/0.0.4/Blues-Minimal-I2C-0.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beegee-tokyo/library/DHT%20sensor%20library%20for%20ESPx/1.19/DHTsensorlibraryforESPx-1.19.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DHTsensorlibraryforESPx-1.19.tar.gz",
+    "size_bytes": 25774,
+    "sha256": "b6785b35fce58981cad269d0dab872e3c18ebc8fa2a0ccafe2eda6507e374d48",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beegee-tokyo/library/DHT%2520sensor%2520library%2520for%2520ESPx/1.19/DHTsensorlibraryforESPx-1.19.tar.gz",
+     "https://dl.registry.platformio.org/download/beegee-tokyo/library/DHT%20sensor%20library%20for%20ESPx/1.19/DHTsensorlibraryforESPx-1.19.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beegee-tokyo/library/PicoSoftwareSerial/1.0.0/PicoSoftwareSerial-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PicoSoftwareSerial-1.0.0.tar.gz",
+    "size_bytes": 5532,
+    "sha256": "de3fa0d8f185aaa277b91738baafcedd7f93fdb786881c08b75e363a26b59841",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beegee-tokyo/library/PicoSoftwareSerial/1.0.0/PicoSoftwareSerial-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/beegee-tokyo/library/PicoSoftwareSerial/1.0.0/PicoSoftwareSerial-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beegee-tokyo/library/RAK%20I3G4250D%20Gyroscope/1.0.0/RAKI3G4250DGyroscope-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RAKI3G4250DGyroscope-1.0.0.tar.gz",
+    "size_bytes": 10688,
+    "sha256": "982b3bfcbb340fab5a1c9207f170d92db540d453654d0e043e030afd7100f1c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beegee-tokyo/library/RAK%2520I3G4250D%2520Gyroscope/1.0.0/RAKI3G4250DGyroscope-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/beegee-tokyo/library/RAK%20I3G4250D%20Gyroscope/1.0.0/RAKI3G4250DGyroscope-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beegee-tokyo/library/RAK-OneWireSerial/0.0.2/RAK-OneWireSerial-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RAK-OneWireSerial-0.0.2.tar.gz",
+    "size_bytes": 145403,
+    "sha256": "d093ec119331722f132d6789edb8a6a4ea58727ed99af477e7bb8c35c699f523",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beegee-tokyo/library/RAK-OneWireSerial/0.0.2/RAK-OneWireSerial-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/beegee-tokyo/library/RAK-OneWireSerial/0.0.2/RAK-OneWireSerial-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beegee-tokyo/library/RAK12019_LTR390_UV_Light/1.0.0/RAK12019_LTR390_UV_Light-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RAK12019_LTR390_UV_Light-1.0.0.tar.gz",
+    "size_bytes": 17209,
+    "sha256": "6f5b16f7a590d46e528d6a28a60380ceeec2b4822394766a003147a23014e05e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beegee-tokyo/library/RAK12019_LTR390_UV_Light/1.0.0/RAK12019_LTR390_UV_Light-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/beegee-tokyo/library/RAK12019_LTR390_UV_Light/1.0.0/RAK12019_LTR390_UV_Light-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beegee-tokyo/library/RAK12022-MAX31865/1.0.1/RAK12022-MAX31865-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RAK12022-MAX31865-1.0.1.tar.gz",
+    "size_bytes": 6192,
+    "sha256": "e478416b1e75b716728f7685a8b9d792e881fa214867d1f1d80cbdbb85939b86",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beegee-tokyo/library/RAK12022-MAX31865/1.0.1/RAK12022-MAX31865-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/beegee-tokyo/library/RAK12022-MAX31865/1.0.1/RAK12022-MAX31865-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beegee-tokyo/library/RAK12027-D7S/1.0.0/RAK12027-D7S-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RAK12027-D7S-1.0.0.tar.gz",
+    "size_bytes": 13570,
+    "sha256": "e0a2d0333771acf3662b88cad6f69029a81ee4262b16c6c001f1e3d9fa87d0d3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beegee-tokyo/library/RAK12027-D7S/1.0.0/RAK12027-D7S-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/beegee-tokyo/library/RAK12027-D7S/1.0.0/RAK12027-D7S-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beegee-tokyo/library/RAK12029-LDC1614/1.0.0/RAK12029-LDC1614-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RAK12029-LDC1614-1.0.0.tar.gz",
+    "size_bytes": 8157,
+    "sha256": "104c73e971211f7f63ea0d8abc6fc7f628d1598d4e3de9fbcb4ffe4d9b304759",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beegee-tokyo/library/RAK12029-LDC1614/1.0.0/RAK12029-LDC1614-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/beegee-tokyo/library/RAK12029-LDC1614/1.0.0/RAK12029-LDC1614-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beegee-tokyo/library/RAK12035_SoilMoisture/1.0.4/RAK12035_SoilMoisture-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RAK12035_SoilMoisture-1.0.4.tar.gz",
+    "size_bytes": 18785,
+    "sha256": "db1430761e4f4d0f541310f2de00f4636598a1fd3c6bd169f02ac2047339ef1e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beegee-tokyo/library/RAK12035_SoilMoisture/1.0.4/RAK12035_SoilMoisture-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/beegee-tokyo/library/RAK12035_SoilMoisture/1.0.4/RAK12035_SoilMoisture-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beegee-tokyo/library/RAK12039_PM_Sensor/1.0.0/RAK12039_PM_Sensor-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RAK12039_PM_Sensor-1.0.0.tar.gz",
+    "size_bytes": 6072,
+    "sha256": "d2f887d88f50c89cc951394a31943d3e5785fb2d9cad7615680c87112c102747",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beegee-tokyo/library/RAK12039_PM_Sensor/1.0.0/RAK12039_PM_Sensor-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/beegee-tokyo/library/RAK12039_PM_Sensor/1.0.0/RAK12039_PM_Sensor-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beegee-tokyo/library/RAK12052-MLX90640/1.0.1/RAK12052-MLX90640-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RAK12052-MLX90640-1.0.1.tar.gz",
+    "size_bytes": 20397,
+    "sha256": "43ffe4f1398ff297aa652113a12669a79fd04e568dd618fef1afa1d27ce7895c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beegee-tokyo/library/RAK12052-MLX90640/1.0.1/RAK12052-MLX90640-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/beegee-tokyo/library/RAK12052-MLX90640/1.0.1/RAK12052-MLX90640-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beegee-tokyo/library/RAK13006-MCP2518%20library/1.0.1/RAK13006-MCP2518library-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RAK13006-MCP2518library-1.0.1.tar.gz",
+    "size_bytes": 19366,
+    "sha256": "c5245ac6245a26a8b15b7c55ad1e2ce1194efc253c50b56f2ec1a9a877c24358",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beegee-tokyo/library/RAK13006-MCP2518%2520library/1.0.1/RAK13006-MCP2518library-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/beegee-tokyo/library/RAK13006-MCP2518%20library/1.0.1/RAK13006-MCP2518library-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beegee-tokyo/library/RAK13800-W5100S/1.0.3/RAK13800-W5100S-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RAK13800-W5100S-1.0.3.tar.gz",
+    "size_bytes": 38176,
+    "sha256": "71d25a62d6eee2cc9d2f41a8f167f43f3e97d580dddf4eaf86b6e3efb8b8f83b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beegee-tokyo/library/RAK13800-W5100S/1.0.3/RAK13800-W5100S-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/beegee-tokyo/library/RAK13800-W5100S/1.0.3/RAK13800-W5100S-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beegee-tokyo/library/RAK13800-W5100S/1.0.4/RAK13800-W5100S-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RAK13800-W5100S-1.0.4.tar.gz",
+    "size_bytes": 38208,
+    "sha256": "931d3144923e4b1d6f64f6fc99fa926a4d541451974e04edbc91602876741bf6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beegee-tokyo/library/RAK13800-W5100S/1.0.4/RAK13800-W5100S-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/beegee-tokyo/library/RAK13800-W5100S/1.0.4/RAK13800-W5100S-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beegee-tokyo/library/RAK13800_W5100S/1.0.0/RAK13800_W5100S-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RAK13800_W5100S-1.0.0.tar.gz",
+    "size_bytes": 37938,
+    "sha256": "3534534e6a54b1dafbe249b9bacb7a0155da18dab500c3ca0d9235c3ca46d393",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beegee-tokyo/library/RAK13800_W5100S/1.0.0/RAK13800_W5100S-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/beegee-tokyo/library/RAK13800_W5100S/1.0.0/RAK13800_W5100S-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beegee-tokyo/library/RAK14000_EPD/1.0.0/RAK14000_EPD-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RAK14000_EPD-1.0.0.tar.gz",
+    "size_bytes": 27642,
+    "sha256": "ace46b9d90d7781bf966f2787d2df7e3e1e289bd5255ad656a5a9f50f1006b2c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beegee-tokyo/library/RAK14000_EPD/1.0.0/RAK14000_EPD-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/beegee-tokyo/library/RAK14000_EPD/1.0.0/RAK14000_EPD-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beegee-tokyo/library/RAK14012-LED-Matrix/1.0.0/RAK14012-LED-Matrix-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RAK14012-LED-Matrix-1.0.0.tar.gz",
+    "size_bytes": 46367,
+    "sha256": "9365c02faf1c8864f918782e76b6facee35cfb252a9555389ece06eadaf203ac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beegee-tokyo/library/RAK14012-LED-Matrix/1.0.0/RAK14012-LED-Matrix-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/beegee-tokyo/library/RAK14012-LED-Matrix/1.0.0/RAK14012-LED-Matrix-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beegee-tokyo/library/RAK14014-FT6336U/1.0.1/RAK14014-FT6336U-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RAK14014-FT6336U-1.0.1.tar.gz",
+    "size_bytes": 21391,
+    "sha256": "f75b77b778769792a5158bc41b28e4c284d0671fe3d48c218bc18ac94bc31cd0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beegee-tokyo/library/RAK14014-FT6336U/1.0.1/RAK14014-FT6336U-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/beegee-tokyo/library/RAK14014-FT6336U/1.0.1/RAK14014-FT6336U-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beegee-tokyo/library/RAK15007-CY15B108QN/1.0.0/RAK15007-CY15B108QN-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RAK15007-CY15B108QN-1.0.0.tar.gz",
+    "size_bytes": 8805,
+    "sha256": "413ce4ff135f30ac1c82cbe296878046c0d6554a746fcd70d16e20e2b67f6116",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beegee-tokyo/library/RAK15007-CY15B108QN/1.0.0/RAK15007-CY15B108QN-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/beegee-tokyo/library/RAK15007-CY15B108QN/1.0.0/RAK15007-CY15B108QN-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beegee-tokyo/library/RAK1500x-MB85RC/1.0.0/RAK1500x-MB85RC-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RAK1500x-MB85RC-1.0.0.tar.gz",
+    "size_bytes": 6757,
+    "sha256": "b089f74305bcdb6c2ae0ab6d045cab5858ea91e3f03141926b53f53ac80cc3b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beegee-tokyo/library/RAK1500x-MB85RC/1.0.0/RAK1500x-MB85RC-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/beegee-tokyo/library/RAK1500x-MB85RC/1.0.0/RAK1500x-MB85RC-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beegee-tokyo/library/RAK5814-ATECC608A/1.0.0/RAK5814-ATECC608A-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RAK5814-ATECC608A-1.0.0.tar.gz",
+    "size_bytes": 20213,
+    "sha256": "1683a28f74e3fd7fff73343e8e29425f697067c8dd82f8c8bacd845647d56686",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beegee-tokyo/library/RAK5814-ATECC608A/1.0.0/RAK5814-ATECC608A-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/beegee-tokyo/library/RAK5814-ATECC608A/1.0.0/RAK5814-ATECC608A-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beegee-tokyo/library/RAK_LPP/1.0.0/RAK_LPP-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RAK_LPP-1.0.0.tar.gz",
+    "size_bytes": 25757,
+    "sha256": "d220763d46e88f59145b6e015d5dba5ee02f8bca6442217b39c28332883830eb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beegee-tokyo/library/RAK_LPP/1.0.0/RAK_LPP-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/beegee-tokyo/library/RAK_LPP/1.0.0/RAK_LPP-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beegee-tokyo/library/RAKwireless%20CAP1293%20Touch%20Pad%20library/1.0.3/RAKwirelessCAP1293TouchPadlibrary-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RAKwirelessCAP1293TouchPadlibrary-1.0.3.tar.gz",
+    "size_bytes": 16381,
+    "sha256": "004332be0c5c91625a6bcf7ceb6fa10ad0584e73b751b3860087542aace303d4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beegee-tokyo/library/RAKwireless%2520CAP1293%2520Touch%2520Pad%2520library/1.0.3/RAKwirelessCAP1293TouchPadlibrary-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/beegee-tokyo/library/RAKwireless%20CAP1293%20Touch%20Pad%20library/1.0.3/RAKwirelessCAP1293TouchPadlibrary-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beegee-tokyo/library/RAKwireless%20NCP5623%20RGB%20LED%20library/1.0.3/RAKwirelessNCP5623RGBLEDlibrary-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RAKwirelessNCP5623RGBLEDlibrary-1.0.3.tar.gz",
+    "size_bytes": 5628,
+    "sha256": "48f55ae25807e40dbfd22e9abfc4e7ef69d7e0131b096f5dd093c1fc3c9e15b6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beegee-tokyo/library/RAKwireless%2520NCP5623%2520RGB%2520LED%2520library/1.0.3/RAKwirelessNCP5623RGBLEDlibrary-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/beegee-tokyo/library/RAKwireless%20NCP5623%20RGB%20LED%20library/1.0.3/RAKwirelessNCP5623RGBLEDlibrary-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beegee-tokyo/library/RAKwireless%20RAK12021%20TCS37725/1.0.0/RAKwirelessRAK12021TCS37725-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RAKwirelessRAK12021TCS37725-1.0.0.tar.gz",
+    "size_bytes": 10876,
+    "sha256": "702c9d504d69ca3fded64fd366860f1f0790d6c1a0b257788d645866729a6b7f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beegee-tokyo/library/RAKwireless%2520RAK12021%2520TCS37725/1.0.0/RAKwirelessRAK12021TCS37725-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/beegee-tokyo/library/RAKwireless%20RAK12021%20TCS37725/1.0.0/RAKwirelessRAK12021TCS37725-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beegee-tokyo/library/RAKwireless%20RAK12033%20Library/1.0.1/RAKwirelessRAK12033Library-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RAKwirelessRAK12033Library-1.0.1.tar.gz",
+    "size_bytes": 13825,
+    "sha256": "0ab42089170820f3982b53b7fa83ab9e62147d874d1229e20bf2e61aab497a84",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beegee-tokyo/library/RAKwireless%2520RAK12033%2520Library/1.0.1/RAKwirelessRAK12033Library-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/beegee-tokyo/library/RAKwireless%20RAK12033%20Library/1.0.1/RAKwirelessRAK12033Library-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beegee-tokyo/library/RAKwireless%20RAK12034/1.0.0/RAKwirelessRAK12034-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RAKwirelessRAK12034-1.0.0.tar.gz",
+    "size_bytes": 18484,
+    "sha256": "43034ba7cbdac96f5a6a37fb985b1a03f61302a2065eae7083449e11568a245a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beegee-tokyo/library/RAKwireless%2520RAK12034/1.0.0/RAKwirelessRAK12034-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/beegee-tokyo/library/RAKwireless%20RAK12034/1.0.0/RAKwirelessRAK12034-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beegee-tokyo/library/RAKwireless%20RAK13600%20RFID%20library/1.0.1/RAKwirelessRAK13600RFIDlibrary-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RAKwirelessRAK13600RFIDlibrary-1.0.1.tar.gz",
+    "size_bytes": 36355,
+    "sha256": "f9a6e2718c09125988b2acc26138de165d0f6c7659b814dadd7762124becaa07",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beegee-tokyo/library/RAKwireless%2520RAK13600%2520RFID%2520library/1.0.1/RAKwirelessRAK13600RFIDlibrary-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/beegee-tokyo/library/RAKwireless%20RAK13600%20RFID%20library/1.0.1/RAKwirelessRAK13600RFIDlibrary-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beegee-tokyo/library/RAKwireless%20Storage/1.0.2/RAKwirelessStorage-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RAKwirelessStorage-1.0.2.tar.gz",
+    "size_bytes": 17306,
+    "sha256": "c7286970e3d609f488c23d737497e22eabf96691ec642dd1de050808d6d1ebed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beegee-tokyo/library/RAKwireless%2520Storage/1.0.2/RAKwirelessStorage-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/beegee-tokyo/library/RAKwireless%20Storage/1.0.2/RAKwirelessStorage-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beegee-tokyo/library/RAKwireless%20TLE7259%20LIN%20Bus%20library/1.0.2/RAKwirelessTLE7259LINBuslibrary-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RAKwirelessTLE7259LINBuslibrary-1.0.2.tar.gz",
+    "size_bytes": 9005,
+    "sha256": "13f5f0bee657a153a786afa552c355684c07a4be9b8dc9d3bee1f7e050355086",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beegee-tokyo/library/RAKwireless%2520TLE7259%2520LIN%2520Bus%2520library/1.0.2/RAKwirelessTLE7259LINBuslibrary-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/beegee-tokyo/library/RAKwireless%20TLE7259%20LIN%20Bus%20library/1.0.2/RAKwirelessTLE7259LINBuslibrary-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beegee-tokyo/library/RAKwireless%20VEML%20Light%20Sensor/1.0.2/RAKwirelessVEMLLightSensor-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RAKwirelessVEMLLightSensor-1.0.2.tar.gz",
+    "size_bytes": 16089,
+    "sha256": "44082f6baf333c3ec9a5e88fd1c99d42fe5e559374516020a8137bd3783f1404",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beegee-tokyo/library/RAKwireless%2520VEML%2520Light%2520Sensor/1.0.2/RAKwirelessVEMLLightSensor-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/beegee-tokyo/library/RAKwireless%20VEML%20Light%20Sensor/1.0.2/RAKwirelessVEMLLightSensor-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beegee-tokyo/library/RAKwireless_ADC_SGM58031_library/1.0.1/RAKwireless_ADC_SGM58031_library-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RAKwireless_ADC_SGM58031_library-1.0.1.tar.gz",
+    "size_bytes": 5444,
+    "sha256": "ec21842673cef98aadbdc84799534213b025216af643070ec7e9c50d6a83e506",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beegee-tokyo/library/RAKwireless_ADC_SGM58031_library/1.0.1/RAKwireless_ADC_SGM58031_library-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/beegee-tokyo/library/RAKwireless_ADC_SGM58031_library/1.0.1/RAKwireless_ADC_SGM58031_library-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beegee-tokyo/library/RAKwireless_SDI-12/1.0.1/RAKwireless_SDI-12-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RAKwireless_SDI-12-1.0.1.tar.gz",
+    "size_bytes": 38872,
+    "sha256": "12e1b0a5f3aecbc3c465c38c51d4891e1750056b0c93c6cc1aa138ab6e1691b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beegee-tokyo/library/RAKwireless_SDI-12/1.0.1/RAKwireless_SDI-12-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/beegee-tokyo/library/RAKwireless_SDI-12/1.0.1/RAKwireless_SDI-12-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beegee-tokyo/library/RUI3-Arduino-Library/1.0.1/RUI3-Arduino-Library-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RUI3-Arduino-Library-1.0.1.tar.gz",
+    "size_bytes": 69138,
+    "sha256": "6266bf4085b2602a4cdee1c5c04b3832b4a122746afb954e9398668f5fd4e7db",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beegee-tokyo/library/RUI3-Arduino-Library/1.0.1/RUI3-Arduino-Library-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/beegee-tokyo/library/RUI3-Arduino-Library/1.0.1/RUI3-Arduino-Library-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beegee-tokyo/library/SHT1x-ESP/1.0.2/SHT1x-ESP-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SHT1x-ESP-1.0.2.tar.gz",
+    "size_bytes": 6714,
+    "sha256": "b2cdf89a8ac9c10c7c01caf53c01ebe2086293aa7b63674bf3993e5ff5923563",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beegee-tokyo/library/SHT1x-ESP/1.0.2/SHT1x-ESP-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/beegee-tokyo/library/SHT1x-ESP/1.0.2/SHT1x-ESP-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beegee-tokyo/library/SX126x-Arduino/2.0.31/SX126x-Arduino-2.0.31.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SX126x-Arduino-2.0.31.tar.gz",
+    "size_bytes": 321600,
+    "sha256": "c0a523df563a409eb0b7e133057bc99e250d4eb7b626b4b1a84835ddb24f2cd4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beegee-tokyo/library/SX126x-Arduino/2.0.31/SX126x-Arduino-2.0.31.tar.gz",
+     "https://dl.registry.platformio.org/download/beegee-tokyo/library/SX126x-Arduino/2.0.31/SX126x-Arduino-2.0.31.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beegee-tokyo/library/SX126x-Arduino/2.0.32/SX126x-Arduino-2.0.32.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SX126x-Arduino-2.0.32.tar.gz",
+    "size_bytes": 333317,
+    "sha256": "82fd1dcc2a80c86a6ab60cf5b22cc4fa0cc049f23f701131ed8f2b3c19639759",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beegee-tokyo/library/SX126x-Arduino/2.0.32/SX126x-Arduino-2.0.32.tar.gz",
+     "https://dl.registry.platformio.org/download/beegee-tokyo/library/SX126x-Arduino/2.0.32/SX126x-Arduino-2.0.32.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beegee-tokyo/library/SX126x-Arduino/2.0.33/SX126x-Arduino-2.0.33.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SX126x-Arduino-2.0.33.tar.gz",
+    "size_bytes": 331606,
+    "sha256": "ecc0c4cda4785f8b318f2a74fa00668250c90d59a11821d37a4ea2452dfda9bd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beegee-tokyo/library/SX126x-Arduino/2.0.33/SX126x-Arduino-2.0.33.tar.gz",
+     "https://dl.registry.platformio.org/download/beegee-tokyo/library/SX126x-Arduino/2.0.33/SX126x-Arduino-2.0.33.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beegee-tokyo/library/VCNL4020C-Arduino/1.0.1/VCNL4020C-Arduino-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VCNL4020C-Arduino-1.0.1.tar.gz",
+    "size_bytes": 46802,
+    "sha256": "5fb8460d90ec963ccb9dd799fe966f3adcc8a297d1b3ce5aceb35e3f3ea90b3b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beegee-tokyo/library/VCNL4020C-Arduino/1.0.1/VCNL4020C-Arduino-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/beegee-tokyo/library/VCNL4020C-Arduino/1.0.1/VCNL4020C-Arduino-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beegee-tokyo/library/WisBlock-API-V2/2.0.27/WisBlock-API-V2-2.0.27.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WisBlock-API-V2-2.0.27.tar.gz",
+    "size_bytes": 95807,
+    "sha256": "a6e50e071aa3dac5691c7271d0d7a3591991e1c12d143d8a12807eb0808a1a2b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beegee-tokyo/library/WisBlock-API-V2/2.0.27/WisBlock-API-V2-2.0.27.tar.gz",
+     "https://dl.registry.platformio.org/download/beegee-tokyo/library/WisBlock-API-V2/2.0.27/WisBlock-API-V2-2.0.27.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beegee-tokyo/library/WisBlock-API-V2/2.0.28/WisBlock-API-V2-2.0.28.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WisBlock-API-V2-2.0.28.tar.gz",
+    "size_bytes": 110157,
+    "sha256": "85c5f01904869268286d553cd3bdb97070b81c08ab17f5fa689ae3f519a96d30",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beegee-tokyo/library/WisBlock-API-V2/2.0.28/WisBlock-API-V2-2.0.28.tar.gz",
+     "https://dl.registry.platformio.org/download/beegee-tokyo/library/WisBlock-API-V2/2.0.28/WisBlock-API-V2-2.0.28.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beegee-tokyo/library/WisBlock-API/1.1.19/WisBlock-API-1.1.19.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WisBlock-API-1.1.19.tar.gz",
+    "size_bytes": 78902,
+    "sha256": "46ed34e472d97a2afa4d3303c2d45c4a48e6cc4b4ce92d7cf30a9b9dca2c8c65",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beegee-tokyo/library/WisBlock-API/1.1.19/WisBlock-API-1.1.19.tar.gz",
+     "https://dl.registry.platformio.org/download/beegee-tokyo/library/WisBlock-API/1.1.19/WisBlock-API-1.1.19.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beegee-tokyo/library/WisBlockLoRaWAN/1.0.0/WisBlockLoRaWAN-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WisBlockLoRaWAN-1.0.0.tar.gz",
+    "size_bytes": 789874,
+    "sha256": "c96d02209185ad3a821df6de0b469a5a6273658048953691dc02b43a1e1257af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beegee-tokyo/library/WisBlockLoRaWAN/1.0.0/WisBlockLoRaWAN-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/beegee-tokyo/library/WisBlockLoRaWAN/1.0.0/WisBlockLoRaWAN-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beegee-tokyo/library/WisBlockLoRaWAN/1.0.1/WisBlockLoRaWAN-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WisBlockLoRaWAN-1.0.1.tar.gz",
+    "size_bytes": 793878,
+    "sha256": "1bdff9a0c6ba9c716bcc894706c69cc46e18e5b3495ac17da4e4be149b14f8ea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beegee-tokyo/library/WisBlockLoRaWAN/1.0.1/WisBlockLoRaWAN-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/beegee-tokyo/library/WisBlockLoRaWAN/1.0.1/WisBlockLoRaWAN-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beegee-tokyo/library/WisBlockLoRaWAN/1.0.2/WisBlockLoRaWAN-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WisBlockLoRaWAN-1.0.2.tar.gz",
+    "size_bytes": 799362,
+    "sha256": "b2e0442f95a78afa3defa1904c83902f774c90cb80f6cd30a4a8df7e7c4aefcc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beegee-tokyo/library/WisBlockLoRaWAN/1.0.2/WisBlockLoRaWAN-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/beegee-tokyo/library/WisBlockLoRaWAN/1.0.2/WisBlockLoRaWAN-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beegee-tokyo/library/WisBlockLoRaWAN/1.0.3/WisBlockLoRaWAN-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WisBlockLoRaWAN-1.0.3.tar.gz",
+    "size_bytes": 784595,
+    "sha256": "7500e0a95886c0e61e9b7294f4d3f9df27131b7b8370261f25be670f0e40f895",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beegee-tokyo/library/WisBlockLoRaWAN/1.0.3/WisBlockLoRaWAN-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/beegee-tokyo/library/WisBlockLoRaWAN/1.0.3/WisBlockLoRaWAN-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beegee-tokyo/library/nRF52_OLED/1.0.0/nRF52_OLED-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nRF52_OLED-1.0.0.tar.gz",
+    "size_bytes": 49156,
+    "sha256": "1c4a213f77c4073f09e56ec080c0417c9512cb75af090b37dc7caa1ded76abae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beegee-tokyo/library/nRF52_OLED/1.0.0/nRF52_OLED-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/beegee-tokyo/library/nRF52_OLED/1.0.0/nRF52_OLED-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

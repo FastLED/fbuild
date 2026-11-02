@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/arthen",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "arthen/library/Unofficial%20Netatmo%20Weather%20API%20Library%20for%20ESP32%20/0.1.0/UnofficialNetatmoWeatherAPILibraryforESP32-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UnofficialNetatmoWeatherAPILibraryforESP32-0.1.0.tar.gz",
+    "size_bytes": 29837,
+    "sha256": "ae8d54f938d3100d9dd9f93c8637bbdaa04c03fdd10417599935c798e0028738",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arthen/library/Unofficial%2520Netatmo%2520Weather%2520API%2520Library%2520for%2520ESP32%2520/0.1.0/UnofficialNetatmoWeatherAPILibraryforESP32-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arthen/library/Unofficial%20Netatmo%20Weather%20API%20Library%20for%20ESP32%20/0.1.0/UnofficialNetatmoWeatherAPILibraryforESP32-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arthen/library/UnofficialNetatmoWeatherAPIlibraryForESP32%20/0.1.0/UnofficialNetatmoWeatherAPIlibraryForESP32-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UnofficialNetatmoWeatherAPIlibraryForESP32-0.1.0.tar.gz",
+    "size_bytes": 29412,
+    "sha256": "130d1f13513dbaa7dc55d60e3f846be2f8dd2432a13b8685e0f83668cf1fb974",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arthen/library/UnofficialNetatmoWeatherAPIlibraryForESP32%2520/0.1.0/UnofficialNetatmoWeatherAPIlibraryForESP32-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arthen/library/UnofficialNetatmoWeatherAPIlibraryForESP32%20/0.1.0/UnofficialNetatmoWeatherAPIlibraryForESP32-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

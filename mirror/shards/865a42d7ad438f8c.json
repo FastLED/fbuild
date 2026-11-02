@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/semcneil",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "semcneil/library/Anitracks_ADS7142/0.1.5/Anitracks_ADS7142-0.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Anitracks_ADS7142-0.1.5.tar.gz",
+    "size_bytes": 3750,
+    "sha256": "5193b0bea6babcf4dc72881e47581abeb0a936c2c394dd0fe377a21fd997e48b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/semcneil/library/Anitracks_ADS7142/0.1.5/Anitracks_ADS7142-0.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/semcneil/library/Anitracks_ADS7142/0.1.5/Anitracks_ADS7142-0.1.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,165 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/narwhalsss360",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "narwhalsss360/library/Callables/1.0.0/Callables-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Callables-1.0.0.tar.gz",
+    "size_bytes": 8816,
+    "sha256": "625d45e2f0d8e5ac6fe5c6b34921713d3659e8ecd58069c5e6bea290966d8958",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/narwhalsss360/library/Callables/1.0.0/Callables-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/narwhalsss360/library/Callables/1.0.0/Callables-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "narwhalsss360/library/NBitArray/1.0.0/NBitArray-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NBitArray-1.0.0.tar.gz",
+    "size_bytes": 5954,
+    "sha256": "34d91e6fd765ab77fba538a8faf65f4b73c771644ed8d83b1e67fd8642808bf9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/narwhalsss360/library/NBitArray/1.0.0/NBitArray-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/narwhalsss360/library/NBitArray/1.0.0/NBitArray-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "narwhalsss360/library/NColor/2.0.1/NColor-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NColor-2.0.1.tar.gz",
+    "size_bytes": 4884,
+    "sha256": "a1304995710d0d1827fbe6b67568e865f87b52905e99de4963cb2697ec49ecba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/narwhalsss360/library/NColor/2.0.1/NColor-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/narwhalsss360/library/NColor/2.0.1/NColor-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "narwhalsss360/library/NDefs/2.0.0/NDefs-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NDefs-2.0.0.tar.gz",
+    "size_bytes": 3213,
+    "sha256": "9086371afdfde9046cb2d58a83638c397b552c9f15157fa6661aff543e9443a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/narwhalsss360/library/NDefs/2.0.0/NDefs-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/narwhalsss360/library/NDefs/2.0.0/NDefs-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "narwhalsss360/library/NFuncs/2.0.0/NFuncs-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NFuncs-2.0.0.tar.gz",
+    "size_bytes": 4196,
+    "sha256": "751f8e291cc2325c8a4d13cabd4d7583d75def786639c5f7cc4ee5f858a0e3d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/narwhalsss360/library/NFuncs/2.0.0/NFuncs-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/narwhalsss360/library/NFuncs/2.0.0/NFuncs-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "narwhalsss360/library/NHCSR04/2.0.0/NHCSR04-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NHCSR04-2.0.0.tar.gz",
+    "size_bytes": 6079,
+    "sha256": "2baac2e9f1ea4a96369066e67b5fe7995cda6b394ad8d9185d05ab3cbef10c54",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/narwhalsss360/library/NHCSR04/2.0.0/NHCSR04-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/narwhalsss360/library/NHCSR04/2.0.0/NHCSR04-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "narwhalsss360/library/NPush/3.0.1/NPush-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NPush-3.0.1.tar.gz",
+    "size_bytes": 5299,
+    "sha256": "3df96f945dc4a56189f789633ec4503c51f1e093c8014a99ee8aa34dd4c66eca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/narwhalsss360/library/NPush/3.0.1/NPush-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/narwhalsss360/library/NPush/3.0.1/NPush-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "narwhalsss360/library/NRotary/2.0.0/NRotary-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NRotary-2.0.0.tar.gz",
+    "size_bytes": 4928,
+    "sha256": "51878ae6865096623fbf65a15f583327a7213d7ba964a8f006c051be566a8d21",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/narwhalsss360/library/NRotary/2.0.0/NRotary-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/narwhalsss360/library/NRotary/2.0.0/NRotary-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "narwhalsss360/library/NTimer/2.0.2/NTimer-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NTimer-2.0.2.tar.gz",
+    "size_bytes": 6832,
+    "sha256": "535e1943c8b6120a887b6efc88fdb945f5e7a6728ea00b60c511e646c5f054c5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/narwhalsss360/library/NTimer/2.0.2/NTimer-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/narwhalsss360/library/NTimer/2.0.2/NTimer-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "narwhalsss360/library/PinMatrix/1.0.0/PinMatrix-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PinMatrix-1.0.0.tar.gz",
+    "size_bytes": 6548,
+    "sha256": "cd479552fcd35fc4663adebab86d633206fc4725c5e335e859e1ef2f25e394a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/narwhalsss360/library/PinMatrix/1.0.0/PinMatrix-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/narwhalsss360/library/PinMatrix/1.0.0/PinMatrix-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "narwhalsss360/library/SketchBinder/1.0.0/SketchBinder-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SketchBinder-1.0.0.tar.gz",
+    "size_bytes": 5730,
+    "sha256": "76d803fc339a92c2f3e940311f19e8cb6309b935bb166872b4f0c578cec31301",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/narwhalsss360/library/SketchBinder/1.0.0/SketchBinder-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/narwhalsss360/library/SketchBinder/1.0.0/SketchBinder-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "narwhalsss360/library/stdcol/0.1.2/stdcol-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "stdcol-0.1.2.tar.gz",
+    "size_bytes": 20222,
+    "sha256": "db60417bee22fcbf273a89ede899fe6ad0a6d6913460c8f285d90bcc33d3b849",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/narwhalsss360/library/stdcol/0.1.2/stdcol-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/narwhalsss360/library/stdcol/0.1.2/stdcol-0.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

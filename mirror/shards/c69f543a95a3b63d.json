@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cathedrow",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cathedrow/library/Cryptosuite/1.0.0/Cryptosuite-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Cryptosuite-1.0.0.tar.gz",
+    "size_bytes": 6162,
+    "sha256": "2684688422d07970c3cb9f7857b46c5559bc30114f2e117d001866b3d965d910",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cathedrow/library/Cryptosuite/1.0.0/Cryptosuite-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cathedrow/library/Cryptosuite/1.0.0/Cryptosuite-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-nurbol",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-nurbol/library/MCP23017/0.0.0+sha.69c047b34ca6/MCP23017-0.0.0+sha.69c047b34ca6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP23017-0.0.0+sha.69c047b34ca6.tar.gz",
+    "size_bytes": 3736,
+    "sha256": "d6a27235d967b2d4e127ffaeddf901d685e731f5a2dd86432b072b42daeba4af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nurbol/library/MCP23017/0.0.0%2Bsha.69c047b34ca6/MCP23017-0.0.0%2Bsha.69c047b34ca6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nurbol/library/MCP23017/0.0.0%2Bsha.69c047b34ca6/MCP23017-0.0.0%2Bsha.69c047b34ca6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nurbol/library/cmd_io/0.0.0+sha.30c4e3e11cb5/cmd_io-0.0.0+sha.30c4e3e11cb5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cmd_io-0.0.0+sha.30c4e3e11cb5.tar.gz",
+    "size_bytes": 1830,
+    "sha256": "7594029b76d150ab1282ddc2126593ddde7176a7f595ec87f9f8c0ba14d75472",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nurbol/library/cmd_io/0.0.0%2Bsha.30c4e3e11cb5/cmd_io-0.0.0%2Bsha.30c4e3e11cb5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nurbol/library/cmd_io/0.0.0%2Bsha.30c4e3e11cb5/cmd_io-0.0.0%2Bsha.30c4e3e11cb5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nurbol/library/globals/0.0.0+sha.804ea67c7003/globals-0.0.0+sha.804ea67c7003.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "globals-0.0.0+sha.804ea67c7003.tar.gz",
+    "size_bytes": 857,
+    "sha256": "b3224d00b1d5018cae1670a77456d17b0f96c4c1c3c43fac58acf5cfb65398d9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nurbol/library/globals/0.0.0%2Bsha.804ea67c7003/globals-0.0.0%2Bsha.804ea67c7003.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nurbol/library/globals/0.0.0%2Bsha.804ea67c7003/globals-0.0.0%2Bsha.804ea67c7003.tar.gz"
+    ]
+   }
+  }
+ ]
+}

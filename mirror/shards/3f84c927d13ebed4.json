@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dickswart",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dickswart/library/SwartNinjaLDR/1.0/SwartNinjaLDR-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SwartNinjaLDR-1.0.tar.gz",
+    "size_bytes": 2285,
+    "sha256": "0433a1292ca6aa723d8aaa6bba79ff9a1e30772662e54567f027498869e80316",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dickswart/library/SwartNinjaLDR/1.0/SwartNinjaLDR-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dickswart/library/SwartNinjaLDR/1.0/SwartNinjaLDR-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dickswart/library/SwartNinjaPIR/1.0.1/SwartNinjaPIR-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SwartNinjaPIR-1.0.1.tar.gz",
+    "size_bytes": 1978,
+    "sha256": "80161ba7e0d1f6befd00e3e6f7a0628a6bef6c5f2febf12d8561ef981412b865",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dickswart/library/SwartNinjaPIR/1.0.1/SwartNinjaPIR-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dickswart/library/SwartNinjaPIR/1.0.1/SwartNinjaPIR-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dickswart/library/SwartNinjaRSW/1.2.0/SwartNinjaRSW-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SwartNinjaRSW-1.2.0.tar.gz",
+    "size_bytes": 2335,
+    "sha256": "092854057ffa6fb0613d6a84dd5fd85e19a6aeae4bb963a5191a51b17ce3888f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dickswart/library/SwartNinjaRSW/1.2.0/SwartNinjaRSW-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dickswart/library/SwartNinjaRSW/1.2.0/SwartNinjaRSW-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dickswart/library/SwartNinjaSMD/1.0.0/SwartNinjaSMD-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SwartNinjaSMD-1.0.0.tar.gz",
+    "size_bytes": 1743,
+    "sha256": "bc17e10583a875ddee81779244ea34e85164cd8e9390dd8d85ba43acb77ec5b6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dickswart/library/SwartNinjaSMD/1.0.0/SwartNinjaSMD-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dickswart/library/SwartNinjaSMD/1.0.0/SwartNinjaSMD-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dickswart/library/SwartNinjaSW/1.0/SwartNinjaSW-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SwartNinjaSW-1.0.tar.gz",
+    "size_bytes": 1813,
+    "sha256": "9cc4eac4947009515a0db708658231e44897125f2c1628ea6377a3cd273cc9c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dickswart/library/SwartNinjaSW/1.0/SwartNinjaSW-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dickswart/library/SwartNinjaSW/1.0/SwartNinjaSW-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

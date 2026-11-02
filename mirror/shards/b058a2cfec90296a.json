@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tfry-git",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tfry-git/library/EmbAJAX/0.1.1/EmbAJAX-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmbAJAX-0.1.1.tar.gz",
+    "size_bytes": 32350,
+    "sha256": "e40d3fb73230aec8f52182882c80ccfdabf4c5ed43ea29b207621307e4af4c18",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tfry-git/library/EmbAJAX/0.1.1/EmbAJAX-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tfry-git/library/EmbAJAX/0.1.1/EmbAJAX-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

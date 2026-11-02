@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/geend",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "geend/library/SX1276GenericLib/0.0.0-alpha+sha.f2826a8fbf/SX1276GenericLib-0.0.0-alphasha.f2826a8fbf.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SX1276GenericLib-0.0.0-alphasha.f2826a8fbf.tar.gz",
+    "size_bytes": 35526,
+    "sha256": "ea98a7b3c539b14707315638627111efc37ea45f67f02f5e044662f471c7a0b4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/geend/library/SX1276GenericLib/0.0.0-alpha%2Bsha.f2826a8fbf/SX1276GenericLib-0.0.0-alphasha.f2826a8fbf.tar.gz",
+     "https://dl.registry.platformio.org/download/geend/library/SX1276GenericLib/0.0.0-alpha%2Bsha.f2826a8fbf/SX1276GenericLib-0.0.0-alphasha.f2826a8fbf.tar.gz"
+    ]
+   }
+  }
+ ]
+}

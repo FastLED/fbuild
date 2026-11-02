@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ghaemshop",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ghaemshop/library/ghaemShopSmSim/3.1.0/ghaemShopSmSim-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ghaemShopSmSim-3.1.0.tar.gz",
+    "size_bytes": 7530,
+    "sha256": "384d6aa187df9058cc2c83128e28e92d3af4c891332733ee7368ecfd8d3b1a0f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ghaemshop/library/ghaemShopSmSim/3.1.0/ghaemShopSmSim-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ghaemshop/library/ghaemShopSmSim/3.1.0/ghaemShopSmSim-3.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

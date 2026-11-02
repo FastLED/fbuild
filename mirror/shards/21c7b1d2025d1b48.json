@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ad039",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ad039/library/ZSSC3230%20I2C%20Driver/0.2/ZSSC3230I2CDriver-0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ZSSC3230I2CDriver-0.2.tar.gz",
+    "size_bytes": 11483,
+    "sha256": "c4858fc14cb86bab5b092d31f95abd905fdf967e9d92dc8978a23935446c239e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ad039/library/ZSSC3230%2520I2C%2520Driver/0.2/ZSSC3230I2CDriver-0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ad039/library/ZSSC3230%20I2C%20Driver/0.2/ZSSC3230I2CDriver-0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

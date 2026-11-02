@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sonalputhane",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sonalputhane/library/Srp_RGB_1/1.0.0/Srp_RGB_1-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Srp_RGB_1-1.0.0.tar.gz",
+    "size_bytes": 2053,
+    "sha256": "0e4c72f3e8bc23441d6f3b7c5f65ea1797dc65e21a173c25007e898d604fe92e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sonalputhane/library/Srp_RGB_1/1.0.0/Srp_RGB_1-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sonalputhane/library/Srp_RGB_1/1.0.0/Srp_RGB_1-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

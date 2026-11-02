@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nocturnailed-community",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nocturnailed-community/library/NocKinematics/1.0.0/NocKinematics-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NocKinematics-1.0.0.tar.gz",
+    "size_bytes": 12073,
+    "sha256": "50f137e391b07ab857068fb2a7990ac3f398085039cb30e6096472fbe9f5a47a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nocturnailed-community/library/NocKinematics/1.0.0/NocKinematics-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nocturnailed-community/library/NocKinematics/1.0.0/NocKinematics-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nocturnailed-community/library/NocLLM/1.0.0/NocLLM-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NocLLM-1.0.0.tar.gz",
+    "size_bytes": 7922,
+    "sha256": "2b3bbe313296fedda4cf4f8f10a043bc8539cced84319b07584f455d29514d84",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nocturnailed-community/library/NocLLM/1.0.0/NocLLM-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nocturnailed-community/library/NocLLM/1.0.0/NocLLM-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nocturnailed-community/library/NocML/1.0.0/NocML-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NocML-1.0.0.tar.gz",
+    "size_bytes": 16026,
+    "sha256": "446909b77b89f627c0a73e52536490f0d58fadd3ef72cc80ee6f72a67a32e2e3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nocturnailed-community/library/NocML/1.0.0/NocML-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nocturnailed-community/library/NocML/1.0.0/NocML-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nocturnailed-community/library/NocMotion/1.0.0/NocMotion-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NocMotion-1.0.0.tar.gz",
+    "size_bytes": 9603,
+    "sha256": "8dee58f7660602097aad882d13ae2e6049fc64731724ae6b49aa90e3bbbe71f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nocturnailed-community/library/NocMotion/1.0.0/NocMotion-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nocturnailed-community/library/NocMotion/1.0.0/NocMotion-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nocturnailed-community/library/NocShield/1.0.0/NocShield-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NocShield-1.0.0.tar.gz",
+    "size_bytes": 12067,
+    "sha256": "bfe2adc06daa9a513aba9a328547b8955b4b69f439daf2418cf853207585c5b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nocturnailed-community/library/NocShield/1.0.0/NocShield-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nocturnailed-community/library/NocShield/1.0.0/NocShield-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nocturnailed-community/library/NocShield/1.0.2/NocShield-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NocShield-1.0.2.tar.gz",
+    "size_bytes": 17516,
+    "sha256": "d15548c5fb67affd807443164f8cd8fc29762617ed06ce7b280fe3646aaf661e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nocturnailed-community/library/NocShield/1.0.2/NocShield-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nocturnailed-community/library/NocShield/1.0.2/NocShield-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

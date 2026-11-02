@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/brunolnetto",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "brunolnetto/library/Einstein/1.2.0/Einstein-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Einstein-1.2.0.tar.gz",
+    "size_bytes": 4743,
+    "sha256": "9935408cc9d08a11cd4fa9ce9c983e46af9094636f59d2df19f68dccf57d5074",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/brunolnetto/library/Einstein/1.2.0/Einstein-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/brunolnetto/library/Einstein/1.2.0/Einstein-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "brunolnetto/library/FortuneTeller/1.0.1/FortuneTeller-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FortuneTeller-1.0.1.tar.gz",
+    "size_bytes": 7482,
+    "sha256": "906da565c51123854256831e2dd86b39ed2efc62f7ad5baf1df91d5b75a7921d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/brunolnetto/library/FortuneTeller/1.0.1/FortuneTeller-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/brunolnetto/library/FortuneTeller/1.0.1/FortuneTeller-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "brunolnetto/library/Ultrasonic-HC-SR04/1.0.0/Ultrasonic-HC-SR04-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ultrasonic-HC-SR04-1.0.0.tar.gz",
+    "size_bytes": 506920,
+    "sha256": "cf3c1aa3d7e53bf6d65b34a99f8d13d4645832cdf562c3d5684bd110857e88a7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/brunolnetto/library/Ultrasonic-HC-SR04/1.0.0/Ultrasonic-HC-SR04-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/brunolnetto/library/Ultrasonic-HC-SR04/1.0.0/Ultrasonic-HC-SR04-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

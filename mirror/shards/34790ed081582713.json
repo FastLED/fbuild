@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fandm77",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fandm77/library/Lilka_ST7796/1.0.0/Lilka_ST7796-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lilka_ST7796-1.0.0.tar.gz",
+    "size_bytes": 318707,
+    "sha256": "1a635dda06fbe506d27a91d906fa9cb5adf52ada2795b9a0b1741646517155df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fandm77/library/Lilka_ST7796/1.0.0/Lilka_ST7796-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fandm77/library/Lilka_ST7796/1.0.0/Lilka_ST7796-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

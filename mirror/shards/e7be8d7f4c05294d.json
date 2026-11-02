@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kacpertora",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kacpertora/library/KT_BQ25601/1.0.1/KT_BQ25601-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KT_BQ25601-1.0.1.tar.gz",
+    "size_bytes": 20969,
+    "sha256": "2324f4509a6040183329ec590e049208f857928baafd55fc191c1f4a77ccb4fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kacpertora/library/KT_BQ25601/1.0.1/KT_BQ25601-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/kacpertora/library/KT_BQ25601/1.0.1/KT_BQ25601-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kacpertora/library/KT_BQ25601/1.0.2/KT_BQ25601-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KT_BQ25601-1.0.2.tar.gz",
+    "size_bytes": 20971,
+    "sha256": "38cde133cae0ddffe5f98a2f6ef65fd1621ed2a0a56f40d72102f5ab8f2eded0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kacpertora/library/KT_BQ25601/1.0.2/KT_BQ25601-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/kacpertora/library/KT_BQ25601/1.0.2/KT_BQ25601-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kacpertora/library/KT_BQ25601/1.0.3/KT_BQ25601-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KT_BQ25601-1.0.3.tar.gz",
+    "size_bytes": 20947,
+    "sha256": "86ba3d2e81238f21156a9344584b353cb806cf9fcf1e4c9b26ed5f392218cd1b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kacpertora/library/KT_BQ25601/1.0.3/KT_BQ25601-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/kacpertora/library/KT_BQ25601/1.0.3/KT_BQ25601-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kacpertora/library/KT_BQ25601/1.1.0/KT_BQ25601-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KT_BQ25601-1.1.0.tar.gz",
+    "size_bytes": 24596,
+    "sha256": "a04ff1159df2592c8ddb782d8b0ffdf112ec43d41757241b03e8606ff5272375",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kacpertora/library/KT_BQ25601/1.1.0/KT_BQ25601-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kacpertora/library/KT_BQ25601/1.1.0/KT_BQ25601-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kacpertora/library/KT_BQ25601/1.2.0/KT_BQ25601-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KT_BQ25601-1.2.0.tar.gz",
+    "size_bytes": 24520,
+    "sha256": "47e5a7bb204969792734dfa5e37ab8a0dd5f5b98d0e4f978de9250d30b3125dc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kacpertora/library/KT_BQ25601/1.2.0/KT_BQ25601-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kacpertora/library/KT_BQ25601/1.2.0/KT_BQ25601-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kacpertora/library/KT_SHT40/1.0.0/KT_SHT40-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KT_SHT40-1.0.0.tar.gz",
+    "size_bytes": 17671,
+    "sha256": "1691e199ca99af0722b4bfd808f997e840a52851b5e4fb65c7c0777c66edad86",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kacpertora/library/KT_SHT40/1.0.0/KT_SHT40-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kacpertora/library/KT_SHT40/1.0.0/KT_SHT40-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

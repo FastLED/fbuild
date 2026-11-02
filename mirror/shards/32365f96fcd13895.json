@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ccaprojects",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ccaprojects/library/CCARemote/1.0.0/CCARemote-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CCARemote-1.0.0.tar.gz",
+    "size_bytes": 16768,
+    "sha256": "d0d188a381d665f543829da3a7afea2682f77156563905660a305a84b97dd0c1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ccaprojects/library/CCARemote/1.0.0/CCARemote-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ccaprojects/library/CCARemote/1.0.0/CCARemote-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ccaprojects/library/CCARemote/1.0.1/CCARemote-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CCARemote-1.0.1.tar.gz",
+    "size_bytes": 17692,
+    "sha256": "44588e44cfd2b31b70b417257ac03537b0306cb8ce72032a494931a9b47fc404",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ccaprojects/library/CCARemote/1.0.1/CCARemote-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ccaprojects/library/CCARemote/1.0.1/CCARemote-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ccaprojects/library/CCARemote/1.1.0/CCARemote-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CCARemote-1.1.0.tar.gz",
+    "size_bytes": 18338,
+    "sha256": "ae94c1425418a43d50a2e09e35cb6132cda671379ff8995b06a6b3261863a6ac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ccaprojects/library/CCARemote/1.1.0/CCARemote-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ccaprojects/library/CCARemote/1.1.0/CCARemote-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ccaprojects/library/CCARemote/1.2.0/CCARemote-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CCARemote-1.2.0.tar.gz",
+    "size_bytes": 21057,
+    "sha256": "639c15e010caf4492ec48b64a620bfa2114150ad11e13c232797c72f710f5cf4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ccaprojects/library/CCARemote/1.2.0/CCARemote-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ccaprojects/library/CCARemote/1.2.0/CCARemote-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ccaprojects/library/CCARemote/1.2.1/CCARemote-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CCARemote-1.2.1.tar.gz",
+    "size_bytes": 24985,
+    "sha256": "9eb0a7fb42ca0405ef565dd12533bf8a612488a09d5325a067d759235d7f3330",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ccaprojects/library/CCARemote/1.2.1/CCARemote-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ccaprojects/library/CCARemote/1.2.1/CCARemote-1.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/riteshrajas",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "riteshrajas/library/Pyintel_Lux/0.1.1/Pyintel_Lux-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pyintel_Lux-0.1.1.tar.gz",
+    "size_bytes": 34521,
+    "sha256": "4d04df9e3673d70115486a8d6febf753712910e8fc4e85346c995dac074e2029",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/riteshrajas/library/Pyintel_Lux/0.1.1/Pyintel_Lux-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/riteshrajas/library/Pyintel_Lux/0.1.1/Pyintel_Lux-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "riteshrajas/library/Pyintel_Lux/0.1.2/Pyintel_Lux-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pyintel_Lux-0.1.2.tar.gz",
+    "size_bytes": 34509,
+    "sha256": "e9377578dab83bc27487bb717864065a47c6ef97bebb99c44037dc4f2fd4c823",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/riteshrajas/library/Pyintel_Lux/0.1.2/Pyintel_Lux-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/riteshrajas/library/Pyintel_Lux/0.1.2/Pyintel_Lux-0.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

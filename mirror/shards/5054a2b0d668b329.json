@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/drakosha",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "drakosha/library/AsyncWebConsole/0.2.0/AsyncWebConsole-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncWebConsole-0.2.0.tar.gz",
+    "size_bytes": 15106,
+    "sha256": "ee76932f8dc25a5b4a8e7e4dc5ebe770cbc917d5b6f77dd94c910de12e0ddca1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/drakosha/library/AsyncWebConsole/0.2.0/AsyncWebConsole-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/drakosha/library/AsyncWebConsole/0.2.0/AsyncWebConsole-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "drakosha/library/AsyncWebConsole/0.2.1/AsyncWebConsole-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncWebConsole-0.2.1.tar.gz",
+    "size_bytes": 18687,
+    "sha256": "4d5342bf92c8654fab3a2fa937bb1c2d570800fc87ee3c31b3b985d0b8c241b2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/drakosha/library/AsyncWebConsole/0.2.1/AsyncWebConsole-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/drakosha/library/AsyncWebConsole/0.2.1/AsyncWebConsole-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "drakosha/library/AsyncWebConsole/0.2.2/AsyncWebConsole-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncWebConsole-0.2.2.tar.gz",
+    "size_bytes": 18734,
+    "sha256": "8b04ed6e62c4f87c9ab45304c3d90ca32ba292dfa0ea3dec06ec31cbb53e530a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/drakosha/library/AsyncWebConsole/0.2.2/AsyncWebConsole-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/drakosha/library/AsyncWebConsole/0.2.2/AsyncWebConsole-0.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "drakosha/library/AsyncWebConsole/0.3.0/AsyncWebConsole-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncWebConsole-0.3.0.tar.gz",
+    "size_bytes": 20322,
+    "sha256": "5d88c42899de3b8adae75f85d86a136c54c02cd51c2ec7dc3ad9a164e68a5285",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/drakosha/library/AsyncWebConsole/0.3.0/AsyncWebConsole-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/drakosha/library/AsyncWebConsole/0.3.0/AsyncWebConsole-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "drakosha/library/AsyncWebConsole/0.3.1/AsyncWebConsole-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncWebConsole-0.3.1.tar.gz",
+    "size_bytes": 20980,
+    "sha256": "5185c0fc0e3c0ea3a3f71f29935986bf0078cbb49883873a68decf8166280860",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/drakosha/library/AsyncWebConsole/0.3.1/AsyncWebConsole-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/drakosha/library/AsyncWebConsole/0.3.1/AsyncWebConsole-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "drakosha/library/AsyncWebConsole/0.3.2/AsyncWebConsole-0.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncWebConsole-0.3.2.tar.gz",
+    "size_bytes": 20888,
+    "sha256": "5b4ee72e0e8ab6ccdf68404e21990e870594cccb3ac4c3f712a5f6b78bf5a8f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/drakosha/library/AsyncWebConsole/0.3.2/AsyncWebConsole-0.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/drakosha/library/AsyncWebConsole/0.3.2/AsyncWebConsole-0.3.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

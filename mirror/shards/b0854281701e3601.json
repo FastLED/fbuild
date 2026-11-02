@@ -1,0 +1,230 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/remocons",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "remocons/library/Boho/0.6.0/Boho-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Boho-0.6.0.tar.gz",
+    "size_bytes": 6363,
+    "sha256": "33dc4a4290631be91a40e43267c2305dd5c56b82d262c1daff754f9ec49354b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/remocons/library/Boho/0.6.0/Boho-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/remocons/library/Boho/0.6.0/Boho-0.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "remocons/library/Boho/0.7.0/Boho-0.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Boho-0.7.0.tar.gz",
+    "size_bytes": 6146,
+    "sha256": "91ba2fe7fa994f16ebf8bb7a30fc61e9b54f10529d6ad6f57d779395685af40d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/remocons/library/Boho/0.7.0/Boho-0.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/remocons/library/Boho/0.7.0/Boho-0.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "remocons/library/Boho/0.8.0/Boho-0.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Boho-0.8.0.tar.gz",
+    "size_bytes": 9570,
+    "sha256": "b908d56ded197411120fa72cc496eb204f0ef6b00b2d66676fc249af6d93551d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/remocons/library/Boho/0.8.0/Boho-0.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/remocons/library/Boho/0.8.0/Boho-0.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "remocons/library/Boho/1.0.0/Boho-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Boho-1.0.0.tar.gz",
+    "size_bytes": 19847,
+    "sha256": "df3fa7944d8801ac8054f1fdc456aab84d7a433a66826e6cb0d04ce48f731ead",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/remocons/library/Boho/1.0.0/Boho-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/remocons/library/Boho/1.0.0/Boho-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "remocons/library/IOSignal/3.4.0/IOSignal-3.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IOSignal-3.4.0.tar.gz",
+    "size_bytes": 12247,
+    "sha256": "9899ebe699a4099756eb23d844875651baeb86a66a005d66e2b25d7d77f5c305",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/remocons/library/IOSignal/3.4.0/IOSignal-3.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/remocons/library/IOSignal/3.4.0/IOSignal-3.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "remocons/library/IOSignal/4.0.0/IOSignal-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IOSignal-4.0.0.tar.gz",
+    "size_bytes": 12160,
+    "sha256": "b2e710454c42af8a1b7f09a473cdd93f3dcb846cb67792fc9170c092cea5451b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/remocons/library/IOSignal/4.0.0/IOSignal-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/remocons/library/IOSignal/4.0.0/IOSignal-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "remocons/library/IOSignal/5.0.0/IOSignal-5.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IOSignal-5.0.0.tar.gz",
+    "size_bytes": 15005,
+    "sha256": "f88bfe28ef40e5dc71f7f9665076d887bdf92ab134e9e7c1fed7c13f572487b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/remocons/library/IOSignal/5.0.0/IOSignal-5.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/remocons/library/IOSignal/5.0.0/IOSignal-5.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "remocons/library/IOSignal/5.1.0/IOSignal-5.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IOSignal-5.1.0.tar.gz",
+    "size_bytes": 14089,
+    "sha256": "bada8b70a0bf9bd1b9f4ea6b2df11e7b8f221950d999ae38a64a133f780ac58e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/remocons/library/IOSignal/5.1.0/IOSignal-5.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/remocons/library/IOSignal/5.1.0/IOSignal-5.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "remocons/library/IOSignal/6.0.0/IOSignal-6.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IOSignal-6.0.0.tar.gz",
+    "size_bytes": 14502,
+    "sha256": "28e9c3834eb4f9f5d348d1e383add330e0868b9878083ac8a529b5516c2fbbc8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/remocons/library/IOSignal/6.0.0/IOSignal-6.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/remocons/library/IOSignal/6.0.0/IOSignal-6.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "remocons/library/IOSignal/6.0.1/IOSignal-6.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IOSignal-6.0.1.tar.gz",
+    "size_bytes": 17535,
+    "sha256": "4e7e2b67820de4d1a555750fdc66d9069393864953b7f5636aa82bebfedf875c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/remocons/library/IOSignal/6.0.1/IOSignal-6.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/remocons/library/IOSignal/6.0.1/IOSignal-6.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "remocons/library/IOSignal/7.0.0/IOSignal-7.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IOSignal-7.0.0.tar.gz",
+    "size_bytes": 21743,
+    "sha256": "13649a038736db6f941d0aa7ae3a35d519187a96e549898b7dbc2c06d559c128",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/remocons/library/IOSignal/7.0.0/IOSignal-7.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/remocons/library/IOSignal/7.0.0/IOSignal-7.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "remocons/library/Remocon/2.2.1/Remocon-2.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Remocon-2.2.1.tar.gz",
+    "size_bytes": 9096,
+    "sha256": "aa1fad4490dda9520e9cc0eb39824ac3b5d3f325e06373ed0490131132253d2a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/remocons/library/Remocon/2.2.1/Remocon-2.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/remocons/library/Remocon/2.2.1/Remocon-2.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "remocons/library/Remocon/2.3.0/Remocon-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Remocon-2.3.0.tar.gz",
+    "size_bytes": 11628,
+    "sha256": "c610d3f3a074046d53f5dd84d7dc02efd4d78926dcca7c7014596ed7afe10482",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/remocons/library/Remocon/2.3.0/Remocon-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/remocons/library/Remocon/2.3.0/Remocon-2.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "remocons/library/Remocon/3.0.0/Remocon-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Remocon-3.0.0.tar.gz",
+    "size_bytes": 15050,
+    "sha256": "6fce98f124833b1e2a15d30f2fcd97ab6fff7bac31e9334badd77aef40a86ca6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/remocons/library/Remocon/3.0.0/Remocon-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/remocons/library/Remocon/3.0.0/Remocon-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "remocons/library/Remocon/3.0.1/Remocon-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Remocon-3.0.1.tar.gz",
+    "size_bytes": 17985,
+    "sha256": "7d315d39de74efa1c222cd38e392f393191dbfc51e8c476786e5b57c29922ad8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/remocons/library/Remocon/3.0.1/Remocon-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/remocons/library/Remocon/3.0.1/Remocon-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "remocons/library/Remocon/4.0.0/Remocon-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Remocon-4.0.0.tar.gz",
+    "size_bytes": 17990,
+    "sha256": "33785055f52e9cbc1c3a6d0a48734887feea3bee032dd39a95854cd0ee3db039",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/remocons/library/Remocon/4.0.0/Remocon-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/remocons/library/Remocon/4.0.0/Remocon-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "remocons/library/RemoteSignal/0.8.0/RemoteSignal-0.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RemoteSignal-0.8.0.tar.gz",
+    "size_bytes": 14139,
+    "sha256": "7499fbc0fc80464ca7da54e9fdd6683d15e819082c0cb7f75d48b25604eb8ea3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/remocons/library/RemoteSignal/0.8.0/RemoteSignal-0.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/remocons/library/RemoteSignal/0.8.0/RemoteSignal-0.8.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

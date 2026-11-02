@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/eduwit-dev",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "eduwit-dev/library/EduWit/1.0.0/EduWit-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EduWit-1.0.0.tar.gz",
+    "size_bytes": 5088,
+    "sha256": "3c0a1c92b80d8b5cee725bb93f74348b5079c1fe80fb43506b629887a873f2e0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eduwit-dev/library/EduWit/1.0.0/EduWit-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/eduwit-dev/library/EduWit/1.0.0/EduWit-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "eduwit-dev/library/EduWit/1.1.2/EduWit-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EduWit-1.1.2.tar.gz",
+    "size_bytes": 12698,
+    "sha256": "d277d9e672fa1896d2399d944fbc195e0ffa71b797cb1e94a0398ec1a517509c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eduwit-dev/library/EduWit/1.1.2/EduWit-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/eduwit-dev/library/EduWit/1.1.2/EduWit-1.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/scottyob",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "scottyob/library/IgcLogger/0.0.3/IgcLogger-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IgcLogger-0.0.3.tar.gz",
+    "size_bytes": 6421,
+    "sha256": "581ae52732cf2c8d4ee292eb5837b3a57c309bf36c8ae2aba967b090edc06214",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/scottyob/library/IgcLogger/0.0.3/IgcLogger-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/scottyob/library/IgcLogger/0.0.3/IgcLogger-0.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

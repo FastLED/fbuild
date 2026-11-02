@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/shamofu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "shamofu/library/LazyBLE/0.0.1/LazyBLE-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LazyBLE-0.0.1.tar.gz",
+    "size_bytes": 3142,
+    "sha256": "fabd0ee116e7ada2360061f3f5d9609e96ed1c463e300f72c07e6203370291ca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shamofu/library/LazyBLE/0.0.1/LazyBLE-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/shamofu/library/LazyBLE/0.0.1/LazyBLE-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

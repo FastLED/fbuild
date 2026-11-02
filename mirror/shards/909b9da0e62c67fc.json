@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/microbeaut",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "microbeaut/library/ADebouncer/1.2.0/ADebouncer-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADebouncer-1.2.0.tar.gz",
+    "size_bytes": 5938,
+    "sha256": "ca8202937147d3b86f35aa6f4ff873175fba2ba7dc614cb79e0fed68bb3f394b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/microbeaut/library/ADebouncer/1.2.0/ADebouncer-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/microbeaut/library/ADebouncer/1.2.0/ADebouncer-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "microbeaut/library/Finite-State/1.6.0/Finite-State-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Finite-State-1.6.0.tar.gz",
+    "size_bytes": 15769,
+    "sha256": "335e46901b4203f532c06c9d79ac6cf2babd6740900675963f60c62ee42e8353",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/microbeaut/library/Finite-State/1.6.0/Finite-State-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/microbeaut/library/Finite-State/1.6.0/Finite-State-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "microbeaut/library/Generic-Queue/1.0.0/Generic-Queue-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Generic-Queue-1.0.0.tar.gz",
+    "size_bytes": 7461,
+    "sha256": "fc48be8899ffdb04a80f0a2a6b58264d5bbe1cae0607ed915b641907313480eb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/microbeaut/library/Generic-Queue/1.0.0/Generic-Queue-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/microbeaut/library/Generic-Queue/1.0.0/Generic-Queue-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "microbeaut/library/MAX6816/1.0.2/MAX6816-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX6816-1.0.2.tar.gz",
+    "size_bytes": 3018,
+    "sha256": "2e6e09ee35fae3f2ea895a1e204fd37acd16cce3c801f27126efbc2754ff69b2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/microbeaut/library/MAX6816/1.0.2/MAX6816-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/microbeaut/library/MAX6816/1.0.2/MAX6816-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "microbeaut/library/MicroBeaut/2.0.0/MicroBeaut-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MicroBeaut-2.0.0.tar.gz",
+    "size_bytes": 16510,
+    "sha256": "bc07388277acdc4c95c21b19d7f9eb01d5e7c5cb09c29f5c3c71f87bda386397",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/microbeaut/library/MicroBeaut/2.0.0/MicroBeaut-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/microbeaut/library/MicroBeaut/2.0.0/MicroBeaut-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "microbeaut/library/TCone/1.1.0/TCone-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TCone-1.1.0.tar.gz",
+    "size_bytes": 4732,
+    "sha256": "a19d709c8ba9c4b2ad206d47b84717d8dca701471808bc5d87d0be1e8f82e7ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/microbeaut/library/TCone/1.1.0/TCone-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/microbeaut/library/TCone/1.1.0/TCone-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

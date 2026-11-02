@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/qub1750ul",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "qub1750ul/library/HTTP/1.1.0/HTTP-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HTTP-1.1.0.tar.gz",
+    "size_bytes": 16229,
+    "sha256": "8ee172723252e64bc6559bc3ced75144b9c1251fb597be8c9e516c1e54c7eea4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/qub1750ul/library/HTTP/1.1.0/HTTP-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/qub1750ul/library/HTTP/1.1.0/HTTP-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "qub1750ul/library/L293/4.0.2/L293-4.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "L293-4.0.2.tar.gz",
+    "size_bytes": 11870,
+    "sha256": "84c0a646eb54e73f15c62f5f099ac8a1fdaf163ed85f159ca0e26de5de6656f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/qub1750ul/library/L293/4.0.2/L293-4.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/qub1750ul/library/L293/4.0.2/L293-4.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "qub1750ul/library/SharpIR/2.0.1/SharpIR-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SharpIR-2.0.1.tar.gz",
+    "size_bytes": 9683,
+    "sha256": "4478ca8d604e4d84fe742ecac27c3daffe357d6dfd63a7d25494d29f4cab0110",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/qub1750ul/library/SharpIR/2.0.1/SharpIR-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/qub1750ul/library/SharpIR/2.0.1/SharpIR-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "qub1750ul/library/SoftwareReset/3.0.1/SoftwareReset-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SoftwareReset-3.0.1.tar.gz",
+    "size_bytes": 2647,
+    "sha256": "b23e81a0463099d65a1facb426aa0aba8391db1a9b216c700b9b152c675a1677",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/qub1750ul/library/SoftwareReset/3.0.1/SoftwareReset-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/qub1750ul/library/SoftwareReset/3.0.1/SoftwareReset-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "qub1750ul/library/sevenSegmentDisplay/1.0.0/sevenSegmentDisplay-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "sevenSegmentDisplay-1.0.0.tar.gz",
+    "size_bytes": 3849,
+    "sha256": "acbae9fbe0cd5a11555dde16bdcb50be697102679182b76fb4c8e890ae82faf3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/qub1750ul/library/sevenSegmentDisplay/1.0.0/sevenSegmentDisplay-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/qub1750ul/library/sevenSegmentDisplay/1.0.0/sevenSegmentDisplay-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

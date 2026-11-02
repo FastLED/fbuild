@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jwagnerhki",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jwagnerhki/library/PM2005Lib/1.0.2/PM2005Lib-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PM2005Lib-1.0.2.tar.gz",
+    "size_bytes": 5020,
+    "sha256": "9f5f512226c73ffe10a5f960e825b6e8ba6e7320ef2b7af371a6e7a654b7a6fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jwagnerhki/library/PM2005Lib/1.0.2/PM2005Lib-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jwagnerhki/library/PM2005Lib/1.0.2/PM2005Lib-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

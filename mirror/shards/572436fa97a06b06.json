@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/drk",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "drk/library/ESP32_LIB_RK/1.0.79/ESP32_LIB_RK-1.0.79.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_LIB_RK-1.0.79.tar.gz",
+    "size_bytes": 54006,
+    "sha256": "69b35679ef840017c8b7fafbadd5b1d8fd89ce1aec66016334ad9a0021f09382",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/drk/library/ESP32_LIB_RK/1.0.79/ESP32_LIB_RK-1.0.79.tar.gz",
+     "https://dl.registry.platformio.org/download/drk/library/ESP32_LIB_RK/1.0.79/ESP32_LIB_RK-1.0.79.tar.gz"
+    ]
+   }
+  }
+ ]
+}

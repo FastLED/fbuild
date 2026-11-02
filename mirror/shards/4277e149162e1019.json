@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-nerfus",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-nerfus/library/HardwareInterface/0.0.0+sha.0a7810520b9e/HardwareInterface-0.0.0+sha.0a7810520b9e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HardwareInterface-0.0.0+sha.0a7810520b9e.tar.gz",
+    "size_bytes": 1921,
+    "sha256": "6f273ffbd8ea885a7c0998024edf82c8de9733d0f35f2971b03403b5f3fe8dbc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nerfus/library/HardwareInterface/0.0.0%2Bsha.0a7810520b9e/HardwareInterface-0.0.0%2Bsha.0a7810520b9e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nerfus/library/HardwareInterface/0.0.0%2Bsha.0a7810520b9e/HardwareInterface-0.0.0%2Bsha.0a7810520b9e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nerfus/library/NerfUSXbee/0.0.0+sha.da71d952fcd6/NerfUSXbee-0.0.0+sha.da71d952fcd6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NerfUSXbee-0.0.0+sha.da71d952fcd6.tar.gz",
+    "size_bytes": 6082,
+    "sha256": "00407139a65faa1a8c3a95dc1934acfb52f486504410e7686bcdc56c675e4a44",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nerfus/library/NerfUSXbee/0.0.0%2Bsha.da71d952fcd6/NerfUSXbee-0.0.0%2Bsha.da71d952fcd6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nerfus/library/NerfUSXbee/0.0.0%2Bsha.da71d952fcd6/NerfUSXbee-0.0.0%2Bsha.da71d952fcd6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nerfus/library/Servomotor/0.0.0+sha.e42a3a06e072/Servomotor-0.0.0+sha.e42a3a06e072.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Servomotor-0.0.0+sha.e42a3a06e072.tar.gz",
+    "size_bytes": 1595,
+    "sha256": "7ea2034f4ec96783454ac3e623d1dbad058fd0196ffe95fd9f586b0a9cefb955",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nerfus/library/Servomotor/0.0.0%2Bsha.e42a3a06e072/Servomotor-0.0.0%2Bsha.e42a3a06e072.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nerfus/library/Servomotor/0.0.0%2Bsha.e42a3a06e072/Servomotor-0.0.0%2Bsha.e42a3a06e072.tar.gz"
+    ]
+   }
+  }
+ ]
+}

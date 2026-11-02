@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-azazeal88",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-azazeal88/library/MQ2/0.0.0+sha.944051b30179/MQ2-0.0.0+sha.944051b30179.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQ2-0.0.0+sha.944051b30179.tar.gz",
+    "size_bytes": 2720,
+    "sha256": "84f0dbe110c7c860b0306ffa4ba5b434f20c9551df431ab9691cc9f0ce49dd3b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-azazeal88/library/MQ2/0.0.0%2Bsha.944051b30179/MQ2-0.0.0%2Bsha.944051b30179.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-azazeal88/library/MQ2/0.0.0%2Bsha.944051b30179/MQ2-0.0.0%2Bsha.944051b30179.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-azazeal88/library/MQTT_MbedOS/0.0.0+sha.ac90fd2dd859/MQTT_MbedOS-0.0.0+sha.ac90fd2dd859.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQTT_MbedOS-0.0.0+sha.ac90fd2dd859.tar.gz",
+    "size_bytes": 10728,
+    "sha256": "9e653be84377e211ee920adc7a1005c7c61484947b28a6caab329f728941a379",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-azazeal88/library/MQTT_MbedOS/0.0.0%2Bsha.ac90fd2dd859/MQTT_MbedOS-0.0.0%2Bsha.ac90fd2dd859.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-azazeal88/library/MQTT_MbedOS/0.0.0%2Bsha.ac90fd2dd859/MQTT_MbedOS-0.0.0%2Bsha.ac90fd2dd859.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-azazeal88/library/RN2483/0.0.0+sha.c4069091afa1/RN2483-0.0.0+sha.c4069091afa1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RN2483-0.0.0+sha.c4069091afa1.tar.gz",
+    "size_bytes": 10382,
+    "sha256": "a78165423cedd54c5a8fa87f9e3bc7be9067cce8cc313d8fc176f483dbe557c3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-azazeal88/library/RN2483/0.0.0%2Bsha.c4069091afa1/RN2483-0.0.0%2Bsha.c4069091afa1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-azazeal88/library/RN2483/0.0.0%2Bsha.c4069091afa1/RN2483-0.0.0%2Bsha.c4069091afa1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-azazeal88/library/SimonK_I2C_ESC/0.0.0+sha.014606ea57a3/SimonK_I2C_ESC-0.0.0+sha.014606ea57a3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimonK_I2C_ESC-0.0.0+sha.014606ea57a3.tar.gz",
+    "size_bytes": 3403,
+    "sha256": "4d3b0d07318adc873f61d206561f9846976d4e26f20386b38599c2afe4f3f549",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-azazeal88/library/SimonK_I2C_ESC/0.0.0%2Bsha.014606ea57a3/SimonK_I2C_ESC-0.0.0%2Bsha.014606ea57a3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-azazeal88/library/SimonK_I2C_ESC/0.0.0%2Bsha.014606ea57a3/SimonK_I2C_ESC-0.0.0%2Bsha.014606ea57a3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

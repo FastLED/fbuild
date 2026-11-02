@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/queuetue",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "queuetue/library/Queuetue%20Digital%20Balance%20Library/1.0.6/QueuetueDigitalBalanceLibrary-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QueuetueDigitalBalanceLibrary-1.0.6.tar.gz",
+    "size_bytes": 5805,
+    "sha256": "1035282409150e3e99b8f80429dc962cbd7e030c6533250bdcffa6a9eb2a15cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/queuetue/library/Queuetue%2520Digital%2520Balance%2520Library/1.0.6/QueuetueDigitalBalanceLibrary-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/queuetue/library/Queuetue%20Digital%20Balance%20Library/1.0.6/QueuetueDigitalBalanceLibrary-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "queuetue/library/Queuetue%20HX711%20Library/1.0.2/QueuetueHX711Library-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QueuetueHX711Library-1.0.2.tar.gz",
+    "size_bytes": 2765,
+    "sha256": "98e16c42a18396ea2ccf0535c039c0813a80a4aecd522a727783f2d30f221447",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/queuetue/library/Queuetue%2520HX711%2520Library/1.0.2/QueuetueHX711Library-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/queuetue/library/Queuetue%20HX711%20Library/1.0.2/QueuetueHX711Library-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

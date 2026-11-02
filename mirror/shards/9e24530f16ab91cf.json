@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/marc-arita",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "marc-arita/library/CncboardClient/1.3.0/CncboardClient-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CncboardClient-1.3.0.tar.gz",
+    "size_bytes": 4179,
+    "sha256": "367675f3ad662a29f4469659e1d3c052ab645239326c7bc972b3de2ca27e75d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marc-arita/library/CncboardClient/1.3.0/CncboardClient-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/marc-arita/library/CncboardClient/1.3.0/CncboardClient-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marc-arita/library/CncboardClient/1.3.1/CncboardClient-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CncboardClient-1.3.1.tar.gz",
+    "size_bytes": 4368,
+    "sha256": "4786418f61c3eb646cd86ccc25931c9c0e2ed2d0a2031fcb84340dba529c5e2d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marc-arita/library/CncboardClient/1.3.1/CncboardClient-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/marc-arita/library/CncboardClient/1.3.1/CncboardClient-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marc-arita/library/CncboardClient/1.3.2/CncboardClient-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CncboardClient-1.3.2.tar.gz",
+    "size_bytes": 4625,
+    "sha256": "f92b151e4805554797dbdeca4dc5e932769f8ee95145d6d6b04004731955eb1a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marc-arita/library/CncboardClient/1.3.2/CncboardClient-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/marc-arita/library/CncboardClient/1.3.2/CncboardClient-1.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marc-arita/library/i2c-node/1.0.0/i2c-node-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "i2c-node-1.0.0.tar.gz",
+    "size_bytes": 4632,
+    "sha256": "684ff2703bb01a55db891bb5f3e99520c1fbb5a3efcb25a0b106fb7372606559",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marc-arita/library/i2c-node/1.0.0/i2c-node-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/marc-arita/library/i2c-node/1.0.0/i2c-node-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

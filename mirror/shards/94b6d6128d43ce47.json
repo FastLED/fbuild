@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/plageoj",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "plageoj/library/RequestBuilder/1.0.1/RequestBuilder-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RequestBuilder-1.0.1.tar.gz",
+    "size_bytes": 5339,
+    "sha256": "27f1d6407162372b4d282e637e1af9e7e959595ede7c428cfd4ce6b1c111e3e5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/plageoj/library/RequestBuilder/1.0.1/RequestBuilder-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/plageoj/library/RequestBuilder/1.0.1/RequestBuilder-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "plageoj/library/UrlEncode/1.0.1/UrlEncode-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UrlEncode-1.0.1.tar.gz",
+    "size_bytes": 2130,
+    "sha256": "2589aea269d67b48c9691e439e503b2a1b4341116c9cf8e5e463a96556a180af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/plageoj/library/UrlEncode/1.0.1/UrlEncode-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/plageoj/library/UrlEncode/1.0.1/UrlEncode-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

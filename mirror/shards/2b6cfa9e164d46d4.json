@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/o0zz",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "o0zz/library/climate-uart/1.0.0/climate-uart-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "climate-uart-1.0.0.tar.gz",
+    "size_bytes": 22685,
+    "sha256": "41ece8aaf934e81b8d8f59e9f5eb7a76d81219c577c04118652017599962b434",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/o0zz/library/climate-uart/1.0.0/climate-uart-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/o0zz/library/climate-uart/1.0.0/climate-uart-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

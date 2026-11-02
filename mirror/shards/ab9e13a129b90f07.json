@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ubsub",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ubsub/library/Ubsub/0.1.12/Ubsub-0.1.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ubsub-0.1.12.tar.gz",
+    "size_bytes": 116432,
+    "sha256": "00bd9c57a49d1fff878162f406d394198b22caf46b7b20082cd4ebdddc337675",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ubsub/library/Ubsub/0.1.12/Ubsub-0.1.12.tar.gz",
+     "https://dl.registry.platformio.org/download/ubsub/library/Ubsub/0.1.12/Ubsub-0.1.12.tar.gz"
+    ]
+   }
+  }
+ ]
+}

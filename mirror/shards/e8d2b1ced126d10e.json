@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/yushin-ito",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "yushin-ito/library/M5Battery/0.0.5/M5Battery-0.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Battery-0.0.5.tar.gz",
+    "size_bytes": 4689,
+    "sha256": "4055bca72a04047ffe1293193dd51bda43514b0e7af2563ba9c7134fa4b30337",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yushin-ito/library/M5Battery/0.0.5/M5Battery-0.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/yushin-ito/library/M5Battery/0.0.5/M5Battery-0.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "yushin-ito/library/M5Clock/0.0.3/M5Clock-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Clock-0.0.3.tar.gz",
+    "size_bytes": 4939,
+    "sha256": "47ccfddd5f6620266d5d201f13e060c4e6a58f3e0dd3a9325e68e2be0b051bb1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yushin-ito/library/M5Clock/0.0.3/M5Clock-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/yushin-ito/library/M5Clock/0.0.3/M5Clock-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "yushin-ito/library/M5TextScroll/0.0.5/M5TextScroll-0.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5TextScroll-0.0.5.tar.gz",
+    "size_bytes": 4565,
+    "sha256": "8b46fd4661bd55bee4d93017418d180200b6ecf3e4cbdbc034c0dd4f9fc84288",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yushin-ito/library/M5TextScroll/0.0.5/M5TextScroll-0.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/yushin-ito/library/M5TextScroll/0.0.5/M5TextScroll-0.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "yushin-ito/library/M5Timer/0.0.6/M5Timer-0.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Timer-0.0.6.tar.gz",
+    "size_bytes": 4621,
+    "sha256": "f6f049d4811f271fb0f267782bc8b19063a842d7174296bae089b9f64b1cdb3d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yushin-ito/library/M5Timer/0.0.6/M5Timer-0.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/yushin-ito/library/M5Timer/0.0.6/M5Timer-0.0.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

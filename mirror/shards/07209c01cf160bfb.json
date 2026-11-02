@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mfriskey",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mfriskey/library/SimpleBatteryMonitor/1.0.1/SimpleBatteryMonitor-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleBatteryMonitor-1.0.1.tar.gz",
+    "size_bytes": 2822,
+    "sha256": "591364df28ea59d1605c8c513981689dd469e3ddbdb605ac62ff618768bc968d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mfriskey/library/SimpleBatteryMonitor/1.0.1/SimpleBatteryMonitor-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mfriskey/library/SimpleBatteryMonitor/1.0.1/SimpleBatteryMonitor-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mfriskey/library/SimpleMAX98357A/1.0.0/SimpleMAX98357A-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleMAX98357A-1.0.0.tar.gz",
+    "size_bytes": 6106,
+    "sha256": "f9f87a82d2a518fc1fa4638f8dc9777f6f7178d821505bd7012aa37e6bcc4b4b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mfriskey/library/SimpleMAX98357A/1.0.0/SimpleMAX98357A-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mfriskey/library/SimpleMAX98357A/1.0.0/SimpleMAX98357A-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mfriskey/library/SimpleMQTT/2.0.2/SimpleMQTT-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleMQTT-2.0.2.tar.gz",
+    "size_bytes": 8565,
+    "sha256": "52a3609011b08d01366eac9bbf148bddc6aabbace38a46176649ade47ee14d01",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mfriskey/library/SimpleMQTT/2.0.2/SimpleMQTT-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mfriskey/library/SimpleMQTT/2.0.2/SimpleMQTT-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mfriskey/library/SimpleTCA9555/2.1.0/SimpleTCA9555-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleTCA9555-2.1.0.tar.gz",
+    "size_bytes": 5013,
+    "sha256": "3f6eb67eb0f60c5b201d9aa8ed820ef30a2f90248c0585d29fca6af90fbe5d73",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mfriskey/library/SimpleTCA9555/2.1.0/SimpleTCA9555-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mfriskey/library/SimpleTCA9555/2.1.0/SimpleTCA9555-2.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

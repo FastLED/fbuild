@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-kvling",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-kvling/library/MMA7361L/0.0.0+sha.9f484862187b/MMA7361L-0.0.0+sha.9f484862187b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MMA7361L-0.0.0+sha.9f484862187b.tar.gz",
+    "size_bytes": 1293,
+    "sha256": "4bffe7c45a36b27579f4258ee05702eca5caf383efbffa63c31fc2487b30f5c5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kvling/library/MMA7361L/0.0.0%2Bsha.9f484862187b/MMA7361L-0.0.0%2Bsha.9f484862187b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kvling/library/MMA7361L/0.0.0%2Bsha.9f484862187b/MMA7361L-0.0.0%2Bsha.9f484862187b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

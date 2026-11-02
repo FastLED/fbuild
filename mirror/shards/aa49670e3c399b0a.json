@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/paperdink",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "paperdink/library/Paperdink/0.0.7/Paperdink-0.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Paperdink-0.0.7.tar.gz",
+    "size_bytes": 215558,
+    "sha256": "5ea13775e113c660f28cb8bbeffaf042c714f4c97376a9f78733b882aef0d45a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paperdink/library/Paperdink/0.0.7/Paperdink-0.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/paperdink/library/Paperdink/0.0.7/Paperdink-0.0.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-betago",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-betago/library/Debug/0.0.0+sha.26532a4397da/Debug-0.0.0+sha.26532a4397da.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Debug-0.0.0+sha.26532a4397da.tar.gz",
+    "size_bytes": 1797,
+    "sha256": "0b743d504556970302127e5d16d1dcb74ba695e6a76f3184d1098bbb76b49661",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-betago/library/Debug/0.0.0%2Bsha.26532a4397da/Debug-0.0.0%2Bsha.26532a4397da.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-betago/library/Debug/0.0.0%2Bsha.26532a4397da/Debug-0.0.0%2Bsha.26532a4397da.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-betago/library/Process/0.0.0+sha.e4727bcb1054/Process-0.0.0+sha.e4727bcb1054.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Process-0.0.0+sha.e4727bcb1054.tar.gz",
+    "size_bytes": 1246,
+    "sha256": "4cd0919b85163f986f0dfb5dc0a1f20797a1eefe0c5ce5832d22d797ffc0fbf6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-betago/library/Process/0.0.0%2Bsha.e4727bcb1054/Process-0.0.0%2Bsha.e4727bcb1054.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-betago/library/Process/0.0.0%2Bsha.e4727bcb1054/Process-0.0.0%2Bsha.e4727bcb1054.tar.gz"
+    ]
+   }
+  }
+ ]
+}

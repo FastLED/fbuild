@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-strikewolf",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-strikewolf/library/ADXL345_I2C/0.0.0+sha.a7184ee0a913/ADXL345_I2C-0.0.0+sha.a7184ee0a913.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADXL345_I2C-0.0.0+sha.a7184ee0a913.tar.gz",
+    "size_bytes": 7181,
+    "sha256": "e4c2216a0ac564c0cad45861f37b1317b5d445e313a844c0d31541ccc4ef1d5e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-strikewolf/library/ADXL345_I2C/0.0.0%2Bsha.a7184ee0a913/ADXL345_I2C-0.0.0%2Bsha.a7184ee0a913.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-strikewolf/library/ADXL345_I2C/0.0.0%2Bsha.a7184ee0a913/ADXL345_I2C-0.0.0%2Bsha.a7184ee0a913.tar.gz"
+    ]
+   }
+  }
+ ]
+}

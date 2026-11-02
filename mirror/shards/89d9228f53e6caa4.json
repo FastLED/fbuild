@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ssozonoff",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ssozonoff/library/HMC6343/0.0.0+sha.2645c4d75671/HMC6343-0.0.0+sha.2645c4d75671.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HMC6343-0.0.0+sha.2645c4d75671.tar.gz",
+    "size_bytes": 4420,
+    "sha256": "914343218228792c894aa958d6f8a332f0306156e26181ea300daa116a8bb8a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ssozonoff/library/HMC6343/0.0.0%2Bsha.2645c4d75671/HMC6343-0.0.0%2Bsha.2645c4d75671.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ssozonoff/library/HMC6343/0.0.0%2Bsha.2645c4d75671/HMC6343-0.0.0%2Bsha.2645c4d75671.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ssozonoff/library/PCF2119_16X2_LCD/0.0.0+sha.1590b28a5be7/PCF2119_16X2_LCD-0.0.0+sha.1590b28a5be7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCF2119_16X2_LCD-0.0.0+sha.1590b28a5be7.tar.gz",
+    "size_bytes": 2436,
+    "sha256": "67d77b5be5c47ae5788878ae368817d826a2f2ffd4cc9e3df09c8e8952483753",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ssozonoff/library/PCF2119_16X2_LCD/0.0.0%2Bsha.1590b28a5be7/PCF2119_16X2_LCD-0.0.0%2Bsha.1590b28a5be7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ssozonoff/library/PCF2119_16X2_LCD/0.0.0%2Bsha.1590b28a5be7/PCF2119_16X2_LCD-0.0.0%2Bsha.1590b28a5be7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ssozonoff/library/SHT2x/0.0.0+sha.2464fed17980/SHT2x-0.0.0+sha.2464fed17980.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SHT2x-0.0.0+sha.2464fed17980.tar.gz",
+    "size_bytes": 4402,
+    "sha256": "c0c8b235c8d255dd7ff64e43aabdcfb34316af12ea8069ca2e6abeadecc0c144",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ssozonoff/library/SHT2x/0.0.0%2Bsha.2464fed17980/SHT2x-0.0.0%2Bsha.2464fed17980.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ssozonoff/library/SHT2x/0.0.0%2Bsha.2464fed17980/SHT2x-0.0.0%2Bsha.2464fed17980.tar.gz"
+    ]
+   }
+  }
+ ]
+}

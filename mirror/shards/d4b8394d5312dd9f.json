@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/reyanvaldes",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "reyanvaldes/library/SorbaMqttWifi/1.0.4/SorbaMqttWifi-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SorbaMqttWifi-1.0.4.tar.gz",
+    "size_bytes": 13835,
+    "sha256": "8117c7e83d573a8ebf8cb69ea40af71df6e6e439269b3a7cd3cc3c0dd40fd62b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/reyanvaldes/library/SorbaMqttWifi/1.0.4/SorbaMqttWifi-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/reyanvaldes/library/SorbaMqttWifi/1.0.4/SorbaMqttWifi-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "reyanvaldes/library/SorbaMqttWifi/1.0.5/SorbaMqttWifi-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SorbaMqttWifi-1.0.5.tar.gz",
+    "size_bytes": 15359,
+    "sha256": "ce7a372f5a3ec54d917d3ef872a7c64fe8cfa22845a3c43df8498bd340daa9df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/reyanvaldes/library/SorbaMqttWifi/1.0.5/SorbaMqttWifi-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/reyanvaldes/library/SorbaMqttWifi/1.0.5/SorbaMqttWifi-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "reyanvaldes/library/SorbaMqttWifi/1.0.6/SorbaMqttWifi-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SorbaMqttWifi-1.0.6.tar.gz",
+    "size_bytes": 16146,
+    "sha256": "f8bdc8718609281d369eb49f2a98a74566b29d15dcb5ac02a4ba22d18ea1791a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/reyanvaldes/library/SorbaMqttWifi/1.0.6/SorbaMqttWifi-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/reyanvaldes/library/SorbaMqttWifi/1.0.6/SorbaMqttWifi-1.0.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

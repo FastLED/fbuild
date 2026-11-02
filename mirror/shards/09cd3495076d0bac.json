@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-openobc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-openobc/library/e36obd/0.0.0+sha.5a4b823759ac/e36obd-0.0.0+sha.5a4b823759ac.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "e36obd-0.0.0+sha.5a4b823759ac.tar.gz",
+    "size_bytes": 3736,
+    "sha256": "304c5ea58e7e847322f8af0c373c1ca92efc57d81eeeb2aca6ab25a40e209459",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-openobc/library/e36obd/0.0.0%2Bsha.5a4b823759ac/e36obd-0.0.0%2Bsha.5a4b823759ac.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-openobc/library/e36obd/0.0.0%2Bsha.5a4b823759ac/e36obd-0.0.0%2Bsha.5a4b823759ac.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-hublex",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-hublex/library/AS5600/0.0.0+sha.ec69fa9832e5/AS5600-0.0.0+sha.ec69fa9832e5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AS5600-0.0.0+sha.ec69fa9832e5.tar.gz",
+    "size_bytes": 1568,
+    "sha256": "6c2dd22080ff0ed84b905778ea9ff05686c4f047782488d31b830ebc18a3bbfd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hublex/library/AS5600/0.0.0%2Bsha.ec69fa9832e5/AS5600-0.0.0%2Bsha.ec69fa9832e5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hublex/library/AS5600/0.0.0%2Bsha.ec69fa9832e5/AS5600-0.0.0%2Bsha.ec69fa9832e5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hublex/library/HTRC110_lib/0.0.0+sha.02db8b7c40fb/HTRC110_lib-0.0.0+sha.02db8b7c40fb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HTRC110_lib-0.0.0+sha.02db8b7c40fb.tar.gz",
+    "size_bytes": 4152,
+    "sha256": "ea5f4645d646add3ff86ec43ef12bb3514b47ee00cd6a77c833c9e6d06ba8ea7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hublex/library/HTRC110_lib/0.0.0%2Bsha.02db8b7c40fb/HTRC110_lib-0.0.0%2Bsha.02db8b7c40fb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hublex/library/HTRC110_lib/0.0.0%2Bsha.02db8b7c40fb/HTRC110_lib-0.0.0%2Bsha.02db8b7c40fb.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hublex/library/Roboteq_CANOpen/0.0.0+sha.33d64a3c48a2/Roboteq_CANOpen-0.0.0+sha.33d64a3c48a2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Roboteq_CANOpen-0.0.0+sha.33d64a3c48a2.tar.gz",
+    "size_bytes": 5829,
+    "sha256": "81a68394159f8ecb1f446215350bcae0784699fdac5ebbbf92d9aa33fe0e9c98",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hublex/library/Roboteq_CANOpen/0.0.0%2Bsha.33d64a3c48a2/Roboteq_CANOpen-0.0.0%2Bsha.33d64a3c48a2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hublex/library/Roboteq_CANOpen/0.0.0%2Bsha.33d64a3c48a2/Roboteq_CANOpen-0.0.0%2Bsha.33d64a3c48a2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

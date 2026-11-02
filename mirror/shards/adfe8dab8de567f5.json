@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/evthefuture",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "evthefuture/library/WebConsole/1.0.3/WebConsole-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WebConsole-1.0.3.tar.gz",
+    "size_bytes": 17261,
+    "sha256": "b5175e6ac6a256f270a70d8bf0ae469143b94298e1d0ca25b112ad82bf9403df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/evthefuture/library/WebConsole/1.0.3/WebConsole-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/evthefuture/library/WebConsole/1.0.3/WebConsole-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

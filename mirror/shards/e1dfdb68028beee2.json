@@ -1,0 +1,126 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/linneslab",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "linneslab/library/KickFFT/3.0.0/KickFFT-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KickFFT-3.0.0.tar.gz",
+    "size_bytes": 6842,
+    "sha256": "4a6534234781cf25ffe7d52248a649d7d316b3d00d2a1beee19be4c6598d07cd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/linneslab/library/KickFFT/3.0.0/KickFFT-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/linneslab/library/KickFFT/3.0.0/KickFFT-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "linneslab/library/KickFilters/3.0.0/KickFilters-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KickFilters-3.0.0.tar.gz",
+    "size_bytes": 8716,
+    "sha256": "48ed5266654ecb5aafba39cacb3596f75359ee169befce6e374d163ad2749d29",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/linneslab/library/KickFilters/3.0.0/KickFilters-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/linneslab/library/KickFilters/3.0.0/KickFilters-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "linneslab/library/KickFiltersRT/2.0.0/KickFiltersRT-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KickFiltersRT-2.0.0.tar.gz",
+    "size_bytes": 8636,
+    "sha256": "7961a33a8609f175d3e09bb523d0399309598c7849866d7d3d16f8392b0fc38f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/linneslab/library/KickFiltersRT/2.0.0/KickFiltersRT-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/linneslab/library/KickFiltersRT/2.0.0/KickFiltersRT-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "linneslab/library/KickMath/4.0.0/KickMath-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KickMath-4.0.0.tar.gz",
+    "size_bytes": 14118,
+    "sha256": "9f763b3ead375e5c9873518466de0c5d59a09b95644d5f3bed95b780b778685f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/linneslab/library/KickMath/4.0.0/KickMath-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/linneslab/library/KickMath/4.0.0/KickMath-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "linneslab/library/KickSort/1.1.0/KickSort-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KickSort-1.1.0.tar.gz",
+    "size_bytes": 5121,
+    "sha256": "23018e228ff3622ceabcdc6a23321c3513ef66121c715e64b84ba3ddeb5355f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/linneslab/library/KickSort/1.1.0/KickSort-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/linneslab/library/KickSort/1.1.0/KickSort-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "linneslab/library/LMP91000/1.0.0/LMP91000-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LMP91000-1.0.0.tar.gz",
+    "size_bytes": 10119,
+    "sha256": "968471bb950c2d602477b3a1d9d712b3dfa50fcb3ab55a9fe94d93ada1753f51",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/linneslab/library/LMP91000/1.0.0/LMP91000-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/linneslab/library/LMP91000/1.0.0/LMP91000-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "linneslab/library/MAX541X/1.0.2/MAX541X-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX541X-1.0.2.tar.gz",
+    "size_bytes": 5948,
+    "sha256": "cbbd039b95c5187a3597e843f5f6611db631d93959cbf0ac300f0b1abee53a26",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/linneslab/library/MAX541X/1.0.2/MAX541X-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/linneslab/library/MAX541X/1.0.2/MAX541X-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "linneslab/library/TrigDef/1.0.1/TrigDef-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TrigDef-1.0.1.tar.gz",
+    "size_bytes": 12728,
+    "sha256": "9f085eeda631ee726cea4a6e25a2df27eea65d55036fa933a0ae6a37bfa46d21",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/linneslab/library/TrigDef/1.0.1/TrigDef-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/linneslab/library/TrigDef/1.0.1/TrigDef-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "linneslab/library/ttestTable/1.0.0/ttestTable-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ttestTable-1.0.0.tar.gz",
+    "size_bytes": 2477,
+    "sha256": "d296fe3747ecf4e8db55b3e7a7b93b139746d71c93404af350529c62d6ae0029",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/linneslab/library/ttestTable/1.0.0/ttestTable-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/linneslab/library/ttestTable/1.0.0/ttestTable-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

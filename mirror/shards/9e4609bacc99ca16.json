@@ -1,0 +1,152 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/engin100",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "engin100/library/ENGR100-950/1.3.0/ENGR100-950-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ENGR100-950-1.3.0.tar.gz",
+    "size_bytes": 88583,
+    "sha256": "6b2120f4fa36ffa8089c7be2a933abf619e9cc3359c80dde77d965a4f69ed3c5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/engin100/library/ENGR100-950/1.3.0/ENGR100-950-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/engin100/library/ENGR100-950/1.3.0/ENGR100-950-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "engin100/library/ENGR100-950/1.3.2/ENGR100-950-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ENGR100-950-1.3.2.tar.gz",
+    "size_bytes": 93553,
+    "sha256": "4b4d4f422dc9b9ef77807d7d911e5f2a3d13080d58dfd220da0d43f75477bd04",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/engin100/library/ENGR100-950/1.3.2/ENGR100-950-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/engin100/library/ENGR100-950/1.3.2/ENGR100-950-1.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "engin100/library/ENGR100-950/1.3.4/ENGR100-950-1.3.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ENGR100-950-1.3.4.tar.gz",
+    "size_bytes": 97626,
+    "sha256": "0fa592a825a6e8770f0d5798c0da050a48d0a007459412aa2edf1280b107c959",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/engin100/library/ENGR100-950/1.3.4/ENGR100-950-1.3.4.tar.gz",
+     "https://dl.registry.platformio.org/download/engin100/library/ENGR100-950/1.3.4/ENGR100-950-1.3.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "engin100/library/ENGR100-950/1.3.5/ENGR100-950-1.3.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ENGR100-950-1.3.5.tar.gz",
+    "size_bytes": 96867,
+    "sha256": "d174bd97d4f8f2a2b83c8473fc73c17abaae5e5efccc57914e3277061ee6c274",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/engin100/library/ENGR100-950/1.3.5/ENGR100-950-1.3.5.tar.gz",
+     "https://dl.registry.platformio.org/download/engin100/library/ENGR100-950/1.3.5/ENGR100-950-1.3.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "engin100/library/ENGR100-980/1.1.0/ENGR100-980-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ENGR100-980-1.1.0.tar.gz",
+    "size_bytes": 81724,
+    "sha256": "120587197599750e4c32d67d23f6165f68949f58601acc89b2d622c6c9b17367",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/engin100/library/ENGR100-980/1.1.0/ENGR100-980-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/engin100/library/ENGR100-980/1.1.0/ENGR100-980-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "engin100/library/ENGR100-980/1.2.0/ENGR100-980-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ENGR100-980-1.2.0.tar.gz",
+    "size_bytes": 83314,
+    "sha256": "8f7d5cd376727f5baf8955c8bbc39e702b851eb3a027f1ed7177d27dd7b29559",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/engin100/library/ENGR100-980/1.2.0/ENGR100-980-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/engin100/library/ENGR100-980/1.2.0/ENGR100-980-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "engin100/library/ENGR100-980/1.2.1/ENGR100-980-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ENGR100-980-1.2.1.tar.gz",
+    "size_bytes": 82179,
+    "sha256": "76f18a19859ee7238dd0d68dadc65e7fd9ed1973f3cc7b63fea0aea68b152756",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/engin100/library/ENGR100-980/1.2.1/ENGR100-980-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/engin100/library/ENGR100-980/1.2.1/ENGR100-980-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "engin100/library/ENGR100-980/1.2.2/ENGR100-980-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ENGR100-980-1.2.2.tar.gz",
+    "size_bytes": 82183,
+    "sha256": "d1e44eefb66a4b74ace61045230976640d3a3bedfee6e06e8dd89975c5202697",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/engin100/library/ENGR100-980/1.2.2/ENGR100-980-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/engin100/library/ENGR100-980/1.2.2/ENGR100-980-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "engin100/library/ENGR100-980/1.2.3/ENGR100-980-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ENGR100-980-1.2.3.tar.gz",
+    "size_bytes": 2746286,
+    "sha256": "d758724907c3b56e893a9a67bf0d03011b2bb4578ff2c5dad0ddec16644dd271",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/engin100/library/ENGR100-980/1.2.3/ENGR100-980-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/engin100/library/ENGR100-980/1.2.3/ENGR100-980-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "engin100/library/ENGR100-980/1.3.0/ENGR100-980-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ENGR100-980-1.3.0.tar.gz",
+    "size_bytes": 2748491,
+    "sha256": "d9d7ebba87bb51af754d61929b27bda24c936c5164c209e1be3cb6b5a60bcee3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/engin100/library/ENGR100-980/1.3.0/ENGR100-980-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/engin100/library/ENGR100-980/1.3.0/ENGR100-980-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "engin100/library/ENGR100-980/1.3.1/ENGR100-980-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ENGR100-980-1.3.1.tar.gz",
+    "size_bytes": 2750427,
+    "sha256": "08e951add6e4edb62385c90166c8efb086d671c95c1153b42d34e8b629b902b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/engin100/library/ENGR100-980/1.3.1/ENGR100-980-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/engin100/library/ENGR100-980/1.3.1/ENGR100-980-1.3.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

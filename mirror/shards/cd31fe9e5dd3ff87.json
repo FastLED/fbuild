@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tpanajott",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tpanajott/library/ArduLog/0.1.1/ArduLog-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduLog-0.1.1.tar.gz",
+    "size_bytes": 4083,
+    "sha256": "17bfa0e1ddbdf2061d66862e40cabce1df0a0261782a7367fb66f529bd2a6178",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tpanajott/library/ArduLog/0.1.1/ArduLog-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tpanajott/library/ArduLog/0.1.1/ArduLog-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tpanajott/library/ESP-Dmx/1.0/ESP-Dmx-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-Dmx-1.0.tar.gz",
+    "size_bytes": 5017,
+    "sha256": "a60fe1e443fe25e7f2d6f481b40673c265a35e71267b0db092931f9ed2734e98",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tpanajott/library/ESP-Dmx/1.0/ESP-Dmx-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tpanajott/library/ESP-Dmx/1.0/ESP-Dmx-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tpanajott/library/ESP32-DMX/1.0/ESP32-DMX-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-DMX-1.0.tar.gz",
+    "size_bytes": 3413,
+    "sha256": "ff920273c9849cc4c1f10484f601ed2a3df5230fa1f0e6fba158fe28ce59cf5d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tpanajott/library/ESP32-DMX/1.0/ESP32-DMX-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tpanajott/library/ESP32-DMX/1.0/ESP32-DMX-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

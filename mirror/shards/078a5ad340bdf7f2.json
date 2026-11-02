@@ -1,0 +1,217 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/digitalfuturesocadu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "digitalfuturesocadu/library/DFPongController/1.0.0/DFPongController-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFPongController-1.0.0.tar.gz",
+    "size_bytes": 22744,
+    "sha256": "e86fc90a8cf295137763f6dfb9726cb63829dd6458842cb8b2277ee8f7e81857",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalfuturesocadu/library/DFPongController/1.0.0/DFPongController-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalfuturesocadu/library/DFPongController/1.0.0/DFPongController-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalfuturesocadu/library/DFPongController/1.1.0/DFPongController-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFPongController-1.1.0.tar.gz",
+    "size_bytes": 29819,
+    "sha256": "9832f264ccefa1f052099061f6fe2b823f95a09faaff039010e2a0b32a1359f5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalfuturesocadu/library/DFPongController/1.1.0/DFPongController-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalfuturesocadu/library/DFPongController/1.1.0/DFPongController-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalfuturesocadu/library/DFPongController/1.2.0/DFPongController-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFPongController-1.2.0.tar.gz",
+    "size_bytes": 30803,
+    "sha256": "2c42356d2c78dc73fa0c979caadc9cc00a0e7640b9bf4c874e35a2c3f05291f3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalfuturesocadu/library/DFPongController/1.2.0/DFPongController-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalfuturesocadu/library/DFPongController/1.2.0/DFPongController-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalfuturesocadu/library/DFPongController/2.1.1/DFPongController-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFPongController-2.1.1.tar.gz",
+    "size_bytes": 53715,
+    "sha256": "f87aa39f1e66c5b23ec68a9aa7721e9a61fbdc1c6b1ed6a0964d4e7d07594c60",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalfuturesocadu/library/DFPongController/2.1.1/DFPongController-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalfuturesocadu/library/DFPongController/2.1.1/DFPongController-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalfuturesocadu/library/DFPongController/2.3.0/DFPongController-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFPongController-2.3.0.tar.gz",
+    "size_bytes": 59303,
+    "sha256": "053401643487e81a3baf7cdb8eaefed1b3d97062913334ba92a16909f9c49a01",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalfuturesocadu/library/DFPongController/2.3.0/DFPongController-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalfuturesocadu/library/DFPongController/2.3.0/DFPongController-2.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalfuturesocadu/library/DFPongController/2.3.1/DFPongController-2.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFPongController-2.3.1.tar.gz",
+    "size_bytes": 60450,
+    "sha256": "75eb22fafe2f323fb08c9a13f1b33e1051a61482a0aac47905be99489cac55ea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalfuturesocadu/library/DFPongController/2.3.1/DFPongController-2.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalfuturesocadu/library/DFPongController/2.3.1/DFPongController-2.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalfuturesocadu/library/DFPongController/2.4.2/DFPongController-2.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFPongController-2.4.2.tar.gz",
+    "size_bytes": 62774,
+    "sha256": "582cf46439f3597a17a1a410753bace584cab4d3bfabfd6d8f18a4693c00ffd9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalfuturesocadu/library/DFPongController/2.4.2/DFPongController-2.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalfuturesocadu/library/DFPongController/2.4.2/DFPongController-2.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalfuturesocadu/library/TinyFilmFestival/2.0.0/TinyFilmFestival-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyFilmFestival-2.0.0.tar.gz",
+    "size_bytes": 30018,
+    "sha256": "83f772a3ee1c29941be09fe45188ba05bb2c6044ced0c170dede8edf8206f92c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalfuturesocadu/library/TinyFilmFestival/2.0.0/TinyFilmFestival-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalfuturesocadu/library/TinyFilmFestival/2.0.0/TinyFilmFestival-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalfuturesocadu/library/TinyFilmFestival/2.1.0/TinyFilmFestival-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyFilmFestival-2.1.0.tar.gz",
+    "size_bytes": 38728,
+    "sha256": "65bd92e3e2e7e949ea7263dd58382e1a041e7e0ffdf7181b07103f58569f3816",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalfuturesocadu/library/TinyFilmFestival/2.1.0/TinyFilmFestival-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalfuturesocadu/library/TinyFilmFestival/2.1.0/TinyFilmFestival-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalfuturesocadu/library/TinyFilmFestival/2.2.0/TinyFilmFestival-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyFilmFestival-2.2.0.tar.gz",
+    "size_bytes": 44868,
+    "sha256": "7d5cdd323a2487fc25c2ac1e9cfce96954025ac09c2a39a34fc22854e8a1e101",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalfuturesocadu/library/TinyFilmFestival/2.2.0/TinyFilmFestival-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalfuturesocadu/library/TinyFilmFestival/2.2.0/TinyFilmFestival-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalfuturesocadu/library/TinyFilmFestival/2.3.0/TinyFilmFestival-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyFilmFestival-2.3.0.tar.gz",
+    "size_bytes": 46835,
+    "sha256": "66a566c8e969d7aac574b9511879e7cc64ca2e7b82152b27bc896a2141468419",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalfuturesocadu/library/TinyFilmFestival/2.3.0/TinyFilmFestival-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalfuturesocadu/library/TinyFilmFestival/2.3.0/TinyFilmFestival-2.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalfuturesocadu/library/TinyFilmFestival/2.4.2/TinyFilmFestival-2.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyFilmFestival-2.4.2.tar.gz",
+    "size_bytes": 48620,
+    "sha256": "c151281f58e1805eac4ac830da1cbf362802335d91b97d36312ecf7d51b8a8c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalfuturesocadu/library/TinyFilmFestival/2.4.2/TinyFilmFestival-2.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalfuturesocadu/library/TinyFilmFestival/2.4.2/TinyFilmFestival-2.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalfuturesocadu/library/TinyFilmFestival/2.5.0/TinyFilmFestival-2.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyFilmFestival-2.5.0.tar.gz",
+    "size_bytes": 51007,
+    "sha256": "e884b765efad020cdd28ba2d6cc272296932f44df7210510ba7cdbac545c40fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalfuturesocadu/library/TinyFilmFestival/2.5.0/TinyFilmFestival-2.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalfuturesocadu/library/TinyFilmFestival/2.5.0/TinyFilmFestival-2.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalfuturesocadu/library/TinyFilmFestival/2.5.1/TinyFilmFestival-2.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyFilmFestival-2.5.1.tar.gz",
+    "size_bytes": 51909,
+    "sha256": "42808807f116a63a8e88480df567054bab7bf64d4bf43f451f485a73792440ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalfuturesocadu/library/TinyFilmFestival/2.5.1/TinyFilmFestival-2.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalfuturesocadu/library/TinyFilmFestival/2.5.1/TinyFilmFestival-2.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalfuturesocadu/library/TinyFilmFestival/2.5.2/TinyFilmFestival-2.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyFilmFestival-2.5.2.tar.gz",
+    "size_bytes": 52076,
+    "sha256": "d591f3953413743b826eab5d99f20bafdedc30f77a6df5419a258f01ffeeeb01",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalfuturesocadu/library/TinyFilmFestival/2.5.2/TinyFilmFestival-2.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalfuturesocadu/library/TinyFilmFestival/2.5.2/TinyFilmFestival-2.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalfuturesocadu/library/YouveBeenNotified/1.1.6/YouveBeenNotified-1.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YouveBeenNotified-1.1.6.tar.gz",
+    "size_bytes": 292771,
+    "sha256": "1d01d2dcb5b167cbd2b4d6dad815bb745e6df0654dee601504890841658971c3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalfuturesocadu/library/YouveBeenNotified/1.1.6/YouveBeenNotified-1.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalfuturesocadu/library/YouveBeenNotified/1.1.6/YouveBeenNotified-1.1.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

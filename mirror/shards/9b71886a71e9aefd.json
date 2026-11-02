@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/libretiny-eu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "libretiny-eu/library/FlashDB/2023.5.7/FlashDB-2023.5.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FlashDB-2023.5.7.tar.gz",
+    "size_bytes": 59365,
+    "sha256": "ab0b301b4867edbfb52c58aa1e33e65a172d5300316504cef513893789bc5a61",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/libretiny-eu/library/FlashDB/2023.5.7/FlashDB-2023.5.7.tar.gz",
+     "https://dl.registry.platformio.org/download/libretiny-eu/library/FlashDB/2023.5.7/FlashDB-2023.5.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

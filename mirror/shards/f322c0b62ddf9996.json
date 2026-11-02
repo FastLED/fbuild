@@ -1,0 +1,178 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nothinx",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nothinx/library/AlurProgram/1.0.1/AlurProgram-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlurProgram-1.0.1.tar.gz",
+    "size_bytes": 9833,
+    "sha256": "9160a07e932aaeac892434b3ac068a58c0ad270b4e25d4d729e9c000524f6e1a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nothinx/library/AlurProgram/1.0.1/AlurProgram-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nothinx/library/AlurProgram/1.0.1/AlurProgram-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nothinx/library/ArahMPU6050/1.0.2/ArahMPU6050-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArahMPU6050-1.0.2.tar.gz",
+    "size_bytes": 14230,
+    "sha256": "35ca96491f58527c0bfb127305db4bab18f67ec945d1c39b001263db3d3256d5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nothinx/library/ArahMPU6050/1.0.2/ArahMPU6050-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nothinx/library/ArahMPU6050/1.0.2/ArahMPU6050-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nothinx/library/FilterSensor/1.0.1/FilterSensor-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FilterSensor-1.0.1.tar.gz",
+    "size_bytes": 13242,
+    "sha256": "482b43fa3fb30a7953e1e0be317424ec3a33146d745c321cb96d639732628251",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nothinx/library/FilterSensor/1.0.1/FilterSensor-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nothinx/library/FilterSensor/1.0.1/FilterSensor-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nothinx/library/KalibrasiSensor/1.0.1/KalibrasiSensor-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KalibrasiSensor-1.0.1.tar.gz",
+    "size_bytes": 12254,
+    "sha256": "cef3d080d9738f68c095b2ecc4515f4c4766c56d4151f04507d2275591b3015b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nothinx/library/KalibrasiSensor/1.0.1/KalibrasiSensor-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nothinx/library/KalibrasiSensor/1.0.1/KalibrasiSensor-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nothinx/library/KontrolPID/1.0.1/KontrolPID-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KontrolPID-1.0.1.tar.gz",
+    "size_bytes": 13287,
+    "sha256": "da632a08f86f96af40f3ce18d2cfb7b446bddbc5612baf593a6f80b60450b852",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nothinx/library/KontrolPID/1.0.1/KontrolPID-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nothinx/library/KontrolPID/1.0.1/KontrolPID-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nothinx/library/LogikaFuzzy/1.0.1/LogikaFuzzy-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LogikaFuzzy-1.0.1.tar.gz",
+    "size_bytes": 15400,
+    "sha256": "6db301db96349833496dd75e1913026d51725f6031e1bcff365eb83c43f23184",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nothinx/library/LogikaFuzzy/1.0.1/LogikaFuzzy-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nothinx/library/LogikaFuzzy/1.0.1/LogikaFuzzy-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nothinx/library/PerintahSerial/1.0.1/PerintahSerial-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PerintahSerial-1.0.1.tar.gz",
+    "size_bytes": 12129,
+    "sha256": "ab27df9c02f59907e297feb956acd415a602f3d7f1dd119563ac9b953470e565",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nothinx/library/PerintahSerial/1.0.1/PerintahSerial-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nothinx/library/PerintahSerial/1.0.1/PerintahSerial-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nothinx/library/PosisiRobot/1.1.0/PosisiRobot-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PosisiRobot-1.1.0.tar.gz",
+    "size_bytes": 12602,
+    "sha256": "7b378df5169f1103d514d8d2348ca918855fb2dbe3cf52a18a5f955ef7ffd756",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nothinx/library/PosisiRobot/1.1.0/PosisiRobot-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nothinx/library/PosisiRobot/1.1.0/PosisiRobot-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nothinx/library/SandiMorse/1.0.0/SandiMorse-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SandiMorse-1.0.0.tar.gz",
+    "size_bytes": 11057,
+    "sha256": "73d9038a2ee60be718b60e9e6bda536855025abac5831fe45430ee345126a5d9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nothinx/library/SandiMorse/1.0.0/SandiMorse-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nothinx/library/SandiMorse/1.0.0/SandiMorse-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nothinx/library/TanpaDelay/1.0.1/TanpaDelay-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TanpaDelay-1.0.1.tar.gz",
+    "size_bytes": 9741,
+    "sha256": "d3b7a555d2983a4f6b5056293652438ab7491d06b236bb71fcce2c7af13ae5ab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nothinx/library/TanpaDelay/1.0.1/TanpaDelay-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nothinx/library/TanpaDelay/1.0.1/TanpaDelay-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nothinx/library/Terbilang/1.0.1/Terbilang-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Terbilang-1.0.1.tar.gz",
+    "size_bytes": 13214,
+    "sha256": "a7073bbec2ed680cd54ef85abf0622bb999693145b0278a9b9dded36e21ee5f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nothinx/library/Terbilang/1.0.1/Terbilang-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nothinx/library/Terbilang/1.0.1/Terbilang-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nothinx/library/TimbanganHX711/1.0.0/TimbanganHX711-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TimbanganHX711-1.0.0.tar.gz",
+    "size_bytes": 12577,
+    "sha256": "8fef44b778e7c16944e871883df0a140108172c612a7340a155cf2ac85e91fa6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nothinx/library/TimbanganHX711/1.0.0/TimbanganHX711-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nothinx/library/TimbanganHX711/1.0.0/TimbanganHX711-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nothinx/library/TombolPintar/1.0.0/TombolPintar-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TombolPintar-1.0.0.tar.gz",
+    "size_bytes": 10528,
+    "sha256": "bf62c19c75e4be8d1d15ab454783f34a75b3b2caf33e3d82ff2cf162a16bb7c3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nothinx/library/TombolPintar/1.0.0/TombolPintar-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nothinx/library/TombolPintar/1.0.0/TombolPintar-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

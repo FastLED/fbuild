@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/vincent-moreno",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "vincent-moreno/library/Heltec_HUPI_Esp32_LoRaWan/0.1.2/Heltec_HUPI_Esp32_LoRaWan-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Heltec_HUPI_Esp32_LoRaWan-0.1.2.tar.gz",
+    "size_bytes": 355803,
+    "sha256": "916aaa65a5cb1fdece84d4c89b54d626e6af2dc7737b93becb87a1d182810a24",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vincent-moreno/library/Heltec_HUPI_Esp32_LoRaWan/0.1.2/Heltec_HUPI_Esp32_LoRaWan-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/vincent-moreno/library/Heltec_HUPI_Esp32_LoRaWan/0.1.2/Heltec_HUPI_Esp32_LoRaWan-0.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

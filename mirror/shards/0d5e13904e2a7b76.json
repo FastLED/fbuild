@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/schnoog",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "schnoog/library/Joystick_ESP32S2/0.9.4/Joystick_ESP32S2-0.9.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Joystick_ESP32S2-0.9.4.tar.gz",
+    "size_bytes": 17609,
+    "sha256": "c8ac8561e49089460dbdb227ceda676c1b57d04eff94d254a04703157e2db14a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/schnoog/library/Joystick_ESP32S2/0.9.4/Joystick_ESP32S2-0.9.4.tar.gz",
+     "https://dl.registry.platformio.org/download/schnoog/library/Joystick_ESP32S2/0.9.4/Joystick_ESP32S2-0.9.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "schnoog/library/VL53L0X_mod/1.0.1/VL53L0X_mod-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VL53L0X_mod-1.0.1.tar.gz",
+    "size_bytes": 15776,
+    "sha256": "6c48667ec5b90674a5ea45da10c88025a51601c9476ebbb4ccfd9281c15599d9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/schnoog/library/VL53L0X_mod/1.0.1/VL53L0X_mod-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/schnoog/library/VL53L0X_mod/1.0.1/VL53L0X_mod-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

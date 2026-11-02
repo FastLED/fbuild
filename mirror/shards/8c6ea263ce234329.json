@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/leenix",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "leenix/library/TFmini_plus_driver/1.0.0/TFmini_plus_driver-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFmini_plus_driver-1.0.0.tar.gz",
+    "size_bytes": 8064,
+    "sha256": "7c4d1be1535d4275600d2cbf06693183b364521ca093172fb48004742dc3bf63",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leenix/library/TFmini_plus_driver/1.0.0/TFmini_plus_driver-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leenix/library/TFmini_plus_driver/1.0.0/TFmini_plus_driver-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

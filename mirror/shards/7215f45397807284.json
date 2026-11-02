@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/vell001",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "vell001/library/BinCmdParser/1.0.0/BinCmdParser-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BinCmdParser-1.0.0.tar.gz",
+    "size_bytes": 2871,
+    "sha256": "ade38e4c4872e5f817110436340c0f8b4ea43c6b1392e3e5098375e3a83e3e8c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vell001/library/BinCmdParser/1.0.0/BinCmdParser-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vell001/library/BinCmdParser/1.0.0/BinCmdParser-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vell001/library/STM32CAN/1.0.1/STM32CAN-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32CAN-1.0.1.tar.gz",
+    "size_bytes": 8692,
+    "sha256": "774bc9735cd4ea42c0ecf8f7ef493ff33af69c7f17f2a508831474e63454b2cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vell001/library/STM32CAN/1.0.1/STM32CAN-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vell001/library/STM32CAN/1.0.1/STM32CAN-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

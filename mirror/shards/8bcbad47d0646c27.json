@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ai5gw",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ai5gw/library/BaudotCode/1.0.2/BaudotCode-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BaudotCode-1.0.2.tar.gz",
+    "size_bytes": 17546,
+    "sha256": "2069d894fe3a0fdb45fd5ddb643f936355b7ca10187ead5528b264909fcb8e3a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ai5gw/library/BaudotCode/1.0.2/BaudotCode-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ai5gw/library/BaudotCode/1.0.2/BaudotCode-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ai5gw/library/CCIR476/1.2.1/CCIR476-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CCIR476-1.2.1.tar.gz",
+    "size_bytes": 19837,
+    "sha256": "a5f7bf0f0d52607daa5b44f602f5e740a98ee871b2465b50f082ecd540d8f597",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ai5gw/library/CCIR476/1.2.1/CCIR476-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ai5gw/library/CCIR476/1.2.1/CCIR476-1.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/charminjunior",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "charminjunior/library/UOS/1.5.2/UOS-1.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UOS-1.5.2.tar.gz",
+    "size_bytes": 10881,
+    "sha256": "5dafbb1fb7d0647f5965e04e3b20f1937f4c08f2ef0d3d9321c6169433d537f9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/charminjunior/library/UOS/1.5.2/UOS-1.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/charminjunior/library/UOS/1.5.2/UOS-1.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "charminjunior/library/UOS/1.5.4/UOS-1.5.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UOS-1.5.4.tar.gz",
+    "size_bytes": 11753,
+    "sha256": "2125c7d13ce4b43cc2b236cb1a03ff46d0c8f717b1e57b82677a13840214908d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/charminjunior/library/UOS/1.5.4/UOS-1.5.4.tar.gz",
+     "https://dl.registry.platformio.org/download/charminjunior/library/UOS/1.5.4/UOS-1.5.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "charminjunior/library/UOS/1.5.5/UOS-1.5.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UOS-1.5.5.tar.gz",
+    "size_bytes": 12091,
+    "sha256": "d4f2c45c396f5cf9e0be61055da62c81bb2f6297fd4257aa4febbd9730a0a681",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/charminjunior/library/UOS/1.5.5/UOS-1.5.5.tar.gz",
+     "https://dl.registry.platformio.org/download/charminjunior/library/UOS/1.5.5/UOS-1.5.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "charminjunior/library/UOS/1.5.6/UOS-1.5.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UOS-1.5.6.tar.gz",
+    "size_bytes": 11565,
+    "sha256": "c479863a551fbf615adfdb002e3e68a95c1178ac5584a82fea97b2b934f12ac9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/charminjunior/library/UOS/1.5.6/UOS-1.5.6.tar.gz",
+     "https://dl.registry.platformio.org/download/charminjunior/library/UOS/1.5.6/UOS-1.5.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "charminjunior/library/UOS/1.5.7/UOS-1.5.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UOS-1.5.7.tar.gz",
+    "size_bytes": 14488,
+    "sha256": "db452857816cfa04b189e838d92b9076c952ccf587ae568aa94274181218dee4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/charminjunior/library/UOS/1.5.7/UOS-1.5.7.tar.gz",
+     "https://dl.registry.platformio.org/download/charminjunior/library/UOS/1.5.7/UOS-1.5.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "charminjunior/library/UOS/1.5.8/UOS-1.5.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UOS-1.5.8.tar.gz",
+    "size_bytes": 14492,
+    "sha256": "6cadb9b34ff631c496662abd6bb70c706678c28da5badf3bbdcd0ea2c61ffd60",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/charminjunior/library/UOS/1.5.8/UOS-1.5.8.tar.gz",
+     "https://dl.registry.platformio.org/download/charminjunior/library/UOS/1.5.8/UOS-1.5.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "charminjunior/library/UOS/1.5.9/UOS-1.5.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UOS-1.5.9.tar.gz",
+    "size_bytes": 18504,
+    "sha256": "4bb52f36cd88fc1220cfe1a88c26272ed8fa10ab6e56a4cd7e0190901ee3366e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/charminjunior/library/UOS/1.5.9/UOS-1.5.9.tar.gz",
+     "https://dl.registry.platformio.org/download/charminjunior/library/UOS/1.5.9/UOS-1.5.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

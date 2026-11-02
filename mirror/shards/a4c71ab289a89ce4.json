@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-mazgch",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-mazgch/library/INA219/0.0.0+sha.a123ae7c1e4b/INA219-0.0.0+sha.a123ae7c1e4b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "INA219-0.0.0+sha.a123ae7c1e4b.tar.gz",
+    "size_bytes": 1523,
+    "sha256": "719420ff1c0d7736479ad11e82c11b251345cddb31cc9da52d728fc65106bafe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mazgch/library/INA219/0.0.0%2Bsha.a123ae7c1e4b/INA219-0.0.0%2Bsha.a123ae7c1e4b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mazgch/library/INA219/0.0.0%2Bsha.a123ae7c1e4b/INA219-0.0.0%2Bsha.a123ae7c1e4b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-mazgch/library/SeeedStudioTFTv2/0.0.0+sha.8331742695ea/SeeedStudioTFTv2-0.0.0+sha.8331742695ea.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SeeedStudioTFTv2-0.0.0+sha.8331742695ea.tar.gz",
+    "size_bytes": 3340,
+    "sha256": "9d7d90dc6b3cd29c44b59f906687ffe57fe146d490d5b15b5020d87398ca824c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mazgch/library/SeeedStudioTFTv2/0.0.0%2Bsha.8331742695ea/SeeedStudioTFTv2-0.0.0%2Bsha.8331742695ea.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mazgch/library/SeeedStudioTFTv2/0.0.0%2Bsha.8331742695ea/SeeedStudioTFTv2-0.0.0%2Bsha.8331742695ea.tar.gz"
+    ]
+   }
+  }
+ ]
+}

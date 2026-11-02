@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ddododvic",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ddododvic/library/ReactiveAt/0.1.1/ReactiveAt-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ReactiveAt-0.1.1.tar.gz",
+    "size_bytes": 7530,
+    "sha256": "10bb196fa54889fd466965e689a646abfee5ff0a930cba0cb86f7fb6b57646a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ddododvic/library/ReactiveAt/0.1.1/ReactiveAt-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ddododvic/library/ReactiveAt/0.1.1/ReactiveAt-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ddododvic/library/ReactiveRelay/0.1.1/ReactiveRelay-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ReactiveRelay-0.1.1.tar.gz",
+    "size_bytes": 6058,
+    "sha256": "e25517cf9b1b1cba1cff2b75deb2b36401e36de8f53677759b3e5f4160b30048",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ddododvic/library/ReactiveRelay/0.1.1/ReactiveRelay-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ddododvic/library/ReactiveRelay/0.1.1/ReactiveRelay-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

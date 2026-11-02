@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mgo-tec",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mgo-tec/library/ESP32_SD_EasyWebSocket/1.60/ESP32_SD_EasyWebSocket-1.60.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_SD_EasyWebSocket-1.60.tar.gz",
+    "size_bytes": 28122,
+    "sha256": "a35e763a3af031ecbdeb2d1e0b99aabdc68a0068169112c3be4de45b952175b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mgo-tec/library/ESP32_SD_EasyWebSocket/1.60/ESP32_SD_EasyWebSocket-1.60.tar.gz",
+     "https://dl.registry.platformio.org/download/mgo-tec/library/ESP32_SD_EasyWebSocket/1.60/ESP32_SD_EasyWebSocket-1.60.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mgo-tec/library/ESP32_TwitterAPI/1.1/ESP32_TwitterAPI-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_TwitterAPI-1.1.tar.gz",
+    "size_bytes": 5260,
+    "sha256": "1819400a7f496bc6d7f8170a460f570f57ec035afb7002831261ec075bc98a5a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mgo-tec/library/ESP32_TwitterAPI/1.1/ESP32_TwitterAPI-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mgo-tec/library/ESP32_TwitterAPI/1.1/ESP32_TwitterAPI-1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

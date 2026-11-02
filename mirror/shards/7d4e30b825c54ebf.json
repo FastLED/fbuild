@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/duckle",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "duckle/library/DebugPrint/1.0.1/DebugPrint-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DebugPrint-1.0.1.tar.gz",
+    "size_bytes": 4827,
+    "sha256": "999dcbd77d39e4f216e3a65fe0506250f508b6c0482de67297b1b0058c415503",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/duckle/library/DebugPrint/1.0.1/DebugPrint-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/duckle/library/DebugPrint/1.0.1/DebugPrint-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "duckle/library/HUSB238/1.0.1/HUSB238-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HUSB238-1.0.1.tar.gz",
+    "size_bytes": 5151,
+    "sha256": "e59ef0bd8d9c91d050ac0ec0b580bace88da1a0bc10c9251e9609b06b08a06ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/duckle/library/HUSB238/1.0.1/HUSB238-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/duckle/library/HUSB238/1.0.1/HUSB238-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "duckle/library/tiny_sht4x/1.0.4/tiny_sht4x-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tiny_sht4x-1.0.4.tar.gz",
+    "size_bytes": 3263,
+    "sha256": "68ca2c57e3bf35b672fac7b6deede94930ef34fd54025192b6fdafc101e9724c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/duckle/library/tiny_sht4x/1.0.4/tiny_sht4x-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/duckle/library/tiny_sht4x/1.0.4/tiny_sht4x-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

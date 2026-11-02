@@ -1,0 +1,152 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hippymulehead",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hippymulehead/library/FastDigitalPin/1.0.1/FastDigitalPin-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastDigitalPin-1.0.1.tar.gz",
+    "size_bytes": 2638,
+    "sha256": "45958120ecc0ad2b6defde3b73335f0c844557004dcd1f2f0c6f45451577507f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hippymulehead/library/FastDigitalPin/1.0.1/FastDigitalPin-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/hippymulehead/library/FastDigitalPin/1.0.1/FastDigitalPin-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hippymulehead/library/RA165/1.0.2/RA165-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RA165-1.0.2.tar.gz",
+    "size_bytes": 1139,
+    "sha256": "4179d7efd15b27250c24ee36391f4a129c00e03af23d012b66cd8b6abfbddf1a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hippymulehead/library/RA165/1.0.2/RA165-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/hippymulehead/library/RA165/1.0.2/RA165-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hippymulehead/library/RA4051/1.0.2/RA4051-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RA4051-1.0.2.tar.gz",
+    "size_bytes": 1543,
+    "sha256": "e05f1ec3b7802418cad4151b9837528e1e09833e8a49b7c481245360b44c94bf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hippymulehead/library/RA4051/1.0.2/RA4051-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/hippymulehead/library/RA4051/1.0.2/RA4051-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hippymulehead/library/RA4067/1.0.2/RA4067-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RA4067-1.0.2.tar.gz",
+    "size_bytes": 1512,
+    "sha256": "f4a16f9b8384bc24fed105a8310152a7a4035e7be548740478d99f95daf28e8c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hippymulehead/library/RA4067/1.0.2/RA4067-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/hippymulehead/library/RA4067/1.0.2/RA4067-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hippymulehead/library/RA595/1.1.1/RA595-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RA595-1.1.1.tar.gz",
+    "size_bytes": 2677,
+    "sha256": "f7f277a87daaeb34867789615dddae630fa0c2501d7d2f231e6e408cb889cd4a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hippymulehead/library/RA595/1.1.1/RA595-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/hippymulehead/library/RA595/1.1.1/RA595-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hippymulehead/library/RAClock/1.0.1/RAClock-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RAClock-1.0.1.tar.gz",
+    "size_bytes": 1420,
+    "sha256": "4b5e8375b8ae896a0f3d61b7dde99608206247cfba528a575fa9f3f496a6fe56",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hippymulehead/library/RAClock/1.0.1/RAClock-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/hippymulehead/library/RAClock/1.0.1/RAClock-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hippymulehead/library/RAExecutionQueue/1.0.0/RAExecutionQueue-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RAExecutionQueue-1.0.0.tar.gz",
+    "size_bytes": 3257,
+    "sha256": "bb08b9abe990e4eab6ca2db26befaca66d2d7795073f86e40cae6665bde71bbe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hippymulehead/library/RAExecutionQueue/1.0.0/RAExecutionQueue-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hippymulehead/library/RAExecutionQueue/1.0.0/RAExecutionQueue-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hippymulehead/library/RAGPIO/1.2.0/RAGPIO-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RAGPIO-1.2.0.tar.gz",
+    "size_bytes": 3911,
+    "sha256": "6730861fb76a6f19d802f9ae8383da955327a0df3182a8ccfa1733481fc18e0b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hippymulehead/library/RAGPIO/1.2.0/RAGPIO-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hippymulehead/library/RAGPIO/1.2.0/RAGPIO-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hippymulehead/library/RAMiniVector/2.0.0/RAMiniVector-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RAMiniVector-2.0.0.tar.gz",
+    "size_bytes": 2066,
+    "sha256": "b41ac67d83fef6131e3cb757de1083004fe30cc8da44a85e826d3cccb1516d04",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hippymulehead/library/RAMiniVector/2.0.0/RAMiniVector-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hippymulehead/library/RAMiniVector/2.0.0/RAMiniVector-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hippymulehead/library/RARGBLED/1.0.3/RARGBLED-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RARGBLED-1.0.3.tar.gz",
+    "size_bytes": 2213,
+    "sha256": "2503eeb90b834d978519c27f008067f93a9e634126e979962fb7bf445ebe2b29",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hippymulehead/library/RARGBLED/1.0.3/RARGBLED-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/hippymulehead/library/RARGBLED/1.0.3/RARGBLED-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hippymulehead/library/Romans%20Audio%20FastDigitalPin%20Library/1.0.1/RomansAudioFastDigitalPinLibrary-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RomansAudioFastDigitalPinLibrary-1.0.1.tar.gz",
+    "size_bytes": 2449,
+    "sha256": "70272e1fdf243ffb0d1822b4805eb176dcfb34e892d1411102bae182db874710",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hippymulehead/library/Romans%2520Audio%2520FastDigitalPin%2520Library/1.0.1/RomansAudioFastDigitalPinLibrary-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/hippymulehead/library/Romans%20Audio%20FastDigitalPin%20Library/1.0.1/RomansAudioFastDigitalPinLibrary-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

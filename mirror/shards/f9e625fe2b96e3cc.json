@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-giorgos2405",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-giorgos2405/library/DS2480B/0.0.0+sha.07f0cd3758fa/DS2480B-0.0.0+sha.07f0cd3758fa.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS2480B-0.0.0+sha.07f0cd3758fa.tar.gz",
+    "size_bytes": 3332,
+    "sha256": "853cbccb724a6950eba04ea86ac2e6208bf346dc091ba1d3be2f99f7e0c602ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-giorgos2405/library/DS2480B/0.0.0%2Bsha.07f0cd3758fa/DS2480B-0.0.0%2Bsha.07f0cd3758fa.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-giorgos2405/library/DS2480B/0.0.0%2Bsha.07f0cd3758fa/DS2480B-0.0.0%2Bsha.07f0cd3758fa.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ritarosakai",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ritarosakai/library/KT0915/0.0.0+sha.d3d45a8ac7a5/KT0915-0.0.0+sha.d3d45a8ac7a5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KT0915-0.0.0+sha.d3d45a8ac7a5.tar.gz",
+    "size_bytes": 2683,
+    "sha256": "68dcbd9d076be0e2d96aee22ca0b0b74ec7422773d577ca9bb393948013dfaf3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ritarosakai/library/KT0915/0.0.0%2Bsha.d3d45a8ac7a5/KT0915-0.0.0%2Bsha.d3d45a8ac7a5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ritarosakai/library/KT0915/0.0.0%2Bsha.d3d45a8ac7a5/KT0915-0.0.0%2Bsha.d3d45a8ac7a5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

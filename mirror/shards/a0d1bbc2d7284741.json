@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/finson-release",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "finson-release/library/FirmataWithDeviceFeature/2.9.4/FirmataWithDeviceFeature-2.9.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FirmataWithDeviceFeature-2.9.4.tar.gz",
+    "size_bytes": 60833,
+    "sha256": "56378c3fea8ce77252d422ae83dd2784e0e0653138c3d41fecd6d26b1bec1b9c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/finson-release/library/FirmataWithDeviceFeature/2.9.4/FirmataWithDeviceFeature-2.9.4.tar.gz",
+     "https://dl.registry.platformio.org/download/finson-release/library/FirmataWithDeviceFeature/2.9.4/FirmataWithDeviceFeature-2.9.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "finson-release/library/Luni/0.9.1/Luni-0.9.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Luni-0.9.1.tar.gz",
+    "size_bytes": 30212,
+    "sha256": "6880f5d07fcdb1f8758023bf2d7f4d696b964a32d612ed368521891a986cf704",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/finson-release/library/Luni/0.9.1/Luni-0.9.1.tar.gz",
+     "https://dl.registry.platformio.org/download/finson-release/library/Luni/0.9.1/Luni-0.9.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

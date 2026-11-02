@@ -1,0 +1,126 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/eltonio79",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "eltonio79/library/DimmerEx/1.0.0/DimmerEx-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DimmerEx-1.0.0.tar.gz",
+    "size_bytes": 6589,
+    "sha256": "ab9e4c7221c7ac435d7509d8735bf342fe86446c51ba5b3b0358519d0f252e8e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eltonio79/library/DimmerEx/1.0.0/DimmerEx-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/eltonio79/library/DimmerEx/1.0.0/DimmerEx-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "eltonio79/library/DimmerI2C/1.0.0/DimmerI2C-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DimmerI2C-1.0.0.tar.gz",
+    "size_bytes": 2114,
+    "sha256": "ddfb6cf5ba2af9616f81e739fb28d39788336ada1e8c5e6b54d2c763f0872f9f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eltonio79/library/DimmerI2C/1.0.0/DimmerI2C-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/eltonio79/library/DimmerI2C/1.0.0/DimmerI2C-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "eltonio79/library/DimmerLED/1.0.0/DimmerLED-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DimmerLED-1.0.0.tar.gz",
+    "size_bytes": 2386,
+    "sha256": "1fe75dd65c8a223249373a4a460ea04f1de3a0e78c6c0603f814f0c1ec81fc33",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eltonio79/library/DimmerLED/1.0.0/DimmerLED-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/eltonio79/library/DimmerLED/1.0.0/DimmerLED-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "eltonio79/library/DimmerTLC/1.0.0/DimmerTLC-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DimmerTLC-1.0.0.tar.gz",
+    "size_bytes": 1803,
+    "sha256": "f0557a5028151d3879dc036d74ea53374108d341aff681e7e41b29def49b0561",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eltonio79/library/DimmerTLC/1.0.0/DimmerTLC-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/eltonio79/library/DimmerTLC/1.0.0/DimmerTLC-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "eltonio79/library/RelayDoor/1.0.0/RelayDoor-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RelayDoor-1.0.0.tar.gz",
+    "size_bytes": 1307,
+    "sha256": "c8ded675788bcdd0d9fa60758e46648dabe00d51bcebc1218e638526f179a9a0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eltonio79/library/RelayDoor/1.0.0/RelayDoor-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/eltonio79/library/RelayDoor/1.0.0/RelayDoor-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "eltonio79/library/RelayEx/1.0.0/RelayEx-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RelayEx-1.0.0.tar.gz",
+    "size_bytes": 2150,
+    "sha256": "8dc7b693a19d563b22f148bcef08349cc716031b8d4ba76c98d7cbdd44b14974",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eltonio79/library/RelayEx/1.0.0/RelayEx-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/eltonio79/library/RelayEx/1.0.0/RelayEx-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "eltonio79/library/RelayLatch/1.0.0/RelayLatch-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RelayLatch-1.0.0.tar.gz",
+    "size_bytes": 1179,
+    "sha256": "3471dd1ac3faba06df0c5db298935ab0f0b074e12e5211087f9057a45ad133bd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eltonio79/library/RelayLatch/1.0.0/RelayLatch-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/eltonio79/library/RelayLatch/1.0.0/RelayLatch-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "eltonio79/library/RelayPin/1.0.0/RelayPin-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RelayPin-1.0.0.tar.gz",
+    "size_bytes": 930,
+    "sha256": "0c09d226cfb0a2d70e57305d356617e698f562a96ba200c92eb5a7c5d2180fca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eltonio79/library/RelayPin/1.0.0/RelayPin-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/eltonio79/library/RelayPin/1.0.0/RelayPin-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "eltonio79/library/RelayRinger/1.0.0/RelayRinger-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RelayRinger-1.0.0.tar.gz",
+    "size_bytes": 1286,
+    "sha256": "2a5349e250f33bd1b3fc4d01a65240938fd0cea8ae4f171345937683ef0284c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eltonio79/library/RelayRinger/1.0.0/RelayRinger-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/eltonio79/library/RelayRinger/1.0.0/RelayRinger-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

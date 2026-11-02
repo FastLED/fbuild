@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tinkerkit",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tinkerkit/library/DmxMaster/0.0.0-alpha+sha.7bf0282c54/DmxMaster-0.0.0-alphasha.7bf0282c54.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DmxMaster-0.0.0-alphasha.7bf0282c54.tar.gz",
+    "size_bytes": 4594,
+    "sha256": "23a67e81227d9514414b53050d196ce08228ee213128bd516e5e782d2c4b6022",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tinkerkit/library/DmxMaster/0.0.0-alpha%2Bsha.7bf0282c54/DmxMaster-0.0.0-alphasha.7bf0282c54.tar.gz",
+     "https://dl.registry.platformio.org/download/tinkerkit/library/DmxMaster/0.0.0-alpha%2Bsha.7bf0282c54/DmxMaster-0.0.0-alphasha.7bf0282c54.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tinkerkit/library/TinkerKit/0.0.0-alpha+sha.3e3fd686f3/TinkerKit-0.0.0-alphasha.3e3fd686f3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinkerKit-0.0.0-alphasha.3e3fd686f3.tar.gz",
+    "size_bytes": 10646,
+    "sha256": "daf85e43c0dae7ce35391385cd9e90060c85223e08ad2b46a5cb75205560c81d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tinkerkit/library/TinkerKit/0.0.0-alpha%2Bsha.3e3fd686f3/TinkerKit-0.0.0-alphasha.3e3fd686f3.tar.gz",
+     "https://dl.registry.platformio.org/download/tinkerkit/library/TinkerKit/0.0.0-alpha%2Bsha.3e3fd686f3/TinkerKit-0.0.0-alphasha.3e3fd686f3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

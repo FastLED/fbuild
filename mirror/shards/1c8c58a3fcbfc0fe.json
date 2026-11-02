@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-danielolarte",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-danielolarte/library/ADC/0.0.0+sha.969bd4f60e3f/ADC-0.0.0+sha.969bd4f60e3f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADC-0.0.0+sha.969bd4f60e3f.tar.gz",
+    "size_bytes": 885,
+    "sha256": "0fed88cdbc84e5d16daa43a1d6f9847ae8b47b250f9435c7951e3295892cc275",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-danielolarte/library/ADC/0.0.0%2Bsha.969bd4f60e3f/ADC-0.0.0%2Bsha.969bd4f60e3f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-danielolarte/library/ADC/0.0.0%2Bsha.969bd4f60e3f/ADC-0.0.0%2Bsha.969bd4f60e3f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-danielolarte/library/RTC/0.0.0+sha.86951afbcc3f/RTC-0.0.0+sha.86951afbcc3f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RTC-0.0.0+sha.86951afbcc3f.tar.gz",
+    "size_bytes": 960,
+    "sha256": "90ccd7ae776646fb78837221ce7c1421e63a1142a49814cc49116f1f1e3bc04b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-danielolarte/library/RTC/0.0.0%2Bsha.86951afbcc3f/RTC-0.0.0%2Bsha.86951afbcc3f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-danielolarte/library/RTC/0.0.0%2Bsha.86951afbcc3f/RTC-0.0.0%2Bsha.86951afbcc3f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

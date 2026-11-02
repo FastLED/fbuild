@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-emmanuelchio",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-emmanuelchio/library/MINISMARTGPU/0.0.0+sha.83a75a056cfa/MINISMARTGPU-0.0.0+sha.83a75a056cfa.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MINISMARTGPU-0.0.0+sha.83a75a056cfa.tar.gz",
+    "size_bytes": 4350,
+    "sha256": "afef1697ca219e244d8400a1d0dee1794b720a1ffa3ebb9496b55438cd0ca9ec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-emmanuelchio/library/MINISMARTGPU/0.0.0%2Bsha.83a75a056cfa/MINISMARTGPU-0.0.0%2Bsha.83a75a056cfa.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-emmanuelchio/library/MINISMARTGPU/0.0.0%2Bsha.83a75a056cfa/MINISMARTGPU-0.0.0%2Bsha.83a75a056cfa.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-emmanuelchio/library/SMARTGPU/0.0.0+sha.8da93960a86b/SMARTGPU-0.0.0+sha.8da93960a86b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SMARTGPU-0.0.0+sha.8da93960a86b.tar.gz",
+    "size_bytes": 3576,
+    "sha256": "66d2107614d182271f9e1a2cac775f2556898074741b145a69ea6ae1337f0394",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-emmanuelchio/library/SMARTGPU/0.0.0%2Bsha.8da93960a86b/SMARTGPU-0.0.0%2Bsha.8da93960a86b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-emmanuelchio/library/SMARTGPU/0.0.0%2Bsha.8da93960a86b/SMARTGPU-0.0.0%2Bsha.8da93960a86b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-emmanuelchio/library/SMARTGPU2/0.0.0+sha.a57cfeb0185d/SMARTGPU2-0.0.0+sha.a57cfeb0185d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SMARTGPU2-0.0.0+sha.a57cfeb0185d.tar.gz",
+    "size_bytes": 13598,
+    "sha256": "c400ddc22c898e066b20792896f59b7701a0d4a73bb522b2a114df6d00aaee58",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-emmanuelchio/library/SMARTGPU2/0.0.0%2Bsha.a57cfeb0185d/SMARTGPU2-0.0.0%2Bsha.a57cfeb0185d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-emmanuelchio/library/SMARTGPU2/0.0.0%2Bsha.a57cfeb0185d/SMARTGPU2-0.0.0%2Bsha.a57cfeb0185d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-emmanuelchio/library/SMARTWAV/0.0.0+sha.d3cb5755b201/SMARTWAV-0.0.0+sha.d3cb5755b201.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SMARTWAV-0.0.0+sha.d3cb5755b201.tar.gz",
+    "size_bytes": 2963,
+    "sha256": "c666c3de00a73bdc8c1311a828376a71fc7cb5b698f0290f170c3c8f7676e9b4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-emmanuelchio/library/SMARTWAV/0.0.0%2Bsha.d3cb5755b201/SMARTWAV-0.0.0%2Bsha.d3cb5755b201.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-emmanuelchio/library/SMARTWAV/0.0.0%2Bsha.d3cb5755b201/SMARTWAV-0.0.0%2Bsha.d3cb5755b201.tar.gz"
+    ]
+   }
+  }
+ ]
+}

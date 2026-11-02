@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/obsttube",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "obsttube/library/AES_CMAC/1.0.0/AES_CMAC-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AES_CMAC-1.0.0.tar.gz",
+    "size_bytes": 5871,
+    "sha256": "6b613a5085b6b1f54d9f032f803ad0586363b426704c60a6df47c276734c5c7d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/obsttube/library/AES_CMAC/1.0.0/AES_CMAC-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/obsttube/library/AES_CMAC/1.0.0/AES_CMAC-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "obsttube/library/CryptoAES_CBC/1.0.0/CryptoAES_CBC-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CryptoAES_CBC-1.0.0.tar.gz",
+    "size_bytes": 22545,
+    "sha256": "8f3e64f84296b81376e9aa0d32a9f325ba0ad66e4987ae7a81fa6f127ae7357a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/obsttube/library/CryptoAES_CBC/1.0.0/CryptoAES_CBC-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/obsttube/library/CryptoAES_CBC/1.0.0/CryptoAES_CBC-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "obsttube/library/MFRC522_NTAG424DNA/1.0.1/MFRC522_NTAG424DNA-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MFRC522_NTAG424DNA-1.0.1.tar.gz",
+    "size_bytes": 21094,
+    "sha256": "708aab874a8c1aa03c42eb94c2314a62fddd44d73fa1873c3b035e4a66c8bc02",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/obsttube/library/MFRC522_NTAG424DNA/1.0.1/MFRC522_NTAG424DNA-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/obsttube/library/MFRC522_NTAG424DNA/1.0.1/MFRC522_NTAG424DNA-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

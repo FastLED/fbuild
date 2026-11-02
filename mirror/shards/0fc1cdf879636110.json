@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/robiduck",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "robiduck/library/Raphael/1.0.0/Raphael-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Raphael-1.0.0.tar.gz",
+    "size_bytes": 3370,
+    "sha256": "06a9cc8a4dbb2b17dd91e20269af02a6574b44091d6bc1333783f558c35a7ba0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robiduck/library/Raphael/1.0.0/Raphael-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/robiduck/library/Raphael/1.0.0/Raphael-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robiduck/library/Raphael/1.0.4/Raphael-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Raphael-1.0.4.tar.gz",
+    "size_bytes": 4586,
+    "sha256": "0ba0415974794ade1d92e445eff6eed2dfb756fbb459d9612e7982257f7bd590",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robiduck/library/Raphael/1.0.4/Raphael-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/robiduck/library/Raphael/1.0.4/Raphael-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

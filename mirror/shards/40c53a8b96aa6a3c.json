@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-nsrwsurasak",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-nsrwsurasak/library/FileManager/0.0.0+sha.e2799f75940f/FileManager-0.0.0+sha.e2799f75940f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FileManager-0.0.0+sha.e2799f75940f.tar.gz",
+    "size_bytes": 7395,
+    "sha256": "e64625c8304ab5cd9f929547af7bda4faa40890a365d3a7be91b78212320008e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nsrwsurasak/library/FileManager/0.0.0%2Bsha.e2799f75940f/FileManager-0.0.0%2Bsha.e2799f75940f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nsrwsurasak/library/FileManager/0.0.0%2Bsha.e2799f75940f/FileManager-0.0.0%2Bsha.e2799f75940f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nsrwsurasak/library/GPSGms6/0.0.0+sha.1311a69b0857/GPSGms6-0.0.0+sha.1311a69b0857.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GPSGms6-0.0.0+sha.1311a69b0857.tar.gz",
+    "size_bytes": 5106,
+    "sha256": "d46145386699acbc56d8dd694f99198e3f2c3ff23dd80164ba95fcc3fedcbb19",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nsrwsurasak/library/GPSGms6/0.0.0%2Bsha.1311a69b0857/GPSGms6-0.0.0%2Bsha.1311a69b0857.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nsrwsurasak/library/GPSGms6/0.0.0%2Bsha.1311a69b0857/GPSGms6-0.0.0%2Bsha.1311a69b0857.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nsrwsurasak/library/RMS_UART/0.0.0+sha.3bbbabca6590/RMS_UART-0.0.0+sha.3bbbabca6590.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RMS_UART-0.0.0+sha.3bbbabca6590.tar.gz",
+    "size_bytes": 3833,
+    "sha256": "1aaf9ba2bf1950108128fe09f93658e8f2342becd9ed8812ab6a0b6daf870e4b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nsrwsurasak/library/RMS_UART/0.0.0%2Bsha.3bbbabca6590/RMS_UART-0.0.0%2Bsha.3bbbabca6590.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nsrwsurasak/library/RMS_UART/0.0.0%2Bsha.3bbbabca6590/RMS_UART-0.0.0%2Bsha.3bbbabca6590.tar.gz"
+    ]
+   }
+  }
+ ]
+}

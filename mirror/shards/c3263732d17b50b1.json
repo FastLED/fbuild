@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/shieldio",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "shieldio/library/ShieldioDisplay/0.1.1/ShieldioDisplay-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ShieldioDisplay-0.1.1.tar.gz",
+    "size_bytes": 6609,
+    "sha256": "1f3324e3f2e250d5a31de379358a5c61df194cc5611d0c9b9795d7f66c12abff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shieldio/library/ShieldioDisplay/0.1.1/ShieldioDisplay-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/shieldio/library/ShieldioDisplay/0.1.1/ShieldioDisplay-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

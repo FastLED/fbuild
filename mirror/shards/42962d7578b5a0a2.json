@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/emane33",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "emane33/library/CustomStepper/1.0.0/CustomStepper-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CustomStepper-1.0.0.tar.gz",
+    "size_bytes": 4173,
+    "sha256": "e5673118cf9a2cd4d98ddcdfb19fe58af61e4cbcf079fe25286ad6c3438c33ec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/emane33/library/CustomStepper/1.0.0/CustomStepper-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/emane33/library/CustomStepper/1.0.0/CustomStepper-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "emane33/library/CustomStepper/1.0.1/CustomStepper-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CustomStepper-1.0.1.tar.gz",
+    "size_bytes": 4179,
+    "sha256": "854e29b9afcaf95b9aa14c468da452596a6504961e19bc0ca3f952dce9da97ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/emane33/library/CustomStepper/1.0.1/CustomStepper-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/emane33/library/CustomStepper/1.0.1/CustomStepper-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

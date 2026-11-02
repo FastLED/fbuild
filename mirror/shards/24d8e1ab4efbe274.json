@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-daneast",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-daneast/library/Adafruit_ST7735/0.0.0+sha.6c3a23e87409/Adafruit_ST7735-0.0.0+sha.6c3a23e87409.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Adafruit_ST7735-0.0.0+sha.6c3a23e87409.tar.gz",
+    "size_bytes": 6015,
+    "sha256": "1cbb15f853cc2cb194c19dfca3f0450ff43179a039784aaa38421c59338ca818",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-daneast/library/Adafruit_ST7735/0.0.0%2Bsha.6c3a23e87409/Adafruit_ST7735-0.0.0%2Bsha.6c3a23e87409.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-daneast/library/Adafruit_ST7735/0.0.0%2Bsha.6c3a23e87409/Adafruit_ST7735-0.0.0%2Bsha.6c3a23e87409.tar.gz"
+    ]
+   }
+  }
+ ]
+}

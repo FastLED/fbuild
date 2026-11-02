@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-atomx",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-atomx/library/MFRC522/0.0.0+sha.63d729186747/MFRC522-0.0.0+sha.63d729186747.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MFRC522-0.0.0+sha.63d729186747.tar.gz",
+    "size_bytes": 20216,
+    "sha256": "471f6efda93334d69acc3f0abd5d26141c3ca9655380ea789419649b106c2b29",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-atomx/library/MFRC522/0.0.0%2Bsha.63d729186747/MFRC522-0.0.0%2Bsha.63d729186747.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-atomx/library/MFRC522/0.0.0%2Bsha.63d729186747/MFRC522-0.0.0%2Bsha.63d729186747.tar.gz"
+    ]
+   }
+  }
+ ]
+}

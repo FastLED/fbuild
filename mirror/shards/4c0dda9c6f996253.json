@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-pn532",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-pn532/library/pn532/0.0.0+sha.ec0ca4b0b48e/pn532-0.0.0+sha.ec0ca4b0b48e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pn532-0.0.0+sha.ec0ca4b0b48e.tar.gz",
+    "size_bytes": 12609,
+    "sha256": "c41d8f60549848a368ee6a329cfcb19538f4a651a23f3e9229de4b4790f7fd24",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pn532/library/pn532/0.0.0%2Bsha.ec0ca4b0b48e/pn532-0.0.0%2Bsha.ec0ca4b0b48e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pn532/library/pn532/0.0.0%2Bsha.ec0ca4b0b48e/pn532-0.0.0%2Bsha.ec0ca4b0b48e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

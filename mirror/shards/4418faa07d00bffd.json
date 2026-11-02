@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/akajes",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "akajes/library/AsyncPing%28esp8266%29/1.1.0/AsyncPingesp8266-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncPingesp8266-1.1.0.tar.gz",
+    "size_bytes": 6396,
+    "sha256": "c9808a7b4a795e1e964b0b166577a5497b871547c417a908f116804e9268503c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/akajes/library/AsyncPing%2528esp8266%2529/1.1.0/AsyncPingesp8266-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/akajes/library/AsyncPing%28esp8266%29/1.1.0/AsyncPingesp8266-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

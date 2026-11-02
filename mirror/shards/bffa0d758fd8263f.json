@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ansond",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ansond/library/GroveEarbudSensor/0.0.0+sha.8687d42d6798/GroveEarbudSensor-0.0.0+sha.8687d42d6798.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GroveEarbudSensor-0.0.0+sha.8687d42d6798.tar.gz",
+    "size_bytes": 4028,
+    "sha256": "865bea926a75c7ec6ab961b5807c522b7b8268e7739213526a80d8d0d0539735",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ansond/library/GroveEarbudSensor/0.0.0%2Bsha.8687d42d6798/GroveEarbudSensor-0.0.0%2Bsha.8687d42d6798.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ansond/library/GroveEarbudSensor/0.0.0%2Bsha.8687d42d6798/GroveEarbudSensor-0.0.0%2Bsha.8687d42d6798.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ansond/library/HTTPClient-SSL/0.0.0+sha.fa91a40cecb5/HTTPClient-SSL-0.0.0+sha.fa91a40cecb5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HTTPClient-SSL-0.0.0+sha.fa91a40cecb5.tar.gz",
+    "size_bytes": 12781,
+    "sha256": "7e7503c237b8f7c30e2fb897d502e7663294f7d416894a6d2c0a6674a30d3941",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ansond/library/HTTPClient-SSL/0.0.0%2Bsha.fa91a40cecb5/HTTPClient-SSL-0.0.0%2Bsha.fa91a40cecb5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ansond/library/HTTPClient-SSL/0.0.0%2Bsha.fa91a40cecb5/HTTPClient-SSL-0.0.0%2Bsha.fa91a40cecb5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ansond/library/StatusReporter/0.0.0+sha.324d739f9a22/StatusReporter-0.0.0+sha.324d739f9a22.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StatusReporter-0.0.0+sha.324d739f9a22.tar.gz",
+    "size_bytes": 3191,
+    "sha256": "695d4b4dd7ce1b76e468936487e4b9ebfbd479a1d8efdfb8726fd289c2f68e1e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ansond/library/StatusReporter/0.0.0%2Bsha.324d739f9a22/StatusReporter-0.0.0%2Bsha.324d739f9a22.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ansond/library/StatusReporter/0.0.0%2Bsha.324d739f9a22/StatusReporter-0.0.0%2Bsha.324d739f9a22.tar.gz"
+    ]
+   }
+  }
+ ]
+}

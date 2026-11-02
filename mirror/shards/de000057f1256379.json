@@ -1,0 +1,373 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-seeed",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-seeed/library/BluetoothSerial/0.0.0+sha.f56002898ee8/BluetoothSerial-0.0.0+sha.f56002898ee8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BluetoothSerial-0.0.0+sha.f56002898ee8.tar.gz",
+    "size_bytes": 2251,
+    "sha256": "dfe24f7c25582c416bb2e5760e2fe33172b74590af56e752f54ab7623d4a5c48",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-seeed/library/BluetoothSerial/0.0.0%2Bsha.f56002898ee8/BluetoothSerial-0.0.0%2Bsha.f56002898ee8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-seeed/library/BluetoothSerial/0.0.0%2Bsha.f56002898ee8/BluetoothSerial-0.0.0%2Bsha.f56002898ee8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-seeed/library/Chainable_RGB_LED/0.0.0+sha.50d0a66599e1/Chainable_RGB_LED-0.0.0+sha.50d0a66599e1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Chainable_RGB_LED-0.0.0+sha.50d0a66599e1.tar.gz",
+    "size_bytes": 3096,
+    "sha256": "61079e4ab3c1a79f59522d9218c603c2da12e034a8d3f7ab30a58e5438e07ea3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-seeed/library/Chainable_RGB_LED/0.0.0%2Bsha.50d0a66599e1/Chainable_RGB_LED-0.0.0%2Bsha.50d0a66599e1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-seeed/library/Chainable_RGB_LED/0.0.0%2Bsha.50d0a66599e1/Chainable_RGB_LED-0.0.0%2Bsha.50d0a66599e1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-seeed/library/DS1337/0.0.0+sha.129d962af46f/DS1337-0.0.0+sha.129d962af46f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS1337-0.0.0+sha.129d962af46f.tar.gz",
+    "size_bytes": 2914,
+    "sha256": "4d88770357017b89b31655361ea43aa322629a261c0f6096b96a1f9b982ff482",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-seeed/library/DS1337/0.0.0%2Bsha.129d962af46f/DS1337-0.0.0%2Bsha.129d962af46f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-seeed/library/DS1337/0.0.0%2Bsha.129d962af46f/DS1337-0.0.0%2Bsha.129d962af46f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-seeed/library/DigitDisplay/0.0.0+sha.d3173c8bfd48/DigitDisplay-0.0.0+sha.d3173c8bfd48.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DigitDisplay-0.0.0+sha.d3173c8bfd48.tar.gz",
+    "size_bytes": 3107,
+    "sha256": "9f8b6c6db1dd5d83deb788c159855fdd1fa775f5d2435d93e20459e530ee0d06",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-seeed/library/DigitDisplay/0.0.0%2Bsha.d3173c8bfd48/DigitDisplay-0.0.0%2Bsha.d3173c8bfd48.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-seeed/library/DigitDisplay/0.0.0%2Bsha.d3173c8bfd48/DigitDisplay-0.0.0%2Bsha.d3173c8bfd48.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-seeed/library/GPRS/0.0.0+sha.1278e9dde24e/GPRS-0.0.0+sha.1278e9dde24e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GPRS-0.0.0+sha.1278e9dde24e.tar.gz",
+    "size_bytes": 4185,
+    "sha256": "6f7a9b6fe47c41effbba512dc190470530c0eef3ac20fc74beb26e2ebbc68387",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-seeed/library/GPRS/0.0.0%2Bsha.1278e9dde24e/GPRS-0.0.0%2Bsha.1278e9dde24e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-seeed/library/GPRS/0.0.0%2Bsha.1278e9dde24e/GPRS-0.0.0%2Bsha.1278e9dde24e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-seeed/library/GPRSInterface/0.0.0+sha.3c6454f033ac/GPRSInterface-0.0.0+sha.3c6454f033ac.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GPRSInterface-0.0.0+sha.3c6454f033ac.tar.gz",
+    "size_bytes": 7087,
+    "sha256": "e2ae77fd7193a7527537be186a555a8a507ad8fcb877c47e88cf25f57630c785",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-seeed/library/GPRSInterface/0.0.0%2Bsha.3c6454f033ac/GPRSInterface-0.0.0%2Bsha.3c6454f033ac.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-seeed/library/GPRSInterface/0.0.0%2Bsha.3c6454f033ac/GPRSInterface-0.0.0%2Bsha.3c6454f033ac.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-seeed/library/Grove_3-Axis_Digital_Accelerometer_MMA7660FC_Library/0.0.0+sha.08f271727b67/Grove_3-Axis_Digital_Accelerometer_MMA7660FC_Library-0.0.0+sha.08f271727b67.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Grove_3-Axis_Digital_Accelerometer_MMA7660FC_Library-0.0.0+sha.08f271727b67.tar.gz",
+    "size_bytes": 3097,
+    "sha256": "f9134bcea60a7fe25a0873874fca10b8dba1153bb10ba3a0179a3c652959465d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-seeed/library/Grove_3-Axis_Digital_Accelerometer_MMA7660FC_Library/0.0.0%2Bsha.08f271727b67/Grove_3-Axis_Digital_Accelerometer_MMA7660FC_Library-0.0.0%2Bsha.08f271727b67.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-seeed/library/Grove_3-Axis_Digital_Accelerometer_MMA7660FC_Library/0.0.0%2Bsha.08f271727b67/Grove_3-Axis_Digital_Accelerometer_MMA7660FC_Library-0.0.0%2Bsha.08f271727b67.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-seeed/library/Grove_Air_Quality_Sensor_Library/0.0.0+sha.885417624ec2/Grove_Air_Quality_Sensor_Library-0.0.0+sha.885417624ec2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Grove_Air_Quality_Sensor_Library-0.0.0+sha.885417624ec2.tar.gz",
+    "size_bytes": 2389,
+    "sha256": "b9613de3f250241c87cf4acf2aefc9768f08a2393e5b0e19070657cc5fbf0388",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-seeed/library/Grove_Air_Quality_Sensor_Library/0.0.0%2Bsha.885417624ec2/Grove_Air_Quality_Sensor_Library-0.0.0%2Bsha.885417624ec2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-seeed/library/Grove_Air_Quality_Sensor_Library/0.0.0%2Bsha.885417624ec2/Grove_Air_Quality_Sensor_Library-0.0.0%2Bsha.885417624ec2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-seeed/library/LED_Bar/0.0.0+sha.edcb13b58b4f/LED_Bar-0.0.0+sha.edcb13b58b4f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LED_Bar-0.0.0+sha.edcb13b58b4f.tar.gz",
+    "size_bytes": 2271,
+    "sha256": "da90893b95cb4e8eddb8c0a118f86ebf431548f2dc29c7cfa223bca53c7ce3b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-seeed/library/LED_Bar/0.0.0%2Bsha.edcb13b58b4f/LED_Bar-0.0.0%2Bsha.edcb13b58b4f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-seeed/library/LED_Bar/0.0.0%2Bsha.edcb13b58b4f/LED_Bar-0.0.0%2Bsha.edcb13b58b4f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-seeed/library/MAX31855/0.0.0+sha.5d56064bc4c3/MAX31855-0.0.0+sha.5d56064bc4c3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX31855-0.0.0+sha.5d56064bc4c3.tar.gz",
+    "size_bytes": 2170,
+    "sha256": "539367d9226a3845930dfa82d5f11ffa14a4dacd7f5b62e5010b8d16e199daf7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-seeed/library/MAX31855/0.0.0%2Bsha.5d56064bc4c3/MAX31855-0.0.0%2Bsha.5d56064bc4c3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-seeed/library/MAX31855/0.0.0%2Bsha.5d56064bc4c3/MAX31855-0.0.0%2Bsha.5d56064bc4c3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-seeed/library/MotorDriver/0.0.0+sha.9c93f514f369/MotorDriver-0.0.0+sha.9c93f514f369.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MotorDriver-0.0.0+sha.9c93f514f369.tar.gz",
+    "size_bytes": 2465,
+    "sha256": "33831d374afb08ab7a5dedb037326006d7e6f5c374f2331edb84f7fe6d79c4ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-seeed/library/MotorDriver/0.0.0%2Bsha.9c93f514f369/MotorDriver-0.0.0%2Bsha.9c93f514f369.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-seeed/library/MotorDriver/0.0.0%2Bsha.9c93f514f369/MotorDriver-0.0.0%2Bsha.9c93f514f369.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-seeed/library/PN532/0.0.0+sha.85bfede025da/PN532-0.0.0+sha.85bfede025da.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PN532-0.0.0+sha.85bfede025da.tar.gz",
+    "size_bytes": 24194,
+    "sha256": "243e2e80e87a02b29e6fae2a7a563b22385b7643af5ab3c54946f9ac5064ebd8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-seeed/library/PN532/0.0.0%2Bsha.85bfede025da/PN532-0.0.0%2Bsha.85bfede025da.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-seeed/library/PN532/0.0.0%2Bsha.85bfede025da/PN532-0.0.0%2Bsha.85bfede025da.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-seeed/library/WS2812/0.0.0+sha.11215bdf5084/WS2812-0.0.0+sha.11215bdf5084.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WS2812-0.0.0+sha.11215bdf5084.tar.gz",
+    "size_bytes": 3384,
+    "sha256": "d2170d107eadf04d198b4660daf0dc51bbbd1454b7d232daf5fe0e5b2b575c68",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-seeed/library/WS2812/0.0.0%2Bsha.11215bdf5084/WS2812-0.0.0%2Bsha.11215bdf5084.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-seeed/library/WS2812/0.0.0%2Bsha.11215bdf5084/WS2812-0.0.0%2Bsha.11215bdf5084.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-seeed/library/XadowGPS/0.0.0+sha.cf4d22190de4/XadowGPS-0.0.0+sha.cf4d22190de4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XadowGPS-0.0.0+sha.cf4d22190de4.tar.gz",
+    "size_bytes": 3276,
+    "sha256": "491e983c7f4edc73ba7164064005fbce91d5668f7b270fe75915d8b1f7fbf64c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-seeed/library/XadowGPS/0.0.0%2Bsha.cf4d22190de4/XadowGPS-0.0.0%2Bsha.cf4d22190de4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-seeed/library/XadowGPS/0.0.0%2Bsha.cf4d22190de4/XadowGPS-0.0.0%2Bsha.cf4d22190de4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-seeed/library/XadowNFC/0.0.0+sha.27242e2abd99/XadowNFC-0.0.0+sha.27242e2abd99.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XadowNFC-0.0.0+sha.27242e2abd99.tar.gz",
+    "size_bytes": 2223,
+    "sha256": "104662bbf4700dfb942c69532cdb41f1a7236da82e2f02d7595c4145e9da35ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-seeed/library/XadowNFC/0.0.0%2Bsha.27242e2abd99/XadowNFC-0.0.0%2Bsha.27242e2abd99.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-seeed/library/XadowNFC/0.0.0%2Bsha.27242e2abd99/XadowNFC-0.0.0%2Bsha.27242e2abd99.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-seeed/library/color_pixels/0.0.0+sha.16ef874fa57f/color_pixels-0.0.0+sha.16ef874fa57f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "color_pixels-0.0.0+sha.16ef874fa57f.tar.gz",
+    "size_bytes": 3493,
+    "sha256": "2e91aa991e701d31d0c54f514087430f1040eb2dc8cbc35e70330890a59b9f16",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-seeed/library/color_pixels/0.0.0%2Bsha.16ef874fa57f/color_pixels-0.0.0%2Bsha.16ef874fa57f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-seeed/library/color_pixels/0.0.0%2Bsha.16ef874fa57f/color_pixels-0.0.0%2Bsha.16ef874fa57f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-seeed/library/eMPL_MPU/0.0.0+sha.814475fdc553/eMPL_MPU-0.0.0+sha.814475fdc553.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "eMPL_MPU-0.0.0+sha.814475fdc553.tar.gz",
+    "size_bytes": 41609,
+    "sha256": "3032849fa8f953ed6900dcd77d4bd41eebd3a87d5b904a0fb129f797be6cdd53",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-seeed/library/eMPL_MPU/0.0.0%2Bsha.814475fdc553/eMPL_MPU-0.0.0%2Bsha.814475fdc553.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-seeed/library/eMPL_MPU/0.0.0%2Bsha.814475fdc553/eMPL_MPU-0.0.0%2Bsha.814475fdc553.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-seeed/library/eMPL_MPU6050/0.0.0+sha.6aedb937cb38/eMPL_MPU6050-0.0.0+sha.6aedb937cb38.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "eMPL_MPU6050-0.0.0+sha.6aedb937cb38.tar.gz",
+    "size_bytes": 40697,
+    "sha256": "75dbbafd67a3a92dda7c6919b204953fa00dc012261bcfd9b0d679f82131738f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-seeed/library/eMPL_MPU6050/0.0.0%2Bsha.6aedb937cb38/eMPL_MPU6050-0.0.0%2Bsha.6aedb937cb38.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-seeed/library/eMPL_MPU6050/0.0.0%2Bsha.6aedb937cb38/eMPL_MPU6050-0.0.0%2Bsha.6aedb937cb38.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-seeed/library/grove_accelerometer/0.0.0+sha.316e9c3f4e4f/grove_accelerometer-0.0.0+sha.316e9c3f4e4f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "grove_accelerometer-0.0.0+sha.316e9c3f4e4f.tar.gz",
+    "size_bytes": 1783,
+    "sha256": "679f784f4834153693aa1c56325b6e4043b5b55cf023f2d63927f0f24a69566f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-seeed/library/grove_accelerometer/0.0.0%2Bsha.316e9c3f4e4f/grove_accelerometer-0.0.0%2Bsha.316e9c3f4e4f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-seeed/library/grove_accelerometer/0.0.0%2Bsha.316e9c3f4e4f/grove_accelerometer-0.0.0%2Bsha.316e9c3f4e4f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-seeed/library/grove_barometer/0.0.0+sha.3d05d80776f9/grove_barometer-0.0.0+sha.3d05d80776f9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "grove_barometer-0.0.0+sha.3d05d80776f9.tar.gz",
+    "size_bytes": 2346,
+    "sha256": "1de68f53b6afe93b4b86a4a33f7a4324a793418c9af877f03eb1126f362d5797",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-seeed/library/grove_barometer/0.0.0%2Bsha.3d05d80776f9/grove_barometer-0.0.0%2Bsha.3d05d80776f9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-seeed/library/grove_barometer/0.0.0%2Bsha.3d05d80776f9/grove_barometer-0.0.0%2Bsha.3d05d80776f9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-seeed/library/grove_compass/0.0.0+sha.609518794a5d/grove_compass-0.0.0+sha.609518794a5d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "grove_compass-0.0.0+sha.609518794a5d.tar.gz",
+    "size_bytes": 2110,
+    "sha256": "b8d7c17da40043a2398f1a7e706d5d5c597efda4241a3efb71b7641be74994f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-seeed/library/grove_compass/0.0.0%2Bsha.609518794a5d/grove_compass-0.0.0%2Bsha.609518794a5d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-seeed/library/grove_compass/0.0.0%2Bsha.609518794a5d/grove_compass-0.0.0%2Bsha.609518794a5d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-seeed/library/grove_digital_light/0.0.0+sha.54ed8f245631/grove_digital_light-0.0.0+sha.54ed8f245631.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "grove_digital_light-0.0.0+sha.54ed8f245631.tar.gz",
+    "size_bytes": 2832,
+    "sha256": "20f23ae9963148af61789f5aaa1fcac9ffe7dddfc3fc83d96bf0775ae1cda234",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-seeed/library/grove_digital_light/0.0.0%2Bsha.54ed8f245631/grove_digital_light-0.0.0%2Bsha.54ed8f245631.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-seeed/library/grove_digital_light/0.0.0%2Bsha.54ed8f245631/grove_digital_light-0.0.0%2Bsha.54ed8f245631.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-seeed/library/grove_fingerprint/0.0.0+sha.20273e15a6ee/grove_fingerprint-0.0.0+sha.20273e15a6ee.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "grove_fingerprint-0.0.0+sha.20273e15a6ee.tar.gz",
+    "size_bytes": 3057,
+    "sha256": "b6c7854dbc4772bd3b61af9b16a35f727cfa829ac6e33ea20427a3e12a711d80",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-seeed/library/grove_fingerprint/0.0.0%2Bsha.20273e15a6ee/grove_fingerprint-0.0.0%2Bsha.20273e15a6ee.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-seeed/library/grove_fingerprint/0.0.0%2Bsha.20273e15a6ee/grove_fingerprint-0.0.0%2Bsha.20273e15a6ee.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-seeed/library/grove_gyroscope/0.0.0+sha.d4c2464a3868/grove_gyroscope-0.0.0+sha.d4c2464a3868.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "grove_gyroscope-0.0.0+sha.d4c2464a3868.tar.gz",
+    "size_bytes": 2117,
+    "sha256": "a3e218fe15c8ca5c22e359b91f1441a8b2d33b43165a14f1139a04eb6e82ba03",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-seeed/library/grove_gyroscope/0.0.0%2Bsha.d4c2464a3868/grove_gyroscope-0.0.0%2Bsha.d4c2464a3868.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-seeed/library/grove_gyroscope/0.0.0%2Bsha.d4c2464a3868/grove_gyroscope-0.0.0%2Bsha.d4c2464a3868.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-seeed/library/grove_heartrate/0.0.0+sha.746f515e2564/grove_heartrate-0.0.0+sha.746f515e2564.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "grove_heartrate-0.0.0+sha.746f515e2564.tar.gz",
+    "size_bytes": 1211,
+    "sha256": "ee4fb0fbd9ddc214e74396d8df4c1589676bddc346a65ebe0449731f3be62d39",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-seeed/library/grove_heartrate/0.0.0%2Bsha.746f515e2564/grove_heartrate-0.0.0%2Bsha.746f515e2564.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-seeed/library/grove_heartrate/0.0.0%2Bsha.746f515e2564/grove_heartrate-0.0.0%2Bsha.746f515e2564.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-seeed/library/grove_moisture/0.0.0+sha.c36e6e82163c/grove_moisture-0.0.0+sha.c36e6e82163c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "grove_moisture-0.0.0+sha.c36e6e82163c.tar.gz",
+    "size_bytes": 1174,
+    "sha256": "0fd28fd36dab9228e351121531cc16eb336fde654eebbcfd11f7a62a9b4e2bc1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-seeed/library/grove_moisture/0.0.0%2Bsha.c36e6e82163c/grove_moisture-0.0.0%2Bsha.c36e6e82163c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-seeed/library/grove_moisture/0.0.0%2Bsha.c36e6e82163c/grove_moisture-0.0.0%2Bsha.c36e6e82163c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-seeed/library/grove_temp_hum/0.0.0+sha.f0824fc8b273/grove_temp_hum-0.0.0+sha.f0824fc8b273.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "grove_temp_hum-0.0.0+sha.f0824fc8b273.tar.gz",
+    "size_bytes": 2343,
+    "sha256": "b2d714b8958d15e549725fcfe3b5ac707c2ef3db5cdc4806d185b72825404dd3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-seeed/library/grove_temp_hum/0.0.0%2Bsha.f0824fc8b273/grove_temp_hum-0.0.0%2Bsha.f0824fc8b273.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-seeed/library/grove_temp_hum/0.0.0%2Bsha.f0824fc8b273/grove_temp_hum-0.0.0%2Bsha.f0824fc8b273.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-seeed/library/suli2/0.0.0+sha.25c5f1b9f9e2/suli2-0.0.0+sha.25c5f1b9f9e2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "suli2-0.0.0+sha.25c5f1b9f9e2.tar.gz",
+    "size_bytes": 5170,
+    "sha256": "f6a7fd121055e6ddd8f74453050f3b90354eced74b553becbb140b6e4f1212ec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-seeed/library/suli2/0.0.0%2Bsha.25c5f1b9f9e2/suli2-0.0.0%2Bsha.25c5f1b9f9e2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-seeed/library/suli2/0.0.0%2Bsha.25c5f1b9f9e2/suli2-0.0.0%2Bsha.25c5f1b9f9e2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-geekylou",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-geekylou/library/RFM69/0.0.0+sha.cedfa200eaeb/RFM69-0.0.0+sha.cedfa200eaeb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RFM69-0.0.0+sha.cedfa200eaeb.tar.gz",
+    "size_bytes": 15243,
+    "sha256": "510aaab7e1244d69b1dfb766286ad3047c147555311c5f5c3c73160f1e3603bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-geekylou/library/RFM69/0.0.0%2Bsha.cedfa200eaeb/RFM69-0.0.0%2Bsha.cedfa200eaeb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-geekylou/library/RFM69/0.0.0%2Bsha.cedfa200eaeb/RFM69-0.0.0%2Bsha.cedfa200eaeb.tar.gz"
+    ]
+   }
+  }
+ ]
+}

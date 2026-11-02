@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-hapoo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-hapoo/library/Display/0.0.0+sha.0cc7719c6d87/Display-0.0.0+sha.0cc7719c6d87.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Display-0.0.0+sha.0cc7719c6d87.tar.gz",
+    "size_bytes": 3014,
+    "sha256": "ad2d11870c5eb2b976eefd688b2a8f311ee5f803da8b21d41de85c94592153c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hapoo/library/Display/0.0.0%2Bsha.0cc7719c6d87/Display-0.0.0%2Bsha.0cc7719c6d87.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hapoo/library/Display/0.0.0%2Bsha.0cc7719c6d87/Display-0.0.0%2Bsha.0cc7719c6d87.tar.gz"
+    ]
+   }
+  }
+ ]
+}

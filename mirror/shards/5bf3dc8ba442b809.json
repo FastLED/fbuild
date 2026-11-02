@@ -1,0 +1,178 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sebajost",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sebajost/library/BlaeckSerial/5.0.1/BlaeckSerial-5.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BlaeckSerial-5.0.1.tar.gz",
+    "size_bytes": 28899,
+    "sha256": "600fbdd75a894175a0f14d61018d6323a0fff404ab0a39e7dbcaab47df104847",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sebajost/library/BlaeckSerial/5.0.1/BlaeckSerial-5.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sebajost/library/BlaeckSerial/5.0.1/BlaeckSerial-5.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sebajost/library/BlaeckSerial/5.0.2/BlaeckSerial-5.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BlaeckSerial-5.0.2.tar.gz",
+    "size_bytes": 29051,
+    "sha256": "f1c73384089451d28f4d7970f63eb92b5188fa4d16cdf5f618b054537084fdd1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sebajost/library/BlaeckSerial/5.0.2/BlaeckSerial-5.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sebajost/library/BlaeckSerial/5.0.2/BlaeckSerial-5.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sebajost/library/BlaeckSerial/6.0.0/BlaeckSerial-6.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BlaeckSerial-6.0.0.tar.gz",
+    "size_bytes": 29560,
+    "sha256": "47fc3dd44fc0e46484e086db9fecb91405e9c02a4f43f324c2cf72078922b96a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sebajost/library/BlaeckSerial/6.0.0/BlaeckSerial-6.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sebajost/library/BlaeckSerial/6.0.0/BlaeckSerial-6.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sebajost/library/BlaeckSerial/6.0.1/BlaeckSerial-6.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BlaeckSerial-6.0.1.tar.gz",
+    "size_bytes": 37812,
+    "sha256": "dec31e54167b95fa78b19298da09847da3b216549e1b64703695785d927fa972",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sebajost/library/BlaeckSerial/6.0.1/BlaeckSerial-6.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sebajost/library/BlaeckSerial/6.0.1/BlaeckSerial-6.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sebajost/library/BlaeckSerial/6.0.2/BlaeckSerial-6.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BlaeckSerial-6.0.2.tar.gz",
+    "size_bytes": 47596,
+    "sha256": "fc4ae4a3f56f8ed1f810ccd8ca5a0624c4497d8f6875bfbf108bda2c04f8db9b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sebajost/library/BlaeckSerial/6.0.2/BlaeckSerial-6.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sebajost/library/BlaeckSerial/6.0.2/BlaeckSerial-6.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sebajost/library/BlaeckTCP/5.0.0/BlaeckTCP-5.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BlaeckTCP-5.0.0.tar.gz",
+    "size_bytes": 23647,
+    "sha256": "f4c925914cee97385f49eb5df9a37d2726bad758db0f3af952f79fa6bfa700cd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sebajost/library/BlaeckTCP/5.0.0/BlaeckTCP-5.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sebajost/library/BlaeckTCP/5.0.0/BlaeckTCP-5.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sebajost/library/BlaeckTCP/5.0.1/BlaeckTCP-5.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BlaeckTCP-5.0.1.tar.gz",
+    "size_bytes": 24293,
+    "sha256": "de197ba4c0b6f6cbac29e72bd57ee8a0fe424cf95f35a16230bd84ba2d2330c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sebajost/library/BlaeckTCP/5.0.1/BlaeckTCP-5.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sebajost/library/BlaeckTCP/5.0.1/BlaeckTCP-5.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sebajost/library/BlaeckTCP/5.0.2/BlaeckTCP-5.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BlaeckTCP-5.0.2.tar.gz",
+    "size_bytes": 24905,
+    "sha256": "7b1eb74411cf25aaa5d490b5c4424ebb129dcc8cb9ac8b5dc6b20b54542c5440",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sebajost/library/BlaeckTCP/5.0.2/BlaeckTCP-5.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sebajost/library/BlaeckTCP/5.0.2/BlaeckTCP-5.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sebajost/library/BlaeckTCP/5.0.3/BlaeckTCP-5.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BlaeckTCP-5.0.3.tar.gz",
+    "size_bytes": 25084,
+    "sha256": "bc0bbfce557580728e1b233d78bd83ab9386569cb7b80f60b82632584508b43b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sebajost/library/BlaeckTCP/5.0.3/BlaeckTCP-5.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/sebajost/library/BlaeckTCP/5.0.3/BlaeckTCP-5.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sebajost/library/BlaeckTCP/6.0.0/BlaeckTCP-6.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BlaeckTCP-6.0.0.tar.gz",
+    "size_bytes": 25717,
+    "sha256": "cdd271b512fc5cd088c5b2eab2fd8e269dc89a4dc38ad838d0178acdf6376e02",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sebajost/library/BlaeckTCP/6.0.0/BlaeckTCP-6.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sebajost/library/BlaeckTCP/6.0.0/BlaeckTCP-6.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sebajost/library/BlaeckTCP/6.0.1/BlaeckTCP-6.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BlaeckTCP-6.0.1.tar.gz",
+    "size_bytes": 29726,
+    "sha256": "f3cac2f7f932f01a7c1494c6a772208dce2dcd65d14cc3d5a23f43c76c9a864f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sebajost/library/BlaeckTCP/6.0.1/BlaeckTCP-6.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sebajost/library/BlaeckTCP/6.0.1/BlaeckTCP-6.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sebajost/library/BlaeckTCP/6.0.2/BlaeckTCP-6.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BlaeckTCP-6.0.2.tar.gz",
+    "size_bytes": 32887,
+    "sha256": "2e73f5a3ef786d00bd9fabd61f6e7a8c16c65ebbbf4a2e7b570ad4ad6176eead",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sebajost/library/BlaeckTCP/6.0.2/BlaeckTCP-6.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sebajost/library/BlaeckTCP/6.0.2/BlaeckTCP-6.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sebajost/library/BlaeckTCP/6.1.0/BlaeckTCP-6.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BlaeckTCP-6.1.0.tar.gz",
+    "size_bytes": 42184,
+    "sha256": "71846e08d57d3d717c176e45ff5a02e292a30123864be71e820573c48dd010d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sebajost/library/BlaeckTCP/6.1.0/BlaeckTCP-6.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sebajost/library/BlaeckTCP/6.1.0/BlaeckTCP-6.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

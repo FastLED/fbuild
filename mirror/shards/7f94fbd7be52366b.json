@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-electromotivated",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-electromotivated/library/DRV2605/0.0.0+sha.3b2b4f34aaca/DRV2605-0.0.0+sha.3b2b4f34aaca.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DRV2605-0.0.0+sha.3b2b4f34aaca.tar.gz",
+    "size_bytes": 4964,
+    "sha256": "3b4efc331060f5fc5c8db85c5e423893c9f485d3b088dd4a4ca902672263d58d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-electromotivated/library/DRV2605/0.0.0%2Bsha.3b2b4f34aaca/DRV2605-0.0.0%2Bsha.3b2b4f34aaca.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-electromotivated/library/DRV2605/0.0.0%2Bsha.3b2b4f34aaca/DRV2605-0.0.0%2Bsha.3b2b4f34aaca.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-electromotivated/library/Eyes_uLCD-144-G2/0.0.0+sha.9dd81fc2623f/Eyes_uLCD-144-G2-0.0.0+sha.9dd81fc2623f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Eyes_uLCD-144-G2-0.0.0+sha.9dd81fc2623f.tar.gz",
+    "size_bytes": 2896,
+    "sha256": "3c1e1e683f31097f8bd776b8c77c82a5f0656c265bba649660a4580fbcfc9262",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-electromotivated/library/Eyes_uLCD-144-G2/0.0.0%2Bsha.9dd81fc2623f/Eyes_uLCD-144-G2-0.0.0%2Bsha.9dd81fc2623f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-electromotivated/library/Eyes_uLCD-144-G2/0.0.0%2Bsha.9dd81fc2623f/Eyes_uLCD-144-G2-0.0.0%2Bsha.9dd81fc2623f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-electromotivated/library/FibonacciLFSR/0.0.0+sha.a1207d543967/FibonacciLFSR-0.0.0+sha.a1207d543967.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FibonacciLFSR-0.0.0+sha.a1207d543967.tar.gz",
+    "size_bytes": 1643,
+    "sha256": "b3130dd7c0716883dcc9325ec19d06bcf2c412d5843d26684f126e6f09792cfb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-electromotivated/library/FibonacciLFSR/0.0.0%2Bsha.a1207d543967/FibonacciLFSR-0.0.0%2Bsha.a1207d543967.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-electromotivated/library/FibonacciLFSR/0.0.0%2Bsha.a1207d543967/FibonacciLFSR-0.0.0%2Bsha.a1207d543967.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-electromotivated/library/HALLFX_ENCODER/0.0.0+sha.f10558519825/HALLFX_ENCODER-0.0.0+sha.f10558519825.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HALLFX_ENCODER-0.0.0+sha.f10558519825.tar.gz",
+    "size_bytes": 1469,
+    "sha256": "a9839aa37ec7de2d9bfbe16836ef95511663cbb3a15b289ea585add6471458f5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-electromotivated/library/HALLFX_ENCODER/0.0.0%2Bsha.f10558519825/HALLFX_ENCODER-0.0.0%2Bsha.f10558519825.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-electromotivated/library/HALLFX_ENCODER/0.0.0%2Bsha.f10558519825/HALLFX_ENCODER-0.0.0%2Bsha.f10558519825.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-electromotivated/library/MPR121/0.0.0+sha.f0e656f25701/MPR121-0.0.0+sha.f0e656f25701.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPR121-0.0.0+sha.f0e656f25701.tar.gz",
+    "size_bytes": 3643,
+    "sha256": "f57b7af5fc918abf6fe457093847c71669741dc84aa8d4f7a4eae9791d8d92ca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-electromotivated/library/MPR121/0.0.0%2Bsha.f0e656f25701/MPR121-0.0.0%2Bsha.f0e656f25701.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-electromotivated/library/MPR121/0.0.0%2Bsha.f0e656f25701/MPR121-0.0.0%2Bsha.f0e656f25701.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-electromotivated/library/MotorDriver/0.0.0+sha.871adb9cf798/MotorDriver-0.0.0+sha.871adb9cf798.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MotorDriver-0.0.0+sha.871adb9cf798.tar.gz",
+    "size_bytes": 3138,
+    "sha256": "914a9f073070569b06ebe6cd608c7c9129c80ef26bc9df48772795282e012732",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-electromotivated/library/MotorDriver/0.0.0%2Bsha.871adb9cf798/MotorDriver-0.0.0%2Bsha.871adb9cf798.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-electromotivated/library/MotorDriver/0.0.0%2Bsha.871adb9cf798/MotorDriver-0.0.0%2Bsha.871adb9cf798.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-electromotivated/library/QEI/0.0.0+sha.50aae578cb89/QEI-0.0.0+sha.50aae578cb89.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QEI-0.0.0+sha.50aae578cb89.tar.gz",
+    "size_bytes": 1519,
+    "sha256": "0bf5f3842eecf8e42eeb0a84c2a47924b43f6cca78574792a86ad044686fe752",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-electromotivated/library/QEI/0.0.0%2Bsha.50aae578cb89/QEI-0.0.0%2Bsha.50aae578cb89.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-electromotivated/library/QEI/0.0.0%2Bsha.50aae578cb89/QEI-0.0.0%2Bsha.50aae578cb89.tar.gz"
+    ]
+   }
+  }
+ ]
+}

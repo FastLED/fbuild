@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/th-hock",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "th-hock/library/EgoSmartHeaterRS485/1.0.2/EgoSmartHeaterRS485-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EgoSmartHeaterRS485-1.0.2.tar.gz",
+    "size_bytes": 145427,
+    "sha256": "849ce1772fb6aca2e7ef65dd642ae386a3b9f8259defa696bdb9ec21911b0f30",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/th-hock/library/EgoSmartHeaterRS485/1.0.2/EgoSmartHeaterRS485-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/th-hock/library/EgoSmartHeaterRS485/1.0.2/EgoSmartHeaterRS485-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

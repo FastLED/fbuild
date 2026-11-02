@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jpmeijers",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jpmeijers/library/RN2xx3%20Arduino%20Library/1.0.1/RN2xx3ArduinoLibrary-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RN2xx3ArduinoLibrary-1.0.1.tar.gz",
+    "size_bytes": 30401,
+    "sha256": "62f58787a44ac4121fc9f1d1d45a8363937ae187730364df2e82a2440736c997",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jpmeijers/library/RN2xx3%2520Arduino%2520Library/1.0.1/RN2xx3ArduinoLibrary-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jpmeijers/library/RN2xx3%20Arduino%20Library/1.0.1/RN2xx3ArduinoLibrary-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

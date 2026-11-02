@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mousezver",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mousezver/library/AsyncTempSensor/1.0.0/AsyncTempSensor-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncTempSensor-1.0.0.tar.gz",
+    "size_bytes": 3899,
+    "sha256": "059f68629aff9ff4cb886e37a8b43ded97d8e59d39a8e8aa0831661103d35eaf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mousezver/library/AsyncTempSensor/1.0.0/AsyncTempSensor-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mousezver/library/AsyncTempSensor/1.0.0/AsyncTempSensor-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

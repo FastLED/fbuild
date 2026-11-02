@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-dotunhunter",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-dotunhunter/library/AFE4404/0.0.0+sha.e9068fdddb58/AFE4404-0.0.0+sha.e9068fdddb58.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AFE4404-0.0.0+sha.e9068fdddb58.tar.gz",
+    "size_bytes": 3234,
+    "sha256": "02bcedd7d41a1ca441bb32c9fece855cab199a68692838d8a1336d784f6e9f35",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dotunhunter/library/AFE4404/0.0.0%2Bsha.e9068fdddb58/AFE4404-0.0.0%2Bsha.e9068fdddb58.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dotunhunter/library/AFE4404/0.0.0%2Bsha.e9068fdddb58/AFE4404-0.0.0%2Bsha.e9068fdddb58.tar.gz"
+    ]
+   }
+  }
+ ]
+}

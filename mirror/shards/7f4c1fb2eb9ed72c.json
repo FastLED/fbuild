@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/me1121118",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "me1121118/library/Praph/1.0.1/Praph-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Praph-1.0.1.tar.gz",
+    "size_bytes": 8152,
+    "sha256": "5f08e13bc5291ea177cc6d2aed694ea84ad8120cd6e866e825e8cfc084f3ba8b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/me1121118/library/Praph/1.0.1/Praph-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/me1121118/library/Praph/1.0.1/Praph-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

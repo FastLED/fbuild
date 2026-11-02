@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/berrak",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "berrak/library/LedTask/0.5.0/LedTask-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LedTask-0.5.0.tar.gz",
+    "size_bytes": 8417,
+    "sha256": "9b47a8c3f0d430ff0c07d454edb980bb204a24778bcc4ce6040857fc53176c8c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/berrak/library/LedTask/0.5.0/LedTask-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/berrak/library/LedTask/0.5.0/LedTask-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "berrak/library/Mock/0.2.0/Mock-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Mock-0.2.0.tar.gz",
+    "size_bytes": 6996,
+    "sha256": "8bd618160573a1401077a2566df7ce15ec6c13cc53b4c78ea2cfc0199021654f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/berrak/library/Mock/0.2.0/Mock-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/berrak/library/Mock/0.2.0/Mock-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "berrak/library/MockEEPROM/0.1.0/MockEEPROM-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MockEEPROM-0.1.0.tar.gz",
+    "size_bytes": 5239,
+    "sha256": "89cde0e034a18928b54c6bc1f1b6293541e8ae68fb67f554d162b16481ee565c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/berrak/library/MockEEPROM/0.1.0/MockEEPROM-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/berrak/library/MockEEPROM/0.1.0/MockEEPROM-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "berrak/library/MyMacros/0.6.0/MyMacros-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MyMacros-0.6.0.tar.gz",
+    "size_bytes": 9579,
+    "sha256": "54e9af1578ccea578017a230d11c5aea5fb71b07193a0f6ab39bb874941a9098",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/berrak/library/MyMacros/0.6.0/MyMacros-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/berrak/library/MyMacros/0.6.0/MyMacros-0.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "berrak/library/Rdebug/0.3.0/Rdebug-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Rdebug-0.3.0.tar.gz",
+    "size_bytes": 4923,
+    "sha256": "0df697064e5c943ad9bdfb6fbf3dd1ac4e1f1c797af92445a0f55e6dc076734c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/berrak/library/Rdebug/0.3.0/Rdebug-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/berrak/library/Rdebug/0.3.0/Rdebug-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "berrak/library/SensorWLED/1.0.0/SensorWLED-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensorWLED-1.0.0.tar.gz",
+    "size_bytes": 18648,
+    "sha256": "d2fa6700617652eddc23caf45cbfa2bb38e3f72efc2bfb74ea80cce7960a99f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/berrak/library/SensorWLED/1.0.0/SensorWLED-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/berrak/library/SensorWLED/1.0.0/SensorWLED-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

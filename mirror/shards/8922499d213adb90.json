@@ -1,0 +1,152 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/prj-electins",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "prj-electins/library/ElctinsIoTClient/1.0.0/ElctinsIoTClient-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ElctinsIoTClient-1.0.0.tar.gz",
+    "size_bytes": 8929,
+    "sha256": "87a4b8c0fc3f71f8dfa36c215075aa1b066b8a6a5d020884acca4411d98344ea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/prj-electins/library/ElctinsIoTClient/1.0.0/ElctinsIoTClient-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/prj-electins/library/ElctinsIoTClient/1.0.0/ElctinsIoTClient-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "prj-electins/library/ElectinsIoT/1.0.0/ElectinsIoT-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ElectinsIoT-1.0.0.tar.gz",
+    "size_bytes": 12698,
+    "sha256": "6685875fef1a4f2973a7e6a54f6866150c86a89a3c61a2ebba03a0a4be873053",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/prj-electins/library/ElectinsIoT/1.0.0/ElectinsIoT-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/prj-electins/library/ElectinsIoT/1.0.0/ElectinsIoT-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "prj-electins/library/ElectinsIoT/2.0.0/ElectinsIoT-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ElectinsIoT-2.0.0.tar.gz",
+    "size_bytes": 19949,
+    "sha256": "4bff49080a257a7ccea7a67917346a74fbbf47de4c59babd6a6669165db54cb9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/prj-electins/library/ElectinsIoT/2.0.0/ElectinsIoT-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/prj-electins/library/ElectinsIoT/2.0.0/ElectinsIoT-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "prj-electins/library/ElectinsIoT/2.1.4/ElectinsIoT-2.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ElectinsIoT-2.1.4.tar.gz",
+    "size_bytes": 24783,
+    "sha256": "be8ddf47a77100e2c0d9b70fb430eae2672e97a9b65b9b413e95f8afadcc558c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/prj-electins/library/ElectinsIoT/2.1.4/ElectinsIoT-2.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/prj-electins/library/ElectinsIoT/2.1.4/ElectinsIoT-2.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "prj-electins/library/ElectinsIoT/3.0.0/ElectinsIoT-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ElectinsIoT-3.0.0.tar.gz",
+    "size_bytes": 15699,
+    "sha256": "4e9168fe40145629f6b77ce914116e9bbf0a5de691ad5ab5c04ce2bb4736da47",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/prj-electins/library/ElectinsIoT/3.0.0/ElectinsIoT-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/prj-electins/library/ElectinsIoT/3.0.0/ElectinsIoT-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "prj-electins/library/ElectinsIoT/3.0.1/ElectinsIoT-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ElectinsIoT-3.0.1.tar.gz",
+    "size_bytes": 15998,
+    "sha256": "a7c6ba06f685766f3992478efd194d2f430b6cf71505bdde41ecd1e2d724901c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/prj-electins/library/ElectinsIoT/3.0.1/ElectinsIoT-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/prj-electins/library/ElectinsIoT/3.0.1/ElectinsIoT-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "prj-electins/library/ElectinsIoT/3.0.2/ElectinsIoT-3.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ElectinsIoT-3.0.2.tar.gz",
+    "size_bytes": 16001,
+    "sha256": "2cc2e0fcd812baa3534350aa13d39e6a3d79b1507fd19ca32642462087613c51",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/prj-electins/library/ElectinsIoT/3.0.2/ElectinsIoT-3.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/prj-electins/library/ElectinsIoT/3.0.2/ElectinsIoT-3.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "prj-electins/library/ElectinsIoT/3.0.3/ElectinsIoT-3.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ElectinsIoT-3.0.3.tar.gz",
+    "size_bytes": 19788,
+    "sha256": "5ffa65546de211d89d946715ebc3add43fd081c29108fd9a6feb367806652fa4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/prj-electins/library/ElectinsIoT/3.0.3/ElectinsIoT-3.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/prj-electins/library/ElectinsIoT/3.0.3/ElectinsIoT-3.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "prj-electins/library/ElectinsIoT/3.0.4/ElectinsIoT-3.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ElectinsIoT-3.0.4.tar.gz",
+    "size_bytes": 19888,
+    "sha256": "853727849983c62b2afecb41cc9ff8fe33335783358ac8ee54013b35edba6e4f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/prj-electins/library/ElectinsIoT/3.0.4/ElectinsIoT-3.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/prj-electins/library/ElectinsIoT/3.0.4/ElectinsIoT-3.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "prj-electins/library/ElectinsIoT/3.0.5/ElectinsIoT-3.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ElectinsIoT-3.0.5.tar.gz",
+    "size_bytes": 19891,
+    "sha256": "8d9ae9df69aba73147311a78744afcd3c9ca86e3eec16d3fd1c7c36dc3881136",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/prj-electins/library/ElectinsIoT/3.0.5/ElectinsIoT-3.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/prj-electins/library/ElectinsIoT/3.0.5/ElectinsIoT-3.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "prj-electins/library/ElectinsIoT/3.1.0/ElectinsIoT-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ElectinsIoT-3.1.0.tar.gz",
+    "size_bytes": 23494,
+    "sha256": "7abfdda28b91e1ecac28d6917e8dbfdb3e26b49725dfad6444b50d8c455b10df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/prj-electins/library/ElectinsIoT/3.1.0/ElectinsIoT-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/prj-electins/library/ElectinsIoT/3.1.0/ElectinsIoT-3.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

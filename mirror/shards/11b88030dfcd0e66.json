@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/iamthevector",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "iamthevector/library/Forgetfulino/1.0.0/Forgetfulino-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Forgetfulino-1.0.0.tar.gz",
+    "size_bytes": 7796,
+    "sha256": "e5d3b4c1404f96926d52880f8d8613785fef3741d918a53bf4e1cb35f74a530d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iamthevector/library/Forgetfulino/1.0.0/Forgetfulino-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/iamthevector/library/Forgetfulino/1.0.0/Forgetfulino-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "iamthevector/library/Forgetfulino/2.0.1/Forgetfulino-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Forgetfulino-2.0.1.tar.gz",
+    "size_bytes": 30426,
+    "sha256": "17868a614e2945d8f5e3be557b4914a6c29274d565e230422bfb1b5368202e4b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iamthevector/library/Forgetfulino/2.0.1/Forgetfulino-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/iamthevector/library/Forgetfulino/2.0.1/Forgetfulino-2.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

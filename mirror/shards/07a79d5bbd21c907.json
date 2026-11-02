@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/marti-beta",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "marti-beta/library/HD44780_liquidC/2.0.0/HD44780_liquidC-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HD44780_liquidC-2.0.0.tar.gz",
+    "size_bytes": 7095,
+    "sha256": "b9180bcf22874acd2a87b804b63ef9e910886ee6b4a614861fd870b1bb2aa0ac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marti-beta/library/HD44780_liquidC/2.0.0/HD44780_liquidC-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/marti-beta/library/HD44780_liquidC/2.0.0/HD44780_liquidC-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marti-beta/library/LCD_HD44780_C-native/1.0.0/LCD_HD44780_C-native-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCD_HD44780_C-native-1.0.0.tar.gz",
+    "size_bytes": 4363,
+    "sha256": "44fa64c2af289626a7388b0341601d6a4b7fd5ec43408e56b81bd5ce09c3749a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marti-beta/library/LCD_HD44780_C-native/1.0.0/LCD_HD44780_C-native-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/marti-beta/library/LCD_HD44780_C-native/1.0.0/LCD_HD44780_C-native-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marti-beta/library/uart-AVR/1.1.0/uart-AVR-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uart-AVR-1.1.0.tar.gz",
+    "size_bytes": 1801,
+    "sha256": "1c8962acedcf305c1cb6ad40229724716415e2fb1f36049b0f5db46e60dee2b2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marti-beta/library/uart-AVR/1.1.0/uart-AVR-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/marti-beta/library/uart-AVR/1.1.0/uart-AVR-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

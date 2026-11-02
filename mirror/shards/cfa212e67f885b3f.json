@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/atclarkson",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "atclarkson/library/messageStruct/0.0.7/messageStruct-0.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "messageStruct-0.0.7.tar.gz",
+    "size_bytes": 3881,
+    "sha256": "9c00ac95960010804e1c8abb77f0aecd5b503c73971f2d60c659eca5ce68440c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/atclarkson/library/messageStruct/0.0.7/messageStruct-0.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/atclarkson/library/messageStruct/0.0.7/messageStruct-0.0.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

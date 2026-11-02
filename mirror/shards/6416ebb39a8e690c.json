@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/spklpool",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "spklpool/library/Carduino/1.1.0/Carduino-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Carduino-1.1.0.tar.gz",
+    "size_bytes": 207321,
+    "sha256": "c3ea742a19c5e4844a568222323af6297c3e2df131cb669f63a85110a1a52786",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/spklpool/library/Carduino/1.1.0/Carduino-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/spklpool/library/Carduino/1.1.0/Carduino-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

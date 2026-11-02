@@ -1,0 +1,1335 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sensirion",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sensirion/library/Sensirion%20Core/0.6.0/SensirionCore-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionCore-0.6.0.tar.gz",
+    "size_bytes": 14572,
+    "sha256": "823add75860ae3d0c04583e8e5ab6639f1bf0123d64471a165c6a511e1989cc6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520Core/0.6.0/SensirionCore-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20Core/0.6.0/SensirionCore-0.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20Core/0.7.1/SensirionCore-0.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionCore-0.7.1.tar.gz",
+    "size_bytes": 14979,
+    "sha256": "286dbb48087f7c764349e181c8c23c22953341b49140b9bc883fd65ccb3c3def",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520Core/0.7.1/SensirionCore-0.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20Core/0.7.1/SensirionCore-0.7.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20Core/0.7.2/SensirionCore-0.7.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionCore-0.7.2.tar.gz",
+    "size_bytes": 15293,
+    "sha256": "be3b43e4aabd903fafb0fad2dbd2dd1dc8f8de016301016ae0ecda1616bc5214",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520Core/0.7.2/SensirionCore-0.7.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20Core/0.7.2/SensirionCore-0.7.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20Core/0.7.3/SensirionCore-0.7.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionCore-0.7.3.tar.gz",
+    "size_bytes": 15317,
+    "sha256": "74857b997134edf92669953e08261c5b4a2a3c07aacd8a4d273e17b176d63b86",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520Core/0.7.3/SensirionCore-0.7.3.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20Core/0.7.3/SensirionCore-0.7.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20Gadget%20BLE%20Arduino%20Lib/1.5.0/SensirionGadgetBLEArduinoLib-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionGadgetBLEArduinoLib-1.5.0.tar.gz",
+    "size_bytes": 58221,
+    "sha256": "2e42666ee7ae0dd459ba34ab37d0e77ade02eab223e78e5c1d706ca6be00d3e1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520Gadget%2520BLE%2520Arduino%2520Lib/1.5.0/SensirionGadgetBLEArduinoLib-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20Gadget%20BLE%20Arduino%20Lib/1.5.0/SensirionGadgetBLEArduinoLib-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20Gas%20Index%20Algorithm/3.2.3/SensirionGasIndexAlgorithm-3.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionGasIndexAlgorithm-3.2.3.tar.gz",
+    "size_bytes": 14505,
+    "sha256": "d96332a63ba6404ccb84f748c111bf3a84a013030b656a781feedd8542371298",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520Gas%2520Index%2520Algorithm/3.2.3/SensirionGasIndexAlgorithm-3.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20Gas%20Index%20Algorithm/3.2.3/SensirionGasIndexAlgorithm-3.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20I2C%20SCD30/0.1.0/SensirionI2CSCD30-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionI2CSCD30-0.1.0.tar.gz",
+    "size_bytes": 9499,
+    "sha256": "c4fd0338ac2a0efee3468500c8833cef361ec50c3ba38611c2905d92f2c024a7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520I2C%2520SCD30/0.1.0/SensirionI2CSCD30-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20I2C%20SCD30/0.1.0/SensirionI2CSCD30-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20I2C%20SCD30/1.0.0/SensirionI2CSCD30-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionI2CSCD30-1.0.0.tar.gz",
+    "size_bytes": 9551,
+    "sha256": "9a58485dfa15655b9b6ba6c4e8ec2ab858459a809e2bde5fb65569e36ee7abad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520I2C%2520SCD30/1.0.0/SensirionI2CSCD30-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20I2C%20SCD30/1.0.0/SensirionI2CSCD30-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20I2C%20SCD30/1.1.0/SensirionI2CSCD30-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionI2CSCD30-1.1.0.tar.gz",
+    "size_bytes": 9827,
+    "sha256": "651da07febe15ea43da66fe6999fb4bcddb846c584971b18abd7b5544d999204",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520I2C%2520SCD30/1.1.0/SensirionI2CSCD30-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20I2C%20SCD30/1.1.0/SensirionI2CSCD30-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20I2C%20SCD30/1.1.1/SensirionI2CSCD30-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionI2CSCD30-1.1.1.tar.gz",
+    "size_bytes": 9893,
+    "sha256": "9c781a9a099a6d01eb2057b1e2a5283f1ea17f3ee35ce920a6a4f1d5e9a1a6bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520I2C%2520SCD30/1.1.1/SensirionI2CSCD30-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20I2C%20SCD30/1.1.1/SensirionI2CSCD30-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20I2C%20SCD4x/0.3.1/SensirionI2CSCD4x-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionI2CSCD4x-0.3.1.tar.gz",
+    "size_bytes": 9128,
+    "sha256": "db6bcb154cd613185e124811b5e85d4859ada1f5e34cd9c77bdd3619a537d981",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520I2C%2520SCD4x/0.3.1/SensirionI2CSCD4x-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20I2C%20SCD4x/0.3.1/SensirionI2CSCD4x-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20I2C%20SCD4x/0.4.0/SensirionI2CSCD4x-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionI2CSCD4x-0.4.0.tar.gz",
+    "size_bytes": 9541,
+    "sha256": "a8cbd96668b13d43ad1cf29524f66aab28f0b28a90dfcbd0eb4453ad74c62ed9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520I2C%2520SCD4x/0.4.0/SensirionI2CSCD4x-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20I2C%20SCD4x/0.4.0/SensirionI2CSCD4x-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20I2C%20SCD4x/1.0.0/SensirionI2CSCD4x-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionI2CSCD4x-1.0.0.tar.gz",
+    "size_bytes": 13824,
+    "sha256": "53001cfa8debd690db51b803e5f6f8d398a35ec3595a4918863a93eb1acbc34e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520I2C%2520SCD4x/1.0.0/SensirionI2CSCD4x-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20I2C%20SCD4x/1.0.0/SensirionI2CSCD4x-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20I2C%20SCD4x/1.1.0/SensirionI2CSCD4x-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionI2CSCD4x-1.1.0.tar.gz",
+    "size_bytes": 14559,
+    "sha256": "ab76ae105aa8e804edbbb7ec3951d7ff8b5b9a141d779b2135d80d14805b7f5f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520I2C%2520SCD4x/1.1.0/SensirionI2CSCD4x-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20I2C%20SCD4x/1.1.0/SensirionI2CSCD4x-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20I2C%20SDP/0.1.0/SensirionI2CSDP-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionI2CSDP-0.1.0.tar.gz",
+    "size_bytes": 7332,
+    "sha256": "9cbc7cc0e16f38aa4be1064cd51a04a36bd442a607e19cd195508e7cd324806d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520I2C%2520SDP/0.1.0/SensirionI2CSDP-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20I2C%20SDP/0.1.0/SensirionI2CSDP-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20I2C%20SEN44/0.1.0/SensirionI2CSEN44-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionI2CSEN44-0.1.0.tar.gz",
+    "size_bytes": 8076,
+    "sha256": "e4d374fdcd0657ed2ffdc2d7726079104e88329dcd4bcf33f8ca10f51418f584",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520I2C%2520SEN44/0.1.0/SensirionI2CSEN44-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20I2C%20SEN44/0.1.0/SensirionI2CSEN44-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20I2C%20SEN5X/0.3.0/SensirionI2CSEN5X-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionI2CSEN5X-0.3.0.tar.gz",
+    "size_bytes": 13964,
+    "sha256": "2c38fe88e3205e7ddcf67c732db93da845f91eb2f243127023ef2dc5e0974483",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520I2C%2520SEN5X/0.3.0/SensirionI2CSEN5X-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20I2C%20SEN5X/0.3.0/SensirionI2CSEN5X-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20I2C%20SEN62/1.0.0/SensirionI2CSEN62-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionI2CSEN62-1.0.0.tar.gz",
+    "size_bytes": 10902,
+    "sha256": "ab4f99eb7a961caadda326cc718c2341bde70287368cbf7c28afb6eafe396b12",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520I2C%2520SEN62/1.0.0/SensirionI2CSEN62-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20I2C%20SEN62/1.0.0/SensirionI2CSEN62-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20I2C%20SEN62/1.1.0/SensirionI2CSEN62-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionI2CSEN62-1.1.0.tar.gz",
+    "size_bytes": 11205,
+    "sha256": "6ce0a4d1812864798aa64b92d0c567284a5c488a61c92dcc154f62bfb5079ead",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520I2C%2520SEN62/1.1.0/SensirionI2CSEN62-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20I2C%20SEN62/1.1.0/SensirionI2CSEN62-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20I2C%20SEN63C/0.1.0/SensirionI2CSEN63C-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionI2CSEN63C-0.1.0.tar.gz",
+    "size_bytes": 12524,
+    "sha256": "3eaef5ca8e83644b42a56e860eae1bac079f29d13282fd56c8375ef229ed5180",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520I2C%2520SEN63C/0.1.0/SensirionI2CSEN63C-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20I2C%20SEN63C/0.1.0/SensirionI2CSEN63C-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20I2C%20SEN63C/1.0.1/SensirionI2CSEN63C-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionI2CSEN63C-1.0.1.tar.gz",
+    "size_bytes": 12564,
+    "sha256": "201a5ffed3933cb3efd220ec2fed34cb8690cc39012a4b4221c6022b9ef44f15",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520I2C%2520SEN63C/1.0.1/SensirionI2CSEN63C-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20I2C%20SEN63C/1.0.1/SensirionI2CSEN63C-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20I2C%20SEN63C/1.1.0/SensirionI2CSEN63C-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionI2CSEN63C-1.1.0.tar.gz",
+    "size_bytes": 12901,
+    "sha256": "b993f065366c5cb32838c686db001dab0692932659137c06702125d4b8c09adb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520I2C%2520SEN63C/1.1.0/SensirionI2CSEN63C-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20I2C%20SEN63C/1.1.0/SensirionI2CSEN63C-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20I2C%20SEN65/0.1.0/SensirionI2CSEN65-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionI2CSEN65-0.1.0.tar.gz",
+    "size_bytes": 13238,
+    "sha256": "f19d8fae5564d3e5bbc35abb6c21c0bce94afba33ee30e67178cf4d5cc677e0c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520I2C%2520SEN65/0.1.0/SensirionI2CSEN65-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20I2C%20SEN65/0.1.0/SensirionI2CSEN65-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20I2C%20SEN65/1.0.1/SensirionI2CSEN65-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionI2CSEN65-1.0.1.tar.gz",
+    "size_bytes": 13279,
+    "sha256": "52c791c1a2ecc3ef7b20c53e389c11ad2fa2d80d503fdfa3eee739a923a1b1f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520I2C%2520SEN65/1.0.1/SensirionI2CSEN65-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20I2C%20SEN65/1.0.1/SensirionI2CSEN65-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20I2C%20SEN65/1.1.0/SensirionI2CSEN65-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionI2CSEN65-1.1.0.tar.gz",
+    "size_bytes": 13389,
+    "sha256": "53009c6289988f58c89809c4a4603d5dfe413f61791dddbe19ef094b2ed49325",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520I2C%2520SEN65/1.1.0/SensirionI2CSEN65-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20I2C%20SEN65/1.1.0/SensirionI2CSEN65-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20I2C%20SEN66/1.2.0/SensirionI2CSEN66-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionI2CSEN66-1.2.0.tar.gz",
+    "size_bytes": 16482,
+    "sha256": "16446b35f5b0268eb3ef3b678a033ede86fef6828ad8d8db3fb77084d0661c76",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520I2C%2520SEN66/1.2.0/SensirionI2CSEN66-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20I2C%20SEN66/1.2.0/SensirionI2CSEN66-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20I2C%20SEN66/1.3.0/SensirionI2CSEN66-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionI2CSEN66-1.3.0.tar.gz",
+    "size_bytes": 18084,
+    "sha256": "72e81f1c2e727dbdef6172476b1f32dc67ab86ccfade1bfa8e32ddf9a51cea6d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520I2C%2520SEN66/1.3.0/SensirionI2CSEN66-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20I2C%20SEN66/1.3.0/SensirionI2CSEN66-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20I2C%20SEN66/1.3.1/SensirionI2CSEN66-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionI2CSEN66-1.3.1.tar.gz",
+    "size_bytes": 18279,
+    "sha256": "31d0f0d627909ba6624e2e5b3efd71ce4486667c4922f19f83aa2abe223a781d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520I2C%2520SEN66/1.3.1/SensirionI2CSEN66-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20I2C%20SEN66/1.3.1/SensirionI2CSEN66-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20I2C%20SEN68/0.1.0/SensirionI2CSEN68-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionI2CSEN68-0.1.0.tar.gz",
+    "size_bytes": 13404,
+    "sha256": "89395d1973712cbad1667a843c10c179501793c9759eac1152bffd83781d902e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520I2C%2520SEN68/0.1.0/SensirionI2CSEN68-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20I2C%20SEN68/0.1.0/SensirionI2CSEN68-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20I2C%20SEN68/1.0.1/SensirionI2CSEN68-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionI2CSEN68-1.0.1.tar.gz",
+    "size_bytes": 13445,
+    "sha256": "7386728c297d0c54dccbd0707f660c9790cfa8425ac059f56d2f5bf68f0e0d67",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520I2C%2520SEN68/1.0.1/SensirionI2CSEN68-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20I2C%20SEN68/1.0.1/SensirionI2CSEN68-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20I2C%20SEN68/1.1.0/SensirionI2CSEN68-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionI2CSEN68-1.1.0.tar.gz",
+    "size_bytes": 13539,
+    "sha256": "6313af81ec6aa8bd8ca3c38b5f298da116bb8ed0acf869c25d78d718ed24947f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520I2C%2520SEN68/1.1.0/SensirionI2CSEN68-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20I2C%20SEN68/1.1.0/SensirionI2CSEN68-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20I2C%20SEN69C/1.0.0/SensirionI2CSEN69C-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionI2CSEN69C-1.0.0.tar.gz",
+    "size_bytes": 16078,
+    "sha256": "d2a5268612476e6e1cf5e745e4e99252daeb1c2ff90b9e8bb99c12815e90ee63",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520I2C%2520SEN69C/1.0.0/SensirionI2CSEN69C-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20I2C%20SEN69C/1.0.0/SensirionI2CSEN69C-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20I2C%20SEN69C/1.1.0/SensirionI2CSEN69C-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionI2CSEN69C-1.1.0.tar.gz",
+    "size_bytes": 16250,
+    "sha256": "43a7cf8e33d094e74f2e981bae23d31fcae66cce534c3afc21d1447ad57e18fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520I2C%2520SEN69C/1.1.0/SensirionI2CSEN69C-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20I2C%20SEN69C/1.1.0/SensirionI2CSEN69C-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20I2C%20SF06-LF/1.0.0/SensirionI2CSF06-LF-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionI2CSF06-LF-1.0.0.tar.gz",
+    "size_bytes": 10852,
+    "sha256": "77b0f51e855c93e7cf55e6d0520d14d8d8d0fdc727b6dfececdcb12439cade9f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520I2C%2520SF06-LF/1.0.0/SensirionI2CSF06-LF-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20I2C%20SF06-LF/1.0.0/SensirionI2CSF06-LF-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20I2C%20SFA3x/0.1.0/SensirionI2CSFA3x-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionI2CSFA3x-0.1.0.tar.gz",
+    "size_bytes": 5359,
+    "sha256": "28b99d4234af21c694f57c04a9e84b8e779ca343f6da1a2c35fd1bf016241b76",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520I2C%2520SFA3x/0.1.0/SensirionI2CSFA3x-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20I2C%20SFA3x/0.1.0/SensirionI2CSFA3x-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20I2C%20SFA3x/1.0.0/SensirionI2CSFA3x-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionI2CSFA3x-1.0.0.tar.gz",
+    "size_bytes": 6922,
+    "sha256": "0a202d1ff372dfd8273f6fc6c2407a113a9f3602a3387c6be8aa22ee2b944a09",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520I2C%2520SFA3x/1.0.0/SensirionI2CSFA3x-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20I2C%20SFA3x/1.0.0/SensirionI2CSFA3x-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20I2C%20SFA4x/1.0.0/SensirionI2CSFA4x-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionI2CSFA4x-1.0.0.tar.gz",
+    "size_bytes": 7344,
+    "sha256": "3371bfc176b22aa0463dd9d7b9949463986823a35f89b8f90b9049eec6640a31",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520I2C%2520SFA4x/1.0.0/SensirionI2CSFA4x-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20I2C%20SFA4x/1.0.0/SensirionI2CSFA4x-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20I2C%20SFM-SF06/3.0.1/SensirionI2CSFM-SF06-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionI2CSFM-SF06-3.0.1.tar.gz",
+    "size_bytes": 11639,
+    "sha256": "5e2f96529e8d5dde8167dd2c1f24163b7e7aeb5c5e69d3e63c21e431c015c9b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520I2C%2520SFM-SF06/3.0.1/SensirionI2CSFM-SF06-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20I2C%20SFM-SF06/3.0.1/SensirionI2CSFM-SF06-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20I2C%20SFM3000/0.1.0/SensirionI2CSFM3000-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionI2CSFM3000-0.1.0.tar.gz",
+    "size_bytes": 4641,
+    "sha256": "60d6ec0524c937bec13a31e4ecac230f83ec336a29def60d3ef2cbbcf6e4fe9f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520I2C%2520SFM3000/0.1.0/SensirionI2CSFM3000-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20I2C%20SFM3000/0.1.0/SensirionI2CSFM3000-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20I2C%20SFM3304/1.0.0/SensirionI2CSFM3304-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionI2CSFM3304-1.0.0.tar.gz",
+    "size_bytes": 8949,
+    "sha256": "a4e6e33fc9903704d26f5f2b2d8e6d5acf3242d2d85ef16c48f52637b85e272e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520I2C%2520SFM3304/1.0.0/SensirionI2CSFM3304-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20I2C%20SFM3304/1.0.0/SensirionI2CSFM3304-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20I2C%20SFM3505/1.0.0/SensirionI2CSFM3505-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionI2CSFM3505-1.0.0.tar.gz",
+    "size_bytes": 7166,
+    "sha256": "f02e2f4ad199630017da1a2f57e242234d1af720b90012b183c576c23c299e97",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520I2C%2520SFM3505/1.0.0/SensirionI2CSFM3505-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20I2C%20SFM3505/1.0.0/SensirionI2CSFM3505-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20I2C%20SFM3505/1.2.0/SensirionI2CSFM3505-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionI2CSFM3505-1.2.0.tar.gz",
+    "size_bytes": 7177,
+    "sha256": "73f091742372701822756f563bc9fbe8bfd086914f3616f3fe09f028de24f73f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520I2C%2520SFM3505/1.2.0/SensirionI2CSFM3505-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20I2C%20SFM3505/1.2.0/SensirionI2CSFM3505-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20I2C%20SFx6xxx/1.1.0/SensirionI2CSFx6xxx-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionI2CSFx6xxx-1.1.0.tar.gz",
+    "size_bytes": 11338,
+    "sha256": "3ca9fcb394afcab715a3c7f57c42c0adf73387320303d804e10e2141a00cc18a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520I2C%2520SFx6xxx/1.1.0/SensirionI2CSFx6xxx-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20I2C%20SFx6xxx/1.1.0/SensirionI2CSFx6xxx-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20I2C%20SGP40/0.1.0/SensirionI2CSGP40-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionI2CSGP40-0.1.0.tar.gz",
+    "size_bytes": 5708,
+    "sha256": "a4e260cc0a88f15a545b77f64f17e5c00b4d11fe883162ebbf74b08d72a69e5c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520I2C%2520SGP40/0.1.0/SensirionI2CSGP40-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20I2C%20SGP40/0.1.0/SensirionI2CSGP40-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20I2C%20SGP41/1.0.0/SensirionI2CSGP41-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionI2CSGP41-1.0.0.tar.gz",
+    "size_bytes": 6309,
+    "sha256": "081d71093bfbeb5432ea104ad973bdb8acfb7e6bb55411bb62014079659ca964",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520I2C%2520SGP41/1.0.0/SensirionI2CSGP41-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20I2C%20SGP41/1.0.0/SensirionI2CSGP41-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20I2C%20SHT3x/1.0.1/SensirionI2CSHT3x-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionI2CSHT3x-1.0.1.tar.gz",
+    "size_bytes": 10451,
+    "sha256": "49ce6f32d74cdfa2ea598f491ac21ebaa9651e36696521b1c0072fdd5e470d93",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520I2C%2520SHT3x/1.0.1/SensirionI2CSHT3x-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20I2C%20SHT3x/1.0.1/SensirionI2CSHT3x-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20I2C%20SHT4x/0.1.0/SensirionI2CSHT4x-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionI2CSHT4x-0.1.0.tar.gz",
+    "size_bytes": 6769,
+    "sha256": "314942b822a43d119d5f05ec5f69991f8eb724a565d9e2dc5f71b68db8cd06b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520I2C%2520SHT4x/0.1.0/SensirionI2CSHT4x-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20I2C%20SHT4x/0.1.0/SensirionI2CSHT4x-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20I2C%20SHT4x/1.1.2/SensirionI2CSHT4x-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionI2CSHT4x-1.1.2.tar.gz",
+    "size_bytes": 8302,
+    "sha256": "09d7233b907a130f4d3b349573d5aa9a7abaeb8cab59dd0e44e81134f0371871",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520I2C%2520SHT4x/1.1.2/SensirionI2CSHT4x-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20I2C%20SHT4x/1.1.2/SensirionI2CSHT4x-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20I2C%20SPS30/1.0.0/SensirionI2CSPS30-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionI2CSPS30-1.0.0.tar.gz",
+    "size_bytes": 8646,
+    "sha256": "755cad6efcc5e452836500764aba079ba36fea457541d9b9804bfb0a3f040735",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520I2C%2520SPS30/1.0.0/SensirionI2CSPS30-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20I2C%20SPS30/1.0.0/SensirionI2CSPS30-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20I2C%20STC3x/1.1.0/SensirionI2CSTC3x-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionI2CSTC3x-1.1.0.tar.gz",
+    "size_bytes": 16149,
+    "sha256": "9837dafd75f221b80ac3387eb067d9004f3ebec630adb3deab57f29654b11cb9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520I2C%2520STC3x/1.1.0/SensirionI2CSTC3x-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20I2C%20STC3x/1.1.0/SensirionI2CSTC3x-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20I2C%20STC42/1.0.1/SensirionI2CSTC42-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionI2CSTC42-1.0.1.tar.gz",
+    "size_bytes": 10177,
+    "sha256": "89a8fc2a4f8e2b05647223ac5beebfa0edf9f953530940ae144562aaa7156a93",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520I2C%2520STC42/1.0.1/SensirionI2CSTC42-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20I2C%20STC42/1.0.1/SensirionI2CSTC42-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20I2C%20STC42/1.1.0/SensirionI2CSTC42-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionI2CSTC42-1.1.0.tar.gz",
+    "size_bytes": 10638,
+    "sha256": "b45db69707b1eb6476be87d09dcde91a5196ee4242e1faf0049b32cb18856c4e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520I2C%2520STC42/1.1.0/SensirionI2CSTC42-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20I2C%20STC42/1.1.0/SensirionI2CSTC42-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20I2C%20STCC4/1.0.0/SensirionI2CSTCC4-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionI2CSTCC4-1.0.0.tar.gz",
+    "size_bytes": 10061,
+    "sha256": "e56263c109fd3fca68917a0b51b8c6cc790ad35f5a380738d5795ead8801be06",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520I2C%2520STCC4/1.0.0/SensirionI2CSTCC4-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20I2C%20STCC4/1.0.0/SensirionI2CSTCC4-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20I2C%20STCC4/1.1.0/SensirionI2CSTCC4-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionI2CSTCC4-1.1.0.tar.gz",
+    "size_bytes": 10658,
+    "sha256": "7befc3c2fe0116ba8475c9fca0ffac407f739d988dfc16b440820dd758d3e9ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520I2C%2520STCC4/1.1.0/SensirionI2CSTCC4-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20I2C%20STCC4/1.1.0/SensirionI2CSTCC4-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20I2C%20STS3x/1.0.1/SensirionI2CSTS3x-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionI2CSTS3x-1.0.1.tar.gz",
+    "size_bytes": 9819,
+    "sha256": "31d86fcaa93976d3b13dd8d3411fc0d7fe66b1a99f02319f4e4d60dcff371cb4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520I2C%2520STS3x/1.0.1/SensirionI2CSTS3x-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20I2C%20STS3x/1.0.1/SensirionI2CSTS3x-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20I2C%20STS4x/0.1.0/SensirionI2CSTS4x-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionI2CSTS4x-0.1.0.tar.gz",
+    "size_bytes": 6328,
+    "sha256": "c2d9f4aec3202a28ba641ec11a64cf295ea5a311c4588c28f8de4c055fc66b07",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520I2C%2520STS4x/0.1.0/SensirionI2CSTS4x-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20I2C%20STS4x/0.1.0/SensirionI2CSTS4x-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20I2C%20SVM40/0.1.0/SensirionI2CSVM40-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionI2CSVM40-0.1.0.tar.gz",
+    "size_bytes": 7319,
+    "sha256": "baff1f5634f111f7c63a5266205562b7ddae05d4d5372f2247302831c892a529",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520I2C%2520SVM40/0.1.0/SensirionI2CSVM40-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20I2C%20SVM40/0.1.0/SensirionI2CSVM40-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20I2C%20SVM4x/0.2.0/SensirionI2CSVM4x-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionI2CSVM4x-0.2.0.tar.gz",
+    "size_bytes": 8730,
+    "sha256": "7db50d716348a000ed197a8d66ce4ff1f46995c225f258be4c2278fa87b487f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520I2C%2520SVM4x/0.2.0/SensirionI2CSVM4x-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20I2C%20SVM4x/0.2.0/SensirionI2CSVM4x-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20UART%20SEN44/0.1.0/SensirionUARTSEN44-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionUARTSEN44-0.1.0.tar.gz",
+    "size_bytes": 7882,
+    "sha256": "dafa7582fee55883c44160bea3dc700bc20095dc230af85a5ce38de0cf1977d9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520UART%2520SEN44/0.1.0/SensirionUARTSEN44-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20UART%20SEN44/0.1.0/SensirionUARTSEN44-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20UART%20SFA3x/0.1.0/SensirionUARTSFA3x-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionUARTSFA3x-0.1.0.tar.gz",
+    "size_bytes": 5445,
+    "sha256": "c8fd8cbbd87ea75b918c424e734ce0d84ab97377d5aaee409f5d9d4b7a6eef81",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520UART%2520SFA3x/0.1.0/SensirionUARTSFA3x-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20UART%20SFA3x/0.1.0/SensirionUARTSFA3x-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20UART%20SFx6xxx/1.1.0/SensirionUARTSFx6xxx-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionUARTSFx6xxx-1.1.0.tar.gz",
+    "size_bytes": 12574,
+    "sha256": "181d096df79189f4df421733976a96ecd5421eb269b1aebf29254c818a41346b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520UART%2520SFx6xxx/1.1.0/SensirionUARTSFx6xxx-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20UART%20SFx6xxx/1.1.0/SensirionUARTSFx6xxx-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20UART%20SPS30/1.0.0/SensirionUARTSPS30-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionUARTSPS30-1.0.0.tar.gz",
+    "size_bytes": 10414,
+    "sha256": "943739c0df52afd388b574679492f4ae0502ac0b785b500fee2cf52278754408",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520UART%2520SPS30/1.0.0/SensirionUARTSPS30-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20UART%20SPS30/1.0.0/SensirionUARTSPS30-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20UART%20SVM40/0.1.0/SensirionUARTSVM40-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionUARTSVM40-0.1.0.tar.gz",
+    "size_bytes": 7911,
+    "sha256": "93f8d1ce00b4838b1a686b33b78f9171fa5c8050e6c0f9201fd5c4f7f52baac1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520UART%2520SVM40/0.1.0/SensirionUARTSVM40-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20UART%20SVM40/0.1.0/SensirionUARTSVM40-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20UART%20Svm41/0.1.0/SensirionUARTSvm41-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionUARTSvm41-0.1.0.tar.gz",
+    "size_bytes": 9020,
+    "sha256": "4fa3aa19da24e1f632320c8b5c5814156817d73ddcfc32d164d7e6a9ab3c094e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520UART%2520Svm41/0.1.0/SensirionUARTSvm41-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20UART%20Svm41/0.1.0/SensirionUARTSvm41-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20UPT%20BLE%20Auto%20Detection/0.3.0/SensirionUPTBLEAutoDetection-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionUPTBLEAutoDetection-0.3.0.tar.gz",
+    "size_bytes": 8401,
+    "sha256": "2df284fc8e3b9e2e6c0ecbc940429b69cce8d6b9d2ffb959cc1a9dc4ae9d5d1c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520UPT%2520BLE%2520Auto%2520Detection/0.3.0/SensirionUPTBLEAutoDetection-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20UPT%20BLE%20Auto%20Detection/0.3.0/SensirionUPTBLEAutoDetection-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20UPT%20BLE%20Server/1.0.0/SensirionUPTBLEServer-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionUPTBLEServer-1.0.0.tar.gz",
+    "size_bytes": 19250,
+    "sha256": "abb8b4f5fd956a3ea7476dee21fe65272744c7ed8961bfcce24c0b01dc851977",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520UPT%2520BLE%2520Server/1.0.0/SensirionUPTBLEServer-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20UPT%20BLE%20Server/1.0.0/SensirionUPTBLEServer-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20UPT%20BLE%20Server/1.1.0/SensirionUPTBLEServer-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionUPTBLEServer-1.1.0.tar.gz",
+    "size_bytes": 19301,
+    "sha256": "20b10cfc846d1a370946e8860d295f8d2caf3fe2ae40987ed77a1330889a111b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520UPT%2520BLE%2520Server/1.1.0/SensirionUPTBLEServer-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20UPT%20BLE%20Server/1.1.0/SensirionUPTBLEServer-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20UPT%20BLE%20Server/1.2.0/SensirionUPTBLEServer-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionUPTBLEServer-1.2.0.tar.gz",
+    "size_bytes": 21738,
+    "sha256": "5cc1ee71d0abb63b08f7c8b8d5aedb05fd04bb7eb2ccfa55af25140f49c19af3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520UPT%2520BLE%2520Server/1.2.0/SensirionUPTBLEServer-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20UPT%20BLE%20Server/1.2.0/SensirionUPTBLEServer-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20UPT%20BLE%20Server/1.3.0/SensirionUPTBLEServer-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionUPTBLEServer-1.3.0.tar.gz",
+    "size_bytes": 23720,
+    "sha256": "72bf98e0c9d6041e84d3141b217fc9c33d4c520c4b90adc0c3d29bbbc8dfa351",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520UPT%2520BLE%2520Server/1.3.0/SensirionUPTBLEServer-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20UPT%20BLE%20Server/1.3.0/SensirionUPTBLEServer-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20UPT%20BLE%20Server/1.3.1/SensirionUPTBLEServer-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionUPTBLEServer-1.3.1.tar.gz",
+    "size_bytes": 23935,
+    "sha256": "ddc70efa8c1191ee923e68f6c1944af85a7fb5c64e9f0fb6dd3f88d5250cb096",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520UPT%2520BLE%2520Server/1.3.1/SensirionUPTBLEServer-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20UPT%20BLE%20Server/1.3.1/SensirionUPTBLEServer-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20UPT%20Core/0.8.0/SensirionUPTCore-0.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionUPTCore-0.8.0.tar.gz",
+    "size_bytes": 17159,
+    "sha256": "9d503c00497c36e06052790082e079acdf17b177d46cf56abc6cf35de6f5dc2b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520UPT%2520Core/0.8.0/SensirionUPTCore-0.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20UPT%20Core/0.8.0/SensirionUPTCore-0.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20UPT%20Core/0.9.0/SensirionUPTCore-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionUPTCore-0.9.0.tar.gz",
+    "size_bytes": 17206,
+    "sha256": "c5d2fdfd335c1443432e77e9f9f6f516484a955f38084f0e40c2361963a0c25c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520UPT%2520Core/0.9.0/SensirionUPTCore-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20UPT%20Core/0.9.0/SensirionUPTCore-0.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20UPT%20Core/0.9.1/SensirionUPTCore-0.9.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionUPTCore-0.9.1.tar.gz",
+    "size_bytes": 16850,
+    "sha256": "a0dcbb9f3d12f23df5c276d1a7450df05f0556bd98e11f4ff4c1a4c4ae1a9236",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520UPT%2520Core/0.9.1/SensirionUPTCore-0.9.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20UPT%20Core/0.9.1/SensirionUPTCore-0.9.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20UPT%20Core/0.9.2/SensirionUPTCore-0.9.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionUPTCore-0.9.2.tar.gz",
+    "size_bytes": 17167,
+    "sha256": "8e6e1e98c2ddcac7afa7a3341550bb1f680bed1ed4e3314348e6b0dc6e1acf06",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520UPT%2520Core/0.9.2/SensirionUPTCore-0.9.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20UPT%20Core/0.9.2/SensirionUPTCore-0.9.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20UPT%20Core/0.9.3/SensirionUPTCore-0.9.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionUPTCore-0.9.3.tar.gz",
+    "size_bytes": 17172,
+    "sha256": "eee76719701ea0922b94d1111136795d5f82682c3b00de2526679cf847ef7adf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520UPT%2520Core/0.9.3/SensirionUPTCore-0.9.3.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20UPT%20Core/0.9.3/SensirionUPTCore-0.9.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20UPT%20Core/0.9.4/SensirionUPTCore-0.9.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionUPTCore-0.9.4.tar.gz",
+    "size_bytes": 17357,
+    "sha256": "ea2377c4ab26704bc9ac1d2a5fcdd02d348948cb56cf4eb11ebf5c1a77df8773",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520UPT%2520Core/0.9.4/SensirionUPTCore-0.9.4.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20UPT%20Core/0.9.4/SensirionUPTCore-0.9.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20UPT%20Core/0.9.5/SensirionUPTCore-0.9.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionUPTCore-0.9.5.tar.gz",
+    "size_bytes": 17358,
+    "sha256": "91b20c04eb8621aab8186d8a3a35a81421f93f0b996e956ee8d52bbd96e8ad1f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520UPT%2520Core/0.9.5/SensirionUPTCore-0.9.5.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20UPT%20Core/0.9.5/SensirionUPTCore-0.9.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20UPT%20Core/1.0.0/SensirionUPTCore-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionUPTCore-1.0.0.tar.gz",
+    "size_bytes": 17382,
+    "sha256": "f5846ad600e3a113da6bafd73222c4745dfc5cf875741e59fb78bd8c7ebb2236",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520UPT%2520Core/1.0.0/SensirionUPTCore-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20UPT%20Core/1.0.0/SensirionUPTCore-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20UPT%20Core/1.1.0/SensirionUPTCore-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionUPTCore-1.1.0.tar.gz",
+    "size_bytes": 17708,
+    "sha256": "6765437ca5d2fac4b75307148a0808b0fa281ca9bc3eb965127b931542d6c0a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520UPT%2520Core/1.1.0/SensirionUPTCore-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20UPT%20Core/1.1.0/SensirionUPTCore-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20UPT%20Core/1.1.1/SensirionUPTCore-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionUPTCore-1.1.1.tar.gz",
+    "size_bytes": 17751,
+    "sha256": "cd16905a9da2058dea7732613bee9f17ff1078a0c31d8c9276724147f83c578a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520UPT%2520Core/1.1.1/SensirionUPTCore-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20UPT%20Core/1.1.1/SensirionUPTCore-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20UPT%20Core/1.2.0/SensirionUPTCore-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionUPTCore-1.2.0.tar.gz",
+    "size_bytes": 17746,
+    "sha256": "82ccf694c77809f76b9e72644e13d6d68f48586f42827737715498df3bccf942",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520UPT%2520Core/1.2.0/SensirionUPTCore-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20UPT%20Core/1.2.0/SensirionUPTCore-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20UPT%20Core/1.3.0/SensirionUPTCore-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionUPTCore-1.3.0.tar.gz",
+    "size_bytes": 18149,
+    "sha256": "ad9832371dd5e915c76032848f98cbd790c5ff95cb66e86090d08c51e7eb048b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520UPT%2520Core/1.3.0/SensirionUPTCore-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20UPT%20Core/1.3.0/SensirionUPTCore-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20UPT%20Display/0.2.0/SensirionUPTDisplay-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionUPTDisplay-0.2.0.tar.gz",
+    "size_bytes": 76474,
+    "sha256": "f5ac9634dacb15bf46bcb31deda74c13b4b557e0fd79a7e38de61672cd8a1be6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520UPT%2520Display/0.2.0/SensirionUPTDisplay-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20UPT%20Display/0.2.0/SensirionUPTDisplay-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20UPT%20Display/0.2.1/SensirionUPTDisplay-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionUPTDisplay-0.2.1.tar.gz",
+    "size_bytes": 76573,
+    "sha256": "17fa043904451410f9f7c513f5ede371597d894c19f8fbb4bcc825f8eae214a3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520UPT%2520Display/0.2.1/SensirionUPTDisplay-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20UPT%20Display/0.2.1/SensirionUPTDisplay-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20UPT%20Display/0.2.2/SensirionUPTDisplay-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionUPTDisplay-0.2.2.tar.gz",
+    "size_bytes": 76598,
+    "sha256": "9dfe5733f5e24cc29032d0f688c6e192bd45a9aaa2c3921228f674821d57e5c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520UPT%2520Display/0.2.2/SensirionUPTDisplay-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20UPT%20Display/0.2.2/SensirionUPTDisplay-0.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20UPT%20Display/0.3.0/SensirionUPTDisplay-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionUPTDisplay-0.3.0.tar.gz",
+    "size_bytes": 76616,
+    "sha256": "3c832e0e3f5dff6267c73143b18a9c6aa1fbadc225425e131e916df56d0bb3a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520UPT%2520Display/0.3.0/SensirionUPTDisplay-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20UPT%20Display/0.3.0/SensirionUPTDisplay-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20UPT%20Display/0.4.0/SensirionUPTDisplay-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionUPTDisplay-0.4.0.tar.gz",
+    "size_bytes": 76694,
+    "sha256": "60e6d8566d6e950d06211962cfe84108b63bae717475ba1124534ae8a84a12ff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520UPT%2520Display/0.4.0/SensirionUPTDisplay-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20UPT%20Display/0.4.0/SensirionUPTDisplay-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20UPT%20Display/0.4.1/SensirionUPTDisplay-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionUPTDisplay-0.4.1.tar.gz",
+    "size_bytes": 77012,
+    "sha256": "a13dfe805e2dad7dcd1c2080ebad28775d93ae06f594fa515bcbeb14493f96eb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520UPT%2520Display/0.4.1/SensirionUPTDisplay-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20UPT%20Display/0.4.1/SensirionUPTDisplay-0.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20UPT%20I2C%20Auto%20Detection/2.0.0/SensirionUPTI2CAutoDetection-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionUPTI2CAutoDetection-2.0.0.tar.gz",
+    "size_bytes": 23630,
+    "sha256": "51e5f53a88f6df7fa78f0d69bc46c6d0c50a7640b0e8773b1e9cabf6ff442478",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520UPT%2520I2C%2520Auto%2520Detection/2.0.0/SensirionUPTI2CAutoDetection-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20UPT%20I2C%20Auto%20Detection/2.0.0/SensirionUPTI2CAutoDetection-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20UPT%20I2C%20Auto%20Detection/3.0.0/SensirionUPTI2CAutoDetection-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionUPTI2CAutoDetection-3.0.0.tar.gz",
+    "size_bytes": 24504,
+    "sha256": "38c95e92f758b9cfe895657b97f49741157e91cd30e40be36b7ab2ef188f9bf2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520UPT%2520I2C%2520Auto%2520Detection/3.0.0/SensirionUPTI2CAutoDetection-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20UPT%20I2C%20Auto%20Detection/3.0.0/SensirionUPTI2CAutoDetection-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20UPT%20I2C%20Auto%20Detection/3.0.1/SensirionUPTI2CAutoDetection-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionUPTI2CAutoDetection-3.0.1.tar.gz",
+    "size_bytes": 24650,
+    "sha256": "b7c5c0363ec910368e7fda8e0ea4f9ac0853b283fdf12f4ae0c32c2e2d6f4e23",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520UPT%2520I2C%2520Auto%2520Detection/3.0.1/SensirionUPTI2CAutoDetection-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20UPT%20I2C%20Auto%20Detection/3.0.1/SensirionUPTI2CAutoDetection-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20UPT%20I2C%20Auto%20Detection/3.0.2/SensirionUPTI2CAutoDetection-3.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionUPTI2CAutoDetection-3.0.2.tar.gz",
+    "size_bytes": 24717,
+    "sha256": "1a90ccaeaffcf0dbb1ff92ca622d24a7d4a96f434f63f70123430284292d73ba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520UPT%2520I2C%2520Auto%2520Detection/3.0.2/SensirionUPTI2CAutoDetection-3.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20UPT%20I2C%20Auto%20Detection/3.0.2/SensirionUPTI2CAutoDetection-3.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20UPT%20I2C%20Auto%20Detection/3.1.0/SensirionUPTI2CAutoDetection-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionUPTI2CAutoDetection-3.1.0.tar.gz",
+    "size_bytes": 26530,
+    "sha256": "cf6eb34f48df7832127878f4176b643d109598a00f645fd7cc3a324082545ea3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520UPT%2520I2C%2520Auto%2520Detection/3.1.0/SensirionUPTI2CAutoDetection-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20UPT%20I2C%20Auto%20Detection/3.1.0/SensirionUPTI2CAutoDetection-3.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20UPT%20I2C%20Auto%20Detection/3.1.1/SensirionUPTI2CAutoDetection-3.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionUPTI2CAutoDetection-3.1.1.tar.gz",
+    "size_bytes": 26648,
+    "sha256": "f331662c346171effc4e4737522988409283fece9d9df32e7bfef5f0b7f34f06",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520UPT%2520I2C%2520Auto%2520Detection/3.1.1/SensirionUPTI2CAutoDetection-3.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20UPT%20I2C%20Auto%20Detection/3.1.1/SensirionUPTI2CAutoDetection-3.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20UPT%20MQTT%20Client/0.2.1/SensirionUPTMQTTClient-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionUPTMQTTClient-0.2.1.tar.gz",
+    "size_bytes": 10047,
+    "sha256": "63234a0a06af9c0cb3e199c740a53a13c19e34c8cc618ba83e164534eeb062aa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520UPT%2520MQTT%2520Client/0.2.1/SensirionUPTMQTTClient-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20UPT%20MQTT%20Client/0.2.1/SensirionUPTMQTTClient-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20UPT%20MQTT%20Client/0.3.0/SensirionUPTMQTTClient-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionUPTMQTTClient-0.3.0.tar.gz",
+    "size_bytes": 10084,
+    "sha256": "1f3cb67d0789fa540aa98af4ddca27791d3da6cd4b8cfc0a30ce98c0727b5430",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520UPT%2520MQTT%2520Client/0.3.0/SensirionUPTMQTTClient-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20UPT%20MQTT%20Client/0.3.0/SensirionUPTMQTTClient-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20UPT%20MQTT%20Client/0.4.0/SensirionUPTMQTTClient-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionUPTMQTTClient-0.4.0.tar.gz",
+    "size_bytes": 10288,
+    "sha256": "bc98a21ec7063e2120679e3e9eb396147ff997a02aa4c7c8c0e4d15b9a852667",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520UPT%2520MQTT%2520Client/0.4.0/SensirionUPTMQTTClient-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20UPT%20MQTT%20Client/0.4.0/SensirionUPTMQTTClient-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/Sensirion%20UPT%20MQTT%20Client/0.4.1/SensirionUPTMQTTClient-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionUPTMQTTClient-0.4.1.tar.gz",
+    "size_bytes": 10283,
+    "sha256": "f388524292becb199cc617336aecf6910e48322756953a2815e2187ffc9338b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/Sensirion%2520UPT%2520MQTT%2520Client/0.4.1/SensirionUPTMQTTClient-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/Sensirion%20UPT%20MQTT%20Client/0.4.1/SensirionUPTMQTTClient-0.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/arduino-ess/0.5.4/arduino-ess-0.5.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arduino-ess-0.5.4.tar.gz",
+    "size_bytes": 10420,
+    "sha256": "a9d40c8be46bbb046bc268ea4f9957b78f85bba249b09b6bc10bc73cab5e36e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/arduino-ess/0.5.4/arduino-ess-0.5.4.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/arduino-ess/0.5.4/arduino-ess-0.5.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/arduino-sht/1.2.6/arduino-sht-1.2.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arduino-sht-1.2.6.tar.gz",
+    "size_bytes": 8592,
+    "sha256": "906649bbe5854325c464879bbbf86a93a852aad1eaa3acbe25316e06dc1f1c5d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/arduino-sht/1.2.6/arduino-sht-1.2.6.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/arduino-sht/1.2.6/arduino-sht-1.2.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/arduino-sht/2.0.0/arduino-sht-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arduino-sht-2.0.0.tar.gz",
+    "size_bytes": 9237,
+    "sha256": "df13bbfec5ebabedb0576b5f906429664fa32fb2771d04af6bad5e79914ec648",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/arduino-sht/2.0.0/arduino-sht-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/arduino-sht/2.0.0/arduino-sht-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensirion/library/sensirion-sps/1.2.0/sensirion-sps-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "sensirion-sps-1.2.0.tar.gz",
+    "size_bytes": 17619,
+    "sha256": "97a397452cd3d368715ddbf5d44fd3c67c9d3b19b7984c1bd16e775f9e33c033",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensirion/library/sensirion-sps/1.2.0/sensirion-sps-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensirion/library/sensirion-sps/1.2.0/sensirion-sps-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

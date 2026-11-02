@@ -1,0 +1,126 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/roberbike",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "roberbike/library/Noise%20Monitor%20UNE-EN%20ISO%201996-2/3.2.1/NoiseMonitorUNE-ENISO1996-2-3.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NoiseMonitorUNE-ENISO1996-2-3.2.1.tar.gz",
+    "size_bytes": 52166,
+    "sha256": "1b771f2f9e76523146b36c03a2629d254ebe3836929ee2618e7d60e9a6eedf4a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/roberbike/library/Noise%2520Monitor%2520UNE-EN%2520ISO%25201996-2/3.2.1/NoiseMonitorUNE-ENISO1996-2-3.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/roberbike/library/Noise%20Monitor%20UNE-EN%20ISO%201996-2/3.2.1/NoiseMonitorUNE-ENISO1996-2-3.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "roberbike/library/Noise%20Monitor%20UNE-EN%20ISO%201996-2/3.3.0/NoiseMonitorUNE-ENISO1996-2-3.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NoiseMonitorUNE-ENISO1996-2-3.3.0.tar.gz",
+    "size_bytes": 55847,
+    "sha256": "4339b796e3069e25191ff24a4550bef1a6c464b41286ea6eeff92b980b459b81",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/roberbike/library/Noise%2520Monitor%2520UNE-EN%2520ISO%25201996-2/3.3.0/NoiseMonitorUNE-ENISO1996-2-3.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/roberbike/library/Noise%20Monitor%20UNE-EN%20ISO%201996-2/3.3.0/NoiseMonitorUNE-ENISO1996-2-3.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "roberbike/library/Noise%20Monitor%20UNE-EN%20ISO%201996-2/3.3.1/NoiseMonitorUNE-ENISO1996-2-3.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NoiseMonitorUNE-ENISO1996-2-3.3.1.tar.gz",
+    "size_bytes": 81307,
+    "sha256": "2ace4fc3798b1e5e830895798a27631c6228cfd8b8d6f597f2805792ac34423e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/roberbike/library/Noise%2520Monitor%2520UNE-EN%2520ISO%25201996-2/3.3.1/NoiseMonitorUNE-ENISO1996-2-3.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/roberbike/library/Noise%20Monitor%20UNE-EN%20ISO%201996-2/3.3.1/NoiseMonitorUNE-ENISO1996-2-3.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "roberbike/library/Noise%20Monitor%20UNE-EN%20ISO%201996-2/3.3.2/NoiseMonitorUNE-ENISO1996-2-3.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NoiseMonitorUNE-ENISO1996-2-3.3.2.tar.gz",
+    "size_bytes": 87334,
+    "sha256": "bf0bd5b194cd90b9b3fb11fb5a33736ad64665354f49895fc1780762fcb9c3f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/roberbike/library/Noise%2520Monitor%2520UNE-EN%2520ISO%25201996-2/3.3.2/NoiseMonitorUNE-ENISO1996-2-3.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/roberbike/library/Noise%20Monitor%20UNE-EN%20ISO%201996-2/3.3.2/NoiseMonitorUNE-ENISO1996-2-3.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "roberbike/library/Noise%20Monitor%20UNE-EN%20ISO%201996-2/3.3.3/NoiseMonitorUNE-ENISO1996-2-3.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NoiseMonitorUNE-ENISO1996-2-3.3.3.tar.gz",
+    "size_bytes": 102318,
+    "sha256": "ad903a012b1576dc3a9a390f277a24606b80e4e7a6484ae3ef11b12237ac58d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/roberbike/library/Noise%2520Monitor%2520UNE-EN%2520ISO%25201996-2/3.3.3/NoiseMonitorUNE-ENISO1996-2-3.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/roberbike/library/Noise%20Monitor%20UNE-EN%20ISO%201996-2/3.3.3/NoiseMonitorUNE-ENISO1996-2-3.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "roberbike/library/NoiseSensor/1.0.0/NoiseSensor-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NoiseSensor-1.0.0.tar.gz",
+    "size_bytes": 17827,
+    "sha256": "d9883d62e69723560d2f183ac5358720a1fcc2d99d324d9531a206e65862e74a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/roberbike/library/NoiseSensor/1.0.0/NoiseSensor-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/roberbike/library/NoiseSensor/1.0.0/NoiseSensor-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "roberbike/library/NoiseSensor/1.0.1/NoiseSensor-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NoiseSensor-1.0.1.tar.gz",
+    "size_bytes": 19079,
+    "sha256": "ef7e9f611a4700b85d23937fac622e6c4034d17159c242d921e1c6901083e817",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/roberbike/library/NoiseSensor/1.0.1/NoiseSensor-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/roberbike/library/NoiseSensor/1.0.1/NoiseSensor-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "roberbike/library/NoiseSensor/1.1.0/NoiseSensor-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NoiseSensor-1.1.0.tar.gz",
+    "size_bytes": 23958,
+    "sha256": "0223986e0ad729f19df7fc7d03c4a34619d7f8e867b16884f25035b8f9801191",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/roberbike/library/NoiseSensor/1.1.0/NoiseSensor-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/roberbike/library/NoiseSensor/1.1.0/NoiseSensor-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "roberbike/library/noise-monitor-i2c-slave/1.0.0/noise-monitor-i2c-slave-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "noise-monitor-i2c-slave-1.0.0.tar.gz",
+    "size_bytes": 22292,
+    "sha256": "b0805658a77079a4676e02144fdadc3d6f063f15f49e365d56f2ba5a0bb311fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/roberbike/library/noise-monitor-i2c-slave/1.0.0/noise-monitor-i2c-slave-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/roberbike/library/noise-monitor-i2c-slave/1.0.0/noise-monitor-i2c-slave-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/akhil-chaturvedi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "akhil-chaturvedi/library/CastMCU/0.1.1/CastMCU-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CastMCU-0.1.1.tar.gz",
+    "size_bytes": 34097,
+    "sha256": "62b8cf36b70f58cba4dc5a351486c0c67649da566a646577f30d95e2326a9d7a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/akhil-chaturvedi/library/CastMCU/0.1.1/CastMCU-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/akhil-chaturvedi/library/CastMCU/0.1.1/CastMCU-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "akhil-chaturvedi/library/CastMCU/0.1.2/CastMCU-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CastMCU-0.1.2.tar.gz",
+    "size_bytes": 39841,
+    "sha256": "18a0cd8ee8a5f56bee9e0644d65098f20750ab625537361eb9995abaa398e23f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/akhil-chaturvedi/library/CastMCU/0.1.2/CastMCU-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/akhil-chaturvedi/library/CastMCU/0.1.2/CastMCU-0.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

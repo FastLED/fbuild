@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nickgammon",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nickgammon/library/BigNumber/3.5/BigNumber-3.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BigNumber-3.5.tar.gz",
+    "size_bytes": 24018,
+    "sha256": "973167aad620948d9fe6c2420d44ca5003ec70642fa44a0a41388e7bb8c1e8fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nickgammon/library/BigNumber/3.5/BigNumber-3.5.tar.gz",
+     "https://dl.registry.platformio.org/download/nickgammon/library/BigNumber/3.5/BigNumber-3.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nickgammon/library/Regexp/0.1.0/Regexp-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Regexp-0.1.0.tar.gz",
+    "size_bytes": 10002,
+    "sha256": "23cf49dac85aedfaae5c82d76ecc0dc75134668a8084c655fc40f84803a7ffe1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nickgammon/library/Regexp/0.1.0/Regexp-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nickgammon/library/Regexp/0.1.0/Regexp-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

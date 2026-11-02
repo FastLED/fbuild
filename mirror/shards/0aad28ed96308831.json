@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dhruvacube",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dhruvacube/library/Led%207%20Segment/0.0.2/Led7Segment-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Led7Segment-0.0.2.tar.gz",
+    "size_bytes": 15497,
+    "sha256": "f4d01cec3bc346c2ee160d43bf6b0668a61f57041cbd0e389060d05ad61e42fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dhruvacube/library/Led%25207%2520Segment/0.0.2/Led7Segment-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dhruvacube/library/Led%207%20Segment/0.0.2/Led7Segment-0.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

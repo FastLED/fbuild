@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/andrey-m",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "andrey-m/library/DHT22%20C%7CC%2B%2B%20library%20for%20ESP32%20%28ESP-IDF%29/1.0.6/DHT22CC++libraryforESP32ESP-IDF-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DHT22CC++libraryforESP32ESP-IDF-1.0.6.tar.gz",
+    "size_bytes": 8452,
+    "sha256": "9f02543a60ad407713073788be4077ca62a099837595441fdf55a2ce8a0f9371",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/andrey-m/library/DHT22%2520C%257CC%252B%252B%2520library%2520for%2520ESP32%2520%2528ESP-IDF%2529/1.0.6/DHT22CC%2B%2BlibraryforESP32ESP-IDF-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/andrey-m/library/DHT22%20C%7CC%2B%2B%20library%20for%20ESP32%20%28ESP-IDF%29/1.0.6/DHT22CC%2B%2BlibraryforESP32ESP-IDF-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "andrey-m/library/LWMQTT%20library%20for%20ESP32%20%28ESP-IDF%29/1.0.0/LWMQTTlibraryforESP32ESP-IDF-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LWMQTTlibraryforESP32ESP-IDF-1.0.0.tar.gz",
+    "size_bytes": 18089,
+    "sha256": "d61785dba13d32f41a6379c4a91c2f33454d9d28b67731b2ca22aab7b281c59b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/andrey-m/library/LWMQTT%2520library%2520for%2520ESP32%2520%2528ESP-IDF%2529/1.0.0/LWMQTTlibraryforESP32ESP-IDF-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/andrey-m/library/LWMQTT%20library%20for%20ESP32%20%28ESP-IDF%29/1.0.0/LWMQTTlibraryforESP32ESP-IDF-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "andrey-m/library/MQTT%20library%20for%20ESP32%20%28ESP-IDF%29/1.0.0/MQTTlibraryforESP32ESP-IDF-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQTTlibraryforESP32ESP-IDF-1.0.0.tar.gz",
+    "size_bytes": 45673,
+    "sha256": "51642585ef00fb7d06c43bc009f0244c5bf7028827d798344ad9200276452eb4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/andrey-m/library/MQTT%2520library%2520for%2520ESP32%2520%2528ESP-IDF%2529/1.0.0/MQTTlibraryforESP32ESP-IDF-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/andrey-m/library/MQTT%20library%20for%20ESP32%20%28ESP-IDF%29/1.0.0/MQTTlibraryforESP32ESP-IDF-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

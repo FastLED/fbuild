@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dreed47",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dreed47/library/WiFiMQTTManager%20Library/1.0.2-beta/WiFiMQTTManagerLibrary-1.0.2-beta.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFiMQTTManagerLibrary-1.0.2-beta.tar.gz",
+    "size_bytes": 22574,
+    "sha256": "2b8ecb631940eee92a24d8c30f177d002ea1ea4b793251ebf8e0d28744c02798",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dreed47/library/WiFiMQTTManager%2520Library/1.0.2-beta/WiFiMQTTManagerLibrary-1.0.2-beta.tar.gz",
+     "https://dl.registry.platformio.org/download/dreed47/library/WiFiMQTTManager%20Library/1.0.2-beta/WiFiMQTTManagerLibrary-1.0.2-beta.tar.gz"
+    ]
+   }
+  }
+ ]
+}

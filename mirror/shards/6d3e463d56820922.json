@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gonya707",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gonya707/library/AD9850/0.0.0-alpha+sha.7f7d933f46/AD9850-0.0.0-alphasha.7f7d933f46.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AD9850-0.0.0-alphasha.7f7d933f46.tar.gz",
+    "size_bytes": 6233,
+    "sha256": "bf363f9a4546c47fcb1ad030f6192d319c5dd8284642916eadc433e39f26afb2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gonya707/library/AD9850/0.0.0-alpha%2Bsha.7f7d933f46/AD9850-0.0.0-alphasha.7f7d933f46.tar.gz",
+     "https://dl.registry.platformio.org/download/gonya707/library/AD9850/0.0.0-alpha%2Bsha.7f7d933f46/AD9850-0.0.0-alphasha.7f7d933f46.tar.gz"
+    ]
+   }
+  }
+ ]
+}

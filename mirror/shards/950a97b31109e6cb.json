@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pedroalbuquerque",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pedroalbuquerque/library/ESP32WebServer/1.0/ESP32WebServer-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32WebServer-1.0.tar.gz",
+    "size_bytes": 13066,
+    "sha256": "3dd79a00cba9553a51b7817e8ec3164c4562b9ba5a0ed4bf0a229448326dfb22",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pedroalbuquerque/library/ESP32WebServer/1.0/ESP32WebServer-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pedroalbuquerque/library/ESP32WebServer/1.0/ESP32WebServer-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-mreda",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-mreda/library/Thingspeak/0.0.0+sha.0c196a572d6b/Thingspeak-0.0.0+sha.0c196a572d6b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Thingspeak-0.0.0+sha.0c196a572d6b.tar.gz",
+    "size_bytes": 1107,
+    "sha256": "c324c1d03e204403a7dac09b00c32ae79d6e9b46e67f471ec267c2529fe6de5e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mreda/library/Thingspeak/0.0.0%2Bsha.0c196a572d6b/Thingspeak-0.0.0%2Bsha.0c196a572d6b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mreda/library/Thingspeak/0.0.0%2Bsha.0c196a572d6b/Thingspeak-0.0.0%2Bsha.0c196a572d6b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-mreda/library/WatchdogTimer/0.0.0+sha.1b576cfa3f49/WatchdogTimer-0.0.0+sha.1b576cfa3f49.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WatchdogTimer-0.0.0+sha.1b576cfa3f49.tar.gz",
+    "size_bytes": 1110,
+    "sha256": "39b8f95d3667a68884954426ad5b3ac0b3564b2c5844f75fcf9eeb9285352a50",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mreda/library/WatchdogTimer/0.0.0%2Bsha.1b576cfa3f49/WatchdogTimer-0.0.0%2Bsha.1b576cfa3f49.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mreda/library/WatchdogTimer/0.0.0%2Bsha.1b576cfa3f49/WatchdogTimer-0.0.0%2Bsha.1b576cfa3f49.tar.gz"
+    ]
+   }
+  }
+ ]
+}

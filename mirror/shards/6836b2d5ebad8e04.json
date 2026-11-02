@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/yashi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "yashi/library/Servo328/1.0.0/Servo328-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Servo328-1.0.0.tar.gz",
+    "size_bytes": 8891,
+    "sha256": "d6962963b04dbff7d47e16dbaea5daf62909c5579d8bb28c65b1e8af49cdd623",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yashi/library/Servo328/1.0.0/Servo328-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/yashi/library/Servo328/1.0.0/Servo328-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

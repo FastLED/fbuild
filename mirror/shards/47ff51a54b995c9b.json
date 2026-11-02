@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/adish0016",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "adish0016/library/DHT118266/1.0.16/DHT118266-1.0.16.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DHT118266-1.0.16.tar.gz",
+    "size_bytes": 12982,
+    "sha256": "4264b17742273d7c15a3136eededef84d3103e58a61524ef0f8d9ee3013865a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/adish0016/library/DHT118266/1.0.16/DHT118266-1.0.16.tar.gz",
+     "https://dl.registry.platformio.org/download/adish0016/library/DHT118266/1.0.16/DHT118266-1.0.16.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "adish0016/library/dht11esp8266/1.0.10/dht11esp8266-1.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "dht11esp8266-1.0.10.tar.gz",
+    "size_bytes": 11806,
+    "sha256": "0c9c1ae1ea52e093c9b734260d91b37c66067bf32b37b4ad5bb666f462c314d7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/adish0016/library/dht11esp8266/1.0.10/dht11esp8266-1.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/adish0016/library/dht11esp8266/1.0.10/dht11esp8266-1.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "adish0016/library/dht11esp8266examples/1.0.10/dht11esp8266examples-1.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "dht11esp8266examples-1.0.10.tar.gz",
+    "size_bytes": 15456,
+    "sha256": "f9df23387ed464a174e1c9c191e220480f8af29de89d605e9784fb79913e9a9f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/adish0016/library/dht11esp8266examples/1.0.10/dht11esp8266examples-1.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/adish0016/library/dht11esp8266examples/1.0.10/dht11esp8266examples-1.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "adish0016/library/esp826611/1.0.16/esp826611-1.0.16.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp826611-1.0.16.tar.gz",
+    "size_bytes": 13952,
+    "sha256": "abb866b6447853789d16f5d5543834f80aa29b149cefb1780248da7b9a9a7c75",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/adish0016/library/esp826611/1.0.16/esp826611-1.0.16.tar.gz",
+     "https://dl.registry.platformio.org/download/adish0016/library/esp826611/1.0.16/esp826611-1.0.16.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "adish0016/library/servodht11/1.0.10/servodht11-1.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "servodht11-1.0.10.tar.gz",
+    "size_bytes": 12943,
+    "sha256": "a4e97fb0b7dd47f715c73eb7830db1708ac829e2314c269e7c455e4228328fd7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/adish0016/library/servodht11/1.0.10/servodht11-1.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/adish0016/library/servodht11/1.0.10/servodht11-1.0.10.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/openhab-nodes",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "openhab-nodes/library/WakaamaNode/1.0.2/WakaamaNode-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WakaamaNode-1.0.2.tar.gz",
+    "size_bytes": 822591,
+    "sha256": "1b29a8e8e5d2857bf5907a0d36762a891de487229e7fb0809d5385114a25ce02",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/openhab-nodes/library/WakaamaNode/1.0.2/WakaamaNode-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/openhab-nodes/library/WakaamaNode/1.0.2/WakaamaNode-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

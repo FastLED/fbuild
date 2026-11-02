@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-38domo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-38domo/library/SDFileSystem_Warning_Fixed/0.0.0+sha.03a26c21cdaf/SDFileSystem_Warning_Fixed-0.0.0+sha.03a26c21cdaf.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SDFileSystem_Warning_Fixed-0.0.0+sha.03a26c21cdaf.tar.gz",
+    "size_bytes": 10351,
+    "sha256": "78fbd11c284fda373b4013966850a612916762edfd16682cd00b64b372523535",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-38domo/library/SDFileSystem_Warning_Fixed/0.0.0%2Bsha.03a26c21cdaf/SDFileSystem_Warning_Fixed-0.0.0%2Bsha.03a26c21cdaf.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-38domo/library/SDFileSystem_Warning_Fixed/0.0.0%2Bsha.03a26c21cdaf/SDFileSystem_Warning_Fixed-0.0.0%2Bsha.03a26c21cdaf.tar.gz"
+    ]
+   }
+  }
+ ]
+}

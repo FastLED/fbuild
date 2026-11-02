@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fourier-git",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fourier-git/library/ADXL372/0.7.1/ADXL372-0.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADXL372-0.7.1.tar.gz",
+    "size_bytes": 20911,
+    "sha256": "d3a76d2ff4d06fa149129dc9c5d29dd4b1c2f8d3f6b89a3709b72f44903573a3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fourier-git/library/ADXL372/0.7.1/ADXL372-0.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fourier-git/library/ADXL372/0.7.1/ADXL372-0.7.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

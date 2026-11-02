@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/chrisjoyce911",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "chrisjoyce911/library/esp32FOTA/0.1.6/esp32FOTA-0.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32FOTA-0.1.6.tar.gz",
+    "size_bytes": 16956,
+    "sha256": "ad86808b83b4515ae4feda2c87d9cb8a9ee37518e6042d3cff179c98551062a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrisjoyce911/library/esp32FOTA/0.1.6/esp32FOTA-0.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/chrisjoyce911/library/esp32FOTA/0.1.6/esp32FOTA-0.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrisjoyce911/library/esp32FOTA/0.2.9/esp32FOTA-0.2.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32FOTA-0.2.9.tar.gz",
+    "size_bytes": 37309,
+    "sha256": "b2d069c0df82a94bc9831e2e49d473206ce42e6265623eb3e5de6891e16df00e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrisjoyce911/library/esp32FOTA/0.2.9/esp32FOTA-0.2.9.tar.gz",
+     "https://dl.registry.platformio.org/download/chrisjoyce911/library/esp32FOTA/0.2.9/esp32FOTA-0.2.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrisjoyce911/library/esp32FOTA/0.3.0/esp32FOTA-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32FOTA-0.3.0.tar.gz",
+    "size_bytes": 38478,
+    "sha256": "5a135d6a31bdb308b71b1f763a0420ff05aa2ccf858e73ec760cf135242e1cc8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrisjoyce911/library/esp32FOTA/0.3.0/esp32FOTA-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chrisjoyce911/library/esp32FOTA/0.3.0/esp32FOTA-0.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

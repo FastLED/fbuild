@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-lbrandl",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-lbrandl/library/KeplerBRAIN_V3_AHRS/0.0.0+sha.3e169a8299d4/KeplerBRAIN_V3_AHRS-0.0.0+sha.3e169a8299d4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KeplerBRAIN_V3_AHRS-0.0.0+sha.3e169a8299d4.tar.gz",
+    "size_bytes": 43496,
+    "sha256": "9193b3c794fa34044b2046981c09fda69afd3342a577e0e65f773ab21aca9ed6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-lbrandl/library/KeplerBRAIN_V3_AHRS/0.0.0%2Bsha.3e169a8299d4/KeplerBRAIN_V3_AHRS-0.0.0%2Bsha.3e169a8299d4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-lbrandl/library/KeplerBRAIN_V3_AHRS/0.0.0%2Bsha.3e169a8299d4/KeplerBRAIN_V3_AHRS-0.0.0%2Bsha.3e169a8299d4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-lbrandl/library/KeplerBRAIN_V4/0.0.0+sha.5953e6862d35/KeplerBRAIN_V4-0.0.0+sha.5953e6862d35.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KeplerBRAIN_V4-0.0.0+sha.5953e6862d35.tar.gz",
+    "size_bytes": 5338,
+    "sha256": "846adfd70f73974763dad025a51773f6f518ac8dd62dd78ab991e107e27e7392",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-lbrandl/library/KeplerBRAIN_V4/0.0.0%2Bsha.5953e6862d35/KeplerBRAIN_V4-0.0.0%2Bsha.5953e6862d35.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-lbrandl/library/KeplerBRAIN_V4/0.0.0%2Bsha.5953e6862d35/KeplerBRAIN_V4-0.0.0%2Bsha.5953e6862d35.tar.gz"
+    ]
+   }
+  }
+ ]
+}

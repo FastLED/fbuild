@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mycamel222",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mycamel222/library/AbleTP/1.0.1/AbleTP-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AbleTP-1.0.1.tar.gz",
+    "size_bytes": 44276,
+    "sha256": "52810506e86a066674b0b462e6213460c18b01cbe1373356948d67c645420e6e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mycamel222/library/AbleTP/1.0.1/AbleTP-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mycamel222/library/AbleTP/1.0.1/AbleTP-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

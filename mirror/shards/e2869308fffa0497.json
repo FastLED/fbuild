@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/thotro",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "thotro/library/DW1000/0.9/DW1000-0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DW1000-0.9.tar.gz",
+    "size_bytes": 50919,
+    "sha256": "ec49e8db31cc0e13ab3b53f970f805d3a6708efc23b84895fd112ffc2b35fbf2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thotro/library/DW1000/0.9/DW1000-0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/thotro/library/DW1000/0.9/DW1000-0.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

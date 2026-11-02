@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ilyabrin",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ilyabrin/library/ci18n/2.18.0/ci18n-2.18.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ci18n-2.18.0.tar.gz",
+    "size_bytes": 63643,
+    "sha256": "7d47d500b759e40adfdea962f87f78f88cfc1f28a22ebb18e051ca56e1e0d666",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ilyabrin/library/ci18n/2.18.0/ci18n-2.18.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ilyabrin/library/ci18n/2.18.0/ci18n-2.18.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

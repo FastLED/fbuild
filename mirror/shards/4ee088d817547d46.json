@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/eis-interbot",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "eis-interbot/library/EIS_INTERBOT/1.0.3/EIS_INTERBOT-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EIS_INTERBOT-1.0.3.tar.gz",
+    "size_bytes": 160701,
+    "sha256": "136673eb46ea374fd98ebc1fde3a13a5222d5bd810b9fb850eb1092dab07eddc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eis-interbot/library/EIS_INTERBOT/1.0.3/EIS_INTERBOT-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/eis-interbot/library/EIS_INTERBOT/1.0.3/EIS_INTERBOT-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "eis-interbot/library/EIS_INTERBOT/1.0.4/EIS_INTERBOT-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EIS_INTERBOT-1.0.4.tar.gz",
+    "size_bytes": 160774,
+    "sha256": "65d95c266953a858492a57709d93f18304b34f6582854a95788afed102e97967",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eis-interbot/library/EIS_INTERBOT/1.0.4/EIS_INTERBOT-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/eis-interbot/library/EIS_INTERBOT/1.0.4/EIS_INTERBOT-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "eis-interbot/library/EIS_INTERBOT/1.0.5/EIS_INTERBOT-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EIS_INTERBOT-1.0.5.tar.gz",
+    "size_bytes": 162679,
+    "sha256": "7442367deb5a3509d9c1e26a9c43161ad5bdc2920b4fdf716bd9f5773151514e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eis-interbot/library/EIS_INTERBOT/1.0.5/EIS_INTERBOT-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/eis-interbot/library/EIS_INTERBOT/1.0.5/EIS_INTERBOT-1.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

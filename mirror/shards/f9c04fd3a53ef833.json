@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/xavierbrassoud",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "xavierbrassoud/library/Epson_PNL_CE02/1.0.1/Epson_PNL_CE02-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Epson_PNL_CE02-1.0.1.tar.gz",
+    "size_bytes": 14878,
+    "sha256": "0751fdb54b5546f492c2405f80335da9f69e58cc73dba93109d884c8da4d843d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xavierbrassoud/library/Epson_PNL_CE02/1.0.1/Epson_PNL_CE02-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/xavierbrassoud/library/Epson_PNL_CE02/1.0.1/Epson_PNL_CE02-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

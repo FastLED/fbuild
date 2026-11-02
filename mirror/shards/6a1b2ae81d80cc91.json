@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-chiggayeuh",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-chiggayeuh/library/APDS9960%20GestureSensor/0.0.0+sha.49ae62548910/APDS9960GestureSensor-0.0.0+sha.49ae62548910.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "APDS9960GestureSensor-0.0.0+sha.49ae62548910.tar.gz",
+    "size_bytes": 11392,
+    "sha256": "80057e7d27e687424328159a825668f49de4ec43635e5973c6d86e9091e44a7f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-chiggayeuh/library/APDS9960%2520GestureSensor/0.0.0%2Bsha.49ae62548910/APDS9960GestureSensor-0.0.0%2Bsha.49ae62548910.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-chiggayeuh/library/APDS9960%20GestureSensor/0.0.0%2Bsha.49ae62548910/APDS9960GestureSensor-0.0.0%2Bsha.49ae62548910.tar.gz"
+    ]
+   }
+  }
+ ]
+}

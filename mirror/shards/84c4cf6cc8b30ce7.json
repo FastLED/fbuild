@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rpault",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rpault/library/AdvancedRotaryEncoder/1.0.1/AdvancedRotaryEncoder-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AdvancedRotaryEncoder-1.0.1.tar.gz",
+    "size_bytes": 8488,
+    "sha256": "deda940818a220eebbec12abb4682de35a41276d8bccd1a85e290b33ae7966d5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rpault/library/AdvancedRotaryEncoder/1.0.1/AdvancedRotaryEncoder-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/rpault/library/AdvancedRotaryEncoder/1.0.1/AdvancedRotaryEncoder-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

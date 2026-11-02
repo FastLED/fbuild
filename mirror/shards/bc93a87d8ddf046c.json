@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/featherfly",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "featherfly/library/JQ6500_Serial/1.0.0/JQ6500_Serial-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JQ6500_Serial-1.0.0.tar.gz",
+    "size_bytes": 12740,
+    "sha256": "73a17e0cf581bcb295b7c3d0d296b489bbb8499987da1ab18511a9763e723a13",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/featherfly/library/JQ6500_Serial/1.0.0/JQ6500_Serial-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/featherfly/library/JQ6500_Serial/1.0.0/JQ6500_Serial-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "featherfly/library/LCDWIKI%20SPI%20Library/1.0/LCDWIKISPILibrary-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCDWIKISPILibrary-1.0.tar.gz",
+    "size_bytes": 34049,
+    "sha256": "1b81044b540083212ad9077da651e25d4ee39bea26ad0698cb4f309ae1476e39",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/featherfly/library/LCDWIKI%2520SPI%2520Library/1.0/LCDWIKISPILibrary-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/featherfly/library/LCDWIKI%20SPI%20Library/1.0/LCDWIKISPILibrary-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "featherfly/library/SoftwareSerial/1.0/SoftwareSerial-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SoftwareSerial-1.0.tar.gz",
+    "size_bytes": 8250,
+    "sha256": "bc449732f13e65ac804793e30557e54dc87f5d45ef15a3c9d1653b1130229a87",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/featherfly/library/SoftwareSerial/1.0/SoftwareSerial-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/featherfly/library/SoftwareSerial/1.0/SoftwareSerial-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

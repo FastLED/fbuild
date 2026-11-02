@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-robertfischer",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-robertfischer/library/DS3231/0.0.0+sha.f56cd929da3f/DS3231-0.0.0+sha.f56cd929da3f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS3231-0.0.0+sha.f56cd929da3f.tar.gz",
+    "size_bytes": 3464,
+    "sha256": "1c65f8149812950542f13f4dc4f2be3ebbf6c8b18791bfb13a99bcdecf4fcef3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-robertfischer/library/DS3231/0.0.0%2Bsha.f56cd929da3f/DS3231-0.0.0%2Bsha.f56cd929da3f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-robertfischer/library/DS3231/0.0.0%2Bsha.f56cd929da3f/DS3231-0.0.0%2Bsha.f56cd929da3f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-robertfischer/library/TFTLCD/0.0.0+sha.fe9a2e0ce659/TFTLCD-0.0.0+sha.fe9a2e0ce659.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFTLCD-0.0.0+sha.fe9a2e0ce659.tar.gz",
+    "size_bytes": 32964,
+    "sha256": "8801f6c29a744c63029182841209b3204b6554842aba44a7a81d358fcdc2d295",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-robertfischer/library/TFTLCD/0.0.0%2Bsha.fe9a2e0ce659/TFTLCD-0.0.0%2Bsha.fe9a2e0ce659.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-robertfischer/library/TFTLCD/0.0.0%2Bsha.fe9a2e0ce659/TFTLCD-0.0.0%2Bsha.fe9a2e0ce659.tar.gz"
+    ]
+   }
+  }
+ ]
+}

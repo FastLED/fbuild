@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/digitalfen",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "digitalfen/library/EmuRTC/1.0.0/EmuRTC-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmuRTC-1.0.0.tar.gz",
+    "size_bytes": 4728,
+    "sha256": "522b191aa68f1d34ce18b00e0724e238e55193502ad5fa605485e1f5f85c98fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalfen/library/EmuRTC/1.0.0/EmuRTC-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalfen/library/EmuRTC/1.0.0/EmuRTC-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalfen/library/PseudoDateTime/1.0.0/PseudoDateTime-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PseudoDateTime-1.0.0.tar.gz",
+    "size_bytes": 4510,
+    "sha256": "efedcd9cb208f48360ee55a55df37ae14099f25f4389d8192feb16587b9a0dd5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalfen/library/PseudoDateTime/1.0.0/PseudoDateTime-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalfen/library/PseudoDateTime/1.0.0/PseudoDateTime-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

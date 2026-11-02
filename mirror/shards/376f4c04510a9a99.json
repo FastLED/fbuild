@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ndomx",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ndomx/library/MCP23017%20Port%20Expander/1.0.3/MCP23017PortExpander-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP23017PortExpander-1.0.3.tar.gz",
+    "size_bytes": 5945,
+    "sha256": "7135a247ad1e47258d1cb23f0bfd9350701aff607550d960a4c0f1546be68d84",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ndomx/library/MCP23017%2520Port%2520Expander/1.0.3/MCP23017PortExpander-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/ndomx/library/MCP23017%20Port%20Expander/1.0.3/MCP23017PortExpander-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

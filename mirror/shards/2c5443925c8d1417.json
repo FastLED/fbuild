@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/robotistan",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "robotistan/library/PicoBricks-for-ESP32/1.0.0/PicoBricks-for-ESP32-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PicoBricks-for-ESP32-1.0.0.tar.gz",
+    "size_bytes": 18153,
+    "sha256": "b8102f64688efe4cd87902fe071158db16e727b63762602823a7b4922ed12d88",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robotistan/library/PicoBricks-for-ESP32/1.0.0/PicoBricks-for-ESP32-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/robotistan/library/PicoBricks-for-ESP32/1.0.0/PicoBricks-for-ESP32-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robotistan/library/PicoBricks-for-ESP32/1.0.1/PicoBricks-for-ESP32-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PicoBricks-for-ESP32-1.0.1.tar.gz",
+    "size_bytes": 18756,
+    "sha256": "bd707b97e1c9d436788c13d7bbf0df91db7d1693e4c399c8bced8f4d024f890b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robotistan/library/PicoBricks-for-ESP32/1.0.1/PicoBricks-for-ESP32-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/robotistan/library/PicoBricks-for-ESP32/1.0.1/PicoBricks-for-ESP32-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robotistan/library/PicoBricks-for-RPico/1.0.1/PicoBricks-for-RPico-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PicoBricks-for-RPico-1.0.1.tar.gz",
+    "size_bytes": 18229,
+    "sha256": "a908b9b8172f1936e8d4318a4f1c4de4d7159edd557c50af2e85b77ec0b9f0da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robotistan/library/PicoBricks-for-RPico/1.0.1/PicoBricks-for-RPico-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/robotistan/library/PicoBricks-for-RPico/1.0.1/PicoBricks-for-RPico-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

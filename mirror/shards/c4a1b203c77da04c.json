@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cgrassin",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cgrassin/library/M62429%20Volume%20Control%20Library/1.0.1/M62429VolumeControlLibrary-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M62429VolumeControlLibrary-1.0.1.tar.gz",
+    "size_bytes": 2694,
+    "sha256": "fefadb0e44d68568d7f4004c6757da6348b53b2c8fbaae98f92ea128a3a9e07a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cgrassin/library/M62429%2520Volume%2520Control%2520Library/1.0.1/M62429VolumeControlLibrary-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cgrassin/library/M62429%20Volume%20Control%20Library/1.0.1/M62429VolumeControlLibrary-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

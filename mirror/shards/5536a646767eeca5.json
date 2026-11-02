@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/plotly",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "plotly/library/Plotly-CC3000/0.0.0-broken/Plotly-CC3000-0.0.0-alphasha.38ee5b1916.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Plotly-CC3000-0.0.0-alphasha.38ee5b1916.tar.gz",
+    "size_bytes": 549,
+    "sha256": "b7a31c84b087fcb48deade05e26ac0a1427456aee24b556073ba4517912bfcb7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/plotly/library/Plotly-CC3000/0.0.0-broken/Plotly-CC3000-0.0.0-alphasha.38ee5b1916.tar.gz",
+     "https://dl.registry.platformio.org/download/plotly/library/Plotly-CC3000/0.0.0-broken/Plotly-CC3000-0.0.0-alphasha.38ee5b1916.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "plotly/library/Plotly-Ethernet/0.0.0-broken/Plotly-Ethernet-0.0.0-alphasha.38ee5b1916.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Plotly-Ethernet-0.0.0-alphasha.38ee5b1916.tar.gz",
+    "size_bytes": 490,
+    "sha256": "9ce982ee789e4a3c781a8065488b2c8b12245db76600f813249441d781be9ae0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/plotly/library/Plotly-Ethernet/0.0.0-broken/Plotly-Ethernet-0.0.0-alphasha.38ee5b1916.tar.gz",
+     "https://dl.registry.platformio.org/download/plotly/library/Plotly-Ethernet/0.0.0-broken/Plotly-Ethernet-0.0.0-alphasha.38ee5b1916.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "plotly/library/Plotly-GSM/0.0.0-broken/Plotly-GSM-0.0.0-alphasha.38ee5b1916.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Plotly-GSM-0.0.0-alphasha.38ee5b1916.tar.gz",
+    "size_bytes": 484,
+    "sha256": "b1ba4b70425bea67a5d6aa55a8f1702481ce65194f634d6b689f558a97f5d4bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/plotly/library/Plotly-GSM/0.0.0-broken/Plotly-GSM-0.0.0-alphasha.38ee5b1916.tar.gz",
+     "https://dl.registry.platformio.org/download/plotly/library/Plotly-GSM/0.0.0-broken/Plotly-GSM-0.0.0-alphasha.38ee5b1916.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "plotly/library/Plotly-WiFi/0.0.0-broken/Plotly-WiFi-0.0.0-alphasha.38ee5b1916.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Plotly-WiFi-0.0.0-alphasha.38ee5b1916.tar.gz",
+    "size_bytes": 491,
+    "sha256": "f3a787ea28232071e489335aa78595646b01b7de10bc6af24bf651640420d89e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/plotly/library/Plotly-WiFi/0.0.0-broken/Plotly-WiFi-0.0.0-alphasha.38ee5b1916.tar.gz",
+     "https://dl.registry.platformio.org/download/plotly/library/Plotly-WiFi/0.0.0-broken/Plotly-WiFi-0.0.0-alphasha.38ee5b1916.tar.gz"
+    ]
+   }
+  }
+ ]
+}

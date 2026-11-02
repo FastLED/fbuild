@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pvannatto",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pvannatto/library/Switch2_lib/1.0/Switch2_lib-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Switch2_lib-1.0.tar.gz",
+    "size_bytes": 15437,
+    "sha256": "de42acb43898beaf5a535c1224babacb35c3e36b4e05a5cd914077a2e3f77c9a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pvannatto/library/Switch2_lib/1.0/Switch2_lib-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pvannatto/library/Switch2_lib/1.0/Switch2_lib-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

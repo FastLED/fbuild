@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/neu-rah",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "neu-rah/library/ArduinoMenu%20library/4.21.5/ArduinoMenulibrary-4.21.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoMenulibrary-4.21.5.tar.gz",
+    "size_bytes": 167650,
+    "sha256": "19cd8cd3ec9f24038cc6924f46883f97e1ffe6e24df2b57247a4a766b0a5e08c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/neu-rah/library/ArduinoMenu%2520library/4.21.5/ArduinoMenulibrary-4.21.5.tar.gz",
+     "https://dl.registry.platformio.org/download/neu-rah/library/ArduinoMenu%20library/4.21.5/ArduinoMenulibrary-4.21.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "neu-rah/library/Dump/0.0.0-alpha+sha.e15feb0af9/Dump-0.0.0-alphasha.e15feb0af9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Dump-0.0.0-alphasha.e15feb0af9.tar.gz",
+    "size_bytes": 2061,
+    "sha256": "56f340106e268bfe29a5ac2a204ec82456ba274be293b6d004d6ea7b8b2dc396",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/neu-rah/library/Dump/0.0.0-alpha%2Bsha.e15feb0af9/Dump-0.0.0-alphasha.e15feb0af9.tar.gz",
+     "https://dl.registry.platformio.org/download/neu-rah/library/Dump/0.0.0-alpha%2Bsha.e15feb0af9/Dump-0.0.0-alphasha.e15feb0af9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "neu-rah/library/HAPI/0.5.3/HAPI-0.5.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HAPI-0.5.3.tar.gz",
+    "size_bytes": 24910,
+    "sha256": "17a9450cf33d449e427b6acb5a12da564e2f3599493905be89f70c8fac18688d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/neu-rah/library/HAPI/0.5.3/HAPI-0.5.3.tar.gz",
+     "https://dl.registry.platformio.org/download/neu-rah/library/HAPI/0.5.3/HAPI-0.5.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "neu-rah/library/PCINT%20r-site.net/4.0.8/PCINTr-site.net-4.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCINTr-site.net-4.0.8.tar.gz",
+    "size_bytes": 6119,
+    "sha256": "85028ec18a5c86bba5f28268d0578dbad08fa97373977fc539719b32b27a48f9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/neu-rah/library/PCINT%2520r-site.net/4.0.8/PCINTr-site.net-4.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/neu-rah/library/PCINT%20r-site.net/4.0.8/PCINTr-site.net-4.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "neu-rah/library/Yolanda/0.3.0/Yolanda-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Yolanda-0.3.0.tar.gz",
+    "size_bytes": 16960,
+    "sha256": "21be1e054ddfd6b60b29a045d1641eb8986421c4248c877041146dde21b1952a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/neu-rah/library/Yolanda/0.3.0/Yolanda-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/neu-rah/library/Yolanda/0.3.0/Yolanda-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "neu-rah/library/lpp/0.1.2/lpp-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lpp-0.1.2.tar.gz",
+    "size_bytes": 18616,
+    "sha256": "8a3f29308505901002ce8761fccb01e3e080f2dfa18bdd883276fd23916a4703",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/neu-rah/library/lpp/0.1.2/lpp-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/neu-rah/library/lpp/0.1.2/lpp-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "neu-rah/library/streamFlow/0.0.0-alpha+sha.bf16ce8926/streamFlow-0.0.0-alphasha.bf16ce8926.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "streamFlow-0.0.0-alphasha.bf16ce8926.tar.gz",
+    "size_bytes": 1586,
+    "sha256": "f2028e279f8df8b4d7ae60f69725512f8c4435894886bb43237607c132c6a124",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/neu-rah/library/streamFlow/0.0.0-alpha%2Bsha.bf16ce8926/streamFlow-0.0.0-alphasha.bf16ce8926.tar.gz",
+     "https://dl.registry.platformio.org/download/neu-rah/library/streamFlow/0.0.0-alpha%2Bsha.bf16ce8926/streamFlow-0.0.0-alphasha.bf16ce8926.tar.gz"
+    ]
+   }
+  }
+ ]
+}

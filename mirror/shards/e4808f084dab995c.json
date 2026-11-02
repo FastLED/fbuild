@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-atkinz117",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-atkinz117/library/MU2Class/0.0.0+sha.a7d413a2889d/MU2Class-0.0.0+sha.a7d413a2889d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MU2Class-0.0.0+sha.a7d413a2889d.tar.gz",
+    "size_bytes": 1812,
+    "sha256": "250ce7123cd339bc30e71e8bfa059d0edc97794dcc009c56db08dc233faa3368",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-atkinz117/library/MU2Class/0.0.0%2Bsha.a7d413a2889d/MU2Class-0.0.0%2Bsha.a7d413a2889d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-atkinz117/library/MU2Class/0.0.0%2Bsha.a7d413a2889d/MU2Class-0.0.0%2Bsha.a7d413a2889d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

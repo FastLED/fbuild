@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-daid",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-daid/library/EasyCAT_lib/0.0.0+sha.e0fc1b098ce8/EasyCAT_lib-0.0.0+sha.e0fc1b098ce8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyCAT_lib-0.0.0+sha.e0fc1b098ce8.tar.gz",
+    "size_bytes": 14238,
+    "sha256": "e805dd02551fe3562d4a9ee69550706f92b1e803661873338c1629c96c1a6009",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-daid/library/EasyCAT_lib/0.0.0%2Bsha.e0fc1b098ce8/EasyCAT_lib-0.0.0%2Bsha.e0fc1b098ce8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-daid/library/EasyCAT_lib/0.0.0%2Bsha.e0fc1b098ce8/EasyCAT_lib-0.0.0%2Bsha.e0fc1b098ce8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

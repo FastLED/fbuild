@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dhananjayaprabath",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dhananjayaprabath/library/WiFiProvision/1.0.0/WiFiProvision-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFiProvision-1.0.0.tar.gz",
+    "size_bytes": 2929,
+    "sha256": "ad96bfff423dde8e9f776c48f5ec7545cd2febf76c4799e40a839d4bf7065422",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dhananjayaprabath/library/WiFiProvision/1.0.0/WiFiProvision-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dhananjayaprabath/library/WiFiProvision/1.0.0/WiFiProvision-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

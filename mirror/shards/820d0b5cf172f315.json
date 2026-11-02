@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/italo-coelho",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "italo-coelho/library/Dimmer_ITC/1.1.0/Dimmer_ITC-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Dimmer_ITC-1.1.0.tar.gz",
+    "size_bytes": 18427,
+    "sha256": "e5ec41daf8dad345237aaf41cd340f6ae09b07506f31b9dbc8716cb7a73b7aa5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/italo-coelho/library/Dimmer_ITC/1.1.0/Dimmer_ITC-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/italo-coelho/library/Dimmer_ITC/1.1.0/Dimmer_ITC-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "italo-coelho/library/Dimmer_ITC/1.1.1/Dimmer_ITC-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Dimmer_ITC-1.1.1.tar.gz",
+    "size_bytes": 18462,
+    "sha256": "2ccf74ea9e7f18fd1b975a3c0a179aa5de080d85e9d358b78534854563a22f7b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/italo-coelho/library/Dimmer_ITC/1.1.1/Dimmer_ITC-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/italo-coelho/library/Dimmer_ITC/1.1.1/Dimmer_ITC-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "italo-coelho/library/InverterWEG/1.1.0/InverterWEG-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "InverterWEG-1.1.0.tar.gz",
+    "size_bytes": 7115,
+    "sha256": "46136087975b3b895074ee262c620f21fff83b691fde5b05c6a4aa049b9e5797",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/italo-coelho/library/InverterWEG/1.1.0/InverterWEG-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/italo-coelho/library/InverterWEG/1.1.0/InverterWEG-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "italo-coelho/library/KukaVar/1.0.5/KukaVar-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KukaVar-1.0.5.tar.gz",
+    "size_bytes": 5311,
+    "sha256": "c6062881f3a7517cbda35166349fb6b4127b45c91e945c79a2655ace0062a024",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/italo-coelho/library/KukaVar/1.0.5/KukaVar-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/italo-coelho/library/KukaVar/1.0.5/KukaVar-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "italo-coelho/library/UpdateOTW/1.0.1/UpdateOTW-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UpdateOTW-1.0.1.tar.gz",
+    "size_bytes": 83961,
+    "sha256": "e9d1fb47b2fe4168d2f4e40162227b0ea6ba64064a5108d094fe37f3d338e8e3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/italo-coelho/library/UpdateOTW/1.0.1/UpdateOTW-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/italo-coelho/library/UpdateOTW/1.0.1/UpdateOTW-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "italo-coelho/library/UpdateOTW/1.1.0/UpdateOTW-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UpdateOTW-1.1.0.tar.gz",
+    "size_bytes": 91253,
+    "sha256": "a74787026229d02f33158214a045ccc2752c44bdd682b842247b70daf79f6d49",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/italo-coelho/library/UpdateOTW/1.1.0/UpdateOTW-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/italo-coelho/library/UpdateOTW/1.1.0/UpdateOTW-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "italo-coelho/library/pushButton/1.0.6/pushButton-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pushButton-1.0.6.tar.gz",
+    "size_bytes": 2854,
+    "sha256": "1192f1f354d3851d5da08e83e79697cdee12759093bbf2a1a3c624d89d86a6df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/italo-coelho/library/pushButton/1.0.6/pushButton-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/italo-coelho/library/pushButton/1.0.6/pushButton-1.0.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,126 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-sillevl",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-sillevl/library/EmbUnit/0.0.0+sha.bbc0d658b7eb/EmbUnit-0.0.0+sha.bbc0d658b7eb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmbUnit-0.0.0+sha.bbc0d658b7eb.tar.gz",
+    "size_bytes": 7167,
+    "sha256": "f38c18323f1da54e836c4690c66f452a7328a0c51b2698455580b30063778b8d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sillevl/library/EmbUnit/0.0.0%2Bsha.bbc0d658b7eb/EmbUnit-0.0.0%2Bsha.bbc0d658b7eb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sillevl/library/EmbUnit/0.0.0%2Bsha.bbc0d658b7eb/EmbUnit-0.0.0%2Bsha.bbc0d658b7eb.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sillevl/library/HMC5583L/0.0.0+sha.097089f0feb1/HMC5583L-0.0.0+sha.097089f0feb1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HMC5583L-0.0.0+sha.097089f0feb1.tar.gz",
+    "size_bytes": 1316,
+    "sha256": "1e9744d19f0d4f85674a14cd39dba2dd7734c3157b0f695944decbfae1e77d3c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sillevl/library/HMC5583L/0.0.0%2Bsha.097089f0feb1/HMC5583L-0.0.0%2Bsha.097089f0feb1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sillevl/library/HMC5583L/0.0.0%2Bsha.097089f0feb1/HMC5583L-0.0.0%2Bsha.097089f0feb1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sillevl/library/RGB-fun/0.0.0+sha.d10cfeb2f18e/RGB-fun-0.0.0+sha.d10cfeb2f18e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RGB-fun-0.0.0+sha.d10cfeb2f18e.tar.gz",
+    "size_bytes": 4207,
+    "sha256": "a117ccd9477fbc6ce934f2fb0b47fff1d3ef1d3c208e368cf4234c4bbfb8f6bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sillevl/library/RGB-fun/0.0.0%2Bsha.d10cfeb2f18e/RGB-fun-0.0.0%2Bsha.d10cfeb2f18e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sillevl/library/RGB-fun/0.0.0%2Bsha.d10cfeb2f18e/RGB-fun-0.0.0%2Bsha.d10cfeb2f18e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sillevl/library/Simple-LoRaWAN/0.0.0+sha.9bf05e9b4cde/Simple-LoRaWAN-0.0.0+sha.9bf05e9b4cde.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Simple-LoRaWAN-0.0.0+sha.9bf05e9b4cde.tar.gz",
+    "size_bytes": 3500,
+    "sha256": "9ff5a11f562c3bc7f6f0d178ebc5ea5e350de10dfea48d30af637ba0fa5c9aa8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sillevl/library/Simple-LoRaWAN/0.0.0%2Bsha.9bf05e9b4cde/Simple-LoRaWAN-0.0.0%2Bsha.9bf05e9b4cde.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sillevl/library/Simple-LoRaWAN/0.0.0%2Bsha.9bf05e9b4cde/Simple-LoRaWAN-0.0.0%2Bsha.9bf05e9b4cde.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sillevl/library/TLC59116/0.0.0+sha.c285b2c57b2e/TLC59116-0.0.0+sha.c285b2c57b2e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TLC59116-0.0.0+sha.c285b2c57b2e.tar.gz",
+    "size_bytes": 1445,
+    "sha256": "31e88455757f10ee1d128cd22044692b961bfa8c84fbd579b7e2df52b1e28144",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sillevl/library/TLC59116/0.0.0%2Bsha.c285b2c57b2e/TLC59116-0.0.0%2Bsha.c285b2c57b2e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sillevl/library/TLC59116/0.0.0%2Bsha.c285b2c57b2e/TLC59116-0.0.0%2Bsha.c285b2c57b2e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sillevl/library/VL6180x/0.0.0+sha.2e0406672e67/VL6180x-0.0.0+sha.2e0406672e67.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VL6180x-0.0.0+sha.2e0406672e67.tar.gz",
+    "size_bytes": 3211,
+    "sha256": "3394fac6b11b3a7c3d282867dfffd3df2d5a5219b6282009b6d8d973358a9dea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sillevl/library/VL6180x/0.0.0%2Bsha.2e0406672e67/VL6180x-0.0.0%2Bsha.2e0406672e67.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sillevl/library/VL6180x/0.0.0%2Bsha.2e0406672e67/VL6180x-0.0.0%2Bsha.2e0406672e67.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sillevl/library/m3Dpi-helloworld/0.0.0+sha.b73fcdb828f3/m3Dpi-helloworld-0.0.0+sha.b73fcdb828f3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "m3Dpi-helloworld-0.0.0+sha.b73fcdb828f3.tar.gz",
+    "size_bytes": 3186,
+    "sha256": "57301fc37c16957f4d08bb3a01ceb4fbb1379bc8904e664d81a3105743cf0c4e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sillevl/library/m3Dpi-helloworld/0.0.0%2Bsha.b73fcdb828f3/m3Dpi-helloworld-0.0.0%2Bsha.b73fcdb828f3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sillevl/library/m3Dpi-helloworld/0.0.0%2Bsha.b73fcdb828f3/m3Dpi-helloworld-0.0.0%2Bsha.b73fcdb828f3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sillevl/library/m3Dpi/0.0.0+sha.4cb092df6958/m3Dpi-0.0.0+sha.4cb092df6958.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "m3Dpi-0.0.0+sha.4cb092df6958.tar.gz",
+    "size_bytes": 4207,
+    "sha256": "cc30dee780297045345bdb9442a3428fd404e0114dbc6e02b36f84161f20ef90",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sillevl/library/m3Dpi/0.0.0%2Bsha.4cb092df6958/m3Dpi-0.0.0%2Bsha.4cb092df6958.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sillevl/library/m3Dpi/0.0.0%2Bsha.4cb092df6958/m3Dpi-0.0.0%2Bsha.4cb092df6958.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sillevl/library/xbee/0.0.0+sha.a4621ef93d99/xbee-0.0.0+sha.a4621ef93d99.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "xbee-0.0.0+sha.a4621ef93d99.tar.gz",
+    "size_bytes": 905,
+    "sha256": "6458184a6bd7c129124712c742d5fc1ce90bb56c348651bad30ccdc2efc6e0f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sillevl/library/xbee/0.0.0%2Bsha.a4621ef93d99/xbee-0.0.0%2Bsha.a4621ef93d99.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sillevl/library/xbee/0.0.0%2Bsha.a4621ef93d99/xbee-0.0.0%2Bsha.a4621ef93d99.tar.gz"
+    ]
+   }
+  }
+ ]
+}

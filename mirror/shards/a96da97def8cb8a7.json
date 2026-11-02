@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/victorsvi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "victorsvi/library/MatrixKeypad/1.1.0/MatrixKeypad-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MatrixKeypad-1.1.0.tar.gz",
+    "size_bytes": 15050,
+    "sha256": "c90399543fab0476deb18c0d261ede4c9e5c150220f96fb66ba86b634ee08134",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/victorsvi/library/MatrixKeypad/1.1.0/MatrixKeypad-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/victorsvi/library/MatrixKeypad/1.1.0/MatrixKeypad-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

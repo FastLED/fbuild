@@ -1,0 +1,191 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/links2004",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "links2004/library/WebSockets/2.1.2/WebSockets-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WebSockets-2.1.2.tar.gz",
+    "size_bytes": 43069,
+    "sha256": "34b16097bca864759ef1c4bc1a9f2551caf241a85a9d88d610d99159885579f5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/links2004/library/WebSockets/2.1.2/WebSockets-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/links2004/library/WebSockets/2.1.2/WebSockets-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "links2004/library/WebSockets/2.2.1/WebSockets-2.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WebSockets-2.2.1.tar.gz",
+    "size_bytes": 49819,
+    "sha256": "2afc2507c183db4128cd7b48469f8c0dbb2984119d6cf3ce01f362cfe6465cf8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/links2004/library/WebSockets/2.2.1/WebSockets-2.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/links2004/library/WebSockets/2.2.1/WebSockets-2.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "links2004/library/WebSockets/2.3.4/WebSockets-2.3.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WebSockets-2.3.4.tar.gz",
+    "size_bytes": 59317,
+    "sha256": "129e24b09f4c38a9594ea6c37a61d13517488d44ee972af6b38752b2fc8f433c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/links2004/library/WebSockets/2.3.4/WebSockets-2.3.4.tar.gz",
+     "https://dl.registry.platformio.org/download/links2004/library/WebSockets/2.3.4/WebSockets-2.3.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "links2004/library/WebSockets/2.3.6/WebSockets-2.3.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WebSockets-2.3.6.tar.gz",
+    "size_bytes": 59349,
+    "sha256": "fd0c1016f978010fec01aa3bed64e67fd966753cf862aa4278f4bcec3898aafc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/links2004/library/WebSockets/2.3.6/WebSockets-2.3.6.tar.gz",
+     "https://dl.registry.platformio.org/download/links2004/library/WebSockets/2.3.6/WebSockets-2.3.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "links2004/library/WebSockets/2.3.7/WebSockets-2.3.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WebSockets-2.3.7.tar.gz",
+    "size_bytes": 64870,
+    "sha256": "f7b4825506cf3357ff5b0dbb4380d616da1d368b9ce4421997e86230d45666d3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/links2004/library/WebSockets/2.3.7/WebSockets-2.3.7.tar.gz",
+     "https://dl.registry.platformio.org/download/links2004/library/WebSockets/2.3.7/WebSockets-2.3.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "links2004/library/WebSockets/2.4.1/WebSockets-2.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WebSockets-2.4.1.tar.gz",
+    "size_bytes": 65495,
+    "sha256": "50b954d3d3dd5571bfa6d44803b0c8ced3f1ad5515735104b9872f60ffb46e81",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/links2004/library/WebSockets/2.4.1/WebSockets-2.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/links2004/library/WebSockets/2.4.1/WebSockets-2.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "links2004/library/WebSockets/2.4.2/WebSockets-2.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WebSockets-2.4.2.tar.gz",
+    "size_bytes": 204741,
+    "sha256": "964d964b0d75e0aa4e9b820802b8105a6a076fc21f30656d9994277b8448371f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/links2004/library/WebSockets/2.4.2/WebSockets-2.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/links2004/library/WebSockets/2.4.2/WebSockets-2.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "links2004/library/WebSockets/2.5.3/WebSockets-2.5.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WebSockets-2.5.3.tar.gz",
+    "size_bytes": 206434,
+    "sha256": "0d2a33bbfb4d3c3e3644f0f3d84e44fc0becd87c63e70150098295dee263534b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/links2004/library/WebSockets/2.5.3/WebSockets-2.5.3.tar.gz",
+     "https://dl.registry.platformio.org/download/links2004/library/WebSockets/2.5.3/WebSockets-2.5.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "links2004/library/WebSockets/2.6.1/WebSockets-2.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WebSockets-2.6.1.tar.gz",
+    "size_bytes": 207968,
+    "sha256": "c085e46661ebf5806b369de7dc281c8422d637d8460b9bcb7fe848140c8e5ed7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/links2004/library/WebSockets/2.6.1/WebSockets-2.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/links2004/library/WebSockets/2.6.1/WebSockets-2.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "links2004/library/WebSockets/2.7.0/WebSockets-2.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WebSockets-2.7.0.tar.gz",
+    "size_bytes": 211381,
+    "sha256": "9e85c6638060264afbb36c9047db05cf42006c8ef55cb4c0a7c0903eba30d946",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/links2004/library/WebSockets/2.7.0/WebSockets-2.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/links2004/library/WebSockets/2.7.0/WebSockets-2.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "links2004/library/WebSockets/2.7.1/WebSockets-2.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WebSockets-2.7.1.tar.gz",
+    "size_bytes": 211476,
+    "sha256": "dd86496b0db4ae93f1a7342fb6548508ebfdf35d0ab1aeace3290677012cb826",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/links2004/library/WebSockets/2.7.1/WebSockets-2.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/links2004/library/WebSockets/2.7.1/WebSockets-2.7.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "links2004/library/WebSockets/2.7.2/WebSockets-2.7.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WebSockets-2.7.2.tar.gz",
+    "size_bytes": 211946,
+    "sha256": "588122106c9826fae4dc4980c25b7c6dd18c8bba47ccf2d11f02a69499898dfd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/links2004/library/WebSockets/2.7.2/WebSockets-2.7.2.tar.gz",
+     "https://dl.registry.platformio.org/download/links2004/library/WebSockets/2.7.2/WebSockets-2.7.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "links2004/library/WebSockets/2.7.3/WebSockets-2.7.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WebSockets-2.7.3.tar.gz",
+    "size_bytes": 212091,
+    "sha256": "d1c0dbff96a0cbd4deea42c01f20386b105a9b461e1e08d308f0ca92f3cf3533",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/links2004/library/WebSockets/2.7.3/WebSockets-2.7.3.tar.gz",
+     "https://dl.registry.platformio.org/download/links2004/library/WebSockets/2.7.3/WebSockets-2.7.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "links2004/library/arduinoVNC/1.5/arduinoVNC-1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arduinoVNC-1.5.tar.gz",
+    "size_bytes": 45755,
+    "sha256": "c649d1c32fe813c54a121f231786691f8e17e679203c3d21ea984d84c2c4f4e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/links2004/library/arduinoVNC/1.5/arduinoVNC-1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/links2004/library/arduinoVNC/1.5/arduinoVNC-1.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

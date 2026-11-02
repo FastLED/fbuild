@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nredor",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nredor/library/ESPNexUpload/0.5.7/ESPNexUpload-0.5.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPNexUpload-0.5.7.tar.gz",
+    "size_bytes": 24314,
+    "sha256": "7cbe47e01b96fd5abe609cd074dc154bbaaa5b2db62a3b381cf5e723947b9c87",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nredor/library/ESPNexUpload/0.5.7/ESPNexUpload-0.5.7.tar.gz",
+     "https://dl.registry.platformio.org/download/nredor/library/ESPNexUpload/0.5.7/ESPNexUpload-0.5.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

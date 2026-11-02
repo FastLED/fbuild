@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/skafuu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "skafuu/library/AsyncWebOTA/1.0.0/AsyncWebOTA-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncWebOTA-1.0.0.tar.gz",
+    "size_bytes": 5258,
+    "sha256": "ca8fb964bc8ff0d3018b7d3b1660dc1f428a627c22086253817d2a48f92b43eb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/skafuu/library/AsyncWebOTA/1.0.0/AsyncWebOTA-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/skafuu/library/AsyncWebOTA/1.0.0/AsyncWebOTA-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "skafuu/library/AsyncWebOTA/1.1.0/AsyncWebOTA-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncWebOTA-1.1.0.tar.gz",
+    "size_bytes": 7334,
+    "sha256": "f06abf91fcccec4a8d3cf3f02d59aaa7848e1d3828b5830454c14a52a935ff7e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/skafuu/library/AsyncWebOTA/1.1.0/AsyncWebOTA-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/skafuu/library/AsyncWebOTA/1.1.0/AsyncWebOTA-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

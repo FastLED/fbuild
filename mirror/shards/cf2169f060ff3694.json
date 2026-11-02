@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/advancertechnologies",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "advancertechnologies/library/MyoWare%20Arduino%20Library/1.0.0/MyoWareArduinoLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MyoWareArduinoLibrary-1.0.0.tar.gz",
+    "size_bytes": 11519,
+    "sha256": "7ee8851e53a532b7268aa0c1d8cc566ea914412b8bebe739000536a9c5cb127d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/advancertechnologies/library/MyoWare%2520Arduino%2520Library/1.0.0/MyoWareArduinoLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/advancertechnologies/library/MyoWare%20Arduino%20Library/1.0.0/MyoWareArduinoLibrary-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

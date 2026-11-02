@@ -1,0 +1,295 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/celliesprojects",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "celliesprojects/library/ESP32_VS1053_Stream/2.1.3/ESP32_VS1053_Stream-2.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_VS1053_Stream-2.1.3.tar.gz",
+    "size_bytes": 11247,
+    "sha256": "874a95e341a471d2bc7e4a899eab4386376696ed6777222a0b0c1f3875ae5388",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/celliesprojects/library/ESP32_VS1053_Stream/2.1.3/ESP32_VS1053_Stream-2.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/celliesprojects/library/ESP32_VS1053_Stream/2.1.3/ESP32_VS1053_Stream-2.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "celliesprojects/library/ESP32_VS1053_Stream/3.0.0/ESP32_VS1053_Stream-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_VS1053_Stream-3.0.0.tar.gz",
+    "size_bytes": 11837,
+    "sha256": "8fd84fd1986956ac29d0c16beb78b71ca14309e554694b4ff167bd53faaa6a88",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/celliesprojects/library/ESP32_VS1053_Stream/3.0.0/ESP32_VS1053_Stream-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/celliesprojects/library/ESP32_VS1053_Stream/3.0.0/ESP32_VS1053_Stream-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "celliesprojects/library/ESP32_VS1053_Stream/3.0.1/ESP32_VS1053_Stream-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_VS1053_Stream-3.0.1.tar.gz",
+    "size_bytes": 11920,
+    "sha256": "d7589df139aed9ec2b90fa744caa7c791ed920fc923eb58bea3e4215465ec056",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/celliesprojects/library/ESP32_VS1053_Stream/3.0.1/ESP32_VS1053_Stream-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/celliesprojects/library/ESP32_VS1053_Stream/3.0.1/ESP32_VS1053_Stream-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "celliesprojects/library/ESP32_VS1053_Stream/3.0.10/ESP32_VS1053_Stream-3.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_VS1053_Stream-3.0.10.tar.gz",
+    "size_bytes": 13167,
+    "sha256": "1134fb13799bdfd3300da08b0d699f587f7ecc1de06f90f66d86076fa3f16ed5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/celliesprojects/library/ESP32_VS1053_Stream/3.0.10/ESP32_VS1053_Stream-3.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/celliesprojects/library/ESP32_VS1053_Stream/3.0.10/ESP32_VS1053_Stream-3.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "celliesprojects/library/ESP32_VS1053_Stream/3.0.11/ESP32_VS1053_Stream-3.0.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_VS1053_Stream-3.0.11.tar.gz",
+    "size_bytes": 14163,
+    "sha256": "dbb14fe63f8b02fc8e8e26cb02fba7f9fb7a2335178513b64aeddc786e076b92",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/celliesprojects/library/ESP32_VS1053_Stream/3.0.11/ESP32_VS1053_Stream-3.0.11.tar.gz",
+     "https://dl.registry.platformio.org/download/celliesprojects/library/ESP32_VS1053_Stream/3.0.11/ESP32_VS1053_Stream-3.0.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "celliesprojects/library/ESP32_VS1053_Stream/3.0.12/ESP32_VS1053_Stream-3.0.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_VS1053_Stream-3.0.12.tar.gz",
+    "size_bytes": 14546,
+    "sha256": "198c30a693b1f7cd24d4454208223f307dbaa8b949e63a6b54cc734080714165",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/celliesprojects/library/ESP32_VS1053_Stream/3.0.12/ESP32_VS1053_Stream-3.0.12.tar.gz",
+     "https://dl.registry.platformio.org/download/celliesprojects/library/ESP32_VS1053_Stream/3.0.12/ESP32_VS1053_Stream-3.0.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "celliesprojects/library/ESP32_VS1053_Stream/3.0.13/ESP32_VS1053_Stream-3.0.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_VS1053_Stream-3.0.13.tar.gz",
+    "size_bytes": 15239,
+    "sha256": "7c2e634cfdba87299b2e33e9e05dc5ccc4902dced7ecab790fd28d91bb6334cf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/celliesprojects/library/ESP32_VS1053_Stream/3.0.13/ESP32_VS1053_Stream-3.0.13.tar.gz",
+     "https://dl.registry.platformio.org/download/celliesprojects/library/ESP32_VS1053_Stream/3.0.13/ESP32_VS1053_Stream-3.0.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "celliesprojects/library/ESP32_VS1053_Stream/3.0.14/ESP32_VS1053_Stream-3.0.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_VS1053_Stream-3.0.14.tar.gz",
+    "size_bytes": 15509,
+    "sha256": "e4c299195572014cc4724f9f2deb6ee81dbc894123a060d4ba79f7ef187288c1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/celliesprojects/library/ESP32_VS1053_Stream/3.0.14/ESP32_VS1053_Stream-3.0.14.tar.gz",
+     "https://dl.registry.platformio.org/download/celliesprojects/library/ESP32_VS1053_Stream/3.0.14/ESP32_VS1053_Stream-3.0.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "celliesprojects/library/ESP32_VS1053_Stream/3.0.2/ESP32_VS1053_Stream-3.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_VS1053_Stream-3.0.2.tar.gz",
+    "size_bytes": 12428,
+    "sha256": "efddc2383585ce19b79917daee7b7c547a8e35a1817bcb55d08f649c706ab74b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/celliesprojects/library/ESP32_VS1053_Stream/3.0.2/ESP32_VS1053_Stream-3.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/celliesprojects/library/ESP32_VS1053_Stream/3.0.2/ESP32_VS1053_Stream-3.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "celliesprojects/library/ESP32_VS1053_Stream/3.0.3/ESP32_VS1053_Stream-3.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_VS1053_Stream-3.0.3.tar.gz",
+    "size_bytes": 12503,
+    "sha256": "744f8d110c3a56641f0692826e162d639de23d1faf6c9951b72b70c97ad8411b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/celliesprojects/library/ESP32_VS1053_Stream/3.0.3/ESP32_VS1053_Stream-3.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/celliesprojects/library/ESP32_VS1053_Stream/3.0.3/ESP32_VS1053_Stream-3.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "celliesprojects/library/ESP32_VS1053_Stream/3.0.4/ESP32_VS1053_Stream-3.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_VS1053_Stream-3.0.4.tar.gz",
+    "size_bytes": 12776,
+    "sha256": "eac89a5f15e58d3d2571cb25fbd979acf0340751596c96e57da454f43790b29b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/celliesprojects/library/ESP32_VS1053_Stream/3.0.4/ESP32_VS1053_Stream-3.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/celliesprojects/library/ESP32_VS1053_Stream/3.0.4/ESP32_VS1053_Stream-3.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "celliesprojects/library/ESP32_VS1053_Stream/3.0.5/ESP32_VS1053_Stream-3.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_VS1053_Stream-3.0.5.tar.gz",
+    "size_bytes": 12672,
+    "sha256": "ab727f9829c7a98fe143190f19c62558549964cb72c826bfa8e69e9e5b9b13df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/celliesprojects/library/ESP32_VS1053_Stream/3.0.5/ESP32_VS1053_Stream-3.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/celliesprojects/library/ESP32_VS1053_Stream/3.0.5/ESP32_VS1053_Stream-3.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "celliesprojects/library/ESP32_VS1053_Stream/3.0.6/ESP32_VS1053_Stream-3.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_VS1053_Stream-3.0.6.tar.gz",
+    "size_bytes": 12770,
+    "sha256": "f24456c4a7e84564eac79674472e0819760542530e0a301532a2efec296515c5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/celliesprojects/library/ESP32_VS1053_Stream/3.0.6/ESP32_VS1053_Stream-3.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/celliesprojects/library/ESP32_VS1053_Stream/3.0.6/ESP32_VS1053_Stream-3.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "celliesprojects/library/ESP32_VS1053_Stream/3.0.7/ESP32_VS1053_Stream-3.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_VS1053_Stream-3.0.7.tar.gz",
+    "size_bytes": 13106,
+    "sha256": "2d69d1d7a1588967fe5f1fc14eada2fe75cc8c9d2ad0c3589e5b7e1b7054a381",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/celliesprojects/library/ESP32_VS1053_Stream/3.0.7/ESP32_VS1053_Stream-3.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/celliesprojects/library/ESP32_VS1053_Stream/3.0.7/ESP32_VS1053_Stream-3.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "celliesprojects/library/ESP32_VS1053_Stream/3.0.8/ESP32_VS1053_Stream-3.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_VS1053_Stream-3.0.8.tar.gz",
+    "size_bytes": 13108,
+    "sha256": "a3e764ab973a74a3a2486de9204f4221be510dc40f02d2e63927207180f44da6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/celliesprojects/library/ESP32_VS1053_Stream/3.0.8/ESP32_VS1053_Stream-3.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/celliesprojects/library/ESP32_VS1053_Stream/3.0.8/ESP32_VS1053_Stream-3.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "celliesprojects/library/ESP32_VS1053_Stream/3.0.9/ESP32_VS1053_Stream-3.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_VS1053_Stream-3.0.9.tar.gz",
+    "size_bytes": 13078,
+    "sha256": "492c439862648400136f95d88d77ca4afa56b38e7d15e8a41f38ee580911ae07",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/celliesprojects/library/ESP32_VS1053_Stream/3.0.9/ESP32_VS1053_Stream-3.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/celliesprojects/library/ESP32_VS1053_Stream/3.0.9/ESP32_VS1053_Stream-3.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "celliesprojects/library/LGFX-ScreenShot/1.0.1/LGFX-ScreenShot-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LGFX-ScreenShot-1.0.1.tar.gz",
+    "size_bytes": 5121,
+    "sha256": "3167b9f4b813d91aad25457957e18e67b9e59720c47de32ed7379bb73272ed7b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/celliesprojects/library/LGFX-ScreenShot/1.0.1/LGFX-ScreenShot-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/celliesprojects/library/LGFX-ScreenShot/1.0.1/LGFX-ScreenShot-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "celliesprojects/library/MoonPhase/2.0.0/MoonPhase-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MoonPhase-2.0.0.tar.gz",
+    "size_bytes": 5208,
+    "sha256": "fc832e41b6a0201e847eb47eaed9900d977047e885077efcfce07ea177b898a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/celliesprojects/library/MoonPhase/2.0.0/MoonPhase-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/celliesprojects/library/MoonPhase/2.0.0/MoonPhase-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "celliesprojects/library/OpenStreetMap-esp32/1.2.1/OpenStreetMap-esp32-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OpenStreetMap-esp32-1.2.1.tar.gz",
+    "size_bytes": 6183,
+    "sha256": "27f865e45ff34b1bcc16bc5b93f5e030e2837224124d714e09222bfa03f495f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/celliesprojects/library/OpenStreetMap-esp32/1.2.1/OpenStreetMap-esp32-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/celliesprojects/library/OpenStreetMap-esp32/1.2.1/OpenStreetMap-esp32-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "celliesprojects/library/OpenStreetMap-esp32/1.2.2/OpenStreetMap-esp32-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OpenStreetMap-esp32-1.2.2.tar.gz",
+    "size_bytes": 6404,
+    "sha256": "0cbef315368628403386262d9c2cf2adbdbf9ae80766781b12e5d284f24bc929",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/celliesprojects/library/OpenStreetMap-esp32/1.2.2/OpenStreetMap-esp32-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/celliesprojects/library/OpenStreetMap-esp32/1.2.2/OpenStreetMap-esp32-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "celliesprojects/library/wm8978-esp32/1.0.5/wm8978-esp32-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "wm8978-esp32-1.0.5.tar.gz",
+    "size_bytes": 6337,
+    "sha256": "ea82d63a290fbf1ffccb628d69d47f14aee6ba88a9aa3430d96421e29d5e600e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/celliesprojects/library/wm8978-esp32/1.0.5/wm8978-esp32-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/celliesprojects/library/wm8978-esp32/1.0.5/wm8978-esp32-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "celliesprojects/library/wm8978-esp32/1.0.6/wm8978-esp32-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "wm8978-esp32-1.0.6.tar.gz",
+    "size_bytes": 6330,
+    "sha256": "ffe64609257947a0b6a82167a06e5a32c80df796418ce7cc999bd6ba18cf2808",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/celliesprojects/library/wm8978-esp32/1.0.6/wm8978-esp32-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/celliesprojects/library/wm8978-esp32/1.0.6/wm8978-esp32-1.0.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

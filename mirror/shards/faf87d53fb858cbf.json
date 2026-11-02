@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-bertl-chel-18",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-bertl-chel-18/library/HCSR/0.0.0+sha.92d1f0be3af4/HCSR-0.0.0+sha.92d1f0be3af4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HCSR-0.0.0+sha.92d1f0be3af4.tar.gz",
+    "size_bytes": 2411,
+    "sha256": "6ac01177fd71f5dd930bd3583ca215053f1c85dc7d222aef9aad3b4333cad63e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bertl-chel-18/library/HCSR/0.0.0%2Bsha.92d1f0be3af4/HCSR-0.0.0%2Bsha.92d1f0be3af4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bertl-chel-18/library/HCSR/0.0.0%2Bsha.92d1f0be3af4/HCSR-0.0.0%2Bsha.92d1f0be3af4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-bertl-chel-18/library/ur_Bertl/0.0.0+sha.43d6a7e6e64a/ur_Bertl-0.0.0+sha.43d6a7e6e64a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ur_Bertl-0.0.0+sha.43d6a7e6e64a.tar.gz",
+    "size_bytes": 7502,
+    "sha256": "a0a11164364d5a1e77f6ab4e50e95172a4e1ab98865bb9d0142ac524efd03f89",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bertl-chel-18/library/ur_Bertl/0.0.0%2Bsha.43d6a7e6e64a/ur_Bertl-0.0.0%2Bsha.43d6a7e6e64a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bertl-chel-18/library/ur_Bertl/0.0.0%2Bsha.43d6a7e6e64a/ur_Bertl-0.0.0%2Bsha.43d6a7e6e64a.tar.gz"
+    ]
+   }
+  }
+ ]
+}

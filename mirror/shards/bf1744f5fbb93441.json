@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-zeutel",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-zeutel/library/LSM9DS1/0.0.0+sha.2ba419ea901e/LSM9DS1-0.0.0+sha.2ba419ea901e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LSM9DS1-0.0.0+sha.2ba419ea901e.tar.gz",
+    "size_bytes": 6665,
+    "sha256": "3564244b02bee8dc3aa0b796d797b464b264e5c2910b341830a12465e5a5a999",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-zeutel/library/LSM9DS1/0.0.0%2Bsha.2ba419ea901e/LSM9DS1-0.0.0%2Bsha.2ba419ea901e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-zeutel/library/LSM9DS1/0.0.0%2Bsha.2ba419ea901e/LSM9DS1-0.0.0%2Bsha.2ba419ea901e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

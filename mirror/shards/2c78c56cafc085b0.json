@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/vidor-libraries",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "vidor-libraries/library/USBBlaster/1.0.1/USBBlaster-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "USBBlaster-1.0.1.tar.gz",
+    "size_bytes": 99040,
+    "sha256": "30f2c5abbf24dcfa4ebfe893aa579e68b442514bf53c5d12e80701520c725db8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vidor-libraries/library/USBBlaster/1.0.1/USBBlaster-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vidor-libraries/library/USBBlaster/1.0.1/USBBlaster-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vidor-libraries/library/VidorBoot/1.0.0/VidorBoot-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VidorBoot-1.0.0.tar.gz",
+    "size_bytes": 278793,
+    "sha256": "1db76c1ffaa5ff226b61e9157050253294d6b28f68596fa0b8c99fcdcdb122dc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vidor-libraries/library/VidorBoot/1.0.0/VidorBoot-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vidor-libraries/library/VidorBoot/1.0.0/VidorBoot-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vidor-libraries/library/VidorGraphics/1.1.0/VidorGraphics-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VidorGraphics-1.1.0.tar.gz",
+    "size_bytes": 425468,
+    "sha256": "44140fb879bffe4edccadd21f386674dcff0b3036226a3b9cd5c10b093076a66",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vidor-libraries/library/VidorGraphics/1.1.0/VidorGraphics-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vidor-libraries/library/VidorGraphics/1.1.0/VidorGraphics-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vidor-libraries/library/VidorPeripherals/1.1.0/VidorPeripherals-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VidorPeripherals-1.1.0.tar.gz",
+    "size_bytes": 389639,
+    "sha256": "c89247a902fcd8cacf736a6fdfc36e63ddc8114584f4c9f8064c69a49ebbba38",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vidor-libraries/library/VidorPeripherals/1.1.0/VidorPeripherals-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vidor-libraries/library/VidorPeripherals/1.1.0/VidorPeripherals-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

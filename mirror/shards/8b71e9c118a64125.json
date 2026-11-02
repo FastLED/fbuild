@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ciniml",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ciniml/library/ExtFlashLoader/0.1.2/ExtFlashLoader-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ExtFlashLoader-0.1.2.tar.gz",
+    "size_bytes": 129547,
+    "sha256": "fc87b1ee1ed7e50e8490a3313d1fa317f2710de43c92a18182fb48f5b89d39d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ciniml/library/ExtFlashLoader/0.1.2/ExtFlashLoader-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ciniml/library/ExtFlashLoader/0.1.2/ExtFlashLoader-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ciniml/library/WireGuard-ESP32/0.1.5/WireGuard-ESP32-0.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WireGuard-ESP32-0.1.5.tar.gz",
+    "size_bytes": 42950,
+    "sha256": "ae9b1a785dacc1ffd05e983a6d72bbd5160f8e7dc34726d0a3acbb1f0974a853",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ciniml/library/WireGuard-ESP32/0.1.5/WireGuard-ESP32-0.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/ciniml/library/WireGuard-ESP32/0.1.5/WireGuard-ESP32-0.1.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

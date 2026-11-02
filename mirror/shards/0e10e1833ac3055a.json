@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/xavierchanth",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "xavierchanth/library/atchops/0.2.9/atchops-0.2.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "atchops-0.2.9.tar.gz",
+    "size_bytes": 16025,
+    "sha256": "582e127ddc695592d7f91c8e091fc2d74efbdce88db50d7e3100d7465fdf35dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xavierchanth/library/atchops/0.2.9/atchops-0.2.9.tar.gz",
+     "https://dl.registry.platformio.org/download/xavierchanth/library/atchops/0.2.9/atchops-0.2.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xavierchanth/library/atclient/0.2.12/atclient-0.2.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "atclient-0.2.12.tar.gz",
+    "size_bytes": 88496,
+    "sha256": "5713163f5de74daf825285f095abf677ce4544835a905be26b434bb4ce61e0ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xavierchanth/library/atclient/0.2.12/atclient-0.2.12.tar.gz",
+     "https://dl.registry.platformio.org/download/xavierchanth/library/atclient/0.2.12/atclient-0.2.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xavierchanth/library/atlogger/0.2.4/atlogger-0.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "atlogger-0.2.4.tar.gz",
+    "size_bytes": 3582,
+    "sha256": "7fbe8be61a9794001e554f8fb9b2dac3315b1cf0c3a950cfe4081630f95ed93e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xavierchanth/library/atlogger/0.2.4/atlogger-0.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/xavierchanth/library/atlogger/0.2.4/atlogger-0.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xavierchanth/library/uuid4/0.2.4/uuid4-0.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uuid4-0.2.4.tar.gz",
+    "size_bytes": 11789,
+    "sha256": "4e6c85e0b3888a0f82da7c125c9839b01c177266a6d85739392f8ec7a10099ac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xavierchanth/library/uuid4/0.2.4/uuid4-0.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/xavierchanth/library/uuid4/0.2.4/uuid4-0.2.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

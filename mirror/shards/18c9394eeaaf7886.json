@@ -1,0 +1,191 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-akinorihashimoto",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-akinorihashimoto/library/AQM1602/0.0.0+sha.43f874a2b8e9/AQM1602-0.0.0+sha.43f874a2b8e9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AQM1602-0.0.0+sha.43f874a2b8e9.tar.gz",
+    "size_bytes": 3159,
+    "sha256": "44dcd60213476245168435c5a5844ae34e0dd7c3750bf6e588bc6b7db92d3a64",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-akinorihashimoto/library/AQM1602/0.0.0%2Bsha.43f874a2b8e9/AQM1602-0.0.0%2Bsha.43f874a2b8e9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-akinorihashimoto/library/AQM1602/0.0.0%2Bsha.43f874a2b8e9/AQM1602-0.0.0%2Bsha.43f874a2b8e9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-akinorihashimoto/library/ATP3011/0.0.0+sha.18e2be0c89a4/ATP3011-0.0.0+sha.18e2be0c89a4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ATP3011-0.0.0+sha.18e2be0c89a4.tar.gz",
+    "size_bytes": 2403,
+    "sha256": "9e11786a1d482f9ab7dd20f3d468b68f9ab1b0c43da37ae8f6582f0542c5ade1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-akinorihashimoto/library/ATP3011/0.0.0%2Bsha.18e2be0c89a4/ATP3011-0.0.0%2Bsha.18e2be0c89a4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-akinorihashimoto/library/ATP3011/0.0.0%2Bsha.18e2be0c89a4/ATP3011-0.0.0%2Bsha.18e2be0c89a4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-akinorihashimoto/library/CheckSum/0.0.0+sha.b3a521e42246/CheckSum-0.0.0+sha.b3a521e42246.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CheckSum-0.0.0+sha.b3a521e42246.tar.gz",
+    "size_bytes": 1712,
+    "sha256": "0328c291613b9ded45c68fa2d0ec42dfd8dd9c507d679d8713a6534e36b94588",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-akinorihashimoto/library/CheckSum/0.0.0%2Bsha.b3a521e42246/CheckSum-0.0.0%2Bsha.b3a521e42246.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-akinorihashimoto/library/CheckSum/0.0.0%2Bsha.b3a521e42246/CheckSum-0.0.0%2Bsha.b3a521e42246.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-akinorihashimoto/library/HC05/0.0.0+sha.2eefa9ea0bf1/HC05-0.0.0+sha.2eefa9ea0bf1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HC05-0.0.0+sha.2eefa9ea0bf1.tar.gz",
+    "size_bytes": 2849,
+    "sha256": "a21280a16ebab31cf4809a7496ba8e0219254edcc97c163f5bb778ad45fee1c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-akinorihashimoto/library/HC05/0.0.0%2Bsha.2eefa9ea0bf1/HC05-0.0.0%2Bsha.2eefa9ea0bf1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-akinorihashimoto/library/HC05/0.0.0%2Bsha.2eefa9ea0bf1/HC05-0.0.0%2Bsha.2eefa9ea0bf1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-akinorihashimoto/library/LED7segX4/0.0.0+sha.e89aae394d29/LED7segX4-0.0.0+sha.e89aae394d29.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LED7segX4-0.0.0+sha.e89aae394d29.tar.gz",
+    "size_bytes": 3159,
+    "sha256": "d35bb0e06c2ea5c3eee86341db9b94759816bd159da12b4ff7f450ffad75aa8b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-akinorihashimoto/library/LED7segX4/0.0.0%2Bsha.e89aae394d29/LED7segX4-0.0.0%2Bsha.e89aae394d29.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-akinorihashimoto/library/LED7segX4/0.0.0%2Bsha.e89aae394d29/LED7segX4-0.0.0%2Bsha.e89aae394d29.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-akinorihashimoto/library/PCA9547/0.0.0+sha.c388983364cc/PCA9547-0.0.0+sha.c388983364cc.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCA9547-0.0.0+sha.c388983364cc.tar.gz",
+    "size_bytes": 2005,
+    "sha256": "b33f1a8737817c952494e1a368d86f97e9c87680970890a9d937d2225d76bf03",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-akinorihashimoto/library/PCA9547/0.0.0%2Bsha.c388983364cc/PCA9547-0.0.0%2Bsha.c388983364cc.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-akinorihashimoto/library/PCA9547/0.0.0%2Bsha.c388983364cc/PCA9547-0.0.0%2Bsha.c388983364cc.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-akinorihashimoto/library/RN41/0.0.0+sha.63925964cbd5/RN41-0.0.0+sha.63925964cbd5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RN41-0.0.0+sha.63925964cbd5.tar.gz",
+    "size_bytes": 5466,
+    "sha256": "3d4bb86dc3d1743c25c9cbba675b918491d6fb05f2a85c0cadae1397c9ad04c1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-akinorihashimoto/library/RN41/0.0.0%2Bsha.63925964cbd5/RN41-0.0.0%2Bsha.63925964cbd5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-akinorihashimoto/library/RN41/0.0.0%2Bsha.63925964cbd5/RN41-0.0.0%2Bsha.63925964cbd5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-akinorihashimoto/library/RealTimeClock/0.0.0+sha.605138b5eef6/RealTimeClock-0.0.0+sha.605138b5eef6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RealTimeClock-0.0.0+sha.605138b5eef6.tar.gz",
+    "size_bytes": 1875,
+    "sha256": "a71f1257adf6c68f32d4c6a35104b53c4ca5dd250601430252f4db34cbb33ac7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-akinorihashimoto/library/RealTimeClock/0.0.0%2Bsha.605138b5eef6/RealTimeClock-0.0.0%2Bsha.605138b5eef6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-akinorihashimoto/library/RealTimeClock/0.0.0%2Bsha.605138b5eef6/RealTimeClock-0.0.0%2Bsha.605138b5eef6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-akinorihashimoto/library/RingBuffer/0.0.0+sha.29917182b5c8/RingBuffer-0.0.0+sha.29917182b5c8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RingBuffer-0.0.0+sha.29917182b5c8.tar.gz",
+    "size_bytes": 2235,
+    "sha256": "f56f0206c5e7cb1d6c823a3338178c69d1c18eef7ef6dc2f06ce4cdd7e630985",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-akinorihashimoto/library/RingBuffer/0.0.0%2Bsha.29917182b5c8/RingBuffer-0.0.0%2Bsha.29917182b5c8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-akinorihashimoto/library/RingBuffer/0.0.0%2Bsha.29917182b5c8/RingBuffer-0.0.0%2Bsha.29917182b5c8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-akinorihashimoto/library/SO1602A/0.0.0+sha.e17943b827d8/SO1602A-0.0.0+sha.e17943b827d8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SO1602A-0.0.0+sha.e17943b827d8.tar.gz",
+    "size_bytes": 2508,
+    "sha256": "c6d3c91cce7fbb2fad79bbc384f7e2f5548e4c0ff67b366e53443f522fa6582a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-akinorihashimoto/library/SO1602A/0.0.0%2Bsha.e17943b827d8/SO1602A-0.0.0%2Bsha.e17943b827d8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-akinorihashimoto/library/SO1602A/0.0.0%2Bsha.e17943b827d8/SO1602A-0.0.0%2Bsha.e17943b827d8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-akinorihashimoto/library/SimpleNTP/0.0.0+sha.b5a2e4532331/SimpleNTP-0.0.0+sha.b5a2e4532331.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleNTP-0.0.0+sha.b5a2e4532331.tar.gz",
+    "size_bytes": 2141,
+    "sha256": "9f286dfdc8042991ec94edef9fc6fcfd63e890ab96df5d6ad1e29c5791fc75f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-akinorihashimoto/library/SimpleNTP/0.0.0%2Bsha.b5a2e4532331/SimpleNTP-0.0.0%2Bsha.b5a2e4532331.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-akinorihashimoto/library/SimpleNTP/0.0.0%2Bsha.b5a2e4532331/SimpleNTP-0.0.0%2Bsha.b5a2e4532331.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-akinorihashimoto/library/StrLib/0.0.0+sha.7bc89a64bfbd/StrLib-0.0.0+sha.7bc89a64bfbd.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StrLib-0.0.0+sha.7bc89a64bfbd.tar.gz",
+    "size_bytes": 2236,
+    "sha256": "cfe8312893214a7a70d0e3fd5cc18b4a9e883855df7933475b7568960e119913",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-akinorihashimoto/library/StrLib/0.0.0%2Bsha.7bc89a64bfbd/StrLib-0.0.0%2Bsha.7bc89a64bfbd.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-akinorihashimoto/library/StrLib/0.0.0%2Bsha.7bc89a64bfbd/StrLib-0.0.0%2Bsha.7bc89a64bfbd.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-akinorihashimoto/library/mySerial/0.0.0+sha.3658415b257b/mySerial-0.0.0+sha.3658415b257b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mySerial-0.0.0+sha.3658415b257b.tar.gz",
+    "size_bytes": 2690,
+    "sha256": "c6fbe85943b272795bb2132927e74a74dac8f91f06b475346becc3fa5ec94d00",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-akinorihashimoto/library/mySerial/0.0.0%2Bsha.3658415b257b/mySerial-0.0.0%2Bsha.3658415b257b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-akinorihashimoto/library/mySerial/0.0.0%2Bsha.3658415b257b/mySerial-0.0.0%2Bsha.3658415b257b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-akinorihashimoto/library/myTimer/0.0.0+sha.8fbe0cf9d582/myTimer-0.0.0+sha.8fbe0cf9d582.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "myTimer-0.0.0+sha.8fbe0cf9d582.tar.gz",
+    "size_bytes": 1210,
+    "sha256": "8c8aafb7353d5e8fb2e5e8e46a64545621335de608abd8b651cb1c4d99bea74c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-akinorihashimoto/library/myTimer/0.0.0%2Bsha.8fbe0cf9d582/myTimer-0.0.0%2Bsha.8fbe0cf9d582.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-akinorihashimoto/library/myTimer/0.0.0%2Bsha.8fbe0cf9d582/myTimer-0.0.0%2Bsha.8fbe0cf9d582.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-opshud",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-opshud/library/PWMMotorDriver/0.0.0+sha.b00b27b2573d/PWMMotorDriver-0.0.0+sha.b00b27b2573d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PWMMotorDriver-0.0.0+sha.b00b27b2573d.tar.gz",
+    "size_bytes": 1525,
+    "sha256": "e199a04f764a27cb6cae8b6f16ccee1e207ae16c31fa5f0fc047b76be48ceacc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-opshud/library/PWMMotorDriver/0.0.0%2Bsha.b00b27b2573d/PWMMotorDriver-0.0.0%2Bsha.b00b27b2573d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-opshud/library/PWMMotorDriver/0.0.0%2Bsha.b00b27b2573d/PWMMotorDriver-0.0.0%2Bsha.b00b27b2573d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

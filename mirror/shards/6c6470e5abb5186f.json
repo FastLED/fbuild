@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/anyleaf",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "anyleaf/library/Anyleaf/0.2.2/Anyleaf-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Anyleaf-0.2.2.tar.gz",
+    "size_bytes": 9663,
+    "sha256": "3d08e61d04a7c6955108122014144cc0860b066106b10966401c6da70f2df1fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/anyleaf/library/Anyleaf/0.2.2/Anyleaf-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/anyleaf/library/Anyleaf/0.2.2/Anyleaf-0.2.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

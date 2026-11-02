@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/derwaldi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "derwaldi/library/Tiny-I2C-Drivers/1.0.0/Tiny-I2C-Drivers-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Tiny-I2C-Drivers-1.0.0.tar.gz",
+    "size_bytes": 8885,
+    "sha256": "52393b6f23312e0df6d2248fd936f7f472b46d268aad83adb3798b678efbcf4c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/derwaldi/library/Tiny-I2C-Drivers/1.0.0/Tiny-I2C-Drivers-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/derwaldi/library/Tiny-I2C-Drivers/1.0.0/Tiny-I2C-Drivers-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

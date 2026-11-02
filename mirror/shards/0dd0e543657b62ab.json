@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rnrobles",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rnrobles/library/ESC%20Thermal%20Printer%20BLE/0.0.2/ESCThermalPrinterBLE-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESCThermalPrinterBLE-0.0.2.tar.gz",
+    "size_bytes": 10659,
+    "sha256": "5df986a274b0238be3438bd0cc3b961e77bcbe3d554fb24cd7cfef0f74988216",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rnrobles/library/ESC%2520Thermal%2520Printer%2520BLE/0.0.2/ESCThermalPrinterBLE-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/rnrobles/library/ESC%20Thermal%20Printer%20BLE/0.0.2/ESCThermalPrinterBLE-0.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

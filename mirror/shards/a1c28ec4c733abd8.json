@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/e4-select",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "e4-select/library/ESPWROOM02/0.0.0+sha.4c02d104c249/ESPWROOM02-0.0.0+sha.4c02d104c249.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPWROOM02-0.0.0+sha.4c02d104c249.tar.gz",
+    "size_bytes": 1300,
+    "sha256": "90b0c023f2d870f3c20554fd1ccd18498ba5b46283249454a0b46f9efa2c33b2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/e4-select/library/ESPWROOM02/0.0.0%2Bsha.4c02d104c249/ESPWROOM02-0.0.0%2Bsha.4c02d104c249.tar.gz",
+     "https://dl.registry.platformio.org/download/e4-select/library/ESPWROOM02/0.0.0%2Bsha.4c02d104c249/ESPWROOM02-0.0.0%2Bsha.4c02d104c249.tar.gz"
+    ]
+   }
+  }
+ ]
+}

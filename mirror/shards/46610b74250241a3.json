@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/felipengeletrica",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "felipengeletrica/library/Smart%20Arduino%20logs/2.0.0/SmartArduinologs-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartArduinologs-2.0.0.tar.gz",
+    "size_bytes": 57889,
+    "sha256": "1937b6640a856de758c56fa8dba83d54a2559c11d69016c8c79c716f09099b9f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/felipengeletrica/library/Smart%2520Arduino%2520logs/2.0.0/SmartArduinologs-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/felipengeletrica/library/Smart%20Arduino%20logs/2.0.0/SmartArduinologs-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

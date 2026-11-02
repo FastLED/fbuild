@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dvelaren",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dvelaren/library/Halisense_SoilSensor/1.0.1/Halisense_SoilSensor-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Halisense_SoilSensor-1.0.1.tar.gz",
+    "size_bytes": 7537,
+    "sha256": "f144a1dfb94aeb5bcea0d4d4ffa47526f2cbae05c1b1d4758ef56acbac453725",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dvelaren/library/Halisense_SoilSensor/1.0.1/Halisense_SoilSensor-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dvelaren/library/Halisense_SoilSensor/1.0.1/Halisense_SoilSensor-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dvelaren/library/Thingworx%20ESP32/1.1.1/ThingworxESP32-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ThingworxESP32-1.1.1.tar.gz",
+    "size_bytes": 5339,
+    "sha256": "7aeda70e3c728c601d140bb90581e58941384d3c088c12e8965af46a7cf4864c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dvelaren/library/Thingworx%2520ESP32/1.1.1/ThingworxESP32-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dvelaren/library/Thingworx%20ESP32/1.1.1/ThingworxESP32-1.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

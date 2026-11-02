@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-programmeringsgruppe-1",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-programmeringsgruppe-1/library/Mappeoppgave2_Andreas_Spesial/0.0.0+sha.d6ea21c5753b/Mappeoppgave2_Andreas_Spesial-0.0.0+sha.d6ea21c5753b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Mappeoppgave2_Andreas_Spesial-0.0.0+sha.d6ea21c5753b.tar.gz",
+    "size_bytes": 7316,
+    "sha256": "be94cc78a3213f015a14c2f0f201a08fdab7a571ec9a4e44602597008226c8bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-programmeringsgruppe-1/library/Mappeoppgave2_Andreas_Spesial/0.0.0%2Bsha.d6ea21c5753b/Mappeoppgave2_Andreas_Spesial-0.0.0%2Bsha.d6ea21c5753b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-programmeringsgruppe-1/library/Mappeoppgave2_Andreas_Spesial/0.0.0%2Bsha.d6ea21c5753b/Mappeoppgave2_Andreas_Spesial-0.0.0%2Bsha.d6ea21c5753b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

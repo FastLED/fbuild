@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mmmarinho",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mmmarinho/library/UMIRobot/22.4.0/UMIRobot-22.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UMIRobot-22.4.0.tar.gz",
+    "size_bytes": 15484,
+    "sha256": "cbcd27e01ed3d33b68d8cdc8d19b8505e465aa47f8ae70f4507bbc1c9821f2cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mmmarinho/library/UMIRobot/22.4.0/UMIRobot-22.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mmmarinho/library/UMIRobot/22.4.0/UMIRobot-22.4.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-mjromeijn",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-mjromeijn/library/Adafruit-GFX-Library-Mbed_Compatible/0.0.0-alpha+sha.cc4253367fc7/Adafruit-GFX-Library-Mbed_Compatible-0.0.0-alpha+sha.cc4253367fc7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Adafruit-GFX-Library-Mbed_Compatible-0.0.0-alpha+sha.cc4253367fc7.tar.gz",
+    "size_bytes": 258346,
+    "sha256": "e24c924516ebcb84ab19938fd08a07736d42635481152498b4fdbd5fed491c0c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mjromeijn/library/Adafruit-GFX-Library-Mbed_Compatible/0.0.0-alpha%2Bsha.cc4253367fc7/Adafruit-GFX-Library-Mbed_Compatible-0.0.0-alpha%2Bsha.cc4253367fc7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mjromeijn/library/Adafruit-GFX-Library-Mbed_Compatible/0.0.0-alpha%2Bsha.cc4253367fc7/Adafruit-GFX-Library-Mbed_Compatible-0.0.0-alpha%2Bsha.cc4253367fc7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

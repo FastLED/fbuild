@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jaruiz",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jaruiz/library/HCSR044/0.0.0+sha.d4d01f7a6c68/HCSR044-0.0.0+sha.d4d01f7a6c68.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HCSR044-0.0.0+sha.d4d01f7a6c68.tar.gz",
+    "size_bytes": 1434,
+    "sha256": "c979d3d967ca0941af624956c779163bcd67e189b9e3922caa316e056e1aebaa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jaruiz/library/HCSR044/0.0.0%2Bsha.d4d01f7a6c68/HCSR044-0.0.0%2Bsha.d4d01f7a6c68.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jaruiz/library/HCSR044/0.0.0%2Bsha.d4d01f7a6c68/HCSR044-0.0.0%2Bsha.d4d01f7a6c68.tar.gz"
+    ]
+   }
+  }
+ ]
+}

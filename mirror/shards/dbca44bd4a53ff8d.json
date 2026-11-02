@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ngraziano",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ngraziano/library/LMICPP-Arduino/2.6.0/LMICPP-Arduino-2.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LMICPP-Arduino-2.6.0.tar.gz",
+    "size_bytes": 96544,
+    "sha256": "96a71d21906a7477a145ecc5325061c8b000f20d4a49d8f6e40f358e2903175e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ngraziano/library/LMICPP-Arduino/2.6.0/LMICPP-Arduino-2.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ngraziano/library/LMICPP-Arduino/2.6.0/LMICPP-Arduino-2.6.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

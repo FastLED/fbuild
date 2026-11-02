@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/apophisxx",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "apophisxx/library/MyTimer/1.2/MyTimer-1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MyTimer-1.2.tar.gz",
+    "size_bytes": 8121,
+    "sha256": "5d65939cc2c981f217818b6f156aad48c9242bc31d38b1f75ef8f19e90e4609f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/apophisxx/library/MyTimer/1.2/MyTimer-1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/apophisxx/library/MyTimer/1.2/MyTimer-1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "apophisxx/library/MyTimery/1.0.5/MyTimery-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MyTimery-1.0.5.tar.gz",
+    "size_bytes": 5444,
+    "sha256": "4a8038a36dd447abf7bad44795bd004ab7fbc609b2b464c0f022d0935a4afd50",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/apophisxx/library/MyTimery/1.0.5/MyTimery-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/apophisxx/library/MyTimery/1.0.5/MyTimery-1.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-abraha2d",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-abraha2d/library/APA102/0.0.0+sha.c223864b981f/APA102-0.0.0+sha.c223864b981f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "APA102-0.0.0+sha.c223864b981f.tar.gz",
+    "size_bytes": 1334,
+    "sha256": "1b05bc41ceb5d90530debd34742c154f05dda770bd4ae85bb9b7dc14a2d2b531",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-abraha2d/library/APA102/0.0.0%2Bsha.c223864b981f/APA102-0.0.0%2Bsha.c223864b981f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-abraha2d/library/APA102/0.0.0%2Bsha.c223864b981f/APA102-0.0.0%2Bsha.c223864b981f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

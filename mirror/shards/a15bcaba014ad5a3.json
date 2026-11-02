@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-wvd-vegt",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-wvd-vegt/library/CMDB/0.0.0+sha.17ff3b07a392/CMDB-0.0.0+sha.17ff3b07a392.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CMDB-0.0.0+sha.17ff3b07a392.tar.gz",
+    "size_bytes": 15250,
+    "sha256": "b4c2ac9aef528ef0aeabd789fc2d7121cc8ab7adfa13336ed7b07e2312f75273",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wvd-vegt/library/CMDB/0.0.0%2Bsha.17ff3b07a392/CMDB-0.0.0%2Bsha.17ff3b07a392.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wvd-vegt/library/CMDB/0.0.0%2Bsha.17ff3b07a392/CMDB-0.0.0%2Bsha.17ff3b07a392.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wvd-vegt/library/RIT/0.0.0+sha.64198265f56f/RIT-0.0.0+sha.64198265f56f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RIT-0.0.0+sha.64198265f56f.tar.gz",
+    "size_bytes": 3099,
+    "sha256": "d5fc4e225fccc000e328dcadd1c0cfc5f0d0a47eb3c4a399ca0460c740c95391",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wvd-vegt/library/RIT/0.0.0%2Bsha.64198265f56f/RIT-0.0.0%2Bsha.64198265f56f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wvd-vegt/library/RIT/0.0.0%2Bsha.64198265f56f/RIT-0.0.0%2Bsha.64198265f56f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wvd-vegt/library/TINYXML/0.0.0+sha.3c1d63c20cfc/TINYXML-0.0.0+sha.3c1d63c20cfc.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TINYXML-0.0.0+sha.3c1d63c20cfc.tar.gz",
+    "size_bytes": 38545,
+    "sha256": "e42401eaf579b9828f71390f20aefef00c1cdd07261d693f9cbcc60c92dfc18d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wvd-vegt/library/TINYXML/0.0.0%2Bsha.3c1d63c20cfc/TINYXML-0.0.0%2Bsha.3c1d63c20cfc.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wvd-vegt/library/TINYXML/0.0.0%2Bsha.3c1d63c20cfc/TINYXML-0.0.0%2Bsha.3c1d63c20cfc.tar.gz"
+    ]
+   }
+  }
+ ]
+}

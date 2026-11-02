@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/embarquech",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "embarquech/library/trng/1.0.1/trng-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "trng-1.0.1.tar.gz",
+    "size_bytes": 7215,
+    "sha256": "b8eec310dbe5aae31c2bbb96b0618a407a2abc4ad303667ade09eb1200ebdb45",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/embarquech/library/trng/1.0.1/trng-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/embarquech/library/trng/1.0.1/trng-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "embarquech/library/trng/1.0.2/trng-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "trng-1.0.2.tar.gz",
+    "size_bytes": 7337,
+    "sha256": "4ef1575c0c56d5594bc14eb5f6ba1c180e905c98069369954ccbff4abd7c0923",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/embarquech/library/trng/1.0.2/trng-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/embarquech/library/trng/1.0.2/trng-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

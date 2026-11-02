@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/solamyl",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "solamyl/library/Mini_Button/1.0.0/Mini_Button-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Mini_Button-1.0.0.tar.gz",
+    "size_bytes": 19017,
+    "sha256": "eb52ecb6892e2e343a2f05c2d0e174df3b37b83b61e314d033406edb136a9f19",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solamyl/library/Mini_Button/1.0.0/Mini_Button-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solamyl/library/Mini_Button/1.0.0/Mini_Button-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solamyl/library/Mini_Button/1.3.0/Mini_Button-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Mini_Button-1.3.0.tar.gz",
+    "size_bytes": 20439,
+    "sha256": "66a0566a8e8d0d3e442ad946c35546121f231b4b9470c909ee6ceb0f0031d7d3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solamyl/library/Mini_Button/1.3.0/Mini_Button-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solamyl/library/Mini_Button/1.3.0/Mini_Button-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solamyl/library/Mini_Button/1.4.0/Mini_Button-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Mini_Button-1.4.0.tar.gz",
+    "size_bytes": 21194,
+    "sha256": "7723df1aebaa5cc90fbce4a13f89bea373669afc270eb3113e7bb4be4ae62814",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solamyl/library/Mini_Button/1.4.0/Mini_Button-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solamyl/library/Mini_Button/1.4.0/Mini_Button-1.4.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

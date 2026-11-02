@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-solo332",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-solo332/library/filter/0.0.0+sha.654a11fd900b/filter-0.0.0+sha.654a11fd900b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "filter-0.0.0+sha.654a11fd900b.tar.gz",
+    "size_bytes": 3166,
+    "sha256": "af3095c38129dc577dac88fb3a66bdee2fbcd8e04fdbb9d3c4657d7b8326c676",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-solo332/library/filter/0.0.0%2Bsha.654a11fd900b/filter-0.0.0%2Bsha.654a11fd900b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-solo332/library/filter/0.0.0%2Bsha.654a11fd900b/filter-0.0.0%2Bsha.654a11fd900b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

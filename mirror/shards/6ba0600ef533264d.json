@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/schoomydevelopment",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "schoomydevelopment/library/SchooMyUtilities/1.2.5/SchooMyUtilities-1.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SchooMyUtilities-1.2.5.tar.gz",
+    "size_bytes": 3132,
+    "sha256": "2cf34c0b37059d8ff35a810d7907dc62650b5a42b8c87e1f3406cfc7e027f7af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/schoomydevelopment/library/SchooMyUtilities/1.2.5/SchooMyUtilities-1.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/schoomydevelopment/library/SchooMyUtilities/1.2.5/SchooMyUtilities-1.2.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

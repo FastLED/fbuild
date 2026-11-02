@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/raulbraghin",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "raulbraghin/library/Standard_PLC/1.0.2/Standard_PLC-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Standard_PLC-1.0.2.tar.gz",
+    "size_bytes": 6300,
+    "sha256": "fec0b069cc272dc7ae46bfcd285587fe1a81c51f2c0df4629ad93b5f407679d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/raulbraghin/library/Standard_PLC/1.0.2/Standard_PLC-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/raulbraghin/library/Standard_PLC/1.0.2/Standard_PLC-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

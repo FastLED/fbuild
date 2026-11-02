@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kelleyja",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kelleyja/library/SAME51_CAN/0.1.0/SAME51_CAN-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SAME51_CAN-0.1.0.tar.gz",
+    "size_bytes": 21012,
+    "sha256": "a72a5a5b7870c96f2a116fc4d74a2e57f61c1bffad8a7eb9d4d136871fe61855",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kelleyja/library/SAME51_CAN/0.1.0/SAME51_CAN-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kelleyja/library/SAME51_CAN/0.1.0/SAME51_CAN-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kelleyja/library/WEMOS%20Motor%20Shield/1.0.0/WEMOSMotorShield-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WEMOSMotorShield-1.0.0.tar.gz",
+    "size_bytes": 2194,
+    "sha256": "0b23aa0772721f90a1b99ec30e8516bd2431e565702ca0df459fde13f05fe1a0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kelleyja/library/WEMOS%2520Motor%2520Shield/1.0.0/WEMOSMotorShield-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kelleyja/library/WEMOS%20Motor%20Shield/1.0.0/WEMOSMotorShield-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

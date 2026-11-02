@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/googlecloudplatform",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "googlecloudplatform/library/Google%20Cloud%20IoT%20Core%20JWT/1.1.11/GoogleCloudIoTCoreJWT-1.1.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GoogleCloudIoTCoreJWT-1.1.11.tar.gz",
+    "size_bytes": 86157,
+    "sha256": "31c83494a4f234ff7a6aa7d059d4fe872cae50edbb6bb4c406dc2b467677665f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/googlecloudplatform/library/Google%2520Cloud%2520IoT%2520Core%2520JWT/1.1.11/GoogleCloudIoTCoreJWT-1.1.11.tar.gz",
+     "https://dl.registry.platformio.org/download/googlecloudplatform/library/Google%20Cloud%20IoT%20Core%20JWT/1.1.11/GoogleCloudIoTCoreJWT-1.1.11.tar.gz"
+    ]
+   }
+  }
+ ]
+}

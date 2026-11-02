@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/natcl",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "natcl/library/Art-Net/1.0.0/Art-Net-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Art-Net-1.0.0.tar.gz",
+    "size_bytes": 9024,
+    "sha256": "d90aa124c17e4b804d1435a62edbf19c2e75b0fb6b33132771bdf8cf8a118484",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/natcl/library/Art-Net/1.0.0/Art-Net-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/natcl/library/Art-Net/1.0.0/Art-Net-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

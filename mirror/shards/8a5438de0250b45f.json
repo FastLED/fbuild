@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fellipecouto",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fellipecouto/library/ButtonControl/1.0.0/ButtonControl-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ButtonControl-1.0.0.tar.gz",
+    "size_bytes": 15558,
+    "sha256": "f5de9df6f872879a1ba789f1984a46a507d3b790aa9491ea2c03868e892b65d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fellipecouto/library/ButtonControl/1.0.0/ButtonControl-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fellipecouto/library/ButtonControl/1.0.0/ButtonControl-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fellipecouto/library/CipherCode/1.1.2/CipherCode-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CipherCode-1.1.2.tar.gz",
+    "size_bytes": 15931,
+    "sha256": "5e6da77da069c5ad75301922c4f561dd2c9489e929eb3b3d00f9f152bd398a4f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fellipecouto/library/CipherCode/1.1.2/CipherCode-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/fellipecouto/library/CipherCode/1.1.2/CipherCode-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fellipecouto/library/MemoryLib/1.0.2/MemoryLib-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MemoryLib-1.0.2.tar.gz",
+    "size_bytes": 5578,
+    "sha256": "d46facd838dafd7abd5b81db7d369e0f6d2219d2e4424674c7e892489ef9fdd9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fellipecouto/library/MemoryLib/1.0.2/MemoryLib-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/fellipecouto/library/MemoryLib/1.0.2/MemoryLib-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fellipecouto/library/MillisTimerLib/1.3.0/MillisTimerLib-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MillisTimerLib-1.3.0.tar.gz",
+    "size_bytes": 14566,
+    "sha256": "507d5d8d77c59b2b3d0c129ebf1532638c8fbcadbb521a17adaeab2277d90c07",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fellipecouto/library/MillisTimerLib/1.3.0/MillisTimerLib-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fellipecouto/library/MillisTimerLib/1.3.0/MillisTimerLib-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fellipecouto/library/PWMOutESP32/1.0.2/PWMOutESP32-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PWMOutESP32-1.0.2.tar.gz",
+    "size_bytes": 4611,
+    "sha256": "6c9c687e4deefa48716627263ff020b4794ea507bd9d5e7b8ba92f8717f7d34e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fellipecouto/library/PWMOutESP32/1.0.2/PWMOutESP32-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/fellipecouto/library/PWMOutESP32/1.0.2/PWMOutESP32-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fellipecouto/library/ShiftOutMega/1.0.1/ShiftOutMega-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ShiftOutMega-1.0.1.tar.gz",
+    "size_bytes": 5268,
+    "sha256": "4469fff11b6c12ad498730599952811b630db3c4e2838db9f77b132eac5252e8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fellipecouto/library/ShiftOutMega/1.0.1/ShiftOutMega-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fellipecouto/library/ShiftOutMega/1.0.1/ShiftOutMega-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

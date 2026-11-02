@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dampflokhd",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dampflokhd/library/ATTinyBME280/1.0.1/ATTinyBME280-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ATTinyBME280-1.0.1.tar.gz",
+    "size_bytes": 9865,
+    "sha256": "1d99a03fd1b345ac6090cd7654166a80a706edde30eb853ffcd2728ed79f4f8b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dampflokhd/library/ATTinyBME280/1.0.1/ATTinyBME280-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dampflokhd/library/ATTinyBME280/1.0.1/ATTinyBME280-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dampflokhd/library/ATTinySerial/1.0.0/ATTinySerial-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ATTinySerial-1.0.0.tar.gz",
+    "size_bytes": 8342,
+    "sha256": "8f8c387e668e467d7a22da0c083d60da1124a2bcefabd69c121894f0cb9ad4e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dampflokhd/library/ATTinySerial/1.0.0/ATTinySerial-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dampflokhd/library/ATTinySerial/1.0.0/ATTinySerial-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

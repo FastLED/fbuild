@@ -1,0 +1,1634 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cariaddisplaylibrary",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cariaddisplaylibrary/library/AVOP/2.1.2/AVOP-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AVOP-2.1.2.tar.gz",
+    "size_bytes": 14456,
+    "sha256": "673491f2e9062c3deb95601bebb3d698ef28e30dbe7606eaca6c887d8e0ea4cd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/AVOP/2.1.2/AVOP-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/AVOP/2.1.2/AVOP-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/Acorn/2.1.4/Acorn-2.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Acorn-2.1.4.tar.gz",
+    "size_bytes": 4247,
+    "sha256": "406a53b3f7909add2d0c90f2cdd1123d034c89fe2440b97314b730f5f89136b6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/Acorn/2.1.4/Acorn-2.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/Acorn/2.1.4/Acorn-2.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/Acorn8x8/2.1.2/Acorn8x8-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Acorn8x8-2.1.2.tar.gz",
+    "size_bytes": 5948,
+    "sha256": "06852b90a4aeb2243a9ac165d8b5af742006b2dcb3825799f3bc25da0b4ea6f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/Acorn8x8/2.1.2/Acorn8x8-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/Acorn8x8/2.1.2/Acorn8x8-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/AnalogTouch/2.1.3/AnalogTouch-2.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AnalogTouch-2.1.3.tar.gz",
+    "size_bytes": 2003,
+    "sha256": "7bdae4464ec9ca32c4c3e0aaaeedfc545a706892db1535836b6c9d6489489ce7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/AnalogTouch/2.1.3/AnalogTouch-2.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/AnalogTouch/2.1.3/AnalogTouch-2.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/Aquarius/2.1.2/Aquarius-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Aquarius-2.1.2.tar.gz",
+    "size_bytes": 6988,
+    "sha256": "7af008cca049496e6f71a62cb1b31f6d2fd64b686d2a0147e87d80a03f7064c4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/Aquarius/2.1.2/Aquarius-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/Aquarius/2.1.2/Aquarius-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/Arial/2.1.0/Arial-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arial-2.1.0.tar.gz",
+    "size_bytes": 71255,
+    "sha256": "8c964c3bab13ec1412ecbeb7dc98391402f6418ba93848d36e63198e4477ae35",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/Arial/2.1.0/Arial-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/Arial/2.1.0/Arial-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/ArialBold/2.1.2/ArialBold-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArialBold-2.1.2.tar.gz",
+    "size_bytes": 70930,
+    "sha256": "85f5315f3a72fe1171a24f2bb41efa2f68e3ac82907e4a9a80000a527688548f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/ArialBold/2.1.2/ArialBold-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/ArialBold/2.1.2/ArialBold-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/Atari/2.1.2/Atari-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Atari-2.1.2.tar.gz",
+    "size_bytes": 7248,
+    "sha256": "051e2f8d41e16a758f2b9b07472d5eedaaf89c663b7d9317469c73763e910f41",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/Atari/2.1.2/Atari-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/Atari/2.1.2/Atari-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/AtariButtons/2.1.2/AtariButtons-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AtariButtons-2.1.2.tar.gz",
+    "size_bytes": 8704,
+    "sha256": "ccf30dcb775bd148c8befc5b806779dd3a7c3723108b99665745dd07dd72d4b0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/AtariButtons/2.1.2/AtariButtons-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/AtariButtons/2.1.2/AtariButtons-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/BD663474/2.1.2/BD663474-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BD663474-2.1.2.tar.gz",
+    "size_bytes": 2558,
+    "sha256": "1ac0a40ee7cc32c73e828471c6c95aba8518f51a53a1e62713058cace99bf2ac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/BD663474/2.1.2/BD663474-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/BD663474/2.1.2/BD663474-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/BMP/2.1.0/BMP-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMP-2.1.0.tar.gz",
+    "size_bytes": 3218,
+    "sha256": "1aa08997b6daf37086c9cf248a60c5e879f487d1c7d105c25bab42a86c36d945",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/BMP/2.1.0/BMP-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/BMP/2.1.0/BMP-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/BMPFile/2.1.0/BMPFile-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMPFile-2.1.0.tar.gz",
+    "size_bytes": 1600565,
+    "sha256": "82240d03340404d36eae899ef8b254270c836abfa4247584f3902d252c18d0dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/BMPFile/2.1.0/BMPFile-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/BMPFile/2.1.0/BMPFile-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/BPMonoItalic/2.1.1/BPMonoItalic-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BPMonoItalic-2.1.1.tar.gz",
+    "size_bytes": 100660,
+    "sha256": "08216b4f6e2318a8ed54dbc3c5ea3c52aff5ed9742cb965f9b5d8dc954bb9361",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/BPMonoItalic/2.1.1/BPMonoItalic-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/BPMonoItalic/2.1.1/BPMonoItalic-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/BinaryVector/2.1.1/BinaryVector-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BinaryVector-2.1.1.tar.gz",
+    "size_bytes": 1654,
+    "sha256": "3ebbabef26a28843ab11f3b3361014f7ce86d11da8ceb86412ea01fd57755f73",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/BinaryVector/2.1.1/BinaryVector-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/BinaryVector/2.1.1/BinaryVector-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/Bisasam/2.1.1/Bisasam-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bisasam-2.1.1.tar.gz",
+    "size_bytes": 21031,
+    "sha256": "e3bd0fe027eb50634c1f3d8d7888074f42f56b4533009fb997b26bb440f5ef3a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/Bisasam/2.1.1/Bisasam-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/Bisasam/2.1.1/Bisasam-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/Brankic/2.0.9/Brankic-2.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Brankic-2.0.9.tar.gz",
+    "size_bytes": 91987,
+    "sha256": "8cc7dcdff94b8498442c6e174eec0fb97bbc9f522280190f8db7dfb6a9346b0e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/Brankic/2.0.9/Brankic-2.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/Brankic/2.0.9/Brankic-2.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/BunnyMambo/2.1.1/BunnyMambo-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BunnyMambo-2.1.1.tar.gz",
+    "size_bytes": 46360,
+    "sha256": "be1aa3cea0313de6870625808af53741b523f981c83d0487d75d63ce3c780c94",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/BunnyMambo/2.1.1/BunnyMambo-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/BunnyMambo/2.1.1/BunnyMambo-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/CP111/2.1.1/CP111-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CP111-2.1.1.tar.gz",
+    "size_bytes": 7915,
+    "sha256": "a058d165185593060958bc9f97bbfc303e79c10328417437b0ef1502a6029db2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/CP111/2.1.1/CP111-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/CP111/2.1.1/CP111-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/CP112/2.1.1/CP112-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CP112-2.1.1.tar.gz",
+    "size_bytes": 8299,
+    "sha256": "72ef0a4aa762e799ae18480e20ce9a7c666e78312fb6a90bcd0e1b405cce6362",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/CP112/2.1.1/CP112-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/CP112/2.1.1/CP112-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/CP113/2.1.2/CP113-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CP113-2.1.2.tar.gz",
+    "size_bytes": 8078,
+    "sha256": "90bcf5cf5524d5950cdf318323df2cd098180e746a6fc9eb803dc4d5c3eb11b4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/CP113/2.1.2/CP113-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/CP113/2.1.2/CP113-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/CP437/2.1.1/CP437-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CP437-2.1.1.tar.gz",
+    "size_bytes": 8110,
+    "sha256": "44803a2e3b85dcaa485d81590cf8d5883abf0b9fe9cc1e81ac0181b4d3418555",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/CP437/2.1.1/CP437-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/CP437/2.1.1/CP437-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/CP737/2.1.1/CP737-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CP737-2.1.1.tar.gz",
+    "size_bytes": 7896,
+    "sha256": "88471e070b21192d025f1d9bd8c7510ff3306d410760b2306220044dfa6d3c00",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/CP737/2.1.1/CP737-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/CP737/2.1.1/CP737-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/CP850/2.1.1/CP850-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CP850-2.1.1.tar.gz",
+    "size_bytes": 8446,
+    "sha256": "294045ef182a97fabe56c32dd8025c8a1f7f4668af21764dc423a1336a8e4bcf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/CP850/2.1.1/CP850-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/CP850/2.1.1/CP850-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/CP851/2.1.1/CP851-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CP851-2.1.1.tar.gz",
+    "size_bytes": 8423,
+    "sha256": "7a400f0cb9f82eded1e6016aa86a361434564a03e41141f196a1455ce30ecd7d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/CP851/2.1.1/CP851-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/CP851/2.1.1/CP851-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/CP852/2.1.1/CP852-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CP852-2.1.1.tar.gz",
+    "size_bytes": 8514,
+    "sha256": "8dea7476b365085bde6246850db9b92bfbb315283ad37a453db7c8c90854af52",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/CP852/2.1.1/CP852-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/CP852/2.1.1/CP852-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/CP853/2.1.1/CP853-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CP853-2.1.1.tar.gz",
+    "size_bytes": 8299,
+    "sha256": "449b11ed5cf1e565b7b710d8ecd1397243d5852fed12cc0f2a0b9cf5bcd3a812",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/CP853/2.1.1/CP853-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/CP853/2.1.1/CP853-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/CP860/2.1.1/CP860-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CP860-2.1.1.tar.gz",
+    "size_bytes": 8148,
+    "sha256": "80fb2c8b15aa49da217c3a53cdfc065480402bc7d67408e589d0e808571c82c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/CP860/2.1.1/CP860-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/CP860/2.1.1/CP860-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/CP861/2.1.1/CP861-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CP861-2.1.1.tar.gz",
+    "size_bytes": 8171,
+    "sha256": "a42aa49b526c10b688f0c6b84deb83ae6a70e3be9b709f5deeaf28f6c91c88ab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/CP861/2.1.1/CP861-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/CP861/2.1.1/CP861-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/CP862/2.1.1/CP862-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CP862-2.1.1.tar.gz",
+    "size_bytes": 8138,
+    "sha256": "e15acfb2f5df2bf4bf82c59b6dbc14a8656673d6dc917e76e190f87e160bf964",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/CP862/2.1.1/CP862-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/CP862/2.1.1/CP862-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/CP863/2.1.1/CP863-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CP863-2.1.1.tar.gz",
+    "size_bytes": 8077,
+    "sha256": "8d930c1de3246c66d5f12c8080fe8ebd088c6b1276f2378d35782644f056a944",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/CP863/2.1.1/CP863-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/CP863/2.1.1/CP863-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/CP864/2.1.1/CP864-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CP864-2.1.1.tar.gz",
+    "size_bytes": 8416,
+    "sha256": "9df77de35c6da0eed61eb9b2d94ad0c0538c4938c07f0ad0226472200c033c12",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/CP864/2.1.1/CP864-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/CP864/2.1.1/CP864-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/CP865/2.1.1/CP865-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CP865-2.1.1.tar.gz",
+    "size_bytes": 8126,
+    "sha256": "d828f1955d56f13592c305ea81c8e50e9979c1c0339e758bf7cd7e5861725cbb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/CP865/2.1.1/CP865-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/CP865/2.1.1/CP865-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/CP866/2.1.1/CP866-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CP866-2.1.1.tar.gz",
+    "size_bytes": 7915,
+    "sha256": "af778dbc1bb3305cc581ff078957f30686918e688904ea54f0c87fd3297d0bda",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/CP866/2.1.1/CP866-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/CP866/2.1.1/CP866-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/CP880/2.1.1/CP880-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CP880-2.1.1.tar.gz",
+    "size_bytes": 8117,
+    "sha256": "d00d1dc029be6ddad4313e7c4cf933ff09aa65a7321f7d5454b5ba088900bf33",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/CP880/2.1.1/CP880-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/CP880/2.1.1/CP880-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/CP881/2.1.1/CP881-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CP881-2.1.1.tar.gz",
+    "size_bytes": 7852,
+    "sha256": "ac1b3695774a39dac4993a717870c10faaae487b54d97d6bccf9b2fb05b3a489",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/CP881/2.1.1/CP881-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/CP881/2.1.1/CP881-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/CP882/2.1.1/CP882-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CP882-2.1.1.tar.gz",
+    "size_bytes": 7858,
+    "sha256": "95584d70abeb5214089c6ac79fc10a634ac8d6e61ee3bc85c2edbc06be48ed4a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/CP882/2.1.1/CP882-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/CP882/2.1.1/CP882-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/CP883/2.1.1/CP883-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CP883-2.1.1.tar.gz",
+    "size_bytes": 8049,
+    "sha256": "933db43a966c137ae2c26942026d7e8c192ff08cdba53fd9deb28c879c7f734c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/CP883/2.1.1/CP883-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/CP883/2.1.1/CP883-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/CP884/2.1.1/CP884-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CP884-2.1.1.tar.gz",
+    "size_bytes": 7894,
+    "sha256": "b943abbfbce7fbe80b915c1cc1aecb10063359eeb747d3361cebd47495142cb5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/CP884/2.1.1/CP884-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/CP884/2.1.1/CP884-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/CP885/2.1.1/CP885-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CP885-2.1.1.tar.gz",
+    "size_bytes": 7870,
+    "sha256": "81f2bf09d589f19e4c9af5b85d7809c4d9a93fb452bb0b63e06813cc9ff5f572",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/CP885/2.1.1/CP885-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/CP885/2.1.1/CP885-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/Carbine/2.1.1/Carbine-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Carbine-2.1.1.tar.gz",
+    "size_bytes": 10266,
+    "sha256": "573d085de089058388e98343d7d0c8493d179da7ecef60c3c50cd33a0f23a3e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/Carbine/2.1.1/Carbine-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/Carbine/2.1.1/Carbine-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/ComfortAA/2.1.1/ComfortAA-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ComfortAA-2.1.1.tar.gz",
+    "size_bytes": 63916,
+    "sha256": "8b0fc31d103fa94064a352e514547373d4fd0393c009b688e4880d894cf7206c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/ComfortAA/2.1.1/ComfortAA-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/ComfortAA/2.1.1/ComfortAA-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/Comic/2.1.1/Comic-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Comic-2.1.1.tar.gz",
+    "size_bytes": 17348,
+    "sha256": "1cb26bba469d8427c4bdeb36fef9ee79c358f1f06387fbb19bfe67052ffe631a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/Comic/2.1.1/Comic-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/Comic/2.1.1/Comic-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/DOS/2.1.1/DOS-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DOS-2.1.1.tar.gz",
+    "size_bytes": 10463,
+    "sha256": "e28391ba63dc618cd527746177f2430f7189b9f7cf43f90454c96dcfafa5e393",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/DOS/2.1.1/DOS-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/DOS/2.1.1/DOS-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/DejaVuSans/2.1.1/DejaVuSans-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DejaVuSans-2.1.1.tar.gz",
+    "size_bytes": 118573,
+    "sha256": "f31601ee02efd5a00a4c70c1872ab9f93f0fe7ae89ee16b7b0a1d40545e5578e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/DejaVuSans/2.1.1/DejaVuSans-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/DejaVuSans/2.1.1/DejaVuSans-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/DejaVuSansMono/2.1.1/DejaVuSansMono-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DejaVuSansMono-2.1.1.tar.gz",
+    "size_bytes": 95545,
+    "sha256": "e79dbe8bc45fa5d1d6b8fe123d4fa8241ce262f809c2980ab8d1d1f2b23b6a61",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/DejaVuSansMono/2.1.1/DejaVuSansMono-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/DejaVuSansMono/2.1.1/DejaVuSansMono-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/Diablo16/2.1.1/Diablo16-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Diablo16-2.1.1.tar.gz",
+    "size_bytes": 2704,
+    "sha256": "ad6859c5173f908b2f4643647dc880f4678f9e60f1cb2bbe221b059a3040a3f3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/Diablo16/2.1.1/Diablo16-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/Diablo16/2.1.1/Diablo16-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/Display7Seg/2.1.1/Display7Seg-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Display7Seg-2.1.1.tar.gz",
+    "size_bytes": 2796,
+    "sha256": "db901195c63d71f903b3c98b3b9cfcb782e0cf4226691e1af79d7dfc23942f29",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/Display7Seg/2.1.1/Display7Seg-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/Display7Seg/2.1.1/Display7Seg-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/Display7SegShadow/2.1.1/Display7SegShadow-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Display7SegShadow-2.1.1.tar.gz",
+    "size_bytes": 3996,
+    "sha256": "af039d09610126aa63d5212af7bb45e87c5378f9d3d5e726f3246b492892f854",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/Display7SegShadow/2.1.1/Display7SegShadow-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/Display7SegShadow/2.1.1/Display7SegShadow-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/DisplayCore/2.2.2/DisplayCore-2.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DisplayCore-2.2.2.tar.gz",
+    "size_bytes": 49735,
+    "sha256": "958714fd9881feaa111046d1027cd515c76ddbdb41f61a60ac9bc5ead3b6fc03",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/DisplayCore/2.2.2/DisplayCore-2.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/DisplayCore/2.2.2/DisplayCore-2.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/Doorly/2.1.1/Doorly-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Doorly-2.1.1.tar.gz",
+    "size_bytes": 11894,
+    "sha256": "2338bbbc8a141b1fa17944792cafb77936f8b6502cdc9fe60279d10e580ca059",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/Doorly/2.1.1/Doorly-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/Doorly/2.1.1/Doorly-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/Ecqlipse32/2.1.0/Ecqlipse32-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ecqlipse32-2.1.0.tar.gz",
+    "size_bytes": 105559,
+    "sha256": "77f8173725b9d5ce4ad602e98f3f99b1be8d1a3ad74d863e5a470dc4bb439ac4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/Ecqlipse32/2.1.0/Ecqlipse32-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/Ecqlipse32/2.1.0/Ecqlipse32-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/Ecqlipse48/2.0.9/Ecqlipse48-2.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ecqlipse48-2.0.9.tar.gz",
+    "size_bytes": 185181,
+    "sha256": "1c6311c69137757ecaef64ede7299ce197856e3b24adc271e76b06e3dec8f97f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/Ecqlipse48/2.0.9/Ecqlipse48-2.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/Ecqlipse48/2.0.9/Ecqlipse48-2.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/EngliBesh/2.1.2/EngliBesh-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EngliBesh-2.1.2.tar.gz",
+    "size_bytes": 132511,
+    "sha256": "ccb5085ad5f8aeb2310206c48851193fef94a9ec0856d8c09a610f808e462fa2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/EngliBesh/2.1.2/EngliBesh-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/EngliBesh/2.1.2/EngliBesh-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/Filters/2.0.9/Filters-2.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Filters-2.0.9.tar.gz",
+    "size_bytes": 2200,
+    "sha256": "420355341fe82bf59f14cc63f6e20ba97518ab9d26e899e4d51fd8e41eb1abe3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/Filters/2.0.9/Filters-2.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/Filters/2.0.9/Filters-2.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/Font44/2.1.2/Font44-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Font44-2.1.2.tar.gz",
+    "size_bytes": 14614,
+    "sha256": "ac32195d603a20b795ae6e8e4795b1b1d3922fe9a6233445d0e6d1610c937aa6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/Font44/2.1.2/Font44-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/Font44/2.1.2/Font44-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/Framebuffer332/2.1.1/Framebuffer332-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Framebuffer332-2.1.1.tar.gz",
+    "size_bytes": 1906,
+    "sha256": "c1a643088fd8667e113970cf3d14e9919a26557573cf26177ef13d23910c8319",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/Framebuffer332/2.1.1/Framebuffer332-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/Framebuffer332/2.1.1/Framebuffer332-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/Framebuffer565/2.1.3/Framebuffer565-2.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Framebuffer565-2.1.3.tar.gz",
+    "size_bytes": 1735,
+    "sha256": "a7e94a8a6d56b1d41687fe98a1543784c0ef0be698c35190c6fdeeb4e6543daa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/Framebuffer565/2.1.3/Framebuffer565-2.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/Framebuffer565/2.1.3/Framebuffer565-2.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/Gem/2.1.2/Gem-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Gem-2.1.2.tar.gz",
+    "size_bytes": 20644,
+    "sha256": "9f10c07014d348df570ac5003d3b942951f9b15bed04f406453322ce04f735d7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/Gem/2.1.2/Gem-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/Gem/2.1.2/Gem-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/Gentleface32/2.1.2/Gentleface32-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Gentleface32-2.1.2.tar.gz",
+    "size_bytes": 61924,
+    "sha256": "e37216c0fd82596852e63d4daad9a392217207ac2428adc5fa2919be725c2795",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/Gentleface32/2.1.2/Gentleface32-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/Gentleface32/2.1.2/Gentleface32-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/Gentleface48/2.1.2/Gentleface48-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Gentleface48-2.1.2.tar.gz",
+    "size_bytes": 161672,
+    "sha256": "485cf27c675d1dec3e328fdbc855af34230779a2138ee011a97357817297db64",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/Gentleface48/2.1.2/Gentleface48-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/Gentleface48/2.1.2/Gentleface48-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/GeorgiaBoldItalic/2.1.4/GeorgiaBoldItalic-2.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GeorgiaBoldItalic-2.1.4.tar.gz",
+    "size_bytes": 245816,
+    "sha256": "cffd12d64ee516bacb2a046d8de773286eacbdf8b81eaa0d6c0fa4729b271445",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/GeorgiaBoldItalic/2.1.4/GeorgiaBoldItalic-2.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/GeorgiaBoldItalic/2.1.4/GeorgiaBoldItalic-2.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/Goldelox/2.1.1/Goldelox-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Goldelox-2.1.1.tar.gz",
+    "size_bytes": 3606,
+    "sha256": "4a17a6a9d8f6e65c49271ae9ddefa5d2242eec0171a5f83e8543ef6f7a069032",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/Goldelox/2.1.1/Goldelox-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/Goldelox/2.1.1/Goldelox-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/HX8347D/2.1.0/HX8347D-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HX8347D-2.1.0.tar.gz",
+    "size_bytes": 3232,
+    "sha256": "17de353bf89890818d50917b7dc5cdf612bdfa3ac632a48c23ffdd6246b5aa6b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/HX8347D/2.1.0/HX8347D-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/HX8347D/2.1.0/HX8347D-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/Hazard/2.1.2/Hazard-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Hazard-2.1.2.tar.gz",
+    "size_bytes": 69264,
+    "sha256": "36a268b8a332de6dd86c40deb2992902c3d59cfe2fe8607db5b20bd6ed292b80",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/Hazard/2.1.2/Hazard-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/Hazard/2.1.2/Hazard-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/ILI9163/2.1.1/ILI9163-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ILI9163-2.1.1.tar.gz",
+    "size_bytes": 2252,
+    "sha256": "bdfba930867f90ffcb5c3b7c7487413e041528d01ca96ffe15ac3584e52812f9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/ILI9163/2.1.1/ILI9163-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/ILI9163/2.1.1/ILI9163-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/ILI9325/2.0.8/ILI9325-2.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ILI9325-2.0.8.tar.gz",
+    "size_bytes": 4016,
+    "sha256": "119dec9cd2a2e226e5861705d3eafce05b6d983d9e64de3bf8426aa2f2cd8215",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/ILI9325/2.0.8/ILI9325-2.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/ILI9325/2.0.8/ILI9325-2.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/ILI9340/2.1.1/ILI9340-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ILI9340-2.1.1.tar.gz",
+    "size_bytes": 2926,
+    "sha256": "8bf456a08ffa55b0d75f9ebf89e5f4185e3830a23befb871bf1731eb88010416",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/ILI9340/2.1.1/ILI9340-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/ILI9340/2.1.1/ILI9340-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/ILI9341/2.1.4/ILI9341-2.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ILI9341-2.1.4.tar.gz",
+    "size_bytes": 7559,
+    "sha256": "8d8389209b4f842f404be3059254374ee78bfe54b6125675b133489548014396",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/ILI9341/2.1.4/ILI9341-2.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/ILI9341/2.1.4/ILI9341-2.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/ILI9342/2.1.1/ILI9342-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ILI9342-2.1.1.tar.gz",
+    "size_bytes": 4329,
+    "sha256": "406fb1c69ee49acaa39c8d6ebbb48ac6f92b83722bef92c3fdeced441304146d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/ILI9342/2.1.1/ILI9342-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/ILI9342/2.1.1/ILI9342-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/ILI9481/2.1.1/ILI9481-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ILI9481-2.1.1.tar.gz",
+    "size_bytes": 3688,
+    "sha256": "05a749699da29e76f7a1dce3835a6bd920c31798095c51a5de8a6a8ce1d30daf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/ILI9481/2.1.1/ILI9481-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/ILI9481/2.1.1/ILI9481-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/Icon8/2.1.2/Icon8-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Icon8-2.1.2.tar.gz",
+    "size_bytes": 2112,
+    "sha256": "c898d57f345c2c8e130f0cf80ef17c283850f8bafe6c77c54a3145923dcd4937",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/Icon8/2.1.2/Icon8-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/Icon8/2.1.2/Icon8-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/Iconic/2.1.1/Iconic-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Iconic-2.1.1.tar.gz",
+    "size_bytes": 186238,
+    "sha256": "4077eff0d6256bd8462d280c74635121010b2327f64c385d9c88484d7652ceca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/Iconic/2.1.1/Iconic-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/Iconic/2.1.1/Iconic-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/Ingot/2.1.2/Ingot-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ingot-2.1.2.tar.gz",
+    "size_bytes": 27066,
+    "sha256": "175c4a70f0cfaafdda235a7a186c0755ffa5680bd82bba8e912be918e6666844",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/Ingot/2.1.2/Ingot-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/Ingot/2.1.2/Ingot-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/JPEG/2.1.0/JPEG-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JPEG-2.1.0.tar.gz",
+    "size_bytes": 53974,
+    "sha256": "8e6a2f9eb8c4dbfd508e69e633c5b3c096f49c48f919057c21f489cec6e13b8d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/JPEG/2.1.0/JPEG-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/JPEG/2.1.0/JPEG-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/KS0108/2.1.1/KS0108-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KS0108-2.1.1.tar.gz",
+    "size_bytes": 2921,
+    "sha256": "d41688c5be22befb642452d5a48b901625ab7a295bb5781e8033d541cf78215e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/KS0108/2.1.1/KS0108-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/KS0108/2.1.1/KS0108-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/Kimberley/2.1.2/Kimberley-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Kimberley-2.1.2.tar.gz",
+    "size_bytes": 136780,
+    "sha256": "4eed96c207a05bb5968463918e8d2cb529702b602dc89b8c70ca229ec369dac2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/Kimberley/2.1.2/Kimberley-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/Kimberley/2.1.2/Kimberley-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/LCARS/2.1.2/LCARS-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCARS-2.1.2.tar.gz",
+    "size_bytes": 80865,
+    "sha256": "a010b7e9bb367f7c4eb653215f3c36eaf544776b57e28ffd1b5fd8b5ce4d86ec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/LCARS/2.1.2/LCARS-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/LCARS/2.1.2/LCARS-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/LCARSInterface/2.1.0/LCARSInterface-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCARSInterface-2.1.0.tar.gz",
+    "size_bytes": 6250,
+    "sha256": "121ff84da8f5a8b4abb56b926843498ef5593a757d8f54f83ae9f6af719e6df4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/LCARSInterface/2.1.0/LCARSInterface-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/LCARSInterface/2.1.0/LCARSInterface-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/LCDish/2.1.2/LCDish-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCDish-2.1.2.tar.gz",
+    "size_bytes": 9595,
+    "sha256": "d0044de420a9522e990192df28fe6c33fb8f74575417942fd2bcbdef42fee588",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/LCDish/2.1.2/LCDish-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/LCDish/2.1.2/LCDish-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/LM6800/2.1.1/LM6800-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LM6800-2.1.1.tar.gz",
+    "size_bytes": 167678,
+    "sha256": "b3ad541f68b774945dece9189a35729e18f6459d8175839a452a44d5a8563b26",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/LM6800/2.1.1/LM6800-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/LM6800/2.1.1/LM6800-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/LedMatrixBright/2.1.2/LedMatrixBright-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LedMatrixBright-2.1.2.tar.gz",
+    "size_bytes": 18452,
+    "sha256": "0fbe4f7e46465360c364734b760157392cb88a6d43d2cdb1cba68e49851053e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/LedMatrixBright/2.1.2/LedMatrixBright-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/LedMatrixBright/2.1.2/LedMatrixBright-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/LedMatrixDim/2.1.2/LedMatrixDim-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LedMatrixDim-2.1.2.tar.gz",
+    "size_bytes": 19027,
+    "sha256": "72f995c4e1f52691d1fc1532a27e57c28841c049ad4de8eef7db8ad5ba702e10",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/LedMatrixDim/2.1.2/LedMatrixDim-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/LedMatrixDim/2.1.2/LedMatrixDim-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/Liberation/2.1.2/Liberation-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Liberation-2.1.2.tar.gz",
+    "size_bytes": 72874,
+    "sha256": "844897a7106006db87a96e8019c719c452419d6a29046e65bb393ba0e719bb16",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/Liberation/2.1.2/Liberation-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/Liberation/2.1.2/Liberation-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/Linux10x18/2.1.2/Linux10x18-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Linux10x18-2.1.2.tar.gz",
+    "size_bytes": 11916,
+    "sha256": "e4517c792f8a02d44ba93e4033c81ab08a5f4960c0927a3eb1c2f4fea6888be3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/Linux10x18/2.1.2/Linux10x18-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/Linux10x18/2.1.2/Linux10x18-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/Linux6x10/2.1.2/Linux6x10-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Linux6x10-2.1.2.tar.gz",
+    "size_bytes": 6588,
+    "sha256": "b81ebdde04c72e7bc0496de1a844ca608e9803781aac4d17aad0c02cefb9f369",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/Linux6x10/2.1.2/Linux6x10-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/Linux6x10/2.1.2/Linux6x10-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/Linux7x14/2.1.2/Linux7x14-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Linux7x14-2.1.2.tar.gz",
+    "size_bytes": 8061,
+    "sha256": "10634fb8271496661f8a84195701f751d8dd86a8c8c63ea31398c700dd78cb70",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/Linux7x14/2.1.2/Linux7x14-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/Linux7x14/2.1.2/Linux7x14-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/LinuxEvent/2.1.1/LinuxEvent-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LinuxEvent-2.1.1.tar.gz",
+    "size_bytes": 2691,
+    "sha256": "47148888b514b8b83ada75b0e504834faab75e03845de3da38806102c7d1fa22",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/LinuxEvent/2.1.1/LinuxEvent-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/LinuxEvent/2.1.1/LinuxEvent-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/MINI4x6/2.1.2/MINI4x6-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MINI4x6-2.1.2.tar.gz",
+    "size_bytes": 3830,
+    "sha256": "14af8374f8aec80a44c2cb563ee0433647f56852f9aed9b13435cf56fa85add1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/MINI4x6/2.1.2/MINI4x6-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/MINI4x6/2.1.2/MINI4x6-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/MonoIcon/2.0.9/MonoIcon-2.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MonoIcon-2.0.9.tar.gz",
+    "size_bytes": 4638,
+    "sha256": "226c6e9e5201be8404bb12d71b2e64200f9e6e90716e369f18214b5f166c0ff9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/MonoIcon/2.0.9/MonoIcon-2.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/MonoIcon/2.0.9/MonoIcon-2.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/NativeFB/2.1.2/NativeFB-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NativeFB-2.1.2.tar.gz",
+    "size_bytes": 4018,
+    "sha256": "034a8dea3e4a006ff2b0b4ff2801558af8fcc3c28d3a8b5a0087e47d0029574f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/NativeFB/2.1.2/NativeFB-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/NativeFB/2.1.2/NativeFB-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/OCRAExtended/2.1.2/OCRAExtended-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OCRAExtended-2.1.2.tar.gz",
+    "size_bytes": 99882,
+    "sha256": "0c1650809026e29e54b6798f70e695999ce0344aa0221e847bc692d193d90439",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/OCRAExtended/2.1.2/OCRAExtended-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/OCRAExtended/2.1.2/OCRAExtended-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/OldStandard/2.1.0/OldStandard-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OldStandard-2.1.0.tar.gz",
+    "size_bytes": 81933,
+    "sha256": "53b065e18b8d5ff6af1aeb18b61aadef81091e57af695e17d13e3894f83bf97d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/OldStandard/2.1.0/OldStandard-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/OldStandard/2.1.0/OldStandard-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/Open24Display/2.1.2/Open24Display-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Open24Display-2.1.2.tar.gz",
+    "size_bytes": 79268,
+    "sha256": "8ead02d53f8fa51dc0e7943bba6dc9f783eee15b37d5999fbb3f2fe10a1c5187",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/Open24Display/2.1.2/Open24Display-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/Open24Display/2.1.2/Open24Display-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/PEARL8x8/2.1.2/PEARL8x8-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PEARL8x8-2.1.2.tar.gz",
+    "size_bytes": 6975,
+    "sha256": "c9d17696154c3c419065ab1d1e4d832b127214b4e12f65a2645752a2d1080772",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/PEARL8x8/2.1.2/PEARL8x8-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/PEARL8x8/2.1.2/PEARL8x8-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/PG25664CG/2.1.1/PG25664CG-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PG25664CG-2.1.1.tar.gz",
+    "size_bytes": 4839,
+    "sha256": "358b80978c7b1d8842f2ca0662440efefbbb7e56fd99ef2f3ab42689dd096368",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/PG25664CG/2.1.1/PG25664CG-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/PG25664CG/2.1.1/PG25664CG-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/PICOL/2.0.9/PICOL-2.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PICOL-2.0.9.tar.gz",
+    "size_bytes": 227484,
+    "sha256": "bc2f27ec27dd25092f578a15f3c60467c752b9ad479870289fe66749480a96af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/PICOL/2.0.9/PICOL-2.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/PICOL/2.0.9/PICOL-2.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/Picadillo/2.1.3/Picadillo-2.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Picadillo-2.1.3.tar.gz",
+    "size_bytes": 2726846,
+    "sha256": "c1d6465c074757e37e0819844eb0b2fae32aef49538b3cf5c61e4f214c2d3961",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/Picadillo/2.1.3/Picadillo-2.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/Picadillo/2.1.3/Picadillo-2.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/ProFont6x11/2.1.2/ProFont6x11-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProFont6x11-2.1.2.tar.gz",
+    "size_bytes": 6614,
+    "sha256": "37ed1fcf7d8ae0afdf2511fc0091c3915e9f84e149150797d02a4658717da040",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/ProFont6x11/2.1.2/ProFont6x11-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/ProFont6x11/2.1.2/ProFont6x11-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/Raw565/2.1.0/Raw565-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Raw565-2.1.0.tar.gz",
+    "size_bytes": 1537,
+    "sha256": "785f6b949caf68be9eea4ef5e9f8fd715ac68082f616e185030bf115843e1fd2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/Raw565/2.1.0/Raw565-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/Raw565/2.1.0/Raw565-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/RawGold/2.1.2/RawGold-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RawGold-2.1.2.tar.gz",
+    "size_bytes": 26119,
+    "sha256": "f59cd6c0a74a0d982d33972a9a273e836a7d8e6ca6caea2def00c2d2dfd87d9f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/RawGold/2.1.2/RawGold-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/RawGold/2.1.2/RawGold-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/Roboto/2.1.2/Roboto-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Roboto-2.1.2.tar.gz",
+    "size_bytes": 26830,
+    "sha256": "1dd776f43b59f96f4960fe9278542a612365355d9d10187f312df91c94c61818",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/Roboto/2.1.2/Roboto-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/Roboto/2.1.2/Roboto-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/S6D0154/2.1.1/S6D0154-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "S6D0154-2.1.1.tar.gz",
+    "size_bytes": 3544,
+    "sha256": "5378442c91924e3caab4da0a2a73d3479a030b2fe44da22cda8156ec3d9e0ffa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/S6D0154/2.1.1/S6D0154-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/S6D0154/2.1.1/S6D0154-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/SDL/2.1.2/SDL-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SDL-2.1.2.tar.gz",
+    "size_bytes": 3885,
+    "sha256": "996f63685f3f70dddc65766fb5fcd9fc9c337d27fe76b2abc6769146926d3bba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/SDL/2.1.2/SDL-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/SDL/2.1.2/SDL-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/SSD1289/2.1.1/SSD1289-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SSD1289-2.1.1.tar.gz",
+    "size_bytes": 571483,
+    "sha256": "689a1cb19b5fc4863dbc29c0aa4fc68ebcc6d81a645786d8493972eb05c799b2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/SSD1289/2.1.1/SSD1289-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/SSD1289/2.1.1/SSD1289-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/SSD1306/2.1.9/SSD1306-2.1.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SSD1306-2.1.9.tar.gz",
+    "size_bytes": 3184,
+    "sha256": "45fb15ccde5a3967f890a338b3722fa79fcfb6e9d4c7689c430712cdf7cc1d4a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/SSD1306/2.1.9/SSD1306-2.1.9.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/SSD1306/2.1.9/SSD1306-2.1.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/SSD1963/2.1.1/SSD1963-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SSD1963-2.1.1.tar.gz",
+    "size_bytes": 8080,
+    "sha256": "c9f3b9a483fd1888dd0655042d3e7643dbab089aa5a138023e4fe6b1be4f3433",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/SSD1963/2.1.1/SSD1963-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/SSD1963/2.1.1/SSD1963-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/ST7735/2.0.8/ST7735-2.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ST7735-2.0.8.tar.gz",
+    "size_bytes": 5201,
+    "sha256": "4fc627c049f3d2f901dd03fdbe2467791693d30baaeda1c7f14f89d97e3a8c2b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/ST7735/2.0.8/ST7735-2.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/ST7735/2.0.8/ST7735-2.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/SUN12x22/2.1.2/SUN12x22-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SUN12x22-2.1.2.tar.gz",
+    "size_bytes": 13372,
+    "sha256": "53cd2f2f05393f95b721bec586ec7b2170cfb24a0e5727d1977cd883a2790fba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/SUN12x22/2.1.2/SUN12x22-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/SUN12x22/2.1.2/SUN12x22-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/SUN8x16/2.1.2/SUN8x16-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SUN8x16-2.1.2.tar.gz",
+    "size_bytes": 8608,
+    "sha256": "1d34b68d8b7c5474f1bfaa8825eb4edbffc77be1d3d814c189dccedcf495f545",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/SUN8x16/2.1.2/SUN8x16-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/SUN8x16/2.1.2/SUN8x16-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/SheepSans/2.1.3/SheepSans-2.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SheepSans-2.1.3.tar.gz",
+    "size_bytes": 185397,
+    "sha256": "8b1435a27bb504da617b11867d36f28acb635557fa0ad2ceb3728e5eb474bf68",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/SheepSans/2.1.3/SheepSans-2.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/SheepSans/2.1.3/SheepSans-2.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/Sinclair/2.1.2/Sinclair-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sinclair-2.1.2.tar.gz",
+    "size_bytes": 6566,
+    "sha256": "05ec334df56957f0ed8f34f50bb4c3d7ea4247643197dce0e54634f49ea798a6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/Sinclair/2.1.2/Sinclair-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/Sinclair/2.1.2/Sinclair-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/Squircle/2.1.2/Squircle-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Squircle-2.1.2.tar.gz",
+    "size_bytes": 16944,
+    "sha256": "cc0b0f1869487d401fc625bdde779afa6e2f9202a3a46069493710a19a96a9a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/Squircle/2.1.2/Squircle-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/Squircle/2.1.2/Squircle-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/Terminus6x12/2.1.2/Terminus6x12-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Terminus6x12-2.1.2.tar.gz",
+    "size_bytes": 6963,
+    "sha256": "58f2aa10b4f2b31b9c1f6c2a27ca9459a39829f96560b984b75c8f4f97d15a01",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/Terminus6x12/2.1.2/Terminus6x12-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/Terminus6x12/2.1.2/Terminus6x12-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/Topaz/2.1.2/Topaz-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Topaz-2.1.2.tar.gz",
+    "size_bytes": 8330,
+    "sha256": "73567fc27af0ba9f79c6c7e68f493f9588e4b1d7d8765c02c9e862d495b79f7d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/Topaz/2.1.2/Topaz-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/Topaz/2.1.2/Topaz-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/Tutorial9Mono/2.0.9/Tutorial9Mono-2.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Tutorial9Mono-2.0.9.tar.gz",
+    "size_bytes": 41309,
+    "sha256": "a3ba770471f9c60242eeede35c3af81f3342e38251b7aff904001a614baa3441",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/Tutorial9Mono/2.0.9/Tutorial9Mono-2.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/Tutorial9Mono/2.0.9/Tutorial9Mono-2.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/Ubuntu/2.1.2/Ubuntu-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ubuntu-2.1.2.tar.gz",
+    "size_bytes": 82152,
+    "sha256": "1ce2c579d3ae7b8c4c0792b10163d06f5744aeca77fdaea9e569f89918ff9393",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/Ubuntu/2.1.2/Ubuntu-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/Ubuntu/2.1.2/Ubuntu-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/Unicode/2.1.0/Unicode-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Unicode-2.1.0.tar.gz",
+    "size_bytes": 1032553,
+    "sha256": "14a11b788056cc0a27f42ff630f196f07182049a728bfaca6d4f478bb8d14477",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/Unicode/2.1.0/Unicode-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/Unicode/2.1.0/Unicode-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/VGA/2.1.5/VGA-2.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VGA-2.1.5.tar.gz",
+    "size_bytes": 3990,
+    "sha256": "003f48b776a3551c3e5b96e9a89c4bc797bb50fd7b9405c6f6b32887063c6a13",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/VGA/2.1.5/VGA-2.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/VGA/2.1.5/VGA-2.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/VGA8x16/2.1.2/VGA8x16-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VGA8x16-2.1.2.tar.gz",
+    "size_bytes": 8577,
+    "sha256": "eafb77a7776317d66d477e5cde64a72889437a7abefbb1435f108d105c1d438f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/VGA8x16/2.1.2/VGA8x16-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/VGA8x16/2.1.2/VGA8x16-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/VGA8x8/2.1.1/VGA8x8-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VGA8x8-2.1.1.tar.gz",
+    "size_bytes": 7041,
+    "sha256": "579597eb2fb51247743918c9acb3222fb27ff7b285d74a428aaab520848c5a50",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/VGA8x8/2.1.1/VGA8x8-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/VGA8x8/2.1.1/VGA8x8-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/VLCD/2.1.1/VLCD-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VLCD-2.1.1.tar.gz",
+    "size_bytes": 2441,
+    "sha256": "d929c9afc53e83389872b99a1e8ebc944b3307cc01371cfd6005b0c4654acfa0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/VLCD/2.1.1/VLCD-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/VLCD/2.1.1/VLCD-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/Widgets/2.1.6/Widgets-2.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Widgets-2.1.6.tar.gz",
+    "size_bytes": 5979,
+    "sha256": "142f5f16f1cd5a844a05a1c66dac3cc23e9e4514cbbb438d865d074c50c133f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/Widgets/2.1.6/Widgets-2.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/Widgets/2.1.6/Widgets-2.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/XPT2046/2.1.5/XPT2046-2.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XPT2046-2.1.5.tar.gz",
+    "size_bytes": 699731,
+    "sha256": "ab4921f36895076e6c725e5127d884ea7eff1555f646062177cdf708cd5c5a8b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/XPT2046/2.1.5/XPT2046-2.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/XPT2046/2.1.5/XPT2046-2.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/XTerm/2.1.2/XTerm-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XTerm-2.1.2.tar.gz",
+    "size_bytes": 8269,
+    "sha256": "707571df817365ab0f189532664ef826c5061f2a353e3432811d2cae39fc9912",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/XTerm/2.1.2/XTerm-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/XTerm/2.1.2/XTerm-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cariaddisplaylibrary/library/gciWidget/2.1.0/gciWidget-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "gciWidget-2.1.0.tar.gz",
+    "size_bytes": 1468486,
+    "sha256": "a5eb92e07eb6582fb508dfaf5cc1858abd1c60708f34907955559c1da7b4ff07",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cariaddisplaylibrary/library/gciWidget/2.1.0/gciWidget-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cariaddisplaylibrary/library/gciWidget/2.1.0/gciWidget-2.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

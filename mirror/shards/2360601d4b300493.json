@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-carycoders",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-carycoders/library/AS3935/0.0.0+sha.afbf7ba667e7/AS3935-0.0.0+sha.afbf7ba667e7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AS3935-0.0.0+sha.afbf7ba667e7.tar.gz",
+    "size_bytes": 5232,
+    "sha256": "f5ef3908976068d7bf9804d9a47974cb437b4bd81886f30a10489f533852aa18",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-carycoders/library/AS3935/0.0.0%2Bsha.afbf7ba667e7/AS3935-0.0.0%2Bsha.afbf7ba667e7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-carycoders/library/AS3935/0.0.0%2Bsha.afbf7ba667e7/AS3935-0.0.0%2Bsha.afbf7ba667e7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-carycoders/library/AdafruitGPS/0.0.0+sha.509abe8eda59/AdafruitGPS-0.0.0+sha.509abe8eda59.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AdafruitGPS-0.0.0+sha.509abe8eda59.tar.gz",
+    "size_bytes": 5148,
+    "sha256": "d13dbf2fc9e8fdcb96f7865f74516c8032519b1304f4a0e9eb763ed2e4656e2a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-carycoders/library/AdafruitGPS/0.0.0%2Bsha.509abe8eda59/AdafruitGPS-0.0.0%2Bsha.509abe8eda59.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-carycoders/library/AdafruitGPS/0.0.0%2Bsha.509abe8eda59/AdafruitGPS-0.0.0%2Bsha.509abe8eda59.tar.gz"
+    ]
+   }
+  }
+ ]
+}

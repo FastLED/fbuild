@@ -1,0 +1,139 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/puchatek",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "puchatek/library/ESPDeviceConfig/0.1.0/ESPDeviceConfig-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPDeviceConfig-0.1.0.tar.gz",
+    "size_bytes": 4632,
+    "sha256": "f72d8adfb38902369471ba70356b0242275ac094ee139c343d85d4caec7b3d08",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/puchatek/library/ESPDeviceConfig/0.1.0/ESPDeviceConfig-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/puchatek/library/ESPDeviceConfig/0.1.0/ESPDeviceConfig-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "puchatek/library/ESPDeviceConfig/0.1.1/ESPDeviceConfig-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPDeviceConfig-0.1.1.tar.gz",
+    "size_bytes": 4803,
+    "sha256": "b12b570f78a5a43f40ce9e131425c8db63f64cea005db559961b638fc86f8c62",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/puchatek/library/ESPDeviceConfig/0.1.1/ESPDeviceConfig-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/puchatek/library/ESPDeviceConfig/0.1.1/ESPDeviceConfig-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "puchatek/library/ESPMqttManager/0.1.0/EspMqttManager-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspMqttManager-0.1.0.tar.gz",
+    "size_bytes": 8649,
+    "sha256": "4ff1cf71d0051873a2d1e3c70ab16eec58fef46aee8afc9ce6b4bf3d4cddefc2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/puchatek/library/ESPMqttManager/0.1.0/EspMqttManager-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/puchatek/library/ESPMqttManager/0.1.0/EspMqttManager-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "puchatek/library/ESPMqttManager/0.2.0/EspMqttManager-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspMqttManager-0.2.0.tar.gz",
+    "size_bytes": 8642,
+    "sha256": "153b11735f3a81d7550dfc6b4bf8f7cc1523090628934e2c5aef722d3f7be849",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/puchatek/library/ESPMqttManager/0.2.0/EspMqttManager-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/puchatek/library/ESPMqttManager/0.2.0/EspMqttManager-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "puchatek/library/ESPOtaPortal/0.1.0/ESPOtaPortal-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPOtaPortal-0.1.0.tar.gz",
+    "size_bytes": 20184,
+    "sha256": "75df1e11e3480d6b2818910ad14858f69bdd770dd152fa11062bf65d9798f6d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/puchatek/library/ESPOtaPortal/0.1.0/ESPOtaPortal-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/puchatek/library/ESPOtaPortal/0.1.0/ESPOtaPortal-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "puchatek/library/ESPOtaPortal/0.1.1/ESPOtaPortal-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPOtaPortal-0.1.1.tar.gz",
+    "size_bytes": 20366,
+    "sha256": "2f2648236d0e5d6a45991f128eba22cc4626323285e7de181d4231cfca4342d5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/puchatek/library/ESPOtaPortal/0.1.1/ESPOtaPortal-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/puchatek/library/ESPOtaPortal/0.1.1/ESPOtaPortal-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "puchatek/library/ESPOtaPortal/0.1.2/ESPOtaPortal-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPOtaPortal-0.1.2.tar.gz",
+    "size_bytes": 11616,
+    "sha256": "12385969a010f76583a94fc56769b8f142d8b991ed2bcba101e12fbd9353f6b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/puchatek/library/ESPOtaPortal/0.1.2/ESPOtaPortal-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/puchatek/library/ESPOtaPortal/0.1.2/ESPOtaPortal-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "puchatek/library/ESPOtaPortal/0.1.3/ESPOtaPortal-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPOtaPortal-0.1.3.tar.gz",
+    "size_bytes": 11770,
+    "sha256": "72c721a17f36b3656e81e590f881de755d88f7132fbc130e2a380495ab02e52a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/puchatek/library/ESPOtaPortal/0.1.3/ESPOtaPortal-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/puchatek/library/ESPOtaPortal/0.1.3/ESPOtaPortal-0.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "puchatek/library/ESPOtaPortal/0.1.4/ESPOtaPortal-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPOtaPortal-0.1.4.tar.gz",
+    "size_bytes": 11788,
+    "sha256": "e103cedcc680de87dd0002aea58bced721cd0fe73d8820ecf9fa68400667aa94",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/puchatek/library/ESPOtaPortal/0.1.4/ESPOtaPortal-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/puchatek/library/ESPOtaPortal/0.1.4/ESPOtaPortal-0.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "puchatek/library/ESPOtaPortal/0.2.0/ESPOtaPortal-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPOtaPortal-0.2.0.tar.gz",
+    "size_bytes": 12795,
+    "sha256": "f19c13806602145c789b94845281e530d45dd1689efc439fb83bac3a60280406",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/puchatek/library/ESPOtaPortal/0.2.0/ESPOtaPortal-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/puchatek/library/ESPOtaPortal/0.2.0/ESPOtaPortal-0.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

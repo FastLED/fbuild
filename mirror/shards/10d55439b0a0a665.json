@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/martin-leo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "martin-leo/library/KeyboardAzertyFr/1.0.2/KeyboardAzertyFr-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KeyboardAzertyFr-1.0.2.tar.gz",
+    "size_bytes": 4397,
+    "sha256": "b379d5127fc2d80d6b5f963437b29335fa53ac29a2ad4405494205eaddaf42cf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martin-leo/library/KeyboardAzertyFr/1.0.2/KeyboardAzertyFr-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/martin-leo/library/KeyboardAzertyFr/1.0.2/KeyboardAzertyFr-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

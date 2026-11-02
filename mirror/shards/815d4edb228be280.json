@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jovaneps",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jovaneps/library/dhry/0.0.0+sha.f7463045004e/dhry-0.0.0+sha.f7463045004e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "dhry-0.0.0+sha.f7463045004e.tar.gz",
+    "size_bytes": 5928,
+    "sha256": "607a3b90947b716d45a79318c82adb557257832953b48a91909a4fb801a1125b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jovaneps/library/dhry/0.0.0%2Bsha.f7463045004e/dhry-0.0.0%2Bsha.f7463045004e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jovaneps/library/dhry/0.0.0%2Bsha.f7463045004e/dhry-0.0.0%2Bsha.f7463045004e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

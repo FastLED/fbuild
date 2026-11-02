@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mourty",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mourty/library/ExtendedTime/1.0.2/ExtendedTime-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ExtendedTime-1.0.2.tar.gz",
+    "size_bytes": 12112,
+    "sha256": "aa5d9e119319574b9210de1cc75cf3562c0109711408640329ab389d1fd688b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mourty/library/ExtendedTime/1.0.2/ExtendedTime-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mourty/library/ExtendedTime/1.0.2/ExtendedTime-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mourty/library/PLCTimer/2.1.1/PLCTimer-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PLCTimer-2.1.1.tar.gz",
+    "size_bytes": 16770,
+    "sha256": "d92e4629a23f7527fe68351db94f32175bdf4f1f801bc09fad9d16adae11405b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mourty/library/PLCTimer/2.1.1/PLCTimer-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mourty/library/PLCTimer/2.1.1/PLCTimer-2.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

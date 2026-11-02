@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tawfique02",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tawfique02/library/SmartSensorFilter/1.0.0/SmartSensorFilter-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartSensorFilter-1.0.0.tar.gz",
+    "size_bytes": 1216,
+    "sha256": "d65d9d5103d6c9a1afdfaa4c2fd41b11cfcfa8ca53e6618ef239090adafe4bde",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tawfique02/library/SmartSensorFilter/1.0.0/SmartSensorFilter-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tawfique02/library/SmartSensorFilter/1.0.0/SmartSensorFilter-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

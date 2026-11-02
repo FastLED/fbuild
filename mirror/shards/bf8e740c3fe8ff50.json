@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ingram",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ingram/library/DMX-STM32/0.0.0+sha.36276a92303f/DMX-STM32-0.0.0+sha.36276a92303f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DMX-STM32-0.0.0+sha.36276a92303f.tar.gz",
+    "size_bytes": 3306,
+    "sha256": "074c6c3f37effaa516c63fe6b186342a20e63c919c151eab91e282335a567de2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ingram/library/DMX-STM32/0.0.0%2Bsha.36276a92303f/DMX-STM32-0.0.0%2Bsha.36276a92303f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ingram/library/DMX-STM32/0.0.0%2Bsha.36276a92303f/DMX-STM32-0.0.0%2Bsha.36276a92303f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

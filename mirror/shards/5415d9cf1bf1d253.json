@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/abderraouf-adjal",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "abderraouf-adjal/library/Embedded%20Type-C%20PID/1.1.3/EmbeddedType-CPID-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmbeddedType-CPID-1.1.3.tar.gz",
+    "size_bytes": 6970,
+    "sha256": "bfb4c3676e968e3311b765a398084a0e5c76a4f45bbf77c5785367844cb6aa3b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/abderraouf-adjal/library/Embedded%2520Type-C%2520PID/1.1.3/EmbeddedType-CPID-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/abderraouf-adjal/library/Embedded%20Type-C%20PID/1.1.3/EmbeddedType-CPID-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "abderraouf-adjal/library/SpritzCipher/1.2.0/SpritzCipher-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SpritzCipher-1.2.0.tar.gz",
+    "size_bytes": 14147,
+    "sha256": "8adc3cda35b6ea8fe4450cc6759fe7cea324e28f1986aa3c793d36ec0bb03b11",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/abderraouf-adjal/library/SpritzCipher/1.2.0/SpritzCipher-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/abderraouf-adjal/library/SpritzCipher/1.2.0/SpritzCipher-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

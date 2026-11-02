@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/chris-42",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "chris-42/library/MLX90377_SENT/0.3.2/MLX90377_SENT-0.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MLX90377_SENT-0.3.2.tar.gz",
+    "size_bytes": 11161,
+    "sha256": "fb07c37c5bbb6cc2589dfbb1dd43b1ab7123f4318987d5a90ff1de469db5eb4b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chris-42/library/MLX90377_SENT/0.3.2/MLX90377_SENT-0.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/chris-42/library/MLX90377_SENT/0.3.2/MLX90377_SENT-0.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chris-42/library/rmt_SENT/0.3.1/rmt_SENT-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "rmt_SENT-0.3.1.tar.gz",
+    "size_bytes": 13174,
+    "sha256": "3fbc95c7a35119779d8f47410fc9265031fd192c06260ce6e5f0701ccf290f8a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chris-42/library/rmt_SENT/0.3.1/rmt_SENT-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/chris-42/library/rmt_SENT/0.3.1/rmt_SENT-0.3.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

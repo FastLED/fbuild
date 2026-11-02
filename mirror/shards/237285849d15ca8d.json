@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/elektrofuzzis",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "elektrofuzzis/library/ftSwarm/0.7.1/ftSwarm-0.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ftSwarm-0.7.1.tar.gz",
+    "size_bytes": 235026,
+    "sha256": "eaacad92c808805dd5f77e8327fecd9798c1f05443acde50587e2f386890d562",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/elektrofuzzis/library/ftSwarm/0.7.1/ftSwarm-0.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/elektrofuzzis/library/ftSwarm/0.7.1/ftSwarm-0.7.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "elektrofuzzis/library/ftSwarm/0.8.0/ftSwarm-0.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ftSwarm-0.8.0.tar.gz",
+    "size_bytes": 242295,
+    "sha256": "5cc2eddcab22fa56c48045f42cb0c4ccd6bac38327f9ca2437634be9002410e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/elektrofuzzis/library/ftSwarm/0.8.0/ftSwarm-0.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/elektrofuzzis/library/ftSwarm/0.8.0/ftSwarm-0.8.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

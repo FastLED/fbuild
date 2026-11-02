@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lautarorodriguezbase",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lautarorodriguezbase/library/PButton/0.1.2/PButton-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PButton-0.1.2.tar.gz",
+    "size_bytes": 6570,
+    "sha256": "965bfce6d2ce93a6d1a3f6f11eff17d709a5ab9138ae7ab77741ae6cbe63ecdf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lautarorodriguezbase/library/PButton/0.1.2/PButton-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lautarorodriguezbase/library/PButton/0.1.2/PButton-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lautarorodriguezbase/library/RFDO/0.0.2/RFDO-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RFDO-0.0.2.tar.gz",
+    "size_bytes": 6764,
+    "sha256": "8e6c44b67911956026926cb9f60837fa9f06cfd586857199215ce22fc2b960b4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lautarorodriguezbase/library/RFDO/0.0.2/RFDO-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lautarorodriguezbase/library/RFDO/0.0.2/RFDO-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lautarorodriguezbase/library/RFDO/0.1.0/RFDO-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RFDO-0.1.0.tar.gz",
+    "size_bytes": 6944,
+    "sha256": "8544085819168537499160c31116cb858c60e30cab1e472f2546d54eaec0c8f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lautarorodriguezbase/library/RFDO/0.1.0/RFDO-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lautarorodriguezbase/library/RFDO/0.1.0/RFDO-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lautarorodriguezbase/library/RFDO/0.1.1/RFDO-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RFDO-0.1.1.tar.gz",
+    "size_bytes": 6951,
+    "sha256": "411ae7e465576d8d6efb4178da748f49d71229d6b4423458d6fd60908bd4c034",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lautarorodriguezbase/library/RFDO/0.1.1/RFDO-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lautarorodriguezbase/library/RFDO/0.1.1/RFDO-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lautarorodriguezbase/library/RFDO/0.1.2/RFDO-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RFDO-0.1.2.tar.gz",
+    "size_bytes": 6969,
+    "sha256": "7754f6fbd59c30d47c5f98ad6a0b0c4b94379e559f3a4c3721795dad7b888947",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lautarorodriguezbase/library/RFDO/0.1.2/RFDO-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lautarorodriguezbase/library/RFDO/0.1.2/RFDO-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lautarorodriguezbase/library/RFDO/0.1.4/RFDO-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RFDO-0.1.4.tar.gz",
+    "size_bytes": 7301,
+    "sha256": "ac67b7041d13aaae7416c773fc7b183bb5f0c8227223ece406a4924d6cc5c348",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lautarorodriguezbase/library/RFDO/0.1.4/RFDO-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/lautarorodriguezbase/library/RFDO/0.1.4/RFDO-0.1.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

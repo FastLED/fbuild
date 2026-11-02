@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-flywind",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-flywind/library/MPU6050-DMP-Seeed-Tiny-BLE/0.0.0+sha.ae51ac8b7cf1/MPU6050-DMP-Seeed-Tiny-BLE-0.0.0+sha.ae51ac8b7cf1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPU6050-DMP-Seeed-Tiny-BLE-0.0.0+sha.ae51ac8b7cf1.tar.gz",
+    "size_bytes": 43165,
+    "sha256": "99e90f5efdeda8e39481302bc019f5bec0dde8344e96018089e697e4a6449cc3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-flywind/library/MPU6050-DMP-Seeed-Tiny-BLE/0.0.0%2Bsha.ae51ac8b7cf1/MPU6050-DMP-Seeed-Tiny-BLE-0.0.0%2Bsha.ae51ac8b7cf1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-flywind/library/MPU6050-DMP-Seeed-Tiny-BLE/0.0.0%2Bsha.ae51ac8b7cf1/MPU6050-DMP-Seeed-Tiny-BLE-0.0.0%2Bsha.ae51ac8b7cf1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

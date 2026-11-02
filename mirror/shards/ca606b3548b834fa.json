@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/albertgbarber",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "albertgbarber/library/Pixel_Spork/1.0.7/Pixel_Spork-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pixel_Spork-1.0.7.tar.gz",
+    "size_bytes": 382795,
+    "sha256": "63de36d85132ab32a4a065b07d1d13e347fae647659a86d59ba87aa97459dd94",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/albertgbarber/library/Pixel_Spork/1.0.7/Pixel_Spork-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/albertgbarber/library/Pixel_Spork/1.0.7/Pixel_Spork-1.0.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

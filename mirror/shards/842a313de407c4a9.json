@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-tichise",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-tichise/library/NeoPixel/0.0.0+sha.415459e3f93b/NeoPixel-0.0.0+sha.415459e3f93b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeoPixel-0.0.0+sha.415459e3f93b.tar.gz",
+    "size_bytes": 3468,
+    "sha256": "760f110c2c4c0b253ee56b6980c82e06acd9b8928bfc5d7ab521f56dcf2c8439",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tichise/library/NeoPixel/0.0.0%2Bsha.415459e3f93b/NeoPixel-0.0.0%2Bsha.415459e3f93b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tichise/library/NeoPixel/0.0.0%2Bsha.415459e3f93b/NeoPixel-0.0.0%2Bsha.415459e3f93b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-tichise/library/StringUtil/0.0.0+sha.ea93cc1c113a/StringUtil-0.0.0+sha.ea93cc1c113a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StringUtil-0.0.0+sha.ea93cc1c113a.tar.gz",
+    "size_bytes": 1003,
+    "sha256": "80c7324366c0d38ba05d132771f0386dac1f420cb1dc0f0fd188f304e3652f40",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tichise/library/StringUtil/0.0.0%2Bsha.ea93cc1c113a/StringUtil-0.0.0%2Bsha.ea93cc1c113a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tichise/library/StringUtil/0.0.0%2Bsha.ea93cc1c113a/StringUtil-0.0.0%2Bsha.ea93cc1c113a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-tichise/library/TI_NEOPIXEL/0.0.0+sha.d7a396a60bdc/TI_NEOPIXEL-0.0.0+sha.d7a396a60bdc.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TI_NEOPIXEL-0.0.0+sha.d7a396a60bdc.tar.gz",
+    "size_bytes": 1539,
+    "sha256": "8014b0ada386303c6f877a2715e3325e810ce6c52b6b91e462005dd07f0ae39a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tichise/library/TI_NEOPIXEL/0.0.0%2Bsha.d7a396a60bdc/TI_NEOPIXEL-0.0.0%2Bsha.d7a396a60bdc.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tichise/library/TI_NEOPIXEL/0.0.0%2Bsha.d7a396a60bdc/TI_NEOPIXEL-0.0.0%2Bsha.d7a396a60bdc.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-tichise/library/TI_NEOPIXEL_SPI/0.0.0+sha.69bb2a2fa11f/TI_NEOPIXEL_SPI-0.0.0+sha.69bb2a2fa11f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TI_NEOPIXEL_SPI-0.0.0+sha.69bb2a2fa11f.tar.gz",
+    "size_bytes": 2371,
+    "sha256": "ea784a7ede5fe8490a99b6707a393f12f313343c2fabaaf8e3bc654179f4fdc4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tichise/library/TI_NEOPIXEL_SPI/0.0.0%2Bsha.69bb2a2fa11f/TI_NEOPIXEL_SPI-0.0.0%2Bsha.69bb2a2fa11f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tichise/library/TI_NEOPIXEL_SPI/0.0.0%2Bsha.69bb2a2fa11f/TI_NEOPIXEL_SPI-0.0.0%2Bsha.69bb2a2fa11f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-tichise/library/TI_VL53L0X/0.0.0+sha.9d485cd4147c/TI_VL53L0X-0.0.0+sha.9d485cd4147c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TI_VL53L0X-0.0.0+sha.9d485cd4147c.tar.gz",
+    "size_bytes": 3919,
+    "sha256": "bca1376184f254919a826a1c5b5cddb26ba52c00634d643e4b7f571b382b8518",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tichise/library/TI_VL53L0X/0.0.0%2Bsha.9d485cd4147c/TI_VL53L0X-0.0.0%2Bsha.9d485cd4147c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tichise/library/TI_VL53L0X/0.0.0%2Bsha.9d485cd4147c/TI_VL53L0X-0.0.0%2Bsha.9d485cd4147c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

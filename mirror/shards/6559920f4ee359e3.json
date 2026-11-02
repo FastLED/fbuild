@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/arduino12",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "arduino12/library/pixy2/1.0.4/pixy2-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pixy2-1.0.4.tar.gz",
+    "size_bytes": 25451,
+    "sha256": "adce9548a7cdf8393edb8c5bdb0d9b0958f3314db3f8b66fd7f3d527d691d330",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino12/library/pixy2/1.0.4/pixy2-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino12/library/pixy2/1.0.4/pixy2-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino12/library/rdm6300/2.0.0/rdm6300-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "rdm6300-2.0.0.tar.gz",
+    "size_bytes": 17763,
+    "sha256": "d9dec3fd87cbf3e81cf016bf11b6dda3e4b8f33a8e08ce59375882fcaf8dbaf3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino12/library/rdm6300/2.0.0/rdm6300-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino12/library/rdm6300/2.0.0/rdm6300-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ulikoehler",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ulikoehler/library/ESPNVSValue/1.1/ESPNVSValue-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPNVSValue-1.1.tar.gz",
+    "size_bytes": 13218,
+    "sha256": "9519247236894c1adb6753878c35c25e76a8f0b23defaf89465e4460fb91b1fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ulikoehler/library/ESPNVSValue/1.1/ESPNVSValue-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ulikoehler/library/ESPNVSValue/1.1/ESPNVSValue-1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ulikoehler/library/ESPNVSValue/1.2.0/ESPNVSValue-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPNVSValue-1.2.0.tar.gz",
+    "size_bytes": 13905,
+    "sha256": "e8c52c8c930fd89398cd68d3b320fa2c7eb3ff9b72f7d2a526e4ba2181837e23",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ulikoehler/library/ESPNVSValue/1.2.0/ESPNVSValue-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ulikoehler/library/ESPNVSValue/1.2.0/ESPNVSValue-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ulikoehler/library/HumanESPHTTP/1.1.0/HumanESPHTTP-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HumanESPHTTP-1.1.0.tar.gz",
+    "size_bytes": 7978,
+    "sha256": "91bcab0a0c5ee5b0bb0a79dfa545e36a9709cb521d431d4bb4d55042abdea058",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ulikoehler/library/HumanESPHTTP/1.1.0/HumanESPHTTP-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ulikoehler/library/HumanESPHTTP/1.1.0/HumanESPHTTP-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ulikoehler/library/QuickI2C/2.2.0/QuickI2C-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QuickI2C-2.2.0.tar.gz",
+    "size_bytes": 21428,
+    "sha256": "bf90947b0690623a1c2f99e871123d0843701e7887ba6187c3c4ce54c07085cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ulikoehler/library/QuickI2C/2.2.0/QuickI2C-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ulikoehler/library/QuickI2C/2.2.0/QuickI2C-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ulikoehler/library/QuickSPI/2.0.0/QuickSPI-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QuickSPI-2.0.0.tar.gz",
+    "size_bytes": 14445,
+    "sha256": "ec4df6bbfed3de7297b7522f22e9d18bc82aa468d669d5ae2ebe19812e676c47",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ulikoehler/library/QuickSPI/2.0.0/QuickSPI-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ulikoehler/library/QuickSPI/2.0.0/QuickSPI-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ulikoehler/library/QuickSPI/2.0.1/QuickSPI-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QuickSPI-2.0.1.tar.gz",
+    "size_bytes": 14614,
+    "sha256": "dd146ae66424927e890537dc6cba20a3cee1aa6a56400d9d3d58c8991f0dec2a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ulikoehler/library/QuickSPI/2.0.1/QuickSPI-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ulikoehler/library/QuickSPI/2.0.1/QuickSPI-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ulikoehler/library/QuickSPI/2.0.4/QuickSPI-2.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QuickSPI-2.0.4.tar.gz",
+    "size_bytes": 18879,
+    "sha256": "5e56f38d576a7095e1497062f9fd3a70dff05b92b32ce9696f60a1fbda240c53",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ulikoehler/library/QuickSPI/2.0.4/QuickSPI-2.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/ulikoehler/library/QuickSPI/2.0.4/QuickSPI-2.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ulikoehler/library/QuickSPI/3.0.0/QuickSPI-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QuickSPI-3.0.0.tar.gz",
+    "size_bytes": 20311,
+    "sha256": "56e72d539bce48a79e2167236ec6cbd51e190ee25650ff65884091adba8f59b2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ulikoehler/library/QuickSPI/3.0.0/QuickSPI-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ulikoehler/library/QuickSPI/3.0.0/QuickSPI-3.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

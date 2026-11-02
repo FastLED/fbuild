@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/stacknix",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "stacknix/library/Stackmq/1.2.0/Stackmq-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Stackmq-1.2.0.tar.gz",
+    "size_bytes": 5649,
+    "sha256": "1ec2b17bcabc88e2acd8cb46295bfba4fbdea2ee6f387486a6741ba9c83f20fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stacknix/library/Stackmq/1.2.0/Stackmq-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stacknix/library/Stackmq/1.2.0/Stackmq-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,217 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/foodyfood",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "foodyfood/library/esp32-mcp2518fd-driver/0.10.0/esp32-mcp2518fd-driver-0.10.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32-mcp2518fd-driver-0.10.0.tar.gz",
+    "size_bytes": 21044,
+    "sha256": "1bef4134fda941ce94d38261bd6abc9b0e4854db6a0ffa86f3e7dfcbe796b38e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/foodyfood/library/esp32-mcp2518fd-driver/0.10.0/esp32-mcp2518fd-driver-0.10.0.tar.gz",
+     "https://dl.registry.platformio.org/download/foodyfood/library/esp32-mcp2518fd-driver/0.10.0/esp32-mcp2518fd-driver-0.10.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "foodyfood/library/esp32-mcp2518fd-driver/0.2.0/esp32-mcp2518fd-driver-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32-mcp2518fd-driver-0.2.0.tar.gz",
+    "size_bytes": 30734,
+    "sha256": "d4c06c62d0e974213d69a35a5f1d196ea22048e6a28d12242ceedaad801d44d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/foodyfood/library/esp32-mcp2518fd-driver/0.2.0/esp32-mcp2518fd-driver-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/foodyfood/library/esp32-mcp2518fd-driver/0.2.0/esp32-mcp2518fd-driver-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "foodyfood/library/esp32-mcp2518fd-driver/0.3.0/esp32-mcp2518fd-driver-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32-mcp2518fd-driver-0.3.0.tar.gz",
+    "size_bytes": 31912,
+    "sha256": "20de356536cbd4cb1043350c204bfcef44c5b143baa72588a387f7ce57bcc00c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/foodyfood/library/esp32-mcp2518fd-driver/0.3.0/esp32-mcp2518fd-driver-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/foodyfood/library/esp32-mcp2518fd-driver/0.3.0/esp32-mcp2518fd-driver-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "foodyfood/library/esp32-mcp2518fd-driver/0.4.0/esp32-mcp2518fd-driver-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32-mcp2518fd-driver-0.4.0.tar.gz",
+    "size_bytes": 30352,
+    "sha256": "8ab30005f37004f3eb4f7471e377ad3cb20249828642b76044a599b2e68bc069",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/foodyfood/library/esp32-mcp2518fd-driver/0.4.0/esp32-mcp2518fd-driver-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/foodyfood/library/esp32-mcp2518fd-driver/0.4.0/esp32-mcp2518fd-driver-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "foodyfood/library/esp32-mcp2518fd-driver/0.5.0/esp32-mcp2518fd-driver-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32-mcp2518fd-driver-0.5.0.tar.gz",
+    "size_bytes": 31572,
+    "sha256": "fcb8c2d4e85760df83d22dc691e986768eb4b460378f10650f7cf022a8ce66d4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/foodyfood/library/esp32-mcp2518fd-driver/0.5.0/esp32-mcp2518fd-driver-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/foodyfood/library/esp32-mcp2518fd-driver/0.5.0/esp32-mcp2518fd-driver-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "foodyfood/library/esp32-mcp2518fd-driver/0.6.0/esp32-mcp2518fd-driver-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32-mcp2518fd-driver-0.6.0.tar.gz",
+    "size_bytes": 31584,
+    "sha256": "42f102afb417cc619e3ae371f93937c0ab48bb64508d27f4b056d086599d16c9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/foodyfood/library/esp32-mcp2518fd-driver/0.6.0/esp32-mcp2518fd-driver-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/foodyfood/library/esp32-mcp2518fd-driver/0.6.0/esp32-mcp2518fd-driver-0.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "foodyfood/library/esp32-mcp2518fd-driver/0.7.0/esp32-mcp2518fd-driver-0.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32-mcp2518fd-driver-0.7.0.tar.gz",
+    "size_bytes": 31096,
+    "sha256": "5f9bf21972945f6956428c18c75963a55310b4b8bbfe6a3290d8e008eae55099",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/foodyfood/library/esp32-mcp2518fd-driver/0.7.0/esp32-mcp2518fd-driver-0.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/foodyfood/library/esp32-mcp2518fd-driver/0.7.0/esp32-mcp2518fd-driver-0.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "foodyfood/library/esp32-mcp2518fd-driver/0.7.1/esp32-mcp2518fd-driver-0.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32-mcp2518fd-driver-0.7.1.tar.gz",
+    "size_bytes": 19513,
+    "sha256": "410ef48158c0939e7bb4b23b7326d719c2b90d215802d0e0554e6024e6de7912",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/foodyfood/library/esp32-mcp2518fd-driver/0.7.1/esp32-mcp2518fd-driver-0.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/foodyfood/library/esp32-mcp2518fd-driver/0.7.1/esp32-mcp2518fd-driver-0.7.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "foodyfood/library/esp32-mcp2518fd-driver/0.8.0/esp32-mcp2518fd-driver-0.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32-mcp2518fd-driver-0.8.0.tar.gz",
+    "size_bytes": 20167,
+    "sha256": "0e5906fbf1af9a1136791c6a93dfdc22d7f230913662a3b11fb6a68ce723a6af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/foodyfood/library/esp32-mcp2518fd-driver/0.8.0/esp32-mcp2518fd-driver-0.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/foodyfood/library/esp32-mcp2518fd-driver/0.8.0/esp32-mcp2518fd-driver-0.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "foodyfood/library/esp32-mcp2518fd-driver/0.9.0/esp32-mcp2518fd-driver-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32-mcp2518fd-driver-0.9.0.tar.gz",
+    "size_bytes": 20297,
+    "sha256": "a3261bc38778fa0948ef4264b4fddfb85c004228803617d38f07b2412cd60cab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/foodyfood/library/esp32-mcp2518fd-driver/0.9.0/esp32-mcp2518fd-driver-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/foodyfood/library/esp32-mcp2518fd-driver/0.9.0/esp32-mcp2518fd-driver-0.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "foodyfood/library/esp32-mcp2518fd-driver/1.0.0/esp32-mcp2518fd-driver-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32-mcp2518fd-driver-1.0.0.tar.gz",
+    "size_bytes": 25198,
+    "sha256": "8d9c3541ce1277494e8a49c571d6077aca1cfc3e14172520c3f1eed2cbf10f0a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/foodyfood/library/esp32-mcp2518fd-driver/1.0.0/esp32-mcp2518fd-driver-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/foodyfood/library/esp32-mcp2518fd-driver/1.0.0/esp32-mcp2518fd-driver-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "foodyfood/library/esp32-mcp2518fd-driver/1.1.0/esp32-mcp2518fd-driver-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32-mcp2518fd-driver-1.1.0.tar.gz",
+    "size_bytes": 31600,
+    "sha256": "70598998ee613b8ad587d50761a5b4ec0be598c31b6b3ded2744029eb2201adc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/foodyfood/library/esp32-mcp2518fd-driver/1.1.0/esp32-mcp2518fd-driver-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/foodyfood/library/esp32-mcp2518fd-driver/1.1.0/esp32-mcp2518fd-driver-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "foodyfood/library/esp32-mcp2518fd-driver/1.1.1/esp32-mcp2518fd-driver-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32-mcp2518fd-driver-1.1.1.tar.gz",
+    "size_bytes": 31632,
+    "sha256": "085052c72d8ce4aecef07f0afc7b2c7948bdb82862287e15c2a50772998b89ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/foodyfood/library/esp32-mcp2518fd-driver/1.1.1/esp32-mcp2518fd-driver-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/foodyfood/library/esp32-mcp2518fd-driver/1.1.1/esp32-mcp2518fd-driver-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "foodyfood/library/esp32-mcp2518fd-driver/1.1.2/esp32-mcp2518fd-driver-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32-mcp2518fd-driver-1.1.2.tar.gz",
+    "size_bytes": 31608,
+    "sha256": "181ff850ef782632d91fe1a7993db5e4cc88db42ddaa98f5ade72248c7d06182",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/foodyfood/library/esp32-mcp2518fd-driver/1.1.2/esp32-mcp2518fd-driver-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/foodyfood/library/esp32-mcp2518fd-driver/1.1.2/esp32-mcp2518fd-driver-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "foodyfood/library/esp32-mcp2518fd-driver/1.1.3/esp32-mcp2518fd-driver-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32-mcp2518fd-driver-1.1.3.tar.gz",
+    "size_bytes": 31712,
+    "sha256": "4168c70baac65e66d26518fdf545f7e616c1851655852a110a643a34ae8281ab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/foodyfood/library/esp32-mcp2518fd-driver/1.1.3/esp32-mcp2518fd-driver-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/foodyfood/library/esp32-mcp2518fd-driver/1.1.3/esp32-mcp2518fd-driver-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "foodyfood/library/esp32-mcp2518fd-driver/1.1.4/esp32-mcp2518fd-driver-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32-mcp2518fd-driver-1.1.4.tar.gz",
+    "size_bytes": 32204,
+    "sha256": "4daae7e56d741dffcfa6433f69ae91e96e507e65e4cdc47d6f126e92c6c23573",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/foodyfood/library/esp32-mcp2518fd-driver/1.1.4/esp32-mcp2518fd-driver-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/foodyfood/library/esp32-mcp2518fd-driver/1.1.4/esp32-mcp2518fd-driver-1.1.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/parse-community",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "parse-community/library/Parse%20Arduino%20SDK/1.0.3/ParseArduinoSDK-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ParseArduinoSDK-1.0.3.tar.gz",
+    "size_bytes": 24560,
+    "sha256": "8966f6f6b243e92171e9c1a08233241ae54ca5821ad76b406b608e4e0a47ba2d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/parse-community/library/Parse%2520Arduino%2520SDK/1.0.3/ParseArduinoSDK-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/parse-community/library/Parse%20Arduino%20SDK/1.0.3/ParseArduinoSDK-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

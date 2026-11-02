@@ -1,0 +1,139 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/atsign",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "atsign/library/at_client/0.1.0/at_client-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "at_client-0.1.0.tar.gz",
+    "size_bytes": 5633280,
+    "sha256": "aa308e5974be20cddafb42c116d110f553b29987292419fe8d671eea39bf4529",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/atsign/library/at_client/0.1.0/at_client-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/atsign/library/at_client/0.1.0/at_client-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "atsign/library/at_client/0.1.1/at_client-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "at_client-0.1.1.tar.gz",
+    "size_bytes": 5634142,
+    "sha256": "9bd35f78b2dc68b6d89650e60153f76f2cc4e2c4912d8baec26bd2dc3fe570d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/atsign/library/at_client/0.1.1/at_client-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/atsign/library/at_client/0.1.1/at_client-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "atsign/library/at_client/0.1.2/at_client-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "at_client-0.1.2.tar.gz",
+    "size_bytes": 5635716,
+    "sha256": "68e385e38d699b1513b3edd28a7f6b1b463a8f88dceb30b3569ad34263d7c60d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/atsign/library/at_client/0.1.2/at_client-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/atsign/library/at_client/0.1.2/at_client-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "atsign/library/at_client/0.1.3/at_client-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "at_client-0.1.3.tar.gz",
+    "size_bytes": 173716,
+    "sha256": "c066ab3a5830a7f2445ff3ae1b4c2c8247903a88ae7780931cd7f43362ec727e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/atsign/library/at_client/0.1.3/at_client-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/atsign/library/at_client/0.1.3/at_client-0.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "atsign/library/at_client/0.1.4/at_client-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "at_client-0.1.4.tar.gz",
+    "size_bytes": 173986,
+    "sha256": "d4996113444543eec2afbd6c60421e57080c5a6c33ca2df625c17318f4702679",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/atsign/library/at_client/0.1.4/at_client-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/atsign/library/at_client/0.1.4/at_client-0.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "atsign/library/at_client/0.1.5/at_client-0.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "at_client-0.1.5.tar.gz",
+    "size_bytes": 175489,
+    "sha256": "24c0472084df1a950897ad691c15f8188377851afee5dd29d9c938fdf32471ba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/atsign/library/at_client/0.1.5/at_client-0.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/atsign/library/at_client/0.1.5/at_client-0.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "atsign/library/at_client/0.1.6/at_client-0.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "at_client-0.1.6.tar.gz",
+    "size_bytes": 175961,
+    "sha256": "99a06136bf2323efca3c3d1928125dfeb0b51398088ebd03a2848590dfbb3aa3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/atsign/library/at_client/0.1.6/at_client-0.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/atsign/library/at_client/0.1.6/at_client-0.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "atsign/library/at_client/0.2.0/at_client-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "at_client-0.2.0.tar.gz",
+    "size_bytes": 5649791,
+    "sha256": "6a5b36491598ea9ba76a67f9efe99be7c5b7ddb540f54b63a9736c5b8704849e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/atsign/library/at_client/0.2.0/at_client-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/atsign/library/at_client/0.2.0/at_client-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "atsign/library/at_client/1.0.0/at_client-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "at_client-1.0.0.tar.gz",
+    "size_bytes": 5651972,
+    "sha256": "610a5036329bd78a67fbb92f0d44bbc0de6eda4e71a4d45cc1e82eb876b2649b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/atsign/library/at_client/1.0.0/at_client-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/atsign/library/at_client/1.0.0/at_client-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "atsign/library/at_client/1.0.1/at_client-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "at_client-1.0.1.tar.gz",
+    "size_bytes": 170618,
+    "sha256": "6ebaea1de2a56edaf2b4df4db7f290d371a9cd31f246d078a7c0a507afd127bf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/atsign/library/at_client/1.0.1/at_client-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/atsign/library/at_client/1.0.1/at_client-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

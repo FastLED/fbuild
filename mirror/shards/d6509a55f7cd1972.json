@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-discypus",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-discypus/library/23LCxx_SPI/0.0.0+sha.52d3272b886c/23LCxx_SPI-0.0.0+sha.52d3272b886c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "23LCxx_SPI-0.0.0+sha.52d3272b886c.tar.gz",
+    "size_bytes": 2248,
+    "sha256": "d155cbf0ef0f6194fb4ba928d05863abe6f6b878f5d8f20a9dadd084efeb0a8a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-discypus/library/23LCxx_SPI/0.0.0%2Bsha.52d3272b886c/23LCxx_SPI-0.0.0%2Bsha.52d3272b886c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-discypus/library/23LCxx_SPI/0.0.0%2Bsha.52d3272b886c/23LCxx_SPI-0.0.0%2Bsha.52d3272b886c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

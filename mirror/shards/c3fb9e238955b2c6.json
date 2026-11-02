@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/galarb",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "galarb/library/ButtonnIRQ/1.0.1/ButtonnIRQ-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ButtonnIRQ-1.0.1.tar.gz",
+    "size_bytes": 1347,
+    "sha256": "f84fc9ee0de6b2e717e5a852dee4a2671975b4d70729c61b1875bd7c0c61e0e7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/galarb/library/ButtonnIRQ/1.0.1/ButtonnIRQ-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/galarb/library/ButtonnIRQ/1.0.1/ButtonnIRQ-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "galarb/library/PenYX/2.2.3/PenYX-2.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PenYX-2.2.3.tar.gz",
+    "size_bytes": 3039,
+    "sha256": "07f423b35fad02ff50dba33399daf2974ca3c0fdff45b6b520e5f3cc71951f39",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/galarb/library/PenYX/2.2.3/PenYX-2.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/galarb/library/PenYX/2.2.3/PenYX-2.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "galarb/library/clicli/1.2.0/clicli-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "clicli-1.2.0.tar.gz",
+    "size_bytes": 2256,
+    "sha256": "281115eb7e3dcdd989ca121bd5515a982f1b9f26d4abea2e22ff2f425148fafc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/galarb/library/clicli/1.2.0/clicli-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/galarb/library/clicli/1.2.0/clicli-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "galarb/library/ev3lego/2.1.0/ev3lego-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ev3lego-2.1.0.tar.gz",
+    "size_bytes": 4025,
+    "sha256": "a5d6d3380fde31d4c62cd040101a6bed0d5d4c38176ae6a905204af1b77d319d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/galarb/library/ev3lego/2.1.0/ev3lego-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/galarb/library/ev3lego/2.1.0/ev3lego-2.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

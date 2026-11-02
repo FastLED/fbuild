@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/marinpopa",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "marinpopa/library/AsyncOTAManager/1.0.1/AsyncOTAManager-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncOTAManager-1.0.1.tar.gz",
+    "size_bytes": 6779,
+    "sha256": "c998335167495f37d30a205504d369885ef7d82675073dbd4526103ef217d414",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marinpopa/library/AsyncOTAManager/1.0.1/AsyncOTAManager-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/marinpopa/library/AsyncOTAManager/1.0.1/AsyncOTAManager-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marinpopa/library/AsyncOTAManager/1.0.2/AsyncOTAManager-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncOTAManager-1.0.2.tar.gz",
+    "size_bytes": 9473,
+    "sha256": "91776101941d5b7307d382184661c4f9e47c09b4024439c51e106328e004750b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marinpopa/library/AsyncOTAManager/1.0.2/AsyncOTAManager-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/marinpopa/library/AsyncOTAManager/1.0.2/AsyncOTAManager-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marinpopa/library/AsyncOTAManager/1.0.4/AsyncOTAManager-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncOTAManager-1.0.4.tar.gz",
+    "size_bytes": 8682,
+    "sha256": "fefddb5401b003dadc5ab9772a17d6c2d3b021da70485cc7086f588469596107",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marinpopa/library/AsyncOTAManager/1.0.4/AsyncOTAManager-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/marinpopa/library/AsyncOTAManager/1.0.4/AsyncOTAManager-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marinpopa/library/AsyncOTAManager/1.0.5/AsyncOTAManager-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncOTAManager-1.0.5.tar.gz",
+    "size_bytes": 7487,
+    "sha256": "fc9a62a0641d4d146d4be0d2fec3892fe8a510830cd1075872f61878ee06cd44",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marinpopa/library/AsyncOTAManager/1.0.5/AsyncOTAManager-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/marinpopa/library/AsyncOTAManager/1.0.5/AsyncOTAManager-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marinpopa/library/AsyncWiFiManagerSimple/1.0.0/AsyncWiFiManagerSimple-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncWiFiManagerSimple-1.0.0.tar.gz",
+    "size_bytes": 5336,
+    "sha256": "6f6d8fa023e450de210808cd47884f06ed91a8c9640337d5f7a2158cef733719",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marinpopa/library/AsyncWiFiManagerSimple/1.0.0/AsyncWiFiManagerSimple-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/marinpopa/library/AsyncWiFiManagerSimple/1.0.0/AsyncWiFiManagerSimple-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marinpopa/library/AsyncWiFiManagerSimple/1.1.0/AsyncWiFiManagerSimple-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncWiFiManagerSimple-1.1.0.tar.gz",
+    "size_bytes": 5563,
+    "sha256": "ac9e0904330d24f09e142a25305e72c2e72f4c76b6cbe79c250af81c53f80de0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marinpopa/library/AsyncWiFiManagerSimple/1.1.0/AsyncWiFiManagerSimple-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/marinpopa/library/AsyncWiFiManagerSimple/1.1.0/AsyncWiFiManagerSimple-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marinpopa/library/AsyncWiFiManagerSimple/1.1.1/AsyncWiFiManagerSimple-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncWiFiManagerSimple-1.1.1.tar.gz",
+    "size_bytes": 8121,
+    "sha256": "941a2d13a100d81c674a216b1a2582c55c54fbbc46031f456d455f66c8f34be6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marinpopa/library/AsyncWiFiManagerSimple/1.1.1/AsyncWiFiManagerSimple-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/marinpopa/library/AsyncWiFiManagerSimple/1.1.1/AsyncWiFiManagerSimple-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marinpopa/library/AsyncWiFiManagerSimple/1.1.2/AsyncWiFiManagerSimple-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncWiFiManagerSimple-1.1.2.tar.gz",
+    "size_bytes": 6814,
+    "sha256": "e5e0bde72d1d44e4f7a299d784c1b99caf2f798e4ea9155c27fc8b0cd2e48184",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marinpopa/library/AsyncWiFiManagerSimple/1.1.2/AsyncWiFiManagerSimple-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/marinpopa/library/AsyncWiFiManagerSimple/1.1.2/AsyncWiFiManagerSimple-1.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

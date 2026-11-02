@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/paulpavish",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "paulpavish/library/GuiN-E%20Bot/1.0.1/GuiN-EBot-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GuiN-EBot-1.0.1.tar.gz",
+    "size_bytes": 17496,
+    "sha256": "4d890b5b62b1f5602ef3a95e3fa4e59ca4f3fe388ade1c63e99eaa30d425f5c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paulpavish/library/GuiN-E%2520Bot/1.0.1/GuiN-EBot-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/paulpavish/library/GuiN-E%20Bot/1.0.1/GuiN-EBot-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

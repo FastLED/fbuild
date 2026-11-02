@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-embedded-camp",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-embedded-camp/library/HC_SR04_Ultrasonic_Library/0.0.0+sha.ec628cb704f8/HC_SR04_Ultrasonic_Library-0.0.0+sha.ec628cb704f8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HC_SR04_Ultrasonic_Library-0.0.0+sha.ec628cb704f8.tar.gz",
+    "size_bytes": 2350,
+    "sha256": "5a075942ca132a4db0325d0a78cbd9e4cd1c648d8455e4f2a35af4bbf5da8d2b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-embedded-camp/library/HC_SR04_Ultrasonic_Library/0.0.0%2Bsha.ec628cb704f8/HC_SR04_Ultrasonic_Library-0.0.0%2Bsha.ec628cb704f8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-embedded-camp/library/HC_SR04_Ultrasonic_Library/0.0.0%2Bsha.ec628cb704f8/HC_SR04_Ultrasonic_Library-0.0.0%2Bsha.ec628cb704f8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-embedded-camp/library/TB6612FNG/0.0.0+sha.b045c043b12c/TB6612FNG-0.0.0+sha.b045c043b12c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TB6612FNG-0.0.0+sha.b045c043b12c.tar.gz",
+    "size_bytes": 1976,
+    "sha256": "8a44913d2a4dc9f9434e0c17e05480529107a20a5c63b96e726f7c73008cd60a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-embedded-camp/library/TB6612FNG/0.0.0%2Bsha.b045c043b12c/TB6612FNG-0.0.0%2Bsha.b045c043b12c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-embedded-camp/library/TB6612FNG/0.0.0%2Bsha.b045c043b12c/TB6612FNG-0.0.0%2Bsha.b045c043b12c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-embedded-camp/library/TB6612FNG2/0.0.0+sha.269091717d47/TB6612FNG2-0.0.0+sha.269091717d47.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TB6612FNG2-0.0.0+sha.269091717d47.tar.gz",
+    "size_bytes": 2035,
+    "sha256": "42b7b13948b49bf0faf53562687869f7c4737dda4279c887f4686412d9009290",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-embedded-camp/library/TB6612FNG2/0.0.0%2Bsha.269091717d47/TB6612FNG2-0.0.0%2Bsha.269091717d47.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-embedded-camp/library/TB6612FNG2/0.0.0%2Bsha.269091717d47/TB6612FNG2-0.0.0%2Bsha.269091717d47.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-embedded-camp/library/TRSensors/0.0.0+sha.0d7360cea70c/TRSensors-0.0.0+sha.0d7360cea70c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TRSensors-0.0.0+sha.0d7360cea70c.tar.gz",
+    "size_bytes": 4792,
+    "sha256": "700dc71f8044b65bf42bb62ab19bf61ec4187ac7a5a7fa9380200ed11e527d34",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-embedded-camp/library/TRSensors/0.0.0%2Bsha.0d7360cea70c/TRSensors-0.0.0%2Bsha.0d7360cea70c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-embedded-camp/library/TRSensors/0.0.0%2Bsha.0d7360cea70c/TRSensors-0.0.0%2Bsha.0d7360cea70c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-embedded-camp/library/WS2812/0.0.0+sha.6e647820f587/WS2812-0.0.0+sha.6e647820f587.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WS2812-0.0.0+sha.6e647820f587.tar.gz",
+    "size_bytes": 3286,
+    "sha256": "ac4f85964de50cd8945e275d2c89e073e88134bad1d93c05876b8e09d22a6be5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-embedded-camp/library/WS2812/0.0.0%2Bsha.6e647820f587/WS2812-0.0.0%2Bsha.6e647820f587.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-embedded-camp/library/WS2812/0.0.0%2Bsha.6e647820f587/WS2812-0.0.0%2Bsha.6e647820f587.tar.gz"
+    ]
+   }
+  }
+ ]
+}

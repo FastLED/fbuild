@@ -1,0 +1,269 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/stutchbury",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "stutchbury/library/DisplayUtils/0.0.2/DisplayUtils-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DisplayUtils-0.0.2.tar.gz",
+    "size_bytes": 13615,
+    "sha256": "57bb801faf70bc9387d5a63aed8cb4ce3b1cfe11c5ed08165a63926ee490a7eb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stutchbury/library/DisplayUtils/0.0.2/DisplayUtils-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/stutchbury/library/DisplayUtils/0.0.2/DisplayUtils-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stutchbury/library/EncoderAdapter/0.5.2/EncoderAdapter-0.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EncoderAdapter-0.5.2.tar.gz",
+    "size_bytes": 9275,
+    "sha256": "b6d777014ad14b6d9ad42af83d417ab4841a167986b749a7a88ba1aff93e3467",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stutchbury/library/EncoderAdapter/0.5.2/EncoderAdapter-0.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/stutchbury/library/EncoderAdapter/0.5.2/EncoderAdapter-0.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stutchbury/library/EncoderButton/1.0.7/EncoderButton-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EncoderButton-1.0.7.tar.gz",
+    "size_bytes": 18359,
+    "sha256": "04b9f74f0eaa88a363a076b18f06e2dbd5f2aa073c2f0e9dcdad83c4313a1440",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stutchbury/library/EncoderButton/1.0.7/EncoderButton-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/stutchbury/library/EncoderButton/1.0.7/EncoderButton-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stutchbury/library/EventAnalog/1.0.4/EventAnalog-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EventAnalog-1.0.4.tar.gz",
+    "size_bytes": 12490,
+    "sha256": "008ffd0eccf3833d39f5d88b8fa64950b06bb91792d91c631d817550e7f38783",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stutchbury/library/EventAnalog/1.0.4/EventAnalog-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/stutchbury/library/EventAnalog/1.0.4/EventAnalog-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stutchbury/library/EventButton/1.0.3/EventButton-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EventButton-1.0.3.tar.gz",
+    "size_bytes": 14946,
+    "sha256": "0a14a5398ca194d3a0f904ffd9c9b592a8baef9a654420ed53741dca385fdbbd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stutchbury/library/EventButton/1.0.3/EventButton-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/stutchbury/library/EventButton/1.0.3/EventButton-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stutchbury/library/EventJoystick/1.0.2/EventJoystick-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EventJoystick-1.0.2.tar.gz",
+    "size_bytes": 12645,
+    "sha256": "757e9003a9a5f9d9a230347610efcce7789b7743a61f4c9add638de690d66da5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stutchbury/library/EventJoystick/1.0.2/EventJoystick-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/stutchbury/library/EventJoystick/1.0.2/EventJoystick-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stutchbury/library/EventTouchScreen/0.5.1/EventTouchScreen-0.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EventTouchScreen-0.5.1.tar.gz",
+    "size_bytes": 13303,
+    "sha256": "175f322563bba7b417bdcba92d74b0387764788cd6e2c643675cb04dd5184f5b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stutchbury/library/EventTouchScreen/0.5.1/EventTouchScreen-0.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/stutchbury/library/EventTouchScreen/0.5.1/EventTouchScreen-0.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stutchbury/library/InputEvents/1.5.0/InputEvents-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "InputEvents-1.5.0.tar.gz",
+    "size_bytes": 44487,
+    "sha256": "0cdaa7d93fdde4f8c5ea8becc497a5fe0e114a3c8f7f7abb782dcdd158f147ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stutchbury/library/InputEvents/1.5.0/InputEvents-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stutchbury/library/InputEvents/1.5.0/InputEvents-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stutchbury/library/InputEvents/1.5.1/InputEvents-1.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "InputEvents-1.5.1.tar.gz",
+    "size_bytes": 41090,
+    "sha256": "56a7dcba808068bbc481b29765de3c8cdbb8311a5bac850801ec071e30db6ccf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stutchbury/library/InputEvents/1.5.1/InputEvents-1.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/stutchbury/library/InputEvents/1.5.1/InputEvents-1.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stutchbury/library/InputEvents/1.5.2/InputEvents-1.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "InputEvents-1.5.2.tar.gz",
+    "size_bytes": 44515,
+    "sha256": "23c6d8181b6b84e51969b67fe62a40b2ca8e44bb9d8756e26088a0ee1b08defc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stutchbury/library/InputEvents/1.5.2/InputEvents-1.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/stutchbury/library/InputEvents/1.5.2/InputEvents-1.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stutchbury/library/InputEvents/1.6.0/InputEvents-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "InputEvents-1.6.0.tar.gz",
+    "size_bytes": 49732,
+    "sha256": "aedf2abf04ad7829b1d0cede8df4999e45e7c66611250bfbb881c783ae948946",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stutchbury/library/InputEvents/1.6.0/InputEvents-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stutchbury/library/InputEvents/1.6.0/InputEvents-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stutchbury/library/InputEventsTouchUI/0.5.1/InputEventsTouchUI-0.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "InputEventsTouchUI-0.5.1.tar.gz",
+    "size_bytes": 35117,
+    "sha256": "8bd55c7a5ddb9155f5c9bfee87bc75544f0b4b05d2507fc2235cdb9f63f1251d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stutchbury/library/InputEventsTouchUI/0.5.1/InputEventsTouchUI-0.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/stutchbury/library/InputEventsTouchUI/0.5.1/InputEventsTouchUI-0.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stutchbury/library/ResistiveTouchScreen/1.0.0/ResistiveTouchScreen-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ResistiveTouchScreen-1.0.0.tar.gz",
+    "size_bytes": 13847,
+    "sha256": "82cd8673a18351867a2cb48ac8e144457f4ece8b33aae6efa0e6100a7bfeb30f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stutchbury/library/ResistiveTouchScreen/1.0.0/ResistiveTouchScreen-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stutchbury/library/ResistiveTouchScreen/1.0.0/ResistiveTouchScreen-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stutchbury/library/ResistiveTouchScreen/1.1.0/ResistiveTouchScreen-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ResistiveTouchScreen-1.1.0.tar.gz",
+    "size_bytes": 15098,
+    "sha256": "ac277e2f013b1144522fd20201ad205448160bbbbf49b9a8ed7c52f9ce84de10",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stutchbury/library/ResistiveTouchScreen/1.1.0/ResistiveTouchScreen-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stutchbury/library/ResistiveTouchScreen/1.1.0/ResistiveTouchScreen-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stutchbury/library/ResistiveTouchScreen/1.1.1/ResistiveTouchScreen-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ResistiveTouchScreen-1.1.1.tar.gz",
+    "size_bytes": 15204,
+    "sha256": "1e1f696f9b3a85f12a0e4ae77901b28154ddaf49e775d030f6d41ae3843d5798",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stutchbury/library/ResistiveTouchScreen/1.1.1/ResistiveTouchScreen-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/stutchbury/library/ResistiveTouchScreen/1.1.1/ResistiveTouchScreen-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stutchbury/library/ScreenManager/1.0.0/ScreenManager-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ScreenManager-1.0.0.tar.gz",
+    "size_bytes": 16098,
+    "sha256": "bad720a8be8493082de5639f02272a4ad5e9cc1321c4995cb2e250a00b47685b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stutchbury/library/ScreenManager/1.0.0/ScreenManager-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stutchbury/library/ScreenManager/1.0.0/ScreenManager-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stutchbury/library/ScreenManager/1.1.0/ScreenManager-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ScreenManager-1.1.0.tar.gz",
+    "size_bytes": 16975,
+    "sha256": "6f311f0b9077fc65355024ab70866c5a9138c46dbd115ef10c5c8b3435d291b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stutchbury/library/ScreenManager/1.1.0/ScreenManager-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stutchbury/library/ScreenManager/1.1.0/ScreenManager-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stutchbury/library/SerialMessageEvents/0.5.3/SerialMessageEvents-0.5.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialMessageEvents-0.5.3.tar.gz",
+    "size_bytes": 20039,
+    "sha256": "8c7847bb14439daa435b9cb23120cd542a95124ee9d87cba3766218b179599cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stutchbury/library/SerialMessageEvents/0.5.3/SerialMessageEvents-0.5.3.tar.gz",
+     "https://dl.registry.platformio.org/download/stutchbury/library/SerialMessageEvents/0.5.3/SerialMessageEvents-0.5.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stutchbury/library/TouchKeypad/0.0.6/TouchKeypad-0.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TouchKeypad-0.0.6.tar.gz",
+    "size_bytes": 15788,
+    "sha256": "f3161ee0246c2473beb63ec551a646495bf36bcb6d3e9b101985b5e24f582c4d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stutchbury/library/TouchKeypad/0.0.6/TouchKeypad-0.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/stutchbury/library/TouchKeypad/0.0.6/TouchKeypad-0.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stutchbury/library/TouchScreenAdapter/0.5.0/TouchScreenAdapter-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TouchScreenAdapter-0.5.0.tar.gz",
+    "size_bytes": 14016,
+    "sha256": "8ae691a019f1c0cc71e42de052624692964a404ee8fcce6daa288570214e302f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stutchbury/library/TouchScreenAdapter/0.5.0/TouchScreenAdapter-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stutchbury/library/TouchScreenAdapter/0.5.0/TouchScreenAdapter-0.5.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jasonacox",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jasonacox/library/TM1637TinyDisplay/1.1.0/TM1637TinyDisplay-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TM1637TinyDisplay-1.1.0.tar.gz",
+    "size_bytes": 16182,
+    "sha256": "4861e0457d9dac292752680caefd803caa5dfbb8c81e526ca65a4acd1dd82181",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jasonacox/library/TM1637TinyDisplay/1.1.0/TM1637TinyDisplay-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jasonacox/library/TM1637TinyDisplay/1.1.0/TM1637TinyDisplay-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jasonacox/library/TinyStepper/1.0.0/TinyStepper-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyStepper-1.0.0.tar.gz",
+    "size_bytes": 6247,
+    "sha256": "a62d75b4a847d970d685ea7805b8a11f60dd6050f559f4adddccde9a8c3e2807",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jasonacox/library/TinyStepper/1.0.0/TinyStepper-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jasonacox/library/TinyStepper/1.0.0/TinyStepper-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

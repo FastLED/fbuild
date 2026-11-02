@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/boschsensortec",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "boschsensortec/library/BME68x%20Sensor%20library/1.1.40407/BME68xSensorlibrary-1.1.40407.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BME68xSensorlibrary-1.1.40407.tar.gz",
+    "size_bytes": 30339,
+    "sha256": "537ba84c5386e265c6d33be0572886ac33327408947f722155d70053c824b698",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/boschsensortec/library/BME68x%2520Sensor%2520library/1.1.40407/BME68xSensorlibrary-1.1.40407.tar.gz",
+     "https://dl.registry.platformio.org/download/boschsensortec/library/BME68x%20Sensor%20library/1.1.40407/BME68xSensorlibrary-1.1.40407.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "boschsensortec/library/BME68x%20Sensor%20library/1.2.40408/BME68xSensorlibrary-1.2.40408.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BME68xSensorlibrary-1.2.40408.tar.gz",
+    "size_bytes": 30440,
+    "sha256": "071ae7eb2d81b1df0553b4707568145d74f7cada62a9c0ea22f2a0fe89d057d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/boschsensortec/library/BME68x%2520Sensor%2520library/1.2.40408/BME68xSensorlibrary-1.2.40408.tar.gz",
+     "https://dl.registry.platformio.org/download/boschsensortec/library/BME68x%20Sensor%20library/1.2.40408/BME68xSensorlibrary-1.2.40408.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "boschsensortec/library/BME68x%20Sensor%20library/1.3.40408/BME68xSensorlibrary-1.3.40408.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BME68xSensorlibrary-1.3.40408.tar.gz",
+    "size_bytes": 32878,
+    "sha256": "41197495da846a1bda8601024fa31e14fb2293280ce387e535f425aedc92275b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/boschsensortec/library/BME68x%2520Sensor%2520library/1.3.40408/BME68xSensorlibrary-1.3.40408.tar.gz",
+     "https://dl.registry.platformio.org/download/boschsensortec/library/BME68x%20Sensor%20library/1.3.40408/BME68xSensorlibrary-1.3.40408.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "boschsensortec/library/BSEC%20Software%20Library/1.6.1480/BSECSoftwareLibrary-1.6.1480.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BSECSoftwareLibrary-1.6.1480.tar.gz",
+    "size_bytes": 317302,
+    "sha256": "d83c20ddd1bfb0990cf148eb5f30ca0c6b0ca9dc8a613fb4905770f3f69e09a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/boschsensortec/library/BSEC%2520Software%2520Library/1.6.1480/BSECSoftwareLibrary-1.6.1480.tar.gz",
+     "https://dl.registry.platformio.org/download/boschsensortec/library/BSEC%20Software%20Library/1.6.1480/BSECSoftwareLibrary-1.6.1480.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "boschsensortec/library/BSEC%20Software%20Library/1.8.1492/BSECSoftwareLibrary-1.8.1492.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BSECSoftwareLibrary-1.8.1492.tar.gz",
+    "size_bytes": 323234,
+    "sha256": "3c0e4437219b4732f5835cf7b55c5b51e2f0d3b9d131a9465a596f3d06cafd66",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/boschsensortec/library/BSEC%2520Software%2520Library/1.8.1492/BSECSoftwareLibrary-1.8.1492.tar.gz",
+     "https://dl.registry.platformio.org/download/boschsensortec/library/BSEC%20Software%20Library/1.8.1492/BSECSoftwareLibrary-1.8.1492.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "boschsensortec/library/bsec2/1.10.2610/bsec2-1.10.2610.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bsec2-1.10.2610.tar.gz",
+    "size_bytes": 765822,
+    "sha256": "b9c50d06b0c90dc3ab5367c070c21a1b3866a5343e56194e680e7a86343e8a0d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/boschsensortec/library/bsec2/1.10.2610/bsec2-1.10.2610.tar.gz",
+     "https://dl.registry.platformio.org/download/boschsensortec/library/bsec2/1.10.2610/bsec2-1.10.2610.tar.gz"
+    ]
+   }
+  }
+ ]
+}

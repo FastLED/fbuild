@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/energesis-ingenieria",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "energesis-ingenieria/library/Energesis%20LM35/0.1.2/EnergesisLM35-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EnergesisLM35-0.1.2.tar.gz",
+    "size_bytes": 8735,
+    "sha256": "bc594c62f68551dfa256fb6aae301e103db5a6ee155f3248b7325b9ca15bb2d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/energesis-ingenieria/library/Energesis%2520LM35/0.1.2/EnergesisLM35-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/energesis-ingenieria/library/Energesis%20LM35/0.1.2/EnergesisLM35-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "energesis-ingenieria/library/Energesis_GenericSensor/0.1.5/Energesis_GenericSensor-0.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Energesis_GenericSensor-0.1.5.tar.gz",
+    "size_bytes": 9725,
+    "sha256": "78570dd303eec1eca6c2514975fdc3ce24470c5bd722f82bdaebc308aa274e1a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/energesis-ingenieria/library/Energesis_GenericSensor/0.1.5/Energesis_GenericSensor-0.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/energesis-ingenieria/library/Energesis_GenericSensor/0.1.5/Energesis_GenericSensor-0.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "energesis-ingenieria/library/Energesis_IO/0.1.0/Energesis_IO-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Energesis_IO-0.1.0.tar.gz",
+    "size_bytes": 6902,
+    "sha256": "de591549b0fbb8480f85ecce5de928d4a69862771bf0bed82a8f9eafad6dea86",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/energesis-ingenieria/library/Energesis_IO/0.1.0/Energesis_IO-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/energesis-ingenieria/library/Energesis_IO/0.1.0/Energesis_IO-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "energesis-ingenieria/library/Energesis_SHT2x/0.1.0/Energesis_SHT2x-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Energesis_SHT2x-0.1.0.tar.gz",
+    "size_bytes": 12846,
+    "sha256": "e64080bcea123f14b433fd9639e86f0c64a5e69c6fe9438dab324e7c2f034899",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/energesis-ingenieria/library/Energesis_SHT2x/0.1.0/Energesis_SHT2x-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/energesis-ingenieria/library/Energesis_SHT2x/0.1.0/Energesis_SHT2x-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "energesis-ingenieria/library/Energesis_Sensor/0.1.4/Energesis_Sensor-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Energesis_Sensor-0.1.4.tar.gz",
+    "size_bytes": 9546,
+    "sha256": "ba43ca7c73e084e8ce50f31f2aee08f9eea6466cfb87b3c0535b085373d3b322",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/energesis-ingenieria/library/Energesis_Sensor/0.1.4/Energesis_Sensor-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/energesis-ingenieria/library/Energesis_Sensor/0.1.4/Energesis_Sensor-0.1.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

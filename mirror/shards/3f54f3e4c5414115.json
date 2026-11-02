@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/physee",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "physee/library/SimpleTime/1.0/SimpleTime-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleTime-1.0.tar.gz",
+    "size_bytes": 3570,
+    "sha256": "2399ad4406f056ac49244faee6a3a7ecdbea0e90465b8e59a77eec2281238a23",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/physee/library/SimpleTime/1.0/SimpleTime-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/physee/library/SimpleTime/1.0/SimpleTime-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

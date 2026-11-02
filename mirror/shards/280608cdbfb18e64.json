@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-kadams6",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-kadams6/library/SCP1000/0.0.0+sha.47d6f205890b/SCP1000-0.0.0+sha.47d6f205890b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SCP1000-0.0.0+sha.47d6f205890b.tar.gz",
+    "size_bytes": 2311,
+    "sha256": "4860e522b0b78a2c926b0a5edb6c7d53e90488b39d39bc96ca1a0311dcf61764",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kadams6/library/SCP1000/0.0.0%2Bsha.47d6f205890b/SCP1000-0.0.0%2Bsha.47d6f205890b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kadams6/library/SCP1000/0.0.0%2Bsha.47d6f205890b/SCP1000-0.0.0%2Bsha.47d6f205890b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

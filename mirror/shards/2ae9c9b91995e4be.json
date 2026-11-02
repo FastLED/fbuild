@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/andrewrapp",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "andrewrapp/library/XBee/0.0.0-alpha+sha.39f236ea18/XBee-0.0.0-alphasha.39f236ea18.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XBee-0.0.0-alphasha.39f236ea18.tar.gz",
+    "size_bytes": 37462,
+    "sha256": "a4fe69a7015e8f75b04f56096f28ba932d084ddac2dfdbbaa41b0658aa0695c9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/andrewrapp/library/XBee/0.0.0-alpha%2Bsha.39f236ea18/XBee-0.0.0-alphasha.39f236ea18.tar.gz",
+     "https://dl.registry.platformio.org/download/andrewrapp/library/XBee/0.0.0-alpha%2Bsha.39f236ea18/XBee-0.0.0-alphasha.39f236ea18.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,217 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/erqos",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "erqos/library/EQSP32/1.0.1/EQSP32-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EQSP32-1.0.1.tar.gz",
+    "size_bytes": 8387347,
+    "sha256": "460ac78b58c28209968d63993f20591381922ca0c8cd6759eb2b42097234039d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/erqos/library/EQSP32/1.0.1/EQSP32-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/erqos/library/EQSP32/1.0.1/EQSP32-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "erqos/library/EQSP32/1.0.2/EQSP32-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EQSP32-1.0.2.tar.gz",
+    "size_bytes": 8395712,
+    "sha256": "b939854655d14a66a1f75d2e28e695c5bc227419c48bc280122a9c96ea2308e7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/erqos/library/EQSP32/1.0.2/EQSP32-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/erqos/library/EQSP32/1.0.2/EQSP32-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "erqos/library/EQSP32/1.0.3/EQSP32-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EQSP32-1.0.3.tar.gz",
+    "size_bytes": 8396896,
+    "sha256": "8d2e81837a8ce3b018f70b9dc3e2afdf373bd46c35e60912e154b48ad4e98d91",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/erqos/library/EQSP32/1.0.3/EQSP32-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/erqos/library/EQSP32/1.0.3/EQSP32-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "erqos/library/EQSP32/1.0.4/EQSP32-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EQSP32-1.0.4.tar.gz",
+    "size_bytes": 8400942,
+    "sha256": "469c7571bda0fea36710023a6aeb5538174280cdd17a8da3165c963d0ec77844",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/erqos/library/EQSP32/1.0.4/EQSP32-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/erqos/library/EQSP32/1.0.4/EQSP32-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "erqos/library/EQSP32/1.1.0/EQSP32-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EQSP32-1.1.0.tar.gz",
+    "size_bytes": 8458650,
+    "sha256": "1357091f4ea9d3c826357c30495334db45a6b8b5884e4bcc0a0f2ae95c523bdd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/erqos/library/EQSP32/1.1.0/EQSP32-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/erqos/library/EQSP32/1.1.0/EQSP32-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "erqos/library/EQSP32/1.2.0/EQSP32-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EQSP32-1.2.0.tar.gz",
+    "size_bytes": 8589944,
+    "sha256": "70cba7416660c363acfc36345d7bcf4cf2c36a48bdd0a78761a992991fbf46fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/erqos/library/EQSP32/1.2.0/EQSP32-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/erqos/library/EQSP32/1.2.0/EQSP32-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "erqos/library/EQSP32/1.2.1/EQSP32-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EQSP32-1.2.1.tar.gz",
+    "size_bytes": 8577290,
+    "sha256": "0cc7884aa9a791508470f3cda761742398cfde43447d39c4ff48afd714c833c3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/erqos/library/EQSP32/1.2.1/EQSP32-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/erqos/library/EQSP32/1.2.1/EQSP32-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "erqos/library/EQSP32/1.2.2/EQSP32-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EQSP32-1.2.2.tar.gz",
+    "size_bytes": 8577499,
+    "sha256": "826a1d440adaa7c52fff55108ccecd26718a2b94b3b5ffcb0a62b22b01bdbf23",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/erqos/library/EQSP32/1.2.2/EQSP32-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/erqos/library/EQSP32/1.2.2/EQSP32-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "erqos/library/EQSP32/1.3.0/EQSP32-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EQSP32-1.3.0.tar.gz",
+    "size_bytes": 12574772,
+    "sha256": "00c17b65ec6c9bdd19af2c390d8776e3b2e5c59ac44232ef85425e6ba912ff80",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/erqos/library/EQSP32/1.3.0/EQSP32-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/erqos/library/EQSP32/1.3.0/EQSP32-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "erqos/library/EQSP32/1.3.1/EQSP32-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EQSP32-1.3.1.tar.gz",
+    "size_bytes": 12575177,
+    "sha256": "c0d55d12ebb0e2040418da699ecba33cba6884b442acb94d984e0491e60db95d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/erqos/library/EQSP32/1.3.1/EQSP32-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/erqos/library/EQSP32/1.3.1/EQSP32-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "erqos/library/EQSP32/1.3.2/EQSP32-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EQSP32-1.3.2.tar.gz",
+    "size_bytes": 12575223,
+    "sha256": "8311fc528dd6e26acbe09c4638814564bef02e46c84cddca48735fdb45ea23e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/erqos/library/EQSP32/1.3.2/EQSP32-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/erqos/library/EQSP32/1.3.2/EQSP32-1.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "erqos/library/EQSP32/1.4.0/EQSP32-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EQSP32-1.4.0.tar.gz",
+    "size_bytes": 17092786,
+    "sha256": "4c2189a1fa36da5d1a00a261cf1b166784895b3309e9af940977186dca8419eb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/erqos/library/EQSP32/1.4.0/EQSP32-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/erqos/library/EQSP32/1.4.0/EQSP32-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "erqos/library/EQSP32/1.5.0/EQSP32-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EQSP32-1.5.0.tar.gz",
+    "size_bytes": 14817947,
+    "sha256": "b9cf4a29bc113f1c40518a536d9eb858aa54850d860d57b69b92c7b9a502bc7e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/erqos/library/EQSP32/1.5.0/EQSP32-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/erqos/library/EQSP32/1.5.0/EQSP32-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "erqos/library/EQSP32/1.5.1/EQSP32-1.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EQSP32-1.5.1.tar.gz",
+    "size_bytes": 14821611,
+    "sha256": "cfb545567625bd4811ee4fda88c61311130feda8b122cfb310a50c5f05681582",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/erqos/library/EQSP32/1.5.1/EQSP32-1.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/erqos/library/EQSP32/1.5.1/EQSP32-1.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "erqos/library/EQSP32/1.5.2/EQSP32-1.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EQSP32-1.5.2.tar.gz",
+    "size_bytes": 14825658,
+    "sha256": "fe3d148bbcd6753a6ea2bdd971649c82ecdea32bc60b6ab951dd01d84b0fc64b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/erqos/library/EQSP32/1.5.2/EQSP32-1.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/erqos/library/EQSP32/1.5.2/EQSP32-1.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "erqos/library/EQSP32/1.6.0/EQSP32-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EQSP32-1.6.0.tar.gz",
+    "size_bytes": 14994027,
+    "sha256": "d789b74474036bdb0bd186f6c6d44109380dfef1f3b251468a2a727bf297b224",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/erqos/library/EQSP32/1.6.0/EQSP32-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/erqos/library/EQSP32/1.6.0/EQSP32-1.6.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

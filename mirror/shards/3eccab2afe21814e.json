@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jsutcliff",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jsutcliff/library/SensESP-SeaTalk/0.0.1/SensESP-SeaTalk-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensESP-SeaTalk-0.0.1.tar.gz",
+    "size_bytes": 13234,
+    "sha256": "45a1b6ecfaa4c4e813813fd43aa11b57a2703812d5e37858dfe026a1111d65a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jsutcliff/library/SensESP-SeaTalk/0.0.1/SensESP-SeaTalk-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jsutcliff/library/SensESP-SeaTalk/0.0.1/SensESP-SeaTalk-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

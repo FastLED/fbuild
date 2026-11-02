@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/scottmudge",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "scottmudge/library/ESPArduinoPins/1.0.2/ESPArduinoPins-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPArduinoPins-1.0.2.tar.gz",
+    "size_bytes": 1405,
+    "sha256": "d4276714a95966e7401720ac55e86848effa9d6ac874f0409b1847bb3290d666",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/scottmudge/library/ESPArduinoPins/1.0.2/ESPArduinoPins-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/scottmudge/library/ESPArduinoPins/1.0.2/ESPArduinoPins-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

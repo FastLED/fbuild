@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-viacheslav",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-viacheslav/library/ssd1306/0.0.0+sha.55577bcb3dc8/ssd1306-0.0.0+sha.55577bcb3dc8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ssd1306-0.0.0+sha.55577bcb3dc8.tar.gz",
+    "size_bytes": 4409,
+    "sha256": "3afefcddb9d1e30d829b72e3432a4f56477f57971da2ceb5542451ea6c78968e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-viacheslav/library/ssd1306/0.0.0%2Bsha.55577bcb3dc8/ssd1306-0.0.0%2Bsha.55577bcb3dc8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-viacheslav/library/ssd1306/0.0.0%2Bsha.55577bcb3dc8/ssd1306-0.0.0%2Bsha.55577bcb3dc8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

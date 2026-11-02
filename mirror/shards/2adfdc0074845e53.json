@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jlab-sps-group",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jlab-sps-group/library/Soil%20Power%20Sensor%20Protocal%20Buffer/2.0.0/SoilPowerSensorProtocalBuffer-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SoilPowerSensorProtocalBuffer-2.0.0.tar.gz",
+    "size_bytes": 37075,
+    "sha256": "92da73de9ca76e13db6d6c6c018a689646970c79c559990caec2bc25cf78dd88",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jlab-sps-group/library/Soil%2520Power%2520Sensor%2520Protocal%2520Buffer/2.0.0/SoilPowerSensorProtocalBuffer-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jlab-sps-group/library/Soil%20Power%20Sensor%20Protocal%20Buffer/2.0.0/SoilPowerSensorProtocalBuffer-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

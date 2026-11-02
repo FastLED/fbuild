@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/impulseadventure",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "impulseadventure/library/GUIslice/0.17.2/GUIslice-0.17.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GUIslice-0.17.2.tar.gz",
+    "size_bytes": 1001807,
+    "sha256": "5e8edf236a1c08c6e5ce6a6f4121ce2684e5444827ae55d3a09025df2b5e1f78",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/impulseadventure/library/GUIslice/0.17.2/GUIslice-0.17.2.tar.gz",
+     "https://dl.registry.platformio.org/download/impulseadventure/library/GUIslice/0.17.2/GUIslice-0.17.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "impulseadventure/library/Waveshare%20ILI9486/2.0.1/WaveshareILI9486-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WaveshareILI9486-2.0.1.tar.gz",
+    "size_bytes": 14155,
+    "sha256": "219c2575192fa21d26c357b353c38b8a013232a18b7de511e85a2f90ca9e1aed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/impulseadventure/library/Waveshare%2520ILI9486/2.0.1/WaveshareILI9486-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/impulseadventure/library/Waveshare%20ILI9486/2.0.1/WaveshareILI9486-2.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

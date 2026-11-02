@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/aquatwix",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "aquatwix/library/PD-10LX-Library/1.0.2/PD-10LX-Library-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PD-10LX-Library-1.0.2.tar.gz",
+    "size_bytes": 5317,
+    "sha256": "25309302d41a42756d812d3d265f97e09a9a06645ad97a43d2f659946291e1dc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aquatwix/library/PD-10LX-Library/1.0.2/PD-10LX-Library-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/aquatwix/library/PD-10LX-Library/1.0.2/PD-10LX-Library-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

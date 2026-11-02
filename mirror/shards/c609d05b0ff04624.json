@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mcendu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mcendu/library/LCDI2C_Multilingual_MCD/2.1.0/LCDI2C_Multilingual_MCD-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCDI2C_Multilingual_MCD-2.1.0.tar.gz",
+    "size_bytes": 30627,
+    "sha256": "aadc751af32f2189140248bc0251a758d872e489256c53234bbccf37bc53e2ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mcendu/library/LCDI2C_Multilingual_MCD/2.1.0/LCDI2C_Multilingual_MCD-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mcendu/library/LCDI2C_Multilingual_MCD/2.1.0/LCDI2C_Multilingual_MCD-2.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

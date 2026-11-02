@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/masud744",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "masud744/library/SmartProv/2.1.3/SmartProv-2.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartProv-2.1.3.tar.gz",
+    "size_bytes": 18183,
+    "sha256": "7c5fc9fb1b8de4df15179f92f79da0897af2292bb0cc937e9d484b31bd1db4cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/masud744/library/SmartProv/2.1.3/SmartProv-2.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/masud744/library/SmartProv/2.1.3/SmartProv-2.1.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

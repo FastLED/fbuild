@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/connormmckelvey",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "connormmckelvey/library/Haplink/0.1.0/Haplink-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Haplink-0.1.0.tar.gz",
+    "size_bytes": 19623,
+    "sha256": "ad2609bc58e100d8483fc051fb02f9ba85cd5f9b93b9868ab4400560676070c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/connormmckelvey/library/Haplink/0.1.0/Haplink-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/connormmckelvey/library/Haplink/0.1.0/Haplink-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

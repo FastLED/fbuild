@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/vroland",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "vroland/library/epdiy/1.0.0/epdiy-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "epdiy-1.0.0.tar.gz",
+    "size_bytes": 40426855,
+    "sha256": "fd833fa03988f63fce220c948a55c4c04878985bc6d49008f8f5921247380c62",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vroland/library/epdiy/1.0.0/epdiy-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vroland/library/epdiy/1.0.0/epdiy-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vroland/library/epdiy/2.1.3/epdiy-2.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "epdiy-2.1.3.tar.gz",
+    "size_bytes": 19071223,
+    "sha256": "6a0bd4d036fd19ef6734c612c60c7a9180670b6ab4fc060dfbe9055033e40804",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vroland/library/epdiy/2.1.3/epdiy-2.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/vroland/library/epdiy/2.1.3/epdiy-2.1.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

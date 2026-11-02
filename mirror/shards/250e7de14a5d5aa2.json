@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/roncoa",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "roncoa/library/KeySequence/1.3.0/KeySequence-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KeySequence-1.3.0.tar.gz",
+    "size_bytes": 9009,
+    "sha256": "61390511c57c93daea4c148778c9d990e48daa9a50fa154db9d0a0998101b16b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/roncoa/library/KeySequence/1.3.0/KeySequence-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/roncoa/library/KeySequence/1.3.0/KeySequence-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "roncoa/library/SimRacingController/2.1.0/SimRacingController-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimRacingController-2.1.0.tar.gz",
+    "size_bytes": 11128,
+    "sha256": "473950b85756a7ae96652987f767c81d3bf6f2f9e41749ae275a812124b11aee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/roncoa/library/SimRacingController/2.1.0/SimRacingController-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/roncoa/library/SimRacingController/2.1.0/SimRacingController-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "roncoa/library/StringEEPROM/1.0.4/StringEEPROM-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StringEEPROM-1.0.4.tar.gz",
+    "size_bytes": 10751,
+    "sha256": "bd4ced7bbaea378c7d23920faeb7945d85c693138801dcee6cd2dde3494f4c1e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/roncoa/library/StringEEPROM/1.0.4/StringEEPROM-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/roncoa/library/StringEEPROM/1.0.4/StringEEPROM-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

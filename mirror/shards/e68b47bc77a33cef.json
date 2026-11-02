@@ -1,0 +1,152 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kristijanpruzinac",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kristijanpruzinac/library/ESP-DDS/2.0.0/ESP-DDS-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-DDS-2.0.0.tar.gz",
+    "size_bytes": 11148,
+    "sha256": "2171b9695980ea2da31c94f79926006f73b66f1aabd4a07b747c537006d20b2f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kristijanpruzinac/library/ESP-DDS/2.0.0/ESP-DDS-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kristijanpruzinac/library/ESP-DDS/2.0.0/ESP-DDS-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kristijanpruzinac/library/ESP-DDS/2.0.1/ESP-DDS-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-DDS-2.0.1.tar.gz",
+    "size_bytes": 10185,
+    "sha256": "77fd30ace7338e0323b9682d60d70f55014d6327d55a286a1261e17e76b70807",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kristijanpruzinac/library/ESP-DDS/2.0.1/ESP-DDS-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/kristijanpruzinac/library/ESP-DDS/2.0.1/ESP-DDS-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kristijanpruzinac/library/ESP-DDS/2.0.10/ESP-DDS-2.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-DDS-2.0.10.tar.gz",
+    "size_bytes": 10502,
+    "sha256": "7dc8260129a3e0698e527c08fa3af07fe0b3a6289cfa31c7c3a6709d13514372",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kristijanpruzinac/library/ESP-DDS/2.0.10/ESP-DDS-2.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/kristijanpruzinac/library/ESP-DDS/2.0.10/ESP-DDS-2.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kristijanpruzinac/library/ESP-DDS/2.0.2/ESP-DDS-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-DDS-2.0.2.tar.gz",
+    "size_bytes": 10209,
+    "sha256": "3d9e83415f14d196ba30eab8f1ba3d5b7da540b99b0399da28ef91911b122679",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kristijanpruzinac/library/ESP-DDS/2.0.2/ESP-DDS-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/kristijanpruzinac/library/ESP-DDS/2.0.2/ESP-DDS-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kristijanpruzinac/library/ESP-DDS/2.0.3/ESP-DDS-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-DDS-2.0.3.tar.gz",
+    "size_bytes": 10251,
+    "sha256": "ede2de89f433f8ce67e51eddf3e67c80f296c4cd7b61d1525912a2f22779654a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kristijanpruzinac/library/ESP-DDS/2.0.3/ESP-DDS-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/kristijanpruzinac/library/ESP-DDS/2.0.3/ESP-DDS-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kristijanpruzinac/library/ESP-DDS/2.0.4/ESP-DDS-2.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-DDS-2.0.4.tar.gz",
+    "size_bytes": 10291,
+    "sha256": "df950fbb9bd24661fe4cbead35e5bcc6e4cd2338099e4a2f4016e182e62f32a3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kristijanpruzinac/library/ESP-DDS/2.0.4/ESP-DDS-2.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/kristijanpruzinac/library/ESP-DDS/2.0.4/ESP-DDS-2.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kristijanpruzinac/library/ESP-DDS/2.0.5/ESP-DDS-2.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-DDS-2.0.5.tar.gz",
+    "size_bytes": 10291,
+    "sha256": "44840c19c6b5164300e735e62e9f5fc1b82567bf05c679cd343426e3dd13b6ab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kristijanpruzinac/library/ESP-DDS/2.0.5/ESP-DDS-2.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/kristijanpruzinac/library/ESP-DDS/2.0.5/ESP-DDS-2.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kristijanpruzinac/library/ESP-DDS/2.0.6/ESP-DDS-2.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-DDS-2.0.6.tar.gz",
+    "size_bytes": 10397,
+    "sha256": "6fe769ef2b313d79b1fd1b878a355e384a2ec8fe1ab376f0dbba38a0171e4ea5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kristijanpruzinac/library/ESP-DDS/2.0.6/ESP-DDS-2.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/kristijanpruzinac/library/ESP-DDS/2.0.6/ESP-DDS-2.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kristijanpruzinac/library/ESP-DDS/2.0.7/ESP-DDS-2.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-DDS-2.0.7.tar.gz",
+    "size_bytes": 10471,
+    "sha256": "14ff39be83af60f0eaf11ffc3afe88a6a003b042d3214c1ebb9c253978eb20b0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kristijanpruzinac/library/ESP-DDS/2.0.7/ESP-DDS-2.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/kristijanpruzinac/library/ESP-DDS/2.0.7/ESP-DDS-2.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kristijanpruzinac/library/ESP-DDS/2.0.8/ESP-DDS-2.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-DDS-2.0.8.tar.gz",
+    "size_bytes": 10466,
+    "sha256": "5432e2b18423340c1d6660ce52aaa650c0ed77fb83ada6c52f44b9c0f86ab263",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kristijanpruzinac/library/ESP-DDS/2.0.8/ESP-DDS-2.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/kristijanpruzinac/library/ESP-DDS/2.0.8/ESP-DDS-2.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kristijanpruzinac/library/ESP-DDS/2.0.9/ESP-DDS-2.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-DDS-2.0.9.tar.gz",
+    "size_bytes": 10509,
+    "sha256": "1edb58a95c63bae265faf4ee7eca689402f509802057af736c9a89a7e92e0085",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kristijanpruzinac/library/ESP-DDS/2.0.9/ESP-DDS-2.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/kristijanpruzinac/library/ESP-DDS/2.0.9/ESP-DDS-2.0.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

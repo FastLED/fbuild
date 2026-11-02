@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hazowagit",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hazowagit/library/GFX_Graph/1.0.0/GFX_Graph-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GFX_Graph-1.0.0.tar.gz",
+    "size_bytes": 71492,
+    "sha256": "eaf1af8039befc5a1ca834aed40edaa4d5b943bb367efeba1901c3723cae3b43",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hazowagit/library/GFX_Graph/1.0.0/GFX_Graph-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hazowagit/library/GFX_Graph/1.0.0/GFX_Graph-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hazowagit/library/GFX_Graph/1.0.1/GFX_Graph-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GFX_Graph-1.0.1.tar.gz",
+    "size_bytes": 71655,
+    "sha256": "2331b67e353f9bf45705e768c880fe004d8e2339979ff18a35c770d34b06d6a1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hazowagit/library/GFX_Graph/1.0.1/GFX_Graph-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/hazowagit/library/GFX_Graph/1.0.1/GFX_Graph-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

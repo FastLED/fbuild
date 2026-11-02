@@ -1,0 +1,581 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/asukiaaa",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "asukiaaa/library/A89306_asukiaaa/1.0.2/A89306_asukiaaa-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "A89306_asukiaaa-1.0.2.tar.gz",
+    "size_bytes": 10115,
+    "sha256": "e6e378791fe26701ec2ffd3daaf36c67b39ba40df2cf1ef6e5269fd793efd90d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/asukiaaa/library/A89306_asukiaaa/1.0.2/A89306_asukiaaa-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/asukiaaa/library/A89306_asukiaaa/1.0.2/A89306_asukiaaa-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "asukiaaa/library/AD5254_asukiaaa/1.0.5/AD5254_asukiaaa-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AD5254_asukiaaa-1.0.5.tar.gz",
+    "size_bytes": 2332,
+    "sha256": "2e420958c25c0fb9948bfd75d961d78eaa91c20744ebc65a822800af3efe2ea6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/asukiaaa/library/AD5254_asukiaaa/1.0.5/AD5254_asukiaaa-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/asukiaaa/library/AD5254_asukiaaa/1.0.5/AD5254_asukiaaa-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "asukiaaa/library/AM2320_asukiaaa/1.1.4/AM2320_asukiaaa-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AM2320_asukiaaa-1.1.4.tar.gz",
+    "size_bytes": 1888,
+    "sha256": "b37230d6045c507cc6fec9da96f10f3f5be52a1ed42d70405d9e71e6d4e5ed83",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/asukiaaa/library/AM2320_asukiaaa/1.1.4/AM2320_asukiaaa-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/asukiaaa/library/AM2320_asukiaaa/1.1.4/AM2320_asukiaaa-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "asukiaaa/library/BLVD20KM_asukiaaa/1.3.2/BLVD20KM_asukiaaa-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLVD20KM_asukiaaa-1.3.2.tar.gz",
+    "size_bytes": 7479,
+    "sha256": "1b020752ef7875c2ab1c173db1e09724faf73b0a1baf7517d058725f58e104fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/asukiaaa/library/BLVD20KM_asukiaaa/1.3.2/BLVD20KM_asukiaaa-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/asukiaaa/library/BLVD20KM_asukiaaa/1.3.2/BLVD20KM_asukiaaa-1.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "asukiaaa/library/CanBusData_asukiaaa/1.0.1/CanBusData_asukiaaa-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CanBusData_asukiaaa-1.0.1.tar.gz",
+    "size_bytes": 1996,
+    "sha256": "533b2144247815c6ba8ed0e091a9b44c1b169f33d889fb3ae0139f023a527ce6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/asukiaaa/library/CanBusData_asukiaaa/1.0.1/CanBusData_asukiaaa-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/asukiaaa/library/CanBusData_asukiaaa/1.0.1/CanBusData_asukiaaa-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "asukiaaa/library/CanBusMCP2515_asukiaaa/0.1.0/CanBusMCP2515_asukiaaa-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CanBusMCP2515_asukiaaa-0.1.0.tar.gz",
+    "size_bytes": 1623,
+    "sha256": "fadd5130965a80561ac2068a9161b6fa69f1843abd4817622b085f7ed2e23d2f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/asukiaaa/library/CanBusMCP2515_asukiaaa/0.1.0/CanBusMCP2515_asukiaaa-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/asukiaaa/library/CanBusMCP2515_asukiaaa/0.1.0/CanBusMCP2515_asukiaaa-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "asukiaaa/library/ControllerAsI2c_asukiaaa/1.0.5/ControllerAsI2c_asukiaaa-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ControllerAsI2c_asukiaaa-1.0.5.tar.gz",
+    "size_bytes": 7201,
+    "sha256": "162bc9d3fc6ed7d1909523fdf07ad9e86c1f8c1963debf0c2561b2e8553a643f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/asukiaaa/library/ControllerAsI2c_asukiaaa/1.0.5/ControllerAsI2c_asukiaaa-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/asukiaaa/library/ControllerAsI2c_asukiaaa/1.0.5/ControllerAsI2c_asukiaaa-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "asukiaaa/library/ControllerAsI2c_asukiaaa/1.0.7/ControllerAsI2c_asukiaaa-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ControllerAsI2c_asukiaaa-1.0.7.tar.gz",
+    "size_bytes": 7549,
+    "sha256": "2fef1a5cf6d482c93e399a9b75b84daf5a9efbb7fb7b5bc616e3594a7082ea7f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/asukiaaa/library/ControllerAsI2c_asukiaaa/1.0.7/ControllerAsI2c_asukiaaa-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/asukiaaa/library/ControllerAsI2c_asukiaaa/1.0.7/ControllerAsI2c_asukiaaa-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "asukiaaa/library/EPD/1.1.1/EPD-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EPD-1.1.1.tar.gz",
+    "size_bytes": 40572,
+    "sha256": "ed7d516b1d5e5b9ef09799729b5b56f5d4f7549f9c41304c87cb622d7022eb2c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/asukiaaa/library/EPD/1.1.1/EPD-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/asukiaaa/library/EPD/1.1.1/EPD-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "asukiaaa/library/Gauge_asukiaaa/1.0.0/Gauge_asukiaaa-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Gauge_asukiaaa-1.0.0.tar.gz",
+    "size_bytes": 2215,
+    "sha256": "d6f24d4e4d94081676e26389db4783b6afa614799a953052d2174406f87fe806",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/asukiaaa/library/Gauge_asukiaaa/1.0.0/Gauge_asukiaaa-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/asukiaaa/library/Gauge_asukiaaa/1.0.0/Gauge_asukiaaa-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "asukiaaa/library/HX711_asukiaaa/1.0.6/HX711_asukiaaa-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HX711_asukiaaa-1.0.6.tar.gz",
+    "size_bytes": 4098,
+    "sha256": "798ef13ef63be91e9b298ecd20f64bc2e9f0a3cfe286979162e2ec1cad53a1c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/asukiaaa/library/HX711_asukiaaa/1.0.6/HX711_asukiaaa-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/asukiaaa/library/HX711_asukiaaa/1.0.6/HX711_asukiaaa-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "asukiaaa/library/HzMeter_asukiaaa/1.1.7/HzMeter_asukiaaa-1.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HzMeter_asukiaaa-1.1.7.tar.gz",
+    "size_bytes": 3272,
+    "sha256": "bc70aaf594db1c2d793be2a3e6ed28004e0c538a30b55b644e80ef3a49487c58",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/asukiaaa/library/HzMeter_asukiaaa/1.1.7/HzMeter_asukiaaa-1.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/asukiaaa/library/HzMeter_asukiaaa/1.1.7/HzMeter_asukiaaa-1.1.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "asukiaaa/library/I2cControlPanel_asukiaaa/1.4.2/I2cControlPanel_asukiaaa-1.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2cControlPanel_asukiaaa-1.4.2.tar.gz",
+    "size_bytes": 6523,
+    "sha256": "aacddc4e0815ce93413e297c5f970516a6164a9c83040bc3b7674e980c939b36",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/asukiaaa/library/I2cControlPanel_asukiaaa/1.4.2/I2cControlPanel_asukiaaa-1.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/asukiaaa/library/I2cControlPanel_asukiaaa/1.4.2/I2cControlPanel_asukiaaa-1.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "asukiaaa/library/I2cMotors_asukiaaa/1.0.4/I2cMotors_asukiaaa-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2cMotors_asukiaaa-1.0.4.tar.gz",
+    "size_bytes": 5986,
+    "sha256": "e67b4c738583001352779bafd2e6df571a8ceb25e3c72702ae5e9ccb24f1a2e5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/asukiaaa/library/I2cMotors_asukiaaa/1.0.4/I2cMotors_asukiaaa-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/asukiaaa/library/I2cMotors_asukiaaa/1.0.4/I2cMotors_asukiaaa-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "asukiaaa/library/I2cMultipleMotors_asukiaaa/1.2.0/I2cMultipleMotors_asukiaaa-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2cMultipleMotors_asukiaaa-1.2.0.tar.gz",
+    "size_bytes": 2947,
+    "sha256": "49e674c542a859d042d3f68839a5e874f2fde49d0b09b854025414bf039af7ea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/asukiaaa/library/I2cMultipleMotors_asukiaaa/1.2.0/I2cMultipleMotors_asukiaaa-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/asukiaaa/library/I2cMultipleMotors_asukiaaa/1.2.0/I2cMultipleMotors_asukiaaa-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "asukiaaa/library/INA226_asukiaaa/1.2.2/INA226_asukiaaa-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "INA226_asukiaaa-1.2.2.tar.gz",
+    "size_bytes": 2754,
+    "sha256": "d18ea0b4962e4e913512201dbe823754318891f3250f96994193837c2b6eb33d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/asukiaaa/library/INA226_asukiaaa/1.2.2/INA226_asukiaaa-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/asukiaaa/library/INA226_asukiaaa/1.2.2/INA226_asukiaaa-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "asukiaaa/library/MCP4661_asukiaaa/1.0.0/MCP4661_asukiaaa-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP4661_asukiaaa-1.0.0.tar.gz",
+    "size_bytes": 3690,
+    "sha256": "94aa5435247a5cd0956bcd99dbe2ac65183e7be88743981c0bf7c5589ba2bafa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/asukiaaa/library/MCP4661_asukiaaa/1.0.0/MCP4661_asukiaaa-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/asukiaaa/library/MCP4661_asukiaaa/1.0.0/MCP4661_asukiaaa-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "asukiaaa/library/MPU9250_asukiaaa/1.5.13/MPU9250_asukiaaa-1.5.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPU9250_asukiaaa-1.5.13.tar.gz",
+    "size_bytes": 6582,
+    "sha256": "9328ca2b5c1035af4f96687171e88add197bbf1c706aed5516b983e1c279f4a6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/asukiaaa/library/MPU9250_asukiaaa/1.5.13/MPU9250_asukiaaa-1.5.13.tar.gz",
+     "https://dl.registry.platformio.org/download/asukiaaa/library/MPU9250_asukiaaa/1.5.13/MPU9250_asukiaaa-1.5.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "asukiaaa/library/MotorCVD_asukiaaa/1.0.6/MotorCVD_asukiaaa-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MotorCVD_asukiaaa-1.0.6.tar.gz",
+    "size_bytes": 3008,
+    "sha256": "aeed56999d748e01f645945653d1f0d4e64d55c9515bcc18ed1c99cf98e89301",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/asukiaaa/library/MotorCVD_asukiaaa/1.0.6/MotorCVD_asukiaaa-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/asukiaaa/library/MotorCVD_asukiaaa/1.0.6/MotorCVD_asukiaaa-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "asukiaaa/library/MotorDMKB4_asukiaaa/1.0.1/MotorDMKB4_asukiaaa-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MotorDMKB4_asukiaaa-1.0.1.tar.gz",
+    "size_bytes": 3809,
+    "sha256": "2b600de88180aea4caf7b442f27d9e621932210ede1c90e46d7a5837791f63e3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/asukiaaa/library/MotorDMKB4_asukiaaa/1.0.1/MotorDMKB4_asukiaaa-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/asukiaaa/library/MotorDMKB4_asukiaaa/1.0.1/MotorDMKB4_asukiaaa-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "asukiaaa/library/OrientalAZ_asukiaaa/1.0.0/OrientalAZ_asukiaaa-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OrientalAZ_asukiaaa-1.0.0.tar.gz",
+    "size_bytes": 3838,
+    "sha256": "92c6250f6ff4452c0bf4db65300074ba031f7afddf859bdfbbe96675b38b190c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/asukiaaa/library/OrientalAZ_asukiaaa/1.0.0/OrientalAZ_asukiaaa-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/asukiaaa/library/OrientalAZ_asukiaaa/1.0.0/OrientalAZ_asukiaaa-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "asukiaaa/library/OrientalBLVR_asukiaaa/1.0.0/OrientalBLVR_asukiaaa-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OrientalBLVR_asukiaaa-1.0.0.tar.gz",
+    "size_bytes": 3314,
+    "sha256": "df7ea21880f3e6271ef66bca176a41dc3f6e19708494104e61626e80c9229be0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/asukiaaa/library/OrientalBLVR_asukiaaa/1.0.0/OrientalBLVR_asukiaaa-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/asukiaaa/library/OrientalBLVR_asukiaaa/1.0.0/OrientalBLVR_asukiaaa-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "asukiaaa/library/OrientalCommon_asukiaaa/1.1.3/OrientalCommon_asukiaaa-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OrientalCommon_asukiaaa-1.1.3.tar.gz",
+    "size_bytes": 2666,
+    "sha256": "50788de29137fa2b8d0393db930514cb613372f409f5126cefa9bb15e2a13b1e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/asukiaaa/library/OrientalCommon_asukiaaa/1.1.3/OrientalCommon_asukiaaa-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/asukiaaa/library/OrientalCommon_asukiaaa/1.1.3/OrientalCommon_asukiaaa-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "asukiaaa/library/ResistorReader_asukiaaa/1.0.3/ResistorReader_asukiaaa-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ResistorReader_asukiaaa-1.0.3.tar.gz",
+    "size_bytes": 2616,
+    "sha256": "00798346fd1f0f62c2bb5a1bc7d289aa71a2f83420c9619416f2b880e6afa29a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/asukiaaa/library/ResistorReader_asukiaaa/1.0.3/ResistorReader_asukiaaa-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/asukiaaa/library/ResistorReader_asukiaaa/1.0.3/ResistorReader_asukiaaa-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "asukiaaa/library/ST7032_asukiaaa/1.0.5/ST7032_asukiaaa-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ST7032_asukiaaa-1.0.5.tar.gz",
+    "size_bytes": 5479,
+    "sha256": "06d3ac052d37aa5a4c7ef733eea60f3ba0e2f9380ca7cca90250328d8dafbef8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/asukiaaa/library/ST7032_asukiaaa/1.0.5/ST7032_asukiaaa-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/asukiaaa/library/ST7032_asukiaaa/1.0.5/ST7032_asukiaaa-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "asukiaaa/library/SomeSerial/1.1.3/SomeSerial-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SomeSerial-1.1.3.tar.gz",
+    "size_bytes": 3075,
+    "sha256": "3e809ed6dc44f592f3345ed402658bd4909e2e2a2ad0efef0f45344b05946bde",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/asukiaaa/library/SomeSerial/1.1.3/SomeSerial-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/asukiaaa/library/SomeSerial/1.1.3/SomeSerial-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "asukiaaa/library/TC78B009FTG_asukiaaa/1.0.2/TC78B009FTG_asukiaaa-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TC78B009FTG_asukiaaa-1.0.2.tar.gz",
+    "size_bytes": 10823,
+    "sha256": "0e34897ed5d1f577a781e6c1529b0439d4083b755af46b8ec6d2ebdfa4da9b5d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/asukiaaa/library/TC78B009FTG_asukiaaa/1.0.2/TC78B009FTG_asukiaaa-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/asukiaaa/library/TC78B009FTG_asukiaaa/1.0.2/TC78B009FTG_asukiaaa-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "asukiaaa/library/ThingSpeak_asukiaaa/1.0.1/ThingSpeak_asukiaaa-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ThingSpeak_asukiaaa-1.0.1.tar.gz",
+    "size_bytes": 1724,
+    "sha256": "c9bc53f72bfaaba7ba0f007135f059914394c0c9fd2cd2b5e2db8e2597cb91a7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/asukiaaa/library/ThingSpeak_asukiaaa/1.0.1/ThingSpeak_asukiaaa-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/asukiaaa/library/ThingSpeak_asukiaaa/1.0.1/ThingSpeak_asukiaaa-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "asukiaaa/library/WindSensorHWD_asukiaaa/1.0.1/WindSensorHWD_asukiaaa-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WindSensorHWD_asukiaaa-1.0.1.tar.gz",
+    "size_bytes": 3326,
+    "sha256": "3a3763e37757ddf4feffcb2818184680a6b325a3dc1d12ef1153844c8367e751",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/asukiaaa/library/WindSensorHWD_asukiaaa/1.0.1/WindSensorHWD_asukiaaa-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/asukiaaa/library/WindSensorHWD_asukiaaa/1.0.1/WindSensorHWD_asukiaaa-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "asukiaaa/library/WiredController_asukiaaa/1.3.3/WiredController_asukiaaa-1.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiredController_asukiaaa-1.3.3.tar.gz",
+    "size_bytes": 4170,
+    "sha256": "defeeb729f4a474405800d28a0a70d93ad7e8cfb0da6a1fea3d30f77062fb947",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/asukiaaa/library/WiredController_asukiaaa/1.3.3/WiredController_asukiaaa-1.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/asukiaaa/library/WiredController_asukiaaa/1.3.3/WiredController_asukiaaa-1.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "asukiaaa/library/XboxControllerNotificationParser/1.0.4/XboxControllerNotificationParser-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XboxControllerNotificationParser-1.0.4.tar.gz",
+    "size_bytes": 5622,
+    "sha256": "5c53be41b16562e7d9b18e4329adee8824ea97593aa2edaf238e98646a6484d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/asukiaaa/library/XboxControllerNotificationParser/1.0.4/XboxControllerNotificationParser-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/asukiaaa/library/XboxControllerNotificationParser/1.0.4/XboxControllerNotificationParser-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "asukiaaa/library/XboxControllerNotificationParser/1.0.5/XboxControllerNotificationParser-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XboxControllerNotificationParser-1.0.5.tar.gz",
+    "size_bytes": 6790,
+    "sha256": "64b68329ed39f31abb5f59be5a1bd11c5939d32743bebb8b2575a805209e053b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/asukiaaa/library/XboxControllerNotificationParser/1.0.5/XboxControllerNotificationParser-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/asukiaaa/library/XboxControllerNotificationParser/1.0.5/XboxControllerNotificationParser-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "asukiaaa/library/XboxSeriesXControllerESP32_asukiaaa/1.1.1/XboxSeriesXControllerESP32_asukiaaa-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XboxSeriesXControllerESP32_asukiaaa-1.1.1.tar.gz",
+    "size_bytes": 7275,
+    "sha256": "3cf22f021915f5fe1e7b9bccaa52fba5ae881a88ff87c22b71ac7a1103d7fddf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/asukiaaa/library/XboxSeriesXControllerESP32_asukiaaa/1.1.1/XboxSeriesXControllerESP32_asukiaaa-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/asukiaaa/library/XboxSeriesXControllerESP32_asukiaaa/1.1.1/XboxSeriesXControllerESP32_asukiaaa-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "asukiaaa/library/XboxSeriesXControllerESP32_asukiaaa/1.1.2/XboxSeriesXControllerESP32_asukiaaa-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XboxSeriesXControllerESP32_asukiaaa-1.1.2.tar.gz",
+    "size_bytes": 7278,
+    "sha256": "2ec95f71704086892cc8d2456713b9ecc9e5f6eaace557d2651e9c78e94a4762",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/asukiaaa/library/XboxSeriesXControllerESP32_asukiaaa/1.1.2/XboxSeriesXControllerESP32_asukiaaa-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/asukiaaa/library/XboxSeriesXControllerESP32_asukiaaa/1.1.2/XboxSeriesXControllerESP32_asukiaaa-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "asukiaaa/library/XboxSeriesXControllerESP32_asukiaaa/1.1.3/XboxSeriesXControllerESP32_asukiaaa-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XboxSeriesXControllerESP32_asukiaaa-1.1.3.tar.gz",
+    "size_bytes": 7472,
+    "sha256": "4562e0189edece1e722a87a71756aa99cf75a80538bb67c5faef5c91af022fec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/asukiaaa/library/XboxSeriesXControllerESP32_asukiaaa/1.1.3/XboxSeriesXControllerESP32_asukiaaa-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/asukiaaa/library/XboxSeriesXControllerESP32_asukiaaa/1.1.3/XboxSeriesXControllerESP32_asukiaaa-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "asukiaaa/library/XboxSeriesXHIDReportBuilder_asukiaaa/1.0.1/XboxSeriesXHIDReportBuilder_asukiaaa-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XboxSeriesXHIDReportBuilder_asukiaaa-1.0.1.tar.gz",
+    "size_bytes": 2017,
+    "sha256": "69e02b6b0c7247bcbf213379127f8b62310185d153240433e8100ad4415186de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/asukiaaa/library/XboxSeriesXHIDReportBuilder_asukiaaa/1.0.1/XboxSeriesXHIDReportBuilder_asukiaaa-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/asukiaaa/library/XboxSeriesXHIDReportBuilder_asukiaaa/1.0.1/XboxSeriesXHIDReportBuilder_asukiaaa-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "asukiaaa/library/bits_asukiaaa/1.1.0/bits_asukiaaa-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bits_asukiaaa-1.1.0.tar.gz",
+    "size_bytes": 3858,
+    "sha256": "89845baaeff38a5efe0fc20f37df287845f7e186dd34224798723ca726c12096",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/asukiaaa/library/bits_asukiaaa/1.1.0/bits_asukiaaa-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/asukiaaa/library/bits_asukiaaa/1.1.0/bits_asukiaaa-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "asukiaaa/library/button_asukiaaa/1.0.4/button_asukiaaa-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "button_asukiaaa-1.0.4.tar.gz",
+    "size_bytes": 3274,
+    "sha256": "97b54683507ad9998a3ba521bc658cef4a546bed3fcb58b6f12c9e4f0b37579d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/asukiaaa/library/button_asukiaaa/1.0.4/button_asukiaaa-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/asukiaaa/library/button_asukiaaa/1.0.4/button_asukiaaa-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "asukiaaa/library/crc_asukiaaa/1.0.2/crc_asukiaaa-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "crc_asukiaaa-1.0.2.tar.gz",
+    "size_bytes": 1551,
+    "sha256": "180f76edc8ae0e0b55b32a5eda2a4bbc9633d3ee9aa64cab791133830667aaa4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/asukiaaa/library/crc_asukiaaa/1.0.2/crc_asukiaaa-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/asukiaaa/library/crc_asukiaaa/1.0.2/crc_asukiaaa-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "asukiaaa/library/enum_asukiaaa/1.0.2/enum_asukiaaa-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "enum_asukiaaa-1.0.2.tar.gz",
+    "size_bytes": 1620,
+    "sha256": "b63013ea9b8c3f5332b27447ad9e597045dea07e3b32f120f5976bf41b9cae67",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/asukiaaa/library/enum_asukiaaa/1.0.2/enum_asukiaaa-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/asukiaaa/library/enum_asukiaaa/1.0.2/enum_asukiaaa-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "asukiaaa/library/rs485_asukiaaa/1.2.8/rs485_asukiaaa-1.2.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "rs485_asukiaaa-1.2.8.tar.gz",
+    "size_bytes": 4082,
+    "sha256": "22ed742ca04fedcb3264c95d5cbff1dfa98346267ce214f25cabd709ea21c56b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/asukiaaa/library/rs485_asukiaaa/1.2.8/rs485_asukiaaa-1.2.8.tar.gz",
+     "https://dl.registry.platformio.org/download/asukiaaa/library/rs485_asukiaaa/1.2.8/rs485_asukiaaa-1.2.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "asukiaaa/library/string_asukiaaa/1.0.7/string_asukiaaa-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "string_asukiaaa-1.0.7.tar.gz",
+    "size_bytes": 2632,
+    "sha256": "6e5ec9619864af50dfb16aae4763a925f3d4c930898a8e54fbba9868c65fae25",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/asukiaaa/library/string_asukiaaa/1.0.7/string_asukiaaa-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/asukiaaa/library/string_asukiaaa/1.0.7/string_asukiaaa-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "asukiaaa/library/utils_asukiaaa/1.0.6/utils_asukiaaa-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "utils_asukiaaa-1.0.6.tar.gz",
+    "size_bytes": 4093,
+    "sha256": "3391db26ef17c7024e477195e392195b18a663ebd0e56f32e1102009d71dcd24",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/asukiaaa/library/utils_asukiaaa/1.0.6/utils_asukiaaa-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/asukiaaa/library/utils_asukiaaa/1.0.6/utils_asukiaaa-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "asukiaaa/library/wire_asukiaaa/1.1.13/wire_asukiaaa-1.1.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "wire_asukiaaa-1.1.13.tar.gz",
+    "size_bytes": 4601,
+    "sha256": "f8fecccd9ab9db4bc8328de4b34341afcc1a6408d37ed7d65a12b0003706658e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/asukiaaa/library/wire_asukiaaa/1.1.13/wire_asukiaaa-1.1.13.tar.gz",
+     "https://dl.registry.platformio.org/download/asukiaaa/library/wire_asukiaaa/1.1.13/wire_asukiaaa-1.1.13.tar.gz"
+    ]
+   }
+  }
+ ]
+}

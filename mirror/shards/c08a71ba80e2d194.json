@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/aatiqur",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "aatiqur/library/EZConnect/1.0.1/EZConnect-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EZConnect-1.0.1.tar.gz",
+    "size_bytes": 5539,
+    "sha256": "807aded4e8bff8ce6f171217546f55754c1a7daf8643ed42a671015cf44e8376",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aatiqur/library/EZConnect/1.0.1/EZConnect-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/aatiqur/library/EZConnect/1.0.1/EZConnect-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

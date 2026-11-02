@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ykuroda",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ykuroda/library/AD7490/0.0.0+sha.f059fdd25051/AD7490-0.0.0+sha.f059fdd25051.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AD7490-0.0.0+sha.f059fdd25051.tar.gz",
+    "size_bytes": 1639,
+    "sha256": "0cf0936a7daae1bad55186481a8a921f4dcd4d106e9d87efecedc553b7169d9b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ykuroda/library/AD7490/0.0.0%2Bsha.f059fdd25051/AD7490-0.0.0%2Bsha.f059fdd25051.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ykuroda/library/AD7490/0.0.0%2Bsha.f059fdd25051/AD7490-0.0.0%2Bsha.f059fdd25051.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ykuroda/library/Eigen/0.0.0+sha.13a5d365ba16/Eigen-0.0.0+sha.13a5d365ba16.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Eigen-0.0.0+sha.13a5d365ba16.tar.gz",
+    "size_bytes": 369036,
+    "sha256": "fa0c9d4836c657edb3103e3fe9290402d5cc4b6e3771ba34267a39088b6fda38",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ykuroda/library/Eigen/0.0.0%2Bsha.13a5d365ba16/Eigen-0.0.0%2Bsha.13a5d365ba16.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ykuroda/library/Eigen/0.0.0%2Bsha.13a5d365ba16/Eigen-0.0.0%2Bsha.13a5d365ba16.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ykuroda/library/MCP3208/0.0.0+sha.0876e83ba21b/MCP3208-0.0.0+sha.0876e83ba21b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP3208-0.0.0+sha.0876e83ba21b.tar.gz",
+    "size_bytes": 1033,
+    "sha256": "9d641d95d8f875c9fcba33bfd7cb9b7d4f8a7cd9c6f7727136cba326f250deab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ykuroda/library/MCP3208/0.0.0%2Bsha.0876e83ba21b/MCP3208-0.0.0%2Bsha.0876e83ba21b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ykuroda/library/MCP3208/0.0.0%2Bsha.0876e83ba21b/MCP3208-0.0.0%2Bsha.0876e83ba21b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ykuroda/library/RingBuffer/0.0.0+sha.ea6d02ba96ae/RingBuffer-0.0.0+sha.ea6d02ba96ae.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RingBuffer-0.0.0+sha.ea6d02ba96ae.tar.gz",
+    "size_bytes": 1516,
+    "sha256": "89607f19597684fa0fb54a64184b6153b01b32351ef8dbc85513f4d20ef645e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ykuroda/library/RingBuffer/0.0.0%2Bsha.ea6d02ba96ae/RingBuffer-0.0.0%2Bsha.ea6d02ba96ae.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ykuroda/library/RingBuffer/0.0.0%2Bsha.ea6d02ba96ae/RingBuffer-0.0.0%2Bsha.ea6d02ba96ae.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ykuroda/library/RingBuffer_RTOS/0.0.0+sha.9adf0d5e0522/RingBuffer_RTOS-0.0.0+sha.9adf0d5e0522.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RingBuffer_RTOS-0.0.0+sha.9adf0d5e0522.tar.gz",
+    "size_bytes": 1468,
+    "sha256": "3ad450b19afc6aa24892aba2065d28a59d7fb3b5924f429dba09f2be48749b38",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ykuroda/library/RingBuffer_RTOS/0.0.0%2Bsha.9adf0d5e0522/RingBuffer_RTOS-0.0.0%2Bsha.9adf0d5e0522.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ykuroda/library/RingBuffer_RTOS/0.0.0%2Bsha.9adf0d5e0522/RingBuffer_RTOS-0.0.0%2Bsha.9adf0d5e0522.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ykuroda/library/TB6569/0.0.0+sha.0a18bc568fa4/TB6569-0.0.0+sha.0a18bc568fa4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TB6569-0.0.0+sha.0a18bc568fa4.tar.gz",
+    "size_bytes": 1415,
+    "sha256": "5bc95e04a82e1a077596789934638fcfdb64a5f68ff12845272db9ce054aa532",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ykuroda/library/TB6569/0.0.0%2Bsha.0a18bc568fa4/TB6569-0.0.0%2Bsha.0a18bc568fa4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ykuroda/library/TB6569/0.0.0%2Bsha.0a18bc568fa4/TB6569-0.0.0%2Bsha.0a18bc568fa4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ykuroda/library/bcdutil/0.0.0+sha.dc2c526097d2/bcdutil-0.0.0+sha.dc2c526097d2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bcdutil-0.0.0+sha.dc2c526097d2.tar.gz",
+    "size_bytes": 1167,
+    "sha256": "103d0caf620ae0c54b026cb022fc9641a587daa4ca169701a5668326961c04fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ykuroda/library/bcdutil/0.0.0%2Bsha.dc2c526097d2/bcdutil-0.0.0%2Bsha.dc2c526097d2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ykuroda/library/bcdutil/0.0.0%2Bsha.dc2c526097d2/bcdutil-0.0.0%2Bsha.dc2c526097d2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ykuroda/library/iSerial/0.0.0+sha.20759f992d48/iSerial-0.0.0+sha.20759f992d48.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iSerial-0.0.0+sha.20759f992d48.tar.gz",
+    "size_bytes": 2222,
+    "sha256": "ddecf4188a50585750ae565fdf667d1f67c8e40cb143fa34400db20cbadce4d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ykuroda/library/iSerial/0.0.0%2Bsha.20759f992d48/iSerial-0.0.0%2Bsha.20759f992d48.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ykuroda/library/iSerial/0.0.0%2Bsha.20759f992d48/iSerial-0.0.0%2Bsha.20759f992d48.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jrullan",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jrullan/library/Neotimer/1.1.6/Neotimer-1.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Neotimer-1.1.6.tar.gz",
+    "size_bytes": 4407,
+    "sha256": "9443b2f2aad66ea5d45413d8da9c6c54cff23d3b35ef376d6ec18b876fc86b2c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jrullan/library/Neotimer/1.1.6/Neotimer-1.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/jrullan/library/Neotimer/1.1.6/Neotimer-1.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jrullan/library/StateMachine/1.0.11/StateMachine-1.0.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StateMachine-1.0.11.tar.gz",
+    "size_bytes": 4676,
+    "sha256": "123d563100fa78940d2f1cc561b9328f6dd24cbfb45367e245801ff1ccfa1d41",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jrullan/library/StateMachine/1.0.11/StateMachine-1.0.11.tar.gz",
+     "https://dl.registry.platformio.org/download/jrullan/library/StateMachine/1.0.11/StateMachine-1.0.11.tar.gz"
+    ]
+   }
+  }
+ ]
+}

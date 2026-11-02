@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bakadave",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bakadave/library/GP8302/0.2.5/GP8302-0.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GP8302-0.2.5.tar.gz",
+    "size_bytes": 3174,
+    "sha256": "f048260e1948d1629a97b74d1eb0aa22cfa54b7d2f91d7f67a59ffd614bb6a40",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bakadave/library/GP8302/0.2.5/GP8302-0.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/bakadave/library/GP8302/0.2.5/GP8302-0.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bakadave/library/PCA9554/0.3.2/PCA9554-0.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCA9554-0.3.2.tar.gz",
+    "size_bytes": 3909,
+    "sha256": "0f14212d5686c0d870b3aec97537d3bae3a5b56ba67b9d2b6fd54db1597bb739",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bakadave/library/PCA9554/0.3.2/PCA9554-0.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bakadave/library/PCA9554/0.3.2/PCA9554-0.3.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

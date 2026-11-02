@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tobiasschuerg",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tobiasschuerg/library/ESP8266%20Influxdb/3.13.2/ESP8266Influxdb-3.13.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266Influxdb-3.13.2.tar.gz",
+    "size_bytes": 56806,
+    "sha256": "320bd01e4e70b3e208027c05f6366ca9fc656e2a83da616d543636794bba01ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tobiasschuerg/library/ESP8266%2520Influxdb/3.13.2/ESP8266Influxdb-3.13.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tobiasschuerg/library/ESP8266%20Influxdb/3.13.2/ESP8266Influxdb-3.13.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tobiasschuerg/library/ESP8266%20Influxdb/3.9.0/ESP8266Influxdb-3.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266Influxdb-3.9.0.tar.gz",
+    "size_bytes": 48879,
+    "sha256": "dc094c79f971dfb49bc5722bee3945c9c21267976755a0be39d9cc7c2fff6cd5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tobiasschuerg/library/ESP8266%2520Influxdb/3.9.0/ESP8266Influxdb-3.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tobiasschuerg/library/ESP8266%20Influxdb/3.9.0/ESP8266Influxdb-3.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tobiasschuerg/library/MH-Z%20CO2%20Sensors/1.6.0/MH-ZCO2Sensors-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MH-ZCO2Sensors-1.6.0.tar.gz",
+    "size_bytes": 7548,
+    "sha256": "9cec695ba95eb080d7feaf1041010ac5415a1f1a9caa7cea38e9d63698827667",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tobiasschuerg/library/MH-Z%2520CO2%2520Sensors/1.6.0/MH-ZCO2Sensors-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tobiasschuerg/library/MH-Z%20CO2%20Sensors/1.6.0/MH-ZCO2Sensors-1.6.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

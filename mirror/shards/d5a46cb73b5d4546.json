@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jpconstantineau",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jpconstantineau/library/bluemicro_engine/0.0.2/bluemicro_engine-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bluemicro_engine-0.0.2.tar.gz",
+    "size_bytes": 4932,
+    "sha256": "0969ebdbcf55c097856983580756c4c5a04af10e2a95523b24fdc56a95b585d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jpconstantineau/library/bluemicro_engine/0.0.2/bluemicro_engine-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jpconstantineau/library/bluemicro_engine/0.0.2/bluemicro_engine-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jpconstantineau/library/bluemicro_exmpl/0.0.3/bluemicro_exmpl-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bluemicro_exmpl-0.0.3.tar.gz",
+    "size_bytes": 7493,
+    "sha256": "83bc0bc7a77dba9b4f0e8ccf3b244237b28fc5acdeb2494e1fb6a58b5da07973",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jpconstantineau/library/bluemicro_exmpl/0.0.3/bluemicro_exmpl-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/jpconstantineau/library/bluemicro_exmpl/0.0.3/bluemicro_exmpl-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jpconstantineau/library/bluemicro_hid/0.0.12/bluemicro_hid-0.0.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bluemicro_hid-0.0.12.tar.gz",
+    "size_bytes": 23117,
+    "sha256": "1d6190719785acd3b999cf4cc0da00101b311d814b5097ed85a9c44afd72d9ff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jpconstantineau/library/bluemicro_hid/0.0.12/bluemicro_hid-0.0.12.tar.gz",
+     "https://dl.registry.platformio.org/download/jpconstantineau/library/bluemicro_hid/0.0.12/bluemicro_hid-0.0.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jpconstantineau/library/bluemicro_nrf52/0.0.5/bluemicro_nrf52-0.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bluemicro_nrf52-0.0.5.tar.gz",
+    "size_bytes": 5104,
+    "sha256": "506ad6686c88c971d0f325a4470a795fe2386647c0b7e8d740b9dcf1168c4d56",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jpconstantineau/library/bluemicro_nrf52/0.0.5/bluemicro_nrf52-0.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/jpconstantineau/library/bluemicro_nrf52/0.0.5/bluemicro_nrf52-0.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jpconstantineau/library/bluemicro_rp2040/0.0.3/bluemicro_rp2040-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bluemicro_rp2040-0.0.3.tar.gz",
+    "size_bytes": 2953,
+    "sha256": "eab28fb785ffd3aa74f253e253ae42e8fed212070f6488d17e6324c472712b73",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jpconstantineau/library/bluemicro_rp2040/0.0.3/bluemicro_rp2040-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/jpconstantineau/library/bluemicro_rp2040/0.0.3/bluemicro_rp2040-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jpconstantineau/library/bluemicro_samd/0.0.1/bluemicro_samd-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bluemicro_samd-0.0.1.tar.gz",
+    "size_bytes": 2813,
+    "sha256": "5c02148388c81f1b5dd9e46e5c733c2eafbd389668eb64355d45e7c5cde4d714",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jpconstantineau/library/bluemicro_samd/0.0.1/bluemicro_samd-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jpconstantineau/library/bluemicro_samd/0.0.1/bluemicro_samd-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

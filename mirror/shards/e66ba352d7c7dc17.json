@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bromleysat",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bromleysat/library/Kasia/0.1.1/Kasia-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Kasia-0.1.1.tar.gz",
+    "size_bytes": 58111,
+    "sha256": "0f6780ade7022c628378b96b6d080a2b6def95ff6f5431360650573ac0cbdd83",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bromleysat/library/Kasia/0.1.1/Kasia-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bromleysat/library/Kasia/0.1.1/Kasia-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

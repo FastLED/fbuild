@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-feilang",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-feilang/library/OLED/0.0.0+sha.5a9708927d23/OLED-0.0.0+sha.5a9708927d23.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OLED-0.0.0+sha.5a9708927d23.tar.gz",
+    "size_bytes": 10452,
+    "sha256": "20b53416f1da971097c945c4b86d1e129523ba5dba31e8a00638a2ea0ed6c316",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-feilang/library/OLED/0.0.0%2Bsha.5a9708927d23/OLED-0.0.0%2Bsha.5a9708927d23.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-feilang/library/OLED/0.0.0%2Bsha.5a9708927d23/OLED-0.0.0%2Bsha.5a9708927d23.tar.gz"
+    ]
+   }
+  }
+ ]
+}

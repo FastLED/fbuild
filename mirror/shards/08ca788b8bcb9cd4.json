@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/aviancompany",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "aviancompany/library/Avian%20LiquidCrystal/1.0.0/AvianLiquidCrystal-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AvianLiquidCrystal-1.0.0.tar.gz",
+    "size_bytes": 16853,
+    "sha256": "978d2678ebb787d0ccf6979345c4f5d20156e3e02592db03c78d87b537fd6c4f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aviancompany/library/Avian%2520LiquidCrystal/1.0.0/AvianLiquidCrystal-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aviancompany/library/Avian%20LiquidCrystal/1.0.0/AvianLiquidCrystal-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

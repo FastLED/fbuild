@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/forkineye",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "forkineye/library/E131/1.0.0/E131-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "E131-1.0.0.tar.gz",
+    "size_bytes": 6761,
+    "sha256": "0684163b2584886ab2b071008903e71eb49c59d6bc1274a79311f609194ae0ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/forkineye/library/E131/1.0.0/E131-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/forkineye/library/E131/1.0.0/E131-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "forkineye/library/ESPAsyncE131/1.0.4/ESPAsyncE131-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncE131-1.0.4.tar.gz",
+    "size_bytes": 8457,
+    "sha256": "98d1b1cfa2b72d3b94b968582e76ca21c166272b347ab475909e85c17393790b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/forkineye/library/ESPAsyncE131/1.0.4/ESPAsyncE131-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/forkineye/library/ESPAsyncE131/1.0.4/ESPAsyncE131-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "forkineye/library/ESPAsyncE131/1.0.5/ESPAsyncE131-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncE131-1.0.5.tar.gz",
+    "size_bytes": 9082,
+    "sha256": "f2711882f78bfe6c80cc55a2fc182c35df6c7cd14eab9bb0e79b55d9095d5a1c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/forkineye/library/ESPAsyncE131/1.0.5/ESPAsyncE131-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/forkineye/library/ESPAsyncE131/1.0.5/ESPAsyncE131-1.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/wpiroboticsengineering",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "wpiroboticsengineering/library/DFW/0.5.3/DFW-0.5.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFW-0.5.3.tar.gz",
+    "size_bytes": 20657,
+    "sha256": "10b954feb42e3e8dc556e7322f36c7b77d93da191cb2bbf6e6544c523521663b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wpiroboticsengineering/library/DFW/0.5.3/DFW-0.5.3.tar.gz",
+     "https://dl.registry.platformio.org/download/wpiroboticsengineering/library/DFW/0.5.3/DFW-0.5.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wpiroboticsengineering/library/RBE1001Lib/0.13.2/RBE1001Lib-0.13.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RBE1001Lib-0.13.2.tar.gz",
+    "size_bytes": 129603,
+    "sha256": "2d117ba33016689aae586e8419b0b002aa15f9363e8e5f24433a06b61cec0759",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wpiroboticsengineering/library/RBE1001Lib/0.13.2/RBE1001Lib-0.13.2.tar.gz",
+     "https://dl.registry.platformio.org/download/wpiroboticsengineering/library/RBE1001Lib/0.13.2/RBE1001Lib-0.13.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wpiroboticsengineering/library/ReactorProtocol/0.0.2/ReactorProtocol-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ReactorProtocol-0.0.2.tar.gz",
+    "size_bytes": 19756,
+    "sha256": "bab9a41ce3ec385a53586182224c156a5a9d8cd3a56e8762ace72d6ebe7d91b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wpiroboticsengineering/library/ReactorProtocol/0.0.2/ReactorProtocol-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/wpiroboticsengineering/library/ReactorProtocol/0.0.2/ReactorProtocol-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wpiroboticsengineering/library/wpi-32u4-library/3.5.3/wpi-32u4-library-3.5.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "wpi-32u4-library-3.5.3.tar.gz",
+    "size_bytes": 31665,
+    "sha256": "6a60efbc5c75775465aeb8b305f4c930ca557c076ef116665815871b71969507",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wpiroboticsengineering/library/wpi-32u4-library/3.5.3/wpi-32u4-library-3.5.3.tar.gz",
+     "https://dl.registry.platformio.org/download/wpiroboticsengineering/library/wpi-32u4-library/3.5.3/wpi-32u4-library-3.5.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

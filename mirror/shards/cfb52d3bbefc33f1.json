@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/thijxx",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "thijxx/library/PowerNap/0.1/PowerNap-0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PowerNap-0.1.tar.gz",
+    "size_bytes": 7063,
+    "sha256": "2925ef72a9c49ec43d7bea083a82447591a68731b74451e1544d16aff7b1d542",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thijxx/library/PowerNap/0.1/PowerNap-0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/thijxx/library/PowerNap/0.1/PowerNap-0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thijxx/library/TinyHead/0.0.0-alpha+sha.120109f428/TinyHead-0.0.0-alphasha.120109f428.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyHead-0.0.0-alphasha.120109f428.tar.gz",
+    "size_bytes": 45355,
+    "sha256": "d5d30f0e7d81f096eaee71457637085d30970f3d5c253d19cffe6b46f20a0b24",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thijxx/library/TinyHead/0.0.0-alpha%2Bsha.120109f428/TinyHead-0.0.0-alphasha.120109f428.tar.gz",
+     "https://dl.registry.platformio.org/download/thijxx/library/TinyHead/0.0.0-alpha%2Bsha.120109f428/TinyHead-0.0.0-alphasha.120109f428.tar.gz"
+    ]
+   }
+  }
+ ]
+}

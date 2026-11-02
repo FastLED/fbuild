@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sebmillet",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sebmillet/library/DelayExec/0.2.0/DelayExec-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DelayExec-0.2.0.tar.gz",
+    "size_bytes": 10866,
+    "sha256": "af04cc87a65bda8038139d67eaafa6bf607a736fbd9e2cf92dfdabdb65aa7096",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sebmillet/library/DelayExec/0.2.0/DelayExec-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sebmillet/library/DelayExec/0.2.0/DelayExec-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sebmillet/library/RF433any/0.7.7/RF433any-0.7.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RF433any-0.7.7.tar.gz",
+    "size_bytes": 51807,
+    "sha256": "0aaac7a58be3f458a976c01c0f2303d4277f68977fe6c5a70451e26b83758eeb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sebmillet/library/RF433any/0.7.7/RF433any-0.7.7.tar.gz",
+     "https://dl.registry.platformio.org/download/sebmillet/library/RF433any/0.7.7/RF433any-0.7.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sebmillet/library/RF433recv/0.3.4/RF433recv-0.3.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RF433recv-0.3.4.tar.gz",
+    "size_bytes": 75370,
+    "sha256": "899fb6dbb1a79287f5489f43e129673c6f64e8f3e0a366fa0276bc9445943b91",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sebmillet/library/RF433recv/0.3.4/RF433recv-0.3.4.tar.gz",
+     "https://dl.registry.platformio.org/download/sebmillet/library/RF433recv/0.3.4/RF433recv-0.3.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sebmillet/library/RF433send/0.5.5/RF433send-0.5.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RF433send-0.5.5.tar.gz",
+    "size_bytes": 30212,
+    "sha256": "9770c7b8e60f6774764940ed28de6a68174ea5edbc3d83b4ad191378912a3b0d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sebmillet/library/RF433send/0.5.5/RF433send-0.5.5.tar.gz",
+     "https://dl.registry.platformio.org/download/sebmillet/library/RF433send/0.5.5/RF433send-0.5.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

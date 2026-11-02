@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/olehs",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "olehs/library/PZEM004T/1.1.5/PZEM004T-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PZEM004T-1.1.5.tar.gz",
+    "size_bytes": 6095,
+    "sha256": "c2586c3046012df536202d354bc3b543b3597efa53b4101fd6513c134b6fa42f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/olehs/library/PZEM004T/1.1.5/PZEM004T-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/olehs/library/PZEM004T/1.1.5/PZEM004T-1.1.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

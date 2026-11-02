@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-lucasec",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-lucasec/library/XBee/0.0.0+sha.350d308e7b77/XBee-0.0.0+sha.350d308e7b77.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XBee-0.0.0+sha.350d308e7b77.tar.gz",
+    "size_bytes": 20812,
+    "sha256": "3686c081a4ca7b4be490cd9ed36b378ef2e81701be874b9368f7617c77ee88e2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-lucasec/library/XBee/0.0.0%2Bsha.350d308e7b77/XBee-0.0.0%2Bsha.350d308e7b77.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-lucasec/library/XBee/0.0.0%2Bsha.350d308e7b77/XBee-0.0.0%2Bsha.350d308e7b77.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-lucasec/library/pn532/0.0.0+sha.d2a284d0a714/pn532-0.0.0+sha.d2a284d0a714.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pn532-0.0.0+sha.d2a284d0a714.tar.gz",
+    "size_bytes": 12556,
+    "sha256": "6dd3567ba822acd5e32fef20ceafee87771d8549e6212932efddbb8f98408170",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-lucasec/library/pn532/0.0.0%2Bsha.d2a284d0a714/pn532-0.0.0%2Bsha.d2a284d0a714.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-lucasec/library/pn532/0.0.0%2Bsha.d2a284d0a714/pn532-0.0.0%2Bsha.d2a284d0a714.tar.gz"
+    ]
+   }
+  }
+ ]
+}

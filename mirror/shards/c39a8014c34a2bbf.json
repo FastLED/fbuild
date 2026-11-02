@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hydrosense",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hydrosense/library/FeatherM0_Davis_ISS_rx/1.0.0/FeatherM0_Davis_ISS_rx-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FeatherM0_Davis_ISS_rx-1.0.0.tar.gz",
+    "size_bytes": 27520,
+    "sha256": "3cfbe402d7a57f75add16ac0ec093a5daf264a864bb5fed832ebeff9721c4256",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hydrosense/library/FeatherM0_Davis_ISS_rx/1.0.0/FeatherM0_Davis_ISS_rx-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hydrosense/library/FeatherM0_Davis_ISS_rx/1.0.0/FeatherM0_Davis_ISS_rx-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nananauno",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nananauno/library/M5EasyUI/0.0.1/M5EasyUI-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5EasyUI-0.0.1.tar.gz",
+    "size_bytes": 12017,
+    "sha256": "3606d1312b7c9eaeaffb23d04bedd92f147495a7d3f354f7e13313e5e002b029",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nananauno/library/M5EasyUI/0.0.1/M5EasyUI-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nananauno/library/M5EasyUI/0.0.1/M5EasyUI-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nananauno/library/M5GuruguruAvatar/0.0.1/M5GuruguruAvatar-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5GuruguruAvatar-0.0.1.tar.gz",
+    "size_bytes": 4522,
+    "sha256": "d1c9dca0ff11fdad93dc8d02ea29fc33fc15a5561d58cc626e3d042eb332b2a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nananauno/library/M5GuruguruAvatar/0.0.1/M5GuruguruAvatar-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nananauno/library/M5GuruguruAvatar/0.0.1/M5GuruguruAvatar-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nananauno/library/M5GuruguruAvatar/0.0.4/M5GuruguruAvatar-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5GuruguruAvatar-0.0.4.tar.gz",
+    "size_bytes": 5647,
+    "sha256": "53d0efc53310b3ed59caaef7bb05b5ca522553ed480527cfe4bb43cad4b88d8b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nananauno/library/M5GuruguruAvatar/0.0.4/M5GuruguruAvatar-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/nananauno/library/M5GuruguruAvatar/0.0.4/M5GuruguruAvatar-0.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nananauno/library/M5GuruguruAvatar/0.0.5/M5GuruguruAvatar-0.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5GuruguruAvatar-0.0.5.tar.gz",
+    "size_bytes": 6809,
+    "sha256": "2f619f4d44269919b2306174ce5be1d289330b1584961cadb9d12b5ebac1d7f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nananauno/library/M5GuruguruAvatar/0.0.5/M5GuruguruAvatar-0.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/nananauno/library/M5GuruguruAvatar/0.0.5/M5GuruguruAvatar-0.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nananauno/library/M5GuruguruAvatar/0.0.6/M5GuruguruAvatar-0.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5GuruguruAvatar-0.0.6.tar.gz",
+    "size_bytes": 7150,
+    "sha256": "ea896ceeba27fa39e9394ee9e45cb024159c5cd4a7be744d172786af4a8c81c4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nananauno/library/M5GuruguruAvatar/0.0.6/M5GuruguruAvatar-0.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/nananauno/library/M5GuruguruAvatar/0.0.6/M5GuruguruAvatar-0.0.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

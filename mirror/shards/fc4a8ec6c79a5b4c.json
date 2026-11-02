@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mattairtech",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mattairtech/library/EEPROM_CAT25/1.0.2/EEPROM_CAT25-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EEPROM_CAT25-1.0.2.tar.gz",
+    "size_bytes": 7358,
+    "sha256": "4bc8b3f48ad6eebccbad7e7728732c58659e271c15d26c1ef71bbe65d3d50d00",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mattairtech/library/EEPROM_CAT25/1.0.2/EEPROM_CAT25-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mattairtech/library/EEPROM_CAT25/1.0.2/EEPROM_CAT25-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mattairtech/library/SRAM_23LC/1.1.2/SRAM_23LC-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SRAM_23LC-1.1.2.tar.gz",
+    "size_bytes": 5084,
+    "sha256": "6066cd05148a8f7568c005ccde4d15bb260def1fcd5fc161067bc36727f92a35",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mattairtech/library/SRAM_23LC/1.1.2/SRAM_23LC-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mattairtech/library/SRAM_23LC/1.1.2/SRAM_23LC-1.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

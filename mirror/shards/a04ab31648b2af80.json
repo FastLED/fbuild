@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rhapsodyv",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rhapsodyv/library/ChanFatFS/0.14.0/ChanFatFS-0.14.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ChanFatFS-0.14.0.tar.gz",
+    "size_bytes": 702871,
+    "sha256": "7fe23cacfee0fb8348d63dcbeded8f6a01c523ede308e3f7336c400ac801ddb0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rhapsodyv/library/ChanFatFS/0.14.0/ChanFatFS-0.14.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rhapsodyv/library/ChanFatFS/0.14.0/ChanFatFS-0.14.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

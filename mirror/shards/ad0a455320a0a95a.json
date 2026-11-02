@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fabriciomendes",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fabriciomendes/library/esp32-graphql-client/0.1.3/esp32-graphql-client-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32-graphql-client-0.1.3.tar.gz",
+    "size_bytes": 10994,
+    "sha256": "ba0cf4fe5dd374c2bd35b37f9236216658ad9a54485ade3b0bf1b4d416fd3c77",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fabriciomendes/library/esp32-graphql-client/0.1.3/esp32-graphql-client-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/fabriciomendes/library/esp32-graphql-client/0.1.3/esp32-graphql-client-0.1.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

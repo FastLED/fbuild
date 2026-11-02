@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-sdanziger",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-sdanziger/library/m3pi-pov/0.0.0+sha.ba75502c4fdd/m3pi-pov-0.0.0+sha.ba75502c4fdd.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "m3pi-pov-0.0.0+sha.ba75502c4fdd.tar.gz",
+    "size_bytes": 2692,
+    "sha256": "2e4b037ad1a91ff43079b28ad5d9b2a2dc9784ff58820a4507d99aafdaf6ea08",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sdanziger/library/m3pi-pov/0.0.0%2Bsha.ba75502c4fdd/m3pi-pov-0.0.0%2Bsha.ba75502c4fdd.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sdanziger/library/m3pi-pov/0.0.0%2Bsha.ba75502c4fdd/m3pi-pov-0.0.0%2Bsha.ba75502c4fdd.tar.gz"
+    ]
+   }
+  }
+ ]
+}

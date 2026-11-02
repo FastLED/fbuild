@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jobnoorman",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jobnoorman/library/PmodCls/0.1.0/PmodCls-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PmodCls-0.1.0.tar.gz",
+    "size_bytes": 4732,
+    "sha256": "42568e74b597445ee788703cb9debe1bbf8a3f2b811a5a3a03a9f794177c360b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jobnoorman/library/PmodCls/0.1.0/PmodCls-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jobnoorman/library/PmodCls/0.1.0/PmodCls-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

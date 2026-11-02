@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/shawndooley",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "shawndooley/library/tinyfsm/0.3.2/tinyfsm-0.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tinyfsm-0.3.2.tar.gz",
+    "size_bytes": 21986,
+    "sha256": "ec73b079768dc6fcc61a405bce65ee0128263910a612071680f138a9137a8a70",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shawndooley/library/tinyfsm/0.3.2/tinyfsm-0.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/shawndooley/library/tinyfsm/0.3.2/tinyfsm-0.3.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

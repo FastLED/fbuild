@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/uiop3385",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "uiop3385/library/CommandHandler/1.0.0/CommandHandler-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CommandHandler-1.0.0.tar.gz",
+    "size_bytes": 17102,
+    "sha256": "b7df5f2271bcaf87d31a69ca675e7fdeae6685516f37003d23421697df0c6301",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/uiop3385/library/CommandHandler/1.0.0/CommandHandler-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/uiop3385/library/CommandHandler/1.0.0/CommandHandler-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

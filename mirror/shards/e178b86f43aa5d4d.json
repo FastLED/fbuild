@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rockerm4nhun",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rockerm4nhun/library/HX1230Menu/0.1.0/HX1230Menu-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HX1230Menu-0.1.0.tar.gz",
+    "size_bytes": 6165,
+    "sha256": "47a4012634b09acd6d86ed7daa4f3f9fece1ff8c3f76ef6c4fca56bfd22d736d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rockerm4nhun/library/HX1230Menu/0.1.0/HX1230Menu-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rockerm4nhun/library/HX1230Menu/0.1.0/HX1230Menu-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rockerm4nhun/library/STM32TimerArray/0.4.4/STM32TimerArray-0.4.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32TimerArray-0.4.4.tar.gz",
+    "size_bytes": 15772,
+    "sha256": "8264e45d8514b944cd539cc7cda483ea85a260ab8df928aa82ed4c1780b24979",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rockerm4nhun/library/STM32TimerArray/0.4.4/STM32TimerArray-0.4.4.tar.gz",
+     "https://dl.registry.platformio.org/download/rockerm4nhun/library/STM32TimerArray/0.4.4/STM32TimerArray-0.4.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

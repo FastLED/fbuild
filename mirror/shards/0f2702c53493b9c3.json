@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/4nvesh",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "4nvesh/library/EasyESPConnect/1.1.1/EasyESPConnect-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyESPConnect-1.1.1.tar.gz",
+    "size_bytes": 16014,
+    "sha256": "6bb77fea8eb732210e876a93409e72824f09cf68dad035f0a72f5ce348a63d54",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/4nvesh/library/EasyESPConnect/1.1.1/EasyESPConnect-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/4nvesh/library/EasyESPConnect/1.1.1/EasyESPConnect-1.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

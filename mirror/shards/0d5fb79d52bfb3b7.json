@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-paulbartell",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-paulbartell/library/MPU6050-DMP/0.0.0+sha.95449a48c5c0/MPU6050-DMP-0.0.0+sha.95449a48c5c0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPU6050-DMP-0.0.0+sha.95449a48c5c0.tar.gz",
+    "size_bytes": 43789,
+    "sha256": "0cbfe29327a47dcf971025bcc095bf9ca7f78d19f48b44028b8bae9214270a4a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-paulbartell/library/MPU6050-DMP/0.0.0%2Bsha.95449a48c5c0/MPU6050-DMP-0.0.0%2Bsha.95449a48c5c0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-paulbartell/library/MPU6050-DMP/0.0.0%2Bsha.95449a48c5c0/MPU6050-DMP-0.0.0%2Bsha.95449a48c5c0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

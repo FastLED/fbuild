@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/eduautomatiza",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "eduautomatiza/library/ValueList/1.0.1/ValueList-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ValueList-1.0.1.tar.gz",
+    "size_bytes": 14186,
+    "sha256": "1562aef6d369c2d0119e9a8fa05d02f330ae3629f2d16093926e0b7d243a45ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eduautomatiza/library/ValueList/1.0.1/ValueList-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/eduautomatiza/library/ValueList/1.0.1/ValueList-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

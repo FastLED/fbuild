@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/marcin-filipiak",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "marcin-filipiak/library/DeviceConfigJSON/0.3.0/DeviceConfigJSON-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DeviceConfigJSON-0.3.0.tar.gz",
+    "size_bytes": 15847,
+    "sha256": "7ac49e6a3a75df04ca951cf69e59cfbf9156258b2353c0a3f521052907b480d7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marcin-filipiak/library/DeviceConfigJSON/0.3.0/DeviceConfigJSON-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/marcin-filipiak/library/DeviceConfigJSON/0.3.0/DeviceConfigJSON-0.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bilhelm96",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bilhelm96/library/FlowMeter/1.2.0/FlowMeter-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FlowMeter-1.2.0.tar.gz",
+    "size_bytes": 5910,
+    "sha256": "19141864563c396c47c7d0ee3ec2e139885f963d91314a2150313046107943db",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bilhelm96/library/FlowMeter/1.2.0/FlowMeter-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bilhelm96/library/FlowMeter/1.2.0/FlowMeter-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bilhelm96/library/OWMOneCall/1.2.0/OWMOneCall-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OWMOneCall-1.2.0.tar.gz",
+    "size_bytes": 8706,
+    "sha256": "d92f5ac2ba1ac90eb7562243a9ca150a346dcf3dda72646f881c928224269da9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bilhelm96/library/OWMOneCall/1.2.0/OWMOneCall-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bilhelm96/library/OWMOneCall/1.2.0/OWMOneCall-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

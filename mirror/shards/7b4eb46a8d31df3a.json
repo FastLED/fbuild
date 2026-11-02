@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/integreight",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "integreight/library/OneSheeld/1.14.0/OneSheeld-1.14.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OneSheeld-1.14.0.tar.gz",
+    "size_bytes": 95389,
+    "sha256": "759c0090e9f450a63b5bfc846069cbd49c195fe880c527c79daf1c32d4349808",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/integreight/library/OneSheeld/1.14.0/OneSheeld-1.14.0.tar.gz",
+     "https://dl.registry.platformio.org/download/integreight/library/OneSheeld/1.14.0/OneSheeld-1.14.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

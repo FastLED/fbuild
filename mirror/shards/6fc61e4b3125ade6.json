@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/interested-in-spresense",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "interested-in-spresense/library/E220-900T22S%28JP%29%20LoRa%20library/1.0.0/E220-900T22SJPLoRalibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "E220-900T22SJPLoRalibrary-1.0.0.tar.gz",
+    "size_bytes": 7153,
+    "sha256": "68289f9e8efe1e4230bd6a78c062657bf0c245a6c7f86057c2e7703e17a160a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/interested-in-spresense/library/E220-900T22S%2528JP%2529%2520LoRa%2520library/1.0.0/E220-900T22SJPLoRalibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/interested-in-spresense/library/E220-900T22S%28JP%29%20LoRa%20library/1.0.0/E220-900T22SJPLoRalibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "interested-in-spresense/library/MMS50MV%28ToF%20sensor%29%20Driver/1.0.0/MMS50MVToFsensorDriver-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MMS50MVToFsensorDriver-1.0.0.tar.gz",
+    "size_bytes": 14008,
+    "sha256": "6e94825cc51170c2fa108d4151e4672fcf4be5aece91ff41d7545010e2fca1d2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/interested-in-spresense/library/MMS50MV%2528ToF%2520sensor%2529%2520Driver/1.0.0/MMS50MVToFsensorDriver-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/interested-in-spresense/library/MMS50MV%28ToF%20sensor%29%20Driver/1.0.0/MMS50MVToFsensorDriver-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

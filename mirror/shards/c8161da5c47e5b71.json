@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-screamer",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-screamer/library/GPRSInterface/0.0.0+sha.5afc5b4e2df8/GPRSInterface-0.0.0+sha.5afc5b4e2df8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GPRSInterface-0.0.0+sha.5afc5b4e2df8.tar.gz",
+    "size_bytes": 7037,
+    "sha256": "3613e33b9a6779306590fc13362e96444417e2b4fa210d9421b1f18b199c494c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-screamer/library/GPRSInterface/0.0.0%2Bsha.5afc5b4e2df8/GPRSInterface-0.0.0%2Bsha.5afc5b4e2df8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-screamer/library/GPRSInterface/0.0.0%2Bsha.5afc5b4e2df8/GPRSInterface-0.0.0%2Bsha.5afc5b4e2df8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-screamer/library/HTTPServer/0.0.0+sha.284f2df30cf9/HTTPServer-0.0.0+sha.284f2df30cf9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HTTPServer-0.0.0+sha.284f2df30cf9.tar.gz",
+    "size_bytes": 243105,
+    "sha256": "a99ac9084e5060b0942ab8f1f222689ddef0fe65e2a0030598d784cbd94a946a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-screamer/library/HTTPServer/0.0.0%2Bsha.284f2df30cf9/HTTPServer-0.0.0%2Bsha.284f2df30cf9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-screamer/library/HTTPServer/0.0.0%2Bsha.284f2df30cf9/HTTPServer-0.0.0%2Bsha.284f2df30cf9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-screamer/library/SeeedShieldBot/0.0.0+sha.9fd1722259a1/SeeedShieldBot-0.0.0+sha.9fd1722259a1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SeeedShieldBot-0.0.0+sha.9fd1722259a1.tar.gz",
+    "size_bytes": 2579,
+    "sha256": "406700a42e307ca31fe7db63c03c092d51c4bfd66d920b8d7bd61e895ce3c08c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-screamer/library/SeeedShieldBot/0.0.0%2Bsha.9fd1722259a1/SeeedShieldBot-0.0.0%2Bsha.9fd1722259a1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-screamer/library/SeeedShieldBot/0.0.0%2Bsha.9fd1722259a1/SeeedShieldBot-0.0.0%2Bsha.9fd1722259a1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-screamer/library/UDPLogger/0.0.0+sha.acc2aad1d2d5/UDPLogger-0.0.0+sha.acc2aad1d2d5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UDPLogger-0.0.0+sha.acc2aad1d2d5.tar.gz",
+    "size_bytes": 2183,
+    "sha256": "cea8a74854f0d9f490561ebfd1486e38b259fe57b20521b8ee3057ff9fccdadc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-screamer/library/UDPLogger/0.0.0%2Bsha.acc2aad1d2d5/UDPLogger-0.0.0%2Bsha.acc2aad1d2d5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-screamer/library/UDPLogger/0.0.0%2Bsha.acc2aad1d2d5/UDPLogger-0.0.0%2Bsha.acc2aad1d2d5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-screamer/library/VodafoneUSBModem/0.0.0+sha.522210d2aaf9/VodafoneUSBModem-0.0.0+sha.522210d2aaf9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VodafoneUSBModem-0.0.0+sha.522210d2aaf9.tar.gz",
+    "size_bytes": 29589,
+    "sha256": "401a14442f61144afb3b6db93ceaeb7bbb40f18205469de95e95585ad930d4fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-screamer/library/VodafoneUSBModem/0.0.0%2Bsha.522210d2aaf9/VodafoneUSBModem-0.0.0%2Bsha.522210d2aaf9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-screamer/library/VodafoneUSBModem/0.0.0%2Bsha.522210d2aaf9/VodafoneUSBModem-0.0.0%2Bsha.522210d2aaf9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

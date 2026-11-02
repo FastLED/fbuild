@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/idaesas",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "idaesas/library/TecnovaIoT/1.1.1/TecnovaIoT-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TecnovaIoT-1.1.1.tar.gz",
+    "size_bytes": 24483,
+    "sha256": "c8e73ab59e0953fb0c1a978d390c1a7568754cc0844235add3eb1d48eb937dee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/idaesas/library/TecnovaIoT/1.1.1/TecnovaIoT-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/idaesas/library/TecnovaIoT/1.1.1/TecnovaIoT-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "idaesas/library/TecnovaIoT/1.2.0/TecnovaIoT-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TecnovaIoT-1.2.0.tar.gz",
+    "size_bytes": 34977,
+    "sha256": "6de4d3d205fa6391dc3e4b3f1814361bfed4410e3aec086cb25676a9bb39f108",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/idaesas/library/TecnovaIoT/1.2.0/TecnovaIoT-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/idaesas/library/TecnovaIoT/1.2.0/TecnovaIoT-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "idaesas/library/TecnovaIoT/1.2.2/TecnovaIoT-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TecnovaIoT-1.2.2.tar.gz",
+    "size_bytes": 35895,
+    "sha256": "65938142c9ae16808a0f0ee1a70d4142edff2b3f878f31c19baaa34dc7075450",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/idaesas/library/TecnovaIoT/1.2.2/TecnovaIoT-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/idaesas/library/TecnovaIoT/1.2.2/TecnovaIoT-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "idaesas/library/TecnovaIoT/1.3.0/TecnovaIoT-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TecnovaIoT-1.3.0.tar.gz",
+    "size_bytes": 37324,
+    "sha256": "63cb297d03b18187978fc0c64622aa07e06f73269da24a31605e39359b78061a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/idaesas/library/TecnovaIoT/1.3.0/TecnovaIoT-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/idaesas/library/TecnovaIoT/1.3.0/TecnovaIoT-1.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

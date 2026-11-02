@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-akichika",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-akichika/library/AX12/0.0.0+sha.db8f063d50f0/AX12-0.0.0+sha.db8f063d50f0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AX12-0.0.0+sha.db8f063d50f0.tar.gz",
+    "size_bytes": 5126,
+    "sha256": "a3d7fd5b18b141f234f4a368895b832fe2d29a4270770aad20b96cfdde4f3bbd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-akichika/library/AX12/0.0.0%2Bsha.db8f063d50f0/AX12-0.0.0%2Bsha.db8f063d50f0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-akichika/library/AX12/0.0.0%2Bsha.db8f063d50f0/AX12-0.0.0%2Bsha.db8f063d50f0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

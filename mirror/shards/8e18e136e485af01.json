@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-lktromp",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-lktromp/library/charLCD/0.0.0+sha.18f6402fd025/charLCD-0.0.0+sha.18f6402fd025.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "charLCD-0.0.0+sha.18f6402fd025.tar.gz",
+    "size_bytes": 3223,
+    "sha256": "a770f35eb6000e96c3130c2ec38be1b87d3ced249173d02861d4a95264ac0bf9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-lktromp/library/charLCD/0.0.0%2Bsha.18f6402fd025/charLCD-0.0.0%2Bsha.18f6402fd025.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-lktromp/library/charLCD/0.0.0%2Bsha.18f6402fd025/charLCD-0.0.0%2Bsha.18f6402fd025.tar.gz"
+    ]
+   }
+  }
+ ]
+}

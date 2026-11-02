@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ee192-team-4",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ee192-team-4/library/telemetry/0.0.0+sha.aca5a32d2759/telemetry-0.0.0+sha.aca5a32d2759.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "telemetry-0.0.0+sha.aca5a32d2759.tar.gz",
+    "size_bytes": 8526,
+    "sha256": "77fcc5bade1b4c80321ea94e9bb4097bc54166f7b364663b4ecdf0f783fb028d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ee192-team-4/library/telemetry/0.0.0%2Bsha.aca5a32d2759/telemetry-0.0.0%2Bsha.aca5a32d2759.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ee192-team-4/library/telemetry/0.0.0%2Bsha.aca5a32d2759/telemetry-0.0.0%2Bsha.aca5a32d2759.tar.gz"
+    ]
+   }
+  }
+ ]
+}

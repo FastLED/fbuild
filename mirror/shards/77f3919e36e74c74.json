@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-sweilz",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-sweilz/library/LCDTaonoi/0.0.0+sha.a8cb70204513/LCDTaonoi-0.0.0+sha.a8cb70204513.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCDTaonoi-0.0.0+sha.a8cb70204513.tar.gz",
+    "size_bytes": 1516,
+    "sha256": "4dee1e590a0314859aff2c56887916b87764354a37000e4a2da709b5e62e0a09",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sweilz/library/LCDTaonoi/0.0.0%2Bsha.a8cb70204513/LCDTaonoi-0.0.0%2Bsha.a8cb70204513.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sweilz/library/LCDTaonoi/0.0.0%2Bsha.a8cb70204513/LCDTaonoi-0.0.0%2Bsha.a8cb70204513.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sweilz/library/libz_dynamixel/0.0.0+sha.e4ba03a21caa/libz_dynamixel-0.0.0+sha.e4ba03a21caa.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libz_dynamixel-0.0.0+sha.e4ba03a21caa.tar.gz",
+    "size_bytes": 3441,
+    "sha256": "f837f0fac8280148a16e672277100388e522869add96826c3cd328c3bbcbcbc9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sweilz/library/libz_dynamixel/0.0.0%2Bsha.e4ba03a21caa/libz_dynamixel-0.0.0%2Bsha.e4ba03a21caa.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sweilz/library/libz_dynamixel/0.0.0%2Bsha.e4ba03a21caa/libz_dynamixel-0.0.0%2Bsha.e4ba03a21caa.tar.gz"
+    ]
+   }
+  }
+ ]
+}

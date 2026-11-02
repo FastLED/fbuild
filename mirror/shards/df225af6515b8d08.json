@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cyijun",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cyijun/library/ESP32MQTTClient/1.1.1/ESP32MQTTClient-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32MQTTClient-1.1.1.tar.gz",
+    "size_bytes": 9648,
+    "sha256": "58e7f05428c83c9dbb6b573835dc196a0eec4a9c73a4e9d93c67d72471824433",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cyijun/library/ESP32MQTTClient/1.1.1/ESP32MQTTClient-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cyijun/library/ESP32MQTTClient/1.1.1/ESP32MQTTClient-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cyijun/library/ESP32MQTTClient/1.1.2/ESP32MQTTClient-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32MQTTClient-1.1.2.tar.gz",
+    "size_bytes": 13977,
+    "sha256": "fa50e56c55082aa011754fa48038705c03595e69ee7f1447a5d458a4b7492fa0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cyijun/library/ESP32MQTTClient/1.1.2/ESP32MQTTClient-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cyijun/library/ESP32MQTTClient/1.1.2/ESP32MQTTClient-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cyijun/library/ESP32MQTTClient/1.1.3/ESP32MQTTClient-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32MQTTClient-1.1.3.tar.gz",
+    "size_bytes": 14005,
+    "sha256": "a54cbfc8add6cc129a824b29e7958af50639df6b1ffce5a079a13fd677bada33",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cyijun/library/ESP32MQTTClient/1.1.3/ESP32MQTTClient-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/cyijun/library/ESP32MQTTClient/1.1.3/ESP32MQTTClient-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cyijun/library/ESP32MQTTClient/1.1.5/ESP32MQTTClient-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32MQTTClient-1.1.5.tar.gz",
+    "size_bytes": 17811,
+    "sha256": "9aa81a7159148780293bec73ddf64e2afe1d8b256c5b030ab716b23d8f016138",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cyijun/library/ESP32MQTTClient/1.1.5/ESP32MQTTClient-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/cyijun/library/ESP32MQTTClient/1.1.5/ESP32MQTTClient-1.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cyijun/library/HAMqttDiscoveryHandler/0.2.0/HAMqttDiscoveryHandler-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HAMqttDiscoveryHandler-0.2.0.tar.gz",
+    "size_bytes": 20018,
+    "sha256": "7995599e6e928641c48af97e7f4897d29bcc73ef7eb93335ccf84e3dc84ca2db",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cyijun/library/HAMqttDiscoveryHandler/0.2.0/HAMqttDiscoveryHandler-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cyijun/library/HAMqttDiscoveryHandler/0.2.0/HAMqttDiscoveryHandler-0.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

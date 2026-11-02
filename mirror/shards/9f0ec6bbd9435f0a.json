@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ginixsan",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ginixsan/library/CamS3Library/1.2.0/CamS3Library-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CamS3Library-1.2.0.tar.gz",
+    "size_bytes": 17418,
+    "sha256": "da390d4c4e750421a22c54317c61dbd733afde16c9f11dc9b1037352f4a579af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ginixsan/library/CamS3Library/1.2.0/CamS3Library-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ginixsan/library/CamS3Library/1.2.0/CamS3Library-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ginixsan/library/CamS3Library/1.2.5/CamS3Library-1.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CamS3Library-1.2.5.tar.gz",
+    "size_bytes": 18210,
+    "sha256": "2d2499d92e0fcd72089efce6e276b2c270b04a49c0fd48b9c8a7183883da4287",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ginixsan/library/CamS3Library/1.2.5/CamS3Library-1.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/ginixsan/library/CamS3Library/1.2.5/CamS3Library-1.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ginixsan/library/CamS3Library/1.2.6/CamS3Library-1.2.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CamS3Library-1.2.6.tar.gz",
+    "size_bytes": 21879,
+    "sha256": "8c5d159f116229eec18bce1e73a56af1fa2a2d0ac49f66339bd84a7da42a2d02",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ginixsan/library/CamS3Library/1.2.6/CamS3Library-1.2.6.tar.gz",
+     "https://dl.registry.platformio.org/download/ginixsan/library/CamS3Library/1.2.6/CamS3Library-1.2.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/belinus-code",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "belinus-code/library/AxpertProtocol/0.1.0/AxpertProtocol-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AxpertProtocol-0.1.0.tar.gz",
+    "size_bytes": 62216,
+    "sha256": "949ab7741cc1b3ea6769bab2ecd8050c97bfb1a7d5456a4d9945c58b3c7554fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/belinus-code/library/AxpertProtocol/0.1.0/AxpertProtocol-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/belinus-code/library/AxpertProtocol/0.1.0/AxpertProtocol-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

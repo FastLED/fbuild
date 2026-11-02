@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/imiconsystem",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "imiconsystem/library/MicromationDevboardV3/1.0.9/MicromationDevboardV3-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MicromationDevboardV3-1.0.9.tar.gz",
+    "size_bytes": 23620,
+    "sha256": "385da34df28f43bf93c19066a4ab82b52782a8f47f6a56979117b39b4305dba0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/imiconsystem/library/MicromationDevboardV3/1.0.9/MicromationDevboardV3-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/imiconsystem/library/MicromationDevboardV3/1.0.9/MicromationDevboardV3-1.0.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

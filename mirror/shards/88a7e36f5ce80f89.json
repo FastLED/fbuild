@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ferdiu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ferdiu/library/ESP32ProvisionToolkit/1.0.1/ESP32ProvisionToolkit-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32ProvisionToolkit-1.0.1.tar.gz",
+    "size_bytes": 34019,
+    "sha256": "93873dab2b1d1a6af5a0d8194199796ab090f9bb6960bf184f1b4ef45dd882de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ferdiu/library/ESP32ProvisionToolkit/1.0.1/ESP32ProvisionToolkit-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ferdiu/library/ESP32ProvisionToolkit/1.0.1/ESP32ProvisionToolkit-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,178 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/z3t0",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "z3t0/library/IRremote/3.5.0/IRremote-3.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IRremote-3.5.0.tar.gz",
+    "size_bytes": 182694,
+    "sha256": "45063658160041cd884ee1098abd4a7b5aac3fb658b46113d2300d5d5b07c5cf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/z3t0/library/IRremote/3.5.0/IRremote-3.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/z3t0/library/IRremote/3.5.0/IRremote-3.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "z3t0/library/IRremote/3.9.0/IRremote-3.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IRremote-3.9.0.tar.gz",
+    "size_bytes": 232287,
+    "sha256": "7dc099a439f8f031c605d1f886a6e402287e75ecfee586e2e4918c298f1452a7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/z3t0/library/IRremote/3.9.0/IRremote-3.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/z3t0/library/IRremote/3.9.0/IRremote-3.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "z3t0/library/IRremote/4.2.0/IRremote-4.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IRremote-4.2.0.tar.gz",
+    "size_bytes": 296888,
+    "sha256": "ee49cade6dbef4fe3223fe0417312a530f0f05aa8377d9427f5e268ab7cf4597",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/z3t0/library/IRremote/4.2.0/IRremote-4.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/z3t0/library/IRremote/4.2.0/IRremote-4.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "z3t0/library/IRremote/4.3.0/IRremote-4.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IRremote-4.3.0.tar.gz",
+    "size_bytes": 320574,
+    "sha256": "5cd612797a09143a99d0dfe22e8ac8341fb05167fd18b89eca77f6114b3d10cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/z3t0/library/IRremote/4.3.0/IRremote-4.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/z3t0/library/IRremote/4.3.0/IRremote-4.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "z3t0/library/IRremote/4.4.0/IRremote-4.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IRremote-4.4.0.tar.gz",
+    "size_bytes": 333721,
+    "sha256": "ff6df056d64db6664e6252062847b5b60233b62aeafde15893f2e4d785fdf4dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/z3t0/library/IRremote/4.4.0/IRremote-4.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/z3t0/library/IRremote/4.4.0/IRremote-4.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "z3t0/library/IRremote/4.4.1/IRremote-4.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IRremote-4.4.1.tar.gz",
+    "size_bytes": 335786,
+    "sha256": "451e60544e8349ed11fc6aa3e3b23cc9c0a79e07cf1a538fe747a320e9802e13",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/z3t0/library/IRremote/4.4.1/IRremote-4.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/z3t0/library/IRremote/4.4.1/IRremote-4.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "z3t0/library/IRremote/4.4.2/IRremote-4.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IRremote-4.4.2.tar.gz",
+    "size_bytes": 325590,
+    "sha256": "6e7f3a8e1da393c9a7b2e0e4c5f31f80df3a6e4816ea6a8e9e1bf9c331ba2577",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/z3t0/library/IRremote/4.4.2/IRremote-4.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/z3t0/library/IRremote/4.4.2/IRremote-4.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "z3t0/library/IRremote/4.5.0/IRremote-4.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IRremote-4.5.0.tar.gz",
+    "size_bytes": 347188,
+    "sha256": "b3db0e0875b193b3985d49c10f53efbdf24c1ed1feac1ecfd2c0c6fd4000019d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/z3t0/library/IRremote/4.5.0/IRremote-4.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/z3t0/library/IRremote/4.5.0/IRremote-4.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "z3t0/library/IRremote/4.6.0/IRremote-4.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IRremote-4.6.0.tar.gz",
+    "size_bytes": 354379,
+    "sha256": "f8497874be3b7c926e0a04ca5770556603536d55ac5eee79e8e01c96680bd3f5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/z3t0/library/IRremote/4.6.0/IRremote-4.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/z3t0/library/IRremote/4.6.0/IRremote-4.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "z3t0/library/IRremote/4.6.1/IRremote-4.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IRremote-4.6.1.tar.gz",
+    "size_bytes": 371112,
+    "sha256": "47076bff5f8988396c99ed3fab66fee7ae4031172fb6708ade5df2097ad36346",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/z3t0/library/IRremote/4.6.1/IRremote-4.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/z3t0/library/IRremote/4.6.1/IRremote-4.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "z3t0/library/IRremote/4.6.2/IRremote-4.6.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IRremote-4.6.2.tar.gz",
+    "size_bytes": 371268,
+    "sha256": "ce97ab074b81f199e1f2e3ec82594d88164a93e946db59e7fe20217c8b2d674d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/z3t0/library/IRremote/4.6.2/IRremote-4.6.2.tar.gz",
+     "https://dl.registry.platformio.org/download/z3t0/library/IRremote/4.6.2/IRremote-4.6.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "z3t0/library/IRremote/4.7.0/IRremote-4.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IRremote-4.7.0.tar.gz",
+    "size_bytes": 371061,
+    "sha256": "0dc675446acb066b518a5a94e74b8d0c74e1391dc38e83a079df81413c67fd0b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/z3t0/library/IRremote/4.7.0/IRremote-4.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/z3t0/library/IRremote/4.7.0/IRremote-4.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "z3t0/library/IRremote/4.7.1/IRremote-4.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IRremote-4.7.1.tar.gz",
+    "size_bytes": 371790,
+    "sha256": "67e4e01b231ecb48fdb680377299cb0ed881f8382649ed167c14427da17d6e25",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/z3t0/library/IRremote/4.7.1/IRremote-4.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/z3t0/library/IRremote/4.7.1/IRremote-4.7.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,425 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gperez88",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gperez88/library/PixelRoot32-APU/1.0.1/PixelRoot32-APU-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PixelRoot32-APU-1.0.1.tar.gz",
+    "size_bytes": 41044,
+    "sha256": "86fda9a431984d3be286deff33246da47b58bbfa9d4a8b7cbc17fd522f559bc0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gperez88/library/PixelRoot32-APU/1.0.1/PixelRoot32-APU-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gperez88/library/PixelRoot32-APU/1.0.1/PixelRoot32-APU-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gperez88/library/PixelRoot32-APU/2.0.0/PixelRoot32-APU-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PixelRoot32-APU-2.0.0.tar.gz",
+    "size_bytes": 80711,
+    "sha256": "4587aac2cda24440a518d095f212b635751c32c262df31cf951e8876cd043c57",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gperez88/library/PixelRoot32-APU/2.0.0/PixelRoot32-APU-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gperez88/library/PixelRoot32-APU/2.0.0/PixelRoot32-APU-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gperez88/library/PixelRoot32-APU/2.1.0/PixelRoot32-APU-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PixelRoot32-APU-2.1.0.tar.gz",
+    "size_bytes": 170204,
+    "sha256": "df9eb13e951d0248964a8f9b0c4a568e49d319dc8c6924c2a312c1d29b4d6677",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gperez88/library/PixelRoot32-APU/2.1.0/PixelRoot32-APU-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gperez88/library/PixelRoot32-APU/2.1.0/PixelRoot32-APU-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gperez88/library/PixelRoot32-APU/2.2.0/PixelRoot32-APU-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PixelRoot32-APU-2.2.0.tar.gz",
+    "size_bytes": 172920,
+    "sha256": "37f16d4f0255f4b40a3b1e413f5c5f7980d71b57d30a0ddbba6eac6a0adc4ecd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gperez88/library/PixelRoot32-APU/2.2.0/PixelRoot32-APU-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gperez88/library/PixelRoot32-APU/2.2.0/PixelRoot32-APU-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gperez88/library/PixelRoot32-Game-Engine/0.1.0-dev/PixelRoot32-Game-Engine-0.1.0-dev.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PixelRoot32-Game-Engine-0.1.0-dev.tar.gz",
+    "size_bytes": 95321,
+    "sha256": "9154ce05414e14afddac8dd864caaeb5f74ec1f80109fdd7d27f3504f2af59a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gperez88/library/PixelRoot32-Game-Engine/0.1.0-dev/PixelRoot32-Game-Engine-0.1.0-dev.tar.gz",
+     "https://dl.registry.platformio.org/download/gperez88/library/PixelRoot32-Game-Engine/0.1.0-dev/PixelRoot32-Game-Engine-0.1.0-dev.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gperez88/library/PixelRoot32-Game-Engine/0.1.0/PixelRoot32-Game-Engine-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PixelRoot32-Game-Engine-0.1.0.tar.gz",
+    "size_bytes": 94807,
+    "sha256": "0b739490ba38484e6f543c2afbe95d720de364e0ed2d12bfdc397f7f042c8d23",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gperez88/library/PixelRoot32-Game-Engine/0.1.0/PixelRoot32-Game-Engine-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gperez88/library/PixelRoot32-Game-Engine/0.1.0/PixelRoot32-Game-Engine-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gperez88/library/PixelRoot32-Game-Engine/0.2.0-dev/PixelRoot32-Game-Engine-0.2.0-dev.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PixelRoot32-Game-Engine-0.2.0-dev.tar.gz",
+    "size_bytes": 100163,
+    "sha256": "317a40e10d509e178ecb9bc64fc5f994f76156a83a57100d87e400e0c2e497f9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gperez88/library/PixelRoot32-Game-Engine/0.2.0-dev/PixelRoot32-Game-Engine-0.2.0-dev.tar.gz",
+     "https://dl.registry.platformio.org/download/gperez88/library/PixelRoot32-Game-Engine/0.2.0-dev/PixelRoot32-Game-Engine-0.2.0-dev.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gperez88/library/PixelRoot32-Game-Engine/0.3.0-dev/PixelRoot32-Game-Engine-0.3.0-dev.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PixelRoot32-Game-Engine-0.3.0-dev.tar.gz",
+    "size_bytes": 100792,
+    "sha256": "d984dbe6872bf5a254b1798685d9bcc62dfd7ad74e3a6d0310929294a91f4214",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gperez88/library/PixelRoot32-Game-Engine/0.3.0-dev/PixelRoot32-Game-Engine-0.3.0-dev.tar.gz",
+     "https://dl.registry.platformio.org/download/gperez88/library/PixelRoot32-Game-Engine/0.3.0-dev/PixelRoot32-Game-Engine-0.3.0-dev.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gperez88/library/PixelRoot32-Game-Engine/0.4.0-dev/PixelRoot32-Game-Engine-0.4.0-dev.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PixelRoot32-Game-Engine-0.4.0-dev.tar.gz",
+    "size_bytes": 103489,
+    "sha256": "908842d4729deb1af5a595c38af1503e8b4f9248c93f77b3db23ffb001c16b21",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gperez88/library/PixelRoot32-Game-Engine/0.4.0-dev/PixelRoot32-Game-Engine-0.4.0-dev.tar.gz",
+     "https://dl.registry.platformio.org/download/gperez88/library/PixelRoot32-Game-Engine/0.4.0-dev/PixelRoot32-Game-Engine-0.4.0-dev.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gperez88/library/PixelRoot32-Game-Engine/0.4.1-dev/PixelRoot32-Game-Engine-0.4.1-dev.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PixelRoot32-Game-Engine-0.4.1-dev.tar.gz",
+    "size_bytes": 103715,
+    "sha256": "052ad147ee8f7775a1523756aa9dc9bd7b51d1b2b4555c12567f070fa3d9a6e2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gperez88/library/PixelRoot32-Game-Engine/0.4.1-dev/PixelRoot32-Game-Engine-0.4.1-dev.tar.gz",
+     "https://dl.registry.platformio.org/download/gperez88/library/PixelRoot32-Game-Engine/0.4.1-dev/PixelRoot32-Game-Engine-0.4.1-dev.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gperez88/library/PixelRoot32-Game-Engine/0.5.0-dev/PixelRoot32-Game-Engine-0.5.0-dev.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PixelRoot32-Game-Engine-0.5.0-dev.tar.gz",
+    "size_bytes": 107933,
+    "sha256": "d597f658224dcd9f14b1a17e108ba5037cddf09f5a454e46837b489a8df933c1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gperez88/library/PixelRoot32-Game-Engine/0.5.0-dev/PixelRoot32-Game-Engine-0.5.0-dev.tar.gz",
+     "https://dl.registry.platformio.org/download/gperez88/library/PixelRoot32-Game-Engine/0.5.0-dev/PixelRoot32-Game-Engine-0.5.0-dev.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gperez88/library/PixelRoot32-Game-Engine/0.7.0-dev/PixelRoot32-Game-Engine-0.7.0-dev.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PixelRoot32-Game-Engine-0.7.0-dev.tar.gz",
+    "size_bytes": 107356,
+    "sha256": "126831f2e6917afc988799536398a847296e5937cb8b2050b9d537e3b764bad7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gperez88/library/PixelRoot32-Game-Engine/0.7.0-dev/PixelRoot32-Game-Engine-0.7.0-dev.tar.gz",
+     "https://dl.registry.platformio.org/download/gperez88/library/PixelRoot32-Game-Engine/0.7.0-dev/PixelRoot32-Game-Engine-0.7.0-dev.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gperez88/library/PixelRoot32-Game-Engine/0.8.0-dev/PixelRoot32-Game-Engine-0.8.0-dev.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PixelRoot32-Game-Engine-0.8.0-dev.tar.gz",
+    "size_bytes": 110029,
+    "sha256": "724695bf029ed9f00f67e6a0b7594ddc8fc55277884cfbea5c13ecb2447cfc96",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gperez88/library/PixelRoot32-Game-Engine/0.8.0-dev/PixelRoot32-Game-Engine-0.8.0-dev.tar.gz",
+     "https://dl.registry.platformio.org/download/gperez88/library/PixelRoot32-Game-Engine/0.8.0-dev/PixelRoot32-Game-Engine-0.8.0-dev.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gperez88/library/PixelRoot32-Game-Engine/0.8.1-dev/PixelRoot32-Game-Engine-0.8.1-dev.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PixelRoot32-Game-Engine-0.8.1-dev.tar.gz",
+    "size_bytes": 110506,
+    "sha256": "42ab24b73e11e03d332adcb6cdc71e8b62b2d4f2cdc964890000f308eef2deac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gperez88/library/PixelRoot32-Game-Engine/0.8.1-dev/PixelRoot32-Game-Engine-0.8.1-dev.tar.gz",
+     "https://dl.registry.platformio.org/download/gperez88/library/PixelRoot32-Game-Engine/0.8.1-dev/PixelRoot32-Game-Engine-0.8.1-dev.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gperez88/library/PixelRoot32-Game-Engine/1.0.0/PixelRoot32-Game-Engine-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PixelRoot32-Game-Engine-1.0.0.tar.gz",
+    "size_bytes": 130216,
+    "sha256": "4d77a54281ce9191231053efc2145c7bec2bc26f4fdd62234b0583c2466cf34e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gperez88/library/PixelRoot32-Game-Engine/1.0.0/PixelRoot32-Game-Engine-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gperez88/library/PixelRoot32-Game-Engine/1.0.0/PixelRoot32-Game-Engine-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gperez88/library/PixelRoot32-Game-Engine/1.1.0/PixelRoot32-Game-Engine-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PixelRoot32-Game-Engine-1.1.0.tar.gz",
+    "size_bytes": 156780,
+    "sha256": "d6e9ced16bfb4f2684f5fa103c800c440af3c1e976c4ffa2552d570f0a92698a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gperez88/library/PixelRoot32-Game-Engine/1.1.0/PixelRoot32-Game-Engine-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gperez88/library/PixelRoot32-Game-Engine/1.1.0/PixelRoot32-Game-Engine-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gperez88/library/PixelRoot32-Game-Engine/1.10.0/PixelRoot32-Game-Engine-1.10.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PixelRoot32-Game-Engine-1.10.0.tar.gz",
+    "size_bytes": 428384,
+    "sha256": "e2d779320de1108ec6ddfcc7c4875d0e482d1e104929623cdd274285e316f8fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gperez88/library/PixelRoot32-Game-Engine/1.10.0/PixelRoot32-Game-Engine-1.10.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gperez88/library/PixelRoot32-Game-Engine/1.10.0/PixelRoot32-Game-Engine-1.10.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gperez88/library/PixelRoot32-Game-Engine/1.10.1/PixelRoot32-Game-Engine-1.10.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PixelRoot32-Game-Engine-1.10.1.tar.gz",
+    "size_bytes": 428046,
+    "sha256": "70d7d23fd42b1402fec7d490bc7c281ebd0390fe545681348e166eba84f38a59",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gperez88/library/PixelRoot32-Game-Engine/1.10.1/PixelRoot32-Game-Engine-1.10.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gperez88/library/PixelRoot32-Game-Engine/1.10.1/PixelRoot32-Game-Engine-1.10.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gperez88/library/PixelRoot32-Game-Engine/1.11.0/PixelRoot32-Game-Engine-1.11.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PixelRoot32-Game-Engine-1.11.0.tar.gz",
+    "size_bytes": 473846,
+    "sha256": "5cce952d86023dff591cfa438f1100c068f3e628d4e803c26496d3e19a17a378",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gperez88/library/PixelRoot32-Game-Engine/1.11.0/PixelRoot32-Game-Engine-1.11.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gperez88/library/PixelRoot32-Game-Engine/1.11.0/PixelRoot32-Game-Engine-1.11.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gperez88/library/PixelRoot32-Game-Engine/1.12.0/PixelRoot32-Game-Engine-1.12.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PixelRoot32-Game-Engine-1.12.0.tar.gz",
+    "size_bytes": 496258,
+    "sha256": "bf52c29a5405fcff697e423cff3014708c13d5634ef1f239d3a050458a8c8752",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gperez88/library/PixelRoot32-Game-Engine/1.12.0/PixelRoot32-Game-Engine-1.12.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gperez88/library/PixelRoot32-Game-Engine/1.12.0/PixelRoot32-Game-Engine-1.12.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gperez88/library/PixelRoot32-Game-Engine/1.13.0/PixelRoot32-Game-Engine-1.13.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PixelRoot32-Game-Engine-1.13.0.tar.gz",
+    "size_bytes": 604247,
+    "sha256": "02dbd620833fe3a4d0f4f56d35e998827b1adccc0bbdb9176e429eb8a35b6c98",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gperez88/library/PixelRoot32-Game-Engine/1.13.0/PixelRoot32-Game-Engine-1.13.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gperez88/library/PixelRoot32-Game-Engine/1.13.0/PixelRoot32-Game-Engine-1.13.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gperez88/library/PixelRoot32-Game-Engine/1.2.0/PixelRoot32-Game-Engine-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PixelRoot32-Game-Engine-1.2.0.tar.gz",
+    "size_bytes": 294200,
+    "sha256": "0a62e220d42571a82c719dc91f58ad55f06f43064ddcef4f22b714a839438f7b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gperez88/library/PixelRoot32-Game-Engine/1.2.0/PixelRoot32-Game-Engine-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gperez88/library/PixelRoot32-Game-Engine/1.2.0/PixelRoot32-Game-Engine-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gperez88/library/PixelRoot32-Game-Engine/1.2.1/PixelRoot32-Game-Engine-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PixelRoot32-Game-Engine-1.2.1.tar.gz",
+    "size_bytes": 330512,
+    "sha256": "295d7632c40334a9c3fa903e7a9628d797e682ad8aef7bbbca52fe883997f9e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gperez88/library/PixelRoot32-Game-Engine/1.2.1/PixelRoot32-Game-Engine-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gperez88/library/PixelRoot32-Game-Engine/1.2.1/PixelRoot32-Game-Engine-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gperez88/library/PixelRoot32-Game-Engine/1.2.2/PixelRoot32-Game-Engine-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PixelRoot32-Game-Engine-1.2.2.tar.gz",
+    "size_bytes": 332799,
+    "sha256": "df5825ca044fa13e2c67038b57b95e954e4cb8bfdc06b0fa390231c60c22cc76",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gperez88/library/PixelRoot32-Game-Engine/1.2.2/PixelRoot32-Game-Engine-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gperez88/library/PixelRoot32-Game-Engine/1.2.2/PixelRoot32-Game-Engine-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gperez88/library/PixelRoot32-Game-Engine/1.3.0/PixelRoot32-Game-Engine-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PixelRoot32-Game-Engine-1.3.0.tar.gz",
+    "size_bytes": 355351,
+    "sha256": "b70421768816b4e5dfb072785040e9f78b1cc5abfbef7a87f435d0168e978e45",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gperez88/library/PixelRoot32-Game-Engine/1.3.0/PixelRoot32-Game-Engine-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gperez88/library/PixelRoot32-Game-Engine/1.3.0/PixelRoot32-Game-Engine-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gperez88/library/PixelRoot32-Game-Engine/1.4.0/PixelRoot32-Game-Engine-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PixelRoot32-Game-Engine-1.4.0.tar.gz",
+    "size_bytes": 377384,
+    "sha256": "1be7ce91e1d9db7fe99bd24ed13663556ad1cb88d73274b42f36a354fe72f2a3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gperez88/library/PixelRoot32-Game-Engine/1.4.0/PixelRoot32-Game-Engine-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gperez88/library/PixelRoot32-Game-Engine/1.4.0/PixelRoot32-Game-Engine-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gperez88/library/PixelRoot32-Game-Engine/1.5.0/PixelRoot32-Game-Engine-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PixelRoot32-Game-Engine-1.5.0.tar.gz",
+    "size_bytes": 417618,
+    "sha256": "0b3a390cf71d13a71f953c73d7cc813470dfdab0ce8ff6820731e3dc5b58c3af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gperez88/library/PixelRoot32-Game-Engine/1.5.0/PixelRoot32-Game-Engine-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gperez88/library/PixelRoot32-Game-Engine/1.5.0/PixelRoot32-Game-Engine-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gperez88/library/PixelRoot32-Game-Engine/1.6.0/PixelRoot32-Game-Engine-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PixelRoot32-Game-Engine-1.6.0.tar.gz",
+    "size_bytes": 446464,
+    "sha256": "5d5c29fc5504c97029e8cfbb962aa8cd280bb1b41f8e2d70b0263077b7614933",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gperez88/library/PixelRoot32-Game-Engine/1.6.0/PixelRoot32-Game-Engine-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gperez88/library/PixelRoot32-Game-Engine/1.6.0/PixelRoot32-Game-Engine-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gperez88/library/PixelRoot32-Game-Engine/1.6.1/PixelRoot32-Game-Engine-1.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PixelRoot32-Game-Engine-1.6.1.tar.gz",
+    "size_bytes": 438860,
+    "sha256": "5b24e96e7bc930292a0b33e1ecd4e50a28d0e3a0629c8a4133bbc66c018e0ce5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gperez88/library/PixelRoot32-Game-Engine/1.6.1/PixelRoot32-Game-Engine-1.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gperez88/library/PixelRoot32-Game-Engine/1.6.1/PixelRoot32-Game-Engine-1.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gperez88/library/PixelRoot32-Game-Engine/1.7.0/PixelRoot32-Game-Engine-1.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PixelRoot32-Game-Engine-1.7.0.tar.gz",
+    "size_bytes": 456960,
+    "sha256": "b2c0a0acb4c33cc737c1efc09e47b38e222bdf196cf5c24e07deb27f62876f05",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gperez88/library/PixelRoot32-Game-Engine/1.7.0/PixelRoot32-Game-Engine-1.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gperez88/library/PixelRoot32-Game-Engine/1.7.0/PixelRoot32-Game-Engine-1.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gperez88/library/PixelRoot32-Game-Engine/1.8.0/PixelRoot32-Game-Engine-1.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PixelRoot32-Game-Engine-1.8.0.tar.gz",
+    "size_bytes": 432937,
+    "sha256": "e5cb28acc35b20629d31d6471a35866cdf75c3b42ae3f5b65815bf4024b360a7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gperez88/library/PixelRoot32-Game-Engine/1.8.0/PixelRoot32-Game-Engine-1.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gperez88/library/PixelRoot32-Game-Engine/1.8.0/PixelRoot32-Game-Engine-1.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gperez88/library/PixelRoot32-Game-Engine/1.9.0/PixelRoot32-Game-Engine-1.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PixelRoot32-Game-Engine-1.9.0.tar.gz",
+    "size_bytes": 621133,
+    "sha256": "213aba19a47c56c51398f021f341c37a0805a8a1b1278e9ec15cb8145986ca75",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gperez88/library/PixelRoot32-Game-Engine/1.9.0/PixelRoot32-Game-Engine-1.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gperez88/library/PixelRoot32-Game-Engine/1.9.0/PixelRoot32-Game-Engine-1.9.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

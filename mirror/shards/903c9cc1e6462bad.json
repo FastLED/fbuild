@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/deploythefleet",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "deploythefleet/library/DTF_ESP32Update/2.0.1/DTF_ESP32Update-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DTF_ESP32Update-2.0.1.tar.gz",
+    "size_bytes": 8019,
+    "sha256": "93cb9221b795902ded1f25b3e416ff579100a1fabecf800ffa4902722bfdc688",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deploythefleet/library/DTF_ESP32Update/2.0.1/DTF_ESP32Update-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/deploythefleet/library/DTF_ESP32Update/2.0.1/DTF_ESP32Update-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "deploythefleet/library/DTF_ESP32Update/2.0.2/DTF_ESP32Update-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DTF_ESP32Update-2.0.2.tar.gz",
+    "size_bytes": 8132,
+    "sha256": "a19970a6115c4ef37bce28005e3104c8fb4113161320d1bd388f22f6e8fecee6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deploythefleet/library/DTF_ESP32Update/2.0.2/DTF_ESP32Update-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/deploythefleet/library/DTF_ESP32Update/2.0.2/DTF_ESP32Update-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "deploythefleet/library/DTF_ESP32Update/2.0.3/DTF_ESP32Update-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DTF_ESP32Update-2.0.3.tar.gz",
+    "size_bytes": 8531,
+    "sha256": "e05c61bc90118eb03d57aa39dd776cf65ecbb004aaedbd1008b1c50a5ded3bd9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deploythefleet/library/DTF_ESP32Update/2.0.3/DTF_ESP32Update-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/deploythefleet/library/DTF_ESP32Update/2.0.3/DTF_ESP32Update-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "deploythefleet/library/DTF_ESP8266Update/2.0.0/DTF_ESP8266Update-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DTF_ESP8266Update-2.0.0.tar.gz",
+    "size_bytes": 6790,
+    "sha256": "a5cc5a3c4888e9c70bf217f81382d6079b32e71cb4121ca069b97537547c10b0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deploythefleet/library/DTF_ESP8266Update/2.0.0/DTF_ESP8266Update-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/deploythefleet/library/DTF_ESP8266Update/2.0.0/DTF_ESP8266Update-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

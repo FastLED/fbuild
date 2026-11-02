@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/devtagse",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "devtagse/library/DEVTAGLibIA/1.0.0/DEVTAGLibIA-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DEVTAGLibIA-1.0.0.tar.gz",
+    "size_bytes": 25996,
+    "sha256": "8c3a04d889bc32cefee818b4ebb1476c221f2420717cf907fb2881c6295a2d79",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/devtagse/library/DEVTAGLibIA/1.0.0/DEVTAGLibIA-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/devtagse/library/DEVTAGLibIA/1.0.0/DEVTAGLibIA-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

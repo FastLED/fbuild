@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/prampec",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "prampec/library/IotWebConf/2.3.3/IotWebConf-2.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IotWebConf-2.3.3.tar.gz",
+    "size_bytes": 31885,
+    "sha256": "2bd96600ce1d6f7553f7b05306d39bbf4659c032d692807c1e965f89703f84c4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/prampec/library/IotWebConf/2.3.3/IotWebConf-2.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/prampec/library/IotWebConf/2.3.3/IotWebConf-2.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "prampec/library/IotWebConf/3.2.1/IotWebConf-3.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IotWebConf-3.2.1.tar.gz",
+    "size_bytes": 54386,
+    "sha256": "4bf34a85fdd1987dbbb54a28a99ef727ac46a5dcdceac2d71100bf766b0c8e17",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/prampec/library/IotWebConf/3.2.1/IotWebConf-3.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/prampec/library/IotWebConf/3.2.1/IotWebConf-3.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "prampec/library/LcdBarGraph/2.0.1/LcdBarGraph-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LcdBarGraph-2.0.1.tar.gz",
+    "size_bytes": 15198,
+    "sha256": "04cd56786357ffc8be4a72d0b7e64dda51041b7497200ade3d3cc947a44c3747",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/prampec/library/LcdBarGraph/2.0.1/LcdBarGraph-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/prampec/library/LcdBarGraph/2.0.1/LcdBarGraph-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "prampec/library/LcdBarGraphX/2.0.1/LcdBarGraphX-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LcdBarGraphX-2.0.1.tar.gz",
+    "size_bytes": 15451,
+    "sha256": "c665ee7ced1c5c593f7d59052dd5f834f62694a3cea51f03ac571ec7a6f81a50",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/prampec/library/LcdBarGraphX/2.0.1/LcdBarGraphX-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/prampec/library/LcdBarGraphX/2.0.1/LcdBarGraphX-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "prampec/library/PciManager/2.1.4/PciManager-2.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PciManager-2.1.4.tar.gz",
+    "size_bytes": 4459,
+    "sha256": "c8a89bc6a7f5b22590cbee5e0e9d2e69c409d5ff8cf66a99c70d6c7ee20d4b56",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/prampec/library/PciManager/2.1.4/PciManager-2.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/prampec/library/PciManager/2.1.4/PciManager-2.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "prampec/library/SoftTimer/3.2.0/SoftTimer-3.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SoftTimer-3.2.0.tar.gz",
+    "size_bytes": 29470,
+    "sha256": "f3324ffb7a095052503d3bf98de3474d195532b85637f9757752b88cd6f92b3e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/prampec/library/SoftTimer/3.2.0/SoftTimer-3.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/prampec/library/SoftTimer/3.2.0/SoftTimer-3.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

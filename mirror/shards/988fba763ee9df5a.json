@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-kkoichy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-kkoichy/library/CANopen_Node/0.0.0+sha.f98581f4455d/CANopen_Node-0.0.0+sha.f98581f4455d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CANopen_Node-0.0.0+sha.f98581f4455d.tar.gz",
+    "size_bytes": 1375,
+    "sha256": "ff2cd674473aa5089446b468cb87958429350d333d3ce82a2b2b02f0f478e945",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kkoichy/library/CANopen_Node/0.0.0%2Bsha.f98581f4455d/CANopen_Node-0.0.0%2Bsha.f98581f4455d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kkoichy/library/CANopen_Node/0.0.0%2Bsha.f98581f4455d/CANopen_Node-0.0.0%2Bsha.f98581f4455d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-kkoichy/library/Roboteq_SDC_serie/0.0.0+sha.bd10b47f59d2/Roboteq_SDC_serie-0.0.0+sha.bd10b47f59d2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Roboteq_SDC_serie-0.0.0+sha.bd10b47f59d2.tar.gz",
+    "size_bytes": 2949,
+    "sha256": "1b01d202f65b1837fcead9b590c47ed2921bbf95139c4a811a48fbe196b51b06",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kkoichy/library/Roboteq_SDC_serie/0.0.0%2Bsha.bd10b47f59d2/Roboteq_SDC_serie-0.0.0%2Bsha.bd10b47f59d2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kkoichy/library/Roboteq_SDC_serie/0.0.0%2Bsha.bd10b47f59d2/Roboteq_SDC_serie-0.0.0%2Bsha.bd10b47f59d2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

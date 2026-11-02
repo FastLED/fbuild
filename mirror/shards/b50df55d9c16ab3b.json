@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dcc-ex",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dcc-ex/library/DCCEXProtocol/1.2.1/DCCEXProtocol-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DCCEXProtocol-1.2.1.tar.gz",
+    "size_bytes": 47823,
+    "sha256": "a9e48d422ce79d1df6958e6f99d549142a5220b9ff13efb03b107125e3a1b67f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dcc-ex/library/DCCEXProtocol/1.2.1/DCCEXProtocol-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dcc-ex/library/DCCEXProtocol/1.2.1/DCCEXProtocol-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dcc-ex/library/DCCEXProtocol/1.3.0/DCCEXProtocol-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DCCEXProtocol-1.3.0.tar.gz",
+    "size_bytes": 55625,
+    "sha256": "1ec0241400bd37409a92a6db57d7746495b2ee926ba41245327eb1b5830b4638",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dcc-ex/library/DCCEXProtocol/1.3.0/DCCEXProtocol-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dcc-ex/library/DCCEXProtocol/1.3.0/DCCEXProtocol-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dcc-ex/library/DCCEXProtocol/1.3.1/DCCEXProtocol-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DCCEXProtocol-1.3.1.tar.gz",
+    "size_bytes": 55662,
+    "sha256": "f62813059df0856691dcc3eefd8f0e7ad1831b6675bb3f2ff653418876c5df00",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dcc-ex/library/DCCEXProtocol/1.3.1/DCCEXProtocol-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dcc-ex/library/DCCEXProtocol/1.3.1/DCCEXProtocol-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dcc-ex/library/DCCEXProtocol/1.3.2/DCCEXProtocol-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DCCEXProtocol-1.3.2.tar.gz",
+    "size_bytes": 55836,
+    "sha256": "7308aaf1d466de7808fdb4a5da17f6a14e086b8573d78635c33796fb62964b99",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dcc-ex/library/DCCEXProtocol/1.3.2/DCCEXProtocol-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dcc-ex/library/DCCEXProtocol/1.3.2/DCCEXProtocol-1.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dcc-ex/library/DCCEXProtocol/1.3.3/DCCEXProtocol-1.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DCCEXProtocol-1.3.3.tar.gz",
+    "size_bytes": 57081,
+    "sha256": "c261248d1ea2da42e4429db5222108de0c30835b96485cc4cdf266e4d2b5ec87",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dcc-ex/library/DCCEXProtocol/1.3.3/DCCEXProtocol-1.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dcc-ex/library/DCCEXProtocol/1.3.3/DCCEXProtocol-1.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dcc-ex/library/DCCEXProtocol/1.4.0/DCCEXProtocol-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DCCEXProtocol-1.4.0.tar.gz",
+    "size_bytes": 57318,
+    "sha256": "e8617b947ae477d265e86f623286abe200ef82135267d909bbcbfd2e383d3b12",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dcc-ex/library/DCCEXProtocol/1.4.0/DCCEXProtocol-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dcc-ex/library/DCCEXProtocol/1.4.0/DCCEXProtocol-1.4.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pschatzmann",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pschatzmann/library/TalkiePCM/0.1.1/TalkiePCM-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TalkiePCM-0.1.1.tar.gz",
+    "size_bytes": 258155,
+    "sha256": "0ed615a074efc3c3e12db20ab25e37d548d4f6d71cfc1579dabed4a71ecfaa28",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pschatzmann/library/TalkiePCM/0.1.1/TalkiePCM-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pschatzmann/library/TalkiePCM/0.1.1/TalkiePCM-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

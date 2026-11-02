@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-nakor",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-nakor/library/armoured_vehicle/0.0.0+sha.f0201a296a0d/armoured_vehicle-0.0.0+sha.f0201a296a0d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "armoured_vehicle-0.0.0+sha.f0201a296a0d.tar.gz",
+    "size_bytes": 2438,
+    "sha256": "7d4950023c738551d3475655615bb9a37a71d746b9fe91d7798447d2801f7d8b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nakor/library/armoured_vehicle/0.0.0%2Bsha.f0201a296a0d/armoured_vehicle-0.0.0%2Bsha.f0201a296a0d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nakor/library/armoured_vehicle/0.0.0%2Bsha.f0201a296a0d/armoured_vehicle-0.0.0%2Bsha.f0201a296a0d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nakor/library/enemy/0.0.0+sha.59274d3772ec/enemy-0.0.0+sha.59274d3772ec.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "enemy-0.0.0+sha.59274d3772ec.tar.gz",
+    "size_bytes": 2161,
+    "sha256": "136da19aa02e7b63d879c13d35bd8c803a2a2e791c8c5567c3780c46a5af99d3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nakor/library/enemy/0.0.0%2Bsha.59274d3772ec/enemy-0.0.0%2Bsha.59274d3772ec.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nakor/library/enemy/0.0.0%2Bsha.59274d3772ec/enemy-0.0.0%2Bsha.59274d3772ec.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nakor/library/life_entity/0.0.0+sha.0b3582b2b45f/life_entity-0.0.0+sha.0b3582b2b45f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "life_entity-0.0.0+sha.0b3582b2b45f.tar.gz",
+    "size_bytes": 2295,
+    "sha256": "130d76bacb57be4a876187b2f22d338a602ab4f9bab3930d8c1c22d9d84ab190",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nakor/library/life_entity/0.0.0%2Bsha.0b3582b2b45f/life_entity-0.0.0%2Bsha.0b3582b2b45f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nakor/library/life_entity/0.0.0%2Bsha.0b3582b2b45f/life_entity-0.0.0%2Bsha.0b3582b2b45f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nakor/library/player/0.0.0+sha.2548417420a3/player-0.0.0+sha.2548417420a3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "player-0.0.0+sha.2548417420a3.tar.gz",
+    "size_bytes": 3491,
+    "sha256": "a2a570a379c6dc73e41d30cc316578223060b46067760009d193075d529c1bd7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nakor/library/player/0.0.0%2Bsha.2548417420a3/player-0.0.0%2Bsha.2548417420a3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nakor/library/player/0.0.0%2Bsha.2548417420a3/player-0.0.0%2Bsha.2548417420a3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nakor/library/theBadTouch/0.0.0+sha.e1e14d61dd00/theBadTouch-0.0.0+sha.e1e14d61dd00.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "theBadTouch-0.0.0+sha.e1e14d61dd00.tar.gz",
+    "size_bytes": 1927,
+    "sha256": "66702fcd6777ba10d03da137cef12ae0edc1a5bfd07a6363c01cf26839da12e1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nakor/library/theBadTouch/0.0.0%2Bsha.e1e14d61dd00/theBadTouch-0.0.0%2Bsha.e1e14d61dd00.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nakor/library/theBadTouch/0.0.0%2Bsha.e1e14d61dd00/theBadTouch-0.0.0%2Bsha.e1e14d61dd00.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nakor/library/trackballer/0.0.0+sha.a66aea99500e/trackballer-0.0.0+sha.a66aea99500e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "trackballer-0.0.0+sha.a66aea99500e.tar.gz",
+    "size_bytes": 2493,
+    "sha256": "6f31e5ef8c43e5c1640a42a538b335bd8dd8317c2f677e90a5483711c153b8b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nakor/library/trackballer/0.0.0%2Bsha.a66aea99500e/trackballer-0.0.0%2Bsha.a66aea99500e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nakor/library/trackballer/0.0.0%2Bsha.a66aea99500e/trackballer-0.0.0%2Bsha.a66aea99500e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nakor/library/uOLED/0.0.0+sha.7ad5bf258a1e/uOLED-0.0.0+sha.7ad5bf258a1e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uOLED-0.0.0+sha.7ad5bf258a1e.tar.gz",
+    "size_bytes": 7228,
+    "sha256": "dbaa845ccaea72a441b4aa5671647c3481228d89738f27b8f545a2df669ec520",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nakor/library/uOLED/0.0.0%2Bsha.7ad5bf258a1e/uOLED-0.0.0%2Bsha.7ad5bf258a1e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nakor/library/uOLED/0.0.0%2Bsha.7ad5bf258a1e/uOLED-0.0.0%2Bsha.7ad5bf258a1e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

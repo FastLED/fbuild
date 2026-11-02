@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/microbot-it",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "microbot-it/library/Microbot_Motor_Shield/1.0.0/Microbot_Motor_Shield-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Microbot_Motor_Shield-1.0.0.tar.gz",
+    "size_bytes": 3351,
+    "sha256": "5b2b4c8ed0cd4079469fc594690658a2c3667948687e7f2c527959b1325cdc93",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/microbot-it/library/Microbot_Motor_Shield/1.0.0/Microbot_Motor_Shield-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/microbot-it/library/Microbot_Motor_Shield/1.0.0/Microbot_Motor_Shield-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

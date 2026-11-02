@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-sierrasmith71",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-sierrasmith71/library/VarSpeedServo/0.0.0+sha.8bdb46e629b9/VarSpeedServo-0.0.0+sha.8bdb46e629b9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VarSpeedServo-0.0.0+sha.8bdb46e629b9.tar.gz",
+    "size_bytes": 2974,
+    "sha256": "53e3b13756a0ac7d9dfdc7589efbf816090b7e092ceb9f48d7aac777d2a8c61c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sierrasmith71/library/VarSpeedServo/0.0.0%2Bsha.8bdb46e629b9/VarSpeedServo-0.0.0%2Bsha.8bdb46e629b9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sierrasmith71/library/VarSpeedServo/0.0.0%2Bsha.8bdb46e629b9/VarSpeedServo-0.0.0%2Bsha.8bdb46e629b9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

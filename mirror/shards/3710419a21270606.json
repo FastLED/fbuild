@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/adotal",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "adotal/library/Adafruit%20MCP23017%20Arduino%20Library/2.3.2/AdafruitMCP23017ArduinoLibrary-2.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AdafruitMCP23017ArduinoLibrary-2.3.2.tar.gz",
+    "size_bytes": 10727,
+    "sha256": "efc23bea0ec7d678e77733e23fe8546eb67c8aef66d478f78684c9031733817b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/adotal/library/Adafruit%2520MCP23017%2520Arduino%2520Library/2.3.2/AdafruitMCP23017ArduinoLibrary-2.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/adotal/library/Adafruit%20MCP23017%20Arduino%20Library/2.3.2/AdafruitMCP23017ArduinoLibrary-2.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "adotal/library/Adafruit%20MCP23017%20Arduino%20Library/2.3.3/AdafruitMCP23017ArduinoLibrary-2.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AdafruitMCP23017ArduinoLibrary-2.3.3.tar.gz",
+    "size_bytes": 9747,
+    "sha256": "bb87bfc0acc9805c096e9dd65a5c4e1ed62f02846b1838769f8ec5b1ce6e7e4b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/adotal/library/Adafruit%2520MCP23017%2520Arduino%2520Library/2.3.3/AdafruitMCP23017ArduinoLibrary-2.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/adotal/library/Adafruit%20MCP23017%20Arduino%20Library/2.3.3/AdafruitMCP23017ArduinoLibrary-2.3.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

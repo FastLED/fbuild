@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/2ni",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "2ni/library/ESP32-RTTTL/1.3/ESP32-RTTTL-1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-RTTTL-1.3.tar.gz",
+    "size_bytes": 5827,
+    "sha256": "43bf307c7944ae60e08a2cb812cb4b460769eb0d614f93073ff08bf67a3f9645",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/2ni/library/ESP32-RTTTL/1.3/ESP32-RTTTL-1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/2ni/library/ESP32-RTTTL/1.3/ESP32-RTTTL-1.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

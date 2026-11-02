@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kovalrm",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kovalrm/library/KRM/1.0.0/KRM-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KRM-1.0.0.tar.gz",
+    "size_bytes": 10766,
+    "sha256": "32ab96b24dc424c2a6740b8990e2149498cd95b1817e3cf174bc76e0d31870ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kovalrm/library/KRM/1.0.0/KRM-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kovalrm/library/KRM/1.0.0/KRM-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

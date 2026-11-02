@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/toldotechnik",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "toldotechnik/library/TTBOUNCE/1.5.1/TTBOUNCE-1.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TTBOUNCE-1.5.1.tar.gz",
+    "size_bytes": 7486,
+    "sha256": "5af9de4708b0bf2ffa8dfa103206cc104ef57f7562bb0417bcbe689bf42bbd16",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/toldotechnik/library/TTBOUNCE/1.5.1/TTBOUNCE-1.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/toldotechnik/library/TTBOUNCE/1.5.1/TTBOUNCE-1.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "toldotechnik/library/TTLED/1.1.0/TTLED-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TTLED-1.1.0.tar.gz",
+    "size_bytes": 6665,
+    "sha256": "dd3db472c7e112ab7ba5b3be460a4a24c1c8f1fdf039192d7a649ff8a95f59ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/toldotechnik/library/TTLED/1.1.0/TTLED-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/toldotechnik/library/TTLED/1.1.0/TTLED-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "toldotechnik/library/TTSi7006/1.0.0/TTSi7006-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TTSi7006-1.0.0.tar.gz",
+    "size_bytes": 2394,
+    "sha256": "26a29a2341bb6ff7dcc4ad0f8d1795e81cce772d1f3d53b193dde3a3bd696b01",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/toldotechnik/library/TTSi7006/1.0.0/TTSi7006-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/toldotechnik/library/TTSi7006/1.0.0/TTSi7006-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "toldotechnik/library/TTVCNL4040/1.0.0/TTVCNL4040-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TTVCNL4040-1.0.0.tar.gz",
+    "size_bytes": 11739,
+    "sha256": "7fc6b8479916a44157a5d9d6a82d7abda616996f69fde2188f45eb9dfb1f4e6e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/toldotechnik/library/TTVCNL4040/1.0.0/TTVCNL4040-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/toldotechnik/library/TTVCNL4040/1.0.0/TTVCNL4040-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

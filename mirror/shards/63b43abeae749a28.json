@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-j3",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-j3/library/BMI160/0.0.0+sha.0ae99e97bcf5/BMI160-0.0.0+sha.0ae99e97bcf5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMI160-0.0.0+sha.0ae99e97bcf5.tar.gz",
+    "size_bytes": 8917,
+    "sha256": "753b9738bfd3cb86945027edb635e59c821e85100a8890c668943fbcb4d94a72",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-j3/library/BMI160/0.0.0%2Bsha.0ae99e97bcf5/BMI160-0.0.0%2Bsha.0ae99e97bcf5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-j3/library/BMI160/0.0.0%2Bsha.0ae99e97bcf5/BMI160-0.0.0%2Bsha.0ae99e97bcf5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-j3/library/ard2pmod/0.0.0+sha.6d82914432e2/ard2pmod-0.0.0+sha.6d82914432e2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ard2pmod-0.0.0+sha.6d82914432e2.tar.gz",
+    "size_bytes": 3053,
+    "sha256": "7a469a23be583094075a89f1f0ad693c68dcf587970d9889022275d99ead8664",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-j3/library/ard2pmod/0.0.0%2Bsha.6d82914432e2/ard2pmod-0.0.0%2Bsha.6d82914432e2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-j3/library/ard2pmod/0.0.0%2Bsha.6d82914432e2/ard2pmod-0.0.0%2Bsha.6d82914432e2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-j3/library/ds3231/0.0.0+sha.e1c0f63595d9/ds3231-0.0.0+sha.e1c0f63595d9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ds3231-0.0.0+sha.e1c0f63595d9.tar.gz",
+    "size_bytes": 5614,
+    "sha256": "3af14eefe927bac117a914e8bc651c078c65cc3cd01801df9a9cc3684182d085",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-j3/library/ds3231/0.0.0%2Bsha.e1c0f63595d9/ds3231-0.0.0%2Bsha.e1c0f63595d9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-j3/library/ds3231/0.0.0%2Bsha.e1c0f63595d9/ds3231-0.0.0%2Bsha.e1c0f63595d9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

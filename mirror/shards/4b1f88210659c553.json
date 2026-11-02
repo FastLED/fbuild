@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jonfreeman",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jonfreeman/library/AsyncSerial/0.0.0+sha.e8b153dcb239/AsyncSerial-0.0.0+sha.e8b153dcb239.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncSerial-0.0.0+sha.e8b153dcb239.tar.gz",
+    "size_bytes": 3369,
+    "sha256": "a5de488f84712c0f4a2b2d0a8007fb9ec4872af44365b36d8af52fe4116662fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jonfreeman/library/AsyncSerial/0.0.0%2Bsha.e8b153dcb239/AsyncSerial-0.0.0%2Bsha.e8b153dcb239.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jonfreeman/library/AsyncSerial/0.0.0%2Bsha.e8b153dcb239/AsyncSerial-0.0.0%2Bsha.e8b153dcb239.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jonfreeman/library/Touch_tft/0.0.0+sha.ab6e91032412/Touch_tft-0.0.0+sha.ab6e91032412.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Touch_tft-0.0.0+sha.ab6e91032412.tar.gz",
+    "size_bytes": 3569,
+    "sha256": "7e3d9ca9d326e2e6c2f57a05790c60002f0485d8cfac7b385698ce504892b24f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jonfreeman/library/Touch_tft/0.0.0%2Bsha.ab6e91032412/Touch_tft-0.0.0%2Bsha.ab6e91032412.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jonfreeman/library/Touch_tft/0.0.0%2Bsha.ab6e91032412/Touch_tft-0.0.0%2Bsha.ab6e91032412.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jonfreeman/library/circular_buffer/0.0.0+sha.7ef4c240d5e3/circular_buffer-0.0.0+sha.7ef4c240d5e3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "circular_buffer-0.0.0+sha.7ef4c240d5e3.tar.gz",
+    "size_bytes": 2514,
+    "sha256": "368f8cfc19af14a562004564c03c6be34988d1398850456324f3f4c2d7afdd8a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jonfreeman/library/circular_buffer/0.0.0%2Bsha.7ef4c240d5e3/circular_buffer-0.0.0%2Bsha.7ef4c240d5e3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jonfreeman/library/circular_buffer/0.0.0%2Bsha.7ef4c240d5e3/circular_buffer-0.0.0%2Bsha.7ef4c240d5e3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

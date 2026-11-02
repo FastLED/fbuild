@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/scheintodx",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "scheintodx/library/BulliBus/0.0.1/BulliBus-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BulliBus-0.0.1.tar.gz",
+    "size_bytes": 13968,
+    "sha256": "07899badd22e0f0b01b6e59cda431bff3041c93d101a3e0ccd247c741717a2de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/scheintodx/library/BulliBus/0.0.1/BulliBus-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/scheintodx/library/BulliBus/0.0.1/BulliBus-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "scheintodx/library/Knobs/1.0.0/Knobs-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Knobs-1.0.0.tar.gz",
+    "size_bytes": 14542,
+    "sha256": "7251d7db3dfe6bccc9bc49d6c4978871c7abc1515f87f2bdad21530a2a648ede",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/scheintodx/library/Knobs/1.0.0/Knobs-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/scheintodx/library/Knobs/1.0.0/Knobs-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

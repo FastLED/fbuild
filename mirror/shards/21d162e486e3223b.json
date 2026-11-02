@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kadivar",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kadivar/library/CHAGAT-IOT-ESP32/1.0.0/CHAGAT-IOT-ESP32-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CHAGAT-IOT-ESP32-1.0.0.tar.gz",
+    "size_bytes": 909,
+    "sha256": "09d7eb1c64a1a032816e361e4380bd42b9055a473d1d7b8f497205ef7ec0fae1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kadivar/library/CHAGAT-IOT-ESP32/1.0.0/CHAGAT-IOT-ESP32-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kadivar/library/CHAGAT-IOT-ESP32/1.0.0/CHAGAT-IOT-ESP32-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

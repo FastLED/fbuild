@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-yongqiangwang",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-yongqiangwang/library/SHTx/0.0.0+sha.cd8e210049b9/SHTx-0.0.0+sha.cd8e210049b9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SHTx-0.0.0+sha.cd8e210049b9.tar.gz",
+    "size_bytes": 5297,
+    "sha256": "d9d43155f5b264d6ca02db2d51d464ccc16d097cc8b099e96f86aa8c18e6558d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yongqiangwang/library/SHTx/0.0.0%2Bsha.cd8e210049b9/SHTx-0.0.0%2Bsha.cd8e210049b9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yongqiangwang/library/SHTx/0.0.0%2Bsha.cd8e210049b9/SHTx-0.0.0%2Bsha.cd8e210049b9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

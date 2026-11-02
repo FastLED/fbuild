@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/practicalarduino",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "practicalarduino/library/SHT1x/0.0.0-alpha+sha.be7042c3e3/SHT1x-0.0.0-alphasha.be7042c3e3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SHT1x-0.0.0-alphasha.be7042c3e3.tar.gz",
+    "size_bytes": 3786,
+    "sha256": "4c7a14c5c833608a4219f87094892511bc57e1c2c76adaee2d76a67e2561c510",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/practicalarduino/library/SHT1x/0.0.0-alpha%2Bsha.be7042c3e3/SHT1x-0.0.0-alphasha.be7042c3e3.tar.gz",
+     "https://dl.registry.platformio.org/download/practicalarduino/library/SHT1x/0.0.0-alpha%2Bsha.be7042c3e3/SHT1x-0.0.0-alphasha.be7042c3e3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

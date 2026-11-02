@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/akilaid",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "akilaid/library/Blifi/0.1.1/Blifi-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Blifi-0.1.1.tar.gz",
+    "size_bytes": 11505,
+    "sha256": "c0ee71b88323389ba261bd7776d2e75636f22554b8076437bef581c272f2b73a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/akilaid/library/Blifi/0.1.1/Blifi-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/akilaid/library/Blifi/0.1.1/Blifi-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "akilaid/library/Blifi/0.3.0/Blifi-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Blifi-0.3.0.tar.gz",
+    "size_bytes": 13094,
+    "sha256": "688f8162fab427f0dccf317b8cd450ee8518a9f698898835657593fa1688ae33",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/akilaid/library/Blifi/0.3.0/Blifi-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/akilaid/library/Blifi/0.3.0/Blifi-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "akilaid/library/Blifi/0.5.0/Blifi-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Blifi-0.5.0.tar.gz",
+    "size_bytes": 13806,
+    "sha256": "5d574e7083ce450f36f6cbbda7864b1e000d172c734bf57dfc0a6dd72c34f017",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/akilaid/library/Blifi/0.5.0/Blifi-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/akilaid/library/Blifi/0.5.0/Blifi-0.5.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,165 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/piruetasxyz",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "piruetasxyz/library/Boton/0.0.1/Boton-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Boton-0.0.1.tar.gz",
+    "size_bytes": 2231,
+    "sha256": "497a416b18676173b08c98f7d6de91dba2667eaeeb26376b8532efdb55cca0f3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/piruetasxyz/library/Boton/0.0.1/Boton-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/piruetasxyz/library/Boton/0.0.1/Boton-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "piruetasxyz/library/Boton/0.0.3/Boton-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Boton-0.0.3.tar.gz",
+    "size_bytes": 4546,
+    "sha256": "a53860bc11ccc87696057018ca68a6ea854c80fd2bb30e7eff546af427473029",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/piruetasxyz/library/Boton/0.0.3/Boton-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/piruetasxyz/library/Boton/0.0.3/Boton-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "piruetasxyz/library/Boton/0.1.1/Boton-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Boton-0.1.1.tar.gz",
+    "size_bytes": 12021,
+    "sha256": "a1c2a6163b06c4ca92d02e7442bd29e71aa4ff75f51253f8d4900b6e497b0794",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/piruetasxyz/library/Boton/0.1.1/Boton-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/piruetasxyz/library/Boton/0.1.1/Boton-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "piruetasxyz/library/FrecuenciasMIDI/0.0.1/FrecuenciasMIDI-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FrecuenciasMIDI-0.0.1.tar.gz",
+    "size_bytes": 2068,
+    "sha256": "139a733f756b391d15fa24a99ea9ce8e19a63565649fab34b7414156871765af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/piruetasxyz/library/FrecuenciasMIDI/0.0.1/FrecuenciasMIDI-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/piruetasxyz/library/FrecuenciasMIDI/0.0.1/FrecuenciasMIDI-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "piruetasxyz/library/Microfono/0.1.0/Microfono-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Microfono-0.1.0.tar.gz",
+    "size_bytes": 13712,
+    "sha256": "de75834470f67c8162edce4923464292c08558d4be5eb808945218b22e46c22d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/piruetasxyz/library/Microfono/0.1.0/Microfono-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/piruetasxyz/library/Microfono/0.1.0/Microfono-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "piruetasxyz/library/NotasMIDI/0.0.3/NotasMIDI-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NotasMIDI-0.0.3.tar.gz",
+    "size_bytes": 3285,
+    "sha256": "ed5fd237eab98bcf45704e7c1dd016f9938effe1a8e29793055e2edf70e015b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/piruetasxyz/library/NotasMIDI/0.0.3/NotasMIDI-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/piruetasxyz/library/NotasMIDI/0.0.3/NotasMIDI-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "piruetasxyz/library/Pantalla12x8/0.0.4/Pantalla12x8-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pantalla12x8-0.0.4.tar.gz",
+    "size_bytes": 3485,
+    "sha256": "6dcaedc906e7a565106024c9932024eb4572af48586e2bff7c20e9aa77529d88",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/piruetasxyz/library/Pantalla12x8/0.0.4/Pantalla12x8-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/piruetasxyz/library/Pantalla12x8/0.0.4/Pantalla12x8-0.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "piruetasxyz/library/Perilla/0.0.1/Perilla-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Perilla-0.0.1.tar.gz",
+    "size_bytes": 2378,
+    "sha256": "fdcf5503f37bc34ed02d8abe2d2719123dc07d7bac3f30fa2d0b3d6700367d21",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/piruetasxyz/library/Perilla/0.0.1/Perilla-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/piruetasxyz/library/Perilla/0.0.1/Perilla-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "piruetasxyz/library/Perilla/0.1.0/Perilla-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Perilla-0.1.0.tar.gz",
+    "size_bytes": 11764,
+    "sha256": "71563af99fb21a4ae2aaa6c37389dc12846b615bb6a33796ad98dc0be62f757c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/piruetasxyz/library/Perilla/0.1.0/Perilla-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/piruetasxyz/library/Perilla/0.1.0/Perilla-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "piruetasxyz/library/Perilla/0.2.0/Perilla-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Perilla-0.2.0.tar.gz",
+    "size_bytes": 17520,
+    "sha256": "70adcb47c6a86ccea617a758a25a768b3a3c78563f0aab45c9386b7e0520c1ab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/piruetasxyz/library/Perilla/0.2.0/Perilla-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/piruetasxyz/library/Perilla/0.2.0/Perilla-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "piruetasxyz/library/Perilla/0.3.0/Perilla-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Perilla-0.3.0.tar.gz",
+    "size_bytes": 21219,
+    "sha256": "6000d7de31777b24d8cdad9e95e1856df078381b52bc8cc11581991becfaf73d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/piruetasxyz/library/Perilla/0.3.0/Perilla-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/piruetasxyz/library/Perilla/0.3.0/Perilla-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "piruetasxyz/library/maqui/0.0.6/maqui-0.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "maqui-0.0.6.tar.gz",
+    "size_bytes": 38733,
+    "sha256": "0b500d9de777e95aac258c77dd390d81f8cc4c751bba53936a94f96ee619e97c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/piruetasxyz/library/maqui/0.0.6/maqui-0.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/piruetasxyz/library/maqui/0.0.6/maqui-0.0.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

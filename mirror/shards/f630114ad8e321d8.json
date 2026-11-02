@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/itead",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "itead/library/ArduinoAPI/0.0.0+sha.1fec2e4c60e5/ArduinoAPI-0.0.0+sha.1fec2e4c60e5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoAPI-0.0.0+sha.1fec2e4c60e5.tar.gz",
+    "size_bytes": 9456,
+    "sha256": "46f6952e521ed8fa61f3b7702bc97eb12a8d63fe6feeec8d5e49da9e37ad1d16",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/itead/library/ArduinoAPI/0.0.0%2Bsha.1fec2e4c60e5/ArduinoAPI-0.0.0%2Bsha.1fec2e4c60e5.tar.gz",
+     "https://dl.registry.platformio.org/download/itead/library/ArduinoAPI/0.0.0%2Bsha.1fec2e4c60e5/ArduinoAPI-0.0.0%2Bsha.1fec2e4c60e5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "itead/library/Nextion/0.9.0/Nextion-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Nextion-0.9.0.tar.gz",
+    "size_bytes": 11043963,
+    "sha256": "98be6f26bbbfdd7b9a5ef97cdb67f81271ebe5547d9e83064547843f4c29cf46",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/itead/library/Nextion/0.9.0/Nextion-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/itead/library/Nextion/0.9.0/Nextion-0.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "itead/library/WeeESP8266/1.0.0/WeeESP8266-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WeeESP8266-1.0.0.tar.gz",
+    "size_bytes": 37477,
+    "sha256": "b9f271460cd36d65c18e3646b2f21fb829232920675af7259a05768611c34d3c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/itead/library/WeeESP8266/1.0.0/WeeESP8266-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/itead/library/WeeESP8266/1.0.0/WeeESP8266-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

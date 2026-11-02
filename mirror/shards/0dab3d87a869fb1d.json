@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/exmikupro",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "exmikupro/library/WiFiCaptive/0.2.0/WiFiCaptive-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFiCaptive-0.2.0.tar.gz",
+    "size_bytes": 5528,
+    "sha256": "2bee8e2d538e80bd5e05db2d4e5fcf6f6eabfbb9041aff24cabdd1f467a7942c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/exmikupro/library/WiFiCaptive/0.2.0/WiFiCaptive-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/exmikupro/library/WiFiCaptive/0.2.0/WiFiCaptive-0.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

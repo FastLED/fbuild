@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-programy1",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-programy1/library/thermistor/0.0.0+sha.424e85f62cd8/thermistor-0.0.0+sha.424e85f62cd8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "thermistor-0.0.0+sha.424e85f62cd8.tar.gz",
+    "size_bytes": 1692,
+    "sha256": "699e2556796534524e0f3fdc39371d31d8e517a533f7a71c9b34344c421a6030",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-programy1/library/thermistor/0.0.0%2Bsha.424e85f62cd8/thermistor-0.0.0%2Bsha.424e85f62cd8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-programy1/library/thermistor/0.0.0%2Bsha.424e85f62cd8/thermistor-0.0.0%2Bsha.424e85f62cd8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fortyseveneffects",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fortyseveneffects/library/MIDI%20Library/5.0.2/MIDILibrary-5.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MIDILibrary-5.0.2.tar.gz",
+    "size_bytes": 28389,
+    "sha256": "2269ddc2bdd3284ec1f895c1733ee67ff656182664d656f577bac02a164308fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fortyseveneffects/library/MIDI%2520Library/5.0.2/MIDILibrary-5.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/fortyseveneffects/library/MIDI%20Library/5.0.2/MIDILibrary-5.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fortyseveneffects/library/Serde/0.3.0/Serde-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Serde-0.3.0.tar.gz",
+    "size_bytes": 6015,
+    "sha256": "9e005438ea3b04cb6b395e90f2370bd96f2e52b8f1191831b3e3d316eee65bd4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fortyseveneffects/library/Serde/0.3.0/Serde-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fortyseveneffects/library/Serde/0.3.0/Serde-0.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

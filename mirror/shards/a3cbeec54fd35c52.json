@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gitlab-soruce",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gitlab-soruce/library/PimientoClockLib/0.0.5/PimientoClockLib-0.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PimientoClockLib-0.0.5.tar.gz",
+    "size_bytes": 29863,
+    "sha256": "632083cc220e2ff35011078731acd79a22105c26f81bf2ef6de45d861b93ad0c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gitlab-soruce/library/PimientoClockLib/0.0.5/PimientoClockLib-0.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/gitlab-soruce/library/PimientoClockLib/0.0.5/PimientoClockLib-0.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

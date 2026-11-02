@@ -1,0 +1,438 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/protocentral",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "protocentral/library/ProtoCentral%20ADS1220%2024-bit%20ADC%20Library/1.2.1/ProtoCentralADS122024-bitADCLibrary-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProtoCentralADS122024-bitADCLibrary-1.2.1.tar.gz",
+    "size_bytes": 11121,
+    "sha256": "c4b4f20d51443a4df2a9ed3bca507507bfcbbbb6320f5c9696db024789899910",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/protocentral/library/ProtoCentral%2520ADS1220%252024-bit%2520ADC%2520Library/1.2.1/ProtoCentralADS122024-bitADCLibrary-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/protocentral/library/ProtoCentral%20ADS1220%2024-bit%20ADC%20Library/1.2.1/ProtoCentralADS122024-bitADCLibrary-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "protocentral/library/ProtoCentral%20ADS1262%2032-bit%20precision%20ADC%20Library/2.0.0/ProtoCentralADS126232-bitprecisionADCLibrary-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProtoCentralADS126232-bitprecisionADCLibrary-2.0.0.tar.gz",
+    "size_bytes": 172351,
+    "sha256": "ef13fb63e5cba6906fb41b948daca3936b527ef6b3a19833df036274cb86c5de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/protocentral/library/ProtoCentral%2520ADS1262%252032-bit%2520precision%2520ADC%2520Library/2.0.0/ProtoCentralADS126232-bitprecisionADCLibrary-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/protocentral/library/ProtoCentral%20ADS1262%2032-bit%20precision%20ADC%20Library/2.0.0/ProtoCentralADS126232-bitprecisionADCLibrary-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "protocentral/library/ProtoCentral%20ADS1292R%20ECG%20and%20Respiration%20boards%20library/1.1.0/ProtoCentralADS1292RECGandRespirationboardslibrary-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProtoCentralADS1292RECGandRespirationboardslibrary-1.1.0.tar.gz",
+    "size_bytes": 13027,
+    "sha256": "39034236e31c5c08cc31ee0ad058457cdb43c6b4658745738aaa786c043074ec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/protocentral/library/ProtoCentral%2520ADS1292R%2520ECG%2520and%2520Respiration%2520boards%2520library/1.1.0/ProtoCentralADS1292RECGandRespirationboardslibrary-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/protocentral/library/ProtoCentral%20ADS1292R%20ECG%20and%20Respiration%20boards%20library/1.1.0/ProtoCentralADS1292RECGandRespirationboardslibrary-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "protocentral/library/ProtoCentral%20ADS1292R%20ECG%20and%20Respiration%20boards%20library/2.0.0/ProtoCentralADS1292RECGandRespirationboardslibrary-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProtoCentralADS1292RECGandRespirationboardslibrary-2.0.0.tar.gz",
+    "size_bytes": 35893,
+    "sha256": "8180e7acb7bbc1560020d23178968a86138c272ab849b0ddeb19966db8c65379",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/protocentral/library/ProtoCentral%2520ADS1292R%2520ECG%2520and%2520Respiration%2520boards%2520library/2.0.0/ProtoCentralADS1292RECGandRespirationboardslibrary-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/protocentral/library/ProtoCentral%20ADS1292R%20ECG%20and%20Respiration%20boards%20library/2.0.0/ProtoCentralADS1292RECGandRespirationboardslibrary-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "protocentral/library/ProtoCentral%20ADS1293%20ECG%20Library/1.1.0/ProtoCentralADS1293ECGLibrary-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProtoCentralADS1293ECGLibrary-1.1.0.tar.gz",
+    "size_bytes": 115844,
+    "sha256": "c1653a78e612325359fdd43f3688e4b658482f7dff9b76f4aa40845481e10c32",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/protocentral/library/ProtoCentral%2520ADS1293%2520ECG%2520Library/1.1.0/ProtoCentralADS1293ECGLibrary-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/protocentral/library/ProtoCentral%20ADS1293%20ECG%20Library/1.1.0/ProtoCentralADS1293ECGLibrary-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "protocentral/library/ProtoCentral%20ADS1293%20ECG%20Library/1.2.0/ProtoCentralADS1293ECGLibrary-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProtoCentralADS1293ECGLibrary-1.2.0.tar.gz",
+    "size_bytes": 115770,
+    "sha256": "2ea37029b607a3600416b8167e2a2377618f350bdcf4a5a7ffe9546397cd2f13",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/protocentral/library/ProtoCentral%2520ADS1293%2520ECG%2520Library/1.2.0/ProtoCentralADS1293ECGLibrary-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/protocentral/library/ProtoCentral%20ADS1293%20ECG%20Library/1.2.0/ProtoCentralADS1293ECGLibrary-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "protocentral/library/ProtoCentral%20ADS1293%20ECG%20Library/1.3.0/ProtoCentralADS1293ECGLibrary-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProtoCentralADS1293ECGLibrary-1.3.0.tar.gz",
+    "size_bytes": 116023,
+    "sha256": "29ba5d9c32925da016dd0641c6fb5b47ce41d811c07a3c39cfcdfca49d8e96b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/protocentral/library/ProtoCentral%2520ADS1293%2520ECG%2520Library/1.3.0/ProtoCentralADS1293ECGLibrary-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/protocentral/library/ProtoCentral%20ADS1293%20ECG%20Library/1.3.0/ProtoCentralADS1293ECGLibrary-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "protocentral/library/ProtoCentral%20ADS1293%20ECG%20Library/2.0.0/ProtoCentralADS1293ECGLibrary-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProtoCentralADS1293ECGLibrary-2.0.0.tar.gz",
+    "size_bytes": 39961,
+    "sha256": "2756d89f49021271b9c08594de4377716123c4a3af9821ed455395f80008d90c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/protocentral/library/ProtoCentral%2520ADS1293%2520ECG%2520Library/2.0.0/ProtoCentralADS1293ECGLibrary-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/protocentral/library/ProtoCentral%20ADS1293%20ECG%20Library/2.0.0/ProtoCentralADS1293ECGLibrary-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "protocentral/library/ProtoCentral%20AFE4490%20PPG%20and%20SpO2%20boards%20library/1.4.0/ProtoCentralAFE4490PPGandSpO2boardslibrary-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProtoCentralAFE4490PPGandSpO2boardslibrary-1.4.0.tar.gz",
+    "size_bytes": 202466,
+    "sha256": "69b620dcee22d6fcff9bb3c69741b2d86b5d876fb90146d1e76f797d3d2b0438",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/protocentral/library/ProtoCentral%2520AFE4490%2520PPG%2520and%2520SpO2%2520boards%2520library/1.4.0/ProtoCentralAFE4490PPGandSpO2boardslibrary-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/protocentral/library/ProtoCentral%20AFE4490%20PPG%20and%20SpO2%20boards%20library/1.4.0/ProtoCentralAFE4490PPGandSpO2boardslibrary-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "protocentral/library/ProtoCentral%20AS6221/1.0.0/ProtoCentralAS6221-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProtoCentralAS6221-1.0.0.tar.gz",
+    "size_bytes": 8146,
+    "sha256": "d850b5964ee3c1b52ec5a4cb3347f3178ad374bc8804edfe3faf2598f2cce083",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/protocentral/library/ProtoCentral%2520AS6221/1.0.0/ProtoCentralAS6221-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/protocentral/library/ProtoCentral%20AS6221/1.0.0/ProtoCentralAS6221-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "protocentral/library/ProtoCentral%20FDC1004%20Capacitive%20Sensor%20Library/1.0.2/ProtoCentralFDC1004CapacitiveSensorLibrary-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProtoCentralFDC1004CapacitiveSensorLibrary-1.0.2.tar.gz",
+    "size_bytes": 86654,
+    "sha256": "f79162cc6fc12bf22456a668164bc041f73131b908753487ded3fa5114c0d1f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/protocentral/library/ProtoCentral%2520FDC1004%2520Capacitive%2520Sensor%2520Library/1.0.2/ProtoCentralFDC1004CapacitiveSensorLibrary-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/protocentral/library/ProtoCentral%20FDC1004%20Capacitive%20Sensor%20Library/1.0.2/ProtoCentralFDC1004CapacitiveSensorLibrary-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "protocentral/library/ProtoCentral%20HealthyPi%205/2.0.1/ProtoCentralHealthyPi5-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProtoCentralHealthyPi5-2.0.1.tar.gz",
+    "size_bytes": 65008,
+    "sha256": "904a4be0f68e277d108a2a81c2937fb86a7895f912ed2c59051820be2a628428",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/protocentral/library/ProtoCentral%2520HealthyPi%25205/2.0.1/ProtoCentralHealthyPi5-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/protocentral/library/ProtoCentral%20HealthyPi%205/2.0.1/ProtoCentralHealthyPi5-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "protocentral/library/ProtoCentral%20HealthyPi%205/2.1.1/ProtoCentralHealthyPi5-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProtoCentralHealthyPi5-2.1.1.tar.gz",
+    "size_bytes": 75723,
+    "sha256": "19800b07930531f49c6f6478f45a43fbe721519392e569ef8a215a9cb965eca8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/protocentral/library/ProtoCentral%2520HealthyPi%25205/2.1.1/ProtoCentralHealthyPi5-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/protocentral/library/ProtoCentral%20HealthyPi%205/2.1.1/ProtoCentralHealthyPi5-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "protocentral/library/ProtoCentral%20HealthyPi%20v4%20Library/0.3.2/ProtoCentralHealthyPiv4Library-0.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProtoCentralHealthyPiv4Library-0.3.2.tar.gz",
+    "size_bytes": 49816,
+    "sha256": "c39e237877ded21f1d87052aa6db182aaaac8258c10408a69c1eb498c4e82312",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/protocentral/library/ProtoCentral%2520HealthyPi%2520v4%2520Library/0.3.2/ProtoCentralHealthyPiv4Library-0.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/protocentral/library/ProtoCentral%20HealthyPi%20v4%20Library/0.3.2/ProtoCentralHealthyPiv4Library-0.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "protocentral/library/ProtoCentral%20MAX30001/2.0.0/ProtoCentralMAX30001-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProtoCentralMAX30001-2.0.0.tar.gz",
+    "size_bytes": 26606,
+    "sha256": "311348e4db4698981e2c10b69d7a869df0a3241f1da3218af319793f7eab76b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/protocentral/library/ProtoCentral%2520MAX30001/2.0.0/ProtoCentralMAX30001-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/protocentral/library/ProtoCentral%20MAX30001/2.0.0/ProtoCentralMAX30001-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "protocentral/library/ProtoCentral%20MAX30003%20ECG%20AFE%20Sensor%20Library/2.0.0/ProtoCentralMAX30003ECGAFESensorLibrary-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProtoCentralMAX30003ECGAFESensorLibrary-2.0.0.tar.gz",
+    "size_bytes": 10086,
+    "sha256": "77b8999185083ac64309b4caf1bd945eb161980c9b08c2dcea923f75f791e6aa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/protocentral/library/ProtoCentral%2520MAX30003%2520ECG%2520AFE%2520Sensor%2520Library/2.0.0/ProtoCentralMAX30003ECGAFESensorLibrary-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/protocentral/library/ProtoCentral%20MAX30003%20ECG%20AFE%20Sensor%20Library/2.0.0/ProtoCentralMAX30003ECGAFESensorLibrary-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "protocentral/library/ProtoCentral%20MAX30205%20Body%20Temperature%20Sensor%20Library/2.1.2/ProtoCentralMAX30205BodyTemperatureSensorLibrary-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProtoCentralMAX30205BodyTemperatureSensorLibrary-2.1.2.tar.gz",
+    "size_bytes": 184721,
+    "sha256": "2c9f8098ffe19c95f7634102f390219afac5ff13e8435e88b13bbdca1665721a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/protocentral/library/ProtoCentral%2520MAX30205%2520Body%2520Temperature%2520Sensor%2520Library/2.1.2/ProtoCentralMAX30205BodyTemperatureSensorLibrary-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/protocentral/library/ProtoCentral%20MAX30205%20Body%20Temperature%20Sensor%20Library/2.1.2/ProtoCentralMAX30205BodyTemperatureSensorLibrary-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "protocentral/library/ProtoCentral%20MAX30205%20Body%20Temperature%20Sensor%20Library/3.0.0/ProtoCentralMAX30205BodyTemperatureSensorLibrary-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProtoCentralMAX30205BodyTemperatureSensorLibrary-3.0.0.tar.gz",
+    "size_bytes": 101104,
+    "sha256": "16609159dd1b11dd12208ae07c442c042d92a38f6d0d78b700e6257c9b36a25c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/protocentral/library/ProtoCentral%2520MAX30205%2520Body%2520Temperature%2520Sensor%2520Library/3.0.0/ProtoCentralMAX30205BodyTemperatureSensorLibrary-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/protocentral/library/ProtoCentral%20MAX30205%20Body%20Temperature%20Sensor%20Library/3.0.0/ProtoCentralMAX30205BodyTemperatureSensorLibrary-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "protocentral/library/ProtoCentral%20MAX86150%20PPG%20and%20ECG%20IC%20library/0.1.4/ProtoCentralMAX86150PPGandECGIClibrary-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProtoCentralMAX86150PPGandECGIClibrary-0.1.4.tar.gz",
+    "size_bytes": 11629,
+    "sha256": "e1974d64d5258ae5fce7005420cf526c1b16fde2fba647db7d0a514b692fe94d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/protocentral/library/ProtoCentral%2520MAX86150%2520PPG%2520and%2520ECG%2520IC%2520library/0.1.4/ProtoCentralMAX86150PPGandECGIClibrary-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/protocentral/library/ProtoCentral%20MAX86150%20PPG%20and%20ECG%20IC%20library/0.1.4/ProtoCentralMAX86150PPGandECGIClibrary-0.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "protocentral/library/ProtoCentral%20MLX90632%20Non-contact%20temperature%20Library/1.0.0/ProtoCentralMLX90632Non-contacttemperatureLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProtoCentralMLX90632Non-contacttemperatureLibrary-1.0.0.tar.gz",
+    "size_bytes": 106259,
+    "sha256": "eb6a670c6419bca6ec77111657482b1a3e36a86a828c38ba58cb4c6f21501a47",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/protocentral/library/ProtoCentral%2520MLX90632%2520Non-contact%2520temperature%2520Library/1.0.0/ProtoCentralMLX90632Non-contacttemperatureLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/protocentral/library/ProtoCentral%20MLX90632%20Non-contact%20temperature%20Library/1.0.0/ProtoCentralMLX90632Non-contacttemperatureLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "protocentral/library/ProtoCentral%20Pulse%20Express%20SpO2%20Heartrate%20and%20BPT%20sensor/1.0.3/ProtoCentralPulseExpressSpO2HeartrateandBPTsensor-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProtoCentralPulseExpressSpO2HeartrateandBPTsensor-1.0.3.tar.gz",
+    "size_bytes": 9607,
+    "sha256": "6171cfbd2f7a77f1deff91563976f769d99781306daaebece156650eb2b63eac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/protocentral/library/ProtoCentral%2520Pulse%2520Express%2520SpO2%2520Heartrate%2520and%2520BPT%2520sensor/1.0.3/ProtoCentralPulseExpressSpO2HeartrateandBPTsensor-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/protocentral/library/ProtoCentral%20Pulse%20Express%20SpO2%20Heartrate%20and%20BPT%20sensor/1.0.3/ProtoCentralPulseExpressSpO2HeartrateandBPTsensor-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "protocentral/library/ProtoCentral%20ST1VAFE3BX/1.0.2/ProtoCentralST1VAFE3BX-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProtoCentralST1VAFE3BX-1.0.2.tar.gz",
+    "size_bytes": 21905,
+    "sha256": "63bb29952e7484d472e47dbde5f07ad50cfd9f85f4daf6c43f4f4fc47099ae96",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/protocentral/library/ProtoCentral%2520ST1VAFE3BX/1.0.2/ProtoCentralST1VAFE3BX-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/protocentral/library/ProtoCentral%20ST1VAFE3BX/1.0.2/ProtoCentralST1VAFE3BX-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "protocentral/library/ProtoCentral%20ST1VAFE3BX/1.1.0/ProtoCentralST1VAFE3BX-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProtoCentralST1VAFE3BX-1.1.0.tar.gz",
+    "size_bytes": 22569,
+    "sha256": "db8c10afd7af35aa6de58b21e47ab8e87192cd6fe7ce23908535eb67ec0e0616",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/protocentral/library/ProtoCentral%2520ST1VAFE3BX/1.1.0/ProtoCentralST1VAFE3BX-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/protocentral/library/ProtoCentral%20ST1VAFE3BX/1.1.0/ProtoCentralST1VAFE3BX-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "protocentral/library/ProtoCentral%20ST1VAFE3BX/1.1.1/ProtoCentralST1VAFE3BX-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProtoCentralST1VAFE3BX-1.1.1.tar.gz",
+    "size_bytes": 22592,
+    "sha256": "172d8d4220904550a2b12388d0df36b7fe48fb068226b7f60dc7b665a05266d7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/protocentral/library/ProtoCentral%2520ST1VAFE3BX/1.1.1/ProtoCentralST1VAFE3BX-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/protocentral/library/ProtoCentral%20ST1VAFE3BX/1.1.1/ProtoCentralST1VAFE3BX-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "protocentral/library/ProtoCentral%20TLA20xx/2.0.1/ProtoCentralTLA20xx-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProtoCentralTLA20xx-2.0.1.tar.gz",
+    "size_bytes": 15412,
+    "sha256": "f7a887d306477f7c77ae811baa15f533400ff96d33111f97098cf1fc590677d5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/protocentral/library/ProtoCentral%2520TLA20xx/2.0.1/ProtoCentralTLA20xx-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/protocentral/library/ProtoCentral%20TLA20xx/2.0.1/ProtoCentralTLA20xx-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "protocentral/library/ProtoCentral_FDC2214_Capacitance/1.0.0/ProtoCentral_FDC2214_Capacitance-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProtoCentral_FDC2214_Capacitance-1.0.0.tar.gz",
+    "size_bytes": 16962,
+    "sha256": "08da505242546ab15d512ab112486752bd734436016ee6a27290911593ef639e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/protocentral/library/ProtoCentral_FDC2214_Capacitance/1.0.0/ProtoCentral_FDC2214_Capacitance-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/protocentral/library/ProtoCentral_FDC2214_Capacitance/1.0.0/ProtoCentral_FDC2214_Capacitance-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "protocentral/library/ProtoCentral_FDC2214_Capacitance/1.0.1/ProtoCentral_FDC2214_Capacitance-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProtoCentral_FDC2214_Capacitance-1.0.1.tar.gz",
+    "size_bytes": 16362,
+    "sha256": "4ffb824cc46626b9da551ad2c290b6fb36d5c3200ebfb580a336b949f98b1247",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/protocentral/library/ProtoCentral_FDC2214_Capacitance/1.0.1/ProtoCentral_FDC2214_Capacitance-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/protocentral/library/ProtoCentral_FDC2214_Capacitance/1.0.1/ProtoCentral_FDC2214_Capacitance-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "protocentral/library/ProtoCentral_TMF8829_dToF_Sensor_Library/1.0.0/ProtoCentral_TMF8829_dToF_Sensor_Library-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProtoCentral_TMF8829_dToF_Sensor_Library-1.0.0.tar.gz",
+    "size_bytes": 51692,
+    "sha256": "83c2cbfd0c0c1315da051dbd4f113350e684ba56642e01980c314ce0c157ac0b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/protocentral/library/ProtoCentral_TMF8829_dToF_Sensor_Library/1.0.0/ProtoCentral_TMF8829_dToF_Sensor_Library-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/protocentral/library/ProtoCentral_TMF8829_dToF_Sensor_Library/1.0.0/ProtoCentral_TMF8829_dToF_Sensor_Library-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "protocentral/library/SensythingCore/0.1.0/SensythingCore-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensythingCore-0.1.0.tar.gz",
+    "size_bytes": 49343,
+    "sha256": "b6f8cf46ed9627386a833894df66f83bb8b70cad0edd54ee9844e4d010722211",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/protocentral/library/SensythingCore/0.1.0/SensythingCore-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/protocentral/library/SensythingCore/0.1.0/SensythingCore-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "protocentral/library/SensythingCore/0.1.2/SensythingCore-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensythingCore-0.1.2.tar.gz",
+    "size_bytes": 58924,
+    "sha256": "f30fe3050f7f018ac45dfe73d0780f038d27bc0a86af26faab188213177c1166",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/protocentral/library/SensythingCore/0.1.2/SensythingCore-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/protocentral/library/SensythingCore/0.1.2/SensythingCore-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "protocentral/library/SensythingCore/0.2.0/SensythingCore-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensythingCore-0.2.0.tar.gz",
+    "size_bytes": 63978,
+    "sha256": "4c4208d9a252572ee05b8577a6737b68631aae78cc2c466c2aa52e9da81021fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/protocentral/library/SensythingCore/0.2.0/SensythingCore-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/protocentral/library/SensythingCore/0.2.0/SensythingCore-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "protocentral/library/SensythingCore/1.0.0/SensythingCore-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensythingCore-1.0.0.tar.gz",
+    "size_bytes": 66428,
+    "sha256": "e544d0e39a8cffd7d0b75826208a4aee9c9961a762e2c401a95f47c33bbf1bd5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/protocentral/library/SensythingCore/1.0.0/SensythingCore-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/protocentral/library/SensythingCore/1.0.0/SensythingCore-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "protocentral/library/protocentral_tinygsr/1.0.0/protocentral_tinygsr-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "protocentral_tinygsr-1.0.0.tar.gz",
+    "size_bytes": 19144,
+    "sha256": "f0054ba35e5b8d52f2dbbdd7ff622cb7cfd0bdd622ac1a054af69385468c7427",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/protocentral/library/protocentral_tinygsr/1.0.0/protocentral_tinygsr-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/protocentral/library/protocentral_tinygsr/1.0.0/protocentral_tinygsr-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

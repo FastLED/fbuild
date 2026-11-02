@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-nxp",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-nxp/library/FXOS8700Q/0.0.0+sha.aee7dea904e2/FXOS8700Q-0.0.0+sha.aee7dea904e2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FXOS8700Q-0.0.0+sha.aee7dea904e2.tar.gz",
+    "size_bytes": 3490,
+    "sha256": "5a7186a1961366d574dc751e3c8b3ab3b5bfb0f87d5d2bdaf61c80fea73ef5ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nxp/library/FXOS8700Q/0.0.0%2Bsha.aee7dea904e2/FXOS8700Q-0.0.0%2Bsha.aee7dea904e2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nxp/library/FXOS8700Q/0.0.0%2Bsha.aee7dea904e2/FXOS8700Q-0.0.0%2Bsha.aee7dea904e2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nxp/library/MAG3110/0.0.0+sha.4194a41cfd16/MAG3110-0.0.0+sha.4194a41cfd16.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAG3110-0.0.0+sha.4194a41cfd16.tar.gz",
+    "size_bytes": 2227,
+    "sha256": "14c62af613e2680a58367c651e603efd9d78914d83984bfd2fb755f68720abc3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nxp/library/MAG3110/0.0.0%2Bsha.4194a41cfd16/MAG3110-0.0.0%2Bsha.4194a41cfd16.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nxp/library/MAG3110/0.0.0%2Bsha.4194a41cfd16/MAG3110-0.0.0%2Bsha.4194a41cfd16.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nxp/library/MMA8491/0.0.0+sha.ce9ae6fa9407/MMA8491-0.0.0+sha.ce9ae6fa9407.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MMA8491-0.0.0+sha.ce9ae6fa9407.tar.gz",
+    "size_bytes": 2075,
+    "sha256": "6ff29af3834a781237c7dba6c8cd851dc6aacc740a6d47618f43165e825cc337",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nxp/library/MMA8491/0.0.0%2Bsha.ce9ae6fa9407/MMA8491-0.0.0%2Bsha.ce9ae6fa9407.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nxp/library/MMA8491/0.0.0%2Bsha.ce9ae6fa9407/MMA8491-0.0.0%2Bsha.ce9ae6fa9407.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nxp/library/MMA8652FC/0.0.0+sha.ccaeb5d75dc2/MMA8652FC-0.0.0+sha.ccaeb5d75dc2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MMA8652FC-0.0.0+sha.ccaeb5d75dc2.tar.gz",
+    "size_bytes": 2171,
+    "sha256": "382cf0465c1bd052bf85759c3fd415f1cc6b453d3857e0eb1572d6017cb85b4c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nxp/library/MMA8652FC/0.0.0%2Bsha.ccaeb5d75dc2/MMA8652FC-0.0.0%2Bsha.ccaeb5d75dc2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nxp/library/MMA8652FC/0.0.0%2Bsha.ccaeb5d75dc2/MMA8652FC-0.0.0%2Bsha.ccaeb5d75dc2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nxp/library/MPL3115A2/0.0.0+sha.c705222de18d/MPL3115A2-0.0.0+sha.c705222de18d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPL3115A2-0.0.0+sha.c705222de18d.tar.gz",
+    "size_bytes": 2213,
+    "sha256": "20ccaa2852596e8b7c8eccf0a1787440d52e2884de1e0e4bfd660e424379ceb6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nxp/library/MPL3115A2/0.0.0%2Bsha.c705222de18d/MPL3115A2-0.0.0%2Bsha.c705222de18d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nxp/library/MPL3115A2/0.0.0%2Bsha.c705222de18d/MPL3115A2-0.0.0%2Bsha.c705222de18d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nxp/library/fsl_phy_mcr20a/0.0.0+sha.764779eedf2d/fsl_phy_mcr20a-0.0.0+sha.764779eedf2d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "fsl_phy_mcr20a-0.0.0+sha.764779eedf2d.tar.gz",
+    "size_bytes": 72618,
+    "sha256": "d036ea061ff5ebd3f60d09f2b7b2e7912991909a5d2fc863847f1c063e5d371a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nxp/library/fsl_phy_mcr20a/0.0.0%2Bsha.764779eedf2d/fsl_phy_mcr20a-0.0.0%2Bsha.764779eedf2d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nxp/library/fsl_phy_mcr20a/0.0.0%2Bsha.764779eedf2d/fsl_phy_mcr20a-0.0.0%2Bsha.764779eedf2d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

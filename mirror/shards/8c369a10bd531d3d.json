@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-dreamworker",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-dreamworker/library/PCA9685PWM/0.0.0+sha.7f3c3ac6b20b/PCA9685PWM-0.0.0+sha.7f3c3ac6b20b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCA9685PWM-0.0.0+sha.7f3c3ac6b20b.tar.gz",
+    "size_bytes": 2288,
+    "sha256": "66de9d85e5fc5b927ed8fb64c73b5efb1cb17af550bced876cf9a6120c984d09",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dreamworker/library/PCA9685PWM/0.0.0%2Bsha.7f3c3ac6b20b/PCA9685PWM-0.0.0%2Bsha.7f3c3ac6b20b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dreamworker/library/PCA9685PWM/0.0.0%2Bsha.7f3c3ac6b20b/PCA9685PWM-0.0.0%2Bsha.7f3c3ac6b20b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

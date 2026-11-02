@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-mbed-unsupported",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-mbed-unsupported/library/SPIHalfDuplex/0.0.0+sha.e9b41fc7d351/SPIHalfDuplex-0.0.0+sha.e9b41fc7d351.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SPIHalfDuplex-0.0.0+sha.e9b41fc7d351.tar.gz",
+    "size_bytes": 2741,
+    "sha256": "f249c706e0932104f2b2435c156183e4982627602609877412d7f34775731b79",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mbed-unsupported/library/SPIHalfDuplex/0.0.0%2Bsha.e9b41fc7d351/SPIHalfDuplex-0.0.0%2Bsha.e9b41fc7d351.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mbed-unsupported/library/SPIHalfDuplex/0.0.0%2Bsha.e9b41fc7d351/SPIHalfDuplex-0.0.0%2Bsha.e9b41fc7d351.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-mbed-unsupported/library/SerialHalfDuplex/0.0.0+sha.7802a25daf3b/SerialHalfDuplex-0.0.0+sha.7802a25daf3b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialHalfDuplex-0.0.0+sha.7802a25daf3b.tar.gz",
+    "size_bytes": 3421,
+    "sha256": "a6cb1d8150f41a97f1524b1157aec0b4888ecf1c2bad427c4cfa888258aa63e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mbed-unsupported/library/SerialHalfDuplex/0.0.0%2Bsha.7802a25daf3b/SerialHalfDuplex-0.0.0%2Bsha.7802a25daf3b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mbed-unsupported/library/SerialHalfDuplex/0.0.0%2Bsha.7802a25daf3b/SerialHalfDuplex-0.0.0%2Bsha.7802a25daf3b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

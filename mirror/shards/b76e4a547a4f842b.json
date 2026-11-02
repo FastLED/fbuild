@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/martin2250",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "martin2250/library/ADCTouch/1.0.4/ADCTouch-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADCTouch-1.0.4.tar.gz",
+    "size_bytes": 3666,
+    "sha256": "c8fbfb8bd22dbdda6d18673121e419a9bb6e9d03eb06420d3718479a0c74c566",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martin2250/library/ADCTouch/1.0.4/ADCTouch-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/martin2250/library/ADCTouch/1.0.4/ADCTouch-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

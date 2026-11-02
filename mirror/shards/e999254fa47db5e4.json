@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/codewithher",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "codewithher/library/CC-Lantern/1.4.5/CC-Lantern-1.4.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CC-Lantern-1.4.5.tar.gz",
+    "size_bytes": 26446,
+    "sha256": "e78c3721a70f110ac8911e5fb05379a9eae032fc9daab4c25396efb49ed61d44",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codewithher/library/CC-Lantern/1.4.5/CC-Lantern-1.4.5.tar.gz",
+     "https://dl.registry.platformio.org/download/codewithher/library/CC-Lantern/1.4.5/CC-Lantern-1.4.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

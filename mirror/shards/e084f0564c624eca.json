@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jscrane",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jscrane/library/Interrupted/2.0.0/Interrupted-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Interrupted-2.0.0.tar.gz",
+    "size_bytes": 23216,
+    "sha256": "dac96ac5d6f67e29f95c7240361eb7132facf5e802777b92fa6189bbcfc8a9a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jscrane/library/Interrupted/2.0.0/Interrupted-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jscrane/library/Interrupted/2.0.0/Interrupted-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jscrane/library/TTS/1.0.0/TTS-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TTS-1.0.0.tar.gz",
+    "size_bytes": 113288,
+    "sha256": "9f936974d6bf5776e59fd5cf795a98faf996ddafc9fda55a7139fc6198b4d61a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jscrane/library/TTS/1.0.0/TTS-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jscrane/library/TTS/1.0.0/TTS-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jscrane/library/Tasks/1.0/Tasks-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Tasks-1.0.tar.gz",
+    "size_bytes": 9515,
+    "sha256": "4337c736b40a502932b6e3dfc5976b098b4c7cc4aa269567d03b48da48682372",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jscrane/library/Tasks/1.0/Tasks-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jscrane/library/Tasks/1.0/Tasks-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/wilmouths",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "wilmouths/library/LM35%20Sensor/1.0.1/LM35Sensor-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LM35Sensor-1.0.1.tar.gz",
+    "size_bytes": 218962,
+    "sha256": "7b4c17319ac81aaa0703161eda3353c29c3fcf1f271996f454ce4c09fd4274b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wilmouths/library/LM35%2520Sensor/1.0.1/LM35Sensor-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/wilmouths/library/LM35%20Sensor/1.0.1/LM35Sensor-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wilmouths/library/RGB/1.0.10/RGB-1.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RGB-1.0.10.tar.gz",
+    "size_bytes": 15950,
+    "sha256": "ec715ea327ec71dbfabacdcff7ef917f13e21d82e61545119fb23c2b8c634b48",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wilmouths/library/RGB/1.0.10/RGB-1.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/wilmouths/library/RGB/1.0.10/RGB-1.0.10.tar.gz"
+    ]
+   }
+  }
+ ]
+}

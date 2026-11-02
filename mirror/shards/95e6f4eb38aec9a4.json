@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fraunhofer-ims",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fraunhofer-ims/library/AIfES%20for%20Arduino/2.2.1/AIfESforArduino-2.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AIfESforArduino-2.2.1.tar.gz",
+    "size_bytes": 224968,
+    "sha256": "21ef28bb3c2509a5f3b061a40dfd2a243f1403187b85ed1c75cd73565d3b40ac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fraunhofer-ims/library/AIfES%2520for%2520Arduino/2.2.1/AIfESforArduino-2.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fraunhofer-ims/library/AIfES%20for%20Arduino/2.2.1/AIfESforArduino-2.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

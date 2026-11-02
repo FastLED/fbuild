@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/homespan",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "homespan/library/HomeSpan/1.9.1/HomeSpan-1.9.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HomeSpan-1.9.1.tar.gz",
+    "size_bytes": 178674,
+    "sha256": "199639e7faa3a5d2b58cf3fac63a52c1b669a3e73918f53ac5c189caf343fd79",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/homespan/library/HomeSpan/1.9.1/HomeSpan-1.9.1.tar.gz",
+     "https://dl.registry.platformio.org/download/homespan/library/HomeSpan/1.9.1/HomeSpan-1.9.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "homespan/library/HomeSpan/2.0.0/HomeSpan-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HomeSpan-2.0.0.tar.gz",
+    "size_bytes": 180301,
+    "sha256": "25e81886c402c5a1b38242fe81b1735c9a7e01f5bd783ca316f1c01f90ec6f85",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/homespan/library/HomeSpan/2.0.0/HomeSpan-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/homespan/library/HomeSpan/2.0.0/HomeSpan-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "homespan/library/HomeSpan/2.1.4/HomeSpan-2.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HomeSpan-2.1.4.tar.gz",
+    "size_bytes": 190532,
+    "sha256": "906f1e5574c168b6e668c5151ae42636699a98fca763e57b86af99b634545974",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/homespan/library/HomeSpan/2.1.4/HomeSpan-2.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/homespan/library/HomeSpan/2.1.4/HomeSpan-2.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "homespan/library/HomeSpan/2.1.5/HomeSpan-2.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HomeSpan-2.1.5.tar.gz",
+    "size_bytes": 190625,
+    "sha256": "a31f4289547b0c770683b31f1def6aa807f91ca73ede8920750692a6f01efd9d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/homespan/library/HomeSpan/2.1.5/HomeSpan-2.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/homespan/library/HomeSpan/2.1.5/HomeSpan-2.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "homespan/library/HomeSpan/2.1.6/HomeSpan-2.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HomeSpan-2.1.6.tar.gz",
+    "size_bytes": 190852,
+    "sha256": "a47fe8ea8bb8469d5b2a7ef6a925b13ce9564d99b490f8ab4c098bb1049a9014",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/homespan/library/HomeSpan/2.1.6/HomeSpan-2.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/homespan/library/HomeSpan/2.1.6/HomeSpan-2.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "homespan/library/HomeSpan/2.1.7/HomeSpan-2.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HomeSpan-2.1.7.tar.gz",
+    "size_bytes": 186725,
+    "sha256": "ef380c18c4533206320b2078bf370406f75784db9c743acfd107d581f6f6b1f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/homespan/library/HomeSpan/2.1.7/HomeSpan-2.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/homespan/library/HomeSpan/2.1.7/HomeSpan-2.1.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "homespan/library/HomeSpan/2.1.8/HomeSpan-2.1.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HomeSpan-2.1.8.tar.gz",
+    "size_bytes": 189231,
+    "sha256": "0580d8d52c18a1fcfdceb4aa66be0844f62409b0cf0471dc17229bcfa4d5eb63",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/homespan/library/HomeSpan/2.1.8/HomeSpan-2.1.8.tar.gz",
+     "https://dl.registry.platformio.org/download/homespan/library/HomeSpan/2.1.8/HomeSpan-2.1.8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

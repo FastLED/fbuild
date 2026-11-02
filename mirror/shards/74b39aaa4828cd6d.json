@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/inficon-spot",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "inficon-spot/library/INFICON%20Spot%20Library/1.4.0/INFICONSpotLibrary-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "INFICONSpotLibrary-1.4.0.tar.gz",
+    "size_bytes": 4552,
+    "sha256": "201e5db5ae54bb29228159e1592eb44838b6bd7d6c0f7175790ebc4da68f1fcb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inficon-spot/library/INFICON%2520Spot%2520Library/1.4.0/INFICONSpotLibrary-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/inficon-spot/library/INFICON%20Spot%20Library/1.4.0/INFICONSpotLibrary-1.4.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

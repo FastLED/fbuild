@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/21koufler",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "21koufler/library/Ampel/1.0.1/Ampel-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ampel-1.0.1.tar.gz",
+    "size_bytes": 4147,
+    "sha256": "eb247d753e1ff0901e9b4a507fc70aa9beb160844dea87567ab5af24536b347e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/21koufler/library/Ampel/1.0.1/Ampel-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/21koufler/library/Ampel/1.0.1/Ampel-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "21koufler/library/Sensors/1.0.0/Sensors-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sensors-1.0.0.tar.gz",
+    "size_bytes": 3041,
+    "sha256": "05dccd329d1ef58953c84b7270203cb95b64113382afbca1353640f27bcf0f1e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/21koufler/library/Sensors/1.0.0/Sensors-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/21koufler/library/Sensors/1.0.0/Sensors-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

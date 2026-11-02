@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kanitawa",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kanitawa/library/RotEnc/1.1.3/RotEnc-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RotEnc-1.1.3.tar.gz",
+    "size_bytes": 7089,
+    "sha256": "1fb4eed7820ac39bb7c260f6857023d4a2070c9bf76a5d6631937f9ef0ab19f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kanitawa/library/RotEnc/1.1.3/RotEnc-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/kanitawa/library/RotEnc/1.1.3/RotEnc-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kanitawa/library/VersatileSwitch/1.1.0/VersatileSwitch-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VersatileSwitch-1.1.0.tar.gz",
+    "size_bytes": 9275,
+    "sha256": "6481df0a80da7db138834ff2b71aa357566e68d83fdf193908d37ba25604f258",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kanitawa/library/VersatileSwitch/1.1.0/VersatileSwitch-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kanitawa/library/VersatileSwitch/1.1.0/VersatileSwitch-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

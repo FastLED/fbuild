@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/toppenhoff",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "toppenhoff/library/MCP23017/0.0.0-alpha+sha.81edd5a549/MCP23017-0.0.0-alphasha.81edd5a549.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP23017-0.0.0-alphasha.81edd5a549.tar.gz",
+    "size_bytes": 20307,
+    "sha256": "321482a72a706cb5476bed685cf9f40f54b20a6265e43024ba5fb5db5f5fcf3a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/toppenhoff/library/MCP23017/0.0.0-alpha%2Bsha.81edd5a549/MCP23017-0.0.0-alphasha.81edd5a549.tar.gz",
+     "https://dl.registry.platformio.org/download/toppenhoff/library/MCP23017/0.0.0-alpha%2Bsha.81edd5a549/MCP23017-0.0.0-alphasha.81edd5a549.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "toppenhoff/library/PCA9685/0.0.0-alpha+sha.26adc95c5b/PCA9685-0.0.0-alphasha.26adc95c5b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCA9685-0.0.0-alphasha.26adc95c5b.tar.gz",
+    "size_bytes": 30252,
+    "sha256": "cac2f6aeac8a8a53a91f4937a4007858ba085717fe68f8c38026cca4e05ee04b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/toppenhoff/library/PCA9685/0.0.0-alpha%2Bsha.26adc95c5b/PCA9685-0.0.0-alphasha.26adc95c5b.tar.gz",
+     "https://dl.registry.platformio.org/download/toppenhoff/library/PCA9685/0.0.0-alpha%2Bsha.26adc95c5b/PCA9685-0.0.0-alphasha.26adc95c5b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

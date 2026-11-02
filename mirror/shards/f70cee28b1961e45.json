@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dmkishi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dmkishi/library/Dusk2Dawn/1.0.1/Dusk2Dawn-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Dusk2Dawn-1.0.1.tar.gz",
+    "size_bytes": 5515,
+    "sha256": "b3274eb138480171c1ad2e1dd908ed7bf29bc09fed0d6f76a3d2fd58400696f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dmkishi/library/Dusk2Dawn/1.0.1/Dusk2Dawn-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dmkishi/library/Dusk2Dawn/1.0.1/Dusk2Dawn-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

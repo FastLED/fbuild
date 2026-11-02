@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hotchpotch",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hotchpotch/library/HDC1000/0.0.0-alpha+sha.969d92d850/HDC1000-0.0.0-alphasha.969d92d850.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HDC1000-0.0.0-alphasha.969d92d850.tar.gz",
+    "size_bytes": 2790,
+    "sha256": "99d08d5cb10afb2e5f14f19f1786426007744f58093997bbac3698d1ea63e423",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hotchpotch/library/HDC1000/0.0.0-alpha%2Bsha.969d92d850/HDC1000-0.0.0-alphasha.969d92d850.tar.gz",
+     "https://dl.registry.platformio.org/download/hotchpotch/library/HDC1000/0.0.0-alpha%2Bsha.969d92d850/HDC1000-0.0.0-alphasha.969d92d850.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hotchpotch/library/SN74141/0.0.0-alpha+sha.a4d4718802/SN74141-0.0.0-alphasha.a4d4718802.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SN74141-0.0.0-alphasha.a4d4718802.tar.gz",
+    "size_bytes": 2333,
+    "sha256": "51f9acf24978785f5549186f5e768a322dba9aee08be0344230ac6070a27a5bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hotchpotch/library/SN74141/0.0.0-alpha%2Bsha.a4d4718802/SN74141-0.0.0-alphasha.a4d4718802.tar.gz",
+     "https://dl.registry.platformio.org/download/hotchpotch/library/SN74141/0.0.0-alpha%2Bsha.a4d4718802/SN74141-0.0.0-alphasha.a4d4718802.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hotchpotch/library/i2cdetect/0.0.0-alpha+sha.ac90ad8c0a/i2cdetect-0.0.0-alphasha.ac90ad8c0a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "i2cdetect-0.0.0-alphasha.ac90ad8c0a.tar.gz",
+    "size_bytes": 2386,
+    "sha256": "09443df70719234863c6cce38cff7d50d9ba3ec08948f10ce67ee90cc893d3b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hotchpotch/library/i2cdetect/0.0.0-alpha%2Bsha.ac90ad8c0a/i2cdetect-0.0.0-alphasha.ac90ad8c0a.tar.gz",
+     "https://dl.registry.platformio.org/download/hotchpotch/library/i2cdetect/0.0.0-alpha%2Bsha.ac90ad8c0a/i2cdetect-0.0.0-alphasha.ac90ad8c0a.tar.gz"
+    ]
+   }
+  }
+ ]
+}

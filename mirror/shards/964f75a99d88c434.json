@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-dsp-book-yeditepe",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-dsp-book-yeditepe/library/mbed_f401re/0.0.0+sha.7e2bd16f80af/mbed_f401re-0.0.0+sha.7e2bd16f80af.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mbed_f401re-0.0.0+sha.7e2bd16f80af.tar.gz",
+    "size_bytes": 7768676,
+    "sha256": "4cf4656cad54138c658cadbf9b4c01b3a4d02459cb8f15ac03d251bb5760db79",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dsp-book-yeditepe/library/mbed_f401re/0.0.0%2Bsha.7e2bd16f80af/mbed_f401re-0.0.0%2Bsha.7e2bd16f80af.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dsp-book-yeditepe/library/mbed_f401re/0.0.0%2Bsha.7e2bd16f80af/mbed_f401re-0.0.0%2Bsha.7e2bd16f80af.tar.gz"
+    ]
+   }
+  }
+ ]
+}

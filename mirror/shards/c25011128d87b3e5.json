@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/martin-laclaustra",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "martin-laclaustra/library/CronAlarms/0.1.0/CronAlarms-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CronAlarms-0.1.0.tar.gz",
+    "size_bytes": 16895,
+    "sha256": "4dab753209b28fa9ce01640a2254c9731ce58d8853ece4b81bba060441ac32be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martin-laclaustra/library/CronAlarms/0.1.0/CronAlarms-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/martin-laclaustra/library/CronAlarms/0.1.0/CronAlarms-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

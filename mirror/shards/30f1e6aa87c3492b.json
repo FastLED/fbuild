@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/esharp17",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "esharp17/library/INA219_Plus/1.0.0/INA219_Plus-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "INA219_Plus-1.0.0.tar.gz",
+    "size_bytes": 1242,
+    "sha256": "04e2d7738f0752860d6dad8467c85b756e518d4e128dadfde7759d3dc2bfc96d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esharp17/library/INA219_Plus/1.0.0/INA219_Plus-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esharp17/library/INA219_Plus/1.0.0/INA219_Plus-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esharp17/library/MecanumBase/1.0.0/MecanumBase-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MecanumBase-1.0.0.tar.gz",
+    "size_bytes": 2241,
+    "sha256": "383b945bdbf083b68afe345e05172bf0e0156d97296b88f167cfa84d48e1aeba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esharp17/library/MecanumBase/1.0.0/MecanumBase-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esharp17/library/MecanumBase/1.0.0/MecanumBase-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

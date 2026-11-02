@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/crazy-max-blog",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "crazy-max-blog/library/Crazy-IoTik/0.1/Crazy-IoTik-0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Crazy-IoTik-0.1.tar.gz",
+    "size_bytes": 3431,
+    "sha256": "c6105802407011eeb1db5c9f3fded55c7554c33d74e5869e8f60b8b8f921b29e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/crazy-max-blog/library/Crazy-IoTik/0.1/Crazy-IoTik-0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/crazy-max-blog/library/Crazy-IoTik/0.1/Crazy-IoTik-0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "crazy-max-blog/library/CrazyHC595/0.1.2/CrazyHC595-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CrazyHC595-0.1.2.tar.gz",
+    "size_bytes": 3964,
+    "sha256": "3104fdbb577f7a19af7c54fd8ec9b662d5e948323c0cec8e05607186f56c6709",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/crazy-max-blog/library/CrazyHC595/0.1.2/CrazyHC595-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/crazy-max-blog/library/CrazyHC595/0.1.2/CrazyHC595-0.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

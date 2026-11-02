@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-andyhope",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-andyhope/library/Infrared/0.0.0+sha.d1764facee30/Infrared-0.0.0+sha.d1764facee30.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Infrared-0.0.0+sha.d1764facee30.tar.gz",
+    "size_bytes": 2911,
+    "sha256": "1c3145580db87d18656d17afbba3461babaa845a6e32c8eafa31d89dce1d360c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-andyhope/library/Infrared/0.0.0%2Bsha.d1764facee30/Infrared-0.0.0%2Bsha.d1764facee30.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-andyhope/library/Infrared/0.0.0%2Bsha.d1764facee30/Infrared-0.0.0%2Bsha.d1764facee30.tar.gz"
+    ]
+   }
+  }
+ ]
+}

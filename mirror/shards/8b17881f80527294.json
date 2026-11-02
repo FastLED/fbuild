@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-the-sz",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-the-sz/library/BSP_DISCO_F746NG_patch_fixed/0.0.0+sha.a4e658110084/BSP_DISCO_F746NG_patch_fixed-0.0.0+sha.a4e658110084.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BSP_DISCO_F746NG_patch_fixed-0.0.0+sha.a4e658110084.tar.gz",
+    "size_bytes": 88035,
+    "sha256": "26ed627c0445828f5f56b0b3a474372f316a165238faab4e89f6b96b7b33c750",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-the-sz/library/BSP_DISCO_F746NG_patch_fixed/0.0.0%2Bsha.a4e658110084/BSP_DISCO_F746NG_patch_fixed-0.0.0%2Bsha.a4e658110084.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-the-sz/library/BSP_DISCO_F746NG_patch_fixed/0.0.0%2Bsha.a4e658110084/BSP_DISCO_F746NG_patch_fixed-0.0.0%2Bsha.a4e658110084.tar.gz"
+    ]
+   }
+  }
+ ]
+}

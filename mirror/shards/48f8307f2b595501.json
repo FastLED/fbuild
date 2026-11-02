@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hwspeedy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hwspeedy/library/DHT-Sensor/1.4.3/DHT-Sensor-1.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DHT-Sensor-1.4.3.tar.gz",
+    "size_bytes": 18080,
+    "sha256": "96440790ddfaad0ca83d4ae14e52c9f1d2e0a83a1c389fc3263dfbfbe64e970e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hwspeedy/library/DHT-Sensor/1.4.3/DHT-Sensor-1.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/hwspeedy/library/DHT-Sensor/1.4.3/DHT-Sensor-1.4.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hwspeedy/library/arduino-mqtt/2.5.1/arduino-mqtt-2.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arduino-mqtt-2.5.1.tar.gz",
+    "size_bytes": 21083,
+    "sha256": "aa4f5014e662772989e6e66ca4a9774f24fee05374a04e062f04b6973491cd47",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hwspeedy/library/arduino-mqtt/2.5.1/arduino-mqtt-2.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/hwspeedy/library/arduino-mqtt/2.5.1/arduino-mqtt-2.5.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

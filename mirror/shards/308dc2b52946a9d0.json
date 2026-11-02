@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/depau",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "depau/library/APDS-9930%20Ambient%20Light%20and%20Proximity%20Sensor/1.5.1/APDS-9930AmbientLightandProximitySensor-1.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "APDS-9930AmbientLightandProximitySensor-1.5.1.tar.gz",
+    "size_bytes": 13105,
+    "sha256": "23402266fbe6fb2ff1965e3de0416df5cffbae794698ad70188a6c81240400fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/depau/library/APDS-9930%2520Ambient%2520Light%2520and%2520Proximity%2520Sensor/1.5.1/APDS-9930AmbientLightandProximitySensor-1.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/depau/library/APDS-9930%20Ambient%20Light%20and%20Proximity%20Sensor/1.5.1/APDS-9930AmbientLightandProximitySensor-1.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "depau/library/SoftI2CPeripheral/0.1.0/SoftI2CPeripheral-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SoftI2CPeripheral-0.1.0.tar.gz",
+    "size_bytes": 11417,
+    "sha256": "975fd0e8226985e1920561bbcba575b112a1c709b9f5dd87747c5362e6b9d4a7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/depau/library/SoftI2CPeripheral/0.1.0/SoftI2CPeripheral-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/depau/library/SoftI2CPeripheral/0.1.0/SoftI2CPeripheral-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "depau/library/SoftI2CPeripheral/0.2.0/SoftI2CPeripheral-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SoftI2CPeripheral-0.2.0.tar.gz",
+    "size_bytes": 12383,
+    "sha256": "845385ce578e47af0b5bc1262ba45a1c193b77fb067e7b159bd16fb29dc68b6f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/depau/library/SoftI2CPeripheral/0.2.0/SoftI2CPeripheral-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/depau/library/SoftI2CPeripheral/0.2.0/SoftI2CPeripheral-0.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

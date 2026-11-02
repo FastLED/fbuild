@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/monhauvd",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "monhauvd/library/PlayNote/1.1.1/PlayNote-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PlayNote-1.1.1.tar.gz",
+    "size_bytes": 4928,
+    "sha256": "ba26d258e274fe06bb876174927556998d41183b449bce44d6eb3e78da14eb2e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/monhauvd/library/PlayNote/1.1.1/PlayNote-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/monhauvd/library/PlayNote/1.1.1/PlayNote-1.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

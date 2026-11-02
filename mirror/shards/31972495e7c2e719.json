@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jocis",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jocis/library/HighPWM/0.0.0+sha.923b54e7c2c1/HighPWM-0.0.0+sha.923b54e7c2c1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HighPWM-0.0.0+sha.923b54e7c2c1.tar.gz",
+    "size_bytes": 2644,
+    "sha256": "3eff85b1af976140704b0dd54886d2966458b0846350c909fad18f90aa897da8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jocis/library/HighPWM/0.0.0%2Bsha.923b54e7c2c1/HighPWM-0.0.0%2Bsha.923b54e7c2c1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jocis/library/HighPWM/0.0.0%2Bsha.923b54e7c2c1/HighPWM-0.0.0%2Bsha.923b54e7c2c1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jocis/library/Pulses/0.0.0+sha.36dd0d59fdc8/Pulses-0.0.0+sha.36dd0d59fdc8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pulses-0.0.0+sha.36dd0d59fdc8.tar.gz",
+    "size_bytes": 3599,
+    "sha256": "3d1c942aa7f87ca8e97697bb973d9803be24176ff8b3db6a867759bdb955c4d9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jocis/library/Pulses/0.0.0%2Bsha.36dd0d59fdc8/Pulses-0.0.0%2Bsha.36dd0d59fdc8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jocis/library/Pulses/0.0.0%2Bsha.36dd0d59fdc8/Pulses-0.0.0%2Bsha.36dd0d59fdc8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/zipionlive",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "zipionlive/library/RedLab_I2CMatrixKeypad/1.0.0/RedLab_I2CMatrixKeypad-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RedLab_I2CMatrixKeypad-1.0.0.tar.gz",
+    "size_bytes": 9875,
+    "sha256": "9b29109cb0781d0523f8a1d71e762b46fbbfcdff2b0b5fcc723ac1b2883a7342",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zipionlive/library/RedLab_I2CMatrixKeypad/1.0.0/RedLab_I2CMatrixKeypad-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/zipionlive/library/RedLab_I2CMatrixKeypad/1.0.0/RedLab_I2CMatrixKeypad-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

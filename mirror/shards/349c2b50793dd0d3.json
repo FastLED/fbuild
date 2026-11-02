@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/vic4key",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "vic4key/library/MyButtons/1.0.0/MyButtons-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MyButtons-1.0.0.tar.gz",
+    "size_bytes": 23328,
+    "sha256": "6b1b45c319ba0b543a8758c4b9ac79709950e20874f0f40a25da3367c0d5e511",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vic4key/library/MyButtons/1.0.0/MyButtons-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vic4key/library/MyButtons/1.0.0/MyButtons-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vic4key/library/MyButtons/1.0.1/MyButtons-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MyButtons-1.0.1.tar.gz",
+    "size_bytes": 22930,
+    "sha256": "8227f170768a338ae583b249d7a6cba2de956c4f6d581eb66e8bfcb39ab834e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vic4key/library/MyButtons/1.0.1/MyButtons-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vic4key/library/MyButtons/1.0.1/MyButtons-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vic4key/library/MyDisplayLogging/1.0.0/MyDisplayLogging-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MyDisplayLogging-1.0.0.tar.gz",
+    "size_bytes": 15233,
+    "sha256": "8964bf41947c8da34f4dac75408632ec71a0aaa21e54e382969c66a02778b04f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vic4key/library/MyDisplayLogging/1.0.0/MyDisplayLogging-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vic4key/library/MyDisplayLogging/1.0.0/MyDisplayLogging-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vic4key/library/MyOTA/1.0.0/MyOTA-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MyOTA-1.0.0.tar.gz",
+    "size_bytes": 4980,
+    "sha256": "54f9d9ecedc04e1c873d56fde3177ba4c08c12bf4d1ae4c551a1cdab917407d9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vic4key/library/MyOTA/1.0.0/MyOTA-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vic4key/library/MyOTA/1.0.0/MyOTA-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

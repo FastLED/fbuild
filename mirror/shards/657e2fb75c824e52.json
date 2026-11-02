@@ -1,0 +1,165 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/thiagozaneti",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "thiagozaneti/library/Modem-a7608sa-library/1.0.0/Modem-a7608sa-library-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Modem-a7608sa-library-1.0.0.tar.gz",
+    "size_bytes": 17706,
+    "sha256": "2ffb5d6c7d72eec8dd161613d9c7858022e8a037808e80ccd6fcbbd5652f749a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thiagozaneti/library/Modem-a7608sa-library/1.0.0/Modem-a7608sa-library-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/thiagozaneti/library/Modem-a7608sa-library/1.0.0/Modem-a7608sa-library-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thiagozaneti/library/Modem-a7608sa-library/1.0.1/Modem-a7608sa-library-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Modem-a7608sa-library-1.0.1.tar.gz",
+    "size_bytes": 17927,
+    "sha256": "fd691078059a9012b620acbc9fe0659ad2c56effe21eff2919d758da829424e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thiagozaneti/library/Modem-a7608sa-library/1.0.1/Modem-a7608sa-library-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/thiagozaneti/library/Modem-a7608sa-library/1.0.1/Modem-a7608sa-library-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thiagozaneti/library/Modem-a7608sa-library/1.0.2/Modem-a7608sa-library-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Modem-a7608sa-library-1.0.2.tar.gz",
+    "size_bytes": 18157,
+    "sha256": "f99657e49aa505c42d5e92ff76a7aa5f83f4013f55dbec0a80c29542d9c81b86",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thiagozaneti/library/Modem-a7608sa-library/1.0.2/Modem-a7608sa-library-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/thiagozaneti/library/Modem-a7608sa-library/1.0.2/Modem-a7608sa-library-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thiagozaneti/library/Modem-a7608sa-library/1.0.3/Modem-a7608sa-library-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Modem-a7608sa-library-1.0.3.tar.gz",
+    "size_bytes": 18222,
+    "sha256": "50cea5f085f9e64fd2c837e0fec62c0078219a3a070f5a84fa825b7f47365579",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thiagozaneti/library/Modem-a7608sa-library/1.0.3/Modem-a7608sa-library-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/thiagozaneti/library/Modem-a7608sa-library/1.0.3/Modem-a7608sa-library-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thiagozaneti/library/Modem-a7608sa-library/1.0.4/Modem-a7608sa-library-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Modem-a7608sa-library-1.0.4.tar.gz",
+    "size_bytes": 18222,
+    "sha256": "14b80f0071f28b305a2170f10696c94aa7ab01371cdeab0b6a5f4d551f125e46",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thiagozaneti/library/Modem-a7608sa-library/1.0.4/Modem-a7608sa-library-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/thiagozaneti/library/Modem-a7608sa-library/1.0.4/Modem-a7608sa-library-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thiagozaneti/library/Modem-a7608sa-library/1.0.5/Modem-a7608sa-library-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Modem-a7608sa-library-1.0.5.tar.gz",
+    "size_bytes": 18254,
+    "sha256": "62de86a38f247a4ef2de5516d8f970a80b7d4267134372e87e8bed350c1ea400",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thiagozaneti/library/Modem-a7608sa-library/1.0.5/Modem-a7608sa-library-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/thiagozaneti/library/Modem-a7608sa-library/1.0.5/Modem-a7608sa-library-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thiagozaneti/library/Modem-a7608sa-library/2.0.10/Modem-a7608sa-library-2.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Modem-a7608sa-library-2.0.10.tar.gz",
+    "size_bytes": 19928,
+    "sha256": "77d7ed26ff49feaab853ab78880e477ef2e5fa13ecee75d9cb8cdde242f2cb64",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thiagozaneti/library/Modem-a7608sa-library/2.0.10/Modem-a7608sa-library-2.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/thiagozaneti/library/Modem-a7608sa-library/2.0.10/Modem-a7608sa-library-2.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thiagozaneti/library/Modem-a7608sa-library/2.0.6/Modem-a7608sa-library-2.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Modem-a7608sa-library-2.0.6.tar.gz",
+    "size_bytes": 19424,
+    "sha256": "23e3b1778dd13428c329cc9cffbf624d1135be91f53079a930e161628b6d0012",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thiagozaneti/library/Modem-a7608sa-library/2.0.6/Modem-a7608sa-library-2.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/thiagozaneti/library/Modem-a7608sa-library/2.0.6/Modem-a7608sa-library-2.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thiagozaneti/library/Modem-a7608sa-library/2.0.7/Modem-a7608sa-library-2.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Modem-a7608sa-library-2.0.7.tar.gz",
+    "size_bytes": 19655,
+    "sha256": "dabddf37728c07f7fdc87e7aa77965d9056f3f284f222f8c9e2c503d5cc1e221",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thiagozaneti/library/Modem-a7608sa-library/2.0.7/Modem-a7608sa-library-2.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/thiagozaneti/library/Modem-a7608sa-library/2.0.7/Modem-a7608sa-library-2.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thiagozaneti/library/Modem-a7608sa-library/2.0.8/Modem-a7608sa-library-2.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Modem-a7608sa-library-2.0.8.tar.gz",
+    "size_bytes": 19678,
+    "sha256": "1d3fdc7d2c9992d7675d226625b4cbeae2c2f6daf206946e3e84e1b79af11951",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thiagozaneti/library/Modem-a7608sa-library/2.0.8/Modem-a7608sa-library-2.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/thiagozaneti/library/Modem-a7608sa-library/2.0.8/Modem-a7608sa-library-2.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thiagozaneti/library/Modem-a7608sa-library/2.0.9/Modem-a7608sa-library-2.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Modem-a7608sa-library-2.0.9.tar.gz",
+    "size_bytes": 19647,
+    "sha256": "ebb4012a1138c6a8060d324eccc8841e4d522a4154c1ce55da442e689dd9b3df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thiagozaneti/library/Modem-a7608sa-library/2.0.9/Modem-a7608sa-library-2.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/thiagozaneti/library/Modem-a7608sa-library/2.0.9/Modem-a7608sa-library-2.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thiagozaneti/library/Modem-a7608sa-library/3.0.10/Modem-a7608sa-library-3.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Modem-a7608sa-library-3.0.10.tar.gz",
+    "size_bytes": 20237,
+    "sha256": "1971df410ea179f601f3a954f025b43fcfa2be111369a2be53f54da196db5835",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thiagozaneti/library/Modem-a7608sa-library/3.0.10/Modem-a7608sa-library-3.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/thiagozaneti/library/Modem-a7608sa-library/3.0.10/Modem-a7608sa-library-3.0.10.tar.gz"
+    ]
+   }
+  }
+ ]
+}

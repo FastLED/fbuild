@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nodewave-ea",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nodewave-ea/library/FOTA-Client-ESP32/1.0.1/FOTA-Client-ESP32-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FOTA-Client-ESP32-1.0.1.tar.gz",
+    "size_bytes": 66556,
+    "sha256": "5618063f9993f4ed9a0e4bea072b1fd50c85d254187c42c53271e96761b7ee8f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nodewave-ea/library/FOTA-Client-ESP32/1.0.1/FOTA-Client-ESP32-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nodewave-ea/library/FOTA-Client-ESP32/1.0.1/FOTA-Client-ESP32-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nodewave-ea/library/FOTA-Client-ESP32/1.0.2/FOTA-Client-ESP32-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FOTA-Client-ESP32-1.0.2.tar.gz",
+    "size_bytes": 66572,
+    "sha256": "85b65b2d68966352c7003e73daef7a889afe67a61618863869365e84d232cbd9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nodewave-ea/library/FOTA-Client-ESP32/1.0.2/FOTA-Client-ESP32-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nodewave-ea/library/FOTA-Client-ESP32/1.0.2/FOTA-Client-ESP32-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nodewave-ea/library/FOTA-Client-ESP32/1.0.3/FOTA-Client-ESP32-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FOTA-Client-ESP32-1.0.3.tar.gz",
+    "size_bytes": 65879,
+    "sha256": "7d278ede16b7d5b9be9698f8675ed4727de951e0872d08ed282cbd1479600692",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nodewave-ea/library/FOTA-Client-ESP32/1.0.3/FOTA-Client-ESP32-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/nodewave-ea/library/FOTA-Client-ESP32/1.0.3/FOTA-Client-ESP32-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nodewave-ea/library/FOTA-Client-ESP32/1.0.4/FOTA-Client-ESP32-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FOTA-Client-ESP32-1.0.4.tar.gz",
+    "size_bytes": 65938,
+    "sha256": "2ec2e40acfcd44f6fe8f8160ce22db319f5fb993a46f76632d2e18f9a9e94a41",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nodewave-ea/library/FOTA-Client-ESP32/1.0.4/FOTA-Client-ESP32-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/nodewave-ea/library/FOTA-Client-ESP32/1.0.4/FOTA-Client-ESP32-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nodewave-ea/library/FOTA-Client-ESP32/1.0.5/FOTA-Client-ESP32-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FOTA-Client-ESP32-1.0.5.tar.gz",
+    "size_bytes": 65855,
+    "sha256": "cb0930eaf378f5a8ac037a4e834bd8ca69345c61572758b106c8752fb59170e5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nodewave-ea/library/FOTA-Client-ESP32/1.0.5/FOTA-Client-ESP32-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/nodewave-ea/library/FOTA-Client-ESP32/1.0.5/FOTA-Client-ESP32-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nodewave-ea/library/FOTA-Client-ESP32/2.0.0/FOTA-Client-ESP32-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FOTA-Client-ESP32-2.0.0.tar.gz",
+    "size_bytes": 36211,
+    "sha256": "bc6cd345b85a90dd89abcf31ba8e08479f897ee9fa2ff946c49d6bf3ffd8c6cf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nodewave-ea/library/FOTA-Client-ESP32/2.0.0/FOTA-Client-ESP32-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nodewave-ea/library/FOTA-Client-ESP32/2.0.0/FOTA-Client-ESP32-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nodewave-ea/library/FOTA-Client-ESP32/2.0.1/FOTA-Client-ESP32-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FOTA-Client-ESP32-2.0.1.tar.gz",
+    "size_bytes": 36232,
+    "sha256": "a488e4674098121bde562940b9143bdb9d275057c40efbdd75cd0b8e82c576a1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nodewave-ea/library/FOTA-Client-ESP32/2.0.1/FOTA-Client-ESP32-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nodewave-ea/library/FOTA-Client-ESP32/2.0.1/FOTA-Client-ESP32-2.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

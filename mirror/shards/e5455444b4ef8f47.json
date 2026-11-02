@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jsoh91",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jsoh91/library/Eigen/0.0.0+sha.3b8049da21b8/Eigen-0.0.0+sha.3b8049da21b8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Eigen-0.0.0+sha.3b8049da21b8.tar.gz",
+    "size_bytes": 368904,
+    "sha256": "0e9742cc9170b9aa3d687925040aa74119d37dcdabc38a26be2b6b9bccf9f017",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jsoh91/library/Eigen/0.0.0%2Bsha.3b8049da21b8/Eigen-0.0.0%2Bsha.3b8049da21b8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jsoh91/library/Eigen/0.0.0%2Bsha.3b8049da21b8/Eigen-0.0.0%2Bsha.3b8049da21b8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

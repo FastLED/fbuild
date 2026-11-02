@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lxydiy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lxydiy/library/CH9328-Keyboard/1.0.1/CH9328-Keyboard-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CH9328-Keyboard-1.0.1.tar.gz",
+    "size_bytes": 14286,
+    "sha256": "f5aa71f70c112716f2fadd188bf77047668c829cf3f8fe2658b832e1b1a1e3fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lxydiy/library/CH9328-Keyboard/1.0.1/CH9328-Keyboard-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lxydiy/library/CH9328-Keyboard/1.0.1/CH9328-Keyboard-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/vrekrer",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "vrekrer/library/Vrekrer%20SCPI%20parser/0.5.0/VrekrerSCPIparser-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VrekrerSCPIparser-0.5.0.tar.gz",
+    "size_bytes": 14373,
+    "sha256": "263cab18b60ab61aeb390e85a23efb587d5b37e4acba43580ed28141fd9b9c68",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vrekrer/library/Vrekrer%2520SCPI%2520parser/0.5.0/VrekrerSCPIparser-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vrekrer/library/Vrekrer%20SCPI%20parser/0.5.0/VrekrerSCPIparser-0.5.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

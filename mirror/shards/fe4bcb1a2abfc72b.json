@@ -1,0 +1,178 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/alix-anneraud",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "alix-anneraud/library/Battery%20Library/1.0.3/BatteryLibrary-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BatteryLibrary-1.0.3.tar.gz",
+    "size_bytes": 2759,
+    "sha256": "9fd40517292b6f99109d20879f7e1674ece155f804b5d70b02b23d4f42831ef8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alix-anneraud/library/Battery%2520Library/1.0.3/BatteryLibrary-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/alix-anneraud/library/Battery%20Library/1.0.3/BatteryLibrary-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alix-anneraud/library/Battery%20Library/1.0.4/BatteryLibrary-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BatteryLibrary-1.0.4.tar.gz",
+    "size_bytes": 2926,
+    "sha256": "7e54c68380fb663411d57536d89d43372ddbccfbca9d32ebdf27acebe316db33",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alix-anneraud/library/Battery%2520Library/1.0.4/BatteryLibrary-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/alix-anneraud/library/Battery%20Library/1.0.4/BatteryLibrary-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alix-anneraud/library/Nextion%20Library/1.0.0/NextionLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NextionLibrary-1.0.0.tar.gz",
+    "size_bytes": 8659,
+    "sha256": "da49e9d5a7bbbcd2462d43df70e1787ef5edea8adbba452e0c1109281d27c811",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alix-anneraud/library/Nextion%2520Library/1.0.0/NextionLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alix-anneraud/library/Nextion%20Library/1.0.0/NextionLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alix-anneraud/library/Xila/0.1.0/Xila-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Xila-0.1.0.tar.gz",
+    "size_bytes": 90288,
+    "sha256": "7bbd05959bbdeb1fcd27f475e4f39b25c903e5aa0e594f88a5a62d31c2a19bb1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alix-anneraud/library/Xila/0.1.0/Xila-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alix-anneraud/library/Xila/0.1.0/Xila-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alix-anneraud/library/battery-percent/2.0.0/battery-percent-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "battery-percent-2.0.0.tar.gz",
+    "size_bytes": 6793,
+    "sha256": "92958f3f7685caf69a46bedb3b52a7ba5a0b83e6422e2a4b21abf86764179c71",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alix-anneraud/library/battery-percent/2.0.0/battery-percent-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alix-anneraud/library/battery-percent/2.0.0/battery-percent-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alix-anneraud/library/battery-percent/2.0.1/battery-percent-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "battery-percent-2.0.1.tar.gz",
+    "size_bytes": 8464,
+    "sha256": "e5a15036df2af2726585af545c3346af191427b2afc31ea79d76a7fe49998e6f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alix-anneraud/library/battery-percent/2.0.1/battery-percent-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/alix-anneraud/library/battery-percent/2.0.1/battery-percent-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alix-anneraud/library/battery-percent/2.0.2/battery-percent-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "battery-percent-2.0.2.tar.gz",
+    "size_bytes": 10091,
+    "sha256": "84ef165a818ba127d92f6e4422e357c6221cca81fa1f8e85ebee1ea850f330db",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alix-anneraud/library/battery-percent/2.0.2/battery-percent-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/alix-anneraud/library/battery-percent/2.0.2/battery-percent-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alix-anneraud/library/battery-percent/2.1.0/battery-percent-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "battery-percent-2.1.0.tar.gz",
+    "size_bytes": 11691,
+    "sha256": "ff16beee136f014d2231aa1feebe0f890dd262d6cac2cf6d2ccfcab0f945b1bd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alix-anneraud/library/battery-percent/2.1.0/battery-percent-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alix-anneraud/library/battery-percent/2.1.0/battery-percent-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alix-anneraud/library/lvgl_theme_shadcn/0.1.0/lvgl_theme_shadcn-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lvgl_theme_shadcn-0.1.0.tar.gz",
+    "size_bytes": 17371,
+    "sha256": "5f0267eb2229512399598c2ef47047bef4c60fb33ac188f2580dd941eaf4e48c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alix-anneraud/library/lvgl_theme_shadcn/0.1.0/lvgl_theme_shadcn-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alix-anneraud/library/lvgl_theme_shadcn/0.1.0/lvgl_theme_shadcn-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alix-anneraud/library/lvgl_theme_shadcn/0.1.1/lvgl_theme_shadcn-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lvgl_theme_shadcn-0.1.1.tar.gz",
+    "size_bytes": 17631,
+    "sha256": "b983865fda1982a6e0e6221f769fa126b731da06f5ac954e2235c0486285ecb6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alix-anneraud/library/lvgl_theme_shadcn/0.1.1/lvgl_theme_shadcn-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/alix-anneraud/library/lvgl_theme_shadcn/0.1.1/lvgl_theme_shadcn-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alix-anneraud/library/lvgl_theme_shadcn/0.2.0/lvgl_theme_shadcn-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lvgl_theme_shadcn-0.2.0.tar.gz",
+    "size_bytes": 22204,
+    "sha256": "731b243c8e1fde79279395ca4a0425e267ffd72815aa3effa3cbbb46ccd1b1a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alix-anneraud/library/lvgl_theme_shadcn/0.2.0/lvgl_theme_shadcn-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alix-anneraud/library/lvgl_theme_shadcn/0.2.0/lvgl_theme_shadcn-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alix-anneraud/library/lvgl_theme_shadcn/0.3.0/lvgl_theme_shadcn-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lvgl_theme_shadcn-0.3.0.tar.gz",
+    "size_bytes": 27484,
+    "sha256": "f7f306227833e305771cca21c2681d435fa503a6555defb68d54cae41210c832",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alix-anneraud/library/lvgl_theme_shadcn/0.3.0/lvgl_theme_shadcn-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alix-anneraud/library/lvgl_theme_shadcn/0.3.0/lvgl_theme_shadcn-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alix-anneraud/library/lvgl_theme_shadcn/0.3.1/lvgl_theme_shadcn-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lvgl_theme_shadcn-0.3.1.tar.gz",
+    "size_bytes": 31273,
+    "sha256": "faed6e314b74fcc8fee0aeb813f24fb6c1d3e2855cc11bcf17320de4859a6fbd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alix-anneraud/library/lvgl_theme_shadcn/0.3.1/lvgl_theme_shadcn-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/alix-anneraud/library/lvgl_theme_shadcn/0.3.1/lvgl_theme_shadcn-0.3.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bakercp",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bakercp/library/BufferUtils/3.0.0/BufferUtils-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BufferUtils-3.0.0.tar.gz",
+    "size_bytes": 7434,
+    "sha256": "f175ce0d3da239a84e7b326c4a374494d3b324df43790f235252bb0ea2a1b98b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bakercp/library/BufferUtils/3.0.0/BufferUtils-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bakercp/library/BufferUtils/3.0.0/BufferUtils-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bakercp/library/CRC32/2.0.0/CRC32-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CRC32-2.0.0.tar.gz",
+    "size_bytes": 4045,
+    "sha256": "49ae9289978d2397f93d83ba9cd2d96096077e982a1cd33b69219426d6e3888a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bakercp/library/CRC32/2.0.0/CRC32-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bakercp/library/CRC32/2.0.0/CRC32-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bakercp/library/CRC32/2.0.1/CRC32-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CRC32-2.0.1.tar.gz",
+    "size_bytes": 4338,
+    "sha256": "d7e26c5ae075ccce98f2028e661571c80320a55e378a2cb1d3f0daba6e1f23c9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bakercp/library/CRC32/2.0.1/CRC32-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bakercp/library/CRC32/2.0.1/CRC32-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bakercp/library/Logger/1.0.3/Logger-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Logger-1.0.3.tar.gz",
+    "size_bytes": 2936,
+    "sha256": "40b490bb1fed0653b77bf3182e7c281b81961b6a233114fc65b057d3c0a26e73",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bakercp/library/Logger/1.0.3/Logger-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/bakercp/library/Logger/1.0.3/Logger-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bakercp/library/MCP3XXX/1.0.0/MCP3XXX-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP3XXX-1.0.0.tar.gz",
+    "size_bytes": 5583,
+    "sha256": "e89c0816ae22787a4d332c5866298f9d83dbca5a4f312aa15de36feba073839d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bakercp/library/MCP3XXX/1.0.0/MCP3XXX-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bakercp/library/MCP3XXX/1.0.0/MCP3XXX-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bakercp/library/PacketSerial/1.4.0/PacketSerial-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PacketSerial-1.4.0.tar.gz",
+    "size_bytes": 11370,
+    "sha256": "6118fd6cb14aa57ee02135108bedb1bec0836f319d9530107e6951c3e2ee44fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bakercp/library/PacketSerial/1.4.0/PacketSerial-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bakercp/library/PacketSerial/1.4.0/PacketSerial-1.4.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

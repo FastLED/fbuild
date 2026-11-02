@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/martinrusk",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "martinrusk/library/Stepper%20MotionControl/0.3.1/StepperMotionControl-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StepperMotionControl-0.3.1.tar.gz",
+    "size_bytes": 49091,
+    "sha256": "30ac591bb9b3d8c3c3a2b59858850344d0ca0d03d9160174f579abfe328c4669",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinrusk/library/Stepper%2520MotionControl/0.3.1/StepperMotionControl-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/martinrusk/library/Stepper%20MotionControl/0.3.1/StepperMotionControl-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinrusk/library/XPLDevices/0.13.1/XPLDevices-0.13.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XPLDevices-0.13.1.tar.gz",
+    "size_bytes": 61197,
+    "sha256": "61234a4110dfeb46b0bdf9a04dbdad96d709efc006003a6a2460fe893cc1dc46",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinrusk/library/XPLDevices/0.13.1/XPLDevices-0.13.1.tar.gz",
+     "https://dl.registry.platformio.org/download/martinrusk/library/XPLDevices/0.13.1/XPLDevices-0.13.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinrusk/library/XPLPro/0.4.0/XPLPro-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XPLPro-0.4.0.tar.gz",
+    "size_bytes": 50607,
+    "sha256": "63b751d89ca42372011a709754b08b8aefb37da207f7ac7af5eb8502abfb8119",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinrusk/library/XPLPro/0.4.0/XPLPro-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/martinrusk/library/XPLPro/0.4.0/XPLPro-0.4.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

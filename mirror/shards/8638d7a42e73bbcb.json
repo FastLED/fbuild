@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-trisjph",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-trisjph/library/RN42/0.0.0+sha.30f62fde3cf4/RN42-0.0.0+sha.30f62fde3cf4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RN42-0.0.0+sha.30f62fde3cf4.tar.gz",
+    "size_bytes": 1888,
+    "sha256": "b8e77f8e0ef7773e61fe685678d58b105c043fe57b086970308b9fdc078ec44a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-trisjph/library/RN42/0.0.0%2Bsha.30f62fde3cf4/RN42-0.0.0%2Bsha.30f62fde3cf4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-trisjph/library/RN42/0.0.0%2Bsha.30f62fde3cf4/RN42-0.0.0%2Bsha.30f62fde3cf4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-trisjph/library/jsmn/0.0.0+sha.625bfa0ff591/jsmn-0.0.0+sha.625bfa0ff591.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "jsmn-0.0.0+sha.625bfa0ff591.tar.gz",
+    "size_bytes": 3005,
+    "sha256": "92f304e81f4d9bdd5d562a3d6e8d7c2c5f5ec14cec5d4028dd7196deec7bcddf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-trisjph/library/jsmn/0.0.0%2Bsha.625bfa0ff591/jsmn-0.0.0%2Bsha.625bfa0ff591.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-trisjph/library/jsmn/0.0.0%2Bsha.625bfa0ff591/jsmn-0.0.0%2Bsha.625bfa0ff591.tar.gz"
+    ]
+   }
+  }
+ ]
+}

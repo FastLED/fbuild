@@ -1,0 +1,217 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-hlipka",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-hlipka/library/25LCxxx_SPI/0.0.0+sha.3a3404dbd3eb/25LCxxx_SPI-0.0.0+sha.3a3404dbd3eb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "25LCxxx_SPI-0.0.0+sha.3a3404dbd3eb.tar.gz",
+    "size_bytes": 3269,
+    "sha256": "048ddca7219f45e0b6f6a659babd9a0a8724c2bf2281b06ed7be24c7a52ab4a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hlipka/library/25LCxxx_SPI/0.0.0%2Bsha.3a3404dbd3eb/25LCxxx_SPI-0.0.0%2Bsha.3a3404dbd3eb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hlipka/library/25LCxxx_SPI/0.0.0%2Bsha.3a3404dbd3eb/25LCxxx_SPI-0.0.0%2Bsha.3a3404dbd3eb.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hlipka/library/ASyncTicker/0.0.0+sha.13db8277ce26/ASyncTicker-0.0.0+sha.13db8277ce26.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ASyncTicker-0.0.0+sha.13db8277ce26.tar.gz",
+    "size_bytes": 2463,
+    "sha256": "20892560ae4afdc76f9de10206292b1e96f92520e16475e4d6b228e3d1b1a018",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hlipka/library/ASyncTicker/0.0.0%2Bsha.13db8277ce26/ASyncTicker-0.0.0%2Bsha.13db8277ce26.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hlipka/library/ASyncTicker/0.0.0%2Bsha.13db8277ce26/ASyncTicker-0.0.0%2Bsha.13db8277ce26.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hlipka/library/DNSResolver/0.0.0+sha.097d4993dd1e/DNSResolver-0.0.0+sha.097d4993dd1e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DNSResolver-0.0.0+sha.097d4993dd1e.tar.gz",
+    "size_bytes": 2004,
+    "sha256": "4fc8183faf022d2a3a193a93456b47db1d2ae98a7d60ab1b71003e9e8e70050c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hlipka/library/DNSResolver/0.0.0%2Bsha.097d4993dd1e/DNSResolver-0.0.0%2Bsha.097d4993dd1e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hlipka/library/DNSResolver/0.0.0%2Bsha.097d4993dd1e/DNSResolver-0.0.0%2Bsha.097d4993dd1e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hlipka/library/LcdWindow/0.0.0+sha.2fe93daa2106/LcdWindow-0.0.0+sha.2fe93daa2106.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LcdWindow-0.0.0+sha.2fe93daa2106.tar.gz",
+    "size_bytes": 12428,
+    "sha256": "feed40fe26380c533cca0de86781343468755ffeb6c91e0f4f0fa18c8287cc97",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hlipka/library/LcdWindow/0.0.0%2Bsha.2fe93daa2106/LcdWindow-0.0.0%2Bsha.2fe93daa2106.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hlipka/library/LcdWindow/0.0.0%2Bsha.2fe93daa2106/LcdWindow-0.0.0%2Bsha.2fe93daa2106.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hlipka/library/Localization/0.0.0+sha.56714c5edd05/Localization-0.0.0+sha.56714c5edd05.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Localization-0.0.0+sha.56714c5edd05.tar.gz",
+    "size_bytes": 2264,
+    "sha256": "ca5a591c976986291ebd84057e2300e12a957d75c81217fcf7d324a6bb851f66",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hlipka/library/Localization/0.0.0%2Bsha.56714c5edd05/Localization-0.0.0%2Bsha.56714c5edd05.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hlipka/library/Localization/0.0.0%2Bsha.56714c5edd05/Localization-0.0.0%2Bsha.56714c5edd05.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hlipka/library/MD5/0.0.0+sha.8561cc01127c/MD5-0.0.0+sha.8561cc01127c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MD5-0.0.0+sha.8561cc01127c.tar.gz",
+    "size_bytes": 4836,
+    "sha256": "1cb7983fbd31c810681ee7a8071c5fb27d6d12fc9821910d18257ee523a9e4f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hlipka/library/MD5/0.0.0%2Bsha.8561cc01127c/MD5-0.0.0%2Bsha.8561cc01127c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hlipka/library/MD5/0.0.0%2Bsha.8561cc01127c/MD5-0.0.0%2Bsha.8561cc01127c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hlipka/library/NTPClientMin/0.0.0+sha.63ded11b8fa2/NTPClientMin-0.0.0+sha.63ded11b8fa2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NTPClientMin-0.0.0+sha.63ded11b8fa2.tar.gz",
+    "size_bytes": 4619,
+    "sha256": "94c2920bf84143105b7c4033f071eda9483060d549b669546e559ac1cc8b3600",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hlipka/library/NTPClientMin/0.0.0%2Bsha.63ded11b8fa2/NTPClientMin-0.0.0%2Bsha.63ded11b8fa2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hlipka/library/NTPClientMin/0.0.0%2Bsha.63ded11b8fa2/NTPClientMin-0.0.0%2Bsha.63ded11b8fa2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hlipka/library/NetServicesMin/0.0.0+sha.9d93f4dc2f46/NetServicesMin-0.0.0+sha.9d93f4dc2f46.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NetServicesMin-0.0.0+sha.9d93f4dc2f46.tar.gz",
+    "size_bytes": 27093,
+    "sha256": "67a31c4d55e8896756f3894b482054b92222128a7e5129f21d20db2719b71395",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hlipka/library/NetServicesMin/0.0.0%2Bsha.9d93f4dc2f46/NetServicesMin-0.0.0%2Bsha.9d93f4dc2f46.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hlipka/library/NetServicesMin/0.0.0%2Bsha.9d93f4dc2f46/NetServicesMin-0.0.0%2Bsha.9d93f4dc2f46.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hlipka/library/SimpleWebService/0.0.0+sha.687430e7f63a/SimpleWebService-0.0.0+sha.687430e7f63a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleWebService-0.0.0+sha.687430e7f63a.tar.gz",
+    "size_bytes": 4216,
+    "sha256": "a340bea46c52e9b327f4de8d7195a66d33516e240373c0e19e57fff0a356816d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hlipka/library/SimpleWebService/0.0.0%2Bsha.687430e7f63a/SimpleWebService-0.0.0%2Bsha.687430e7f63a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hlipka/library/SimpleWebService/0.0.0%2Bsha.687430e7f63a/SimpleWebService-0.0.0%2Bsha.687430e7f63a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hlipka/library/TcpLineStream/0.0.0+sha.28416a5a4ec5/TcpLineStream-0.0.0+sha.28416a5a4ec5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TcpLineStream-0.0.0+sha.28416a5a4ec5.tar.gz",
+    "size_bytes": 3112,
+    "sha256": "5d69ba06fab30825f651ae45c61ccdf91fc158da8a8eb5af9e525fba8a7b59f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hlipka/library/TcpLineStream/0.0.0%2Bsha.28416a5a4ec5/TcpLineStream-0.0.0%2Bsha.28416a5a4ec5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hlipka/library/TcpLineStream/0.0.0%2Bsha.28416a5a4ec5/TcpLineStream-0.0.0%2Bsha.28416a5a4ec5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hlipka/library/TimeZone/0.0.0+sha.0c7207d674d3/TimeZone-0.0.0+sha.0c7207d674d3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TimeZone-0.0.0+sha.0c7207d674d3.tar.gz",
+    "size_bytes": 3974,
+    "sha256": "8c2af0f051bc4c18995c63912c0d4048ce7786bccad5eb12177a94610e2f44e3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hlipka/library/TimeZone/0.0.0%2Bsha.0c7207d674d3/TimeZone-0.0.0%2Bsha.0c7207d674d3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hlipka/library/TimeZone/0.0.0%2Bsha.0c7207d674d3/TimeZone-0.0.0%2Bsha.0c7207d674d3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hlipka/library/ar1020/0.0.0+sha.a6971458d612/ar1020-0.0.0+sha.a6971458d612.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ar1020-0.0.0+sha.a6971458d612.tar.gz",
+    "size_bytes": 5394,
+    "sha256": "88c55618ec49dfc421ca70418440c65ad6854dc439cb03502d8736486a1f1e09",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hlipka/library/ar1020/0.0.0%2Bsha.a6971458d612/ar1020-0.0.0%2Bsha.a6971458d612.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hlipka/library/ar1020/0.0.0%2Bsha.a6971458d612/ar1020-0.0.0%2Bsha.a6971458d612.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hlipka/library/csv_parser/0.0.0+sha.7c9aa931c67c/csv_parser-0.0.0+sha.7c9aa931c67c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "csv_parser-0.0.0+sha.7c9aa931c67c.tar.gz",
+    "size_bytes": 8253,
+    "sha256": "4ea381c043c197c8a8fbf6b027968bc15dab6993da48ff8af734167f69501636",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hlipka/library/csv_parser/0.0.0%2Bsha.7c9aa931c67c/csv_parser-0.0.0%2Bsha.7c9aa931c67c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hlipka/library/csv_parser/0.0.0%2Bsha.7c9aa931c67c/csv_parser-0.0.0%2Bsha.7c9aa931c67c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hlipka/library/irrxml/0.0.0+sha.41a49a73580c/irrxml-0.0.0+sha.41a49a73580c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "irrxml-0.0.0+sha.41a49a73580c.tar.gz",
+    "size_bytes": 18641,
+    "sha256": "02e54d76400ba0c2739757e70a5bfeb956ef3ba4feb2128fc373329e73e13a02",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hlipka/library/irrxml/0.0.0%2Bsha.41a49a73580c/irrxml-0.0.0%2Bsha.41a49a73580c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hlipka/library/irrxml/0.0.0%2Bsha.41a49a73580c/irrxml-0.0.0%2Bsha.41a49a73580c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hlipka/library/pop3/0.0.0+sha.3e29a3a6f3bb/pop3-0.0.0+sha.3e29a3a6f3bb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pop3-0.0.0+sha.3e29a3a6f3bb.tar.gz",
+    "size_bytes": 3736,
+    "sha256": "8cb34d225f5540ab5174fe5224d5fa78909fefdd692280e79ce2931a1de3a09e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hlipka/library/pop3/0.0.0%2Bsha.3e29a3a6f3bb/pop3-0.0.0%2Bsha.3e29a3a6f3bb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hlipka/library/pop3/0.0.0%2Bsha.3e29a3a6f3bb/pop3-0.0.0%2Bsha.3e29a3a6f3bb.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hlipka/library/spxml/0.0.0+sha.3fa97f2c0505/spxml-0.0.0+sha.3fa97f2c0505.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "spxml-0.0.0+sha.3fa97f2c0505.tar.gz",
+    "size_bytes": 18769,
+    "sha256": "85328a3963fba11e6389bd61c57d846853a79b0af39af9c0b9d62a5b2b279e8c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hlipka/library/spxml/0.0.0%2Bsha.3fa97f2c0505/spxml-0.0.0%2Bsha.3fa97f2c0505.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hlipka/library/spxml/0.0.0%2Bsha.3fa97f2c0505/spxml-0.0.0%2Bsha.3fa97f2c0505.tar.gz"
+    ]
+   }
+  }
+ ]
+}

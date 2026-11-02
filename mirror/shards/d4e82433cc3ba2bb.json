@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-reniboy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-reniboy/library/buzzer/0.0.0+sha.622b1d533a1c/buzzer-0.0.0+sha.622b1d533a1c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "buzzer-0.0.0+sha.622b1d533a1c.tar.gz",
+    "size_bytes": 1722,
+    "sha256": "11cea49dd30f3c8e5462ad7eb2af2e4c40d6c5902b73b30e11fbbb86afbf8a88",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-reniboy/library/buzzer/0.0.0%2Bsha.622b1d533a1c/buzzer-0.0.0%2Bsha.622b1d533a1c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-reniboy/library/buzzer/0.0.0%2Bsha.622b1d533a1c/buzzer-0.0.0%2Bsha.622b1d533a1c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

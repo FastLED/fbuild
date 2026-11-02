@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-cotzo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-cotzo/library/FastAtan2/0.0.0+sha.3f469f0aa3b4/FastAtan2-0.0.0+sha.3f469f0aa3b4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastAtan2-0.0.0+sha.3f469f0aa3b4.tar.gz",
+    "size_bytes": 1585,
+    "sha256": "c18d5556f4372e2e6847d2a292752d85fb0b6cc9f20f3b6f50422a6e615c4eb6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-cotzo/library/FastAtan2/0.0.0%2Bsha.3f469f0aa3b4/FastAtan2-0.0.0%2Bsha.3f469f0aa3b4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-cotzo/library/FastAtan2/0.0.0%2Bsha.3f469f0aa3b4/FastAtan2-0.0.0%2Bsha.3f469f0aa3b4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-cotzo/library/FastECompass/0.0.0+sha.5eb51c7b0ca3/FastECompass-0.0.0+sha.5eb51c7b0ca3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastECompass-0.0.0+sha.5eb51c7b0ca3.tar.gz",
+    "size_bytes": 2904,
+    "sha256": "d77999ed5f837bc2841f67b6187591b6d0f980dd040c935292f354e50746483e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-cotzo/library/FastECompass/0.0.0%2Bsha.5eb51c7b0ca3/FastECompass-0.0.0%2Bsha.5eb51c7b0ca3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-cotzo/library/FastECompass/0.0.0%2Bsha.5eb51c7b0ca3/FastECompass-0.0.0%2Bsha.5eb51c7b0ca3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-cotzo/library/FastMathFunctions/0.0.0+sha.0c7af7a8de7a/FastMathFunctions-0.0.0+sha.0c7af7a8de7a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastMathFunctions-0.0.0+sha.0c7af7a8de7a.tar.gz",
+    "size_bytes": 2538,
+    "sha256": "113d3b22e970c903cefa55de3d797503c6856aceb0a01a518053246a537d0667",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-cotzo/library/FastMathFunctions/0.0.0%2Bsha.0c7af7a8de7a/FastMathFunctions-0.0.0%2Bsha.0c7af7a8de7a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-cotzo/library/FastMathFunctions/0.0.0%2Bsha.0c7af7a8de7a/FastMathFunctions-0.0.0%2Bsha.0c7af7a8de7a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-cotzo/library/MotorDC/0.0.0+sha.81602681b304/MotorDC-0.0.0+sha.81602681b304.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MotorDC-0.0.0+sha.81602681b304.tar.gz",
+    "size_bytes": 1353,
+    "sha256": "2880316c3a74618b398e99b070dbdc81d164f0d2893b4798bdbfa151b3d668dc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-cotzo/library/MotorDC/0.0.0%2Bsha.81602681b304/MotorDC-0.0.0%2Bsha.81602681b304.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-cotzo/library/MotorDC/0.0.0%2Bsha.81602681b304/MotorDC-0.0.0%2Bsha.81602681b304.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-yusufx",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-yusufx/library/filagree/0.0.0+sha.1a89e28dea91/filagree-0.0.0+sha.1a89e28dea91.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "filagree-0.0.0+sha.1a89e28dea91.tar.gz",
+    "size_bytes": 29505,
+    "sha256": "71ac97f0c53575ab03e835a10fa731057ba4f9773864cabea9a44c023350ff48",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yusufx/library/filagree/0.0.0%2Bsha.1a89e28dea91/filagree-0.0.0%2Bsha.1a89e28dea91.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yusufx/library/filagree/0.0.0%2Bsha.1a89e28dea91/filagree-0.0.0%2Bsha.1a89e28dea91.tar.gz"
+    ]
+   }
+  }
+ ]
+}

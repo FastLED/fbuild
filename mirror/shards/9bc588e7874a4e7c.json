@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ameer1234567890",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ameer1234567890/library/ShiftDisplay2/1.2.1/ShiftDisplay2-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ShiftDisplay2-1.2.1.tar.gz",
+    "size_bytes": 24600,
+    "sha256": "477cc6efcb434c3f8c74ca6466dd2f22e4206e1417d17fb39a180f65852d00fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ameer1234567890/library/ShiftDisplay2/1.2.1/ShiftDisplay2-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ameer1234567890/library/ShiftDisplay2/1.2.1/ShiftDisplay2-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ameer1234567890/library/TelnetStream2/1.0.0/TelnetStream2-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TelnetStream2-1.0.0.tar.gz",
+    "size_bytes": 13625,
+    "sha256": "45502a652c7ffb405801e121ba37f0e43e65b320c5931f78a1f20f523df2b92e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ameer1234567890/library/TelnetStream2/1.0.0/TelnetStream2-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ameer1234567890/library/TelnetStream2/1.0.0/TelnetStream2-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/franalvarez21",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "franalvarez21/library/Arduboy-BistercianNumbers/1.0/Arduboy-BistercianNumbers-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduboy-BistercianNumbers-1.0.tar.gz",
+    "size_bytes": 3743,
+    "sha256": "782d488247a07d4e367043a4d46459b78ded4fc5273a0f74def741d6b6096dcb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/franalvarez21/library/Arduboy-BistercianNumbers/1.0/Arduboy-BistercianNumbers-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/franalvarez21/library/Arduboy-BistercianNumbers/1.0/Arduboy-BistercianNumbers-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,126 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/steffann",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "steffann/library/DCCBase/0.0.1/DCCBase-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DCCBase-0.0.1.tar.gz",
+    "size_bytes": 12510,
+    "sha256": "a71e34ac5e635c3d8f2b7d8e48d235ce325e547b1d7dd102cf3620b904043ca2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/steffann/library/DCCBase/0.0.1/DCCBase-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/steffann/library/DCCBase/0.0.1/DCCBase-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "steffann/library/DCCBase/0.0.3/DCCBase-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DCCBase-0.0.3.tar.gz",
+    "size_bytes": 19220,
+    "sha256": "9079f1d6f1c1bcf7b06ea6d9f3752a914af11c2053429494c4a8a4f30e5e7e44",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/steffann/library/DCCBase/0.0.3/DCCBase-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/steffann/library/DCCBase/0.0.3/DCCBase-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "steffann/library/DCCBase/0.1.0/DCCBase-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DCCBase-0.1.0.tar.gz",
+    "size_bytes": 20122,
+    "sha256": "0744bc17e45636acb39c4674130c2735a95e5e2b64a720d3f3cd920bb7e878c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/steffann/library/DCCBase/0.1.0/DCCBase-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/steffann/library/DCCBase/0.1.0/DCCBase-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "steffann/library/DCCBase/0.1.1/DCCBase-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DCCBase-0.1.1.tar.gz",
+    "size_bytes": 21088,
+    "sha256": "8ec1bb78541b154dfd9bf31e9832f50c397390daa17e24eae52bafcd1adc33a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/steffann/library/DCCBase/0.1.1/DCCBase-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/steffann/library/DCCBase/0.1.1/DCCBase-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "steffann/library/DCCBase/0.2.0/DCCBase-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DCCBase-0.2.0.tar.gz",
+    "size_bytes": 20919,
+    "sha256": "6eac82e2d85810b221ce2bba907fc00c6c548135cfc0718526f5c2a5216532de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/steffann/library/DCCBase/0.2.0/DCCBase-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/steffann/library/DCCBase/0.2.0/DCCBase-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "steffann/library/DCCSignal/0.0.2/DCCSignal-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DCCSignal-0.0.2.tar.gz",
+    "size_bytes": 12748,
+    "sha256": "1c66e6fdd199a20db4bc466a302e1f78c731e0edb5ae652255a5a9a8bc60078d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/steffann/library/DCCSignal/0.0.2/DCCSignal-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/steffann/library/DCCSignal/0.0.2/DCCSignal-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "steffann/library/DCCSignal/0.0.3/DCCSignal-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DCCSignal-0.0.3.tar.gz",
+    "size_bytes": 19557,
+    "sha256": "9910d9e19115d0d5e84e66a2214cb977722817bd9c260d7bafa61a5e111e21d5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/steffann/library/DCCSignal/0.0.3/DCCSignal-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/steffann/library/DCCSignal/0.0.3/DCCSignal-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "steffann/library/DCCSignal/0.1.0/DCCSignal-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DCCSignal-0.1.0.tar.gz",
+    "size_bytes": 20199,
+    "sha256": "8ff748ef6828982031c9a62ea127e0a0f39090b5fdcf46b096446cfcab2c101f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/steffann/library/DCCSignal/0.1.0/DCCSignal-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/steffann/library/DCCSignal/0.1.0/DCCSignal-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "steffann/library/DCCSignal/0.2.0/DCCSignal-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DCCSignal-0.2.0.tar.gz",
+    "size_bytes": 20659,
+    "sha256": "cc239bcdf672f6b309c916497a7426c08125a57ab9f210b9ec6dc4c38e85a61c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/steffann/library/DCCSignal/0.2.0/DCCSignal-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/steffann/library/DCCSignal/0.2.0/DCCSignal-0.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}
