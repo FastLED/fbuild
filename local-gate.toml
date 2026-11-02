@@ -30,6 +30,14 @@ key = "linux/Check Ubuntu/Python facade tests (ubuntu-latest)"
 steps = ["Checkout source", "Verify candidate SHA", "Set up uv", "Setup soldr", "Run embedded-CPython facade tests", "Test (python facades, --ignored)"]
 lanes = ["linux-minimal"]
 
+# The release cross-link is declared but not executed for this lane: ci-minimal
+# passes a literal `glibc_floor: false`, so the job exists in the expanded graph
+# as a skipped job and derives no required checks. Omitting `steps` is what asks
+# for that derivation -- a skipped job must not demand proof it never produces.
+[[gate.replay.jobs]]
+source-job = "check-ubuntu.yml:glibc-floor"
+lanes = ["linux-minimal"]
+
 [[gate.replay.selections]]
 lane = "linux-minimal"
 job = "linux"
@@ -57,6 +65,13 @@ lanes = ["dylint"]
 source-job = "dylint.yml:policy"
 key = "Dylint/Dylint policy"
 steps = ["Checkout source", "Set up uv", "Validate Dylint policy files"]
+lanes = ["dylint"]
+
+# `all-jobs` above selects every job of the standalone Dylint run, including the
+# end-of-queue janitor, which its own guard confines to `merge_group`. Declared
+# without `steps` so the skipped job derives no required checks.
+[[gate.replay.jobs]]
+source-job = "dylint.yml:queue-cache-janitor"
 lanes = ["dylint"]
 
 [[gate.replay.selections]]

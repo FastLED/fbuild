@@ -190,6 +190,21 @@ class FractionalWorkflowTests(unittest.TestCase):
             self.assertNotIn("if", steps[0])
             self.assertFalse(steps[0].get("continue-on-error", False))
 
+    def test_release_cross_link_is_a_sibling_job(self):
+        minimal = self.load("ci-minimal.yml")["jobs"]
+        # The `linux` binding must be a literal, never an event expression:
+        # ci-lint's replay proof resolves a callee job `if:` only from a literal
+        # caller binding. An expression puts `check-ubuntu.yml:glibc-floor` into
+        # every linux-minimal replay graph, which the local proof lane cannot
+        # attest -- that is GATE-001 on unmodified main (FastLED/fbuild#1629)
+        # and it silently reddens `ci.test_shared_replay` (local-gate only).
+        self.assertIs(False, minimal["linux"]["with"]["glibc_floor"])
+        floor = minimal["glibc_floor"]
+        self.assertEqual("./.github/workflows/check-ubuntu.yml", floor["uses"])
+        self.assertIs(True, floor["with"]["glibc_floor"])
+        self.assertIn("glibc_floor", minimal["ci-summary"]["needs"])
+        self.assertIn("glibc_floor", minimal["queue-cache-janitor"]["needs"])
+
     def load(self, name):
         # PyYAML treats `on` as a YAML 1.1 boolean; inspect its True key.
         return yaml.safe_load((render_workflows.WORKFLOWS_DIR / name).read_text())
@@ -359,9 +374,9 @@ class FractionalWorkflowTests(unittest.TestCase):
         self.assertIn("pull_request", minimal[True])
         self.assertEqual(
             {
-                "cancel-superseded", "verify", "linux", "board_plan", "fbuild_bin", "pr_boards",
-                "reuse_decision", "test", "full", "selected-coverage", "queue-cache-janitor",
-                "dylint", "ci-summary",
+                "cancel-superseded", "verify", "linux", "glibc_floor", "board_plan", "fbuild_bin",
+                "pr_boards", "reuse_decision", "test", "full", "selected-coverage",
+                "queue-cache-janitor", "dylint", "ci-summary",
             },
             set(minimal["jobs"]),
         )
@@ -376,9 +391,12 @@ class FractionalWorkflowTests(unittest.TestCase):
         self.assertIn("ci-summary", minimal["jobs"]["queue-cache-janitor"]["needs"])
         self.assertIn("ci/gate_jobs.py", summary["steps"][-1]["run"])
         self.assertEqual("read", summary["permissions"]["actions"])
-        # The glibc release cross-link stays off the PR and merge-queue path.
-        self.assertEqual("${{ github.event_name == 'push' || github.event_name == 'workflow_dispatch' }}",
-                         minimal["jobs"]["linux"]["with"]["glibc-floor"])
+        # The glibc release cross-link stays off the PR and merge-queue path:
+        # the shared Ubuntu call binds it false and a sibling job adds it on
+        # push/dispatch only (see test_release_cross_link_is_a_sibling_job).
+        self.assertIs(False, minimal["jobs"]["linux"]["with"]["glibc_floor"])
+        self.assertEqual("github.event_name == 'push' || github.event_name == 'workflow_dispatch'",
+                         minimal["jobs"]["glibc_floor"]["if"])
         # GEN-021 shadow decision (zackees/ci.yml#162): main pushes only, never
         # consumed by another job, and unable to fail the run.
         reuse = minimal["jobs"]["reuse_decision"]

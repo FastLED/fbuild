@@ -8,7 +8,10 @@ on:
         type: string
         required: false
         default: ""
-      glibc-floor:
+      # Plain identifier, not `glibc-floor`: ci-lint's replay static exclusion
+      # resolves `inputs.<name>` for plain identifiers only, so a hyphenated
+      # name would keep this job in every replay graph (GATE-001).
+      glibc_floor:
         # The release cross-link below. ci-minimal turns it off on the PR and
         # merge-queue path and on for push to main.
         type: boolean
@@ -132,7 +135,7 @@ jobs:
     # glibc-2.17 sysroot, then read the linked symbol tables. No new workflow
     # file: this is another job in the existing Ubuntu lane.
     name: glibc 2.17 floor (linux x86_64 + aarch64)
-    if: ${{ github.event_name == 'workflow_dispatch' || inputs.glibc-floor }}
+    if: ${{ github.event_name == 'workflow_dispatch' || inputs.glibc_floor }}
     runs-on: ubuntu-latest
     # Cold cache: two release cross-links of fbuild-cli + fbuild-daemon.
     # Measured ~16 min for the daemon alone on a loaded 16-core host with an

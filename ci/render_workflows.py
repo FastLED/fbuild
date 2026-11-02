@@ -378,12 +378,45 @@ def render_reuse_decision() -> str:
 # the #405 repo-wide LRU budget pass, which CI_LINT_SHA predates.
 QUEUE_JANITOR_CI_LINT_SHA = "953c4e13691b10c1c4f1f9c39fa259fd732c5789"
 QUEUE_JANITOR_NEEDS = (
-    "cancel-superseded", "verify", "linux", "dylint", "board_plan", "fbuild_bin", "pr_boards",
-    "reuse_decision", "test", "full", "selected-coverage", "ci-summary",
+    "cancel-superseded", "verify", "linux", "glibc_floor", "dylint", "board_plan", "fbuild_bin",
+    "pr_boards", "reuse_decision", "test", "full", "selected-coverage", "ci-summary",
 )
 # CI summary needs every ci-minimal job except the janitor (which runs after
 # it), itself, and reuse_decision (shadow-only; GEN-021 forbids depending on it).
 CI_SUMMARY_NEEDS = tuple(j for j in QUEUE_JANITOR_NEEDS if j not in ("ci-summary", "reuse_decision"))
+
+
+def render_glibc_floor_call() -> str:
+    """The manylinux_2_17 release cross-link, off the shared Ubuntu call.
+
+    FastLED/fbuild#1629 wants the floor measured before a release, on push to
+    main and on a manual dispatch -- never on the PR or merge-queue path, where
+    it would add two release cross-links to every run. It used to ride the
+    `linux` call as a boolean input; that made the job a dependency of the call
+    for the local proof lane as well, which by construction replays
+    `ci-minimal.yml:linux` under `workflow_dispatch` and can never prove a
+    cross-link that needs soldr's glibc-2.17 sysroots
+    (`ci/test_shared_replay`, GATE-001 `omitted=['check-ubuntu.yml:glibc-floor']`).
+
+    A sibling job keeps one honest dependency graph: `linux` is exactly
+    check + python-facade-tests on every event, and this job adds the floor on
+    push/dispatch only. It is not a dependency of `linux`, so the replay proof
+    does not have to attest it, and the local gate's selected job stays the
+    same two Ubuntu jobs.
+    """
+    return (
+        "  glibc_floor:\n"
+        "    name: glibc 2.17 floor\n"
+        "    # Release cross-link: push to main / manual dispatch only, never the\n"
+        "    # PR or merge-queue path. The literal input keeps the job out of the\n"
+        "    # PR replay graph (see the `linux` job's `with:` block).\n"
+        "    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'\n"
+        "    uses: ./.github/workflows/check-ubuntu.yml\n"
+        "    secrets: inherit\n"
+        "    with:\n"
+        "      ref: ${{ github.sha }}\n"
+        "      glibc_floor: true\n"
+    )
 
 
 def render_dylint_call() -> str:
@@ -697,9 +730,14 @@ def render_ci(boards: list[dict], tier: str, families: dict) -> str:
         + "    secrets: inherit\n"
         + "    with:\n"
         + ("      ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}\n"
-              # Release cross-link: push to main / dispatch only, never the PR or queue path.
-              "      glibc-floor: ${{ github.event_name == 'push' || github.event_name == 'workflow_dispatch' }}\n"
-              + render_dylint_call() if minimal else f"      ref: {verified_ref}\n")
+              # The release cross-link is a literal `false` here, never an
+              # event expression: ci-lint's replay proof resolves a callee job
+              # `if:` only from a literal caller binding, so an expression
+              # would keep `check-ubuntu.yml:glibc-floor` in every linux-minimal
+              # replay graph (GATE-001) and break the local gate. It runs from
+              # the `glibc_floor` sibling job below on push/dispatch instead.
+              "      glibc_floor: false\n"
+              + render_dylint_call() + render_glibc_floor_call() if minimal else f"      ref: {verified_ref}\n")
         + host
         + policy
         + ("" if minimal else
