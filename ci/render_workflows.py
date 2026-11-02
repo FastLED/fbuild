@@ -389,8 +389,8 @@ CI_SUMMARY_NEEDS = tuple(j for j in QUEUE_JANITOR_NEEDS if j not in ("ci-summary
 def render_dylint_call() -> str:
     """Dylint inside ci-minimal, so the single `CI summary` gate sees its jobs.
 
-    The standalone dylint.yml pull_request/merge_group triggers stay until the
-    ruleset stops requiring the old `Dylint` context; then they can go.
+    dylint.yml no longer has its own pull_request/merge_group triggers; PRs and
+    the merge queue run it only through this call.
     """
     return (
         "  dylint:\n"

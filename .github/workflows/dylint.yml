@@ -11,15 +11,12 @@ on:
         type: string
         required: false
         default: ""
-  pull_request:
-    branches: [main]
+  # PRs and merge-queue runs reach Dylint through ci-minimal.yml's
+  # workflow_call, gated by the single required "CI summary" check.
   # setup-soldr skips cache uploads on PRs. A main run seeds the shared
   # Dylint compile cache that subsequent PRs are allowed to restore.
   push:
     branches: [main]
-  # GEN-022: branch protection requires the `Dylint` check, so a merge-queue
-  # run must report it too or the queue stalls. Every job runs unconditionally.
-  merge_group:
 
 # Auto-cancel superseded PR runs: pushing again to a feature branch
 # supersedes the in-flight run instead of queueing behind it. Non-PR

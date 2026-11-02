@@ -225,9 +225,10 @@ class FractionalWorkflowTests(unittest.TestCase):
         self.assertNotIn("run_full", full["jobs"]["dylint"]["with"])
         dylint = self.load("dylint.yml")
         self.assertEqual(["main"], dylint[True]["push"]["branches"])
-        # GEN-022: the required `Dylint` check must report on merge-queue runs,
-        # and none of its jobs may be skipped there.
-        self.assertIn("merge_group", dylint[True])
+        # Only `CI summary` is required now; PRs and the merge queue reach
+        # Dylint via ci-minimal's workflow_call, so no duplicate triggers.
+        self.assertNotIn("merge_group", dylint[True])
+        self.assertNotIn("pull_request", dylint[True])
         self.assertEqual("Dylint", dylint["jobs"]["gate"]["name"])
         self.assertEqual("always()", dylint["jobs"]["gate"]["if"])
         self.assertNotIn("if", dylint["jobs"]["policy"])
