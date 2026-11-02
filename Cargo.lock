@@ -1102,6 +1102,7 @@ dependencies = [
  "fbuild-build",
  "fbuild-config",
  "fbuild-core",
+ "fbuild-daemon",
  "fbuild-deploy",
  "fbuild-library-select",
  "fbuild-packages",

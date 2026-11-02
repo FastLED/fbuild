@@ -12,3 +12,10 @@ than mocking it.
   test (FastLED/fbuild#32). Acts as a parent, child, or grandchild
   depending on the role argument passed on the command line; see the
   module-level doc-comment in the source.
+
+## Library modules
+
+- `entry/mod.rs` — the daemon's in-process entry point
+  (`fbuild_daemon::entry::run`). A library module, not a binary: it lives here
+  because it is a program entry point and the process-scope dylints exempt
+  `src/bin/**`. See `entry/README.md`.
