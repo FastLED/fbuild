@@ -18,6 +18,15 @@ fn derive_cppfilt_prefix() {
 }
 
 #[test]
+fn derive_cppfilt_preserves_ape_com_suffix() {
+    let nm = PathBuf::from("/tools/xtensa-esp32s3-elf-nm.com");
+    assert_eq!(
+        derive_cppfilt_path(&nm),
+        PathBuf::from("/tools/xtensa-esp32s3-elf-c++filt.com")
+    );
+}
+
+#[test]
 fn derive_cppfilt_no_prefix() {
     let nm = PathBuf::from("/usr/bin/nm");
     let cppfilt = derive_cppfilt_path(&nm);

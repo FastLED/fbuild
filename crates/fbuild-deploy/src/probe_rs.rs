@@ -133,7 +133,7 @@ pub fn managed_probe_rs_path() -> Option<NormalizedPath> {
 /// Search order (first hit wins):
 ///
 /// 1. `FBUILD_PROBE_RS_PATH` — explicit override.
-/// 2. `~/.fbuild/{prod|dev}/tools/probe-rs/probe-rs[.exe]` — the
+/// 2. `~/.fbuild/{prod|dev}/tools/probe-rs/probe-rs[.exe|.com]` — the
 ///    canonical fbuild-managed location populated from the pinned
 ///    FastLED/probe-rs release.
 ///
@@ -149,11 +149,7 @@ pub fn find_probe_rs() -> Option<NormalizedPath> {
         }
     }
 
-    let managed = managed_probe_rs_path()?;
-    if managed.is_file() {
-        return Some(managed);
-    }
-    None
+    fbuild_core::platform::executable::find_tool_in(&managed_probe_rs_dir()?, "probe-rs")
 }
 
 /// Resolve and, if needed, install the pinned FastLED/probe-rs binary.
@@ -292,34 +288,13 @@ fn probe_rs_temp_install_path(dest_path: &Path) -> NormalizedPath {
 }
 
 fn find_extracted_probe_rs_binary(root: &Path) -> Result<NormalizedPath> {
-    let exe = fbuild_core::platform::executable::native_name("probe-rs");
-    find_file_by_name(root, &exe).ok_or_else(|| {
+    fbuild_core::platform::executable::find_tool_in_tree(root, "probe-rs").ok_or_else(|| {
+        let exe = fbuild_core::platform::executable::native_name("probe-rs");
         FbuildError::PackageError(format!(
             "probe-rs binary `{exe}` not found after extracting {}",
             root.display()
         ))
     })
-}
-
-fn find_file_by_name(root: &Path, file_name: &str) -> Option<NormalizedPath> {
-    let entries = std::fs::read_dir(root).ok()?;
-    for entry in entries.flatten() {
-        let path = entry.path();
-        if path.is_file()
-            && path
-                .file_name()
-                .and_then(|name| name.to_str())
-                .is_some_and(|name| name == file_name)
-        {
-            return Some(NormalizedPath::from(path));
-        }
-        if path.is_dir() {
-            if let Some(found) = find_file_by_name(&path, file_name) {
-                return Some(found);
-            }
-        }
-    }
-    None
 }
 
 /// Map an fbuild `BoardConfig` to the `--chip` name probe-rs expects.

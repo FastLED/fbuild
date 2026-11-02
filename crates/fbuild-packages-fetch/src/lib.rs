@@ -18,22 +18,25 @@ pub mod platformio_registry_fixture;
 pub mod platformio_repository;
 pub mod submodules;
 
+mod ape_perms;
 mod install_lock;
+mod touch;
 
 pub use cache::Cache;
 pub use disk_cache::DiskCache;
 
-use std::collections::{HashMap, HashSet};
+use std::collections::HashMap;
 use std::path::{Path, PathBuf};
-use std::sync::{Mutex, OnceLock};
+
+#[cfg(test)]
+use touch::clear_package_touch_cache_for_tests;
+use touch::{mark_package_touch_needed, package_touch_key};
 
 /// Type-erased validation closure for [`PackageBase::staged_install`].
 type BoxedValidate<'a> = Box<dyn FnOnce(&Path) -> fbuild_core::Result<()> + Send + 'a>;
 
 use async_trait::async_trait;
 use fbuild_core::install_status::{self, InstallPhase, InstallRole};
-
-static PACKAGE_TOUCHES: OnceLock<Mutex<HashSet<String>>> = OnceLock::new();
 
 /// Recursively compute the total size of a directory in bytes.
 ///
@@ -389,7 +392,7 @@ impl PackageBase {
     ) -> fbuild_core::Result<PathBuf> {
         let install_path = self.install_path();
 
-        if install_path.exists() {
+        if install_path.exists() && ape_perms::is_repaired(&install_path) {
             // An existing-install hit is a use: refresh the DiskCache LRU so
             // background GC doesn't treat this package as the oldest unused
             // entry and delete it mid-build (FastLED/fbuild#1341).
@@ -408,6 +411,7 @@ impl PackageBase {
         let _install_lock =
             install_lock::acquire_for_install(&install_path, &self.name, &self.version).await?;
         if install_path.exists() {
+            ape_perms::repair_once(&install_path);
             self.touch_disk_cache();
             return Ok(install_path);
         }
@@ -484,6 +488,10 @@ impl PackageBase {
         submodules::prepare_submodules(&self.name, &self.url, &staging_path, &self.submodules)
             .await?;
 
+        // Zip entries without Unix attributes extract as 0644; restore the
+        // exec bit on APE host tools so one `tool.com` runs on every host.
+        ape_perms::mark_fresh(&staging_path)?;
+
         // Validate
         validate(&staging_path)?;
 
@@ -538,39 +546,14 @@ impl PackageBase {
     }
 }
 
-fn package_touch_key(
-    kind: disk_cache::Kind,
-    cache_key: &str,
-    version: &str,
-    install_path: &Path,
-) -> String {
-    format!(
-        "{}|{}|{}|{}",
-        kind.as_str(),
-        cache_key,
-        version,
-        install_path.display()
-    )
-}
-
-fn mark_package_touch_needed(key: String) -> bool {
-    let touched = PACKAGE_TOUCHES.get_or_init(|| Mutex::new(HashSet::new()));
-    let mut touched = touched.lock().unwrap_or_else(|e| e.into_inner());
-    touched.insert(key)
-}
-
 #[cfg(test)]
-fn clear_package_touch_cache_for_tests() {
-    if let Some(touched) = PACKAGE_TOUCHES.get() {
-        touched.lock().unwrap_or_else(|e| e.into_inner()).clear();
-    }
-}
+mod ape_install_tests;
 
 #[cfg(test)]
 mod toolchain_gcc_ar_tests {
     use super::*;
 
-    async fn serve_once(body: Vec<u8>) -> String {
+    pub(super) async fn serve_once(body: Vec<u8>) -> String {
         use tokio::io::{AsyncReadExt, AsyncWriteExt};
         use tokio::net::TcpListener;
 

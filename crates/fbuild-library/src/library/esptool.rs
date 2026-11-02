@@ -589,7 +589,8 @@ fn host_platform_tag() -> Result<&'static str> {
     })
 }
 
-/// Executable name for the current platform.
+/// Native executable name for the current platform (test fixtures).
+#[cfg(test)]
 fn esptool_bin_name() -> &'static str {
     fbuild_core::platform::executable::name("esptool", "esptool.exe")
 }
@@ -599,9 +600,8 @@ fn esptool_bin_name() -> &'static str {
 /// `esptool-<platform>/esptool`).
 fn find_esptool_binary(root: &Path) -> Option<NormalizedPath> {
     fn search(dir: &Path, depth: usize) -> Option<NormalizedPath> {
-        let candidate = dir.join(esptool_bin_name());
-        if candidate.is_file() {
-            return Some(NormalizedPath::from(candidate));
+        if let Some(candidate) = fbuild_core::platform::executable::find_tool_in(dir, "esptool") {
+            return Some(candidate);
         }
         if depth == 0 {
             return None;

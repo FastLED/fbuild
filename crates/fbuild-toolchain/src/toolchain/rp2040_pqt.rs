@@ -116,9 +116,7 @@ impl crate::Package for Rp2040PqtToolchain {
             return false;
         }
         let root = find_bin_root(&self.base.install_path());
-        root.join("bin")
-            .join(tool_name("arm-none-eabi-gcc"))
-            .exists()
+        tool_binary(&root.join("bin"), "arm-none-eabi-gcc").exists()
     }
 
     fn get_info(&self) -> PackageInfo {
@@ -245,12 +243,9 @@ fn find_bin_root(install_dir: &Path) -> PathBuf {
     install_dir.to_path_buf()
 }
 
-fn tool_name(name: &str) -> String {
-    fbuild_core::platform::executable::native_name(name)
-}
-
+/// Get the full path to a tool binary (native spelling, or a `.com`/`.exe` APE).
 fn tool_binary(bin_dir: &Path, name: &str) -> PathBuf {
-    bin_dir.join(tool_name(name))
+    fbuild_core::platform::executable::resolve_tool_in(bin_dir, name).into_path_buf()
 }
 
 #[cfg(test)]
@@ -263,15 +258,6 @@ mod tests {
         let (url, _checksum) = platform_package();
         assert!(url.contains("4.0.1"));
         assert!(url.contains("arm-none-eabi"));
-    }
-
-    #[test]
-    fn test_tool_name_platform() {
-        let name = tool_name("arm-none-eabi-gcc");
-        assert_eq!(
-            name,
-            fbuild_core::platform::executable::native_name("arm-none-eabi-gcc")
-        );
     }
 
     #[test]
