@@ -138,9 +138,11 @@ impl BuildOrchestrator for Esp32Orchestrator {
 
         // Read link-affecting config before the expensive include/library/source discovery steps
         // so the no-op fast path can return early on warm builds.
-        let sdk_ld_flags = framework.get_sdk_ld_flags(&sdk_variant);
+        let sdk_ld_flags = fixups::effective_sdk_ld_flags(
+            framework.get_sdk_ld_flags(&sdk_variant),
+            &ctx.build_unflags,
+        );
         let sdk_defines = framework.get_sdk_defines(&sdk_variant);
-
         let mcu_config = fixups::for_sdk_ld_flags(mcu_config, &sdk_ld_flags);
 
         let embed_files = ctx.config.get_embed_files(&params.env_name)?;
@@ -297,8 +299,10 @@ impl BuildOrchestrator for Esp32Orchestrator {
         // Toolchain sysroot includes (xtensa headers, etc.)
         include_dirs.extend(toolchain.get_include_dirs());
 
-        // Read SDK flags early â€” needed to check LTO before compiling.
-        let sdk_ld_flags = framework.get_sdk_ld_flags(&sdk_variant);
+        let sdk_ld_flags = fixups::effective_sdk_ld_flags(
+            framework.get_sdk_ld_flags(&sdk_variant),
+            &ctx.build_unflags,
+        );
         let sdk_lib_flags = framework.get_sdk_lib_flags(&sdk_variant, sdk_memory_type.as_deref());
         let mut raw_ld_scripts =
             framework.get_sdk_ld_scripts(&sdk_variant, sdk_memory_type.as_deref());
@@ -312,11 +316,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
         }
         let sdk_ld_scripts = LinkerScripts::from_raw_flags(&raw_ld_scripts);
         let sdk_defines = framework.get_sdk_defines(&sdk_variant);
-
-        // If SDK specifies -fno-lto, disable LTO in MCU config profiles to avoid
-        // compiling objects with LTO that the linker can't handle.
         let mcu_config = fixups::for_sdk_ld_flags(mcu_config, &sdk_ld_flags);
-
         // 8.5. Library dependencies
         //
         // `lib_deps` may name libraries the Arduino core bundles (`FS`,

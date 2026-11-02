@@ -58,6 +58,14 @@ pub fn for_sdk_ld_flags(config: Esp32McuConfig, sdk_ld_flags: &[String]) -> Esp3
     )
 }
 
+/// Apply caller removals before SDK LTO policy and linker construction.
+/// GCC's driver suppresses its linker plugin if any `-fno-lto` survives,
+/// even when an overlay appends `-flto` later (FastLED/fbuild#1862).
+pub fn effective_sdk_ld_flags(mut flags: Vec<String>, build_unflags: &[String]) -> Vec<String> {
+    crate::pipeline::remove_unflagged_tokens(&mut flags, build_unflags);
+    flags
+}
+
 fn apply_if(condition: bool, config: Esp32McuConfig, rule: Rule) -> Esp32McuConfig {
     if condition { rule(config) } else { config }
 }
@@ -346,6 +354,30 @@ mod tests {
         assert_eq!(has_lto(&kept), has_lto(&base));
         assert!(!has_lto(&stripped));
         assert_eq!(stripped.profiles.len(), base.profiles.len());
+    }
+
+    #[test]
+    fn sdk_unflags_remove_no_lto_before_profile_and_link_selection() {
+        let flags = effective_sdk_ld_flags(
+            vec!["-fno-lto".into(), "-nostartfiles".into()],
+            &["-fno-lto".into()],
+        );
+        assert_eq!(flags, vec!["-nostartfiles"]);
+        let base = get_mcu_config("esp32c6").unwrap();
+        assert!(has_lto(&base));
+        assert!(has_lto(&for_sdk_ld_flags(base, &flags)));
+    }
+
+    #[test]
+    fn sdk_unflags_preserve_defaults_and_exact_token_semantics() {
+        let flags = vec!["-fno-lto".into(), "-Wl,--gc-sections".into()];
+        assert_eq!(effective_sdk_ld_flags(flags.clone(), &[]), flags);
+        assert_eq!(
+            effective_sdk_ld_flags(flags.clone(), &["-flto".into()]),
+            flags
+        );
+        let base = get_mcu_config("esp32s3").unwrap();
+        assert!(!has_lto(&for_sdk_ld_flags(base, &flags)));
     }
 
     #[test]
