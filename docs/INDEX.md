@@ -13,6 +13,8 @@ fbuild docs.
 | What CLI commands and options exist? | [reference/cli.md](reference/cli.md) |
 | How do I use `fbuild build` / `deploy` / `monitor` / `test-emu`? | [reference/cli.md](reference/cli.md#core-workflows) |
 | How do I use the emulator (QEMU / avr8js / simavr)? | [guides/emulator-testing.md](guides/emulator-testing.md) |
+| How do I find what is retaining memory in the daemon? | [guides/heap-profiling.md](guides/heap-profiling.md) |
+| Why does a heap dump show `??` instead of function names? | [guides/heap-profiling.md](guides/heap-profiling.md#symbolizing-a-dump-the-part-that-is-easy-to-get-wrong) |
 | What is fbuild's PlatformIO compatibility policy? | [reference/platformio-compatibility.md](reference/platformio-compatibility.md) |
 | Why does fbuild strip `.eh_frame` on some builds? | [reference/platformio-compatibility.md#eh_frame-strip-policy](reference/platformio-compatibility.md#eh_frame-strip-policy) |
 | Why does fbuild exist? | [WHY.md](WHY.md) |
