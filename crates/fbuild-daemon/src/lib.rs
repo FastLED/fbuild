@@ -33,6 +33,12 @@
 pub mod broker;
 pub mod context;
 pub mod device_manager;
+// The daemon entry point is a program entry point, so it lives under `src/bin/`
+// where the two process-scope dylints (`ban_process_exit_outside_main`,
+// `ban_env_var_set_after_import`) already exempt entry-point paths. It is NOT a
+// binary target: cargo only auto-discovers `src/bin/*/main.rs`.
+#[path = "bin/entry/mod.rs"]
+pub mod entry;
 pub mod handlers;
 pub mod heap_profile;
 pub mod lock_models;

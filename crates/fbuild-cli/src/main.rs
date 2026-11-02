@@ -2,11 +2,22 @@ mod cli;
 mod daemon_client;
 mod lib_select;
 mod mcp;
+mod multicall;
 mod output;
 mod sync;
 mod update_check;
 
 fn main() {
+    // FastLED/fbuild#1851 — busybox-style argv[0] dispatch, first thing in the
+    // process. A `fbuild-daemon` invocation runs the daemon from this image and
+    // must not pay for the 8 MB stack trampoline, the dev-namespace hash, the
+    // tokio runtime build, or clap's subcommand tree: `entry::run` starts the
+    // heap profiler itself (its own #1361 ordering) and builds the runtime the
+    // daemon has always used. Every other name falls through unchanged.
+    if let Some(multicall::MulticallDispatch::Exit(code)) = multicall::maybe_dispatch() {
+        std::process::exit(code);
+    }
+
     // Trampoline through a larger-stack thread: Windows' default 1 MB main-thread
     // stack is not enough for clap's `--help` formatting across fbuild's full
     // subcommand tree on debug builds (would crash with STATUS_STACK_OVERFLOW
