@@ -276,6 +276,18 @@ jobs:
       # zccache idiom: an unset matrix key must mean "required". `!= false`
       # does not work -- expressions coerce null and false both to 0.
       require_debug_sidecars: ${{ (matrix.require_debug_sidecars || 'true') == 'true' }}
+      # Authenticode signing (Azure Artifact Signing, OIDC only). This
+      # workflow is workflow_dispatch-only, so the OIDC subject is the
+      # dispatched ref -- Azure trusts refs/heads/main and tags. A dispatch
+      # from any other branch fails closed at azure/login.
+      sign_windows: ${{ contains(matrix.target, 'windows') }}
+    secrets:
+      AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      AZURE_SIGNING_ENDPOINT: ${{ secrets.AZURE_SIGNING_ENDPOINT }}
+      AZURE_SIGNING_ACCOUNT: ${{ secrets.AZURE_SIGNING_ACCOUNT }}
+      AZURE_SIGNING_PROFILE: ${{ secrets.AZURE_SIGNING_PROFILE }}
+      AZURE_SIGN_PUBLISHER: ${{ secrets.AZURE_SIGN_PUBLISHER }}
 
   full-ci:
     name: Full validation on release commit
@@ -346,9 +358,38 @@ jobs:
           .wheel-smoke/bin/fbuild --version
           uv run --no-project --python .wheel-smoke/bin/python python -c 'import fbuild; print(fbuild.__version__)'
 
+  # The Windows lanes are signed on Linux, where only a structural check is
+  # possible; this is Windows' own chain/timestamp/hash verdict on every PE in
+  # the exact artifact the release archives and wheels are built from.
+  windows-release-smoke:
+    name: Smoke signed Windows binaries (${{ matrix.target }})
+    needs: [prepare, build]
+    if: needs.prepare.outputs.should_build == 'true'
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: x86_64-pc-windows-msvc
+            runner: windows-2025
+          - target: aarch64-pc-windows-msvc
+            runner: windows-11-arm
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: ${{ needs.prepare.outputs.release_ref }}
+          persist-credentials: false
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        with:
+          name: binaries-${{ matrix.target }}
+          path: native
+      - name: Require Valid Authenticode and execute fbuild.exe
+        run: python ci/sign_windows_release.py smoke --dir native
+
   publish:
     name: Publish GitHub release
-    needs: [prepare, build, full-ci, macos-release-smoke]
+    needs: [prepare, build, full-ci, macos-release-smoke, windows-release-smoke]
     if: needs.prepare.outputs.should_publish_github == 'true' && needs.full-ci.outputs.coverage == 'true'
     runs-on: ubuntu-24.04
     timeout-minutes: 30
@@ -445,7 +486,7 @@ jobs:
 
   build-pypi:
     name: Build PyPI wheels
-    needs: [prepare, build, full-ci, macos-release-smoke]
+    needs: [prepare, build, full-ci, macos-release-smoke, windows-release-smoke]
     if: needs.prepare.outputs.should_publish_pypi == 'true' && needs.full-ci.outputs.coverage == 'true'
     runs-on: ubuntu-24.04
     timeout-minutes: 30

@@ -29,7 +29,8 @@ The dispatch requires a 40-character commit SHA equal to the head commit of the 
 release-auto.yml
 ├── prepare              ── compute candidate version, check tag + PyPI state
 ├── ci-full              ── validate exact candidate SHA and every board/platform job
-├── build (matrix)       ── build native binaries for 6 targets
+├── build (matrix)       ── build native binaries for 6 targets (Windows PEs Authenticode-signed)
+├── windows-release-smoke ── require Get-AuthenticodeSignature Valid + run fbuild.exe
 ├── build-pypi           ── call `ci/publish.py::build_all_wheels` → 5 wheels
 ├── smoke tests          ── install wheels, verify macOS architectures, run CLI + import
 ├── publish              ── create GitHub release + push v<version> tag
@@ -45,6 +46,10 @@ should_publish_pypi = true    IF publish=true AND PyPI has fewer than expected w
 ```
 
 The file-count guard exists because a complete `fbuild` release means one wheel per `PLATFORMS` entry in `ci/publish.py` (currently 5: Linux x86_64, Linux aarch64, macOS x86_64, macOS aarch64, Windows x86_64). Anything less is a partial / stranded release; an explicit retry on the same candidate SHA can rebuild and upload the missing wheels after full CI and release-binary smoke tests pass. Both this gate and the post-upload "Verify all wheels visible on PyPI" check derive their expected counts at run time (from `ci/publish.py::PLATFORMS` and the built wheels respectively) — a stale hardcoded 4 broke the verify gate during the 2.3.22-2.3.24 window. Note the build matrix has more lanes than wheels: the aarch64-pc-windows-msvc binaries ship via the GitHub release archives only (ARM Windows uses the win_amd64 wheel via emulation). macOS wheels are separate for Intel and Apple Silicon: each contains matching native extension and CLI binaries. Both hosted macOS release smoke lanes assemble and install the wheel, verify the installed binaries with `lipo -verify_arch`, import the extension, and execute the CLI before publication.
+
+### Windows Authenticode signing
+
+Both `*-pc-windows-msvc` lanes sign `fbuild.exe`, `fbuild-daemon.exe` and `_native.pyd` in `template_native_build.yml` (`sign_windows: true`, set only by `release-auto.yml`) with `ci/sign_windows_release.py`: `azure/login` (OIDC, no client secret) mints an Azure Artifact Signing token, and a SHA-256-pinned jsign jar signs and RFC 3161-timestamps every PE before `SHA256SUMS.txt`, provenance and the artifact upload, so the release zips, checksums and the `win_amd64` wheel all carry signed bytes. The step fails if any PE is left unsigned. `windows-release-smoke` then requires `Get-AuthenticodeSignature` to report `Valid` on native Windows (x64 and ARM64) before either publish job can run. It reads the FastLED org secrets `AZURE_TENANT_ID`, `AZURE_CLIENT_ID`, `AZURE_SIGNING_ENDPOINT`, `AZURE_SIGNING_ACCOUNT`, `AZURE_SIGNING_PROFILE` and `AZURE_SIGN_PUBLISHER`; a repo-level secret of the same name overrides the org value. Azure only trusts the OIDC subject for `main`, tags and environments, so dispatch the release from `main` -- a dispatch from any other branch fails at `azure/login`.
 
 ## Common failure modes
 
