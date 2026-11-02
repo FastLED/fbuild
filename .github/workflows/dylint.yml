@@ -45,6 +45,8 @@ jobs:
     name: Dylint policy
     runs-on: ubuntu-latest
     steps:
+      - name: Deliberate failure (CI summary red proof, do not merge)
+        run: exit 1
       - name: Checkout source
         uses: actions/checkout@v6
         with:
