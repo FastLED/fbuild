@@ -25,13 +25,26 @@ class SharedReplayTests(unittest.TestCase):
         self.assertIsNotNone(config)
         assert config is not None
         self.assertEqual(check_replay_static(config, ROOT), [])
+        # Two jobs carry proof. The release cross-link (glibc_floor) is in the
+        # graph but provably skipped -- ci-minimal binds a literal false -- so
+        # it is declared with no step list and derives no required checks.
         self.assertEqual(
-            {job.source_job for job in config.jobs if "linux-minimal" in job.lanes},
+            {
+                job.source_job
+                for job in config.jobs
+                if "linux-minimal" in job.lanes and job.proof.steps
+            },
             {
                 "check-ubuntu.yml:check",
                 "check-ubuntu.yml:python-facade-tests",
             },
         )
+        cross_link = [
+            job for job in config.jobs
+            if job.source_job == "check-ubuntu.yml:glibc-floor"
+        ]
+        self.assertEqual(len(cross_link), 1)
+        self.assertEqual(cross_link[0].proof.steps, ())
 
     def test_dylint_lane_declares_the_whole_pr_workflow(self):
         raw = tomllib.loads((ROOT / "local-gate.toml").read_text())
