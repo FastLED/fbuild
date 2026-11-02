@@ -210,13 +210,28 @@ impl MirrorManifest {
     }
 
     /// The entry for `url`: from this document, else from `owner`'s shard,
-    /// fetched (once per process) on first use.
-    pub async fn entry_for(&self, url: &str, owner: Option<&str>) -> Option<Arc<MirrorEntry>> {
+    /// fetched (once per process) on first use. Tells an owner this document
+    /// does not list apart from an owner whose shard it lists but could not load
+    /// (FastLED/fbuild#1825 item 4): the second case means the bucket's bytes
+    /// for the URL are unverified, which the caller may want to deprioritise.
+    pub(crate) async fn entry_lookup(&self, url: &str, owner: Option<&str>) -> EntryLookup {
         if let Some(entry) = self.by_url.get(url) {
-            return Some(entry.clone());
+            return EntryLookup::Found(entry.clone());
         }
-        let shard = self.shard(owner?).await?;
-        shard.by_url.get(url).cloned()
+        let Some(owner) = owner else {
+            return EntryLookup::NotListed;
+        };
+        if !self.shards.contains_key(owner) {
+            return EntryLookup::NotListed;
+        }
+        match self.shard(owner).await {
+            Some(shard) => shard
+                .by_url
+                .get(url)
+                .cloned()
+                .map_or(EntryLookup::NotListed, EntryLookup::Found),
+            None => EntryLookup::Unavailable,
+        }
     }
 
     /// Every asset entry of this document.
@@ -267,6 +282,17 @@ impl MirrorManifest {
         self.source = Some(source);
         self
     }
+}
+
+/// Outcome of [`MirrorManifest::entry_lookup`] (FastLED/fbuild#1825).
+pub(crate) enum EntryLookup {
+    /// An entry listing the URL, from the document itself or its owner's shard.
+    Found(Arc<MirrorEntry>),
+    /// Neither the document nor a loaded shard lists the URL.
+    NotListed,
+    /// The Index lists the owner's shard but it could not be loaded, so no
+    /// entry can be derived and nothing verifies bytes served for this URL.
+    Unavailable,
 }
 
 /// Outcome of [`MirrorManifest::owner_shard`].
@@ -408,10 +434,20 @@ async fn load_shard(
         }
     }
     let shard = cached.and_then(|bytes| parse_shard(&bytes).ok());
-    if shard.is_some() {
-        tracing::warn!("using a stale cached mirror shard for {owner}");
-    }
+    report_shard_outcome(owner, shard.as_ref());
     shard
+}
+
+/// A stale-but-verified shard is still usable; having none means the owner's
+/// objects cannot be verified from the mirror right now, which the download
+/// path deprioritises (FastLED/fbuild#1825).
+fn report_shard_outcome(owner: &str, shard: Option<&MirrorManifest>) {
+    match shard {
+        Some(_) => tracing::warn!("using a stale cached mirror shard for {owner}"),
+        None => tracing::warn!(
+            "mirror shard for {owner} is unavailable; bytes for its objects are unverified"
+        ),
+    }
 }
 
 /// `bytes` parsed as a shard, if they hash to `shard_ref`.

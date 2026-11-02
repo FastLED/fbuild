@@ -378,9 +378,61 @@ def render_reuse_decision() -> str:
 # the #405 repo-wide LRU budget pass, which CI_LINT_SHA predates.
 QUEUE_JANITOR_CI_LINT_SHA = "953c4e13691b10c1c4f1f9c39fa259fd732c5789"
 QUEUE_JANITOR_NEEDS = (
-    "cancel-superseded", "verify", "linux", "board_plan", "fbuild_bin", "pr_boards",
-    "reuse_decision", "test", "full", "selected-coverage",
+    "cancel-superseded", "verify", "linux", "dylint", "board_plan", "fbuild_bin", "pr_boards",
+    "reuse_decision", "test", "full", "selected-coverage", "ci-summary",
 )
+# CI summary needs every ci-minimal job except the janitor (which runs after
+# it), itself, and reuse_decision (shadow-only; GEN-021 forbids depending on it).
+CI_SUMMARY_NEEDS = tuple(j for j in QUEUE_JANITOR_NEEDS if j not in ("ci-summary", "reuse_decision"))
+
+
+def render_dylint_call() -> str:
+    """Dylint inside ci-minimal, so the single `CI summary` gate sees its jobs.
+
+    dylint.yml no longer has its own pull_request/merge_group triggers; PRs and
+    the merge queue run it only through this call.
+    """
+    return (
+        "  dylint:\n"
+        "    uses: ./.github/workflows/dylint.yml\n"
+        "    secrets: inherit\n"
+        "    with:\n"
+        "      ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}\n"
+    )
+
+
+def render_ci_summary() -> str:
+    """The single required context (obs-rust/obs-studio `CI Gate`, soldr `CI summary`).
+
+    `needs.*.result` misses a job that ends cancelled inside a reusable call
+    while the call reports success, so ci/gate_jobs.py lists every job of
+    this run attempt through the API (retried) and fails on any that did not
+    succeed. Runs on every event, including merge_group, via always().
+    """
+    return (
+        "  ci-summary:\n"
+        "    name: CI summary\n"
+        "    if: always()\n"
+        f"    needs: [{', '.join(CI_SUMMARY_NEEDS)}]\n"
+        "    runs-on: ubuntu-latest\n"
+        "    timeout-minutes: 10\n"
+        "    permissions:\n"
+        "      actions: read\n"
+        "      contents: read\n"
+        "    steps:\n"
+        "      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6\n"
+        "        with:\n"
+        "          sparse-checkout: ci/gate_jobs.py\n"
+        "          sparse-checkout-cone-mode: false\n"
+        "          persist-credentials: false\n"
+        "      - name: Check job results\n"
+        "        if: contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')\n"
+        "        run: exit 1\n"
+        "      - name: Check run jobs\n"
+        "        env:\n"
+        "          GH_TOKEN: ${{ github.token }}\n"
+        "        run: python3 -P ci/gate_jobs.py\n"
+    )
 
 
 def render_cancel_superseded() -> str:
@@ -644,7 +696,10 @@ def render_ci(boards: list[dict], tier: str, families: dict) -> str:
         + "    uses: ./.github/workflows/check-ubuntu.yml\n"
         + "    secrets: inherit\n"
         + "    with:\n"
-        + ("      ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}\n" if minimal else f"      ref: {verified_ref}\n")
+        + ("      ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}\n"
+              # Release cross-link: push to main / dispatch only, never the PR or queue path.
+              "      glibc-floor: ${{ github.event_name == 'push' || github.event_name == 'workflow_dispatch' }}\n"
+              + render_dylint_call() if minimal else f"      ref: {verified_ref}\n")
         + host
         + policy
         + ("" if minimal else
@@ -743,6 +798,7 @@ def render_ci(boards: list[dict], tier: str, families: dict) -> str:
            "            # Path-selected boards: skipped when the PR touches none.\n"
            "            case \"$PR_BOARDS\" in success|skipped) ;; *) exit 1 ;; esac\n"
            "          fi\n"
+           + render_ci_summary()
            + render_queue_cache_janitor()
            if minimal else "")
     )

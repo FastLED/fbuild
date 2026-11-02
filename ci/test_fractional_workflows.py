@@ -225,15 +225,16 @@ class FractionalWorkflowTests(unittest.TestCase):
         self.assertNotIn("run_full", full["jobs"]["dylint"]["with"])
         dylint = self.load("dylint.yml")
         self.assertEqual(["main"], dylint[True]["push"]["branches"])
-        # GEN-022: the required `Dylint` check must report on merge-queue runs,
-        # and none of its jobs may be skipped there.
-        self.assertIn("merge_group", dylint[True])
+        # Only `CI summary` is required now; PRs and the merge queue reach
+        # Dylint via ci-minimal's workflow_call, so no duplicate triggers.
+        self.assertNotIn("merge_group", dylint[True])
+        self.assertNotIn("pull_request", dylint[True])
         self.assertEqual("Dylint", dylint["jobs"]["gate"]["name"])
         self.assertEqual("always()", dylint["jobs"]["gate"]["if"])
         self.assertNotIn("if", dylint["jobs"]["policy"])
         dylint_janitor = dylint["jobs"]["queue-cache-janitor"]
         self.assertEqual(set(dylint["jobs"]) - {"queue-cache-janitor"}, set(dylint_janitor["needs"]))
-        self.assertEqual("always() && github.event_name == 'merge_group'", dylint_janitor["if"])
+        self.assertEqual("always() && github.event_name == 'merge_group' && github.workflow == 'Dylint'", dylint_janitor["if"])
         setup = next(
             step for step in dylint["jobs"]["dylint"]["steps"]
             if step.get("uses", "").startswith("zackees/setup-soldr@")
@@ -360,9 +361,24 @@ class FractionalWorkflowTests(unittest.TestCase):
             {
                 "cancel-superseded", "verify", "linux", "board_plan", "fbuild_bin", "pr_boards",
                 "reuse_decision", "test", "full", "selected-coverage", "queue-cache-janitor",
+                "dylint", "ci-summary",
             },
             set(minimal["jobs"]),
         )
+        # The single required context: always() on every event, every other
+        # job but the janitor in needs, and the run's full job list via the API.
+        summary = minimal["jobs"]["ci-summary"]
+        self.assertEqual("CI summary", summary["name"])
+        self.assertEqual("always()", summary["if"])
+        self.assertIn("merge_group", minimal[True])
+        self.assertEqual(set(minimal["jobs"]) - {"ci-summary", "queue-cache-janitor", "reuse_decision"},
+                         set(summary["needs"]))
+        self.assertIn("ci-summary", minimal["jobs"]["queue-cache-janitor"]["needs"])
+        self.assertIn("ci/gate_jobs.py", summary["steps"][-1]["run"])
+        self.assertEqual("read", summary["permissions"]["actions"])
+        # The glibc release cross-link stays off the PR and merge-queue path.
+        self.assertEqual("${{ github.event_name == 'push' || github.event_name == 'workflow_dispatch' }}",
+                         minimal["jobs"]["linux"]["with"]["glibc-floor"])
         # GEN-021 shadow decision (zackees/ci.yml#162): main pushes only, never
         # consumed by another job, and unable to fail the run.
         reuse = minimal["jobs"]["reuse_decision"]

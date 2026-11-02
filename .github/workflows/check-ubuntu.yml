@@ -8,6 +8,12 @@ on:
         type: string
         required: false
         default: ""
+      glibc-floor:
+        # The release cross-link below. ci-minimal turns it off on the PR and
+        # merge-queue path and on for push to main.
+        type: boolean
+        required: false
+        default: true
 
 # Auto-cancel superseded PR runs: pushing again to a feature branch
 # supersedes the in-flight run instead of queueing behind it. Non-PR
@@ -126,6 +132,7 @@ jobs:
     # glibc-2.17 sysroot, then read the linked symbol tables. No new workflow
     # file: this is another job in the existing Ubuntu lane.
     name: glibc 2.17 floor (linux x86_64 + aarch64)
+    if: ${{ github.event_name == 'workflow_dispatch' || inputs.glibc-floor }}
     runs-on: ubuntu-latest
     # Cold cache: two release cross-links of fbuild-cli + fbuild-daemon.
     # Measured ~16 min for the daemon alone on a loaded 16-core host with an
