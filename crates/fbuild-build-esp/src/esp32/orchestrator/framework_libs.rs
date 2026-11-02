@@ -225,15 +225,13 @@ impl FwLibsPlan {
         }
         let hydrate_outcome = ctx.cache.hydrate(&ctx.build_dir);
         build_log.push(hydrate_summary(&hydrate_outcome));
-        match &hydrate_outcome {
-            Ok(copied) if *copied > 0 => tracing::info!(
+        match hydrate_outcome {
+            Ok(copied) if copied > 0 => tracing::info!(
                 "hydrated {} cached ESP32 framework library archives",
                 copied
             ),
             Ok(_) => {}
-            Err(error) => {
-                tracing::warn!("failed to hydrate ESP32 framework library cache: {}", error)
-            }
+            Err(error) => return Err(error.into()),
         }
 
         let mut entries = Vec::new();

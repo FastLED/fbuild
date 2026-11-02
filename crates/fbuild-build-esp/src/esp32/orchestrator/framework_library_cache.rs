@@ -12,9 +12,11 @@ use sha2::{Digest, Sha256};
 use walkdir::WalkDir;
 
 const CACHE_VERSION: &str = "fbuild-esp32-framework-libraries-v1";
+const LOCAL_IDENTITY_FILE: &str = ".cache-identity";
 
 pub(super) struct FrameworkLibraryCache {
     path: NormalizedPath,
+    key: String,
 }
 
 impl FrameworkLibraryCache {
@@ -27,9 +29,10 @@ impl FrameworkLibraryCache {
         let key = cache_key(project_dir, profile, compile_signature, libraries_dir);
         let path = fbuild_packages::Cache::new(project_dir)
             .framework_library_artifacts_dir()
-            .join(key);
+            .join(&key);
         Self {
             path: NormalizedPath::new(path),
+            key,
         }
     }
 
@@ -44,31 +47,57 @@ impl FrameworkLibraryCache {
         let key = cache_key(project_dir, profile, compile_signature, libraries_dir);
         let path = fbuild_packages::Cache::with_cache_root(project_dir, cache_root)
             .framework_library_artifacts_dir()
-            .join(key);
+            .join(&key);
         Self {
             path: NormalizedPath::new(path),
+            key,
         }
     }
 
     pub(super) fn hydrate(&self, target_dir: &Path) -> std::io::Result<usize> {
-        if !self.path.is_dir() {
-            return Ok(0);
-        }
-        std::fs::create_dir_all(target_dir)?;
+        self.prepare_local(target_dir)?;
         let mut copied = 0;
-        for entry in std::fs::read_dir(&self.path)? {
-            let entry = entry?;
-            if !entry.file_type()?.is_file() || !is_archive(&entry.path()) {
-                continue;
+        if self.path.is_dir() {
+            for entry in std::fs::read_dir(&self.path)? {
+                let entry = entry?;
+                if !entry.file_type()?.is_file() || !is_archive(&entry.path()) {
+                    continue;
+                }
+                let destination = target_dir.join(entry.file_name());
+                if destination.exists() {
+                    continue;
+                }
+                std::fs::copy(entry.path(), destination)?;
+                copied += 1;
             }
-            let destination = target_dir.join(entry.file_name());
-            if destination.exists() {
-                continue;
-            }
-            std::fs::copy(entry.path(), destination)?;
-            copied += 1;
         }
+        // Publish only after all copies finish. An interrupted hydrate leaves
+        // no identity, so the next build discards any partial archives.
+        fbuild_core::fs::write_atomic_sync(
+            target_dir.join(LOCAL_IDENTITY_FILE),
+            self.key.as_bytes(),
+        )?;
         Ok(copied)
+    }
+
+    fn prepare_local(&self, target_dir: &Path) -> std::io::Result<()> {
+        let identity = target_dir.join(LOCAL_IDENTITY_FILE);
+        match std::fs::read(&identity) {
+            Ok(recorded) if recorded.as_slice() == self.key.as_bytes() => {
+                // Consume the identity while hydration is in progress.
+                std::fs::remove_file(identity)?;
+                return Ok(());
+            }
+            Ok(_) => {}
+            Err(error) if error.kind() == std::io::ErrorKind::NotFound => {}
+            Err(error) => return Err(error),
+        }
+        // This directory contains only generated framework archives/objects.
+        // Legacy outputs have no identity and must not authorize cache hits.
+        if target_dir.exists() {
+            std::fs::remove_dir_all(target_dir)?;
+        }
+        std::fs::create_dir_all(target_dir)
     }
 
     pub(super) fn store_archive(&self, archive: &Path) -> std::io::Result<()> {

@@ -218,9 +218,10 @@ async fn finish_keeps_selection_order_and_tolerates_failures() {
         fx.library("FastLED", &["f.cpp"]),
         fx.library("Gamma", &["g.c"]),
     ];
-    // Beta's archive is already in the build dir (a hydrated cache hit).
-    std::fs::create_dir_all(fx.build_dir()).unwrap();
-    std::fs::write(fx.build_dir().join("libbeta.a"), "cached").unwrap();
+    // Beta is restored from the matching global cache during preparation.
+    let beta = fx.tmp.path().join("libbeta.a");
+    std::fs::write(&beta, "cached").unwrap();
+    fx.ctx().cache.store_archive(&beta).unwrap();
     let already: HashSet<String> = ["fastled".to_string()].into();
 
     let (archives, log) = fx.build(&libraries, &already, 2).await;
@@ -260,6 +261,86 @@ async fn pending_libraries_share_one_gate() {
     assert_eq!(archives, ["liba.a", "libb.a", "libc.a", "libd.a", "libe.a"]);
     let max = fx.backend.max_in_flight.load(Ordering::SeqCst);
     assert!((2..=3).contains(&max), "max in-flight {max} with 3 permits");
+}
+
+#[test]
+fn local_archives_rebuild_when_compile_signature_changes() {
+    let fx = Fixture::new();
+    let libraries = [fx.library("FS", &["FS.cpp"])];
+    std::fs::create_dir_all(fx.build_dir()).unwrap();
+    let mut log = fbuild_core::BuildLog::new();
+    let _initial = fx.plan(&libraries, &HashSet::new(), &mut log);
+    let archive = fx.build_dir().join("libfs.a");
+    std::fs::write(&archive, "old LTO archive").unwrap();
+
+    let mut changed = fx.ctx();
+    changed.signature = "no-lto".into();
+    changed.cache = FrameworkLibraryCache::with_cache_root(
+        &fx.tmp.path().join("project"),
+        &fx.tmp.path().join("cache"),
+        fbuild_core::BuildProfile::Release,
+        &changed.signature,
+        &fx.tmp.path().join("framework"),
+    );
+    let plan = FwLibsPlan::new(
+        changed,
+        &libraries,
+        &HashSet::new(),
+        false,
+        false,
+        &mut PerfTimer::new("fw-libs-test"),
+        &mut log,
+    )
+    .unwrap();
+    assert!(matches!(&plan.entries[..], [FwLibEntry::Compile { .. }]));
+    assert!(
+        !archive.exists(),
+        "old LTO archive must not survive a flag change"
+    );
+}
+
+#[test]
+fn local_archives_without_compile_identity_are_not_reused() {
+    let fx = Fixture::new();
+    let libraries = [fx.library("FS", &["FS.cpp"])];
+    std::fs::create_dir_all(fx.build_dir()).unwrap();
+    std::fs::write(fx.build_dir().join("libfs.a"), "legacy archive").unwrap();
+    let plan = fx.plan(
+        &libraries,
+        &HashSet::new(),
+        &mut fbuild_core::BuildLog::new(),
+    );
+    assert!(matches!(&plan.entries[..], [FwLibEntry::Compile { .. }]));
+}
+
+#[test]
+fn local_archives_with_matching_compile_identity_are_reused() {
+    let fx = Fixture::new();
+    let libraries = [fx.library("FS", &["FS.cpp"])];
+    std::fs::create_dir_all(fx.build_dir()).unwrap();
+    let mut log = fbuild_core::BuildLog::new();
+    let _initial = fx.plan(&libraries, &HashSet::new(), &mut log);
+    std::fs::write(fx.build_dir().join("libfs.a"), "matching archive").unwrap();
+    let plan = fx.plan(&libraries, &HashSet::new(), &mut log);
+    assert!(matches!(&plan.entries[..], [FwLibEntry::Cached { .. }]));
+}
+
+#[test]
+fn local_cache_identity_errors_abort_before_archive_reuse() {
+    let fx = Fixture::new();
+    let libraries = [fx.library("FS", &["FS.cpp"])];
+    std::fs::create_dir_all(fx.build_dir().parent().unwrap()).unwrap();
+    std::fs::write(fx.build_dir(), "not a cache directory").unwrap();
+    let result = FwLibsPlan::new(
+        fx.ctx(),
+        &libraries,
+        &HashSet::new(),
+        false,
+        false,
+        &mut PerfTimer::new("fw-libs-test"),
+        &mut fbuild_core::BuildLog::new(),
+    );
+    assert!(result.is_err());
 }
 
 /// `clean_only` plans nothing (no hydrate); `clean_all` evicts the cache.
