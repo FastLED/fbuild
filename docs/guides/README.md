@@ -6,6 +6,7 @@ Task-oriented docs for using fbuild in real workflows.
 
 - [Emulator testing](emulator-testing.md) - run firmware under avr8js, simavr,
   or QEMU without physical hardware.
+- [Heap profiling the daemon](heap-profiling.md) - capture a pprof heap snapshot from a running or wedged daemon and symbolize it.
 - [CI cache strategy](../CI_CACHE.md) - copy-paste setup for consumer GitHub
   Actions workflows.
 - [CI caching internals](../CI_CACHING.md) - detailed save/restore behavior for
