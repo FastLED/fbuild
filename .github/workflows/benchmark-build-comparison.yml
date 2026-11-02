@@ -184,20 +184,20 @@ jobs:
           retention-days: 30
 
   publish:
-    name: Publish benchmark artifacts
+    name: Assemble and publish the Pages site
+    # `site/mirror/**` is client-facing download metadata, so its deploy must not
+    # hinge on the ESP32-S3 benchmark (FastLED/fbuild#1825). This job therefore
+    # runs whenever the measurement job is DONE, not when it SUCCEEDED: it seeds
+    # the site from the last published `benchmark-stats` branch and overlays fresh
+    # measurements only if they exist. Pages deploys replace the whole site, so a
+    # single assembler stays authoritative -- two publishers would clobber.
     needs: benchmark
-    if: ${{ needs.benchmark.result == 'success' && github.ref == 'refs/heads/main' }}
+    if: ${{ !cancelled() && github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-24.04
     permissions:
       contents: write
       pages: write
     steps:
-      - name: Download benchmark site snapshot
-        uses: actions/download-artifact@v8
-        with:
-          name: build-comparison-site-${{ github.sha }}
-          path: benchmark-stats
-
       - name: Check out the mirror manifest
         uses: actions/checkout@v6
         with:
@@ -205,33 +205,49 @@ jobs:
           sparse-checkout: site/mirror
           sparse-checkout-cone-mode: false
 
-      # Pages deploys replace the whole site, so every deploy must carry the
-      # download mirror manifest fbuild clients fetch (FastLED/fbuild#1810).
-      - name: Add the mirror manifest to the site
-        shell: bash
-        run: |
-          set -euo pipefail
-          mkdir -p benchmark-stats/mirror
-          # The Index points at per-owner shards (FastLED/fbuild#1815); ship them too.
-          cp -a repo/site/mirror/. benchmark-stats/mirror/
+      - name: Download benchmark site snapshot
+        # Optional input: a broken or timed-out benchmark keeps the previous
+        # report online instead of freezing the mirror.
+        if: needs.benchmark.result == 'success'
+        uses: actions/download-artifact@v8
+        with:
+          name: build-comparison-site-${{ github.sha }}
+          path: benchmark-measurements
 
-      - name: Publish one-commit benchmark-stats branch
+      - name: Assemble the site from the last publish plus fresh inputs
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
           publish_dir="$(mktemp -d)"
-          cp -a benchmark-stats/. "${publish_dir}/"
-          git -C "${publish_dir}" init
-          git -C "${publish_dir}" checkout -b benchmark-stats
+          repo_url="https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git -C "${publish_dir}" init --quiet
           git -C "${publish_dir}" config user.name 'github-actions[bot]'
           git -C "${publish_dir}" config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git -C "${publish_dir}" add .
-          git -C "${publish_dir}" commit -m "chore: publish build benchmark for ${GITHUB_SHA}"
-          git -C "${publish_dir}" remote add origin \
-            "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-          git -C "${publish_dir}" push --force origin benchmark-stats
+          # Pages deploys replace the whole site, so start from the last good
+          # publish rather than from an empty tree (FastLED/fbuild#1825).
+          if git ls-remote --exit-code "${repo_url}" refs/heads/benchmark-stats >/dev/null 2>&1; then
+            git -C "${publish_dir}" fetch --depth=1 "${repo_url}" refs/heads/benchmark-stats
+            git -C "${publish_dir}" reset --hard FETCH_HEAD
+          fi
+          git -C "${publish_dir}" checkout -B benchmark-stats
+          if [[ -d benchmark-measurements ]]; then
+            cp -a benchmark-measurements/. "${publish_dir}/"
+          else
+            echo "No benchmark measurements this run; keeping the last published report."
+          fi
+          # The Index points at per-owner shards (FastLED/fbuild#1815); ship them too.
+          mkdir -p "${publish_dir}/mirror"
+          cp -a repo/site/mirror/. "${publish_dir}/mirror/"
+          git -C "${publish_dir}" add -A
+          if git -C "${publish_dir}" diff --cached --quiet; then
+            echo "No site changes to publish."
+          else
+            git -C "${publish_dir}" commit -m "chore: publish build benchmark for ${GITHUB_SHA}"
+            git -C "${publish_dir}" push --force "${repo_url}" benchmark-stats
+          fi
+          echo "publish_dir=${publish_dir}" >> "${GITHUB_ENV}"
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
@@ -239,11 +255,12 @@ jobs:
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          path: benchmark-stats
+          path: ${{ env.publish_dir }}
 
   deploy-pages:
     name: Deploy benchmark report
     needs: publish
+    if: ${{ needs.publish.result == 'success' }}
     runs-on: ubuntu-24.04
     environment:
       name: github-pages
