@@ -8,7 +8,7 @@ use std::path::Path;
 use fbuild_core::{FbuildError, Result};
 use sha2::Digest;
 
-use super::manifest::{self, MirrorEntry, is_loopback_url};
+use super::manifest::{self, EntryLookup, MirrorEntry, is_loopback_url};
 use super::{
     DownloadProgress, RetryTiming, download_file_with_progress_named, get_with_retry_timed,
     hex_encode,
@@ -69,15 +69,35 @@ pub(super) async fn resolve_candidates(url: &str) -> Candidates {
         None
     };
     let canonical = canonical_url(url);
-    let entry = match &manifest {
+    let lookup = match &manifest {
         Some(manifest) => {
             manifest
-                .entry_for(&canonical, registry_owner(&canonical).as_deref())
+                .entry_lookup(&canonical, registry_owner(&canonical).as_deref())
                 .await
         }
-        None => None,
+        None => EntryLookup::NotListed,
     };
-    resolve_with(url, entry.as_deref())
+    match lookup {
+        EntryLookup::Found(entry) => resolve_with(url, Some(entry.as_ref())),
+        EntryLookup::NotListed => resolve_with(url, None),
+        EntryLookup::Unavailable => resolve_unverified(url),
+    }
+}
+
+/// Candidates when the manifest indexes this URL's owner but that owner's
+/// shard could not be loaded (FastLED/fbuild#1825 item 4): no SHA-256 from the
+/// manifest guards the bucket's bytes for the object, so the vendor is tried
+/// first and the built-in bucket stays a last resort. A download the caller
+/// verifies anyway is unaffected; an explicit `FBUILD_DOWNLOAD_MIRROR_FIRST`
+/// keeps the operator's order.
+pub(super) fn resolve_unverified(url: &str) -> Candidates {
+    if std::env::var(MIRROR_FIRST_ENV).is_ok() {
+        return resolve_with(url, None);
+    }
+    if mirror_path(url).is_none() {
+        return Candidates::new(vec![url.to_string()], false);
+    }
+    Candidates::new(candidate_urls(url, &[DEFAULT_MIRROR.to_string()]), false)
 }
 
 /// Candidates for `url`, highest precedence first:

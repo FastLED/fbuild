@@ -53,6 +53,15 @@ Precedence: `FBUILD_DOWNLOAD_MIRRORS` (set, even empty) > manifest entry >
 built-in bucket > vendor alone. `FBUILD_DOWNLOAD_MIRROR_FIRST`, when set,
 overrides the manifest's order.
 
+An owner the index lists but whose shard cannot be fetched is *not* the same
+as an owner it does not list (FastLED/fbuild#1825): with no shard there is no
+`sha256` guarding the bucket's bytes for that object, so the vendor is tried
+first and the built-in bucket stays a last resort — unless
+`FBUILD_DOWNLOAD_MIRROR_FIRST` is set, which keeps the operator's order. A
+warning names the owner whose shard is unavailable. When the shard *is* loaded
+but does not list the URL, the object is genuinely absent from the mirror and
+the normal precedence applies.
+
 | Variable | Meaning |
 |---|---|
 | `FBUILD_MIRROR_MANIFEST_URL` | Manifest source(s), comma/whitespace separated. Empty disables the manifest. Default: the Pages URL, then the raw file on `main`. |
