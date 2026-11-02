@@ -206,9 +206,16 @@ pub async fn heap_dump(
                 live_samples: crate::heap_profile::live_sample_count(),
                 profiling_was_already_running: was_running,
                 message: if was_running {
-                    "heap snapshot written".to_string()
+                    "heap snapshot written; symbolize it against the matching \
+                     fbuild-daemon binary or its debug sidecar"
+                        .to_string()
                 } else {
-                    "heap snapshot written, but profiling only started with this                      request — it covers allocations from now on, not the ones                      already held. Set FBUILD_HEAP_PROFILE=1 before starting the                      daemon to capture from process start."
+                    "heap snapshot written, but profiling only started with this \
+                     request — it covers allocations from now on, not the ones \
+                     already held. Set FBUILD_HEAP_PROFILE=1 before starting the \
+                     daemon to capture from process start. Symbolize the dump \
+                     against the matching binary or debug sidecar; a stripped \
+                     release binary names no frames."
                         .to_string()
                 },
             }),
