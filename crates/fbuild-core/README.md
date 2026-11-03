@@ -18,6 +18,7 @@ Core types, errors, and utilities shared across all fbuild crates.
 ## Modules
 
 - **build_log** -- Centralized build output log with optional `mpsc::Sender` streaming
+- **daemon_diagnostics** -- typed attribution of a vanished daemon: parses the embedded cache watchdog's holder/waiter report (and panic lines) out of a bounded log tail so a lost build or deploy names its infrastructure cause instead of reporting a bare connection error (FastLED/fbuild#1866)
 - **compiler_flags** -- Platform-correct escaping for GCC `-D` define flags
 - **file_lock** -- Generic OS-released shared/exclusive file-lock primitives, used by `fbuild-paths::daemon_ownership` for fbuild-daemon startup/lifetime ownership (not object-cache access, which stays zccache-internal)
 - **platform::process** -- neutral containment, detached and Tokio child spawning, PID liveness/image inspection, termination, wait, and exit-code interpretation; concrete host mechanics stay in the selected platform tree and compatible operations delegate to `running-process`
