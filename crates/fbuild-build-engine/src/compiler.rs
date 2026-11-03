@@ -561,44 +561,19 @@ pub fn build_cpp_flags(common_flags: Vec<String>, config: &dyn McuConfig) -> Vec
 /// - `extra_pre_flags`: additional flags inserted between base flags
 ///   and `extra_flags` (ESP32 uses this for include flags deferred
 ///   from `common_flags`).
-#[allow(clippy::too_many_arguments)]
-#[expect(
-    clippy::cognitive_complexity,
-    clippy::too_many_lines,
-    reason = "baseline, zackees/ci.yml#229"
-)]
-pub async fn compile_source(
-    compiler: &Path,
+/// The exact argument vector consumed by the compile backend, also used by
+/// prebuilt fingerprinting. Source/output paths are normalized identically.
+pub fn compile_argv(
     source: &Path,
     output: &Path,
     flags: &[String],
-    extra_flags: &[String],
-    _temp_dir: &Path,
-    _response_file_prefix: &str,
-    verbose: bool,
-    _compiler_cache: Option<&Path>,
     extra_pre_flags: &[String],
-) -> Result<CompileResult> {
-    // #282: a relative `output` (from `fbuild build <relative project_dir>` —
-    // what CI does) collides with the asymmetry between
-    // `compile_cwd_from_output` (canonicalizes the workspace to absolute) and
-    // `path_arg_for_compile_cwd` (short-circuits on relative paths). The
-    // resulting gcc invocation would get `cwd = absolute project_dir` plus a
-    // relative `-o`, resolving to a doubled path whose parent dir was never
-    // created — and `-MMD -MF` fails. Promote both paths to absolute up front
-    // so the downstream cwd / `-o` pair stays consistent.
+    extra_flags: &[String],
+) -> (Vec<String>, Option<PathBuf>) {
     let source_buf = absolute_from_cwd(source);
     let output_buf = absolute_from_cwd(output);
     let source = source_buf.as_path();
     let output = output_buf.as_path();
-    for path in [compiler, source, output] {
-        fbuild_paths::long_paths::validate_legacy_path(path)?;
-    }
-
-    if let Some(parent) = output.parent() {
-        std::fs::create_dir_all(parent)?;
-    }
-
     let compile_cwd = crate::zccache::compile_cwd_from_output(output);
     let (source_arg, output_arg) = if let Some(cwd) = compile_cwd.as_deref() {
         (
@@ -637,6 +612,51 @@ pub async fn compile_source(
         all_flags.extend(extra_pre_flags.iter().cloned());
         all_flags.extend(extra_flags.iter().cloned());
     }
+    all_flags.extend(["-c".to_string(), source_arg, "-o".to_string(), output_arg]);
+    (prepare_flags_for_exec(all_flags), compile_cwd)
+}
+
+#[allow(clippy::too_many_arguments)]
+#[expect(
+    clippy::cognitive_complexity,
+    clippy::too_many_lines,
+    reason = "baseline, zackees/ci.yml#229"
+)]
+pub async fn compile_source(
+    compiler: &Path,
+    source: &Path,
+    output: &Path,
+    flags: &[String],
+    extra_flags: &[String],
+    _temp_dir: &Path,
+    _response_file_prefix: &str,
+    verbose: bool,
+    _compiler_cache: Option<&Path>,
+    extra_pre_flags: &[String],
+) -> Result<CompileResult> {
+    // #282: a relative `output` (from `fbuild build <relative project_dir>` —
+    // what CI does) collides with the asymmetry between
+    // `compile_cwd_from_output` (canonicalizes the workspace to absolute) and
+    // `path_arg_for_compile_cwd` (short-circuits on relative paths). The
+    // resulting gcc invocation would get `cwd = absolute project_dir` plus a
+    // relative `-o`, resolving to a doubled path whose parent dir was never
+    // created — and `-MMD -MF` fails. Promote both paths to absolute up front
+    // so the downstream cwd / `-o` pair stays consistent.
+    let source_buf = absolute_from_cwd(source);
+    let output_buf = absolute_from_cwd(output);
+    let source = source_buf.as_path();
+    let output = output_buf.as_path();
+    for path in [compiler, source, output] {
+        fbuild_paths::long_paths::validate_legacy_path(path)?;
+    }
+
+    if let Some(parent) = output.parent() {
+        std::fs::create_dir_all(parent)?;
+    }
+
+    let (sanitized, compile_cwd) =
+        compile_argv(source, output, flags, extra_pre_flags, extra_flags);
+
     // `flags`/`extra_flags` here are already unflag-filtered by
     // compile_c/compile_cpp before reaching compile_one, so pass empty unflags
     // (re-stripping would be a no-op). The read side reconstructs the same
@@ -654,8 +674,6 @@ pub async fn compile_source(
         extra_flags,
         &[],
     );
-    all_flags.extend(["-c".to_string(), source_arg, "-o".to_string(), output_arg]);
-
     let global = crate::compile_backend::get_global().ok_or_else(|| {
         fbuild_core::FbuildError::BuildFailed(
             "compile_backend not installed — fbuild-daemon must call \
@@ -676,8 +694,6 @@ pub async fn compile_source(
     // collapses adjacent `-I path` pairs, and rewrites Windows
     // backslashes in path-bearing flags. Skipping it produced
     // malformed `#include` directives in the ARM/RISC-V CI builds.
-    let sanitized = prepare_flags_for_exec(all_flags);
-
     if verbose {
         tracing::info!(
             "compile (embedded): {} {}",
