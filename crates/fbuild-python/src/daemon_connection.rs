@@ -43,18 +43,33 @@ impl DaemonConnection {
         send_op(&build_url(), &self.build_request(clean, verbose), timeout).success
     }
 
-    #[pyo3(signature = (port=None, clean=false, skip_build=false, monitor_after=false, timeout=1800.0))]
+    #[pyo3(signature = (port=None, clean=false, skip_build=false, monitor_after=false, lease_id=None, lease_wait_ms=0, timeout=1800.0))]
+    /// `lease_id` / `lease_wait_ms` mirror the daemon's deploy admission
+    /// (FastLED/fbuild#1864): pass the id of the exclusive device lease this
+    /// workflow holds, and optionally how long the daemon may queue behind a
+    /// foreign lease before failing. `lease_wait_ms=0` keeps the historical
+    /// fail-fast behaviour.
+    #[allow(clippy::too_many_arguments)]
     fn deploy(
         &self,
         port: Option<String>,
         clean: bool,
         skip_build: bool,
         monitor_after: bool,
+        lease_id: Option<String>,
+        lease_wait_ms: u64,
         timeout: f64,
     ) -> bool {
         send_op(
             &deploy_url(),
-            &self.deploy_request(port, clean, skip_build, monitor_after),
+            &self.deploy_request(
+                port,
+                clean,
+                skip_build,
+                monitor_after,
+                lease_id,
+                lease_wait_ms,
+            ),
             timeout,
         )
         .success
@@ -88,7 +103,8 @@ impl DaemonConnection {
     }
 
     /// Structured-result counterpart to `deploy()`. See `build_result()`.
-    #[pyo3(signature = (port=None, clean=false, skip_build=false, monitor_after=false, timeout=1800.0))]
+    #[pyo3(signature = (port=None, clean=false, skip_build=false, monitor_after=false, lease_id=None, lease_wait_ms=0, timeout=1800.0))]
+    #[allow(clippy::too_many_arguments)]
     fn deploy_result<'py>(
         &self,
         py: Python<'py>,
@@ -96,11 +112,20 @@ impl DaemonConnection {
         clean: bool,
         skip_build: bool,
         monitor_after: bool,
+        lease_id: Option<String>,
+        lease_wait_ms: u64,
         timeout: f64,
     ) -> PyResult<Bound<'py, pyo3::types::PyDict>> {
         let outcome = send_op(
             &deploy_url(),
-            &self.deploy_request(port, clean, skip_build, monitor_after),
+            &self.deploy_request(
+                port,
+                clean,
+                skip_build,
+                monitor_after,
+                lease_id,
+                lease_wait_ms,
+            ),
             timeout,
         );
         outcome_to_pydict(py, &outcome)
@@ -136,15 +161,20 @@ impl DaemonConnection {
             skip_build: false,
             baud_rate: None,
             src_dir: platformio_src_dir_from_env(),
+            lease_id: None,
+            lease_wait_ms: 0,
         }
     }
 
+    #[allow(clippy::too_many_arguments)]
     pub(crate) fn deploy_request(
         &self,
         port: Option<String>,
         clean: bool,
         skip_build: bool,
         monitor_after: bool,
+        lease_id: Option<String>,
+        lease_wait_ms: u64,
     ) -> OpRequest {
         OpRequest {
             project_dir: self.project_dir.clone(),
@@ -156,6 +186,8 @@ impl DaemonConnection {
             skip_build,
             baud_rate: None,
             src_dir: platformio_src_dir_from_env(),
+            lease_id,
+            lease_wait_ms,
         }
     }
 
@@ -170,6 +202,8 @@ impl DaemonConnection {
             skip_build: false,
             baud_rate,
             src_dir: None,
+            lease_id: None,
+            lease_wait_ms: 0,
         }
     }
 }

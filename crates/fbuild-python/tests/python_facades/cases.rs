@@ -110,9 +110,10 @@ from _native import SerialMonitor, AsyncSerialMonitor
 
 sig = inspect.signature(SerialMonitor)
 names = list(sig.parameters.keys())
-assert names == ["port", "baud_rate", "hooks", "auto_reconnect", "verbose"], names
+assert names == ["port", "baud_rate", "hooks", "auto_reconnect", "verbose", "lease_id"], names
 assert {p.name: p.default for p in list(sig.parameters.values())[1:]} == {
-    "baud_rate": 115200, "hooks": None, "auto_reconnect": True, "verbose": False
+    "baud_rate": 115200, "hooks": None, "auto_reconnect": True, "verbose": False,
+    "lease_id": None
 }
 
 read_lines_sig = inspect.signature(SerialMonitor.read_lines)
@@ -133,9 +134,9 @@ assert hasattr(SerialMonitor, "lines_dropped")
 
 async_sig = inspect.signature(AsyncSerialMonitor)
 async_names = list(async_sig.parameters.keys())
-assert async_names == ["port", "baud_rate", "auto_reconnect", "verbose"], async_names
+assert async_names == ["port", "baud_rate", "auto_reconnect", "verbose", "lease_id"], async_names
 assert {p.name: p.default for p in list(async_sig.parameters.values())[1:]} == {
-    "baud_rate": 115200, "auto_reconnect": True, "verbose": False
+    "baud_rate": 115200, "auto_reconnect": True, "verbose": False, "lease_id": None
 }
 
 async_read_lines = inspect.signature(AsyncSerialMonitor.read_lines)

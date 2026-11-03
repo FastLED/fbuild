@@ -67,6 +67,8 @@ pub(crate) struct SerialMonitor {
     verbose: bool,
     hooks: Vec<Py<PyAny>>,
     client_id: String,
+    /// Workflow lease presented on attach, if any (FastLED/fbuild#1864).
+    lease_id: Option<String>,
     // FastLED/fbuild#844: borrow the process-shared runtime rather than
     // constructing a fresh one per monitor session.
     runtime: Option<&'static Runtime>,
@@ -84,6 +86,7 @@ impl SerialMonitor {
             auto_reconnect: self.auto_reconnect,
             verbose: self.verbose,
             client_id: self.client_id.clone(),
+            lease_id: self.lease_id.clone(),
             max_buffered_lines: crate::serial_session::DEFAULT_MAX_BUFFERED_LINES,
             handshake_timeout: std::time::Duration::from_secs(5),
         }
@@ -112,13 +115,14 @@ impl SerialMonitor {
 #[pymethods]
 impl SerialMonitor {
     #[new]
-    #[pyo3(signature = (port, baud_rate=115200, hooks=None, auto_reconnect=true, verbose=false))]
+    #[pyo3(signature = (port, baud_rate=115200, hooks=None, auto_reconnect=true, verbose=false, lease_id=None))]
     fn new(
         port: String,
         baud_rate: u32,
         hooks: Option<Vec<Py<PyAny>>>,
         auto_reconnect: bool,
         verbose: bool,
+        lease_id: Option<String>,
     ) -> Self {
         Self {
             port,
@@ -127,6 +131,7 @@ impl SerialMonitor {
             verbose,
             hooks: hooks.unwrap_or_default(),
             client_id: uuid::Uuid::new_v4().to_string(),
+            lease_id,
             runtime: None,
             session: None,
             last_line: std::sync::Mutex::new(String::new()),

@@ -115,6 +115,8 @@ pub(crate) struct AsyncSerialMonitor {
     auto_reconnect: bool,
     verbose: bool,
     client_id: String,
+    /// Workflow lease presented on attach, if any (FastLED/fbuild#1864).
+    lease_id: Option<String>,
     session: Arc<RwLock<Option<Arc<SerialSession>>>>,
     lifecycle: Arc<tokio::sync::Mutex<()>>,
 }
@@ -131,6 +133,7 @@ impl AsyncSerialMonitor {
             auto_reconnect: self.auto_reconnect,
             verbose: self.verbose,
             client_id: self.client_id.clone(),
+            lease_id: self.lease_id.clone(),
             max_buffered_lines: crate::serial_session::DEFAULT_MAX_BUFFERED_LINES,
             handshake_timeout: std::time::Duration::from_secs(5),
         }
@@ -148,14 +151,21 @@ async fn current_session(
 #[pymethods]
 impl AsyncSerialMonitor {
     #[new]
-    #[pyo3(signature = (port, baud_rate=115200, auto_reconnect=true, verbose=false))]
-    fn new(port: String, baud_rate: u32, auto_reconnect: bool, verbose: bool) -> Self {
+    #[pyo3(signature = (port, baud_rate=115200, auto_reconnect=true, verbose=false, lease_id=None))]
+    fn new(
+        port: String,
+        baud_rate: u32,
+        auto_reconnect: bool,
+        verbose: bool,
+        lease_id: Option<String>,
+    ) -> Self {
         Self {
             port,
             baud_rate,
             auto_reconnect,
             verbose,
             client_id: uuid::Uuid::new_v4().to_string(),
+            lease_id,
             session: Arc::new(RwLock::new(None)),
             lifecycle: Arc::new(tokio::sync::Mutex::new(())),
         }
