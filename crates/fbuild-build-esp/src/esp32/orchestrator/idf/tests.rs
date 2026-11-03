@@ -202,7 +202,7 @@ fn explicit_native_flags_are_preserved_and_conflicts_rejected() {
         "-DCMAKE_C_FLAGS=-DAPP=1".into(),
     )]);
     let options = super::cmake_options(&env, &[]).unwrap();
-    assert_eq!(options, ["-DCMAKE_C_FLAGS=-DAPP=1"]);
+    assert_eq!(options, ["-DCMAKE_C_FLAGS=-DAPP=1", "-DCMAKE_CXX_FLAGS="]);
     assert!(super::cmake_options(&env, &["-DOTHER=2".into()]).is_err());
 }
 
@@ -230,4 +230,13 @@ fn unknown_frameworks_are_not_silently_added_to_idf_support() {
     let params = params(PathBuf::new(), PathBuf::new());
     let env = std::collections::HashMap::from([("framework".into(), "espidf, other".into())]);
     assert!(super::validate("esp32s3", &env, &params).is_err());
+}
+
+#[test]
+fn removed_build_flags_clear_both_cached_cmake_overlays() {
+    let env = std::collections::HashMap::new();
+    let with_flags = super::cmake_options(&env, &["-DAPP=1".into()]).unwrap();
+    assert!(with_flags.contains(&"-DCMAKE_C_FLAGS=-DAPP=1".into()));
+    let without_flags = super::cmake_options(&env, &[]).unwrap();
+    assert_eq!(without_flags, ["-DCMAKE_C_FLAGS=", "-DCMAKE_CXX_FLAGS="]);
 }

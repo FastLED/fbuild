@@ -271,16 +271,18 @@ fn cmake_options(env: &HashMap<String, String>, flags: &[String]) -> Result<Vec<
         .cloned()
         .collect::<Vec<_>>()
         .join(" ");
-    if !flags.is_empty() {
-        for variable in ["CMAKE_C_FLAGS", "CMAKE_CXX_FLAGS"] {
-            if args.iter().any(|arg| {
-                arg.strip_prefix("-D")
-                    .is_some_and(|arg| arg.split(['=', ':']).next() == Some(variable))
-            }) {
-                return Err(FbuildError::ConfigError(format!(
-                    "use either build_flags or cmake_extra_args {variable}, not both"
-                )));
-            }
+    for variable in ["CMAKE_C_FLAGS", "CMAKE_CXX_FLAGS"] {
+        let explicit = args.iter().any(|arg| {
+            arg.strip_prefix("-D")
+                .is_some_and(|arg| arg.split(['=', ':']).next() == Some(variable))
+        });
+        if explicit && !flags.is_empty() {
+            return Err(FbuildError::ConfigError(format!(
+                "use either build_flags or cmake_extra_args {variable}, not both"
+            )));
+        }
+        if !explicit {
+            // Reset a previous fbuild overlay when build_flags is removed.
             args.push(format!("-D{variable}={flags}"));
         }
     }
