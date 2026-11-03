@@ -294,8 +294,15 @@ pub(crate) fn terminate_pid(pid: u32, _termination: Termination) -> std::io::Res
 /// itself stopped, and the tree keeps the `KILL_ON_JOB_CLOSE` guarantee the
 /// spawn path establishes. The handle handoff for a per-command tree kill is
 /// the Windows half of FastLED/fbuild#1867.
+///
+/// A pid the host cannot resolve is a successful no-op, matching the Unix
+/// contract: `OpenProcess` reports a vanished pid as `ERROR_INVALID_PARAMETER`.
 pub(crate) fn terminate_tree(pid: u32, termination: Termination) -> std::io::Result<()> {
-    terminate_pid(pid, termination)
+    const ERROR_INVALID_PARAMETER: i32 = 87;
+    match terminate_pid(pid, termination) {
+        Err(error) if error.raw_os_error() == Some(ERROR_INVALID_PARAMETER) => Ok(()),
+        result => result,
+    }
 }
 
 pub(crate) fn exit_code(status: std::process::ExitStatus) -> i32 {
