@@ -423,13 +423,18 @@ def render_dylint_call() -> str:
     """Dylint inside ci-minimal, so the single `CI summary` gate sees its jobs.
 
     dylint.yml no longer has its own pull_request/merge_group triggers; PRs and
-    the merge queue run it only through this call.
+    the merge queue run it only through the callers rendered here and in
+    ci-full. `lane` names the call site because ci-full calls dylint.yml a
+    second time inside the same run, and a called workflow's `github` context
+    belongs to the top-level caller -- the group would otherwise collide and
+    the two calls would cancel each other (FastLED/fbuild#1874).
     """
     return (
         "  dylint:\n"
         "    uses: ./.github/workflows/dylint.yml\n"
         "    secrets: inherit\n"
         "    with:\n"
+        "      lane: ci-minimal\n"
         "      ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}\n"
     )
 
@@ -679,6 +684,7 @@ def render_ci(boards: list[dict], tier: str, families: dict) -> str:
         + "      actions: write\n"
         + "    uses: ./.github/workflows/dylint.yml\n"
         + "    with:\n"
+        + "      lane: ci-full\n"
         + f"      ref: {verified_ref}\n"
         + "  acceptance:\n"
         + gate

@@ -71,6 +71,7 @@ jobs:
     uses: ./.github/workflows/dylint.yml
     secrets: inherit
     with:
+      lane: ci-minimal
       ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
   glibc_floor:
     name: glibc 2.17 floor

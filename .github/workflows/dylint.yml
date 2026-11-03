@@ -11,6 +11,16 @@ on:
         type: string
         required: false
         default: ""
+      # Which call site this is. One workflow run can call this file twice
+      # (ci-minimal directly, ci-full from its own `dylint` job) and the
+      # `github` context of a called workflow always belongs to the TOP-LEVEL
+      # caller, so `github.workflow`/`github.run_id` are identical for both.
+      # Without a caller-supplied lane the two calls shared a concurrency
+      # group and cancelled each other (FastLED/fbuild#1874).
+      lane:
+        type: string
+        required: false
+        default: "standalone"
   # PRs and merge-queue runs reach Dylint through ci-minimal.yml's
   # workflow_call, gated by the single required "CI summary" check.
   # setup-soldr skips cache uploads on PRs. A main run seeds the shared
@@ -23,14 +33,14 @@ on:
 # events key on run_id so each gets its own group -- a shared group keeps
 # only ONE pending run, which would silently drop queued main SHAs.
 #
-# `github.workflow` (the CALLER's name inside a reusable workflow) is part
-# of the group because one run can call this file more than once: on a
-# `ci-full` PR, ci-minimal calls it directly and ci-full calls it again
-# from its own `dylint` job. Both calls share `github.run_id`, so without
-# the caller discriminator the second call cancelled the first and
-# `dylint / Dylint` failed on every ci-full PR (#1874, #1872).
+# `inputs.lane` is the call site, and it must be in the group: one run can
+# call this file twice (ci-minimal directly, ci-full from its own `dylint`
+# job) while `github.run_id` -- and `github.workflow`, which inside a called
+# workflow belongs to the TOP-LEVEL caller -- are the same for both. Keyed
+# on the run alone, the second call cancelled the first and `dylint /
+# Dylint` failed on every `ci-full` PR (FastLED/fbuild#1874).
 concurrency:
-  group: dylint.yml-${{ github.workflow }}-${{ inputs.ref != '' && github.run_id || (github.event_name == 'pull_request' && github.ref || github.run_id) }}
+  group: dylint.yml-${{ inputs.lane }}-${{ inputs.ref != '' && github.run_id || (github.event_name == 'pull_request' && github.ref || github.run_id) }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 # Read-only token. Every step here reads: checkout, a shallow `git fetch
