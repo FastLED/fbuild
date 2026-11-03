@@ -22,27 +22,10 @@ pub(super) fn requested(config: &fbuild_config::PlatformIOConfig, env: &str) -> 
 }
 
 fn validate(mcu: &str, env: &HashMap<String, String>, params: &crate::BuildParams) -> Result<()> {
-    if !packages::PackageSet::load()?
-        .targets
-        .iter()
-        .any(|target| target == mcu)
-    {
-        return Err(FbuildError::ConfigError(format!(
-            "framework = espidf is not yet supported for {mcu}: the ESP-IDF CMake/ninja adapter currently supports ESP32-S3 only (FastLED/fbuild#1664)",
-        )));
-    }
+    packages::PackageSet::load(mcu)?;
     if params.compiledb_only {
         return Err(FbuildError::ConfigError(
             "ESP-IDF compiledb-only mode is not yet supported".into(),
-        ));
-    }
-    if env.get("framework").is_some_and(|frameworks| {
-        frameworks
-            .split(',')
-            .any(|f| !f.trim().eq_ignore_ascii_case("espidf"))
-    }) {
-        return Err(FbuildError::ConfigError(
-            "the ESP-IDF adapter supports framework=espidf only".into(),
         ));
     }
     // No silent Arduino platform pin substitution. Version selection will grow
@@ -52,18 +35,21 @@ fn validate(mcu: &str, env: &HashMap<String, String>, params: &crate::BuildParam
     {
         return Err(FbuildError::ConfigError("ESP-IDF currently uses the pinned IDF 5.4 package set; platform version/URL and platform_packages overrides are not yet supported".into()));
     }
-    for key in [
+    let rejected = [
         "extra_scripts",
         "build_src_filter",
         "build_src_flags",
         "build_unflags",
         "custom_sdkconfig",
-    ] {
-        if env.get(key).is_some_and(|s| !s.trim().is_empty()) {
-            return Err(FbuildError::ConfigError(format!(
-                "{key} is not supported by the ESP-IDF adapter; use native component CMake/Kconfig settings"
-            )));
-        }
+    ]
+    .into_iter()
+    .filter(|key| env.get(*key).is_some_and(|s| !s.trim().is_empty()))
+    .collect::<Vec<_>>();
+    if !rejected.is_empty() {
+        return Err(FbuildError::ConfigError(format!(
+            "unsupported ESP-IDF settings: {}; use native component CMake/Kconfig settings",
+            rejected.join(", ")
+        )));
     }
     if params.symbol_analysis
         || params.bloat_analysis
@@ -147,11 +133,17 @@ pub(super) async fn build(
         &caller_env,
     )
     .await?;
-    ctx.build_log.push("ESP32 packages: requested=espidf, effective=espidf, integration=idf-cmake; ESP-IDF 5.4 / GCC 14.2");
+    let pins = packages::PackageSet::load(&board.mcu)?;
+    ctx.build_log.push(format!(
+        "{} (ESP-IDF): {}; {}",
+        board.mcu,
+        pins.framework,
+        pins.toolchains.join(", ")
+    ));
     let root = project::source_root(&params.project_dir, &ctx.src_dir, &build)?;
     let mut flags = ctx.user_flags.clone();
     flags.extend(params.extra_build_flags.clone());
-    let sdkconfig = project::sdkconfig(&params.project_dir, &build, &board.mcu, env, &flags)?;
+    let sdkconfig = project::sdkconfig(&params.project_dir, &build, &params.env_name, env)?;
     let environment = environment(&packages, params)?;
     let python = packages.python.display();
     let mut configure = vec![
@@ -166,9 +158,9 @@ pub(super) async fn build(
         format!("-DPYTHON={python}"),
         "-DPYTHON_DEPS_CHECKED=1".into(),
         "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON".into(),
-        format!("-DSDKCONFIG={}", sdkconfig.display()),
         format!("-DCMAKE_MAKE_PROGRAM={}", packages.ninja.display()),
     ];
+    configure.extend(sdkconfig);
     configure.extend(cmake_options(env, &flags)?);
     command(
         &configure,
@@ -196,7 +188,7 @@ pub(super) async fn build(
     Ok(crate::pipeline::assemble_build_result(
         linked,
         start.elapsed().as_secs_f64(),
-        "ESP32-S3 (ESP-IDF)",
+        &format!("{} (ESP-IDF)", board.mcu),
         &params.env_name,
         Some(ctx.build_dir.join("compile_commands.json")),
         ctx.build_log,
@@ -244,46 +236,19 @@ fn cmake_options(env: &HashMap<String, String>, flags: &[String]) -> Result<Vec<
             .next()
             .unwrap_or("");
         if name.is_empty()
-            || [
-                "CMAKE_C_COMPILER",
-                "CMAKE_CXX_COMPILER",
-                "CMAKE_ASM_COMPILER",
-            ]
-            .iter()
-            .any(|prefix| name.starts_with(prefix))
-            || [
-                "IDF_TARGET",
-                "IDF_PATH",
-                "SDKCONFIG",
-                "PYTHON",
-                "CMAKE_TOOLCHAIN_FILE",
-                "CMAKE_MAKE_PROGRAM",
-                "CMAKE_AR",
-                "CMAKE_LINKER",
-            ]
-            .contains(&name)
+            || ["IDF_TARGET", "SDKCONFIG", "PYTHON", "CMAKE_TOOLCHAIN_FILE"].contains(&name)
         {
             return Err(FbuildError::ConfigError(format!(
                 "unsupported ESP-IDF cmake_extra_args argument: {arg}"
             )));
         }
     }
-    let flags = flags
-        .iter()
-        .filter(|f| !f.starts_with("-DCONFIG_"))
-        .cloned()
-        .collect::<Vec<_>>()
-        .join(" ");
+    let flags = flags.join(" ");
     for variable in ["CMAKE_C_FLAGS", "CMAKE_CXX_FLAGS"] {
         let explicit = args.iter().any(|arg| {
             arg.strip_prefix("-D")
                 .is_some_and(|arg| arg.split(['=', ':']).next() == Some(variable))
         });
-        if explicit && !flags.is_empty() {
-            return Err(FbuildError::ConfigError(format!(
-                "use either build_flags or cmake_extra_args {variable}, not both"
-            )));
-        }
         if !explicit {
             // Reset a previous fbuild overlay when build_flags is removed.
             args.push(format!("-D{variable}={flags}"));

@@ -33,14 +33,21 @@ fn params(project_dir: PathBuf, build_dir: PathBuf) -> crate::BuildParams {
 #[tokio::test]
 #[ignore = "downloads ESP-IDF 5.4 and Xtensa toolchain (~hundreds of MB); requires uv and network"]
 async fn espidf_s3_real_build() {
+    real_build("esp32s3").await;
+}
+
+async fn real_build(target: &str) {
     let project_dir = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-        .join("../../tests/platform/esp32s3-idf")
+        .join(format!("../../tests/platform/{target}-idf"))
         .canonicalize()
         .unwrap();
     let tmp = tempfile::TempDir::new().unwrap();
-    let build_dir = std::env::var_os("FBUILD_IDF_TEST_BUILD_DIR")
-        .map_or_else(|| tmp.path().join("build"), PathBuf::from);
-    let params = params(project_dir, build_dir);
+    let build_dir = std::env::var_os("FBUILD_IDF_TEST_BUILD_DIR").map_or_else(
+        || tmp.path().join("build"),
+        |root| PathBuf::from(root).join(target),
+    );
+    let mut params = params(project_dir, build_dir);
+    params.env_name = format!("{target}-idf");
     let result = super::super::Esp32Orchestrator
         .build(&params)
         .await
@@ -107,16 +114,18 @@ fn dispatch_keeps_arduino_and_dual_on_the_existing_path() {
 }
 
 #[test]
-fn only_s3_is_enabled_and_package_pins_are_never_ignored() {
+fn validated_targets_are_enabled_and_package_pins_are_never_ignored() {
     let params = params(PathBuf::new(), PathBuf::new());
     let mut env = std::collections::HashMap::new();
-    assert!(super::validate("esp32s3", &env, &params).is_ok());
     for target in [
-        "esp32", "esp32s2", "esp32c2", "esp32c3", "esp32c5", "esp32c6", "esp32h2", "esp32p4",
+        "esp32", "esp32s2", "esp32s3", "esp32c3", "esp32c6", "esp32h2", "esp32c2",
     ] {
+        assert!(super::validate(target, &env, &params).is_ok(), "{target}");
+    }
+    for target in ["esp32c5", "esp32p4"] {
         let error = super::validate(target, &env, &params).unwrap_err();
         assert!(error.to_string().contains(target));
-        assert!(error.to_string().contains("ESP32-S3 only"));
+        assert!(error.to_string().contains("not yet supported"));
     }
     env.insert("platform_packages".into(), "framework-espidf@0.0.0".into());
     assert!(
@@ -132,7 +141,7 @@ async fn unsupported_target_fails_before_clean_or_download() {
     let tmp = tempfile::TempDir::new().unwrap();
     std::fs::write(
         tmp.path().join("platformio.ini"),
-        "[env:esp32s3-idf]\nplatform = espressif32\nboard = esp32dev\nframework = espidf\n",
+        "[env:esp32s3-idf]\nplatform = espressif32\nboard = esp32-p4-evboard\nframework = espidf\n",
     )
     .unwrap();
     let build = tmp.path().join("build");
@@ -145,38 +154,43 @@ async fn unsupported_target_fails_before_clean_or_download() {
         .await
         .err()
         .unwrap();
-    assert!(error.to_string().contains("ESP32-S3 only"));
+    assert!(error.to_string().contains("not yet supported"));
     assert!(build.join("keep").is_file());
 }
 
 #[test]
-fn sdkconfig_changes_reseed_but_an_unchanged_input_preserves_idf_output() {
+fn sdkconfig_preserves_active_config_and_passes_native_defaults() {
     let tmp = tempfile::TempDir::new().unwrap();
     let project = tmp.path();
     let build = project.join("build");
     std::fs::create_dir(&build).unwrap();
-    let mut env = std::collections::HashMap::new();
-    env.insert(
-        "board_build.esp-idf.sdkconfig_options".into(),
-        "CONFIG_LOG_DEFAULT_LEVEL=2".into(),
-    );
-    let sdkconfig = super::project::sdkconfig(project, &build, "esp32s3", &env, &[]).unwrap();
-    std::fs::write(&sdkconfig, "IDF generated output").unwrap();
-    super::project::sdkconfig(project, &build, "esp32s3", &env, &[]).unwrap();
+    std::fs::write(
+        project.join("sdkconfig.defaults"),
+        "CONFIG_LOG_DEFAULT_LEVEL=2\n",
+    )
+    .unwrap();
+    let active = project.join("sdkconfig.demo");
+    std::fs::write(&active, "CONFIG_LOG_DEFAULT_LEVEL=3\n").unwrap();
+    let env = std::collections::HashMap::new();
+    let options = super::project::sdkconfig(project, &build, "demo", &env).unwrap();
+    assert!(options.contains(&format!("-DSDKCONFIG={}", active.display())));
+    assert!(options.contains(&format!(
+        "-DSDKCONFIG_DEFAULTS={}",
+        project.join("sdkconfig.defaults").display()
+    )));
     assert_eq!(
-        std::fs::read_to_string(&sdkconfig).unwrap(),
-        "IDF generated output"
+        std::fs::read_to_string(&active).unwrap(),
+        "CONFIG_LOG_DEFAULT_LEVEL=3\n"
     );
-    env.insert(
-        "board_build.esp-idf.sdkconfig_options".into(),
-        "CONFIG_LOG_DEFAULT_LEVEL=3".into(),
-    );
-    super::project::sdkconfig(project, &build, "esp32s3", &env, &[]).unwrap();
-    assert!(
-        std::fs::read_to_string(&sdkconfig)
-            .unwrap()
-            .contains("CONFIG_LOG_DEFAULT_LEVEL=3")
-    );
+    let env = std::collections::HashMap::from([(
+        "board_build.esp-idf.sdkconfig_path".into(),
+        "custom.config".into(),
+    )]);
+    let options = super::project::sdkconfig(project, &build, "demo", &env).unwrap();
+    assert!(options.contains(&format!(
+        "-DSDKCONFIG={}",
+        project.join("custom.config").display()
+    )));
 }
 
 #[test]
@@ -185,9 +199,8 @@ fn cmake_cannot_override_the_validated_target_or_sdkconfig() {
         "-DIDF_TARGET=esp32c3",
         "-DSDKCONFIG:FILEPATH=/tmp/bypass",
         "-GUnix Makefiles",
-        "-DCMAKE_C_COMPILER=/other/gcc",
-        "-DIDF_PATH=/other/idf",
-        "-DCMAKE_MAKE_PROGRAM=/other/ninja",
+        "-DPYTHON=/other/python",
+        "-DCMAKE_TOOLCHAIN_FILE=/other/toolchain",
     ] {
         let env =
             std::collections::HashMap::from([("board_build.cmake_extra_args".into(), arg.into())]);
@@ -196,14 +209,16 @@ fn cmake_cannot_override_the_validated_target_or_sdkconfig() {
 }
 
 #[test]
-fn explicit_native_flags_are_preserved_and_conflicts_rejected() {
+fn explicit_native_flags_override_build_flags() {
     let env = std::collections::HashMap::from([(
         "board_build.cmake_extra_args".into(),
         "-DCMAKE_C_FLAGS=-DAPP=1".into(),
     )]);
     let options = super::cmake_options(&env, &[]).unwrap();
     assert_eq!(options, ["-DCMAKE_C_FLAGS=-DAPP=1", "-DCMAKE_CXX_FLAGS="]);
-    assert!(super::cmake_options(&env, &["-DOTHER=2".into()]).is_err());
+    let options = super::cmake_options(&env, &["-DCONFIG_OTHER=2".into()]).unwrap();
+    assert!(options.contains(&"-DCMAKE_C_FLAGS=-DAPP=1".into()));
+    assert!(options.contains(&"-DCMAKE_CXX_FLAGS=-DCONFIG_OTHER=2".into()));
 }
 
 #[test]
@@ -216,20 +231,13 @@ fn generated_project_never_scans_the_project_root_or_keeps_a_stale_main() {
     let src = project.join("src");
     std::fs::create_dir(&src).unwrap();
     super::project::source_root(project, &src, &build).unwrap();
+    let component = std::fs::read_to_string(build.join("project/main/CMakeLists.txt")).unwrap();
+    for pattern in ["CONFIGURE_DEPENDS", "*.cc", "*.cxx"] {
+        assert!(component.contains(pattern), "{pattern}");
+    }
     std::fs::write(src.join("CMakeLists.txt"), "idf_component_register()\n").unwrap();
-    assert!(
-        super::project::source_root(project, &src, &build)
-            .unwrap_err()
-            .to_string()
-            .contains("--clean")
-    );
-}
-
-#[test]
-fn unknown_frameworks_are_not_silently_added_to_idf_support() {
-    let params = params(PathBuf::new(), PathBuf::new());
-    let env = std::collections::HashMap::from([("framework".into(), "espidf, other".into())]);
-    assert!(super::validate("esp32s3", &env, &params).is_err());
+    super::project::source_root(project, &src, &build).unwrap();
+    assert!(!build.join("project/main").exists());
 }
 
 #[test]
@@ -258,4 +266,123 @@ async fn clean_only_removes_outputs_without_the_clean_flag() {
     assert!(result.success);
     assert!(result.firmware_path.is_none());
     assert!(!build.exists());
+}
+
+macro_rules! target_build_test {
+    ($name:ident, $target:literal) => {
+        #[tokio::test]
+        #[ignore = "downloads ESP-IDF and cross toolchain (~hundreds of MB); requires uv and network"]
+        async fn $name() { real_build($target).await; }
+    };
+}
+target_build_test!(espidf_esp32_real_build, "esp32");
+target_build_test!(espidf_s2_real_build, "esp32s2");
+target_build_test!(espidf_c3_real_build, "esp32c3");
+target_build_test!(espidf_c6_real_build, "esp32c6");
+target_build_test!(espidf_h2_real_build, "esp32h2");
+target_build_test!(espidf_c2_real_build, "esp32c2");
+
+#[test]
+fn partitions_are_a_native_defaults_overlay() {
+    let tmp = tempfile::TempDir::new().unwrap();
+    let project = tmp.path();
+    let build = project.join("build");
+    std::fs::create_dir(&build).unwrap();
+    std::fs::write(project.join("partitions.csv"), "# native CSV\n").unwrap();
+    let env = std::collections::HashMap::from([(
+        "board_build.partitions".into(),
+        "partitions.csv".into(),
+    )]);
+    let options = super::project::sdkconfig(project, &build, "demo", &env).unwrap();
+    assert!(options.contains(&format!(
+        "-DSDKCONFIG_DEFAULTS={}",
+        build.join("partitions.defaults").display()
+    )));
+    let overlay = std::fs::read_to_string(build.join("partitions.defaults")).unwrap();
+    assert!(overlay.contains("CONFIG_PARTITION_TABLE_CUSTOM=y"));
+    assert!(overlay.contains(&project.join("partitions.csv").display().to_string()));
+    assert!(!project.join("sdkconfig.demo").exists());
+}
+
+#[test]
+fn removed_invented_config_inputs_are_not_consumed() {
+    let tmp = tempfile::TempDir::new().unwrap();
+    let project = tmp.path();
+    std::fs::write(project.join("sdkconfig.fragment"), "CONFIG_EXAMPLE=y\n").unwrap();
+    let env = std::collections::HashMap::from([
+        ("board_build.sdkconfig_defaults".into(), "missing".into()),
+        (
+            "board_build.esp-idf.sdkconfig_options".into(),
+            "CONFIG_EXAMPLE=y".into(),
+        ),
+    ]);
+    let options = super::project::sdkconfig(project, project, "demo", &env).unwrap();
+    assert_eq!(
+        options,
+        [
+            format!("-DSDKCONFIG={}", project.join("sdkconfig.demo").display()),
+            "-DSDKCONFIG_DEFAULTS=".into()
+        ]
+    );
+}
+
+#[tokio::test]
+#[ignore = "downloads ESP-IDF and Xtensa compiler; runs three real CMake/ninja builds; requires uv and network"]
+async fn espidf_real_native_config_and_partition_mutations() {
+    let tmp = tempfile::TempDir::new().unwrap();
+    let project = tmp.path().join("project");
+    std::fs::create_dir_all(project.join("src")).unwrap();
+    std::fs::write(
+        project.join("src/main.c"),
+        "#include <stdio.h>\nvoid app_main(void) { puts(\"IDF_MUTATION_SENTINEL\"); }\n",
+    )
+    .unwrap();
+    std::fs::write(project.join("platformio.ini"), "[env:esp32s3-idf]\nplatform=espressif32\nboard=esp32-s3-devkitc-1\nframework=espidf\nboard_build.partitions=custom.csv\n").unwrap();
+    let defaults = project.join("sdkconfig.defaults");
+    std::fs::write(
+        &defaults,
+        "CONFIG_FREERTOS_HZ=100\nCONFIG_LOG_DEFAULT_LEVEL_INFO=y\n",
+    )
+    .unwrap();
+    let active = project.join("sdkconfig.esp32s3-idf");
+    std::fs::write(&active, "CONFIG_LOG_DEFAULT_LEVEL_WARN=y\n").unwrap();
+    let csv = project.join("custom.csv");
+    std::fs::write(&csv, "nvs,data,nvs,0x9000,0x6000\nphy_init,data,phy,0xf000,0x1000\nfactory,app,factory,0x10000,1M\n").unwrap();
+    let params = params(project.clone(), tmp.path().join("build"));
+    let orchestrator = super::super::Esp32Orchestrator;
+    assert!(orchestrator.build(&params).await.unwrap().success);
+    let header = params.build_dir.join("idf/config/sdkconfig.h");
+    let first = std::fs::read_to_string(&header).unwrap();
+    assert!(
+        first.contains("#define CONFIG_LOG_DEFAULT_LEVEL 2"),
+        "active sdkconfig.<env> must win over defaults"
+    );
+    assert!(first.contains("#define CONFIG_FREERTOS_HZ 100"));
+    let partitions = std::fs::read(params.build_dir.join("partitions.bin")).unwrap();
+    std::fs::write(
+        &defaults,
+        "CONFIG_FREERTOS_HZ=250\nCONFIG_LOG_DEFAULT_LEVEL_INFO=y\n",
+    )
+    .unwrap();
+    // IDF defaults apply only to unset values: leave the active log level alone.
+    let saved = std::fs::read_to_string(&active).unwrap();
+    let unset = saved
+        .lines()
+        .filter(|line| !line.starts_with("CONFIG_FREERTOS_HZ="))
+        .collect::<Vec<_>>()
+        .join("\n");
+    std::fs::write(&active, unset + "\n").unwrap();
+    assert!(orchestrator.build(&params).await.unwrap().success);
+    let second = std::fs::read_to_string(&header).unwrap();
+    assert!(second.contains("#define CONFIG_FREERTOS_HZ 250"));
+    assert!(second.contains("#define CONFIG_LOG_DEFAULT_LEVEL 2"));
+    std::fs::write(&csv, "nvs,data,nvs,0x9000,0x6000\nphy_init,data,phy,0xf000,0x1000\nfactory,app,factory,0x10000,2M\n").unwrap();
+    assert!(orchestrator.build(&params).await.unwrap().success);
+    assert_ne!(
+        partitions,
+        std::fs::read(params.build_dir.join("partitions.bin")).unwrap()
+    );
+    println!(
+        "native sdkconfig.<env>: LOG_DEFAULT_LEVEL=2 overrides defaults=3; sdkconfig.defaults FREERTOS_HZ 100 -> 250; custom CSV app partition 1M -> 2M changes partitions.bin"
+    );
 }

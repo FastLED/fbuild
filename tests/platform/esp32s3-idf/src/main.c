@@ -3,7 +3,7 @@
 #include "probe.h"
 
 #if CONFIG_LOG_DEFAULT_LEVEL != 2
-#error "sdkconfig_options must reach the IDF component build"
+#error "sdkconfig.defaults must reach the IDF component build"
 #endif
 
 void app_main(void) {

@@ -36,10 +36,7 @@ pub(super) fn source_root(project: &Path, src: &Path, build: &Path) -> Result<Pa
     let root = build.join("project");
     std::fs::create_dir_all(&root)?;
     if src.join("CMakeLists.txt").is_file() && root.join("main/CMakeLists.txt").is_file() {
-        return Err(FbuildError::ConfigError(
-            "ESP-IDF source layout changed; run fbuild build --clean before adding a src component"
-                .into(),
-        ));
+        std::fs::remove_dir_all(root.join("main"))?;
     }
     let mut cmake = "cmake_minimum_required(VERSION 3.16)\n".to_string();
     if project.join("components").is_dir() {
@@ -57,10 +54,12 @@ pub(super) fn source_root(project: &Path, src: &Path, build: &Path) -> Result<Pa
         let main = root.join("main");
         std::fs::create_dir_all(&main)?;
         let mut component = format!(
-            "file(GLOB_RECURSE app_sources {} {} {})\nidf_component_register(SRCS ${{app_sources}} INCLUDE_DIRS {}",
+            "set(app_glob_options)\nif(NOT CMAKE_SCRIPT_MODE_FILE)\n  list(APPEND app_glob_options CONFIGURE_DEPENDS)\nendif()\nfile(GLOB_RECURSE app_sources ${{app_glob_options}} {} {} {} {} {})\nidf_component_register(SRCS ${{app_sources}} INCLUDE_DIRS {}",
             cmake_path(&src.join("*.c"))?,
             cmake_path(&src.join("*.cpp"))?,
             cmake_path(&src.join("*.S"))?,
+            cmake_path(&src.join("*.cc"))?,
+            cmake_path(&src.join("*.cxx"))?,
             cmake_path(src)?,
         );
         if project.join("include").is_dir() {
@@ -74,75 +73,36 @@ pub(super) fn source_root(project: &Path, src: &Path, build: &Path) -> Result<Pa
     Ok(root)
 }
 
-/// Seed Kconfig from native defaults/active config, then fbuild's user overlays.
-/// IDF owns validation, target-specific defaults and sdkconfig.h generation.
+/// IDF owns active configuration and defaults-only-for-unset Kconfig semantics.
 pub(super) fn sdkconfig(
     project: &Path,
     build: &Path,
-    mcu: &str,
+    env_name: &str,
     env: &HashMap<String, String>,
-    flags: &[String],
-) -> Result<PathBuf> {
-    let mut seed = String::new();
-    let defaults = env.get("board_build.sdkconfig_defaults").map_or_else(
-        || vec!["sdkconfig.defaults".into()],
-        |s| fbuild_core::shell_split::split(s),
+) -> Result<Vec<String>> {
+    let active = env.get("board_build.esp-idf.sdkconfig_path").map_or_else(
+        || project.join(format!("sdkconfig.{env_name}")),
+        |path| project.join(path),
     );
-    for file in defaults {
-        append_file(
-            &mut seed,
-            &project.join(&file),
-            env.contains_key("board_build.sdkconfig_defaults"),
-        )?;
-    }
-    append_file(
-        &mut seed,
-        &project.join(format!("sdkconfig.defaults.{mcu}")),
-        false,
-    )?;
-    let active = env
-        .get("board_build.esp-idf.sdkconfig_path")
-        .map_or("sdkconfig", String::as_str);
-    append_file(
-        &mut seed,
-        &project.join(active),
-        env.contains_key("board_build.esp-idf.sdkconfig_path"),
-    )?;
-    append_file(&mut seed, &project.join("sdkconfig.fragment"), false)?;
-    if let Some(options) = env.get("board_build.esp-idf.sdkconfig_options") {
-        seed.push_str(options);
-        seed.push('\n');
-    }
-    for flag in flags {
-        if let Some(config) = flag.strip_prefix("-DCONFIG_") {
-            let (name, value) = config.split_once('=').unwrap_or((config, "y"));
-            seed.push_str(&format!("CONFIG_{name}={value}\n"));
-        }
+    let mut defaults = Vec::new();
+    let native = project.join("sdkconfig.defaults");
+    if native.is_file() {
+        defaults.push(native.to_string_lossy().into_owned());
     }
     if let Some(csv) = env.get("board_build.partitions") {
         let path = project.join(csv).canonicalize()?;
-        seed.push_str(&format!(
-            "CONFIG_PARTITION_TABLE_CUSTOM=y\nCONFIG_PARTITION_TABLE_CUSTOM_FILENAME=\"{}\"\n",
-            path.to_string_lossy().replace('\\', "/")
-        ));
+        let overlay = build.join("partitions.defaults");
+        write_changed(
+            &overlay,
+            &format!(
+                "CONFIG_PARTITION_TABLE_CUSTOM=y\nCONFIG_PARTITION_TABLE_CUSTOM_FILENAME=\"{}\"\n",
+                path.to_string_lossy().replace('\\', "/")
+            ),
+        )?;
+        defaults.push(overlay.to_string_lossy().into_owned());
     }
-    let inputs = build.join("sdkconfig.inputs");
-    let output = build.join("sdkconfig");
-    if !output.is_file() || std::fs::read_to_string(&inputs).ok().as_deref() != Some(&seed) {
-        std::fs::write(&output, &seed)?;
-        write_changed(&inputs, &seed)?;
-    }
-    Ok(output)
-}
-
-fn append_file(text: &mut String, path: &Path, required: bool) -> Result<()> {
-    match std::fs::read_to_string(path) {
-        Ok(value) => {
-            text.push_str(&value);
-            text.push('\n');
-        }
-        Err(error) if error.kind() == std::io::ErrorKind::NotFound && !required => {}
-        Err(error) => return Err(error.into()),
-    }
-    Ok(())
+    Ok(vec![
+        format!("-DSDKCONFIG={}", active.display()),
+        format!("-DSDKCONFIG_DEFAULTS={}", defaults.join(";")),
+    ])
 }

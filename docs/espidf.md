@@ -1,4 +1,4 @@
-# ESP-IDF-only builds (round 1)
+# ESP-IDF-only builds
 
 ## Public surface
 
@@ -17,10 +17,10 @@ fbuild deploy . -e esp32s3-idf
 ```
 
 This is an IDF 5.4 CMake/ninja component build, with no Arduino core. This
-round enables **ESP32-S3 only**, using a coherent pinned package set. Arduino
-and `arduino, espidf` continue through the existing Arduino pipeline, including
-the warning that the latter is not a component build. Other bare-IDF targets
-fail explicitly; their board metadata is not evidence of implemented support.
+adapter enables **ESP32, ESP32-S2, ESP32-S3, ESP32-C3, ESP32-C6,
+ESP32-H2 and ESP32-C2**, using target-keyed package sets. Arduino and
+`arduino, espidf` continue through the existing Arduino pipeline, including
+the warning that the latter is not a component build. C5/P4 remain disabled.
 No CLI option, workspace crate, Rust dependency or workflow is added.
 
 ## Ownership and project layout
@@ -29,7 +29,8 @@ fbuild resolves the framework and matching compiler through its existing
 PlatformIO registry client, fleet mirror, checksum verification and staged
 package cache. The pins in `orchestrator/idf/packages.json` come from PlatformIO
 espressif32 v6.10.0: `framework-espidf@3.50400.0` (IDF 5.4), and
-`toolchain-xtensa-esp-elf@14.2.0+20241119`. Both are already in the mirror.
+`toolchain-xtensa-esp-elf@14.2.0+20241119`. RISC-V targets use `toolchain-riscv32-esp@14.2.0+20241119`; all three
+packages are already in the mirror and match IDF 5.4 tools/tools.json.
 There is no second mirror or git clone of IDF at build time. The existing
 `Esp32Toolchain` locates the compiler and size binary.
 
@@ -44,7 +45,10 @@ A project-owned root `CMakeLists.txt` is used directly. IDF discovers `main/`,
 normal rules. For a minimal `src/` project without a root CMake file, fbuild
 writes a project under the environment build directory: it adds the project's
 `components/`, uses `src/CMakeLists.txt` as an extra component if present, or
-wraps C/C++/assembly sources in an IDF `main` component. It never writes CMake
+wraps `*.c`, `*.cpp`, `*.cc`, `*.cxx` and `*.S` sources in a build-local
+IDF `main` component using `GLOB_RECURSE CONFIGURE_DEPENDS`, regenerating it
+automatically when the source layout changes (IDF’s preliminary script-mode
+requirements scan omits `CONFIGURE_DEPENDS`, which CMake forbids in scripts). It never writes CMake
 files into the source tree. Native projects should register `src/` themselves
 or use IDF's usual `main/` layout.
 
@@ -62,28 +66,28 @@ an orchestrator over the same CMake/ninja rules.
 four-layer general-purpose resolver. The bare-IDF baseline is IDF's Kconfig
 configuration, not Arduino's precompiled `sdkconfig.h`.
 
-The adapter seeds an environment-local `idf/sdkconfig` with, in increasing
-precedence:
+The active configuration is the project `sdkconfig.<environment>`, overridable
+with `board_build.esp-idf.sdkconfig_path`. fbuild passes this path as `SDKCONFIG`
+to IDF; menuconfig results persist there. Existing active values take precedence
+over defaults, exactly as in IDF and PlatformIO. To reapply changed defaults to
+previously configured values, remove those values from the active sdkconfig (or
+regenerate it), as with a native IDF project.
 
-1. `sdkconfig.defaults` (or files in `board_build.sdkconfig_defaults`), then
-   `sdkconfig.defaults.esp32s3`;
-2. the project `sdkconfig`, or `board_build.esp-idf.sdkconfig_path`;
-3. `sdkconfig.fragment`;
-4. `board_build.esp-idf.sdkconfig_options`;
-5. `build_flags` / caller `-DCONFIG_*` values.
-
-IDF parses the Kconfig text and produces `config/sdkconfig.h`. CONFIG flags are
-consumed as Kconfig input instead of also redefining generated header macros.
-Use Kconfig values (`y`, `n`, quoted strings) for these options. On input change,
-fbuild reseeds the generated configuration so a previous build cannot mask an
-overlay change. Unchanged inputs preserve IDF's resolved configuration. No
-project `sdkconfig` is modified. The future `fbuild.toml` layer is not added.
+Existing `sdkconfig.defaults` is passed as `SDKCONFIG_DEFAULTS`; IDF discovers
+its `sdkconfig.defaults.<target>` variant itself. `board_build.partitions` adds
+a build-local defaults overlay selecting the CSV via Kconfig. fbuild does not
+concatenate defaults into active configuration, consume `sdkconfig.fragment`,
+implement `sdkconfig_options` or `board_build.sdkconfig_defaults`, or translate
+`-DCONFIG_*` compiler flags into Kconfig values. Native `SDKCONFIG_DEFAULTS` may
+be supplied through `board_build.cmake_extra_args`.
 
 Ordinary `build_flags` pass to CMake C/C++ compiler flags. Use component CMake
 for finer control. `board_build.cmake_extra_args` accepts shell-quoted `-D...`
 arguments, for example `-DEXTRA_COMPONENT_DIRS=/absolute/components`; native IDF
 variables remain the extension mechanism. Target, sdkconfig, Python and toolchain
-selection are reserved to the validated adapter. `board_build.partitions` accepts
+selection are reserved to the validated adapter (`IDF_TARGET`, `SDKCONFIG`,
+`PYTHON`, `CMAKE_TOOLCHAIN_FILE`). Explicit CMake C/C++ flags override fbuild
+compiler flags for that language; both settings may be present. `board_build.partitions` accepts
 a project-relative CSV; native Kconfig partition options also work, subject to
 the flash layout restriction below. There is no new wrapper around individual
 IDF component or CMake features.
@@ -98,7 +102,7 @@ implemented. Extend these contracts with focused tests as needed.
 
 ## Artifacts and scope
 
-IDF output stays under `<build_dir>/idf/`, including `build.ninja`, sdkconfig,
+IDF output stays under `<build_dir>/idf/`, including `build.ninja`,
 `project_description.json`, `flasher_args.json` and the native component objects.
 fbuild exports `firmware.elf`, `firmware.bin`, `bootloader.bin`, `partitions.bin`
 and `compile_commands.json` at the existing build root and uses its existing
@@ -108,8 +112,9 @@ partition's image limit; fbuild's displayed maximum is the board's memory limit.
 The current deployer assumes MCU-defined offsets. The adapter verifies IDF's
 flash manifest against those offsets and rejects layouts requiring extra images
 (e.g. OTA initialization data), relocated partition tables or relocated apps.
-The accepted default S3 layout uses bootloader 0x0, partitions 0x8000 and app
-0x10000. Flash-mode/frequency Kconfig settings should agree with the board's
+Offsets and compiler prefixes come exclusively from `mcu_config`: ESP32/S2
+boot at 0x1000; S3/C2/C3/C6/H2 boot at 0x0; default partitions are at 0x8000
+and app at 0x10000. Flash-mode/frequency Kconfig settings should agree with the board's
 upload settings. Hardware deployment is not claimed as tested without a board.
 
 ## PlatformIO implementation research
@@ -177,24 +182,28 @@ component contract with a smaller integration surface.
 
 ## Validation
 
-The fixture is `tests/platform/esp32s3-idf`. Run the real opt-in Rust test in CI:
+Fixtures live in `tests/platform/<target>-idf` for every enabled target. Run
+the real opt-in Rust builds and native config/partition mutation checks:
 
 ```sh
-soldr cargo test -p fbuild-build-esp --lib espidf_s3_real_build -- --ignored --nocapture
+soldr cargo test -p fbuild-build-esp --lib esp32::orchestrator::idf -- --ignored --nocapture --test-threads=1
 ```
 
-The test crosses the real registry/download/compiler/CMake boundary and asserts
+These tests cross the real registry/download/compiler/CMake boundary and asserts
 flash artifacts, IDF build metadata, generated Kconfig and fbuild's size result.
 Ordinary unit tests cover dispatch, target/pin rejection, config input changes
 and reserved CMake knobs. This is an explicit opt-in test; routine CI does not
 run it merely because the fixture exists.
 
-## Next targets
+## C5/P4 package research (not enabled)
 
-ESP32 and S2 need Xtensa target/tool prefix validation with this SDK. C2, C3, C6
-and H2 need a matching RISC-V package and real builds; S3 ULP applications also
-need their coprocessor toolchain. C5 and P4 need explicit supported SDK/version
-selection and matching RISC-V packages (including P4 revision distinctions), not
-just enabling a name in a list. The same native IDF adapter can serve these once
-the coherent package/target matrix has evidence. Dual Arduino-as-an-IDF-component
-builds are a separate feature; current dual mode remains Arduino-backed.
+The live fleet mirror index inspected for round 2 lists
+`platformio/framework-espidf@3.50500.0`, `@3.50502.0` and `@3.50503.0`.
+Upstream IDF v5.5 tools/tools.json recommends Xtensa and RISC-V
+`14.2.0+20241119`; v5.5.2/v5.5.3 recommend `14.2.0+20251107`.
+Both compiler versions exist in the mirror for both architectures, including
+Linux x86_64 archives. Constraints are published as
+`https://dl.espressif.com/dl/esp-idf/espidf.constraints.v5.5.txt`.
+These are candidate coherent sets, not validated C5/P4 builds; P4 revision
+support still needs build/hardware verification. No IDF 5.5 package is selected
+by this adapter. ULP and dual Arduino-as-IDF-component support remain separate.

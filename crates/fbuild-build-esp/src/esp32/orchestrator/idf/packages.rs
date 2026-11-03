@@ -12,7 +12,7 @@ use serde::Deserialize;
 pub(super) struct PackageSet {
     pub targets: Vec<String>,
     pub framework: String,
-    pub toolchain: String,
+    pub toolchains: Vec<String>,
     pub constraints: String,
     pub python: String,
     pub cmake: String,
@@ -20,9 +20,16 @@ pub(super) struct PackageSet {
 }
 
 impl PackageSet {
-    pub fn load() -> Result<Self> {
-        serde_json::from_str(include_str!("packages.json"))
-            .map_err(|e| FbuildError::PackageError(e.to_string()))
+    pub fn load(mcu: &str) -> Result<Self> {
+        let sets: Vec<Self> = serde_json::from_str(include_str!("packages.json"))
+            .map_err(|e| FbuildError::PackageError(e.to_string()))?;
+        sets.into_iter()
+            .find(|set| set.targets.iter().any(|target| target == mcu))
+            .ok_or_else(|| {
+                FbuildError::ConfigError(format!(
+                    "framework = espidf is not yet supported for {mcu}"
+                ))
+            })
     }
 }
 
@@ -62,10 +69,16 @@ pub(super) async fn provision(
     log: &mut fbuild_core::build_log::BuildLog,
     env: &[(String, String)],
 ) -> Result<IdfPackages> {
-    let pins = PackageSet::load()?;
+    let pins = PackageSet::load(mcu)?;
     let prefix = super::super::super::mcu_config::get_mcu_config(mcu)?.toolchain_prefix();
     let framework = resolve(project, &pins.framework).await?;
-    let toolchain = resolve(project, &pins.toolchain).await?;
+    let mut tools = Vec::new();
+    for spec in &pins.toolchains {
+        tools.push(resolve(project, spec).await?);
+    }
+    let toolchain = tools
+        .first()
+        .ok_or_else(|| FbuildError::PackageError("IDF package set has no compiler".into()))?;
     let base = PackageBase::new(
         &framework.name,
         &framework.version,
@@ -87,7 +100,7 @@ pub(super) async fn provision(
         })
         .await?;
     let toolchain = fbuild_packages::toolchain::Esp32Toolchain::from_registry_payload(
-        project, &toolchain, &prefix,
+        project, toolchain, &prefix,
     );
     toolchain.ensure_installed().await?;
     let (python_env, bin, python) =
@@ -188,7 +201,7 @@ mod tests {
         std::fs::write(&constraints, "").unwrap();
         let build = project.join("build");
         std::fs::create_dir(&build).unwrap();
-        let mut pins = super::PackageSet::load().unwrap();
+        let mut pins = super::PackageSet::load("esp32s3").unwrap();
         pins.constraints = constraints.to_string_lossy().into_owned();
         let mut log = fbuild_core::build_log::BuildLog::default();
         let (env, _, _) = super::prepare_python(project, &build, &framework, &pins, &[], &mut log)
