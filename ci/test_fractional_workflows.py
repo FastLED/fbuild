@@ -205,6 +205,22 @@ class FractionalWorkflowTests(unittest.TestCase):
         self.assertIn("glibc_floor", minimal["ci-summary"]["needs"])
         self.assertIn("glibc_floor", minimal["queue-cache-janitor"]["needs"])
 
+    def test_dylint_concurrency_distinguishes_each_call_site(self):
+        """A ci-full PR calls dylint.yml twice in ONE run: the groups must differ.
+
+        ci-minimal calls dylint.yml directly, and ci-full calls it again from its
+        own `dylint` job. Inside a reusable workflow `github.run_id` is the
+        caller's run, so keying the group on it alone gave both calls the same
+        group and the second cancelled the first: `dylint / Dylint` failed on
+        every ci-full PR (#1874) while `full / dylint` passed.
+        """
+        minimal = self.load("ci-minimal.yml")["jobs"]
+        full = self.load("ci-full.yml")["jobs"]
+        self.assertEqual("./.github/workflows/dylint.yml", minimal["dylint"]["uses"])
+        self.assertEqual("./.github/workflows/dylint.yml", full["dylint"]["uses"])
+        group = self.load("dylint.yml")["concurrency"]["group"]
+        self.assertIn("github.workflow", group)
+
     def load(self, name):
         # PyYAML treats `on` as a YAML 1.1 boolean; inspect its True key.
         return yaml.safe_load((render_workflows.WORKFLOWS_DIR / name).read_text())
