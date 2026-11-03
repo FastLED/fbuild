@@ -4,10 +4,15 @@
 //! All locking is in-memory (no file-based locks per design rules).
 
 use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
+use std::collections::{HashMap, VecDeque};
 use std::sync::Mutex;
+use std::sync::atomic::AtomicU64;
 use std::time::{Instant, SystemTime, UNIX_EPOCH};
 use uuid::Uuid;
+
+mod wait_queue;
+
+pub use wait_queue::{AdmissionPoll, QueueGuard, QueueTicket};
 
 /// Type of device lease.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
@@ -55,6 +60,15 @@ pub enum DeviceLeaseError {
     InvalidPreemption {
         message: String,
     },
+    /// An opt-in bounded wait for a reserved board ran out of time (or was
+    /// never allowed to wait) without the holder releasing it.
+    LeaseWaitTimedOut {
+        port: String,
+        waited_ms: u64,
+        /// 1-based place the caller had reached in the admission queue.
+        position: usize,
+        holder: Option<Box<DeviceLease>>,
+    },
 }
 
 impl DeviceLeaseError {
@@ -83,6 +97,36 @@ impl DeviceLeaseError {
                 holder.lease_id
             ),
             Self::InvalidPreemption { message } => message.clone(),
+            Self::LeaseWaitTimedOut {
+                port,
+                waited_ms,
+                position,
+                holder,
+            } => {
+                let reserved_by = match holder.as_deref() {
+                    Some(held) => format!(
+                        "exclusive lease '{}' held by client '{}' ({})",
+                        held.lease_id, held.client_id, held.description
+                    ),
+                    None => "an earlier workflow in the admission queue".to_string(),
+                };
+                let ahead = position.saturating_sub(1);
+                if *waited_ms == 0 {
+                    format!(
+                        "device '{}' is reserved by {}; {} workflow(s) queued ahead — \
+                         re-run with --lease-wait <seconds> to queue for it, or \
+                         `fbuild device take {} --reason <why>` to override",
+                        port, reserved_by, ahead, port
+                    )
+                } else {
+                    format!(
+                        "waited {} ms for device '{}' and gave up (queue position {}, {}); \
+                         the board was not reset, closed or flashed — re-run with a \
+                         longer --lease-wait, or `fbuild device take {} --reason <why>`",
+                        waited_ms, port, position, reserved_by, port
+                    )
+                }
+            }
         }
     }
 }
@@ -208,6 +252,10 @@ pub struct DeviceManager {
     /// back-to-back warm deploys.
     last_refresh_at: Mutex<Option<Instant>>,
     recent_port_moves: Mutex<Vec<DevicePortMove>>,
+    /// Per-port FIFO of workflows waiting for an exclusive lease to be
+    /// released (opt-in bounded wait, FastLED/fbuild#1864).
+    waiters: Mutex<HashMap<String, VecDeque<wait_queue::LeaseWaiter>>>,
+    next_waiter_seq: AtomicU64,
 }
 
 impl Default for DeviceManager {
@@ -222,6 +270,8 @@ impl DeviceManager {
             devices: Mutex::new(HashMap::new()),
             last_refresh_at: Mutex::new(None),
             recent_port_moves: Mutex::new(Vec::new()),
+            waiters: Mutex::new(HashMap::new()),
+            next_waiter_seq: AtomicU64::new(0),
         }
     }
 

@@ -298,6 +298,10 @@ pub enum Commands {
         /// lease --track-serial`); admits the deploy on a leased board.
         #[arg(long = "lease-id")]
         lease_id: Option<String>,
+        /// Wait up to this many seconds for a foreign exclusive lease to be
+        /// released, then deploy in FIFO order. Omit to fail fast.
+        #[arg(long = "lease-wait", value_name = "SECONDS")]
+        lease_wait: Option<u64>,
         /// CH32V deploy protocol: `wlink` (default) or factory USB-ISP `isp`
         #[arg(long, value_parser = ["wlink", "isp"])]
         protocol: Option<String>,

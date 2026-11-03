@@ -167,6 +167,7 @@ pub(super) async fn execute_tool(
                 environment,
                 port,
                 lease_id: None,
+                lease_wait_ms: 0,
                 protocol: None,
                 transport: None,
                 monitor_after: false,
