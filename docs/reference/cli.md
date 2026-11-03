@@ -312,6 +312,19 @@ known limitations.
 | `fbuild show daemon` | Show daemon logs. |
 | `fbuild purge` | Purge cached packages or run `--gc`. |
 
+### When the daemon disappears
+
+The daemon embeds the compiler cache, and that cache ends the *process* — not
+the request — when a lock guard is held past its budget. A build, deploy or
+monitor caught by such an abort therefore sees only a dead connection. fbuild
+attributes it from the holder report the watchdog writes immediately before
+terminating, appending the guard, how long it was held, its budget, the
+acquisition site and the number of queued waiters, and stating that this is the
+cache-watchdog failure class rather than a device, firmware, upload or build
+error. The in-flight operation is interrupted and must be retried once a daemon
+is serving again. The next daemon start repeats the previous process's last
+abort report next to its stale-PID warning, so the cause survives in the log.
+
 ### Workflow leases
 
 `fbuild device lease <port> --exclusive --track-serial` reserves the board for

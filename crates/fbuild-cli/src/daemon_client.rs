@@ -421,9 +421,10 @@ impl DaemonClient {
             let chunk = chunk.map_err(|e| {
                 fbuild_core::FbuildError::DaemonError(format!(
                     "lost connection to daemon mid-build ({}); the daemon \
-                     process may have died — check {}",
+                     process may have died — check {}{}",
                     e,
-                    fbuild_paths::get_daemon_log_file().display()
+                    fbuild_paths::get_daemon_log_file().display(),
+                    daemon_loss_note()
                 ))
             })?;
             buffer.push_str(&String::from_utf8_lossy(&chunk));
@@ -750,14 +751,21 @@ impl DaemonClient {
             Some(timeout) => request.timeout(timeout),
             None => request,
         };
-        let resp = request
-            .send()
-            .await
-            .map_err(|e| fbuild_core::FbuildError::DaemonError(format!("request failed: {}", e)))?;
+        let resp = request.send().await.map_err(|e| {
+            fbuild_core::FbuildError::DaemonError(format!(
+                "request failed: {}{}",
+                e,
+                daemon_loss_note()
+            ))
+        })?;
 
-        resp.json::<OperationResponse>()
-            .await
-            .map_err(|e| fbuild_core::FbuildError::DaemonError(format!("invalid response: {}", e)))
+        resp.json::<OperationResponse>().await.map_err(|e| {
+            fbuild_core::FbuildError::DaemonError(format!(
+                "invalid response: {}{}",
+                e,
+                daemon_loss_note()
+            ))
+        })
     }
 }
 
@@ -1088,6 +1096,31 @@ enum DaemonProbe {
     Restarted,
     /// No daemon is answering.
     NotRunning,
+}
+
+/// Sentence to append to a "lost connection" / failed-request error, taken
+/// from the daemon's own diagnostics (FastLED/fbuild#1866).
+///
+/// The daemon embeds `zccache`, whose lock watchdogs abort the *process* — so
+/// an in-flight build or deploy reports only a dead connection. Reading the
+/// holder report the watchdog writes immediately before terminating turns that
+/// into an actionable verdict (cache-backend abort, not a device or build
+/// fault). Empty when the daemon is alive or left nothing to attribute.
+fn daemon_loss_note() -> String {
+    use fbuild_core::daemon_diagnostics::{
+        DEFAULT_TAIL_BYTES, DaemonLoss, diagnose, read_log_tail,
+    };
+    let daemon_gone = fbuild_paths::daemon_ownership::read_owner_claim()
+        .is_some_and(|claim| !fbuild_core::platform::process::pid_is_alive(claim.pid));
+    let log_path = fbuild_paths::get_daemon_log_file();
+    let Ok(tail) = read_log_tail(&log_path, DEFAULT_TAIL_BYTES) else {
+        return String::new();
+    };
+    let loss = diagnose(&tail);
+    if loss == DaemonLoss::Unattributed && !daemon_gone {
+        return String::new();
+    }
+    format!("\n{}", loss.explain(&log_path))
 }
 
 /// Probe the running daemon; shut it down if this CLI's sibling binary
