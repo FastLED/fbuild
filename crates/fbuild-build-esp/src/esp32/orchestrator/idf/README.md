@@ -2,8 +2,9 @@
 
 IDF owns Kconfig, component discovery, compilation, linking and images. fbuild
 owns package resolution, the environment build directory, logging, size reporting
-and exporting the images used by the existing deployer. Only ESP32-S3 is enabled.
+and exporting images. ESP32/S2/S3/C2/C3/C6/H2 retain IDF 5.4; C5/P4 use IDF 5.5.5.
 
-`packages.json` pins the coherent ESP-IDF 5.4 / GCC 14.2 set from
-platformio/platform-espressif32 v6.10.0. Downloads use the existing registry and
-mirror-aware package installer. Python build tools run in uv's cached environment.
+`packages.json` pins coherent framework/compiler sets per target. Downloads use
+the existing registry and mirror-aware installer. Python build tools use uv.
+P4 board silicon variants become native Kconfig defaults; incompatible active
+configuration is rejected before compilation. See `docs/espidf.md` for details.

@@ -106,3 +106,52 @@ pub(super) fn sdkconfig(
         format!("-DSDKCONFIG_DEFAULTS={}", defaults.join(";")),
     ])
 }
+
+/// Pass board revision defaults before the project's native Kconfig defaults.
+pub(super) fn board_sdkconfig(
+    params: &crate::BuildParams,
+    build: &Path,
+    env: &HashMap<String, String>,
+    board: &fbuild_config::BoardConfig,
+) -> Result<Vec<String>> {
+    let mut options = sdkconfig(&params.project_dir, build, &params.env_name, env)?;
+    if let Some(defaults) = revision_defaults(board, build)? {
+        options[1] = format!(
+            "-DSDKCONFIG_DEFAULTS={};{}",
+            defaults.display(),
+            options[1].trim_start_matches("-DSDKCONFIG_DEFAULTS=")
+        );
+    }
+    Ok(options)
+}
+
+/// Translate the board registry's ROM family into IDF's native Kconfig defaults.
+pub(super) fn revision_defaults(
+    board: &fbuild_config::BoardConfig,
+    build: &Path,
+) -> Result<Option<PathBuf>> {
+    let Some(revision) = super::packages::revision(board)? else {
+        return Ok(None);
+    };
+    let path = build.join("board-revision.defaults");
+    write_changed(&path, &revision.defaults)?;
+    Ok(Some(path))
+}
+
+/// Active sdkconfig wins over defaults in IDF; refuse a conflicting ROM family.
+pub(super) fn validate_revision(board: &fbuild_config::BoardConfig, build: &Path) -> Result<()> {
+    if let Some(revision) = super::packages::revision(board)? {
+        let config = std::fs::read_to_string(build.join("config/sdkconfig.h"))?;
+        let selected = config
+            .lines()
+            .any(|line| line == format!("#define {} 1", revision.selector));
+        if selected != revision.enabled {
+            return Err(fbuild_core::FbuildError::ConfigError(format!(
+                "ESP-IDF sdkconfig selects a silicon revision incompatible with board variant {}; update native {} and revision-minimum settings",
+                board.sdk_variant(),
+                revision.selector
+            )));
+        }
+    }
+    Ok(())
+}

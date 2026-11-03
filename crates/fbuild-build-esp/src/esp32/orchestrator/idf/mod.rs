@@ -33,7 +33,7 @@ fn validate(mcu: &str, env: &HashMap<String, String>, params: &crate::BuildParam
     if env.get("platform").is_some_and(|s| s != "espressif32")
         || env.contains_key("platform_packages")
     {
-        return Err(FbuildError::ConfigError("ESP-IDF currently uses the pinned IDF 5.4 package set; platform version/URL and platform_packages overrides are not yet supported".into()));
+        return Err(FbuildError::ConfigError("ESP-IDF uses pinned per-target IDF package sets; platform version/URL and platform_packages overrides are not yet supported".into()));
     }
     let rejected = [
         "extra_scripts",
@@ -143,9 +143,8 @@ pub(super) async fn build(
     let root = project::source_root(&params.project_dir, &ctx.src_dir, &build)?;
     let mut flags = ctx.user_flags.clone();
     flags.extend(params.extra_build_flags.clone());
-    let sdkconfig = project::sdkconfig(&params.project_dir, &build, &params.env_name, env)?;
+    let sdkconfig = project::board_sdkconfig(params, &build, env, &board)?;
     let environment = environment(&packages, params)?;
-    let python = packages.python.display();
     let mut configure = vec![
         packages.cmake.to_string_lossy().into_owned(),
         "-S".into(),
@@ -155,7 +154,7 @@ pub(super) async fn build(
         "-G".into(),
         "Ninja".into(),
         format!("-DIDF_TARGET={}", board.mcu),
-        format!("-DPYTHON={python}"),
+        format!("-DPYTHON={}", packages.python.display()),
         "-DPYTHON_DEPS_CHECKED=1".into(),
         "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON".into(),
         format!("-DCMAKE_MAKE_PROGRAM={}", packages.ninja.display()),
@@ -169,6 +168,7 @@ pub(super) async fn build(
         &mut ctx.build_log,
     )
     .await?;
+    project::validate_revision(&board, &build)?;
     let compile = vec![
         packages.cmake.to_string_lossy().into_owned(),
         "--build".into(),

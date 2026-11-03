@@ -37,6 +37,10 @@ async fn espidf_s3_real_build() {
 }
 
 async fn real_build(target: &str) {
+    real_build_env(target, &format!("{target}-idf")).await;
+}
+
+async fn real_build_env(target: &str, env_name: &str) {
     let project_dir = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
         .join(format!("../../tests/platform/{target}-idf"))
         .canonicalize()
@@ -44,10 +48,10 @@ async fn real_build(target: &str) {
     let tmp = tempfile::TempDir::new().unwrap();
     let build_dir = std::env::var_os("FBUILD_IDF_TEST_BUILD_DIR").map_or_else(
         || tmp.path().join("build"),
-        |root| PathBuf::from(root).join(target),
+        |root| PathBuf::from(root).join(env_name),
     );
     let mut params = params(project_dir, build_dir);
-    params.env_name = format!("{target}-idf");
+    params.env_name = env_name.into();
     let result = super::super::Esp32Orchestrator
         .build(&params)
         .await
@@ -87,6 +91,18 @@ async fn real_build(target: &str) {
     assert!(!database.contains("cores/esp32/main.cpp"));
     let config = std::fs::read_to_string(params.build_dir.join("idf/config/sdkconfig.h")).unwrap();
     assert!(config.contains("#define CONFIG_LOG_DEFAULT_LEVEL 2"));
+    if target == "esp32p4" {
+        let early = env_name == "esp32p4-idf";
+        assert_eq!(
+            config.contains("#define CONFIG_ESP32P4_SELECTS_REV_LESS_V3 1"),
+            early
+        );
+        assert!(config.contains(if early {
+            "#define CONFIG_ESP32P4_REV_MIN_FULL 0\n"
+        } else {
+            "#define CONFIG_ESP32P4_REV_MIN_FULL 300\n"
+        }));
+    }
 }
 
 #[test]
@@ -118,11 +134,12 @@ fn validated_targets_are_enabled_and_package_pins_are_never_ignored() {
     let params = params(PathBuf::new(), PathBuf::new());
     let mut env = std::collections::HashMap::new();
     for target in [
-        "esp32", "esp32s2", "esp32s3", "esp32c3", "esp32c6", "esp32h2", "esp32c2",
+        "esp32", "esp32s2", "esp32s3", "esp32c3", "esp32c6", "esp32h2", "esp32c2", "esp32c5",
+        "esp32p4",
     ] {
         assert!(super::validate(target, &env, &params).is_ok(), "{target}");
     }
-    for target in ["esp32c5", "esp32p4"] {
+    for target in ["esp32c61", "esp32h21"] {
         let error = super::validate(target, &env, &params).unwrap_err();
         assert!(error.to_string().contains(target));
         assert!(error.to_string().contains("not yet supported"));
@@ -137,11 +154,11 @@ fn validated_targets_are_enabled_and_package_pins_are_never_ignored() {
 }
 
 #[tokio::test]
-async fn unsupported_target_fails_before_clean_or_download() {
+async fn package_override_fails_before_clean_or_download() {
     let tmp = tempfile::TempDir::new().unwrap();
     std::fs::write(
         tmp.path().join("platformio.ini"),
-        "[env:esp32s3-idf]\nplatform = espressif32\nboard = esp32-p4-evboard\nframework = espidf\n",
+        "[env:esp32s3-idf]\nplatform = espressif32\nboard = esp32-p4-evboard\nframework = espidf\nplatform_packages = framework-espidf@0.0.0\n",
     )
     .unwrap();
     let build = tmp.path().join("build");
@@ -154,7 +171,7 @@ async fn unsupported_target_fails_before_clean_or_download() {
         .await
         .err()
         .unwrap();
-    assert!(error.to_string().contains("not yet supported"));
+    assert!(error.to_string().contains("platform_packages"));
     assert!(build.join("keep").is_file());
 }
 
@@ -281,6 +298,8 @@ target_build_test!(espidf_c3_real_build, "esp32c3");
 target_build_test!(espidf_c6_real_build, "esp32c6");
 target_build_test!(espidf_h2_real_build, "esp32h2");
 target_build_test!(espidf_c2_real_build, "esp32c2");
+target_build_test!(espidf_c5_real_build, "esp32c5");
+target_build_test!(espidf_p4_real_build, "esp32p4");
 
 #[test]
 fn partitions_are_a_native_defaults_overlay() {
@@ -385,4 +404,71 @@ async fn espidf_real_native_config_and_partition_mutations() {
     println!(
         "native sdkconfig.<env>: LOG_DEFAULT_LEVEL=2 overrides defaults=3; sdkconfig.defaults FREERTOS_HZ 100 -> 250; custom CSV app partition 1M -> 1536K changes partitions.bin"
     );
+}
+
+#[test]
+fn target_package_sets_preserve_existing_pins() {
+    for target in [
+        "esp32", "esp32s2", "esp32s3", "esp32c2", "esp32c3", "esp32c6", "esp32h2",
+    ] {
+        let pins = super::packages::PackageSet::load(target).unwrap();
+        assert_eq!(pins.framework, "platformio/framework-espidf@3.50400.0");
+        assert!(pins.toolchains[0].ends_with("@14.2.0+20241119"));
+    }
+    for target in ["esp32c5", "esp32p4"] {
+        let pins = super::packages::PackageSet::load(target).unwrap();
+        assert_eq!(pins.framework, "platformio/framework-espidf@4.50505.0");
+        assert_eq!(
+            pins.toolchains,
+            ["platformio/toolchain-riscv32-esp@14.2.0+20260121"]
+        );
+        assert!(pins.constraints.ends_with("espidf.constraints.v5.5.txt"));
+    }
+}
+
+#[test]
+fn p4_board_revisions_use_native_defaults_and_reject_conflicting_active_config() {
+    let tmp = tempfile::TempDir::new().unwrap();
+    std::fs::create_dir(tmp.path().join("config")).unwrap();
+    for (board_id, early, minimum) in [("esp32-p4-evboard", true, 0), ("esp32-p4_r3", false, 300)] {
+        let board =
+            fbuild_config::BoardConfig::from_board_id(board_id, &Default::default()).unwrap();
+        let path = super::project::revision_defaults(&board, tmp.path())
+            .unwrap()
+            .unwrap();
+        let defaults = std::fs::read_to_string(path).unwrap();
+        assert!(defaults.contains(&format!("CONFIG_ESP32P4_REV_MIN_{minimum}=y")));
+        assert!(defaults.contains(if early { "LESS_V3=y" } else { "LESS_V3=n" }));
+        for actual_early in [false, true] {
+            std::fs::write(
+                tmp.path().join("config/sdkconfig.h"),
+                if actual_early {
+                    "#define CONFIG_ESP32P4_SELECTS_REV_LESS_V3 1\n"
+                } else {
+                    ""
+                },
+            )
+            .unwrap();
+            let result = super::project::validate_revision(&board, tmp.path());
+            assert_eq!(result.is_ok(), early == actual_early);
+            if let Err(error) = result {
+                assert!(error.to_string().contains("incompatible"));
+            }
+        }
+    }
+    let mut board =
+        fbuild_config::BoardConfig::from_board_id("esp32-p4-evboard", &Default::default()).unwrap();
+    board.chip_variant = Some("esp32p4_unknown".into());
+    assert!(
+        super::project::revision_defaults(&board, tmp.path())
+            .unwrap_err()
+            .to_string()
+            .contains("unsupported esp32p4 silicon variant")
+    );
+}
+
+#[tokio::test]
+#[ignore = "downloads ESP-IDF 5.5.5 and RISC-V toolchain; requires uv and network"]
+async fn espidf_p4_r3_real_build() {
+    real_build_env("esp32p4", "esp32p4-r3-idf").await;
 }

@@ -17,6 +17,8 @@ pub(super) struct PackageSet {
     pub python: String,
     pub cmake: String,
     pub ninja: String,
+    #[serde(default)]
+    pub revisions: std::collections::HashMap<String, std::collections::HashMap<String, Revision>>,
 }
 
 impl PackageSet {
@@ -31,6 +33,30 @@ impl PackageSet {
                 ))
             })
     }
+}
+
+#[derive(Deserialize)]
+pub(super) struct Revision {
+    pub defaults: String,
+    pub selector: String,
+    pub enabled: bool,
+}
+
+pub(super) fn revision(board: &fbuild_config::BoardConfig) -> Result<Option<Revision>> {
+    let mut pins = PackageSet::load(&board.mcu)?;
+    let Some(mut variants) = pins.revisions.remove(&board.mcu) else {
+        return Ok(None);
+    };
+    variants
+        .remove(board.sdk_variant())
+        .map(Some)
+        .ok_or_else(|| {
+            FbuildError::ConfigError(format!(
+                "ESP-IDF: unsupported {} silicon variant {}",
+                board.mcu,
+                board.sdk_variant()
+            ))
+        })
 }
 
 pub(super) struct IdfPackages {

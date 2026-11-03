@@ -16,11 +16,11 @@ fbuild build . -e esp32s3-idf
 fbuild deploy . -e esp32s3-idf
 ```
 
-This is an IDF 5.4 CMake/ninja component build, with no Arduino core. This
+This is a native IDF CMake/ninja component build, with no Arduino core. This
 adapter enables **ESP32, ESP32-S2, ESP32-S3, ESP32-C3, ESP32-C6,
-ESP32-H2 and ESP32-C2**, using target-keyed package sets. Arduino and
+ESP32-H2, ESP32-C2, ESP32-C5 and ESP32-P4**, using target-keyed package sets. Arduino and
 `arduino, espidf` continue through the existing Arduino pipeline, including
-the warning that the latter is not a component build. C5/P4 remain disabled.
+the warning that the latter is not a component build.
 No CLI option, workspace crate, Rust dependency or workflow is added.
 
 ## Ownership and project layout
@@ -113,7 +113,7 @@ The current deployer assumes MCU-defined offsets. The adapter verifies IDF's
 flash manifest against those offsets and rejects layouts requiring extra images
 (e.g. OTA initialization data), relocated partition tables or relocated apps.
 Offsets and compiler prefixes come exclusively from `mcu_config`: ESP32/S2
-boot at 0x1000; S3/C2/C3/C6/H2 boot at 0x0; default partitions are at 0x8000
+boot at 0x1000; S3/C2/C3/C6/H2 boot at 0x0; C5/P4 boot at 0x2000; default partitions are at 0x8000
 and app at 0x10000. Flash-mode/frequency Kconfig settings should agree with the board's
 upload settings. Hardware deployment is not claimed as tested without a board.
 
@@ -195,15 +195,22 @@ Ordinary unit tests cover dispatch, target/pin rejection, config input changes
 and reserved CMake knobs. This is an explicit opt-in test; routine CI does not
 run it merely because the fixture exists.
 
-## C5/P4 package research (not enabled)
+## Target package sets and P4 silicon revisions
 
-The live fleet mirror index inspected for round 2 lists
-`platformio/framework-espidf@3.50500.0`, `@3.50502.0` and `@3.50503.0`.
-Upstream IDF v5.5 tools/tools.json recommends Xtensa and RISC-V
-`14.2.0+20241119`; v5.5.2/v5.5.3 recommend `14.2.0+20251107`.
-Both compiler versions exist in the mirror for both architectures, including
-Linux x86_64 archives. Constraints are published as
-`https://dl.espressif.com/dl/esp-idf/espidf.constraints.v5.5.txt`.
-These are candidate coherent sets, not validated C5/P4 builds; P4 revision
-support still needs build/hardware verification. No IDF 5.5 package is selected
-by this adapter. ULP and dual Arduino-as-IDF-component support remain separate.
+The seven original targets retain `platformio/framework-espidf@3.50400.0`
+(IDF 5.4) with GCC `14.2.0+20241119`. C5/P4 use
+`platformio/framework-espidf@4.50505.0` (IDF 5.5.5) with
+`platformio/toolchain-riscv32-esp@14.2.0+20260121`, matching the packaged
+`tools/tools.json`. Version selection belongs to this table, not project pins.
+The 5.5 constraints still come from `dl.espressif.com`, outside the fleet mirror.
+
+P4 retains `IDF_TARGET=esp32p4` for both ROM families. Board registry
+`chip_variant=esp32p4_es` selects native
+`CONFIG_ESP32P4_SELECTS_REV_LESS_V3=y` and minimum revision 0.0;
+`chip_variant=esp32p4` selects the other family and minimum revision 3.0.
+These are build-local Kconfig defaults, passed before project defaults. Projects
+can use native sdkconfig to raise the minimum within the selected family.
+fbuild checks the generated configuration before compilation and rejects an
+active sdkconfig selecting the other family, since those ROMs are incompatible.
+IDF 5.5.5 supports 0.x/1.x or 3.x, mutually exclusively; it provides no 2.x choice.
+ULP and dual Arduino-as-IDF-component support remain separate.
