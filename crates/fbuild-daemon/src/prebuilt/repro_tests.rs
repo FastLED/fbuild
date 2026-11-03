@@ -11,7 +11,19 @@ use fbuild_packages::prebuilt::{PrebuiltOutcome, Query, Reader, Resolution, sha2
 use serde_json::json;
 use std::{collections::BTreeMap, path::Path};
 
-const CORE_SOURCE:&str=r#"#;
+const CORE_SOURCE: &str = r#"#include "config.h"
+#include "project.h"
+#include "sdk.h"
+struct Config {int value; Config():value(VALUE){}};
+static Config initialized;
+extern "C" {
+const char *core_file=__FILE__; const char *base_file=__BASE_FILE__;
+int core_value(void){return initialized.value;}
+const char *header_file(void){return header_name;}
+const char *project_file(void){return project_name;}
+const char *sdk_file(void){return sdk_name;}
+}
+"#;
 
 async fn compile_fixture(
     framework: &Path,
@@ -26,7 +38,7 @@ async fn compile_fixture(
         "#define VALUE 17\nstatic const char header_name[] = __FILE__;\n",
     )
     .unwrap();
-    std::fs::write(framework.join("core.c"),CORE_SOURCE).unwrap();
+    std::fs::write(framework.join("core.c"), CORE_SOURCE).unwrap();
     let farm = framework
         .parent()
         .unwrap()
