@@ -1,7 +1,9 @@
 //! Prepare a build-local project only when the user has no root CMake project.
 
 use std::collections::HashMap;
-use std::path::{Path, PathBuf};
+use std::path::Path;
+
+use fbuild_core::path::NormalizedPath;
 
 use fbuild_core::{FbuildError, Result};
 
@@ -14,7 +16,7 @@ pub(super) fn write_changed(path: &Path, text: &str) -> Result<()> {
 
 /// CMake bracket arguments preserve spaces, quotes and semicolons in paths.
 pub(super) fn cmake_path(path: &Path) -> Result<String> {
-    let value = path.to_string_lossy().replace('\\', "/");
+    let value = NormalizedPath::new(path).display_slash();
     if value.contains("]=]") || value.contains(';') {
         return Err(FbuildError::ConfigError(format!(
             "unsupported CMake path: {value}"
@@ -23,9 +25,9 @@ pub(super) fn cmake_path(path: &Path) -> Result<String> {
     Ok(format!("[=[{value}]=]"))
 }
 
-pub(super) fn source_root(project: &Path, src: &Path, build: &Path) -> Result<PathBuf> {
+pub(super) fn source_root(project: &Path, src: &Path, build: &Path) -> Result<NormalizedPath> {
     if project.join("CMakeLists.txt").is_file() {
-        return Ok(project.to_path_buf());
+        return Ok(NormalizedPath::new(project));
     }
     if !src.is_dir() || src == project {
         return Err(FbuildError::ConfigError(format!(
@@ -70,7 +72,7 @@ pub(super) fn source_root(project: &Path, src: &Path, build: &Path) -> Result<Pa
     }
     cmake.push_str("include($ENV{IDF_PATH}/tools/cmake/project.cmake)\nproject(firmware)\n");
     write_changed(&root.join("CMakeLists.txt"), &cmake)?;
-    Ok(root)
+    Ok(root.into())
 }
 
 /// IDF owns active configuration and defaults-only-for-unset Kconfig semantics.
@@ -96,7 +98,7 @@ pub(super) fn sdkconfig(
             &overlay,
             &format!(
                 "CONFIG_PARTITION_TABLE_CUSTOM=y\nCONFIG_PARTITION_TABLE_CUSTOM_FILENAME=\"{}\"\n",
-                path.to_string_lossy().replace('\\', "/")
+                NormalizedPath::new(path).display_slash()
             ),
         )?;
         defaults.push(overlay.to_string_lossy().into_owned());
@@ -129,13 +131,13 @@ pub(super) fn board_sdkconfig(
 pub(super) fn revision_defaults(
     board: &fbuild_config::BoardConfig,
     build: &Path,
-) -> Result<Option<PathBuf>> {
+) -> Result<Option<NormalizedPath>> {
     let Some(revision) = super::packages::revision(board)? else {
         return Ok(None);
     };
     let path = build.join("board-revision.defaults");
     write_changed(&path, &revision.defaults)?;
-    Ok(Some(path))
+    Ok(Some(path.into()))
 }
 
 /// Active sdkconfig wins over defaults in IDF; refuse a conflicting ROM family.

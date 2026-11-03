@@ -1,6 +1,8 @@
 //! Resolve IDF packages using the same registry, checksums and cache as Arduino.
 
-use std::path::{Path, PathBuf};
+use std::path::Path;
+
+use fbuild_core::path::NormalizedPath;
 
 use fbuild_core::platform::executable;
 use fbuild_core::platformio_package::{PackageKind, ResolvedPayload, parse_package_spec};
@@ -60,12 +62,12 @@ pub(super) fn revision(board: &fbuild_config::BoardConfig) -> Result<Option<Revi
 }
 
 pub(super) struct IdfPackages {
-    pub framework: PathBuf,
+    pub framework: NormalizedPath,
     pub toolchain: fbuild_packages::toolchain::Esp32Toolchain,
-    pub python: PathBuf,
-    pub python_env: PathBuf,
-    pub cmake: PathBuf,
-    pub ninja: PathBuf,
+    pub python: NormalizedPath,
+    pub python_env: NormalizedPath,
+    pub cmake: NormalizedPath,
+    pub ninja: NormalizedPath,
 }
 
 async fn resolve(project: &Path, spec: &str) -> Result<ResolvedPayload> {
@@ -132,7 +134,7 @@ pub(super) async fn provision(
     let (python_env, bin, python) =
         prepare_python(project, build, &framework_path, &pins, env, log).await?;
     Ok(IdfPackages {
-        framework: framework_path,
+        framework: framework_path.into(),
         toolchain,
         python,
         python_env,
@@ -148,7 +150,7 @@ async fn prepare_python(
     pins: &PackageSet,
     env: &[(String, String)],
     log: &mut fbuild_core::build_log::BuildLog,
-) -> Result<(PathBuf, PathBuf, PathBuf)> {
+) -> Result<(NormalizedPath, NormalizedPath, NormalizedPath)> {
     let requirements = build.join("python-requirements.txt");
     super::project::write_changed(
         &requirements,
@@ -162,7 +164,7 @@ async fn prepare_python(
             pins.ninja,
         ),
     )?;
-    let python_env = build.join("python-env");
+    let python_env = NormalizedPath::new(build).join("python-env");
     let python = python_env.join(executable::name("bin/python", "Scripts/python.exe"));
     let installed = python_env.join("fbuild-requirements.txt");
     let recreated = !python.is_file();
@@ -186,10 +188,10 @@ async fn prepare_python(
         )
         .await?;
     }
-    let bin = python
-        .parent()
-        .ok_or_else(|| FbuildError::PackageError("invalid IDF Python environment path".into()))?
-        .to_path_buf();
+    let bin =
+        NormalizedPath::new(python.parent().ok_or_else(|| {
+            FbuildError::PackageError("invalid IDF Python environment path".into())
+        })?);
     let required = std::fs::read_to_string(&requirements)?;
     if recreated || std::fs::read_to_string(&installed).ok().as_deref() != Some(&required) {
         super::command(

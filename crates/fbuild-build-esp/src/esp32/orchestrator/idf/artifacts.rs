@@ -1,7 +1,9 @@
 //! Adapt IDF artifacts to the existing fbuild size/deploy contract.
 
 use std::collections::BTreeMap;
-use std::path::{Path, PathBuf};
+use std::path::Path;
+
+use fbuild_core::path::NormalizedPath;
 
 use fbuild_core::{FbuildError, Result};
 use fbuild_packages::Toolchain;
@@ -23,9 +25,10 @@ fn read_json<T: serde::de::DeserializeOwned>(path: &Path) -> Result<T> {
         .map_err(|e| FbuildError::BuildFailed(format!("{}: {e}", path.display())))
 }
 
-fn artifact(build: &Path, name: &str) -> Result<PathBuf> {
-    let path = build.join(name).canonicalize()?;
-    if !path.starts_with(build.canonicalize()?) || !path.is_file() {
+fn artifact(build: &Path, name: &str) -> Result<NormalizedPath> {
+    let path = NormalizedPath::new(build.join(name).canonicalize()?);
+    let root = NormalizedPath::new(build.canonicalize()?);
+    if path.relative_to(&root).is_none() || !path.is_file() {
         return Err(FbuildError::BuildFailed(format!(
             "invalid IDF artifact: {name}"
         )));
@@ -92,4 +95,28 @@ pub(super) async fn export(
         size_info: Some(size),
         symbol_map: None,
     })
+}
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn artifacts_must_be_files_inside_the_build_directory() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let build = tmp.path().join("build");
+        std::fs::create_dir(&build).unwrap();
+        std::fs::write(build.join("app.bin"), "firmware").unwrap();
+        std::fs::write(tmp.path().join("outside.bin"), "outside").unwrap();
+        assert_eq!(
+            super::artifact(&build, "app.bin").unwrap().as_path(),
+            build.join("app.bin").canonicalize().unwrap()
+        );
+        for name in ["../outside.bin", "."] {
+            assert!(
+                super::artifact(&build, name)
+                    .unwrap_err()
+                    .to_string()
+                    .contains("invalid IDF artifact")
+            );
+        }
+    }
 }
