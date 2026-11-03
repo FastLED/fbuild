@@ -554,12 +554,32 @@ pub fn compile_argv(
     extra_pre_flags: &[String],
     extra_flags: &[String],
 ) -> (Vec<String>, Option<PathBuf>) {
+    compile_argv_at_root(source, output, flags, extra_pre_flags, extra_flags, None)
+}
+
+/// Explicit CWD policy for reproducible framework compilation. All source,
+/// output and include operands remain absolute under this policy.
+pub fn compile_argv_at_root(
+    source: &Path,
+    output: &Path,
+    flags: &[String],
+    extra_pre_flags: &[String],
+    extra_flags: &[String],
+    root_override: Option<&Path>,
+) -> (Vec<String>, Option<PathBuf>) {
     let source_buf = absolute_from_cwd(source);
     let output_buf = absolute_from_cwd(output);
     let source = source_buf.as_path();
     let output = output_buf.as_path();
-    let compile_cwd = crate::zccache::compile_cwd_from_output(output);
-    let (source_arg, output_arg) = if let Some(cwd) = compile_cwd.as_deref() {
+    let compile_cwd = root_override
+        .map(Path::to_path_buf)
+        .or_else(|| crate::zccache::compile_cwd_from_output(output));
+    let (source_arg, output_arg) = if root_override.is_some() {
+        (
+            NormalizedPath::new(source).display_slash(),
+            NormalizedPath::new(output).display_slash(),
+        )
+    } else if let Some(cwd) = compile_cwd.as_deref() {
         (
             crate::zccache::path_arg_for_compile_cwd(source, cwd),
             crate::zccache::path_arg_for_compile_cwd(output, cwd),
@@ -581,7 +601,7 @@ pub fn compile_argv(
     };
 
     let mut all_flags: Vec<String> = Vec::new();
-    if let Some(cwd) = compile_cwd.as_deref() {
+    if let Some(cwd) = compile_cwd.as_deref().filter(|_| root_override.is_none()) {
         all_flags.extend(crate::zccache::normalize_flags_for_compile_cwd(flags, cwd));
         all_flags.extend(crate::zccache::normalize_flags_for_compile_cwd(
             extra_pre_flags,
@@ -617,7 +637,6 @@ pub fn compile_argv(
 ///   and `extra_flags` (ESP32 uses this for include flags deferred
 ///   from `common_flags`).
 #[allow(clippy::too_many_arguments)]
-#[expect(clippy::cognitive_complexity, reason = "baseline, zackees/ci.yml#229")]
 pub async fn compile_source(
     compiler: &Path,
     source: &Path,
@@ -629,6 +648,37 @@ pub async fn compile_source(
     verbose: bool,
     _compiler_cache: Option<&Path>,
     extra_pre_flags: &[String],
+) -> Result<CompileResult> {
+    compile_source_at_root(
+        compiler,
+        source,
+        output,
+        flags,
+        extra_flags,
+        _temp_dir,
+        _response_file_prefix,
+        verbose,
+        _compiler_cache,
+        extra_pre_flags,
+        None,
+    )
+    .await
+}
+
+#[allow(clippy::too_many_arguments)]
+#[expect(clippy::cognitive_complexity, reason = "baseline, zackees/ci.yml#229")]
+pub async fn compile_source_at_root(
+    compiler: &Path,
+    source: &Path,
+    output: &Path,
+    flags: &[String],
+    extra_flags: &[String],
+    _temp_dir: &Path,
+    _response_file_prefix: &str,
+    verbose: bool,
+    _compiler_cache: Option<&Path>,
+    extra_pre_flags: &[String],
+    root_override: Option<&Path>,
 ) -> Result<CompileResult> {
     // #282: a relative `output` (from `fbuild build <relative project_dir>` —
     // what CI does) collides with the asymmetry between
@@ -650,8 +700,14 @@ pub async fn compile_source(
         std::fs::create_dir_all(parent)?;
     }
 
-    let (sanitized, compile_cwd) =
-        compile_argv(source, output, flags, extra_pre_flags, extra_flags);
+    let (sanitized, compile_cwd) = compile_argv_at_root(
+        source,
+        output,
+        flags,
+        extra_pre_flags,
+        extra_flags,
+        root_override,
+    );
 
     // `flags`/`extra_flags` here are already unflag-filtered by
     // compile_c/compile_cpp before reaching compile_one, so pass empty unflags
@@ -719,7 +775,8 @@ pub async fn compile_source(
     // compile needs (fbuild-owned `TMP`/`TEMP`, forwarded `PATH` +
     // Windows host vars) is composed by
     // [`fbuild_core::subprocess::compile_env_for_build`].
-    let build_scratch_root = compile_scratch_root(compile_cwd.as_deref(), output);
+    let scratch_cwd = crate::zccache::compile_cwd_from_output(output);
+    let build_scratch_root = compile_scratch_root(scratch_cwd.as_deref(), output);
     let mut compile_env =
         fbuild_core::subprocess::compile_env_for_build(&build_scratch_root).unwrap_or_default();
     // FastLED/fbuild#966: pin zccache's worktree_root to the project workspace
