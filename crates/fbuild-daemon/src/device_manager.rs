@@ -69,6 +69,14 @@ pub enum DeviceLeaseError {
         position: usize,
         holder: Option<Box<DeviceLease>>,
     },
+    /// A caller named a port the device no longer uses because it
+    /// re-enumerated (typically a USB renumber) while a tracked lease moved
+    /// with it. Admitting the old name would silently skip that lease.
+    PortRenumbered {
+        port: String,
+        current_port: String,
+        holder: Option<Box<DeviceLease>>,
+    },
 }
 
 impl DeviceLeaseError {
@@ -127,8 +135,40 @@ impl DeviceLeaseError {
                     )
                 }
             }
+            Self::PortRenumbered {
+                port,
+                current_port,
+                holder,
+            } => {
+                let reserved_by = match holder.as_deref() {
+                    Some(held) => format!(
+                        " and is reserved by exclusive lease '{}' held by client '{}' ({})",
+                        held.lease_id, held.client_id, held.description
+                    ),
+                    None => String::new(),
+                };
+                format!(
+                    "device '{}' is no longer present — it re-enumerated as '{}'{reserved_by}; \
+                     re-resolve the port and operate on '{}'",
+                    port, current_port, current_port
+                )
+            }
         }
     }
+}
+
+/// The connected device that re-enumerated *from* `port`, if any.
+///
+/// Only a tracked re-enumeration keyed on the USB serial number rewrites
+/// `previous_port`, so a match proves the physical board moved rather than a
+/// different device reusing the name (FastLED/fbuild#1864 criterion 4).
+pub(crate) fn renumbered_target<'a>(
+    devices: &'a HashMap<String, DeviceState>,
+    port: &str,
+) -> Option<&'a DeviceState> {
+    devices
+        .values()
+        .find(|state| state.is_connected && state.previous_port.as_deref() == Some(port))
 }
 
 impl std::fmt::Display for DeviceLeaseError {
@@ -418,6 +458,7 @@ impl DeviceManager {
                         .then(|| old_port.clone())
                     });
                     if let Some(old_port) = moved_from {
+                        let renumbered_from = old_port.clone();
                         if let Some(mut state) = devices.remove(&old_port) {
                             let serial_number = device.serial_number.clone();
                             state.previous_port = Some(old_port);
@@ -448,6 +489,10 @@ impl DeviceManager {
                                         serial_number,
                                     });
                             }
+                            // Queued workflows follow the board: the queue is
+                            // keyed by port name, so leaving it behind would
+                            // strand a waiter on a port that no longer exists.
+                            self.migrate_waiters(&renumbered_from, &key);
                             devices.insert(key, state);
                             continue;
                         }
@@ -555,7 +600,18 @@ impl DeviceManager {
     ) -> Result<(), DeviceLeaseError> {
         let devices = self.devices.lock().unwrap_or_else(|e| e.into_inner());
         let Some(state) = devices.get(port) else {
-            return Ok(());
+            // A port that vanished because a tracked board re-enumerated is
+            // *not* an unknown/emulator route: admitting the old name would
+            // let a competitor operate while the lease sits on the new port.
+            let moved = renumbered_target(&devices, port);
+            return match moved {
+                Some(target) => Err(DeviceLeaseError::PortRenumbered {
+                    port: port.to_string(),
+                    current_port: target.port.clone(),
+                    holder: target.exclusive_lease.clone().map(Box::new),
+                }),
+                None => Ok(()),
+            };
         };
         match &state.exclusive_lease {
             None => Ok(()),

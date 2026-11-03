@@ -57,9 +57,13 @@ impl AdmissionPoll {
 }
 
 /// Holds a queue ticket; dropping it leaves the queue.
+///
+/// The guard deliberately does **not** remember the port: a tracked
+/// re-enumeration can rename the device while the workflow is queued, and a
+/// ticket is unique across the manager, so leaving by ticket is the only
+/// removal that cannot strand a phantom head-of-line waiter on the old name.
 pub struct QueueGuard {
     manager: Arc<DeviceManager>,
-    port: String,
     ticket: QueueTicket,
 }
 
@@ -71,7 +75,7 @@ impl QueueGuard {
 
 impl Drop for QueueGuard {
     fn drop(&mut self) {
-        self.manager.leave_queue(&self.port, self.ticket);
+        self.manager.leave_ticket(self.ticket);
     }
 }
 
@@ -121,6 +125,96 @@ impl DeviceManager {
         if queue.is_empty() {
             waiters.remove(port);
         }
+    }
+
+    /// Remove `ticket` from whichever queue holds it (no-op when already gone).
+    ///
+    /// Used by [`QueueGuard::drop`], which cannot rely on the port name
+    /// surviving a re-enumeration (FastLED/fbuild#1864 criterion 4).
+    pub fn leave_ticket(&self, ticket: QueueTicket) {
+        let mut waiters = self.waiters.lock().unwrap_or_else(|e| e.into_inner());
+        let stale: Vec<String> = waiters
+            .iter_mut()
+            .filter_map(|(port, queue)| {
+                queue.retain(|waiter| waiter.seq != ticket.seq);
+                queue.is_empty().then(|| port.clone())
+            })
+            .collect();
+        for port in stale {
+            waiters.remove(&port);
+        }
+    }
+
+    /// Move a port's admission queue to the port a tracked board
+    /// re-enumerated as, preserving FIFO order across the move.
+    ///
+    /// Returns the number of workflows moved. Called from
+    /// [`DeviceManager::refresh_devices`] (queue follows the migrated
+    /// `DeviceState`) and while waiting (a renumber mid-wait).
+    pub(crate) fn migrate_waiters(&self, from: &str, to: &str) -> usize {
+        if from == to {
+            return 0;
+        }
+        let mut waiters = self.waiters.lock().unwrap_or_else(|e| e.into_inner());
+        let Some(mut moving) = waiters.remove(from) else {
+            return 0;
+        };
+        let moved = moving.len();
+        match waiters.get_mut(to) {
+            Some(queue) => {
+                queue.append(&mut moving);
+                // Ticket sequences are unique and monotonic, so sorting keeps
+                // the original arrival order across both queues (`VecDeque`
+                // has no in-place `sort_by_key`).
+                let mut merged: Vec<LeaseWaiter> = queue.drain(..).collect();
+                merged.sort_by_key(|waiter| waiter.seq);
+                queue.extend(merged);
+            }
+            None => {
+                waiters.insert(to.to_string(), moving);
+            }
+        }
+        tracing::info!(
+            "moved {} queued workflow(s) from '{}' to '{}' after re-enumeration",
+            moved,
+            from,
+            to
+        );
+        moved
+    }
+
+    /// Follow a tracked re-enumeration from a stale port name to the port the
+    /// board uses now. Bounded so a corrupt `previous_port` chain cannot spin.
+    pub(crate) fn current_port_for(&self, port: &str) -> String {
+        let mut current = port.to_string();
+        for _ in 0..8 {
+            let next = {
+                let devices = self.devices.lock().unwrap_or_else(|e| e.into_inner());
+                super::renumbered_target(&devices, &current).map(|state| state.port.clone())
+            };
+            match next {
+                Some(next) => current = next,
+                None => break,
+            }
+        }
+        current
+    }
+
+    /// Follow a tracked re-enumeration mid-wait: move this port's queue to the
+    /// name the board uses now and return the port to poll.
+    fn follow_renumbered(&self, port: &str, client_id: &str) -> String {
+        let resolved = self.current_port_for(port);
+        if resolved == port {
+            return resolved;
+        }
+        tracing::info!(
+            "workflow '{}' follows device '{}' -> '{}' after re-enumeration",
+            client_id,
+            port,
+            resolved
+        );
+        self.migrate_waiters(port, &resolved);
+        resolved
     }
 
     /// Client ids waiting on `port`, in queue order (diagnostics).
@@ -202,17 +296,21 @@ impl DeviceManager {
         client_id: &str,
     ) -> Result<u64, DeviceLeaseError> {
         let started = Instant::now();
-        if self.poll_admission(port, lease_id, None).is_admitted() {
+        // A tracked USB renumber renames the device under the caller; polling
+        // the old name would report "unknown port" and admit the workflow
+        // while the lease sits on the new one (FastLED/fbuild#1864 criterion 4).
+        let mut current = self.follow_renumbered(port, client_id);
+        if self.poll_admission(&current, lease_id, None).is_admitted() {
             return Ok(0);
         }
         if wait_ms == 0 {
             let AdmissionPoll::Waiting { position, holder } =
-                self.poll_admission(port, lease_id, None)
+                self.poll_admission(&current, lease_id, None)
             else {
                 return Ok(0);
             };
             return Err(DeviceLeaseError::LeaseWaitTimedOut {
-                port: port.to_string(),
+                port: current,
                 waited_ms: 0,
                 position,
                 holder,
@@ -221,21 +319,21 @@ impl DeviceManager {
 
         let guard = QueueGuard {
             manager: Arc::clone(self),
-            port: port.to_string(),
-            ticket: self.enqueue_waiter(port, client_id),
+            ticket: self.enqueue_waiter(&current, client_id),
         };
         let ticket = guard.ticket();
         let deadline = started + Duration::from_millis(wait_ms);
         let mut backoff = Duration::from_millis(20);
         loop {
-            match self.poll_admission(port, lease_id, Some(ticket)) {
+            current = self.follow_renumbered(&current, client_id);
+            match self.poll_admission(&current, lease_id, Some(ticket)) {
                 AdmissionPoll::Admitted => {
                     let waited_ms = started.elapsed().as_millis() as u64;
                     if waited_ms > 0 {
                         tracing::info!(
                             "workflow '{}' admitted on device '{}' after waiting {} ms",
                             client_id,
-                            port,
+                            current,
                             waited_ms
                         );
                     }
@@ -248,12 +346,12 @@ impl DeviceManager {
                         tracing::warn!(
                             "workflow '{}' gave up waiting for device '{}': position {}, queued behind {:?}",
                             client_id,
-                            port,
+                            current,
                             position,
-                            self.queued_client_ids(port)
+                            self.queued_client_ids(&current)
                         );
                         return Err(DeviceLeaseError::LeaseWaitTimedOut {
-                            port: port.to_string(),
+                            port: current.clone(),
                             waited_ms: started.elapsed().as_millis() as u64,
                             position,
                             holder,

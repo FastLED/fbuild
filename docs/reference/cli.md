@@ -324,7 +324,10 @@ check runs at attach — before the port is opened — and again on every write,
 a lease taken by another workflow after a session attached still stops the
 bytes. Read-only monitoring is unaffected, and
 `fbuild device take <port> --reason <text>` still forces a takeover. A tracked
-lease follows the USB serial number across port renumbering.
+lease follows the USB serial number across port renumbering: a queued
+`--lease-wait` workflow moves with the board instead of waiting on a port that no
+longer exists, and a caller still naming the pre-renumber port is told the new
+one (with the lease holder) rather than being admitted past the lease.
 
 Fail-fast is the default. `fbuild deploy --lease-wait <seconds>` instead joins a
 per-port FIFO queue: the deploy waits for the holder to release, then proceeds in
