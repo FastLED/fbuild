@@ -2,6 +2,7 @@
 
 use std::path::{Path, PathBuf};
 
+use fbuild_core::platform::executable;
 use fbuild_core::platformio_package::{PackageKind, ResolvedPayload, parse_package_spec};
 use fbuild_core::{FbuildError, Result};
 use fbuild_packages::{CacheSubdir, Package, PackageBase};
@@ -96,8 +97,8 @@ pub(super) async fn provision(
         toolchain,
         python,
         python_env,
-        cmake: bin.join(if cfg!(windows) { "cmake.exe" } else { "cmake" }),
-        ninja: bin.join(if cfg!(windows) { "ninja.exe" } else { "ninja" }),
+        cmake: bin.join(executable::native_name("cmake")),
+        ninja: bin.join(executable::native_name("ninja")),
     })
 }
 
@@ -123,14 +124,8 @@ async fn prepare_python(
         ),
     )?;
     let python_env = build.join("python-env");
-    if !python_env
-        .join(if cfg!(windows) {
-            "Scripts/python.exe"
-        } else {
-            "bin/python"
-        })
-        .is_file()
-    {
+    let python = python_env.join(executable::name("bin/python", "Scripts/python.exe"));
+    if !python.is_file() {
         super::command(
             &[
                 "uv".into(),
@@ -146,12 +141,10 @@ async fn prepare_python(
         )
         .await?;
     }
-    let bin = python_env.join(if cfg!(windows) { "Scripts" } else { "bin" });
-    let python = bin.join(if cfg!(windows) {
-        "python.exe"
-    } else {
-        "python"
-    });
+    let bin = python
+        .parent()
+        .ok_or_else(|| FbuildError::PackageError("invalid IDF Python environment path".into()))?
+        .to_path_buf();
     let installed = python_env.join("fbuild-requirements.txt");
     let required = std::fs::read_to_string(&requirements)?;
     if std::fs::read_to_string(&installed).ok().as_deref() != Some(&required) {

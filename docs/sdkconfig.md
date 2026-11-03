@@ -1,6 +1,8 @@
 # ESP `sdkconfig` — user-override design
 
-> **Status**: design proposal. Not yet implemented. See [ROADMAP.md](ROADMAP.md) for sequencing once accepted.
+> **Status**: design proposal for Arduino-on-IDF overlays, not yet implemented.
+> Bare ESP-IDF builds use native Kconfig through the CMake adapter; see
+> [ESP-IDF-only builds](espidf.md) for the implemented inputs and precedence.
 
 This doc covers how a fbuild user should be able to override ESP-IDF
 `CONFIG_*` settings for an ESP32-family build, what surfaces exist
