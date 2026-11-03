@@ -56,6 +56,9 @@ crates/fbuild-core/src/platform/macos/process.rs	42	native_path	libc::	process	h
 crates/fbuild-core/src/platform/macos/process.rs	66	native_path	libc::	process	host_mechanic
 crates/fbuild-core/src/platform/macos/process.rs	68	native_path	libc::	process	host_mechanic
 crates/fbuild-core/src/platform/macos/process.rs	68	native_path	libc::	process	host_mechanic
+crates/fbuild-core/src/platform/macos/process.rs	218	native_path	libc::	process	host_mechanic
+crates/fbuild-core/src/platform/macos/process.rs	226	native_path	libc::	process	host_mechanic
+crates/fbuild-core/src/platform/macos/process.rs	233	native_path	libc::	process	host_mechanic
 crates/fbuild-core/src/platform/windows/device.rs	18	native_path	windows_sys::	process	host_mechanic
 crates/fbuild-core/src/platform/windows/device.rs	27	native_path	windows_sys::	process	host_mechanic
 crates/fbuild-core/src/platform/windows/device.rs	30	native_path	windows_sys::	process	host_mechanic
