@@ -1,24 +1,49 @@
 use super::*;
 
-#[cfg(target_os = "linux")]
-use self::serial_ws_support::{expect_text_frame, open_pty_port};
-
 /// #1485's client FIFO relies on the daemon emitting request replies in
 /// request order. Exercise the production WebSocket handler with a real
 /// pseudo-terminal, so this catches a future inbound/writer concurrency
 /// change that reorders `write_ack` and `in_waiting` frames.
 #[cfg(target_os = "linux")]
 #[tokio::test]
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 async fn serial_ws_replies_follow_request_order() {
+    use std::ffi::CStr;
+    use std::os::fd::{AsRawFd, FromRawFd, OwnedFd};
     use tokio_tungstenite::tungstenite::Message as ClientMessage;
 
-    let (_master, _slave, port) = open_pty_port();
+    let mut master_fd = -1;
+    let mut slave_fd = -1;
+    // SAFETY: openpty initializes both fds on success. OwnedFd takes over
+    // each descriptor exactly once, and ttyname_r writes into a sized buffer.
+    let rc = unsafe {
+        libc::openpty(
+            &mut master_fd,
+            &mut slave_fd,
+            std::ptr::null_mut(),
+            std::ptr::null(),
+            std::ptr::null(),
+        )
+    };
+    assert_eq!(rc, 0, "openpty failed: {}", std::io::Error::last_os_error());
+    let _master = unsafe { OwnedFd::from_raw_fd(master_fd) };
+    let slave = unsafe { OwnedFd::from_raw_fd(slave_fd) };
+    let mut name = [0 as std::ffi::c_char; 256];
+    let rc = unsafe { libc::ttyname_r(slave.as_raw_fd(), name.as_mut_ptr(), name.len()) };
+    assert_eq!(rc, 0, "ttyname_r failed: {rc}");
+    let port = unsafe { CStr::from_ptr(name.as_ptr()) }
+        .to_str()
+        .unwrap()
+        .to_owned();
 
     let (shutdown_tx, _shutdown_rx) = tokio::sync::watch::channel(false);
     let ctx = Arc::new(DaemonContext::new(8765, shutdown_tx, "test".to_string()));
+    // FastLED/fbuild#1864: the port is a known device so the lease admission
+    // path is live; no lease is held yet, so the attach must pass.
+    ctx.device_manager.insert_test_device(&port);
     let router = axum::Router::new()
         .route("/ws/serial-monitor", axum::routing::get(ws_serial_monitor))
-        .with_state(ctx);
+        .with_state(ctx.clone());
     let listener = tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap();
     let address = listener.local_addr().unwrap();
     let server = tokio::spawn(async move { axum::serve(listener, router).await.unwrap() });
@@ -94,6 +119,32 @@ async fn serial_ws_replies_follow_request_order() {
             assert_eq!(reply["bytes_written"], byte_count, "reply {index}: {reply}");
         }
     }
+
+    // FastLED/fbuild#1864: a lease taken by another workflow *after* this
+    // session attached must stop the next write instead of letting the bytes
+    // reach a board that another workflow now holds.
+    let foreign = ctx
+        .device_manager
+        .acquire_exclusive(&port, "client-c", "other workflow", true)
+        .expect("a foreign workflow must be able to lease an unleased port");
+    ws.send(ClientMessage::Text(last_write.to_string().into()))
+        .await
+        .unwrap();
+    let frame = tokio::time::timeout(Duration::from_secs(5), ws.next())
+        .await
+        .expect("refused write must be answered")
+        .unwrap()
+        .unwrap();
+    let ClientMessage::Text(text) = frame else {
+        panic!("refused write was not answered with a text frame: {frame:?}");
+    };
+    let reply: serde_json::Value = serde_json::from_str(&text).unwrap();
+    assert_eq!(reply["type"], "write_ack", "{reply}");
+    assert_eq!(reply["success"], false, "{reply}");
+    assert_eq!(reply["bytes_written"], 0, "{reply}");
+    let message = reply["message"].as_str().unwrap_or_default();
+    assert!(message.contains("reserved by exclusive lease"), "{reply}");
+    assert!(message.contains(&foreign.lease_id), "{reply}");
 
     ws.send(ClientMessage::Text(r#"{"type":"detach"}"#.into()))
         .await
@@ -761,36 +812,28 @@ async fn ws_open_port_timeout_names_a_dead_client_holder() {
     assert!(!message.contains("wedged"), "{message}");
 }
 
-/// FastLED/fbuild#1864: the serial write path is a mutating device path, so a
-/// foreign exclusive workflow lease must refuse it exactly like deploy/reset.
-///
-/// Three production-path assertions, all through the real WebSocket handler:
-///  * a client with no lease cannot attach while another workflow holds one,
-///    and the refused attach never opens the port;
-///  * the lease holder attaches and writes by presenting its lease id;
-///  * a lease taken by another workflow *after* the holder attached stops the
-///    very next write, so preemption-by-attach cannot be followed by writes.
-#[cfg(target_os = "linux")]
+/// FastLED/fbuild#1864: the serial attach is a mutating device path, so a
+/// foreign exclusive workflow lease must refuse it — and the holder must still
+/// get through admission. Portable on purpose: the refusal happens before
+/// `open_port`, so the assertion needs no tty and no platform gate.
 #[tokio::test]
-async fn ws_serial_attach_honors_foreign_exclusive_lease() {
+async fn ws_serial_attach_is_refused_under_a_foreign_exclusive_lease() {
     use tokio_tungstenite::tungstenite::Message as ClientMessage;
 
-    let (_master, _slave, port) = open_pty_port();
-
+    let port = "COM_TEST_1864";
     let (shutdown_tx, _shutdown_rx) = tokio::sync::watch::channel(false);
-    let ctx = Arc::new(DaemonContext::new(8765, shutdown_tx, "test".to_string()));
-    ctx.device_manager.insert_test_device(&port);
+    let ctx = Arc::new(DaemonContext::new(8766, shutdown_tx, "test".to_string()));
+    ctx.device_manager.insert_test_device(port);
+    let lease = ctx
+        .device_manager
+        .acquire_exclusive(port, "client-a", "hardware validation", true)
+        .expect("a fresh test device must be leaseable");
     let router = axum::Router::new()
         .route("/ws/serial-monitor", axum::routing::get(ws_serial_monitor))
         .with_state(ctx.clone());
     let listener = tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap();
     let address = listener.local_addr().unwrap();
-    let _server = tokio::spawn(async move { axum::serve(listener, router).await.unwrap() });
-
-    let lease = ctx
-        .device_manager
-        .acquire_exclusive(&port, "client-a", "hardware validation", true)
-        .unwrap();
+    let server = tokio::spawn(async move { axum::serve(listener, router).await.unwrap() });
 
     let attach = |client: &str, lease_id: Option<&str>| {
         let mut frame = serde_json::json!({
@@ -798,8 +841,8 @@ async fn ws_serial_attach_honors_foreign_exclusive_lease() {
             "client_id": client,
             "port": port,
             "baud_rate": 115200,
-            "open_if_needed": true,
-            "pre_acquire_writer": true,
+            "open_if_needed": false,
+            "pre_acquire_writer": false,
         });
         if let Some(id) = lease_id {
             frame["lease_id"] = serde_json::json!(id);
@@ -807,7 +850,7 @@ async fn ws_serial_attach_honors_foreign_exclusive_lease() {
         frame.to_string()
     };
 
-    // 1. A client without the lease is refused before the port is opened.
+    // A client that presents no lease must be refused.
     let (mut foreign, _) =
         tokio_tungstenite::connect_async(format!("ws://{address}/ws/serial-monitor"))
             .await
@@ -816,18 +859,20 @@ async fn ws_serial_attach_honors_foreign_exclusive_lease() {
         .send(ClientMessage::Text(attach("client-b", None).into()))
         .await
         .unwrap();
-    let refused = expect_text_frame(&mut foreign).await;
+    let refused = read_json_frame(&mut foreign).await;
     assert_eq!(refused["type"], "error", "{refused}");
     let message = refused["message"].as_str().unwrap_or_default();
     assert!(message.contains("reserved by exclusive lease"), "{message}");
     assert!(message.contains(&lease.lease_id), "{message}");
     assert!(message.contains("--lease-id"), "{message}");
     assert!(
-        !ctx.serial_manager.has_clients(&port),
+        !ctx.serial_manager.has_clients(port),
         "a refused attach must not open the port"
     );
 
-    // 2. The lease holder attaches and writes by presenting its lease id.
+    // The holder presenting its lease clears admission; this attach then fails
+    // later (the port is not open and open_if_needed is false), which proves
+    // the lease gate was not what refused it.
     let (mut holder, _) =
         tokio_tungstenite::connect_async(format!("ws://{address}/ws/serial-monitor"))
             .await
@@ -838,104 +883,36 @@ async fn ws_serial_attach_honors_foreign_exclusive_lease() {
         ))
         .await
         .unwrap();
-    let attached = expect_text_frame(&mut holder).await;
-    assert_eq!(attached["type"], "attached", "{attached}");
-    assert_eq!(attached["success"], true, "{attached}");
+    let holder_reply = read_json_frame(&mut holder).await;
+    let holder_message = holder_reply["message"].as_str().unwrap_or_default();
+    assert!(
+        !holder_message.contains("reserved by exclusive lease"),
+        "the lease holder must clear admission: {holder_reply}"
+    );
 
-    let write = serde_json::json!({
-        "type": "write",
-        "data": base64::engine::general_purpose::STANDARD.encode(b"ok"),
-    })
-    .to_string();
-    holder
-        .send(ClientMessage::Text(write.clone().into()))
-        .await
-        .unwrap();
-    let ack = expect_text_frame(&mut holder).await;
-    assert_eq!(ack["type"], "write_ack", "{ack}");
-    assert_eq!(ack["success"], true, "{ack}");
-    assert_eq!(ack["bytes_written"], 2, "{ack}");
-
-    // 3. A lease acquired after the attach still stops the next write.
-    ctx.device_manager
-        .release_lease(&lease.lease_id)
-        .expect("holder lease must release");
-    let foreign_lease = ctx
-        .device_manager
-        .acquire_exclusive(&port, "client-c", "other workflow", true)
-        .unwrap();
-    holder
-        .send(ClientMessage::Text(write.into()))
-        .await
-        .unwrap();
-    let ack = expect_text_frame(&mut holder).await;
-    assert_eq!(ack["type"], "write_ack", "{ack}");
-    assert_eq!(ack["success"], false, "{ack}");
-    assert_eq!(ack["bytes_written"], 0, "{ack}");
-    let message = ack["message"].as_str().unwrap_or_default();
-    assert!(message.contains("reserved by exclusive lease"), "{message}");
-    assert!(message.contains(&foreign_lease.lease_id), "{message}");
+    server.abort();
 }
 
-/// Hardware-free helpers shared by the WebSocket handler tests. One `cfg`
-/// gate for the whole module keeps the host-platform ledger honest: these are
-/// test-only tty mechanics, not a new production boundary.
-#[cfg(target_os = "linux")]
-mod serial_ws_support {
-    use futures::StreamExt;
-    use std::time::Duration;
+/// Await one daemon frame and decode it as JSON. Generic over the client stream
+/// so it needs no platform gate.
+async fn read_json_frame<S>(ws: &mut S) -> serde_json::Value
+where
+    S: futures::Stream<
+            Item = Result<
+                tokio_tungstenite::tungstenite::Message,
+                tokio_tungstenite::tungstenite::Error,
+            >,
+        > + Unpin,
+{
+    use tokio_tungstenite::tungstenite::Message as ClientMessage;
 
-    /// WebSocket client stream as produced by `connect_async` against the
-    /// handler under test.
-    pub(super) type WsClient = tokio_tungstenite::WebSocketStream<
-        tokio_tungstenite::MaybeTlsStream<tokio::net::TcpStream>,
-    >;
-
-    /// Open a fresh pseudo-terminal pair and return the slave `/dev/pts/N`
-    /// path so a test can drive the real serial manager without hardware.
-    /// Callers keep both fds alive for the duration of the test.
-    pub(super) fn open_pty_port() -> (std::os::fd::OwnedFd, std::os::fd::OwnedFd, String) {
-        use std::ffi::CStr;
-        use std::os::fd::{AsRawFd, FromRawFd, OwnedFd};
-
-        let mut master_fd = -1;
-        let mut slave_fd = -1;
-        // SAFETY: openpty initializes both fds on success. OwnedFd takes over
-        // each descriptor exactly once, and ttyname_r writes into a sized buffer.
-        let rc = unsafe {
-            libc::openpty(
-                &mut master_fd,
-                &mut slave_fd,
-                std::ptr::null_mut(),
-                std::ptr::null(),
-                std::ptr::null(),
-            )
-        };
-        assert_eq!(rc, 0, "openpty failed: {}", std::io::Error::last_os_error());
-        let master = unsafe { OwnedFd::from_raw_fd(master_fd) };
-        let slave = unsafe { OwnedFd::from_raw_fd(slave_fd) };
-        let mut name = [0 as std::ffi::c_char; 256];
-        let rc = unsafe { libc::ttyname_r(slave.as_raw_fd(), name.as_mut_ptr(), name.len()) };
-        assert_eq!(rc, 0, "ttyname_r failed: {rc}");
-        let port = unsafe { CStr::from_ptr(name.as_ptr()) }
-            .to_str()
-            .unwrap()
-            .to_owned();
-        (master, slave, port)
-    }
-
-    /// Await the daemon's next frame, require it to be text, and decode it.
-    pub(super) async fn expect_text_frame(ws: &mut WsClient) -> serde_json::Value {
-        use tokio_tungstenite::tungstenite::Message as ClientMessage;
-
-        let frame = tokio::time::timeout(Duration::from_secs(5), ws.next())
-            .await
-            .expect("daemon must answer within 5s")
-            .expect("daemon must answer with a frame")
-            .expect("frame must not be a WebSocket error");
-        let ClientMessage::Text(text) = frame else {
-            panic!("expected a text frame, got {frame:?}");
-        };
-        serde_json::from_str(&text).expect("daemon frames are JSON")
-    }
+    let frame = tokio::time::timeout(Duration::from_secs(5), ws.next())
+        .await
+        .expect("daemon must answer within 5s")
+        .expect("daemon must answer with a frame")
+        .expect("daemon must not fail at the websocket layer");
+    let ClientMessage::Text(text) = frame else {
+        panic!("daemon replied with a non-text frame: {frame:?}");
+    };
+    serde_json::from_str(&text).expect("daemon frames are JSON")
 }

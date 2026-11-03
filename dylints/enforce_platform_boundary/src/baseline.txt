@@ -13,9 +13,6 @@ crates/fbuild-daemon/src/handlers/websockets_tests.rs	attr_cfg	target_os	1
 crates/fbuild-daemon/src/handlers/websockets_tests.rs	attr_cfg	target_os	2
 crates/fbuild-daemon/src/handlers/websockets_tests.rs	attr_cfg	target_os	3
 crates/fbuild-daemon/src/handlers/websockets_tests.rs	attr_cfg	target_os	4
-crates/fbuild-daemon/src/handlers/websockets_tests.rs	attr_cfg	target_os	5
-crates/fbuild-daemon/src/handlers/websockets_tests.rs	attr_cfg	target_os	6
-crates/fbuild-daemon/src/handlers/websockets_tests.rs	attr_cfg	target_os	7
 crates/fbuild-daemon/src/handlers/websockets_tests.rs	native_import	libc	0
 crates/fbuild-daemon/src/handlers/websockets_tests.rs	native_import	libc	1
 crates/fbuild-daemon/src/handlers/websockets_tests.rs	native_import	libc	2

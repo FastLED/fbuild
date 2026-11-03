@@ -14,9 +14,6 @@ crates/fbuild-daemon/src/handlers/websockets_tests.rs	attr_cfg	#[cfg(target_os=)
 crates/fbuild-daemon/src/handlers/websockets_tests.rs	attr_cfg	#[cfg(target_os=)]	2	host	host_mechanic
 crates/fbuild-daemon/src/handlers/websockets_tests.rs	attr_cfg	#[cfg(target_os=)]	3	host	host_mechanic
 crates/fbuild-daemon/src/handlers/websockets_tests.rs	attr_cfg	#[cfg(target_os=)]	4	host	host_mechanic
-crates/fbuild-daemon/src/handlers/websockets_tests.rs	attr_cfg	#[cfg(target_os=)]	5	host	host_mechanic
-crates/fbuild-daemon/src/handlers/websockets_tests.rs	attr_cfg	#[cfg(target_os=)]	6	host	host_mechanic
-crates/fbuild-daemon/src/handlers/websockets_tests.rs	attr_cfg	#[cfg(target_os=)]	7	host	host_mechanic
 crates/fbuild-daemon/src/handlers/websockets_tests.rs	native_path	libc::	0	process	host_mechanic
 crates/fbuild-daemon/src/handlers/websockets_tests.rs	native_path	libc::	1	process	host_mechanic
 crates/fbuild-daemon/src/handlers/websockets_tests.rs	native_path	libc::	2	process	host_mechanic
