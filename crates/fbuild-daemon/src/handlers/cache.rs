@@ -46,7 +46,11 @@ pub async fn cache_stats(State(_ctx): State<Arc<DaemonContext>>) -> Json<CacheSt
 pub async fn run_gc(State(ctx): State<Arc<DaemonContext>>) -> Json<GcResponse> {
     // Serialize with background GC loop to prevent interleaved deletes.
     let _guard = ctx.gc_mutex.lock().await;
-    let result = tokio::task::spawn_blocking(|| {
+    let prebuilt = ctx.prebuilt.clone();
+    let result = tokio::task::spawn_blocking(move || {
+        prebuilt
+            .gc()
+            .map_err(|e| format!("prebuilt GC failed: {e}"))?;
         let dc = fbuild_packages::DiskCache::open()
             .map_err(|e| format!("failed to open cache: {}", e))?;
         dc.run_gc().map_err(|e| format!("GC failed: {}", e))

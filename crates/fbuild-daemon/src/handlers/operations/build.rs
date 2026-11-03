@@ -262,6 +262,7 @@ pub async fn build(
         let fired_normal_terminal = Arc::new(AtomicBool::new(false));
 
         let params = fbuild_build::BuildParams {
+            prebuilt: req.prebuilt.then(|| ctx.prebuilt.client()),
             project_dir: project_dir.clone(),
             shrink: req
                 .shrink
@@ -448,7 +449,7 @@ pub async fn build(
             let build_wallclock_start = std::time::Instant::now();
             let mut build_task = tokio::spawn(async move {
                 let orchestrator = fbuild_build::get_orchestrator(platform)?;
-                orchestrator.build(&params).await
+                fbuild_build::prebuilt::build_with_retry(orchestrator.as_ref(), params).await
             });
             // FastLED/fbuild#808 (CRITICAL): wall-clock cap on the
             // streaming build so a wedged C compiler (process stuck
@@ -716,6 +717,7 @@ pub async fn build(
         };
 
         let params = fbuild_build::BuildParams {
+            prebuilt: req.prebuilt.then(|| ctx.prebuilt.client()),
             project_dir: project_dir.clone(),
             shrink: req
                 .shrink
@@ -751,8 +753,11 @@ pub async fn build(
             std::time::Duration::from_secs(60 * 60);
         let result = match fbuild_build::get_orchestrator(platform) {
             Ok(orch) => {
-                match tokio::time::timeout(NON_STREAM_BUILD_HARD_DEADLINE, orch.build(&params))
-                    .await
+                match tokio::time::timeout(
+                    NON_STREAM_BUILD_HARD_DEADLINE,
+                    fbuild_build::prebuilt::build_with_retry(orch.as_ref(), params),
+                )
+                .await
                 {
                     Ok(r) => r,
                     Err(_) => Err(fbuild_core::FbuildError::Other(format!(

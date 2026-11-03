@@ -51,6 +51,7 @@ async fn teensylc_blink_meets_205_acceptance_criteria() {
     let build_dir = tempfile::TempDir::new().unwrap();
 
     let params = BuildParams {
+        prebuilt: None,
         project_dir: project_dir.clone(),
         shrink: Default::default(),
         // WHY: env names are case-sensitive and must match the

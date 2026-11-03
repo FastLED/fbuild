@@ -44,6 +44,7 @@ void loop() { digitalWrite(LED_BUILTIN, HIGH); }
         .join(fbuild_paths::BUILD_DIR_NAME)
         .join("pico/release");
     let params = BuildParams {
+        prebuilt: None,
         project_dir: project.to_path_buf(),
         shrink: Default::default(),
         env_name: "pico".into(),

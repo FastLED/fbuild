@@ -49,3 +49,5 @@ pub mod shutdown;
 pub mod startup;
 pub mod status_manager;
 pub mod watch_set_cache;
+
+pub mod prebuilt;

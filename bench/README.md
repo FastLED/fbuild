@@ -37,3 +37,10 @@ and which CI gate (if any) it feeds.
 The nightly whole-build comparison is published at
 <https://fastled.github.io/fbuild/>. Its machine-readable discovery document
 is `manifest.json` on the one-commit `benchmark-stats` branch.
+
+`first_compile ESP32_GCC ESP32_OBJCOPY` runs five isolated samples per mode
+(`source-cold`, `prebuilt-cold`, `prebuilt-warm`) against a local HTTP fixture.
+It compiles and links real Xtensa objects, reports median wall times and archive
+bytes, and requires byte-identical firmware and ELF files. This fixture checks
+the serving mechanics; Blink and FastLED example parity remain the production
+pilot acceptance gate.

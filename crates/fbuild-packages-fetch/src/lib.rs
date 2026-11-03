@@ -16,6 +16,15 @@ pub mod platformio_registry;
 #[path = "platformio_registry_fixture.rs"]
 pub mod platformio_registry_fixture;
 pub mod platformio_repository;
+pub mod prebuilt;
+
+/// Builds never receive an error from the optional prebuilt path.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum PrebuiltOutcome {
+    Hit(PathBuf),
+    Miss(prebuilt::MissReason),
+}
+
 pub mod submodules;
 
 mod install_lock;

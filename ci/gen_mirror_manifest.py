@@ -377,8 +377,77 @@ def names_documents(
     }
 
 
+def prebuilt_documents(keys, read_sidecar, bases: list[str]) -> dict[str, str]:
+    """Catalog shards from builder sidecars; withdrawn objects must be deleted.
+
+    Only keys present in the bucket listing are published. Removing a sidecar
+    or Index row alone does not withdraw an artifact from stale clients.
+    """
+    tools: dict[str, dict[str, dict]] = {}
+    for key in sorted(keys):
+        parts = key.split("/")
+        if len(parts) != 6 or parts[0] != "prebuilt" or parts[-1] != "prebuilt.tar.zst":
+            continue
+        _, framework, version, arch, flavor, _ = parts
+        try:
+            sidecar = json.loads(read_sidecar(key + ".release.json"))
+            fp = sidecar["fp"]
+            if (len(fp) != 64 or any(c not in "0123456789abcdef" for c in fp)
+                    or flavor != "fp-" + fp[:16] or sidecar["platform"]["arch"] != arch
+                    or sidecar["platform"]["os"] != "none"
+                    or sidecar["variant"]["flavor"] != flavor
+                    or sidecar["size_bytes"] <= 0
+                    or len(sidecar["sha256"]) != 64
+                    or any(c not in "0123456789abcdef" for c in sidecar["sha256"])):
+                raise ValueError("invalid identity or checksum")
+            tool = "prebuilt-" + framework
+            release = tools.setdefault(tool, {}).setdefault(version, {
+                "kind": "Release", "schema_version": 1, "tool": tool,
+                "version": version, "min_client_version": 1,
+                "source": sidecar["source"], "platforms": [],
+            })
+            if release["source"] != sidecar["source"]:
+                raise ValueError("conflicting source revisions for one exact version")
+            release["platforms"].append({
+                "platform": sidecar["platform"], "variant": sidecar["variant"],
+                "asset": {"filename": parts[-1], "size_bytes": sidecar["size_bytes"],
+                    "sha256": sidecar["sha256"], "provides": ["fbuild-fp:" + fp],
+                    "urls": [base.rstrip("/") + "/" + quote(key, safe="/") for base in bases]},
+            })
+        except (OSError, ValueError, KeyError, TypeError) as error:
+            print(f"warning: skipping prebuilt {key}: {error}", file=sys.stderr)
+    return {f"shards/{tool}.json": render({
+        "$schema": SCHEMA, "kind": "Catalog", "schema_version": 1, "tool": tool,
+        "channels": {version: version for version in sorted(releases)},
+        "releases": [releases[v] for v in sorted(releases)],
+    }) for tool, releases in sorted(tools.items())}
+
+
+def bucket_prebuilt_documents(s3, bases: list[str]) -> dict[str, str]:
+    keys = [obj["Key"]
+        for page in s3.get_paginator("list_objects_v2").paginate(Bucket=BUCKET_NAME, Prefix="prebuilt/")
+        for obj in page.get("Contents", [])]
+    def read_sidecar(key):
+        from botocore.exceptions import ClientError
+        try:
+            body = s3.get_object(Bucket=BUCKET_NAME, Key=key)["Body"]
+        except ClientError as error:
+            if error.response.get("Error", {}).get("Code") in {"NoSuchKey", "404", "NotFound"}:
+                raise FileNotFoundError(f"missing sidecar {key}") from error
+            raise
+        try:
+            data = body.read(1024 * 1024 + 1)
+            if len(data) > 1024 * 1024:
+                raise ValueError("oversized sidecar")
+            return data
+        finally:
+            body.close()
+    return prebuilt_documents(keys, read_sidecar, bases)
+
+
 def build_documents(
-    hashed: dict[str, tuple[int, str]], systems: dict[str, list[str]], version: str
+    hashed: dict[str, tuple[int, str]], systems: dict[str, list[str]], version: str,
+    prebuilt: dict[str, str] | None = None,
 ) -> dict[str, str]:
     """Relative path -> rendered document."""
     unknown = sorted(set(hashed) - set(systems))
@@ -411,6 +480,9 @@ def build_documents(
         rel = f"shards/names-{bucket}.json"
         docs[rel] = text
         tools[NAMES_KEY + bucket] = descriptor(rel, text)
+    for rel, text in (prebuilt or {}).items():
+        docs[rel] = text
+        tools[json.loads(text)["tool"]] = descriptor(rel, text)
     docs["manifest.json"] = render(
         {"$schema": SCHEMA, "kind": "Index", "schema_version": 1, "tools": tools}
     )
@@ -426,6 +498,7 @@ def main() -> int:
         "--version",
         help=f"shard version (default: the version the shards on disk carry, else {DEFAULT_VERSION})",
     )
+    parser.add_argument("--base", action="append", help="ordered prebuilt bucket URL bases")
     parser.add_argument("--workers", type=int, default=32)
     parser.add_argument(
         "--checkpoint",
@@ -439,11 +512,20 @@ def main() -> int:
     objects = list_bucket(s3)
     state = args.checkpoint or default_state_path(args.out_dir)
     known = {**load_existing(args.out_dir), **load_state(state)}
+    prebuilt = bucket_prebuilt_documents(s3, args.base or [BUCKET])
     if args.check:
         stale = stale_keys(objects, known)
         gone = sorted(set(known) - set(objects))
         if stale or gone:
             print(f"{len(stale)} unhashed/changed and {len(gone)} removed objects; rerun", file=sys.stderr)
+            return 1
+        index_path = args.out_dir / "manifest.json"
+        current_tools = json.loads(index_path.read_text()).get("tools", {}) if index_path.exists() else {}
+        current = {key: value for key, value in current_tools.items() if key.startswith("prebuilt-")}
+        wanted = {json.loads(text)["tool"]: descriptor(rel, text) for rel, text in prebuilt.items()}
+        if current != wanted or any(not (args.out_dir / rel).exists()
+                or (args.out_dir / rel).read_text() != text for rel, text in prebuilt.items()):
+            print("prebuilt Catalog shards or Index descriptors changed; rerun", file=sys.stderr)
             return 1
         return 0
 
@@ -451,7 +533,8 @@ def main() -> int:
     hashed = {key: (seen.size, seen.sha256) for key, seen in recorded.items()}
     missing = set(objects) - set(hashed)
     version = args.version or existing_version(args.out_dir)
-    docs = build_documents(hashed, load_systems(s3, args.state_db), version)
+    docs = build_documents(hashed, load_systems(s3, args.state_db), version,
+        prebuilt=prebuilt)
     shards_dir = args.out_dir / "shards"
     shards_dir.mkdir(parents=True, exist_ok=True)
     keep = {args.out_dir / rel for rel in docs}

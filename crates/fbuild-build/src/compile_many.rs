@@ -353,6 +353,7 @@ async fn build_one_sketch(inputs: SketchBuildInputs) -> SketchResult {
     let start = Instant::now();
     let build_dir = fbuild_packages::Cache::new(&sketch).get_build_dir(&env_name, profile);
     let params = BuildParams {
+        prebuilt: None,
         project_dir: sketch.clone(),
         shrink: Default::default(),
         env_name: env_name.clone(),

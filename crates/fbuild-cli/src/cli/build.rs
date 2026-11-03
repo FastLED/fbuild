@@ -98,6 +98,7 @@ pub async fn run_build(
     }
     let (caller_pid, caller_cwd) = daemon_client::caller_info();
     let req = BuildRequest {
+        prebuilt: crate::prebuilt::requested(),
         build_dir_override: daemon_client::capture_build_root(&project_dir),
         project_dir: project_dir.clone(),
         environment,

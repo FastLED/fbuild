@@ -98,6 +98,7 @@ async fn sdkconfig_overlay_fails_before_cleaning_build_directory() {
     let marker = build_dir.join("keep.txt");
     std::fs::write(&marker, "keep").unwrap();
     let params = crate::BuildParams {
+        prebuilt: None,
         project_dir: tmp.path().to_path_buf(),
         shrink: Default::default(),
         env_name: "esp32s3".into(),

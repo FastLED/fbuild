@@ -35,6 +35,10 @@ espflash-native = ["fbuild-deploy/espflash-native"]
 # and the wrapper-mode code path is gone.
 
 [dependencies]
+parking_lot = { workspace = true }
+reqwest = { workspace = true }
+tar = { workspace = true }
+zstd = { workspace = true }
 fbuild-core = { path = "../fbuild-core" }
 fbuild-config = { path = "../fbuild-config" }
 fbuild-paths = { path = "../fbuild-paths" }

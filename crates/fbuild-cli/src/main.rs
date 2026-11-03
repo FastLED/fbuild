@@ -4,6 +4,7 @@ mod lib_select;
 mod mcp;
 mod multicall;
 mod output;
+mod prebuilt;
 mod sync;
 mod update_check;
 

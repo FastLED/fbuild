@@ -232,6 +232,7 @@ pub async fn deploy(
             fbuild_core::BuildProfile::Release,
         );
         let params = fbuild_build::BuildParams {
+            prebuilt: req.prebuilt.then(|| ctx.prebuilt.client()),
             project_dir: project_dir.clone(),
             shrink: Default::default(),
             env_name: env_name.clone(),
@@ -274,7 +275,12 @@ pub async fn deploy(
             std::time::Duration::from_secs(60 * 60);
         let build_result = match fbuild_build::get_orchestrator(platform) {
             Ok(orch) => {
-                match tokio::time::timeout(DEPLOY_BUILD_HARD_DEADLINE, orch.build(&params)).await {
+                match tokio::time::timeout(
+                    DEPLOY_BUILD_HARD_DEADLINE,
+                    fbuild_build::prebuilt::build_with_retry(orch.as_ref(), params),
+                )
+                .await
+                {
                     Ok(r) => r,
                     Err(_) => Err(fbuild_core::FbuildError::Other(format!(
                         "pre-deploy build exceeded hard deadline ({}s); aborting — a compiler may be wedged",

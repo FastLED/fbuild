@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -euo pipefail
+# An isolated local-fixture benchmark; toolchain paths must be explicit.
+export FBUILD_DEV_MODE=1
+exec soldr cargo run -p fbuild-daemon --example prebuilt_first_compile -- "$@"

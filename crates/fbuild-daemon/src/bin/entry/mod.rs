@@ -632,6 +632,7 @@ async fn run_async(heap_profile_rate: Option<usize>) -> i32 {
     // Spawn background GC loop — runs every 5 minutes
     {
         let gc_mutex = context.gc_mutex.clone();
+        let prebuilt = context.prebuilt.clone();
         tokio::spawn(async move {
             // Wait 60s after startup before first GC to avoid slowing boot
             tokio::time::sleep(std::time::Duration::from_secs(60)).await;
@@ -642,12 +643,12 @@ async fn run_async(heap_profile_rate: Option<usize>) -> i32 {
                     // Serialize with manual /api/cache/gc endpoint.
                     // Scope the guard so it's dropped before the sleep.
                     let _guard = gc_mutex.lock().await;
-                    // FastLED/fbuild#808 (HIGH): `run_gc` does sync
-                    // filesystem I/O over the cache tree. Match the
-                    // `/api/cache/gc` handler and push the work onto
-                    // `spawn_blocking` so a slow disk does not peg a
-                    // tokio worker.
-                    let join = tokio::task::spawn_blocking(|| {
+                    // Both cache collectors perform blocking filesystem I/O.
+                    let prebuilt = prebuilt.clone();
+                    let join = tokio::task::spawn_blocking(move || {
+                        if let Err(error) = prebuilt.gc() {
+                            tracing::warn!("prebuilt GC: {error}");
+                        }
                         let dc = fbuild_packages::DiskCache::open()?;
                         dc.run_gc()
                     });

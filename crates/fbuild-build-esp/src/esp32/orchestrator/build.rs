@@ -49,18 +49,12 @@ impl BuildOrchestrator for Esp32Orchestrator {
         )?;
         reject_unsupported_esp_framework(&config, &params.env_name)?;
         reject_unsupported_sdkconfig_overlay(&config, &params.env_name)?;
-
         let start = Instant::now();
         // Env-gated per-phase timer (FBUILD_PERF_LOG=1); zero overhead when unset.
         let mut perf = crate::perf_log::PerfTimer::new("esp32-orchestrator");
-
-        // Wrapper-binary discovery removed in FastLED/fbuild#800 â€” every
-        // compile dispatches through the embedded zccache service.
         let compiler_cache: Option<std::path::PathBuf> = None;
-
         // 1-2. Parse config, load board, setup build dirs, resolve src dir, collect flags
         let mut ctx = crate::pipeline::BuildContext::new_with_perf(params, Some(&mut perf)).await?;
-
         // Compute eh_frame strip policy once per build (FastLED/fbuild#243).
         // Reads sdkconfig from the project dir (ESP32 only) so panic-backtrace
         // / gdbstub users automatically Preserve.
@@ -71,8 +65,6 @@ impl BuildOrchestrator for Esp32Orchestrator {
             params.profile,
             Some(&sdkconfig),
         );
-
-        // 3. Load MCU config from embedded JSON
         let mcu_config = get_mcu_config(&ctx.board.mcu)?;
 
         tracing::info!(
@@ -82,7 +74,6 @@ impl BuildOrchestrator for Esp32Orchestrator {
             mcu_config.architecture
         );
 
-        // 4-6. Resolve platform, toolchain, and framework.
         // Look up the env's `platform_packages` overrides so the platform
         // (`platform-espressif32`) and framework (`framework-arduinoespressif32`)
         // packages can honor consumer-pinned URLs (FastLED/fbuild#672).
@@ -127,7 +118,6 @@ impl BuildOrchestrator for Esp32Orchestrator {
         let mcu_config = fixups::for_toolchain(mcu_config, &toolchain_info);
         let _toolchain_cache_dir = fbuild_packages::Package::get_info(&toolchain).install_path;
         let _framework_cache_dir = fbuild_packages::Package::get_info(&framework).install_path;
-        // Aliases for build dirs (already set up by BuildContext::new())
         let build_dir = &ctx.build_dir;
         let core_build_dir = &ctx.core_build_dir;
         let src_build_dir = &ctx.src_build_dir;
@@ -342,15 +332,9 @@ impl BuildOrchestrator for Esp32Orchestrator {
         if fixups::supports_macro_prefix_map(&toolchain_info) {
             user_flags.extend(framework_macro_prefix_map(&core_dir));
             user_flags.extend(sdk_farm.as_ref().map(SdkIncludeFarm::macro_prefix_map));
+            user_flags.extend(super::prebuilt::prefix_maps(&framework_dir, &toolchain_dir));
         }
-        // FastLED/fbuild#1414: without this the compiler records the absolute
-        // build directory as `DW_AT_comp_dir` and absolute source paths, so two
-        // identical sketches in two directories compile to different objects
-        // and zccache can never serve the second one. Both the framework and
-        // the sketch stage get the same mapping, so a hydrated core object and a
-        // freshly compiled one still compare equal. `-fdebug-prefix-map` exists
-        // back to GCC 4.3, so the legacy ESP32 GCC 5 toolchain is covered too
-        // (unlike `-fmacro-prefix-map` just above).
+        // Keep core/sketch debug paths independent of the project directory.
         user_flags.extend(fbuild_paths::debug_prefix_map_args(
             &params.project_dir,
             &ctx.build_dir,
@@ -487,7 +471,6 @@ impl BuildOrchestrator for Esp32Orchestrator {
             sources.variant_sources.len(),
         );
 
-        // 10-11. Compile
         let mut defines = ctx.board.get_defines();
         defines.extend(mcu_config.defines_map());
 
@@ -516,12 +499,10 @@ impl BuildOrchestrator for Esp32Orchestrator {
         let jobs = crate::parallel::effective_jobs(params.jobs);
         tracing::info!("parallel compilation: {} jobs", jobs);
 
-        // Build source lists and flags needed for compile_commands.json
         let mut all_core_sources: Vec<std::path::PathBuf> = Vec::new();
         all_core_sources.extend(sources.core_sources.iter().cloned());
         all_core_sources.extend(sources.variant_sources.iter().cloned());
 
-        // Precompute values needed for compile_commands.json in both paths
         let include_flags = compiler.base.build_include_flags();
         let arch = if mcu_config.is_xtensa() {
             crate::compile_database::TargetArchitecture::Xtensa
@@ -612,10 +593,6 @@ impl BuildOrchestrator for Esp32Orchestrator {
             &mut ctx.build_log,
         )?;
 
-        // Compile core + variant sources in parallel
-        // `--clean` resets only the project build directory. Framework core
-        // objects are content-addressed global artifacts, so hydrate them even
-        // for a clean build; `--clean-all` is the explicit cache eviction path.
         let core_cache = crate::framework_core_cache::FrameworkCoreCache::new(
             &params.project_dir,
             "esp32",
@@ -660,6 +637,22 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 build_log: ctx.build_log,
             });
         }
+        let prebuilt_hit = super::prebuilt::hydrate(super::prebuilt::Inputs {
+            params,
+            compiler: &compiler,
+            toolchain: &toolchain_info,
+            framework: &fbuild_packages::Package::get_info(&framework),
+            board: &ctx.board.board_id,
+            mcu: &ctx.board.mcu,
+            variant: &framework
+                .get_variants_dir()
+                .join(&ctx.board.variant)
+                .to_string_lossy(),
+            sources: &all_core_sources,
+            core_dir: core_build_dir,
+            overlay: &user_overlay,
+        })
+        .await;
         let build_log_mutex = std::sync::Mutex::new(ctx.build_log);
         {
             let _g = perf.phase("core-cache-hydrate");
@@ -762,7 +755,16 @@ impl BuildOrchestrator for Esp32Orchestrator {
         let (core_result, sketch_result) = (pool.core, pool.sketch);
         {
             let _g = perf.phase("core-cache-store");
-            let outcome = core_cache.store(core_build_dir);
+            let outcome = if prebuilt_hit
+                || params
+                    .prebuilt
+                    .as_ref()
+                    .is_some_and(crate::prebuilt::Client::used)
+            {
+                Ok(Default::default())
+            } else {
+                core_cache.store(core_build_dir)
+            };
             build_log_mutex
                 .lock()
                 .unwrap_or_else(|e| e.into_inner())
@@ -787,7 +789,6 @@ impl BuildOrchestrator for Esp32Orchestrator {
             }
         }
 
-        // Unwrap build log and flush collected warnings
         let mut build_log = build_log_mutex
             .into_inner()
             .unwrap_or_else(|e| e.into_inner());

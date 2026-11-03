@@ -150,6 +150,7 @@ pub struct PendingSerialAttachInfo {
 
 /// Shared state for the daemon, passed to all axum handlers via `State`.
 pub struct DaemonContext {
+    pub prebuilt: Arc<crate::prebuilt::Service>,
     /// When the daemon started.
     pub started_at: Instant,
     /// Unix timestamp when daemon started (for API responses).
@@ -277,6 +278,9 @@ impl DaemonContext {
         let source_exe = compute_binary_path();
         let launched_by_broker = crate::broker::backend::launched_by_broker();
         Self {
+            prebuilt: Arc::new(crate::prebuilt::Service::new(
+                &fbuild_paths::get_cache_root(),
+            )),
             started_at: Instant::now(),
             started_at_unix: now_unix,
             port,

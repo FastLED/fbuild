@@ -37,6 +37,7 @@ mod helpers;
 mod job_pool;
 mod local_libs;
 mod packages;
+mod prebuilt;
 mod shrink_link;
 
 pub use packages::resolve_deploy_esptool;
