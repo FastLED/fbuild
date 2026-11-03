@@ -376,13 +376,13 @@ async fn espidf_real_native_config_and_partition_mutations() {
     let second = std::fs::read_to_string(&header).unwrap();
     assert!(second.contains("#define CONFIG_FREERTOS_HZ 250"));
     assert!(second.contains("#define CONFIG_LOG_DEFAULT_LEVEL 2"));
-    std::fs::write(&csv, "nvs,data,nvs,0x9000,0x6000\nphy_init,data,phy,0xf000,0x1000\nfactory,app,factory,0x10000,2M\n").unwrap();
+    std::fs::write(&csv, "nvs,data,nvs,0x9000,0x6000\nphy_init,data,phy,0xf000,0x1000\nfactory,app,factory,0x10000,1536K\n").unwrap();
     assert!(orchestrator.build(&params).await.unwrap().success);
     assert_ne!(
         partitions,
         std::fs::read(params.build_dir.join("partitions.bin")).unwrap()
     );
     println!(
-        "native sdkconfig.<env>: LOG_DEFAULT_LEVEL=2 overrides defaults=3; sdkconfig.defaults FREERTOS_HZ 100 -> 250; custom CSV app partition 1M -> 2M changes partitions.bin"
+        "native sdkconfig.<env>: LOG_DEFAULT_LEVEL=2 overrides defaults=3; sdkconfig.defaults FREERTOS_HZ 100 -> 250; custom CSV app partition 1M -> 1536K changes partitions.bin"
     );
 }
