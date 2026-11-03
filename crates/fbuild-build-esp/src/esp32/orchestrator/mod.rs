@@ -48,4 +48,15 @@ mod tests;
 /// ESP32 platform build orchestrator.
 pub struct Esp32Orchestrator;
 
+#[async_trait::async_trait]
+impl crate::BuildOrchestrator for Esp32Orchestrator {
+    fn platform(&self) -> fbuild_core::Platform {
+        fbuild_core::Platform::Espressif32
+    }
+
+    async fn build(&self, params: &crate::BuildParams) -> fbuild_core::Result<crate::BuildResult> {
+        self.build_arduino(params).await
+    }
+}
+
 pub use cdc::{cdc_on_boot_enabled, create, is_esp32_project, warn_if_cdc_on_boot};
