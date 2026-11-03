@@ -103,6 +103,11 @@ pub struct DeployRequest {
     /// (FastLED/fbuild#1864).
     #[serde(default)]
     pub lease_id: Option<String>,
+    /// Opt-in bounded wait (milliseconds) for a foreign exclusive lease to be
+    /// released. `0` (default) keeps fail-fast admission; a queued deploy never
+    /// preempts, resets or opens the holder's port (FastLED/fbuild#1864).
+    #[serde(default)]
+    pub lease_wait_ms: u64,
     /// Explicit deploy protocol, currently `isp` or `wlink` for CH32V.
     #[serde(default)]
     pub protocol: Option<String>,
@@ -701,6 +706,26 @@ mod tests {
     /// after the layout changes (FastLED/fbuild#1349).
     fn fixture_cache_dir() -> String {
         format!("/home/user/{}/prod/cache", fbuild_paths::FBUILD_DIR_NAME)
+    }
+
+    // --- DeployRequest lease-wait plumbing ---
+
+    #[test]
+    fn deploy_request_defaults_to_fail_fast_admission() {
+        // Older clients never send the field: the daemon must keep refusing a
+        // foreign lease immediately instead of queueing (FastLED/fbuild#1864).
+        let json = r#"{"project_dir": "/tmp/p"}"#;
+        let req: DeployRequest = serde_json::from_str(json).unwrap();
+        assert_eq!(req.lease_wait_ms, 0);
+        assert!(req.lease_id.is_none());
+    }
+
+    #[test]
+    fn deploy_request_carries_the_opt_in_bounded_wait() {
+        let json = r#"{"project_dir": "/tmp/p", "lease_id": "lease-1", "lease_wait_ms": 45000}"#;
+        let req: DeployRequest = serde_json::from_str(json).unwrap();
+        assert_eq!(req.lease_wait_ms, 45_000);
+        assert_eq!(req.lease_id.as_deref(), Some("lease-1"));
     }
 
     // --- BuildRequest deserialization ---

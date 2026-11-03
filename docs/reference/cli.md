@@ -326,6 +326,17 @@ bytes. Read-only monitoring is unaffected, and
 `fbuild device take <port> --reason <text>` still forces a takeover. A tracked
 lease follows the USB serial number across port renumbering.
 
+Fail-fast is the default. `fbuild deploy --lease-wait <seconds>` instead joins a
+per-port FIFO queue: the deploy waits for the holder to release, then proceeds in
+ticket order, so two checkouts can take turns on one board without a retry loop.
+The wait happens before preemption/reset/open, so a queued workflow never
+disturbs the holder's session or firmware. Ordering is deterministic (a waiter
+is admitted only at the head of the queue), the queue is per device, and a
+cancelled/timed-out waiter removes itself and promotes the next one. The holder
+under its own `--lease-id` is never queued. On timeout the error reports the
+queue position, the holder and the elapsed wait, and states that the board was
+not reset, closed or flashed.
+
 ## Diagnostics And Analysis
 
 | Command | Purpose |

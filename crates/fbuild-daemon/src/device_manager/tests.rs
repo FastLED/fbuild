@@ -447,3 +447,146 @@ fn admit_ignores_ports_the_manager_does_not_know() {
     let mgr = DeviceManager::new();
     mgr.admit_operation("COM99", None).unwrap();
 }
+
+mod lease_wait_queue_tests {
+    //! Opt-in bounded wait for a foreign exclusive lease
+    //! ([`DeviceManager::await_admission`], FastLED/fbuild#1864 criterion 3).
+    //!
+    //! A competing workflow joins a per-port FIFO queue instead of being
+    //! refused; ordering is deterministic (head of queue only), the wait
+    //! happens before any preemption/open, and a timed-out or cancelled
+    //! waiter leaves the queue so the next workflow is promoted.
+    use super::*;
+    use std::sync::Arc;
+    use std::time::Duration;
+
+    const PORT: &str = "COM7";
+
+    fn manager_with_holder() -> (Arc<DeviceManager>, String) {
+        let mgr = Arc::new(DeviceManager::new());
+        mgr.insert_test_device(PORT);
+        let lease = mgr
+            .acquire_exclusive(PORT, "client-a", "hardware validation", false)
+            .unwrap();
+        (mgr, lease.lease_id)
+    }
+
+    fn waiting_position(poll: AdmissionPoll) -> usize {
+        match poll {
+            AdmissionPoll::Waiting { position, holder } => {
+                assert!(holder.is_none(), "no lease is held in these cases");
+                position
+            }
+            AdmissionPoll::Admitted => panic!("waiter was admitted out of order"),
+        }
+    }
+
+    #[test]
+    fn queue_is_fifo_and_admits_only_at_the_head() {
+        let mgr = make_manager_with_device(PORT);
+        let first = mgr.enqueue_waiter(PORT, "client-a");
+        let second = mgr.enqueue_waiter(PORT, "client-b");
+        assert!(mgr.poll_admission(PORT, None, Some(first)).is_admitted());
+        assert_eq!(
+            waiting_position(mgr.poll_admission(PORT, None, Some(second))),
+            2
+        );
+        // Diagnostics name the waiting workflows in queue order.
+        assert_eq!(mgr.queued_client_ids(PORT), vec!["client-a", "client-b"]);
+        // Dropping the head promotes the next workflow.
+        mgr.leave_queue(PORT, first);
+        assert!(mgr.poll_admission(PORT, None, Some(second)).is_admitted());
+        mgr.leave_queue(PORT, second);
+        assert_eq!(mgr.queued_workflows(PORT), 0);
+    }
+
+    #[test]
+    fn a_foreign_lease_holds_the_head_and_names_the_holder() {
+        let (mgr, lease_id) = manager_with_holder();
+        let ticket = mgr.enqueue_waiter(PORT, "client-b");
+        match mgr.poll_admission(PORT, None, Some(ticket)) {
+            AdmissionPoll::Waiting { position, holder } => {
+                assert_eq!(position, 1);
+                let holder = holder.expect("the foreign lease must be reported");
+                assert_eq!(holder.lease_id, lease_id);
+                assert_eq!(holder.client_id, "client-a");
+            }
+            AdmissionPoll::Admitted => panic!("a foreign lease admitted the waiter"),
+        }
+        mgr.release_lease(&lease_id).unwrap();
+        assert!(mgr.poll_admission(PORT, None, Some(ticket)).is_admitted());
+        mgr.leave_queue(PORT, ticket);
+    }
+
+    #[test]
+    fn an_unqueued_caller_does_not_jump_a_waiting_workflow() {
+        let mgr = make_manager_with_device(PORT);
+        let ticket = mgr.enqueue_waiter(PORT, "client-a");
+        // A fail-fast caller (no ticket) sees the queue, so two clients that
+        // race a release cannot reorder: it would join *behind* the waiter.
+        assert_eq!(waiting_position(mgr.poll_admission(PORT, None, None)), 2);
+        mgr.leave_queue(PORT, ticket);
+        assert!(mgr.poll_admission(PORT, None, None).is_admitted());
+    }
+
+    #[test]
+    fn unknown_ports_stay_outside_the_lease_path() {
+        let mgr = make_manager_with_device(PORT);
+        assert!(mgr.poll_admission("/dev/ttyNOPE", None, None).is_admitted());
+    }
+
+    #[tokio::test]
+    async fn bounded_wait_admits_after_the_holder_releases() {
+        let (mgr, lease_id) = manager_with_holder();
+        let releaser = Arc::clone(&mgr);
+        tokio::spawn(async move {
+            tokio::time::sleep(Duration::from_millis(120)).await;
+            releaser.release_lease(&lease_id).unwrap();
+        });
+        let waited = mgr
+            .await_admission(PORT, None, 5_000, "client-b")
+            .await
+            .unwrap();
+        assert!(
+            waited >= 100,
+            "admitted before the holder released: {waited} ms"
+        );
+        assert_eq!(mgr.queued_workflows(PORT), 0);
+    }
+
+    #[tokio::test]
+    async fn bounded_wait_times_out_and_leaves_the_queue() {
+        let (mgr, lease_id) = manager_with_holder();
+        let err = mgr
+            .await_admission(PORT, None, 140, "client-b")
+            .await
+            .unwrap_err();
+        let message = err.message();
+        assert!(message.contains(&lease_id), "{message}");
+        assert!(message.contains("not reset"), "{message}");
+        // The abandoned ticket must not block the next workflow.
+        assert_eq!(mgr.queued_workflows(PORT), 0);
+    }
+
+    #[tokio::test]
+    async fn zero_wait_is_still_fail_fast() {
+        let (mgr, _lease_id) = manager_with_holder();
+        let err = mgr
+            .await_admission(PORT, None, 0, "client-b")
+            .await
+            .unwrap_err();
+        assert!(err.message().contains("--lease-wait"), "{}", err.message());
+        assert_eq!(mgr.queued_workflows(PORT), 0);
+    }
+
+    #[tokio::test]
+    async fn the_holder_waits_for_nobody() {
+        let (mgr, lease_id) = manager_with_holder();
+        let _queued = mgr.enqueue_waiter(PORT, "client-b");
+        let waited = mgr
+            .await_admission(PORT, Some(&lease_id), 5_000, "client-a")
+            .await
+            .unwrap();
+        assert_eq!(waited, 0);
+    }
+}

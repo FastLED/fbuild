@@ -493,9 +493,17 @@ pub async fn deploy(
     // other client's port, so a competing deploy cannot replace firmware
     // between the holder's flash and its validation (FastLED/fbuild#1864).
     if let Some(ref p) = deploy_port_str {
+        // `--lease-wait` opts into a bounded FIFO queue instead of refusing
+        // immediately; the wait happens here, still before preemption/reset.
+        let wait_client = req
+            .request_id
+            .clone()
+            .or_else(|| req.lease_id.clone())
+            .unwrap_or_else(|| "deploy".to_string());
         if let Err(error) = ctx
             .device_manager
-            .admit_operation(p, req.lease_id.as_deref())
+            .await_admission(p, req.lease_id.as_deref(), req.lease_wait_ms, &wait_client)
+            .await
         {
             return (
                 StatusCode::CONFLICT,
