@@ -175,13 +175,63 @@ pub(crate) fn terminate_pid(pid: u32, termination: Termination) -> std::io::Resu
     }
 }
 
+/// Terminate `pid` together with every process in the group it leads.
+///
+/// Contained children are put in a group they lead (`setpgid(0, 0)` in
+/// [`configure_tokio_owner_death`]), so a compiler driver's whole tree --
+/// `cc` -> `collect2` -> `ld` -- answers to one group signal. The group is
+/// signalled only when the kernel confirms `pid` leads it: an uncontained
+/// child shares fbuild's own group, and signalling that would take this
+/// process down with it. A tree that is already gone is a successful no-op,
+/// matching the containment contract for a finished command
+/// (FastLED/fbuild#1867).
+pub(crate) fn terminate_tree(pid: u32, termination: Termination) -> std::io::Result<()> {
+    if pid > i32::MAX as u32 {
+        return Err(std::io::Error::new(
+            std::io::ErrorKind::InvalidInput,
+            "pid is outside the host process-id range",
+        ));
+    }
+    let signal = match termination {
+        Termination::Graceful => SIGTERM,
+        Termination::Force => SIGKILL,
+    };
+    // SAFETY: `getpgid` only reads kernel state for a pid; the cast is
+    // lossless under the range check above.
+    let group = unsafe { getpgid(pid as i32) };
+    if group != pid as i32 {
+        return terminate_pid_or_gone(pid, termination);
+    }
+    // SAFETY: the kernel confirmed `pid` leads this group, and the signal is
+    // one of the two constants selected above.
+    if unsafe { kill(-group, signal) } == 0 {
+        return Ok(());
+    }
+    let error = std::io::Error::last_os_error();
+    if error.raw_os_error() == Some(ESRCH) {
+        return Ok(());
+    }
+    Err(error)
+}
+
+/// Single-pid termination that treats a vanished pid as already stopped.
+fn terminate_pid_or_gone(pid: u32, termination: Termination) -> std::io::Result<()> {
+    match terminate_pid(pid, termination) {
+        Ok(()) => Ok(()),
+        Err(error) if error.raw_os_error() == Some(ESRCH) => Ok(()),
+        Err(error) => Err(error),
+    }
+}
+
 const EPERM: i32 = 1;
+const ESRCH: i32 = 3;
 const SIGKILL: i32 = 9;
 const SIGTERM: i32 = 15;
 const PR_SET_PDEATHSIG: i32 = 1;
 
 unsafe extern "C" {
     fn kill(pid: i32, signal: i32) -> i32;
+    fn getpgid(pid: i32) -> i32;
     fn setpgid(pid: i32, pgid: i32) -> i32;
     fn prctl(option: i32, ...) -> i32;
     fn getppid() -> i32;
