@@ -34,6 +34,18 @@ pub async fn reset(
         Some(format!("Resetting device on {}", port)),
     );
 
+    // A foreign exclusive device lease reserves the board: a reset would
+    // drop the holder's workflow mid-validation (FastLED/fbuild#1864).
+    if let Err(error) = ctx
+        .device_manager
+        .admit_operation(&port, req.lease_id.as_deref())
+    {
+        return (
+            StatusCode::CONFLICT,
+            Json(OperationResponse::fail(request_id, error.message())),
+        );
+    }
+
     // Preempt serial if someone is monitoring this port
     if let Err(error) = ctx
         .serial_manager

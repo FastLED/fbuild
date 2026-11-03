@@ -46,6 +46,12 @@ pub enum DeviceLeaseError {
     InvalidLeaseType {
         lease_type: String,
     },
+    /// A mutating operation was refused because another client holds an
+    /// exclusive device lease and the caller did not present that lease.
+    ForeignLeaseHeld {
+        port: String,
+        holder: Box<DeviceLease>,
+    },
     InvalidPreemption {
         message: String,
     },
@@ -63,6 +69,18 @@ impl DeviceLeaseError {
             Self::InvalidLeaseType { lease_type } => format!(
                 "invalid lease_type '{}', must be 'exclusive' or 'monitor'",
                 lease_type
+            ),
+            Self::ForeignLeaseHeld { port, holder } => format!(
+                "device '{}' is reserved by exclusive lease '{}' held by client '{}' ({}); \
+                 pass --lease-id {} to operate under that lease, or release it with \
+                 `fbuild device release {} --lease-id {}`",
+                port,
+                holder.lease_id,
+                holder.client_id,
+                holder.description,
+                holder.lease_id,
+                port,
+                holder.lease_id
             ),
             Self::InvalidPreemption { message } => message.clone(),
         }
@@ -467,6 +485,36 @@ impl DeviceManager {
             .unwrap_or_else(|e| e.into_inner())
             .get(port)
             .cloned()
+    }
+
+    /// Admission check for a mutating operation on `port` (today: deploy and
+    /// reset) against an explicit exclusive device lease.
+    ///
+    /// `lease_id` is the identity the caller presents: the id returned by
+    /// [`Self::acquire_exclusive`]. `None` means the caller holds no lease,
+    /// so any foreign exclusive lease refuses the operation. Read-only
+    /// monitor leases never block admission.
+    ///
+    /// An unknown port is not an admission failure: the operation's own port
+    /// resolution reports it. This keeps emulator and probe-only routes out
+    /// of the device-lease path (FastLED/fbuild#1864).
+    pub fn admit_operation(
+        &self,
+        port: &str,
+        lease_id: Option<&str>,
+    ) -> Result<(), DeviceLeaseError> {
+        let devices = self.devices.lock().unwrap_or_else(|e| e.into_inner());
+        let Some(state) = devices.get(port) else {
+            return Ok(());
+        };
+        match &state.exclusive_lease {
+            None => Ok(()),
+            Some(holder) if Some(holder.lease_id.as_str()) == lease_id => Ok(()),
+            Some(holder) => Err(DeviceLeaseError::ForeignLeaseHeld {
+                port: port.to_string(),
+                holder: Box::new(holder.clone()),
+            }),
+        }
     }
 
     /// Acquire an exclusive lease on a device.

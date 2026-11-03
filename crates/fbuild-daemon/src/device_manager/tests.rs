@@ -379,3 +379,71 @@ fn cleanup_preserves_leased_disconnected() {
     assert_eq!(mgr.cleanup_stale_devices(), 0);
     assert_eq!(mgr.get_all_devices().len(), 1);
 }
+
+#[test]
+fn admit_allows_an_unleased_port() {
+    let mgr = make_manager_with_device("COM3");
+    mgr.admit_operation("COM3", None).unwrap();
+}
+
+#[test]
+fn admit_refuses_an_operation_that_presents_no_lease() {
+    let mgr = make_manager_with_device("COM3");
+    let lease = mgr
+        .acquire_exclusive("COM3", "client-a", "hardware validation", true)
+        .unwrap();
+    match mgr.admit_operation("COM3", None).unwrap_err() {
+        DeviceLeaseError::ForeignLeaseHeld { port, holder } => {
+            assert_eq!(port, "COM3");
+            assert_eq!(holder.lease_id, lease.lease_id);
+            assert_eq!(holder.client_id, "client-a");
+        }
+        other => panic!("expected a foreign-lease refusal, got {other:?}"),
+    }
+}
+
+#[test]
+fn admit_refuses_an_operation_that_presents_a_different_lease() {
+    let mgr = make_manager_with_device("COM3");
+    mgr.acquire_exclusive("COM3", "client-a", "validation", false)
+        .unwrap();
+    let err = mgr
+        .admit_operation("COM3", Some("not-the-lease"))
+        .unwrap_err();
+    assert!(err.message().contains("reserved by exclusive lease"));
+}
+
+#[test]
+fn admit_allows_the_lease_holder() {
+    let mgr = make_manager_with_device("COM3");
+    let lease = mgr
+        .acquire_exclusive("COM3", "client-a", "validation", true)
+        .unwrap();
+    mgr.admit_operation("COM3", Some(&lease.lease_id)).unwrap();
+}
+
+#[test]
+fn admit_does_not_block_on_monitor_leases() {
+    let mgr = make_manager_with_device("COM3");
+    mgr.acquire_monitor("COM3", "client-b", "watching", false)
+        .unwrap();
+    mgr.admit_operation("COM3", None).unwrap();
+}
+
+#[test]
+fn foreign_lease_message_names_the_lease_and_the_escape_hatches() {
+    let mgr = make_manager_with_device("COM3");
+    let lease = mgr
+        .acquire_exclusive("COM3", "client-a", "validation", false)
+        .unwrap();
+    let message = mgr.admit_operation("COM3", None).unwrap_err().message();
+    assert!(message.contains(&lease.lease_id), "{message}");
+    assert!(message.contains("--lease-id"), "{message}");
+    assert!(message.contains("fbuild device release COM3"), "{message}");
+}
+
+#[test]
+fn admit_ignores_ports_the_manager_does_not_know() {
+    let mgr = DeviceManager::new();
+    mgr.admit_operation("COM99", None).unwrap();
+}

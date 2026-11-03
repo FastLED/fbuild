@@ -98,6 +98,11 @@ pub struct DeployRequest {
     pub project_dir: String,
     pub environment: Option<String>,
     pub port: Option<String>,
+    /// Exclusive device-lease id this workflow holds. A deploy that omits it
+    /// is refused when another client has leased the resolved port
+    /// (FastLED/fbuild#1864).
+    #[serde(default)]
+    pub lease_id: Option<String>,
     /// Explicit deploy protocol, currently `isp` or `wlink` for CH32V.
     #[serde(default)]
     pub protocol: Option<String>,
@@ -603,6 +608,10 @@ pub struct GcResponse {
 pub struct ResetRequest {
     /// Serial port (e.g. "COM3", "/dev/ttyUSB0").
     pub port: String,
+    /// Exclusive device-lease id the caller holds; a reset that omits it is
+    /// refused while another client has leased the port (FastLED/fbuild#1864).
+    #[serde(default)]
+    pub lease_id: Option<String>,
     /// Board identifier from platformio.ini (e.g. "esp32dev", "teensy40", "uno").
     /// Used to determine platform-specific reset sequence.
     /// If omitted, "generic" DTR toggle is used.

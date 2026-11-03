@@ -294,6 +294,10 @@ pub enum Commands {
         /// to pick the device carrying that USB serial at use time (see `fbuild port scan`).
         #[arg(short = 'p', long)]
         port: Option<String>,
+        /// Exclusive device-lease id this workflow holds (`fbuild device
+        /// lease --track-serial`); admits the deploy on a leased board.
+        #[arg(long = "lease-id")]
+        lease_id: Option<String>,
         /// CH32V deploy protocol: `wlink` (default) or factory USB-ISP `isp`
         #[arg(long, value_parser = ["wlink", "isp"])]
         protocol: Option<String>,
