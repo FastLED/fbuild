@@ -277,6 +277,7 @@ async fn connect_to(knobs: DaemonKnobs) -> (SerialSession, u16) {
         auto_reconnect: true,
         verbose: false,
         client_id: "test".into(),
+        lease_id: None,
         max_buffered_lines: DEFAULT_MAX_BUFFERED_LINES,
         handshake_timeout: Duration::from_secs(5),
     };
@@ -349,6 +350,7 @@ async fn rejected_attach_reports_daemon_reason() {
             auto_reconnect: true,
             verbose: false,
             client_id: "test".into(),
+            lease_id: None,
             max_buffered_lines: DEFAULT_MAX_BUFFERED_LINES,
             handshake_timeout: Duration::from_secs(5),
         })
@@ -712,6 +714,7 @@ async fn at9_preempted_write_fails_fast_without_auto_reconnect() {
                 auto_reconnect: false,
                 verbose: false,
                 client_id: "test".into(),
+                lease_id: None,
                 max_buffered_lines: DEFAULT_MAX_BUFFERED_LINES,
                 handshake_timeout: Duration::from_secs(5),
             };
@@ -765,6 +768,7 @@ async fn at9_auto_reconnect_keeps_reader_waiting_but_rejects_write() {
                     auto_reconnect: true,
                     verbose: false,
                     client_id: "test".into(),
+                    lease_id: None,
                     max_buffered_lines: DEFAULT_MAX_BUFFERED_LINES,
                     handshake_timeout: Duration::from_secs(5),
                 })
@@ -835,6 +839,7 @@ async fn at9_late_ack_after_preemption_cannot_complete_a_new_write() {
                     auto_reconnect: true,
                     verbose: false,
                     client_id: "test".into(),
+                    lease_id: None,
                     max_buffered_lines: DEFAULT_MAX_BUFFERED_LINES,
                     handshake_timeout: Duration::from_secs(5),
                 })
@@ -887,6 +892,7 @@ async fn at10_port_disconnected_wakes_everyone() {
                 auto_reconnect: true,
                 verbose: false,
                 client_id: "test".into(),
+                lease_id: None,
                 max_buffered_lines: DEFAULT_MAX_BUFFERED_LINES,
                 handshake_timeout: Duration::from_secs(5),
             };
@@ -910,3 +916,34 @@ async fn at10_port_disconnected_wakes_everyone() {
 
 #[path = "tests/extended.rs"]
 mod extended;
+
+/// A session configured with a workflow lease must present it on `Attach`,
+/// otherwise the daemon refuses the attach as a foreign lease and the Python
+/// workflow cannot reach the board it reserved. Without a lease the key must
+/// be omitted entirely (FastLED/fbuild#1864).
+#[test]
+fn attach_frame_forwards_configured_lease() {
+    let mut cfg = SessionConfig {
+        ws_url: "ws://127.0.0.1:1".into(),
+        port: "COM_TEST".into(),
+        baud_rate: 115200,
+        auto_reconnect: true,
+        verbose: false,
+        client_id: "test".into(),
+        lease_id: None,
+        max_buffered_lines: DEFAULT_MAX_BUFFERED_LINES,
+        handshake_timeout: Duration::from_secs(5),
+    };
+    let json = serde_json::to_string(&super::attach_message(&cfg)).unwrap();
+    assert!(
+        !json.contains("lease_id"),
+        "a session without a lease must omit the key, got {json}"
+    );
+
+    cfg.lease_id = Some("lease-abc".into());
+    let json = serde_json::to_string(&super::attach_message(&cfg)).unwrap();
+    assert!(
+        json.contains(r#""lease_id":"lease-abc""#),
+        "the configured lease must ride the attach frame, got {json}"
+    );
+}

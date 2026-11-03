@@ -338,6 +338,8 @@ mod tests {
             skip_build: false,
             baud_rate: None,
             src_dir: None,
+            lease_id: None,
+            lease_wait_ms: 0,
         }
     }
 
@@ -495,7 +497,7 @@ mod tests {
             "tests/platform/uno".into(),
             "uno".into(),
         );
-        let req = conn.deploy_request(None, false, false, false);
+        let req = conn.deploy_request(None, false, false, false, None, 0);
         assert_eq!(req.src_dir.as_deref(), Some("examples/AutoResearch"));
     }
 
@@ -526,7 +528,7 @@ mod tests {
             "tests/platform/uno".into(),
             "uno".into(),
         );
-        let req = conn.deploy_request(None, false, false, false);
+        let req = conn.deploy_request(None, false, false, false, None, 0);
         assert!(req.src_dir.is_none());
     }
 
@@ -555,7 +557,7 @@ mod tests {
             "tests/platform/uno".into(),
             "uno".into(),
         );
-        let req = conn.deploy_request(None, false, false, false);
+        let req = conn.deploy_request(None, false, false, false, None, 0);
         assert_eq!(req.src_dir.as_deref(), Some("examples/AutoResearch"));
     }
 
@@ -583,7 +585,7 @@ mod tests {
             "tests/platform/uno".into(),
             "uno".into(),
         );
-        let req = conn.deploy_request(None, false, false, false);
+        let req = conn.deploy_request(None, false, false, false, None, 0);
         assert!(req.src_dir.is_none());
     }
 
@@ -610,5 +612,59 @@ mod tests {
             json.contains(r#""src_dir":"examples/AutoResearch""#),
             "src_dir must serialize verbatim when set, got {json}"
         );
+    }
+
+    /// A caller that holds no lease and does not opt into waiting must send
+    /// neither lease field, so historical Python traffic stays byte-identical
+    /// and the daemon keeps its fail-fast admission (FastLED/fbuild#1864).
+    #[test]
+    fn op_request_omits_lease_fields_by_default() {
+        let req = sample_op_request();
+        let json = serde_json::to_string(&req).unwrap();
+        assert!(
+            !json.contains("lease_id"),
+            "lease_id must be omitted when no lease is held, got {json}"
+        );
+        assert!(
+            !json.contains("lease_wait_ms"),
+            "lease_wait_ms must be omitted at 0, got {json}"
+        );
+    }
+
+    /// A Python workflow that holds an exclusive device lease must be able to
+    /// name it and opt into the bounded wait; otherwise its own deploy is
+    /// refused as a foreign lease (FastLED/fbuild#1864).
+    #[test]
+    fn deploy_request_forwards_lease_identity() {
+        let conn = crate::daemon_connection::DaemonConnection::new(
+            "tests/platform/uno".into(),
+            "uno".into(),
+        );
+        let req = conn.deploy_request(
+            Some("/dev/ttyACM0".into()),
+            false,
+            false,
+            false,
+            Some("lease-abc".into()),
+            45_000,
+        );
+        assert_eq!(req.lease_id.as_deref(), Some("lease-abc"));
+        assert_eq!(req.lease_wait_ms, 45_000);
+        let json = serde_json::to_string(&req).unwrap();
+        assert!(json.contains(r#""lease_id":"lease-abc""#), "got {json}");
+        assert!(json.contains(r#""lease_wait_ms":45000"#), "got {json}");
+    }
+
+    /// Async parity: the async facade must forward the same admission
+    /// parameters, or an asyncio workflow cannot use its own lease.
+    #[test]
+    fn async_deploy_request_forwards_lease_identity() {
+        let conn = crate::async_daemon_connection::AsyncDaemonConnection::new(
+            "tests/platform/uno".into(),
+            "uno".into(),
+        );
+        let req = conn.deploy_request(None, false, false, false, Some("lease-xyz".into()), 1_500);
+        assert_eq!(req.lease_id.as_deref(), Some("lease-xyz"));
+        assert_eq!(req.lease_wait_ms, 1_500);
     }
 }

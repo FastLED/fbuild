@@ -31,6 +31,23 @@ pub(crate) struct OpRequest {
     /// `src_dir` field. See FastLED/fbuild#274.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub(crate) src_dir: Option<String>,
+    /// Exclusive device-lease id this workflow holds. A deploy that omits it
+    /// is refused when another client holds the lease on the resolved port
+    /// (FastLED/fbuild#1864).
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub(crate) lease_id: Option<String>,
+    /// Opt-in bounded wait (milliseconds) for a foreign exclusive lease to be
+    /// released. `0` keeps the fail-fast admission the CLI has always used;
+    /// the daemon treats the field as `serde(default)`, so omitting it is the
+    /// same as sending `0` (FastLED/fbuild#1864).
+    #[serde(skip_serializing_if = "lease_wait_is_zero")]
+    pub(crate) lease_wait_ms: u64,
+}
+
+/// Omit `lease_wait_ms` when it is `0` (the historical fail-fast default);
+/// the daemon's `DeployRequest` reads the field with `serde(default)`.
+fn lease_wait_is_zero(value: &u64) -> bool {
+    *value == 0
 }
 
 /// Read `PLATFORMIO_SRC_DIR` from the current process env, returning `None`

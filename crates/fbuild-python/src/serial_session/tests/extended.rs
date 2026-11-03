@@ -19,6 +19,7 @@ async fn at11_overflow_drops_oldest_and_counts() {
             auto_reconnect: true,
             verbose: false,
             client_id: "test".into(),
+            lease_id: None,
             max_buffered_lines: 10_000,
             handshake_timeout: Duration::from_secs(5),
         };
@@ -188,6 +189,7 @@ async fn at16_handshake_stall_times_out() {
             auto_reconnect: true,
             verbose: false,
             client_id: "test".into(),
+            lease_id: None,
             max_buffered_lines: DEFAULT_MAX_BUFFERED_LINES,
             handshake_timeout: Duration::from_millis(300),
         };
@@ -226,6 +228,7 @@ async fn at17_reader_task_panic_wakes_pending_calls() {
                     auto_reconnect: true,
                     verbose: false,
                     client_id: "test".into(),
+                    lease_id: None,
                     max_buffered_lines: DEFAULT_MAX_BUFFERED_LINES,
                     handshake_timeout: Duration::from_secs(5),
                 })
@@ -305,6 +308,7 @@ async fn at18_malformed_frames_are_ignored() {
                 auto_reconnect: true,
                 verbose: false,
                 client_id: "test".into(),
+                lease_id: None,
                 max_buffered_lines: DEFAULT_MAX_BUFFERED_LINES,
                 handshake_timeout: Duration::from_secs(5),
             };
@@ -611,6 +615,7 @@ async fn refused_daemon_connection_is_recoverable() {
             auto_reconnect: true,
             verbose: false,
             client_id: "test".into(),
+            lease_id: None,
             max_buffered_lines: DEFAULT_MAX_BUFFERED_LINES,
             handshake_timeout: Duration::from_secs(1),
         };
