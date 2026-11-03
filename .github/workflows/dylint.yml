@@ -22,8 +22,15 @@ on:
 # supersedes the in-flight run instead of queueing behind it. Non-PR
 # events key on run_id so each gets its own group -- a shared group keeps
 # only ONE pending run, which would silently drop queued main SHAs.
+#
+# `github.workflow` (the CALLER's name inside a reusable workflow) is part
+# of the group because one run can call this file more than once: on a
+# `ci-full` PR, ci-minimal calls it directly and ci-full calls it again
+# from its own `dylint` job. Both calls share `github.run_id`, so without
+# the caller discriminator the second call cancelled the first and
+# `dylint / Dylint` failed on every ci-full PR (#1874, #1872).
 concurrency:
-  group: dylint.yml-${{ inputs.ref != '' && github.run_id || (github.event_name == 'pull_request' && github.ref || github.run_id) }}
+  group: dylint.yml-${{ github.workflow }}-${{ inputs.ref != '' && github.run_id || (github.event_name == 'pull_request' && github.ref || github.run_id) }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 # Read-only token. Every step here reads: checkout, a shallow `git fetch
