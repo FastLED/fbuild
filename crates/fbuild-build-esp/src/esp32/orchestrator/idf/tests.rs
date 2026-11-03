@@ -13,7 +13,7 @@ fn params(project_dir: PathBuf, build_dir: PathBuf) -> crate::BuildParams {
         profile: fbuild_core::BuildProfile::Release,
         build_dir,
         verbose: false,
-        jobs: None,
+        jobs: Some(2),
         generate_compiledb: false,
         compiledb_only: false,
         log_sender: None,
@@ -239,4 +239,23 @@ fn removed_build_flags_clear_both_cached_cmake_overlays() {
     assert!(with_flags.contains(&"-DCMAKE_C_FLAGS=-DAPP=1".into()));
     let without_flags = super::cmake_options(&env, &[]).unwrap();
     assert_eq!(without_flags, ["-DCMAKE_C_FLAGS=", "-DCMAKE_CXX_FLAGS="]);
+}
+
+#[tokio::test]
+async fn clean_only_removes_outputs_without_the_clean_flag() {
+    let tmp = tempfile::TempDir::new().unwrap();
+    std::fs::write(tmp.path().join("platformio.ini"), "[env:esp32s3-idf]\nplatform = espressif32\nboard = esp32-s3-devkitc-1\nframework = espidf\n").unwrap();
+    let build = tmp.path().join("build");
+    std::fs::create_dir(&build).unwrap();
+    std::fs::write(build.join("firmware.bin"), "old output").unwrap();
+    let mut params = params(tmp.path().into(), build.clone());
+    params.clean_only = true;
+    assert!(!params.clean);
+    let result = super::super::Esp32Orchestrator
+        .build(&params)
+        .await
+        .unwrap();
+    assert!(result.success);
+    assert!(result.firmware_path.is_none());
+    assert!(!build.exists());
 }

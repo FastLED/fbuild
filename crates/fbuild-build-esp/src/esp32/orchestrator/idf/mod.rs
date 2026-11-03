@@ -117,6 +117,9 @@ pub(super) async fn build(
     validate(&board.mcu, env, params)?;
     let mut ctx = crate::pipeline::BuildContext::new(params).await?;
     if params.clean_only {
+        if params.build_dir.exists() {
+            std::fs::remove_dir_all(&params.build_dir)?;
+        }
         return Ok(crate::BuildResult {
             success: true,
             firmware_path: None,
@@ -179,7 +182,7 @@ pub(super) async fn build(
         "--build".into(),
         build.to_string_lossy().into_owned(),
         "--parallel".into(),
-        params.jobs.unwrap_or(2).max(1).to_string(),
+        crate::parallel::effective_jobs(params.jobs).to_string(),
     ];
     command(
         &compile,

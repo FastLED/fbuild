@@ -125,7 +125,13 @@ async fn prepare_python(
     )?;
     let python_env = build.join("python-env");
     let python = python_env.join(executable::name("bin/python", "Scripts/python.exe"));
-    if !python.is_file() {
+    let installed = python_env.join("fbuild-requirements.txt");
+    let recreated = !python.is_file();
+    if recreated {
+        // A failed recreation/install must never leave an old valid-looking stamp.
+        if installed.is_file() {
+            std::fs::remove_file(&installed)?;
+        }
         super::command(
             &[
                 "uv".into(),
@@ -145,9 +151,8 @@ async fn prepare_python(
         .parent()
         .ok_or_else(|| FbuildError::PackageError("invalid IDF Python environment path".into()))?
         .to_path_buf();
-    let installed = python_env.join("fbuild-requirements.txt");
     let required = std::fs::read_to_string(&requirements)?;
-    if std::fs::read_to_string(&installed).ok().as_deref() != Some(&required) {
+    if recreated || std::fs::read_to_string(&installed).ok().as_deref() != Some(&required) {
         super::command(
             &[
                 "uv".into(),
@@ -166,4 +171,43 @@ async fn prepare_python(
         std::fs::write(&installed, &required)?;
     }
     Ok((python_env, bin, python))
+}
+
+#[cfg(test)]
+mod tests {
+    #[tokio::test]
+    #[ignore = "requires uv, Python 3.11 and network for CMake/ninja packages"]
+    async fn recreated_python_env_reinstalls_matching_requirements() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let project = tmp.path();
+        let framework = project.join("framework");
+        let requirements = framework.join("tools/requirements");
+        std::fs::create_dir_all(&requirements).unwrap();
+        std::fs::write(requirements.join("requirements.core.txt"), "").unwrap();
+        let constraints = project.join("constraints.txt");
+        std::fs::write(&constraints, "").unwrap();
+        let build = project.join("build");
+        std::fs::create_dir(&build).unwrap();
+        let mut pins = super::PackageSet::load().unwrap();
+        pins.constraints = constraints.to_string_lossy().into_owned();
+        let mut log = fbuild_core::build_log::BuildLog::default();
+        let (env, _, _) = super::prepare_python(project, &build, &framework, &pins, &[], &mut log)
+            .await
+            .unwrap();
+        let marker = std::fs::read_to_string(env.join("fbuild-requirements.txt")).unwrap();
+        std::fs::remove_dir_all(&env).unwrap();
+        std::fs::create_dir(&env).unwrap();
+        std::fs::write(env.join("fbuild-requirements.txt"), &marker).unwrap();
+        let (_, bin, _) = super::prepare_python(project, &build, &framework, &pins, &[], &mut log)
+            .await
+            .unwrap();
+        for tool in ["cmake", "ninja"] {
+            let executable = bin.join(fbuild_core::platform::executable::native_name(tool));
+            assert!(
+                executable.is_file(),
+                "missing {} after venv recreation",
+                executable.display()
+            );
+        }
+    }
 }
