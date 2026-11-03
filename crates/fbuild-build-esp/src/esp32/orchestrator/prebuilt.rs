@@ -189,20 +189,10 @@ pub(super) async fn hydrate<S: AsRef<Path> + Sync>(input: Inputs<'_, S>) -> bool
         ))
         .await
     {
-        if input.params.prebuilt.is_some() {
-            tracing::info!(
-                "prebuilt: unsupported configuration or ambiguous roots; building from source"
-            );
-        }
-        return false;
+        return skipped(&input, "unsupported configuration or ambiguous roots");
     }
     let Some(plan) = plan(&input) else {
-        if input.params.prebuilt.is_some() {
-            tracing::info!(
-                "prebuilt: unsupported configuration or ambiguous roots; building from source"
-            );
-        }
-        return false;
+        return skipped(&input, "unsupported or incomplete local build plan");
     };
     let fp = fingerprint(&plan);
     let objects: BTreeMap<_, _> = input
@@ -345,4 +335,11 @@ fn config_digests<S: AsRef<Path>>(
         .ok()?,
     );
     Some(configs)
+}
+
+fn skipped<S: AsRef<Path>>(input: &Inputs<'_, S>, reason: &str) -> bool {
+    if input.params.prebuilt.is_some() {
+        tracing::info!("prebuilt: {reason}; building from source");
+    }
+    false
 }
