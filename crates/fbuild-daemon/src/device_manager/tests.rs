@@ -590,3 +590,156 @@ mod lease_wait_queue_tests {
         assert_eq!(waited, 0);
     }
 }
+
+mod lease_renumber_tests {
+    //! Lease identity across a tracked USB re-enumeration
+    //! (FastLED/fbuild#1864 criterion 4).
+    //!
+    //! `track_serial` moves the [`DeviceState`] — and the exclusive lease with
+    //! it — to the new port name. Everything else keys on the port string, so
+    //! the admission queue, the `QueueGuard` and a caller still holding the
+    //! stale name must follow the board instead of silently passing the lease
+    //! check on a port that no longer exists.
+    use super::*;
+    use std::sync::Arc;
+    use std::time::Duration;
+
+    const OLD_PORT: &str = "COM7";
+    const NEW_PORT: &str = "COM8";
+
+    fn renumbered_device() -> DiscoveredDevice {
+        DiscoveredDevice {
+            port: NEW_PORT.to_string(),
+            device_id: "1234:5678".to_string(),
+            description: "Test Device Renumbered".to_string(),
+            vid: Some(0x1234),
+            pid: Some(0x5678),
+            vendor_name: Some("Test Vendor".to_string()),
+            product_name: Some("Test Device".to_string()),
+            is_cdc: Some(true),
+            serial_number: Some("TEST-SERIAL".to_string()),
+            port_health: fbuild_serial::ports::PortHealth::HealthyPresent,
+            instance_id: Some(r"USB\VID_1234&PID_5678\TEST-SERIAL".to_string()),
+            parent_instance_id: Some(r"USB\VID_1234&PID_5678\PARENT".to_string()),
+            location_paths: vec!["PCIROOT(0)#USBROOT(0)#USB(3)".to_string()],
+        }
+    }
+
+    fn manager_with_tracked_holder() -> (Arc<DeviceManager>, String) {
+        let mgr = Arc::new(DeviceManager::new());
+        mgr.insert_test_device(OLD_PORT);
+        let lease = mgr
+            .acquire_exclusive(OLD_PORT, "client-a", "hardware validation", true)
+            .unwrap();
+        (mgr, lease.lease_id)
+    }
+
+    fn renumber(mgr: &DeviceManager) {
+        mgr.refresh_from_discovered(vec![renumbered_device()]);
+    }
+
+    #[test]
+    fn tracked_renumber_moves_the_admission_queue() {
+        let (mgr, lease_id) = manager_with_tracked_holder();
+        let ticket = mgr.enqueue_waiter(OLD_PORT, "client-b");
+        renumber(&mgr);
+
+        assert_eq!(
+            mgr.queued_workflows(OLD_PORT),
+            0,
+            "the old port is gone; its queue must not linger"
+        );
+        assert_eq!(mgr.queued_client_ids(NEW_PORT), vec!["client-b"]);
+        assert!(
+            matches!(
+                mgr.poll_admission(NEW_PORT, None, Some(ticket)),
+                AdmissionPoll::Waiting {
+                    position: 1,
+                    holder: Some(_)
+                }
+            ),
+            "the waiter must still queue behind the migrated holder"
+        );
+        mgr.release_lease(&lease_id).unwrap();
+        assert!(
+            mgr.poll_admission(NEW_PORT, None, Some(ticket))
+                .is_admitted()
+        );
+        mgr.leave_ticket(ticket);
+        assert_eq!(mgr.queued_workflows(NEW_PORT), 0);
+    }
+
+    #[test]
+    fn a_stale_port_name_reports_the_renumbered_port() {
+        let (mgr, lease_id) = manager_with_tracked_holder();
+        renumber(&mgr);
+
+        let err = mgr.admit_operation(OLD_PORT, None).unwrap_err();
+        match &err {
+            DeviceLeaseError::PortRenumbered {
+                port,
+                current_port,
+                holder,
+            } => {
+                assert_eq!(port, OLD_PORT);
+                assert_eq!(current_port, NEW_PORT);
+                assert_eq!(
+                    holder.as_deref().map(|lease| lease.lease_id.as_str()),
+                    Some(lease_id.as_str())
+                );
+            }
+            other => panic!("expected a renumber report, got {other:?}"),
+        }
+        let message = err.message();
+        assert!(message.contains(NEW_PORT), "{message}");
+        assert!(message.contains("re-enumerated"), "{message}");
+
+        // The holder (and only the holder) may operate on the new name.
+        mgr.admit_operation(NEW_PORT, Some(&lease_id)).unwrap();
+        assert!(matches!(
+            mgr.admit_operation(NEW_PORT, None),
+            Err(DeviceLeaseError::ForeignLeaseHeld { .. })
+        ));
+    }
+
+    #[tokio::test]
+    async fn a_queued_workflow_follows_the_board_across_a_renumber() {
+        let (mgr, lease_id) = manager_with_tracked_holder();
+        let waiter = {
+            let mgr = Arc::clone(&mgr);
+            tokio::spawn(
+                async move { mgr.await_admission(OLD_PORT, None, 5_000, "client-b").await },
+            )
+        };
+        tokio::time::sleep(Duration::from_millis(80)).await;
+        assert_eq!(
+            mgr.queued_workflows(OLD_PORT),
+            1,
+            "the workflow must be queued before the renumber"
+        );
+
+        renumber(&mgr);
+        tokio::time::sleep(Duration::from_millis(300)).await;
+        assert!(
+            !waiter.is_finished(),
+            "a waiting workflow was admitted on a port that no longer exists"
+        );
+        assert_eq!(
+            mgr.queued_workflows(NEW_PORT),
+            1,
+            "the queue must follow the board"
+        );
+
+        mgr.release_lease(&lease_id).unwrap();
+        let waited = waiter.await.unwrap().unwrap();
+        assert!(
+            waited >= 200,
+            "admitted before the holder released: {waited} ms"
+        );
+        assert_eq!(
+            mgr.queued_workflows(NEW_PORT),
+            0,
+            "the guard must remove the ticket from the migrated queue"
+        );
+    }
+}
