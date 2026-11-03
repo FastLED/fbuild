@@ -37,6 +37,10 @@ use crate::{BuildParams, BuildResult, SourceScanner};
 
 impl Esp32Orchestrator {
     #[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
+    #[expect(
+        clippy::cognitive_complexity,
+        reason = "existing Arduino build body previously inside async_trait expansion"
+    )]
     pub(super) async fn build_arduino(&self, params: &BuildParams) -> Result<BuildResult> {
         let config = fbuild_config::PlatformIOConfig::from_path_with_overrides(
             &params.project_dir.join("platformio.ini"),
