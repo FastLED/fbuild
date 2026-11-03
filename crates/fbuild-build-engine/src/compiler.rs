@@ -545,22 +545,6 @@ pub fn build_cpp_flags(common_flags: Vec<String>, config: &dyn McuConfig) -> Vec
     flags
 }
 
-/// Compile a single source file through the embedded zccache service.
-///
-/// Phase 4 stage 2 of FastLED/fbuild#789 (#800): the wrapper-binary
-/// `zccache wrap …` path is gone. Every per-TU compile dispatches
-/// through `ZccacheService::compile` on the daemon's tokio runtime.
-/// The `_compiler_cache: Option<&Path>` parameter is retained for
-/// API stability across the per-platform compilers; the value is
-/// ignored.
-///
-/// Platform-specific differences expressed through parameters:
-/// - `response_file_prefix`: "avr", "teensy", "esp32" (unused under
-///   embedded — the in-process API takes args as `Vec<String>`, no
-///   command line).
-/// - `extra_pre_flags`: additional flags inserted between base flags
-///   and `extra_flags` (ESP32 uses this for include flags deferred
-///   from `common_flags`).
 /// The exact argument vector consumed by the compile backend, also used by
 /// prebuilt fingerprinting. Source/output paths are normalized identically.
 pub fn compile_argv(
@@ -616,12 +600,24 @@ pub fn compile_argv(
     (prepare_flags_for_exec(all_flags), compile_cwd)
 }
 
+/// Compile a single source file through the embedded zccache service.
+///
+/// Phase 4 stage 2 of FastLED/fbuild#789 (#800): the wrapper-binary
+/// `zccache wrap …` path is gone. Every per-TU compile dispatches
+/// through `ZccacheService::compile` on the daemon's tokio runtime.
+/// The `_compiler_cache: Option<&Path>` parameter is retained for
+/// API stability across the per-platform compilers; the value is
+/// ignored.
+///
+/// Platform-specific differences expressed through parameters:
+/// - `response_file_prefix`: "avr", "teensy", "esp32" (unused under
+///   embedded — the in-process API takes args as `Vec<String>`, no
+///   command line).
+/// - `extra_pre_flags`: additional flags inserted between base flags
+///   and `extra_flags` (ESP32 uses this for include flags deferred
+///   from `common_flags`).
 #[allow(clippy::too_many_arguments)]
-#[expect(
-    clippy::cognitive_complexity,
-    clippy::too_many_lines,
-    reason = "baseline, zackees/ci.yml#229"
-)]
+#[expect(clippy::cognitive_complexity, reason = "baseline, zackees/ci.yml#229")]
 pub async fn compile_source(
     compiler: &Path,
     source: &Path,
