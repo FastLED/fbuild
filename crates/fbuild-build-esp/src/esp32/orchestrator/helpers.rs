@@ -45,8 +45,8 @@ pub(super) struct RequestedFrameworks {
 }
 
 impl RequestedFrameworks {
-    /// `None` when the request is a bare `espidf` build fbuild cannot perform,
-    /// otherwise the integration mode the build will actually use.
+    /// `None` for bare `espidf`, which is dispatched to the separate IDF adapter;
+    /// otherwise the integration mode this Arduino adapter will use.
     pub(super) fn integration(self) -> Option<Esp32Integration> {
         match (self.arduino, self.espidf) {
             (true, true) => Some(Esp32Integration::ArduinoOnIdf),

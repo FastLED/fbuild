@@ -22,7 +22,11 @@ pub(super) fn requested(config: &fbuild_config::PlatformIOConfig, env: &str) -> 
 }
 
 fn validate(mcu: &str, env: &HashMap<String, String>, params: &crate::BuildParams) -> Result<()> {
-    if !packages::PackageSet::load()?.targets.contains_key(mcu) {
+    if !packages::PackageSet::load()?
+        .targets
+        .iter()
+        .any(|target| target == mcu)
+    {
         return Err(FbuildError::ConfigError(format!(
             "framework = espidf is not yet supported for {mcu}: the ESP-IDF CMake/ninja adapter currently supports ESP32-S3 only (FastLED/fbuild#1664)",
         )));

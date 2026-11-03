@@ -9,18 +9,13 @@ use serde::Deserialize;
 
 #[derive(Deserialize)]
 pub(super) struct PackageSet {
-    pub targets: std::collections::HashMap<String, Target>,
+    pub targets: Vec<String>,
     pub framework: String,
     pub toolchain: String,
     pub constraints: String,
     pub python: String,
     pub cmake: String,
     pub ninja: String,
-}
-
-#[derive(Deserialize)]
-pub(super) struct Target {
-    pub prefix: String,
 }
 
 impl PackageSet {
@@ -67,10 +62,7 @@ pub(super) async fn provision(
     env: &[(String, String)],
 ) -> Result<IdfPackages> {
     let pins = PackageSet::load()?;
-    let target = pins
-        .targets
-        .get(mcu)
-        .ok_or_else(|| FbuildError::ConfigError(format!("unsupported IDF target {mcu}")))?;
+    let prefix = super::super::super::mcu_config::get_mcu_config(mcu)?.toolchain_prefix();
     let framework = resolve(project, &pins.framework).await?;
     let toolchain = resolve(project, &pins.toolchain).await?;
     let base = PackageBase::new(
@@ -94,9 +86,7 @@ pub(super) async fn provision(
         })
         .await?;
     let toolchain = fbuild_packages::toolchain::Esp32Toolchain::from_registry_payload(
-        project,
-        &toolchain,
-        &target.prefix,
+        project, &toolchain, &prefix,
     );
     toolchain.ensure_installed().await?;
     let (python_env, bin, python) =
