@@ -87,8 +87,15 @@ fbuild deploy --monitor="--timeout 60 --halt-on-success \"TEST PASSED\""
 
 Common options include `--port`, `--clean`, `--monitor`, `--timeout`,
 `--halt-on-error`, `--halt-on-success`, `--expect`, `--no-timestamp`,
-`--skip-build`, `--baud`, `--to device|emu|emulator`, `--emulator`, and
-`--output-dir`.
+`--skip-build`, `--baud`, `--to device|emu|emulator`, `--emulator`,
+`--output-dir`, and `--lease-id`.
+
+`--lease-id <lease-id>` deploys on a board reserved by an explicit device lease
+(see [workflow leases](#workflow-leases)). It is the id printed by
+`fbuild device lease`. Without it, a deploy against another client's exclusive
+lease is refused with `409 Conflict` before the competitor's serial session is
+preempted, so a second checkout can no longer replace firmware between the
+holder's flash and its validation (FastLED/fbuild#1864).
 
 `--transport picotool|uf2|swd` selects the RP2040/RP2350 deploy transport
 (FastLED/fbuild#1162, #1423). `swd` skips the target's USB stack entirely and
@@ -300,6 +307,16 @@ known limitations.
 | `fbuild daemon monitor` | Tail daemon logs. |
 | `fbuild show daemon` | Show daemon logs. |
 | `fbuild purge` | Purge cached packages or run `--gc`. |
+
+### Workflow leases
+
+`fbuild device lease <port> --exclusive --track-serial` reserves the board for
+the workflow that acquired it. Every mutating device operation — deploy and
+reset — is refused for a caller that does not present the lease id with
+`--lease-id`, and the refusal names the lease, its holder, and both escape
+hatches (present the id, or release it). Read-only monitors are unaffected, and
+`fbuild device take <port> --reason <text>` still forces a takeover. A tracked
+lease follows the USB serial number across port renumbering.
 
 ## Diagnostics And Analysis
 
