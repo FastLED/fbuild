@@ -206,20 +206,23 @@ class FractionalWorkflowTests(unittest.TestCase):
         self.assertIn("glibc_floor", minimal["queue-cache-janitor"]["needs"])
 
     def test_dylint_concurrency_distinguishes_each_call_site(self):
-        """A ci-full PR calls dylint.yml twice in ONE run: the groups must differ.
+        """A ci-full PR calls dylint.yml twice in ONE run: the lanes must differ.
 
         ci-minimal calls dylint.yml directly, and ci-full calls it again from its
-        own `dylint` job. Inside a reusable workflow `github.run_id` is the
-        caller's run, so keying the group on it alone gave both calls the same
-        group and the second cancelled the first: `dylint / Dylint` failed on
-        every ci-full PR (#1874) while `full / dylint` passed.
+        own `dylint` job. A called workflow's `github` context belongs to the
+        TOP-LEVEL caller, so `github.run_id` -- and `github.workflow` too -- are
+        identical for both jobs: keyed on either alone, the second call cancelled
+        the first and `dylint / Dylint` failed on every ci-full PR (#1874).
         """
         minimal = self.load("ci-minimal.yml")["jobs"]
         full = self.load("ci-full.yml")["jobs"]
         self.assertEqual("./.github/workflows/dylint.yml", minimal["dylint"]["uses"])
         self.assertEqual("./.github/workflows/dylint.yml", full["dylint"]["uses"])
-        group = self.load("dylint.yml")["concurrency"]["group"]
-        self.assertIn("github.workflow", group)
+        lanes = {minimal["dylint"]["with"]["lane"], full["dylint"]["with"]["lane"]}
+        self.assertEqual(2, len(lanes), f"call sites share a concurrency lane: {lanes}")
+        dylint = self.load("dylint.yml")
+        self.assertIn("lane", dylint[True]["workflow_call"]["inputs"])
+        self.assertIn("inputs.lane", dylint["concurrency"]["group"])
 
     def load(self, name):
         # PyYAML treats `on` as a YAML 1.1 boolean; inspect its True key.

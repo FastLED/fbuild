@@ -81,6 +81,7 @@ jobs:
       actions: write
     uses: ./.github/workflows/dylint.yml
     with:
+      lane: ci-full
       ref: ${{ needs.verify.outputs.candidate_sha }}
   acceptance:
     if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'ci-full')
