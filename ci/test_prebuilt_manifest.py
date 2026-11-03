@@ -32,4 +32,40 @@ class PrebuiltManifestTests(unittest.TestCase):
             self.assertEqual(desc["sha256"],hashlib.sha256(data).hexdigest())
             self.assertEqual(desc["size_bytes"],len(data))
 
+
+
+class PrebuiltBuilderTests(unittest.TestCase):
+    def test_packages_engine_object_mapping_and_canonical_inputs(self):
+        import io
+        import tarfile
+        import zstandard
+        from ci import build_prebuilt as builder
+        with tempfile.TemporaryDirectory() as root:
+            root = Path(root)
+            obj = root / "random-output-name.o"
+            obj.write_bytes(b"real filesystem object fixture")
+            (root / "framework.h").write_text("#define FRAMEWORK_VALUE 17\n")
+            identity = {"id": "fixture", "version": "1", "sha256": "a" * 64}
+            plan = {"abi_version": 1, "toolchain": identity, "framework": identity,
+                "mcu": "esp32", "variant_dir": "/fbuild/framework/variants/esp32",
+                "argv": [["/fbuild/toolchain/gcc", "-Os", "-c", "/fbuild/framework/core.c", "-o", "/fbuild/obj/0.o"]],
+                "config_sha256": {}, "path_map_prefix": "/fbuild"}
+            fp = hashlib.sha256(builder.canonical(plan)).hexdigest()
+            metadata = {"fp": fp, "plan": plan, "objects": {"obj/0.o": str(obj)}, "include_dirs": [str(root)]}
+            source = {"vcs": "git", "repo_url": "https://example.com/framework", "ref": "a" * 40}
+            artifact, sidecar, key = builder.package(metadata, root / "out", source)
+            with zstandard.ZstdDecompressor().stream_reader(io.BytesIO(artifact.read_bytes())) as stream:
+                data = stream.read()
+            with tarfile.open(fileobj=io.BytesIO(data)) as archive:
+                self.assertEqual(archive.getmembers()[0].name, "fbuild-prebuilt.json")
+                manifest = json.load(archive.extractfile("fbuild-prebuilt.json"))
+                self.assertEqual(manifest["fp"], fp)
+                self.assertEqual(manifest["inputs"], plan)
+                for name, digest in manifest["files"].items():
+                    self.assertEqual(hashlib.sha256(archive.extractfile(name).read()).hexdigest(), digest)
+            descriptor = json.loads(sidecar.read_bytes())
+            self.assertEqual(descriptor["sha256"], hashlib.sha256(artifact.read_bytes()).hexdigest())
+            self.assertEqual(descriptor["size_bytes"], artifact.stat().st_size)
+            self.assertEqual(key, f"prebuilt/arduino-esp32/1/esp32/fp-{fp[:16]}/prebuilt.tar.zst")
+
 if __name__ == "__main__": unittest.main()

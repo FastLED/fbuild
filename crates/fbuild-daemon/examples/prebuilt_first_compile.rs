@@ -158,10 +158,10 @@ async fn measure(
         let isolated = tempfile::tempdir()?;
         let service = Service::new(isolated.path());
         let fp = fingerprint(&fixture.plan);
-        if mode == "prebuilt-warm" {
-            if !matches!(service.fetch(asset, &fp).await, PrebuiltOutcome::Hit(_)) {
-                return Err("warmup miss".into());
-            }
+        if mode == "prebuilt-warm"
+            && !matches!(service.fetch(asset, &fp).await, PrebuiltOutcome::Hit(_))
+        {
+            return Err("warmup miss".into());
         }
         for name in ["core.o", "firmware.elf", "firmware.bin"] {
             let _ = std::fs::remove_file(fixture.root.path().join(name));

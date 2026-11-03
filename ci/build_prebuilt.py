@@ -14,6 +14,8 @@ import argparse
 import hashlib
 import io
 import json
+import os
+import re
 import shlex
 import subprocess
 import tarfile
@@ -41,12 +43,10 @@ def package(metadata, output, source):
     if fp != metadata["fp"] or plan["abi_version"] != 1:
         raise ValueError("engine fingerprint or ABI mismatch")
     files = {}
-    for argv in plan["argv"]:
-        obj = Path(argv[argv.index("-o") + 1])
-        # The engine's -o may be relative to the project compile cwd; the
-        # exported core directory supplies the actual local object location.
-        path = Path(metadata["core_dir"]) / obj.name
-        files["obj/" + path.name] = path.read_bytes()
+    for name, path in metadata["objects"].items():
+        if not re.fullmatch(r"obj/[0-9]+\.o", name):
+            raise ValueError("invalid engine object mapping")
+        files[name] = Path(path).read_bytes()
     for number, include in enumerate(metadata["include_dirs"]):
         directory = Path(include)
         if directory.is_dir():
@@ -88,11 +88,15 @@ def main():
     parser.add_argument("--source-ref", required=True, help="resolved framework source commit SHA")
     parser.add_argument("--fbuild", type=Path, help="built v1 fbuild executable; otherwise soldr cargo run")
     parser.add_argument("--bucket", default="s3://fbuild")
+    parser.add_argument("--cache-dir", type=Path, help="dedicated builder cache (default: persistent dedicated temp cache)")
     args = parser.parse_args()
+    environment = os.environ.copy()
+    environment["FBUILD_DEV_MODE"] = "1"
+    environment["FBUILD_CACHE_DIR"] = str((args.cache_dir or Path(tempfile.gettempdir()) / ("fbuild-prebuilt-builder-" + hashlib.sha256(str(args.project.resolve()).encode()).hexdigest()[:16])).resolve())
     with tempfile.TemporaryDirectory(prefix="fbuild-prebuilt-") as root:
         command = [str(args.fbuild.resolve())] if args.fbuild else ["soldr", "cargo", "run", "-p", "fbuild-cli", "--"]
         subprocess.run(command + ["build", str(args.project.resolve()), "-e", args.environment,
-            "--no-prebuilt", "--output-dir", root], cwd=ROOT, check=True)
+            "--no-prebuilt", "--output-dir", root], cwd=ROOT, env=environment, check=True)
         plans = list(Path(root).rglob("prebuilt-plan.json"))
         if len(plans) != 1:
             raise ValueError("expected exactly one engine-exported pilot plan with pinned package checksums")

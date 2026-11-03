@@ -56,8 +56,7 @@ pub async fn run_build(
     let perf_enabled = std::env::var("FBUILD_PERF_LOG")
         .map(|v| !v.is_empty() && v != "0")
         .unwrap_or(false);
-    let cli_start = std::time::Instant::now();
-    let handshake_start = std::time::Instant::now();
+    let (cli_start, handshake_start) = (std::time::Instant::now(), std::time::Instant::now());
     daemon_client::ensure_daemon_running().await?;
     let handshake_elapsed = handshake_start.elapsed();
 

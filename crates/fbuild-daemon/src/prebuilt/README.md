@@ -17,3 +17,9 @@ build clients lease entries. Failed integrity pairs and failed-hit fingerprints
 are tombstoned for 24 hours in daemon memory. A compile/link failure after a Hit
 retries once after discarding project outputs; Hits never populate the reusable
 source framework-core cache.
+
+V1 is deliberately limited to the two pilot boards with conventional `src/`
+projects and default compile inputs. Custom flags, unflags, extra scripts, board
+overrides, forced includes, response files and ambiguous symlinked roots Miss.
+Source packages are still provisioned before planning; this slice does not save
+framework source-download bytes or implement background source population.

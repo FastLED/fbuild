@@ -12,3 +12,8 @@ and exact size are required on every Catalog read, including stale fallback.
 `archive` implements synchronous, strict extraction used on daemon blocking
 workers; `gc` implements synchronous collection under the daemon's live-map
 mutex. These are fetch primitives; only the daemon owns transfer/publication.
+
+Known duplication: the existing PlatformIO loader fetches Release shards, rejects
+Catalog, exposes descriptors only in tests, and accepts stale shard bytes without
+checking them against the current descriptor. It is unchanged here. A follow-up
+should add Catalog support and verified stale fallback there, then unify readers.

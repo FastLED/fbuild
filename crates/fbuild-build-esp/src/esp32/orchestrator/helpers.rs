@@ -373,6 +373,10 @@ impl SdkIncludeFarm {
         }
     }
 
+    pub(super) fn path(&self) -> &Path {
+        self.farm.dir.as_path()
+    }
+
     /// `-fmacro-prefix-map` for headers reached through the farm.
     pub(super) fn macro_prefix_map(&self) -> String {
         self.farm

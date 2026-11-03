@@ -28,13 +28,28 @@ impl BuildOrchestrator for SourceBuild {
     async fn build(&self, params: &BuildParams) -> fbuild_core::Result<BuildResult> {
         self.calls.fetch_add(1, Ordering::SeqCst);
         if let Some(client) = &params.prebuilt {
-            if matches!(
-                client.resolve(self.plan.clone()).await,
-                PrebuiltOutcome::Hit(_)
-            ) {
-                return Err(fbuild_core::FbuildError::BuildFailed(
-                    "fixture linker rejects prebuilt".into(),
-                ));
+            if let PrebuiltOutcome::Hit(entry) = client.resolve(self.plan.clone()).await {
+                std::fs::create_dir_all(&params.build_dir)?;
+                let compiler = if fbuild_core::platform::host::is_windows() {
+                    "clang"
+                } else {
+                    "cc"
+                };
+                let failed = fbuild_core::subprocess::run_command(
+                    &[
+                        compiler,
+                        params.project_dir.join("fixture.c").to_str().unwrap(),
+                        entry.join("obj/core.o").to_str().unwrap(),
+                        "-o",
+                        params.build_dir.join("rejected.bin").to_str().unwrap(),
+                    ],
+                    None,
+                    None,
+                    None,
+                )
+                .await?;
+                assert!(!failed.success(), "the bad object must fail a real link");
+                return Err(fbuild_core::FbuildError::BuildFailed(failed.stderr));
             }
         }
         std::fs::create_dir_all(&params.build_dir)?;
@@ -42,7 +57,11 @@ impl BuildOrchestrator for SourceBuild {
         let firmware = params.build_dir.join("firmware.bin");
         let result = fbuild_core::subprocess::run_command(
             &[
-                if cfg!(windows) { "clang" } else { "cc" },
+                if fbuild_core::platform::host::is_windows() {
+                    "clang"
+                } else {
+                    "cc"
+                },
                 source.to_str().unwrap(),
                 "-o",
                 firmware.to_str().unwrap(),
@@ -69,7 +88,10 @@ impl BuildOrchestrator for SourceBuild {
     }
 }
 
-fn params(root: &std::path::Path, client: fbuild_build::prebuilt::Client) -> BuildParams {
+pub(super) fn params(
+    root: &std::path::Path,
+    client: fbuild_build::prebuilt::Client,
+) -> BuildParams {
     BuildParams {
         prebuilt: Some(client),
         project_dir: root.to_path_buf(),

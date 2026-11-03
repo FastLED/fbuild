@@ -33,3 +33,5 @@ pub fn fingerprint(plan: &FrameworkBuildPlan) -> Fp {
         .map(|bytes| format!("{:x}", Sha256::digest(bytes)))
         .unwrap_or_default()
 }
+
+pub use crate::prebuilt_paths::{PathMapping, canonical_argv, mapped_path, unambiguous_roots};

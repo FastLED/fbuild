@@ -35,6 +35,7 @@ pub mod perf_log;
 pub mod pipeline;
 pub mod prebuilt;
 pub mod prebuilt_fp;
+pub mod prebuilt_paths;
 pub mod provision;
 pub mod rebuild_signature;
 pub mod resolution;

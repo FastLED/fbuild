@@ -83,7 +83,7 @@ impl Service {
         let service = Self {
             root: NormalizedPath::new(cache_root).join("prebuilt"),
             state: Mutex::default(),
-            client: fbuild_packages::http::client_with_timeout(Duration::from_secs(30)),
+            client: fbuild_packages::http::client_with_timeout(Duration::from_secs(24 * 60 * 60)),
             owner: uuid::Uuid::new_v4().to_string(),
             stall_timeout: Duration::from_secs(30),
             write_limit: None,
@@ -312,3 +312,6 @@ async fn verified(path: &Path, fp: &str) -> bool {
         .await
         .unwrap_or(false)
 }
+
+#[cfg(test)]
+mod repro_tests;

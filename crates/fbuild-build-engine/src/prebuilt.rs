@@ -1,4 +1,6 @@
 //! Per-request bridge to daemon-owned prebuilt storage and one source retry.
+pub const INSTALL_MARKER: &str = "prebuilt-installed.json";
+
 use crate::{
     BuildOrchestrator, BuildParams, BuildResult,
     prebuilt_fp::{FrameworkBuildPlan, fingerprint},
@@ -77,4 +79,9 @@ pub async fn build_with_retry(
 
 pub fn disabled() -> PrebuiltOutcome {
     PrebuiltOutcome::Miss(MissReason("opted out".into()))
+}
+
+/// Shared build-context invariant, including direct Rust and compile-many callers.
+pub fn must_clean(build_dir: &std::path::Path, explicit: bool, compiledb_only: bool) -> bool {
+    explicit || (!compiledb_only && build_dir.join(INSTALL_MARKER).is_file())
 }

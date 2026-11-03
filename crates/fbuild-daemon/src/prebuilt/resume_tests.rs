@@ -198,7 +198,8 @@ async fn killed_download_resumes_in_a_new_daemon_with_the_correct_sha() {
     let temp = tempfile::tempdir().unwrap();
     let artifact = asset(&bytes, vec![url]);
     // allow-direct-spawn: real crash-recovery child, spawned through the containment facade.
-    let mut command = std::process::Command::new(std::env::current_exe().unwrap());
+    let mut command =
+        std::process::Command::new(fbuild_core::platform::executable::current_image().unwrap());
     command
         .args([
             "--exact",

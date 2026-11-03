@@ -66,14 +66,12 @@ impl BuildOrchestrator for Esp32Orchestrator {
             Some(&sdkconfig),
         );
         let mcu_config = get_mcu_config(&ctx.board.mcu)?;
-
         tracing::info!(
             "ESP32 build: {} ({}, {})",
             ctx.board.name,
             ctx.board.mcu,
             mcu_config.architecture
         );
-
         // Look up the env's `platform_packages` overrides so the platform
         // (`platform-espressif32`) and framework (`framework-arduinoespressif32`)
         // packages can honor consumer-pinned URLs (FastLED/fbuild#672).
@@ -116,16 +114,16 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 &ctx.board.mcu,
             ));
         let mcu_config = fixups::for_toolchain(mcu_config, &toolchain_info);
+        let reproducible = super::prebuilt::eligible(params, &ctx)
+            && fixups::supports_macro_prefix_map(&toolchain_info);
         let _toolchain_cache_dir = fbuild_packages::Package::get_info(&toolchain).install_path;
         let _framework_cache_dir = fbuild_packages::Package::get_info(&framework).install_path;
         let build_dir = &ctx.build_dir;
         let core_build_dir = &ctx.core_build_dir;
         let src_build_dir = &ctx.src_build_dir;
-
         // SDK directory selector: matches the chip's ROM revision (e.g.
         // `esp32p4_es` for ESP32-P4 eco0â€“eco2). Falls back to `mcu`.
         let sdk_variant = ctx.board.sdk_variant().to_string();
-
         // Read link-affecting config before the expensive include/library/source discovery steps
         // so the no-op fast path can return early on warm builds.
         let sdk_ld_flags = fixups::effective_sdk_ld_flags(
@@ -134,10 +132,8 @@ impl BuildOrchestrator for Esp32Orchestrator {
         );
         let sdk_defines = framework.get_sdk_defines(&sdk_variant);
         let mcu_config = fixups::for_sdk_ld_flags(mcu_config, &sdk_ld_flags);
-
         let embed_files = ctx.config.get_embed_files(&params.env_name)?;
         let embed_txtfiles = ctx.config.get_embed_txtfiles(&params.env_name)?;
-
         let (flash_freq, flash_mode, flash_size) =
             super::helpers::flash_settings(&ctx.board, &mcu_config);
         let metadata_hash = stable_hash_with_build_config(
@@ -176,6 +172,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
             },
             &ctx,
         )?;
+        let metadata_hash = super::prebuilt::metadata_hash(metadata_hash, reproducible);
         let (fast_elf, [fast_bin, fast_boot, fast_parts, fast_app0], fast_compile_db) =
             expected_fast_path_artifacts(
                 build_dir,
@@ -202,7 +199,6 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 ],
             )
         };
-
         if !params.compiledb_only
             && !params.symbol_analysis
             && params.symbol_analysis_path.is_none()
@@ -235,7 +231,6 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 ));
             }
         }
-
         // FastLED/fbuild#800: the `zccache start` daemon-spawn was deleted.
         // The embedded service is part of fbuild-daemon's own lifecycle.
         // Toolchain and framework install independently (FastLED/fbuild#1559).
@@ -253,10 +248,8 @@ impl BuildOrchestrator for Esp32Orchestrator {
             },
             toolchain_dir.display()
         );
-
         let framework_dir = framework_dir?;
         tracing::info!("ESP32 framework at {}", framework_dir.display());
-
         let tc_label = format!("{}gcc", mcu_config.toolchain_prefix());
         crate::pipeline::log_toolchain_version(
             &toolchain.get_gcc_path(),
@@ -264,13 +257,11 @@ impl BuildOrchestrator for Esp32Orchestrator {
             &mut ctx.build_log,
         )
         .await;
-
         let core_dir = framework.get_core_dir(&ctx.board.core);
         let variant_dir = framework.get_variant_dir(&ctx.board.variant);
         let sdk_memory_type = ctx
             .board
             .effective_esp32_memory_type(mcu_config.default_flash_mode());
-
         let mut include_dirs = vec![core_dir.clone()];
         if variant_dir.exists() {
             include_dirs.push(variant_dir.clone());
@@ -281,14 +272,11 @@ impl BuildOrchestrator for Esp32Orchestrator {
             .extend(framework.get_sdk_include_dirs(&sdk_variant, sdk_memory_type.as_deref()));
         let sdk_farm =
             SdkIncludeFarm::build(&include_dirs, sdk_block_start..include_dirs.len()).await;
-
         let builtin_libs_dir = framework.get_libraries_dir();
-
         include_dirs.push(ctx.src_dir.clone());
         crate::pipeline::discover_project_includes(&params.project_dir, &mut include_dirs);
         // Toolchain sysroot includes (xtensa headers, etc.)
         include_dirs.extend(toolchain.get_include_dirs());
-
         let sdk_ld_flags = fixups::effective_sdk_ld_flags(
             framework.get_sdk_ld_flags(&sdk_variant),
             &ctx.build_unflags,
@@ -322,9 +310,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
         let lib_deps =
             fbuild_library_select::external_declared_deps(&declared_lib_deps, &framework_libraries);
         let lib_ignore = ctx.config.get_lib_ignore(&params.env_name)?;
-
         use fbuild_packages::Toolchain;
-
         // Read user build_flags early â€” needed for both library and sketch compilation.
         // SDK defines (from flags/defines) are prepended so user flags can override them.
         let mut user_flags = sdk_defines.clone();
@@ -332,20 +318,27 @@ impl BuildOrchestrator for Esp32Orchestrator {
         if fixups::supports_macro_prefix_map(&toolchain_info) {
             user_flags.extend(framework_macro_prefix_map(&core_dir));
             user_flags.extend(sdk_farm.as_ref().map(SdkIncludeFarm::macro_prefix_map));
-            user_flags.extend(super::prebuilt::prefix_maps(&framework_dir, &toolchain_dir));
         }
         // Keep core/sketch debug paths independent of the project directory.
-        user_flags.extend(fbuild_paths::debug_prefix_map_args(
-            &params.project_dir,
-            &ctx.build_dir,
-        ));
+        if reproducible {
+            user_flags.extend(super::prebuilt::prefix_maps(
+                params,
+                &framework_dir,
+                &toolchain_dir,
+                sdk_farm.as_ref().map(SdkIncludeFarm::path),
+            ));
+        } else {
+            user_flags.extend(fbuild_paths::debug_prefix_map_args(
+                &params.project_dir,
+                &ctx.build_dir,
+            ));
+        }
         let mut user_build_flags = ctx.config.get_build_flags(&params.env_name)?;
         user_build_flags.extend(params.extra_build_flags.clone());
         user_flags.extend(user_build_flags.clone());
         // FastLED/fbuild#574: shared overlay assembly. ESP32 prepends SDK
         // defines to the user flags, so it passes the combined base explicitly.
         let (user_overlay, src_overlay) = ctx.compile_overlays_with_base(&user_flags);
-
         // Emit a warning if CDC on boot is effectively enabled (may cause Serial to block
         // when no USB host is connected).
         warn_if_cdc_on_boot(
@@ -354,7 +347,6 @@ impl BuildOrchestrator for Esp32Orchestrator {
             &user_build_flags,
         );
         crate::warn_debug_build_flags(&user_build_flags);
-
         // External libraries are planned before their framework dependencies
         // are selected. Give their compilation all bundled include roots, then
         // seed the later LDF pass with their source files to select only the
@@ -370,7 +362,6 @@ impl BuildOrchestrator for Esp32Orchestrator {
             compile_include_dirs(sdk_farm.as_ref(), &external_base_includes);
         let mut external_library_sources = Vec::new();
         let mut lib_deps_plan = None;
-
         if !lib_deps.is_empty() {
             let resolved = super::helpers::resolve_lib_deps(
                 params,
@@ -495,7 +486,8 @@ impl BuildOrchestrator for Esp32Orchestrator {
             build_dir.join("tmp"),
         )
         .with_build_unflags(ctx.build_unflags.clone())
-        .with_eh_frame_policy(eh_frame_policy);
+        .with_eh_frame_policy(eh_frame_policy)
+        .with_framework_compile_root(reproducible, &framework_dir);
         let jobs = crate::parallel::effective_jobs(params.jobs);
         tracing::info!("parallel compilation: {} jobs", jobs);
 
@@ -639,6 +631,10 @@ impl BuildOrchestrator for Esp32Orchestrator {
         }
         let prebuilt_hit = super::prebuilt::hydrate(super::prebuilt::Inputs {
             params,
+            eligible: reproducible,
+            framework_root: &framework_dir,
+            toolchain_root: &toolchain_dir,
+            farm: sdk_farm.as_ref().map(SdkIncludeFarm::path),
             compiler: &compiler,
             toolchain: &toolchain_info,
             framework: &fbuild_packages::Package::get_info(&framework),

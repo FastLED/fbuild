@@ -60,9 +60,9 @@ impl Service {
                         .unwrap_or_default(),
                 );
         }
-        let response = request
-            .send()
+        let response = tokio::time::timeout(self.stall_timeout, request.send())
             .await
+            .map_err(|_| Failure::Host("request headers stalled".into()))?
             .map_err(|e| Failure::Host(e.to_string()))?;
         if response.status().is_server_error() {
             return Err(Failure::Host(format!("HTTP {}", response.status())));
