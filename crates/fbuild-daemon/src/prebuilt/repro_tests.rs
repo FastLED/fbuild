@@ -462,11 +462,7 @@ volatile int output;
 const char *volatile names[5];
 extern "C" void _start(void){output=private_value(core_value()); names[0]=header_file(); names[1]=sdk_file(); names[2]=project_file(); names[3]=__FILE__; names[4]=__BASE_FILE__; for(;;){}}
 "#).unwrap();
-    let compiler = if fbuild_core::platform::host::is_windows() {
-        "clang"
-    } else {
-        "cc"
-    };
+    let compiler = fixture_compiler();
     let mut flags = vec![
         "-Os".into(),
         "-g".into(),
@@ -524,4 +520,12 @@ extern "C" void _start(void){output=private_value(core_value()); names[0]=header
         outputs[0], outputs[1],
         "mixed-link firmware/ELF including debug sections must be byte identical"
     );
+}
+
+fn fixture_compiler() -> &'static str {
+    if fbuild_core::platform::host::is_windows() {
+        "clang"
+    } else {
+        "cc"
+    }
 }

@@ -258,6 +258,8 @@ def main() -> None:
             "--with",
             "pyyaml==6.0.2",
             "--with",
+            "zstandard",
+            "--with",
             "ci-lint @ git+https://github.com/zackees/ci.yml@6711e4e418cf9b11de31e30e710b0bb1d9291e5b",
             "python",
             "-m",

@@ -27,6 +27,7 @@ DRIFT_UNITTEST_MODULES: tuple[str, ...] = (
     "ci.test_local_lint_gate",
     "ci.test_publish_quota",
     "ci.test_gen_mirror_manifest",
+    "ci.test_prebuilt_manifest",
     "ci.test_benchmark_publish",
     "ci.test_sign_windows_release",
     "ci.test_local_suites",
