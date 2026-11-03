@@ -421,6 +421,7 @@ pub async fn async_main() {
             halt_on_success,
             expect,
             no_timestamp,
+            lease_id,
         }) => {
             let project_dir = resolve_project_dir(project_dir, &top_level_project_dir);
             if platformio {
@@ -442,6 +443,7 @@ pub async fn async_main() {
                     halt_on_success,
                     expect,
                     no_timestamp,
+                    lease_id,
                 )
                 .await
             }

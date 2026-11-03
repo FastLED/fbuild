@@ -34,6 +34,12 @@ pub enum SerialClientMessage {
         pre_acquire_writer: bool,
         #[serde(default, skip_serializing_if = "Option::is_none")]
         client_metadata: Option<SerialClientMetadata>,
+        /// Workflow lease the client operates under, if any. The daemon
+        /// refuses the attach (and every later write) when another client
+        /// holds the exclusive lease on this port. Omitted by clients that
+        /// did not take a lease. See FastLED/fbuild#1864.
+        #[serde(default, skip_serializing_if = "Option::is_none")]
+        lease_id: Option<String>,
     },
     Write {
         /// Base64-encoded data.
@@ -162,6 +168,7 @@ mod tests {
                 cwd: Some("/work".into()),
                 argv: Some(vec!["python".into(), "-".into()]),
             }),
+            lease_id: Some("lease-7a".into()),
         };
         let json = serde_json::to_string(&msg).unwrap();
         assert!(json.contains("\"type\":\"attach\""));
@@ -175,6 +182,7 @@ mod tests {
                 open_if_needed,
                 pre_acquire_writer,
                 client_metadata,
+                lease_id,
             } => {
                 assert_eq!(client_id, "c1");
                 assert_eq!(port, "COM3");
@@ -182,6 +190,38 @@ mod tests {
                 assert!(open_if_needed);
                 assert!(!pre_acquire_writer);
                 assert_eq!(client_metadata.unwrap().pid, Some(1234));
+                assert_eq!(lease_id.as_deref(), Some("lease-7a"));
+            }
+            _ => panic!("expected Attach"),
+        }
+    }
+
+    #[test]
+    fn client_attach_without_a_lease_treats_the_lease_as_absent() {
+        // Older clients predate the workflow lease (#1864); an attach with no
+        // `lease_id` must deserialize with `None`, which the daemon reads as
+        // "present no lease" and refuses on a reserved board.
+        let json = r#"{"type":"attach","client_id":"c1","port":"COM3","baud_rate":115200,"open_if_needed":true,"pre_acquire_writer":false}"#;
+        let parsed: SerialClientMessage = serde_json::from_str(json).unwrap();
+        match parsed {
+            SerialClientMessage::Attach { lease_id, .. } => assert!(lease_id.is_none()),
+            _ => panic!("expected Attach"),
+        }
+        let msg = SerialClientMessage::Attach {
+            client_id: "c1".into(),
+            port: "COM3".into(),
+            baud_rate: 115200,
+            open_if_needed: true,
+            pre_acquire_writer: false,
+            client_metadata: None,
+            lease_id: Some("lease-7a".into()),
+        };
+        let json = serde_json::to_string(&msg).unwrap();
+        assert!(json.contains(r#""lease_id":"lease-7a""#), "{json}");
+        let parsed: SerialClientMessage = serde_json::from_str(&json).unwrap();
+        match parsed {
+            SerialClientMessage::Attach { lease_id, .. } => {
+                assert_eq!(lease_id.as_deref(), Some("lease-7a"));
             }
             _ => panic!("expected Attach"),
         }

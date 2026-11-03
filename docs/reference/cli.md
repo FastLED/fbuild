@@ -270,7 +270,11 @@ Attach to serial output.
 fbuild monitor
 fbuild monitor -e uno --port COM3 --baud 115200
 fbuild monitor --timeout 60 --halt-on-error "TEST FAILED" --halt-on-success "TEST PASSED"
+fbuild monitor --lease-id 7a3bf83c-4e00-4d81-b95e-62f02b8840de
 ```
+
+`--lease-id` attaches (and writes) under that workflow lease; without it a
+board reserved by another workflow's exclusive lease refuses the attach.
 
 ### `fbuild test-emu`
 
@@ -311,10 +315,14 @@ known limitations.
 ### Workflow leases
 
 `fbuild device lease <port> --exclusive --track-serial` reserves the board for
-the workflow that acquired it. Every mutating device operation — deploy and
-reset — is refused for a caller that does not present the lease id with
-`--lease-id`, and the refusal names the lease, its holder, and both escape
-hatches (present the id, or release it). Read-only monitors are unaffected, and
+the workflow that acquired it. Every mutating device operation — deploy, reset,
+and the serial write path (`fbuild monitor`, the Python serial session, the
+`/ws/serial-monitor` `write` frame) — is refused for a caller that does not
+present the lease id with `--lease-id`, and the refusal names the lease, its
+holder, and both escape hatches (present the id, or release it). The serial
+check runs at attach — before the port is opened — and again on every write, so
+a lease taken by another workflow after a session attached still stops the
+bytes. Read-only monitoring is unaffected, and
 `fbuild device take <port> --reason <text>` still forces a takeover. A tracked
 lease follows the USB serial number across port renumbering.
 

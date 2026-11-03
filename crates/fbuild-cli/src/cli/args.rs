@@ -410,6 +410,9 @@ pub enum Commands {
         /// Disable timestamp prefix on each output line
         #[arg(long)]
         no_timestamp: bool,
+        /// Workflow lease id to operate under (`fbuild device lease --exclusive`)
+        #[arg(long = "lease-id")]
+        lease_id: Option<String>,
     },
     /// Reset device without re-flashing
     Reset {
