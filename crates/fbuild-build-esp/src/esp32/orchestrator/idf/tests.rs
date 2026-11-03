@@ -1,17 +1,17 @@
 //! IDF adapter contracts, including a real opt-in CMake/ninja build.
 use crate::BuildOrchestrator;
-use std::path::PathBuf;
+use fbuild_core::path::NormalizedPath;
 
-fn params(project_dir: PathBuf, build_dir: PathBuf) -> crate::BuildParams {
+fn params(project_dir: NormalizedPath, build_dir: NormalizedPath) -> crate::BuildParams {
     crate::BuildParams {
-        project_dir,
+        project_dir: project_dir.into_path_buf(),
         shrink: Default::default(),
         env_name: "esp32s3-idf".into(),
         clean_all: false,
         clean_only: false,
         clean: false,
         profile: fbuild_core::BuildProfile::Release,
-        build_dir,
+        build_dir: build_dir.into_path_buf(),
         verbose: false,
         jobs: Some(2),
         generate_compiledb: false,
@@ -41,14 +41,15 @@ async fn real_build(target: &str) {
 }
 
 async fn real_build_env(target: &str, env_name: &str) {
-    let project_dir = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+    let project_dir = NormalizedPath::from(env!("CARGO_MANIFEST_DIR"))
         .join(format!("../../tests/platform/{target}-idf"))
         .canonicalize()
-        .unwrap();
+        .unwrap()
+        .into();
     let tmp = tempfile::TempDir::new().unwrap();
     let build_dir = std::env::var_os("FBUILD_IDF_TEST_BUILD_DIR").map_or_else(
-        || tmp.path().join("build"),
-        |root| PathBuf::from(root).join(env_name),
+        || tmp.path().join("build").into(),
+        |root| NormalizedPath::new(root).join(env_name),
     );
     let mut params = params(project_dir, build_dir);
     params.env_name = env_name.into();
@@ -131,7 +132,7 @@ fn dispatch_keeps_arduino_and_dual_on_the_existing_path() {
 
 #[test]
 fn validated_targets_are_enabled_and_package_pins_are_never_ignored() {
-    let params = params(PathBuf::new(), PathBuf::new());
+    let params = params(NormalizedPath::default(), NormalizedPath::default());
     let mut env = std::collections::HashMap::new();
     for target in [
         "esp32", "esp32s2", "esp32s3", "esp32c3", "esp32c6", "esp32h2", "esp32c2", "esp32c5",
@@ -164,7 +165,7 @@ async fn package_override_fails_before_clean_or_download() {
     let build = tmp.path().join("build");
     std::fs::create_dir(&build).unwrap();
     std::fs::write(build.join("keep"), "keep").unwrap();
-    let mut params = params(tmp.path().into(), build.clone());
+    let mut params = params(tmp.path().into(), build.clone().into());
     params.clean = true;
     let error = super::super::Esp32Orchestrator
         .build(&params)
@@ -273,7 +274,7 @@ async fn clean_only_removes_outputs_without_the_clean_flag() {
     let build = tmp.path().join("build");
     std::fs::create_dir(&build).unwrap();
     std::fs::write(build.join("firmware.bin"), "old output").unwrap();
-    let mut params = params(tmp.path().into(), build.clone());
+    let mut params = params(tmp.path().into(), build.clone().into());
     params.clean_only = true;
     assert!(!params.clean);
     let result = super::super::Esp32Orchestrator
@@ -367,7 +368,7 @@ async fn espidf_real_native_config_and_partition_mutations() {
     std::fs::write(&active, "CONFIG_LOG_DEFAULT_LEVEL_WARN=y\n").unwrap();
     let csv = project.join("custom.csv");
     std::fs::write(&csv, "nvs,data,nvs,0x9000,0x6000\nphy_init,data,phy,0xf000,0x1000\nfactory,app,factory,0x10000,1M\n").unwrap();
-    let params = params(project.clone(), tmp.path().join("build"));
+    let params = params(project.clone().into(), tmp.path().join("build").into());
     let orchestrator = super::super::Esp32Orchestrator;
     assert!(orchestrator.build(&params).await.unwrap().success);
     let header = params.build_dir.join("idf/config/sdkconfig.h");
