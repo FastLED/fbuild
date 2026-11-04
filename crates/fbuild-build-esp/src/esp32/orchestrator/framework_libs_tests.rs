@@ -318,8 +318,13 @@ fn local_archives_without_compile_identity_are_not_reused() {
 async fn archive_override_bypasses_cached_framework_archive_and_links_all_objects() {
     let fx = Fixture::new();
     let libraries = [fx.library("FS", &["FS.cpp", "hook.cpp"])];
-    let (warm, _) = fx.build(&libraries, &HashSet::new(), 2).await;
-    assert_eq!(warm, ["libfs.a"]);
+    // The fixture's fake `ar` is a POSIX shell script, so the warm archive
+    // build only runs where it can execute. The plan/compile/finish half
+    // below is platform-independent and still runs everywhere.
+    if !fbuild_core::platform::host::is_windows() {
+        let (warm, _) = fx.build(&libraries, &HashSet::new(), 2).await;
+        assert_eq!(warm, ["libfs.a"]);
+    }
     let mut ctx = fx.ctx();
     ctx.archive_override = Some(false);
     let mut perf = PerfTimer::new("direct-framework-test");
