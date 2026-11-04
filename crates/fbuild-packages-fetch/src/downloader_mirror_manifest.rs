@@ -57,6 +57,12 @@ const RELEASE_KIND: &str = "Release";
 const INDEX_KIND: &str = "Index";
 const EXPECTED_SCHEMA_VERSION: u32 = 1;
 
+/// Tool ids with this prefix are prebuilt framework catalogs consumed by the
+/// prebuilt reader, not registry-owner shards. Their descriptor is validated
+/// like any other, but their body is a `Catalog`, so this reader never loads
+/// or registers them.
+pub(crate) const PREBUILT_TOOL_PREFIX: &str = "prebuilt-";
+
 #[derive(Deserialize)]
 struct Document {
     kind: String,
@@ -364,6 +370,11 @@ fn validate_shards(tools: HashMap<String, ToolDoc>) -> Result<HashMap<String, Sh
             return Err(format!(
                 "shard {owner:?} exceeds {MAX_MANIFEST_BYTES} bytes"
             ));
+        }
+        // A prebuilt catalog shard is a valid descriptor but not a registry
+        // owner; its body is a `Catalog`, which only the prebuilt reader parses.
+        if owner.starts_with(PREBUILT_TOOL_PREFIX) {
+            continue;
         }
         shards.insert(
             owner,

@@ -822,8 +822,18 @@ async fn committed_manifest_is_accepted_and_prefers_the_bucket() {
     let tools = doc["tools"].as_object().expect("an Index");
     assert!(tools.contains_key("platformio"));
     let mut checked = 0;
+    let mut prebuilt = 0;
     for owner in tools.keys() {
-        let shard_ref = m.shard_ref(owner).unwrap();
+        // Prebuilt catalogs are validated descriptors for the prebuilt reader,
+        // not registry-owner shards this reader loads.
+        let Some(shard_ref) = m.shard_ref(owner) else {
+            assert!(
+                owner.starts_with("prebuilt-"),
+                "{owner} is neither a shard nor a prebuilt catalog"
+            );
+            prebuilt += 1;
+            continue;
+        };
         let shard_bytes = std::fs::read(site_mirror().join(&shard_ref.url).as_path()).unwrap();
         assert_eq!(sha_hex(&shard_bytes), shard_ref.sha256, "{owner}");
         assert_eq!(shard_bytes.len() as u64, shard_ref.size_bytes, "{owner}");
@@ -845,6 +855,7 @@ async fn committed_manifest_is_accepted_and_prefers_the_bucket() {
         }
     }
     assert!(checked > 1000, "only {checked} entries");
+    assert_eq!(prebuilt, 1, "expected exactly one prebuilt catalog shard");
 }
 
 /// Live: the published index is reachable and its platformio shard verifies.
