@@ -136,6 +136,7 @@ SECTIONS {
         Some(1024 * 1024),
         false,
     );
+    let mut perf = fbuild_build_engine::perf_log::PerfTimer::new("link-overflow");
     let error = linker
         .link_all(
             &[root.join("main.o")],
@@ -143,6 +144,7 @@ SECTIONS {
             root,
             &LinkExtraArgs::default(),
             false,
+            &mut perf,
         )
         .await
         .unwrap_err()

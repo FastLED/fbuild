@@ -5,6 +5,9 @@
 
 use fbuild_core::{Result, SizeInfo};
 use std::path::{Path, PathBuf};
+use std::time::{Duration, Instant};
+
+use crate::perf_log::PerfTimer;
 
 /// Working directory to run a link in.
 ///
@@ -235,6 +238,12 @@ pub trait Linker: Send + Sync {
     /// Skips relinking when the existing firmware.elf is newer than all input
     /// objects and archives, saving ~10-14s on incremental builds where only
     /// the compilation step ran (or nothing changed at all).
+    ///
+    /// `perf` receives `link-elf`, `link-convert`, `link-size` and
+    /// `link-symbols` so the caller's outer link phase is attributable instead
+    /// of guessed at (FastLED/fbuild#1894). The middle two run concurrently, so
+    /// their sum may exceed the outer phase; the caller's own timing is the
+    /// truth.
     async fn link_all(
         &self,
         sketch_objects: &[PathBuf],
@@ -242,6 +251,7 @@ pub trait Linker: Send + Sync {
         output_dir: &Path,
         extra: &LinkExtraArgs,
         symbol_analysis: bool,
+        perf: &mut PerfTimer,
     ) -> Result<LinkResult> {
         let candidate_elf = output_dir.join("firmware.elf");
         let all_objects: Vec<&PathBuf> = sketch_objects.iter().chain(core_objects).collect();
@@ -251,15 +261,22 @@ pub trait Linker: Send + Sync {
                 && elf_is_up_to_date(&candidate_elf, all_objects.iter().copied());
             if can_skip {
                 tracing::info!("link: firmware.elf is up-to-date, skipping relink");
+                let convert_started = Instant::now();
                 let firmware_path = self.convert_firmware(&candidate_elf, output_dir).await?;
+                perf.record("link-convert", convert_started.elapsed());
+                let size_started = Instant::now();
                 let size_info = self.report_size(&candidate_elf).await.ok();
+                perf.record("link-size", size_started.elapsed());
                 if !extra.bloat_analysis {
                     enforce_size_limits(size_info.as_ref(), self.ram_overflow_is_fatal())?;
                 }
                 let symbol_map = if symbol_analysis {
-                    LinkerBase::analyze_symbols(self.size_tool_path(), &candidate_elf)
+                    let started = Instant::now();
+                    let map = LinkerBase::analyze_symbols(self.size_tool_path(), &candidate_elf)
                         .await
-                        .ok()
+                        .ok();
+                    perf.record("link-symbols", started.elapsed());
+                    map
                 } else {
                     None
                 };
@@ -285,20 +302,24 @@ pub trait Linker: Send + Sync {
         // With LTO + archives, the linker can't see symbols across TUs properly.
         let map_path = output_dir.join("firmware.map");
         let fresh_map = crate::link_overflow::prepare_map(&map_path);
+        let link_started = Instant::now();
         let elf_path = self
             .link(sketch_objects, core_objects, output_dir, extra)
             .await
             .map_err(|error| {
                 crate::link_overflow::enrich(error, fresh_map.then_some(map_path.as_path()))
             })?;
+        perf.record("link-elf", link_started.elapsed());
         crate::link_digest::record_digest(&elf_path, &digest);
 
         // Convert and size. Both only read the ELF, so they run together
         // instead of back to back on the critical path (FastLED/fbuild#1468).
-        let (firmware_path, size_info) = tokio::join!(
-            self.convert_firmware(&elf_path, output_dir),
-            self.report_size(&elf_path)
+        let ((firmware_path, convert_elapsed), (size_info, size_elapsed)) = tokio::join!(
+            timed(self.convert_firmware(&elf_path, output_dir)),
+            timed(self.report_size(&elf_path))
         );
+        perf.record("link-convert", convert_elapsed);
+        perf.record("link-size", size_elapsed);
         let firmware_path = firmware_path?;
         let size_info = size_info.ok();
         if !extra.bloat_analysis {
@@ -307,9 +328,12 @@ pub trait Linker: Send + Sync {
 
         // Symbol analysis
         let symbol_map = if symbol_analysis {
-            LinkerBase::analyze_symbols(self.size_tool_path(), &elf_path)
+            let started = Instant::now();
+            let map = LinkerBase::analyze_symbols(self.size_tool_path(), &elf_path)
                 .await
-                .ok()
+                .ok();
+            perf.record("link-symbols", started.elapsed());
+            map
         } else {
             None
         };
@@ -330,6 +354,16 @@ pub trait Linker: Send + Sync {
             stderr: String::new(),
         })
     }
+}
+
+/// Await `future`, returning its output and its own wall-clock duration.
+///
+/// `link_all` joins the conversion and the size report; timing each leg through
+/// this keeps their costs separable (FastLED/fbuild#1894).
+async fn timed<F: std::future::Future>(future: F) -> (F::Output, Duration) {
+    let started = Instant::now();
+    let output = future.await;
+    (output, started.elapsed())
 }
 
 /// Linker script configuration — search directories and script names.
@@ -664,6 +698,10 @@ impl LinkerBase {
         Ok(hex_path)
     }
 }
+
+#[cfg(test)]
+#[path = "linker_tests.rs"]
+mod linker_tests;
 
 #[cfg(test)]
 mod tests {

@@ -918,22 +918,22 @@ impl BuildOrchestrator for Esp32Orchestrator {
             &mut build_log,
         )
         .await;
-        let link_result = {
-            let _g = perf.phase("link-convert-size");
-            crate::linker::Linker::link_all(
-                &linker,
-                &sketch_objects,
-                &all_archives,
-                build_dir,
-                &crate::linker::LinkExtraArgs {
-                    flags: overlay_link_flags.clone(),
-                    libs: ctx.overlay_link_libs.clone(),
-                    bloat_analysis: false,
-                },
-                params.symbol_analysis,
-            )
-            .await?
-        };
+        let link_started = Instant::now();
+        let link_result = crate::linker::Linker::link_all(
+            &linker,
+            &sketch_objects,
+            &all_archives,
+            build_dir,
+            &crate::linker::LinkExtraArgs {
+                flags: overlay_link_flags.clone(),
+                libs: ctx.overlay_link_libs.clone(),
+                bloat_analysis: false,
+            },
+            params.symbol_analysis,
+            &mut perf,
+        )
+        .await?;
+        perf.record("link-convert-size", link_started.elapsed());
 
         footprint.sample("link-convert");
 
