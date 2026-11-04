@@ -318,10 +318,16 @@ fn local_archives_without_compile_identity_are_not_reused() {
 async fn archive_override_bypasses_cached_framework_archive_and_links_all_objects() {
     let fx = Fixture::new();
     let libraries = [fx.library("FS", &["FS.cpp", "hook.cpp"])];
-    let (warm, _) = fx.build(&libraries, &HashSet::new(), 2).await;
-    assert_eq!(warm, ["libfs.a"]);
+    let mut log = fbuild_core::BuildLog::new();
+    let _initial = fx.plan(&libraries, &HashSet::new(), &mut log);
+    let archive = fx.build_dir().join("libfs.a");
+    std::fs::write(&archive, "cached archive").unwrap();
+    let warm = fx.plan(&libraries, &HashSet::new(), &mut log);
+    assert!(matches!(&warm.entries[..], [FwLibEntry::Cached { .. }]));
     let mut ctx = fx.ctx();
     ctx.archive_override = Some(false);
+    // Direct-object compilation must not need a host archiver executable.
+    ctx.ar_path = fx.tmp.path().join("missing-ar");
     let mut perf = PerfTimer::new("direct-framework-test");
     let mut log = fbuild_core::BuildLog::new();
     let plan = FwLibsPlan::new(
