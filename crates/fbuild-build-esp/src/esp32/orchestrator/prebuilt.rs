@@ -249,19 +249,18 @@ fn install<S: AsRef<Path>>(entry: &Path, input: &Inputs<'_, S>, fp: &str) -> std
         input.params.build_dir.join(crate::prebuilt::INSTALL_MARKER),
         fp.as_bytes(),
     )?;
-    let headers = entry.join("include");
+    let headers = NormalizedPath::new(entry.join("include"));
     for file in walkdir::WalkDir::new(&headers) {
         let file = file.map_err(std::io::Error::other)?;
         if file.file_type().is_file() {
-            let relative = file
-                .path()
-                .strip_prefix(&headers)
-                .map_err(std::io::Error::other)?;
+            let relative = NormalizedPath::new(file.path())
+                .relative_to(&headers)
+                .ok_or_else(|| std::io::Error::other("header outside include root"))?;
             let target = input
                 .params
                 .build_dir
                 .join("prebuilt/include")
-                .join(relative);
+                .join(relative.as_path());
             std::fs::create_dir_all(
                 target
                     .parent()
