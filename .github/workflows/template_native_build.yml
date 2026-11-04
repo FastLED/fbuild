@@ -127,6 +127,12 @@ jobs:
         with:
           ref: ${{ inputs.ref || github.sha }}
 
+      - uses: astral-sh/setup-uv@v3
+        if: runner.os == 'Linux' && runner.environment == 'github-hosted'
+      - name: Provision cold-build disk capacity
+        if: runner.os == 'Linux' && runner.environment == 'github-hosted'
+        run: uv run --no-project python ci/reclaim_android_ndks.py
+
       - name: Setup soldr
         id: setup-soldr
         timeout-minutes: 10

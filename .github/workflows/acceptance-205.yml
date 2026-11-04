@@ -91,6 +91,8 @@ jobs:
         with:
           ref: ${{ inputs.ref }}
       - uses: astral-sh/setup-uv@v3
+      - name: Provision cold-build disk capacity
+        run: uv run --no-project python ci/reclaim_android_ndks.py
       - name: Setup soldr
         uses: zackees/setup-soldr@v0
         with:
