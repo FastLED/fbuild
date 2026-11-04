@@ -292,8 +292,10 @@ pub trait Linker: Send + Sync {
         let content_key = cache_root
             .filter(|_| !candidate_elf.exists())
             .and_then(|_| {
+                let inputs: Vec<&Path> =
+                    all_objects.iter().map(|object| object.as_path()).collect();
                 crate::link_output_cache::content_key(
-                    &all_objects,
+                    &inputs,
                     extra,
                     &self.link_fingerprint(),
                     output_dir,

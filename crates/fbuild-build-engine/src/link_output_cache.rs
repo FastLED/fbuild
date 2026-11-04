@@ -17,7 +17,7 @@
 //! bound.
 
 use std::io::Read;
-use std::path::{Path, PathBuf};
+use std::path::Path;
 use std::time::SystemTime;
 
 use fbuild_core::path::NormalizedPath;
@@ -43,7 +43,7 @@ fn field(hasher: &mut sha2::Sha256, bytes: &[u8]) {
 /// Returns `None` when any input cannot be read: the caller then simply
 /// relinks, which is always correct.
 pub(crate) fn content_key(
-    inputs: &[&PathBuf],
+    inputs: &[&Path],
     extra: &LinkExtraArgs,
     platform_fingerprint: &str,
     output_dir: &Path,
@@ -145,7 +145,7 @@ fn prune(root: &Path) {
     let Ok(prefixes) = std::fs::read_dir(root) else {
         return;
     };
-    let mut entries: Vec<(SystemTime, u64, PathBuf)> = Vec::new();
+    let mut entries: Vec<(SystemTime, u64, NormalizedPath)> = Vec::new();
     let mut total = 0u64;
     for prefix in prefixes.flatten() {
         let prefix_path = prefix.path();
@@ -162,7 +162,11 @@ fn prune(root: &Path) {
             }
             let (size, mtime) = entry_size(&path);
             total = total.saturating_add(size);
-            entries.push((mtime.unwrap_or(SystemTime::UNIX_EPOCH), size, path));
+            entries.push((
+                mtime.unwrap_or(SystemTime::UNIX_EPOCH),
+                size,
+                NormalizedPath::new(&path),
+            ));
         }
     }
     if total <= MAX_CACHE_BYTES {
@@ -173,7 +177,7 @@ fn prune(root: &Path) {
         if total <= MAX_CACHE_BYTES {
             break;
         }
-        if std::fs::remove_dir_all(&path).is_ok() {
+        if std::fs::remove_dir_all(path.as_path()).is_ok() {
             total = total.saturating_sub(size);
         }
     }
@@ -183,13 +187,13 @@ fn prune(root: &Path) {
 mod tests {
     use super::*;
 
-    fn write_object(dir: &Path, name: &str, bytes: &[u8]) -> PathBuf {
+    fn write_object(dir: &Path, name: &str, bytes: &[u8]) -> NormalizedPath {
         let path = dir.join(name);
         std::fs::write(&path, bytes).unwrap();
-        path
+        NormalizedPath::new(&path)
     }
 
-    fn key(dir: &Path, object: &PathBuf, flags: &[String]) -> String {
+    fn key(dir: &Path, object: &Path, flags: &[String]) -> String {
         let extra = LinkExtraArgs {
             flags: flags.to_vec(),
             ..Default::default()
