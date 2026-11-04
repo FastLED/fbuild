@@ -18,6 +18,241 @@ use crate::flag_overlay::LanguageExtraFlags;
 use crate::parallel::compile_sources_parallel_shared;
 use std::path::Path;
 
+mod incremental_archive_policy {
+    use std::path::{Path, PathBuf};
+
+    use crate::BuildParams;
+    use crate::build_fingerprint::{
+        FastPathCheckInputs, FastPathContract, FastPathPersistInputs, fast_path_check,
+        hash_watch_set_stamps, persist_fast_path_success, stable_hash_with_build_config,
+    };
+    use crate::pipeline::BuildContext;
+    use fbuild_core::subprocess::run_command;
+
+    struct Fixture {
+        _temp: tempfile::TempDir,
+        root: PathBuf,
+        build: PathBuf,
+        elf: PathBuf,
+        cc: String,
+        ar: String,
+        sources: Vec<(PathBuf, String)>,
+    }
+
+    impl Fixture {
+        async fn new() -> Self {
+            let temp = tempfile::tempdir().unwrap();
+            let root = temp.path().to_path_buf();
+            let build = root.join("build");
+            std::fs::create_dir_all(root.join("src")).unwrap();
+            std::fs::create_dir_all(root.join("local/src")).unwrap();
+            std::fs::create_dir_all(&build).unwrap();
+            let sources = vec![
+                (root.join("src/main.c"), "__attribute__((weak)) int hook(void) { return 1; } int main(void) { return hook(); }".into()),
+                (root.join("local/src/anchor.c"), "int anchor(void) { return 3; }".into()),
+                (root.join("local/src/hook.c"), "int hook(void) { return 2; }".into()),
+            ];
+            for (path, content) in &sources {
+                std::fs::write(path, content).unwrap();
+            }
+            let cc = std::env::var("FBUILD_TEST_CC").unwrap_or_else(|_| "gcc".into());
+            let ar = std::env::var("FBUILD_TEST_AR").unwrap_or_else(|_| "ar".into());
+            checked(&[
+                cc.clone(),
+                "-c".into(),
+                sources[0].0.display().to_string(),
+                "-o".into(),
+                build.join("main.o").display().to_string(),
+            ])
+            .await;
+            Self {
+                elf: build.join("firmware.elf"),
+                _temp: temp,
+                root,
+                build,
+                cc,
+                ar,
+                sources,
+            }
+        }
+
+        fn configure(&self, manifest: bool, environment: Option<bool>) {
+            std::fs::write(
+                self.root.join("local/library.json"),
+                format!(r#"{{"name":"Hook","build":{{"libArchive":{manifest}}}}}"#),
+            )
+            .unwrap();
+            let archive = environment
+                .map(|value| format!("lib_archive={}\n", if value { "yes" } else { "no" }))
+                .unwrap_or_default();
+            std::fs::write(
+                self.root.join("platformio.ini"),
+                format!("[env:probe]\nplatform=atmelavr\nboard=uno\nframework=arduino\n{archive}"),
+            )
+            .unwrap();
+        }
+
+        fn params(&self) -> BuildParams {
+            BuildParams {
+                project_dir: self.root.clone(),
+                env_name: "probe".into(),
+                build_dir: self.build.clone(),
+                clean: false,
+                clean_all: false,
+                clean_only: false,
+                profile: fbuild_core::BuildProfile::Release,
+                verbose: false,
+                jobs: Some(2),
+                generate_compiledb: false,
+                compiledb_only: false,
+                log_sender: None,
+                symbol_analysis: false,
+                symbol_analysis_path: None,
+                no_timestamp: true,
+                src_dir: None,
+                pio_env: Default::default(),
+                extra_build_flags: Vec::new(),
+                watch_set_cache: None,
+                bloat_analysis: false,
+                shrink: Default::default(),
+                caller_path: None,
+            }
+        }
+
+        async fn relink(&self, context: &BuildContext, archived: bool) {
+            let mut includes = Vec::new();
+            let libs = super::resolve_lib_deps(
+                &["Hook=symlink://local".into()],
+                &[],
+                &self.root,
+                &self.build,
+                Path::new(&self.cc),
+                Path::new(&self.cc),
+                Path::new(&self.ar),
+                Path::new(&self.ar),
+                &[],
+                &[],
+                &mut includes,
+                false,
+                None,
+            )
+            .await
+            .unwrap();
+            let inputs = libs
+                .with_archive_override(context.lib_archive)
+                .compile(&fbuild_packages::library::library_compiler::job_gate(2))
+                .await
+                .unwrap();
+            assert_eq!(inputs.len(), if archived { 1 } else { 2 });
+            assert!(inputs.iter().all(|input| {
+                input
+                    .extension()
+                    .is_some_and(|ext| ext == if archived { "a" } else { "o" })
+            }));
+            let mut command = vec![
+                self.cc.clone(),
+                self.build.join("main.o").display().to_string(),
+                "-o".into(),
+                self.elf.display().to_string(),
+            ];
+            command.extend(inputs.iter().map(|input| input.display().to_string()));
+            checked(&command).await;
+            let result = run_command(
+                &[&self.elf.display().to_string()],
+                None,
+                None,
+                Some(std::time::Duration::from_secs(30)),
+            )
+            .await
+            .unwrap();
+            assert_eq!(
+                result.exit_code,
+                if archived { 1 } else { 2 },
+                "the same ELF must reflect archive extraction versus the direct override"
+            );
+        }
+    }
+
+    async fn checked(command: &[String]) {
+        let args: Vec<&str> = command.iter().map(String::as_str).collect();
+        let result = run_command(&args, None, None, Some(std::time::Duration::from_secs(30)))
+            .await
+            .unwrap();
+        assert!(result.success(), "{command:?}: {}", result.stderr);
+    }
+
+    #[tokio::test]
+    #[ignore = "#1885: requires native GCC and a GNU-compatible archiver"]
+    async fn incremental_policy_toggles_relink_same_elf_through_production_fast_path() {
+        let fixture = Fixture::new().await;
+        let contract = FastPathContract::for_project_outputs(
+            &fixture.build,
+            &fixture.root,
+            [fixture.elf.clone()],
+        );
+        let mut previous_metadata = None;
+        let mut previous_watch = None;
+        for (phase, (manifest, environment, archived)) in [
+            (true, None, true),
+            (false, None, false),
+            (true, None, true),
+            (true, Some(false), false),
+            (false, Some(true), true),
+        ]
+        .into_iter()
+        .enumerate()
+        {
+            fixture.configure(manifest, environment);
+            let context = BuildContext::new(&fixture.params()).await.unwrap();
+            let metadata = stable_hash_with_build_config(&"native-link-fixture", &context).unwrap();
+            if phase == 1 || phase == 2 {
+                assert_eq!(
+                    previous_metadata.as_ref(),
+                    Some(&metadata),
+                    "manifest-only toggles must be detected by watched JSON, not a changed metadata hash"
+                );
+            }
+            if phase == 3 {
+                assert_ne!(previous_metadata.as_ref(), Some(&metadata));
+                assert_eq!(
+                    previous_watch.as_ref(),
+                    Some(&hash_watch_set_stamps(contract.watches()).unwrap()),
+                    "INI-only policy changes require effective-config invalidation"
+                );
+            }
+            let check = FastPathCheckInputs {
+                metadata_hash: &metadata,
+                extra_artifact_ok: None,
+                watch_set_cache: None,
+                compiler_cache: None,
+            };
+            assert!(
+                fast_path_check(&contract, &check).unwrap().is_none(),
+                "policy phase {phase} must rebuild instead of reusing the previous ELF"
+            );
+            fixture.relink(&context, archived).await;
+            for (path, unchanged) in &fixture.sources {
+                assert_eq!(std::fs::read_to_string(path).unwrap(), *unchanged);
+            }
+            persist_fast_path_success(
+                &contract,
+                &FastPathPersistInputs {
+                    metadata_hash: &metadata,
+                    size_info: None,
+                    watch_set_cache: None,
+                    compiler_cache: None,
+                },
+            );
+            assert!(
+                fast_path_check(&contract, &check).unwrap().is_some(),
+                "unchanged policy phase {phase} must retain the real warm-build fast path"
+            );
+            previous_watch = Some(hash_watch_set_stamps(contract.watches()).unwrap());
+            previous_metadata = Some(metadata);
+        }
+    }
+}
+
 /// Fake in-process "core" compiler: records a (label, phase, ns) event to
 /// the shared log for every compile, retaining its gate permit until the
 /// library phase finishes, regardless of subprocess startup latency.

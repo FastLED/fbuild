@@ -158,7 +158,6 @@ impl BuildOrchestrator for Rp2040Orchestrator {
         let start = Instant::now();
         let compiler_cache: Option<std::path::PathBuf> = None;
 
-        // 1-2. Parse config, load board, setup build dirs, resolve src dir, collect flags
         let mut ctx = pipeline::BuildContext::new(params).await?;
 
         // Compute eh_frame strip policy once per build (FastLED/fbuild#244).
@@ -303,7 +302,6 @@ impl BuildOrchestrator for Rp2040Orchestrator {
             sources.variant_sources.len(),
         );
 
-        // 6. Build include dirs + compiler
         let mcu_config =
             super::mcu_config::get_rp2040_config_for_mcu(&ctx.board.mcu.to_lowercase())?;
         let mut defines = rp_board_defines(&ctx.board, &mcu_config);
@@ -434,9 +432,7 @@ impl BuildOrchestrator for Rp2040Orchestrator {
             include_dirs.push(lwip_inc);
         }
 
-        // 6a. Download `lib_deps` from the registry / remote URLs before
-        // creating the compiler, so the downloaded library include directories
-        // are available during compilation (FastLED/fbuild#1276).
+        // Resolve lib_deps before compiler creation so dependency headers are visible (#1276).
         let lib_deps = ctx.config.get_lib_deps(&params.env_name)?;
         let lib_ignore = ctx
             .config
@@ -520,7 +516,6 @@ impl BuildOrchestrator for Rp2040Orchestrator {
             params.verbose,
         );
 
-        // 8. Build LibraryBuildEnv for project-as-library compilation
         let gcc_path = toolchain.get_gcc_path();
         let gxx_path = toolchain.get_gxx_path();
         let ar_path = toolchain.get_ar_path();
@@ -547,6 +542,11 @@ impl BuildOrchestrator for Rp2040Orchestrator {
 
         // 9. Run shared sequential build pipeline
         let board_mcu = ctx.board.mcu.clone();
+        let framework_archive_sources = pipeline::archive_eligible_library_sources(
+            &framework_libs,
+            &framework_library_sources,
+            ctx.lib_archive,
+        )?;
         let mut build_result = pipeline::run_sequential_build_with_optional_framework_libs(
             &compiler,
             &linker,
@@ -556,7 +556,7 @@ impl BuildOrchestrator for Rp2040Orchestrator {
             &support_link_inputs,
             lib_deps_plan,
             Some(&lib_env),
-            Some(&framework_library_sources),
+            Some(&framework_archive_sources),
             TargetArchitecture::Arm,
             "RP2040",
             start,

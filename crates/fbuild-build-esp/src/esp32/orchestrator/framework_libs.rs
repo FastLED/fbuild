@@ -53,6 +53,7 @@ pub(super) struct FwLibsContext {
     pub compile_cwd: Option<PathBuf>,
     pub backend: Arc<dyn LibCompileBackend>,
     pub cache: FrameworkLibraryCache,
+    pub archive_override: Option<bool>,
 }
 
 /// One selected library that yields an archive (or may), in selection order.
@@ -65,6 +66,7 @@ enum FwLibEntry {
         index: usize,
         sources: Vec<PathBuf>,
         marker: PathBuf,
+        archive: bool,
     },
 }
 
@@ -80,7 +82,7 @@ pub(super) struct FwLibsPlan {
 /// Result of [`FwLibsPlan::compile`]: one outcome per [`FwLibEntry::Compile`]
 /// (in entry order), plus the compile's own wall time.
 pub(super) struct FwLibsCompiled {
-    outcomes: Vec<Result<Option<PathBuf>>>,
+    outcomes: Vec<Result<Vec<PathBuf>>>,
     elapsed: Duration,
 }
 
@@ -104,6 +106,7 @@ pub(super) fn prepare_framework_libs(
     selected_libraries: &[fbuild_packages::library::FrameworkLibrary],
     already_compiled: &HashSet<String>,
     build_log: &mut fbuild_core::BuildLog,
+    archive_override: Option<bool>,
 ) -> Result<FwLibsPlan> {
     use fbuild_packages::Toolchain;
 
@@ -177,6 +180,7 @@ pub(super) fn prepare_framework_libs(
         // project-independent keys.
         backend: Arc::new(crate::compile_backend::EmbeddedLibBackend),
         cache,
+        archive_override,
     };
     let mut plan = FwLibsPlan::new(
         ctx,
@@ -223,7 +227,11 @@ impl FwLibsPlan {
         if clean_only {
             return Ok(Self::empty(Duration::ZERO));
         }
-        let hydrate_outcome = ctx.cache.hydrate(&ctx.build_dir);
+        let hydrate_outcome = if ctx.archive_override == Some(false) {
+            Ok(0)
+        } else {
+            ctx.cache.hydrate(&ctx.build_dir)
+        };
         build_log.push(hydrate_summary(&hydrate_outcome));
         match hydrate_outcome {
             Ok(copied) if copied > 0 => tracing::info!(
@@ -245,7 +253,12 @@ impl FwLibsPlan {
 
             // Check if archive already exists
             let archive = ctx.build_dir.join(format!("lib{}.a", lib_name));
-            if archive.exists() {
+            let archive_enabled = fbuild_packages::library::library_info::InstalledLibrary::new(
+                &library.dir,
+                &library.name,
+            )
+            .archive_enabled(ctx.archive_override)?;
+            if archive_enabled && archive.exists() {
                 if perf.is_active() {
                     perf.checkpoint(format!("fw-lib-cache-hit name={} index={}", lib_name, seen));
                 }
@@ -291,6 +304,7 @@ impl FwLibsPlan {
                 ));
             }
             entries.push(FwLibEntry::Compile {
+                archive: archive_enabled,
                 name: lib_name,
                 index: seen,
                 sources: sources.clone(),
@@ -317,8 +331,13 @@ impl FwLibsPlan {
         };
         let compiles = self.entries.iter().filter_map(|entry| match entry {
             FwLibEntry::Cached { .. } => None,
-            FwLibEntry::Compile { name, sources, .. } => Some(async move {
-                fbuild_packages::library::library_compiler::compile_library_gated(
+            FwLibEntry::Compile {
+                name,
+                sources,
+                archive,
+                ..
+            } => Some(async move {
+                fbuild_packages::library::library_compiler::compile_library_link_inputs_gated(
                     name,
                     sources,
                     &ctx.include_dirs,
@@ -334,6 +353,7 @@ impl FwLibsPlan {
                     ctx.compile_cwd.clone(),
                     Some(ctx.backend.clone()),
                     None,
+                    *archive,
                 )
                 .await
             }),
@@ -386,29 +406,32 @@ impl FwLibsPlan {
                 ))
             });
             match outcome {
-                Ok(Some(archive)) => {
+                Ok(inputs) => {
                     let _ = std::fs::remove_file(&marker);
-                    match ctx.cache.store_archive(&archive) {
-                        Ok(()) => stored += 1,
-                        Err(error) => {
-                            tracing::warn!("failed to cache framework library {}: {}", name, error)
+                    for archive in &inputs {
+                        if archive
+                            .extension()
+                            .is_some_and(|extension| extension == "a")
+                        {
+                            match ctx.cache.store_archive(archive) {
+                                Ok(()) => stored += 1,
+                                Err(error) => {
+                                    tracing::warn!(
+                                        "failed to cache framework library {}: {}",
+                                        name,
+                                        error
+                                    )
+                                }
+                            }
                         }
                     }
-                    archives.push(archive);
+                    archives.extend(inputs);
                     if perf.is_active() {
                         perf.checkpoint(format!(
                             "fw-lib-compile-finish name={} index={} count={}",
                             name,
                             index,
                             archives.len()
-                        ));
-                    }
-                }
-                Ok(None) => {
-                    if perf.is_active() {
-                        perf.checkpoint(format!(
-                            "fw-lib-header-only name={} index={}",
-                            name, index
                         ));
                     }
                 }

@@ -11,6 +11,9 @@
 mod parser;
 #[cfg(test)]
 mod tests;
+#[cfg(test)]
+#[path = "tests_library_archive.rs"]
+mod tests_library_archive;
 mod values;
 mod variables;
 
@@ -249,6 +252,26 @@ impl PlatformIOConfig {
         match config.get("lib_deps") {
             Some(deps) => Ok(parse_lib_deps(deps)),
             None => Ok(Vec::new()),
+        }
+    }
+
+    /// Explicit library archive policy. An absent option leaves each library's
+    /// `build.libArchive` manifest setting in control (defaulting to true).
+    pub fn get_lib_archive(&self, env_name: &str) -> fbuild_core::Result<Option<bool>> {
+        let config = self.get_env_config(env_name)?;
+        let Some(value) = config.get("lib_archive") else {
+            return Ok(None);
+        };
+        match strip_inline_comment(value)
+            .trim()
+            .to_ascii_lowercase()
+            .as_str()
+        {
+            "yes" | "true" | "1" | "on" | "y" | "t" => Ok(Some(true)),
+            "no" | "false" | "0" | "off" | "n" | "f" => Ok(Some(false)),
+            _ => Err(fbuild_core::FbuildError::ConfigError(format!(
+                "lib_archive in environment '{env_name}' must be a boolean"
+            ))),
         }
     }
 

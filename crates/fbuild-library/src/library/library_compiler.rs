@@ -194,7 +194,7 @@ pub async fn compile_library_with_jobs(
     clippy::too_many_lines,
     reason = "baseline, zackees/ci.yml#229"
 )]
-pub async fn compile_library_gated(
+pub async fn compile_library_link_inputs_gated(
     name: &str,
     source_files: &[PathBuf],
     include_dirs: &[PathBuf],
@@ -209,22 +209,21 @@ pub async fn compile_library_gated(
     compiler_cache: Option<&Path>,
     compile_cwd: Option<PathBuf>,
     backend: Option<std::sync::Arc<dyn LibCompileBackend>>,
-    // `Some` overrides the TU-duration history root (tests only); `None`
-    // uses the real `fbuild_paths::get_cache_root()` (FastLED/fbuild#1564).
+    // `Some` overrides the TU-history root; `None` uses the cache root (#1564).
     history_root: Option<&Path>,
-) -> Result<Option<PathBuf>> {
+    archive: bool,
+) -> Result<Vec<PathBuf>> {
     let history_root_owned = history_root
         .map(Path::to_path_buf)
         .unwrap_or_else(fbuild_paths::get_cache_root);
     if source_files.is_empty() {
         tracing::debug!("library {} is header-only, skipping compile", name);
-        return Ok(None);
+        return Ok(Vec::new());
     }
 
     let obj_dir = output_dir.join("obj");
     std::fs::create_dir_all(&obj_dir)?;
 
-    // Pre-create all output directories (must be done before parallel compilation)
     for source in source_files {
         let obj = object_path(source, &obj_dir);
         if let Some(parent) = obj.parent() {
@@ -232,10 +231,8 @@ pub async fn compile_library_gated(
         }
     }
 
-    // Build include flags once (shared across all compilations)
     let include_flags = build_include_flags(include_dirs, output_dir).await?;
 
-    // Pre-compute C-safe flags once
     let c_safe_flags: Vec<String> = c_flags
         .iter()
         .filter(|f| !is_cxx_only_flag(f))
@@ -243,12 +240,7 @@ pub async fn compile_library_gated(
         .collect();
 
     let cpp_flags = cpp_flags.to_vec();
-
-    // When opted in, relativize project-rooted path flags (`-I`, `--sysroot`,
-    // ...) to the workspace once. Paths outside the workspace (toolchain,
-    // SDK) are already project-independent and pass through unchanged. This
-    // keeps the per-TU rebuild signature and the zccache key project-stable
-    // (FastLED/fbuild#952).
+    // Normalize project-rooted paths once for stable compiler/cache keys (#952).
     let (include_flags, c_safe_flags, cpp_flags) = match compile_cwd.as_deref() {
         Some(cwd) => (
             fbuild_core::path::normalize_flags_for_compile_cwd(&include_flags, cwd),
@@ -283,7 +275,7 @@ pub async fn compile_library_gated(
     let archive_path = output_dir.join(format!("lib{}.a", name));
 
     if stale_sources.is_empty()
-        && archive_is_up_to_date(&archive_path, &all_objects).unwrap_or(false)
+        && (!archive || archive_is_up_to_date(&archive_path, &all_objects).unwrap_or(false))
     {
         tracing::info!(
             "library {} is up to date: {} files -> {}",
@@ -291,7 +283,11 @@ pub async fn compile_library_gated(
             all_objects.len(),
             archive_path.display()
         );
-        return Ok(Some(archive_path));
+        return Ok(if archive {
+            vec![archive_path]
+        } else {
+            all_objects
+        });
     }
 
     let mut stale_sources = stale_sources;
@@ -402,6 +398,10 @@ pub async fn compile_library_gated(
     let mut all_objects = all_objects;
     all_objects.sort(); // deterministic archive
 
+    if !archive {
+        return Ok(all_objects);
+    }
+
     tracing::info!(
         "archiving library {}: {} objects -> {}",
         name,
@@ -418,7 +418,48 @@ pub async fn compile_library_gated(
         archive_path.display()
     );
 
-    Ok(Some(archive_path))
+    Ok(vec![archive_path])
+}
+
+/// Compile an archived library, preserving the default API for existing callers.
+#[allow(clippy::too_many_arguments)]
+pub async fn compile_library_gated(
+    name: &str,
+    source_files: &[PathBuf],
+    include_dirs: &[PathBuf],
+    gcc_path: &Path,
+    gxx_path: &Path,
+    ar_path: &Path,
+    c_flags: &[String],
+    cpp_flags: &[String],
+    output_dir: &Path,
+    verbose: bool,
+    gate: &JobGate,
+    compiler_cache: Option<&Path>,
+    compile_cwd: Option<PathBuf>,
+    backend: Option<std::sync::Arc<dyn LibCompileBackend>>,
+    history_root: Option<&Path>,
+) -> Result<Option<PathBuf>> {
+    compile_library_link_inputs_gated(
+        name,
+        source_files,
+        include_dirs,
+        gcc_path,
+        gxx_path,
+        ar_path,
+        c_flags,
+        cpp_flags,
+        output_dir,
+        verbose,
+        gate,
+        compiler_cache,
+        compile_cwd,
+        backend,
+        history_root,
+        true,
+    )
+    .await
+    .map(|inputs| inputs.into_iter().next())
 }
 
 /// Compile a single source file, returning its object path.
