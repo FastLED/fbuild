@@ -203,7 +203,7 @@ pub fn hash_tree(root: &Path) -> io::Result<ContentManifest> {
 
 fn scan(root: &Path, hash: bool) -> io::Result<ContentManifest> {
     let mut entries = Vec::new();
-    walk(root, root, hash, &mut entries)?;
+    walk(root, Path::new(""), hash, &mut entries)?;
     entries.sort_by(|a, b| a.path.cmp(&b.path));
     Ok(ContentManifest {
         schema: SCHEMA,
@@ -212,16 +212,17 @@ fn scan(root: &Path, hash: bool) -> io::Result<ContentManifest> {
 }
 
 fn walk(root: &Path, dir: &Path, hash: bool, entries: &mut Vec<Entry>) -> io::Result<()> {
-    for child in fs::read_dir(dir)? {
-        let path = child?.path();
-        let relative = path.strip_prefix(root).map_err(io::Error::other)?;
+    for child in fs::read_dir(root.join(dir))? {
+        let child = child?;
+        let relative = dir.join(child.file_name());
+        let path = child.path();
         if relative == Path::new(SIDECAR) || relative == Path::new(".install_complete") {
             continue;
         }
         let metadata = fs::symlink_metadata(&path)?;
         if metadata.is_dir() {
             entries.push(Entry {
-                path: format!("{}/", portable_path(relative)?),
+                path: format!("{}/", portable_path(&relative)?),
                 size: 0,
                 sha256: if hash {
                     format!("{:x}", Sha256::digest([]))
@@ -231,7 +232,7 @@ fn walk(root: &Path, dir: &Path, hash: bool, entries: &mut Vec<Entry>) -> io::Re
                 exec: executable(&metadata),
                 symlink_target: None,
             });
-            walk(root, &path, hash, entries)?;
+            walk(root, &relative, hash, entries)?;
             continue;
         }
         let target = if metadata.is_symlink() {
@@ -247,7 +248,7 @@ fn walk(root: &Path, dir: &Path, hash: bool, entries: &mut Vec<Entry>) -> io::Re
             return Err(io::Error::other("unsupported package file type"));
         };
         let mut entry = Entry {
-            path: portable_path(relative)?,
+            path: portable_path(&relative)?,
             size: target.as_ref().map_or(metadata.len(), |s| s.len() as u64),
             exec: target.is_none() && executable(&metadata),
             symlink_target: target,
