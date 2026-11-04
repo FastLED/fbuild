@@ -44,7 +44,7 @@ pub(super) fn already_compiled(
 /// framework libraries (selection order), then local `lib/` libraries.
 pub(super) fn link_order<A>(
     lib_deps: Vec<A>,
-    project_library: Option<A>,
+    project_library: Vec<A>,
     framework_libs: Vec<A>,
     local_libs: Vec<A>,
 ) -> Vec<A> {
@@ -72,7 +72,7 @@ pub(super) struct LibraryJobs<LD, PL, LL, B> {
 /// Everything the pool compiled; see [`link_order`] for the archives.
 pub(super) struct PoolOutput<A> {
     pub lib_deps: Vec<A>,
-    pub project_library: Option<A>,
+    pub project_library: Vec<A>,
     pub framework_libs: FwLibsCompiled,
     pub core: ParallelCompileResult,
     pub sketch: ParallelCompileResult,
@@ -101,7 +101,7 @@ where
     S: AsRef<Path> + Send + Sync,
     T: AsRef<Path> + Send + Sync,
     LD: Future<Output = Result<Vec<A>>>,
-    PL: Future<Output = Result<Option<A>>>,
+    PL: Future<Output = Result<Vec<A>>>,
     LL: Future<Output = Result<Vec<A>>>,
     B: Future<Output = Result<Duration>>,
 {

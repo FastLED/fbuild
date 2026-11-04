@@ -28,6 +28,7 @@ pub(super) async fn compile_local_libraries(
     gate: &JobGate,
     verbose: bool,
     compiler_cache: Option<&Path>,
+    archive_override: Option<bool>,
 ) -> Result<Vec<PathBuf>> {
     use fbuild_packages::Toolchain;
 
@@ -40,20 +41,25 @@ pub(super) async fn compile_local_libraries(
     let gcc_path = toolchain.get_gcc_path();
     let gxx_path = toolchain.get_gxx_path();
 
-    let compiles = libraries
-        .iter()
-        .filter(|library| !library.source_files.is_empty())
-        .map(|library| {
-            let lib_build_dir = build_dir.join("lib").join(&library.name);
-            tracing::info!(
-                "compiling local library '{}': {} source files",
-                library.name,
-                library.source_files.len()
-            );
-            let (c_flags, cpp_flags) = (&c_flags, &cpp_flags);
-            let (gcc_path, gxx_path) = (&gcc_path, &gxx_path);
-            async move {
-                let result = fbuild_packages::library::library_compiler::compile_library_gated(
+    let compiles =
+        libraries
+            .iter()
+            .filter(|library| !library.source_files.is_empty())
+            .map(|library| {
+                let lib_build_dir = build_dir.join("lib").join(&library.name);
+                tracing::info!(
+                    "compiling local library '{}': {} source files",
+                    library.name,
+                    library.source_files.len()
+                );
+                let (c_flags, cpp_flags) = (&c_flags, &cpp_flags);
+                let (gcc_path, gxx_path) = (&gcc_path, &gxx_path);
+                async move {
+                    let result = async {
+                let archive = fbuild_packages::library::library_info::InstalledLibrary::new(
+                    &library.dir, &library.name,
+                ).archive_enabled(archive_override)?;
+                fbuild_packages::library::library_compiler::compile_library_link_inputs_gated(
                     &library.name,
                     &library.source_files,
                     include_dirs,
@@ -69,19 +75,20 @@ pub(super) async fn compile_local_libraries(
                     None,
                     None,
                     None,
+                    archive,
                 )
-                .await;
-                (library.name.as_str(), result)
-            }
-        });
+                .await
+                }.await;
+                    (library.name.as_str(), result)
+                }
+            });
     // join_all runs every compile to completion even if one fails.
     let outcomes = futures::future::join_all(compiles).await;
 
     let mut archives = Vec::new();
     for (lib_name, outcome) in outcomes {
         match outcome {
-            Ok(Some(archive)) => archives.push(archive),
-            Ok(None) => {} // header-only
+            Ok(inputs) => archives.extend(inputs),
             Err(e) => {
                 return Err(fbuild_core::FbuildError::BuildFailed(format!(
                     "local library '{}' failed to compile: {}",
@@ -187,7 +194,8 @@ impl ProjectLibrary {
         verbose: bool,
         compiler_cache: Option<&Path>,
         gate: &JobGate,
-    ) -> Result<Option<PathBuf>> {
+        archive_override: Option<bool>,
+    ) -> Result<Vec<PathBuf>> {
         use fbuild_packages::Toolchain;
 
         let gcc_path = toolchain.get_gcc_path();
@@ -203,13 +211,14 @@ impl ProjectLibrary {
             jobs: self.jobs,
             compiler_cache,
         };
-        crate::pipeline::compile_project_as_library(
+        crate::pipeline::compile_project_as_library_link_inputs(
             project_dir,
             src_dir,
             build_dir,
             &env,
             &self.existing_lib_names,
             gate,
+            archive_override,
         )
         .await
     }

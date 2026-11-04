@@ -173,6 +173,18 @@ original issue framing ("fixed-point over include closure — typically 2–3
 iterations") was wrong; we match PIO's 2-pass semantics exactly so users
 who flip between PlatformIO and fbuild see the same library set.
 
+## Archive policy
+
+An explicit environment `lib_archive` value overrides a library's
+`library.json` `build.libArchive` value. Without either setting, existing
+archive behavior is preserved. A disabled library archive contributes all
+of its object files directly to the link, including when an older archive
+already exists. Core archives keep their separate extraction policy.
+
+Changing either configuration source invalidates the build fast path.
+Framework-library ownership is retained when choosing which sources may
+enter a shared archive, so one library's opt-out does not change another's.
+
 ## Cache key
 
 `resolve_cached` (see `crates/fbuild-library-select/src/cache.rs`) hashes:

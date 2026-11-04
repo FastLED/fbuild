@@ -103,6 +103,31 @@ impl InstalledLibrary {
     pub fn archive_path(&self) -> PathBuf {
         self.build_dir.join(format!("lib{}.a", self.name))
     }
+
+    /// Environment policy takes precedence over `build.libArchive`; absent
+    /// both, libraries retain the default archive/extraction semantics.
+    pub fn archive_enabled(&self, environment: Option<bool>) -> fbuild_core::Result<bool> {
+        if let Some(enabled) = environment {
+            return Ok(enabled);
+        }
+        let manifest = self.lib_dir.join("library.json");
+        let content = match std::fs::read_to_string(&manifest) {
+            Ok(content) => content,
+            Err(error) if error.kind() == std::io::ErrorKind::NotFound => return Ok(true),
+            Err(error) => return Err(error.into()),
+        };
+        let data: serde_json::Value = serde_json::from_str(&content).map_err(|error| {
+            fbuild_core::FbuildError::ConfigError(format!("{}: {error}", manifest.display()))
+        })?;
+        match data.get("build").and_then(|build| build.get("libArchive")) {
+            None => Ok(true),
+            Some(serde_json::Value::Bool(enabled)) => Ok(*enabled),
+            Some(_) => Err(fbuild_core::FbuildError::ConfigError(format!(
+                "{}: build.libArchive must be a boolean",
+                manifest.display()
+            ))),
+        }
+    }
 }
 
 /// Recursively collect source files, skipping example/test directories.

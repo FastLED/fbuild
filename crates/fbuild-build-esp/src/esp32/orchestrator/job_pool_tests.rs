@@ -15,7 +15,7 @@ use crate::flag_overlay::LanguageExtraFlags;
 fn link_order_is_lib_deps_project_framework_then_local() {
     let order = link_order(
         vec!["libfastled.a", "libzlib.a"],
-        Some("libproject.a"),
+        vec!["libproject.a"],
         vec!["libfs.a", "libwifi.a"],
         vec!["libmine.a"],
     );
@@ -31,7 +31,7 @@ fn link_order_is_lib_deps_project_framework_then_local() {
         ]
     );
     assert_eq!(
-        link_order(Vec::new(), None, vec!["libfs.a"], Vec::new()),
+        link_order(Vec::new(), Vec::new(), vec!["libfs.a"], Vec::new()),
         ["libfs.a"]
     );
 }
@@ -156,7 +156,7 @@ async fn run_pool(jobs: usize) -> (usize, Vec<String>) {
             .await?;
             Ok(archive.into_iter().collect())
         },
-        project_library: async { Ok(None) },
+        project_library: async { Ok(Vec::new()) },
         local_libs: async { Ok(Vec::new()) },
         boot_artifacts: async { Ok(Duration::ZERO) },
     };

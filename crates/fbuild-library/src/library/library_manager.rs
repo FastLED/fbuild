@@ -13,6 +13,10 @@ use super::library_downloader;
 use super::library_info::InstalledLibrary;
 use super::library_spec::LibrarySpec;
 
+#[cfg(test)]
+#[path = "archive_policy_tests.rs"]
+mod archive_policy_tests;
+
 /// Module-level fallback runtime for sync bridge entry points.
 ///
 /// Constructed lazily on first sync invocation that occurs outside an
@@ -146,9 +150,20 @@ struct PlannedLibrary {
     name: String,
     sources: Vec<PathBuf>,
     build_dir: PathBuf,
+    archive: bool,
 }
 
 impl LibraryCompilePlan {
+    /// An explicit environment option overrides each library manifest.
+    pub fn with_archive_override(mut self, enabled: Option<bool>) -> Self {
+        if let Some(enabled) = enabled {
+            for library in &mut self.libraries {
+                library.archive = enabled;
+            }
+        }
+        self
+    }
+
     /// Whether there is nothing to compile.
     pub fn is_empty(&self) -> bool {
         self.libraries.is_empty()
@@ -175,7 +190,7 @@ impl LibraryCompilePlan {
         let plan = &self;
         // join_all runs every compile to completion even if one fails.
         let archives = futures::future::join_all(plan.libraries.iter().map(|lib| async move {
-            library_compiler::compile_library_gated(
+            library_compiler::compile_library_link_inputs_gated(
                 &lib.name,
                 &lib.sources,
                 &plan.all_include_dirs,
@@ -191,6 +206,7 @@ impl LibraryCompilePlan {
                 None,
                 None,
                 None,
+                lib.archive,
             )
             .await
         }))
@@ -233,17 +249,21 @@ pub async fn resolve_libraries(
 
     let libraries = installed
         .iter()
-        .filter_map(|lib| {
+        .map(|lib| {
             if lib.is_header_only() {
                 tracing::info!("library {} is header-only", lib.name);
-                return None;
+                return Ok(None);
             }
-            Some(PlannedLibrary {
+            Ok(Some(PlannedLibrary {
                 name: lib.name.clone(),
                 sources: lib.get_source_files(),
                 build_dir: lib.build_dir.clone(),
-            })
+                archive: lib.archive_enabled(None)?,
+            }))
         })
+        .collect::<Result<Vec<_>>>()?
+        .into_iter()
+        .flatten()
         .collect();
 
     Ok(ResolvedLibraries {
@@ -871,6 +891,7 @@ mod tests {
             name: name.to_string(),
             sources,
             build_dir: PathBuf::from("build").join(name),
+            archive: true,
         };
         let plan = LibraryCompilePlan {
             libraries: vec![

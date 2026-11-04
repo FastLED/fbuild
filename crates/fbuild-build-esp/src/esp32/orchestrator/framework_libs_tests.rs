@@ -120,6 +120,7 @@ impl Fixture {
     fn ctx(&self) -> FwLibsContext {
         let root = self.tmp.path();
         FwLibsContext {
+            archive_override: None,
             build_dir: self.build_dir().into_path_buf(),
             include_dirs: Vec::new(),
             gcc_path: root.join("gcc"),
@@ -311,6 +312,40 @@ fn local_archives_without_compile_identity_are_not_reused() {
         &mut fbuild_core::BuildLog::new(),
     );
     assert!(matches!(&plan.entries[..], [FwLibEntry::Compile { .. }]));
+}
+
+#[tokio::test]
+async fn archive_override_bypasses_cached_framework_archive_and_links_all_objects() {
+    let fx = Fixture::new();
+    let libraries = [fx.library("FS", &["FS.cpp", "hook.cpp"])];
+    let (warm, _) = fx.build(&libraries, &HashSet::new(), 2).await;
+    assert_eq!(warm, ["libfs.a"]);
+    let mut ctx = fx.ctx();
+    ctx.archive_override = Some(false);
+    let mut perf = PerfTimer::new("direct-framework-test");
+    let mut log = fbuild_core::BuildLog::new();
+    let plan = FwLibsPlan::new(
+        ctx,
+        &libraries,
+        &HashSet::new(),
+        false,
+        false,
+        &mut perf,
+        &mut log,
+    )
+    .unwrap();
+    assert!(matches!(
+        &plan.entries[..],
+        [FwLibEntry::Compile { archive: false, .. }]
+    ));
+    let compiled = plan.compile(&job_gate(2)).await;
+    let inputs = plan.finish(compiled, &mut perf, &mut log);
+    assert_eq!(inputs.len(), 2);
+    assert!(
+        inputs
+            .iter()
+            .all(|input| input.extension().is_some_and(|extension| extension == "o"))
+    );
 }
 
 #[test]

@@ -23,6 +23,7 @@ pub struct BuildContext {
     pub src_build_dir: PathBuf,
     pub src_dir: PathBuf,
     pub source_filter: Option<String>,
+    pub lib_archive: Option<bool>,
     pub user_flags: Vec<String>,
     pub src_flags: Vec<String>,
     pub all_src_flags: Vec<String>,
@@ -45,6 +46,7 @@ pub struct BuildContext {
 /// fast-path decision consumes the same normalized vectors as the real build.
 #[derive(serde::Serialize)]
 pub struct EffectiveBuildConfig<'a> {
+    lib_archive: Option<bool>,
     user_flags: &'a [String],
     src_flags: &'a [String],
     global_compile_overlay: EffectiveLanguageFlags<'a>,
@@ -78,6 +80,7 @@ impl BuildContext {
     /// inheritance, debug-mode expansion, unflags, scripts, and caller flags.
     pub fn effective_build_config(&self) -> EffectiveBuildConfig<'_> {
         EffectiveBuildConfig {
+            lib_archive: self.lib_archive,
             user_flags: &self.user_flags,
             src_flags: &self.src_flags,
             global_compile_overlay: (&self.global_compile_overlay).into(),
@@ -339,19 +342,14 @@ impl BuildContext {
         let build_unflags = config.get_build_unflags(env_name)?;
         let (mut user_flags, src_flags, all_src_flags) =
             apply_build_unflags(user_flags, src_flags, &build_unflags);
-        // FastLED/fbuild#574: fold caller-injected one-off flags (e.g. the
-        // QEMU-emulation `extra_build_flags`) into `user_flags` so they
-        // propagate to framework + library + sketch compiles on EVERY
-        // orchestrator. The shared sequential pipeline previously dropped them
-        // (only the ESP32 path applied them), so the same build behaved
-        // differently across platforms. Appended last so they intentionally
-        // override board/user defaults, and NOT subject to `build_unflags`.
+        // Caller flags override defaults and are not subject to unflags (#574).
         user_flags.extend(params.extra_build_flags.iter().cloned());
         remove_unflagged_tokens(&mut overlay_link_flags, &build_unflags);
         if let Some(p) = perf.as_mut() {
             p.record("flag-collect", t0.elapsed());
         }
 
+        let lib_archive = config.get_lib_archive(env_name)?;
         Ok(Self {
             config,
             board,
@@ -361,6 +359,7 @@ impl BuildContext {
             src_build_dir,
             src_dir,
             source_filter,
+            lib_archive,
             user_flags,
             src_flags,
             all_src_flags,
@@ -464,8 +463,13 @@ mod tests {
     use super::*;
 
     fn fingerprint_for_user_flags(flags: &[String]) -> String {
+        fingerprint_for_archive_policy(flags, None)
+    }
+
+    fn fingerprint_for_archive_policy(flags: &[String], lib_archive: Option<bool>) -> String {
         let empty = LanguageExtraFlags::default();
         let config = EffectiveBuildConfig {
+            lib_archive,
             user_flags: flags,
             src_flags: &[],
             global_compile_overlay: (&empty).into(),
@@ -475,6 +479,16 @@ mod tests {
             build_unflags: &[],
         };
         crate::build_fingerprint::stable_hash_json(&("platform-metadata", config)).unwrap()
+    }
+
+    #[test]
+    fn library_archive_policy_invalidates_no_op_metadata_hash() {
+        let absent = fingerprint_for_archive_policy(&[], None);
+        let archived = fingerprint_for_archive_policy(&[], Some(true));
+        let direct = fingerprint_for_archive_policy(&[], Some(false));
+        assert_ne!(absent, archived, "explicit true overrides manifest false");
+        assert_ne!(absent, direct);
+        assert_ne!(archived, direct);
     }
 
     #[test]

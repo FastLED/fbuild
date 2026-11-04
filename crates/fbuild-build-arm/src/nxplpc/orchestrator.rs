@@ -169,7 +169,6 @@ impl BuildOrchestrator for NxpLpcOrchestrator {
     async fn build(&self, params: &BuildParams) -> Result<BuildResult> {
         let start = Instant::now();
 
-        // 1-2. Parse platformio.ini, load board, setup build dirs.
         let mut ctx = pipeline::BuildContext::new(params).await?;
 
         // eh_frame strip policy â€” same convention every other orchestrator
@@ -369,9 +368,7 @@ impl BuildOrchestrator for NxpLpcOrchestrator {
         pipeline::add_extra_library_include_dirs(&extra_library_roots, &mut include_dirs);
         include_dirs.retain(|dir| !dir.as_os_str().is_empty());
 
-        // 6a. Download `lib_deps` from the registry / remote URLs before
-        // creating the compiler, so the downloaded library include directories
-        // are available during compilation (FastLED/fbuild#1276).
+        // Resolve lib_deps before compiler creation so dependency headers are visible (#1276).
         let lib_deps = ctx.config.get_lib_deps(&params.env_name)?;
         let lib_ignore = ctx
             .config
@@ -474,11 +471,14 @@ impl BuildOrchestrator for NxpLpcOrchestrator {
             jobs: crate::parallel::effective_jobs(params.jobs),
             compiler_cache: None,
         };
-        let extra_link_inputs =
-            pipeline::compile_extra_libraries(&extra_library_roots, &ctx.build_dir, &lib_env)
-                .await?;
+        let extra_link_inputs = pipeline::compile_extra_libraries_with_archive(
+            &extra_library_roots,
+            &ctx.build_dir,
+            &lib_env,
+            ctx.lib_archive,
+        )
+        .await?;
 
-        // 11. Run the shared sequential build pipeline.
         let result = pipeline::run_sequential_build_with_libs(
             &compiler,
             &linker,
