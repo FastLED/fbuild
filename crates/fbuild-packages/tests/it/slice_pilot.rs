@@ -30,7 +30,8 @@ async fn pilot_fetches_the_chip_slice_not_the_whole_bundle() {
     let path = request.fetch(dir.path()).await.expect("slice fetch");
     let size = std::fs::metadata(&path).unwrap().len();
     assert_eq!(
-        size, SLICE_BYTES,
+        size,
+        SLICE_BYTES,
         "expected the esp32s3 slice ({SLICE_BYTES} B), got {size} B at {}",
         path.display()
     );

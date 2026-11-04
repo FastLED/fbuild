@@ -840,7 +840,10 @@ async fn committed_manifest_is_accepted_and_prefers_the_bucket() {
             // Registry shards pair the bucket copy with the PlatformIO vendor
             // URL. The prebuilt ESP libs shard pairs it with the upstream
             // GitHub release instead, and carries additive per-chip slices.
-            if urls.iter().any(|u| u.contains("dl.registry.platformio.org")) {
+            if urls
+                .iter()
+                .any(|u| u.contains("dl.registry.platformio.org"))
+            {
                 assert!(urls[1].starts_with("https://dl.registry.platformio.org/download/"));
             }
             let c = resolve_with(urls[1], shard.lookup(urls[1]));
