@@ -267,6 +267,130 @@
      }
     }
    }
+  },
+  {
+   "id": "framework-arduinoespressif32-libs/3.0.4",
+   "required": false,
+   "asset": {
+    "filename": "esp32-arduino-libs-3.0.4.zip",
+    "size_bytes": 305857583,
+    "sha256": "c5c495fc3e6e11418e87ca9f6bf89cdcb0bcc38244a618f8d457d7a77f70b778",
+    "urls": [
+     "https://github.com/espressif/arduino-esp32/releases/download/3.0.4/esp32-arduino-libs-3.0.4.zip"
+    ],
+    "slices": {
+     "esp32": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/3.0.4/esp32/esp32-arduino-libs-3.0.4-esp32.tar.zst",
+      "sha256": "a4cd234781e1b170e47ab7705c6267dfde51e3bdcd70419d54c7922e22c57b27",
+      "size": 36208253,
+      "format": "tar.zst"
+     },
+     "esp32c3": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/3.0.4/esp32c3/esp32-arduino-libs-3.0.4-esp32c3.tar.zst",
+      "sha256": "7acda19aa4caa58d7ebe1d147ba0d5b7b846671e26b899a91b7501fa446f378b",
+      "size": 30481136,
+      "format": "tar.zst"
+     },
+     "esp32c6": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/3.0.4/esp32c6/esp32-arduino-libs-3.0.4-esp32c6.tar.zst",
+      "sha256": "00244ea14ef33060a1b108b14432b321ea051cd60ab491c92c888f405824442d",
+      "size": 37274824,
+      "format": "tar.zst"
+     },
+     "esp32h2": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/3.0.4/esp32h2/esp32-arduino-libs-3.0.4-esp32h2.tar.zst",
+      "sha256": "a8d3b7c6e17f338d00eb035ec9f67ffdcbf672dec2a07c842520f2bc7f054e0e",
+      "size": 35948018,
+      "format": "tar.zst"
+     },
+     "esp32s2": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/3.0.4/esp32s2/esp32-arduino-libs-3.0.4-esp32s2.tar.zst",
+      "sha256": "132b70b53de7c20c8208fb1494c0a75ccd53b532ed9c29b173937fee55c680da",
+      "size": 34796689,
+      "format": "tar.zst"
+     },
+     "esp32s3": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/3.0.4/esp32s3/esp32-arduino-libs-3.0.4-esp32s3.tar.zst",
+      "sha256": "7fe9053b0867f10cc4cafc4f2fa4be20c5c1016d357a2e5be428f02fb2714e55",
+      "size": 52845072,
+      "format": "tar.zst"
+     }
+    }
+   }
+  },
+  {
+   "id": "framework-arduinoespressif32-libs/core-4.0.0-RC1",
+   "required": false,
+   "asset": {
+    "filename": "esp32-core-4.0.0-RC1-libs.tar.xz",
+    "size_bytes": 387120020,
+    "sha256": "de1b30c11f7796151a5dfe5c0afc44e2ae8de1ae614addd413c7aaea8c3c2f55",
+    "urls": [
+     "https://github.com/espressif/arduino-esp32/releases/download/4.0.0-RC1/esp32-core-4.0.0-RC1-libs.tar.xz"
+    ],
+    "slices": {
+     "esp32": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/core-4.0.0-RC1/esp32/esp32-arduino-libs-4.0.0-RC1-esp32.tar.zst",
+      "sha256": "8f5aa6e245bd05c4558112ebb3ecfde4e60c21b6442b3cab7ac3a794d71cb276",
+      "size": 33180994,
+      "format": "tar.zst"
+     },
+     "esp32c3": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/core-4.0.0-RC1/esp32c3/esp32-arduino-libs-4.0.0-RC1-esp32c3.tar.zst",
+      "sha256": "38e96b87478b07bfad23429691539d27d22f18fe63c601783029401b3db483e6",
+      "size": 48848742,
+      "format": "tar.zst"
+     },
+     "esp32c5": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/core-4.0.0-RC1/esp32c5/esp32-arduino-libs-4.0.0-RC1-esp32c5.tar.zst",
+      "sha256": "c81b26fc2c81cb8fe76f3b792d21d40ce58754c9f64ef184eb30e5d384cb4e76",
+      "size": 66566166,
+      "format": "tar.zst"
+     },
+     "esp32c6": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/core-4.0.0-RC1/esp32c6/esp32-arduino-libs-4.0.0-RC1-esp32c6.tar.zst",
+      "sha256": "d639c8b90566e2c4201f877d3e9c0fad7072a7da6f71c22871df184589fe00ec",
+      "size": 54558270,
+      "format": "tar.zst"
+     },
+     "esp32h2": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/core-4.0.0-RC1/esp32h2/esp32-arduino-libs-4.0.0-RC1-esp32h2.tar.zst",
+      "sha256": "f32638f99db809c9c46671a37412da31327141840b4e447c769f55f72d1e8c3e",
+      "size": 51089834,
+      "format": "tar.zst"
+     },
+     "esp32p4": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/core-4.0.0-RC1/esp32p4/esp32-arduino-libs-4.0.0-RC1-esp32p4.tar.zst",
+      "sha256": "7baa21ee37b1f47647ea6dea1b4369b14d979414914026c778283d6e88b8c605",
+      "size": 93807762,
+      "format": "tar.zst"
+     },
+     "esp32p4_es": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/core-4.0.0-RC1/esp32p4_es/esp32-arduino-libs-4.0.0-RC1-esp32p4_es.tar.zst",
+      "sha256": "2dc658004c29402caa04eaf7d3e46d65bc6a39b128e0237e49286663818a6bf0",
+      "size": 94391074,
+      "format": "tar.zst"
+     },
+     "esp32s2": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/core-4.0.0-RC1/esp32s2/esp32-arduino-libs-4.0.0-RC1-esp32s2.tar.zst",
+      "sha256": "a02844797b603bad54f8dcf9ecc766fb8b0b95aceb708b6abcd63b0291e57f7f",
+      "size": 31368750,
+      "format": "tar.zst"
+     },
+     "esp32s3": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/core-4.0.0-RC1/esp32s3/esp32-arduino-libs-4.0.0-RC1-esp32s3.tar.zst",
+      "sha256": "bceff7a6254e2e98c7de80acd61aa1ffe931bf606cfcf590c870f96f9ede0a41",
+      "size": 65625329,
+      "format": "tar.zst"
+     },
+     "esp32s31": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/core-4.0.0-RC1/esp32s31/esp32-arduino-libs-4.0.0-RC1-esp32s31.tar.zst",
+      "sha256": "97a030fe44633e0c08bd41590d162468c6fe4d75f94afd141d38c81bdf43d249",
+      "size": 61906551,
+      "format": "tar.zst"
+     }
+    }
+   }
   }
  ]
 }
