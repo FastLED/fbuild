@@ -5,3 +5,4 @@
 mod disk_cache_schema_migration;
 mod lnk_e2e;
 mod qemu_linux_runtime;
+mod slice_pilot;

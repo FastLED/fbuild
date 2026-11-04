@@ -211,14 +211,20 @@ impl Esp32Framework {
 
         std::fs::create_dir_all(&tools_dir)?;
 
-        // Check for already-downloaded archive (skip re-download)
-        let archive_filename = libs_url.rsplit('/').next().unwrap_or("libs.tar.xz");
-        let archive_path = tools_dir.join(archive_filename);
-
-        if !archive_path.exists() {
-            tracing::info!("downloading ESP32 SDK libs");
-            crate::downloader::download_file(libs_url, &tools_dir).await?;
+        let version = libs_url
+            .rsplit('/')
+            .next()
+            .unwrap_or("libs")
+            .trim_start_matches("esp32-")
+            .trim_end_matches("-libs.tar.xz");
+        let archive_path = crate::FetchRequest {
+            name: "framework-arduinoespressif32-libs",
+            version,
+            url: libs_url,
+            variant: Some(mcu),
         }
+        .fetch(&tools_dir.join(".libs-archives"))
+        .await?;
 
         // Extract to a short temp path to avoid Windows MAX_PATH (260 char) limit.
         // Rooted under `~/.fbuild/{dev|prod}/tmp/esp32-framework/` so the
@@ -236,7 +242,6 @@ impl Esp32Framework {
                 .unwrap_or(0)
         );
         crate::extractor::extract(&archive_path, temp_dir.path())?;
-        let _ = std::fs::remove_file(&archive_path);
 
         merge_sdk_archive_entries(temp_dir.path(), &tools_dir)?;
 

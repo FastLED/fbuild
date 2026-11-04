@@ -62,8 +62,12 @@ impl Candidates {
 /// [`resolve_with`] using the server-side manifest (FastLED/fbuild#1810),
 /// which is consulted only when no operator mirrors are configured and the
 /// download is not to the loopback host.
+pub(crate) fn manifest_enabled(url: &str) -> bool {
+    std::env::var(MIRRORS_ENV).is_err() && !is_loopback_url(url)
+}
+
 pub(super) async fn resolve_candidates(url: &str) -> Candidates {
-    let manifest = if std::env::var(MIRRORS_ENV).is_err() && !is_loopback_url(url) {
+    let manifest = if manifest_enabled(url) {
         manifest::current().await
     } else {
         None

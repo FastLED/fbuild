@@ -561,3 +561,18 @@ impl Drop for MirrorFirstEnv {
         }
     }
 }
+
+#[tokio::test]
+async fn variant_manifest_respects_operator_mirror_opt_out() {
+    let _guard = network_test_guard().await;
+    let vendor = "https://vendor.example/esp32-3.3.5-libs.tar.xz";
+    {
+        let _mirrors = ScopedEnv::unset(MIRRORS_ENV);
+        assert!(super::manifest_enabled(vendor));
+        assert!(!super::manifest_enabled("http://127.0.0.1/libs.tar.xz"));
+    }
+    for configured in ["", "https://operator.example/"] {
+        let _mirrors = ScopedEnv::set(MIRRORS_ENV, configured);
+        assert!(!super::manifest_enabled(vendor));
+    }
+}

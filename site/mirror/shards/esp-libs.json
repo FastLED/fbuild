@@ -1,0 +1,399 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/esp-libs",
+ "version": "2026.11.04",
+ "components": [
+  {
+   "id": "framework-arduinoespressif32-libs/3.3.5",
+   "required": false,
+   "asset": {
+    "filename": "esp32-3.3.5-libs.tar.xz",
+    "size_bytes": 271802544,
+    "sha256": "394170d0dbe2c728c8985129275baea61c61d56eb976873ce4cae197a12c0ed0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/3.3.5/whole/esp32-arduino-libs-3.3.5.394170d0dbe2c728.tar.xz",
+     "https://github.com/espressif/arduino-esp32/releases/download/3.3.5/esp32-3.3.5-libs.tar.xz"
+    ],
+    "slices": {
+     "esp32": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/3.3.5/esp32/esp32-arduino-libs-3.3.5-esp32.f908b350d2ebf416.tar.zst",
+      "sha256": "f908b350d2ebf4160f68bc78b963c0e6094a71d681bb192d514a9595212c149e",
+      "size": 28195096,
+      "format": "tar.zst"
+     },
+     "esp32c3": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/3.3.5/esp32c3/esp32-arduino-libs-3.3.5-esp32c3.f94d1b60bf8bf56b.tar.zst",
+      "sha256": "f94d1b60bf8bf56b93d6ce0fa82c6df9ae77fe538f495a023d85dfd1de434d6d",
+      "size": 34895770,
+      "format": "tar.zst"
+     },
+     "esp32c5": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/3.3.5/esp32c5/esp32-arduino-libs-3.3.5-esp32c5.44d5cdd4177141f1.tar.zst",
+      "sha256": "44d5cdd4177141f165f5f702be6001202741dc631c21deb8026f90f1d6310172",
+      "size": 40794296,
+      "format": "tar.zst"
+     },
+     "esp32c6": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/3.3.5/esp32c6/esp32-arduino-libs-3.3.5-esp32c6.81cac1305d038d91.tar.zst",
+      "sha256": "81cac1305d038d9122a9daa2682a12c9deb4651da343b94c343b8f9a12a06a75",
+      "size": 40039905,
+      "format": "tar.zst"
+     },
+     "esp32h2": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/3.3.5/esp32h2/esp32-arduino-libs-3.3.5-esp32h2.7b105d571dfc537c.tar.zst",
+      "sha256": "7b105d571dfc537cecf74cb56fc519267e97cec261c01bf9eb391ccbf83563ae",
+      "size": 37215524,
+      "format": "tar.zst"
+     },
+     "esp32p4": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/3.3.5/esp32p4/esp32-arduino-libs-3.3.5-esp32p4.b1475b0d80dd924f.tar.zst",
+      "sha256": "b1475b0d80dd924f399b2af017c68e2625d9f41ae507b0741605948a30c26e5b",
+      "size": 38395428,
+      "format": "tar.zst"
+     },
+     "esp32p4_es": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/3.3.5/esp32p4_es/esp32-arduino-libs-3.3.5-esp32p4_es.3aa37f4d60f89c58.tar.zst",
+      "sha256": "3aa37f4d60f89c582a0ea82c37afeb75108160106c216fe09ef68578739d5833",
+      "size": 38206520,
+      "format": "tar.zst"
+     },
+     "esp32s2": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/3.3.5/esp32s2/esp32-arduino-libs-3.3.5-esp32s2.a3c2ca56d228f20d.tar.zst",
+      "sha256": "a3c2ca56d228f20d0501d1d690ba75b325eb0442b3d45cc2f5d7bd44d2cdc2d1",
+      "size": 26815899,
+      "format": "tar.zst"
+     },
+     "esp32s3": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/3.3.5/esp32s3/esp32-arduino-libs-3.3.5-esp32s3.6d01cf09d720d800.tar.zst",
+      "sha256": "6d01cf09d720d8008a391d48ddc3b6cdd4935b6f287207003220cea78cc706f7",
+      "size": 39790521,
+      "format": "tar.zst"
+     }
+    }
+   }
+  },
+  {
+   "id": "framework-arduinoespressif32-libs/core-3.3.12",
+   "required": false,
+   "asset": {
+    "filename": "esp32-core-3.3.12-libs.tar.xz",
+    "size_bytes": 347236084,
+    "sha256": "a62b21a0b633ba0277ca64802e873adf82de28e54925cbf2ad45d6f7c3379750",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/3.3.12/whole/esp32-arduino-libs-3.3.12.a62b21a0b633ba02.tar.xz",
+     "https://github.com/espressif/arduino-esp32/releases/download/3.3.12/esp32-core-3.3.12-libs.tar.xz"
+    ],
+    "slices": {
+     "esp32": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/3.3.12/esp32/esp32-arduino-libs-3.3.12-esp32.tar.zst",
+      "sha256": "4b9f1675815e69f5c0bc8b25ad0edd844dcb92ee4e1ce222f6494c2d3ac0f4d0",
+      "size": 36029420,
+      "format": "tar.zst"
+     },
+     "esp32c3": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/3.3.12/esp32c3/esp32-arduino-libs-3.3.12-esp32c3.tar.zst",
+      "sha256": "fad8096ea28214c25208b969979510c8c5da6f6f91021dbdc9f3d99537d9e0f0",
+      "size": 46020118,
+      "format": "tar.zst"
+     },
+     "esp32c5": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/3.3.12/esp32c5/esp32-arduino-libs-3.3.12-esp32c5.tar.zst",
+      "sha256": "d4d4e5b17fca846d1c085fadec776dfebe189d283a6618ee77e88667f194b117",
+      "size": 60172201,
+      "format": "tar.zst"
+     },
+     "esp32c6": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/3.3.12/esp32c6/esp32-arduino-libs-3.3.12-esp32c6.tar.zst",
+      "sha256": "2ba98770b52667f4dffb6a6ade2852765761f4e8d913e8535b3d41871d6f034c",
+      "size": 52497898,
+      "format": "tar.zst"
+     },
+     "esp32h2": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/3.3.12/esp32h2/esp32-arduino-libs-3.3.12-esp32h2.tar.zst",
+      "sha256": "8bb0e39c1effd0506dd13f5a4a638edfcc8985a85415dd1a99566297426a0042",
+      "size": 49083459,
+      "format": "tar.zst"
+     },
+     "esp32p4": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/3.3.12/esp32p4/esp32-arduino-libs-3.3.12-esp32p4.tar.zst",
+      "sha256": "dc03dffe89a8c61e25d891cf9e796e8f565089fef1a5381eb0bc40f3785674ba",
+      "size": 82532129,
+      "format": "tar.zst"
+     },
+     "esp32p4_es": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/3.3.12/esp32p4_es/esp32-arduino-libs-3.3.12-esp32p4_es.tar.zst",
+      "sha256": "70da8c3a3c1bcee676fba694df45f6e17369ea5e2a47cadaf8eb55de3bed57f3",
+      "size": 82211475,
+      "format": "tar.zst"
+     },
+     "esp32s2": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/3.3.12/esp32s2/esp32-arduino-libs-3.3.12-esp32s2.tar.zst",
+      "sha256": "6083b9407e82fe1962686aeb9f9aa72ac122ef222e2240b852cce9173cee2590",
+      "size": 34471957,
+      "format": "tar.zst"
+     },
+     "esp32s3": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/3.3.12/esp32s3/esp32-arduino-libs-3.3.12-esp32s3.tar.zst",
+      "sha256": "3e69bee03f83669830ce9c4ae485a3a0162a631e2c741dcc2606ebb59cf3824b",
+      "size": 72335469,
+      "format": "tar.zst"
+     }
+    }
+   }
+  },
+  {
+   "id": "framework-arduinoespressif32-libs/core-3.3.11",
+   "required": false,
+   "asset": {
+    "filename": "esp32-core-3.3.11-libs.tar.xz",
+    "size_bytes": 298739508,
+    "sha256": "3cd58bcd67cb2105c058aef8c3fbdd233e2eae07bd41b5ee80c7652a5950e512",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/core-3.3.11/whole/framework-arduinoespressif32-libs-core-3.3.11.3cd58bcd67cb2105.tar.xz",
+     "https://github.com/espressif/arduino-esp32/releases/download/3.3.11/esp32-core-3.3.11-libs.tar.xz"
+    ],
+    "slices": {
+     "esp32": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/core-3.3.11/esp32/esp32-arduino-libs-core-3.3.11-esp32.tar.zst",
+      "sha256": "f97165988c28ba122e74e505e505b95d513b6374eb3203bf60a559b2afcf4a0e",
+      "size": 29592156,
+      "format": "tar.zst"
+     },
+     "esp32c3": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/core-3.3.11/esp32c3/esp32-arduino-libs-core-3.3.11-esp32c3.tar.zst",
+      "sha256": "c96964428cc01011d206f47b169fb4d0f4a80e4209106ec61a7fa84afa40c5d4",
+      "size": 36978101,
+      "format": "tar.zst"
+     },
+     "esp32c5": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/core-3.3.11/esp32c5/esp32-arduino-libs-core-3.3.11-esp32c5.tar.zst",
+      "sha256": "b644a0b304d13ee32f5816c8dc3f19c8f41f1f22c22e9e270b8f103d94d870f0",
+      "size": 43020534,
+      "format": "tar.zst"
+     },
+     "esp32c6": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/core-3.3.11/esp32c6/esp32-arduino-libs-core-3.3.11-esp32c6.tar.zst",
+      "sha256": "793869a1adee0b9a61b8b4eae0d774e5d1f0e8e88b0d13f32164b989501d3026",
+      "size": 42202128,
+      "format": "tar.zst"
+     },
+     "esp32h2": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/core-3.3.11/esp32h2/esp32-arduino-libs-core-3.3.11-esp32h2.tar.zst",
+      "sha256": "08b3ae98d7a8fc7ba5a6a2e0e39243b8afd88335228a743370b4bafec35ef5e2",
+      "size": 39379505,
+      "format": "tar.zst"
+     },
+     "esp32p4": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/core-3.3.11/esp32p4/esp32-arduino-libs-core-3.3.11-esp32p4.tar.zst",
+      "sha256": "ca514930fe62179a22ba5a4f4bb1d90db0e6091d4adddcc36f46f2796bc7f139",
+      "size": 46751115,
+      "format": "tar.zst"
+     },
+     "esp32p4_es": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/core-3.3.11/esp32p4_es/esp32-arduino-libs-core-3.3.11-esp32p4_es.tar.zst",
+      "sha256": "5f1f09b112fb08b4e985e79762be3a08402fea0bef2a9f96d4636f6362285e31",
+      "size": 46507431,
+      "format": "tar.zst"
+     },
+     "esp32s2": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/core-3.3.11/esp32s2/esp32-arduino-libs-core-3.3.11-esp32s2.tar.zst",
+      "sha256": "f004823a67d34e14749083bf9dca7543e5ea523f8da085e2f579ef2afb51b360",
+      "size": 28221093,
+      "format": "tar.zst"
+     },
+     "esp32s3": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/core-3.3.11/esp32s3/esp32-arduino-libs-core-3.3.11-esp32s3.tar.zst",
+      "sha256": "3a5c21f5872e6c5ada3dddfc2e52324de9b05cbff62f663223bfb7f2bf4f821e",
+      "size": 42709354,
+      "format": "tar.zst"
+     }
+    }
+   }
+  },
+  {
+   "id": "framework-arduinoespressif32-libs/core-4.0.0-RC1",
+   "required": false,
+   "asset": {
+    "filename": "esp32-core-4.0.0-RC1-libs.tar.xz",
+    "size_bytes": 387120020,
+    "sha256": "de1b30c11f7796151a5dfe5c0afc44e2ae8de1ae614addd413c7aaea8c3c2f55",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/core-4.0.0-RC1/whole/framework-arduinoespressif32-libs-core-4.0.0-RC1.de1b30c11f779615.tar.xz",
+     "https://github.com/espressif/arduino-esp32/releases/download/4.0.0-RC1/esp32-core-4.0.0-RC1-libs.tar.xz"
+    ],
+    "slices": {
+     "esp32": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/core-4.0.0-RC1/esp32/esp32-arduino-libs-4.0.0-RC1-esp32.tar.zst",
+      "sha256": "8f5aa6e245bd05c4558112ebb3ecfde4e60c21b6442b3cab7ac3a794d71cb276",
+      "size": 33180994,
+      "format": "tar.zst"
+     },
+     "esp32c3": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/core-4.0.0-RC1/esp32c3/esp32-arduino-libs-4.0.0-RC1-esp32c3.tar.zst",
+      "sha256": "38e96b87478b07bfad23429691539d27d22f18fe63c601783029401b3db483e6",
+      "size": 48848742,
+      "format": "tar.zst"
+     },
+     "esp32c5": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/core-4.0.0-RC1/esp32c5/esp32-arduino-libs-4.0.0-RC1-esp32c5.tar.zst",
+      "sha256": "c81b26fc2c81cb8fe76f3b792d21d40ce58754c9f64ef184eb30e5d384cb4e76",
+      "size": 66566166,
+      "format": "tar.zst"
+     },
+     "esp32c6": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/core-4.0.0-RC1/esp32c6/esp32-arduino-libs-4.0.0-RC1-esp32c6.tar.zst",
+      "sha256": "d639c8b90566e2c4201f877d3e9c0fad7072a7da6f71c22871df184589fe00ec",
+      "size": 54558270,
+      "format": "tar.zst"
+     },
+     "esp32h2": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/core-4.0.0-RC1/esp32h2/esp32-arduino-libs-4.0.0-RC1-esp32h2.tar.zst",
+      "sha256": "f32638f99db809c9c46671a37412da31327141840b4e447c769f55f72d1e8c3e",
+      "size": 51089834,
+      "format": "tar.zst"
+     },
+     "esp32p4": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/core-4.0.0-RC1/esp32p4/esp32-arduino-libs-4.0.0-RC1-esp32p4.tar.zst",
+      "sha256": "7baa21ee37b1f47647ea6dea1b4369b14d979414914026c778283d6e88b8c605",
+      "size": 93807762,
+      "format": "tar.zst"
+     },
+     "esp32p4_es": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/core-4.0.0-RC1/esp32p4_es/esp32-arduino-libs-4.0.0-RC1-esp32p4_es.tar.zst",
+      "sha256": "2dc658004c29402caa04eaf7d3e46d65bc6a39b128e0237e49286663818a6bf0",
+      "size": 94391074,
+      "format": "tar.zst"
+     },
+     "esp32s2": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/core-4.0.0-RC1/esp32s2/esp32-arduino-libs-4.0.0-RC1-esp32s2.tar.zst",
+      "sha256": "a02844797b603bad54f8dcf9ecc766fb8b0b95aceb708b6abcd63b0291e57f7f",
+      "size": 31368750,
+      "format": "tar.zst"
+     },
+     "esp32s3": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/core-4.0.0-RC1/esp32s3/esp32-arduino-libs-4.0.0-RC1-esp32s3.tar.zst",
+      "sha256": "bceff7a6254e2e98c7de80acd61aa1ffe931bf606cfcf590c870f96f9ede0a41",
+      "size": 65625329,
+      "format": "tar.zst"
+     },
+     "esp32s31": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/core-4.0.0-RC1/esp32s31/esp32-arduino-libs-4.0.0-RC1-esp32s31.tar.zst",
+      "sha256": "97a030fe44633e0c08bd41590d162468c6fe4d75f94afd141d38c81bdf43d249",
+      "size": 61906551,
+      "format": "tar.zst"
+     }
+    }
+   }
+  },
+  {
+   "id": "framework-arduinoespressif32-libs/5.3",
+   "required": false,
+   "asset": {
+    "filename": "esp32-arduino-libs-idf-release_v5.3-083aad99-v2.zip",
+    "size_bytes": 341175680,
+    "sha256": "4c6cae2e34df7e85a149615a6c18169777faf9460f708fc51d93616a117973c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/5.3/whole/framework-arduinoespressif32-libs-5.3.4c6cae2e34df7e85.zip",
+     "https://github.com/espressif/esp32-arduino-lib-builder/releases/download/idf-release_v5.3/esp32-arduino-libs-idf-release_v5.3-083aad99-v2.zip"
+    ],
+    "slices": {
+     "esp32": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/5.3/esp32/esp32-arduino-libs-5.3-esp32.tar.zst",
+      "sha256": "2928baf2bdba1b6332690b58deed3a26187ac6be4d46cbcd19030a431a027acb",
+      "size": 29429919,
+      "format": "tar.zst"
+     },
+     "esp32c3": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/5.3/esp32c3/esp32-arduino-libs-5.3-esp32c3.tar.zst",
+      "sha256": "618146b4bcd5c262c5a3b35eafbdb38c90f1953de16f7f0245177cf86fc84cb3",
+      "size": 38139234,
+      "format": "tar.zst"
+     },
+     "esp32c6": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/5.3/esp32c6/esp32-arduino-libs-5.3-esp32c6.tar.zst",
+      "sha256": "8abd95ee4d212c4a2464729e1bb8c7d99c8a73d260932298caeabbdb50d6bc6e",
+      "size": 45454902,
+      "format": "tar.zst"
+     },
+     "esp32h2": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/5.3/esp32h2/esp32-arduino-libs-5.3-esp32h2.tar.zst",
+      "sha256": "ecfc88468f1f556887b26088627586f76cff1a1d4631c0382d5526badfe3e3ca",
+      "size": 36905639,
+      "format": "tar.zst"
+     },
+     "esp32p4": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/5.3/esp32p4/esp32-arduino-libs-5.3-esp32p4.tar.zst",
+      "sha256": "a2ee9412c6f8971c06b86f32fb7868b0861324f64a94036581d65caeb956969c",
+      "size": 29150343,
+      "format": "tar.zst"
+     },
+     "esp32s2": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/5.3/esp32s2/esp32-arduino-libs-5.3-esp32s2.tar.zst",
+      "sha256": "31d72a5abde658496de683f0e2d5c0ce852337d69f159b30721fa810e8646337",
+      "size": 27549885,
+      "format": "tar.zst"
+     },
+     "esp32s3": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/5.3/esp32s3/esp32-arduino-libs-5.3-esp32s3.tar.zst",
+      "sha256": "816ee2d6ec01ddbade1c3a27e220bba7f48fa0e448000993e372ed9147fdfb34",
+      "size": 46420845,
+      "format": "tar.zst"
+     }
+    }
+   }
+  },
+  {
+   "id": "framework-arduinoespressif32-libs/3.0.4",
+   "required": false,
+   "asset": {
+    "filename": "esp32-arduino-libs-3.0.4.zip",
+    "size_bytes": 305857583,
+    "sha256": "c5c495fc3e6e11418e87ca9f6bf89cdcb0bcc38244a618f8d457d7a77f70b778",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/3.0.4/whole/framework-arduinoespressif32-libs-3.0.4.c5c495fc3e6e1141.zip",
+     "https://github.com/espressif/arduino-esp32/releases/download/3.0.4/esp32-arduino-libs-3.0.4.zip"
+    ],
+    "slices": {
+     "esp32": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/3.0.4/esp32/esp32-arduino-libs-3.0.4-esp32.tar.zst",
+      "sha256": "a4cd234781e1b170e47ab7705c6267dfde51e3bdcd70419d54c7922e22c57b27",
+      "size": 36208253,
+      "format": "tar.zst"
+     },
+     "esp32c3": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/3.0.4/esp32c3/esp32-arduino-libs-3.0.4-esp32c3.tar.zst",
+      "sha256": "7acda19aa4caa58d7ebe1d147ba0d5b7b846671e26b899a91b7501fa446f378b",
+      "size": 30481136,
+      "format": "tar.zst"
+     },
+     "esp32c6": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/3.0.4/esp32c6/esp32-arduino-libs-3.0.4-esp32c6.tar.zst",
+      "sha256": "00244ea14ef33060a1b108b14432b321ea051cd60ab491c92c888f405824442d",
+      "size": 37274824,
+      "format": "tar.zst"
+     },
+     "esp32h2": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/3.0.4/esp32h2/esp32-arduino-libs-3.0.4-esp32h2.tar.zst",
+      "sha256": "a8d3b7c6e17f338d00eb035ec9f67ffdcbf672dec2a07c842520f2bc7f054e0e",
+      "size": 35948018,
+      "format": "tar.zst"
+     },
+     "esp32s2": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/3.0.4/esp32s2/esp32-arduino-libs-3.0.4-esp32s2.tar.zst",
+      "sha256": "132b70b53de7c20c8208fb1494c0a75ccd53b532ed9c29b173937fee55c680da",
+      "size": 34796689,
+      "format": "tar.zst"
+     },
+     "esp32s3": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/esp32-arduino-libs/release/3.0.4/esp32s3/esp32-arduino-libs-3.0.4-esp32s3.tar.zst",
+      "sha256": "7fe9053b0867f10cc4cafc4f2fa4be20c5c1016d357a2e5be428f02fb2714e55",
+      "size": 52845072,
+      "format": "tar.zst"
+     }
+    }
+   }
+  }
+ ]
+}

@@ -73,3 +73,23 @@ fail coverage. This policy is tracked in [#1698](https://github.com/FastLED/fbui
 - **`test_cache_status.py`** streams the unchanged Cargo test selection with JSON compiler evidence; only a completed assertion failure enables setup-soldr failure saves. Compiler errors, incomplete logs and cancellation remain blocked.
 
 - **`check_python_complexity.py`** -- Runs configured C901/RUF100 checks on every tracked Python file, including scripts excluded from normal discovery (FastLED/fbuild#1639).
+
+ESP libs slices: `uv run --no-project ci/slice_esp_libs.py SOURCE --version 3.3.5
+--out-dir OUTPUT` reads the xz once and spools payloads to temporary disk to sort
+entries. Each checksum-enabled zstd-19 slice includes its chip and all shared
+content under the upstream root. `--check` recomputes and verifies without
+writing OUTPUT. `uncompressed_bytes` counts file payload bytes; `entries`
+counts tar members. The stdout JSON includes `manifest_slices` for pasting into
+an existing libs asset's optional `slices` map. Upload keys must match
+`--slice-prefix` (default `slices/`), relative to the manifest index directory.
+The slicer never writes `site/mirror`. Pass a JSON component list with existing
+whole-asset fields plus `slices` to `gen_mirror_manifest.py --prebuilt FILE`;
+its `@esp-libs` shard preserves the whole bundle for older clients.
+
+Offline slice tests: `uv run --no-project --with zstandard python -m unittest
+ci.test_slice_esp_libs -v`. MCU slice selection is limited to SDK libs;
+archives are retained under the framework's `tools/.libs-archives/` in
+vendor-identity / package@version+chip directories. An already complete MCU
+install still skips fetching; a cached whole archive serves any MCU. Slice
+cache hits verify their size and SHA-256; integrity errors never trigger a
+whole-bundle retry. Artifacts and manifest publication remain separate steps.
