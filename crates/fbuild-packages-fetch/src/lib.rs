@@ -6,6 +6,8 @@
 //! crates build on. Re-exported (with those two) by the `fbuild-packages` facade.
 
 pub mod cache;
+mod variants;
+pub use variants::FetchRequest;
 pub mod cache_archive;
 pub mod disk_cache;
 pub mod downloader;

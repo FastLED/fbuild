@@ -180,3 +180,24 @@ class TestIncrementalHash(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestPrebuiltSlices(unittest.TestCase):
+    def test_optional_slices_leave_whole_asset_unchanged_and_manifest_v1(self):
+        from ci.gen_mirror_manifest import build_documents
+
+        whole = {
+            "urls": ["https://bucket.example/whole.tar.xz", "https://vendor.example/libs.tar.xz"],
+            "sha256": "a" * 64,
+            "size_bytes": 123,
+        }
+        slices = {"esp32s3": {"url": "slices/s3.tar.zst", "sha256": "b" * 64,
+                               "size": 42, "format": "tar.zst"}}
+        asset = {**whole, "slices": slices}
+        docs = build_documents({}, {}, "1", [{"id": "framework-arduinoespressif32-libs", "asset": asset}])
+        index = json.loads(docs["manifest.json"])
+        self.assertEqual(index["schema_version"], 1)
+        self.assertIn("@esp-libs", index["tools"])
+        parsed = json.loads(docs["shards/esp-libs.json"])["components"][0]["asset"]
+        self.assertEqual({k: parsed[k] for k in whole}, whole)
+        self.assertEqual(parsed["slices"], slices)

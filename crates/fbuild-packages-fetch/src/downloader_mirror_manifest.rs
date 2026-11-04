@@ -114,6 +114,17 @@ struct AssetDoc {
     yanked: bool,
     #[serde(default)]
     provides: Vec<String>,
+    #[serde(default)]
+    slices: Option<HashMap<String, SliceEntry>>,
+}
+
+/// An integrity-pinned, self-contained chip archive. Unknown fields remain compatible.
+#[derive(Debug, Clone, PartialEq, Eq, Deserialize)]
+pub(crate) struct SliceEntry {
+    pub url: String,
+    pub sha256: String,
+    pub size: u64,
+    pub format: String,
 }
 
 /// One artifact's fallback settings.
@@ -129,6 +140,7 @@ pub(crate) struct MirrorEntry {
     pub sha256: Option<String>,
     /// The publisher withdrew this artifact's mirrors.
     pub yanked: bool,
+    pub slices: Option<HashMap<String, SliceEntry>>,
 }
 
 /// A validated manifest, indexed by every URL it lists, plus the shards of
@@ -140,6 +152,7 @@ pub(crate) struct MirrorManifest {
     entries: Vec<Arc<MirrorEntry>>,
     shards: HashMap<String, ShardRef>,
     source: Option<ShardSource>,
+    resolved_base: Option<String>,
     loaded: Mutex<HashMap<String, Option<Arc<MirrorManifest>>>>,
 }
 
@@ -276,6 +289,12 @@ impl MirrorManifest {
             .unwrap_or_else(|e| e.into_inner())
             .get(owner)
             .cloned()
+    }
+
+    pub(crate) fn base_url(&self) -> Option<&str> {
+        self.resolved_base
+            .as_deref()
+            .or_else(|| self.source.as_ref()?.bases.first().map(String::as_str))
     }
 
     fn with_source(mut self, source: ShardSource) -> Self {
@@ -499,12 +518,32 @@ fn validate_asset(id: Option<String>, asset: AssetDoc) -> Result<MirrorEntry, St
     {
         return Err(format!("provides entry {bad:?} is not a system name"));
     }
+    if let Some(slices) = &asset.slices {
+        for (chip, slice) in slices {
+            if !chip.starts_with("esp32")
+                || !chip.bytes().all(|c| c.is_ascii_alphanumeric())
+                || !is_sha256_hex(&slice.sha256)
+                || slice.format != "tar.zst"
+                || slice.url.starts_with('/')
+                || slice.url.contains("..")
+                || slice.url.contains('\\')
+                || slice.url.contains(':')
+                || slice.url.chars().any(char::is_whitespace)
+                || slice.url.chars().any(char::is_control)
+                || slice.url.contains(['?', '#'])
+                || slice.url.is_empty()
+            {
+                return Err(format!("invalid slice {chip:?}"));
+            }
+        }
+    }
     Ok(MirrorEntry {
         id,
         systems: asset.provides,
         urls: asset.urls,
         sha256,
         yanked: asset.yanked,
+        slices: asset.slices,
     })
 }
 
@@ -612,6 +651,14 @@ pub(crate) async fn load_with(
         .map(|manifest| manifest.with_source(source))
 }
 
+fn read_cache_from(cache: &Path, sources: &[String]) -> Option<MirrorManifest> {
+    let mut manifest = read_cache(cache)?;
+    manifest.resolved_base = std::fs::read_to_string(cache.with_extension("source-url"))
+        .ok()
+        .filter(|base| sources.contains(base));
+    Some(manifest)
+}
+
 async fn load_document(
     client: &reqwest::Client,
     sources: &[String],
@@ -620,23 +667,25 @@ async fn load_document(
 ) -> Option<MirrorManifest> {
     if let Some(cache) = cache {
         if is_fresh(cache, ttl) {
-            if let Some(manifest) = read_cache(cache) {
+            if let Some(manifest) = read_cache_from(cache, sources) {
                 return Some(manifest);
             }
         }
     }
     for source in sources {
         match fetch(client, source).await {
-            Ok((bytes, manifest)) => {
+            Ok((bytes, mut manifest)) => {
+                manifest.resolved_base = Some(source.clone());
                 if let Some(cache) = cache {
                     write_cache(cache, &bytes);
+                    write_cache(&cache.with_extension("source-url"), source.as_bytes());
                 }
                 return Some(manifest);
             }
             Err(error) => tracing::warn!("mirror manifest {source}: {error}"),
         }
     }
-    cache.and_then(read_cache)
+    cache.and_then(|cache| read_cache_from(cache, sources))
 }
 
 async fn fetch(
@@ -705,5 +754,30 @@ fn write_cache(path: &Path, bytes: &[u8]) {
             "could not cache mirror manifest at {}: {error}",
             path.display()
         );
+    }
+}
+
+#[cfg(test)]
+mod slice_base_tests {
+    use super::*;
+
+    #[tokio::test]
+    async fn cached_manifest_keeps_successful_pages_base() {
+        let tmp = tempfile::tempdir().unwrap();
+        let cache = tmp.path().join("manifest.json");
+        let sources = vec![
+            "https://bucket.example/manifest.json".to_string(),
+            "https://example.github.io/fbuild/mirror/manifest.json".to_string(),
+        ];
+        std::fs::write(
+            &cache,
+            br#"{"kind":"Release","schema_version":1,"components":[]}"#,
+        )
+        .unwrap();
+        std::fs::write(cache.with_extension("source-url"), &sources[1]).unwrap();
+        let manifest = load_with(&reqwest::Client::new(), &sources, Some(&cache), CACHE_TTL)
+            .await
+            .unwrap();
+        assert_eq!(manifest.base_url(), Some(sources[1].as_str()));
     }
 }
