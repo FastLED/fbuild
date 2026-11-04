@@ -92,7 +92,8 @@ impl AsyncDaemonConnection {
     }
 
     /// Async counterpart to `DaemonConnection::deploy`.
-    #[pyo3(signature = (port=None, clean=false, skip_build=false, monitor_after=false, timeout=1800.0))]
+    #[pyo3(signature = (port=None, clean=false, skip_build=false, monitor_after=false, lease_id=None, lease_wait_ms=0, timeout=1800.0))]
+    #[allow(clippy::too_many_arguments)]
     fn deploy<'py>(
         &self,
         py: Python<'py>,
@@ -100,10 +101,19 @@ impl AsyncDaemonConnection {
         clean: bool,
         skip_build: bool,
         monitor_after: bool,
+        lease_id: Option<String>,
+        lease_wait_ms: u64,
         timeout: f64,
     ) -> PyResult<Bound<'py, PyAny>> {
         let url = deploy_url();
-        let req = self.deploy_request(port, clean, skip_build, monitor_after);
+        let req = self.deploy_request(
+            port,
+            clean,
+            skip_build,
+            monitor_after,
+            lease_id,
+            lease_wait_ms,
+        );
         pyo3_async_runtimes::tokio::future_into_py(py, async move {
             Ok(send_op_async(url, req, timeout).await.success)
         })
@@ -147,7 +157,8 @@ impl AsyncDaemonConnection {
     }
 
     /// Async counterpart to `DaemonConnection::deploy_result`.
-    #[pyo3(signature = (port=None, clean=false, skip_build=false, monitor_after=false, timeout=1800.0))]
+    #[pyo3(signature = (port=None, clean=false, skip_build=false, monitor_after=false, lease_id=None, lease_wait_ms=0, timeout=1800.0))]
+    #[allow(clippy::too_many_arguments)]
     fn deploy_result<'py>(
         &self,
         py: Python<'py>,
@@ -155,10 +166,19 @@ impl AsyncDaemonConnection {
         clean: bool,
         skip_build: bool,
         monitor_after: bool,
+        lease_id: Option<String>,
+        lease_wait_ms: u64,
         timeout: f64,
     ) -> PyResult<Bound<'py, PyAny>> {
         let url = deploy_url();
-        let req = self.deploy_request(port, clean, skip_build, monitor_after);
+        let req = self.deploy_request(
+            port,
+            clean,
+            skip_build,
+            monitor_after,
+            lease_id,
+            lease_wait_ms,
+        );
         pyo3_async_runtimes::tokio::future_into_py(py, async move {
             let outcome = send_op_async(url, req, timeout).await;
             Python::attach(|py| Ok(outcome_to_pydict(py, &outcome)?.unbind()))
@@ -196,15 +216,20 @@ impl AsyncDaemonConnection {
             skip_build: false,
             baud_rate: None,
             src_dir: platformio_src_dir_from_env(),
+            lease_id: None,
+            lease_wait_ms: 0,
         }
     }
 
+    #[allow(clippy::too_many_arguments)]
     pub(crate) fn deploy_request(
         &self,
         port: Option<String>,
         clean: bool,
         skip_build: bool,
         monitor_after: bool,
+        lease_id: Option<String>,
+        lease_wait_ms: u64,
     ) -> OpRequest {
         OpRequest {
             project_dir: self.project_dir.clone(),
@@ -216,6 +241,8 @@ impl AsyncDaemonConnection {
             skip_build,
             baud_rate: None,
             src_dir: platformio_src_dir_from_env(),
+            lease_id,
+            lease_wait_ms,
         }
     }
 
@@ -230,6 +257,8 @@ impl AsyncDaemonConnection {
             skip_build: false,
             baud_rate,
             src_dir: None,
+            lease_id: None,
+            lease_wait_ms: 0,
         }
     }
 }

@@ -127,6 +127,12 @@ pub(crate) enum ClientMessage {
         pre_acquire_writer: bool,
         #[serde(skip_serializing_if = "Option::is_none")]
         client_metadata: Option<ClientMetadata>,
+        /// Workflow lease the session operates under, if any. The daemon
+        /// refuses the attach when another client holds the exclusive lease
+        /// on this port, so a Python workflow that took a lease must present
+        /// it here or its own session is rejected (FastLED/fbuild#1864).
+        #[serde(skip_serializing_if = "Option::is_none")]
+        lease_id: Option<String>,
     },
     Write {
         data: String,

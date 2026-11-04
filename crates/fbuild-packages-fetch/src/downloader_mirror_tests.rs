@@ -3,7 +3,7 @@
 
 use super::mirrors::{
     Candidates, DEFAULT_MIRROR, MIRROR_FIRST_ENV, MIRRORS_ENV, attempt_order, candidate_urls,
-    mirror_first_requested, resolve_with,
+    mirror_first_requested, resolve_unverified, resolve_with,
 };
 use super::tests::{
     FAST_RETRY_TIMING, complete_response, network_test_guard, run_flaky_server, test_client,
@@ -328,6 +328,47 @@ async fn env_overrides_the_built_in_bucket() {
         resolve_with(registry, None),
         Candidates::new(vec![registry.to_string()], false)
     );
+}
+
+/// When the manifest lists the URL's owner but its shard could not be loaded
+/// (FastLED/fbuild#1825 item 4), nothing verifies the bucket's bytes for that
+/// object, so the vendor is tried first and the bucket only as a last resort.
+#[tokio::test]
+async fn an_unavailable_owner_shard_prefers_the_vendor_over_unverified_bucket_bytes() {
+    let _guard = network_test_guard().await;
+    let _mirrors = ScopedEnv::unset(MIRRORS_ENV);
+    let _first = ScopedEnv::unset(MIRROR_FIRST_ENV);
+    let bucket = DEFAULT_MIRROR.trim_end_matches("{path}");
+    let registry = "https://dl.registry.platformio.org/download/o/tool/t/1.0/t-1.0.tar.gz";
+
+    let declined = resolve_unverified(registry);
+    assert_eq!(
+        declined,
+        Candidates::new(
+            vec![
+                registry.to_string(),
+                format!("{bucket}o/tool/t/1.0/t-1.0.tar.gz"),
+            ],
+            false
+        ),
+        "vendor first, bucket last"
+    );
+    assert_eq!(declined.order, vec![0, 1]);
+    assert_eq!(
+        declined.mirror_sha256, None,
+        "no shard means nothing verified the bucket bytes"
+    );
+
+    // A host the built-in bucket does not mirror is unchanged.
+    let other = "https://github.com/o/r/archive/refs/tags/1.0.tar.gz";
+    assert_eq!(
+        resolve_unverified(other),
+        Candidates::new(vec![other.to_string()], false)
+    );
+
+    // An operator who asked for mirror-first keeps that order.
+    let _first = ScopedEnv::set(MIRROR_FIRST_ENV, "1");
+    assert_eq!(resolve_unverified(registry).order, vec![1, 0]);
 }
 
 /// `{filename}`, bare bases and `{path}` coexist, and the mirror order given

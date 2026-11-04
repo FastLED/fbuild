@@ -294,6 +294,14 @@ pub enum Commands {
         /// to pick the device carrying that USB serial at use time (see `fbuild port scan`).
         #[arg(short = 'p', long)]
         port: Option<String>,
+        /// Exclusive device-lease id this workflow holds (`fbuild device
+        /// lease --track-serial`); admits the deploy on a leased board.
+        #[arg(long = "lease-id")]
+        lease_id: Option<String>,
+        /// Wait up to this many seconds for a foreign exclusive lease to be
+        /// released, then deploy in FIFO order. Omit to fail fast.
+        #[arg(long = "lease-wait", value_name = "SECONDS")]
+        lease_wait: Option<u64>,
         /// CH32V deploy protocol: `wlink` (default) or factory USB-ISP `isp`
         #[arg(long, value_parser = ["wlink", "isp"])]
         protocol: Option<String>,
@@ -406,6 +414,9 @@ pub enum Commands {
         /// Disable timestamp prefix on each output line
         #[arg(long)]
         no_timestamp: bool,
+        /// Workflow lease id to operate under (`fbuild device lease --exclusive`)
+        #[arg(long = "lease-id")]
+        lease_id: Option<String>,
     },
     /// Reset device without re-flashing
     Reset {

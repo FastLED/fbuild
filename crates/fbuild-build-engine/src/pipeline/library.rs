@@ -140,11 +140,59 @@ pub fn add_extra_library_include_dirs(library_roots: &[PathBuf], include_dirs: &
     }
 }
 
-/// Compile extra library roots from `lib_extra_dirs` into archives.
+/// Preserve library records while selecting only archive-eligible framework
+/// sources. Core archive sources never pass through library policy here.
+pub fn archive_eligible_library_sources(
+    libraries: &[fbuild_packages::library::FrameworkLibrary],
+    selected: &[PathBuf],
+    archive_override: Option<bool>,
+) -> Result<Vec<PathBuf>> {
+    if let Some(archive) = archive_override {
+        return Ok(if archive {
+            selected.to_vec()
+        } else {
+            Vec::new()
+        });
+    }
+    let mut eligible = std::collections::HashSet::new();
+    for library in libraries {
+        if !library
+            .source_files
+            .iter()
+            .any(|source| selected.contains(source))
+        {
+            continue;
+        }
+        let info = fbuild_packages::library::library_info::InstalledLibrary::new(
+            &library.dir,
+            &library.name,
+        );
+        if info.archive_enabled(None)? {
+            eligible.extend(library.source_files.iter().cloned());
+        }
+    }
+    Ok(selected
+        .iter()
+        .filter(|source| eligible.contains(*source))
+        .cloned()
+        .collect())
+}
+
+/// Compile extra library roots from `lib_extra_dirs` into link inputs.
 pub async fn compile_extra_libraries(
     library_roots: &[PathBuf],
     build_dir: &Path,
     env: &LibraryBuildEnv<'_>,
+) -> Result<Vec<PathBuf>> {
+    compile_extra_libraries_with_archive(library_roots, build_dir, env, None).await
+}
+
+/// Compile extra libraries with the environment's optional archive override.
+pub async fn compile_extra_libraries_with_archive(
+    library_roots: &[PathBuf],
+    build_dir: &Path,
+    env: &LibraryBuildEnv<'_>,
+    archive_override: Option<bool>,
 ) -> Result<Vec<PathBuf>> {
     let mut archives = Vec::new();
     for root in library_roots {
@@ -166,7 +214,8 @@ pub async fn compile_extra_libraries(
 
         let output_dir = build_dir.join("extra_lib").join(&lib_name);
         std::fs::create_dir_all(&output_dir)?;
-        match fbuild_packages::library::library_compiler::compile_library_with_jobs(
+        let archive = lib_info.archive_enabled(archive_override)?;
+        match fbuild_packages::library::library_compiler::compile_library_link_inputs_gated(
             &lib_name,
             &sources,
             env.include_dirs,
@@ -177,15 +226,16 @@ pub async fn compile_extra_libraries(
             env.cpp_flags,
             &output_dir,
             env.verbose,
-            env.jobs,
+            &fbuild_packages::library::library_compiler::job_gate(env.jobs),
             env.compiler_cache,
             None,
             None,
+            None,
+            archive,
         )
         .await
         {
-            Ok(Some(archive)) => archives.push(archive),
-            Ok(None) => {}
+            Ok(inputs) => archives.extend(inputs),
             Err(e) => {
                 return Err(fbuild_core::FbuildError::BuildFailed(format!(
                     "extra library '{}' compilation failed: {}",
@@ -209,18 +259,19 @@ pub async fn compile_extra_libraries(
 /// Matches PlatformIO's project-as-library convention; see ISSUES.md Issue 1.
 /// Its compiles draw from `gate`, the build's shared job budget
 /// (FastLED/fbuild#1559).
-pub async fn compile_project_as_library(
+pub async fn compile_project_as_library_link_inputs(
     project_dir: &Path,
     src_dir: &Path,
     build_dir: &Path,
     env: &LibraryBuildEnv<'_>,
     existing_lib_names: &std::collections::HashSet<String>,
     gate: &fbuild_packages::library::library_compiler::JobGate,
-) -> Result<Option<PathBuf>> {
+    archive_override: Option<bool>,
+) -> Result<Vec<PathBuf>> {
     let Some((lib_name, sources)) =
         project_library_candidate(project_dir, src_dir, existing_lib_names, true)
     else {
-        return Ok(None);
+        return Ok(Vec::new());
     };
     let project_src = project_dir.join("src");
 
@@ -234,7 +285,10 @@ pub async fn compile_project_as_library(
     let project_libs_dir = build_dir.join("project_lib");
     std::fs::create_dir_all(&project_libs_dir)?;
 
-    match fbuild_packages::library::library_compiler::compile_library_gated(
+    let archive =
+        fbuild_packages::library::library_info::InstalledLibrary::new(project_dir, &lib_name)
+            .archive_enabled(archive_override)?;
+    match fbuild_packages::library::library_compiler::compile_library_link_inputs_gated(
         &lib_name,
         &sources,
         env.include_dirs,
@@ -250,23 +304,46 @@ pub async fn compile_project_as_library(
         None,
         None,
         None,
+        archive,
     )
     .await
     {
-        Ok(Some(archive)) => {
+        Ok(inputs) => {
             tracing::info!(
                 "project-as-library compiled: {} sources -> {}",
                 sources.len(),
-                archive.display()
+                inputs.len()
             );
-            Ok(Some(archive))
+            Ok(inputs)
         }
-        Ok(None) => Ok(None), // unreachable when sources is non-empty, but safe
         Err(e) => Err(fbuild_core::FbuildError::BuildFailed(format!(
             "project-as-library '{}' compilation failed: {}",
             lib_name, e
         ))),
     }
+}
+
+/// Default archived form retained for callers that require one archive path.
+#[allow(clippy::too_many_arguments)]
+pub async fn compile_project_as_library(
+    project_dir: &Path,
+    src_dir: &Path,
+    build_dir: &Path,
+    env: &LibraryBuildEnv<'_>,
+    existing_lib_names: &std::collections::HashSet<String>,
+    gate: &fbuild_packages::library::library_compiler::JobGate,
+) -> Result<Option<PathBuf>> {
+    compile_project_as_library_link_inputs(
+        project_dir,
+        src_dir,
+        build_dir,
+        env,
+        existing_lib_names,
+        gate,
+        Some(true),
+    )
+    .await
+    .map(|inputs| inputs.into_iter().next())
 }
 
 /// Name of the archive [`compile_project_as_library`] produces
@@ -351,6 +428,11 @@ pub struct LibDeps {
 }
 
 impl LibDeps {
+    /// Apply an explicit environment policy to the deferred libraries.
+    pub fn with_archive_override(mut self, enabled: Option<bool>) -> Self {
+        self.plan = self.plan.map(|plan| plan.with_archive_override(enabled));
+        self
+    }
     /// Compile every library on `gate`; archives come back in link order.
     pub async fn compile(
         self,
@@ -468,6 +550,50 @@ mod pick_archiver_tests {
 #[cfg(test)]
 mod extra_library_tests {
     use super::*;
+
+    #[test]
+    fn framework_archive_sources_honor_manifest_and_global_precedence() {
+        let root = tempfile::tempdir().unwrap();
+        let libraries: Vec<_> = [("direct", false), ("archived", true)]
+            .into_iter()
+            .map(|(name, archive)| {
+                let dir = root.path().join(name);
+                std::fs::create_dir_all(&dir).unwrap();
+                std::fs::write(
+                    dir.join("library.json"),
+                    format!(r#"{{"build":{{"libArchive":{archive}}}}}"#),
+                )
+                .unwrap();
+                fbuild_packages::library::FrameworkLibrary {
+                    name: name.into(),
+                    source_files: vec![dir.join("source.cpp")],
+                    dir,
+                    include_dirs: Vec::new(),
+                }
+            })
+            .collect();
+        let selected: Vec<_> = libraries
+            .iter()
+            .flat_map(|library| library.source_files.clone())
+            .collect();
+        assert_eq!(
+            archive_eligible_library_sources(&libraries, &selected[1..], None).unwrap(),
+            selected[1..]
+        );
+        assert_eq!(
+            archive_eligible_library_sources(&libraries, &selected, None).unwrap(),
+            libraries[1].source_files
+        );
+        assert!(
+            archive_eligible_library_sources(&libraries, &selected, Some(false))
+                .unwrap()
+                .is_empty()
+        );
+        assert_eq!(
+            archive_eligible_library_sources(&libraries, &selected, Some(true)).unwrap(),
+            selected
+        );
+    }
 
     #[test]
     fn discovers_direct_library_root() {

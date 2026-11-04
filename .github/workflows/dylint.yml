@@ -11,22 +11,36 @@ on:
         type: string
         required: false
         default: ""
-  pull_request:
-    branches: [main]
+      # Which call site this is. One workflow run can call this file twice
+      # (ci-minimal directly, ci-full from its own `dylint` job) and the
+      # `github` context of a called workflow always belongs to the TOP-LEVEL
+      # caller, so `github.workflow`/`github.run_id` are identical for both.
+      # Without a caller-supplied lane the two calls shared a concurrency
+      # group and cancelled each other (FastLED/fbuild#1874).
+      lane:
+        type: string
+        required: false
+        default: "standalone"
+  # PRs and merge-queue runs reach Dylint through ci-minimal.yml's
+  # workflow_call, gated by the single required "CI summary" check.
   # setup-soldr skips cache uploads on PRs. A main run seeds the shared
   # Dylint compile cache that subsequent PRs are allowed to restore.
   push:
     branches: [main]
-  # GEN-022: branch protection requires the `Dylint` check, so a merge-queue
-  # run must report it too or the queue stalls. Every job runs unconditionally.
-  merge_group:
 
 # Auto-cancel superseded PR runs: pushing again to a feature branch
 # supersedes the in-flight run instead of queueing behind it. Non-PR
 # events key on run_id so each gets its own group -- a shared group keeps
 # only ONE pending run, which would silently drop queued main SHAs.
+#
+# `inputs.lane` is the call site, and it must be in the group: one run can
+# call this file twice (ci-minimal directly, ci-full from its own `dylint`
+# job) while `github.run_id` -- and `github.workflow`, which inside a called
+# workflow belongs to the TOP-LEVEL caller -- are the same for both. Keyed
+# on the run alone, the second call cancelled the first and `dylint /
+# Dylint` failed on every `ci-full` PR (FastLED/fbuild#1874).
 concurrency:
-  group: dylint.yml-${{ inputs.ref != '' && github.run_id || (github.event_name == 'pull_request' && github.ref || github.run_id) }}
+  group: dylint.yml-${{ inputs.lane }}-${{ inputs.ref != '' && github.run_id || (github.event_name == 'pull_request' && github.ref || github.run_id) }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 # Read-only token. Every step here reads: checkout, a shallow `git fetch
@@ -283,7 +297,8 @@ jobs:
   queue-cache-janitor:
     name: End-of-queue cache janitor
     needs: [policy, dylint, gate]
-    if: always() && github.event_name == 'merge_group'
+    # Only the standalone run sweeps; ci-minimal's call leaves it to ci-minimal.
+    if: always() && github.event_name == 'merge_group' && github.workflow == 'Dylint'
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     concurrency:

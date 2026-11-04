@@ -11,6 +11,7 @@ pub mod build_id;
 pub mod build_log;
 pub mod channel;
 pub mod compiler_flags;
+pub mod daemon_diagnostics;
 pub mod daemon_health;
 pub mod disk_full;
 pub mod disk_reserve;
@@ -468,6 +469,9 @@ impl SymbolMap {
         })
     }
 }
+
+#[cfg(test)]
+mod daemon_diagnostics_tests;
 
 #[cfg(test)]
 mod tests {

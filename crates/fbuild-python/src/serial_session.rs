@@ -400,6 +400,9 @@ pub(crate) struct SessionConfig {
     pub(crate) auto_reconnect: bool,
     pub(crate) verbose: bool,
     pub(crate) client_id: String,
+    /// Workflow lease to present on `Attach`, if the caller holds one
+    /// (FastLED/fbuild#1864).
+    pub(crate) lease_id: Option<String>,
     pub(crate) max_buffered_lines: usize,
     pub(crate) handshake_timeout: Duration,
 }
@@ -433,14 +436,7 @@ impl SerialSession {
             };
         let (mut write, mut read) = ws_stream.split();
 
-        let attach = ClientMessage::Attach {
-            client_id: cfg.client_id,
-            port: cfg.port,
-            baud_rate: cfg.baud_rate,
-            open_if_needed: true,
-            pre_acquire_writer: true,
-            client_metadata: Some(crate::messages::ClientMetadata::current()),
-        };
+        let attach = attach_message(&cfg);
         let attach_json = serde_json::to_string(&attach)
             .expect("fbuild-python: ClientMessage::Attach serialization is infallible");
         match tokio::time::timeout_at(
@@ -994,6 +990,10 @@ async fn reader_task(inner: Arc<Inner>, mut read: WsSource, auto_reconnect: bool
         }
     }
 }
+
+mod attach;
+
+pub(crate) use attach::attach_message;
 
 #[cfg(test)]
 #[path = "serial_session/tests.rs"]

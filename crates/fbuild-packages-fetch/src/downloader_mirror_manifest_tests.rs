@@ -6,8 +6,8 @@ use std::time::Duration;
 
 use super::DownloadProgress;
 use super::manifest::{
-    CACHE_TTL, MAX_MANIFEST_BYTES, MirrorManifest, cache_path, is_allowed_url, is_loopback_url,
-    load_with,
+    CACHE_TTL, EntryLookup, MAX_MANIFEST_BYTES, MirrorManifest, cache_path, is_allowed_url,
+    is_loopback_url, load_with,
 };
 use super::mirror_tests::ScopedEnv;
 use super::mirrors::{
@@ -36,6 +36,25 @@ fn component(urls: &[&str], extra: &str) -> String {
         r#"{{"id":"t","required":false,"asset":{{"filename":"t-1.0.tar.gz","urls":[{}]{extra}}}}}"#,
         urls.join(",")
     )
+}
+
+/// The entry `entry_lookup` found for `url`, or a panic naming what was hoped
+/// for; the lookup itself is covered by
+/// `entry_lookup_tells_an_unavailable_shard_from_an_unlisted_owner`.
+async fn found(
+    m: &MirrorManifest,
+    url: &str,
+    owner: Option<&str>,
+) -> Arc<super::manifest::MirrorEntry> {
+    match m.entry_lookup(url, owner).await {
+        EntryLookup::Found(entry) => entry,
+        _ => panic!("expected {url} to be listed for {owner:?}"),
+    }
+}
+
+/// Whether `entry_lookup` found an entry for `url`.
+async fn listed(m: &MirrorManifest, url: &str, owner: Option<&str>) -> bool {
+    matches!(m.entry_lookup(url, owner).await, EntryLookup::Found(_))
 }
 
 fn parse(json: &str) -> MirrorManifest {
@@ -618,12 +637,12 @@ async fn shard_is_fetched_verified_and_used() {
         m.lookup(VENDOR).is_none(),
         "the index itself lists no assets"
     );
-    let entry = m.entry_for(VENDOR, Some("o")).await.expect("shard entry");
+    let entry = found(&m, VENDOR, Some("o")).await;
     assert_eq!(entry.sha256.as_deref(), Some(HELLO_SHA));
     // Second lookup, other owner: no extra fetches.
-    assert!(m.entry_for(VENDOR, Some("o")).await.is_some());
-    assert!(m.entry_for(VENDOR, Some("other")).await.is_none());
-    assert!(m.entry_for(VENDOR, None).await.is_none());
+    assert!(listed(&m, VENDOR, Some("o")).await);
+    assert!(!listed(&m, VENDOR, Some("other")).await);
+    assert!(!listed(&m, VENDOR, None).await);
     assert_eq!(hits.load(Ordering::SeqCst), 1, "one shard fetch per owner");
 }
 
@@ -642,14 +661,14 @@ async fn tampered_or_hostile_shards_are_rejected() {
         let m = load_with(&test_client(), &sources, None, CACHE_TTL)
             .await
             .unwrap();
-        assert!(m.entry_for(VENDOR, Some("o")).await.is_none());
+        assert!(!listed(&m, VENDOR, Some("o")).await);
     }
     // A shard that is itself an Index is refused even when its hash matches.
     let (sources, _) = sharded("o", &nested, vec![http_ok(&nested)]).await;
     let m = load_with(&test_client(), &sources, None, CACHE_TTL)
         .await
         .unwrap();
-    assert!(m.entry_for(VENDOR, Some("o")).await.is_none());
+    assert!(!listed(&m, VENDOR, Some("o")).await);
 }
 
 #[tokio::test]
@@ -662,14 +681,14 @@ async fn cached_shard_is_reused_and_survives_an_outage() {
     let m = load_with(&test_client(), &sources, Some(&cache), CACHE_TTL)
         .await
         .unwrap();
-    assert!(m.entry_for(VENDOR, Some("o")).await.is_some());
+    assert!(listed(&m, VENDOR, Some("o")).await);
 
     // New process (fresh manifest from cache): the verified shard cache is
     // used without asking the server again.
     let m = load_with(&test_client(), &sources, Some(&cache), CACHE_TTL)
         .await
         .unwrap();
-    assert!(m.entry_for(VENDOR, Some("o")).await.is_some());
+    assert!(listed(&m, VENDOR, Some("o")).await);
     assert_eq!(hits.load(Ordering::SeqCst), 1);
 
     // The index moves on to a shard nobody can serve: the stale cached
@@ -685,7 +704,7 @@ async fn cached_shard_is_reused_and_survives_an_outage() {
     .await
     .unwrap();
     assert!(
-        m.entry_for(VENDOR, Some("o")).await.is_some(),
+        listed(&m, VENDOR, Some("o")).await,
         "stale shard from the shared shard cache"
     );
 }
@@ -708,7 +727,7 @@ async fn relative_shard_urls_resolve_against_the_manifest_source() {
     let m = load_with(&test_client(), &[source], None, CACHE_TTL)
         .await
         .unwrap();
-    assert!(m.entry_for(VENDOR, Some("o")).await.is_some());
+    assert!(listed(&m, VENDOR, Some("o")).await);
     assert_eq!(hits.load(Ordering::SeqCst), 2);
 }
 
@@ -842,11 +861,62 @@ async fn published_manifest_resolves_live() {
         )
         .await
         .unwrap_or_else(|| panic!("{source} did not serve a valid manifest"));
-        let entry = m
-            .entry_for(vendor, Some("platformio"))
-            .await
-            .unwrap_or_else(|| panic!("{source}: framework-arduino-avr 5.4.0 not in its shard"));
+        let entry = found(&m, vendor, Some("platformio")).await;
         assert!(entry.urls[0].starts_with("https://fbuild.sfo3.digitaloceanspaces.com/"));
         assert!(entry.sha256.is_some());
+    }
+}
+
+// ------------------------------------------------- #1825 item 4: shardless
+
+/// An owner the Index lists but whose shard cannot be loaded is told apart
+/// from an owner it does not list at all, so the download path can prefer the
+/// vendor over unverified bucket bytes (FastLED/fbuild#1825).
+#[tokio::test]
+async fn entry_lookup_tells_an_unavailable_shard_from_an_unlisted_owner() {
+    let _guard = network_test_guard().await;
+    let shard = doc(&component(
+        &[BUCKET, VENDOR],
+        &format!(r#","sha256":"{HELLO_SHA}""#),
+    ));
+    let (sources, _) = sharded("o", &shard, vec![http_ok(&shard)]).await;
+    let m = load_with(&test_client(), &sources, None, CACHE_TTL)
+        .await
+        .unwrap();
+    assert!(
+        matches!(
+            m.entry_lookup(VENDOR, Some("o")).await,
+            EntryLookup::Found(_)
+        ),
+        "the shard lists the URL"
+    );
+    // Listed owner, URL absent from its shard; and owners the Index omits.
+    assert!(matches!(
+        m.entry_lookup(OTHER, Some("o")).await,
+        EntryLookup::NotListed
+    ));
+    assert!(matches!(
+        m.entry_lookup(VENDOR, Some("other")).await,
+        EntryLookup::NotListed
+    ));
+    assert!(matches!(
+        m.entry_lookup(VENDOR, None).await,
+        EntryLookup::NotListed
+    ));
+
+    // A shard the Index lists but nobody serves is Unavailable, not NotListed.
+    for served in [DOWN, http_ok("<html>")] {
+        let (sources, _) = sharded("o", &shard, vec![served]).await;
+        let m = load_with(&test_client(), &sources, None, CACHE_TTL)
+            .await
+            .unwrap();
+        assert!(
+            matches!(
+                m.entry_lookup(VENDOR, Some("o")).await,
+                EntryLookup::Unavailable
+            ),
+            "a served {served:?} shard must report the owner as unavailable"
+        );
+        assert!(!listed(&m, VENDOR, Some("o")).await);
     }
 }

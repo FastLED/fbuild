@@ -87,6 +87,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
         // (`platform-espressif32`) and framework (`framework-arduinoespressif32`)
         // packages can honor consumer-pinned URLs (FastLED/fbuild#672).
         let env_config = ctx.config.get_env_config(&params.env_name).ok();
+        let archive_override = ctx.lib_archive;
         // Fail before package resolution when a root the build writes cannot
         // hold what a cold ESP32 build needs (FastLED/fbuild#1750): a full disk
         // otherwise surfaces as a raw ENOSPC from whichever subprocess writes
@@ -95,10 +96,6 @@ impl BuildOrchestrator for Esp32Orchestrator {
             let _disk_phase = perf.phase("disk-preflight");
             super::disk_requirements::preflight_esp32_disk(&params.project_dir)?;
         }
-        // Measure what this build actually consumes per stage, so the ESP32 disk
-        // requirements can be measured rather than estimated
-        // (FastLED/fbuild#1750 item 1). A no-op unless FBUILD_DISK_FOOTPRINT is
-        // set in the environment the daemon was spawned with.
         let mut footprint = fbuild_build_engine::disk_footprint::DiskFootprint::new(
             "esp32",
             &fbuild_build_engine::disk_preflight::HostFreeSpace,
@@ -138,9 +135,11 @@ impl BuildOrchestrator for Esp32Orchestrator {
 
         // Read link-affecting config before the expensive include/library/source discovery steps
         // so the no-op fast path can return early on warm builds.
-        let sdk_ld_flags = framework.get_sdk_ld_flags(&sdk_variant);
+        let sdk_ld_flags = fixups::effective_sdk_ld_flags(
+            framework.get_sdk_ld_flags(&sdk_variant),
+            &ctx.build_unflags,
+        );
         let sdk_defines = framework.get_sdk_defines(&sdk_variant);
-
         let mcu_config = fixups::for_sdk_ld_flags(mcu_config, &sdk_ld_flags);
 
         let embed_files = ctx.config.get_embed_files(&params.env_name)?;
@@ -297,8 +296,10 @@ impl BuildOrchestrator for Esp32Orchestrator {
         // Toolchain sysroot includes (xtensa headers, etc.)
         include_dirs.extend(toolchain.get_include_dirs());
 
-        // Read SDK flags early â€” needed to check LTO before compiling.
-        let sdk_ld_flags = framework.get_sdk_ld_flags(&sdk_variant);
+        let sdk_ld_flags = fixups::effective_sdk_ld_flags(
+            framework.get_sdk_ld_flags(&sdk_variant),
+            &ctx.build_unflags,
+        );
         let sdk_lib_flags = framework.get_sdk_lib_flags(&sdk_variant, sdk_memory_type.as_deref());
         let mut raw_ld_scripts =
             framework.get_sdk_ld_scripts(&sdk_variant, sdk_memory_type.as_deref());
@@ -312,11 +313,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
         }
         let sdk_ld_scripts = LinkerScripts::from_raw_flags(&raw_ld_scripts);
         let sdk_defines = framework.get_sdk_defines(&sdk_variant);
-
-        // If SDK specifies -fno-lto, disable LTO in MCU config profiles to avoid
-        // compiling objects with LTO that the linker can't handle.
         let mcu_config = fixups::for_sdk_ld_flags(mcu_config, &sdk_ld_flags);
-
         // 8.5. Library dependencies
         //
         // `lib_deps` may name libraries the Arduino core bundles (`FS`,
@@ -610,6 +607,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
             &selected_framework_libraries,
             &already_compiled,
             &mut ctx.build_log,
+            archive_override,
         )?;
 
         // Compile core + variant sources in parallel
@@ -690,11 +688,6 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 ),
             }
         }
-        // Every compile of the build runs now, in one job pool: lib_deps,
-        // framework libraries, project-as-library, core + sketch and local
-        // lib/ libraries all draw from one gate (FastLED/fbuild#1559; see
-        // `job_pool`). Boot artifacts depend on nothing compiled, so they are
-        // staged alongside. Only the link waits.
         let gate = fbuild_packages::library::library_compiler::job_gate(jobs);
         let local_libraries = crate::framework_libs::select_local_libraries(
             &params.project_dir,
@@ -704,7 +697,11 @@ impl BuildOrchestrator for Esp32Orchestrator {
         let library_jobs = super::job_pool::LibraryJobs {
             lib_deps: async {
                 match lib_deps_plan {
-                    Some(plan) => plan.compile(&gate).await,
+                    Some(plan) => {
+                        plan.with_archive_override(archive_override)
+                            .compile(&gate)
+                            .await
+                    }
                     None => Ok(Vec::new()),
                 }
             },
@@ -717,6 +714,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 params.verbose,
                 compiler_cache.as_deref(),
                 &gate,
+                archive_override,
             ),
             local_libs: compile_local_libraries(
                 &local_libraries,
@@ -728,6 +726,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 &gate,
                 params.verbose,
                 compiler_cache.as_deref(),
+                archive_override,
             ),
             boot_artifacts: prepare_boot_artifacts(
                 build_dir,

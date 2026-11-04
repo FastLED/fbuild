@@ -379,3 +379,367 @@ fn cleanup_preserves_leased_disconnected() {
     assert_eq!(mgr.cleanup_stale_devices(), 0);
     assert_eq!(mgr.get_all_devices().len(), 1);
 }
+
+#[test]
+fn admit_allows_an_unleased_port() {
+    let mgr = make_manager_with_device("COM3");
+    mgr.admit_operation("COM3", None).unwrap();
+}
+
+#[test]
+fn admit_refuses_an_operation_that_presents_no_lease() {
+    let mgr = make_manager_with_device("COM3");
+    let lease = mgr
+        .acquire_exclusive("COM3", "client-a", "hardware validation", true)
+        .unwrap();
+    match mgr.admit_operation("COM3", None).unwrap_err() {
+        DeviceLeaseError::ForeignLeaseHeld { port, holder } => {
+            assert_eq!(port, "COM3");
+            assert_eq!(holder.lease_id, lease.lease_id);
+            assert_eq!(holder.client_id, "client-a");
+        }
+        other => panic!("expected a foreign-lease refusal, got {other:?}"),
+    }
+}
+
+#[test]
+fn admit_refuses_an_operation_that_presents_a_different_lease() {
+    let mgr = make_manager_with_device("COM3");
+    mgr.acquire_exclusive("COM3", "client-a", "validation", false)
+        .unwrap();
+    let err = mgr
+        .admit_operation("COM3", Some("not-the-lease"))
+        .unwrap_err();
+    assert!(err.message().contains("reserved by exclusive lease"));
+}
+
+#[test]
+fn admit_allows_the_lease_holder() {
+    let mgr = make_manager_with_device("COM3");
+    let lease = mgr
+        .acquire_exclusive("COM3", "client-a", "validation", true)
+        .unwrap();
+    mgr.admit_operation("COM3", Some(&lease.lease_id)).unwrap();
+}
+
+#[test]
+fn admit_does_not_block_on_monitor_leases() {
+    let mgr = make_manager_with_device("COM3");
+    mgr.acquire_monitor("COM3", "client-b", "watching", false)
+        .unwrap();
+    mgr.admit_operation("COM3", None).unwrap();
+}
+
+#[test]
+fn foreign_lease_message_names_the_lease_and_the_escape_hatches() {
+    let mgr = make_manager_with_device("COM3");
+    let lease = mgr
+        .acquire_exclusive("COM3", "client-a", "validation", false)
+        .unwrap();
+    let message = mgr.admit_operation("COM3", None).unwrap_err().message();
+    assert!(message.contains(&lease.lease_id), "{message}");
+    assert!(message.contains("--lease-id"), "{message}");
+    assert!(message.contains("fbuild device release COM3"), "{message}");
+}
+
+#[test]
+fn admit_ignores_ports_the_manager_does_not_know() {
+    let mgr = DeviceManager::new();
+    mgr.admit_operation("COM99", None).unwrap();
+}
+
+mod lease_wait_queue_tests {
+    //! Opt-in bounded wait for a foreign exclusive lease
+    //! ([`DeviceManager::await_admission`], FastLED/fbuild#1864 criterion 3).
+    //!
+    //! A competing workflow joins a per-port FIFO queue instead of being
+    //! refused; ordering is deterministic (head of queue only), the wait
+    //! happens before any preemption/open, and a timed-out or cancelled
+    //! waiter leaves the queue so the next workflow is promoted.
+    use super::*;
+    use std::sync::Arc;
+    use std::time::Duration;
+
+    const PORT: &str = "COM7";
+
+    fn manager_with_holder() -> (Arc<DeviceManager>, String) {
+        let mgr = Arc::new(DeviceManager::new());
+        mgr.insert_test_device(PORT);
+        let lease = mgr
+            .acquire_exclusive(PORT, "client-a", "hardware validation", false)
+            .unwrap();
+        (mgr, lease.lease_id)
+    }
+
+    fn waiting_position(poll: AdmissionPoll) -> usize {
+        match poll {
+            AdmissionPoll::Waiting { position, holder } => {
+                assert!(holder.is_none(), "no lease is held in these cases");
+                position
+            }
+            AdmissionPoll::Admitted => panic!("waiter was admitted out of order"),
+        }
+    }
+
+    #[test]
+    fn queue_is_fifo_and_admits_only_at_the_head() {
+        let mgr = make_manager_with_device(PORT);
+        let first = mgr.enqueue_waiter(PORT, "client-a");
+        let second = mgr.enqueue_waiter(PORT, "client-b");
+        assert!(mgr.poll_admission(PORT, None, Some(first)).is_admitted());
+        assert_eq!(
+            waiting_position(mgr.poll_admission(PORT, None, Some(second))),
+            2
+        );
+        // Diagnostics name the waiting workflows in queue order.
+        assert_eq!(mgr.queued_client_ids(PORT), vec!["client-a", "client-b"]);
+        // Dropping the head promotes the next workflow.
+        mgr.leave_queue(PORT, first);
+        assert!(mgr.poll_admission(PORT, None, Some(second)).is_admitted());
+        mgr.leave_queue(PORT, second);
+        assert_eq!(mgr.queued_workflows(PORT), 0);
+    }
+
+    #[test]
+    fn a_foreign_lease_holds_the_head_and_names_the_holder() {
+        let (mgr, lease_id) = manager_with_holder();
+        let ticket = mgr.enqueue_waiter(PORT, "client-b");
+        match mgr.poll_admission(PORT, None, Some(ticket)) {
+            AdmissionPoll::Waiting { position, holder } => {
+                assert_eq!(position, 1);
+                let holder = holder.expect("the foreign lease must be reported");
+                assert_eq!(holder.lease_id, lease_id);
+                assert_eq!(holder.client_id, "client-a");
+            }
+            AdmissionPoll::Admitted => panic!("a foreign lease admitted the waiter"),
+        }
+        mgr.release_lease(&lease_id).unwrap();
+        assert!(mgr.poll_admission(PORT, None, Some(ticket)).is_admitted());
+        mgr.leave_queue(PORT, ticket);
+    }
+
+    #[test]
+    fn an_unqueued_caller_does_not_jump_a_waiting_workflow() {
+        let mgr = make_manager_with_device(PORT);
+        let ticket = mgr.enqueue_waiter(PORT, "client-a");
+        // A fail-fast caller (no ticket) sees the queue, so two clients that
+        // race a release cannot reorder: it would join *behind* the waiter.
+        assert_eq!(waiting_position(mgr.poll_admission(PORT, None, None)), 2);
+        mgr.leave_queue(PORT, ticket);
+        assert!(mgr.poll_admission(PORT, None, None).is_admitted());
+    }
+
+    #[test]
+    fn unknown_ports_stay_outside_the_lease_path() {
+        let mgr = make_manager_with_device(PORT);
+        assert!(mgr.poll_admission("/dev/ttyNOPE", None, None).is_admitted());
+    }
+
+    #[tokio::test]
+    async fn bounded_wait_admits_after_the_holder_releases() {
+        let (mgr, lease_id) = manager_with_holder();
+        let releaser = Arc::clone(&mgr);
+        tokio::spawn(async move {
+            tokio::time::sleep(Duration::from_millis(120)).await;
+            releaser.release_lease(&lease_id).unwrap();
+        });
+        let waited = mgr
+            .await_admission(PORT, None, 5_000, "client-b")
+            .await
+            .unwrap();
+        assert!(
+            waited >= 100,
+            "admitted before the holder released: {waited} ms"
+        );
+        assert_eq!(mgr.queued_workflows(PORT), 0);
+    }
+
+    #[tokio::test]
+    async fn bounded_wait_times_out_and_leaves_the_queue() {
+        let (mgr, lease_id) = manager_with_holder();
+        let err = mgr
+            .await_admission(PORT, None, 140, "client-b")
+            .await
+            .unwrap_err();
+        let message = err.message();
+        assert!(message.contains(&lease_id), "{message}");
+        assert!(message.contains("not reset"), "{message}");
+        // The abandoned ticket must not block the next workflow.
+        assert_eq!(mgr.queued_workflows(PORT), 0);
+    }
+
+    #[tokio::test]
+    async fn zero_wait_is_still_fail_fast() {
+        let (mgr, _lease_id) = manager_with_holder();
+        let err = mgr
+            .await_admission(PORT, None, 0, "client-b")
+            .await
+            .unwrap_err();
+        assert!(err.message().contains("--lease-wait"), "{}", err.message());
+        assert_eq!(mgr.queued_workflows(PORT), 0);
+    }
+
+    #[tokio::test]
+    async fn the_holder_waits_for_nobody() {
+        let (mgr, lease_id) = manager_with_holder();
+        let _queued = mgr.enqueue_waiter(PORT, "client-b");
+        let waited = mgr
+            .await_admission(PORT, Some(&lease_id), 5_000, "client-a")
+            .await
+            .unwrap();
+        assert_eq!(waited, 0);
+    }
+}
+
+mod lease_renumber_tests {
+    //! Lease identity across a tracked USB re-enumeration
+    //! (FastLED/fbuild#1864 criterion 4).
+    //!
+    //! `track_serial` moves the [`DeviceState`] — and the exclusive lease with
+    //! it — to the new port name. Everything else keys on the port string, so
+    //! the admission queue, the `QueueGuard` and a caller still holding the
+    //! stale name must follow the board instead of silently passing the lease
+    //! check on a port that no longer exists.
+    use super::*;
+    use std::sync::Arc;
+    use std::time::Duration;
+
+    const OLD_PORT: &str = "COM7";
+    const NEW_PORT: &str = "COM8";
+
+    fn renumbered_device() -> DiscoveredDevice {
+        DiscoveredDevice {
+            port: NEW_PORT.to_string(),
+            device_id: "1234:5678".to_string(),
+            description: "Test Device Renumbered".to_string(),
+            vid: Some(0x1234),
+            pid: Some(0x5678),
+            vendor_name: Some("Test Vendor".to_string()),
+            product_name: Some("Test Device".to_string()),
+            is_cdc: Some(true),
+            serial_number: Some("TEST-SERIAL".to_string()),
+            port_health: fbuild_serial::ports::PortHealth::HealthyPresent,
+            instance_id: Some(r"USB\VID_1234&PID_5678\TEST-SERIAL".to_string()),
+            parent_instance_id: Some(r"USB\VID_1234&PID_5678\PARENT".to_string()),
+            location_paths: vec!["PCIROOT(0)#USBROOT(0)#USB(3)".to_string()],
+        }
+    }
+
+    fn manager_with_tracked_holder() -> (Arc<DeviceManager>, String) {
+        let mgr = Arc::new(DeviceManager::new());
+        mgr.insert_test_device(OLD_PORT);
+        let lease = mgr
+            .acquire_exclusive(OLD_PORT, "client-a", "hardware validation", true)
+            .unwrap();
+        (mgr, lease.lease_id)
+    }
+
+    fn renumber(mgr: &DeviceManager) {
+        mgr.refresh_from_discovered(vec![renumbered_device()]);
+    }
+
+    #[test]
+    fn tracked_renumber_moves_the_admission_queue() {
+        let (mgr, lease_id) = manager_with_tracked_holder();
+        let ticket = mgr.enqueue_waiter(OLD_PORT, "client-b");
+        renumber(&mgr);
+
+        assert_eq!(
+            mgr.queued_workflows(OLD_PORT),
+            0,
+            "the old port is gone; its queue must not linger"
+        );
+        assert_eq!(mgr.queued_client_ids(NEW_PORT), vec!["client-b"]);
+        assert!(
+            matches!(
+                mgr.poll_admission(NEW_PORT, None, Some(ticket)),
+                AdmissionPoll::Waiting {
+                    position: 1,
+                    holder: Some(_)
+                }
+            ),
+            "the waiter must still queue behind the migrated holder"
+        );
+        mgr.release_lease(&lease_id).unwrap();
+        assert!(
+            mgr.poll_admission(NEW_PORT, None, Some(ticket))
+                .is_admitted()
+        );
+        mgr.leave_ticket(ticket);
+        assert_eq!(mgr.queued_workflows(NEW_PORT), 0);
+    }
+
+    #[test]
+    fn a_stale_port_name_reports_the_renumbered_port() {
+        let (mgr, lease_id) = manager_with_tracked_holder();
+        renumber(&mgr);
+
+        let err = mgr.admit_operation(OLD_PORT, None).unwrap_err();
+        match &err {
+            DeviceLeaseError::PortRenumbered {
+                port,
+                current_port,
+                holder,
+            } => {
+                assert_eq!(port, OLD_PORT);
+                assert_eq!(current_port, NEW_PORT);
+                assert_eq!(
+                    holder.as_deref().map(|lease| lease.lease_id.as_str()),
+                    Some(lease_id.as_str())
+                );
+            }
+            other => panic!("expected a renumber report, got {other:?}"),
+        }
+        let message = err.message();
+        assert!(message.contains(NEW_PORT), "{message}");
+        assert!(message.contains("re-enumerated"), "{message}");
+
+        // The holder (and only the holder) may operate on the new name.
+        mgr.admit_operation(NEW_PORT, Some(&lease_id)).unwrap();
+        assert!(matches!(
+            mgr.admit_operation(NEW_PORT, None),
+            Err(DeviceLeaseError::ForeignLeaseHeld { .. })
+        ));
+    }
+
+    #[tokio::test]
+    async fn a_queued_workflow_follows_the_board_across_a_renumber() {
+        let (mgr, lease_id) = manager_with_tracked_holder();
+        let waiter = {
+            let mgr = Arc::clone(&mgr);
+            tokio::spawn(
+                async move { mgr.await_admission(OLD_PORT, None, 5_000, "client-b").await },
+            )
+        };
+        tokio::time::sleep(Duration::from_millis(80)).await;
+        assert_eq!(
+            mgr.queued_workflows(OLD_PORT),
+            1,
+            "the workflow must be queued before the renumber"
+        );
+
+        renumber(&mgr);
+        tokio::time::sleep(Duration::from_millis(300)).await;
+        assert!(
+            !waiter.is_finished(),
+            "a waiting workflow was admitted on a port that no longer exists"
+        );
+        assert_eq!(
+            mgr.queued_workflows(NEW_PORT),
+            1,
+            "the queue must follow the board"
+        );
+
+        mgr.release_lease(&lease_id).unwrap();
+        let waited = waiter.await.unwrap().unwrap();
+        assert!(
+            waited >= 200,
+            "admitted before the holder released: {waited} ms"
+        );
+        assert_eq!(
+            mgr.queued_workflows(NEW_PORT),
+            0,
+            "the guard must remove the ticket from the migrated queue"
+        );
+    }
+}

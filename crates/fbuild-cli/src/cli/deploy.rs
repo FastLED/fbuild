@@ -146,6 +146,8 @@ pub async fn run_deploy(
     project_dir: String,
     environment: Option<String>,
     port: Option<String>,
+    lease_id: Option<String>,
+    lease_wait: Option<u64>,
     protocol: Option<String>,
     transport: Option<String>,
     clean: bool,
@@ -200,6 +202,8 @@ pub async fn run_deploy(
         project_dir,
         environment,
         port,
+        lease_id,
+        lease_wait_ms: lease_wait.unwrap_or(0) * 1000,
         protocol,
         transport,
         monitor_after,
@@ -603,6 +607,7 @@ pub async fn run_monitor(
     halt_on_success: Option<String>,
     expect: Option<String>,
     no_timestamp: bool,
+    lease_id: Option<String>,
 ) -> fbuild_core::Result<()> {
     // Linux: make attached boards openable without root (FastLED/fbuild#1621).
     super::udev_install::ensure_device_access();
@@ -630,6 +635,7 @@ pub async fn run_monitor(
         open_if_needed: true,
         pre_acquire_writer: false,
         client_metadata: None,
+        lease_id,
     };
     socket
         .send(Message::Text(

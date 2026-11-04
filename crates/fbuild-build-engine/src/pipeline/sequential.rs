@@ -13,7 +13,7 @@ use crate::{BuildParams, BuildResult};
 
 use super::compile::{compile_local_libraries, compile_sources, generate_compile_db};
 use super::context::BuildContext;
-use super::library::{LibraryBuildEnv, compile_project_as_library};
+use super::library::{LibraryBuildEnv, compile_project_as_library_link_inputs};
 use super::link::{assemble_build_result, handle_link_result};
 
 /// Run the sequential compile → link → result pipeline used by AVR, Teensy,
@@ -25,11 +25,11 @@ use super::link::{assemble_build_result, handle_link_result};
 ///
 /// ESP32 cannot use this because it uses parallel compilation and has
 /// additional hooks (SDK libs, embed files, bootloader prep). It calls
-/// [`compile_project_as_library`] directly.
+/// [`compile_project_as_library_link_inputs`] directly.
 ///
 /// When `lib_env` is `Some`, the project's own `src/` is compiled as a library
 /// archive (matching PlatformIO's project-as-library convention) and linked
-/// with the rest of the build. See [`compile_project_as_library`] and
+/// with the rest of the build. See [`compile_project_as_library_link_inputs`] and
 /// ISSUES.md Issue 1.
 #[allow(clippy::too_many_arguments)]
 pub async fn run_sequential_build_with_libs(
@@ -134,11 +134,7 @@ pub async fn run_sequential_build_with_optional_framework_libs(
         });
     }
 
-    // Wrap the build log so it can be shared across parallel compile phases.
-    // The compile phases (core, variant, sketch, local libs) run
-    // concurrently and draw from one `jobs`-permit semaphore
-    // (FastLED/fbuild#1468): nothing but the link needs their outputs, so a
-    // strict phase order only left cores idle in each phase's tail.
+    // Compile phases share one job gate and log (#1468).
     let jobs = crate::parallel::effective_jobs(params.jobs);
     let compile_slots = std::sync::Arc::new(tokio::sync::Semaphore::new(jobs));
     let core_cache = crate::framework_core_cache::FrameworkCoreCache::new(
@@ -310,24 +306,28 @@ pub async fn run_sequential_build_with_optional_framework_libs(
         &build_log_mutex,
     ));
 
-    // `lib_deps` and the project-as-library archive compile in the same pool
-    // (FastLED/fbuild#1559): nothing but the link needs their archives.
-    let lib_deps_compile = timed(lib_deps.compile(&compile_slots));
+    let archive_override = ctx.lib_archive;
+    let lib_deps_compile = timed(
+        lib_deps
+            .with_archive_override(archive_override)
+            .compile(&compile_slots),
+    );
     let existing_lib_names = local_lib_dir_names(&params.project_dir);
     let project_as_lib = timed(async {
         match lib_env {
             Some(env) => {
-                compile_project_as_library(
+                compile_project_as_library_link_inputs(
                     &params.project_dir,
                     &ctx.src_dir,
                     &ctx.build_dir,
                     env,
                     &existing_lib_names,
                     &compile_slots,
+                    archive_override,
                 )
                 .await
             }
-            None => Ok(None),
+            None => Ok(Vec::new()),
         }
     });
 
@@ -392,20 +392,20 @@ pub async fn run_sequential_build_with_optional_framework_libs(
 
     // Link
     crate::build_output::log_linking(&mut ctx.build_log, "Linking firmware.elf");
+    let direct_local_objects =
+        direct_library_objects(&local_libraries, &ctx.build_dir, archive_override)?;
     let optional_objects: Option<Vec<PathBuf>> = optional_framework_sources.map(|sources| {
-        sources
-            .iter()
-            .map(|source| crate::compiler::CompilerBase::object_path(source, &ctx.core_build_dir))
-            .chain(library_objects.iter().cloned())
-            .collect()
+        optional_archive_objects(
+            sources,
+            &ctx.core_build_dir,
+            &library_objects,
+            &direct_local_objects,
+        )
     });
     core_objects.extend(library_objects);
     core_objects.extend(extra_link_inputs.iter().cloned());
     core_objects.extend(lib_deps_archives);
-    if let Some(archive) = project_as_lib_archive {
-        // GCC accepts .a in the same positional slot as .o files.
-        core_objects.push(archive);
-    }
+    core_objects.extend(project_as_lib_archive);
     if let Some(optional_objects) = optional_objects.filter(|objects| !objects.is_empty()) {
         let env = lib_env.ok_or_else(|| {
             fbuild_core::FbuildError::BuildFailed(
@@ -498,6 +498,49 @@ pub async fn run_sequential_build_with_optional_framework_libs(
 /// Preserve mandatory core startup objects, and place local and SDK objects in
 /// one archive after every consumer. GNU archive extraction resolves dependencies
 /// among its members without imposing the scanner's library discovery order.
+fn direct_library_objects(
+    libraries: &[fbuild_packages::library::FrameworkLibrary],
+    build_dir: &Path,
+    archive_override: Option<bool>,
+) -> Result<std::collections::HashSet<PathBuf>> {
+    let mut direct = std::collections::HashSet::new();
+    for library in libraries {
+        let info = fbuild_packages::library::library_info::InstalledLibrary::new(
+            &library.dir,
+            &library.name,
+        );
+        if !info.archive_enabled(archive_override)? {
+            let output = build_dir.join("lib").join(&library.name);
+            direct.extend(
+                library
+                    .source_files
+                    .iter()
+                    .map(|source| crate::compiler::CompilerBase::object_path(source, &output)),
+            );
+        }
+    }
+    Ok(direct)
+}
+
+fn optional_archive_objects(
+    sources: &[PathBuf],
+    core_build_dir: &Path,
+    library_objects: &[PathBuf],
+    direct_library_objects: &std::collections::HashSet<PathBuf>,
+) -> Vec<PathBuf> {
+    // The Arduino core.a contract is independent of library archiving.
+    sources
+        .iter()
+        .map(|source| crate::compiler::CompilerBase::object_path(source, core_build_dir))
+        .chain(
+            library_objects
+                .iter()
+                .filter(|object| !direct_library_objects.contains(*object))
+                .cloned(),
+        )
+        .collect()
+}
+
 async fn archive_optional_library_objects(
     inputs: Vec<PathBuf>,
     optional_objects: &[PathBuf],
@@ -558,6 +601,74 @@ mod optional_framework_tests {
     use super::*;
     use crate::compiler::CompilerBase;
     use fbuild_core::subprocess::run_command;
+
+    #[tokio::test]
+    #[ignore = "#1885: requires native GCC and a GNU-compatible archiver"]
+    async fn disabling_library_archives_preserves_core_isr_extraction() {
+        let temp = tempfile::tempdir().unwrap();
+        let root = temp.path();
+        let cc = std::env::var("FBUILD_TEST_CC").unwrap_or_else(|_| "gcc".into());
+        let ar = gcc_archiver(&cc).await;
+        let core = root.join("WInterrupts.c");
+        let sketch = root.join("sketch.c");
+        let library_dir = root.join("Direct");
+        std::fs::create_dir_all(&library_dir).unwrap();
+        std::fs::write(
+            library_dir.join("library.json"),
+            r#"{"build":{"libArchive":true}}"#,
+        )
+        .unwrap();
+        let library = library_dir.join("library.c");
+        std::fs::write(&core, "int EIC_Handler(void) { return 1; }").unwrap();
+        std::fs::write(
+            &sketch,
+            "int EIC_Handler(void) { return 2; } __attribute__((weak)) int hook(void) { return 1; } int main(void) { return EIC_Handler() != 2 || hook() != 3; }",
+        )
+        .unwrap();
+        std::fs::write(&library, "int hook(void) { return 3; }").unwrap();
+        let mut objects = Vec::new();
+        for source in [&core, &sketch, &library] {
+            let output = if source == &library {
+                root.join("lib/Direct")
+            } else {
+                root.to_path_buf()
+            };
+            std::fs::create_dir_all(&output).unwrap();
+            let object = CompilerBase::object_path(source, &output);
+            run(&[
+                cc.clone(),
+                "-c".into(),
+                source.display().to_string(),
+                "-o".into(),
+                object.display().to_string(),
+            ])
+            .await;
+            objects.push(object);
+        }
+        let record = fbuild_packages::library::FrameworkLibrary {
+            name: "Direct".into(),
+            dir: library_dir,
+            source_files: vec![library],
+            include_dirs: Vec::new(),
+        };
+        let direct = direct_library_objects(&[record], root, Some(false)).unwrap();
+        let optional = optional_archive_objects(&[core], root, &[objects[2].clone()], &direct);
+        assert_eq!(optional, [objects[0].clone()]);
+        let inputs = archive_optional_library_objects(objects, &optional, root, &ar)
+            .await
+            .unwrap();
+        assert!(inputs.iter().any(|input| direct.contains(input)));
+        assert!(
+            inputs
+                .iter()
+                .any(|input| input.extension().is_some_and(|extension| extension == "a"))
+        );
+        let executable = root.join("core-isr-probe");
+        let mut args = vec![cc, "-o".into(), executable.display().to_string()];
+        args.extend(inputs.iter().map(|input| input.display().to_string()));
+        run(&args).await;
+        run(&[executable.display().to_string()]).await;
+    }
 
     async fn run(args: &[String]) -> String {
         let args: Vec<&str> = args.iter().map(String::as_str).collect();

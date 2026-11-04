@@ -4,10 +4,15 @@
 //! All locking is in-memory (no file-based locks per design rules).
 
 use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
+use std::collections::{HashMap, VecDeque};
 use std::sync::Mutex;
+use std::sync::atomic::AtomicU64;
 use std::time::{Instant, SystemTime, UNIX_EPOCH};
 use uuid::Uuid;
+
+mod wait_queue;
+
+pub use wait_queue::{AdmissionPoll, QueueGuard, QueueTicket};
 
 /// Type of device lease.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
@@ -46,8 +51,31 @@ pub enum DeviceLeaseError {
     InvalidLeaseType {
         lease_type: String,
     },
+    /// A mutating operation was refused because another client holds an
+    /// exclusive device lease and the caller did not present that lease.
+    ForeignLeaseHeld {
+        port: String,
+        holder: Box<DeviceLease>,
+    },
     InvalidPreemption {
         message: String,
+    },
+    /// An opt-in bounded wait for a reserved board ran out of time (or was
+    /// never allowed to wait) without the holder releasing it.
+    LeaseWaitTimedOut {
+        port: String,
+        waited_ms: u64,
+        /// 1-based place the caller had reached in the admission queue.
+        position: usize,
+        holder: Option<Box<DeviceLease>>,
+    },
+    /// A caller named a port the device no longer uses because it
+    /// re-enumerated (typically a USB renumber) while a tracked lease moved
+    /// with it. Admitting the old name would silently skip that lease.
+    PortRenumbered {
+        port: String,
+        current_port: String,
+        holder: Option<Box<DeviceLease>>,
     },
 }
 
@@ -64,9 +92,83 @@ impl DeviceLeaseError {
                 "invalid lease_type '{}', must be 'exclusive' or 'monitor'",
                 lease_type
             ),
+            Self::ForeignLeaseHeld { port, holder } => format!(
+                "device '{}' is reserved by exclusive lease '{}' held by client '{}' ({}); \
+                 pass --lease-id {} to operate under that lease, or release it with \
+                 `fbuild device release {} --lease-id {}`",
+                port,
+                holder.lease_id,
+                holder.client_id,
+                holder.description,
+                holder.lease_id,
+                port,
+                holder.lease_id
+            ),
             Self::InvalidPreemption { message } => message.clone(),
+            Self::LeaseWaitTimedOut {
+                port,
+                waited_ms,
+                position,
+                holder,
+            } => {
+                let reserved_by = match holder.as_deref() {
+                    Some(held) => format!(
+                        "exclusive lease '{}' held by client '{}' ({})",
+                        held.lease_id, held.client_id, held.description
+                    ),
+                    None => "an earlier workflow in the admission queue".to_string(),
+                };
+                let ahead = position.saturating_sub(1);
+                if *waited_ms == 0 {
+                    format!(
+                        "device '{}' is reserved by {}; {} workflow(s) queued ahead — \
+                         re-run with --lease-wait <seconds> to queue for it, or \
+                         `fbuild device take {} --reason <why>` to override",
+                        port, reserved_by, ahead, port
+                    )
+                } else {
+                    format!(
+                        "waited {} ms for device '{}' and gave up (queue position {}, {}); \
+                         the board was not reset, closed or flashed — re-run with a \
+                         longer --lease-wait, or `fbuild device take {} --reason <why>`",
+                        waited_ms, port, position, reserved_by, port
+                    )
+                }
+            }
+            Self::PortRenumbered {
+                port,
+                current_port,
+                holder,
+            } => {
+                let reserved_by = match holder.as_deref() {
+                    Some(held) => format!(
+                        " and is reserved by exclusive lease '{}' held by client '{}' ({})",
+                        held.lease_id, held.client_id, held.description
+                    ),
+                    None => String::new(),
+                };
+                format!(
+                    "device '{}' is no longer present — it re-enumerated as '{}'{reserved_by}; \
+                     re-resolve the port and operate on '{}'",
+                    port, current_port, current_port
+                )
+            }
         }
     }
+}
+
+/// The connected device that re-enumerated *from* `port`, if any.
+///
+/// Only a tracked re-enumeration keyed on the USB serial number rewrites
+/// `previous_port`, so a match proves the physical board moved rather than a
+/// different device reusing the name (FastLED/fbuild#1864 criterion 4).
+pub(crate) fn renumbered_target<'a>(
+    devices: &'a HashMap<String, DeviceState>,
+    port: &str,
+) -> Option<&'a DeviceState> {
+    devices
+        .values()
+        .find(|state| state.is_connected && state.previous_port.as_deref() == Some(port))
 }
 
 impl std::fmt::Display for DeviceLeaseError {
@@ -190,6 +292,10 @@ pub struct DeviceManager {
     /// back-to-back warm deploys.
     last_refresh_at: Mutex<Option<Instant>>,
     recent_port_moves: Mutex<Vec<DevicePortMove>>,
+    /// Per-port FIFO of workflows waiting for an exclusive lease to be
+    /// released (opt-in bounded wait, FastLED/fbuild#1864).
+    waiters: Mutex<HashMap<String, VecDeque<wait_queue::LeaseWaiter>>>,
+    next_waiter_seq: AtomicU64,
 }
 
 impl Default for DeviceManager {
@@ -204,6 +310,8 @@ impl DeviceManager {
             devices: Mutex::new(HashMap::new()),
             last_refresh_at: Mutex::new(None),
             recent_port_moves: Mutex::new(Vec::new()),
+            waiters: Mutex::new(HashMap::new()),
+            next_waiter_seq: AtomicU64::new(0),
         }
     }
 
@@ -350,6 +458,7 @@ impl DeviceManager {
                         .then(|| old_port.clone())
                     });
                     if let Some(old_port) = moved_from {
+                        let renumbered_from = old_port.clone();
                         if let Some(mut state) = devices.remove(&old_port) {
                             let serial_number = device.serial_number.clone();
                             state.previous_port = Some(old_port);
@@ -380,6 +489,10 @@ impl DeviceManager {
                                         serial_number,
                                     });
                             }
+                            // Queued workflows follow the board: the queue is
+                            // keyed by port name, so leaving it behind would
+                            // strand a waiter on a port that no longer exists.
+                            self.migrate_waiters(&renumbered_from, &key);
                             devices.insert(key, state);
                             continue;
                         }
@@ -467,6 +580,47 @@ impl DeviceManager {
             .unwrap_or_else(|e| e.into_inner())
             .get(port)
             .cloned()
+    }
+
+    /// Admission check for a mutating operation on `port` (today: deploy and
+    /// reset) against an explicit exclusive device lease.
+    ///
+    /// `lease_id` is the identity the caller presents: the id returned by
+    /// [`Self::acquire_exclusive`]. `None` means the caller holds no lease,
+    /// so any foreign exclusive lease refuses the operation. Read-only
+    /// monitor leases never block admission.
+    ///
+    /// An unknown port is not an admission failure: the operation's own port
+    /// resolution reports it. This keeps emulator and probe-only routes out
+    /// of the device-lease path (FastLED/fbuild#1864).
+    pub fn admit_operation(
+        &self,
+        port: &str,
+        lease_id: Option<&str>,
+    ) -> Result<(), DeviceLeaseError> {
+        let devices = self.devices.lock().unwrap_or_else(|e| e.into_inner());
+        let Some(state) = devices.get(port) else {
+            // A port that vanished because a tracked board re-enumerated is
+            // *not* an unknown/emulator route: admitting the old name would
+            // let a competitor operate while the lease sits on the new port.
+            let moved = renumbered_target(&devices, port);
+            return match moved {
+                Some(target) => Err(DeviceLeaseError::PortRenumbered {
+                    port: port.to_string(),
+                    current_port: target.port.clone(),
+                    holder: target.exclusive_lease.clone().map(Box::new),
+                }),
+                None => Ok(()),
+            };
+        };
+        match &state.exclusive_lease {
+            None => Ok(()),
+            Some(holder) if Some(holder.lease_id.as_str()) == lease_id => Ok(()),
+            Some(holder) => Err(DeviceLeaseError::ForeignLeaseHeld {
+                port: port.to_string(),
+                holder: Box::new(holder.clone()),
+            }),
+        }
     }
 
     /// Acquire an exclusive lease on a device.

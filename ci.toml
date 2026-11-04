@@ -121,9 +121,12 @@ cache  = "machine"
 
 # -- Allowlists ----------------------------------------------------------------
 [allow]
-actions           = ["actions/checkout", "actions/upload-artifact", "actions/download-artifact", "actions/cache", "actions/setup-python", "actions/attest-build-provenance", "actions/upload-pages-artifact", "actions/deploy-pages", "actions/configure-pages", "actions/create-github-app-token", "actions/add-to-project", "astral-sh/setup-uv", "zackees/setup-soldr", "arduino/setup-arduino-cli", "pypa/gh-action-pypi-publish", "FastLED/fbuild"]
+actions           = ["actions/checkout", "actions/upload-artifact", "actions/download-artifact", "actions/cache", "actions/setup-python", "actions/attest-build-provenance", "actions/upload-pages-artifact", "actions/deploy-pages", "actions/configure-pages", "actions/create-github-app-token", "actions/add-to-project", "astral-sh/setup-uv", "zackees/setup-soldr", "arduino/setup-arduino-cli", "pypa/gh-action-pypi-publish", "FastLED/fbuild", "azure/login"]
 tools             = ["soldr", "uv", "python", "python3", "git", "gh", "bosn"]
-secrets           = ["PROJECT_APP_PRIVATE_KEY"]
+# Azure Artifact Signing (Authenticode) for the Windows release lanes: azure/login is OIDC
+# (no client secret); these are org-level coordinates, not credentials
+# (release-auto.yml build -> template_native_build.yml).
+secrets           = ["PROJECT_APP_PRIVATE_KEY", "AZURE_CLIENT_ID", "AZURE_TENANT_ID", "AZURE_SIGNING_ENDPOINT", "AZURE_SIGNING_ACCOUNT", "AZURE_SIGNING_PROFILE", "AZURE_SIGN_PUBLISHER"]
 platform-selector = "ci/select_boards.py"
 platform-code     = ["ci/select_boards.py"]
 setup-soldr       = { only-in = ".github/actions/setup" }

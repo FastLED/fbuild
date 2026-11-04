@@ -46,6 +46,24 @@ on:
         type: boolean
         default: false
         description: "Fail when a split debug sidecar (.dwp/.dSYM/.pdb) is missing"
+      sign_windows:
+        required: false
+        type: boolean
+        default: false
+        description: "Authenticode-sign the staged Windows PEs via Azure Artifact Signing (release-auto only; needs id-token: write and the AZURE_* secrets)"
+    secrets:
+      AZURE_CLIENT_ID:
+        required: false
+      AZURE_TENANT_ID:
+        required: false
+      AZURE_SIGNING_ENDPOINT:
+        required: false
+      AZURE_SIGNING_ACCOUNT:
+        required: false
+      AZURE_SIGNING_PROFILE:
+        required: false
+      AZURE_SIGN_PUBLISHER:
+        required: false
 
 env:
   CARGO_TERM_COLOR: always
@@ -420,6 +438,32 @@ jobs:
       #   Linux:        <bin>.dwp
       #   macOS:        <bin>.dSYM/  (rustc runs dsymutil at link time)
       #   Windows MSVC: <crate>.pdb  (hyphens become underscores)
+      # Azure Artifact Signing (Authenticode) for the Windows release lanes.
+      # Both lanes cross-build on Linux, so the signer is a SHA-256-pinned
+      # jsign jar driven by the OIDC azure/login session (no client secret).
+      # It signs every PE staged for this artifact -- fbuild.exe,
+      # fbuild-daemon.exe and _native.pyd -- BEFORE SHA256SUMS.txt, the
+      # provenance attestation and the upload, so the release archives, their
+      # checksums and the PyPI wheels built from this artifact all carry
+      # signed bytes. The script fails the step if any PE is left unsigned.
+      # Only release-auto.yml sets sign_windows; build.yml stays unsigned.
+      - name: Azure login for Authenticode signing
+        if: inputs.sign_windows
+        uses: azure/login@a457da9ea143d694b1b9c7c869ebb04ebe844ef5 # v2.3.0
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          allow-no-subscriptions: true
+
+      - name: Authenticode-sign Windows binaries
+        if: inputs.sign_windows
+        env:
+          AZURE_SIGNING_ENDPOINT: ${{ secrets.AZURE_SIGNING_ENDPOINT }}
+          AZURE_SIGNING_ACCOUNT: ${{ secrets.AZURE_SIGNING_ACCOUNT }}
+          AZURE_SIGNING_PROFILE: ${{ secrets.AZURE_SIGNING_PROFILE }}
+          AZURE_SIGN_PUBLISHER: ${{ secrets.AZURE_SIGN_PUBLISHER }}
+        run: python3 ci/sign_windows_release.py sign --dir staging
+
       - name: Stage debug sidecars
         shell: bash
         run: |

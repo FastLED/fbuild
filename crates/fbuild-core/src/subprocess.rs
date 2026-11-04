@@ -54,6 +54,10 @@ use crate::{FbuildError, Result};
 /// so the choice is auditable.
 const DEFAULT_SUBPROCESS_TIMEOUT_SECS: u64 = 900;
 
+/// Budget for stopping and reaping a timed-out command's tree before the
+/// failure is returned to the caller (FastLED/fbuild#1867).
+const TIMED_OUT_REAP_BUDGET: Duration = Duration::from_secs(5);
+
 /// Sentinel passed internally to mean "actually run with no timeout".
 /// `None` from a public caller is translated into the default cap
 /// (see [`resolve_default_timeout`]); only the `*_no_timeout` helpers
@@ -372,6 +376,12 @@ async fn run_command_passthrough_inner(
     let status = match wait_with_timeout(&mut child, timeout).await? {
         Some(status) => status,
         None => {
+            // Same ownership boundary as the captured path: a passthrough
+            // command's descendants stop with it, not after it
+            // (FastLED/fbuild#1867).
+            if let Some(pid) = child.id() {
+                let _ = process::terminate_tree(pid, process::Termination::Force);
+            }
             let _ = child.kill().await;
             return Err(FbuildError::Timeout(format!(
                 "command timed out after {}s",
@@ -536,34 +546,95 @@ where
 // Shared async plumbing
 // ---------------------------------------------------------------------------
 
+/// Collect a captured child's output, stopping its whole tree on timeout.
+///
+/// A deadline is not a completion. Stopping only the direct child left the
+/// compiler driver's descendants (`cc` -> `collect2` -> `ld`) running after
+/// the caller had already been told the build failed, so a retry raced a live
+/// writer that still owned the artifact (FastLED/fbuild#1867). On timeout the
+/// command's process tree is stopped and reaped before the error is returned.
 async fn wait_and_capture(
     child: Child,
     args: &[&str],
     timeout: Option<Duration>,
 ) -> Result<ToolOutput> {
-    let wait_fut = child.wait_with_output();
-    let output = match timeout {
-        Some(d) => match tokio::time::timeout(d, wait_fut).await {
-            Ok(res) => {
-                res.map_err(|e| FbuildError::Other(format!("command {:?} failed: {}", args, e)))?
-            }
-            Err(_) => {
-                return Err(FbuildError::Timeout(format!(
-                    "command timed out after {}s",
-                    d.as_secs()
-                )));
-            }
-        },
-        None => wait_fut
+    let Some(limit) = timeout else {
+        let output = child
+            .wait_with_output()
             .await
-            .map_err(|e| FbuildError::Other(format!("command {:?} failed: {}", args, e)))?,
+            .map_err(|e| FbuildError::Other(format!("command {:?} failed: {}", args, e)))?;
+        return Ok(ToolOutput {
+            stdout: bytes_to_lines_string(&output.stdout),
+            stderr: bytes_to_lines_string(&output.stderr),
+            exit_code: exit_code_from(output.status),
+        });
     };
-    let exit_code = exit_code_from(output.status);
-    Ok(ToolOutput {
-        stdout: bytes_to_lines_string(&output.stdout),
-        stderr: bytes_to_lines_string(&output.stderr),
-        exit_code,
-    })
+
+    let pid = child.id().unwrap_or(0);
+    let mut child = child;
+    let stdout = child.stdout.take();
+    let stderr = child.stderr.take();
+
+    // The streams are drained alongside the wait so a child that writes more
+    // than a pipe buffer cannot stall, and so the handle stays ours after the
+    // deadline expires.
+    let completed = {
+        let capture =
+            async { tokio::try_join!(drain_stream(stdout), drain_stream(stderr), child.wait()) };
+        tokio::time::timeout(limit, capture).await
+    };
+
+    match completed {
+        Ok(Ok((stdout, stderr, status))) => Ok(ToolOutput {
+            stdout: bytes_to_lines_string(&stdout),
+            stderr: bytes_to_lines_string(&stderr),
+            exit_code: exit_code_from(status),
+        }),
+        Ok(Err(error)) => Err(FbuildError::Other(format!(
+            "command {:?} failed: {}",
+            args, error
+        ))),
+        Err(_) => {
+            stop_timed_out_command(&mut child, pid).await;
+            Err(FbuildError::Timeout(format!(
+                "command timed out after {}s",
+                limit.as_secs()
+            )))
+        }
+    }
+}
+
+/// Read one captured stream to EOF, or nothing when it was not piped.
+async fn drain_stream<R>(reader: Option<R>) -> std::io::Result<Vec<u8>>
+where
+    R: tokio::io::AsyncRead + Unpin,
+{
+    let Some(mut reader) = reader else {
+        return Ok(Vec::new());
+    };
+    let mut bytes = Vec::new();
+    tokio::io::AsyncReadExt::read_to_end(&mut reader, &mut bytes).await?;
+    Ok(bytes)
+}
+
+/// Stop and reap everything a timed-out command started.
+///
+/// Completes before the timeout error is returned, so the caller's project
+/// lock is only released once no writer the command owned can still touch its
+/// output (FastLED/fbuild#1867).
+async fn stop_timed_out_command(child: &mut Child, pid: u32) {
+    if pid != 0 {
+        // The child leads its own process group inside the daemon, so this
+        // reaches the compiler driver's descendants too. Already gone is fine.
+        let _ = process::terminate_tree(pid, process::Termination::Force);
+    }
+    if tokio::time::timeout(TIMED_OUT_REAP_BUDGET, child.wait())
+        .await
+        .is_err()
+    {
+        let _ = child.start_kill();
+        let _ = tokio::time::timeout(TIMED_OUT_REAP_BUDGET, child.wait()).await;
+    }
 }
 
 async fn wait_with_timeout(
@@ -777,6 +848,10 @@ pub fn bare_name_path_overlay<'a>(
 fn compute_env(program: &str, overlay: Option<&[(&str, &str)]>) -> Option<Vec<(String, String)>> {
     process::command_environment(program, overlay)
 }
+
+#[cfg(test)]
+#[path = "subprocess_timeout_tests.rs"]
+mod timeout_tests;
 
 #[cfg(test)]
 mod tests {

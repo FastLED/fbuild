@@ -91,6 +91,14 @@ pub struct DeployRequest {
     pub environment: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub port: Option<String>,
+    /// Exclusive device-lease id this workflow holds
+    /// (`fbuild device lease ...`). Forwarded so the daemon admits the
+    /// deploy on a board leased to this workflow (FastLED/fbuild#1864).
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub lease_id: Option<String>,
+    /// Opt-in bounded wait for a foreign exclusive lease, in milliseconds.
+    #[serde(default)]
+    pub lease_wait_ms: u64,
     /// Explicit deploy protocol, currently `isp` or `wlink` for CH32V.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub protocol: Option<String>,

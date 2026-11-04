@@ -87,8 +87,15 @@ fbuild deploy --monitor="--timeout 60 --halt-on-success \"TEST PASSED\""
 
 Common options include `--port`, `--clean`, `--monitor`, `--timeout`,
 `--halt-on-error`, `--halt-on-success`, `--expect`, `--no-timestamp`,
-`--skip-build`, `--baud`, `--to device|emu|emulator`, `--emulator`, and
-`--output-dir`.
+`--skip-build`, `--baud`, `--to device|emu|emulator`, `--emulator`,
+`--output-dir`, and `--lease-id`.
+
+`--lease-id <lease-id>` deploys on a board reserved by an explicit device lease
+(see [workflow leases](#workflow-leases)). It is the id printed by
+`fbuild device lease`. Without it, a deploy against another client's exclusive
+lease is refused with `409 Conflict` before the competitor's serial session is
+preempted, so a second checkout can no longer replace firmware between the
+holder's flash and its validation (FastLED/fbuild#1864).
 
 `--transport picotool|uf2|swd` selects the RP2040/RP2350 deploy transport
 (FastLED/fbuild#1162, #1423). `swd` skips the target's USB stack entirely and
@@ -263,7 +270,11 @@ Attach to serial output.
 fbuild monitor
 fbuild monitor -e uno --port COM3 --baud 115200
 fbuild monitor --timeout 60 --halt-on-error "TEST FAILED" --halt-on-success "TEST PASSED"
+fbuild monitor --lease-id 7a3bf83c-4e00-4d81-b95e-62f02b8840de
 ```
+
+`--lease-id` attaches (and writes) under that workflow lease; without it a
+board reserved by another workflow's exclusive lease refuses the attach.
 
 ### `fbuild test-emu`
 
@@ -300,6 +311,47 @@ known limitations.
 | `fbuild daemon monitor` | Tail daemon logs. |
 | `fbuild show daemon` | Show daemon logs. |
 | `fbuild purge` | Purge cached packages or run `--gc`. |
+
+### When the daemon disappears
+
+The daemon embeds the compiler cache, and that cache ends the *process* — not
+the request — when a lock guard is held past its budget. A build, deploy or
+monitor caught by such an abort therefore sees only a dead connection. fbuild
+attributes it from the holder report the watchdog writes immediately before
+terminating, appending the guard, how long it was held, its budget, the
+acquisition site and the number of queued waiters, and stating that this is the
+cache-watchdog failure class rather than a device, firmware, upload or build
+error. The in-flight operation is interrupted and must be retried once a daemon
+is serving again. The next daemon start repeats the previous process's last
+abort report next to its stale-PID warning, so the cause survives in the log.
+
+### Workflow leases
+
+`fbuild device lease <port> --exclusive --track-serial` reserves the board for
+the workflow that acquired it. Every mutating device operation — deploy, reset,
+and the serial write path (`fbuild monitor`, the Python serial session, the
+`/ws/serial-monitor` `write` frame) — is refused for a caller that does not
+present the lease id with `--lease-id`, and the refusal names the lease, its
+holder, and both escape hatches (present the id, or release it). The serial
+check runs at attach — before the port is opened — and again on every write, so
+a lease taken by another workflow after a session attached still stops the
+bytes. Read-only monitoring is unaffected, and
+`fbuild device take <port> --reason <text>` still forces a takeover. A tracked
+lease follows the USB serial number across port renumbering: a queued
+`--lease-wait` workflow moves with the board instead of waiting on a port that no
+longer exists, and a caller still naming the pre-renumber port is told the new
+one (with the lease holder) rather than being admitted past the lease.
+
+Fail-fast is the default. `fbuild deploy --lease-wait <seconds>` instead joins a
+per-port FIFO queue: the deploy waits for the holder to release, then proceeds in
+ticket order, so two checkouts can take turns on one board without a retry loop.
+The wait happens before preemption/reset/open, so a queued workflow never
+disturbs the holder's session or firmware. Ordering is deterministic (a waiter
+is admitted only at the head of the queue), the queue is per device, and a
+cancelled/timed-out waiter removes itself and promotes the next one. The holder
+under its own `--lease-id` is never queued. On timeout the error reports the
+queue position, the holder and the elapsed wait, and states that the board was
+not reset, closed or flashed.
 
 ## Diagnostics And Analysis
 

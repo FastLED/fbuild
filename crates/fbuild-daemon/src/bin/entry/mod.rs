@@ -207,8 +207,9 @@ async fn run_async(heap_profile_rate: Option<usize>) -> i32 {
     // path (kernel TIME_WAIT) and `fbuild daemon list` reflect reality.
     if let Some(stale_pid) = read_stale_daemon_pid().await {
         tracing::warn!(
-            "found stale daemon PID file pointing at dead PID {}; cleaning up",
-            stale_pid
+            "found stale daemon PID file pointing at dead PID {}; cleaning up{}",
+            stale_pid,
+            previous_exit_note()
         );
         let _ = fbuild_core::fs::remove_file(fbuild_paths::get_daemon_pid_file()).await;
     }
@@ -768,6 +769,24 @@ fn populate_usb_overlay_best_effort() {
 /// Used at startup to clean up after a crashed previous instance so that
 /// `fbuild daemon list` reflects reality and the bind-retry loop has a
 /// chance to claim the port. See ISSUES.md "Issue B5a".
+/// Attribution for the daemon that owned the PID file before this one
+/// (FastLED/fbuild#1866). An embedded cache-lock watchdog abort ends the
+/// previous process with no graceful shutdown, so its holder report is the only
+/// surviving evidence of *why* it died; logging it at the next start means the
+/// cause is visible without hunting through the log.
+fn previous_exit_note() -> String {
+    use fbuild_core::daemon_diagnostics::{
+        DEFAULT_TAIL_BYTES, DaemonLoss, diagnose, read_log_tail,
+    };
+    let Ok(tail) = read_log_tail(&fbuild_paths::get_daemon_log_file(), DEFAULT_TAIL_BYTES) else {
+        return String::new();
+    };
+    match diagnose(&tail) {
+        DaemonLoss::Unattributed => String::new(),
+        loss => format!(" — the log ends with: {}", loss.headline()),
+    }
+}
+
 async fn read_stale_daemon_pid() -> Option<u32> {
     let path = fbuild_paths::get_daemon_pid_file();
     let raw = fbuild_core::fs::read_to_string(&path).await.ok()?;

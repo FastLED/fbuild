@@ -235,3 +235,50 @@ mod request_project_dir_tests {
         assert_eq!(components, expected);
     }
 }
+
+mod device_lease_admission_tests {
+    //! The deploy and reset handlers call
+    //! [`DeviceManager::admit_operation`] on the resolved port *before*
+    //! `preempt_for_deploy`, so a competing client cannot replace firmware
+    //! between a lease holder's flash and its validation
+    //! (FastLED/fbuild#1864). These tests drive that exact admission call
+    //! through the production [`DaemonContext`] without hardware.
+    use crate::context::DaemonContext;
+    use std::sync::Arc;
+
+    const PORT: &str = "/dev/ttyTEST0";
+
+    fn ctx_with_leased_device() -> (Arc<DaemonContext>, String) {
+        let (tx, _rx) = tokio::sync::watch::channel(false);
+        let ctx = Arc::new(DaemonContext::new(8765, tx, "unknown".to_string()));
+        ctx.device_manager.insert_test_device(PORT);
+        let lease = ctx
+            .device_manager
+            .acquire_exclusive(PORT, "client-a", "hardware validation", true)
+            .unwrap();
+        (ctx, lease.lease_id)
+    }
+
+    #[test]
+    fn competing_deploy_is_refused_at_admission() {
+        let (ctx, lease_id) = ctx_with_leased_device();
+        // Client B never acquired a lease: the deploy handler's gate refuses
+        // it before `preempt_for_deploy` can close client A's port.
+        let err = ctx.device_manager.admit_operation(PORT, None).unwrap_err();
+        assert!(err.message().contains(&lease_id), "{}", err.message());
+        assert!(err.message().contains("reserved"), "{}", err.message());
+    }
+
+    #[test]
+    fn holder_deploys_and_resets_under_its_own_lease() {
+        let (ctx, lease_id) = ctx_with_leased_device();
+        // Same lease id admitted repeatedly: a deploy followed by a reset /
+        // RPC carries the identity without a release/reacquire gap.
+        ctx.device_manager
+            .admit_operation(PORT, Some(&lease_id))
+            .unwrap();
+        ctx.device_manager
+            .admit_operation(PORT, Some(&lease_id))
+            .unwrap();
+    }
+}

@@ -66,6 +66,24 @@ jobs:
     secrets: inherit
     with:
       ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+      glibc_floor: false
+  dylint:
+    uses: ./.github/workflows/dylint.yml
+    secrets: inherit
+    with:
+      lane: ci-minimal
+      ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+  glibc_floor:
+    name: glibc 2.17 floor
+    # Release cross-link: push to main / manual dispatch only, never the
+    # PR or merge-queue path. The literal input keeps the job out of the
+    # PR replay graph (see the `linux` job's `with:` block).
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    uses: ./.github/workflows/check-ubuntu.yml
+    secrets: inherit
+    with:
+      ref: ${{ github.sha }}
+      glibc_floor: true
   board_plan:
     name: Select boards for changed paths
     if: github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'ci-test') && !contains(github.event.pull_request.labels.*.name, 'ci-full')
@@ -213,9 +231,31 @@ jobs:
             # Path-selected boards: skipped when the PR touches none.
             case "$PR_BOARDS" in success|skipped) ;; *) exit 1 ;; esac
           fi
+  ci-summary:
+    name: CI summary
+    if: always()
+    needs: [cancel-superseded, verify, linux, glibc_floor, dylint, board_plan, fbuild_bin, pr_boards, test, full, selected-coverage]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      actions: read
+      contents: read
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          sparse-checkout: ci/gate_jobs.py
+          sparse-checkout-cone-mode: false
+          persist-credentials: false
+      - name: Check job results
+        if: contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')
+        run: exit 1
+      - name: Check run jobs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 -P ci/gate_jobs.py
   queue-cache-janitor:
     name: End-of-queue cache janitor
-    needs: [cancel-superseded, verify, linux, board_plan, fbuild_bin, pr_boards, reuse_decision, test, full, selected-coverage]
+    needs: [cancel-superseded, verify, linux, glibc_floor, dylint, board_plan, fbuild_bin, pr_boards, reuse_decision, test, full, selected-coverage, ci-summary]
     if: always() && github.event_name == 'merge_group'
     runs-on: ubuntu-24.04
     timeout-minutes: 5

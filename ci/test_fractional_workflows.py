@@ -190,6 +190,40 @@ class FractionalWorkflowTests(unittest.TestCase):
             self.assertNotIn("if", steps[0])
             self.assertFalse(steps[0].get("continue-on-error", False))
 
+    def test_release_cross_link_is_a_sibling_job(self):
+        minimal = self.load("ci-minimal.yml")["jobs"]
+        # The `linux` binding must be a literal, never an event expression:
+        # ci-lint's replay proof resolves a callee job `if:` only from a literal
+        # caller binding. An expression puts `check-ubuntu.yml:glibc-floor` into
+        # every linux-minimal replay graph, which the local proof lane cannot
+        # attest -- that is GATE-001 on unmodified main (FastLED/fbuild#1629)
+        # and it silently reddens `ci.test_shared_replay` (local-gate only).
+        self.assertIs(False, minimal["linux"]["with"]["glibc_floor"])
+        floor = minimal["glibc_floor"]
+        self.assertEqual("./.github/workflows/check-ubuntu.yml", floor["uses"])
+        self.assertIs(True, floor["with"]["glibc_floor"])
+        self.assertIn("glibc_floor", minimal["ci-summary"]["needs"])
+        self.assertIn("glibc_floor", minimal["queue-cache-janitor"]["needs"])
+
+    def test_dylint_concurrency_distinguishes_each_call_site(self):
+        """A ci-full PR calls dylint.yml twice in ONE run: the lanes must differ.
+
+        ci-minimal calls dylint.yml directly, and ci-full calls it again from its
+        own `dylint` job. A called workflow's `github` context belongs to the
+        TOP-LEVEL caller, so `github.run_id` -- and `github.workflow` too -- are
+        identical for both jobs: keyed on either alone, the second call cancelled
+        the first and `dylint / Dylint` failed on every ci-full PR (#1874).
+        """
+        minimal = self.load("ci-minimal.yml")["jobs"]
+        full = self.load("ci-full.yml")["jobs"]
+        self.assertEqual("./.github/workflows/dylint.yml", minimal["dylint"]["uses"])
+        self.assertEqual("./.github/workflows/dylint.yml", full["dylint"]["uses"])
+        lanes = {minimal["dylint"]["with"]["lane"], full["dylint"]["with"]["lane"]}
+        self.assertEqual(2, len(lanes), f"call sites share a concurrency lane: {lanes}")
+        dylint = self.load("dylint.yml")
+        self.assertIn("lane", dylint[True]["workflow_call"]["inputs"])
+        self.assertIn("inputs.lane", dylint["concurrency"]["group"])
+
     def load(self, name):
         # PyYAML treats `on` as a YAML 1.1 boolean; inspect its True key.
         return yaml.safe_load((render_workflows.WORKFLOWS_DIR / name).read_text())
@@ -225,15 +259,16 @@ class FractionalWorkflowTests(unittest.TestCase):
         self.assertNotIn("run_full", full["jobs"]["dylint"]["with"])
         dylint = self.load("dylint.yml")
         self.assertEqual(["main"], dylint[True]["push"]["branches"])
-        # GEN-022: the required `Dylint` check must report on merge-queue runs,
-        # and none of its jobs may be skipped there.
-        self.assertIn("merge_group", dylint[True])
+        # Only `CI summary` is required now; PRs and the merge queue reach
+        # Dylint via ci-minimal's workflow_call, so no duplicate triggers.
+        self.assertNotIn("merge_group", dylint[True])
+        self.assertNotIn("pull_request", dylint[True])
         self.assertEqual("Dylint", dylint["jobs"]["gate"]["name"])
         self.assertEqual("always()", dylint["jobs"]["gate"]["if"])
         self.assertNotIn("if", dylint["jobs"]["policy"])
         dylint_janitor = dylint["jobs"]["queue-cache-janitor"]
         self.assertEqual(set(dylint["jobs"]) - {"queue-cache-janitor"}, set(dylint_janitor["needs"]))
-        self.assertEqual("always() && github.event_name == 'merge_group'", dylint_janitor["if"])
+        self.assertEqual("always() && github.event_name == 'merge_group' && github.workflow == 'Dylint'", dylint_janitor["if"])
         setup = next(
             step for step in dylint["jobs"]["dylint"]["steps"]
             if step.get("uses", "").startswith("zackees/setup-soldr@")
@@ -358,11 +393,29 @@ class FractionalWorkflowTests(unittest.TestCase):
         self.assertIn("pull_request", minimal[True])
         self.assertEqual(
             {
-                "cancel-superseded", "verify", "linux", "board_plan", "fbuild_bin", "pr_boards",
-                "reuse_decision", "test", "full", "selected-coverage", "queue-cache-janitor",
+                "cancel-superseded", "verify", "linux", "glibc_floor", "board_plan", "fbuild_bin",
+                "pr_boards", "reuse_decision", "test", "full", "selected-coverage",
+                "queue-cache-janitor", "dylint", "ci-summary",
             },
             set(minimal["jobs"]),
         )
+        # The single required context: always() on every event, every other
+        # job but the janitor in needs, and the run's full job list via the API.
+        summary = minimal["jobs"]["ci-summary"]
+        self.assertEqual("CI summary", summary["name"])
+        self.assertEqual("always()", summary["if"])
+        self.assertIn("merge_group", minimal[True])
+        self.assertEqual(set(minimal["jobs"]) - {"ci-summary", "queue-cache-janitor", "reuse_decision"},
+                         set(summary["needs"]))
+        self.assertIn("ci-summary", minimal["jobs"]["queue-cache-janitor"]["needs"])
+        self.assertIn("ci/gate_jobs.py", summary["steps"][-1]["run"])
+        self.assertEqual("read", summary["permissions"]["actions"])
+        # The glibc release cross-link stays off the PR and merge-queue path:
+        # the shared Ubuntu call binds it false and a sibling job adds it on
+        # push/dispatch only (see test_release_cross_link_is_a_sibling_job).
+        self.assertIs(False, minimal["jobs"]["linux"]["with"]["glibc_floor"])
+        self.assertEqual("github.event_name == 'push' || github.event_name == 'workflow_dispatch'",
+                         minimal["jobs"]["glibc_floor"]["if"])
         # GEN-021 shadow decision (zackees/ci.yml#162): main pushes only, never
         # consumed by another job, and unable to fail the run.
         reuse = minimal["jobs"]["reuse_decision"]

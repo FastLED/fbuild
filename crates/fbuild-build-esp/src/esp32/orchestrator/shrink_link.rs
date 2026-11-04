@@ -50,6 +50,34 @@ pub(crate) async fn resolve_shrink(
         // JSON then documents that shrink was considered and not applied.
         return printf_thin::record_for(mode, false);
     }
+    apply_printf_shrink(
+        mode,
+        compiler,
+        caller_path,
+        toolchain_name,
+        is_xtensa,
+        overlay_link_flags,
+        build_log,
+    )
+    .await
+}
+
+/// The `--shrink=printf` half of [`resolve_shrink`]: the architecture gate,
+/// the nano.specs probe, the link flags and the two-line notice.
+///
+/// Separate function so each half stays under the workspace
+/// `cognitive_complexity` gate; the split follows the two questions being
+/// answered ("is this mode for this platform?" and "can this toolchain
+/// actually shrink, and what does the user need to know?").
+async fn apply_printf_shrink(
+    mode: ShrinkMode,
+    compiler: &Path,
+    caller_path: Option<&str>,
+    toolchain_name: &str,
+    is_xtensa: bool,
+    overlay_link_flags: &mut Vec<String>,
+    build_log: &mut BuildLog,
+) -> ShrinkRecord {
     if !is_xtensa {
         // Measured, not assumed: on ESP32-C6 (riscv32-esp-elf 14.2.0,
         // ESP-IDF 5.5.5, arduino 3.3.12) linking newlib-nano pulled
@@ -69,29 +97,48 @@ pub(crate) async fn resolve_shrink(
     let available = printf_thin::probe_nano_specs(compiler, caller_path)
         .await
         .unwrap_or(false);
-    if available {
-        overlay_link_flags.extend(printf_thin::link_flags());
-        // The one place that may claim the reducer is linked: this module
-        // knows the architecture *and* the probe result. The CLI cannot (it
-        // would have to resolve board -> mcu -> arch), so it no longer
-        // previews the applied reducer -- see `fbuild-cli/cli/shrink_notice.rs`.
-        build_log.push(format!(
+    if !available {
+        // Visible, not just filtered `tracing::warn!`: the request is being
+        // dropped. The record says the same thing (`resolved: off`, empty
+        // `applied`) so terminal output and telemetry agree.
+        let warning = format!(
+            "WARNING: shrink: --shrink=printf found no nano.specs in {toolchain_name}; \
+             building unshrunk"
+        );
+        build_log.push(warning.clone());
+        tracing::warn!("{warning}");
+        return printf_thin::record_for(mode, false);
+    }
+    overlay_link_flags.extend(printf_thin::link_flags());
+    // The one place that may claim the reducer is linked: this module
+    // knows the architecture *and* the probe result. The CLI cannot (it
+    // would have to resolve board -> mcu -> arch), so it no longer
+    // previews the applied reducer -- see `fbuild-cli/cli/shrink_notice.rs`.
+    for line in applied_notice() {
+        tracing::warn!("{line}");
+        build_log.push(line);
+    }
+    printf_thin::record_for(mode, true)
+}
+
+/// What a shrunk build says once the reducer is actually linked: the claim,
+/// then the measured divergence disclosure.
+///
+/// Two lines, both always visible. The disclosure is not optional: nano really
+/// does format `%lld`/`%zu`/`%hh*` differently on hardware (see
+/// [`printf_thin::UNSUPPORTED_CONVERSIONS`]), so a build that shrinks has to
+/// say so at build time rather than leave it to the docs. Kept pure — the
+/// only caller needs a probed toolchain, but the pairing of "we shrank" with
+/// "here is what changed" must be testable without one.
+pub(crate) fn applied_notice() -> [String; 2] {
+    [
+        format!(
             "shrink: --shrink=printf links newlib-nano ({}) instead of newlib's full \
              _vfprintf_r/_svfprintf_r; float formatting kept via _printf_float",
             printf_thin::SPECS_FLAG
-        ));
-        return printf_thin::record_for(mode, true);
-    }
-    // Visible, not just filtered `tracing::warn!`: the request is being
-    // dropped. The record says the same thing (`resolved: off`, empty
-    // `applied`) so terminal output and telemetry agree.
-    let warning = format!(
-        "WARNING: shrink: --shrink=printf found no nano.specs in {toolchain_name}; \
-         building unshrunk"
-    );
-    build_log.push(warning.clone());
-    tracing::warn!("{warning}");
-    printf_thin::record_for(mode, false)
+        ),
+        printf_thin::divergence_warning(),
+    ]
 }
 
 /// Write `build_info_<env>.json` (+ the `build_info.json` fallback) for a

@@ -197,6 +197,44 @@ pub(crate) fn terminate_pid(pid: u32, termination: Termination) -> std::io::Resu
 }
 
 const EPERM: i32 = 1;
+/// Terminate `pid` together with every process in the group it leads.
+///
+/// Same ownership contract as the Linux backend: the group is signalled only
+/// when the kernel confirms `pid` leads it, so an uncontained child that
+/// shares fbuild's group can never take fbuild down, and a tree that is
+/// already gone is a successful no-op (FastLED/fbuild#1867).
+pub(crate) fn terminate_tree(pid: u32, termination: Termination) -> std::io::Result<()> {
+    let Ok(pid) = i32::try_from(pid) else {
+        return Err(std::io::Error::new(
+            std::io::ErrorKind::InvalidInput,
+            "pid is outside the host process-id range",
+        ));
+    };
+    let signal = match termination {
+        Termination::Graceful => SIGTERM,
+        Termination::Force => SIGKILL,
+    };
+    // SAFETY: `getpgid` only reads kernel state for the pid.
+    let group = unsafe { libc::getpgid(pid) };
+    if group == pid {
+        // SAFETY: the kernel confirmed `pid` leads this group, and the signal
+        // is one of the two constants selected above.
+        if unsafe { kill(-group, signal) } == 0 {
+            return Ok(());
+        }
+        let error = std::io::Error::last_os_error();
+        return if error.raw_os_error() == Some(libc::ESRCH) {
+            Ok(())
+        } else {
+            Err(error)
+        };
+    }
+    match terminate_pid(pid as u32, termination) {
+        Err(error) if error.raw_os_error() == Some(libc::ESRCH) => Ok(()),
+        other => other,
+    }
+}
+
 const SIGKILL: i32 = 9;
 const SIGTERM: i32 = 15;
 

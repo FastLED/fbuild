@@ -130,7 +130,7 @@ the "every 2nd RPC times out" abandoned-reader failure mode).
 
 | method | signature | returns |
 |---|---|---|
-| ctor | `AsyncSerialMonitor(port, baud_rate=115200, auto_reconnect=True, verbose=False)` | — |
+| ctor | `AsyncSerialMonitor(port, baud_rate=115200, auto_reconnect=True, verbose=False, lease_id=None)` | — |
 | `__aenter__` / `__aexit__` | — | self / `False` |
 | `read_lines` | `read_lines(timeout=30.0)` (`timeout_secs=` kept as a deprecated alias for one release) | `list[str]` |
 | `write` | `write(data: str)` | **`int`** bytes written (breaking change from the pre-#1485 `bool`) |
@@ -192,12 +192,19 @@ class DaemonConnection:
               timeout: float = 1800.0) -> bool: ...
     def deploy(self, port: str | None = None, clean: bool = False,
                skip_build: bool = False, monitor_after: bool = False,
+               lease_id: str | None = None, lease_wait_ms: int = 0,
                timeout: float = 1800.0) -> bool: ...
     def monitor(self, port: str | None = None, baud_rate: int | None = None,
                 timeout: float | None = None) -> bool: ...
 ```
 
 Uses `reqwest` internally to make HTTP requests to the daemon.
+
+Workflow leases (FastLED/fbuild#1864): `deploy(lease_id=..., lease_wait_ms=...)`
+forwards the exclusive device lease the workflow holds to the daemon's deploy
+admission, and `SerialMonitor(lease_id=...)` / `AsyncSerialMonitor(lease_id=...)`
+present the same lease on the serial `Attach` frame. Omitting both keeps the
+historical fail-fast behaviour.
 
 ## FbuildSerialAdapter (FastLED side)
 

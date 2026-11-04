@@ -15,6 +15,8 @@ import tempfile
 from dataclasses import dataclass
 from pathlib import Path
 
+from ci.local_suites import LOCAL_UNITTEST_MODULES
+
 JsonValue = str | int | float | bool | None | list["JsonValue"] | dict[str, "JsonValue"]
 ROOT = Path(__file__).resolve().parent.parent
 WORKFLOW = ".github/workflows/ci-minimal.yml"
@@ -260,15 +262,7 @@ def main() -> None:
             "python",
             "-m",
             "unittest",
-            "ci.test_shared_replay",
-            "ci.test_local_gate",
-            "ci.test_local_dylint_gate",
-            "ci.test_local_lint_gate",
-            "ci.test_fractional_workflows",
-            "ci.test_publish_quota",
-            "ci.test_setup_action",
-            "ci.test_test_cache_status",
-            "ci.test_gen_mirror_manifest",
+            *LOCAL_UNITTEST_MODULES,
         ],
         cwd=ROOT,
         check=True,

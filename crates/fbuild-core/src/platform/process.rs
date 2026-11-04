@@ -309,6 +309,28 @@ pub fn terminate_pid(pid: u32, termination: Termination) -> std::io::Result<()> 
     super::selected::process::terminate_pid(pid, termination)
 }
 
+/// Terminate `pid` together with the process tree it leads.
+///
+/// [`terminate_pid`] stops exactly one process. A compiler driver is not one
+/// process: `cc` forks `collect2`, which forks `ld`, and the writer that
+/// matters is the grandchild. Stopping only the driver leaves that writer
+/// running after fbuild has already reported a terminal failure, so a retry
+/// races a process that still owns the output file (FastLED/fbuild#1867).
+///
+/// The host implementation signals a process group only when the kernel
+/// confirms `pid` leads it; an uncontained child that shares the caller's own
+/// group degrades to the single-pid kill rather than taking the caller down.
+/// Termination strength is passed through unchanged.
+pub fn terminate_tree(pid: u32, termination: Termination) -> std::io::Result<()> {
+    if pid == 0 || pid > i32::MAX as u32 {
+        return Err(std::io::Error::new(
+            std::io::ErrorKind::InvalidInput,
+            "pid is outside fbuild's supported process-id range",
+        ));
+    }
+    super::selected::process::terminate_tree(pid, termination)
+}
+
 pub fn wait_for_pid_exit(pid: u32, timeout: Duration) -> bool {
     let deadline = Instant::now() + timeout;
     while Instant::now() < deadline {

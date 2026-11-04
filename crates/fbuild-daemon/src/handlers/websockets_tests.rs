@@ -38,9 +38,12 @@ async fn serial_ws_replies_follow_request_order() {
 
     let (shutdown_tx, _shutdown_rx) = tokio::sync::watch::channel(false);
     let ctx = Arc::new(DaemonContext::new(8765, shutdown_tx, "test".to_string()));
+    // FastLED/fbuild#1864: the port is a known device so the lease admission
+    // path is live; no lease is held yet, so the attach must pass.
+    ctx.device_manager.insert_test_device(&port);
     let router = axum::Router::new()
         .route("/ws/serial-monitor", axum::routing::get(ws_serial_monitor))
-        .with_state(ctx);
+        .with_state(ctx.clone());
     let listener = tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap();
     let address = listener.local_addr().unwrap();
     let server = tokio::spawn(async move { axum::serve(listener, router).await.unwrap() });
@@ -116,6 +119,32 @@ async fn serial_ws_replies_follow_request_order() {
             assert_eq!(reply["bytes_written"], byte_count, "reply {index}: {reply}");
         }
     }
+
+    // FastLED/fbuild#1864: a lease taken by another workflow *after* this
+    // session attached must stop the next write instead of letting the bytes
+    // reach a board that another workflow now holds.
+    let foreign = ctx
+        .device_manager
+        .acquire_exclusive(&port, "client-c", "other workflow", true)
+        .expect("a foreign workflow must be able to lease an unleased port");
+    ws.send(ClientMessage::Text(last_write.to_string().into()))
+        .await
+        .unwrap();
+    let frame = tokio::time::timeout(Duration::from_secs(5), ws.next())
+        .await
+        .expect("refused write must be answered")
+        .unwrap()
+        .unwrap();
+    let ClientMessage::Text(text) = frame else {
+        panic!("refused write was not answered with a text frame: {frame:?}");
+    };
+    let reply: serde_json::Value = serde_json::from_str(&text).unwrap();
+    assert_eq!(reply["type"], "write_ack", "{reply}");
+    assert_eq!(reply["success"], false, "{reply}");
+    assert_eq!(reply["bytes_written"], 0, "{reply}");
+    let message = reply["message"].as_str().unwrap_or_default();
+    assert!(message.contains("reserved by exclusive lease"), "{reply}");
+    assert!(message.contains(&foreign.lease_id), "{reply}");
 
     ws.send(ClientMessage::Text(r#"{"type":"detach"}"#.into()))
         .await
@@ -781,4 +810,109 @@ async fn ws_open_port_timeout_names_a_dead_client_holder() {
         "{message}"
     );
     assert!(!message.contains("wedged"), "{message}");
+}
+
+/// FastLED/fbuild#1864: the serial attach is a mutating device path, so a
+/// foreign exclusive workflow lease must refuse it — and the holder must still
+/// get through admission. Portable on purpose: the refusal happens before
+/// `open_port`, so the assertion needs no tty and no platform gate.
+#[tokio::test]
+async fn ws_serial_attach_is_refused_under_a_foreign_exclusive_lease() {
+    use tokio_tungstenite::tungstenite::Message as ClientMessage;
+
+    let port = "COM_TEST_1864";
+    let (shutdown_tx, _shutdown_rx) = tokio::sync::watch::channel(false);
+    let ctx = Arc::new(DaemonContext::new(8766, shutdown_tx, "test".to_string()));
+    ctx.device_manager.insert_test_device(port);
+    let lease = ctx
+        .device_manager
+        .acquire_exclusive(port, "client-a", "hardware validation", true)
+        .expect("a fresh test device must be leaseable");
+    let router = axum::Router::new()
+        .route("/ws/serial-monitor", axum::routing::get(ws_serial_monitor))
+        .with_state(ctx.clone());
+    let listener = tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap();
+    let address = listener.local_addr().unwrap();
+    let server = tokio::spawn(async move { axum::serve(listener, router).await.unwrap() });
+
+    let attach = |client: &str, lease_id: Option<&str>| {
+        let mut frame = serde_json::json!({
+            "type": "attach",
+            "client_id": client,
+            "port": port,
+            "baud_rate": 115200,
+            "open_if_needed": false,
+            "pre_acquire_writer": false,
+        });
+        if let Some(id) = lease_id {
+            frame["lease_id"] = serde_json::json!(id);
+        }
+        frame.to_string()
+    };
+
+    // A client that presents no lease must be refused.
+    let (mut foreign, _) =
+        tokio_tungstenite::connect_async(format!("ws://{address}/ws/serial-monitor"))
+            .await
+            .unwrap();
+    foreign
+        .send(ClientMessage::Text(attach("client-b", None).into()))
+        .await
+        .unwrap();
+    let refused = read_json_frame(&mut foreign).await;
+    assert_eq!(refused["type"], "error", "{refused}");
+    let message = refused["message"].as_str().unwrap_or_default();
+    assert!(message.contains("reserved by exclusive lease"), "{message}");
+    assert!(message.contains(&lease.lease_id), "{message}");
+    assert!(message.contains("--lease-id"), "{message}");
+    assert!(
+        !ctx.serial_manager.has_clients(port),
+        "a refused attach must not open the port"
+    );
+
+    // The holder presenting its lease clears admission; this attach then fails
+    // later (the port is not open and open_if_needed is false), which proves
+    // the lease gate was not what refused it.
+    let (mut holder, _) =
+        tokio_tungstenite::connect_async(format!("ws://{address}/ws/serial-monitor"))
+            .await
+            .unwrap();
+    holder
+        .send(ClientMessage::Text(
+            attach("client-a", Some(&lease.lease_id)).into(),
+        ))
+        .await
+        .unwrap();
+    let holder_reply = read_json_frame(&mut holder).await;
+    let holder_message = holder_reply["message"].as_str().unwrap_or_default();
+    assert!(
+        !holder_message.contains("reserved by exclusive lease"),
+        "the lease holder must clear admission: {holder_reply}"
+    );
+
+    server.abort();
+}
+
+/// Await one daemon frame and decode it as JSON. Generic over the client stream
+/// so it needs no platform gate.
+async fn read_json_frame<S>(ws: &mut S) -> serde_json::Value
+where
+    S: futures::Stream<
+            Item = Result<
+                tokio_tungstenite::tungstenite::Message,
+                tokio_tungstenite::tungstenite::Error,
+            >,
+        > + Unpin,
+{
+    use tokio_tungstenite::tungstenite::Message as ClientMessage;
+
+    let frame = tokio::time::timeout(Duration::from_secs(5), ws.next())
+        .await
+        .expect("daemon must answer within 5s")
+        .expect("daemon must answer with a frame")
+        .expect("daemon must not fail at the websocket layer");
+    let ClientMessage::Text(text) = frame else {
+        panic!("daemon replied with a non-text frame: {frame:?}");
+    };
+    serde_json::from_str(&text).expect("daemon frames are JSON")
 }

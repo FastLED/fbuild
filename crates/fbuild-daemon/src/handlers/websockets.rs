@@ -197,7 +197,7 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
             return;
         }
     };
-    let (client_id, port, baud_rate, pre_acquire_writer, client_metadata) = match first_frame {
+    let (client_id, port, baud_rate, pre_acquire, client_metadata, lease_id) = match first_frame {
         Some(Ok(Message::Text(text))) => {
             match serde_json::from_str::<SerialClientMessage>(&text) {
                 Ok(SerialClientMessage::Attach {
@@ -205,10 +205,27 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
                     port,
                     baud_rate,
                     open_if_needed,
-                    pre_acquire_writer,
+                    pre_acquire_writer: pre_acquire,
                     client_metadata,
+                    lease_id,
                 }) => {
                     attach_guard.set_target(client_id.clone(), port.clone());
+                    // FastLED/fbuild#1864: a foreign exclusive workflow lease
+                    // refuses the attach BEFORE the port is opened, so a client
+                    // whose board another workflow reserved can never reset,
+                    // flash, or write it by attaching a serial session.
+                    if let Err(error) = ctx
+                        .device_manager
+                        .admit_operation(&port, lease_id.as_deref())
+                    {
+                        let err_msg = SerialServerMessage::Error {
+                            message: format!("serial attach refused: {}", error.message()),
+                        };
+                        let _ = socket
+                            .send(Message::Text(serialize_or_fallback(&err_msg).into()))
+                            .await;
+                        return;
+                    }
                     if let Some(message) = active_preemption_error(&ctx, &port).await {
                         let err_msg = SerialServerMessage::Error { message };
                         let _ = socket
@@ -243,8 +260,9 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
                         client_id,
                         port,
                         baud_rate,
-                        pre_acquire_writer,
+                        pre_acquire,
                         client_metadata,
+                        lease_id,
                     )
                 }
                 Ok(_) => {
@@ -277,7 +295,7 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
     // the leak that kept fbuild-daemon resident after autoresearch ended.
 
     // Pre-acquire writer if requested
-    let writer_acquired = if pre_acquire_writer {
+    let writer_acquired = if pre_acquire {
         ctx.serial_manager
             .acquire_writer(&port, &client_id)
             .await
@@ -521,7 +539,7 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
                                 )
                                 .await;
                                 if opened.is_ok() {
-                                    if pre_acquire_writer {
+                                    if pre_acquire {
                                         let _ = ctx
                                             .serial_manager
                                             .acquire_writer(&port_owned, &client_id_owned)
@@ -720,6 +738,7 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
         let ctx = ctx.clone();
         let port_owned = port.clone();
         let client_id_owned = client_id.clone();
+        let lease_id_owned = lease_id.clone();
         let out_tx_inbound = out_tx;
         tokio::spawn(async move {
             while let Some(msg) = ws_stream.next().await {
@@ -728,6 +747,24 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
                         match serde_json::from_str::<SerialClientMessage>(&text) {
                             Ok(SerialClientMessage::Write { data }) => {
                                 ctx.touch_activity();
+                                // FastLED/fbuild#1864: re-admit every write, so a
+                                // lease acquired by another workflow after this
+                                // session attached still stops the bytes before
+                                // they reach the board.
+                                if let Err(error) = ctx
+                                    .device_manager
+                                    .admit_operation(&port_owned, lease_id_owned.as_deref())
+                                {
+                                    let _ = out_tx_inbound.send(SerialServerMessage::WriteAck {
+                                        success: false,
+                                        bytes_written: 0,
+                                        message: Some(format!(
+                                            "write refused: {}",
+                                            error.message()
+                                        )),
+                                    });
+                                    continue;
+                                }
                                 let decoded = match base64::engine::general_purpose::STANDARD
                                     .decode(&data)
                                 {

@@ -286,6 +286,25 @@ pub(crate) fn terminate_pid(pid: u32, _termination: Termination) -> std::io::Res
     }
 }
 
+/// Terminate `pid` -- and, on Windows, the tree it owns.
+///
+/// Windows containment is a Job Object created at spawn time; fbuild's
+/// contained async spawn path does not retain that handle, so no tree-wide
+/// kill is reachable from a bare pid here. The caller still gets the process
+/// itself stopped, and the tree keeps the `KILL_ON_JOB_CLOSE` guarantee the
+/// spawn path establishes. The handle handoff for a per-command tree kill is
+/// the Windows half of FastLED/fbuild#1867.
+///
+/// A pid the host cannot resolve is a successful no-op, matching the Unix
+/// contract: `OpenProcess` reports a vanished pid as `ERROR_INVALID_PARAMETER`.
+pub(crate) fn terminate_tree(pid: u32, termination: Termination) -> std::io::Result<()> {
+    const ERROR_INVALID_PARAMETER: i32 = 87;
+    match terminate_pid(pid, termination) {
+        Err(error) if error.raw_os_error() == Some(ERROR_INVALID_PARAMETER) => Ok(()),
+        result => result,
+    }
+}
+
 pub(crate) fn exit_code(status: std::process::ExitStatus) -> i32 {
     status.code().unwrap_or(-1)
 }
