@@ -45,6 +45,27 @@ fn is_cxx_only_flag(flag: &str) -> bool {
     CXX_ONLY_PREFIXES.iter().any(|p| flag.starts_with(p))
 }
 
+/// True when `source` is a C-driver translation unit.
+///
+/// The C driver owns C *and* assembly: `gcc` preprocesses `.S`
+/// (assembler-with-cpp) and assembles `.s`, and the target C flags are the
+/// recipe those files expect. Sending them through `g++` instead switches the
+/// `#ifdef __cplusplus` branches inside vendored assembly, defines
+/// `__cplusplus`, and appends a `-std=gnu++*`/`-fno-rtti` recipe the file was
+/// never written for (FastLED/fbuild#1885).
+///
+/// Case matters, as it does for GCC: `.S` is assembled with the preprocessor
+/// and `.s` without, while `.C` is C++. [`crate::library::library_info`] only collects
+/// `c`, `S` and `s`, so this is the complete set for library sources. The
+/// core/sketch path (`CompilerBase::compile`) already draws the same line;
+/// library TUs must not depend on how they entered the build.
+fn uses_c_driver(source: &Path) -> bool {
+    source
+        .extension()
+        .and_then(|ext| ext.to_str())
+        .is_some_and(|ext| matches!(ext, "c" | "S" | "s"))
+}
+
 /// Outcome of a single [`LibCompileBackend::compile`] dispatch.
 pub struct LibCompileOutcome {
     pub exit_code: i32,
@@ -442,9 +463,7 @@ async fn compile_one_source(
     let obj = object_path(source, obj_dir);
     let rsp_dir = obj_dir.parent().unwrap_or(obj_dir).join("tmp");
 
-    let is_c = source.extension().map(|e| e == "c").unwrap_or(false);
-
-    let (compiler, flags): (&Path, &[String]) = if is_c {
+    let (compiler, flags): (&Path, &[String]) = if uses_c_driver(source) {
         (gcc_path, c_safe_flags)
     } else {
         (gxx_path, cpp_flags)
@@ -611,8 +630,7 @@ fn compile_signature(
     cpp_flags: &[String],
     include_flags: &[String],
 ) -> String {
-    let is_c = source.extension().map(|e| e == "c").unwrap_or(false);
-    let (compiler, flags): (&Path, &[String]) = if is_c {
+    let (compiler, flags): (&Path, &[String]) = if uses_c_driver(source) {
         (gcc_path, c_safe_flags)
     } else {
         (gxx_path, cpp_flags)
@@ -799,3 +817,7 @@ fn write_sources(dir: &Path, names: &[&str]) -> Vec<PathBuf> {
 #[cfg(test)]
 #[path = "library_compiler_tests.rs"]
 mod tests;
+
+#[cfg(test)]
+#[path = "library_dispatch_tests.rs"]
+mod dispatch_tests;

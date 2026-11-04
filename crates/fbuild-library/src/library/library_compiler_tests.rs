@@ -270,7 +270,7 @@ fn test_archive_is_not_up_to_date_when_object_newer() {
 /// Install a fake `ar` shell script at `path` that creates its 2nd arg
 /// (the archive) as an empty file. Installed via staging + rename to
 /// avoid ETXTBSY under parallel tests.
-fn install_fake_ar(path: &Path) {
+pub(super) fn install_fake_ar(path: &Path) {
     let script = "#!/bin/sh\n# argv: rcs <archive> <objs...>\ntouch \"$2\"\n";
     let staging = path.with_extension("staging");
     std::fs::write(&staging, script).unwrap();
@@ -278,24 +278,39 @@ fn install_fake_ar(path: &Path) {
     std::fs::rename(&staging, path).unwrap();
 }
 
+/// One recorded dispatch: the compiler and the arguments that followed it.
+type RecordedCall = (String, Vec<String>);
+
+/// Every dispatch a [`FakeBackend`] has run, in start order.
+type CallLog = std::sync::Arc<std::sync::Mutex<Vec<RecordedCall>>>;
+
 /// A fake [`LibCompileBackend`] that tracks concurrency, start order, and
 /// writes the object file, failing for sources whose file name starts
 /// with "bad".
-struct FakeBackend {
+pub(super) struct FakeBackend {
     in_flight: std::sync::Arc<std::sync::atomic::AtomicUsize>,
     max_in_flight: std::sync::Arc<std::sync::atomic::AtomicUsize>,
     start_order: std::sync::Arc<std::sync::Mutex<Vec<String>>>,
     call_count: std::sync::Arc<std::sync::atomic::AtomicUsize>,
+    /// `(compiler, args)` for every dispatch, so a test can assert which
+    /// driver and flag set a source extension actually gets (#1885).
+    calls: CallLog,
 }
 
 impl FakeBackend {
-    fn new() -> Self {
+    pub(super) fn new() -> Self {
         Self {
             in_flight: std::sync::Arc::new(std::sync::atomic::AtomicUsize::new(0)),
             max_in_flight: std::sync::Arc::new(std::sync::atomic::AtomicUsize::new(0)),
             start_order: std::sync::Arc::new(std::sync::Mutex::new(Vec::new())),
             call_count: std::sync::Arc::new(std::sync::atomic::AtomicUsize::new(0)),
+            calls: std::sync::Arc::new(std::sync::Mutex::new(Vec::new())),
         }
+    }
+
+    /// Every `(compiler, args)` dispatch recorded so far.
+    pub(super) fn calls(&self) -> Vec<RecordedCall> {
+        self.calls.lock().unwrap().clone()
     }
 }
 
@@ -303,13 +318,17 @@ impl FakeBackend {
 impl LibCompileBackend for FakeBackend {
     async fn compile(
         &self,
-        _compiler: &Path,
+        compiler: &Path,
         args: Vec<String>,
         cwd: NormalizedPath,
         _env: Vec<(String, String)>,
     ) -> Result<LibCompileOutcome> {
         self.call_count
             .fetch_add(1, std::sync::atomic::Ordering::Relaxed);
+        self.calls
+            .lock()
+            .unwrap()
+            .push((compiler.to_string_lossy().to_string(), args.clone()));
 
         // Locate the source arg (before "-c" wouldn't help; source is the
         // arg right after "-c", obj is the arg right after "-o").
