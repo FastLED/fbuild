@@ -421,25 +421,27 @@ pub async fn run_sequential_build_with_optional_framework_libs(
         )
         .await?;
     }
-    let link_result = {
-        // FastLED/fbuild#1465: `link` covers `Linker::link_all` end to end
-        // (link + objcopy + size). Mandatory core objects remain direct;
-        // the optional library archive has already been prepared above.
-        let _g = perf.phase("link");
-        crate::linker::Linker::link_all(
-            linker,
-            &sketch_objects,
-            &core_objects,
-            &ctx.build_dir,
-            &crate::linker::LinkExtraArgs {
-                flags: ctx.overlay_link_flags.clone(),
-                libs: ctx.overlay_link_libs.clone(),
-                bloat_analysis: params.bloat_analysis,
-            },
-            params.symbol_analysis,
-        )
-        .await?
-    };
+    // FastLED/fbuild#1465: `link` covers `Linker::link_all` end to end
+    // (link + objcopy + size). Mandatory core objects remain direct;
+    // the optional library archive has already been prepared above.
+    // FastLED/fbuild#1894: `link_all` records its own `link-elf` /
+    // `link-convert` / `link-size` sub-phases into the same timer.
+    let link_started = Instant::now();
+    let link_result = crate::linker::Linker::link_all(
+        linker,
+        &sketch_objects,
+        &core_objects,
+        &ctx.build_dir,
+        &crate::linker::LinkExtraArgs {
+            flags: ctx.overlay_link_flags.clone(),
+            libs: ctx.overlay_link_libs.clone(),
+            bloat_analysis: params.bloat_analysis,
+        },
+        params.symbol_analysis,
+        &mut perf,
+    )
+    .await?;
+    perf.record("link", link_started.elapsed());
 
     // Emit build_info_<env>.json (and the generic fallback) so downstream
     // tools (FastLED `ci/compiled_size.py`, etc.) can find the toolchain
