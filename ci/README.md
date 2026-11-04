@@ -2,8 +2,8 @@
 
 Python scripts for CI, packaging, and development tooling. All invoked via `uv run`.
 
-`reclaim_android_ndks.py` provisions cold Linux acceptance, glibc-floor, and
-native release builders by uninstalling only installed Android NDK package IDs
+`reclaim_android_ndks.py` provisions cold Linux acceptance, glibc-floor, Dylint,
+and native release builders by uninstalling only installed Android NDK package IDs
 through their SDK manager. These jobs do not build Android targets. It records
 workspace free bytes before and after; Rust/fbuild caches and disk guards stay
 unchanged. Run its focused checks with
