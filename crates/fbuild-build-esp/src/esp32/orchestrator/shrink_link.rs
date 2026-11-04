@@ -69,28 +69,28 @@ pub(crate) async fn resolve_shrink(
     let available = printf_thin::probe_nano_specs(compiler, caller_path)
         .await
         .unwrap_or(false);
-    if available {
-        overlay_link_flags.extend(printf_thin::link_flags());
-        // The one place that may claim the reducer is linked: this module
-        // knows the architecture *and* the probe result. The CLI cannot (it
-        // would have to resolve board -> mcu -> arch), so it no longer
-        // previews the applied reducer -- see `fbuild-cli/cli/shrink_notice.rs`.
-        for line in applied_notice() {
-            tracing::warn!("{line}");
-            build_log.push(line);
-        }
-        return printf_thin::record_for(mode, true);
+    if !available {
+        // Visible, not just filtered `tracing::warn!`: the request is being
+        // dropped. The record says the same thing (`resolved: off`, empty
+        // `applied`) so terminal output and telemetry agree.
+        let warning = format!(
+            "WARNING: shrink: --shrink=printf found no nano.specs in {toolchain_name}; \
+             building unshrunk"
+        );
+        build_log.push(warning.clone());
+        tracing::warn!("{warning}");
+        return printf_thin::record_for(mode, false);
     }
-    // Visible, not just filtered `tracing::warn!`: the request is being
-    // dropped. The record says the same thing (`resolved: off`, empty
-    // `applied`) so terminal output and telemetry agree.
-    let warning = format!(
-        "WARNING: shrink: --shrink=printf found no nano.specs in {toolchain_name}; \
-         building unshrunk"
-    );
-    build_log.push(warning.clone());
-    tracing::warn!("{warning}");
-    printf_thin::record_for(mode, false)
+    overlay_link_flags.extend(printf_thin::link_flags());
+    // The one place that may claim the reducer is linked: this module
+    // knows the architecture *and* the probe result. The CLI cannot (it
+    // would have to resolve board -> mcu -> arch), so it no longer
+    // previews the applied reducer -- see `fbuild-cli/cli/shrink_notice.rs`.
+    for line in applied_notice() {
+        tracing::warn!("{line}");
+        build_log.push(line);
+    }
+    printf_thin::record_for(mode, true)
 }
 
 /// What a shrunk build says once the reducer is actually linked: the claim,
