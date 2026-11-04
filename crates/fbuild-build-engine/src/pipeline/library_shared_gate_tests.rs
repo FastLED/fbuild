@@ -19,7 +19,7 @@ use crate::parallel::compile_sources_parallel_shared;
 use std::path::Path;
 
 mod incremental_archive_policy {
-    use std::path::{Path, PathBuf};
+    use std::path::Path;
 
     use crate::BuildParams;
     use crate::build_fingerprint::{
@@ -27,22 +27,23 @@ mod incremental_archive_policy {
         hash_watch_set_stamps, persist_fast_path_success, stable_hash_with_build_config,
     };
     use crate::pipeline::BuildContext;
+    use fbuild_core::path::NormalizedPath;
     use fbuild_core::subprocess::run_command;
 
     struct Fixture {
         _temp: tempfile::TempDir,
-        root: PathBuf,
-        build: PathBuf,
-        elf: PathBuf,
+        root: NormalizedPath,
+        build: NormalizedPath,
+        elf: NormalizedPath,
         cc: String,
         ar: String,
-        sources: Vec<(PathBuf, String)>,
+        sources: Vec<(NormalizedPath, String)>,
     }
 
     impl Fixture {
         async fn new() -> Self {
             let temp = tempfile::tempdir().unwrap();
-            let root = temp.path().to_path_buf();
+            let root = NormalizedPath::new(temp.path());
             let build = root.join("build");
             std::fs::create_dir_all(root.join("src")).unwrap();
             std::fs::create_dir_all(root.join("local/src")).unwrap();
@@ -94,9 +95,9 @@ mod incremental_archive_policy {
 
         fn params(&self) -> BuildParams {
             BuildParams {
-                project_dir: self.root.clone(),
+                project_dir: self.root.clone().into_path_buf(),
                 env_name: "probe".into(),
-                build_dir: self.build.clone(),
+                build_dir: self.build.clone().into_path_buf(),
                 clean: false,
                 clean_all: false,
                 clean_only: false,
@@ -188,7 +189,7 @@ mod incremental_archive_policy {
         let contract = FastPathContract::for_project_outputs(
             &fixture.build,
             &fixture.root,
-            [fixture.elf.clone()],
+            [fixture.elf.clone().into_path_buf()],
         );
         let mut previous_metadata = None;
         let mut previous_watch = None;
