@@ -282,6 +282,8 @@ fn install_fake_ar(path: &Path) {
 /// writes the object file, failing for sources whose file name starts
 /// with "bad".
 struct FakeBackend {
+    compilers: std::sync::Mutex<Vec<PathBuf>>,
+    flag_sets: std::sync::Mutex<Vec<Vec<String>>>,
     in_flight: std::sync::Arc<std::sync::atomic::AtomicUsize>,
     max_in_flight: std::sync::Arc<std::sync::atomic::AtomicUsize>,
     start_order: std::sync::Arc<std::sync::Mutex<Vec<String>>>,
@@ -291,6 +293,8 @@ struct FakeBackend {
 impl FakeBackend {
     fn new() -> Self {
         Self {
+            compilers: std::sync::Mutex::new(Vec::new()),
+            flag_sets: std::sync::Mutex::new(Vec::new()),
             in_flight: std::sync::Arc::new(std::sync::atomic::AtomicUsize::new(0)),
             max_in_flight: std::sync::Arc::new(std::sync::atomic::AtomicUsize::new(0)),
             start_order: std::sync::Arc::new(std::sync::Mutex::new(Vec::new())),
@@ -303,11 +307,13 @@ impl FakeBackend {
 impl LibCompileBackend for FakeBackend {
     async fn compile(
         &self,
-        _compiler: &Path,
+        compiler: &Path,
         args: Vec<String>,
         cwd: NormalizedPath,
         _env: Vec<(String, String)>,
     ) -> Result<LibCompileOutcome> {
+        self.compilers.lock().unwrap().push(compiler.to_path_buf());
+        self.flag_sets.lock().unwrap().push(args.clone());
         self.call_count
             .fetch_add(1, std::sync::atomic::Ordering::Relaxed);
 
@@ -369,6 +375,121 @@ impl LibCompileBackend for FakeBackend {
             stderr: Vec::new(),
         })
     }
+}
+
+#[tokio::test]
+async fn library_assembly_uses_c_driver_and_target_flags() {
+    let tmp = tempfile::tempdir().unwrap();
+    let gcc = Path::new("/toolchain/gcc");
+    let gxx = Path::new("/toolchain/g++");
+    let c_flags = vec!["-mcpu=cortex-m0plus".into(), "-mthumb".into()];
+    let cpp_flags = vec!["-std=gnu++11".into(), "-fno-rtti".into()];
+    let backend = std::sync::Arc::new(FakeBackend::new());
+    let dispatch: std::sync::Arc<dyn LibCompileBackend> = backend.clone();
+    for name in [
+        "preprocessed.S",
+        "raw.s",
+        "plain.c",
+        "cplusplus.C",
+        "unit.cpp",
+    ] {
+        let source = tmp.path().join(name);
+        std::fs::write(&source, "").unwrap();
+        compile_one_source(
+            &source,
+            &tmp.path().join("obj"),
+            gcc,
+            gxx,
+            &c_flags,
+            &cpp_flags,
+            &[],
+            "assembly-fixture",
+            false,
+            None,
+            Some(tmp.path()),
+            Some(&dispatch),
+        )
+        .await
+        .unwrap();
+    }
+    assert_eq!(
+        *backend.compilers.lock().unwrap(),
+        [gcc, gcc, gcc, gxx, gxx]
+    );
+    let flags = backend.flag_sets.lock().unwrap();
+    for args in &flags[..3] {
+        assert!(args.contains(&"-mcpu=cortex-m0plus".into()));
+        assert!(args.contains(&"-mthumb".into()));
+        assert!(!args.contains(&"-fno-rtti".into()));
+    }
+    assert!(flags[0].iter().any(|arg| arg.ends_with("preprocessed.S")));
+    assert!(flags[1].iter().any(|arg| arg.ends_with("raw.s")));
+}
+
+#[test]
+fn library_assembly_signature_tracks_c_driver_and_flags() {
+    let gcc = Path::new("/toolchain/gcc");
+    let gxx = Path::new("/toolchain/g++");
+    let c_flags = vec!["-mcpu=cortex-m0plus".into()];
+    let cpp_flags = vec!["-std=gnu++11".into()];
+    let expected = compile_signature(Path::new("plain.c"), gcc, gxx, &c_flags, &cpp_flags, &[]);
+    for source in ["preprocessed.S", "raw.s"] {
+        let signature = compile_signature(Path::new(source), gcc, gxx, &c_flags, &cpp_flags, &[]);
+        assert_eq!(
+            signature, expected,
+            "assembly must hash its actual C invocation"
+        );
+        assert_ne!(
+            signature,
+            compile_signature(
+                Path::new(source),
+                gcc,
+                gxx,
+                &["-mcpu=cortex-m3".into()],
+                &cpp_flags,
+                &[]
+            )
+        );
+        assert_eq!(
+            signature,
+            compile_signature(
+                Path::new(source),
+                gcc,
+                gxx,
+                &c_flags,
+                &["-std=gnu++17".into()],
+                &[]
+            )
+        );
+    }
+}
+
+#[tokio::test]
+#[ignore = "#1885: requires native GCC and G++"]
+async fn library_assembly_real_compiler_consumes_c_flags() {
+    let tmp = tempfile::tempdir().unwrap();
+    std::fs::create_dir(tmp.path().join("obj")).unwrap();
+    let source = tmp.path().join("guard.S");
+    std::fs::write(&source, "#if !defined(ASSEMBLY_C_FLAGS) || defined(ASSEMBLY_CPP_FLAGS)\n#error wrong language flags\n#endif\n.text\n.globl assembly_fixture_symbol\nassembly_fixture_symbol:\n").unwrap();
+    let gcc = std::env::var("FBUILD_TEST_CC").unwrap_or_else(|_| "gcc".into());
+    let gxx = std::env::var("FBUILD_TEST_CXX").unwrap_or_else(|_| "g++".into());
+    let object = compile_one_source(
+        &source,
+        &tmp.path().join("obj"),
+        Path::new(&gcc),
+        Path::new(&gxx),
+        &["-DASSEMBLY_C_FLAGS".into()],
+        &["-DASSEMBLY_CPP_FLAGS".into()],
+        &[],
+        "assembly-real",
+        false,
+        None,
+        Some(tmp.path()),
+        None,
+    )
+    .await
+    .unwrap();
+    assert!(object.is_file());
 }
 
 #[tokio::test(flavor = "multi_thread", worker_threads = 4)]

@@ -45,6 +45,14 @@ fn is_cxx_only_flag(flag: &str) -> bool {
     CXX_ONLY_PREFIXES.iter().any(|p| flag.starts_with(p))
 }
 
+/// Preserve the assembly suffix: GCC preprocesses `.S`, but not `.s`.
+fn uses_c_driver(source: &Path) -> bool {
+    matches!(
+        source.extension().and_then(|extension| extension.to_str()),
+        Some("c" | "S" | "s")
+    )
+}
+
 /// Outcome of a single [`LibCompileBackend::compile`] dispatch.
 pub struct LibCompileOutcome {
     pub exit_code: i32,
@@ -442,9 +450,7 @@ async fn compile_one_source(
     let obj = object_path(source, obj_dir);
     let rsp_dir = obj_dir.parent().unwrap_or(obj_dir).join("tmp");
 
-    let is_c = source.extension().map(|e| e == "c").unwrap_or(false);
-
-    let (compiler, flags): (&Path, &[String]) = if is_c {
+    let (compiler, flags): (&Path, &[String]) = if uses_c_driver(source) {
         (gcc_path, c_safe_flags)
     } else {
         (gxx_path, cpp_flags)
@@ -611,8 +617,7 @@ fn compile_signature(
     cpp_flags: &[String],
     include_flags: &[String],
 ) -> String {
-    let is_c = source.extension().map(|e| e == "c").unwrap_or(false);
-    let (compiler, flags): (&Path, &[String]) = if is_c {
+    let (compiler, flags): (&Path, &[String]) = if uses_c_driver(source) {
         (gcc_path, c_safe_flags)
     } else {
         (gxx_path, cpp_flags)
