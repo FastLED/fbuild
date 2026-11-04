@@ -294,11 +294,12 @@ pub(super) fn sdk_libs_urls(
 pub(super) async fn ensure_sdk_libs(
     framework: &fbuild_packages::library::Esp32Framework,
     mcu: &str,
+    sdk_variant: &str,
     libs_url: Option<&str>,
     skeleton_url: Option<&str>,
 ) -> Result<()> {
     if let Some(url) = libs_url {
-        framework.ensure_libs(url, mcu).await?;
+        framework.ensure_libs(url, mcu, sdk_variant).await?;
     }
     if let Some(url) = skeleton_url {
         framework.ensure_mcu_libs(url, mcu).await?;
