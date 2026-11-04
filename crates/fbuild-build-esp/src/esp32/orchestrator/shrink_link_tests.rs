@@ -101,3 +101,26 @@ async fn riscv_auto_stays_silent() {
         "auto must not warn about an unrequested mode"
     );
 }
+
+/// A shrunk build must never claim the reducer silently: the claim and the
+/// measured divergence disclosure are emitted together, so "we shrank your
+/// image" cannot reach the log without "and these five conversions changed".
+#[test]
+fn applied_notice_pairs_the_claim_with_the_measured_disclosure() {
+    let [claim, disclosure] = applied_notice();
+    assert!(
+        claim.contains("links newlib-nano"),
+        "first line claims the reducer: {claim}"
+    );
+    assert!(
+        claim.contains(printf_thin::SPECS_FLAG),
+        "the claim names the spec file: {claim}"
+    );
+    assert_eq!(
+        disclosure,
+        printf_thin::divergence_warning(),
+        "the disclosure is the one measured list, not a copy"
+    );
+    assert!(disclosure.starts_with("WARNING: shrink:"), "{disclosure}");
+    assert!(disclosure.contains("%zu"), "{disclosure}");
+}

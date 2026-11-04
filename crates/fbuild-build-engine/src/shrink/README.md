@@ -65,9 +65,37 @@ literal expectation and printing `BATTERY total=N failed=M` over serial. Two
 `--ignored` integration tests build it both ways and assert the flash/telemetry
 halves; flashing either image answers the formatting half on real silicon.
 
-Known divergences, deliberately not asserted: nano has no wide-character or
-`long double` conversions.
+Known divergences, **measured on real silicon rather than assumed**: that same
+battery was flashed on an ESP32-S3 (Xtensa LX7, xtensa-esp32s3-elf 8.4.0,
+espressif32 6.13.0, Arduino core 3.3.12), built both ways from `origin/main`:
 
-`Auto` still resolves to `Off` for every platform. Flipping ESP32's `Auto` to
-this mode needs the guarded A/B report *and* the hardware formatting run per
-board family — the C6 measurement above is exactly why that stays opt-in.
+| image | flash | on-device verdict |
+|---|---|---|
+| `--no-shrink` (control) | 358,903 B | `BATTERY total=36 failed=0` |
+| `--shrink=printf` | 335,875 B (−23,028 B, −6.4 %) | `BATTERY total=36 failed=6` |
+
+All six failures are one class — a length modifier nano does not implement, so
+the modifier is printed literally instead of the value:
+
+| conversion | control | `--shrink=printf` |
+|---|---|---|
+| `%lld` (`-9223372036854775807LL`) | `-9223372036854775807` | `ld` |
+| `%llu` (`18446744073709551615ULL`) | `18446744073709551615` | `lu` |
+| `%llx` (`0xDEADBEEFCAFEF00D`) | `deadbeefcafef00d` | `lx` |
+| `%zu` (`sizeof(size_t)`) | `4` | `zu` |
+| `%hhu` (`(unsigned char)200`) | `200` | `hu` |
+| `vsnprintf("%08.3f\|%lld", …)` | `0002.500\|9` `000000000` | `0002.500\|ld` |
+
+`libc_nano.a` exports `_printf_float` — which is why `%f`/`%e`/`%g` still pass —
+and nothing equivalent for 64-bit integers: there is no `_printf_long_long` to
+`-u`, so this is the vendor's formatter, not a flag fbuild forgot. Wide-character
+and `long double` conversions are absent for the same reason. The set is pinned
+in `printf_thin::UNSUPPORTED_CONVERSIONS`, and a shrunk build prints it as a
+`WARNING:` line, so a sketch that formats 64-bit values finds out at build time
+instead of on a serial console.
+
+`Auto` stays `Off` for every platform, now on evidence rather than pending
+measurement: `--shrink=printf` trades formatting semantics for ~23 KB, which is
+right for a sketch that formats 32-bit values and wrong for one that logs a
+64-bit counter. It stays explicit opt-in for that reason; the C6 growth
+measurement above is the second, independent reason.

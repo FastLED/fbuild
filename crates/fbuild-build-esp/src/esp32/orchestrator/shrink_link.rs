@@ -75,11 +75,10 @@ pub(crate) async fn resolve_shrink(
         // knows the architecture *and* the probe result. The CLI cannot (it
         // would have to resolve board -> mcu -> arch), so it no longer
         // previews the applied reducer -- see `fbuild-cli/cli/shrink_notice.rs`.
-        build_log.push(format!(
-            "shrink: --shrink=printf links newlib-nano ({}) instead of newlib's full \
-             _vfprintf_r/_svfprintf_r; float formatting kept via _printf_float",
-            printf_thin::SPECS_FLAG
-        ));
+        for line in applied_notice() {
+            tracing::warn!("{line}");
+            build_log.push(line);
+        }
         return printf_thin::record_for(mode, true);
     }
     // Visible, not just filtered `tracing::warn!`: the request is being
@@ -92,6 +91,26 @@ pub(crate) async fn resolve_shrink(
     build_log.push(warning.clone());
     tracing::warn!("{warning}");
     printf_thin::record_for(mode, false)
+}
+
+/// What a shrunk build says once the reducer is actually linked: the claim,
+/// then the measured divergence disclosure.
+///
+/// Two lines, both always visible. The disclosure is not optional: nano really
+/// does format `%lld`/`%zu`/`%hh*` differently on hardware (see
+/// [`printf_thin::UNSUPPORTED_CONVERSIONS`]), so a build that shrinks has to
+/// say so at build time rather than leave it to the docs. Kept pure — the
+/// only caller needs a probed toolchain, but the pairing of "we shrank" with
+/// "here is what changed" must be testable without one.
+pub(crate) fn applied_notice() -> [String; 2] {
+    [
+        format!(
+            "shrink: --shrink=printf links newlib-nano ({}) instead of newlib's full \
+             _vfprintf_r/_svfprintf_r; float formatting kept via _printf_float",
+            printf_thin::SPECS_FLAG
+        ),
+        printf_thin::divergence_warning(),
+    ]
 }
 
 /// Write `build_info_<env>.json` (+ the `build_info.json` fallback) for a
