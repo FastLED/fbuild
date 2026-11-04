@@ -324,3 +324,15 @@ pub(super) fn fixture_plan() -> fbuild_build::prebuilt_fp::FrameworkBuildPlan {
 pub(super) fn fixture_fp() -> String {
     fbuild_build::prebuilt_fp::fingerprint(&fixture_plan())
 }
+
+#[test]
+fn extraction_rejects_nonempty_staging_without_writing_members() {
+    let temp = tempfile::tempdir().unwrap();
+    let sentinel = temp.path().join("existing");
+    std::fs::write(&sentinel, b"preserve").unwrap();
+    let fp = fixture_fp();
+    let bytes = bundle(&fp);
+    assert!(extract::extract(bytes.as_slice(), temp.path(), &fp, None).is_err());
+    assert_eq!(std::fs::read(sentinel).unwrap(), b"preserve");
+    assert!(!temp.path().join("obj").exists());
+}

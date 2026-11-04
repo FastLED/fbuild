@@ -23,12 +23,20 @@ fn checked_path(path: &Path) -> bool {
         && matches!(path.components().next(),Some(Component::Normal(p)) if p=="obj" || p=="lib" || p=="include")
 }
 
+/// Extract into a fresh private staging directory owned by the daemon.
 pub fn extract(
     reader: impl Read,
     stage: &Path,
     fp: &str,
     write_limit: Option<u64>,
 ) -> Result<(), String> {
+    if std::fs::read_dir(stage)
+        .map_err(|e| e.to_string())?
+        .next()
+        .is_some()
+    {
+        return Err("staging directory must be empty".into());
+    }
     let decoder = zstd::stream::read::Decoder::new(reader).map_err(|e| e.to_string())?;
     let mut archive = tar::Archive::new(decoder);
     let mut entries = archive.entries().map_err(|e| e.to_string())?;
@@ -62,11 +70,9 @@ pub fn extract(
         let target = stage.join(path);
         std::fs::create_dir_all(target.parent().ok_or("invalid parent")?)
             .map_err(|e| e.to_string())?;
-        let mut file = std::fs::OpenOptions::new()
-            .write(true)
-            .create_new(true)
-            .open(target)
-            .map_err(|e| e.to_string())?;
+        // The private stage starts empty; only checked regular members create paths.
+        // Duplicate names are rejected above, so member creation needs no lock primitive.
+        let mut file = std::fs::File::create(target).map_err(|e| e.to_string())?;
         use sha2::{Digest, Sha256};
         let mut digest = Sha256::new();
         let mut buffer = [0u8; 64 * 1024];
