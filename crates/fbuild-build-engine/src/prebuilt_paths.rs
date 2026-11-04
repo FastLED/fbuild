@@ -126,11 +126,18 @@ fn prefix_map(arg: &str) -> Option<(&str, &str, &str)> {
 /// V1 fails closed when the compiler's physical CWD differs from mapped roots.
 pub async fn unambiguous_roots(mappings: &[PathMapping]) -> bool {
     for mapping in mappings {
-        if !fbuild_core::path::canonicalize_existing(&mapping.root)
-            .await
-            .is_ok_and(|physical| physical == mapping.root)
-        {
-            return false;
+        match fbuild_core::path::canonicalize_existing(&mapping.root).await {
+            Ok(physical) if physical == mapping.root => {}
+            Ok(physical) => {
+                tracing::info!(root = %mapping.root, prefix = %mapping.prefix, canonical = %physical,
+                    "prebuilt: skipped: root resolves to a different physical path");
+                return false;
+            }
+            Err(error) => {
+                tracing::info!(root = %mapping.root, prefix = %mapping.prefix, %error,
+                    "prebuilt: skipped: cannot canonicalize root");
+                return false;
+            }
         }
     }
     true

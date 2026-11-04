@@ -69,8 +69,13 @@ fn package(info: &PackageInfo) -> Option<PackageIdentity> {
         }
         format!("registry:{}", checksum.to_ascii_lowercase())
     } else {
-        let id =
-            fbuild_packages::content_manifest::load_verified_content_id(&info.install_path, info)?;
+        let Some(id) =
+            fbuild_packages::content_manifest::load_verified_content_id(&info.install_path, info)
+        else {
+            tracing::info!(package = %info.name, root = %info.install_path.display(),
+                "prebuilt: skipped: package has no verified content manifest");
+            return None;
+        };
         format!("tree:{id}")
     };
     Some(PackageIdentity {
@@ -119,7 +124,8 @@ pub(super) fn prefix_maps(
 
 pub(super) fn metadata_hash(original: String, reproducible: bool) -> String {
     if reproducible {
-        sha256(format!("{original}:prebuilt-abi-{PREBUILT_ABI_VERSION}").as_bytes())
+        // Rebuild legacy no-op outputs once so they acquire the exported plan.
+        sha256(format!("{original}:prebuilt-abi-{PREBUILT_ABI_VERSION}:plan-export-v1").as_bytes())
     } else {
         original
     }
@@ -139,7 +145,10 @@ fn plan<S: AsRef<Path>>(input: &Inputs<'_, S>) -> Option<FrameworkBuildPlan> {
     for (ordinal, source) in input.sources.iter().enumerate() {
         let source = source.as_ref();
         let output = CompilerBase::object_path(source, input.core_dir);
-        let cwd = input.compiler.framework_compile_root(source)?;
+        let cwd = input.compiler.framework_compile_root(source).or_else(|| {
+            tracing::info!(source = %source.display(), "prebuilt: skipped: source has no framework compile root");
+            None
+        })?;
         let cpp = !matches!(
             source
                 .extension()
@@ -175,7 +184,10 @@ fn plan<S: AsRef<Path>>(input: &Inputs<'_, S>) -> Option<FrameworkBuildPlan> {
             })
             .display_slash(),
         );
-        argv.push(canonical_argv(&raw, cwd, &mappings, ordinal)?);
+        argv.push(canonical_argv(&raw, cwd, &mappings, ordinal).or_else(|| {
+            tracing::info!(source = %source.display(), "prebuilt: skipped: unsupported compiler arguments");
+            None
+        })?);
     }
     Some(FrameworkBuildPlan {
         abi_version: PREBUILT_ABI_VERSION,
@@ -185,22 +197,42 @@ fn plan<S: AsRef<Path>>(input: &Inputs<'_, S>) -> Option<FrameworkBuildPlan> {
         mcu: input.mcu.into(),
         variant_dir: mapped_path(Path::new(input.variant), input.framework_root, &mappings),
         argv,
-        config_sha256: config_digests(input, &mappings)?,
+        config_sha256: config_digests(input, &mappings).or_else(|| {
+            tracing::info!("prebuilt: skipped: cannot hash framework sources or include tree");
+            None
+        })?,
         path_map_prefix: "/fbuild".into(),
     })
 }
 
 pub(super) async fn hydrate<S: AsRef<Path> + Sync>(input: Inputs<'_, S>) -> bool {
-    if !input.eligible
-        || !crate::prebuilt_paths::unambiguous_roots(&roots(
-            input.params,
-            input.framework_root,
-            input.toolchain_root,
-            input.farm,
-        ))
-        .await
+    if !input.eligible {
+        return skipped(&input, "unsupported configuration or compiler prefix maps");
+    }
+    let cache_root = fbuild_paths::get_cache_root();
+    for dir in [cache_root.as_path(), input.params.build_dir.as_path()]
+        .into_iter()
+        .chain(input.farm)
     {
-        return skipped(&input, "unsupported configuration or ambiguous roots");
+        if let Err(error) = std::fs::create_dir_all(dir) {
+            return skipped(
+                &input,
+                &format!("cannot create output root {}: {error}", dir.display()),
+            );
+        }
+    }
+    if !crate::prebuilt_paths::unambiguous_roots(&roots(
+        input.params,
+        input.framework_root,
+        input.toolchain_root,
+        input.farm,
+    ))
+    .await
+    {
+        return skipped(
+            &input,
+            "ambiguous or unavailable roots (see root diagnostic)",
+        );
     }
     let Some(plan) = plan(&input) else {
         return skipped(&input, "unsupported or incomplete local build plan");
@@ -220,11 +252,14 @@ pub(super) async fn hydrate<S: AsRef<Path> + Sync>(input: Inputs<'_, S>) -> bool
     let metadata = serde_json::json!({"fp":fp,"plan":plan,"objects":objects,
         "core_dir":input.core_dir,"include_dirs":input.compiler.base.include_dirs,
         "framework_dir":input.framework_root,"board":input.board});
-    let _ = fbuild_core::fs::write_atomic(
+    if let Err(error) = fbuild_core::fs::write_atomic(
         input.params.build_dir.join("prebuilt-plan.json"),
         serde_json::to_vec(&metadata).unwrap_or_default(),
     )
-    .await;
+    .await
+    {
+        return skipped(&input, &format!("cannot write prebuilt-plan.json: {error}"));
+    }
     let Some(client) = &input.params.prebuilt else {
         return false;
     };
@@ -347,9 +382,7 @@ fn config_digests<S: AsRef<Path>>(
     Some(configs)
 }
 
-fn skipped<S: AsRef<Path>>(input: &Inputs<'_, S>, reason: &str) -> bool {
-    if input.params.prebuilt.is_some() {
-        tracing::info!("prebuilt: {reason}; building from source");
-    }
+fn skipped<S: AsRef<Path>>(_input: &Inputs<'_, S>, reason: &str) -> bool {
+    tracing::info!("prebuilt: skipped: {reason}; building from source");
     false
 }
