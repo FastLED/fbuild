@@ -30,13 +30,11 @@ use crate::provision::{
 /// downloads the selected framework + libs packages.
 ///
 /// `env_config` is the resolved `[env:<name>]` section from `platformio.ini`,
-/// used to honor `platform_packages` overrides for both
-/// `platform-espressif32` and `framework-arduinoespressif32`
-/// (FastLED/fbuild#672). Pass `None` if no env is in scope (cold-cache /
-/// diagnostic paths) — both packages will fall back to their pinned defaults.
+/// used to honor `platform_packages` overrides (FastLED/fbuild#672). Pass
+/// `None` if no env is in scope — packages then use their pinned defaults.
 pub(super) async fn resolve_pioarduino_packages(
     project_dir: &Path,
-    mcu: &str,
+    board: &fbuild_config::BoardConfig,
     mcu_config: &Esp32McuConfig,
     env_config: Option<&HashMap<String, String>>,
 ) -> Result<(
@@ -45,6 +43,9 @@ pub(super) async fn resolve_pioarduino_packages(
     Option<NormalizedPath>,
     fbuild_packages::PackageInfo,
 )> {
+    // `build.chip_variant` (e.g. `esp32p4_es`) needs its own per-chip libs tree.
+    let mcu = board.mcu.as_str();
+    let sdk_variant = board.sdk_variant();
     // Ensure pioarduino platform (contains platform.json with metadata URLs).
     let platform = pioarduino_platform(project_dir, env_config, true)
         .await?
@@ -89,6 +90,7 @@ pub(super) async fn resolve_pioarduino_packages(
         ensure_sdk_libs(
             &framework,
             mcu,
+            sdk_variant,
             libs_url.as_deref(),
             skeleton_url.as_deref(),
         )
@@ -185,6 +187,7 @@ pub(crate) async fn provision_esp32(
     let project_dir = inputs.project_dir;
     let env_config = Some(inputs.env_config);
     let mcu = inputs.board.mcu.as_str();
+    let sdk_variant = inputs.board.sdk_variant();
     let mcu_config = get_mcu_config(mcu)?;
     let mut rows = Vec::new();
 
@@ -225,6 +228,7 @@ pub(crate) async fn provision_esp32(
                 &framework,
                 framework_ready,
                 mcu,
+                sdk_variant,
                 libs_url.as_deref(),
                 skeleton_url.as_deref(),
                 mode,
@@ -661,6 +665,7 @@ async fn provision_sdk_libs(
     framework: &fbuild_packages::library::Esp32Framework,
     framework_ready: bool,
     mcu: &str,
+    sdk_variant: &str,
     libs_url: Option<&str>,
     skeleton_url: Option<&str>,
     mode: ProvisionMode,
@@ -676,11 +681,11 @@ async fn provision_sdk_libs(
             ProvisionStatus::WouldFetch,
         )
     };
-    if framework_ready && framework.sdk_libs_installed(mcu) {
+    if framework_ready && framework.sdk_libs_installed(mcu, sdk_variant) {
         row.status = ProvisionStatus::Present;
     } else if mode.fetches() {
         if framework_ready {
-            match ensure_sdk_libs(framework, mcu, libs_url, skeleton_url).await {
+            match ensure_sdk_libs(framework, mcu, sdk_variant, libs_url, skeleton_url).await {
                 Ok(()) => row.status = ProvisionStatus::Fetched,
                 Err(error) => {
                     row.status = ProvisionStatus::Failed;

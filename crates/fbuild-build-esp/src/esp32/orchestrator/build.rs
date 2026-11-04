@@ -103,13 +103,9 @@ impl BuildOrchestrator for Esp32Orchestrator {
             super::disk_requirements::footprint_roots(&params.project_dir),
         );
         let _resolve_phase = perf.phase("pioarduino-resolve");
-        let (toolchain, framework, esptool_bin, platform_info) = resolve_pioarduino_packages(
-            &params.project_dir,
-            &ctx.board.mcu,
-            &mcu_config,
-            env_config,
-        )
-        .await?;
+        let (toolchain, framework, esptool_bin, platform_info) =
+            resolve_pioarduino_packages(&params.project_dir, &ctx.board, &mcu_config, env_config)
+                .await?;
         drop(_resolve_phase);
         footprint.sample("pioarduino-resolve");
         let toolchain_info = fbuild_packages::Package::get_info(&toolchain);

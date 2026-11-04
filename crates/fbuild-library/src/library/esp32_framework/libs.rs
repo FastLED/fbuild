@@ -64,6 +64,80 @@ fn mcu_sdk_complete(mcu_dir: &Path) -> bool {
         && has_freertos_archive(mcu_dir)
 }
 
+/// Chip SDK directories a build links against: the MCU family, plus the
+/// board's SDK variant when it differs.
+///
+/// A per-chip libs slice ships exactly ONE `esp32-arduino-libs/<chip>/` tree,
+/// so installing only `mcu` leaves the directory the SDK include paths and
+/// prebuilt archives name missing — ESP32-P4 ES boards link against
+/// `esp32p4_es` (FastLED/fbuild#1897).
+fn required_sdk_variants<'a>(mcu: &'a str, sdk_variant: &'a str) -> Vec<&'a str> {
+    let mut variants = vec![mcu];
+    if !sdk_variant.is_empty() && sdk_variant != mcu {
+        variants.push(sdk_variant);
+    }
+    variants
+}
+
+/// Variants with no complete per-MCU SDK tree under `tools/`.
+fn missing_sdk_variants(tools_dir: &Path, variants: &[&str]) -> Vec<String> {
+    variants
+        .iter()
+        .filter(|variant| installed_variant_dir(tools_dir, variant).is_none())
+        .map(|variant| (*variant).to_string())
+        .collect()
+}
+
+/// The complete `tools/<layout>/<variant>/` SDK tree, new layout preferred.
+fn installed_variant_dir(tools_dir: &Path, variant: &str) -> Option<PathBuf> {
+    mcu_sdk_dir_candidates(tools_dir, variant)
+        .into_iter()
+        .find(|mcu_dir| mcu_sdk_complete(mcu_dir))
+}
+
+fn patch_installed_variants(tools_dir: &Path, variants: &[&str]) -> fbuild_core::Result<()> {
+    for variant in variants {
+        if let Some(mcu_dir) = installed_variant_dir(tools_dir, variant) {
+            patch_mcu_compatibility(&mcu_dir, variant)?;
+        }
+    }
+    Ok(())
+}
+
+/// Fetch one variant's (possibly sliced) libs archive and merge it into `tools/`.
+async fn install_sdk_archive(
+    libs_url: &str,
+    version: &str,
+    variant: &str,
+    tools_dir: &Path,
+) -> fbuild_core::Result<()> {
+    let archive_path = crate::FetchRequest {
+        name: "framework-arduinoespressif32-libs",
+        version,
+        url: libs_url,
+        variant: Some(variant),
+    }
+    .fetch(&tools_dir.join(".libs-archives"))
+    .await?;
+
+    // Extract to a short temp path to avoid Windows MAX_PATH (260 char) limit.
+    // Rooted under the daemon's `tmp/esp32-framework/` so the extract scratch
+    // dir stays in one user-visible location — FastLED/fbuild#844 bridge pair 10.
+    let temp_dir = tempfile::Builder::new()
+        .prefix("fbuild_sdk_")
+        .tempdir_in(fbuild_paths::temp_subdir("esp32-framework"))?;
+
+    tracing::info!(
+        "extracting ESP32 SDK libs ({variant}, {} MB)",
+        archive_path
+            .metadata()
+            .map(|m| m.len() / 1_000_000)
+            .unwrap_or(0)
+    );
+    crate::extractor::extract(&archive_path, temp_dir.path())?;
+    merge_sdk_archive_entries(temp_dir.path(), tools_dir)
+}
+
 /// Locate `libfreertos.a` inside an installed per-MCU SDK tree.
 ///
 /// Most MCUs put every archive in `lib/`. ESP32-S3 does not: its FreeRTOS
@@ -167,30 +241,34 @@ fn patch_mcu_compatibility(mcu_dir: &Path, mcu: &str) -> fbuild_core::Result<()>
 }
 
 impl Esp32Framework {
-    /// Whether the per-MCU SDK is already complete under the framework's
-    /// `tools/` dir — the test [`Self::ensure_libs`] and
+    /// Whether every per-MCU SDK tree this board links against is complete
+    /// under the framework's `tools/` dir — the test [`Self::ensure_libs`] and
     /// [`Self::ensure_mcu_libs`] use to skip work. Offline, so `fbuild install
     /// --check` can ask it (FastLED/fbuild#1433).
-    pub fn sdk_libs_installed(&self, mcu: &str) -> bool {
+    ///
+    /// `sdk_variant` is the board's `build.chip_variant` (`esp32p4_es` for
+    /// ESP32-P4 eco0–eco2 boards); it needs its own SDK tree even when it
+    /// differs from `mcu` (FastLED/fbuild#1897).
+    pub fn sdk_libs_installed(&self, mcu: &str, sdk_variant: &str) -> bool {
         let tools_dir = self.resolved_dir().join("tools");
-        mcu_sdk_dir_candidates(&tools_dir, mcu)
-            .iter()
-            .any(|mcu_dir| mcu_sdk_complete(mcu_dir))
+        missing_sdk_variants(&tools_dir, &required_sdk_variants(mcu, sdk_variant)).is_empty()
     }
 
     /// Ensure the SDK libs are downloaded and extracted into the framework's `tools/` dir.
     #[expect(clippy::cognitive_complexity, reason = "baseline, zackees/ci.yml#229")]
-    pub async fn ensure_libs(&self, libs_url: &str, mcu: &str) -> fbuild_core::Result<()> {
+    pub async fn ensure_libs(
+        &self,
+        libs_url: &str,
+        mcu: &str,
+        sdk_variant: &str,
+    ) -> fbuild_core::Result<()> {
         let root = self.resolved_dir();
         let tools_dir = root.join("tools");
-
-        // Already have SDK libs? Check both old (sdk/) and new
-        // (esp32-arduino-libs/) layouts.
-        for mcu_dir in mcu_sdk_dir_candidates(&tools_dir, mcu) {
-            if mcu_sdk_complete(&mcu_dir) {
-                patch_mcu_compatibility(&mcu_dir, mcu)?;
-                return Ok(());
-            }
+        let variants = required_sdk_variants(mcu, sdk_variant);
+        let missing = missing_sdk_variants(&tools_dir, &variants);
+        if missing.is_empty() {
+            patch_installed_variants(&tools_dir, &variants)?;
+            return Ok(());
         }
 
         // A present-but-incomplete MCU tree means the ~300 MB SDK is about
@@ -199,13 +277,15 @@ impl Esp32Framework {
         // genuinely partial install and catastrophic when the completion
         // check is simply wrong about the layout — the silent form of this
         // cost every build 132 s on ESP32-S3 (FastLED/fbuild#1411). Say so.
-        for mcu_dir in mcu_sdk_dir_candidates(&tools_dir, mcu) {
-            if mcu_dir.exists() {
-                tracing::warn!(
-                    "{} SDK dir {} exists but is incomplete; reinstalling the SDK libs",
-                    mcu,
-                    mcu_dir.display()
-                );
+        for variant in &missing {
+            for mcu_dir in mcu_sdk_dir_candidates(&tools_dir, variant) {
+                if mcu_dir.exists() {
+                    tracing::warn!(
+                        "{} SDK dir {} exists but is incomplete; reinstalling the SDK libs",
+                        variant,
+                        mcu_dir.display()
+                    );
+                }
             }
         }
 
@@ -217,39 +297,23 @@ impl Esp32Framework {
             .unwrap_or("libs")
             .trim_start_matches("esp32-")
             .trim_end_matches("-libs.tar.xz");
-        let archive_path = crate::FetchRequest {
-            name: "framework-arduinoespressif32-libs",
-            version,
-            url: libs_url,
-            variant: Some(mcu),
-        }
-        .fetch(&tools_dir.join(".libs-archives"))
-        .await?;
-
-        // Extract to a short temp path to avoid Windows MAX_PATH (260 char) limit.
-        // Rooted under `~/.fbuild/{dev|prod}/tmp/esp32-framework/` so the
-        // extract scratch dir is reachable from a single user-visible
-        // location — FastLED/fbuild#844 bridge pair 10.
-        let temp_dir = tempfile::Builder::new()
-            .prefix("fbuild_sdk_")
-            .tempdir_in(fbuild_paths::temp_subdir("esp32-framework"))?;
-
-        tracing::info!(
-            "extracting ESP32 SDK libs ({} MB)",
-            archive_path
-                .metadata()
-                .map(|m| m.len() / 1_000_000)
-                .unwrap_or(0)
-        );
-        crate::extractor::extract(&archive_path, temp_dir.path())?;
-
-        merge_sdk_archive_entries(temp_dir.path(), &tools_dir)?;
-
-        for mcu_dir in mcu_sdk_dir_candidates(&tools_dir, mcu) {
-            if mcu_sdk_complete(&mcu_dir) {
-                patch_mcu_compatibility(&mcu_dir, mcu)?;
-                break;
+        for variant in &missing {
+            // A whole-bundle archive serves every variant: re-check before
+            // fetching the next slice (FastLED/fbuild#1897).
+            if installed_variant_dir(&tools_dir, variant).is_none() {
+                install_sdk_archive(libs_url, version, variant, &tools_dir).await?;
             }
+            if installed_variant_dir(&tools_dir, variant).is_some() {
+                patch_installed_variants(&tools_dir, &[variant.as_str()])?;
+                continue;
+            }
+            if variant != mcu {
+                return Err(fbuild_core::FbuildError::PackageError(format!(
+                    "ESP32 SDK libs for the board's chip variant `{variant}` are missing after \
+                     installing the `{mcu}` libs; the per-chip slice for `{mcu}` does not cover it"
+                )));
+            }
+            tracing::warn!("{variant} SDK is still incomplete after installing the SDK libs");
         }
 
         tracing::info!("ESP32 SDK libs installed");
@@ -496,5 +560,36 @@ mod tests {
         patch_mcu_compatibility(&mcu_dir, "esp32c3").unwrap();
 
         assert!(!mcu_dir.exists());
+    }
+
+    #[test]
+    fn required_sdk_variants_adds_the_board_chip_variant() {
+        assert_eq!(
+            required_sdk_variants("esp32p4", "esp32p4_es"),
+            vec!["esp32p4", "esp32p4_es"]
+        );
+        assert_eq!(required_sdk_variants("esp32s3", "esp32s3"), vec!["esp32s3"]);
+        assert_eq!(required_sdk_variants("esp32c3", ""), vec!["esp32c3"]);
+    }
+
+    /// A per-chip libs slice ships ONE `esp32-arduino-libs/<chip>/` tree, so
+    /// installing the `esp32p4` slice left ESP32-P4 ES boards (chip_variant
+    /// `esp32p4_es`) with no SDK dir to include from: every P4 build on a
+    /// fresh cache died on `soc/soc_caps.h` (FastLED/fbuild#1897).
+    #[test]
+    fn missing_sdk_variants_reports_the_chip_variant_a_slice_does_not_cover() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let tools_dir = tmp.path().join("tools");
+        let sdk_dir = tools_dir.join(NEW_SDK_LAYOUT);
+        seed_complete_mcu_sdk(&sdk_dir.join("esp32p4"));
+        let variants = required_sdk_variants("esp32p4", "esp32p4_es");
+
+        assert_eq!(
+            missing_sdk_variants(&tools_dir, &variants),
+            vec!["esp32p4_es"]
+        );
+
+        seed_complete_mcu_sdk(&sdk_dir.join("esp32p4_es"));
+        assert!(missing_sdk_variants(&tools_dir, &variants).is_empty());
     }
 }
