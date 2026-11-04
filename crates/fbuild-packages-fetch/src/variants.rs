@@ -26,7 +26,9 @@ struct Selection {
 }
 
 fn chip_name(mcu: &str) -> String {
-    mcu.to_ascii_lowercase().replace(['-', '_'], "")
+    mcu.to_ascii_lowercase()
+        .replace('-', "")
+        .replacen("esp32_", "esp32", 1)
 }
 
 fn select(
@@ -182,6 +184,17 @@ mod tests {
             asset["slices"] = serde_json::json!({"esp32s3": {"url": "slices/s3.tar.zst", "size": 3, "sha256": "b".repeat(64), "format": "tar.zst"}});
         }
         MirrorManifest::parse(&serde_json::to_vec(&serde_json::json!({"kind":"Release", "schema_version":1,"components":[{"asset":asset}]})).unwrap()).unwrap()
+    }
+
+    #[test]
+    fn mcu_normalization_preserves_engineering_sample_directory_suffix() {
+        for (mcu, chip) in [
+            ("ESP32-S3", "esp32s3"),
+            ("esp32_s3", "esp32s3"),
+            ("esp32p4_es", "esp32p4_es"),
+        ] {
+            assert_eq!(chip_name(mcu), chip);
+        }
     }
 
     #[tokio::test]

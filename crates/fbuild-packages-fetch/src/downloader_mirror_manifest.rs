@@ -521,7 +521,7 @@ fn validate_asset(id: Option<String>, asset: AssetDoc) -> Result<MirrorEntry, St
     if let Some(slices) = &asset.slices {
         for (chip, slice) in slices {
             if !chip.starts_with("esp32")
-                || !chip.bytes().all(|c| c.is_ascii_alphanumeric())
+                || !chip.bytes().all(|c| c.is_ascii_alphanumeric() || c == b'_')
                 || !is_sha256_hex(&slice.sha256)
                 || slice.format != "tar.zst"
                 || slice.url.starts_with('/')
