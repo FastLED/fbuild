@@ -364,6 +364,7 @@ fn package_info(name: &str, version: &str) -> fbuild_packages::PackageInfo {
         url: format!("https://example.invalid/{name}-{version}.tar.gz"),
         install_path: PathBuf::from("/nonexistent"),
         checksum: None,
+        content_id: None,
         installed_bytes: None,
     }
 }

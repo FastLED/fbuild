@@ -93,6 +93,14 @@ pub(crate) fn strip_extended_prefix(path: &Path) -> Box<Path> {
     path.into()
 }
 
+pub(crate) fn executable_bit(metadata: &std::fs::Metadata) -> Option<bool> {
+    Some(metadata.permissions().mode() & 0o111 != 0)
+}
+
+pub(crate) fn set_archive_mode(path: &Path, mode: u32) -> std::io::Result<()> {
+    std::fs::set_permissions(path, std::fs::Permissions::from_mode(mode & 0o777))
+}
+
 pub(crate) fn set_executable(path: &Path) -> std::io::Result<()> {
     let mut permissions = std::fs::metadata(path)?.permissions();
     let mode = permissions.mode();

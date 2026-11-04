@@ -311,6 +311,7 @@ pub(super) fn fixture_plan() -> fbuild_build::prebuilt_fp::FrameworkBuildPlan {
     };
     fbuild_build::prebuilt_fp::FrameworkBuildPlan {
         abi_version: 1,
+        fingerprint_schema: 1,
         toolchain: identity.clone(),
         framework: identity,
         mcu: "esp32".into(),

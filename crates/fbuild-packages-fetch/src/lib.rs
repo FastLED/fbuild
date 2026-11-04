@@ -7,9 +7,12 @@
 
 pub mod cache;
 pub mod cache_archive;
+pub mod content_manifest;
 pub mod disk_cache;
 pub mod downloader;
 pub mod extractor;
+mod extractor_manifest;
+pub use fbuild_core::content_manifest::ContentId;
 pub mod http;
 pub mod platformio_registry;
 #[doc(hidden)]
@@ -169,6 +172,7 @@ pub struct PackageInfo {
     pub install_path: PathBuf,
     /// Pinned sha256 of the download archive, when the package has one.
     pub checksum: Option<String>,
+    pub content_id: Option<ContentId>,
     /// Installed size recorded in the package cache index, when it has a row
     /// for this package (FastLED/fbuild#1433).
     pub installed_bytes: Option<u64>,
@@ -481,7 +485,7 @@ impl PackageBase {
             None::<String>,
         ));
         tracing::info!("extracting {} v{}", self.name, self.version);
-        extractor::extract(&archive_path, &staging_path)?;
+        let manifest_builder = extractor::extract_with_manifest(&archive_path, &staging_path)?;
 
         // Remove the archive after extraction
         let _ = std::fs::remove_file(&archive_path);
@@ -497,9 +501,7 @@ impl PackageBase {
         validate(&staging_path)?;
 
         // Atomic commit: rename staging → final
-        fbuild_core::platform::fs::replace_file(&staging_path, &install_path).map_err(|e| {
-            fbuild_core::FbuildError::PackageError(format!("failed to commit installation: {}", e))
-        })?;
+        self.commit_install(&staging_path, &install_path, manifest_builder)?;
 
         // Write sentinel so GC reconciliation recognizes this as a complete install.
         // Best-effort: the install succeeded (rename was atomic), so a sentinel
@@ -524,15 +526,43 @@ impl PackageBase {
         Ok(install_path)
     }
 
+    /// Commit the content anchor and installation together, after validation.
+    fn commit_install(
+        &self,
+        staging: &Path,
+        destination: &Path,
+        builder: fbuild_core::content_manifest::ManifestBuilder,
+    ) -> fbuild_core::Result<()> {
+        match builder.finish(staging) {
+            Ok(manifest) => content_manifest::write_manifest(staging, &self.get_info(), manifest)?,
+            Err(error) if error.kind() == std::io::ErrorKind::Unsupported => {
+                tracing::debug!(%error, "package has no verifiable portable content identity");
+            }
+            Err(error) => return Err(error.into()),
+        }
+        if let Err(error) = fbuild_core::platform::fs::replace_file(staging, destination) {
+            let _ = std::fs::remove_file(staging.join(fbuild_core::content_manifest::SIDECAR));
+            return Err(fbuild_core::FbuildError::PackageError(format!(
+                "failed to commit installation: {error}"
+            )));
+        }
+        Ok(())
+    }
+
     pub fn get_info(&self) -> PackageInfo {
-        PackageInfo {
+        let mut info = PackageInfo {
             name: self.name.clone(),
             version: self.version.clone(),
             url: self.url.clone(),
             install_path: self.install_path(),
             checksum: self.checksum.clone(),
+            content_id: None,
             installed_bytes: self.recorded_installed_bytes(),
+        };
+        if info.install_path.is_dir() {
+            info.content_id = content_manifest::load_verified_content_id(&info.install_path, &info);
         }
+        info
     }
 
     /// Installed size from the cache index row written by
@@ -612,6 +642,87 @@ mod toolchain_gcc_ar_tests {
         zip.finish().expect("finish zip").into_inner()
     }
 
+    #[tokio::test]
+    async fn failed_validation_never_commits_a_manifest() {
+        let tmp = tempfile::tempdir().unwrap();
+        let url = serve_once(zip_bytes("file", b"payload")).await;
+        let base = PackageBase::with_cache_root(
+            "tool",
+            "1",
+            &url,
+            "failure-test",
+            None,
+            CacheSubdir::Toolchains,
+            tmp.path(),
+            &tmp.path().join("cache"),
+        );
+        let installed = base.install_path();
+        let result = base
+            .staged_install(|_| {
+                Err(fbuild_core::FbuildError::PackageError(
+                    "rejected fixture".into(),
+                ))
+            })
+            .await;
+        assert!(result.is_err());
+        assert!(!installed.exists());
+        let staging = installed.with_file_name(format!(
+            "{}_staging",
+            installed.file_name().unwrap().to_string_lossy()
+        ));
+        assert!(staging.join("file").exists());
+        assert!(
+            !staging
+                .join(fbuild_core::content_manifest::SIDECAR)
+                .exists()
+        );
+    }
+
+    #[tokio::test]
+    async fn failed_atomic_rename_removes_staged_manifest() {
+        let tmp = tempfile::tempdir().unwrap();
+        let url = serve_once(zip_bytes("file", b"payload")).await;
+        let base = PackageBase::with_cache_root(
+            "tool",
+            "1",
+            &url,
+            "rename-failure",
+            None,
+            CacheSubdir::Toolchains,
+            tmp.path(),
+            &tmp.path().join("cache"),
+        );
+        let installed = base.install_path();
+        let result = base
+            .staged_install(|staging| {
+                assert!(
+                    !staging
+                        .join(fbuild_core::content_manifest::SIDECAR)
+                        .exists()
+                );
+                std::fs::create_dir_all(&installed)?;
+                std::fs::write(installed.join("occupied"), b"prevent replacement")?;
+                Ok(())
+            })
+            .await;
+        assert!(result.is_err());
+        let staging = installed.with_file_name(format!(
+            "{}_staging",
+            installed.file_name().unwrap().to_string_lossy()
+        ));
+        assert!(staging.join("file").exists());
+        assert!(
+            !staging
+                .join(fbuild_core::content_manifest::SIDECAR)
+                .exists()
+        );
+        assert!(
+            !installed
+                .join(fbuild_core::content_manifest::SIDECAR)
+                .exists()
+        );
+    }
+
     /// Test toolchain that lets the test set the `ar_path`.
     struct TestToolchain {
         ar_path: PathBuf,
@@ -632,6 +743,7 @@ mod toolchain_gcc_ar_tests {
                 url: String::new(),
                 install_path: PathBuf::new(),
                 checksum: None,
+                content_id: None,
                 installed_bytes: None,
             }
         }
@@ -789,6 +901,17 @@ mod toolchain_gcc_ar_tests {
 
         assert_eq!(installed, install_path);
         assert!(installed.join("fresh.txt").exists());
+        if fbuild_core::platform::fs::executable_bit(&std::fs::metadata(&installed).unwrap())
+            .is_some()
+        {
+            assert!(
+                content_manifest::load_verified_content_id(&installed, &base.get_info()).is_some()
+            );
+        } else {
+            assert!(
+                content_manifest::load_verified_content_id(&installed, &base.get_info()).is_none()
+            );
+        }
         assert!(!installed.join("stale.txt").exists());
         assert!(
             !staging_path.exists(),

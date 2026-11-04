@@ -125,6 +125,16 @@ pub fn set_executable(path: &Path) -> std::io::Result<()> {
     super::selected::fs::set_executable(path)
 }
 
+/// Query executable permission bits where the filesystem represents them.
+pub fn executable_bit(metadata: &std::fs::Metadata) -> Option<bool> {
+    super::selected::fs::executable_bit(metadata)
+}
+
+/// Restore ordinary archive permissions without granting setuid/setgid bits.
+pub fn set_archive_mode(path: &Path, mode: u32) -> std::io::Result<()> {
+    super::selected::fs::set_archive_mode(path, mode)
+}
+
 /// Ensure an extracted tool is executable without changing an already-runnable file.
 pub fn ensure_executable(path: &Path) -> std::io::Result<()> {
     super::selected::fs::ensure_executable(path)

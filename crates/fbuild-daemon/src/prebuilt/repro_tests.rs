@@ -98,8 +98,7 @@ async fn compile_fixture(
         .await
         .unwrap();
     assert!(result.success(), "{}", result.stderr);
-    let mut recorded = vec![compiler.to_owned()];
-    recorded.extend(raw);
+    let recorded = [vec![compiler.to_owned()], raw].concat();
     let argv = canonical_argv(&recorded, framework, &mappings, 0).unwrap();
     let files = [
         framework.join("core.c"),
@@ -120,6 +119,7 @@ async fn compile_fixture(
     };
     let plan = FrameworkBuildPlan {
         abi_version: 1,
+        fingerprint_schema: 1,
         toolchain: package.clone(),
         framework: package,
         mcu: "esp32".into(),

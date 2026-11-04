@@ -4,6 +4,7 @@
 
 use std::path::Path;
 
+pub use crate::extractor_manifest::extract_with_manifest;
 use fbuild_core::{FbuildError, Result};
 
 /// Check the actual extracted layout before an installer marks it complete.
@@ -28,7 +29,7 @@ fn validate_extraction_tree(root: &Path, required: bool) -> Result<()> {
     Ok(())
 }
 
-fn validate_extraction(root: &Path) -> Result<()> {
+pub(crate) fn validate_extraction(root: &Path) -> Result<()> {
     validate_extraction_tree(
         root,
         fbuild_paths::long_paths::current_resolution()
@@ -260,6 +261,131 @@ mod tests {
             .expect("start file");
         zip.write_all(content).expect("write content");
         zip.finish().expect("finish zip");
+    }
+
+    #[test]
+    fn streamed_manifest_matches_real_extracted_tree_across_formats() {
+        let root = tempfile::tempdir().unwrap();
+        for extension in ["tar.gz", "tar.xz", "zip"] {
+            let archive = root.path().join(format!("test.{extension}"));
+            match extension {
+                "tar.gz" => make_tar_gz(&archive, "nested/file", b"streamed payload"),
+                "tar.xz" => make_tar_xz(&archive, "nested/file", b"streamed payload"),
+                _ => make_zip(&archive, "nested/file", b"streamed payload"),
+            }
+            let dest = root.path().join(extension);
+            std::fs::create_dir(&dest).unwrap();
+            let streamed = extract_with_manifest(&archive, &dest)
+                .unwrap()
+                .finish(&dest);
+            if fbuild_core::platform::fs::executable_bit(&std::fs::metadata(&dest).unwrap())
+                .is_some()
+            {
+                let streamed = streamed.unwrap();
+                assert_eq!(
+                    streamed.content_id(),
+                    fbuild_core::content_manifest::hash_tree(&dest)
+                        .unwrap()
+                        .content_id()
+                );
+            } else {
+                assert_eq!(
+                    streamed.unwrap_err().kind(),
+                    std::io::ErrorKind::Unsupported
+                );
+                assert_eq!(
+                    std::fs::read(dest.join("nested/file")).unwrap(),
+                    b"streamed payload"
+                );
+            }
+        }
+    }
+
+    #[test]
+    #[cfg(unix)]
+    fn zip_without_mode_metadata_has_readable_default_permissions() {
+        let root = tempfile::tempdir().unwrap();
+        let archive = root.path().join("dos.zip");
+        make_zip(&archive, "file", b"payload");
+        let mut bytes = std::fs::read(&archive).unwrap();
+        let central = bytes.windows(4).position(|b| b == b"PK\x01\x02").unwrap();
+        bytes[central + 38..central + 42].fill(0);
+        std::fs::write(&archive, &bytes).unwrap();
+        let mut zip = zip::ZipArchive::new(std::io::Cursor::new(bytes)).unwrap();
+        assert!(zip.by_index(0).unwrap().unix_mode().is_none());
+        let dest = root.path().join("out");
+        std::fs::create_dir(&dest).unwrap();
+        let manifest = extract_with_manifest(&archive, &dest)
+            .unwrap()
+            .finish(&dest)
+            .unwrap();
+        assert_eq!(std::fs::read(dest.join("file")).unwrap(), b"payload");
+        assert!(!manifest.entries[0].exec);
+        assert_eq!(
+            manifest.content_id(),
+            fbuild_core::content_manifest::hash_tree(&dest)
+                .unwrap()
+                .content_id()
+        );
+    }
+
+    #[test]
+    #[cfg(unix)]
+    fn streamed_tar_defers_readonly_directories_and_clears_duplicate_exec() {
+        use flate2::{Compression, write::GzEncoder};
+        let root = tempfile::tempdir().unwrap();
+        let archive_path = root.path().join("fixture.tar.gz");
+        let mut archive = tar::Builder::new(GzEncoder::new(
+            std::fs::File::create(&archive_path).unwrap(),
+            Compression::default(),
+        ));
+        let mut directory = tar::Header::new_gnu();
+        directory.set_entry_type(tar::EntryType::Directory);
+        directory.set_mode(0o555);
+        directory.set_size(0);
+        directory.set_cksum();
+        archive
+            .append_data(&mut directory, "readonly", &b""[..])
+            .unwrap();
+        for (mode, bytes) in [(0o755, b"old"), (0o644, b"new")] {
+            let mut header = tar::Header::new_gnu();
+            header.set_mode(mode);
+            header.set_size(3);
+            header.set_cksum();
+            archive
+                .append_data(&mut header, "readonly/file", &bytes[..])
+                .unwrap();
+        }
+        let mut link = tar::Header::new_gnu();
+        link.set_entry_type(tar::EntryType::Symlink);
+        link.set_mode(0o777);
+        link.set_size(0);
+        link.set_link_name("readonly/file").unwrap();
+        link.set_cksum();
+        archive.append_data(&mut link, "link", &b""[..]).unwrap();
+        archive.into_inner().unwrap().finish().unwrap();
+        let dest = root.path().join("out");
+        std::fs::create_dir(&dest).unwrap();
+        let manifest = extract_with_manifest(&archive_path, &dest)
+            .unwrap()
+            .finish(&dest)
+            .unwrap();
+        assert_eq!(std::fs::read(dest.join("readonly/file")).unwrap(), b"new");
+        assert!(
+            !manifest
+                .entries
+                .iter()
+                .find(|e| e.path == "readonly/file")
+                .unwrap()
+                .exec
+        );
+        assert_eq!(
+            manifest.content_id(),
+            fbuild_core::content_manifest::hash_tree(&dest)
+                .unwrap()
+                .content_id()
+        );
+        fbuild_core::platform::fs::set_archive_mode(&dest.join("readonly"), 0o755).unwrap();
     }
 
     #[test]

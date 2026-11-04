@@ -57,6 +57,7 @@ impl Fixture {
         );
         let plan = FrameworkBuildPlan {
             abi_version: 1,
+            fingerprint_schema: 1,
             toolchain: PackageIdentity {
                 id: "xtensa-esp32-elf-gcc".into(),
                 version: "local-fixture".into(),

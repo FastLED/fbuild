@@ -248,6 +248,14 @@ pub(crate) fn strip_extended_prefix(path: &Path) -> Box<Path> {
     )
 }
 
+pub(crate) fn executable_bit(_metadata: &std::fs::Metadata) -> Option<bool> {
+    None
+}
+
+pub(crate) fn set_archive_mode(_path: &Path, _mode: u32) -> std::io::Result<()> {
+    Ok(())
+}
+
 pub(crate) fn set_executable(_path: &Path) -> std::io::Result<()> {
     Ok(())
 }

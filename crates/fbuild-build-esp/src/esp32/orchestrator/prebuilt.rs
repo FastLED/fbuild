@@ -5,8 +5,8 @@ use crate::{
     compiler::{Compiler, CompilerBase, apply_compile_unflags, compile_argv_at_root},
     flag_overlay::LanguageExtraFlags,
     prebuilt_fp::{
-        FrameworkBuildPlan, PREBUILT_ABI_VERSION, PackageIdentity, PathMapping, canonical_argv,
-        fingerprint, mapped_path,
+        FrameworkBuildPlan, PREBUILT_ABI_VERSION, PREBUILT_FINGERPRINT_SCHEMA, PackageIdentity,
+        PathMapping, canonical_argv, fingerprint, mapped_path,
     },
 };
 use fbuild_core::path::NormalizedPath;
@@ -15,6 +15,10 @@ use fbuild_packages::{
     prebuilt::{PrebuiltOutcome, sha256, valid_sha},
 };
 use std::{collections::BTreeMap, path::Path};
+
+#[cfg(all(test, unix))]
+#[path = "prebuilt_tests.rs"]
+mod tests;
 
 pub(super) struct Inputs<'a, S: AsRef<Path>> {
     pub params: &'a BuildParams,
@@ -58,15 +62,21 @@ pub(super) fn eligible(params: &BuildParams, ctx: &crate::pipeline::BuildContext
 }
 
 fn package(info: &PackageInfo) -> Option<PackageIdentity> {
-    let checksum = info
-        .checksum
-        .as_deref()?
-        .strip_prefix("sha256:")
-        .unwrap_or(info.checksum.as_deref()?);
-    valid_sha(checksum).then(|| PackageIdentity {
+    let identity = if let Some(checksum) = info.checksum.as_deref() {
+        let checksum = checksum.strip_prefix("sha256:").unwrap_or(checksum);
+        if !valid_sha(checksum) {
+            return None;
+        }
+        format!("registry:{}", checksum.to_ascii_lowercase())
+    } else {
+        let id =
+            fbuild_packages::content_manifest::load_verified_content_id(&info.install_path, info)?;
+        format!("tree:{id}")
+    };
+    Some(PackageIdentity {
         id: info.name.clone(),
         version: info.version.clone(),
-        sha256: checksum.into(),
+        sha256: identity,
     })
 }
 
@@ -169,6 +179,7 @@ fn plan<S: AsRef<Path>>(input: &Inputs<'_, S>) -> Option<FrameworkBuildPlan> {
     }
     Some(FrameworkBuildPlan {
         abi_version: PREBUILT_ABI_VERSION,
+        fingerprint_schema: PREBUILT_FINGERPRINT_SCHEMA,
         toolchain: package(input.toolchain)?,
         framework: package(input.framework)?,
         mcu: input.mcu.into(),

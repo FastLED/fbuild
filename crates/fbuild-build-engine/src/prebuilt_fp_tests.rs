@@ -3,7 +3,7 @@ use serde_json::json;
 
 #[test]
 fn fingerprint_is_canonical_and_sensitive_to_every_input() {
-    let value = json!({"abi_version":1,"toolchain":{"id":"gcc","version":"1","sha256":"a".repeat(64)},
+    let value = json!({"abi_version":1,"fingerprint_schema":1,"toolchain":{"id":"gcc","version":"1","sha256":"a".repeat(64)},
         "framework":{"id":"arduino-esp32","version":"3.1.1","sha256":"b".repeat(64)},
         "mcu":"esp32", "variant_dir":"variants/esp32", "argv":[["-Os","-DA=1","-DB=2","-Iinclude"]],
         "config_sha256":{"sdkconfig.h":"c".repeat(64)}, "path_map_prefix":"/fbuild"});
@@ -23,6 +23,7 @@ fn fingerprint_is_canonical_and_sensitive_to_every_input() {
     );
     for field in [
         "abi_version",
+        "fingerprint_schema",
         "toolchain",
         "framework",
         "mcu",
@@ -33,7 +34,7 @@ fn fingerprint_is_canonical_and_sensitive_to_every_input() {
     ] {
         let mut altered = value.clone();
         altered[field] = match field {
-            "abi_version" => json!(2),
+            "abi_version" | "fingerprint_schema" => json!(2),
             "toolchain" => json!({"id":"gcc","version":"2","sha256":"a".repeat(64)}),
             "framework" => json!({"id":"arduino-esp32","version":"3.1.2","sha256":"b".repeat(64)}),
             "argv" => json!([["-Os", "-DB=2", "-DA=1", "-Iinclude"]]),
@@ -59,6 +60,7 @@ fn every_compile_flag_and_package_digest_participates() {
     };
     let plan = FrameworkBuildPlan {
         abi_version: 1,
+        fingerprint_schema: 1,
         toolchain: package.clone(),
         framework: package,
         mcu: "esp32".into(),

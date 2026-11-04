@@ -81,7 +81,7 @@ def package(metadata, output, source):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--project", type=Path, required=True)
-    parser.add_argument("--board", choices=["esp32dev", "esp32-s3-devkitc-1"], required=True)
+    parser.add_argument("--board", choices=["esp32dev", "esp32-s3-devkitc-1", "esp32-c3-devkitm-1"], required=True)
     parser.add_argument("--environment", required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--source-repo", required=True)
@@ -99,7 +99,8 @@ def main():
             "--no-prebuilt", "--output-dir", root], cwd=ROOT, env=environment, check=True)
         plans = list(Path(root).rglob("prebuilt-plan.json"))
         if len(plans) != 1:
-            raise ValueError("expected exactly one engine-exported pilot plan with pinned package checksums")
+            raise ValueError("expected exactly one engine-exported pilot plan with verified package identities")
+        print("engine-exported plans: 1", flush=True)
         metadata = json.loads(plans[0].read_bytes())
         if metadata["board"] != args.board:
             raise ValueError("requested pilot board does not match resolved plan")

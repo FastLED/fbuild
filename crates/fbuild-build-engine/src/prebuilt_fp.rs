@@ -4,6 +4,7 @@ use sha2::{Digest, Sha256};
 use std::collections::BTreeMap;
 
 pub const PREBUILT_ABI_VERSION: u32 = 1;
+pub const PREBUILT_FINGERPRINT_SCHEMA: u32 = 1;
 pub type Fp = String;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
@@ -17,6 +18,7 @@ pub struct PackageIdentity {
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct FrameworkBuildPlan {
     pub abi_version: u32,
+    pub fingerprint_schema: u32,
     pub toolchain: PackageIdentity,
     pub framework: PackageIdentity,
     pub mcu: String,
