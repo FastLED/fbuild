@@ -114,6 +114,8 @@ def publish_or_check(output: Path, scratch: Path, result: dict, check: bool) -> 
 def slice_archive(
     source: str, version: str, output: Path, *, check: bool = False, level: int = 19
 ) -> dict:
+    if not 1 <= level <= 19:
+        raise ValueError("compression level must be between 1 and 19")
     if not version or any(
         c not in "0123456789abcdefghijklmnopqrstuvwxyz.-" for c in version
     ):
@@ -164,7 +166,7 @@ def main() -> None:
     parser.add_argument("source")
     parser.add_argument("--version", required=True)
     parser.add_argument("--out-dir", type=Path, required=True)
-    parser.add_argument("--level", type=int, default=19)
+    parser.add_argument("--level", type=int, choices=range(1, 20), default=19)
     parser.add_argument(
         "--slice-prefix",
         default="slices/",
