@@ -48,6 +48,27 @@ elsewhere at ~299 s on a cold cache for esp32c3, of which the framework tree is
 2.6 of 4.7 GB). V1 still provisions framework sources before planning, so a hit
 saves compilation only, not download bytes.
 
+## Cold hit vs warm hit (real bucket, not a local mirror)
+
+Once the artefacts are published to Spaces and the Catalog shard is in the
+Index, a hit splits into two very different costs:
+
+| state | what it pays | esp32c3 measured |
+|---|---|---|
+| **cold hit** | index fetch + artefact download (3.45 MB) + extract + verify | 24.8 s |
+| **warm hit** | verified extract from the local prebuilt cache | 12.2 s / 13.9 s |
+| source build | 60 framework TUs compiled | 14.9 s (first), 9.5–9.6 s (later) |
+
+So at *this* fixture size the feature is roughly break-even on wall clock: the
+framework compile is only ~5 s of a ~10–12 s build, so install and fixed cost
+eat the difference, and the first hit is actually slower because it pays the
+download. The gain grows with the framework's compile cost (see the K curve in
+the design record: crossover ≈ K=4, ≈5–7x at K=16), which is the case for
+projects with a heavier framework configuration — not for a 60-TU fixture.
+
+These rows are wall clock on a contended host; the load-independent statement
+remains "60 framework TUs compiled → 0".
+
 ## Running it
 
 1. Publish an artefact for the board (prints the upload commands; it does not
