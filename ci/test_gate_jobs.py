@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 import os
 import subprocess
 import sys
@@ -51,7 +52,16 @@ class RunJobsTest(unittest.TestCase):
     def test_lists_this_run_attempt(self):
         with mock.patch.dict(os.environ, self.ENV):
             argv = gate_jobs.jobs_argv()
-        self.assertIn("repos/FastLED/fbuild/actions/runs/7/attempts/2/jobs?per_page=100", argv)
+        self.assertIn("repos/FastLED/fbuild/actions/runs/7/attempts/2/jobs?per_page=30", argv)
+        self.assertIn("--paginate", argv)
+
+    def test_paginated_output_keeps_later_failure(self):
+        output = '\n'.join(json.dumps(item) for item in [
+            job("first page", "success"), job("later page", "failure")
+        ])
+        with mock.patch.dict(os.environ, self.ENV):
+            jobs = gate_jobs.run_jobs(runner=lambda *a, **k: subprocess.CompletedProcess([], 0, output, ""))
+        self.assertEqual(["later page"], gate_jobs.blocking(jobs))
 
     def test_retries_transient_failure(self):
         results = [subprocess.CompletedProcess([], 1, "", "HTTP 502"),
