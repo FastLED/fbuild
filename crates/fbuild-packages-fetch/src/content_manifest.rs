@@ -127,7 +127,7 @@ fn queue_backfill(root: &Path, expect: &PackageInfo) -> Option<std::thread::Join
     }
 }
 
-#[cfg(all(test, unix))]
+#[cfg(test)]
 mod tests {
     use super::*;
     fn info(root: &Path) -> PackageInfo {
@@ -144,6 +144,11 @@ mod tests {
     #[test]
     fn resolved_package_and_metadata_must_match() {
         let root = tempfile::tempdir().unwrap();
+        if fbuild_core::platform::fs::executable_bit(&fs::metadata(root.path()).unwrap()).is_none()
+        {
+            assert!(hash_tree(root.path()).is_err());
+            return;
+        }
         fs::write(root.path().join("file"), b"abc").unwrap();
         let info = info(root.path());
         write_manifest(root.path(), &info, hash_tree(root.path()).unwrap()).unwrap();
@@ -166,6 +171,11 @@ mod tests {
     #[test]
     fn missing_sidecar_then_backfill_then_verified() {
         let root = tempfile::tempdir().unwrap();
+        if fbuild_core::platform::fs::executable_bit(&fs::metadata(root.path()).unwrap()).is_none()
+        {
+            assert!(hash_tree(root.path()).is_err());
+            return;
+        }
         fs::write(root.path().join("file"), b"abc").unwrap();
         let info = info(root.path());
         assert!(load_verified_content_id(root.path(), &info).is_none());

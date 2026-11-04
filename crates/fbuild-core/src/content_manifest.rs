@@ -281,6 +281,17 @@ fn executable(metadata: &fs::Metadata) -> bool {
 mod tests {
     use super::*;
 
+    fn observable_modes(root: &Path) -> bool {
+        let available = crate::platform::fs::executable_bit(&fs::metadata(root).unwrap()).is_some();
+        if !available {
+            assert_eq!(
+                hash_tree(root).unwrap_err().kind(),
+                io::ErrorKind::Unsupported
+            );
+        }
+        available
+    }
+
     #[test]
     fn content_id_rejects_invalid_hex() {
         for bad in ["", "00", &"z".repeat(64)] {
@@ -290,9 +301,11 @@ mod tests {
     }
 
     #[test]
-    #[cfg(unix)]
     fn golden_three_file_tree_with_symlink_and_exec() {
         let root = tempfile::tempdir().unwrap();
+        if !observable_modes(root.path()) {
+            return;
+        }
         fs::write(root.path().join("a"), b"a").unwrap();
         fs::write(root.path().join("run"), b"x").unwrap();
         crate::platform::fs::set_executable(&root.path().join("run")).unwrap();
@@ -323,10 +336,12 @@ mod tests {
     }
 
     #[test]
-    #[cfg(unix)]
     fn tree_identity_tracks_bytes_and_paths_not_creation_order() {
         let a = tempfile::tempdir().unwrap();
         let b = tempfile::tempdir().unwrap();
+        if !observable_modes(a.path()) {
+            return;
+        }
         for (root, names) in [(a.path(), ["a", "b"]), (b.path(), ["b", "a"])] {
             for name in names {
                 std::fs::write(root.join(name), name).unwrap();
@@ -342,9 +357,11 @@ mod tests {
     }
 
     #[test]
-    #[cfg(unix)]
     fn installer_same_size_rewrite_invalidates_streamed_digest() {
         let root = tempfile::tempdir().unwrap();
+        if !observable_modes(root.path()) {
+            return;
+        }
         let path = root.path().join("file");
         let mut builder = ManifestBuilder::default();
         builder
@@ -366,9 +383,11 @@ mod tests {
     }
 
     #[test]
-    #[cfg(unix)]
     fn directory_paths_and_executable_bits_participate() {
         let root = tempfile::tempdir().unwrap();
+        if !observable_modes(root.path()) {
+            return;
+        }
         fs::create_dir(root.path().join("empty")).unwrap();
         let before = hash_tree(root.path()).unwrap();
         fs::rename(root.path().join("empty"), root.path().join("renamed")).unwrap();
@@ -388,9 +407,11 @@ mod tests {
     }
 
     #[test]
-    #[cfg(windows)]
     fn unknown_exec_bits_fail_closed() {
         let root = tempfile::tempdir().unwrap();
+        if observable_modes(root.path()) {
+            return;
+        }
         fs::write(root.path().join("file"), b"x").unwrap();
         assert_eq!(
             hash_tree(root.path()).unwrap_err().kind(),

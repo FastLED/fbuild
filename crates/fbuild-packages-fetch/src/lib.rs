@@ -7,6 +7,8 @@
 
 pub mod cache;
 pub mod cache_archive;
+#[cfg(test)]
+mod content_install_tests;
 pub mod content_manifest;
 pub mod disk_cache;
 pub mod downloader;
@@ -609,7 +611,7 @@ fn clear_package_touch_cache_for_tests() {
 mod toolchain_gcc_ar_tests {
     use super::*;
 
-    async fn serve_once(body: Vec<u8>) -> String {
+    pub(super) async fn serve_once(body: Vec<u8>) -> String {
         use tokio::io::{AsyncReadExt, AsyncWriteExt};
         use tokio::net::TcpListener;
 
@@ -630,7 +632,7 @@ mod toolchain_gcc_ar_tests {
         url
     }
 
-    fn zip_bytes(entry_name: &str, content: &[u8]) -> Vec<u8> {
+    pub(super) fn zip_bytes(entry_name: &str, content: &[u8]) -> Vec<u8> {
         use std::io::{Cursor, Write};
         use zip::write::SimpleFileOptions;
 
@@ -640,87 +642,6 @@ mod toolchain_gcc_ar_tests {
             .expect("start zip entry");
         zip.write_all(content).expect("write zip entry");
         zip.finish().expect("finish zip").into_inner()
-    }
-
-    #[tokio::test]
-    async fn failed_validation_never_commits_a_manifest() {
-        let tmp = tempfile::tempdir().unwrap();
-        let url = serve_once(zip_bytes("file", b"payload")).await;
-        let base = PackageBase::with_cache_root(
-            "tool",
-            "1",
-            &url,
-            "failure-test",
-            None,
-            CacheSubdir::Toolchains,
-            tmp.path(),
-            &tmp.path().join("cache"),
-        );
-        let installed = base.install_path();
-        let result = base
-            .staged_install(|_| {
-                Err(fbuild_core::FbuildError::PackageError(
-                    "rejected fixture".into(),
-                ))
-            })
-            .await;
-        assert!(result.is_err());
-        assert!(!installed.exists());
-        let staging = installed.with_file_name(format!(
-            "{}_staging",
-            installed.file_name().unwrap().to_string_lossy()
-        ));
-        assert!(staging.join("file").exists());
-        assert!(
-            !staging
-                .join(fbuild_core::content_manifest::SIDECAR)
-                .exists()
-        );
-    }
-
-    #[tokio::test]
-    async fn failed_atomic_rename_removes_staged_manifest() {
-        let tmp = tempfile::tempdir().unwrap();
-        let url = serve_once(zip_bytes("file", b"payload")).await;
-        let base = PackageBase::with_cache_root(
-            "tool",
-            "1",
-            &url,
-            "rename-failure",
-            None,
-            CacheSubdir::Toolchains,
-            tmp.path(),
-            &tmp.path().join("cache"),
-        );
-        let installed = base.install_path();
-        let result = base
-            .staged_install(|staging| {
-                assert!(
-                    !staging
-                        .join(fbuild_core::content_manifest::SIDECAR)
-                        .exists()
-                );
-                std::fs::create_dir_all(&installed)?;
-                std::fs::write(installed.join("occupied"), b"prevent replacement")?;
-                Ok(())
-            })
-            .await;
-        assert!(result.is_err());
-        let staging = installed.with_file_name(format!(
-            "{}_staging",
-            installed.file_name().unwrap().to_string_lossy()
-        ));
-        assert!(staging.join("file").exists());
-        assert!(
-            !staging
-                .join(fbuild_core::content_manifest::SIDECAR)
-                .exists()
-        );
-        assert!(
-            !installed
-                .join(fbuild_core::content_manifest::SIDECAR)
-                .exists()
-        );
     }
 
     /// Test toolchain that lets the test set the `ar_path`.

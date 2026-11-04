@@ -16,7 +16,7 @@ use fbuild_packages::{
 };
 use std::{collections::BTreeMap, path::Path};
 
-#[cfg(all(test, unix))]
+#[cfg(test)]
 #[path = "prebuilt_tests.rs"]
 mod tests;
 

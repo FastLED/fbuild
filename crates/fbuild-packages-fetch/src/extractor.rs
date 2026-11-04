@@ -302,9 +302,13 @@ mod tests {
     }
 
     #[test]
-    #[cfg(unix)]
     fn zip_without_mode_metadata_has_readable_default_permissions() {
         let root = tempfile::tempdir().unwrap();
+        if fbuild_core::platform::fs::executable_bit(&std::fs::metadata(root.path()).unwrap())
+            .is_none()
+        {
+            return;
+        }
         let archive = root.path().join("dos.zip");
         make_zip(&archive, "file", b"payload");
         let mut bytes = std::fs::read(&archive).unwrap();
@@ -330,10 +334,14 @@ mod tests {
     }
 
     #[test]
-    #[cfg(unix)]
     fn streamed_tar_defers_readonly_directories_and_clears_duplicate_exec() {
         use flate2::{Compression, write::GzEncoder};
         let root = tempfile::tempdir().unwrap();
+        if fbuild_core::platform::fs::executable_bit(&std::fs::metadata(root.path()).unwrap())
+            .is_none()
+        {
+            return;
+        }
         let archive_path = root.path().join("fixture.tar.gz");
         let mut archive = tar::Builder::new(GzEncoder::new(
             std::fs::File::create(&archive_path).unwrap(),

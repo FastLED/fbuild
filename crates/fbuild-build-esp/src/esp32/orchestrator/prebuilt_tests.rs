@@ -34,9 +34,12 @@ fn params(root: &Path) -> BuildParams {
 }
 
 #[test]
-#[cfg(unix)]
 fn manifest_pinned_plan_and_registry_precedence() {
     let root = tempfile::tempdir().unwrap();
+    if fbuild_core::platform::fs::executable_bit(&std::fs::metadata(root.path()).unwrap()).is_none()
+    {
+        return;
+    }
     let fw = root.path().join("framework");
     let tc = root.path().join("toolchain");
     std::fs::create_dir_all(&fw).unwrap();
