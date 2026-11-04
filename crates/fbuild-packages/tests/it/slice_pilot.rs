@@ -42,3 +42,35 @@ async fn pilot_fetches_the_chip_slice_not_the_whole_bundle() {
         path.display()
     );
 }
+
+/// The real pioarduino 3.3.12 URL and the board's `build.mcu`, exactly as
+/// `ensure_libs` passes them. Proves the production path selects the chip
+/// slice for the version a current platform manifest resolves.
+#[tokio::test]
+#[ignore = "network: downloads a real slice from the fbuild Spaces bucket"]
+async fn pilot_pioarduino_3_3_12_selects_the_chip_slice() {
+    const VENDOR_3_3_12: &str = "https://github.com/espressif/arduino-esp32/releases/download/3.3.12/esp32-core-3.3.12-libs.tar.xz";
+    const SLICE_3_3_12_S3: u64 = 72_335_469;
+    let manifest = std::env::var("FBUILD_MIRROR_MANIFEST_URL").unwrap_or_default();
+    assert!(!manifest.is_empty(), "set FBUILD_MIRROR_MANIFEST_URL");
+    let dir = tempfile::tempdir().unwrap();
+    let path = fbuild_packages_fetch::FetchRequest {
+        name: "framework-arduinoespressif32-libs",
+        version: "core-3.3.12",
+        url: VENDOR_3_3_12,
+        variant: Some("esp32s3"),
+    }
+    .fetch(dir.path())
+    .await
+    .expect("slice fetch");
+    let size = std::fs::metadata(&path).unwrap().len();
+    assert_eq!(
+        size, SLICE_3_3_12_S3,
+        "expected the 3.3.12 esp32s3 slice, got {size}"
+    );
+    assert!(
+        path.to_string_lossy().contains("+esp32s3"),
+        "cache path is not chip-specific: {}",
+        path.display()
+    );
+}
