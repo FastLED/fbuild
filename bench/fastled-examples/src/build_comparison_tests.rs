@@ -262,8 +262,14 @@ fn svg_contains_uno_and_esp32s3_groups() {
         result
     }));
     let svg = render_svg(&sample_metadata(), &results);
-    assert!(svg.contains("Arduino Uno"), "{svg}");
-    assert!(svg.contains("ESP32-S3"), "{svg}");
+    for (id, label) in [("uno", "Arduino Uno"), ("esp32s3", "ESP32-S3")] {
+        let marker = format!("<g role=\"group\" aria-labelledby=\"{id}-title\">");
+        let group = svg.split(&marker).nth(1).expect("labelled board graph");
+        let next_board = group.find("<g role=\"group\"").unwrap_or(group.len());
+        let group = &group[..next_board];
+        assert!(group.contains(&format!("class=\"board\">{label}</text>")));
+        assert_eq!(group.matches("class=\"tool\"").count(), 3);
+    }
 }
 
 #[test]
@@ -284,8 +290,8 @@ fn svg_scales_each_board_independently() {
         2,
         "the longest cold bar must fill each board section: {svg}"
     );
-    assert!(svg.contains("Arduino Uno | scale: slowest median = 1200.0 ms"));
-    assert!(svg.contains("ESP32-S3 | scale: slowest median = 12000.0 ms"));
+    assert!(svg.contains("Scale: slowest median = 1200.0 ms"));
+    assert!(svg.contains("Scale: slowest median = 12000.0 ms"));
 }
 
 #[test]
