@@ -282,7 +282,7 @@ fn install_fake_ar(path: &Path) {
 /// writes the object file, failing for sources whose file name starts
 /// with "bad".
 struct FakeBackend {
-    compilers: std::sync::Mutex<Vec<PathBuf>>,
+    compilers: std::sync::Mutex<Vec<NormalizedPath>>,
     flag_sets: std::sync::Mutex<Vec<Vec<String>>>,
     in_flight: std::sync::Arc<std::sync::atomic::AtomicUsize>,
     max_in_flight: std::sync::Arc<std::sync::atomic::AtomicUsize>,
@@ -312,7 +312,10 @@ impl LibCompileBackend for FakeBackend {
         cwd: NormalizedPath,
         _env: Vec<(String, String)>,
     ) -> Result<LibCompileOutcome> {
-        self.compilers.lock().unwrap().push(compiler.to_path_buf());
+        self.compilers
+            .lock()
+            .unwrap()
+            .push(NormalizedPath::new(compiler));
         self.flag_sets.lock().unwrap().push(args.clone());
         self.call_count
             .fetch_add(1, std::sync::atomic::Ordering::Relaxed);
@@ -414,7 +417,7 @@ async fn library_assembly_uses_c_driver_and_target_flags() {
     }
     assert_eq!(
         *backend.compilers.lock().unwrap(),
-        [gcc, gcc, gcc, gxx, gxx]
+        [gcc, gcc, gcc, gxx, gxx].map(NormalizedPath::new)
     );
     let flags = backend.flag_sets.lock().unwrap();
     for args in &flags[..3] {
