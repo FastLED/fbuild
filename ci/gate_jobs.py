@@ -32,7 +32,7 @@ UNSUCCESSFUL = {"failure", "cancelled", "timed_out", "startup_failure", "action_
 # continue-on-error advisory jobs (their failure never fails the run).
 EXEMPT_NAMES = ("CI summary", "Verify local gate", "Verified reuse decision (shadow)")
 EXEMPT_SUFFIXES = ("End-of-queue cache janitor",)
-# The jobs listing is one API call; three attempts cover a 5xx blip or a
+# Three attempts cover a 5xx blip or a
 # momentary rate-limit without holding the gate's 30 s budget.
 ATTEMPTS = 3
 BACKOFF_SECONDS = 2.0
@@ -56,7 +56,9 @@ def blocking(jobs: list[dict]) -> list[str]:
 def jobs_argv() -> list[str]:
     """The `gh api` call that lists every job of this run attempt."""
     path = (f"repos/{os.environ['GITHUB_REPOSITORY']}/actions/runs/{os.environ['GITHUB_RUN_ID']}"
-            f"/attempts/{os.environ.get('GITHUB_RUN_ATTEMPT', '1')}/jobs?per_page=100")
+            f"/attempts/{os.environ.get('GITHUB_RUN_ATTEMPT', '1')}/jobs?per_page=30")
+    # Large rerun job pages can return persistent HTTP 502 responses.
+    # Keep GitHub's default page size; --paginate still retrieves every job.
     return ["gh", "api", "--paginate", path, "--jq", ".jobs[]"]
 
 
