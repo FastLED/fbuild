@@ -110,6 +110,8 @@ jobs:
       # setup-soldr started, and the mismatched daemon refused every compile.
       - name: Check tracked Python complexity ratchet
         run: uv run --no-project python ci/check_python_complexity.py
+      - name: Test cold-build disk provisioning
+        run: uv run --no-project python -m unittest ci.test_reclaim_android_ndks
       - name: Lint subprocess spawns
         run: uv run --no-project python ci/find_direct_subprocess.py --fail
       - name: Guard production USB VID/PID catalogue literals
@@ -169,6 +171,9 @@ jobs:
           python-version: "3.12"
       # Own build-cache store: this job cross-links two release targets and
       # must not compete with (or poison) the test job's cache generation.
+      - name: Provision cold-build disk capacity
+        if: runner.os == 'Linux' && runner.environment == 'github-hosted'
+        run: uv run --no-project python ci/reclaim_android_ndks.py
       - name: Setup soldr
         uses: zackees/setup-soldr@9337570234850b50322e696037127fa3cf8ac703 # setup-soldr#629 S3 remote cache
         with:

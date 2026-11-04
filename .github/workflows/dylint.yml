@@ -84,6 +84,9 @@ jobs:
           ref: ${{ inputs.ref }}
       - name: Set up uv
         uses: astral-sh/setup-uv@v3
+      - name: Provision cold-build disk capacity
+        if: runner.os == 'Linux' && runner.environment == 'github-hosted'
+        run: uv run --no-project python ci/reclaim_android_ndks.py
       - name: Validate Dylint allowlist paths
         run: uv run --no-project python ci/check_dylint_allowlists.py
       - name: Enforce shrink-only .fbuild allowlist
