@@ -131,7 +131,9 @@ async fn hydrate_exports_verified_plan_without_prebuilt_client() {
 
 async fn assert_hydrate_exports_plan(enabled: bool) {
     let temp = tempfile::tempdir().unwrap();
-    let root = std::fs::canonicalize(temp.path()).unwrap();
+    let root = fbuild_core::path::canonicalize_existing(temp.path())
+        .await
+        .unwrap();
     let fw = root.as_path().join("framework");
     let tc = root.as_path().join("toolchain");
     std::fs::create_dir_all(&fw).unwrap();
