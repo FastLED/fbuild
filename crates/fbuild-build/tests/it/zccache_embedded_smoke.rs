@@ -213,3 +213,122 @@ async fn embedded_compilation_cold_miss_then_warm_hit() {
         .await
         .expect("graceful shutdown should succeed");
 }
+
+/// FastLED/fbuild#1414: an identical compilation in a *different* project
+/// directory must be a cache hit when both compiles pin
+/// `ZCCACHE_WORKTREE_ROOT` to their own project root.
+///
+/// This is the acceptance test for the cross-project reuse claim: the pinned
+/// root makes `src/main.c` normalize to the same `$ZCCACHE_WORKTREE_ROOT/src/main.c`
+/// key in both trees, so the second tree never recompiles. It exercises the
+/// exact production seam — [`FbuildZccacheService::compile`] with the env vec
+/// that `fbuild-build-engine`'s `compiler.rs` builds — so a failure here is
+/// either a lost env entry or zccache ignoring the pin, never an fbuild build
+/// orchestrator artifact.
+#[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+async fn embedded_compilation_is_shared_across_project_dirs() {
+    let tmp = tempfile::TempDir::new().expect("tempdir");
+    let cache_root = tmp.path().join("zccache");
+    let object_name = if fbuild_core::platform::host::is_windows() {
+        "main.obj"
+    } else {
+        "main.o"
+    };
+
+    let project = |tag: &str| {
+        let root = tmp.path().join(tag);
+        std::fs::create_dir_all(root.join("src")).expect("create project src dir");
+        std::fs::write(
+            root.join("src").join("main.c"),
+            "int cross(void) { return 7; }\n",
+        )
+        .expect("write source");
+        root
+    };
+    let dir_a = project("proj_a");
+    let dir_b = project("proj_b");
+
+    let svc_cache_root = cache_root.clone();
+    let svc = FbuildZccacheService::start_in(cache_root)
+        .await
+        .expect("embedded service should start");
+    let compiler = find_c_compiler();
+
+    // Both trees compile the same workspace-relative path to the same
+    // workspace-relative output: only the pinned root differs.
+    let build = |root: &std::path::Path| {
+        let mut env = fbuild_core::subprocess::compile_env_for_build(root)
+            .expect("prepare the hermetic compile environment used in production");
+        env.push((
+            "ZCCACHE_WORKTREE_ROOT".to_string(),
+            root.to_string_lossy().into_owned(),
+        ));
+        let mut args = vec![
+            "-c".to_string(),
+            "src/main.c".to_string(),
+            "-o".to_string(),
+            object_name.to_string(),
+        ];
+        // The production spelling, not a hand-rolled one: a shared cache only
+        // reuses the object across project dirs when every path channel is
+        // remapped, so this test fails if fbuild's flags regress to the
+        // debug-only variant (FastLED/fbuild#1414).
+        args.extend(fbuild_paths::portable_prefix_map_args(root, root));
+        (args, env)
+    };
+
+    let (args_a, env_a) = build(&dir_a);
+    let cold = svc
+        .compile(&compiler, args_a, dir_a.clone(), env_a)
+        .await
+        .expect("cold embedded compile in project A should succeed");
+    assert_eq!(
+        cold.exit_code,
+        0,
+        "cold compile stderr: {}",
+        String::from_utf8_lossy(&cold.stderr)
+    );
+    assert!(!cold.cached, "fresh cache unexpectedly reported a hit");
+    svc.flush()
+        .await
+        .expect("flush cold compile into the cache");
+
+    // The durable layer is the on-disk dep graph: restart the service so the
+    // in-memory request cache is gone and only persisted context keys can
+    // serve project B. This is the reported "warm cache, fresh project dir"
+    // shape.
+    svc.shutdown(ShutdownMode::Graceful)
+        .await
+        .expect("shutdown after project A");
+    let svc = FbuildZccacheService::start_in(svc_cache_root.clone())
+        .await
+        .expect("embedded service should restart over the warm cache");
+
+    let (args_b, env_b) = build(&dir_b);
+    let warm = svc
+        .compile(&compiler, args_b, dir_b.clone(), env_b)
+        .await
+        .expect("embedded compile in project B should succeed");
+    assert_eq!(
+        warm.exit_code,
+        0,
+        "project B stderr: {}",
+        String::from_utf8_lossy(&warm.stderr)
+    );
+    assert!(
+        warm.cached,
+        "an identical compile in a sibling project dir should hit the cache\n\
+         project B stderr: {}\n\
+         zccache journal (miss_reason names the bucket):\n{}",
+        String::from_utf8_lossy(&warm.stderr),
+        zccache_diagnostics(svc.cache_root()),
+    );
+    assert!(
+        dir_b.join(object_name).is_file(),
+        "a cross-project hit should materialize the object in project B"
+    );
+
+    svc.shutdown(ShutdownMode::Graceful)
+        .await
+        .expect("graceful shutdown should succeed");
+}

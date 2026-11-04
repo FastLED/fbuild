@@ -17,7 +17,9 @@ pub mod running_process;
 #[cfg(test)]
 mod owner_port_tests;
 
-pub use debug_prefix_map::{DEBUG_PREFIX_MAP_ROOT, debug_prefix_map_args};
+pub use debug_prefix_map::{
+    DEBUG_PREFIX_MAP_ROOT, debug_prefix_map_args, portable_prefix_map_args,
+};
 /// The project-local and home-local fbuild directory segment: `.fbuild`.
 ///
 /// This is the canonical spelling. Nothing outside `fbuild-paths` /

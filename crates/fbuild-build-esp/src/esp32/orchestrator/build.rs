@@ -26,6 +26,7 @@ use super::helpers::{
 };
 use super::local_libs::compile_local_libraries;
 use super::packages::resolve_pioarduino_packages;
+use super::prefix_map;
 
 use crate::build_fingerprint::{
     BUILD_FINGERPRINT_VERSION, FastPathCheckInputs, FastPathContract, FastPathPersistInputs,
@@ -345,10 +346,14 @@ impl BuildOrchestrator for Esp32Orchestrator {
         // identical sketches in two directories compile to different objects
         // and zccache can never serve the second one. Both the framework and
         // the sketch stage get the same mapping, so a hydrated core object and a
-        // freshly compiled one still compare equal. `-fdebug-prefix-map` exists
-        // back to GCC 4.3, so the legacy ESP32 GCC 5 toolchain is covered too
-        // (unlike `-fmacro-prefix-map` just above).
-        user_flags.extend(fbuild_paths::debug_prefix_map_args(
+        // freshly compiled one still compare equal. Modern toolchains also map
+        // the `-ffile-prefix-map`/`-fmacro-prefix-map` channels: a shared cache
+        // only reuses an object across project dirs once every channel covers
+        // the root, so the debug-only spelling keeps the sketch worktree-scoped.
+        // `-fdebug-prefix-map` exists back to GCC 4.3, so the legacy ESP32 GCC 5
+        // toolchain is covered too (unlike the other two, which are GCC 8+).
+        user_flags.extend(prefix_map::sketch_prefix_map_args(
+            fixups::supports_macro_prefix_map(&toolchain_info),
             &params.project_dir,
             &ctx.build_dir,
         ));
