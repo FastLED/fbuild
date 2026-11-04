@@ -64322,6 +64322,14 @@
     "size_bytes": 600187
    },
    "kind_hint": "data"
+  },
+  "@esp-libs": {
+   "descriptor": {
+    "url": "shards/esp-libs.json",
+    "sha256": "94eb3698462c0e95c7d424b7e6aa28af64178435a972bea21c3bb1a7526ec1c9",
+    "size_bytes": 3744
+   },
+   "kind_hint": "data"
   }
  }
 }

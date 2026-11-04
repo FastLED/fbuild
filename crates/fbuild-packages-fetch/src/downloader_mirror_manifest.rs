@@ -520,18 +520,24 @@ fn validate_asset(id: Option<String>, asset: AssetDoc) -> Result<MirrorEntry, St
     }
     if let Some(slices) = &asset.slices {
         for (chip, slice) in slices {
+            // A slice URL is either an absolute https URL served from an
+            // artifact bucket, or a relative path resolved against the
+            // manifest base. Relative paths keep the shard-URL rules.
+            let absolute = slice.url.starts_with("https://");
+            let relative_ok = !absolute
+                && !slice.url.starts_with('/')
+                && !slice.url.contains("..")
+                && !slice.url.contains('\\')
+                && !slice.url.contains(':')
+                && !slice.url.chars().any(char::is_whitespace)
+                && !slice.url.chars().any(char::is_control)
+                && !slice.url.contains(['?', '#'])
+                && !slice.url.is_empty();
             if !chip.starts_with("esp32")
                 || !chip.bytes().all(|c| c.is_ascii_alphanumeric() || c == b'_')
                 || !is_sha256_hex(&slice.sha256)
                 || slice.format != "tar.zst"
-                || slice.url.starts_with('/')
-                || slice.url.contains("..")
-                || slice.url.contains('\\')
-                || slice.url.contains(':')
-                || slice.url.chars().any(char::is_whitespace)
-                || slice.url.chars().any(char::is_control)
-                || slice.url.contains(['?', '#'])
-                || slice.url.is_empty()
+                || (!absolute && !relative_ok)
             {
                 return Err(format!("invalid slice {chip:?}"));
             }

@@ -837,7 +837,12 @@ async fn committed_manifest_is_accepted_and_prefers_the_bucket() {
                 .map(|u| u.as_str().unwrap())
                 .collect();
             assert!(urls[0].starts_with("https://fbuild.sfo3.digitaloceanspaces.com/"));
-            assert!(urls[1].starts_with("https://dl.registry.platformio.org/download/"));
+            // Registry shards pair the bucket copy with the PlatformIO vendor
+            // URL. The prebuilt ESP libs shard pairs it with the upstream
+            // GitHub release instead, and carries additive per-chip slices.
+            if urls.iter().any(|u| u.contains("dl.registry.platformio.org")) {
+                assert!(urls[1].starts_with("https://dl.registry.platformio.org/download/"));
+            }
             let c = resolve_with(urls[1], shard.lookup(urls[1]));
             assert_eq!(c.urls[c.order[0]], urls[0]);
             assert!(c.mirror_sha256.is_some());
