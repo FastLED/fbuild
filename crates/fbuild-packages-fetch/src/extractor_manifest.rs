@@ -2,6 +2,7 @@
 use fbuild_core::{
     FbuildError, Result,
     content_manifest::{ManifestBuilder, portable_path},
+    path::NormalizedPath,
 };
 use std::{
     fs,
@@ -36,7 +37,7 @@ pub fn extract_with_manifest(archive: &Path, root: &Path) -> Result<ManifestBuil
 }
 
 /// Reject symlink ancestors before opening an output, including archive-created links.
-fn output_path(root: &Path, relative: &Path) -> io::Result<std::path::PathBuf> {
+fn output_path(root: &Path, relative: &Path) -> io::Result<NormalizedPath> {
     let name = portable_path(relative)?;
     if name.is_empty() {
         return Err(io::Error::other("empty archive file path"));
@@ -54,7 +55,7 @@ fn output_path(root: &Path, relative: &Path) -> io::Result<std::path::PathBuf> {
     if let Some(parent) = output.parent() {
         fs::create_dir_all(parent)?;
     }
-    Ok(output)
+    Ok(NormalizedPath::new(output))
 }
 
 fn untar(reader: impl Read, root: &Path) -> io::Result<ManifestBuilder> {

@@ -3,11 +3,12 @@ use crate::PackageInfo;
 use fbuild_core::content_manifest::{
     ContentId, ContentManifest, Entry, SCHEMA, SIDECAR, hash_tree,
 };
+use fbuild_core::path::NormalizedPath;
 use serde::{Deserialize, Serialize};
 use std::{
     collections::HashSet,
     fs,
-    path::{Path, PathBuf},
+    path::Path,
     sync::{Mutex, OnceLock},
 };
 
@@ -92,7 +93,7 @@ fn queue_backfill(root: &Path, expect: &PackageInfo) -> Option<std::thread::Join
     if !root.join(".install_complete").is_file() {
         return None;
     }
-    static PENDING: OnceLock<Mutex<HashSet<PathBuf>>> = OnceLock::new();
+    static PENDING: OnceLock<Mutex<HashSet<NormalizedPath>>> = OnceLock::new();
     let pending = PENDING.get_or_init(Default::default);
     let Ok(mut set) = pending.lock() else {
         return None;
@@ -101,7 +102,7 @@ fn queue_backfill(root: &Path, expect: &PackageInfo) -> Option<std::thread::Join
         return None;
     }
     drop(set);
-    let root = root.to_path_buf();
+    let root = NormalizedPath::new(root);
     let cleanup_root = root.clone();
     let info = expect.clone();
     match std::thread::Builder::new()
