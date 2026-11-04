@@ -179,3 +179,142 @@ async fn requested_symbol_analysis_is_attributed() {
         "a requested symbol pass must be timed even when the tool is missing"
     );
 }
+
+/// A linker with a cross-project cache whose link calls are counted, so a
+/// cache hit is proven by the absence of a second link rather than by timing.
+struct CachedLinker {
+    size_tool: PathBuf,
+    cache: PathBuf,
+    links: std::sync::atomic::AtomicUsize,
+}
+
+#[async_trait::async_trait]
+impl Linker for CachedLinker {
+    async fn archive(&self, _objects: &[PathBuf], _output: &Path) -> Result<()> {
+        Ok(())
+    }
+
+    async fn link(
+        &self,
+        _objects: &[PathBuf],
+        _archives: &[PathBuf],
+        output: &Path,
+        _extra: &LinkExtraArgs,
+    ) -> Result<PathBuf> {
+        self.links.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
+        let elf = output.join("firmware.elf");
+        std::fs::write(&elf, b"\x7fELF cached")?;
+        Ok(elf)
+    }
+
+    async fn convert_firmware(&self, _elf: &Path, output_dir: &Path) -> Result<PathBuf> {
+        let bin = output_dir.join("firmware.bin");
+        std::fs::write(&bin, b"cached image")?;
+        Ok(bin)
+    }
+
+    async fn report_size(&self, _elf: &Path) -> Result<SizeInfo> {
+        Ok(SizeInfo {
+            text: 1024,
+            data: 0,
+            bss: 0,
+            total_flash: 1024,
+            total_ram: 0,
+            max_flash: None,
+            max_ram: None,
+        })
+    }
+
+    fn size_tool_path(&self) -> &Path {
+        self.size_tool.as_path()
+    }
+
+    fn link_output_cache_dir(&self) -> Option<&Path> {
+        Some(self.cache.as_path())
+    }
+}
+
+fn object_in(dir: &Path, bytes: &[u8]) -> PathBuf {
+    let object = dir.join("sketch.o");
+    std::fs::write(&object, bytes).unwrap();
+    object
+}
+
+#[tokio::test]
+async fn an_identical_link_in_a_fresh_directory_reuses_the_cached_elf() {
+    let cache = tempfile::TempDir::new().unwrap();
+    let first = tempfile::TempDir::new().unwrap();
+    let linker = CachedLinker {
+        size_tool: first.path().join("size"),
+        cache: cache.path().to_path_buf(),
+        links: std::sync::atomic::AtomicUsize::new(0),
+    };
+    let extra = LinkExtraArgs::default();
+    let mut perf = PerfTimer::new("cache-first");
+    perf.activate();
+    linker
+        .link_all(
+            &[object_in(first.path(), b"same object")],
+            &[],
+            first.path(),
+            &extra,
+            false,
+            &mut perf,
+        )
+        .await
+        .unwrap();
+
+    let second = tempfile::TempDir::new().unwrap();
+    let mut perf2 = PerfTimer::new("cache-second");
+    perf2.activate();
+    let result = linker
+        .link_all(
+            &[object_in(second.path(), b"same object")],
+            &[],
+            second.path(),
+            &extra,
+            false,
+            &mut perf2,
+        )
+        .await
+        .unwrap();
+
+    assert_eq!(
+        linker.links.load(std::sync::atomic::Ordering::SeqCst),
+        1,
+        "identical inputs in a fresh directory must not relink"
+    );
+    assert!(
+        perf2.recorded("link-restore").is_some(),
+        "the restore must be attributed"
+    );
+    assert_eq!(
+        std::fs::read(second.path().join("firmware.elf")).unwrap(),
+        b"\x7fELF cached"
+    );
+    assert!(
+        result.bin_path.is_some(),
+        "the convert leg still has to run"
+    );
+
+    // Different object bytes are a different link and must not hit.
+    let third = tempfile::TempDir::new().unwrap();
+    let mut perf3 = PerfTimer::new("cache-third");
+    perf3.activate();
+    linker
+        .link_all(
+            &[object_in(third.path(), b"different object")],
+            &[],
+            third.path(),
+            &extra,
+            false,
+            &mut perf3,
+        )
+        .await
+        .unwrap();
+    assert_eq!(
+        linker.links.load(std::sync::atomic::Ordering::SeqCst),
+        2,
+        "changed inputs must relink"
+    );
+}
