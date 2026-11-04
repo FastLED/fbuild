@@ -27,6 +27,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 import subprocess
 import sys
 import tempfile
@@ -51,9 +52,23 @@ def digest(path: Path) -> str:
 
 
 def version_of(vendor_url: str) -> str:
-    """Mirror `libs.rs`: ``esp32-core-3.3.12-libs.tar.xz`` -> ``core-3.3.12``."""
+    """Derive a stable version token from the vendor filename."""
     name = vendor_url.rsplit("/", 1)[-1]
-    return name.removeprefix("esp32-").removesuffix("-libs.tar.xz")
+    # tar.xz: esp32-core-3.3.12-libs.tar.xz -> core-3.3.12
+    match = re.match(r"esp32-(core-.+|[\d.]+)-libs\.tar\.xz$", name)
+    if match:
+        return match.group(1)
+    # lib-builder ZIP: esp32-arduino-libs-idf-release_v5.3-083aad99-v2.zip -> 5.3
+    match = re.match(
+        r"esp32-arduino-libs-idf-release_v?([\d.]+)-[0-9a-f]+(?:-v\d+)?\.zip$", name
+    )
+    if match:
+        return match.group(1)
+    # arduino-esp32 ZIP: esp32-arduino-libs-3.0.4.zip -> 3.0.4
+    match = re.match(r"esp32-arduino-libs-([\d.]+)\.zip$", name)
+    if match:
+        return match.group(1)
+    raise ValueError(f"cannot derive a version from {name}")
 
 
 def slice_archive(source: Path, version: str, out_dir: Path) -> dict:
@@ -92,7 +107,12 @@ def upload(s3, path: Path, key: str) -> None:
 
 
 def publish(
-    source: str, vendor_url: str, shard_path: Path, index_path: Path, credentials: Path
+    source: str,
+    vendor_url: str,
+    shard_path: Path,
+    index_path: Path,
+    credentials: Path,
+    slices_dir: Path | None = None,
 ) -> dict:
     version = version_of(vendor_url)
     if not version:
@@ -105,26 +125,39 @@ def publish(
         aws_access_key_id=creds["access_key"],
         aws_secret_access_key=creds["secret_key"],
     )
-    with tempfile.TemporaryDirectory(prefix="esp-publish-") as tmp:
-        scratch = Path(tmp)
-        archive = downloaded(source, scratch)
-        sliced = slice_archive(archive, version, scratch / "slices")
-        whole_sha = digest(archive)
-        size_bytes = archive.stat().st_size
-        whole_key = (
-            f"{KEY_ROOT}/{version}/whole/{NAME}-{version}.{whole_sha[:16]}.tar.xz"
-        )
-        upload(s3, archive, whole_key)
-        chips = {}
+    if slices_dir is not None:
+        # Reuse slices produced by an earlier `slice_esp_libs.py` run.
+        sliced = json.loads((slices_dir / "slices.json").read_text())
+        whole_sha = sliced["source"]["sha256"]
+        size_bytes = sliced["source"]["size_bytes"]
+        whole_urls = [vendor_url]
         for record in sliced["slices"]:
             key = f"{KEY_ROOT}/{version}/{record['chip']}/{record['name']}"
-            upload(s3, scratch / "slices" / record["name"], key)
-            chips[record["chip"]] = {
-                "url": f"{PUBLIC_BASE}/{key}",
-                "sha256": record["sha256"],
-                "size": record["size_bytes"],
-                "format": "tar.zst",
-            }
+            upload(s3, slices_dir / record["name"], key)
+    else:
+        with tempfile.TemporaryDirectory(prefix="esp-publish-") as tmp:
+            scratch = Path(tmp)
+            archive = downloaded(source, scratch)
+            sliced = slice_archive(archive, version, scratch / "slices")
+            whole_sha = digest(archive)
+            size_bytes = archive.stat().st_size
+            whole_key = (
+                f"{KEY_ROOT}/{version}/whole/{NAME}-{version}.{whole_sha[:16]}.tar.xz"
+            )
+            upload(s3, archive, whole_key)
+            whole_urls = [f"{PUBLIC_BASE}/{whole_key}", vendor_url]
+            for record in sliced["slices"]:
+                key = f"{KEY_ROOT}/{version}/{record['chip']}/{record['name']}"
+                upload(s3, scratch / "slices" / record["name"], key)
+    chips = {}
+    for record in sliced["slices"]:
+        key = f"{KEY_ROOT}/{version}/{record['chip']}/{record['name']}"
+        chips[record["chip"]] = {
+            "url": f"{PUBLIC_BASE}/{key}",
+            "sha256": record["sha256"],
+            "size": record["size_bytes"],
+            "format": "tar.zst",
+        }
     component = {
         "id": f"{NAME}/{version}",
         "required": False,
@@ -132,7 +165,7 @@ def publish(
             "filename": vendor_url.rsplit("/", 1)[-1],
             "size_bytes": size_bytes,
             "sha256": whole_sha,
-            "urls": [f"{PUBLIC_BASE}/{whole_key}", vendor_url],
+            "urls": whole_urls,
             "slices": chips,
         },
     }
@@ -153,19 +186,38 @@ def publish(
         "kind_hint": "data",
     }
     index_path.write_text(json.dumps(index, indent=1) + "\n")
-    return {"version": version, "chips": len(chips), "whole_key": whole_key}
+    return {
+        "version": version,
+        "chips": len(chips),
+        "whole_urls": whole_urls,
+    }
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--source", required=True, help="local archive or https URL")
+    parser.add_argument(
+        "--source",
+        default="",
+        help="local archive or https URL (unused with --slices-dir)",
+    )
     parser.add_argument("--vendor-url", required=True, help="exact URL fbuild resolves")
     parser.add_argument("--shard", type=Path, required=True)
     parser.add_argument("--index", type=Path, required=True)
     parser.add_argument("--credentials", type=Path, required=True)
+    parser.add_argument(
+        "--slices-dir",
+        type=Path,
+        default=None,
+        help="reuse an existing slice_esp_libs.py output instead of slicing",
+    )
     args = parser.parse_args()
     result = publish(
-        args.source, args.vendor_url, args.shard, args.index, args.credentials
+        args.source,
+        args.vendor_url,
+        args.shard,
+        args.index,
+        args.credentials,
+        args.slices_dir,
     )
     print(json.dumps(result, indent=2))
 

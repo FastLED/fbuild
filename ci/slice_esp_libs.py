@@ -15,9 +15,11 @@ import argparse
 import hashlib
 import json
 import shutil
+import stat
 import tarfile
 import tempfile
 import urllib.request
+import zipfile
 from pathlib import Path, PurePosixPath
 
 import zstandard
@@ -38,30 +40,76 @@ def safe_name(name: str) -> str:
     return str(path)
 
 
-def spool(source: Path, scratch: Path) -> dict:
-    """Read the xz once; never extract paths supplied by the archive."""
-    members = {}
-    with tarfile.open(source, "r|xz") as archive:
-        for member in archive:
-            name = safe_name(member.name)
-            if name in members:
-                raise ValueError(f"duplicate archive path: {name}")
-            if not (member.isfile() or member.isdir() or member.issym()):
-                raise ValueError(f"unsupported archive member: {name}")
-            if member.issym():
-                target = PurePosixPath(safe_name(member.linkname))
-                if target.is_absolute() or ".." in target.parts:
-                    raise ValueError(f"unsafe symlink: {name}")
-            payload = scratch / str(len(members))
-            if member.isfile():
-                with archive.extractfile(member) as src, payload.open("wb") as dst:
-                    shutil.copyfileobj(src, dst)
-            members[name] = (member, payload)
+def _record(members: dict, name: str, member, payload: Path) -> None:
+    if name in members:
+        raise ValueError(f"duplicate archive path: {name}")
+    if not (member.isfile() or member.isdir() or member.issym()):
+        raise ValueError(f"unsupported archive member: {name}")
+    if member.issym():
+        target = PurePosixPath(safe_name(member.linkname))
+        if target.is_absolute() or ".." in target.parts:
+            raise ValueError(f"unsafe symlink: {name}")
+    members[name] = (member, payload)
+
+
+def _check_ancestors(members: dict) -> None:
     for name in members:
         for parent in PurePosixPath(name).parents:
             if str(parent) in members and members[str(parent)][0].issym():
                 raise ValueError(f"symlink ancestor: {name}")
+
+
+def spool_tar(source: Path, scratch: Path) -> dict:
+    """Read the xz once; never extract paths supplied by the archive."""
+    members: dict = {}
+    with tarfile.open(source, "r|xz") as archive:
+        for member in archive:
+            name = safe_name(member.name)
+            payload = scratch / str(len(members))
+            if member.isfile():
+                with archive.extractfile(member) as src, payload.open("wb") as dst:
+                    shutil.copyfileobj(src, dst)
+            _record(members, name, member, payload)
+    _check_ancestors(members)
     return members
+
+
+def spool_zip(source: Path, scratch: Path) -> dict:
+    """Read a ZIP once; normalize members to ``TarInfo`` for the slicer."""
+    members: dict = {}
+    with zipfile.ZipFile(source) as archive:
+        for info in archive.infolist():
+            name = safe_name(info.filename)
+            mode = (info.external_attr >> 16) & 0xFFFF
+            member = tarfile.TarInfo(name)
+            member.mode = (mode & 0o777) or 0o644
+            payload = scratch / str(len(members))
+            if info.is_dir():
+                member.type = tarfile.DIRTYPE
+                member.size = 0
+            elif stat.S_ISLNK(mode):
+                member.type = tarfile.SYMTYPE
+                member.linkname = archive.read(info).decode()
+                member.size = 0
+            else:
+                member.type = tarfile.REGTYPE
+                member.size = info.file_size
+                with archive.open(info) as src, payload.open("wb") as dst:
+                    shutil.copyfileobj(src, dst)
+            _record(members, name, member, payload)
+    _check_ancestors(members)
+    return members
+
+
+def spool(source: Path, scratch: Path) -> dict:
+    """Dispatch on magic bytes: ``PK`` is a ZIP, ``\\xfd7zXZ`` an xz tarball."""
+    with source.open("rb") as handle:
+        magic = handle.read(4)
+    if magic[:2] == b"PK":
+        return spool_zip(source, scratch)
+    if magic[:4] == b"\xfd7zXZ":
+        return spool_tar(source, scratch)
+    raise ValueError(f"unsupported archive format: {magic!r}")
 
 
 def write_slice(path: Path, names: list[str], members: dict, level: int) -> dict:
@@ -117,13 +165,14 @@ def slice_archive(
     if not 1 <= level <= 19:
         raise ValueError("compression level must be between 1 and 19")
     if not version or any(
-        c not in "0123456789abcdefghijklmnopqrstuvwxyz.-" for c in version
+        c not in "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.-"
+        for c in version
     ):
         raise ValueError("invalid version")
     with tempfile.TemporaryDirectory(prefix="esp-slices-") as tmp:
         scratch = Path(tmp)
         if source.startswith(("https://", "http://")):
-            archive = scratch / "source.tar.xz"
+            archive = scratch / PurePosixPath(source.split("?")[0]).name
             with urllib.request.urlopen(source) as src, archive.open("wb") as dst:
                 shutil.copyfileobj(src, dst)
         else:
