@@ -125,30 +125,39 @@ def publish(
         aws_access_key_id=creds["access_key"],
         aws_secret_access_key=creds["secret_key"],
     )
-    if slices_dir is not None:
-        # Reuse slices produced by an earlier `slice_esp_libs.py` run.
-        sliced = json.loads((slices_dir / "slices.json").read_text())
-        whole_sha = sliced["source"]["sha256"]
-        size_bytes = sliced["source"]["size_bytes"]
-        whole_urls = [vendor_url]
-        for record in sliced["slices"]:
-            key = f"{KEY_ROOT}/{version}/{record['chip']}/{record['name']}"
-            upload(s3, slices_dir / record["name"], key)
-    else:
-        with tempfile.TemporaryDirectory(prefix="esp-publish-") as tmp:
-            scratch = Path(tmp)
+    # Preserve the vendor file's suffix so the mirrored whole bundle is not
+    # mislabelled (ZIP releases are not tar.xz).
+    suffix = Path(vendor_url.rsplit("/", 1)[-1]).suffix
+    if Path(vendor_url).suffix == ".xz":
+        suffix = ".tar.xz"
+    # Mirror the whole bundle in both paths: the published contract requires
+    # the bucket copy first so whole-bundle fallback never hits the vendor.
+    # With --slices-dir the whole bundle is not on disk, so fetch it from the
+    # vendor URL exactly once and upload it.
+    with tempfile.TemporaryDirectory(prefix="esp-publish-") as tmp:
+        scratch = Path(tmp)
+        if slices_dir is not None:
+            # Reuse slices produced by an earlier `slice_esp_libs.py` run.
+            sliced = json.loads((slices_dir / "slices.json").read_text())
+            whole_sha = sliced["source"]["sha256"]
+            size_bytes = sliced["source"]["size_bytes"]
+            for record in sliced["slices"]:
+                key = f"{KEY_ROOT}/{version}/{record['chip']}/{record['name']}"
+                upload(s3, slices_dir / record["name"], key)
+            archive = downloaded(source or vendor_url, scratch)
+        else:
             archive = downloaded(source, scratch)
             sliced = slice_archive(archive, version, scratch / "slices")
             whole_sha = digest(archive)
             size_bytes = archive.stat().st_size
-            whole_key = (
-                f"{KEY_ROOT}/{version}/whole/{NAME}-{version}.{whole_sha[:16]}.tar.xz"
-            )
-            upload(s3, archive, whole_key)
-            whole_urls = [f"{PUBLIC_BASE}/{whole_key}", vendor_url]
             for record in sliced["slices"]:
                 key = f"{KEY_ROOT}/{version}/{record['chip']}/{record['name']}"
                 upload(s3, scratch / "slices" / record["name"], key)
+        whole_key = (
+            f"{KEY_ROOT}/{version}/whole/{NAME}-{version}.{whole_sha[:16]}{suffix}"
+        )
+        upload(s3, archive, whole_key)
+        whole_urls = [f"{PUBLIC_BASE}/{whole_key}", vendor_url]
     chips = {}
     for record in sliced["slices"]:
         key = f"{KEY_ROOT}/{version}/{record['chip']}/{record['name']}"

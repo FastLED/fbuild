@@ -39,6 +39,7 @@ For a full FAQ-style index of every doc in this repo (human + LLM entry point), 
 - **[sdkconfig.md](sdkconfig.md)** - ESP `sdkconfig` user-override design (5-layer precedence chain, `sdkconfig.fragment`, `fbuild.toml` forward-compat — *design proposal, not yet implemented*)
 - **[update-check.md](update-check.md)** - Passive update check + install-source classification + opt-out flags (FastLED/fbuild#626 Phase 1)
 - **[sync.md](sync.md)** - `fbuild sync` command + `platformio.lock` schema + lib_deps source classification (FastLED/fbuild#618 Phase 1)
+- **[design/](design/README.md)** - Per-feature decision records (artifact serving / prebuilt library slices, FastLED/fbuild#1890)
 - **[DESIGN_DECISIONS.md](DESIGN_DECISIONS.md)** - ADR-style decisions with rationale
 - **[ROADMAP.md](ROADMAP.md)** - Implementation phases
 - **[ARCHITECTURE.md](ARCHITECTURE.md)** - Index of all architecture documents
