@@ -1710,7 +1710,7 @@ fn write_history(
 #[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 fn render_svg(metadata: &Metadata, results: &[ToolResult]) -> String {
     let width = 960.0;
-    let height = 700.0;
+    let height = 748.0;
     let bar_x = 190.0;
     let bar_width = 480.0;
     let board_max_ms = |board: &str| {
@@ -1721,7 +1721,7 @@ fn render_svg(metadata: &Metadata, results: &[ToolResult]) -> String {
             .fold(0.0_f64, f64::max)
             .max(1.0)
     };
-    let mut rows = String::new();
+    let mut rows = [String::new(), String::new()];
     let stack_note = |board: &str| match board_stack_status(results, board) {
         StackStatus::Matched => " | fbuild/PIO stack matched",
         StackStatus::Different => " | fbuild/PIO stack differs; ratio excluded",
@@ -1734,12 +1734,13 @@ fn render_svg(metadata: &Metadata, results: &[ToolResult]) -> String {
             _ => ToolKind::Fbuild,
         };
         let style = kind.style();
-        let board_gap = if result.board == "esp32s3" { 42.0 } else { 0.0 };
-        let y = 194.0 + index as f64 * 68.0 + board_gap;
+        let board_index = usize::from(result.board == "esp32s3");
+        let board_gap = if board_index == 1 { 66.0 } else { 0.0 };
+        let y = 218.0 + index as f64 * 68.0 + board_gap;
         let max_ms = board_max_ms(&result.board);
         let cold_width = (result.cold_ms / max_ms * bar_width).max(3.0);
         let warm_width = (result.warm_ms / max_ms * bar_width).max(3.0);
-        rows.push_str(&format!(
+        rows[board_index].push_str(&format!(
             r##"  <g>
     <text x="24" y="{label_y:.1}" class="tool" fill="{warm}">{label}</text>
     <rect x="{bar_x:.1}" y="{cold_y:.1}" width="{bar_width:.1}" height="28" rx="4" fill="#21262d" />
@@ -1771,14 +1772,7 @@ fn render_svg(metadata: &Metadata, results: &[ToolResult]) -> String {
         ));
     }
     let short_sha = metadata.git_sha.chars().take(12).collect::<String>();
-    let floor_line = svg_floor_line(metadata, results)
-        .map(|text| {
-            format!(
-                "  <text x=\"692\" y=\"95\" class=\"meta\">{}</text>\n",
-                xml_escape(&text)
-            )
-        })
-        .unwrap_or_default();
+    let floor_line = svg_floor_line(metadata, results);
     format!(
         r##"<svg xmlns="http://www.w3.org/2000/svg" width="{width:.0}" height="{height:.0}" viewBox="0 0 {width:.0} {height:.0}" role="img" aria-labelledby="title description">
   <title id="title">Arduino Uno and ESP32-S3 Blink build benchmark</title>
@@ -1788,6 +1782,7 @@ fn render_svg(metadata: &Metadata, results: &[ToolResult]) -> String {
     .heading {{ font-size: 30px; font-weight: 700; fill: #f0f6fc; }}
     .meta {{ font-size: 14px; fill: #8b949e; }}
     .legend {{ font-size: 14px; font-weight: 600; fill: #c9d1d9; }}
+    .board {{ font-size: 20px; font-weight: 700; fill: #f0f6fc; }}
     .tool {{ font-size: 18px; font-weight: 700; }}
     .value {{ font-size: 14px; font-weight: 600; fill: #f0f6fc; }}
     .speed {{ font-size: 13px; fill: #8b949e; }}
@@ -1800,10 +1795,16 @@ fn render_svg(metadata: &Metadata, results: &[ToolResult]) -> String {
 {floor_line}  <rect x="24" y="128" width="76" height="24" rx="4" fill="#5b1f1c" />
   <rect x="24" y="134" width="34" height="12" rx="3" fill="#f85149" />
   <text x="112" y="146" class="legend">cold (back) + warm (front overlay)</text>
-  <text x="24" y="182" class="legend">Arduino Uno | scale: slowest median = {uno_max_ms:.1} ms{uno_stack_note}</text>
-  <text x="24" y="428" class="legend">ESP32-S3 | scale: slowest median = {esp32s3_max_ms:.1} ms{esp32_stack_note}</text>
-{rows}  <line x1="24" y1="672" x2="936" y2="672" stroke="#30363d" stroke-width="2" />
-  <text x="24" y="692" class="meta">Machine data: manifest.json | latest.json | history.jsonl</text>
+  <g role="group" aria-labelledby="uno-title">
+    <text id="uno-title" x="24" y="182" class="board">Arduino Uno</text>
+    <text x="24" y="204" class="legend">Scale: slowest median = {uno_max_ms:.1} ms{uno_stack_note}</text>
+{uno_rows}  </g>
+  <g role="group" aria-labelledby="esp32s3-title">
+    <text id="esp32s3-title" x="24" y="452" class="board">ESP32-S3</text>
+    <text x="24" y="474" class="legend">Scale: slowest median = {esp32s3_max_ms:.1} ms{esp32_stack_note}</text>
+{esp32_rows}  </g>
+  <line x1="24" y1="720" x2="936" y2="720" stroke="#30363d" stroke-width="2" />
+  <text x="24" y="740" class="meta">Machine data: manifest.json | latest.json | history.jsonl</text>
 </svg>
 "##,
         width = width,
@@ -1815,13 +1816,13 @@ fn render_svg(metadata: &Metadata, results: &[ToolResult]) -> String {
         esp32s3_max_ms = board_max_ms("esp32s3"),
         uno_stack_note = stack_note("uno"),
         esp32_stack_note = stack_note("esp32s3"),
-        rows = rows,
-        floor_line = floor_line,
+        uno_rows = rows[0],
+        esp32_rows = rows[1],
     )
 }
 
-/// `raw compiler floor: X ms | fbuild overhead: Y ms | fbuild/PIO cold: Z`, omitting null parts.
-fn svg_floor_line(metadata: &Metadata, results: &[ToolResult]) -> Option<String> {
+/// Render the SVG metadata line, omitting unavailable floor and overhead values.
+fn svg_floor_line(metadata: &Metadata, results: &[ToolResult]) -> String {
     let parts = [
         selected_raw_baseline_ms(metadata, results)
             .map(|ms| format!("raw compiler floor: {ms:.1} ms")),
@@ -1831,7 +1832,14 @@ fn svg_floor_line(metadata: &Metadata, results: &[ToolResult]) -> Option<String>
     .into_iter()
     .flatten()
     .collect::<Vec<_>>();
-    (!parts.is_empty()).then(|| parts.join(" | "))
+    if parts.is_empty() {
+        String::new()
+    } else {
+        format!(
+            "  <text x=\"692\" y=\"95\" class=\"meta\">{}</text>\n",
+            xml_escape(&parts.join(" | "))
+        )
+    }
 }
 
 #[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
