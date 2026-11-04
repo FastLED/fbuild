@@ -104,10 +104,10 @@ def spool_zip(source: Path, scratch: Path) -> dict:
 def spool(source: Path, scratch: Path) -> dict:
     """Dispatch on magic bytes: ``PK`` is a ZIP, ``\\xfd7zXZ`` an xz tarball."""
     with source.open("rb") as handle:
-        magic = handle.read(4)
+        magic = handle.read(6)
     if magic[:2] == b"PK":
         return spool_zip(source, scratch)
-    if magic[:4] == b"\xfd7zXZ":
+    if magic[:6] == b"\xfd7zXZ\x00":
         return spool_tar(source, scratch)
     raise ValueError(f"unsupported archive format: {magic!r}")
 
