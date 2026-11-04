@@ -50,6 +50,34 @@ pub(crate) async fn resolve_shrink(
         // JSON then documents that shrink was considered and not applied.
         return printf_thin::record_for(mode, false);
     }
+    apply_printf_shrink(
+        mode,
+        compiler,
+        caller_path,
+        toolchain_name,
+        is_xtensa,
+        overlay_link_flags,
+        build_log,
+    )
+    .await
+}
+
+/// The `--shrink=printf` half of [`resolve_shrink`]: the architecture gate,
+/// the nano.specs probe, the link flags and the two-line notice.
+///
+/// Separate function so each half stays under the workspace
+/// `cognitive_complexity` gate; the split follows the two questions being
+/// answered ("is this mode for this platform?" and "can this toolchain
+/// actually shrink, and what does the user need to know?").
+async fn apply_printf_shrink(
+    mode: ShrinkMode,
+    compiler: &Path,
+    caller_path: Option<&str>,
+    toolchain_name: &str,
+    is_xtensa: bool,
+    overlay_link_flags: &mut Vec<String>,
+    build_log: &mut BuildLog,
+) -> ShrinkRecord {
     if !is_xtensa {
         // Measured, not assumed: on ESP32-C6 (riscv32-esp-elf 14.2.0,
         // ESP-IDF 5.5.5, arduino 3.3.12) linking newlib-nano pulled
