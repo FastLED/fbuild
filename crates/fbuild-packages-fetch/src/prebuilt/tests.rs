@@ -199,3 +199,36 @@ fn canonical_json_sorts_nested_objects_and_preserves_array_order() {
         br#"{"a":{"a":3,"z":2},"z":[2,1]}"#
     );
 }
+
+#[test]
+fn archive_alias_cannot_overwrite_a_verified_member() {
+    let temp = tempfile::tempdir().unwrap();
+    let inputs = serde_json::json!({"abi_version":1});
+    let fp = super::sha256(&super::canonical_json(&inputs).unwrap());
+    let manifest = serde_json::to_vec(&serde_json::json!({
+        "fp":fp,"abi_version":1,"inputs":inputs,"builder_version":"test",
+        "fbuild_version":"test","source":{},
+        "files":{"obj/core.o":super::sha256(b"first"),"obj/./core.o":super::sha256(b"other")}
+    }))
+    .unwrap();
+    let mut tar = tar::Builder::new(Vec::new());
+    for (name, bytes) in [
+        ("fbuild-prebuilt.json", manifest.as_slice()),
+        ("obj/core.o", b"first".as_slice()),
+        ("obj/./core.o", b"other".as_slice()),
+    ] {
+        let mut header = tar::Header::new_gnu();
+        header.set_size(bytes.len() as u64);
+        header.set_mode(0o644);
+        header.as_mut_bytes()[..100].fill(0);
+        header.as_mut_bytes()[..name.len()].copy_from_slice(name.as_bytes());
+        header.set_cksum();
+        tar.append(&header, bytes).unwrap();
+    }
+    let bytes = zstd::encode_all(tar.into_inner().unwrap().as_slice(), 1).unwrap();
+    assert!(super::archive::extract(bytes.as_slice(), temp.path(), &fp, None).is_err());
+    assert_eq!(
+        std::fs::read(temp.path().join("obj/core.o")).unwrap(),
+        b"first"
+    );
+}

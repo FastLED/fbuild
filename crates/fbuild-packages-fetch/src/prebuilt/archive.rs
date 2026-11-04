@@ -70,8 +70,13 @@ pub fn extract(
         let target = stage.join(path);
         std::fs::create_dir_all(target.parent().ok_or("invalid parent")?)
             .map_err(|e| e.to_string())?;
-        // The private stage starts empty; only checked regular members create paths.
-        // Duplicate names are rejected above, so member creation needs no lock primitive.
+        // The stage is private. Check filesystem aliases as well as raw tar names
+        // before creating a member, without using a lock-file primitive.
+        match std::fs::symlink_metadata(&target) {
+            Err(error) if error.kind() == std::io::ErrorKind::NotFound => {}
+            Ok(_) => return Err("member destination already exists".into()),
+            Err(error) => return Err(error.to_string()),
+        }
         let mut file = std::fs::File::create(target).map_err(|e| e.to_string())?;
         use sha2::{Digest, Sha256};
         let mut digest = Sha256::new();
