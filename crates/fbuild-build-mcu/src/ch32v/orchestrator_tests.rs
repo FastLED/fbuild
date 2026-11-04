@@ -124,6 +124,7 @@ async fn pinned_github_platform_builds_ch32v003_with_gcc8() {
     )
     .resolve();
     let params = BuildParams {
+        prebuilt: None,
         project_dir: project.path().to_path_buf(),
         shrink: Default::default(),
         env_name: "ch32v003".into(),

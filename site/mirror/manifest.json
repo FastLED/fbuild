@@ -64322,6 +64322,14 @@
     "size_bytes": 600187
    },
    "kind_hint": "data"
+  },
+  "prebuilt-arduino-esp32": {
+   "descriptor": {
+    "url": "shards/prebuilt-arduino-esp32.json",
+    "sha256": "02560d95c3c565e2d7f66e9b1f351d81f75d577eb555e5e171aebc4505d39adb",
+    "size_bytes": 2585
+   },
+   "kind_hint": "data"
   }
  }
 }

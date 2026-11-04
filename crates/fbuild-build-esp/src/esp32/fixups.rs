@@ -200,6 +200,7 @@ mod tests {
             url: String::new(),
             install_path: Default::default(),
             checksum: None,
+            content_id: None,
             installed_bytes: None,
         }
     }

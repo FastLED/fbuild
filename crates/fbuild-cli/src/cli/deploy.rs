@@ -198,6 +198,7 @@ pub async fn run_deploy(
 
     let (caller_pid, caller_cwd) = daemon_client::caller_info();
     let req = DeployRequest {
+        prebuilt: crate::prebuilt::requested(),
         build_dir_override: daemon_client::capture_build_root(&project_dir),
         project_dir,
         environment,
@@ -470,6 +471,7 @@ pub async fn run_test_emu(
 
     let (caller_pid, caller_cwd) = daemon_client::caller_info();
     let req = TestEmuRequest {
+        prebuilt: crate::prebuilt::requested(),
         build_dir_override: daemon_client::capture_build_root(&project_dir),
         project_dir,
         environment,

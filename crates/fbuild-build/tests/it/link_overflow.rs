@@ -30,6 +30,7 @@ async fn esp32s3_dram_overflow_still_fails_with_region_summary() {
     std::fs::write(root.join("src/main.cpp"),
         "#include <Arduino.h>\nvolatile unsigned char oversized[400 * 1024];\nvoid setup() { oversized[0] = 1; }\nvoid loop() { oversized[sizeof(oversized) - 1] = oversized[0]; }\n").unwrap();
     let params = BuildParams {
+        prebuilt: None,
         project_dir: root.into(),
         shrink: Default::default(),
         env_name: "overflow".into(),

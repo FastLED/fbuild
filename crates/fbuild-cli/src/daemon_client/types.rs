@@ -4,6 +4,9 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize)]
 pub struct BuildRequest {
+    /// Experimental prebuilt selection resolved by this caller.
+    #[serde(default)]
+    pub prebuilt: bool,
     /// Selected by this invocation so a persistent daemon cannot reuse an old override.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub build_dir_override: Option<String>,
@@ -84,6 +87,9 @@ pub struct InstallDepsRequest {
 
 #[derive(Clone, Debug, Serialize)]
 pub struct DeployRequest {
+    /// Experimental prebuilt selection resolved by this caller.
+    #[serde(default)]
+    pub prebuilt: bool,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub build_dir_override: Option<String>,
     pub project_dir: String,
@@ -170,6 +176,9 @@ fn is_default_usb_recovery_policy(policy: &fbuild_core::usb::UsbRecoveryPolicy) 
 
 #[derive(Debug, Serialize)]
 pub struct TestEmuRequest {
+    /// Experimental prebuilt selection resolved by this caller.
+    #[serde(default)]
+    pub prebuilt: bool,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub build_dir_override: Option<String>,
     pub project_dir: String,

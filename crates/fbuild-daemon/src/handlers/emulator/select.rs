@@ -305,6 +305,7 @@ pub async fn test_emu(
         .with_flatten_env(req.flatten_env)
         .resolve();
         let params = fbuild_build::BuildParams {
+            prebuilt: req.prebuilt.then(|| ctx.prebuilt.client()),
             project_dir: project_dir.clone(),
             shrink: Default::default(),
             env_name: env_name.clone(),
@@ -344,8 +345,11 @@ pub async fn test_emu(
             std::time::Duration::from_secs(60 * 60);
         match fbuild_build::get_orchestrator(p) {
             Ok(orchestrator) => {
-                match tokio::time::timeout(EMU_BUILD_HARD_DEADLINE, orchestrator.build(&params))
-                    .await
+                match tokio::time::timeout(
+                    EMU_BUILD_HARD_DEADLINE,
+                    fbuild_build::prebuilt::build_with_retry(orchestrator.as_ref(), params),
+                )
+                .await
                 {
                     Ok(r) => r,
                     Err(_) => Err(fbuild_core::FbuildError::Other(format!(

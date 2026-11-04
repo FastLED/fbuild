@@ -21,6 +21,9 @@ soldr cargo bench -p fbuild-header-scan  --bench scan_throughput
 
 - [`blink/`](blink/README.md) — shared Arduino Uno Blink fixture used by the
   nightly Arduino CLI vs PlatformIO vs fbuild whole-build benchmark.
+- [`prebuilt/`](prebuilt/README.md) — first-compile effect of prebuilt framework
+  artefacts: framework TUs compiled (source vs hit) and wall clock per pilot
+  board, with the correctness gate (`firmware.bin` byte equality).
 - [`fastled-examples/`](fastled-examples/README.md) — real-FastLED
   warm-cache library-selection matrix (`FastLED/fbuild#205` AC#5, P-01).
   Discovers examples under `$FASTLED_DIR` (default `~/dev/fastled`),
@@ -37,3 +40,10 @@ and which CI gate (if any) it feeds.
 The nightly whole-build comparison is published at
 <https://fastled.github.io/fbuild/>. Its machine-readable discovery document
 is `manifest.json` on the one-commit `benchmark-stats` branch.
+
+`first_compile ESP32_GCC ESP32_OBJCOPY` runs five isolated samples per mode
+(`source-cold`, `prebuilt-cold`, `prebuilt-warm`) against a local HTTP fixture.
+It compiles and links real Xtensa objects, reports median wall times and archive
+bytes, and requires byte-identical firmware and ELF files. This fixture checks
+the serving mechanics; Blink and FastLED example parity remain the production
+pilot acceptance gate.

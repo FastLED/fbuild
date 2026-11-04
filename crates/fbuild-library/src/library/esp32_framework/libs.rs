@@ -167,6 +167,38 @@ fn patch_mcu_compatibility(mcu_dir: &Path, mcu: &str) -> fbuild_core::Result<()>
 }
 
 impl Esp32Framework {
+    /// The SDK and skeleton are merged after the core archive is manifested.
+    /// Finalize the identity at this provisioning boundary, including old caches.
+    fn finalize_sdk_content_manifest(&self) -> fbuild_core::Result<()> {
+        use fbuild_core::content_manifest::{SIDECAR, hash_tree};
+        use fbuild_packages_fetch::content_manifest::{load_verified_content_id, write_manifest};
+
+        // Do not call get_info here: a missing sidecar would start a second,
+        // asynchronous writer while this provisioning operation finalizes it.
+        let info = crate::PackageInfo {
+            name: self.base.name.clone(),
+            version: self.base.version.clone(),
+            url: self.base.url.clone(),
+            install_path: self.base.install_path(),
+            checksum: self.base.checksum.clone(),
+            content_id: None,
+            installed_bytes: None,
+        };
+        if info.install_path.join(SIDECAR).is_file()
+            && load_verified_content_id(&info.install_path, &info).is_some()
+        {
+            return Ok(());
+        }
+        match hash_tree(&info.install_path) {
+            Ok(manifest) => write_manifest(&info.install_path, &info, manifest)?,
+            Err(error) if error.kind() == std::io::ErrorKind::Unsupported => {
+                tracing::info!(%error, "prebuilt: skipped: SDK tree identity unavailable");
+            }
+            Err(error) => return Err(error.into()),
+        }
+        Ok(())
+    }
+
     /// Whether the per-MCU SDK is already complete under the framework's
     /// `tools/` dir — the test [`Self::ensure_libs`] and
     /// [`Self::ensure_mcu_libs`] use to skip work. Offline, so `fbuild install
@@ -189,7 +221,7 @@ impl Esp32Framework {
         for mcu_dir in mcu_sdk_dir_candidates(&tools_dir, mcu) {
             if mcu_sdk_complete(&mcu_dir) {
                 patch_mcu_compatibility(&mcu_dir, mcu)?;
-                return Ok(());
+                return self.finalize_sdk_content_manifest();
             }
         }
 
@@ -248,7 +280,7 @@ impl Esp32Framework {
         }
 
         tracing::info!("ESP32 SDK libs installed");
-        Ok(())
+        self.finalize_sdk_content_manifest()
     }
 
     /// Ensure MCU-specific skeleton libs are downloaded and merged into the framework's `tools/` dir.
@@ -268,7 +300,7 @@ impl Esp32Framework {
         for mcu_dir in mcu_sdk_dir_candidates(&tools_dir, mcu) {
             if mcu_sdk_complete(&mcu_dir) {
                 patch_mcu_compatibility(&mcu_dir, mcu)?;
-                return Ok(());
+                return self.finalize_sdk_content_manifest();
             }
         }
 
@@ -301,7 +333,7 @@ impl Esp32Framework {
             if mcu_sdk_complete(&mcu_dir) || merged_skeleton {
                 patch_mcu_compatibility(&mcu_dir, mcu)?;
                 tracing::info!("{} skeleton libs installed", mcu);
-                return Ok(());
+                return self.finalize_sdk_content_manifest();
             }
         }
 
@@ -336,6 +368,55 @@ mod tests {
         );
         write(&mcu_dir.join("flags").join("includes"), "");
         write(&mcu_dir.join("lib").join("libfreertos.a"), "");
+    }
+
+    #[tokio::test]
+    async fn sdk_completion_refreshes_core_only_content_manifest() {
+        use crate::Package;
+        use fbuild_core::content_manifest::hash_tree;
+        use fbuild_packages_fetch::content_manifest::{load_verified_content_id, write_manifest};
+
+        let temp = tempfile::tempdir().unwrap();
+        if fbuild_core::platform::fs::executable_bit(&std::fs::metadata(temp.path()).unwrap())
+            .is_none()
+        {
+            return;
+        }
+        for (skeleton, sidecar) in [(false, true), (true, true), (false, false), (true, false)] {
+            let cache = temp.path().join(format!("sdk-{skeleton}-{sidecar}"));
+            let framework = Esp32Framework::with_cache_root(temp.path(), &cache, "esp32c3");
+            let info = framework.get_info();
+            write(&info.install_path.join(".install_complete"), "");
+            write(&info.install_path.join("cores/esp32/Arduino.h"), "// core");
+            let original = hash_tree(&info.install_path).unwrap();
+            let original_id = original.content_id();
+            if sidecar {
+                write_manifest(&info.install_path, &info, original).unwrap();
+            }
+            // The split SDK is installed AFTER the core archive was manifested.
+            seed_complete_mcu_sdk(&info.install_path.join("tools/esp32-arduino-libs/esp32c3"));
+            if sidecar {
+                assert!(load_verified_content_id(&info.install_path, &info).is_none());
+            }
+            if skeleton {
+                framework
+                    .ensure_mcu_libs("https://example.invalid/sdk.zip", "esp32c3")
+                    .await
+                    .unwrap();
+            } else {
+                framework
+                    .ensure_libs("https://example.invalid/sdk.tar.xz", "esp32c3")
+                    .await
+                    .unwrap();
+            }
+            let complete = load_verified_content_id(&info.install_path, &info)
+                .expect("completed SDK must be included in the verified framework identity");
+            assert_ne!(complete, original_id);
+            assert_eq!(
+                complete,
+                hash_tree(&info.install_path).unwrap().content_id()
+            );
+        }
     }
 
     /// ESP32-S3 is the one MCU whose `esp32-arduino-libs` tree ships

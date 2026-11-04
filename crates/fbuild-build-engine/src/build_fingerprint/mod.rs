@@ -137,10 +137,16 @@ pub fn stable_hash_json<T: Serialize>(value: &T) -> Result<String> {
 
 pub fn hash_files(paths: &[PathBuf]) -> Result<String> {
     let root = common_parent_for_hash(paths);
-    let mut sorted: Vec<(String, &PathBuf)> = paths
-        .iter()
-        .map(|path| (path_for_hash(root.as_deref(), path), path))
-        .collect();
+    hash_named_files(
+        paths
+            .iter()
+            .map(|path| (path_for_hash(root.as_deref(), path), path.as_path())),
+    )
+}
+
+/// Hash caller-named files with the same byte contract as hash_files.
+pub fn hash_named_files<'a>(paths: impl IntoIterator<Item = (String, &'a Path)>) -> Result<String> {
+    let mut sorted: Vec<_> = paths.into_iter().collect();
     sorted.sort_by(|a, b| a.0.cmp(&b.0).then_with(|| a.1.cmp(b.1)));
     let mut hasher = Sha256::new();
     for (path_for_hash, path) in sorted {

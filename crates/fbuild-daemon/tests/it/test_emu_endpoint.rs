@@ -151,6 +151,7 @@ async fn test_emu_registers_operation_guard() {
     );
 
     let req = TestEmuRequest {
+        prebuilt: false,
         project_dir: "C:/definitely/does/not/exist/at/this/path".to_string(),
         environment: Some("uno".to_string()),
         verbose: false,

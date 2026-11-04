@@ -7,15 +7,29 @@
 
 pub mod cache;
 pub mod cache_archive;
+#[cfg(test)]
+mod content_install_tests;
+pub mod content_manifest;
 pub mod disk_cache;
 pub mod downloader;
 pub mod extractor;
+mod extractor_manifest;
+pub use fbuild_core::content_manifest::ContentId;
 pub mod http;
 pub mod platformio_registry;
 #[doc(hidden)]
 #[path = "platformio_registry_fixture.rs"]
 pub mod platformio_registry_fixture;
 pub mod platformio_repository;
+pub mod prebuilt;
+
+/// Builds never receive an error from the optional prebuilt path.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum PrebuiltOutcome {
+    Hit(PathBuf),
+    Miss(prebuilt::MissReason),
+}
+
 pub mod submodules;
 
 mod install_lock;
@@ -160,6 +174,7 @@ pub struct PackageInfo {
     pub install_path: PathBuf,
     /// Pinned sha256 of the download archive, when the package has one.
     pub checksum: Option<String>,
+    pub content_id: Option<ContentId>,
     /// Installed size recorded in the package cache index, when it has a row
     /// for this package (FastLED/fbuild#1433).
     pub installed_bytes: Option<u64>,
@@ -472,7 +487,7 @@ impl PackageBase {
             None::<String>,
         ));
         tracing::info!("extracting {} v{}", self.name, self.version);
-        extractor::extract(&archive_path, &staging_path)?;
+        let manifest_builder = extractor::extract_with_manifest(&archive_path, &staging_path)?;
 
         // Remove the archive after extraction
         let _ = std::fs::remove_file(&archive_path);
@@ -488,9 +503,7 @@ impl PackageBase {
         validate(&staging_path)?;
 
         // Atomic commit: rename staging → final
-        fbuild_core::platform::fs::replace_file(&staging_path, &install_path).map_err(|e| {
-            fbuild_core::FbuildError::PackageError(format!("failed to commit installation: {}", e))
-        })?;
+        self.commit_install(&staging_path, &install_path, manifest_builder)?;
 
         // Write sentinel so GC reconciliation recognizes this as a complete install.
         // Best-effort: the install succeeded (rename was atomic), so a sentinel
@@ -515,15 +528,43 @@ impl PackageBase {
         Ok(install_path)
     }
 
+    /// Commit the content anchor and installation together, after validation.
+    fn commit_install(
+        &self,
+        staging: &Path,
+        destination: &Path,
+        builder: fbuild_core::content_manifest::ManifestBuilder,
+    ) -> fbuild_core::Result<()> {
+        match builder.finish(staging) {
+            Ok(manifest) => content_manifest::write_manifest(staging, &self.get_info(), manifest)?,
+            Err(error) if error.kind() == std::io::ErrorKind::Unsupported => {
+                tracing::debug!(%error, "package has no verifiable portable content identity");
+            }
+            Err(error) => return Err(error.into()),
+        }
+        if let Err(error) = fbuild_core::platform::fs::replace_file(staging, destination) {
+            let _ = std::fs::remove_file(staging.join(fbuild_core::content_manifest::SIDECAR));
+            return Err(fbuild_core::FbuildError::PackageError(format!(
+                "failed to commit installation: {error}"
+            )));
+        }
+        Ok(())
+    }
+
     pub fn get_info(&self) -> PackageInfo {
-        PackageInfo {
+        let mut info = PackageInfo {
             name: self.name.clone(),
             version: self.version.clone(),
             url: self.url.clone(),
             install_path: self.install_path(),
             checksum: self.checksum.clone(),
+            content_id: None,
             installed_bytes: self.recorded_installed_bytes(),
+        };
+        if info.install_path.is_dir() {
+            info.content_id = content_manifest::load_verified_content_id(&info.install_path, &info);
         }
+        info
     }
 
     /// Installed size from the cache index row written by
@@ -570,7 +611,7 @@ fn clear_package_touch_cache_for_tests() {
 mod toolchain_gcc_ar_tests {
     use super::*;
 
-    async fn serve_once(body: Vec<u8>) -> String {
+    pub(super) async fn serve_once(body: Vec<u8>) -> String {
         use tokio::io::{AsyncReadExt, AsyncWriteExt};
         use tokio::net::TcpListener;
 
@@ -591,7 +632,7 @@ mod toolchain_gcc_ar_tests {
         url
     }
 
-    fn zip_bytes(entry_name: &str, content: &[u8]) -> Vec<u8> {
+    pub(super) fn zip_bytes(entry_name: &str, content: &[u8]) -> Vec<u8> {
         use std::io::{Cursor, Write};
         use zip::write::SimpleFileOptions;
 
@@ -623,6 +664,7 @@ mod toolchain_gcc_ar_tests {
                 url: String::new(),
                 install_path: PathBuf::new(),
                 checksum: None,
+                content_id: None,
                 installed_bytes: None,
             }
         }
@@ -780,6 +822,17 @@ mod toolchain_gcc_ar_tests {
 
         assert_eq!(installed, install_path);
         assert!(installed.join("fresh.txt").exists());
+        if fbuild_core::platform::fs::executable_bit(&std::fs::metadata(&installed).unwrap())
+            .is_some()
+        {
+            assert!(
+                content_manifest::load_verified_content_id(&installed, &base.get_info()).is_some()
+            );
+        } else {
+            assert!(
+                content_manifest::load_verified_content_id(&installed, &base.get_info()).is_none()
+            );
+        }
         assert!(!installed.join("stale.txt").exists());
         assert!(
             !staging_path.exists(),

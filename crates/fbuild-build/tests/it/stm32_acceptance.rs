@@ -88,6 +88,7 @@ async fn stm32f103c8_blink_with_spi_auto_discovers_library_205_ac4() {
         fbuild_paths::BUILD_DIR_NAME
     ));
     let params = BuildParams {
+        prebuilt: None,
         project_dir: project_dir.to_path_buf(),
         shrink: Default::default(),
         env_name: "stm32f103c8".to_string(),

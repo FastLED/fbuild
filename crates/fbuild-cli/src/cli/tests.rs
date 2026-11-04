@@ -568,3 +568,19 @@ fn global_shrink_flag_is_accepted() {
     let cli = Cli::try_parse_from(argv).expect("parse");
     assert_eq!(cli.shrink, Some(super::args::CliShrinkMode::Safe));
 }
+
+#[test]
+fn prebuilt_flags_parse_for_build_deploy_and_test_emu() {
+    use clap::Parser;
+    for command in ["build", "deploy", "test-emu"] {
+        let cli = super::args::Cli::try_parse_from([
+            "fbuild",
+            command,
+            ".",
+            "--prebuilt",
+            "--no-prebuilt",
+        ])
+        .unwrap();
+        assert!(cli.prebuilt && cli.no_prebuilt);
+    }
+}

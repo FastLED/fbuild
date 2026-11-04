@@ -54,6 +54,12 @@ pub enum CleanScope {
     about = "PlatformIO-compatible embedded build tool"
 )]
 pub struct Cli {
+    /// Opt in to experimental exact-fingerprint prebuilt frameworks.
+    #[arg(long, global = true)]
+    pub prebuilt: bool,
+    /// Build frameworks from source and disable prebuilt population.
+    #[arg(long, global = true)]
+    pub no_prebuilt: bool,
     #[command(subcommand)]
     pub command: Option<Commands>,
 

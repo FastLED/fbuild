@@ -16,6 +16,7 @@ use fbuild_core::BuildProfile;
 /// default is `Auto`, so it stays out of every call site).
 fn esp32_params(project_dir: PathBuf, env_name: &str, build_dir: PathBuf) -> BuildParams {
     BuildParams {
+        prebuilt: None,
         project_dir,
         shrink: Default::default(),
         env_name: env_name.to_string(),

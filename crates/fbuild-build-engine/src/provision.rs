@@ -394,6 +394,7 @@ mod tests {
                 url: "https://example.com/fake.tar.gz".into(),
                 install_path: "/cache/fake".into(),
                 checksum: Some("abc123".into()),
+                content_id: None,
                 installed_bytes: Some(4096),
             }
         }

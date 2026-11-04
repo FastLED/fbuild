@@ -115,7 +115,6 @@ impl BuildContext {
         fbuild_paths::long_paths::validate_legacy_path(project_dir)?;
         fbuild_paths::long_paths::validate_legacy_path(&params.build_dir)?;
         fbuild_paths::long_paths::prepare_build_directory(&params.build_dir)?;
-
         // 1. Parse platformio.ini, attaching any forwarded `PLATFORMIO_*` env
         // var overrides from the CLI caller (the daemon does not inherit
         // caller env vars).
@@ -134,7 +133,6 @@ impl BuildContext {
         if let Some(p) = perf.as_mut() {
             p.record("config-parse", t0.elapsed());
         }
-
         // 2. Load board config
         //
         // `ResolutionContext::resolve_board` is the single board-resolution
@@ -148,7 +146,6 @@ impl BuildContext {
         if let Some(p) = perf.as_mut() {
             p.record("board-load", t0.elapsed());
         }
-
         // 3. Build log initialization
         let mut build_log = if params.no_timestamp {
             crate::build_output::create_build_log(params.log_sender.clone())
@@ -282,7 +279,6 @@ impl BuildContext {
                 build_log.push(format!("Warning: {warning}"));
             }
         }
-
         // 4. Setup build directories
         //
         // `params.build_dir` is the authoritative env-rooted build dir
@@ -293,7 +289,9 @@ impl BuildContext {
         // `.build/pio/<board>/` case). See FastLED/fbuild#432.
         let t0 = std::time::Instant::now();
         let build_dir = params.build_dir.clone();
-        if params.clean && build_dir.exists() {
+        if crate::prebuilt::must_clean(&build_dir, params.clean, params.compiledb_only)
+            && build_dir.exists()
+        {
             std::fs::remove_dir_all(&build_dir)?;
         }
         let core_build_dir = build_dir.join("core");

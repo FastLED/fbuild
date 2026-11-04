@@ -61,6 +61,7 @@ async fn build_core_repo(repo: &Path, env_name: &str) -> tempfile::TempDir {
         .join("release");
 
     let params = BuildParams {
+        prebuilt: None,
         project_dir: repo.to_path_buf(),
         shrink: Default::default(),
         env_name: env_name.to_string(),

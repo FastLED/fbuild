@@ -1,0 +1,91 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Catalog",
+ "schema_version": 1,
+ "tool": "prebuilt-arduino-esp32",
+ "channels": {
+  "3.3.12": "3.3.12"
+ },
+ "releases": [
+  {
+   "kind": "Release",
+   "schema_version": 1,
+   "tool": "prebuilt-arduino-esp32",
+   "version": "3.3.12",
+   "min_client_version": 1,
+   "source": {
+    "ref": "3.3.12",
+    "repo_url": "https://github.com/espressif/arduino-esp32",
+    "vcs": "git"
+   },
+   "platforms": [
+    {
+     "platform": {
+      "abi": "esp32-xtensa-gcc@xtensa-esp-elf-14.2.0_20260121-x86_64-linux-gnu",
+      "arch": "esp32",
+      "os": "none"
+     },
+     "variant": {
+      "flavor": "fp-60684f5c454e6911",
+      "optimization": "Os"
+     },
+     "asset": {
+      "filename": "prebuilt.tar.zst",
+      "size_bytes": 3585802,
+      "sha256": "0be294950f4f7c93fb3f362f8c55a1559aa7078994d09e773cdde97dfad67baf",
+      "provides": [
+       "fbuild-fp:60684f5c454e691158fef6e21b48d4d43ec863bac998db23dea77ed3899b9551"
+      ],
+      "urls": [
+       "https://fbuild.sfo3.digitaloceanspaces.com/prebuilt/arduino-esp32/3.3.12/esp32/fp-60684f5c454e6911/prebuilt.tar.zst"
+      ]
+     }
+    },
+    {
+     "platform": {
+      "abi": "esp32-riscv-gcc@riscv32-esp-elf-14.2.0_20260121-x86_64-linux-gnu",
+      "arch": "esp32c3",
+      "os": "none"
+     },
+     "variant": {
+      "flavor": "fp-3883594ba1e34e7d",
+      "optimization": "Os"
+     },
+     "asset": {
+      "filename": "prebuilt.tar.zst",
+      "size_bytes": 3453642,
+      "sha256": "dda8e0a345feb7f66830003ce72258707d0d8cef800b9ca6e48ac6c98c521792",
+      "provides": [
+       "fbuild-fp:3883594ba1e34e7d34f2980bd464601dc2f517aa1c8dc30b69f5da11dcb8388e"
+      ],
+      "urls": [
+       "https://fbuild.sfo3.digitaloceanspaces.com/prebuilt/arduino-esp32/3.3.12/esp32c3/fp-3883594ba1e34e7d/prebuilt.tar.zst"
+      ]
+     }
+    },
+    {
+     "platform": {
+      "abi": "esp32-xtensa-gcc@xtensa-esp-elf-14.2.0_20260121-x86_64-linux-gnu",
+      "arch": "esp32s3",
+      "os": "none"
+     },
+     "variant": {
+      "flavor": "fp-a2b1ddd2690109a4",
+      "optimization": "Os"
+     },
+     "asset": {
+      "filename": "prebuilt.tar.zst",
+      "size_bytes": 4075144,
+      "sha256": "22d34452e696f51a3692349fc8c01a935894da3d2b6d9bcd38e4661b2af7fbd8",
+      "provides": [
+       "fbuild-fp:a2b1ddd2690109a46463661dd35c70398305562a6eafae4f769c0ea44ff3de71"
+      ],
+      "urls": [
+       "https://fbuild.sfo3.digitaloceanspaces.com/prebuilt/arduino-esp32/3.3.12/esp32s3/fp-a2b1ddd2690109a4/prebuilt.tar.zst"
+      ]
+     }
+    }
+   ]
+  }
+ ]
+}

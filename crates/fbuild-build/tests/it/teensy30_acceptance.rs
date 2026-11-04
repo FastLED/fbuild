@@ -103,6 +103,7 @@ async fn teensy30_analog_output_meets_205_ac2() {
         fbuild_paths::BUILD_DIR_NAME
     ));
     let params = BuildParams {
+        prebuilt: None,
         project_dir: project_dir.to_path_buf(),
         shrink: Default::default(),
         // WHY env_name = "teensy30": must match the [env:teensy30] key

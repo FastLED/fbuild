@@ -56,8 +56,7 @@ pub async fn run_build(
     let perf_enabled = std::env::var("FBUILD_PERF_LOG")
         .map(|v| !v.is_empty() && v != "0")
         .unwrap_or(false);
-    let cli_start = std::time::Instant::now();
-    let handshake_start = std::time::Instant::now();
+    let (cli_start, handshake_start) = (std::time::Instant::now(), std::time::Instant::now());
     daemon_client::ensure_daemon_running().await?;
     let handshake_elapsed = handshake_start.elapsed();
 
@@ -98,6 +97,7 @@ pub async fn run_build(
     }
     let (caller_pid, caller_cwd) = daemon_client::caller_info();
     let req = BuildRequest {
+        prebuilt: crate::prebuilt::requested(),
         build_dir_override: daemon_client::capture_build_root(&project_dir),
         project_dir: project_dir.clone(),
         environment,

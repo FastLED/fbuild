@@ -39,6 +39,7 @@ void loop() { result++; }
     )
     .unwrap();
     let params = BuildParams {
+        prebuilt: None,
         project_dir: project.to_path_buf(),
         shrink: Default::default(),
         env_name: "uno_r4".into(),

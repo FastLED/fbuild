@@ -98,6 +98,7 @@ async fn sdkconfig_overlay_fails_before_cleaning_build_directory() {
     let marker = build_dir.join("keep.txt");
     std::fs::write(&marker, "keep").unwrap();
     let params = crate::BuildParams {
+        prebuilt: None,
         project_dir: tmp.path().to_path_buf(),
         shrink: Default::default(),
         env_name: "esp32s3".into(),
@@ -363,6 +364,7 @@ fn package_info(name: &str, version: &str) -> fbuild_packages::PackageInfo {
         url: format!("https://example.invalid/{name}-{version}.tar.gz"),
         install_path: PathBuf::from("/nonexistent"),
         checksum: None,
+        content_id: None,
         installed_bytes: None,
     }
 }

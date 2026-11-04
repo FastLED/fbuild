@@ -545,62 +545,41 @@ pub fn build_cpp_flags(common_flags: Vec<String>, config: &dyn McuConfig) -> Vec
     flags
 }
 
-/// Compile a single source file through the embedded zccache service.
-///
-/// Phase 4 stage 2 of FastLED/fbuild#789 (#800): the wrapper-binary
-/// `zccache wrap …` path is gone. Every per-TU compile dispatches
-/// through `ZccacheService::compile` on the daemon's tokio runtime.
-/// The `_compiler_cache: Option<&Path>` parameter is retained for
-/// API stability across the per-platform compilers; the value is
-/// ignored.
-///
-/// Platform-specific differences expressed through parameters:
-/// - `response_file_prefix`: "avr", "teensy", "esp32" (unused under
-///   embedded — the in-process API takes args as `Vec<String>`, no
-///   command line).
-/// - `extra_pre_flags`: additional flags inserted between base flags
-///   and `extra_flags` (ESP32 uses this for include flags deferred
-///   from `common_flags`).
-#[allow(clippy::too_many_arguments)]
-#[expect(
-    clippy::cognitive_complexity,
-    clippy::too_many_lines,
-    reason = "baseline, zackees/ci.yml#229"
-)]
-pub async fn compile_source(
-    compiler: &Path,
+/// The exact argument vector consumed by the compile backend, also used by
+/// prebuilt fingerprinting. Source/output paths are normalized identically.
+pub fn compile_argv(
     source: &Path,
     output: &Path,
     flags: &[String],
-    extra_flags: &[String],
-    _temp_dir: &Path,
-    _response_file_prefix: &str,
-    verbose: bool,
-    _compiler_cache: Option<&Path>,
     extra_pre_flags: &[String],
-) -> Result<CompileResult> {
-    // #282: a relative `output` (from `fbuild build <relative project_dir>` —
-    // what CI does) collides with the asymmetry between
-    // `compile_cwd_from_output` (canonicalizes the workspace to absolute) and
-    // `path_arg_for_compile_cwd` (short-circuits on relative paths). The
-    // resulting gcc invocation would get `cwd = absolute project_dir` plus a
-    // relative `-o`, resolving to a doubled path whose parent dir was never
-    // created — and `-MMD -MF` fails. Promote both paths to absolute up front
-    // so the downstream cwd / `-o` pair stays consistent.
+    extra_flags: &[String],
+) -> (Vec<String>, Option<PathBuf>) {
+    compile_argv_at_root(source, output, flags, extra_pre_flags, extra_flags, None)
+}
+
+/// Explicit CWD policy for reproducible framework compilation. All source,
+/// output and include operands remain absolute under this policy.
+pub fn compile_argv_at_root(
+    source: &Path,
+    output: &Path,
+    flags: &[String],
+    extra_pre_flags: &[String],
+    extra_flags: &[String],
+    root_override: Option<&Path>,
+) -> (Vec<String>, Option<PathBuf>) {
     let source_buf = absolute_from_cwd(source);
     let output_buf = absolute_from_cwd(output);
     let source = source_buf.as_path();
     let output = output_buf.as_path();
-    for path in [compiler, source, output] {
-        fbuild_paths::long_paths::validate_legacy_path(path)?;
-    }
-
-    if let Some(parent) = output.parent() {
-        std::fs::create_dir_all(parent)?;
-    }
-
-    let compile_cwd = crate::zccache::compile_cwd_from_output(output);
-    let (source_arg, output_arg) = if let Some(cwd) = compile_cwd.as_deref() {
+    let compile_cwd = root_override
+        .map(Path::to_path_buf)
+        .or_else(|| crate::zccache::compile_cwd_from_output(output));
+    let (source_arg, output_arg) = if root_override.is_some() {
+        (
+            NormalizedPath::new(source).display_slash(),
+            NormalizedPath::new(output).display_slash(),
+        )
+    } else if let Some(cwd) = compile_cwd.as_deref() {
         (
             crate::zccache::path_arg_for_compile_cwd(source, cwd),
             crate::zccache::path_arg_for_compile_cwd(output, cwd),
@@ -622,7 +601,7 @@ pub async fn compile_source(
     };
 
     let mut all_flags: Vec<String> = Vec::new();
-    if let Some(cwd) = compile_cwd.as_deref() {
+    if let Some(cwd) = compile_cwd.as_deref().filter(|_| root_override.is_none()) {
         all_flags.extend(crate::zccache::normalize_flags_for_compile_cwd(flags, cwd));
         all_flags.extend(crate::zccache::normalize_flags_for_compile_cwd(
             extra_pre_flags,
@@ -637,6 +616,99 @@ pub async fn compile_source(
         all_flags.extend(extra_pre_flags.iter().cloned());
         all_flags.extend(extra_flags.iter().cloned());
     }
+    all_flags.extend(["-c".to_string(), source_arg, "-o".to_string(), output_arg]);
+    (prepare_flags_for_exec(all_flags), compile_cwd)
+}
+
+/// Compile a single source file through the embedded zccache service.
+///
+/// Phase 4 stage 2 of FastLED/fbuild#789 (#800): the wrapper-binary
+/// `zccache wrap …` path is gone. Every per-TU compile dispatches
+/// through `ZccacheService::compile` on the daemon's tokio runtime.
+/// The `_compiler_cache: Option<&Path>` parameter is retained for
+/// API stability across the per-platform compilers; the value is
+/// ignored.
+///
+/// Platform-specific differences expressed through parameters:
+/// - `response_file_prefix`: "avr", "teensy", "esp32" (unused under
+///   embedded — the in-process API takes args as `Vec<String>`, no
+///   command line).
+/// - `extra_pre_flags`: additional flags inserted between base flags
+///   and `extra_flags` (ESP32 uses this for include flags deferred
+///   from `common_flags`).
+#[allow(clippy::too_many_arguments)]
+pub async fn compile_source(
+    compiler: &Path,
+    source: &Path,
+    output: &Path,
+    flags: &[String],
+    extra_flags: &[String],
+    _temp_dir: &Path,
+    _response_file_prefix: &str,
+    verbose: bool,
+    _compiler_cache: Option<&Path>,
+    extra_pre_flags: &[String],
+) -> Result<CompileResult> {
+    compile_source_at_root(
+        compiler,
+        source,
+        output,
+        flags,
+        extra_flags,
+        _temp_dir,
+        _response_file_prefix,
+        verbose,
+        _compiler_cache,
+        extra_pre_flags,
+        None,
+    )
+    .await
+}
+
+#[allow(clippy::too_many_arguments)]
+#[expect(clippy::cognitive_complexity, reason = "baseline, zackees/ci.yml#229")]
+pub async fn compile_source_at_root(
+    compiler: &Path,
+    source: &Path,
+    output: &Path,
+    flags: &[String],
+    extra_flags: &[String],
+    _temp_dir: &Path,
+    _response_file_prefix: &str,
+    verbose: bool,
+    _compiler_cache: Option<&Path>,
+    extra_pre_flags: &[String],
+    root_override: Option<&Path>,
+) -> Result<CompileResult> {
+    // #282: a relative `output` (from `fbuild build <relative project_dir>` —
+    // what CI does) collides with the asymmetry between
+    // `compile_cwd_from_output` (canonicalizes the workspace to absolute) and
+    // `path_arg_for_compile_cwd` (short-circuits on relative paths). The
+    // resulting gcc invocation would get `cwd = absolute project_dir` plus a
+    // relative `-o`, resolving to a doubled path whose parent dir was never
+    // created — and `-MMD -MF` fails. Promote both paths to absolute up front
+    // so the downstream cwd / `-o` pair stays consistent.
+    let source_buf = absolute_from_cwd(source);
+    let output_buf = absolute_from_cwd(output);
+    let source = source_buf.as_path();
+    let output = output_buf.as_path();
+    for path in [compiler, source, output] {
+        fbuild_paths::long_paths::validate_legacy_path(path)?;
+    }
+
+    if let Some(parent) = output.parent() {
+        std::fs::create_dir_all(parent)?;
+    }
+
+    let (sanitized, compile_cwd) = compile_argv_at_root(
+        source,
+        output,
+        flags,
+        extra_pre_flags,
+        extra_flags,
+        root_override,
+    );
+
     // `flags`/`extra_flags` here are already unflag-filtered by
     // compile_c/compile_cpp before reaching compile_one, so pass empty unflags
     // (re-stripping would be a no-op). The read side reconstructs the same
@@ -654,8 +726,6 @@ pub async fn compile_source(
         extra_flags,
         &[],
     );
-    all_flags.extend(["-c".to_string(), source_arg, "-o".to_string(), output_arg]);
-
     let global = crate::compile_backend::get_global().ok_or_else(|| {
         fbuild_core::FbuildError::BuildFailed(
             "compile_backend not installed — fbuild-daemon must call \
@@ -676,8 +746,6 @@ pub async fn compile_source(
     // collapses adjacent `-I path` pairs, and rewrites Windows
     // backslashes in path-bearing flags. Skipping it produced
     // malformed `#include` directives in the ARM/RISC-V CI builds.
-    let sanitized = prepare_flags_for_exec(all_flags);
-
     if verbose {
         tracing::info!(
             "compile (embedded): {} {}",
@@ -707,7 +775,8 @@ pub async fn compile_source(
     // compile needs (fbuild-owned `TMP`/`TEMP`, forwarded `PATH` +
     // Windows host vars) is composed by
     // [`fbuild_core::subprocess::compile_env_for_build`].
-    let build_scratch_root = compile_scratch_root(compile_cwd.as_deref(), output);
+    let scratch_cwd = crate::zccache::compile_cwd_from_output(output);
+    let build_scratch_root = compile_scratch_root(scratch_cwd.as_deref(), output);
     let mut compile_env =
         fbuild_core::subprocess::compile_env_for_build(&build_scratch_root).unwrap_or_default();
     // FastLED/fbuild#966: pin zccache's worktree_root to the project workspace

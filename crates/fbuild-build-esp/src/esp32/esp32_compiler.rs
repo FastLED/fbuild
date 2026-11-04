@@ -7,7 +7,7 @@
 use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 
-use fbuild_core::{BuildProfile, Result};
+use fbuild_core::{BuildProfile, Result, path::NormalizedPath};
 
 use crate::compiler::{CompileResult, Compiler, CompilerBase};
 use crate::eh_frame_policy::EhFramePolicy;
@@ -16,6 +16,7 @@ use super::mcu_config::Esp32McuConfig;
 
 /// ESP32-specific compiler using RISC-V or Xtensa GCC.
 pub struct Esp32Compiler {
+    framework_root: Option<NormalizedPath>,
     pub base: CompilerBase,
     gcc_path: PathBuf,
     gxx_path: PathBuf,
@@ -97,6 +98,7 @@ impl Esp32Compiler {
             profile,
             temp_dir,
             compiler_cache: None,
+            framework_root: None,
             build_unflags: Vec::new(),
             eh_frame_policy: EhFramePolicy::default(),
         }
@@ -119,6 +121,33 @@ impl Esp32Compiler {
     pub fn with_eh_frame_policy(mut self, policy: EhFramePolicy) -> Self {
         self.eh_frame_policy = policy;
         self
+    }
+
+    pub fn with_framework_compile_root(mut self, enabled: bool, root: &Path) -> Self {
+        self.framework_root = enabled.then(|| NormalizedPath::new(root));
+        self
+    }
+
+    pub fn invocation_pre_flags(&self, source: &Path) -> Vec<String> {
+        let mut flags = self.base.build_include_flags();
+        if let Some(root) = self.framework_compile_root(source) {
+            if let Some(relative) =
+                NormalizedPath::new(source).relative_to(&NormalizedPath::new(root))
+            {
+                flags.push(format!(
+                    "-frandom-seed={}",
+                    fbuild_packages::prebuilt::sha256(relative.display_slash().as_bytes())
+                ));
+            }
+        }
+        flags
+    }
+
+    pub fn framework_compile_root(&self, source: &Path) -> Option<&Path> {
+        self.framework_root
+            .as_ref()
+            .filter(|root| NormalizedPath::new(source).relative_to(root).is_some())
+            .map(NormalizedPath::as_path)
     }
 
     /// Build common compiler flags from the MCU config.
@@ -160,8 +189,8 @@ impl Compiler for Esp32Compiler {
         flags: &[String],
         extra_flags: &[String],
     ) -> Result<CompileResult> {
-        let include_flags = self.base.build_include_flags();
-        crate::compiler::compile_source(
+        let include_flags = self.invocation_pre_flags(source);
+        crate::compiler::compile_source_at_root(
             compiler_path,
             source,
             output,
@@ -172,6 +201,7 @@ impl Compiler for Esp32Compiler {
             self.base.verbose,
             self.compiler_cache.as_deref(),
             &include_flags,
+            self.framework_compile_root(source),
         )
         .await
     }
@@ -206,7 +236,7 @@ impl Compiler for Esp32Compiler {
             "c" | "s" => self.c_flags(),
             _ => self.cpp_flags(),
         };
-        let include_flags = self.base.build_include_flags();
+        let include_flags = self.invocation_pre_flags(source);
         let compiler_path = match ext.as_str() {
             "c" | "s" => self.gcc_path(),
             _ => self.gxx_path(),
@@ -216,8 +246,9 @@ impl Compiler for Esp32Compiler {
         // (FastLED/fbuild#951, #970). The workspace anchor keeps sibling
         // workspaces with identical effective commands hash-equal
         // (FastLED/fbuild#1346).
+        let inferred = crate::zccache::compile_cwd_from_output(output);
         crate::compiler::build_rebuild_signature_for_workspace(
-            crate::zccache::compile_cwd_from_output(output).as_deref(),
+            self.framework_compile_root(source).or(inferred.as_deref()),
             compiler_path,
             &base_flags,
             &include_flags,
@@ -241,11 +272,21 @@ impl Compiler for Esp32Compiler {
             "c" | "s" => self.c_flags(),
             _ => self.cpp_flags(),
         };
-        let include_flags = self.base.build_include_flags();
+        let include_flags = self.invocation_pre_flags(source);
         let compiler_path = match ext.as_str() {
             "c" | "s" => self.gcc_path(),
             _ => self.gxx_path(),
         };
+        if let Some(root) = self.framework_compile_root(source) {
+            return crate::compiler::build_rebuild_signature_for_workspace(
+                Some(root),
+                compiler_path,
+                &base_flags,
+                &include_flags,
+                extra_flags,
+                Compiler::build_unflags(self),
+            );
+        }
         crate::compiler::build_rebuild_signature_for_project(
             project_dir,
             compiler_path,

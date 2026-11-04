@@ -170,6 +170,7 @@ fn params(
     shrink: ShrinkMode,
 ) -> BuildParams {
     BuildParams {
+        prebuilt: None,
         project_dir: project_dir.as_path().to_path_buf(),
         shrink,
         env_name: env_name.to_string(),

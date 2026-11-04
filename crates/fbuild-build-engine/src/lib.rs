@@ -33,6 +33,9 @@ pub mod package_override;
 pub mod parallel;
 pub mod perf_log;
 pub mod pipeline;
+pub mod prebuilt;
+pub mod prebuilt_fp;
+pub mod prebuilt_paths;
 pub mod provision;
 pub mod rebuild_signature;
 pub mod resolution;
@@ -141,6 +144,8 @@ pub struct BuildResult {
 
 /// Input parameters for a build.
 pub struct BuildParams {
+    /// Optional per-request daemon-owned prebuilt service (experiment opt-in).
+    pub prebuilt: Option<prebuilt::Client>,
     pub project_dir: PathBuf,
     pub env_name: String,
     /// Remove the matching reusable framework caches before building. Implies
@@ -256,3 +261,6 @@ mod tests {
 mod disk_footprint_tests;
 #[cfg(test)]
 mod disk_preflight_tests;
+
+#[cfg(test)]
+mod prebuilt_fp_tests;

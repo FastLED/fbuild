@@ -12,6 +12,9 @@ pub use crate::lock_models::{
 /// POST /api/build
 #[derive(Debug, Deserialize)]
 pub struct BuildRequest {
+    /// Experimental prebuilt selection resolved by this caller.
+    #[serde(default)]
+    pub prebuilt: bool,
     pub project_dir: String,
     pub environment: Option<String>,
     #[serde(default, alias = "clean")]
@@ -95,6 +98,9 @@ pub struct BuildRequest {
 /// POST /api/deploy
 #[derive(Debug, Deserialize)]
 pub struct DeployRequest {
+    /// Experimental prebuilt selection resolved by this caller.
+    #[serde(default)]
+    pub prebuilt: bool,
     pub project_dir: String,
     pub environment: Option<String>,
     pub port: Option<String>,
@@ -551,6 +557,9 @@ pub struct DeviceStatusResponse {
 /// POST /api/test-emu — build firmware then run it in an emulator.
 #[derive(Debug, Deserialize)]
 pub struct TestEmuRequest {
+    /// Experimental prebuilt selection resolved by this caller.
+    #[serde(default)]
+    pub prebuilt: bool,
     pub project_dir: String,
     pub environment: Option<String>,
     #[serde(default)]

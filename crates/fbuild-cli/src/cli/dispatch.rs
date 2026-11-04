@@ -3,7 +3,7 @@
 
 use std::path::Path;
 
-use crate::{daemon_client, lib_select, mcp, output, update_check};
+use crate::{lib_select, mcp, output, update_check};
 
 use super::args::{BloatCmd, Cli, Commands, IdeAction, resolve_project_dir, rewrite_args};
 use super::bloat_lookup::run_bloat_lookup;
@@ -116,7 +116,7 @@ pub async fn async_main() {
     // Scan caller's environment for `PLATFORMIO_*` vars and warn about any
     // that fbuild does not act on, so users aren't bitten by silent
     // mis-builds. The captured map is forwarded to the daemon per request.
-    let pio_env = daemon_client::capture_pio_env();
+    let pio_env = crate::prebuilt::capture_pio_env(cli.prebuilt, cli.no_prebuilt);
     for var in fbuild_config::scan_unsupported(&pio_env) {
         tracing::warn!("{} is set but not supported by fbuild (ignored)", var);
     }
