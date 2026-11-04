@@ -1,6 +1,7 @@
 //! Self-contained ESP SDK archive selection; integrity failures never change source.
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
+use fbuild_core::path::NormalizedPath;
 use fbuild_core::{FbuildError, Result};
 
 use crate::downloader::{
@@ -69,20 +70,27 @@ fn select(
     })
 }
 
-fn archive_path(root: &Path, request: &FetchRequest<'_>, chip: Option<&str>, url: &str) -> PathBuf {
+fn archive_path(
+    root: &Path,
+    request: &FetchRequest<'_>,
+    chip: Option<&str>,
+    url: &str,
+) -> NormalizedPath {
     let suffix = chip.map_or_else(String::new, |c| format!("+{c}"));
     let filename_url = if chip.is_none() { request.url } else { url };
     // Include vendor identity so two upstream URLs cannot alias a version.
     let identity = crate::cache::hash_url(request.url);
-    root.join(identity)
-        .join(format!("{}@{}{suffix}", request.name, request.version))
-        .join(filename_url.rsplit('/').next().unwrap_or("archive.tar.xz"))
+    NormalizedPath::from(
+        root.join(identity)
+            .join(format!("{}@{}{suffix}", request.name, request.version))
+            .join(filename_url.rsplit('/').next().unwrap_or("archive.tar.xz")),
+    )
 }
 
 impl FetchRequest<'_> {
     /// Fetch an archive into a variant-separated cache. A cached whole bundle
     /// serves every MCU. Slices are always checked, including cache hits.
-    pub async fn fetch(&self, root: &Path) -> Result<PathBuf> {
+    pub async fn fetch(&self, root: &Path) -> Result<NormalizedPath> {
         let whole = archive_path(root, self, None, self.url);
         if whole.is_file() {
             return Ok(whole);
@@ -107,7 +115,7 @@ impl FetchRequest<'_> {
         self.fetch_selected(root, &selected).await
     }
 
-    async fn fetch_selected(&self, root: &Path, selected: &Selection) -> Result<PathBuf> {
+    async fn fetch_selected(&self, root: &Path, selected: &Selection) -> Result<NormalizedPath> {
         let path = archive_path(root, self, selected.chip.as_deref(), &selected.url);
         if path.is_file() {
             verify(&path, selected.slice.as_ref())?;
