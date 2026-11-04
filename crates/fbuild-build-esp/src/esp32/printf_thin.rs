@@ -19,9 +19,17 @@
 //! conversion specifier literally. We always link it so a build that
 //! shrinks still formats the same values.
 //!
-//! Divergences that remain (documented in `shrink/README.md`): nano has no
-//! wide-char or long-double support and rounds in double precision, like the
-//! vendor intends. `--shrink=auto` never selects this mode.
+//! Divergences that remain are the vendor's, and they are measured rather than
+//! assumed: the self-checking battery in
+//! `crates/fbuild-build/tests/it/esp32_shrink_printf.rs` was flashed on an
+//! ESP32-S3 (Xtensa LX7, xtensa-esp32s3-elf 8.4.0, espressif32 6.13.0) and
+//! reported `BATTERY total=36 failed=0` unshrunk versus
+//! `BATTERY total=36 failed=6` shrunk. Every failure is a length modifier
+//! printed verbatim, because `libc_nano.a` exports `_printf_float` (so `%f`
+//! survives) and has no equivalent for 64-bit integers: see
+//! [`UNSUPPORTED_CONVERSIONS`]. Wide-character and long-double formatting are
+//! absent for the same reason. A shrunk build therefore prints a `WARNING:`
+//! naming those conversions, and `--shrink=auto` still never selects this mode.
 //!
 //! Availability is not the same as a win: RISC-V ESP32 targets ship a much
 //! smaller full formatter, and linking nano there *grows* the image (measured
@@ -66,6 +74,36 @@ pub fn link_flags() -> Vec<String> {
 
 /// Category recorded in `build_info_<env>.json` when the reducer fired.
 pub const REDUCER_NAME: &str = "newlib-nano";
+
+/// Conversions whose formatted **output** changes when the image links
+/// newlib-nano (FastLED/fbuild#1459).
+///
+/// Measured, not assumed: the battery above was flashed on an ESP32-S3 and
+/// `--shrink=printf` turned 6 of 36 identical cases into these five
+/// modifiers printed verbatim (`%lld` of `-9223372036854775807` yields
+/// `"ld"`, `%zu` of `sizeof(size_t)` yields `"zu"`). nano's formatter has no
+/// 64-bit integer, `size_t` or `hh` support — `libc_nano.a` exports
+/// `_printf_float`, which is why `%f` still works, and no symbol that would
+/// restore the rest (there is no `_printf_long_long`).
+///
+/// This list is the single source of truth for the build-time warning, so a
+/// change in measured behaviour has to change the disclosure with it.
+pub const UNSUPPORTED_CONVERSIONS: &[&str] = &["%lld", "%llu", "%llx", "%zu", "%hh*"];
+
+/// The always-visible line a shrunk build prints after claiming the reducer.
+///
+/// A reducer that silently changes what a sketch prints is worse than no
+/// reducer, so the gap is disclosed in the build log, not only in docs. Kept
+/// pure (no compiler, no I/O) so the exact text is testable.
+#[must_use]
+pub fn divergence_warning() -> String {
+    format!(
+        "WARNING: shrink: newlib-nano has no 64-bit integer, %zu or %hh formatting, so {} \
+         print their length modifier instead of the value (measured on ESP32-S3, \
+         FastLED/fbuild#1459); build with --no-shrink if the sketch formats those",
+        UNSUPPORTED_CONVERSIONS.join(", ")
+    )
+}
 
 /// The shrink decision written into `build_info_<env>.json`.
 ///

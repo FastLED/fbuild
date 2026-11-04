@@ -75,3 +75,38 @@ fn non_printf_modes_are_recorded_as_not_applied() {
         assert!(record.applied.is_empty());
     }
 }
+
+/// The measured gap is what a shrunk build discloses, so both halves are
+/// pinned: the exact conversion set (a new divergence, or a fixed one, has to
+/// edit this test) and the shape of the one-line warning that carries it.
+#[test]
+fn divergence_warning_names_every_measured_gap() {
+    assert_eq!(
+        UNSUPPORTED_CONVERSIONS,
+        ["%lld", "%llu", "%llx", "%zu", "%hh*"],
+        "the list is the source of truth for the build-time warning"
+    );
+    let warning = divergence_warning();
+    for conversion in UNSUPPORTED_CONVERSIONS {
+        assert!(
+            warning.contains(conversion),
+            "{conversion} missing from {warning}"
+        );
+    }
+    assert!(
+        warning.starts_with("WARNING: shrink: newlib-nano"),
+        "must be greppable as a shrink warning: {warning}"
+    );
+    assert!(
+        warning.contains("--no-shrink"),
+        "the warning must name the escape hatch: {warning}"
+    );
+    assert!(
+        warning.contains("FastLED/fbuild#1459"),
+        "the warning must cite the measurement: {warning}"
+    );
+    assert!(
+        !warning.contains('\n'),
+        "build-log timestamps prefix one line per entry: {warning}"
+    );
+}

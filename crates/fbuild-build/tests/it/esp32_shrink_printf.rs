@@ -14,6 +14,15 @@
 //! compiled into both images; this test only proves the *size* + *telemetry*
 //! half, which is the half a machine can decide.
 //!
+//! Measured answer (ESP32-S3, xtensa-esp32s3-elf 8.4.0, espressif32 6.13.0):
+//! `--no-shrink` reports `BATTERY total=36 failed=0`, `--shrink=printf`
+//! reports `BATTERY total=36 failed=6` — `%lld %llu %llx %zu %hhu` plus the
+//! `vsnprintf` case that uses `%lld`. nano has no 64-bit/`size_t`/`hh`
+//! support, so this battery is a *divergence detector* under nano, not a
+//! pass/fail gate; the exact list lives in
+//! `fbuild_build_esp::esp32::printf_thin::UNSUPPORTED_CONVERSIONS` and is
+//! printed as a build-time `WARNING:`.
+//!
 //! Run with: `soldr cargo test -p fbuild-build --test it esp32_shrink_printf:: -- --ignored`
 
 use std::fs;
