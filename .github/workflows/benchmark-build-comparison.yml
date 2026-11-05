@@ -26,6 +26,10 @@ permissions:
 env:
   CARGO_TERM_COLOR: always
   RUSTFLAGS: '-D warnings'
+  # Match the rest of the fleet: the benchmark job installs two toolchains
+  # after building fbuild, so the default 5 GiB free-space floor aborts the
+  # build with "build volume has only N GiB free" on a fresh runner.
+  SOLDR_TARGET_BLOCK_FREE_GB: '2'
   PLATFORMIO_CORE_VERSION: '6.1.19'
   ARDUINO_CLI_VERSION: '1.5.0'
   ARDUINO_AVR_CORE_VERSION: '1.8.8'
