@@ -18,6 +18,12 @@ the line immediately before the `Command::new(`:
 
     // allow-direct-spawn: <one-line reason>
 
+The reason is mandatory: a bare `// allow-direct-spawn` with nothing after
+the colon does NOT allowlist a site, because an unexplained hold-out is
+indistinguishable from a forgotten migration. Occurrences inside comments
+(`//`, `/* ... */`, nested) and inside string/raw-string literals are
+ignored: those are documentation, not spawns.
+
 Intentional hold-outs currently allowed:
 - Daemon spawns from CLI/Python/tests (daemon must outlive parent).
 - zccache daemon bootstrap (independent lifecycle).
@@ -64,18 +70,130 @@ class Hit:
     reason: str | None
 
 
-def _is_doc_or_string(line: str) -> bool:
-    """Skip occurrences inside doc comments or string literals.
+_IDENT_CHARS = frozenset("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_")
 
-    We only care about live code, not references in docstrings or
-    rustdoc comments that name `Command::new()` for explanation.
+
+def _blank(chars: list[str], start: int, end: int) -> None:
+    for i in range(start, end):
+        chars[i] = " "
+
+
+def _starts_raw_string(line: str, i: int) -> bool:
+    """True when `line[i]` opens a Rust raw string literal (`r"..."`, `r#"..."#`)."""
+    if i > 0 and line[i - 1] in _IDENT_CHARS:
+        return False
+    j = i + 1
+    while j < len(line) and line[j] == "#":
+        j += 1
+    return j < len(line) and line[j] == '"'
+
+
+def _string_end(line: str, start: int) -> int:
+    """Index just past the escaped string literal opening at `start`."""
+    i = start + 1
+    while i < len(line):
+        if line[i] == "\\":
+            i += 2
+            continue
+        if line[i] == '"':
+            return i + 1
+        i += 1
+    return len(line)
+
+
+def _raw_string_end(line: str, start: int) -> int:
+    """Index just past the raw string literal opening at `start`."""
+    i = start + 1
+    hashes = 0
+    while i < len(line) and line[i] == "#":
+        hashes += 1
+        i += 1
+    terminator = '"' + "#" * hashes
+    end = line.find(terminator, i + 1)
+    return len(line) if end < 0 else end + len(terminator)
+
+
+def _char_end(line: str, start: int) -> int | None:
+    """Index just past the char literal opening at `start`, or None for a lifetime.
+
+    A char literal is a quote, at most a short escape, and a closing quote;
+    `'a` in a lifetime has no closing quote nearby. Without this the quote in
+    `'"'` would open a phantom string literal and hide a real spawn after it.
     """
-    stripped = line.lstrip()
-    if stripped.startswith("//") or stripped.startswith("///"):
-        return True
-    if stripped.startswith("//!") or stripped.startswith("*"):
-        return True
-    return False
+    i = start + 1
+    limit = min(len(line), start + 12)
+    while i < limit:
+        if line[i] == "\\":
+            i += 2
+            continue
+        if line[i] == "'":
+            return i + 1
+        i += 1
+    return None
+
+
+def _skip_block(line: str, i: int, depth: int) -> tuple[int, int]:
+    """Consume block-comment characters from `i`, honouring Rust's nesting.
+
+    Returns the index to resume scanning at and the new open-comment depth.
+    """
+    while i < len(line):
+        close = line.find("*/", i)
+        nested = line.find("/*", i)
+        if nested != -1 and (close == -1 or nested < close):
+            depth += 1
+            i = nested + 2
+            continue
+        if close == -1:
+            return len(line), depth
+        depth -= 1
+        i = close + 2
+        if depth == 0:
+            return i, 0
+    return i, depth
+
+
+def code_only(line: str, depth: int) -> tuple[str, int]:
+    """Blank out comments and string literals, keeping columns stable.
+
+    `depth` carries the open `/* ... */` nesting count across lines (Rust
+    block comments nest). Returns the code-only spelling of the line and the
+    new depth, so a `Command::new(` mentioned in prose or in a test fixture
+    string is never mistaken for a spawn.
+    """
+    chars = list(line)
+    width = len(line)
+    i = 0
+    while i < width:
+        if depth > 0:
+            resume, depth = _skip_block(line, i, depth)
+            _blank(chars, i, resume)
+            i = resume
+            continue
+        if line.startswith("//", i):
+            _blank(chars, i, width)
+            return "".join(chars), 0
+        if line.startswith("/*", i):
+            depth += 1
+            _blank(chars, i, i + 2)
+            i += 2
+            continue
+        if line[i] == '"':
+            end = _string_end(line, i)
+            _blank(chars, i, end)
+            i = end
+            continue
+        if line[i] == "r" and _starts_raw_string(line, i):
+            end = _raw_string_end(line, i)
+            _blank(chars, i, end)
+            i = end
+            continue
+        if line[i] == "'" and (end := _char_end(line, i)) is not None:
+            _blank(chars, i, end)
+            i = end
+            continue
+        i += 1
+    return "".join(chars), depth
 
 
 def _allowlist_reason(lines: list[str], idx: int) -> str | None:
@@ -84,12 +202,15 @@ def _allowlist_reason(lines: list[str], idx: int) -> str | None:
     The marker may appear on the same line as the hit (trailing comment)
     or on the line immediately above it.
     """
-    same = lines[idx]
-    above = lines[idx - 1] if idx > 0 else ""
-    for candidate in (same, above):
-        if ALLOW_MARKER in candidate:
-            tail = candidate.split(ALLOW_MARKER, 1)[1]
-            return tail.lstrip(": ").strip() or "<no reason given>"
+    candidates = [lines[idx]]
+    if idx > 0:
+        candidates.append(lines[idx - 1])
+    for candidate in candidates:
+        if ALLOW_MARKER not in candidate:
+            continue
+        reason = candidate.split(ALLOW_MARKER, 1)[1].lstrip(": ").strip()
+        if reason:
+            return reason
     return None
 
 
@@ -97,10 +218,10 @@ def scan_file(path: Path) -> list[Hit]:
     text = path.read_text(encoding="utf-8", errors="replace")
     lines = text.splitlines()
     hits: list[Hit] = []
+    depth = 0
     for idx, line in enumerate(lines):
-        if not COMMAND_NEW.search(line):
-            continue
-        if _is_doc_or_string(line):
+        code, depth = code_only(line, depth)
+        if not COMMAND_NEW.search(code):
             continue
         reason = _allowlist_reason(lines, idx)
         hits.append(
@@ -147,6 +268,11 @@ def render_text(hits: list[Hit]) -> str:
         for h in pending:
             rel = h.path.relative_to(REPO_ROOT)
             lines.append(f"  {rel}:{h.line_no}: {h.text.strip()}")
+        if any(ALLOW_MARKER in h.text for h in pending):
+            lines.append(
+                "  note: a `allow-direct-spawn` marker with no reason after the colon"
+                " does not allowlist a site"
+            )
     if allowed:
         lines.append("")
         lines.append("Allowlisted (intentional hold-outs):")
@@ -175,6 +301,15 @@ def render_json(hits: list[Hit]) -> str:
     return json.dumps(payload, indent=2)
 
 
+def unmigrated(hits: list[Hit]) -> list[Hit]:
+    """Sites counted as violations: unannotated, or annotated without a reason."""
+    return [hit for hit in hits if not hit.allowlisted]
+
+
+def exit_code(hits: list[Hit], fail: bool) -> int:
+    return 1 if fail and unmigrated(hits) else 0
+
+
 def main() -> int:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--fail", action="store_true", help="exit 1 when >0 unmigrated sites")
@@ -184,9 +319,7 @@ def main() -> int:
     hits = scan_workspace()
     print(render_json(hits) if args.json else render_text(hits))
 
-    if args.fail and any(not h.allowlisted for h in hits):
-        return 1
-    return 0
+    return exit_code(hits, args.fail)
 
 
 if __name__ == "__main__":
