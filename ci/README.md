@@ -57,6 +57,14 @@ fail coverage. This policy is tracked in [#1698](https://github.com/FastLED/fbui
 - **`build_qemu_linux_runtime.py`** -- Builds the Linux runtime-library bundle Espressif QEMU needs (`ldd` closure minus glibc, built on ubuntu:22.04). Published to the `qemu-linux-runtime-v1` release and downloaded on demand by `fbuild-toolchain`'s `esp_qemu_runtime` module; run in CI by `qemu-runtime-bundle.yml`
 - **`check_workspace_crates.py`** -- Monocrate guard: fails if the root `Cargo.toml` `[workspace] members` list gains a crate outside the approved allowlist (run by `crate-gate.yml`). Its `APPROVED_MEMBERS` and `ci/hooks/crate_guard.py`'s `APPROVED_CRATE_DIRS` are one policy in two files; `test_crate_guard_parity.py` asserts both against the real `Cargo.toml` -- and drives the hook itself -- so a drifted list fails a test instead of blocking a legitimate `Cargo.toml` edit with a "new crate" error.
 - **`check_workflow_concurrency.py`** -- Requires every `pull_request`-triggered workflow to declare an auto-cancel `concurrency:` block, so pushing again to a feature branch supersedes its in-flight runs instead of queueing ~80 more board builds. Run by `ci-workflow-drift.yml`; exemptions (reusable templates, `hw-ci.yml`, `add-to-project.yml`) carry a reason in the script. Tested by `test_workflow_concurrency.py`. See [.github/workflows/README.md](../.github/workflows/README.md#concurrency-auto-cancel-superseded-pr-runs).
+- **`cancel_superseded.py`** -- The merge-queue janitor: on every `merge_group` run it
+  cancels the in-flight queue runs for the same PR that a newer queue run replaced, so
+  they stop holding runners when `main` moves. Runs are ordered by `(created_at, id)` --
+  parsed as datetimes, because GitHub's fractional seconds (`.500Z` sorts before `Z` as a
+  string) used to make a NEWER run look older and get cancelled, and a same-second tie
+  matched neither run. A triggering ref that is not a `gh-readonly-queue/.../pr-<N>-<sha>`
+  ref is a hard error rather than a `PR #None: cancelling 0` success. Tested by
+  `test_cancel_superseded.py`.
 - **`check_rust_toolchain_pins.py`** -- Prevents fbuild-owned Rust 1.95.0 MSRV, toolchain, workflow, and bootstrap declarations from drifting
 - **`enforce_platform_boundary.py`** -- Independent whole-tree and manifest checker for the exact host-platform occurrence ledger
 - **`env.py`** -- Centralized PATH activation ensuring the Rust tool bin directory is on PATH before invoking Rust tools
