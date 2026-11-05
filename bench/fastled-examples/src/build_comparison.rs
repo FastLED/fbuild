@@ -80,6 +80,8 @@ struct Options {
     arduino_cli: OsString,
     platformio: OsString,
     trials: usize,
+    /// Link rate the runner was shaped to, in Mbit/s. 0 means unthrottled.
+    network_mbit: u32,
     repository: String,
     git_sha: String,
     generated_at: String,
@@ -102,6 +104,13 @@ enum ColdCleanupStep {
         args: Vec<OsString>,
     },
     RemoveDir(NormalizedPath),
+    /// Remove every immediate child of `parent` whose name starts with
+    /// `prefix`, never following symlinks. Used for package/home caches that
+    /// live outside the repository, where `remove_dir_within` does not apply.
+    RemoveCacheEntries {
+        parent: NormalizedPath,
+        prefix: String,
+    },
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -195,6 +204,8 @@ struct Metadata {
     run_url: String,
     project: String,
     trials: usize,
+    /// Link rate the runner was shaped to, in Mbit/s. 0 means unthrottled.
+    network_mbit: u32,
     /// Per-board median wall clock of replaying the bare compiler.
     raw_baselines_ms: BTreeMap<String, f64>,
 }
@@ -290,6 +301,7 @@ fn run() -> AppResult<()> {
         run_url: options.run_url.clone(),
         project: options.project_dir.display_slash(),
         trials: options.trials,
+        network_mbit: options.network_mbit,
         raw_baselines_ms,
     };
     let history = read_history_values(&output_dir.join("history.jsonl"));
@@ -883,18 +895,24 @@ fn prepare_cold(
         project_dir,
         fbuild,
         arduino_build_dir,
+        &fbuild_paths::get_cache_root(),
+        &fbuild_paths::get_platformio_home(),
     ) {
         match step {
             ColdCleanupStep::Command { program, args } => {
                 run_logged_env(&program, &args, repo_root, log, envs)?;
             }
             ColdCleanupStep::RemoveDir(path) => remove_dir_within(repo_root, &path)?,
+            ColdCleanupStep::RemoveCacheEntries { parent, prefix } => {
+                remove_cache_entries(&parent, &prefix)?;
+            }
         }
     }
     writeln!(log, "----- timed cold build follows -----")?;
     Ok(())
 }
 
+#[allow(clippy::too_many_arguments)]
 fn cold_cleanup_steps(
     kind: ToolKind,
     board: Board,
@@ -903,6 +921,8 @@ fn cold_cleanup_steps(
     project_dir: &Path,
     fbuild: &Path,
     arduino_build_dir: &Path,
+    fbuild_cache_root: &Path,
+    platformio_home: &Path,
 ) -> Vec<ColdCleanupStep> {
     let command = |program: &OsStr, args: Vec<OsString>| ColdCleanupStep::Command {
         program: program.to_os_string(),
@@ -913,35 +933,71 @@ fn cold_cleanup_steps(
             command(arduino_cli, os_args(&["cache", "clean"])),
             ColdCleanupStep::RemoveDir(NormalizedPath::new(arduino_build_dir)),
         ],
-        ToolKind::PlatformIo => vec![
-            command(
-                platformio,
-                os_args(&["system", "prune", "--cache", "--force"]),
-            ),
-            command(
-                platformio,
+        ToolKind::PlatformIo => {
+            let mut steps = vec![
+                command(
+                    platformio,
+                    os_args(&["system", "prune", "--cache", "--force"]),
+                ),
+                command(
+                    platformio,
+                    os_args(&[
+                        "run",
+                        "--project-dir",
+                        &project_dir.to_string_lossy(),
+                        "--environment",
+                        board.environment,
+                        "--target",
+                        "clean",
+                    ]),
+                ),
+            ];
+            if board.key == "esp32s3" {
+                // Cold must include the framework/libs download, so drop the
+                // ESP32 framework packages (core, -libs, @src) and PlatformIO's
+                // download caches. toolchain-* is deliberately untouched: a
+                // ~175 MB toolchain download on a 10 Mbit link would push the
+                // run past the 60-minute CI timeout.
+                steps.push(ColdCleanupStep::RemoveCacheEntries {
+                    parent: NormalizedPath::new(platformio_home.join("packages")),
+                    prefix: "framework-arduinoespressif32".to_string(),
+                });
+                steps.push(ColdCleanupStep::RemoveCacheEntries {
+                    parent: NormalizedPath::new(platformio_home),
+                    prefix: "cache".to_string(),
+                });
+            }
+            steps
+        }
+        ToolKind::Fbuild => {
+            let mut steps = vec![command(
+                fbuild.as_os_str(),
                 os_args(&[
-                    "run",
-                    "--project-dir",
+                    "clean",
+                    "cache",
                     &project_dir.to_string_lossy(),
                     "--environment",
                     board.environment,
-                    "--target",
-                    "clean",
+                    "--release",
                 ]),
-            ),
-        ],
-        ToolKind::Fbuild => vec![command(
-            fbuild.as_os_str(),
-            os_args(&[
-                "clean",
-                "cache",
-                &project_dir.to_string_lossy(),
-                "--environment",
-                board.environment,
-                "--release",
-            ]),
-        )],
+            )];
+            if board.key == "esp32s3" {
+                // Discovered layout: fbuild installs framework packages under
+                // <cache>/platforms/<stem>/<hash>/<version>/ (see
+                // fbuild-packages-fetch's Cache::platforms_dir and
+                // PackageBase::install_path). The ESP-IDF libs archive is
+                // cached inside that tree at tools/.libs-archives, so removing
+                // the stem forces both the core and the libs slice to be
+                // re-downloaded during the timed build. Only the ESP32
+                // framework stem matches this prefix; toolchains/ is a
+                // separate cache root and is left warm on purpose.
+                steps.push(ColdCleanupStep::RemoveCacheEntries {
+                    parent: NormalizedPath::new(fbuild_cache_root.join("platforms")),
+                    prefix: "framework-arduinoespressif32".to_string(),
+                });
+            }
+            steps
+        }
     }
 }
 
@@ -1310,6 +1366,35 @@ fn remove_dir_within(root: &Path, target: &Path) -> AppResult<()> {
     }
 }
 
+/// Delete immediate children of `parent` whose names start with `prefix`.
+/// Missing parents are a no-op so a first run on a clean machine works.
+fn remove_cache_entries(parent: &Path, prefix: &str) -> AppResult<()> {
+    let entries = match fs::read_dir(parent) {
+        Ok(entries) => entries,
+        Err(error) if error.kind() == io::ErrorKind::NotFound => return Ok(()),
+        Err(error) => return Err(error.into()),
+    };
+    for entry in entries {
+        let entry = entry?;
+        let name = entry.file_name();
+        let Some(name) = name.to_str() else {
+            continue;
+        };
+        if !name.starts_with(prefix) {
+            continue;
+        }
+        let path = entry.path();
+        // symlink_metadata: never traverse a symlink out of the cache root.
+        let metadata = fs::symlink_metadata(&path)?;
+        if metadata.is_dir() {
+            fs::remove_dir_all(&path)?;
+        } else {
+            fs::remove_file(&path)?;
+        }
+    }
+    Ok(())
+}
+
 fn absolute_from(root: &Path, path: &Path) -> NormalizedPath {
     if path.is_absolute() {
         NormalizedPath::new(path)
@@ -1400,8 +1485,9 @@ fn latest_payload(metadata: &Metadata, results: &[ToolResult]) -> Value {
                 "note": "ecosystem framework distributions are pinned independently",
             },
             "trials": metadata.trials,
+            "network_mbit": metadata.network_mbit,
             "statistic": "median",
-            "cold_definition": "project outputs, reusable framework objects, compiler-object caches, and Arduino/PlatformIO download/HTTP caches removed; installed packages/toolchains and fbuild package archives retained",
+            "cold_definition": "project outputs, reusable framework objects, compiler-object caches, and Arduino/PlatformIO download/HTTP caches removed; on ESP32-S3 the Arduino-ESP32 framework/lib packages are also removed so they are re-downloaded inside the timed window; installed toolchains remain warm",
             "warm_definition": "immediate no-change rebuild after the cold build",
         },
         "comparison_board": comparison_board(results),
@@ -1904,6 +1990,14 @@ fn render_html(metadata: &Metadata, results: &[ToolResult]) -> String {
 "#
         )
     };
+    let network_note = if metadata.network_mbit > 0 {
+        format!(
+            "\n      <p class=\"note\">* Measured on a link limited to {} Mbit/s (<code>tc</code> traffic shaping); cold includes framework/lib download time.</p>",
+            metadata.network_mbit
+        )
+    } else {
+        String::new()
+    };
     format!(
         r#"<!doctype html>
 <html lang="en">
@@ -1932,7 +2026,7 @@ fn render_html(metadata: &Metadata, results: &[ToolResult]) -> String {
     <main>
       <h1>fbuild Blink build benchmark</h1>
       <p class="meta">Generated {generated_at} from <code>{sha}</code>. Median of {trials} trials on {os}/{arch}.</p>
-      <p class="note">All three tools compile the same Arduino Uno and ESP32-S3 <code>bench/blink/blink.ino</code>. Cold removes project outputs, reusable framework objects, compiler-object caches, and Arduino/PlatformIO download/HTTP caches while retaining installed packages/toolchains and fbuild package archives. Warm is the immediate no-change rebuild. The narrower warm bar overlays the cold bar.</p>
+      <p class="note">All three tools compile the same Arduino Uno and ESP32-S3 <code>bench/blink/blink.ino</code>. Cold removes project outputs, reusable framework objects, compiler-object caches, and Arduino/PlatformIO download/HTTP caches; on ESP32-S3 it also removes the cached Arduino-ESP32 framework/lib packages so they are re-downloaded inside the timed build. Installed toolchains stay warm. Warm is the immediate no-change rebuild. The narrower warm bar overlays the cold bar.</p>{network_note}
       <p class="note">Resolved package stacks: {comparison_note}. Exact package versions and representative core compiler commands are in <a href="latest.json">latest.json</a>.</p>
       <a href="benchmark.svg"><img src="benchmark.svg" alt="Arduino CLI vs PlatformIO vs fbuild cold and warm Blink build timings" /></a>
       <div class="table-wrap">
@@ -1960,6 +2054,7 @@ fn render_html(metadata: &Metadata, results: &[ToolResult]) -> String {
         arch = env::consts::ARCH,
         rows = rows,
         phase_section = phase_section,
+        network_note = network_note,
         run_url = html_escape(&metadata.run_url),
         repository = html_escape(&metadata.repository),
     )
@@ -1994,6 +2089,7 @@ fn parse_options() -> AppResult<Options> {
         }),
         platformio: OsString::from(if cfg!(windows) { "pio.exe" } else { "pio" }),
         trials: 3,
+        network_mbit: 0,
         repository: DEFAULT_REPOSITORY.to_string(),
         git_sha: env::var("GITHUB_SHA").unwrap_or_else(|_| "local".to_string()),
         generated_at: default_generated_at(),
@@ -2030,6 +2126,9 @@ fn parse_options() -> AppResult<Options> {
                     )
                     .into());
                 }
+            }
+            "--network-mbit" => {
+                options.network_mbit = value.to_string_lossy().parse()?;
             }
             "--repository" => options.repository = value.to_string_lossy().into_owned(),
             "--git-sha" => options.git_sha = value.to_string_lossy().into_owned(),
@@ -2069,6 +2168,7 @@ fn print_help() {
          --arduino-cli COMMAND   Arduino CLI executable\n\
          --platformio COMMAND    PlatformIO executable\n\
          --trials N              Cold/warm trial pairs (default: 3)\n\
+         --network-mbit N        Link rate for disclosure, Mbit/s (default: 0 = unthrottled)\n\
          --repository OWNER/REPO Metadata repository\n\
          --git-sha SHA           Commit measured\n\
          --generated-at ISO8601  Run timestamp\n\

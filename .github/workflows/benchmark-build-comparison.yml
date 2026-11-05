@@ -84,26 +84,17 @@ jobs:
             -p fbuild-daemon --bin fbuild-daemon \
             -p fbuild-bench-fastled-examples --bin bench-build-comparison
 
-      - name: Prime package downloads outside timed measurements
+      - name: Warm fbuild toolchains
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p benchmark-output/bootstrap-arduino
-          arduino-cli compile \
-            --fqbn arduino:avr:uno \
-            --build-path benchmark-output/bootstrap-arduino \
-            bench/blink
-          target/release/fbuild build bench/blink -e uno --release
-          target/release/fbuild clean all bench/blink -e uno --release
-          rm -rf benchmark-output/bootstrap-arduino
-          mkdir -p benchmark-output/bootstrap-arduino
-          arduino-cli compile \
-            --fqbn esp32:esp32:esp32s3 \
-            --build-path benchmark-output/bootstrap-arduino \
-            bench/blink
-          target/release/fbuild build bench/blink -e esp32s3 --release
-          target/release/fbuild clean all bench/blink -e esp32s3 --release
-          rm -rf benchmark-output/bootstrap-arduino
+          # `fbuild install` also fetches the ESP32 framework, but the
+          # benchmark's cold cleanup deletes those packages before every
+          # timed build, so their download still lands inside the measured
+          # window. Only the ~175 MB toolchains stay warm, keeping the run
+          # under the 60-minute job timeout.
+          target/release/fbuild install bench/blink -e uno
+          target/release/fbuild install bench/blink -e esp32s3
 
       - name: Restore rolling history
         shell: bash
@@ -122,6 +113,27 @@ jobs:
             fi
           fi
 
+      - name: Shape runner link to 10 Mbit/s
+        shell: bash
+        run: |
+          set -euo pipefail
+          iface="$(ip route | awk '/^default/{print $5; exit}')"
+          if [[ -z "${iface}" ]]; then
+            echo "::error::no default-route interface found; refusing to publish unshaped numbers labelled 10 Mbit/s"
+            exit 1
+          fi
+          echo "Shaping ${iface} to 10 Mbit/s with tc tbf"
+          if ! sudo tc qdisc replace dev "${iface}" root tbf rate 10mbit burst 64kbit latency 50ms; then
+            echo "::error::tc qdisc failed on ${iface}; refusing to publish unshaped numbers labelled 10 Mbit/s"
+            exit 1
+          fi
+          if ! tc qdisc show dev "${iface}" | grep -qiE 'tbf.*10Mbit'; then
+            echo "::error::tc qdisc readback on ${iface} does not show tbf at 10 Mbit/s"
+            tc qdisc show dev "${iface}"
+            exit 1
+          fi
+          echo "iface=${iface}" >> "${GITHUB_ENV}"
+
       - name: Run cold/warm comparison and render site
         shell: bash
         run: |
@@ -133,12 +145,23 @@ jobs:
             --fbuild target/release/fbuild \
             --output-dir benchmark-stats \
             --trials 3 \
+            --network-mbit 10 \
             --repository "${GITHUB_REPOSITORY}" \
             --git-sha "${GITHUB_SHA}" \
             --generated-at "${generated_at}" \
             --run-url "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" \
             --pages-url https://fastled.github.io/fbuild/ \
             --raw-base-url https://raw.githubusercontent.com/FastLED/fbuild/benchmark-stats
+
+      - name: Remove link shaping
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          iface="${iface:-$(ip route | awk '/^default/{print $5; exit}')}"
+          if [[ -n "${iface}" ]]; then
+            sudo tc qdisc del dev "${iface}" root || true
+          fi
 
       - name: Summarize cold-build breakdown
         if: always()
