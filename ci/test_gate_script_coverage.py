@@ -21,9 +21,10 @@ from ci import gate_script_coverage as coverage
 ROOT = Path(__file__).resolve().parents[1]
 
 # The measured gap on 2026-11-05 was eight workflow-invoked gates with no
-# test; `audit_ignored_tests` gained one in this change, so the budget is seven.
+# test; `audit_ignored_tests` and `check_fbuild_path_baseline` gained theirs, so
+# the budget is six.
 # Lowering this number is the work; raising it means the class regrew.
-MAX_UNTESTED = 7
+MAX_UNTESTED = 6
 
 WORKFLOW = """\
 jobs:

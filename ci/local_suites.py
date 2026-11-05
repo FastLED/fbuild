@@ -35,6 +35,7 @@ DRIFT_UNITTEST_MODULES: tuple[str, ...] = (
     "ci.test_audit_ignored_tests",
     "ci.test_local_suites",
     "ci.test_gate_script_coverage",
+    "ci.test_check_fbuild_path_baseline",
 )
 
 # Modules the local gate additionally runs. Their subject is the local proof
