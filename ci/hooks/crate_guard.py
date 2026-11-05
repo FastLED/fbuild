@@ -70,6 +70,13 @@ APPROVED_CRATE_DIRS: frozenset[str] = frozenset(
         "crates/fbuild-library-select",
         "bench/fastled-examples",
         # Workspace-excluded crates with their own toolchains:
+        # `enforce_platform_boundary` is the permanent whole-tree scanner
+        # dylint (#1306/#1315); it has a real `Cargo.toml` and is listed in
+        # the root `[workspace] exclude`, so editing it is normal policy
+        # work, not the creation of a new crate. It was missing here until
+        # `ci/test_crate_guard_parity.py` started asserting that every
+        # excluded Cargo project is writable.
+        "dylints/enforce_platform_boundary",
         "dylints/ban_raw_subprocess",
         "dylints/ban_std_pathbuf",
         "dylints/ban_unrooted_tempdir",
