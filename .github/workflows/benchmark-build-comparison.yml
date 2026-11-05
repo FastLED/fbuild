@@ -134,19 +134,25 @@ jobs:
           # ingress into an ifb device and shape that; fall back to ingress
           # policing when ifb is unavailable.
           #
-          # Every tc call here is idempotent: the runner image ships (and a
-          # previous attempt can leave) its own ingress qdisc, and `qdisc add`
-          # on an existing one dies with "Exclusivity flag on, cannot modify".
+          # Runner images already own handle ffff: on the default interface
+          # (a clsact qdisc for eBPF). `tc qdisc add ... handle ffff: ingress`
+          # therefore dies with "Exclusivity flag on, cannot modify", and a
+          # clsact qdisc cannot be deleted as "ingress". So only create an
+          # ingress qdisc when no ingress hook exists yet; otherwise reuse the
+          # existing one. Clear stale filters either way so re-runs are clean.
           sudo tc qdisc del dev "${iface}" ingress 2>/dev/null || true
-          sudo tc qdisc add dev "${iface}" handle ffff: ingress
+          if ! tc qdisc show dev "${iface}" | grep -qE "clsact|ingress"; then
+            sudo tc qdisc add dev "${iface}" handle ffff: ingress
+          fi
+          sudo tc filter del dev "${iface}" ingress 2>/dev/null || true
           shaped=""
           if sudo modprobe ifb numifbs=1 2>/dev/null && sudo ip link set ifb0 up 2>/dev/null; then
-            sudo tc filter add dev "${iface}" parent ffff: protocol all matchall \
+            sudo tc filter add dev "${iface}" ingress protocol all matchall \
               action mirred egress redirect dev ifb0
             sudo tc qdisc replace dev ifb0 root tbf rate 10mbit burst 64kbit latency 50ms
             shaped="ifb0"
           else
-            sudo tc filter add dev "${iface}" parent ffff: protocol all matchall \
+            sudo tc filter add dev "${iface}" ingress protocol all matchall \
               action police rate 10mbit burst 64k drop
             shaped="police"
           fi
