@@ -1992,7 +1992,7 @@ fn render_html(metadata: &Metadata, results: &[ToolResult]) -> String {
     };
     let network_note = if metadata.network_mbit > 0 {
         format!(
-            "\n      <p class=\"note\">* Measured on a link limited to {} Mbit/s (<code>tc</code> traffic shaping); cold includes framework/lib download time.</p>",
+            "\n      <p class=\"note\">* Measured on a link limited to {} Mbit/s (the benchmark runs in its own shaped network namespace); cold includes framework/lib download time.</p>",
             metadata.network_mbit
         )
     } else {

@@ -629,7 +629,7 @@ fn network_mbit_is_disclosed_in_metadata_and_html() {
 
     let html = render_html(&metadata, &sample_results());
     assert!(html.contains("* Measured on a link limited to 10 Mbit/s"));
-    assert!(html.contains("<code>tc</code> traffic shaping"));
+    assert!(html.contains("shaped network namespace"));
     assert!(html.contains("cold includes framework/lib download time."));
 
     let html = render_html(&sample_metadata(), &sample_results());
