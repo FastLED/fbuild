@@ -14,7 +14,6 @@ schema = 1
 untested = [
   "build_backend",
   "build_qemu_linux_runtime",
-  "cancel_superseded",
   "check_dylint_allowlists",
   "validate_boards",
 ]
@@ -31,7 +30,7 @@ tests = []
 tests = []
 
 [scripts.cancel_superseded]
-tests = []
+tests = ["ci/test_cancel_superseded.py"]
 
 [scripts.check_dylint_allowlists]
 tests = []
