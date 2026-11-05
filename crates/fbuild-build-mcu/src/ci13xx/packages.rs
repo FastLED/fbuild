@@ -31,7 +31,10 @@ impl VendorPackage {
     }
 
     pub(super) fn toolchain(project: &Path) -> Result<Self> {
-        if std::env::consts::OS != "linux" || std::env::consts::ARCH != "x86_64" {
+        let host = fbuild_core::platform::host::current();
+        if host.os() != fbuild_core::platform::host::HostOs::Linux
+            || host.arch() != fbuild_core::platform::host::HostArch::X86_64
+        {
             return Err(FbuildError::PackageError(
                 "CI13xx native toolchain currently supports Linux x86_64 only".into(),
             ));
