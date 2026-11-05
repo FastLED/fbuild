@@ -995,6 +995,18 @@ fn cold_cleanup_steps(
                     parent: NormalizedPath::new(fbuild_cache_root.join("platforms")),
                     prefix: "framework-arduinoespressif32".to_string(),
                 });
+                // Belt and braces: the install has also been observed under
+                // sibling cache roots and under the project's own .fbuild
+                // state. Any of them surviving makes "cold" skip the download
+                // entirely (observed: fw-libs 9.6 ms, 3.5 s cold), so remove
+                // every variant before the timed build.
+                steps.push(ColdCleanupStep::RemoveCacheEntries {
+                    parent: NormalizedPath::new(fbuild_cache_root),
+                    prefix: "framework-arduinoespressif32".to_string(),
+                });
+                steps.push(ColdCleanupStep::RemoveDir(NormalizedPath::new(
+                    project_dir.join(".fbuild"),
+                )));
             }
             steps
         }
@@ -1380,7 +1392,12 @@ fn remove_cache_entries(parent: &Path, prefix: &str) -> AppResult<()> {
         let Some(name) = name.to_str() else {
             continue;
         };
-        if !name.starts_with(prefix) {
+        // Substring, not prefix: fbuild also stores the same package under an
+        // owner-prefixed name (`espressif-framework-arduinoespressif32`) and a
+        // download-cache name (`dl-framework-arduinoespressif32-<ver>-<sha>`).
+        // A prefix match missed those, so the ESP32 framework survived the cold
+        // cleanup and fbuild "cold" builds skipped the download entirely.
+        if !name.contains(prefix) {
             continue;
         }
         let path = entry.path();
