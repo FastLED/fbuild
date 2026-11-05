@@ -42,7 +42,9 @@ jobs:
   benchmark:
     name: Measure and publish Blink builds
     runs-on: ubuntu-24.04
-    timeout-minutes: 60
+    # Cold trials download 271 MB per PlatformIO/arduino-cli run at 10 Mbit
+    # (>=3.6 min each) across 3 trials, so 60 min was not enough headroom.
+    timeout-minutes: 120
     steps:
       - uses: actions/checkout@v6
         with:
@@ -149,7 +151,9 @@ jobs:
           if sudo modprobe ifb numifbs=1 2>/dev/null && sudo ip link set ifb0 up 2>/dev/null; then
             sudo tc filter add dev "${iface}" ingress protocol all matchall \
               action mirred egress redirect dev ifb0
-            sudo tc qdisc replace dev ifb0 root tbf rate 10mbit burst 64kbit latency 50ms
+            # burst must be >= the path MTU and large enough to keep TCP
+            # from collapsing: 64kbit (8 KB) throttled far below 10 Mbit.
+            sudo tc qdisc replace dev ifb0 root tbf rate 10mbit burst 64kb latency 400ms
             shaped="ifb0"
           else
             sudo tc filter add dev "${iface}" ingress protocol all matchall \
@@ -166,8 +170,10 @@ jobs:
             -w '%{speed_download} %{size_download} %{time_total}' \
             'https://speed.cloudflare.com/__down?bytes=10000000')"
           echo "download probe: ${size} bytes at ${speed} B/s in ${elapsed}s"
-          if ! awk -v s="${speed}" -v n="${size}" 'BEGIN { exit !(n >= 9000000 && s <= 1800000) }'; then
-            echo "::error::download probe took ${elapsed}s for ${size} bytes at ${speed} B/s; link is not limited to ~10 Mbit/s (1.25 MB/s) — refusing to publish"
+          # Reject both an unshaped link (>1.8 MB/s) and an over-throttled one
+          # (<0.9 MB/s), so "10 Mbit" means ~10 Mbit and not "some slow number".
+          if ! awk -v s="${speed}" -v n="${size}" 'BEGIN { exit !(n >= 9000000 && s <= 1800000 && s >= 900000) }'; then
+            echo "::error::download probe took ${elapsed}s for ${size} bytes at ${speed} B/s; link is not shaped to ~10 Mbit/s (0.9-1.8 MB/s) — refusing to publish"
             exit 1
           fi
 
