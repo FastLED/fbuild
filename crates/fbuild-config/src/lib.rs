@@ -13,6 +13,7 @@ pub mod mcu;
 pub mod pio_env;
 pub mod platform_packages;
 pub mod sdkconfig;
+pub mod source_filter;
 
 pub use board::{BoardConfig, BoardSummary, DebugToolMeta, Esp32QemuPsramConfig, search_boards};
 pub use ini_parser::PlatformIOConfig;
