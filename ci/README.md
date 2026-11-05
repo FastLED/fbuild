@@ -82,6 +82,8 @@ fail coverage. This policy is tracked in [#1698](https://github.com/FastLED/fbui
 
 - **`find_direct_subprocess.py`** -- Linter for direct `Command::new` spawns outside the `fbuild-core::subprocess` wrappers (FastLED/fbuild#141), run with `--fail` by `check-ubuntu.yml` and `lint-subprocess.yml`. An `allow-direct-spawn` marker now needs a reason after the colon -- a bare marker no longer allowlists the site -- and mentions inside `//`, nested `/* ... */` comments or string/raw-string literals are not spawns. `test_find_direct_subprocess.py` drives both directions plus the live workspace scan.
 
+- **`audit_ignored_tests.py`** -- Weekly inventory of every `#[ignore]` attribute, published as the body of tracking issue #880 (FastLED/fbuild#839). Detection runs on a blanked copy of the source, so a mention inside a `//` or nested `/* ... */` comment, a string/raw-string fixture or a `'"'` char literal is not an ignored test, while `#[ignore = "reason"]` (normal or raw string) and bare `#[ignore]` both are. `test_audit_ignored_tests.py` covers each of those faces plus the live workspace, and cross-checks every reported line against the file it names.
+
 - **`check_python_complexity.py`** -- Runs configured C901/RUF100 checks on every tracked Python file, including scripts excluded from normal discovery (FastLED/fbuild#1639). `test_check_python_complexity.py` drives the same seams, so a raised `max-complexity`, a dropped rule, or a file-selection regression fails a test instead of silently loosening the ratchet.
 
 ESP libs slices: `uv run --no-project ci/slice_esp_libs.py SOURCE --version 3.3.5
