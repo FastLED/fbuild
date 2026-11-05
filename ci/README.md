@@ -2,6 +2,14 @@
 
 Python scripts for CI, packaging, and development tooling. All invoked via `uv run`.
 
+`gate_script_coverage.py --budget <n>` guards the gate scripts themselves: every
+`ci` module that a workflow runs must appear in `gate_script_tests.toml` with the
+test that covers it, and a module with no test must be one of the eight entries
+in that registry's `untested` list. That list is a budget, not a shipping lane --
+the guard fails when it grows, when a declared test disappears or stops
+mentioning its subject, and when an entry is left behind after its test lands.
+Run it with `uv run --no-project python -m unittest ci.test_gate_script_coverage`.
+
 `reclaim_android_ndks.py` provisions cold Linux acceptance, glibc-floor, Dylint,
 and native release builders by uninstalling only installed Android NDK package IDs
 through their SDK manager. These jobs do not build Android targets. It records
