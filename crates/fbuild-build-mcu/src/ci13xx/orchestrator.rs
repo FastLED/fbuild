@@ -332,6 +332,104 @@ async fn resolve_libraries(
     Ok(libraries)
 }
 
+fn add_project_library_includes(roots: &[NormalizedPath], plan: &mut SourcePlan) -> Result<()> {
+    // Convert only across the shared legacy API boundary, then regain normalized ownership.
+    let roots = roots
+        .iter()
+        .map(|path| path.clone().into_path_buf())
+        .collect::<Vec<_>>();
+    let mut includes = plan
+        .includes
+        .iter()
+        .map(|path| path.clone().into_path_buf())
+        .collect();
+    crate::pipeline::add_extra_library_include_dirs(&roots, &mut includes)?;
+    plan.includes = includes.into_iter().map(NormalizedPath::new).collect();
+    Ok(())
+}
+
+fn project_library_roots(recipe: &Recipe, params: &BuildParams) -> Result<Vec<NormalizedPath>> {
+    let config =
+        fbuild_config::PlatformIOConfig::from_path(&recipe.project.join("platformio.ini"))?;
+    let mut entries = vec!["lib".into()];
+    entries.extend(config.get_lib_extra_dirs(&params.env_name)?);
+    let ignored = config.get_lib_ignore(&params.env_name)?;
+    let explicit = fbuild_packages::library::library_manager::parse_lib_specs(
+        &config.get_lib_deps(&params.env_name)?,
+        &ignored,
+    );
+    let mut seen = std::collections::HashSet::new();
+    for spec in explicit {
+        if let Some(path) = spec.local_path {
+            seen.insert(NormalizedPath::new(
+                recipe.project.join(path.as_path()).canonicalize()?,
+            ));
+        }
+    }
+    let mut roots = Vec::new();
+    for root in crate::pipeline::discover_extra_library_roots(&recipe.project, &entries)
+        .into_iter()
+        .map(NormalizedPath::new)
+    {
+        if ignored.iter().any(|name| {
+            root.file_name()
+                .is_some_and(|file| file.to_string_lossy().eq_ignore_ascii_case(name))
+        }) {
+            continue;
+        }
+        // A symlink/file dependency and lib/ may identify the same source.
+        // Compile it once, through the explicit resolver when declared there.
+        if seen.insert(NormalizedPath::new(root.canonicalize()?)) {
+            roots.push(NormalizedPath::new(root));
+        }
+    }
+    Ok(roots)
+}
+
+async fn compile_project_libraries(
+    recipe: &Recipe,
+    params: &BuildParams,
+    plan: &SourcePlan,
+    roots: &[NormalizedPath],
+) -> Result<Vec<NormalizedPath>> {
+    let config =
+        fbuild_config::PlatformIOConfig::from_path(&recipe.project.join("platformio.ini"))?;
+    let gcc = recipe.bin.join("riscv-nuclei-elf-gcc");
+    let gxx = recipe.bin.join("riscv-nuclei-elf-g++");
+    let ar = recipe.bin.join("riscv-nuclei-elf-ar");
+    let gcc_ar = recipe.bin.join("riscv-nuclei-elf-gcc-ar");
+    let c_flags = library_flags(recipe, plan, "compiler.c.flags")?;
+    let cpp_flags = library_flags(recipe, plan, "compiler.cpp.flags")?;
+    let includes = plan
+        .includes
+        .iter()
+        .map(|p| p.clone().into_path_buf())
+        .collect::<Vec<_>>();
+    let roots = roots
+        .iter()
+        .map(|p| p.clone().into_path_buf())
+        .collect::<Vec<_>>();
+    let env = crate::pipeline::LibraryBuildEnv {
+        gcc_path: &gcc,
+        gxx_path: &gxx,
+        ar_path: crate::pipeline::pick_archiver(&ar, &gcc_ar, &c_flags, &cpp_flags),
+        c_flags: &c_flags,
+        cpp_flags: &cpp_flags,
+        include_dirs: &includes,
+        verbose: params.verbose,
+        jobs: crate::parallel::effective_jobs(params.jobs),
+        compiler_cache: None,
+    };
+    crate::pipeline::compile_extra_libraries_with_archive(
+        &roots,
+        &recipe.build,
+        &env,
+        config.get_lib_archive(&params.env_name)?,
+    )
+    .await
+    .map(|paths| paths.into_iter().map(NormalizedPath::new).collect())
+}
+
 fn source_compile_flags(
     recipe: &Recipe,
     plan: &SourcePlan,
@@ -373,6 +471,8 @@ async fn compile_sources(
     let gcc = bin.join("riscv-nuclei-elf-gcc");
     let gxx = bin.join("riscv-nuclei-elf-g++");
     let mut plan = source_plan(recipe)?;
+    let roots = project_library_roots(recipe, params)?;
+    add_project_library_includes(&roots, &mut plan)?;
     let libraries = resolve_libraries(recipe, params, &mut plan).await?;
     prepare_sketch(recipe, params, &mut plan)?;
     let mut records = Vec::new();
@@ -435,7 +535,7 @@ async fn compile_sources(
             .into_iter()
             .map(NormalizedPath::new),
     );
-
+    objects.extend(compile_project_libraries(recipe, params, &plan, &roots).await?);
     Ok((objects, database))
 }
 

@@ -510,3 +510,83 @@ async fn inspect_scheduler_reachability(result: &fbuild_build::BuildResult) -> P
     );
     path
 }
+
+fn stage_project_library(project: &Path, source: &Path, identity: &serde_json::Value) {
+    // Match FastLED's compile wrapper: contents of src/ at lib/FastLED/,
+    // plus the real manifest. Never copy the checkout or generated .build.
+    let library = project.join("lib/FastLED");
+    std::fs::create_dir_all(&library).unwrap();
+    for (name, digest) in identity["src_sha256"].as_object().unwrap() {
+        let relative = name.strip_prefix("src/").expect("source-only inventory");
+        let bytes = std::fs::read(source.join(name)).unwrap();
+        assert_eq!(
+            format!("{:x}", Sha256::digest(&bytes)),
+            digest.as_str().unwrap()
+        );
+        let destination = library.join(relative);
+        std::fs::create_dir_all(destination.parent().unwrap()).unwrap();
+        std::fs::write(destination, bytes).unwrap();
+    }
+    let manifest = std::fs::read(source.join("library.json")).unwrap();
+    assert_eq!(
+        format!("{:x}", Sha256::digest(&manifest)),
+        identity["library_json_sha256"].as_str().unwrap()
+    );
+    std::fs::write(library.join("library.json"), manifest).unwrap();
+}
+
+#[tokio::test(flavor = "multi_thread", worker_threads = 4)]
+#[ignore = "#1914: requires actual FBUILD_FASTLED_SOURCE checkout and Nuclei GCC/SDK; compiles standard project lib/FastLED layout"]
+async fn ci1306_real_fastled_project_library_no_lto() {
+    let source = PathBuf::from(
+        std::env::var_os("FBUILD_FASTLED_SOURCE")
+            .expect("set actual FBUILD_FASTLED_SOURCE checkout"),
+    )
+    .canonicalize()
+    .unwrap();
+    let mut identity = input_identity(&source).await;
+    let manifest = std::fs::read(source.join("library.json")).expect("actual FastLED manifest");
+    identity["library_json_sha256"] = format!("{:x}", Sha256::digest(&manifest)).into();
+    let tmp = tempfile::tempdir().unwrap();
+    let project = tmp.path();
+    std::fs::create_dir(project.join("src")).unwrap();
+    stage_project_library(project, &source, &identity);
+    // No lib_deps: ordinary project-local library discovery is the contract.
+    std::fs::write(project.join("platformio.ini"),
+        "[env:ci1306]\nplatform = ci13xx\nboard = ci1306\nframework = arduino\nbuild_unflags = -flto\nbuild_flags = -fno-lto\n").unwrap();
+    std::fs::write(project.join("src/main.cpp"), PROBE).unwrap();
+    let report = provision_env(project, "ci1306", provision::ProvisionMode::Install)
+        .await
+        .unwrap();
+    assert!(!report.failed());
+    let backend = compile_backend::CompileBackend::start().await.unwrap();
+    compile_backend::install_global(backend);
+    let result = tokio::time::timeout(
+        std::time::Duration::from_secs(1200),
+        fbuild_build::get_orchestrator(Platform::Ci13xx)
+            .unwrap()
+            .build(&params(project)),
+    )
+    .await;
+    retain_build_attempt(
+        project,
+        &identity,
+        "fastled-ci1306-project-library",
+        &result,
+    );
+    let result = result
+        .expect("project library build timeout")
+        .expect("native CI1306 must discover, compile and link actual project-local FastLED");
+    assert!(result.success);
+    let mut after = input_identity(&source).await;
+    after["library_json_sha256"] = format!(
+        "{:x}",
+        Sha256::digest(std::fs::read(source.join("library.json")).unwrap())
+    )
+    .into();
+    assert_eq!(
+        identity, after,
+        "actual source/manifest changed during build"
+    );
+    inspect_and_retain(&result, project, &identity);
+}
