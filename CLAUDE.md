@@ -130,7 +130,7 @@ All hooks are Python scripts in `ci/hooks/`, invoked via `uv run`:
 
 - **UserPromptSubmit**: `ci/hooks/board_context.py` detects board-related prompts and injects skill guidance (board lookup workflow, external source URLs, relevant commands)
 - **PreToolUse**: `ci/hooks/tool_guard.py` blocks bare Rust commands and any `uv run` invocation of `soldr`/`cargo` (must use a globally-installed `soldr` directly) and bare `python`/`pip` (must use `uv`) across supported shell tools, not just Bash
-- **PreToolUse**: `ci/hooks/crate_guard.py` blocks Edit/Write of `Cargo.toml` at any path outside the approved set (workspace root + 14 member dirs + `dylints/ban_raw_subprocess`). Real-time monocrate enforcement; complements the batch CI check at `ci/check_workspace_crates.py`. Keep the allowlists in both files in sync
+- **PreToolUse**: `ci/hooks/crate_guard.py` blocks Edit/Write of `Cargo.toml` at any path outside the approved set (workspace root + every `[workspace] members` dir + every excluded `dylints/*` crate). Real-time monocrate enforcement; complements the batch CI check at `ci/check_workspace_crates.py`. The two allowlists are one policy: `ci/test_crate_guard_parity.py` asserts them against the real `Cargo.toml` and drives the hook, so they cannot drift silently
 - **PostToolUse**: `ci/hooks/lint.py` auto-formats + runs clippy on edited .rs files
 - **PostToolUse**: `ci/hooks/readme_guard.py` errors if directory lacks README.md
 - **SessionStart**: `ci/hooks/check-on-start.py` captures git fingerprint
