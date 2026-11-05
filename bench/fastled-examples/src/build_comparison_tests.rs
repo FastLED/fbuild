@@ -279,7 +279,7 @@ fn esp32s3_cold_removes_framework_packages_but_keeps_toolchains() {
     }));
     assert!(
         fbuild_steps.contains(&ColdCleanupStep::RemoveDir(NormalizedPath::new(
-            Path::new("bench/blink").join(".fbuild")
+            get_project_fbuild_dir(Path::new("bench/blink"))
         )))
     );
 
