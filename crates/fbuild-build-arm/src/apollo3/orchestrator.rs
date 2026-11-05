@@ -246,7 +246,7 @@ impl BuildOrchestrator for Apollo3Orchestrator {
         // 7. Build include dirs
         let mut include_dirs = vec![core_dir.clone(), variant_dir.clone()];
         include_dirs.push(ctx.src_dir.clone());
-        pipeline::discover_project_includes(&params.project_dir, &mut include_dirs);
+        pipeline::discover_project_includes(&params.project_dir, &mut include_dirs)?;
 
         // Note: Do NOT add toolchain sysroot includes for Apollo3.
         // GCC 9 handles its own internal multilib include paths; adding

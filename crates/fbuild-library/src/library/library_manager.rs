@@ -244,19 +244,20 @@ pub async fn resolve_libraries(
 
     let mut all_include_dirs: Vec<PathBuf> = base_includes.to_vec();
     for lib in &installed {
-        all_include_dirs.extend(lib.get_include_dirs());
+        all_include_dirs.extend(lib.get_include_dirs_filtered()?);
     }
 
     let libraries = installed
         .iter()
         .map(|lib| {
-            if lib.is_header_only() {
+            let sources = lib.get_source_files_filtered()?;
+            if sources.is_empty() {
                 tracing::info!("library {} is header-only", lib.name);
                 return Ok(None);
             }
             Ok(Some(PlannedLibrary {
                 name: lib.name.clone(),
-                sources: lib.get_source_files(),
+                sources,
                 build_dir: lib.build_dir.clone(),
                 archive: lib.archive_enabled(None)?,
             }))
@@ -270,11 +271,17 @@ pub async fn resolve_libraries(
         // Library includes only, not base includes.
         include_dirs: installed
             .iter()
-            .flat_map(|lib| lib.get_include_dirs())
+            .map(|lib| lib.get_include_dirs_filtered())
+            .collect::<Result<Vec<_>>>()?
+            .into_iter()
+            .flatten()
             .collect(),
         source_files: installed
             .iter()
-            .flat_map(|lib| lib.get_source_files())
+            .map(|lib| lib.get_source_files_filtered())
+            .collect::<Result<Vec<_>>>()?
+            .into_iter()
+            .flatten()
             .collect(),
         plan: LibraryCompilePlan {
             libraries,
@@ -909,5 +916,45 @@ mod tests {
             compiler_cache: None,
         };
         assert_eq!(plan.archive_names(), vec!["FastLED", "zlib"]);
+    }
+}
+
+#[cfg(test)]
+mod local_manifest_filter_tests {
+    #[tokio::test]
+    async fn explicit_local_dependency_uses_fallible_manifest_source_filter() {
+        let project = tempfile::tempdir().unwrap();
+        let library = project.path().join("real/src");
+        std::fs::create_dir_all(&library).unwrap();
+        std::fs::write(library.join("keep.cpp"), "int keep() { return 1; }").unwrap();
+        std::fs::write(library.join("poison.cpp"), "#error must be excluded").unwrap();
+        let manifest = project.path().join("real/library.json");
+        std::fs::write(
+            &manifest,
+            r#"{"name":"Real","build":{"srcFilter":"+<*> -<poison.cpp>"}}"#,
+        )
+        .unwrap();
+        let specs = vec!["Real=symlink://real".into()];
+        let build = project.path().join("build");
+        let resolve = || {
+            super::resolve_libraries(
+                &specs,
+                &[],
+                std::path::Path::new("gcc"),
+                std::path::Path::new("g++"),
+                std::path::Path::new("ar"),
+                &[],
+                &[],
+                &[],
+                project.path(),
+                &build,
+                false,
+                None,
+            )
+        };
+        let resolved = resolve().await.unwrap();
+        assert_eq!(resolved.source_files, vec![library.join("keep.cpp")]);
+        std::fs::write(&manifest, r#"{"build":{"srcFilter":[false]}}"#).unwrap();
+        assert!(resolve().await.is_err());
     }
 }

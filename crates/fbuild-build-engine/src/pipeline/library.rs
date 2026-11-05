@@ -124,11 +124,14 @@ pub fn discover_extra_library_roots(project_dir: &Path, entries: &[String]) -> V
 }
 
 /// Add include dirs for extra library roots to an orchestrator include list.
-pub fn add_extra_library_include_dirs(library_roots: &[PathBuf], include_dirs: &mut Vec<PathBuf>) {
+pub fn add_extra_library_include_dirs(
+    library_roots: &[PathBuf],
+    include_dirs: &mut Vec<PathBuf>,
+) -> Result<()> {
     for root in library_roots {
         let lib_name = library_name(root);
         let lib = fbuild_packages::library::library_info::InstalledLibrary::new(root, &lib_name);
-        let mut dirs = lib.get_include_dirs();
+        let mut dirs = lib.get_include_dirs_filtered()?;
         if !include_dirs.contains(root) {
             dirs.push(root.clone());
         }
@@ -138,6 +141,7 @@ pub fn add_extra_library_include_dirs(library_roots: &[PathBuf], include_dirs: &
             }
         }
     }
+    Ok(())
 }
 
 /// Preserve library records while selecting only archive-eligible framework
@@ -199,7 +203,7 @@ pub async fn compile_extra_libraries_with_archive(
         let lib_name = library_name(root);
         let lib_info =
             fbuild_packages::library::library_info::InstalledLibrary::new(root, &lib_name);
-        let sources = lib_info.get_source_files();
+        let sources = lib_info.get_source_files_filtered()?;
         if sources.is_empty() {
             tracing::info!("extra library '{}' is header-only", lib_name);
             continue;
@@ -251,10 +255,10 @@ pub async fn compile_extra_libraries_with_archive(
 /// root contains `library.json`/`library.properties` and we're building an
 /// example sketch (i.e. `src_dir` points elsewhere).
 ///
-/// Returns `Ok(None)` when not applicable (not a library project, normal
-/// build, header-only, no src dir, or name collides with a `lib/`
-/// subdirectory). Returns `Ok(Some(archive_path))` when the project-as-
-/// library archive was produced.
+/// Returns no link inputs when not applicable (not a library project, normal
+/// self-build, header-only, or name collides with a `lib/` subdirectory).
+/// Malformed manifest metadata propagates as an error. Source/include roots
+/// come from the actual manifest, including nondefault srcDir.
 ///
 /// Matches PlatformIO's project-as-library convention; see ISSUES.md Issue 1.
 /// Its compiles draw from `gate`, the build's shared job budget
@@ -269,11 +273,19 @@ pub async fn compile_project_as_library_link_inputs(
     archive_override: Option<bool>,
 ) -> Result<Vec<PathBuf>> {
     let Some((lib_name, sources)) =
-        project_library_candidate(project_dir, src_dir, existing_lib_names, true)
+        project_library_candidate(project_dir, src_dir, existing_lib_names, true)?
     else {
         return Ok(Vec::new());
     };
-    let project_src = project_dir.join("src");
+    let library =
+        fbuild_packages::library::library_info::InstalledLibrary::new(project_dir, &lib_name);
+    let project_src = library.source_root_filtered()?;
+    let mut includes = env.include_dirs.to_vec();
+    for path in library.get_include_dirs_filtered()? {
+        if !includes.contains(&path) {
+            includes.push(path);
+        }
+    }
 
     tracing::info!(
         "compiling project-as-library: {} ({} sources from {})",
@@ -291,7 +303,7 @@ pub async fn compile_project_as_library_link_inputs(
     match fbuild_packages::library::library_compiler::compile_library_link_inputs_gated(
         &lib_name,
         &sources,
-        env.include_dirs,
+        &includes,
         env.gcc_path,
         env.gxx_path,
         env.ar_path,
@@ -353,8 +365,11 @@ pub fn project_library_name(
     project_dir: &Path,
     src_dir: &Path,
     existing_lib_names: &std::collections::HashSet<String>,
-) -> Option<String> {
-    project_library_candidate(project_dir, src_dir, existing_lib_names, false).map(|(name, _)| name)
+) -> Result<Option<String>> {
+    Ok(
+        project_library_candidate(project_dir, src_dir, existing_lib_names, false)?
+            .map(|(name, _)| name),
+    )
 }
 
 /// The project-as-library name and sources, when every guard passes and the
@@ -364,26 +379,20 @@ fn project_library_candidate(
     src_dir: &Path,
     existing_lib_names: &std::collections::HashSet<String>,
     log: bool,
-) -> Option<(String, Vec<PathBuf>)> {
+) -> Result<Option<(String, Vec<PathBuf>)>> {
     // Guard 1: must be a library project (library.json or library.properties at root).
     if !is_project_a_library(project_dir) {
-        return None;
+        return Ok(None);
     }
 
-    // Guard 2: project must have a src/ dir.
-    let project_src = project_dir.join("src");
-    if !project_src.is_dir() {
-        return None;
-    }
-
-    // Guard 3: must be building an example. If src_dir IS the project's own
+    // Must be building an example. If src_dir IS the project's own
     // src/, we're doing a normal library self-build and the sketch scanner
     // is already compiling these sources — don't double-compile.
     // Also guard the BuildContext fallback where src_dir collapses to
     // project_dir (would cause the scanner to recursively pick up library
     // sources, leading to multiply-defined symbols).
-    if src_dir == project_src || src_dir == project_dir {
-        return None;
+    if src_dir == project_dir {
+        return Ok(None);
     }
 
     // Compute lib name from project dir basename.
@@ -393,7 +402,7 @@ fn project_library_candidate(
         .unwrap_or("project")
         .to_lowercase();
 
-    // Guard 4: collision with a lib/<name>/ subdirectory — lib/ wins
+    // Collision with a lib/<name>/ subdirectory — lib/ wins
     // (matches PlatformIO behavior).
     if existing_lib_names.contains(&lib_name) {
         if log {
@@ -403,20 +412,24 @@ fn project_library_candidate(
                 lib_name
             );
         }
-        return None;
+        return Ok(None);
     }
 
     // Discover sources via the same helper used for installed libraries.
     let lib_info =
         fbuild_packages::library::library_info::InstalledLibrary::new(project_dir, &lib_name);
-    let sources = lib_info.get_source_files();
+    let project_src = lib_info.source_root_filtered()?;
+    if fbuild_core::path::NormalizedPath::new(src_dir) == project_src {
+        return Ok(None);
+    }
+    let sources = lib_info.get_source_files_filtered()?;
     if sources.is_empty() {
         if log {
             tracing::info!("project-as-library '{}' is header-only", lib_name);
         }
-        return None;
+        return Ok(None);
     }
-    Some((lib_name, sources))
+    Ok(Some((lib_name, sources)))
 }
 
 /// `lib_deps` resolved and installed, compiled later on the build's shared
@@ -631,7 +644,7 @@ mod extra_library_tests {
         std::fs::write(lib.join("src").join("FastLED.h"), "").unwrap();
 
         let mut include_dirs = Vec::new();
-        add_extra_library_include_dirs(std::slice::from_ref(&lib), &mut include_dirs);
+        add_extra_library_include_dirs(std::slice::from_ref(&lib), &mut include_dirs).unwrap();
 
         assert!(include_dirs.contains(&lib.join("src")));
         assert!(include_dirs.contains(&lib));
@@ -896,31 +909,158 @@ mod project_as_library_tests {
 
         // Not a library project yet.
         std::fs::write(project_src.join("FastLED.cpp"), "").unwrap();
-        assert_eq!(project_library_name(&project_dir, &example, &none), None);
+        assert_eq!(
+            project_library_name(&project_dir, &example, &none).unwrap(),
+            None
+        );
 
         std::fs::write(project_dir.join("library.json"), "{}").unwrap();
         assert_eq!(
-            project_library_name(&project_dir, &example, &none).as_deref(),
+            project_library_name(&project_dir, &example, &none)
+                .unwrap()
+                .as_deref(),
             Some("fastled")
         );
         // A normal self-build, or a src dir collapsed to the project root.
         assert_eq!(
-            project_library_name(&project_dir, &project_src, &none),
+            project_library_name(&project_dir, &project_src, &none).unwrap(),
             None
         );
         assert_eq!(
-            project_library_name(&project_dir, &project_dir, &none),
+            project_library_name(&project_dir, &project_dir, &none).unwrap(),
             None
         );
         // lib/fastled wins.
         let collision: HashSet<String> = ["fastled".to_string()].into();
         assert_eq!(
-            project_library_name(&project_dir, &example, &collision),
+            project_library_name(&project_dir, &example, &collision).unwrap(),
             None
         );
         // Header-only.
         std::fs::remove_file(project_src.join("FastLED.cpp")).unwrap();
         std::fs::write(project_src.join("FastLED.h"), "").unwrap();
-        assert_eq!(project_library_name(&project_dir, &example, &none), None);
+        assert_eq!(
+            project_library_name(&project_dir, &example, &none).unwrap(),
+            None
+        );
+    }
+}
+
+#[cfg(test)]
+mod manifest_include_tests {
+    #[test]
+    fn shared_extra_library_includes_honor_manifest_src_dir() {
+        let temp = tempfile::tempdir().unwrap();
+        let root = temp.path().join("Actual");
+        let code = root.join("code");
+        std::fs::create_dir_all(&code).unwrap();
+        std::fs::write(
+            root.join("library.json"),
+            r#"{"name":"Actual","build":{"srcDir":"code"}}"#,
+        )
+        .unwrap();
+        std::fs::write(code.join("Actual.h"), "int actual();\n").unwrap();
+        std::fs::write(
+            code.join("actual.cpp"),
+            "#include <Actual.h>\nint actual() { return 1; }\n",
+        )
+        .unwrap();
+        let mut includes = Vec::new();
+        super::add_extra_library_include_dirs(&[root], &mut includes).unwrap();
+        assert!(
+            includes.contains(&code),
+            "shared caller must receive actual srcDir include root: {includes:?}"
+        );
+    }
+}
+
+#[cfg(test)]
+mod manifest_project_selection_tests {
+    use super::*;
+
+    fn fixture(directory: &str) -> tempfile::TempDir {
+        let temp = tempfile::tempdir().unwrap();
+        let source = temp.path().join(directory);
+        std::fs::create_dir_all(&source).unwrap();
+        std::fs::create_dir_all(temp.path().join("examples/Blink")).unwrap();
+        std::fs::write(source.join("Actual.h"), "int permitted();\n").unwrap();
+        std::fs::write(
+            source.join("permitted.cpp"),
+            "#include <Actual.h>\nint permitted(){return 1;}\n",
+        )
+        .unwrap();
+        std::fs::write(
+            source.join("poison.cpp"),
+            "#error manifest must exclude this source\n",
+        )
+        .unwrap();
+        let build = if directory == "src" {
+            serde_json::json!({"srcFilter":"+<*> -<poison.cpp>"})
+        } else {
+            serde_json::json!({"srcDir":directory,"srcFilter":["+<*>","-<poison.cpp>"]})
+        };
+        std::fs::write(
+            temp.path().join("library.json"),
+            serde_json::to_vec(&serde_json::json!({"name":"Actual","build":build})).unwrap(),
+        )
+        .unwrap();
+        temp
+    }
+
+    #[test]
+    fn project_library_selection_excludes_manifest_poison() {
+        let temp = fixture("src");
+        let selected = project_library_candidate(
+            temp.path(),
+            &temp.path().join("examples/Blink"),
+            &std::collections::HashSet::new(),
+            false,
+        )
+        .unwrap()
+        .expect("actual library project must be selected");
+        assert_eq!(selected.1, vec![temp.path().join("src/permitted.cpp")]);
+    }
+
+    #[test]
+    fn project_library_selection_honors_custom_src_dir_without_default_src() {
+        let temp = fixture("code");
+        assert!(!temp.path().join("src").exists());
+        let selected = project_library_candidate(
+            temp.path(),
+            &temp.path().join("examples/Blink"),
+            &std::collections::HashSet::new(),
+            false,
+        )
+        .unwrap()
+        .expect("custom source directory is an actual library project");
+        assert_eq!(selected.1, vec![temp.path().join("code/permitted.cpp")]);
+        let includes =
+            fbuild_packages::library::library_info::InstalledLibrary::new(temp.path(), "actual")
+                .get_include_dirs_filtered()
+                .unwrap();
+        assert!(includes.contains(&temp.path().join("code")));
+    }
+}
+
+#[cfg(test)]
+mod project_manifest_error_tests {
+    #[test]
+    fn project_selection_and_name_propagate_malformed_manifest() {
+        let temp = tempfile::tempdir().unwrap();
+        std::fs::create_dir(temp.path().join("src")).unwrap();
+        std::fs::write(
+            temp.path().join("src/actual.cpp"),
+            "int actual(){return 1;}\n",
+        )
+        .unwrap();
+        std::fs::write(
+            temp.path().join("library.json"),
+            r#"{"build":{"srcFilter":[false]}}"#,
+        )
+        .unwrap();
+        let example = temp.path().join("examples/Blink");
+        let names = std::collections::HashSet::new();
+        assert!(super::project_library_candidate(temp.path(), &example, &names, false).is_err());
+        assert!(super::project_library_name(temp.path(), &example, &names).is_err());
     }
 }

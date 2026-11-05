@@ -361,11 +361,11 @@ impl BuildOrchestrator for NxpLpcOrchestrator {
             cmsis.get_core_include_dir(),
             src_dir,
         ]);
-        pipeline::discover_project_includes(&params.project_dir, &mut include_dirs);
+        pipeline::discover_project_includes(&params.project_dir, &mut include_dirs)?;
         let lib_extra_dirs = ctx.config.get_lib_extra_dirs(&params.env_name)?;
         let extra_library_roots =
             pipeline::discover_extra_library_roots(&params.project_dir, &lib_extra_dirs);
-        pipeline::add_extra_library_include_dirs(&extra_library_roots, &mut include_dirs);
+        pipeline::add_extra_library_include_dirs(&extra_library_roots, &mut include_dirs)?;
         include_dirs.retain(|dir| !dir.as_os_str().is_empty());
 
         // Resolve lib_deps before compiler creation so dependency headers are visible (#1276).

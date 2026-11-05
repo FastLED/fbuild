@@ -3,9 +3,10 @@
 
 use std::path::{Path, PathBuf};
 
-/// Add the project's `include/` directory and `lib/` subdirectories to include paths.
+/// Add project and library include roots using fallible manifest-aware discovery.
 ///
-/// PlatformIO automatically adds these — replicate that behavior.
+/// Project-as-library examples receive the actual manifest source root, including
+/// custom srcDir. Invalid metadata propagates before compiler construction.
 ///
 /// All emitted paths are absolute. When `project_dir` is relative, it is first
 /// resolved against the current working directory (see `absolute_from_cwd`).
@@ -18,47 +19,30 @@ use std::path::{Path, PathBuf};
 /// open (`fatal error: FastLED.h: No such file or directory`). Promoting
 /// `project_dir` to absolute up front keeps the include paths stable through
 /// the normalize→exec chain. See FastLED/fbuild#303.
-pub fn discover_project_includes(project_dir: &Path, include_dirs: &mut Vec<PathBuf>) {
+pub fn discover_project_includes(
+    project_dir: &Path,
+    include_dirs: &mut Vec<PathBuf>,
+) -> fbuild_core::Result<()> {
     let project_dir = crate::compiler::absolute_from_cwd(project_dir);
-
-    // PlatformIO automatically includes the project's include/ directory
     let include_dir = project_dir.join("include");
-    if include_dir.is_dir() {
+    if include_dir.is_dir() && !include_dirs.contains(&include_dir) {
         include_dirs.push(include_dir);
     }
 
-    // PlatformIO automatically discovers libraries placed in the project's lib/ directory.
-    // Each subdirectory is treated as a library — add its root (and src/ if present).
+    // Use the same fallible manifest-aware roots as actual library compilation.
     let local_lib_dir = project_dir.join("lib");
     if local_lib_dir.is_dir() {
-        if let Ok(entries) = std::fs::read_dir(&local_lib_dir) {
-            for entry in entries.flatten() {
-                let path = entry.path();
-                if path.is_dir() {
-                    let lib_src = path.join("src");
-                    if lib_src.is_dir() {
-                        include_dirs.push(lib_src);
-                    }
-                    // Always add the root too (some libraries have headers at top level)
-                    include_dirs.push(path);
-                }
+        for entry in std::fs::read_dir(&local_lib_dir)? {
+            let path = entry?.path();
+            if path.is_dir() {
+                super::add_extra_library_include_dirs(std::slice::from_ref(&path), include_dirs)?;
             }
         }
     }
-
-    // Project-as-library detection (PlatformIO convention).
-    // When a project root contains library.json or library.properties, the project
-    // itself is a library and its src/ directory is automatically added to include
-    // paths for any sketch built within the project. This allows building example
-    // sketches against the library being developed (e.g., FastLED examples).
-    let library_json = project_dir.join("library.json");
-    let library_props = project_dir.join("library.properties");
-    if library_json.exists() || library_props.exists() {
-        let project_src = project_dir.join("src");
-        if project_src.is_dir() && !include_dirs.contains(&project_src) {
-            include_dirs.push(project_src);
-        }
+    if is_project_a_library(&project_dir) {
+        super::add_extra_library_include_dirs(std::slice::from_ref(&project_dir), include_dirs)?;
     }
+    Ok(())
 }
 
 /// Returns true if the project is a PlatformIO library (has library.json or library.properties).
@@ -102,7 +86,7 @@ mod tests {
         std::fs::create_dir_all(project.join("include")).unwrap();
 
         let mut dirs = Vec::new();
-        discover_project_includes(project, &mut dirs);
+        discover_project_includes(project, &mut dirs).unwrap();
 
         assert!(!dirs.is_empty(), "should discover include + lib paths");
         for d in &dirs {
@@ -141,7 +125,7 @@ mod tests {
         };
 
         let mut dirs = Vec::new();
-        discover_project_includes(&relative, &mut dirs);
+        discover_project_includes(&relative, &mut dirs).unwrap();
 
         for d in &dirs {
             assert!(
@@ -150,5 +134,63 @@ mod tests {
                 d.display()
             );
         }
+    }
+}
+
+#[cfg(test)]
+mod manifest_example_include_tests {
+    #[test]
+    fn project_library_custom_source_root_reaches_example_compiler_flags() {
+        let temp = tempfile::tempdir().unwrap();
+        let code = temp.path().join("code");
+        let example = temp.path().join("examples/Blink");
+        std::fs::create_dir_all(&code).unwrap();
+        std::fs::create_dir_all(&example).unwrap();
+        std::fs::write(
+            temp.path().join("library.json"),
+            r#"{"name":"Actual","build":{"srcDir":"code"}}"#,
+        )
+        .unwrap();
+        std::fs::write(code.join("Actual.h"), "int actual();\n").unwrap();
+        std::fs::write(
+            code.join("actual.cpp"),
+            "#include <Actual.h>\nint actual(){return 1;}\n",
+        )
+        .unwrap();
+        std::fs::write(
+            example.join("main.cpp"),
+            "#include <Actual.h>\nint main(){return actual();}\n",
+        )
+        .unwrap();
+        let mut includes = vec![example];
+        // This is the shared call made before real platform compiler creation.
+        super::discover_project_includes(temp.path(), &mut includes).unwrap();
+        let compiler = crate::compiler::CompilerBase {
+            mcu: "ci1306".into(),
+            f_cpu: "246000000L".into(),
+            defines: std::collections::HashMap::new(),
+            include_dirs: includes,
+            verbose: false,
+        };
+        assert!(
+            compiler
+                .build_include_flags()
+                .contains(&format!("-I{}", code.display())),
+            "actual example compiler flags must expose project manifest source root"
+        );
+    }
+}
+
+#[cfg(test)]
+mod project_manifest_discovery_error_tests {
+    #[test]
+    fn example_compiler_include_discovery_propagates_invalid_project_manifest() {
+        let temp = tempfile::tempdir().unwrap();
+        std::fs::write(
+            temp.path().join("library.json"),
+            r#"{"build":{"srcDir":"missing-code"}}"#,
+        )
+        .unwrap();
+        assert!(super::discover_project_includes(temp.path(), &mut Vec::new()).is_err());
     }
 }

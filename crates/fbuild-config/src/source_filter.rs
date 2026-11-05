@@ -1,7 +1,10 @@
-//! Ordered PlatformIO source filters shared by source consumers.
-use std::path::Path;
+//! Ordered PlatformIO source filters shared by sketches and library manifests.
+use fbuild_core::path::NormalizedPath;
 use regex::Regex;
+use std::path::Path;
 
+/// Normalize lexical glob separators regardless of the build host.
+/// Glob strings may contain Windows separators even when evaluated on Linux.
 pub fn normalize_glob_separators(pattern: &str) -> String {
     // Glob-pattern normalization is INTENTIONALLY unconditional
     // (unlike `NormalizedPath::display_slash()` which gates on
@@ -34,7 +37,7 @@ impl SourceFilter {
             });
         };
 
-        for raw in spec.lines().flat_map(|line| line.split(',')) {
+        for raw in source_filter_rules(spec)? {
             let token = raw.trim();
             if token.is_empty() {
                 continue;
@@ -79,8 +82,10 @@ impl SourceFilter {
             return true;
         }
 
-        let rel =
-            normalize_glob_separators(&path.strip_prefix(root).unwrap_or(path).to_string_lossy());
+        let path = NormalizedPath::new(path);
+        let root = NormalizedPath::new(root);
+        let relative = path.relative_to(&root).unwrap_or(path);
+        let rel = normalize_glob_separators(&relative.to_string_lossy());
 
         let mut included = !self.has_include_rules;
         for rule in &self.rules {
@@ -139,4 +144,34 @@ fn glob_fragment_to_regex(pattern: &str) -> String {
         i += 1;
     }
     out
+}
+
+// Preserve rule order while allowing the documented whitespace-separated string
+// form as well as newline/comma-separated project filters. Spaces inside a
+// <pattern> belong to that pattern.
+fn source_filter_rules(spec: &str) -> fbuild_core::Result<Vec<&str>> {
+    let matcher = Regex::new(r"[+-]<[^>]*>").expect("constant source-filter grammar");
+    let mut rules = Vec::new();
+    let mut end = 0;
+    for token in matcher.find_iter(spec) {
+        if !spec[end..token.start()]
+            .trim_matches(|c: char| c.is_whitespace() || c == ',')
+            .is_empty()
+        {
+            return Err(fbuild_core::FbuildError::ConfigError(
+                "invalid source filter rule".into(),
+            ));
+        }
+        rules.push(token.as_str());
+        end = token.end();
+    }
+    if !spec[end..]
+        .trim_matches(|c: char| c.is_whitespace() || c == ',')
+        .is_empty()
+    {
+        return Err(fbuild_core::FbuildError::ConfigError(
+            "invalid source filter rule".into(),
+        ));
+    }
+    Ok(rules)
 }
