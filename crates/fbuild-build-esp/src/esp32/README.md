@@ -7,6 +7,8 @@ Platform-specific build orchestration for all ESP32 MCU variants.
 - `mcu_config` — Data-driven MCU configuration from embedded JSON files
 - `esp32_compiler` — Compiler using RISC-V or Xtensa GCC, flags from MCU config
 - `esp32_linker` — Linker with multiple scripts, 100+ precompiled libs, response files
+- `firmware_bin_cache` — Cross-project reuse of the `elf2image` product, keyed on
+  ELF contents plus the flash parameters (FastLED/fbuild#1894)
 - `orchestrator` — Build phases: config, packages, compile, link, convert
 
 ## Architecture
