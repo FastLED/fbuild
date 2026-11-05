@@ -32,6 +32,7 @@ DRIFT_UNITTEST_MODULES: tuple[str, ...] = (
     "ci.test_check_python_complexity",
     "ci.test_crate_guard_parity",
     "ci.test_find_direct_subprocess",
+    "ci.test_audit_ignored_tests",
     "ci.test_local_suites",
     "ci.test_gate_script_coverage",
 )

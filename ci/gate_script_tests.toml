@@ -12,7 +12,6 @@
 schema = 1
 
 untested = [
-  "audit_ignored_tests",
   "build_backend",
   "build_qemu_linux_runtime",
   "cancel_superseded",
@@ -23,7 +22,7 @@ untested = [
 ]
 
 [scripts.audit_ignored_tests]
-tests = []
+tests = ["ci/test_audit_ignored_tests.py"]
 
 [scripts.build_backend]
 # Only mentioned as a tracked path in test_check_python_complexity; the PEP 517
