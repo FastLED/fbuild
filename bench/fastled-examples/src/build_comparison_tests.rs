@@ -267,13 +267,19 @@ fn esp32s3_cold_removes_framework_packages_but_keeps_toolchains() {
         cache_root,
         platformio_home,
     );
-    assert_eq!(
-        fbuild_steps.last(),
-        Some(&ColdCleanupStep::RemoveCacheEntries {
-            parent: NormalizedPath::new(cache_root.join("platforms")),
-            prefix: "framework-arduinoespressif32".into(),
-        })
-    );
+    assert!(fbuild_steps.contains(&ColdCleanupStep::RemoveCacheEntries {
+        parent: NormalizedPath::new(cache_root.join("platforms")),
+        prefix: "framework-arduinoespressif32".into(),
+    }));
+    // Sibling cache roots and the per-project state are cleared as well, so a
+    // surviving install cannot make the "cold" arm skip the download.
+    assert!(fbuild_steps.contains(&ColdCleanupStep::RemoveCacheEntries {
+        parent: NormalizedPath::new(cache_root),
+        prefix: "framework-arduinoespressif32".into(),
+    }));
+    assert!(fbuild_steps.contains(&ColdCleanupStep::RemoveDir(NormalizedPath::new(
+        Path::new("bench/blink").join(".fbuild")
+    ))));
 
     let pio_steps = cold_cleanup_steps(
         ToolKind::PlatformIo,
@@ -318,12 +324,14 @@ fn esp32s3_cold_removes_framework_packages_but_keeps_toolchains() {
 }
 
 #[test]
-fn remove_cache_entries_deletes_only_prefixed_children() {
+fn remove_cache_entries_deletes_every_variant_of_the_stem() {
     let temp = tempfile::tempdir().unwrap();
     let parent = temp.path();
     for dir in [
         "framework-arduinoespressif32",
         "framework-arduinoespressif32-libs",
+        "espressif-framework-arduinoespressif32",
+        "dl-framework-arduinoespressif32-3.20017.241212-sha.dcc1105b",
         "toolchain-xtensa-esp32s3",
         "tool-esptoolpy",
     ] {
@@ -335,6 +343,12 @@ fn remove_cache_entries_deletes_only_prefixed_children() {
 
     assert!(!parent.join("framework-arduinoespressif32").exists());
     assert!(!parent.join("framework-arduinoespressif32-libs").exists());
+    assert!(!parent.join("espressif-framework-arduinoespressif32").exists());
+    assert!(
+        !parent
+            .join("dl-framework-arduinoespressif32-3.20017.241212-sha.dcc1105b")
+            .exists()
+    );
     assert!(parent.join("toolchain-xtensa-esp32s3").is_dir());
     assert!(parent.join("tool-esptoolpy").is_dir());
     // A missing parent is a no-op, matching a clean first run.
