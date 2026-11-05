@@ -21,6 +21,7 @@ from __future__ import annotations
 import json
 import os
 import sys
+from dataclasses import dataclass
 from pathlib import Path
 
 
@@ -237,46 +238,85 @@ def diff_dicts(expected: dict, actual: dict, path: str = "") -> list[str]:
     return diffs
 
 
-def validate_board(board_path: Path, pio_dir: Path) -> list[str] | None:
-    """Validate a single board JSON against PlatformIO's source.
+# Per-board validation outcomes. The three skip-ish cases used to collapse
+# into a single `None` return, which is how 61 boards the pinned platform
+# packages do not carry were counted as "skipped, platform not installed" and
+# the job still printed "All checked boards match".
+MATCH = "match"
+DRIFT = "drift"
+UNMATCHED = "unmatched"  # platform is installed, but it ships no <id>.json
+NO_PLATFORM = "no-platform"  # the board asset itself declares no platform
 
-    Returns a list of difference strings, or None if the board was skipped
-    (platform not installed).
+BASELINE_PATH = Path(__file__).resolve().parent / "validate_boards_baseline.json"
+
+
+@dataclass(frozen=True)
+class Validation:
+    status: str
+    diffs: tuple[str, ...] = ()
+
+
+def load_baseline(path: Path | None = None) -> dict[str, frozenset[str]]:
+    """Board ids known to have no upstream JSON in the platform pin.
+
+    A missing file is an empty baseline (every unmatched board then fails);
+    a malformed one is a hard error -- silently ignoring it would turn the
+    gate back into "unmatched boards are fine".
     """
+    baseline_path = BASELINE_PATH if path is None else path
+    if not baseline_path.exists():
+        return {}
+    doc = json.loads(baseline_path.read_text(encoding="utf-8"))
+    boards = doc.get("boards")
+    if not isinstance(boards, dict):
+        raise ValueError(f"{baseline_path}: 'boards' must map platform -> list of board ids")
+    return {str(platform): frozenset(str(i) for i in ids) for platform, ids in boards.items()}
+
+
+def compare_board(board: dict, pio_board: dict) -> list[str]:
+    """Return the differences between our board asset and PlatformIO's dict."""
+    diffs: list[str] = []
+
+    # Compare build section. Both sides are diffed even when PlatformIO
+    # declares nothing comparable: `if expected_build and ...` used to
+    # short-circuit the entire comparison, so an asset carrying build fields
+    # the upstream board never declares was reported as a match.
+    pio_build = pio_board.get("build", {})
+    expected_build = extract_build(pio_build if isinstance(pio_build, dict) else {})
+    raw_build = board.get("build", {})
+    actual_build = raw_build if isinstance(raw_build, dict) else {}
+    # Strip intentional fbuild-only extensions from the actual side so
+    # they aren't reported as drift (see FBUILD_EXTENSION_BUILD_FIELDS).
+    actual_build = {k: v for k, v in actual_build.items() if k not in FBUILD_EXTENSION_BUILD_FIELDS}
+    if expected_build or actual_build:
+        diffs.extend(diff_dicts(expected_build, actual_build, "build"))
+
+    # Same for upload.
+    pio_upload = pio_board.get("upload", {})
+    expected_upload = extract_upload(pio_upload if isinstance(pio_upload, dict) else {})
+    raw_upload = board.get("upload", {})
+    actual_upload = raw_upload if isinstance(raw_upload, dict) else {}
+    if expected_upload or actual_upload:
+        diffs.extend(diff_dicts(expected_upload, actual_upload, "upload"))
+
+    return diffs
+
+
+def validate_board(board_path: Path, pio_dir: Path) -> Validation:
+    """Compare one board JSON against PlatformIO's source."""
     board = json.loads(board_path.read_text(encoding="utf-8"))
     board_id = board.get("id", board_path.stem)
     platform = board.get("platform", "")
 
     if not platform:
-        return None
+        return Validation(NO_PLATFORM)
 
     pio_board = find_pio_board(board_id, platform, pio_dir)
     if pio_board is None:
-        return None  # Platform not installed, skip
+        return Validation(UNMATCHED)
 
-    diffs: list[str] = []
-
-    # Compare build section
-    pio_build = pio_board.get("build", {})
-    if isinstance(pio_build, dict):
-        expected_build = extract_build(pio_build)
-        actual_build = board.get("build", {})
-        # Strip intentional fbuild-only extensions from the actual side so
-        # they aren't reported as drift (see FBUILD_EXTENSION_BUILD_FIELDS).
-        if isinstance(actual_build, dict) and any(k in actual_build for k in FBUILD_EXTENSION_BUILD_FIELDS):
-            actual_build = {k: v for k, v in actual_build.items() if k not in FBUILD_EXTENSION_BUILD_FIELDS}
-        if expected_build and expected_build != actual_build:
-            diffs.extend(diff_dicts(expected_build, actual_build, "build"))
-
-    # Compare upload section
-    pio_upload = pio_board.get("upload", {})
-    if isinstance(pio_upload, dict):
-        expected_upload = extract_upload(pio_upload)
-        actual_upload = board.get("upload", {})
-        if expected_upload and expected_upload != actual_upload:
-            diffs.extend(diff_dicts(expected_upload, actual_upload, "upload"))
-
-    return diffs
+    diffs = compare_board(board, pio_board)
+    return Validation(DRIFT if diffs else MATCH, tuple(diffs))
 
 
 def get_installed_platforms(pio_dir: Path) -> set[str]:
@@ -411,15 +451,20 @@ def main() -> int:  # noqa: C901
     print(f"Board assets directory: {boards_dir}")
     print()
 
+    baseline = load_baseline()
     board_files = sorted(boards_dir.glob("*.json"))
     total = 0
-    checked = 0
-    skipped = 0
+    compared = 0  # boards a real field-by-field comparison ran on
+    unavailable = 0  # platform not installed on this host
+    unreadable = 0
     fbuild_native = 0
     fbuild_native_ids: list[str] = []
     passed = 0
+    drifted = 0
     failed = 0
     failures: list[tuple[str, list[str]]] = []
+    unmatched_known: list[tuple[str, str]] = []
+    unmatched_new: list[tuple[str, str]] = []
 
     for board_path in board_files:
         total += 1
@@ -428,7 +473,7 @@ def main() -> int:  # noqa: C901
         try:
             board = json.loads(board_path.read_text(encoding="utf-8"))
         except (json.JSONDecodeError, OSError):
-            skipped += 1
+            unreadable += 1
             continue
 
         board_id = board.get("id", board_path.stem)
@@ -442,26 +487,77 @@ def main() -> int:  # noqa: C901
             continue
 
         platform = board.get("platform", "")
-        if platform not in check_platforms:
-            skipped += 1
-            continue
-
-        checked += 1
-        diffs = validate_board(board_path, pio_dir)
-
-        if diffs is None:
-            skipped += 1
-            checked -= 1
-            continue
-
-        if diffs:
+        if not platform:
             failed += 1
-            failures.append((board_id, diffs))
+            failures.append((board_id, ["  ! board asset declares no 'platform'"]))
+            continue
+        if platform not in check_platforms:
+            unavailable += 1
+            continue
+
+        outcome = validate_board(board_path, pio_dir)
+
+        if outcome.status == NO_PLATFORM:
+            failed += 1
+            failures.append((board_id, ["  ! board asset declares no 'platform'"]))
+            continue
+
+        if outcome.status == UNMATCHED:
+            # The platform IS installed but ships no JSON for this id. Not a
+            # silent skip: every such board must be declared in the baseline,
+            # so a new board that cannot be validated fails the gate instead of
+            # quietly joining the "skipped" bucket.
+            if board_id in baseline.get(platform, frozenset()):
+                unmatched_known.append((platform, board_id))
+            else:
+                unmatched_new.append((platform, board_id))
+                failed += 1
+                failures.append(
+                    (
+                        board_id,
+                        [
+                            f"  ! no upstream {board_id}.json in the installed {platform} platform: "
+                            "nothing was compared. If this board is intentionally unvalidatable, "
+                            "add it to ci/validate_boards_baseline.json."
+                        ],
+                    )
+                )
+            continue
+
+        compared += 1
+        if outcome.status == DRIFT:
+            drifted += 1
+            failed += 1
+            failures.append((board_id, list(outcome.diffs)))
         else:
             passed += 1
 
+    # A run that compared nothing verifies nothing -- the whole point of the
+    # gate. Before this check an install step that produced no platforms (or a
+    # board set nothing matched) still printed "All checked boards match" rc 0.
+    if compared == 0 and not drifted:
+        print(
+            f"Error: {total} board asset(s) found but none could be validated "
+            f"({len(check_platforms)} platform(s) selected, {unavailable} board(s) skipped as "
+            "platform-not-installed). Nothing was verified.",
+            file=sys.stderr,
+        )
+        return 1
+
     # Report results
-    print(f"Results: {total} total, {checked} checked, {passed} passed, {failed} failed, {skipped} skipped, {fbuild_native} fbuild-native")
+    print(
+        f"Results: {total} total, {compared} compared, {passed} passed, {drifted} drifted, "
+        f"{failed} failed, {unavailable} platform-not-installed, {fbuild_native} fbuild-native, "
+        f"{len(unmatched_known)} known-unmatched, {len(unmatched_new)} NEW-unmatched"
+    )
+    if unreadable:
+        print(f"  unreadable board JSON (not validated): {unreadable}")
+    if unmatched_known:
+        by_platform: dict[str, int] = {}
+        for platform, _board_id in unmatched_known:
+            by_platform[platform] = by_platform.get(platform, 0) + 1
+        detail = ", ".join(f"{p}={n}" for p, n in sorted(by_platform.items()))
+        print(f"  known-unmatched (no upstream JSON in the platform pin -- see ci/validate_boards_baseline.json): {detail}")
     if fbuild_native:
         ids_str = ", ".join(sorted(fbuild_native_ids))
         print(f"  fbuild-native (intentional skip, no PlatformIO upstream — see FastLED/FastLED#2845): {ids_str}")

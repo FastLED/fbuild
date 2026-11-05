@@ -87,7 +87,10 @@ fail coverage. This policy is tracked in [#1698](https://github.com/FastLED/fbui
 - **`ci_common_paths.txt`** -- SOT: paths whose changes force-run *every* per-board build workflow.
 - **`test.py`** -- Workspace test runner with `--full` (stress + integration) and per-crate filtering
 - **`trampoline.py`** -- Development helpers that run fbuild workspace binaries through soldr-managed Cargo
-- **`validate_boards.py`** -- Validates fbuild board JSON assets against PlatformIO board definitions
+- **`validate_boards.py`** -- Validates fbuild board JSON assets against PlatformIO board definitions.
+  Fails when no board could be compared, and on any board whose platform is installed but ships no upstream
+  `<id>.json` unless it is declared in `validate_boards_baseline.json` (the 61 known-unmatched ids, pinned to the
+  platform versions in `validate-boards.yml`; delete entries as the pins grow)
 - **`zccache_setup.py`** -- Optional local wrapper-mode setup for zccache; not used by the standard soldr build path
 
 ## Subdirectories

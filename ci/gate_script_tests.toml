@@ -14,7 +14,6 @@ schema = 1
 untested = [
   "build_backend",
   "build_qemu_linux_runtime",
-  "validate_boards",
 ]
 
 [scripts.audit_ignored_tests]
@@ -92,9 +91,7 @@ tests = ["ci/test_select_boards.py"]
 tests = ["ci/test_sign_windows_release.py"]
 
 [scripts.validate_boards]
-# Mentioned only as a lane-name string in test_fractional_workflows; the board
-# snapshot validation itself is untested.
-tests = []
+tests = ["ci/test_validate_boards.py"]
 
 [scripts.wheel_check]
 tests = ["ci/test_wheel_check.py"]
