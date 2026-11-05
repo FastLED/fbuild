@@ -16,7 +16,6 @@ untested = [
   "build_qemu_linux_runtime",
   "cancel_superseded",
   "check_dylint_allowlists",
-  "check_flash_offsets",
   "validate_boards",
 ]
 
@@ -41,7 +40,7 @@ tests = []
 tests = ["ci/test_check_fbuild_path_baseline.py"]
 
 [scripts.check_flash_offsets]
-tests = []
+tests = ["ci/test_check_flash_offsets.py"]
 
 [scripts.check_glibc_floor]
 tests = ["ci/test_check_glibc_floor.py"]

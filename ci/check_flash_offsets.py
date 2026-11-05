@@ -3,10 +3,9 @@
 
 The second-stage **bootloader offset** (`esptool.flash_offsets.bootloader` in
 `crates/fbuild-build-esp/src/esp32/configs/esp32*.json`) is a ROM-defined
-constant:
-get it wrong and the chip's ROM reads garbage at its fixed load address and
-enters an `invalid header: 0x...` reboot loop (see #278: esp32p4/esp32c5
-shipped `0x0` instead of `0x2000` and bricked boot).
+constant: get it wrong and the chip's ROM reads garbage at its fixed load
+address and enters an `invalid header: 0x...` reboot loop (see #278: esp32p4 /
+esp32c5 shipped `0x0` instead of `0x2000` and bricked boot).
 
 These values are hand-maintained, so nothing previously cross-checked them
 against an external authority. This script does:
@@ -14,11 +13,16 @@ against an external authority. This script does:
   - Reads every `esp32*.json` config and its `esptool.flash_offsets`.
   - Determines the AUTHORITATIVE `build.bootloader_addr` per chip from the
     arduino-esp32 `boards.txt` (with the `platform.txt`
-    `build.bootloader_addr=0x1000` default applied when a chip has no explicit
+    `build.bootloader_addr` default applied when a chip has no explicit
     override).
   - HARD-FAILS (non-zero exit) on any mismatch, on any config chip that has no
     corresponding `boards.txt` entry, and if it cannot locate an authoritative
     source at all (it never silently passes).
+  - HARD-FAILS when a chip relies on the `platform.txt` default but no
+    `platform.txt` declaring `build.bootloader_addr` is available. There is no
+    hard-coded fallback: an unavailable default is an unverifiable chip, and
+    substituting a constant that came from nowhere would let a wrong offset
+    pass silently.
   - Also asserts `partitions == 0x8000` and `firmware == 0x10000` (fixed in
     arduino-esp32 `platform.txt` flash recipes).
 
@@ -52,14 +56,12 @@ import re
 import sys
 import urllib.error
 import urllib.request
+from dataclasses import dataclass, field
 from pathlib import Path
 
 # Default pioarduino arduino-esp32 release tag used when --download has no
 # explicit version. Bump alongside the framework version fbuild ships.
 DEFAULT_DOWNLOAD_VERSION = "3.3.7"
-
-# arduino-esp32 platform.txt default for chips that don't override the offset.
-DEFAULT_BOOTLOADER_ADDR = "0x1000"
 
 # Fixed offsets from arduino-esp32 platform.txt flash recipes (not per-chip).
 EXPECTED_PARTITIONS = "0x8000"
@@ -68,8 +70,51 @@ EXPECTED_FIRMWARE = "0x10000"
 PIOARDUINO_RAW = "https://raw.githubusercontent.com/pioarduino/arduino-esp32/refs/tags/{version}/{name}"
 
 
+class UsageError(Exception):
+    """Bad command line."""
+
+
+class SourceError(Exception):
+    """No authoritative boards.txt could be resolved."""
+
+
+@dataclass
+class Options:
+    """Parsed command line."""
+
+    boards_txt: str | None = None
+    download_version: str | None = None
+    help_requested: bool = False
+
+
+@dataclass
+class Source:
+    """An authoritative boards.txt plus the platform.txt that may accompany it.
+
+    `platform_text is None` means no platform.txt is available at all; that is
+    distinct from a platform.txt that exists but does not declare
+    `build.bootloader_addr`. Both leave the per-chip default unresolved.
+    """
+
+    boards_text: str
+    platform_text: str | None
+    description: str
+
+
+@dataclass
+class ConfigResult:
+    """Per-config outcome: the printable row and any failures."""
+
+    row: str
+    failures: list[str] = field(default_factory=list)
+
+
 def home_dir() -> Path:
-    home = os.environ.get("USERPROFILE") if sys.platform == "win32" else os.environ.get("HOME")
+    home = (
+        os.environ.get("USERPROFILE")
+        if sys.platform == "win32"
+        else os.environ.get("HOME")
+    )
     return Path(home or "")
 
 
@@ -118,8 +163,18 @@ def find_cached_framework() -> tuple[Path, Path] | None:
 
     candidates: list[tuple[tuple[int, ...], Path]] = []
     search_roots = [
-        home / ".fbuild" / "dev" / "cache" / "platforms" / "framework-arduinoespressif32",
-        home / ".fbuild" / "prod" / "cache" / "platforms" / "framework-arduinoespressif32",
+        home
+        / ".fbuild"
+        / "dev"
+        / "cache"
+        / "platforms"
+        / "framework-arduinoespressif32",
+        home
+        / ".fbuild"
+        / "prod"
+        / "cache"
+        / "platforms"
+        / "framework-arduinoespressif32",
     ]
     for root in search_roots:
         if not root.exists():
@@ -146,7 +201,9 @@ def download_authoritative_text(version: str) -> tuple[str, str]:
     out: list[str] = []
     for name in ("boards.txt", "platform.txt"):
         url = PIOARDUINO_RAW.format(version=version, name=name)
-        req = urllib.request.Request(url, headers={"User-Agent": "fbuild-check-flash-offsets/1.0"})
+        req = urllib.request.Request(
+            url, headers={"User-Agent": "fbuild-check-flash-offsets/1.0"}
+        )
         try:
             with urllib.request.urlopen(req, timeout=60) as resp:
                 out.append(resp.read().decode("utf-8"))
@@ -155,18 +212,98 @@ def download_authoritative_text(version: str) -> tuple[str, str]:
     return out[0], out[1]
 
 
+def _read_optional(path: Path) -> str | None:
+    return path.read_text(encoding="utf-8") if path.exists() else None
+
+
+def parse_args(args: list[str]) -> Options:
+    options = Options()
+    i = 0
+    while i < len(args):
+        arg = args[i]
+        if arg == "--boards-txt":
+            if i + 1 >= len(args):
+                raise UsageError("--boards-txt needs a path")
+            options.boards_txt = args[i + 1]
+            i += 2
+        elif arg == "--download":
+            # Optional version follows.
+            options.download_version = DEFAULT_DOWNLOAD_VERSION
+            if i + 1 < len(args) and not args[i + 1].startswith("-"):
+                options.download_version = args[i + 1]
+                i += 2
+            else:
+                i += 1
+        elif arg in ("-h", "--help"):
+            options.help_requested = True
+            return options
+        else:
+            raise UsageError(f"Unknown argument: {arg}")
+    return options
+
+
+def resolve_source(options: Options) -> Source:
+    """Resolve the authoritative boards.txt/platform.txt pair, or raise."""
+    if options.download_version is not None:
+        try:
+            boards_text, platform_text = download_authoritative_text(
+                options.download_version
+            )
+        except RuntimeError as exc:
+            raise SourceError(str(exc)) from exc
+        return Source(
+            boards_text,
+            platform_text,
+            f"pioarduino/arduino-esp32 release tag {options.download_version} (downloaded)",
+        )
+
+    explicit = options.boards_txt or os.environ.get("FBUILD_ESP32_BOARDS_TXT")
+    if explicit:
+        boards_path = Path(explicit)
+        if not boards_path.exists():
+            raise SourceError(f"boards.txt not found at {boards_path}")
+        return Source(
+            boards_path.read_text(encoding="utf-8"),
+            _read_optional(boards_path.with_name("platform.txt")),
+            f"explicit boards.txt: {boards_path}",
+        )
+
+    found = find_cached_framework()
+    if found is not None:
+        boards_path, platform_path = found
+        return Source(
+            boards_path.read_text(encoding="utf-8"),
+            platform_path.read_text(encoding="utf-8"),
+            f"installed framework: {boards_path}",
+        )
+
+    raise SourceError(
+        "could not locate an authoritative arduino-esp32 boards.txt.\n"
+        "  Tried: --boards-txt, $FBUILD_ESP32_BOARDS_TXT, and the fbuild cache\n"
+        "  (~/.fbuild/{dev,prod}/cache/platforms/framework-arduinoespressif32/).\n"
+        "  Install the ESP32 framework, pass --boards-txt PATH, or use --download."
+    )
+
+
 # ---------------------------------------------------------------------------
 # Parsing
 # ---------------------------------------------------------------------------
 
 
-def parse_platform_default(platform_text: str) -> str:
-    """Read `build.bootloader_addr` default from platform.txt, if present."""
-    for line in platform_text.splitlines():
+def parse_platform_default(platform_text: str | None) -> str | None:
+    """Read `build.bootloader_addr` from platform.txt, or None when unresolved.
+
+    There is deliberately NO fallback constant: `None` means the authoritative
+    default could not be established, and every chip that depends on it becomes
+    a hard failure instead of being compared against a guessed value.
+    """
+    for line in (platform_text or "").splitlines():
         line = line.strip()
         if line.startswith("build.bootloader_addr="):
-            return line.split("=", 1)[1].strip()
-    return DEFAULT_BOOTLOADER_ADDR
+            value = line.split("=", 1)[1].strip()
+            if value:
+                return value
+    return None
 
 
 def parse_boards_bootloader_addr(boards_text: str) -> dict[str, str]:
@@ -211,7 +348,7 @@ def authoritative_offset(
     chip: str,
     boards_addrs: dict[str, str],
     known_chips: set[str],
-    platform_default: str,
+    platform_default: str | None,
 ) -> str | None:
     """Resolve the authoritative bootloader offset for a chip.
 
@@ -220,19 +357,22 @@ def authoritative_offset(
       2. the platform.txt default (`build.bootloader_addr`) for a chip that
          boards.txt otherwise knows about (e.g. esp32/esp32s2, which don't
          override the default), else
-      3. `None` -- boards.txt has no knowledge of this chip, so the offset
-         cannot be verified; the caller treats this as a hard failure.
+      3. `None` -- either boards.txt has no knowledge of this chip, or the
+         platform.txt default is unavailable. The offset cannot be verified, so
+         the caller treats both as a hard failure.
     """
     if chip in boards_addrs:
         return boards_addrs[chip]
-    if chip in known_chips:
+    if chip in known_chips and platform_default is not None:
         return platform_default
     return None
 
 
-# ---------------------------------------------------------------------------
-# Main check
-# ---------------------------------------------------------------------------
+def platform_default_reason(source: Source) -> str:
+    """Why `parse_platform_default` could not establish a value."""
+    if source.platform_text is None:
+        return "no platform.txt accompanies this boards.txt"
+    return "platform.txt does not declare build.bootloader_addr"
 
 
 def load_config_offsets(path: Path) -> tuple[str, dict[str, str]]:
@@ -243,145 +383,153 @@ def load_config_offsets(path: Path) -> tuple[str, dict[str, str]]:
     return mcu, offsets
 
 
-def main() -> int:  # noqa: C901
-    args = sys.argv[1:]
-    boards_txt_arg: str | None = None
-    download_version: str | None = None
-    i = 0
-    while i < len(args):
-        if args[i] == "--boards-txt" and i + 1 < len(args):
-            boards_txt_arg = args[i + 1]
-            i += 2
-        elif args[i] == "--download":
-            # Optional version follows.
-            if i + 1 < len(args) and not args[i + 1].startswith("-"):
-                download_version = args[i + 1]
-                i += 2
-            else:
-                download_version = DEFAULT_DOWNLOAD_VERSION
-                i += 1
-        elif args[i] in ("-h", "--help"):
-            print(__doc__)
-            return 0
-        else:
-            print(f"Unknown argument: {args[i]}", file=sys.stderr)
-            print(__doc__, file=sys.stderr)
-            return 1
+# ---------------------------------------------------------------------------
+# Main check
+# ---------------------------------------------------------------------------
+
+
+def unresolved_failure(
+    mcu: str,
+    boards_addrs: dict[str, str],
+    known_chips: set[str],
+    source: Source,
+    platform_default: str | None,
+) -> str:
+    if mcu not in known_chips and mcu not in boards_addrs:
+        return (
+            f"{mcu}: chip is unknown to the authoritative boards.txt (no "
+            f"`{mcu}.build.mcu` or `{mcu}.build.bootloader_addr` entry) -- "
+            f"cannot verify this chip's bootloader offset"
+        )
+    assert platform_default is None
+    return (
+        f"{mcu}: no authoritative bootloader offset -- boards.txt has no "
+        f"`{mcu}.build.bootloader_addr` and the platform.txt default is "
+        f"unavailable ({platform_default_reason(source)}); refusing to guess"
+    )
+
+
+def check_config(
+    mcu: str,
+    offsets: dict[str, str],
+    source: Source,
+    boards_addrs: dict[str, str],
+    known_chips: set[str],
+    platform_default: str | None,
+) -> ConfigResult:
+    cfg_boot = offsets.get("bootloader")
+    cfg_part = offsets.get("partitions")
+    cfg_fw = offsets.get("firmware")
+    failures: list[str] = []
+
+    auth = authoritative_offset(mcu, boards_addrs, known_chips, platform_default)
+    if auth is None:
+        failures.append(
+            unresolved_failure(mcu, boards_addrs, known_chips, source, platform_default)
+        )
+    elif cfg_boot is None:
+        failures.append(f"{mcu}: config has no esptool.flash_offsets.bootloader")
+    elif normalize_offset(cfg_boot) != normalize_offset(auth):
+        failures.append(
+            f"{mcu}: bootloader offset {cfg_boot!r} != authoritative {auth!r} "
+            f"(boards.txt build.bootloader_addr)"
+        )
+
+    if cfg_part is None or normalize_offset(cfg_part) != normalize_offset(
+        EXPECTED_PARTITIONS
+    ):
+        failures.append(
+            f"{mcu}: partitions offset {cfg_part!r} != expected {EXPECTED_PARTITIONS!r}"
+        )
+    if cfg_fw is None or normalize_offset(cfg_fw) != normalize_offset(
+        EXPECTED_FIRMWARE
+    ):
+        failures.append(
+            f"{mcu}: firmware offset {cfg_fw!r} != expected {EXPECTED_FIRMWARE!r}"
+        )
+
+    row = (
+        f"{mcu:<12} {str(cfg_boot):<10} {auth if auth is not None else 'MISSING':<14} "
+        f"{str(cfg_part):<8} {str(cfg_fw):<10} {'PASS' if not failures else 'FAIL'}"
+    )
+    return ConfigResult(row=row, failures=failures)
+
+
+@dataclass
+class Report:
+    rows: list[str] = field(default_factory=list)
+    failures: list[str] = field(default_factory=list)
+    configs: int = 0
+
+
+def evaluate(cfg_dir: Path, source: Source) -> Report:
+    """Compare every esp32 config against `source`; no printing, no exit."""
+    platform_default = parse_platform_default(source.platform_text)
+    boards_addrs = parse_boards_bootloader_addr(source.boards_text)
+    known_chips = parse_known_chips(source.boards_text)
+    report = Report()
+    for path in sorted(cfg_dir.glob("esp32*.json")):
+        mcu, offsets = load_config_offsets(path)
+        result = check_config(
+            mcu, offsets, source, boards_addrs, known_chips, platform_default
+        )
+        report.rows.append(result.row)
+        report.failures.extend(result.failures)
+        report.configs += 1
+    return report
+
+
+def report_lines(report: Report, source: Source, cfg_dir: Path) -> str:
+    platform_default = parse_platform_default(source.platform_text)
+    resolved = platform_default if platform_default is not None else "UNAVAILABLE"
+    header = f"{'CHIP':<12} {'CONFIG':<10} {'AUTHORITATIVE':<14} {'PART':<8} {'FW':<10} RESULT"
+    body = [header, "-" * len(header), *report.rows]
+    return "\n".join(
+        [
+            "Authoritative source: " + source.description,
+            f"platform.txt default build.bootloader_addr = {resolved}",
+            f"configs directory: {cfg_dir}",
+            "",
+            *body,
+        ]
+    )
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = list(sys.argv[1:] if argv is None else argv)
+    try:
+        options = parse_args(args)
+    except UsageError as exc:
+        print(f"Error: {exc}", file=sys.stderr)
+        print(__doc__, file=sys.stderr)
+        return 1
+
+    if options.help_requested:
+        print(__doc__)
+        return 0
 
     cfg_dir = configs_dir()
     if not cfg_dir.exists():
         print(f"Error: esp32 configs not found at {cfg_dir}", file=sys.stderr)
         return 1
 
-    # Resolve the authoritative source text.
-    boards_text: str | None = None
-    platform_text: str | None = None
-    source_desc = ""
-
-    env_boards = os.environ.get("FBUILD_ESP32_BOARDS_TXT")
-
-    if download_version is not None:
-        try:
-            boards_text, platform_text = download_authoritative_text(download_version)
-        except RuntimeError as exc:
-            print(f"Error: {exc}", file=sys.stderr)
-            return 1
-        source_desc = f"pioarduino/arduino-esp32 release tag {download_version} (downloaded)"
-    elif boards_txt_arg or env_boards:
-        boards_path = Path(boards_txt_arg or env_boards or "")
-        if not boards_path.exists():
-            print(f"Error: boards.txt not found at {boards_path}", file=sys.stderr)
-            return 1
-        boards_text = boards_path.read_text(encoding="utf-8")
-        platform_path = boards_path.with_name("platform.txt")
-        platform_text = (
-            platform_path.read_text(encoding="utf-8") if platform_path.exists() else ""
-        )
-        source_desc = f"explicit boards.txt: {boards_path}"
-    else:
-        found = find_cached_framework()
-        if found is not None:
-            boards_path, platform_path = found
-            boards_text = boards_path.read_text(encoding="utf-8")
-            platform_text = platform_path.read_text(encoding="utf-8")
-            source_desc = f"installed framework: {boards_path}"
-
-    if boards_text is None:
-        print(
-            "Error: could not locate an authoritative arduino-esp32 boards.txt.\n"
-            "  Tried: --boards-txt, $FBUILD_ESP32_BOARDS_TXT, and the fbuild cache\n"
-            "  (~/.fbuild/{dev,prod}/cache/platforms/framework-arduinoespressif32/).\n"
-            "  Install the ESP32 framework, pass --boards-txt PATH, or use --download.",
-            file=sys.stderr,
-        )
+    try:
+        source = resolve_source(options)
+    except SourceError as exc:
+        print(f"Error: {exc}", file=sys.stderr)
         return 1
 
-    platform_default = parse_platform_default(platform_text or "")
-    boards_addrs = parse_boards_bootloader_addr(boards_text)
-    known_chips = parse_known_chips(boards_text)
-
-    print("Authoritative source: " + source_desc)
-    print(f"platform.txt default build.bootloader_addr = {platform_default}")
-    print(f"configs directory: {cfg_dir}")
-    print()
-
-    config_files = sorted(cfg_dir.glob("esp32*.json"))
-    if not config_files:
+    report = evaluate(cfg_dir, source)
+    if report.configs == 0:
         print(f"Error: no esp32*.json configs found in {cfg_dir}", file=sys.stderr)
         return 1
 
-    header = f"{'CHIP':<12} {'CONFIG':<10} {'AUTHORITATIVE':<14} {'PART':<8} {'FW':<10} RESULT"
-    print(header)
-    print("-" * len(header))
-
-    failures: list[str] = []
-
-    for path in config_files:
-        mcu, offsets = load_config_offsets(path)
-        cfg_boot = offsets.get("bootloader")
-        cfg_part = offsets.get("partitions")
-        cfg_fw = offsets.get("firmware")
-
-        chip_failures: list[str] = []
-
-        auth = authoritative_offset(mcu, boards_addrs, known_chips, platform_default)
-        auth_display = auth if auth is not None else "MISSING"
-
-        if auth is None:
-            chip_failures.append(
-                f"{mcu}: chip is unknown to the authoritative boards.txt (no "
-                f"`{mcu}.build.mcu` or `{mcu}.build.bootloader_addr` entry) -- "
-                f"cannot verify this chip's bootloader offset"
-            )
-        elif cfg_boot is None:
-            chip_failures.append(f"{mcu}: config has no esptool.flash_offsets.bootloader")
-        elif normalize_offset(cfg_boot) != normalize_offset(auth):
-            chip_failures.append(
-                f"{mcu}: bootloader offset {cfg_boot!r} != authoritative {auth!r} "
-                f"(boards.txt build.bootloader_addr)"
-            )
-
-        if cfg_part is None or normalize_offset(cfg_part) != normalize_offset(EXPECTED_PARTITIONS):
-            chip_failures.append(
-                f"{mcu}: partitions offset {cfg_part!r} != expected {EXPECTED_PARTITIONS!r}"
-            )
-        if cfg_fw is None or normalize_offset(cfg_fw) != normalize_offset(EXPECTED_FIRMWARE):
-            chip_failures.append(
-                f"{mcu}: firmware offset {cfg_fw!r} != expected {EXPECTED_FIRMWARE!r}"
-            )
-
-        result = "PASS" if not chip_failures else "FAIL"
-        print(
-            f"{mcu:<12} {str(cfg_boot):<10} {auth_display:<14} "
-            f"{str(cfg_part):<8} {str(cfg_fw):<10} {result}"
-        )
-        failures.extend(chip_failures)
-
+    print(report_lines(report, source, cfg_dir))
     print()
-    if failures:
-        print(f"FAILED: {len(failures)} flash-offset problem(s):")
-        for f in failures:
-            print(f"  - {f}")
+    if report.failures:
+        print(f"FAILED: {len(report.failures)} flash-offset problem(s):")
+        for failure in report.failures:
+            print(f"  - {failure}")
         print()
         print(
             "The bootloader offset is a ROM-defined constant. The authoritative value is\n"
@@ -391,7 +539,9 @@ def main() -> int:  # noqa: C901
         )
         return 1
 
-    print(f"All {len(config_files)} esp32 config(s) match the authoritative flash offsets.")
+    print(
+        f"All {report.configs} esp32 config(s) match the authoritative flash offsets."
+    )
     return 0
 
 
