@@ -7,6 +7,7 @@
 mod pio_phases;
 
 use fbuild_core::path::NormalizedPath;
+use fbuild_paths::get_project_fbuild_dir;
 use serde::{Deserialize, Serialize};
 use serde_json::{Value, json};
 use std::collections::{BTreeMap, BTreeSet};
@@ -1005,7 +1006,7 @@ fn cold_cleanup_steps(
                     prefix: "framework-arduinoespressif32".to_string(),
                 });
                 steps.push(ColdCleanupStep::RemoveDir(NormalizedPath::new(
-                    project_dir.join(".fbuild"),
+                    get_project_fbuild_dir(project_dir),
                 )));
             }
             steps

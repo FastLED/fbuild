@@ -277,9 +277,11 @@ fn esp32s3_cold_removes_framework_packages_but_keeps_toolchains() {
         parent: NormalizedPath::new(cache_root),
         prefix: "framework-arduinoespressif32".into(),
     }));
-    assert!(fbuild_steps.contains(&ColdCleanupStep::RemoveDir(NormalizedPath::new(
-        Path::new("bench/blink").join(".fbuild")
-    ))));
+    assert!(
+        fbuild_steps.contains(&ColdCleanupStep::RemoveDir(NormalizedPath::new(
+            get_project_fbuild_dir(Path::new("bench/blink"))
+        )))
+    );
 
     let pio_steps = cold_cleanup_steps(
         ToolKind::PlatformIo,
@@ -343,7 +345,11 @@ fn remove_cache_entries_deletes_every_variant_of_the_stem() {
 
     assert!(!parent.join("framework-arduinoespressif32").exists());
     assert!(!parent.join("framework-arduinoespressif32-libs").exists());
-    assert!(!parent.join("espressif-framework-arduinoespressif32").exists());
+    assert!(
+        !parent
+            .join("espressif-framework-arduinoespressif32")
+            .exists()
+    );
     assert!(
         !parent
             .join("dl-framework-arduinoespressif32-3.20017.241212-sha.dcc1105b")

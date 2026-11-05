@@ -29,6 +29,7 @@ DRIFT_UNITTEST_MODULES: tuple[str, ...] = (
     "ci.test_gen_mirror_manifest",
     "ci.test_benchmark_publish",
     "ci.test_sign_windows_release",
+    "ci.test_check_python_complexity",
     "ci.test_local_suites",
 )
 
