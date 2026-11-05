@@ -490,6 +490,51 @@ impl Esp32Linker {
         }
     }
 
+    /// Cross-project `size` reuse lives beside the link-output cache
+    /// (FastLED/fbuild#1894): `size` only reads the ELF, so an ELF restored from
+    /// another directory already has a report.
+    fn size_report_cache_dir(&self) -> Option<NormalizedPath> {
+        self.link_output_cache_dir
+            .as_ref()
+            .map(|root| root.join("firmware-size"))
+    }
+
+    /// Shared-cache root plus content key for the report of `elf_path`.
+    ///
+    /// The board limits are excluded on purpose: they come from config, can
+    /// change without a relink, and [`Self::report_size`] re-applies them.
+    fn size_report_entry(&self, elf_path: &Path) -> Option<(NormalizedPath, String)> {
+        let root = self.size_report_cache_dir()?;
+        let mut identity = vec![format!("fingerprint={BUILD_FINGERPRINT_VERSION}")];
+        identity.push(format!("size_tool={}", self.size_path.as_path().display()));
+        if let Ok(metadata) = std::fs::metadata(self.size_path.as_path()) {
+            identity.push(format!("size_tool_bytes={}", metadata.len()));
+        }
+        let identity: Vec<&str> = identity.iter().map(String::as_str).collect();
+        let key = super::size_report_cache::content_key(elf_path, &identity)?;
+        Some((root, key))
+    }
+
+    /// Restore the report another directory recorded for this ELF, patching in
+    /// this board's limits and recording the per-project cache so the next
+    /// build in this directory never consults the shared one.
+    fn restore_size_report(&self, elf_path: &Path) -> Option<SizeInfo> {
+        let (root, key) = self.size_report_entry(elf_path)?;
+        let mut size_info = super::size_report_cache::restore(root.as_path(), &key)?;
+        size_info.max_flash = self.flash_limit();
+        size_info.max_ram = self.max_ram;
+        tracing::info!("size: restored report (key={})", &key[..16]);
+        self.save_size_cache(elf_path, &size_info);
+        Some(size_info)
+    }
+
+    fn store_size_report(&self, elf_path: &Path, size_info: &SizeInfo) {
+        let Some((root, key)) = self.size_report_entry(elf_path) else {
+            return;
+        };
+        super::size_report_cache::store(root.as_path(), &key, size_info);
+    }
+
     fn load_cached_size(&self, elf_path: &Path) -> Option<SizeInfo> {
         let output_dir = elf_path.parent().unwrap_or_else(|| Path::new("."));
         let expected_stamp = match FileStamp::from_path(elf_path) {
@@ -780,6 +825,13 @@ impl Linker for Esp32Linker {
             return Ok(size_info);
         }
 
+        // A fresh directory has no local stamp, but its ELF came from the
+        // cross-project link cache and is byte-identical to one that was
+        // already sized (FastLED/fbuild#1894).
+        if let Some(size_info) = self.restore_size_report(elf_path) {
+            return Ok(size_info);
+        }
+
         let size_info = super::size_report::esp32_report_size(
             &self.size_path,
             elf_path,
@@ -788,6 +840,7 @@ impl Linker for Esp32Linker {
         )
         .await?;
         self.save_size_cache(elf_path, &size_info);
+        self.store_size_report(elf_path, &size_info);
         Ok(size_info)
     }
 }

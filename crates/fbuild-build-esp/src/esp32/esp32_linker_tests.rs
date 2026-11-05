@@ -645,3 +645,75 @@ async fn converted_firmware_is_reused_without_running_esptool() {
         b"image-from-a-previous-project"
     );
 }
+
+// ---------------------------------------------------------------------------
+// Cross-project `size` report reuse (FastLED/fbuild#1894)
+// ---------------------------------------------------------------------------
+
+use crate::esp32::size_report_cache;
+
+fn linker_with_size_cache(root: &Path) -> Esp32Linker {
+    let mut linker = test_linker("esp32s3");
+    linker.link_output_cache_dir = Some(NormalizedPath::new(root));
+    // A `size` binary that cannot possibly run: any spawn is a hard error, so
+    // a successful `report_size` on the reuse path proves it never ran.
+    linker.size_path = NormalizedPath::new("/nonexistent/size-tool");
+    linker
+}
+
+/// The point: a fresh directory whose ELF came from the link cache must not
+/// spawn the size tool, and must still report the same numbers.
+#[tokio::test]
+async fn size_report_is_reused_without_running_the_size_tool() {
+    let cache = tempfile::TempDir::new().unwrap();
+    let out = tempfile::TempDir::new().unwrap();
+    let linker = linker_with_size_cache(cache.path());
+
+    let elf = out.path().join("firmware.elf");
+    std::fs::write(&elf, b"elf-payload").unwrap();
+    let (root, key) = linker.size_report_entry(&elf).unwrap();
+    let recorded = SizeInfo {
+        text: 1000,
+        data: 20,
+        bss: 30,
+        total_flash: 1050,
+        total_ram: 50,
+        max_flash: None,
+        max_ram: None,
+    };
+    size_report_cache::store(root.as_path(), &key, &recorded);
+
+    let info = linker.report_size(&elf).await.unwrap();
+    assert_eq!(
+        info.total_flash, 1050,
+        "the cached numbers must be reported"
+    );
+    assert_eq!(info.total_ram, 50);
+    assert_eq!(
+        info.max_flash,
+        linker.flash_limit(),
+        "limits come from config, never from the cache"
+    );
+    assert_eq!(info.max_ram, linker.max_ram);
+
+    // The restore also records the per-project stamp, so the next build in this
+    // directory never even consults the shared cache.
+    assert!(
+        out.path().join(".firmware_size_cache.json").exists(),
+        "a restore must record the local size cache"
+    );
+    let again = linker.report_size(&elf).await.unwrap();
+    assert_eq!(again.total_flash, 1050);
+
+    // And an ELF with no entry anywhere still fails when the tool cannot run —
+    // so the assertions above really did skip the spawn.
+    let cold_root = tempfile::TempDir::new().unwrap();
+    let cold_out = tempfile::TempDir::new().unwrap();
+    let cold = linker_with_size_cache(cold_root.path());
+    let cold_elf = cold_out.path().join("firmware.elf");
+    std::fs::write(&cold_elf, b"elf-payload").unwrap();
+    assert!(
+        cold.report_size(&cold_elf).await.is_err(),
+        "an uncached ELF must fail when the size tool cannot run"
+    );
+}
