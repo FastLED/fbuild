@@ -2,6 +2,7 @@
 
 use fbuild_build::{compile_backend, provision, provision_env};
 use fbuild_core::Platform;
+use fbuild_core::path::NormalizedPath;
 use object::Object;
 
 #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
@@ -170,10 +171,8 @@ fn inspect_native_sdk(result: &fbuild_build::BuildResult) {
         let matching: Vec<_> = commands
             .iter()
             .filter(|row| {
-                row["file"]
-                    .as_str()
-                    .unwrap_or("")
-                    .replace('\\', "/")
+                NormalizedPath::new(row["file"].as_str().unwrap_or(""))
+                    .display_slash()
                     .contains(marker)
             })
             .collect();

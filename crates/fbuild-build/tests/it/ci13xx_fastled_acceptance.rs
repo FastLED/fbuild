@@ -1,9 +1,10 @@
 //! Explicit real FastLED consumer acceptance for native CI1306 (#1914).
 use fbuild_build::{BuildParams, compile_backend, provision, provision_env};
+use fbuild_core::path::{NormalizedPath, canonicalize_existing};
 use fbuild_core::{BuildProfile, Platform};
 use object::{Object, ObjectSection, ObjectSymbol};
 use sha2::{Digest, Sha256};
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
 const PROBE: &str = r#"
 #include <FastLED.h>
@@ -35,7 +36,9 @@ pub(super) fn params(project: &Path) -> BuildParams {
     BuildParams {
         project_dir: project.into(),
         env_name: "ci1306".into(),
-        build_dir: project.join(".fbuild/build/ci1306/release"),
+        build_dir: project
+            .join(fbuild_paths::FBUILD_DIR_NAME)
+            .join("build/ci1306/release"),
         clean_all: false,
         clean_only: false,
         clean: true,
@@ -110,7 +113,7 @@ fn retain_build_attempt(
     let Some(root) = std::env::var_os("FBUILD_CI13XX_ARTIFACT_DIR") else {
         return;
     };
-    let parent = PathBuf::from(root).join(mode);
+    let parent = NormalizedPath::new(root).join(mode);
     std::fs::create_dir_all(&parent).unwrap();
     let output = tempfile::Builder::new()
         .prefix("attempt-")
@@ -189,18 +192,19 @@ fn inspect_and_retain(
         assert!(!arguments.iter().any(|a| a.as_str() == Some("-flto")));
         assert!(arguments[0].as_str().unwrap().contains("riscv-nuclei-elf-"));
     }
-    let link_command = elf_path.parent().unwrap().join("native_link_command.json");
+    let link_command =
+        NormalizedPath::new(elf_path.parent().unwrap()).join("native_link_command.json");
     let archives = inspect_linked_archives(&link_command);
     if let Some(output) = std::env::var_os("FBUILD_CI13XX_ARTIFACT_DIR") {
-        let output = PathBuf::from(output).join("fastled-ci1306");
+        let output = NormalizedPath::new(output).join("fastled-ci1306");
         std::fs::create_dir_all(&output).unwrap();
         let mut artifacts = vec![
-            elf_path.clone(),
-            database.clone(),
-            project.join("platformio.ini"),
-            project.join("src/main.cpp"),
+            NormalizedPath::new(elf_path),
+            NormalizedPath::new(database),
+            NormalizedPath::new(project).join("platformio.ini"),
+            NormalizedPath::new(project).join("src/main.cpp"),
             link_command,
-            elf_path.with_extension("map"),
+            NormalizedPath::new(elf_path.with_extension("map")),
         ];
         artifacts.extend(archives);
         for path in artifacts {
@@ -219,12 +223,12 @@ fn inspect_and_retain(
     }
 }
 
-fn inspect_linked_archives(link_command: &Path) -> Vec<PathBuf> {
+fn inspect_linked_archives(link_command: &Path) -> Vec<NormalizedPath> {
     let argv: Vec<String> = serde_json::from_slice(&std::fs::read(link_command).unwrap()).unwrap();
     let archives: Vec<_> = argv
         .iter()
         .filter(|arg| arg.ends_with(".a"))
-        .map(PathBuf::from)
+        .map(NormalizedPath::new)
         .collect();
     assert!(
         archives.iter().any(|p| p
@@ -262,9 +266,9 @@ fn inspect_linked_archives(link_command: &Path) -> Vec<PathBuf> {
 #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
 #[ignore = "#1914: requires FBUILD_FASTLED_SOURCE checkout and Nuclei GCC/Chipintelli downloads; compiles actual FastLED"]
 async fn ci1306_real_fastled_software_spi_no_lto() {
-    let source = PathBuf::from(std::env::var_os("FBUILD_FASTLED_SOURCE")
+    let source = canonicalize_existing(std::env::var_os("FBUILD_FASTLED_SOURCE")
         .expect("set FBUILD_FASTLED_SOURCE to the actual FastLED checkout; no substitute fixture is allowed"))
-        .canonicalize().unwrap();
+        .await.unwrap();
     assert!(
         source
             .join("src/platforms/shared/spi_bitbang/generic_software_spi.h")
@@ -274,9 +278,9 @@ async fn ci1306_real_fastled_software_spi_no_lto() {
     let tmp = tempfile::tempdir().unwrap();
     let project = tmp.path();
     std::fs::create_dir(project.join("src")).unwrap();
-    std::fs::write(project.join("platformio.ini"), format!(
+    std::fs::write(NormalizedPath::new(project).join("platformio.ini"), format!(
         "[env:ci1306]\nplatform = ci13xx\nboard = ci1306\nframework = arduino\nbuild_unflags = -flto\nbuild_flags = -fno-lto\nlib_deps = FastLED=symlink://{}\n", source.display())).unwrap();
-    std::fs::write(project.join("src/main.cpp"), PROBE).unwrap();
+    std::fs::write(NormalizedPath::new(project).join("src/main.cpp"), PROBE).unwrap();
     let report = provision_env(project, "ci1306", provision::ProvisionMode::Install)
         .await
         .expect("native CI13xx must resolve real local FastLED lib_deps");
@@ -303,7 +307,7 @@ async fn ci1306_real_fastled_software_spi_no_lto() {
     inspect_and_retain(&result, project, &identity);
 }
 
-fn inspect_default_lto(result: &fbuild_build::BuildResult) -> Vec<PathBuf> {
+fn inspect_default_lto(result: &fbuild_build::BuildResult) -> Vec<NormalizedPath> {
     let elf_path = result.elf_path.as_ref().unwrap();
     let data = std::fs::read(elf_path).unwrap();
     let elf = object::File::parse(data.as_slice()).unwrap();
@@ -327,10 +331,8 @@ fn inspect_default_lto(result: &fbuild_build::BuildResult) -> Vec<PathBuf> {
         let argv = record["arguments"].as_array().unwrap();
         // Vendor compile_sdk_sources.py keeps SDK calls opaque so ld's
         // scheduler --wrap can create the Arduino task. Core/app stay LTO.
-        let sdk = record["file"]
-            .as_str()
-            .unwrap()
-            .replace('\\', "/")
+        let sdk = NormalizedPath::new(record["file"].as_str().unwrap())
+            .display_slash()
             .contains("/tools/sdk/src/");
         let required = if sdk { "-fno-lto" } else { "-flto" };
         let forbidden = if sdk { "-flto" } else { "-fno-lto" };
@@ -338,13 +340,14 @@ fn inspect_default_lto(result: &fbuild_build::BuildResult) -> Vec<PathBuf> {
         assert!(!argv.iter().any(|a| a.as_str() == Some(forbidden)));
         assert!(argv[0].as_str().unwrap().contains("riscv-nuclei-elf-"));
     }
-    let link_path = elf_path.parent().unwrap().join("native_link_command.json");
+    let link_path =
+        NormalizedPath::new(elf_path.parent().unwrap()).join("native_link_command.json");
     let argv: Vec<String> = serde_json::from_slice(&std::fs::read(&link_path).unwrap()).unwrap();
     assert!(argv.iter().any(|a| a == "-flto"));
     assert!(!argv.iter().any(|a| a == "-fno-lto"));
     let archive = argv
         .iter()
-        .map(PathBuf::from)
+        .map(NormalizedPath::new)
         .find(|p| {
             p.file_name()
                 .is_some_and(|name| name.to_string_lossy().eq_ignore_ascii_case("libfastled.a"))
@@ -368,10 +371,10 @@ fn inspect_default_lto(result: &fbuild_build::BuildResult) -> Vec<PathBuf> {
         "default library build must actually emit GCC LTO objects"
     );
     vec![
-        elf_path.clone(),
-        database.clone(),
+        NormalizedPath::new(elf_path),
+        NormalizedPath::new(database),
         link_path,
-        elf_path.with_extension("map"),
+        NormalizedPath::new(elf_path.with_extension("map")),
         archive,
     ]
 }
@@ -379,11 +382,11 @@ fn inspect_default_lto(result: &fbuild_build::BuildResult) -> Vec<PathBuf> {
 #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
 #[ignore = "#1914: requires actual FBUILD_FASTLED_SOURCE, Nuclei GCC/Chipintelli packages and real default-LTO SDK/library link"]
 async fn ci1306_real_fastled_software_spi_default_lto() {
-    let source = PathBuf::from(
+    let source = canonicalize_existing(
         std::env::var_os("FBUILD_FASTLED_SOURCE")
             .expect("set actual FBUILD_FASTLED_SOURCE checkout"),
     )
-    .canonicalize()
+    .await
     .unwrap();
     assert!(
         source
@@ -395,9 +398,9 @@ async fn ci1306_real_fastled_software_spi_default_lto() {
     let project = tmp.path();
     std::fs::create_dir(project.join("src")).unwrap();
     // Intentionally no build_flags/build_unflags: exercise vendor defaults.
-    std::fs::write(project.join("platformio.ini"), format!(
+    std::fs::write(NormalizedPath::new(project).join("platformio.ini"), format!(
         "[env:ci1306]\nplatform = ci13xx\nboard = ci1306\nframework = arduino\nlib_deps = FastLED=symlink://{}\n", source.display())).unwrap();
-    std::fs::write(project.join("src/main.cpp"), PROBE).unwrap();
+    std::fs::write(NormalizedPath::new(project).join("src/main.cpp"), PROBE).unwrap();
     let report = provision_env(project, "ci1306", provision::ProvisionMode::Install)
         .await
         .unwrap();
@@ -420,9 +423,12 @@ async fn ci1306_real_fastled_software_spi_default_lto() {
     let mut artifacts = inspect_default_lto(&result);
     artifacts.push(inspect_scheduler_reachability(&result).await);
     if let Some(output) = std::env::var_os("FBUILD_CI13XX_ARTIFACT_DIR") {
-        let output = PathBuf::from(output).join("fastled-ci1306-default-lto");
+        let output = NormalizedPath::new(output).join("fastled-ci1306-default-lto");
         std::fs::create_dir_all(&output).unwrap();
-        artifacts.extend([project.join("platformio.ini"), project.join("src/main.cpp")]);
+        artifacts.extend([
+            NormalizedPath::new(project).join("platformio.ini"),
+            NormalizedPath::new(project).join("src/main.cpp"),
+        ]);
         for path in artifacts {
             std::fs::copy(&path, output.join(path.file_name().unwrap())).unwrap();
         }
@@ -439,7 +445,7 @@ async fn ci1306_real_fastled_software_spi_default_lto() {
     }
 }
 
-async fn inspect_scheduler_reachability(result: &fbuild_build::BuildResult) -> PathBuf {
+async fn inspect_scheduler_reachability(result: &fbuild_build::BuildResult) -> NormalizedPath {
     let elf_path = result.elf_path.as_ref().unwrap();
     let data = std::fs::read(elf_path).unwrap();
     let elf = object::File::parse(data.as_slice()).unwrap();
@@ -454,7 +460,8 @@ async fn inspect_scheduler_reachability(result: &fbuild_build::BuildResult) -> P
         &std::fs::read(elf_path.parent().unwrap().join("native_link_command.json")).unwrap(),
     )
     .unwrap();
-    let objdump = PathBuf::from(&link[0]).with_file_name("riscv-nuclei-elf-objdump");
+    let objdump =
+        NormalizedPath::new(Path::new(&link[0]).with_file_name("riscv-nuclei-elf-objdump"));
     let mut bodies = std::collections::HashMap::new();
     let mut evidence = String::new();
     for symbol in ["main", "__wrap_vTaskStartScheduler", task.as_str()] {
@@ -475,10 +482,10 @@ async fn inspect_scheduler_reachability(result: &fbuild_build::BuildResult) -> P
         evidence.push_str(&output.stdout);
         bodies.insert(symbol.to_owned(), output.stdout);
     }
-    let path = elf_path.with_extension("scheduler-disassembly.txt");
+    let path = NormalizedPath::new(elf_path.with_extension("scheduler-disassembly.txt"));
     std::fs::write(&path, &evidence).unwrap();
     if let Some(root) = std::env::var_os("FBUILD_CI13XX_ARTIFACT_DIR") {
-        let output = PathBuf::from(root).join("fastled-ci1306-default-lto");
+        let output = NormalizedPath::new(root).join("fastled-ci1306-default-lto");
         std::fs::create_dir_all(&output).unwrap();
         std::fs::write(output.join("scheduler-disassembly.txt"), &evidence).unwrap();
     }
@@ -538,11 +545,11 @@ fn stage_project_library(project: &Path, source: &Path, identity: &serde_json::V
 #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
 #[ignore = "#1914: requires actual FBUILD_FASTLED_SOURCE checkout and Nuclei GCC/SDK; compiles standard project lib/FastLED layout"]
 async fn ci1306_real_fastled_project_library_no_lto() {
-    let source = PathBuf::from(
+    let source = canonicalize_existing(
         std::env::var_os("FBUILD_FASTLED_SOURCE")
             .expect("set actual FBUILD_FASTLED_SOURCE checkout"),
     )
-    .canonicalize()
+    .await
     .unwrap();
     let mut identity = input_identity(&source).await;
     let manifest = std::fs::read(source.join("library.json")).expect("actual FastLED manifest");
@@ -552,9 +559,9 @@ async fn ci1306_real_fastled_project_library_no_lto() {
     std::fs::create_dir(project.join("src")).unwrap();
     stage_project_library(project, &source, &identity);
     // No lib_deps: ordinary project-local library discovery is the contract.
-    std::fs::write(project.join("platformio.ini"),
+    std::fs::write(NormalizedPath::new(project).join("platformio.ini"),
         "[env:ci1306]\nplatform = ci13xx\nboard = ci1306\nframework = arduino\nbuild_unflags = -flto\nbuild_flags = -fno-lto\n").unwrap();
-    std::fs::write(project.join("src/main.cpp"), PROBE).unwrap();
+    std::fs::write(NormalizedPath::new(project).join("src/main.cpp"), PROBE).unwrap();
     let report = provision_env(project, "ci1306", provision::ProvisionMode::Install)
         .await
         .unwrap();
