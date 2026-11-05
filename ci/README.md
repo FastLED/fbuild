@@ -72,7 +72,7 @@ fail coverage. This policy is tracked in [#1698](https://github.com/FastLED/fbui
 
 - **`test_cache_status.py`** streams the unchanged Cargo test selection with JSON compiler evidence; only a completed assertion failure enables setup-soldr failure saves. Compiler errors, incomplete logs and cancellation remain blocked.
 
-- **`check_python_complexity.py`** -- Runs configured C901/RUF100 checks on every tracked Python file, including scripts excluded from normal discovery (FastLED/fbuild#1639).
+- **`check_python_complexity.py`** -- Runs configured C901/RUF100 checks on every tracked Python file, including scripts excluded from normal discovery (FastLED/fbuild#1639). `test_check_python_complexity.py` drives the same seams, so a raised `max-complexity`, a dropped rule, or a file-selection regression fails a test instead of silently loosening the ratchet.
 
 ESP libs slices: `uv run --no-project ci/slice_esp_libs.py SOURCE --version 3.3.5
 --out-dir OUTPUT` reads the xz once and spools payloads to temporary disk to sort
