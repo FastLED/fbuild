@@ -77,7 +77,19 @@ pub struct Esp32Deployer {
     /// provisioned `tool-esptoolpy` package). `None` falls back to a bare
     /// `esptool` PATH lookup (FastLED/fbuild#1616).
     pub(super) esptool_path: Option<NormalizedPath>,
+    /// Wall-clock budget for the external `esptool write-flash` child.
+    ///
+    /// The budget is what turns a wedged external flash tool into a
+    /// contained [`fbuild_core::FbuildError::Timeout`] instead of a hung
+    /// deploy (FastLED/fbuild#1329). It is a field, not a literal, so the
+    /// containment test can drive the timeout path in under a second
+    /// rather than waiting two minutes.
+    pub(super) flash_timeout: std::time::Duration,
 }
+
+/// Default external `esptool write-flash` budget: a full 4 MB flash on a
+/// slow USB-CDC stack takes ~40 s with headroom for stub-upload retries.
+pub(super) const DEFAULT_FLASH_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(120);
 
 #[cfg(feature = "espflash-native")]
 pub(super) fn native_write_or_fallback_outcome(
@@ -160,6 +172,7 @@ impl Esp32Deployer {
             use_native_write: false,
             caller_path: None,
             esptool_path: None,
+            flash_timeout: DEFAULT_FLASH_TIMEOUT,
         }
     }
 
@@ -236,6 +249,17 @@ impl Esp32Deployer {
     /// Override the baud rate (e.g. from a CLI `--baud` flag).
     pub fn with_baud_rate(mut self, baud: &str) -> Self {
         self.baud_rate = baud.to_string();
+        self
+    }
+
+    /// Override the external `esptool write-flash` wall-clock budget.
+    ///
+    /// Production keeps [`DEFAULT_FLASH_TIMEOUT`]; the containment tests
+    /// lower it so the timeout path is exercised in milliseconds
+    /// (FastLED/fbuild#1329).
+    #[must_use]
+    pub fn with_flash_timeout(mut self, timeout: std::time::Duration) -> Self {
+        self.flash_timeout = timeout;
         self
     }
 
@@ -801,7 +825,7 @@ impl Esp32Deployer {
             &args_ref,
             None,
             env_overlay.as_deref(),
-            Some(std::time::Duration::from_secs(120)),
+            Some(self.flash_timeout),
         )
         .await?;
 
@@ -878,7 +902,7 @@ impl Deployer for Esp32Deployer {
             &args_ref,
             None,
             env_overlay.as_deref(),
-            Some(std::time::Duration::from_secs(120)),
+            Some(self.flash_timeout),
         )
         .await?;
 
