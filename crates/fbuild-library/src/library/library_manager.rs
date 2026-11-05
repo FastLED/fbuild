@@ -953,7 +953,12 @@ mod local_manifest_filter_tests {
             )
         };
         let resolved = resolve().await.unwrap();
-        assert_eq!(resolved.source_files, vec![library.join("keep.cpp")]);
+        // Local library resolution canonicalizes the source root. Match that
+        // identity on hosts where the temporary directory is a symlink.
+        let expected = fbuild_core::path::canonicalize_existing(library.join("keep.cpp"))
+            .await
+            .unwrap();
+        assert_eq!(resolved.source_files, vec![expected.into_path_buf()]);
         std::fs::write(&manifest, r#"{"build":{"srcFilter":[false]}}"#).unwrap();
         assert!(resolve().await.is_err());
     }
