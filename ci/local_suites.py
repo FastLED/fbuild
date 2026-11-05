@@ -33,6 +33,7 @@ DRIFT_UNITTEST_MODULES: tuple[str, ...] = (
     "ci.test_crate_guard_parity",
     "ci.test_find_direct_subprocess",
     "ci.test_local_suites",
+    "ci.test_gate_script_coverage",
 )
 
 # Modules the local gate additionally runs. Their subject is the local proof
