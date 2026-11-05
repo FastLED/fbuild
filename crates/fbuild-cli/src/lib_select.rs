@@ -238,7 +238,8 @@ fn resolve_framework(
             "arduino-ci13xx",
             fbuild_build::ci13xx::installed_framework_root(project_dir)
                 .map_err(|error| error.to_string())?
-                .join("libraries"),
+                .join("libraries")
+                .into_path_buf(),
         ),
         Platform::Apollo3 => info(
             "framework-arduinoapollo3",

@@ -1,10 +1,10 @@
 //! Compile the pinned vendor source manifest through the shared native engine.
-use super::packages::VendorPackage;
+use super::packages;
 use crate::{BuildOrchestrator, BuildParams, BuildResult};
+use fbuild_core::path::NormalizedPath;
 use fbuild_core::{FbuildError, Platform, Result, SizeInfo};
-use fbuild_packages::Package;
 use std::collections::HashMap;
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
 type Properties = HashMap<String, String>;
 
@@ -94,7 +94,7 @@ fn flags(key: &str, props: &Properties) -> Result<Vec<String>> {
     )?))
 }
 
-fn sources(root: &Path) -> Result<Vec<PathBuf>> {
+fn sources(root: &Path) -> Result<Vec<NormalizedPath>> {
     let mut found = Vec::new();
     for entry in walkdir::WalkDir::new(root) {
         let entry = entry.map_err(|e| fail(e.to_string()))?;
@@ -104,7 +104,7 @@ fn sources(root: &Path) -> Result<Vec<PathBuf>> {
                 Some("c" | "cpp" | "S" | "s")
             )
         {
-            found.push(entry.into_path());
+            found.push(NormalizedPath::new(entry.path()));
         }
     }
     found.sort();
@@ -124,10 +124,10 @@ async fn command(args: &[String], cwd: &Path) -> Result<String> {
 }
 
 struct Recipe {
-    project: PathBuf,
-    build: PathBuf,
-    bin: PathBuf,
-    framework: PathBuf,
+    project: NormalizedPath,
+    build: NormalizedPath,
+    bin: NormalizedPath,
+    framework: NormalizedPath,
     props: Properties,
     user_flags: Vec<String>,
     unflags: Vec<String>,
@@ -136,15 +136,15 @@ struct Recipe {
 
 fn configure_recipe(
     params: &BuildParams,
-    project: PathBuf,
-    framework: PathBuf,
-    toolchain: PathBuf,
+    project: NormalizedPath,
+    framework: NormalizedPath,
+    toolchain: NormalizedPath,
     config: &fbuild_config::PlatformIOConfig,
     board: &fbuild_config::BoardConfig,
 ) -> Result<Recipe> {
     validate_board(board, &framework)?;
     std::fs::create_dir_all(&params.build_dir)?;
-    let build = params.build_dir.canonicalize()?;
+    let build = NormalizedPath::new(params.build_dir.canonicalize()?);
     let bin = toolchain.join("bin");
     let mut props = read_properties(&framework.join("platform.txt"))?;
     for (key, value) in read_properties(&framework.join("boards.txt"))? {
@@ -196,10 +196,10 @@ fn configure_recipe(
 }
 
 struct SourcePlan {
-    sources: Vec<PathBuf>,
-    includes: Vec<PathBuf>,
+    sources: Vec<NormalizedPath>,
+    includes: Vec<NormalizedPath>,
     defines: Vec<String>,
-    sdk: PathBuf,
+    sdk: NormalizedPath,
 }
 
 fn source_plan(recipe: &Recipe) -> Result<SourcePlan> {
@@ -276,10 +276,13 @@ fn prepare_sketch(recipe: &Recipe, params: &BuildParams, plan: &mut SourcePlan) 
     let generated = recipe.build.join("sketch");
     std::fs::create_dir_all(&generated)?;
     let scanner = crate::source_scanner::SourceScanner::new(&source_dir, &generated);
-    let includes: Vec<_> = plan.includes.iter().map(PathBuf::as_path).collect();
+    let includes: Vec<_> = plan.includes.iter().map(NormalizedPath::as_path).collect();
     let filter = config.get_source_filter(&params.env_name)?;
     plan.sources.extend(
-        scanner.scan_sketch_sources_filtered_with_include_roots(filter.as_deref(), &includes)?,
+        scanner
+            .scan_sketch_sources_filtered_with_include_roots(filter.as_deref(), &includes)?
+            .into_iter()
+            .map(NormalizedPath::new),
     );
     Ok(())
 }
@@ -303,7 +306,13 @@ async fn resolve_libraries(
     let ignored = config.get_lib_ignore(&params.env_name)?;
     let c_flags = library_flags(recipe, plan, "compiler.c.flags")?;
     let cpp_flags = library_flags(recipe, plan, "compiler.cpp.flags")?;
-    crate::pipeline::resolve_lib_deps(
+    // The shared legacy pipeline owns raw paths only across this API call.
+    let mut includes = plan
+        .includes
+        .iter()
+        .map(|p| p.clone().into_path_buf())
+        .collect();
+    let libraries = crate::pipeline::resolve_lib_deps(
         &dependencies,
         &ignored,
         &recipe.project,
@@ -314,21 +323,51 @@ async fn resolve_libraries(
         &recipe.bin.join("riscv-nuclei-elf-gcc-ar"),
         &c_flags,
         &cpp_flags,
-        &mut plan.includes,
+        &mut includes,
         params.verbose,
         None,
     )
-    .await
+    .await?;
+    plan.includes = includes.into_iter().map(NormalizedPath::new).collect();
+    Ok(libraries)
 }
 
-async fn compile_sources(recipe: &Recipe, params: &BuildParams) -> Result<(Vec<PathBuf>, PathBuf)> {
+fn source_compile_flags(
+    recipe: &Recipe,
+    plan: &SourcePlan,
+    source: &NormalizedPath,
+    flag_key: &str,
+) -> Result<Vec<String>> {
+    let mut compile_flags = flags(flag_key, &recipe.props)?;
+    if source.relative_to(&plan.sdk.join("src")).is_some() {
+        compile_flags.extend([
+            "-DCI_ARDUINO_CORE=1".into(),
+            "-DCI_CONFIG_FILE=\"user_config.h\"".into(),
+        ]);
+    }
+    compile_flags.extend(plan.defines.iter().cloned());
+    compile_flags.extend(plan.includes.iter().map(|p| format!("-I{}", p.display())));
+    compile_flags.retain(|flag| !recipe.unflags.contains(flag));
+    compile_flags.extend(recipe.user_flags.iter().cloned());
+    if source.relative_to(&plan.sdk.join("src")).is_some() {
+        // The pinned vendor compile_sdk_sources.py intentionally compiles
+        // SDK objects without LTO. Its external scheduler call must reach
+        // ld --wrap, which creates the Arduino task. SDK LTO can inline the
+        // real scheduler first and silently discard the entire sketch.
+        compile_flags.retain(|flag| flag != "-flto" && !flag.starts_with("-flto="));
+        compile_flags.push("-fno-lto".into());
+    }
+    Ok(compile_flags)
+}
+
+async fn compile_sources(
+    recipe: &Recipe,
+    params: &BuildParams,
+) -> Result<(Vec<NormalizedPath>, NormalizedPath)> {
     let Recipe {
         project,
         build,
         bin,
-        props,
-        user_flags,
-        unflags,
         ..
     } = recipe;
     let gcc = bin.join("riscv-nuclei-elf-gcc");
@@ -345,25 +384,7 @@ async fn compile_sources(recipe: &Recipe, params: &BuildParams) -> Result<(Vec<P
             "S" | "s" => (&gcc, "compiler.S.flags"),
             _ => (&gcc, "compiler.c.flags"),
         };
-        let mut compile_flags = flags(flag_key, props)?;
-        if source.starts_with(plan.sdk.join("src")) {
-            compile_flags.extend([
-                "-DCI_ARDUINO_CORE=1".into(),
-                "-DCI_CONFIG_FILE=\"user_config.h\"".into(),
-            ]);
-        }
-        compile_flags.extend(plan.defines.iter().cloned());
-        compile_flags.extend(plan.includes.iter().map(|p| format!("-I{}", p.display())));
-        compile_flags.retain(|flag| !unflags.contains(flag));
-        compile_flags.extend(user_flags.iter().cloned());
-        if source.starts_with(plan.sdk.join("src")) {
-            // The pinned vendor compile_sdk_sources.py intentionally compiles
-            // SDK objects without LTO. Its external scheduler call must reach
-            // ld --wrap, which creates the Arduino task. SDK LTO can inline the
-            // real scheduler first and silently discard the entire sketch.
-            compile_flags.retain(|flag| flag != "-flto" && !flag.starts_with("-flto="));
-            compile_flags.push("-fno-lto".into());
-        }
+        let compile_flags = source_compile_flags(recipe, &plan, source, flag_key)?;
         let output = build.join("objects").join(format!("{index}.o"));
         let result = crate::compiler::compile_source(
             compiler,
@@ -407,14 +428,21 @@ async fn compile_sources(recipe: &Recipe, params: &BuildParams) -> Result<(Vec<P
     let gate = fbuild_packages::library::library_compiler::job_gate(
         crate::parallel::effective_jobs(params.jobs),
     );
-    objects.extend(libraries.compile(&gate).await?);
+    objects.extend(
+        libraries
+            .compile(&gate)
+            .await?
+            .into_iter()
+            .map(NormalizedPath::new),
+    );
+
     Ok((objects, database))
 }
 
 async fn link_firmware(
     recipe: &Recipe,
-    objects: &[PathBuf],
-) -> Result<(PathBuf, PathBuf, SizeInfo)> {
+    objects: &[NormalizedPath],
+) -> Result<(NormalizedPath, NormalizedPath, SizeInfo)> {
     let Recipe {
         project,
         build,
@@ -481,7 +509,7 @@ impl BuildOrchestrator for Ci13xxOrchestrator {
 
     async fn build(&self, params: &BuildParams) -> Result<BuildResult> {
         let started = std::time::Instant::now();
-        let project = params.project_dir.canonicalize()?;
+        let project = fbuild_core::path::canonicalize_existing(&params.project_dir).await?;
         let config = fbuild_config::PlatformIOConfig::from_path(&project.join("platformio.ini"))?;
         let env = config.get_env_config(&params.env_name)?;
         let board = crate::resolution::ResolutionContext::new(&project, &params.env_name, &config)
@@ -497,25 +525,21 @@ impl BuildOrchestrator for Ci13xxOrchestrator {
                 "CI13xx custom resources require unimplemented resource-generation hooks",
             ));
         }
-        let framework = VendorPackage::framework(&project)
-            .ensure_installed()
-            .await?;
-        let toolchain = VendorPackage::toolchain(&project)?
-            .ensure_installed()
-            .await?;
+        let framework = packages::framework(&project).ensure_normalized().await?;
+        let toolchain = packages::toolchain(&project)?.ensure_normalized().await?;
         let recipe = configure_recipe(params, project, framework, toolchain, &config, &board)?;
         let (objects, database) = compile_sources(&recipe, params).await?;
         let (elf, firmware, size_info) = link_firmware(&recipe, &objects).await?;
         Ok(BuildResult {
             success: true,
-            firmware_path: Some(firmware),
-            elf_path: Some(elf),
+            firmware_path: Some(firmware.into_path_buf()),
+            elf_path: Some(elf.into_path_buf()),
             size_info: Some(size_info),
             symbol_map: None,
             build_time_secs: started.elapsed().as_secs_f64(),
             message: "Native CI1306 ELF/user-code build (combined firmware/deploy unsupported)"
                 .into(),
-            compile_database_path: Some(database),
+            compile_database_path: Some(database.into_path_buf()),
             build_log: fbuild_core::BuildLog::new(),
         })
     }

@@ -8,8 +8,8 @@ pub struct Ci13xxPlatformSupport;
 /// Resolve the same installed framework as native builds without downloading.
 pub fn installed_framework_root(
     project: &std::path::Path,
-) -> fbuild_core::Result<std::path::PathBuf> {
-    packages::VendorPackage::framework(project).installed_root()
+) -> fbuild_core::Result<fbuild_core::path::NormalizedPath> {
+    packages::framework(project).installed_root()
 }
 
 #[async_trait::async_trait]
@@ -27,8 +27,8 @@ impl crate::PlatformSupport for Ci13xxPlatformSupport {
         mode: crate::provision::ProvisionMode,
     ) -> fbuild_core::Result<Vec<crate::provision::ProvisionedPackage>> {
         orchestrator::validate(inputs.env_config, &inputs.board.mcu)?;
-        let toolchain = packages::VendorPackage::toolchain(inputs.project_dir)?;
-        let framework = packages::VendorPackage::framework(inputs.project_dir);
+        let toolchain = packages::toolchain(inputs.project_dir)?;
+        let framework = packages::framework(inputs.project_dir);
         use crate::provision::{PackageKind, provision_package};
         let reports = vec![
             provision_package(PackageKind::Toolchain, &toolchain, mode).await,
