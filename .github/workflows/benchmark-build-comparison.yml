@@ -113,7 +113,7 @@ jobs:
             fi
           fi
 
-      - name: Shape runner link to 10 Mbit/s
+      - name: Shape runner download link to 10 Mbit/s
         shell: bash
         run: |
           set -euo pipefail
@@ -122,17 +122,39 @@ jobs:
             echo "::error::no default-route interface found; refusing to publish unshaped numbers labelled 10 Mbit/s"
             exit 1
           fi
-          echo "Shaping ${iface} to 10 Mbit/s with tc tbf"
-          if ! sudo tc qdisc replace dev "${iface}" root tbf rate 10mbit burst 64kbit latency 50ms; then
-            echo "::error::tc qdisc failed on ${iface}; refusing to publish unshaped numbers labelled 10 Mbit/s"
-            exit 1
-          fi
-          if ! tc qdisc show dev "${iface}" | grep -qiE 'tbf.*10Mbit'; then
-            echo "::error::tc qdisc readback on ${iface} does not show tbf at 10 Mbit/s"
-            tc qdisc show dev "${iface}"
-            exit 1
-          fi
           echo "iface=${iface}" >> "${GITHUB_ENV}"
+
+          # Downloads are INGRESS traffic. `tc qdisc ... root tbf` only shapes
+          # EGRESS (uploads), so it would leave every measured download running
+          # at full link speed while the report claimed 10 Mbit/s. Redirect
+          # ingress into an ifb device and shape that; fall back to ingress
+          # policing when ifb is unavailable.
+          shaped=""
+          if sudo modprobe ifb numifbs=1 2>/dev/null && sudo ip link set ifb0 up 2>/dev/null; then
+            sudo tc qdisc add dev "${iface}" handle ffff: ingress
+            sudo tc filter add dev "${iface}" parent ffff: protocol all matchall \
+              action mirred egress redirect dev ifb0
+            sudo tc qdisc replace dev ifb0 root tbf rate 10mbit burst 64kbit latency 50ms
+            shaped="ifb0"
+          else
+            sudo tc qdisc add dev "${iface}" handle ffff: ingress
+            sudo tc filter add dev "${iface}" parent ffff: protocol all matchall \
+              action police rate 10mbit burst 64k drop
+            shaped="police"
+          fi
+          echo "shaped ${iface} ingress via ${shaped}"
+
+          # Prove the shaping actually bites. A qdisc readback proves only that
+          # a qdisc exists; this pulls 10 MB and requires the achieved rate to
+          # sit at or below the shaped ceiling.
+          read -r speed size elapsed <<<"$(curl -sS -o /dev/null --max-time 180 \
+            -w '%{speed_download} %{size_download} %{time_total}' \
+            'https://speed.cloudflare.com/__down?bytes=10000000')"
+          echo "download probe: ${size} bytes at ${speed} B/s in ${elapsed}s"
+          if ! awk -v s="${speed}" -v n="${size}" 'BEGIN { exit !(n >= 9000000 && s <= 1800000) }'; then
+            echo "::error::download probe took ${elapsed}s for ${size} bytes at ${speed} B/s; link is not limited to ~10 Mbit/s (1.25 MB/s) — refusing to publish"
+            exit 1
+          fi
 
       - name: Run cold/warm comparison and render site
         shell: bash
@@ -160,8 +182,11 @@ jobs:
           set -euo pipefail
           iface="${iface:-$(ip route | awk '/^default/{print $5; exit}')}"
           if [[ -n "${iface}" ]]; then
+            sudo tc qdisc del dev "${iface}" ingress || true
             sudo tc qdisc del dev "${iface}" root || true
           fi
+          sudo tc qdisc del dev ifb0 root || true
+          sudo ip link set ifb0 down || true
 
       - name: Summarize cold-build breakdown
         if: always()
