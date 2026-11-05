@@ -3,6 +3,9 @@
 //! graph separately, so these modules share one link instead.
 
 mod cache_survives_tar_extract;
+mod ci13xx_acceptance;
+mod ci13xx_configuration_acceptance;
+mod ci13xx_fastled_acceptance;
 mod clangd_check_parity;
 mod compile_many_stage2_perf;
 mod compile_many_two_stage;

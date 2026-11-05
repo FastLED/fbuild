@@ -1,0 +1,20 @@
+{
+  "build": {
+    "core": "chipintelli",
+    "f_cpu": "246000000L",
+    "mabi": "ilp32f",
+    "march": "rv32imafc",
+    "mcu": "ci1306",
+    "variant": "ci1306"
+  },
+  "frameworks": ["arduino"],
+  "id": "ci1306",
+  "name": "Chipintelli CI1306 (external crystal, AEC)",
+  "platform": "ci13xx",
+  "upload": {
+    "maximum_size": 382121,
+    "maximum_ram_size": 532480
+  },
+  "url": "https://github.com/coloz/arduino-ci130x",
+  "vendor": "Chipintelli"
+}
