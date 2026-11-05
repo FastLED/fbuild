@@ -14,7 +14,6 @@ schema = 1
 untested = [
   "build_backend",
   "build_qemu_linux_runtime",
-  "check_dylint_allowlists",
   "validate_boards",
 ]
 
@@ -33,7 +32,7 @@ tests = []
 tests = ["ci/test_cancel_superseded.py"]
 
 [scripts.check_dylint_allowlists]
-tests = []
+tests = ["ci/test_check_dylint_allowlists.py"]
 
 [scripts.check_fbuild_path_baseline]
 tests = ["ci/test_check_fbuild_path_baseline.py"]
