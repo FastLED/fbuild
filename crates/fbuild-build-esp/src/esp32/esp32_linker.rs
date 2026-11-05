@@ -219,6 +219,9 @@ pub struct Esp32Linker {
     /// The app partition's size, which is what the image must fit. `None`
     /// falls back to `max_flash` (FastLED/fbuild#1409).
     app_size_limit: Option<u64>,
+    /// Cross-project link-output cache root (FastLED/fbuild#1894). `None`
+    /// disables reuse, which is the historical behaviour.
+    link_output_cache_dir: Option<NormalizedPath>,
     print_memory_usage: bool,
 }
 
@@ -261,12 +264,19 @@ impl Esp32Linker {
             caller_path: None,
             app_size_limit: None,
             print_memory_usage: true,
+            link_output_cache_dir: None,
         }
     }
 
     /// Builder: size-check the image against the app partition instead of
     /// the board's flash size. `max_flash` still drives esptool's
     /// `--flash-size`, so it cannot carry this limit.
+    /// Enable cross-project link-output reuse under `dir` (FastLED/fbuild#1894).
+    pub fn with_link_output_cache_dir(mut self, dir: Option<NormalizedPath>) -> Self {
+        self.link_output_cache_dir = dir;
+        self
+    }
+
     pub fn with_app_size_limit(mut self, limit: Option<u64>) -> Self {
         self.app_size_limit = limit;
         self
@@ -506,6 +516,38 @@ impl Esp32Linker {
 
 #[async_trait::async_trait]
 impl Linker for Esp32Linker {
+    fn link_output_cache_dir(&self) -> Option<&Path> {
+        self.link_output_cache_dir
+            .as_ref()
+            .map(|path| path.as_path())
+    }
+
+    /// SDK flags and linker-script *contents*, which the generic digest cannot
+    /// see because they live on the linker rather than in `LinkExtraArgs`
+    /// (FastLED/fbuild#1894). Without this a cross-project cache key could
+    /// collide across two SDKs whose scripts differ at the same path.
+    fn link_fingerprint(&self) -> String {
+        use sha2::{Digest, Sha256};
+        let mut hasher = Sha256::new();
+        hasher.update(self.mcu_config.mcu.as_bytes());
+        hasher.update(self.mcu_config.linker_flags.join("\u{1f}").as_bytes());
+        hasher.update(self.mcu_config.linker_libs.join("\u{1f}").as_bytes());
+        hasher.update(self.sdk_ld_flags.join("\u{1f}").as_bytes());
+        hasher.update(self.sdk_lib_flags.join("\u{1f}").as_bytes());
+        for script in &self.linker_scripts.scripts {
+            hasher.update(script.as_bytes());
+            let direct = Path::new(script);
+            let contents = std::fs::read(direct).ok().or_else(|| {
+                self.linker_scripts
+                    .search_dirs
+                    .iter()
+                    .find_map(|dir| std::fs::read(dir.join(script)).ok())
+            });
+            hasher.update(contents.unwrap_or_default());
+        }
+        format!("{:x}", hasher.finalize())
+    }
+
     async fn archive(&self, objects: &[PathBuf], output: &Path) -> Result<()> {
         crate::linker::LinkerBase::archive(&self.ar_path, objects, output, "ar").await
     }

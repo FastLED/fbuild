@@ -222,6 +222,17 @@ pub trait Linker: Send + Sync {
         String::new()
     }
 
+    /// Directory for cross-project link-output reuse, when the platform
+    /// supports it (FastLED/fbuild#1894). `None` disables the cache.
+    ///
+    /// A hit restores `firmware.elf` when the link inputs are byte-identical
+    /// to a previous link, which is the case for fresh project directories
+    /// after the prefix-map work in #1893. The cache never changes the linked
+    /// bytes: a miss always relinks.
+    fn link_output_cache_dir(&self) -> Option<&Path> {
+        None
+    }
+
     /// Whether static RAM over the board's maximum fails the build.
     ///
     /// Default `false`: like PlatformIO, RAM overflow is a warning, because the
@@ -239,11 +250,12 @@ pub trait Linker: Send + Sync {
     /// objects and archives, saving ~10-14s on incremental builds where only
     /// the compilation step ran (or nothing changed at all).
     ///
-    /// `perf` receives `link-elf`, `link-convert`, `link-size` and
-    /// `link-symbols` so the caller's outer link phase is attributable instead
-    /// of guessed at (FastLED/fbuild#1894). The middle two run concurrently, so
-    /// their sum may exceed the outer phase; the caller's own timing is the
-    /// truth.
+    /// `perf` receives `link-elf` (or `link-restore` on a cross-project cache
+    /// hit), `link-convert`, `link-size` and `link-symbols` so the caller's
+    /// outer link phase is attributable instead of guessed at
+    /// (FastLED/fbuild#1894). The middle two run concurrently, so their sum may
+    /// exceed the outer phase; the caller's own timing is the truth. When the
+    /// platform opts in, a fresh directory restores a content-identical ELF.
     async fn link_all(
         &self,
         sketch_objects: &[PathBuf],
@@ -261,99 +273,124 @@ pub trait Linker: Send + Sync {
                 && elf_is_up_to_date(&candidate_elf, all_objects.iter().copied());
             if can_skip {
                 tracing::info!("link: firmware.elf is up-to-date, skipping relink");
-                let convert_started = Instant::now();
-                let firmware_path = self.convert_firmware(&candidate_elf, output_dir).await?;
-                perf.record("link-convert", convert_started.elapsed());
-                let size_started = Instant::now();
-                let size_info = self.report_size(&candidate_elf).await.ok();
-                perf.record("link-size", size_started.elapsed());
-                if !extra.bloat_analysis {
-                    enforce_size_limits(size_info.as_ref(), self.ram_overflow_is_fatal())?;
-                }
-                let symbol_map = if symbol_analysis {
-                    let started = Instant::now();
-                    let map = LinkerBase::analyze_symbols(self.size_tool_path(), &candidate_elf)
-                        .await
-                        .ok();
-                    perf.record("link-symbols", started.elapsed());
-                    map
-                } else {
-                    None
-                };
-                let is_hex = firmware_path.extension().is_some_and(|e| e == "hex");
-                return Ok(LinkResult {
-                    success: true,
-                    elf_path: Some(candidate_elf),
-                    hex_path: if is_hex {
-                        Some(firmware_path.clone())
-                    } else {
-                        None
-                    },
-                    bin_path: if !is_hex { Some(firmware_path) } else { None },
-                    size_info,
-                    symbol_map,
-                    stdout: String::new(),
-                    stderr: String::new(),
-                });
+                return finish_from_elf(
+                    self,
+                    candidate_elf,
+                    output_dir,
+                    extra,
+                    symbol_analysis,
+                    perf,
+                )
+                .await;
             }
         }
 
+        // A fresh directory has no ELF, but its inputs are byte-identical to a
+        // previous project's (FastLED/fbuild#1894). Reuse the cached ELF and
+        // let the normal convert/size legs below run from it.
+        let cache_root = self.link_output_cache_dir();
+        let content_key = cache_root
+            .filter(|_| !candidate_elf.exists())
+            .and_then(|_| {
+                let inputs: Vec<&Path> =
+                    all_objects.iter().map(|object| object.as_path()).collect();
+                crate::link_output_cache::content_key(
+                    &inputs,
+                    extra,
+                    &self.link_fingerprint(),
+                    output_dir,
+                )
+            });
+        let restored = cache_root
+            .zip(content_key.as_deref())
+            .is_some_and(|(root, key)| {
+                let started = Instant::now();
+                let hit = crate::link_output_cache::restore(root, key, &candidate_elf);
+                if hit {
+                    perf.record("link-restore", started.elapsed());
+                }
+                hit
+            });
+
         // Pass core objects directly to linker (not archived) for LTO compatibility.
         // With LTO + archives, the linker can't see symbols across TUs properly.
-        let map_path = output_dir.join("firmware.map");
-        let fresh_map = crate::link_overflow::prepare_map(&map_path);
-        let link_started = Instant::now();
-        let elf_path = self
-            .link(sketch_objects, core_objects, output_dir, extra)
-            .await
-            .map_err(|error| {
-                crate::link_overflow::enrich(error, fresh_map.then_some(map_path.as_path()))
-            })?;
-        perf.record("link-elf", link_started.elapsed());
-        crate::link_digest::record_digest(&elf_path, &digest);
-
-        // Convert and size. Both only read the ELF, so they run together
-        // instead of back to back on the critical path (FastLED/fbuild#1468).
-        let ((firmware_path, convert_elapsed), (size_info, size_elapsed)) = tokio::join!(
-            timed(self.convert_firmware(&elf_path, output_dir)),
-            timed(self.report_size(&elf_path))
-        );
-        perf.record("link-convert", convert_elapsed);
-        perf.record("link-size", size_elapsed);
-        let firmware_path = firmware_path?;
-        let size_info = size_info.ok();
-        if !extra.bloat_analysis {
-            enforce_size_limits(size_info.as_ref(), self.ram_overflow_is_fatal())?;
-        }
-
-        // Symbol analysis
-        let symbol_map = if symbol_analysis {
-            let started = Instant::now();
-            let map = LinkerBase::analyze_symbols(self.size_tool_path(), &elf_path)
-                .await
-                .ok();
-            perf.record("link-symbols", started.elapsed());
-            map
+        let elf_path = if restored {
+            crate::link_digest::record_digest(&candidate_elf, &digest);
+            candidate_elf.clone()
         } else {
-            None
+            let map_path = output_dir.join("firmware.map");
+            let fresh_map = crate::link_overflow::prepare_map(&map_path);
+            let link_started = Instant::now();
+            let elf_path = self
+                .link(sketch_objects, core_objects, output_dir, extra)
+                .await
+                .map_err(|error| {
+                    crate::link_overflow::enrich(error, fresh_map.then_some(map_path.as_path()))
+                })?;
+            perf.record("link-elf", link_started.elapsed());
+            crate::link_digest::record_digest(&elf_path, &digest);
+            if let Some((root, key)) = cache_root.zip(content_key.as_deref()) {
+                crate::link_output_cache::store(root, key, &elf_path);
+            }
+            elf_path
         };
 
-        let is_hex = firmware_path.extension().is_some_and(|e| e == "hex");
-        Ok(LinkResult {
-            success: true,
-            elf_path: Some(elf_path),
-            hex_path: if is_hex {
-                Some(firmware_path.clone())
-            } else {
-                None
-            },
-            bin_path: if !is_hex { Some(firmware_path) } else { None },
-            size_info,
-            symbol_map,
-            stdout: String::new(),
-            stderr: String::new(),
-        })
+        finish_from_elf(self, elf_path, output_dir, extra, symbol_analysis, perf).await
     }
+}
+
+/// Convert, size and optionally analyze an ELF that already exists, then
+/// assemble the [`LinkResult`].
+///
+/// Shared by all three `link_all` outcomes — an up-to-date ELF, a
+/// cross-project cache hit, and a fresh link (FastLED/fbuild#1894) — so the
+/// post-link legs cannot drift between them.
+async fn finish_from_elf<L: Linker + ?Sized>(
+    linker: &L,
+    elf_path: PathBuf,
+    output_dir: &Path,
+    extra: &LinkExtraArgs,
+    symbol_analysis: bool,
+    perf: &mut PerfTimer,
+) -> Result<LinkResult> {
+    // Convert and size. Both only read the ELF, so they run together instead of
+    // back to back on the critical path (FastLED/fbuild#1468).
+    let ((firmware_path, convert_elapsed), (size_info, size_elapsed)) = tokio::join!(
+        timed(linker.convert_firmware(&elf_path, output_dir)),
+        timed(linker.report_size(&elf_path))
+    );
+    perf.record("link-convert", convert_elapsed);
+    perf.record("link-size", size_elapsed);
+    let firmware_path = firmware_path?;
+    let size_info = size_info.ok();
+    if !extra.bloat_analysis {
+        enforce_size_limits(size_info.as_ref(), linker.ram_overflow_is_fatal())?;
+    }
+    let symbol_map = if symbol_analysis {
+        let started = Instant::now();
+        let map = LinkerBase::analyze_symbols(linker.size_tool_path(), &elf_path)
+            .await
+            .ok();
+        perf.record("link-symbols", started.elapsed());
+        map
+    } else {
+        None
+    };
+    let is_hex = firmware_path.extension().is_some_and(|e| e == "hex");
+    Ok(LinkResult {
+        success: true,
+        elf_path: Some(elf_path),
+        hex_path: if is_hex {
+            Some(firmware_path.clone())
+        } else {
+            None
+        },
+        bin_path: if !is_hex { Some(firmware_path) } else { None },
+        size_info,
+        symbol_map,
+        stdout: String::new(),
+        stderr: String::new(),
+    })
 }
 
 /// Await `future`, returning its output and its own wall-clock duration.

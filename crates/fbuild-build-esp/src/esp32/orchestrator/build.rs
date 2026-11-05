@@ -903,7 +903,10 @@ impl BuildOrchestrator for Esp32Orchestrator {
             &params.project_dir,
             &framework,
             &ctx.board,
-        ));
+        ))
+        .with_link_output_cache_dir(Some(fbuild_core::path::NormalizedPath::new(
+            fbuild_paths::get_cache_root().join("link-output"),
+        )));
 
         // `--shrink=printf` (FastLED/fbuild#1459): opt-in, probed, and
         // arch-gated -- see `shrink_link::resolve_shrink`.
