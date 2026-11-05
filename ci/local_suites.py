@@ -39,6 +39,7 @@ DRIFT_UNITTEST_MODULES: tuple[str, ...] = (
     "ci.test_check_flash_offsets",
     "ci.test_cancel_superseded",
     "ci.test_check_dylint_allowlists",
+    "ci.test_validate_boards",
 )
 
 # Modules the local gate additionally runs. Their subject is the local proof

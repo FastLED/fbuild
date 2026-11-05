@@ -25,7 +25,7 @@ ROOT = Path(__file__).resolve().parents[1]
 # `check_flash_offsets`, `cancel_superseded` and `check_dylint_allowlists` gained
 # theirs, so the budget is three. Lowering this number is the work; raising it
 # means the class regrew.
-MAX_UNTESTED = 3
+MAX_UNTESTED = 2
 
 WORKFLOW = """\
 jobs:
