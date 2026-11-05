@@ -52,7 +52,8 @@ fn resolves_libraries_from_project_includes() {
     let mut sources = resolve_framework_library_sources_from_libraries(
         &libraries,
         std::slice::from_ref(&project_src),
-    );
+    )
+    .unwrap();
     sources.sort();
 
     let mut expected = vec![
@@ -103,7 +104,8 @@ fn follows_transitive_includes() {
     let mut sources = resolve_framework_library_sources_from_libraries(
         &libraries,
         std::slice::from_ref(&project_src),
-    );
+    )
+    .unwrap();
     sources.sort();
 
     let mut expected = vec![wrapper_dir.join("NeedsSpi.cpp"), spi_dir.join("SPI.cpp")];
@@ -148,7 +150,8 @@ fn unrelated_library_not_selected() {
     let sources = resolve_framework_library_sources_from_libraries(
         &libraries,
         std::slice::from_ref(&project_src),
-    );
+    )
+    .unwrap();
     assert_eq!(sources, vec![spi_dir.join("SPI.cpp")]);
 }
 
@@ -213,7 +216,8 @@ fn local_library_source_selects_a_framework_library() {
     defines.insert("FASTLED_USE_ADAFRUIT_NEOPIXEL".to_string(), "1".to_string());
 
     let sources =
-        resolve_framework_library_sources_active(&libraries, &project, &project_src, &defines);
+        resolve_framework_library_sources_active(&libraries, &project, &project_src, &defines)
+            .unwrap();
     assert!(
         sources.iter().any(|p| p.ends_with("Adafruit_NeoPixel.cpp")),
         "a compiled library source's include must reach the link line: {sources:?}"
@@ -275,7 +279,8 @@ fn local_library_source_without_the_opt_in_selects_nothing() {
         &project,
         &project_src,
         &HashMap::new(),
-    );
+    )
+    .unwrap();
     assert!(
         sources.is_empty(),
         "an un-opted-in driver must not put a library on the link line: {sources:?}"
@@ -325,7 +330,8 @@ fn local_library_examples_do_not_seed() {
         &project,
         &project_src,
         &HashMap::new(),
-    );
+    )
+    .unwrap();
     assert!(
         sources.is_empty(),
         "an example sketch is not compiled, so it must not select: {sources:?}"
@@ -373,7 +379,8 @@ fn inactive_local_library_header_cannot_select_framework_library() {
     ];
 
     let sources =
-        resolve_framework_library_sources_from_libraries(&libraries, &[project_src, project_lib]);
+        resolve_framework_library_sources_from_libraries(&libraries, &[project_src, project_lib])
+            .unwrap();
     assert_eq!(sources, vec![spi_dir.join("SPI.cpp")]);
 }
 
@@ -423,7 +430,7 @@ fn prefers_local_library_over_framework() {
     ];
 
     let roots = vec![project_src, project_lib];
-    let sources = resolve_framework_library_sources_from_libraries(&libraries, &roots);
+    let sources = resolve_framework_library_sources_from_libraries(&libraries, &roots).unwrap();
 
     assert_eq!(sources, vec![spi_dir.join("SPI.cpp")]);
 }
@@ -471,7 +478,8 @@ fn project_is_the_library_does_not_pull_in_bundled_copy() {
     let sources = resolve_framework_library_sources_from_libraries(
         &libraries,
         std::slice::from_ref(&project_src),
-    );
+    )
+    .unwrap();
 
     assert!(
         sources.is_empty(),
@@ -546,7 +554,8 @@ fn example_only_root_does_not_pull_in_bundled_fastled_when_user_owns_fastled() {
     let sources = resolve_framework_library_sources_from_libraries(
         &filtered,
         std::slice::from_ref(&example_src),
-    );
+    )
+    .unwrap();
 
     assert!(
         sources.is_empty(),
@@ -672,7 +681,8 @@ fn cached_resolution_round_trips_through_file_store() {
         &src_dir,
         &key_inputs,
         &kv,
-    );
+    )
+    .unwrap();
     assert!(!hit_first, "first call must miss the cache");
     assert_eq!(first, vec![spi_dir.join("SPI.cpp")]);
 
@@ -682,7 +692,8 @@ fn cached_resolution_round_trips_through_file_store() {
         &src_dir,
         &key_inputs,
         &kv,
-    );
+    )
+    .unwrap();
     assert!(hit_second, "second call must hit the cache");
     assert_eq!(first, second, "cache hit must yield identical sources");
 }
@@ -733,7 +744,8 @@ fn active_selection_excludes_unreached_matter_library() {
         &src_dir,
         &HashMap::new(),
         &[],
-    );
+    )
+    .unwrap();
 
     assert_eq!(selection.required_libraries, vec!["WiFi"]);
     assert_eq!(selection.source_files, vec![wifi_dir.join("WiFi.cpp")]);
@@ -773,7 +785,8 @@ fn external_library_source_selects_framework_dependency() {
         &[],
         &[external_source],
         &[external_dir],
-    );
+    )
+    .unwrap();
 
     assert_eq!(selection.required_libraries, vec!["WiFi"]);
 }
@@ -826,7 +839,8 @@ fn sdk_capability_header_keeps_framework_library_include_reachable() {
         &[],
         &[],
         &[sdk_dir],
-    );
+    )
+    .unwrap();
 
     assert_eq!(selection.required_libraries, vec!["LittleFS"]);
 }
@@ -858,7 +872,8 @@ fn compiler_include_order_wins_over_shadowing_project_header() {
         &[],
         &[],
         &[sdk_dir],
-    );
+    )
+    .unwrap();
 
     assert!(
         selection

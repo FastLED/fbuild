@@ -26,7 +26,7 @@ pub fn resolve_framework_library_sources(
     libraries: &[FrameworkLibrary],
     project_dir: &Path,
     src_dir: &Path,
-) -> Vec<PathBuf> {
+) -> fbuild_core::Result<Vec<PathBuf>> {
     let roots = framework_include_scan_roots(project_dir, src_dir);
     let filtered = filter_framework_libs_shadowed_by_project(libraries, &roots);
     resolve_framework_library_sources_from_libraries(&filtered, &roots)
@@ -38,7 +38,7 @@ pub fn resolve_framework_library_sources_active(
     project_dir: &Path,
     src_dir: &Path,
     defines: &HashMap<String, String>,
-) -> Vec<PathBuf> {
+) -> fbuild_core::Result<Vec<PathBuf>> {
     resolve_framework_library_sources_active_declared(libraries, project_dir, src_dir, defines, &[])
 }
 
@@ -60,15 +60,15 @@ pub fn resolve_framework_library_sources_active_declared(
     src_dir: &Path,
     defines: &HashMap<String, String>,
     declared: &[String],
-) -> Vec<PathBuf> {
-    resolve_framework_library_selection_active_declared(
+) -> fbuild_core::Result<Vec<PathBuf>> {
+    Ok(resolve_framework_library_selection_active_declared(
         libraries,
         project_dir,
         src_dir,
         defines,
         declared,
-    )
-    .source_files
+    )?
+    .source_files)
 }
 
 /// Resolve the selected framework-library records using active branches and
@@ -83,7 +83,7 @@ pub fn resolve_framework_library_selection_active_declared(
     src_dir: &Path,
     defines: &HashMap<String, String>,
     declared: &[String],
-) -> fbuild_library_select::Selection {
+) -> fbuild_core::Result<fbuild_library_select::Selection> {
     resolve_framework_library_selection_active_declared_with_extra(
         libraries,
         project_dir,
@@ -112,10 +112,10 @@ pub fn resolve_framework_library_selection_active_declared_with_extra(
     declared: &[String],
     extra_source_files: &[PathBuf],
     compiler_include_dirs: &[PathBuf],
-) -> fbuild_library_select::Selection {
+) -> fbuild_core::Result<fbuild_library_select::Selection> {
     let roots = framework_include_scan_roots(project_dir, src_dir);
     let filtered = filter_framework_libs_shadowed_by_project(libraries, &roots);
-    let mut seeds = collect_project_seeds(&roots, declared);
+    let mut seeds = collect_project_seeds(&roots, declared)?;
     seeds.extend_from_slice(extra_source_files);
     // Preserve the compiler's observable include order. In particular, ESP32
     // searches core/variant/SDK headers before project headers; reversing that
@@ -125,17 +125,17 @@ pub fn resolve_framework_library_selection_active_declared_with_extra(
     for include_dir in compiler_include_dirs {
         push_existing_unique(&mut search_paths, include_dir.clone());
     }
-    for project_path in project_search_paths(&roots) {
+    for project_path in project_search_paths(&roots)? {
         push_existing_unique(&mut search_paths, project_path);
     }
-    fbuild_library_select::resolve_with_stats_active_declared(
+    Ok(fbuild_library_select::resolve_with_stats_active_declared(
         &seeds,
         &search_paths,
         &filtered,
         defines,
         declared,
     )
-    .0
+    .0)
 }
 
 /// Warn when a project sets `lib_ldf_mode`, which fbuild does not implement.
@@ -302,13 +302,13 @@ fn collect_top_level_headers(dir: &Path, out: &mut HashSet<String>) {
 pub fn resolve_framework_library_sources_from_libraries(
     libraries: &[FrameworkLibrary],
     roots: &[PathBuf],
-) -> Vec<PathBuf> {
+) -> fbuild_core::Result<Vec<PathBuf>> {
     if libraries.is_empty() {
-        return Vec::new();
+        return Ok(Vec::new());
     }
 
-    let seeds = collect_project_seeds(roots, &[]);
-    let search_paths = project_search_paths(roots);
+    let seeds = collect_project_seeds(roots, &[])?;
+    let search_paths = project_search_paths(roots)?;
     let selection = resolve_library_selection(&seeds, &search_paths, libraries);
 
     for name in &selection.required_libraries {
@@ -321,7 +321,7 @@ pub fn resolve_framework_library_sources_from_libraries(
         }
     }
 
-    selection.source_files
+    Ok(selection.source_files)
 }
 
 /// Cached counterpart to [`resolve_framework_library_sources`].
@@ -338,15 +338,15 @@ pub fn resolve_framework_library_sources_cached(
     src_dir: &Path,
     key_inputs: &CacheKeyInputs<'_>,
     store: &FileKvStore,
-) -> Vec<PathBuf> {
+) -> fbuild_core::Result<Vec<PathBuf>> {
     let (sources, _hit) = resolve_framework_library_sources_cached_with_hit(
         libraries,
         project_dir,
         src_dir,
         key_inputs,
         store,
-    );
-    sources
+    )?;
+    Ok(sources)
 }
 
 /// Internal helper that returns `(sources, from_cache)` so tests can assert
@@ -360,57 +360,59 @@ pub(crate) fn resolve_framework_library_sources_cached_with_hit(
     src_dir: &Path,
     key_inputs: &CacheKeyInputs<'_>,
     store: &FileKvStore,
-) -> (Vec<PathBuf>, bool) {
+) -> fbuild_core::Result<(Vec<PathBuf>, bool)> {
     let roots = framework_include_scan_roots(project_dir, src_dir);
     if libraries.is_empty() {
-        return (Vec::new(), false);
+        return Ok((Vec::new(), false));
     }
 
     // Defensive filter: drop framework libraries whose primary header
     // is shadowed by a project-owned header. See #263.
     let filtered = filter_framework_libs_shadowed_by_project(libraries, &roots);
     if filtered.is_empty() {
-        return (Vec::new(), false);
+        return Ok((Vec::new(), false));
     }
 
-    let seeds = collect_project_seeds(&roots, key_inputs.declared_deps);
-    let search_paths = project_search_paths(&roots);
+    let seeds = collect_project_seeds(&roots, key_inputs.declared_deps)?;
+    let search_paths = project_search_paths(&roots)?;
 
-    match resolve_cached(&seeds, &search_paths, &filtered, key_inputs, store) {
-        Ok(cached) => {
-            for name in &cached.selection.required_libraries {
-                if let Some(lib) = filtered.iter().find(|l| &l.name == name) {
-                    tracing::info!(
-                        "selected framework library '{}': {} source files",
-                        lib.name,
-                        lib.source_files.len()
-                    );
+    Ok(
+        match resolve_cached(&seeds, &search_paths, &filtered, key_inputs, store) {
+            Ok(cached) => {
+                for name in &cached.selection.required_libraries {
+                    if let Some(lib) = filtered.iter().find(|l| &l.name == name) {
+                        tracing::info!(
+                            "selected framework library '{}': {} source files",
+                            lib.name,
+                            lib.source_files.len()
+                        );
+                    }
                 }
+                tracing::info!(
+                    cache = if cached.from_cache { "hit" } else { "miss" },
+                    key = %cached.key.to_hex(),
+                    "library-select cache: {}",
+                    if cached.from_cache { "hit" } else { "miss" }
+                );
+                (cached.selection.source_files, cached.from_cache)
             }
-            tracing::info!(
-                cache = if cached.from_cache { "hit" } else { "miss" },
-                key = %cached.key.to_hex(),
-                "library-select cache: {}",
-                if cached.from_cache { "hit" } else { "miss" }
-            );
-            (cached.selection.source_files, cached.from_cache)
-        }
-        Err(err) => {
-            tracing::warn!(
-                error = %err,
-                "library-select cache backend error; falling back to uncached resolve"
-            );
-            (
-                resolve_framework_library_sources_active(
-                    &filtered,
-                    project_dir,
-                    src_dir,
-                    key_inputs.preprocessor_defines,
-                ),
-                false,
-            )
-        }
-    }
+            Err(err) => {
+                tracing::warn!(
+                    error = %err,
+                    "library-select cache backend error; falling back to uncached resolve"
+                );
+                (
+                    resolve_framework_library_sources_active(
+                        &filtered,
+                        project_dir,
+                        src_dir,
+                        key_inputs.preprocessor_defines,
+                    )?,
+                    false,
+                )
+            }
+        },
+    )
 }
 
 /// Process-shared file store for the library-selection cache.
@@ -478,9 +480,16 @@ fn push_existing_unique(roots: &mut Vec<PathBuf>, path: PathBuf) {
 /// Local libraries live under `lib/<name>/` (or `lib/<name>/src/`), but the
 /// `lib/` directory itself cannot resolve `<FastLED.h>`. Add each library's
 /// public root while retaining the project roots ahead of framework libraries.
-fn project_search_paths(roots: &[PathBuf]) -> Vec<PathBuf> {
+fn project_search_paths(roots: &[PathBuf]) -> fbuild_core::Result<Vec<PathBuf>> {
     let mut paths = roots.to_vec();
     for root in roots {
+        if crate::pipeline::is_project_a_library(root) {
+            let library =
+                fbuild_packages::library::library_info::InstalledLibrary::new(root, "project");
+            for include in library.get_include_dirs_filtered()? {
+                push_existing_unique(&mut paths, include);
+            }
+        }
         if !is_library_root(root) {
             continue;
         }
@@ -493,10 +502,14 @@ fn project_search_paths(roots: &[PathBuf]) -> Vec<PathBuf> {
                 continue;
             }
             push_existing_unique(&mut paths, dir.clone());
-            push_existing_unique(&mut paths, dir.join("src"));
+            let library =
+                fbuild_packages::library::library_info::InstalledLibrary::new(&dir, "search");
+            for include in library.get_include_dirs_filtered()? {
+                push_existing_unique(&mut paths, include);
+            }
         }
     }
-    paths
+    Ok(paths)
 }
 
 /// Local `lib/` libraries the project's include graph reaches, plus any named
@@ -517,29 +530,39 @@ pub fn select_local_libraries(
     project_dir: &Path,
     src_dir: &Path,
     declared: &[String],
-) -> Vec<FrameworkLibrary> {
+) -> fbuild_core::Result<Vec<FrameworkLibrary>> {
     select_local_libraries_in(
         &framework_include_scan_roots(project_dir, src_dir),
         declared,
     )
 }
 
-fn select_local_libraries_in(roots: &[PathBuf], declared: &[String]) -> Vec<FrameworkLibrary> {
+fn select_local_libraries_in(
+    roots: &[PathBuf],
+    declared: &[String],
+) -> fbuild_core::Result<Vec<FrameworkLibrary>> {
     let libraries: Vec<FrameworkLibrary> = roots
         .iter()
         .filter(|root| is_library_root(root))
-        .flat_map(|root| discover_local_libraries(root))
+        .map(|root| discover_local_libraries(root))
+        .collect::<fbuild_core::Result<Vec<_>>>()?
+        .into_iter()
+        .flatten()
         .collect();
     if libraries.is_empty() {
-        return libraries;
+        return Ok(libraries);
+    }
+    let mut search_paths = project_search_paths(roots)?;
+    for library in &libraries {
+        search_paths.extend(library.include_dirs.iter().cloned());
     }
     let selection = fbuild_library_select::resolve_declared(
         &collect_sketch_seeds(roots),
-        &project_search_paths(roots),
+        &search_paths,
         &libraries,
         declared,
     );
-    libraries
+    Ok(libraries
         .into_iter()
         .filter(|library| {
             let used = selection.required_libraries.contains(&library.name);
@@ -551,36 +574,37 @@ fn select_local_libraries_in(roots: &[PathBuf], declared: &[String]) -> Vec<Fram
             }
             used
         })
-        .collect()
+        .collect())
 }
 
 /// Every library directory under a `lib/` root, described by what the build
-/// compiles for it ([`InstalledLibrary::get_source_files`]).
+/// compiles for it ([`InstalledLibrary::get_source_files_filtered`]).
 ///
 /// The library root is always an attribution dir, so a header anywhere in the
 /// library — not only under the `src/` the compiler searches first — counts as
 /// reaching it.
 ///
-/// [`InstalledLibrary::get_source_files`]: fbuild_packages::library::library_info::InstalledLibrary::get_source_files
-fn discover_local_libraries(lib_root: &Path) -> Vec<FrameworkLibrary> {
-    let Ok(entries) = std::fs::read_dir(lib_root) else {
-        return Vec::new();
+/// [`InstalledLibrary::get_source_files_filtered`]: fbuild_packages::library::library_info::InstalledLibrary::get_source_files_filtered
+fn discover_local_libraries(lib_root: &Path) -> fbuild_core::Result<Vec<FrameworkLibrary>> {
+    let entries = match std::fs::read_dir(lib_root) {
+        Ok(entries) => entries,
+        Err(error) if error.kind() == std::io::ErrorKind::NotFound => return Ok(Vec::new()),
+        Err(error) => return Err(error.into()),
     };
     let mut libraries = Vec::new();
-    for entry in entries.flatten() {
+    for entry in entries {
+        let entry = entry?;
         let dir = entry.path();
         if !dir.is_dir() {
             continue;
         }
         let name = entry.file_name().to_string_lossy().to_string();
-        let mut include_dirs =
-            fbuild_packages::library::framework_library::library_include_dirs(&dir);
+        let library = fbuild_packages::library::library_info::InstalledLibrary::new(&dir, &name);
+        let mut include_dirs = library.get_include_dirs_filtered()?;
         if !include_dirs.contains(&dir) {
             include_dirs.push(dir.clone());
         }
-        let source_files =
-            fbuild_packages::library::library_info::InstalledLibrary::new(&dir, &name)
-                .get_source_files();
+        let source_files = library.get_source_files_filtered()?;
         libraries.push(FrameworkLibrary {
             name,
             dir,
@@ -589,7 +613,7 @@ fn discover_local_libraries(lib_root: &Path) -> Vec<FrameworkLibrary> {
         });
     }
     libraries.sort_by(|a, b| a.name.cmp(&b.name));
-    libraries
+    Ok(libraries)
 }
 
 /// Collect translation units as walker seeds.
@@ -611,12 +635,15 @@ fn discover_local_libraries(lib_root: &Path) -> Vec<FrameworkLibrary> {
 /// and the link breaks. That is why only the local libraries
 /// [`select_local_libraries`] picks seed — an unselected one is not compiled
 /// (FastLED/fbuild#1410).
-fn collect_project_seeds(roots: &[PathBuf], declared: &[String]) -> Vec<PathBuf> {
+fn collect_project_seeds(
+    roots: &[PathBuf],
+    declared: &[String],
+) -> fbuild_core::Result<Vec<PathBuf>> {
     let mut seeds = collect_sketch_seeds(roots);
-    for library in select_local_libraries_in(roots, declared) {
+    for library in select_local_libraries_in(roots, declared)? {
         seeds.extend(library.source_files);
     }
-    seeds
+    Ok(seeds)
 }
 
 /// Translation units outside every `lib/` root. The project directory itself
@@ -685,3 +712,82 @@ mod tests;
 #[cfg(test)]
 #[path = "framework_libs_local_tests.rs"]
 mod local_tests;
+
+#[cfg(test)]
+mod local_manifest_selection_tests {
+    #[test]
+    fn reached_local_library_selection_honors_manifest_filter() {
+        let temp = tempfile::tempdir().unwrap();
+        let source = temp.path().join("src");
+        let library = temp.path().join("lib/Actual/src");
+        std::fs::create_dir_all(&source).unwrap();
+        std::fs::create_dir_all(&library).unwrap();
+        std::fs::write(
+            source.join("main.cpp"),
+            "#include <Actual.h>\nint main(){return permitted();}\n",
+        )
+        .unwrap();
+        std::fs::write(library.join("Actual.h"), "int permitted();\n").unwrap();
+        std::fs::write(
+            library.join("permitted.cpp"),
+            "int permitted(){return 1;}\n",
+        )
+        .unwrap();
+        std::fs::write(library.join("poison.cpp"), "#error excluded\n").unwrap();
+        std::fs::write(
+            temp.path().join("lib/Actual/library.json"),
+            r#"{"name":"Actual","build":{"srcFilter":"+<*> -<poison.cpp>"}}"#,
+        )
+        .unwrap();
+        let libraries = super::select_local_libraries(temp.path(), &source, &[]).unwrap();
+        assert_eq!(libraries.len(), 1);
+        assert_eq!(
+            libraries[0].source_files,
+            vec![library.join("permitted.cpp")]
+        );
+    }
+}
+
+#[cfg(test)]
+mod local_manifest_error_tests {
+    #[test]
+    fn local_selection_propagates_invalid_metadata_and_resolves_custom_include_root() {
+        let temp = tempfile::tempdir().unwrap();
+        let src = temp.path().join("src");
+        let library = temp.path().join("lib/Actual/code");
+        std::fs::create_dir_all(&library).unwrap();
+        std::fs::create_dir(&src).unwrap();
+        std::fs::write(src.join("main.cpp"), "#include <Actual.h>\n").unwrap();
+        std::fs::write(library.join("Actual.h"), "int actual();\n").unwrap();
+        std::fs::write(library.join("actual.cpp"), "int actual(){return 1;}\n").unwrap();
+        let manifest = temp.path().join("lib/Actual/library.json");
+        std::fs::write(&manifest, r#"{"build":{"srcDir":"code"}}"#).unwrap();
+        let selected = super::select_local_libraries(temp.path(), &src, &[]).unwrap();
+        assert_eq!(selected.len(), 1);
+        assert!(selected[0].include_dirs.contains(&library));
+        assert_eq!(selected[0].source_files, vec![library.join("actual.cpp")]);
+        std::fs::write(&manifest, r#"{"build":{"srcFilter":false}}"#).unwrap();
+        assert!(super::select_local_libraries(temp.path(), &src, &[]).is_err());
+    }
+}
+
+#[cfg(test)]
+mod manifest_example_search_tests {
+    #[test]
+    fn project_library_custom_source_root_reaches_dependency_search() {
+        let temp = tempfile::tempdir().unwrap();
+        let code = temp.path().join("code");
+        std::fs::create_dir_all(&code).unwrap();
+        std::fs::write(code.join("Actual.h"), "int actual();\n").unwrap();
+        std::fs::write(
+            temp.path().join("library.json"),
+            r#"{"name":"Actual","build":{"srcDir":"code"}}"#,
+        )
+        .unwrap();
+        let search = super::project_search_paths(&[temp.path().to_path_buf()]).unwrap();
+        assert!(
+            search.contains(&code),
+            "example dependency scan must see project library headers: {search:?}"
+        );
+    }
+}

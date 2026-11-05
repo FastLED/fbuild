@@ -7,3 +7,4 @@ pub use fbuild_build_engine::*;
 
 pub mod avr;
 pub mod ch32v;
+pub mod ci13xx;

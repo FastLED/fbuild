@@ -276,7 +276,7 @@ impl BuildOrchestrator for TeensyOrchestrator {
                     &ctx.src_dir,
                     &key_inputs,
                     store,
-                )
+                )?
             }
             None => resolve_framework_library_sources_active_declared(
                 &framework_libs,
@@ -284,7 +284,7 @@ impl BuildOrchestrator for TeensyOrchestrator {
                 &ctx.src_dir,
                 &ldf_defines,
                 &declared_deps,
-            ),
+            )?,
         };
         if !framework_library_sources.is_empty() {
             tracing::info!(
@@ -308,7 +308,7 @@ impl BuildOrchestrator for TeensyOrchestrator {
         defines.extend(mcu_config.defines_map());
         let mut include_dirs = vec![core_dir.clone()];
         include_dirs.push(ctx.src_dir.clone());
-        pipeline::discover_project_includes(&params.project_dir, &mut include_dirs);
+        pipeline::discover_project_includes(&params.project_dir, &mut include_dirs)?;
         include_dirs.extend(framework.get_framework_library_include_dirs());
         // Toolchain sysroot includes (ARM CMSIS headers, etc.)
         include_dirs.extend(toolchain.get_include_dirs());

@@ -289,7 +289,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
         let builtin_libs_dir = framework.get_libraries_dir();
 
         include_dirs.push(ctx.src_dir.clone());
-        crate::pipeline::discover_project_includes(&params.project_dir, &mut include_dirs);
+        crate::pipeline::discover_project_includes(&params.project_dir, &mut include_dirs)?;
         // Toolchain sysroot includes (xtensa headers, etc.)
         include_dirs.extend(toolchain.get_include_dirs());
 
@@ -441,7 +441,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
             &declared_lib_deps,
             &external_library_sources,
             &include_dirs,
-        );
+        )?;
         let selected_framework_libraries: Vec<_> = framework_libraries
             .iter()
             .filter(|library| {
@@ -590,7 +590,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 .as_ref()
                 .map(|plan| plan.archive_names())
                 .unwrap_or_default(),
-            project_library.name(&params.project_dir, &ctx.src_dir),
+            project_library.name(&params.project_dir, &ctx.src_dir)?,
         );
         let fw_libs = prepare_framework_libs(
             params,
@@ -694,7 +694,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
             &params.project_dir,
             &ctx.src_dir,
             &declared_lib_deps,
-        );
+        )?;
         let library_jobs = super::job_pool::LibraryJobs {
             lib_deps: async {
                 match lib_deps_plan {

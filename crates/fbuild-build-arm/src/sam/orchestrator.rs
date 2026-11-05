@@ -487,7 +487,7 @@ impl BuildOrchestrator for SamOrchestrator {
 
         let mut include_dirs = ctx.board.get_include_paths(&framework_dir);
         include_dirs.push(ctx.src_dir.clone());
-        pipeline::discover_project_includes(&params.project_dir, &mut include_dirs);
+        pipeline::discover_project_includes(&params.project_dir, &mut include_dirs)?;
         // Toolchain sysroot includes
         include_dirs.extend(toolchain.get_include_dirs());
         // Platform system includes (CMSIS, libsam, etc.)

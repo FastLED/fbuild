@@ -28,7 +28,7 @@ pub use fbuild_build_arm::{
     apollo3, generic_arm, nrf52, nxplpc, renesas, rp2040, sam, silabs, stm32, teensy,
 };
 pub use fbuild_build_esp::{esp32, esp8266};
-pub use fbuild_build_mcu::{avr, ch32v};
+pub use fbuild_build_mcu::{avr, ch32v, ci13xx};
 
 use std::path::Path;
 
@@ -54,6 +54,7 @@ pub fn get_platform_support(platform: Platform) -> Result<Box<dyn PlatformSuppor
         Platform::RenesasRa => Ok(Box::new(renesas::RenesasPlatformSupport)),
         Platform::SiliconLabs => Ok(Box::new(silabs::SilabsPlatformSupport)),
         Platform::Ch32v => Ok(Box::new(ch32v::Ch32vPlatformSupport)),
+        Platform::Ci13xx => Ok(Box::new(ci13xx::Ci13xxPlatformSupport)),
         _ => Err(fbuild_core::FbuildError::BuildFailed(format!(
             "native orchestrator for {:?} not yet implemented — use --platformio flag for this platform",
             platform
@@ -374,6 +375,24 @@ mod tests {
             );
             assert!(!dir.path().join(fbuild_paths::FBUILD_DIR_NAME).exists());
         }
+    }
+
+    #[test]
+    fn test_get_orchestrator_ci13xx_native_dispatch() {
+        // FastLED/fbuild#1914: parsing a platform is not native build support.
+        // Exercise the public factory and its returned support object, rather
+        // than constructing an orchestrator directly or using PlatformIO.
+        let platform = Platform::from_platform_str("chipintelli/ci13xx@1.0.18")
+            .expect("CI13xx platform spec parses");
+        let support = get_platform_support(platform)
+            .unwrap_or_else(|error| panic!("CI13xx requires native platform support: {error}"));
+        assert_eq!(support.create_orchestrator().platform(), platform);
+
+        let orchestrator = get_orchestrator(platform)
+            .unwrap_or_else(|error| panic!("CI13xx native orchestrator dispatch failed: {error}"));
+        assert_eq!(orchestrator.platform(), Platform::Ci13xx);
+        assert_ne!(orchestrator.platform(), Platform::Ch32v);
+        assert_ne!(orchestrator.platform(), Platform::Espressif32);
     }
 
     #[test]

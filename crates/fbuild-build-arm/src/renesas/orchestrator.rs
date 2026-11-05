@@ -257,7 +257,7 @@ impl BuildOrchestrator for RenesasOrchestrator {
         // FSP includes from variant's includes.txt (bsp_api.h, CMSIS, etc.)
         include_dirs.extend(framework.get_variant_includes(&ctx.board.variant));
         include_dirs.push(ctx.src_dir.clone());
-        pipeline::discover_project_includes(&params.project_dir, &mut include_dirs);
+        pipeline::discover_project_includes(&params.project_dir, &mut include_dirs)?;
         // Toolchain sysroot includes (ARM CMSIS headers, etc.)
         include_dirs.extend(toolchain.get_include_dirs());
 

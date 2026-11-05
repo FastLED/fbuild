@@ -10,11 +10,11 @@
 //! (`src_filter`, `lib_ldf_mode`) as raw strings. Those patterns are not
 //! filesystem paths yet — `NormalizedPath` is the wrong type. Instead,
 //! every call site routes the pattern-level `\` → `/` rewrite through
-//! `normalize_glob_separators`, the single auditable owner of that
-//! transform. The workspace's `ban_manual_slash_normalize` dylint
-//! allowlists this file's definition site for exactly that reason
+//! shared `fbuild_config::source_filter::normalize_glob_separators`
+//! primitive. Its single definition owns that lexical transform
 //! (FastLED/fbuild#911).
 
+use fbuild_config::source_filter::{SourceFilter, normalize_glob_separators};
 use owo_colors::OwoColorize;
 use regex::Regex;
 use std::cmp::Ordering;
@@ -23,27 +23,6 @@ use std::io::{self, Write};
 use std::path::{Path, PathBuf};
 use tree_sitter::{Node, Parser};
 use walkdir::WalkDir;
-
-/// Slash-normalize a user-supplied glob pattern for `platformio.ini`
-/// `src_filter` / `lib_ldf_mode` matching.
-///
-/// The lone auditable owner of the pattern-level `\` → `/` rewrite in
-/// this module. Every glob-pattern call site (`SourceFilter::parse`,
-/// `SourceFilter::matches`, `compile_source_filter_pattern`,
-/// `normalize_generated_source_path_text`) routes through this helper.
-///
-/// Do NOT hand-roll `.replace('\\', "/")` on glob strings — the
-/// `ban_manual_slash_normalize` dylint flags that anti-pattern.
-/// Filesystem paths use `fbuild_core::path::NormalizedPath::display_slash()`
-/// instead; this helper is for glob-shape strings that aren't (yet)
-/// filesystem paths.
-fn normalize_glob_separators(pattern: &str) -> String {
-    // Glob-pattern normalization is INTENTIONALLY unconditional
-    // (unlike `NormalizedPath::display_slash()` which gates on
-    // `fbuild_core::platform::host::is_windows()`) — glob patterns come from `platformio.ini` and
-    // may contain a mix of `\` and `/` regardless of host OS.
-    pattern.replace('\\', "/")
-}
 
 /// Raw-`.ino` path → prelude-header path pairs (FastLED/fbuild#1076 Phase 0).
 /// See [`SourceCollection::ino_preludes`].
@@ -108,18 +87,6 @@ pub struct SourceScanner {
     src_dir: PathBuf,
     /// Build output directory (for preprocessed .ino → .cpp)
     build_dir: PathBuf,
-}
-
-#[derive(Debug)]
-struct SourceFilter {
-    rules: Vec<SourceFilterRule>,
-    has_include_rules: bool,
-}
-
-#[derive(Debug)]
-struct SourceFilterRule {
-    include: bool,
-    matcher: Regex,
 }
 
 impl SourceScanner {
@@ -480,76 +447,6 @@ impl SourceScanner {
     }
 }
 
-impl SourceFilter {
-    fn parse(spec: Option<&str>) -> fbuild_core::Result<Self> {
-        let mut rules = Vec::new();
-        let mut has_include_rules = false;
-
-        let Some(spec) = spec else {
-            return Ok(Self {
-                rules,
-                has_include_rules,
-            });
-        };
-
-        for raw in spec.lines().flat_map(|line| line.split(',')) {
-            let token = raw.trim();
-            if token.is_empty() {
-                continue;
-            }
-
-            let (include, inner) = if token.starts_with("+<") && token.ends_with('>') {
-                (true, &token[2..token.len() - 1])
-            } else if token.starts_with("-<") && token.ends_with('>') {
-                (false, &token[2..token.len() - 1])
-            } else {
-                return Err(fbuild_core::FbuildError::ConfigError(format!(
-                    "invalid source filter rule '{}': expected +/-<pattern>",
-                    token
-                )));
-            };
-
-            let pattern = normalize_glob_separators(inner.trim());
-            if pattern.is_empty() {
-                return Err(fbuild_core::FbuildError::ConfigError(
-                    "source filter rule must not be empty".to_string(),
-                ));
-            }
-
-            if include {
-                has_include_rules = true;
-            }
-
-            rules.push(SourceFilterRule {
-                include,
-                matcher: compile_source_filter_pattern(&pattern)?,
-            });
-        }
-
-        Ok(Self {
-            rules,
-            has_include_rules,
-        })
-    }
-
-    fn matches(&self, root: &Path, path: &Path) -> bool {
-        if self.rules.is_empty() {
-            return true;
-        }
-
-        let rel =
-            normalize_glob_separators(&path.strip_prefix(root).unwrap_or(path).to_string_lossy());
-
-        let mut included = !self.has_include_rules;
-        for rule in &self.rules {
-            if rule.matcher.is_match(&rel) {
-                included = rule.include;
-            }
-        }
-        included
-    }
-}
-
 fn arduino_header_available(include_roots: &[&Path]) -> bool {
     include_roots
         .iter()
@@ -680,55 +577,6 @@ fn file_name_for_sort(path: &Path) -> String {
     path.file_name()
         .map(|name| name.to_string_lossy().to_string())
         .unwrap_or_default()
-}
-
-fn compile_source_filter_pattern(pattern: &str) -> fbuild_core::Result<Regex> {
-    let normalized = normalize_glob_separators(pattern);
-    let regex_body = if normalized == "*" {
-        String::from(".*")
-    } else if normalized.ends_with('/') {
-        format!(
-            "{}(?:/.*)?",
-            glob_fragment_to_regex(normalized.trim_end_matches('/'))
-        )
-    } else if normalized.contains('/') {
-        glob_fragment_to_regex(&normalized)
-    } else {
-        format!("(?:.*/)?{}", glob_fragment_to_regex(&normalized))
-    };
-
-    Regex::new(&format!("^{}$", regex_body)).map_err(|e| {
-        fbuild_core::FbuildError::ConfigError(format!(
-            "invalid source filter pattern '{}': {}",
-            normalized, e
-        ))
-    })
-}
-
-fn glob_fragment_to_regex(pattern: &str) -> String {
-    let chars: Vec<char> = pattern.chars().collect();
-    let mut out = String::new();
-    let mut i = 0;
-    while i < chars.len() {
-        match chars[i] {
-            '*' => {
-                if i + 1 < chars.len() && chars[i + 1] == '*' {
-                    out.push_str(".*");
-                    i += 1;
-                } else {
-                    out.push_str("[^/]*");
-                }
-            }
-            '?' => out.push_str("[^/]"),
-            c if ".+()[]{}^$|\\".contains(c) => {
-                out.push('\\');
-                out.push(c);
-            }
-            c => out.push(c),
-        }
-        i += 1;
-    }
-    out
 }
 
 fn write_if_changed(path: &Path, contents: &str) -> std::io::Result<()> {

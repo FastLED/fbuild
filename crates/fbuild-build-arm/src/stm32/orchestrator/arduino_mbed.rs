@@ -97,7 +97,7 @@ pub(super) async fn build_arduino_mbed_stm32(
     ];
     include_dirs.extend(framework.get_variant_includes(&ctx.board.variant));
     include_dirs.push(ctx.src_dir.clone());
-    pipeline::discover_project_includes(&params.project_dir, &mut include_dirs);
+    pipeline::discover_project_includes(&params.project_dir, &mut include_dirs)?;
     dedupe_paths(&mut include_dirs);
 
     let mut variant_ldflags = fbuild_core::shell_split::split(

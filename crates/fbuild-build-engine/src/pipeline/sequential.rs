@@ -296,7 +296,7 @@ pub async fn run_sequential_build_with_optional_framework_libs(
         &params.project_dir,
         &ctx.src_dir,
         &declared_lib_deps,
-    );
+    )?;
     let libraries = timed(compile_local_libraries(
         compiler,
         &local_libraries,

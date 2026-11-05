@@ -78,6 +78,73 @@ pub trait Package: Send + Sync {
     fn get_info(&self) -> PackageInfo;
 }
 
+/// Concrete archive package whose installed root contains a required marker.
+/// Owns extraction/root validation at the legacy `Package` API boundary.
+pub struct MarkerArchivePackage {
+    base: PackageBase,
+    marker: String,
+}
+
+impl MarkerArchivePackage {
+    pub fn new(base: PackageBase, marker: &str) -> Self {
+        Self {
+            base,
+            marker: marker.to_owned(),
+        }
+    }
+    fn root(&self, installed: &Path) -> fbuild_core::Result<fbuild_core::path::NormalizedPath> {
+        for entry in walkdir::WalkDir::new(installed).max_depth(3) {
+            let entry =
+                entry.map_err(|error| fbuild_core::FbuildError::PackageError(error.to_string()))?;
+            let root = fbuild_core::path::NormalizedPath::new(entry.path());
+            if entry.file_type().is_dir() && root.join(&self.marker).is_file() {
+                return Ok(root);
+            }
+        }
+        Err(fbuild_core::FbuildError::PackageError(format!(
+            "package missing marker {} in {}",
+            self.marker,
+            installed.display()
+        )))
+    }
+    pub fn installed_root(&self) -> fbuild_core::Result<fbuild_core::path::NormalizedPath> {
+        if !self.is_installed() {
+            return Err(fbuild_core::FbuildError::PackageError(format!(
+                "{} not installed; run fbuild install",
+                self.base.name
+            )));
+        }
+        self.root(&self.base.install_path())
+    }
+    pub async fn ensure_normalized(
+        &self,
+    ) -> fbuild_core::Result<fbuild_core::path::NormalizedPath> {
+        if self.is_installed() {
+            return self.installed_root();
+        }
+        let installed = self
+            .base
+            .staged_install(|path| self.root(path).map(|_| ()))
+            .await?;
+        self.root(&installed)
+    }
+}
+
+#[async_trait]
+impl Package for MarkerArchivePackage {
+    async fn ensure_installed(&self) -> fbuild_core::Result<PathBuf> {
+        self.ensure_normalized()
+            .await
+            .map(|path| path.into_path_buf())
+    }
+    fn is_installed(&self) -> bool {
+        self.base.is_cached() && self.root(&self.base.install_path()).is_ok()
+    }
+    fn get_info(&self) -> PackageInfo {
+        self.base.get_info()
+    }
+}
+
 /// Base trait for toolchain packages (GCC, etc.).
 pub trait Toolchain: Package {
     fn get_gcc_path(&self) -> PathBuf;

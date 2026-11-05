@@ -21,7 +21,7 @@ use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 
 use self::parser::{parse_ini, resolve_all_envs};
-pub(crate) use self::values::parse_flags;
+pub use self::values::parse_flags;
 use self::values::{parse_lib_deps, parse_list_values, parse_path_list, strip_inline_comment};
 use crate::pio_env::PioEnvOverrides;
 

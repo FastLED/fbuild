@@ -51,7 +51,8 @@ impl InstalledLibrary {
         }
     }
 
-    /// Get include directories for this library.
+    /// Unfiltered diagnostic view of conventional include directories.
+    /// Production builders must use the fallible manifest-aware variant.
     ///
     /// Returns directories that should be added to `-I` flags.
     pub fn get_include_dirs(&self) -> Vec<PathBuf> {
@@ -79,7 +80,8 @@ impl InstalledLibrary {
         dirs
     }
 
-    /// Get all source files (.c, .cpp, .cc, .cxx) in the library.
+    /// Unfiltered diagnostic view of source files (.c, .cpp, .cc, .cxx).
+    /// Production builders must use the fallible manifest-aware variant.
     ///
     /// Skips `example*/` and `test*/` directories.
     pub fn get_source_files(&self) -> Vec<PathBuf> {
@@ -94,7 +96,103 @@ impl InstalledLibrary {
         sources
     }
 
-    /// Check if the library is header-only (no source files to compile).
+    /// Apply a library manifest's ordered source filter relative to its srcDir.
+    /// Fallible so malformed metadata cannot silently compile excluded files.
+    fn manifest_source_filter(
+        &self,
+    ) -> fbuild_core::Result<(
+        fbuild_core::path::NormalizedPath,
+        fbuild_config::source_filter::SourceFilter,
+    )> {
+        let manifest = self.lib_dir.join("library.json");
+        let data: serde_json::Value = match std::fs::read_to_string(&manifest) {
+            Ok(text) => serde_json::from_str(&text).map_err(|error| {
+                fbuild_core::FbuildError::ConfigError(format!("{}: {error}", manifest.display()))
+            })?,
+            Err(error) if error.kind() == std::io::ErrorKind::NotFound => serde_json::json!({}),
+            Err(error) => return Err(error.into()),
+        };
+        if !data.is_object() {
+            return Err(fbuild_core::FbuildError::ConfigError(
+                "library manifest must be an object".into(),
+            ));
+        }
+        let build = data.get("build");
+        if build.is_some_and(|value| !value.is_object()) {
+            return Err(fbuild_core::FbuildError::ConfigError(
+                "library build must be an object".into(),
+            ));
+        }
+        let root = match build.and_then(|value| value.get("srcDir")) {
+            None => fbuild_core::path::NormalizedPath::new(self.source_root()),
+            Some(serde_json::Value::String(path)) if !path.is_empty() => {
+                let directory = fbuild_core::path::NormalizedPath::new(&self.lib_dir).join(path);
+                if !directory.is_dir() {
+                    return Err(fbuild_core::FbuildError::ConfigError(format!(
+                        "library build.srcDir must name an existing directory: {directory}"
+                    )));
+                }
+                directory
+            }
+            Some(_) => {
+                return Err(fbuild_core::FbuildError::ConfigError(
+                    "library build.srcDir must be a nonempty string".into(),
+                ));
+            }
+        };
+        let spec = match build.and_then(|value| value.get("srcFilter")) {
+            None => None,
+            Some(serde_json::Value::String(value)) => Some(value.clone()),
+            Some(serde_json::Value::Array(values)) => Some(
+                values
+                    .iter()
+                    .map(|value| {
+                        value.as_str().map(str::to_owned).ok_or_else(|| {
+                            fbuild_core::FbuildError::ConfigError(
+                                "library build.srcFilter array must contain strings".into(),
+                            )
+                        })
+                    })
+                    .collect::<fbuild_core::Result<Vec<_>>>()?
+                    .join("\n"),
+            ),
+            Some(_) => {
+                return Err(fbuild_core::FbuildError::ConfigError(
+                    "library build.srcFilter must be string or array".into(),
+                ));
+            }
+        };
+        let filter = fbuild_config::source_filter::SourceFilter::parse(spec.as_deref())?;
+        Ok((root, filter))
+    }
+
+    /// Fallible include discovery honoring the same manifest srcDir as source selection.
+    pub fn get_include_dirs_filtered(&self) -> fbuild_core::Result<Vec<PathBuf>> {
+        let (root, _) = self.manifest_source_filter()?;
+        let mut dirs = vec![root.into_path_buf()];
+        let include = self.lib_dir.join("include");
+        if include.is_dir() && !dirs.contains(&include) {
+            dirs.push(include);
+        }
+        Ok(dirs)
+    }
+
+    /// Resolve and validate the manifest source root without swallowing metadata errors.
+    pub fn source_root_filtered(&self) -> fbuild_core::Result<fbuild_core::path::NormalizedPath> {
+        self.manifest_source_filter().map(|(root, _)| root)
+    }
+
+    /// Select actual sources with ordered manifest filters; malformed data is an error.
+    pub fn get_source_files_filtered(&self) -> fbuild_core::Result<Vec<PathBuf>> {
+        let (root, filter) = self.manifest_source_filter()?;
+        let mut sources = Vec::new();
+        collect_sources(root.as_path(), &mut sources);
+        sources.retain(|source| filter.matches(root.as_path(), source));
+        sources.sort();
+        Ok(sources)
+    }
+
+    /// Unfiltered diagnostic header-only check; builders must use filtered sources.
     pub fn is_header_only(&self) -> bool {
         self.get_source_files().is_empty()
     }
@@ -309,5 +407,127 @@ mod tests {
         assert!(lib.get_include_dirs().is_empty());
         assert!(lib.get_source_files().is_empty());
         assert!(lib.is_header_only());
+    }
+}
+
+#[cfg(test)]
+mod manifest_filter_tests {
+    use super::*;
+
+    #[test]
+    fn ordered_string_and_array_filters_are_relative_to_manifest_src_dir() {
+        for spec in [
+            serde_json::json!("+<*> -<poison.cpp> +<nested/poison.cpp>"),
+            serde_json::json!(["+<*>", "-<poison.cpp>", "+<nested/poison.cpp>"]),
+        ] {
+            let temp = tempfile::tempdir().unwrap();
+            std::fs::create_dir_all(temp.path().join("code/nested")).unwrap();
+            std::fs::create_dir(temp.path().join("src")).unwrap();
+            for path in [
+                "code/keep.cpp",
+                "code/poison.cpp",
+                "code/nested/poison.cpp",
+                "src/wrong.cpp",
+            ] {
+                std::fs::write(temp.path().join(path), "").unwrap();
+            }
+            std::fs::write(
+                temp.path().join("library.json"),
+                serde_json::to_vec(&serde_json::json!(
+                {"name":"Actual","build":{"srcDir":"code","srcFilter":spec}}))
+                .unwrap(),
+            )
+            .unwrap();
+            let library = InstalledLibrary::new(temp.path(), "actual");
+            assert_eq!(
+                library.get_include_dirs_filtered().unwrap(),
+                vec![temp.path().join("code")]
+            );
+            let sources = library.get_source_files_filtered().unwrap();
+            assert_eq!(
+                sources,
+                vec![
+                    temp.path().join("code/keep.cpp"),
+                    temp.path().join("code/nested/poison.cpp")
+                ]
+            );
+        }
+    }
+
+    #[test]
+    fn malformed_manifest_or_rules_are_errors() {
+        for data in [
+            serde_json::json!(null),
+            serde_json::json!({"build":7}),
+            serde_json::json!({"build":{"srcDir":false}}),
+            serde_json::json!({"build":{"srcFilter":["+<*>",7]}}),
+            serde_json::json!({"build":{"srcFilter":"+<*> trailing-garbage"}}),
+        ] {
+            let temp = tempfile::tempdir().unwrap();
+            std::fs::write(
+                temp.path().join("library.json"),
+                serde_json::to_vec(&data).unwrap(),
+            )
+            .unwrap();
+            assert!(
+                InstalledLibrary::new(temp.path(), "bad")
+                    .get_source_files_filtered()
+                    .is_err(),
+                "{data}"
+            );
+        }
+    }
+}
+
+#[cfg(test)]
+mod explicit_src_dir_tests {
+    use super::InstalledLibrary;
+
+    #[test]
+    fn explicitly_missing_or_non_directory_src_dir_is_a_configuration_error() {
+        for directory in ["missing", "regular-file"] {
+            let temp = tempfile::tempdir().unwrap();
+            std::fs::write(temp.path().join("regular-file"), "not a directory").unwrap();
+            std::fs::write(
+                temp.path().join("library.json"),
+                serde_json::to_vec(
+                    &serde_json::json!({"name":"Actual","build":{"srcDir":directory}}),
+                )
+                .unwrap(),
+            )
+            .unwrap();
+            let library = InstalledLibrary::new(temp.path(), "actual");
+            assert!(
+                library.get_source_files_filtered().is_err(),
+                "explicit {directory} must not masquerade as header-only"
+            );
+            assert!(library.get_include_dirs_filtered().is_err());
+        }
+    }
+
+    #[test]
+    fn omitted_root_and_existing_explicit_header_only_directories_remain_valid() {
+        for directory in [None, Some("code")] {
+            let temp = tempfile::tempdir().unwrap();
+            let root = if let Some(directory) = directory {
+                let root = temp.path().join(directory);
+                std::fs::create_dir(&root).unwrap();
+                std::fs::write(
+                    temp.path().join("library.json"),
+                    serde_json::to_vec(
+                        &serde_json::json!({"name":"Actual","build":{"srcDir":directory}}),
+                    )
+                    .unwrap(),
+                )
+                .unwrap();
+                root
+            } else {
+                temp.path().to_path_buf()
+            };
+            std::fs::write(root.join("Actual.h"), "inline int actual() { return 1; }\n").unwrap();
+            let library = InstalledLibrary::new(temp.path(), "actual");
+            assert!(library.get_source_files_filtered().unwrap().is_empty());
+            assert!(library.get_include_dirs_filtered().unwrap().contains(&root));
+        }
     }
 }
