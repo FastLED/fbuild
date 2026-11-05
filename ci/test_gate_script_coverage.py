@@ -22,9 +22,10 @@ ROOT = Path(__file__).resolve().parents[1]
 
 # The measured gap on 2026-11-05 was eight workflow-invoked gates with no
 # test; `audit_ignored_tests`, `check_fbuild_path_baseline`,
-# `check_flash_offsets` and `cancel_superseded` gained theirs, so the budget is
-# four. Lowering this number is the work; raising it means the class regrew.
-MAX_UNTESTED = 4
+# `check_flash_offsets`, `cancel_superseded` and `check_dylint_allowlists` gained
+# theirs, so the budget is three. Lowering this number is the work; raising it
+# means the class regrew.
+MAX_UNTESTED = 3
 
 WORKFLOW = """\
 jobs:

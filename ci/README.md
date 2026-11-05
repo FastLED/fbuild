@@ -65,6 +65,15 @@ fail coverage. This policy is tracked in [#1698](https://github.com/FastLED/fbui
   matched neither run. A triggering ref that is not a `gh-readonly-queue/.../pr-<N>-<sha>`
   ref is a hard error rather than a `PR #None: cancelling 0` success. Tested by
   `test_cancel_superseded.py`.
+- **`check_dylint_allowlists.py`** -- Fails when a `dylints/*/src/allowlist.txt`
+  entry cannot excuse anything: the path is not a file in this repo, the line
+  carries an inline `#` comment (every lint matches the WHOLE trimmed line, so
+  `crates/x.rs  # why` never applies -- the reason goes on its own comment
+  line), the entry holds a backslash (source paths are `/`-normalized first) or
+  is absolute / contains `..`, or the allowlist is an orphan whose `lib.rs`
+  never `include_str!`s it. It also fails when it finds no allowlists at all,
+  so a renamed directory cannot print "paths are current". Tested by
+  `test_check_dylint_allowlists.py`.
 - **`check_rust_toolchain_pins.py`** -- Prevents fbuild-owned Rust 1.95.0 MSRV, toolchain, workflow, and bootstrap declarations from drifting
 - **`enforce_platform_boundary.py`** -- Independent whole-tree and manifest checker for the exact host-platform occurrence ledger
 - **`env.py`** -- Centralized PATH activation ensuring the Rust tool bin directory is on PATH before invoking Rust tools
