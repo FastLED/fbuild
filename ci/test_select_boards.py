@@ -6,13 +6,26 @@ refresh on a schedule.
 """
 from __future__ import annotations
 
+import io
+import json
+import subprocess
 import sys
 import unittest
+from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
+from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from select_boards import matrix_entries, path_matches, select_workflows  # noqa: E402
+import select_boards  # noqa: E402
+from select_boards import (  # noqa: E402
+    ZERO_SHA,
+    changed_files,
+    main,
+    matrix_entries,
+    path_matches,
+    select_workflows,
+)
 
 FAMILIES = {
     "avr": {"crate_paths": ["crates/fbuild-build-mcu/src/avr/**"]},
@@ -122,6 +135,101 @@ class RealSotTests(unittest.TestCase):
         selected = self.select(["crates/fbuild-build-engine/src/compiler.rs"])
         self.assertNotIn("build-esp32p4.yml", selected)
         self.assertIn("build-esp32dev.yml", selected)
+
+
+class ChangedFilesTests(unittest.TestCase):
+    """`changed_files` is the fail-open boundary of the whole dispatcher.
+
+    An unknown diff must select every board; returning an empty list instead
+    would silently stop platform coverage after a force-push or a rewound base.
+    """
+
+    def test_missing_or_zero_base_is_unknown_without_running_git(self) -> None:
+        with patch.object(select_boards.subprocess, "run") as run:
+            self.assertIsNone(changed_files("", "HEAD"))
+            self.assertIsNone(changed_files(ZERO_SHA, "HEAD"))
+        run.assert_not_called()
+
+    def test_failed_git_diff_is_unknown_and_says_why(self) -> None:
+        failed = subprocess.CompletedProcess([], 128, stdout="", stderr="fatal: bad revision 'nosuch'")
+        with (
+            patch.object(select_boards.subprocess, "run", return_value=failed),
+            redirect_stderr(io.StringIO()) as err,
+        ):
+            self.assertIsNone(changed_files("nosuch", "HEAD"))
+        message = err.getvalue()
+        self.assertIn("selecting all boards", message)
+        self.assertIn("fatal: bad revision", message)
+
+    def test_successful_diff_drops_blank_lines(self) -> None:
+        ok = subprocess.CompletedProcess([], 0, stdout="a.rs\nsrc/b.rs\n\n", stderr="")
+        with patch.object(select_boards.subprocess, "run", return_value=ok) as run:
+            self.assertEqual(["a.rs", "src/b.rs"], changed_files("base1", "head1"))
+        self.assertEqual(["git", "diff", "--name-only", "base1", "head1"], run.call_args[0][0])
+
+
+class MainTests(unittest.TestCase):
+    """`main()` is what the workflows execute; its JSON and exit code are the contract."""
+
+    def run_main(self, *argv, sot=None, changed=None, diff_calls=None):
+        sot = sot if sot is not None else {"boards": BOARDS, "families": FAMILIES}
+
+        def diff(base, head):
+            if diff_calls is not None:
+                diff_calls.append((base, head))
+            return changed
+
+        out = io.StringIO()
+        with (
+            patch.object(sys, "argv", ["select_boards.py", *argv]),
+            patch.object(select_boards, "load_sot", return_value=sot),
+            patch.object(select_boards, "load_common_paths", return_value=COMMON),
+            patch.object(select_boards, "changed_files", side_effect=diff),
+            redirect_stdout(out),
+        ):
+            rc = main()
+        return rc, out.getvalue()
+
+    def test_unknown_diff_prints_every_board_and_exits_zero(self) -> None:
+        rc, out = self.run_main("--base", "", changed=None)
+        self.assertEqual(0, rc)
+        self.assertEqual(sorted(b["workflow"] for b in BOARDS), json.loads(out))
+
+    def test_all_skips_the_diff_entirely(self) -> None:
+        calls: list[tuple[str, str]] = []
+        rc, out = self.run_main("--all", changed=["tests/platform/attiny85/platformio.ini"], diff_calls=calls)
+        self.assertEqual(0, rc)
+        self.assertEqual([], calls)
+        # A consulted diff would have narrowed this to build-attiny85.yml.
+        self.assertEqual(sorted(b["workflow"] for b in BOARDS), json.loads(out))
+
+    def test_base_and_head_are_forwarded_to_the_diff(self) -> None:
+        calls: list[tuple[str, str]] = []
+        rc, out = self.run_main("--base", "abc123", "--head", "def456", changed=[], diff_calls=calls)
+        self.assertEqual(0, rc)
+        self.assertEqual([("abc123", "def456")], calls)
+        self.assertEqual([], json.loads(out))
+
+    def test_matrix_flag_emits_template_records(self) -> None:
+        boards = [
+            {**b, "workflow_name": b["workflow"], "env_name": "e", "firmware_ext": "hex"} for b in BOARDS
+        ]
+        sot = {
+            "boards": boards,
+            "families": {**FAMILIES, "esp32": {**FAMILIES["esp32"], "toolchain_cache": True}},
+        }
+        rc, out = self.run_main(
+            "--matrix",
+            "--base",
+            "base1",
+            changed=["tests/platform/esp32c3/platformio.ini"],
+            sot=sot,
+        )
+        self.assertEqual(0, rc)
+        entries = json.loads(out)
+        self.assertEqual(["build-esp32c3.yml"], [e["workflow"] for e in entries])
+        self.assertTrue(entries[0]["toolchain_cache"])
+        self.assertEqual("tests/platform/esp32c3", entries[0]["test_dir"])
 
 
 if __name__ == "__main__":
