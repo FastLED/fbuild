@@ -10,6 +10,10 @@ LOC gate.
 - **`parser.rs`** -- Raw INI tokenizer (`parse_ini`), `[env:*]` inheritance
   resolution (`resolve_all_envs`, `resolve_env`, `resolve_section`), and
   `${section.key}` variable substitution driver (`substitute_vars`).
+- **`extra_configs.rs`** -- `[platformio] extra_configs`: resolve the declared
+  paths/wildcards against the ini directory and merge them over the base
+  sections (declaration order, later wins), refusing a missing file, an
+  empty wildcard, a nested `extra_configs`, or a self-include.
 - **`variables.rs`** -- Variable-reference lookup helpers
   (`resolve_variable`, `resolve_section_key`) that follow `extends` chains.
 - **`values.rs`** -- Value-string helpers: `strip_inline_comment`,
