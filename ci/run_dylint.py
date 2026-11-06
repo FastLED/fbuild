@@ -30,7 +30,18 @@ def main(argv: list[str] | None = None) -> int:
     # The ordinary local check can reuse Cargo fingerprints. CI's native OS
     # legs force fresh traversal and compare the independent observation ledger.
     env.pop("FBUILD_PLATFORM_BOUNDARY_OBSERVED", None)
-    subprocess.run(["soldr", "dylint", "prepare"], cwd=ROOT, env=env, check=True)
+    # Fail closed on the toolchain step: a prepare that could not fetch the
+    # pinned nightly must stop before the lint, and it must report the real
+    # exit code rather than dying with a traceback (rc 1 regardless of cause).
+    prepared = subprocess.run(
+        ["soldr", "dylint", "prepare"], cwd=ROOT, env=env, check=False
+    )
+    if prepared.returncode != 0:
+        print(
+            f"ci.run_dylint: soldr dylint prepare failed with rc {prepared.returncode}",
+            file=sys.stderr,
+        )
+        return prepared.returncode
     scope = ["--workspace"] if not args.package else ["--package", args.package]
     result = subprocess.run(
         ["soldr", "dylint", "--all", "--", *scope, "--all-targets"],
