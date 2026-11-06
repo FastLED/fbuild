@@ -34,6 +34,7 @@ import json
 import re
 import subprocess
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -134,6 +135,115 @@ class HookDecisionTests(unittest.TestCase):
     def test_brand_new_crate_manifest_is_denied(self) -> None:
         manifest = ROOT / "crates" / "fbuild-not-approved" / "Cargo.toml"
         self.assertEqual(decision(run_hook(manifest)), "deny")
+
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+
+from check_workspace_crates import (  # noqa: E402
+    RATCHET_LINTS,
+    inherits_workspace_lints,
+    lint_inheritance_errors,
+    parse_members,
+)
+
+WORKSPACE_LINTS = """
+[workspace.lints.clippy]
+cognitive_complexity = "warn"
+too_many_lines = "warn"
+"""
+
+INHERITING = """
+[lints]
+workspace = true
+"""
+
+
+def synthetic_workspace(
+    root: Path, members: dict[str, str], lints: str = WORKSPACE_LINTS
+) -> Path:
+    """Write a minimal root manifest plus one manifest per named member."""
+    body = "".join(f'    "{name}",\n' for name in members)
+    manifest = f"[workspace]\nmembers = [\n{body}]\n{lints}"
+    (root / "Cargo.toml").write_text(manifest, encoding="utf-8")
+    for name, text in members.items():
+        directory = root / name
+        directory.mkdir(parents=True, exist_ok=True)
+        (directory / "Cargo.toml").write_text(text, encoding="utf-8")
+    return root
+
+
+class LintInheritanceTests(unittest.TestCase):
+    """RUST-018 (FastLED/fbuild#1639): inheritance is a checked invariant."""
+
+    def setUp(self) -> None:
+        self._tmp = tempfile.TemporaryDirectory(prefix="lint-inheritance-")
+        self.addCleanup(self._tmp.cleanup)
+        self.root = Path(self._tmp.name)
+
+    def errors(
+        self, members: dict[str, str], lints: str = WORKSPACE_LINTS
+    ) -> list[str]:
+        return lint_inheritance_errors(synthetic_workspace(self.root, members, lints))
+
+    def test_real_workspace_inherits_every_ratchet(self) -> None:
+        members = parse_members(CARGO_TOML.read_text(encoding="utf-8"))
+        # 20 crates/* plus bench/fastled-examples: the inheritance half of
+        # #1639 claimed all 21 members, so a shrinking loop cannot pass.
+        self.assertEqual(len(members), 21)
+        for member in members:
+            self.assertTrue((ROOT / member / "Cargo.toml").is_file(), member)
+            self.assertTrue(
+                inherits_workspace_lints(
+                    (ROOT / member / "Cargo.toml").read_text(encoding="utf-8")
+                ),
+                f"{member} lost its [lints] workspace = true",
+            )
+        self.assertEqual(lint_inheritance_errors(ROOT), [])
+
+    def test_member_without_lints_table_is_named(self) -> None:
+        errors = self.errors(
+            {"crates/a": INHERITING, "crates/b": '[package]\nname = "b"\n'}
+        )
+        self.assertEqual(len(errors), 1)
+        self.assertIn("crates/b", errors[0])
+        self.assertNotIn("crates/a", errors[0])
+
+    def test_commented_out_inheritance_is_not_accepted(self) -> None:
+        errors = self.errors({"crates/a": "# [lints]\n# workspace = true\n"})
+        self.assertEqual(len(errors), 1)
+        self.assertIn("crates/a", errors[0])
+
+    def test_workspace_false_is_not_inheritance(self) -> None:
+        errors = self.errors({"crates/a": "[lints]\nworkspace = false\n"})
+        self.assertEqual(len(errors), 1)
+        self.assertIn("crates/a", errors[0])
+
+    def test_dotted_form_and_trailing_comment_are_accepted(self) -> None:
+        errors = self.errors(
+            {
+                "crates/a": "lints.workspace = true\n",
+                "crates/b": INHERITING.replace(
+                    "workspace = true", "workspace = true  # RUST-018"
+                ),
+            }
+        )
+        self.assertEqual(errors, [])
+
+    def test_ratchet_downgrade_to_allow_is_reported(self) -> None:
+        downgraded = WORKSPACE_LINTS.replace('cognitive_complexity = "warn"', 'cognitive_complexity = "allow"')
+        errors = self.errors({"crates/a": INHERITING}, downgraded)
+        self.assertEqual(len(errors), 1)
+        self.assertIn("cognitive_complexity", errors[0])
+        self.assertIn("allow", errors[0])
+
+    def test_missing_ratchet_lint_is_reported(self) -> None:
+        dropped = WORKSPACE_LINTS.replace(
+            'cognitive_complexity = "warn"\n', ""
+        ).replace('too_many_lines = "warn"', 'too_many_lines = "warn"')
+        self.assertNotIn("cognitive_complexity", dropped)
+        errors = self.errors({"crates/a": INHERITING}, dropped)
+        self.assertEqual(len(errors), 1)
+        self.assertIn(RATCHET_LINTS[0], errors[0])
 
 
 if __name__ == "__main__":
