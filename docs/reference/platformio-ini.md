@@ -62,25 +62,41 @@ The config parser also supports environment inheritance and variable
 substitution. Architecture notes for the parser live in
 [`docs/architecture/overview.md`](../architecture/overview.md).
 
-### Refused: `[platformio] extra_configs`
+### Merged: `[platformio] extra_configs`
 
-fbuild reads only `platformio.ini`. PlatformIO's
-[`extra_configs`](https://docs.platformio.org/en/latest/projectconf/sections/platformio/options/generic/extra_configs.html)
-option merges additional INI files over the base file (later values win), so an
-environment's `framework`, `board`, `build_flags` or an entire `[env:*]` section
-can live in a file fbuild never opens. Building such a project anyway would
-produce firmware from settings the project did not declare, so a project that
-sets `extra_configs` is refused with a message naming the referenced files:
+PlatformIO can extend the base file with
+[`extra_configs`](https://docs.platformio.org/en/latest/projectconf/sections/platformio/options/generic/extra_configs.html),
+and fbuild honours it the same way:
 
 ```ini
 [platformio]
-extra_configs = extra_envs.ini   ; refused -- inline those settings instead
+extra_configs =
+  extra_envs.ini          ; environments shared by several projects
+  ci/*.ini                ; shell-style wildcards are allowed
 ```
 
-Inline the referenced settings into `platformio.ini`, or build the project with
-PlatformIO. An empty value (or a comment) declares nothing and is accepted. A
-same-named key inside `[env:*]` is not a file include in PlatformIO either, so
-it is not treated as one here.
+- Paths and wildcards resolve against the directory holding `platformio.ini`
+  (not the current directory). Wildcard matches are applied in sorted order so
+  "later wins" is deterministic.
+- The extra files are parsed with the same syntax as `platformio.ini` and merged
+  over it: an option declared in both places takes the extra file's value, later
+  files win over earlier ones, and `[env:*]`, `[env]` and custom groups such as
+  `[common]` may be declared in either place. Base `[env]` data still applies to
+  environments introduced by an extra file, and `${...}` substitution runs after
+  the merge, so `${common.build_flags}` sees the merged value.
+
+Three cases are refused rather than approximated, because PlatformIO would
+either fail or silently drop the declaration:
+
+| Case | Why it is refused |
+|---|---|
+| A listed file does not exist, or a wildcard matches no *file* | PlatformIO would not build this project either. |
+| An extra file declares `extra_configs` again | PlatformIO merges the option but never processes it recursively, so the nested files would never be read. |
+| The list resolves back to `platformio.ini` itself | Merging a file into itself is a mistake, not a configuration. |
+
+An empty value (or one that is only a comment) declares nothing and is
+accepted. A same-named key inside `[env:*]` is not a file include in
+PlatformIO either, so it is not treated as one here.
 
 ## Library Dependencies
 

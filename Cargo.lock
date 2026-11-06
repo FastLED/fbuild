@@ -1132,6 +1132,7 @@ version = "2.5.52"
 dependencies = [
  "fbuild-core",
  "fbuild-paths",
+ "glob",
  "include_dir",
  "regex",
  "serde",
