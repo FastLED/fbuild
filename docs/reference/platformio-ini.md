@@ -62,6 +62,26 @@ The config parser also supports environment inheritance and variable
 substitution. Architecture notes for the parser live in
 [`docs/architecture/overview.md`](../architecture/overview.md).
 
+### Refused: `[platformio] extra_configs`
+
+fbuild reads only `platformio.ini`. PlatformIO's
+[`extra_configs`](https://docs.platformio.org/en/latest/projectconf/sections/platformio/options/generic/extra_configs.html)
+option merges additional INI files over the base file (later values win), so an
+environment's `framework`, `board`, `build_flags` or an entire `[env:*]` section
+can live in a file fbuild never opens. Building such a project anyway would
+produce firmware from settings the project did not declare, so a project that
+sets `extra_configs` is refused with a message naming the referenced files:
+
+```ini
+[platformio]
+extra_configs = extra_envs.ini   ; refused -- inline those settings instead
+```
+
+Inline the referenced settings into `platformio.ini`, or build the project with
+PlatformIO. An empty value (or a comment) declares nothing and is accepted. A
+same-named key inside `[env:*]` is not a file include in PlatformIO either, so
+it is not treated as one here.
+
 ## Library Dependencies
 
 fbuild can download and compile Arduino libraries directly from GitHub URLs:

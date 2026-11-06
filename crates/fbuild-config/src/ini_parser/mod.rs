@@ -7,10 +7,15 @@
 //! - Multi-line values (continuation lines starting with whitespace)
 //! - Inline comments (` ; comment` or ` # comment`)
 //! - Base `[env]` section merged into all `[env:*]` sections
+//! - `[platformio] extra_configs` is refused, not silently ignored: fbuild
+//!   reads only `platformio.ini`, so an extra file's settings would be lost
 
 mod parser;
 #[cfg(test)]
 mod tests;
+#[cfg(test)]
+#[path = "tests_extra_configs.rs"]
+mod tests_extra_configs;
 #[cfg(test)]
 #[path = "tests_library_archive.rs"]
 mod tests_library_archive;
@@ -67,6 +72,7 @@ impl PlatformIOConfig {
         })?;
 
         let sections = parse_ini(&content)?;
+        reject_extra_configs(&sections)?;
         let resolved_envs = resolve_all_envs(&sections)?;
 
         Ok(Self {
@@ -393,4 +399,54 @@ impl PlatformIOConfig {
     pub fn path(&self) -> &Path {
         &self.path
     }
+}
+
+/// Refuse a project whose settings live in files fbuild never opens.
+///
+/// PlatformIO's `[platformio] extra_configs` merges the listed INI files over
+/// `platformio.ini` (later values win, wildcards allowed), so an environment's
+/// `framework`, `board`, `build_flags` or an entire `[env:*]` section can live
+/// in a file fbuild does not read. Ignoring the key silently builds something
+/// other than what the project declares -- the same false-coverage failure as a
+/// bare `framework = espidf` (FastLED/fbuild#1664) -- so the project is refused
+/// before any caller resolves an environment against a partial view.
+///
+/// Only `[platformio]` is consulted, because that is the only section
+/// PlatformIO honours the option in. An empty value, or one that is nothing but
+/// a comment, declares no extra file and is accepted.
+fn reject_extra_configs(
+    sections: &HashMap<String, HashMap<String, String>>,
+) -> fbuild_core::Result<()> {
+    let Some(value) = sections
+        .get("platformio")
+        .and_then(|platformio| platformio.get("extra_configs"))
+    else {
+        return Ok(());
+    };
+
+    let declared = value
+        .lines()
+        .map(strip_inline_comment)
+        .filter(|line| !line.is_empty() && !is_comment_line(line))
+        .collect::<Vec<String>>()
+        .join(", ");
+    if declared.is_empty() {
+        return Ok(());
+    }
+
+    Err(fbuild_core::FbuildError::ConfigError(format!(
+        "[platformio] extra_configs = {declared} is unsupported: fbuild reads only platformio.ini, \
+         so every setting declared in that file (framework, board, build_flags, env sections, ...) \
+         would be silently ignored and the project would build with different settings than it \
+         declares. Inline those settings into platformio.ini, or build this project with PlatformIO \
+         (see FastLED/fbuild#1664)"
+    )))
+}
+
+/// True for a whole-line comment, which declares no configuration.
+///
+/// `strip_inline_comment` only removes a comment that follows a space, so a
+/// value that is nothing but `; note` reaches the caller intact.
+fn is_comment_line(line: &str) -> bool {
+    line.starts_with(';') || line.starts_with('#')
 }
