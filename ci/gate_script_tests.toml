@@ -12,7 +12,6 @@
 schema = 1
 
 untested = [
-  "build_backend",
   "build_qemu_linux_runtime",
 ]
 
@@ -20,9 +19,10 @@ untested = [
 tests = ["ci/test_audit_ignored_tests.py"]
 
 [scripts.build_backend]
-# Only mentioned as a tracked path in test_check_python_complexity; the PEP 517
-# backend itself (wheel assembly, sdist contents) is never exercised.
-tests = []
+# The PEP 517/660 backend every `pip install .` goes through: staleness cache
+# key (mtime + cargo profile + non-empty), atomic staging, cargo artifact
+# selection, and real wheel assembly (RECORD hashes/modes, METADATA, tag).
+tests = ["ci/test_build_backend.py"]
 
 [scripts.build_qemu_linux_runtime]
 tests = []

@@ -59,6 +59,22 @@ To handle both layouts (and any future per-feature/per-profile target
 directory) we drive cargo with `--message-format=json-render-diagnostics`
 and pull the real artifact path out of cargo's structured output. That's
 how `cargo install` and most Rust packaging tools find their binaries.
+
+When the staged artifacts may be reused
+---------------------------------------
+
+Staging lives in `ci/bin/` and a warm tree skips cargo entirely, so the cache
+key has to carry everything that changes the *bytes*:
+
+  * the mtime of every cargo input (`.rs`, `Cargo.toml`, `Cargo.lock`, the
+    toolchain pin) -- a staged artifact older than any input is rebuilt;
+  * the cargo **profile**, recorded in `ci/bin/.build-profile`. The staging
+    paths are profile-agnostic, so without that stamp `FBUILD_BUILD_RELEASE=1`
+    after a plain `pip install .` (or the reverse) reused the other profile;
+  * non-emptiness. A zero-byte artifact is never "current": copies are staged
+    through a temp file + `os.replace`, so an interrupted install can only
+    leave a temp behind, never a truncated `ci/bin/fbuild` that later runs
+    would adopt as fresh and package into every wheel.
 """
 
 from __future__ import annotations
@@ -87,6 +103,9 @@ TARGET_DAEMON_NAME = (
 STAGED_BIN_DIR = REPO_ROOT / "ci" / "bin"
 STAGED_BINARY_PATH = STAGED_BIN_DIR / TARGET_BINARY_NAME
 STAGED_DAEMON_PATH = STAGED_BIN_DIR / TARGET_DAEMON_NAME
+# Records which cargo profile (debug/release) produced the staged files;
+# the staging paths themselves are profile-agnostic.
+STAGED_PROFILE_PATH = STAGED_BIN_DIR / ".build-profile"
 
 # FastLED/fbuild#829: PyO3 extension produced by `fbuild-python`. Python
 # extension module conventions: `.pyd` on Windows, `.so` on Linux/macOS.
@@ -140,14 +159,22 @@ def _iter_cargo_inputs() -> "list[Path]":
     return paths
 
 
-def _staged_binary_is_up_to_date() -> bool:
-    """True if the staged binary exists and is newer than every cargo input."""
-    if not STAGED_BINARY_PATH.is_file():
+def _staged_artifact_is_current(path: Path) -> bool:
+    """True if `path` exists, is non-empty, and is newer than every cargo input.
+
+    A zero-byte artifact is never current: `shutil.copy2` writes in place, so an
+    install killed mid-copy leaves a truncated file whose mtime is the NEWEST in
+    the tree, and the old check then reused it forever while reporting success.
+    """
+    try:
+        staged = path.stat()
+    except FileNotFoundError:
         return False
-    staged_mtime = STAGED_BINARY_PATH.stat().st_mtime
-    for path in _iter_cargo_inputs():
+    if staged.st_size == 0:
+        return False
+    for cargo_input in _iter_cargo_inputs():
         try:
-            if path.stat().st_mtime > staged_mtime:
+            if cargo_input.stat().st_mtime > staged.st_mtime:
                 return False
         except FileNotFoundError:
             # File disappeared between glob and stat — treat as changed.
@@ -155,37 +182,75 @@ def _staged_binary_is_up_to_date() -> bool:
     return True
 
 
-def _staged_daemon_is_up_to_date() -> bool:
-    """True if the staged daemon matches the current Rust workspace inputs."""
-    if not STAGED_DAEMON_PATH.is_file():
-        return False
-    staged_mtime = STAGED_DAEMON_PATH.stat().st_mtime
-    for path in _iter_cargo_inputs():
-        try:
-            if path.stat().st_mtime > staged_mtime:
-                return False
-        except FileNotFoundError:
-            return False
-    return True
+def _current_profile_stamp() -> str:
+    """Stamp identifying which cargo profile produced the staged artifacts."""
+    return f"v1 {_profile_subdir()}"
 
 
-def _staged_native_ext_is_up_to_date() -> bool:
-    """True if the staged PyO3 extension exists and is newer than every cargo input.
+def _staged_profile_is_current() -> bool:
+    """True when the staged artifacts were built for the profile we now want.
 
-    FastLED/fbuild#829: companion to `_staged_binary_is_up_to_date` for the
-    Python extension. If either staged artifact is stale, both rebuild —
-    they share the same cargo workspace and the same incremental cache.
+    The staged paths are shared between debug and release, so without this
+    stamp `FBUILD_BUILD_RELEASE=1` after a plain `pip install .` (or the
+    reverse) silently shipped the other profile's binary -- the wheel's
+    staleness check only looked at mtimes.
     """
-    if not STAGED_NATIVE_EXT_PATH.is_file():
+    try:
+        return STAGED_PROFILE_PATH.read_text(encoding="utf-8").strip() == (
+            _current_profile_stamp()
+        )
+    except (FileNotFoundError, OSError):
         return False
-    staged_mtime = STAGED_NATIVE_EXT_PATH.stat().st_mtime
-    for path in _iter_cargo_inputs():
+
+
+def _staged_artifacts_are_current() -> bool:
+    """True only when all three staged artifacts match this build request."""
+    if not _staged_profile_is_current():
+        return False
+    return all(
+        _staged_artifact_is_current(path)
+        for path in (
+            STAGED_BINARY_PATH,
+            STAGED_DAEMON_PATH,
+            STAGED_NATIVE_EXT_PATH,
+        )
+    )
+
+
+def _atomic_copy(src: Path, dst: Path) -> None:
+    """Copy `src` to `dst` through a sibling temp file + `os.replace`.
+
+    Staging in place means an interrupted install leaves a partial artifact at
+    the final path; the next run then sees a fresh mtime and packages it.
+    """
+    dst.parent.mkdir(parents=True, exist_ok=True)
+    tmp = dst.with_name(f"{dst.name}.tmp")
+    shutil.copy2(src, tmp)
+    os.replace(tmp, dst)
+
+
+def _write_profile_stamp() -> None:
+    """Record which profile the staged artifacts now hold."""
+    STAGED_BIN_DIR.mkdir(parents=True, exist_ok=True)
+    tmp = STAGED_PROFILE_PATH.with_name(f"{STAGED_PROFILE_PATH.name}.tmp")
+    tmp.write_text(f"{_current_profile_stamp()}\n", encoding="utf-8")
+    os.replace(tmp, STAGED_PROFILE_PATH)
+
+
+def _assert_staged_payload() -> None:
+    """Refuse to wrap a missing or empty artifact in a wheel."""
+    for path in (STAGED_BINARY_PATH, STAGED_DAEMON_PATH, STAGED_NATIVE_EXT_PATH):
         try:
-            if path.stat().st_mtime > staged_mtime:
-                return False
+            size = path.stat().st_size
         except FileNotFoundError:
-            return False
-    return True
+            size = 0
+        if size == 0:
+            sys.stderr.write(
+                f"ERROR: staged artifact {path} is missing or empty; refusing to "
+                "build a wheel that would install a broken `fbuild`. Delete "
+                f"`{STAGED_BIN_DIR}` and re-run the install.\n"
+            )
+            sys.exit(1)
 
 
 def _require_soldr() -> None:
@@ -205,6 +270,31 @@ def _require_soldr() -> None:
         sys.exit(1)
 
 
+def _cargo_artifacts(stdout: str):
+    """Yield every `compiler-artifact` message in cargo's JSON stream.
+
+    cargo writes one JSON object per line, but the stream also carries
+    human-readable progress noise interleaved with it. Every line is offered to
+    `json.loads` and skipped unless it decodes to an object: a prefilter like
+    `line.startswith("{")` would leave the `isinstance` check below unreachable
+    (and therefore untestable) while still being needed for a stream that
+    contains `[1, 2]` or a bare string.
+    """
+    for line in stdout.splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        try:
+            msg = json.loads(line)
+        except json.JSONDecodeError:
+            continue
+        if not isinstance(msg, dict):
+            continue
+        if msg.get("reason") != "compiler-artifact":
+            continue
+        yield msg
+
+
 def _find_fbuild_executable_from_json(stdout: str) -> Optional[Path]:
     """Walk cargo's structured artifact stream and return the path to the
     `fbuild` binary, or `None` if no compiler-artifact line for it appeared.
@@ -216,18 +306,7 @@ def _find_fbuild_executable_from_json(stdout: str) -> Optional[Path]:
     want (matches `cargo install`'s selection rule).
     """
     binary_path: Optional[Path] = None
-    for line in stdout.splitlines():
-        line = line.strip()
-        if not line or not line.startswith("{"):
-            continue
-        try:
-            msg = json.loads(line)
-        except json.JSONDecodeError:
-            # Non-JSON noise (rare; cargo's renderer can inline human-
-            # readable progress on stdout when there's no compatible TTY).
-            continue
-        if msg.get("reason") != "compiler-artifact":
-            continue
+    for msg in _cargo_artifacts(stdout):
         target = msg.get("target") or {}
         if target.get("name") != "fbuild":
             continue
@@ -240,16 +319,7 @@ def _find_fbuild_executable_from_json(stdout: str) -> Optional[Path]:
 def _find_fbuild_daemon_from_json(stdout: str) -> Optional[Path]:
     """Return the `fbuild-daemon` executable from cargo's artifact stream."""
     binary_path: Optional[Path] = None
-    for line in stdout.splitlines():
-        line = line.strip()
-        if not line or not line.startswith("{"):
-            continue
-        try:
-            msg = json.loads(line)
-        except json.JSONDecodeError:
-            continue
-        if msg.get("reason") != "compiler-artifact":
-            continue
+    for msg in _cargo_artifacts(stdout):
         target = msg.get("target") or {}
         if target.get("name") != "fbuild-daemon":
             continue
@@ -327,31 +397,21 @@ def _find_native_cdylib_from_json(stdout: str) -> Optional[Path]:
     cdylibs via `executable` since they aren't directly runnable).
     """
     cdylib_path: Optional[Path] = None
-    for line in stdout.splitlines():
-        line = line.strip()
-        if not line or not line.startswith("{"):
-            continue
-        try:
-            msg = json.loads(line)
-        except json.JSONDecodeError:
-            continue
-        if msg.get("reason") != "compiler-artifact":
-            continue
+    for msg in _cargo_artifacts(stdout):
         target = msg.get("target") or {}
         if target.get("name") != "_native":
             continue
         kinds = target.get("kind") or []
         if "cdylib" not in kinds:
             continue
-        filenames = msg.get("filenames") or []
-        for fn in filenames:
-            p = Path(fn)
+        for filename in msg.get("filenames") or []:
+            path = Path(filename)
             # Pick the cdylib file (suffix varies by host):
             # - Windows: `.dll`
             # - Linux:   `.so`
             # - macOS:   `.dylib`
-            if p.suffix in (".dll", ".so", ".dylib"):
-                cdylib_path = p
+            if path.suffix in (".dll", ".so", ".dylib"):
+                cdylib_path = path
                 break
     return cdylib_path
 
@@ -504,32 +564,35 @@ def _build_fbuild_binaries() -> tuple[Path, Path]:
 
 def _stage_artifacts() -> None:
     """Build (or reuse) the CLI, daemon, and PyO3 extension in their staging paths."""
-    # Fast path: when every staged artifact is newer than every cargo input,
-    # skip cargo entirely. Even cargo's "Fresh" pass walks the workspace and
-    # takes wall-clock seconds.
-    if (
-        _staged_binary_is_up_to_date()
-        and _staged_daemon_is_up_to_date()
-        and _staged_native_ext_is_up_to_date()
-    ):
+    # Fast path: when every staged artifact is newer than every cargo input AND
+    # was produced for the profile this build asks for, skip cargo entirely.
+    # Even cargo's "Fresh" pass walks the workspace and takes wall-clock seconds.
+    if _staged_artifacts_are_current():
         sys.stderr.write(
-            f"  staged artifacts up-to-date "
+            f"  staged artifacts up-to-date for the {_profile_subdir()} profile "
             f"({STAGED_BINARY_PATH.name}, {STAGED_DAEMON_PATH.name}, "
             f"{STAGED_NATIVE_EXT_PATH.name}); skipping cargo\n"
         )
+        _assert_staged_payload()
         return
 
     _require_soldr()
     binary_path, daemon_path = _build_fbuild_binaries()
-    STAGED_BIN_DIR.mkdir(parents=True, exist_ok=True)
-    shutil.copy2(binary_path, STAGED_BINARY_PATH)
-    shutil.copy2(daemon_path, STAGED_DAEMON_PATH)
+    # Atomic staging: a killed install must not leave a partial artifact that
+    # the next run adopts as fresh.
+    _atomic_copy(binary_path, STAGED_BINARY_PATH)
+    _atomic_copy(daemon_path, STAGED_DAEMON_PATH)
     # FastLED/fbuild#829: the PyO3 extension is staged alongside so
     # `from fbuild import ...` works after a source/editable install.
     cdylib_path = _build_fbuild_python()
     PYTHON_EXT_DIR.mkdir(parents=True, exist_ok=True)
-    shutil.copy2(cdylib_path, STAGED_NATIVE_EXT_PATH)
-    sys.stderr.write(f"  staged {STAGED_BIN_DIR} and {STAGED_NATIVE_EXT_PATH}\n")
+    _atomic_copy(cdylib_path, STAGED_NATIVE_EXT_PATH)
+    _write_profile_stamp()
+    _assert_staged_payload()
+    sys.stderr.write(
+        f"  staged {STAGED_BIN_DIR} and {STAGED_NATIVE_EXT_PATH} "
+        f"({_profile_subdir()} profile)\n"
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -550,7 +613,10 @@ _NAME = "fbuild"
 def _project_field(key: str) -> str:
     """Read one top-level string field of `[project]` from pyproject.toml."""
     text = (REPO_ROOT / "pyproject.toml").read_text(encoding="utf-8")
-    section = text.split("[project]", 1)[1].split("\n[", 1)[0]
+    _, marker, remainder = text.partition("[project]")
+    if not marker:
+        raise RuntimeError("pyproject.toml has no [project] table")
+    section = remainder.split("\n[", 1)[0]
     match = re.search(rf'^{key}\s*=\s*"([^"]*)"', section, re.MULTILINE)
     if match is None:
         raise RuntimeError(f"pyproject.toml [project] has no string `{key}`")
@@ -641,6 +707,8 @@ class _WheelWriter:
 
 def _write_wheel(wheel_directory: str, add_payload) -> str:
     _stage_artifacts()
+    # Last line of defence: never wrap a missing or empty binary in a wheel.
+    _assert_staged_payload()
     name = f"{_NAME}-{_version()}-{_wheel_tag()}.whl"
     writer = _WheelWriter(Path(wheel_directory) / name)
     # Raw native binaries go to .data/scripts/: pip copies them into bin/
