@@ -1,13 +1,17 @@
 """Tests for ci/check_test_layout.py (FastLED/fbuild#1577)."""
 from __future__ import annotations
 
+import contextlib
+import io
 import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
+import check_test_layout  # noqa: E402
 from check_test_layout import CATEGORIES, MAX_CATEGORIES, violations  # noqa: E402
 
 
@@ -69,6 +73,42 @@ class LayoutTests(unittest.TestCase):
             make(root, "crates/fbuild-x/Cargo.toml", '[package]\nname = "x"\n\n[[bin]]\nname = "b"\npath = "src/bin/b.rs"\ntest = false\n')
             make(root, "crates/fbuild-x/src/bin/b.rs", "fn main() {}\n")
             self.assertEqual([], violations(root))
+
+
+def run_main(argv: list[str] | None = None) -> tuple[int, str, str]:
+    out, err = io.StringIO(), io.StringIO()
+    with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
+        rc = check_test_layout.main() if argv is None else check_test_layout.main(argv)
+    return rc, out.getvalue(), err.getvalue()
+
+
+class MainTests(unittest.TestCase):
+    """`main()` returns the exit code the Crate Gate obeys.
+
+    The tests above drive `violations()`; nothing asserted that a violation
+    actually fails the process, so a `main()` that always returned 0 would
+    ship a green unit suite and a gate that permits stray test binaries.
+    """
+
+    def test_clean_tree_exits_zero_and_reports_categories(self):
+        rc, out, err = run_main()
+        self.assertEqual(0, rc)
+        self.assertIn(f"ok: {len(CATEGORIES)} integration-test categories", out)
+        self.assertEqual("", err)
+
+    def test_one_error_line_per_violation_and_nonzero_exit(self):
+        problems = [
+            "crates/x/tests/new_thing.rs: top-level test file",
+            "crates/y/Cargo.toml: [[test]] targets bypass the category layout",
+        ]
+        with patch.object(check_test_layout, "violations", return_value=problems):
+            rc, out, err = run_main()
+        self.assertEqual(1, rc)
+        self.assertEqual("", out)
+        self.assertEqual(2, err.count("error: "))
+        for problem in problems:
+            self.assertIn(f"error: {problem}", err)
+        self.assertIn("2 test-layout violation(s)", err)
 
 
 if __name__ == "__main__":

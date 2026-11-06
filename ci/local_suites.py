@@ -45,6 +45,7 @@ DRIFT_UNITTEST_MODULES: tuple[str, ...] = (
     "ci.test_setup_soldr_cache_keys",
     "ci.test_gate_jobs",
     "ci.test_wheel_check",
+    "ci.test_check_test_layout",
 )
 
 # Modules the local gate additionally runs. Their subject is the local proof
@@ -67,14 +68,14 @@ LOCAL_UNITTEST_MODULES: tuple[str, ...] = DRIFT_UNITTEST_MODULES + LOCAL_ONLY_MO
 # (the #1843 cache-key collision class), `test_gate_jobs` (the `CI summary`
 # aggregator -- the required check that gates every merge here) and
 # `test_wheel_check` (the release gate that keeps debug info out of the PyPI
-# wheels, #1756's stranded-release class) are now wired into the drift registry,
-# so the budget is four. Raising it means the class regrew -- wire the module,
-# do not add a name.
-MAX_UNWIRED = 4
+# wheels, #1756's stranded-release class) and `test_check_test_layout` (the
+# Crate Gate's #1577 no-stray-test-binary rule) are now wired into the drift
+# registry, so the budget is three. Raising it means the class regrew -- wire
+# the module, do not add a name.
+MAX_UNWIRED = 3
 
 KNOWN_UNWIRED: frozenset[str] = frozenset(
     {
-        "test_check_test_layout",
         "test_lint_entrypoint",
         "test_run_dylint",
         "test_select_boards",
