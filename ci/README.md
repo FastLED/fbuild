@@ -53,6 +53,16 @@ fail coverage. This policy is tracked in [#1698](https://github.com/FastLED/fbui
 
 ## Contents
 
+- **`build_backend.py`** -- The in-tree PEP 517/660 backend that every `pip install .`
+  and `uv sync` goes through (`build-backend` in `pyproject.toml`): runs
+  `soldr cargo build` for `fbuild-cli`, `fbuild-daemon` and the PyO3 `_native`
+  extension, stages them in `ci/bin/` + `python/fbuild/`, and writes a wheel whose
+  `.data/scripts/` carry the raw binaries. Reuse of staged artifacts keys on the
+  cargo input mtimes, the **profile** recorded in `ci/bin/.build-profile` (so
+  `FBUILD_BUILD_RELEASE=1` can never adopt a debug binary, or the reverse) and
+  non-emptiness; staging goes through `os.replace`, so an interrupted install cannot
+  leave a truncated artifact that later runs adopt as current. Tested by
+  `test_build_backend.py`.
 - **`build_dist.py`** -- Triggers GitHub Actions native builds, downloads artifacts, and assembles `dist/` for PyPI packaging
 - **`build_qemu_linux_runtime.py`** -- Builds the Linux runtime-library bundle Espressif QEMU needs (`ldd` closure minus glibc, built on ubuntu:22.04). Published to the `qemu-linux-runtime-v1` release and downloaded on demand by `fbuild-toolchain`'s `esp_qemu_runtime` module; run in CI by `qemu-runtime-bundle.yml`
 - **`check_workspace_crates.py`** -- Monocrate guard: fails if the root `Cargo.toml` `[workspace] members` list gains a crate outside the approved allowlist (run by `crate-gate.yml`). Its `APPROVED_MEMBERS` and `ci/hooks/crate_guard.py`'s `APPROVED_CRATE_DIRS` are one policy in two files; `test_crate_guard_parity.py` asserts both against the real `Cargo.toml` -- and drives the hook itself -- so a drifted list fails a test instead of blocking a legitimate `Cargo.toml` edit with a "new crate" error.
