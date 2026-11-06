@@ -21,7 +21,7 @@ mode = "minimal"
 [[gate.replay.jobs]]
 source-job = "check-ubuntu.yml:check"
 key = "linux/Check Ubuntu/Check (ubuntu-latest)"
-steps = ["Checkout source", "Verify candidate SHA", "Set up uv", "Select workspace test interpreter", "Setup soldr", "Clippy", "Check tracked Python complexity ratchet", "Lint subprocess spawns", "Guard production USB VID/PID catalogue literals", "Test", "Test optional SDK library linkage with native GCC LTO", "Test GNU linker overflow summaries", "Test large library archive"]
+steps = ["Checkout source", "Verify candidate SHA", "Set up uv", "Select workspace test interpreter", "Setup soldr", "Clippy", "Check tracked Python complexity ratchet", "Test cold-build disk provisioning", "Lint subprocess spawns", "Guard production USB VID/PID catalogue literals", "Test", "Test optional SDK library linkage with native GCC LTO", "Test library assembly and archive policies with native GCC", "Test GNU linker overflow summaries", "Test large library archive"]
 lanes = ["linux-minimal"]
 
 [[gate.replay.jobs]]
@@ -51,7 +51,7 @@ tools = ["bosn", "uv"]
 [[gate.replay.jobs]]
 source-job = "dylint.yml:dylint"
 key = "Dylint/Dylint Full (Linux builder, all OS targets)"
-steps = ["Checkout source", "Set up uv", "Validate Dylint allowlist paths", "Enforce shrink-only .fbuild allowlist", "Validate platform-boundary ledgers", "Setup soldr", "Repair registry sources missing packaged files", "Prepare prebuilt Dylint tools and driver", "Install rustfmt for the Dylint toolchain", "Check Dylint library formatting", "Restore compiled Dylint libraries", "Test Dylint libraries", "Reuse cached Dylint library tree", "Run dylint over workspace", "Save compiled Dylint libraries"]
+steps = ["Checkout source", "Set up uv", "Provision cold-build disk capacity", "Validate Dylint allowlist paths", "Enforce shrink-only .fbuild allowlist", "Validate platform-boundary ledgers", "Setup soldr", "Repair registry sources missing packaged files", "Prepare prebuilt Dylint tools and driver", "Install rustfmt for the Dylint toolchain", "Check Dylint library formatting", "Restore compiled Dylint libraries", "Test Dylint libraries", "Reuse cached Dylint library tree", "Run dylint over workspace", "Save compiled Dylint libraries"]
 lanes = ["dylint"]
 cache-save-steps = ["Save compiled Dylint libraries"]
 
