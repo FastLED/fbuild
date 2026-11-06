@@ -2,9 +2,11 @@
 
 from __future__ import annotations
 
+import contextlib
 import io
 import struct
 import sys
+import tempfile
 import unittest
 import zipfile
 from pathlib import Path
@@ -174,6 +176,51 @@ class WheelTests(unittest.TestCase):
         ):
             problems = wheel_check.check_wheels([candidate, other])
         self.assertEqual(sum("budget is" in problem for problem in problems), 3)
+
+
+class MainTests(unittest.TestCase):
+    """The release-blocking path: the exit code `release-auto.yml` obeys.
+
+    `check_wheels` returning problems is only a report; the release stops
+    because `main` turns it into rc 1. Every test above drives a helper, so a
+    `main` that returned 0 regardless would publish a debug-info wheel with the
+    whole suite green.
+    """
+
+    def _wheel(self, directory: Path, members: dict[str, bytes]) -> Path:
+        path = directory / "fbuild-0.0.0-cp310-abi3-any.whl"
+        with zipfile.ZipFile(path, "w", zipfile.ZIP_DEFLATED) as archive:
+            for name, content in members.items():
+                archive.writestr(name, content)
+        return path
+
+    def _run(self, argv: list[str]) -> tuple[int, str]:
+        stream = io.StringIO()
+        with contextlib.redirect_stdout(stream):
+            rc = wheel_check.main(argv)
+        return rc, stream.getvalue()
+
+    def test_unstripped_wheel_fails_the_run_with_an_annotation(self) -> None:
+        with tempfile.TemporaryDirectory() as raw:
+            path = self._wheel(Path(raw), {"fbuild/_native.abi3.so": elf64([".text", ".debug_info"])})
+            rc, output = self._run([str(path)])
+        self.assertEqual(rc, 1)
+        self.assertIn("::error:", output)
+        self.assertIn(".debug_info", output)
+
+    def test_clean_wheel_exits_zero_with_no_annotation(self) -> None:
+        with tempfile.TemporaryDirectory() as raw:
+            path = self._wheel(Path(raw), {"fbuild/_native.abi3.so": elf64([".text"])})
+            rc, output = self._run([str(path)])
+        self.assertEqual(rc, 0)
+        self.assertNotIn("::error:", output)
+
+    def test_no_input_is_a_usage_error(self) -> None:
+        # Silence beats auditing nothing: an empty argv must not "pass".
+        with contextlib.redirect_stderr(io.StringIO()):
+            with self.assertRaises(SystemExit) as caught:
+                wheel_check.main([])
+        self.assertEqual(caught.exception.code, 2)
 
 
 class WorkflowWiringTests(unittest.TestCase):
