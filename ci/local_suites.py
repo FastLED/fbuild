@@ -48,6 +48,7 @@ DRIFT_UNITTEST_MODULES: tuple[str, ...] = (
     "ci.test_check_test_layout",
     "ci.test_lint_entrypoint",
     "ci.test_select_boards",
+    "ci.test_run_dylint",
 )
 
 # Modules the local gate additionally runs. Their subject is the local proof
@@ -74,12 +75,11 @@ LOCAL_UNITTEST_MODULES: tuple[str, ...] = DRIFT_UNITTEST_MODULES + LOCAL_ONLY_MO
 # no-stray-test-binary rule), `test_lint_entrypoint` (the `uv run --script lint`
 # entry point behind the RUST-033 clippy+dylint rule of #1793) and
 # `test_select_boards` (the fail-open diff->board dispatcher: an unknown diff must
-# select every board) are now wired into the drift registry, so the budget is one.
-# Raising it means the class regrew -- wire the module, do not add a name.
-MAX_UNWIRED = 1
+# select every board) and `test_run_dylint` (the two-step `soldr dylint prepare`
+# -> lint gate that `uv run --script lint` ends with: a failed prepare must stop
+# before the lint and report its own exit code) are now wired into the drift
+# registry, so the long-standing debt is zero and the list is empty. Adding a name
+# here means the class regrew -- wire the module, do not raise the budget.
+MAX_UNWIRED = 0
 
-KNOWN_UNWIRED: frozenset[str] = frozenset(
-    {
-        "test_run_dylint",
-    }
-)
+KNOWN_UNWIRED: frozenset[str] = frozenset()
