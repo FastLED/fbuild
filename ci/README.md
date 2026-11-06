@@ -4,8 +4,9 @@ Python scripts for CI, packaging, and development tooling. All invoked via `uv r
 
 `gate_script_coverage.py --budget <n>` guards the gate scripts themselves: every
 `ci` module that a workflow runs must appear in `gate_script_tests.toml` with the
-test that covers it, and a module with no test must be one of the eight entries
-in that registry's `untested` list. That list is a budget, not a shipping lane --
+test that covers it, and a module with no test must be one of the entries in
+that registry's `untested` list -- which is empty, and the guard fails if it
+grows. That list is a budget, not a shipping lane --
 the guard fails when it grows, when a declared test disappears or stops
 mentioning its subject, and when an entry is left behind after its test lands.
 Run it with `uv run --no-project python -m unittest ci.test_gate_script_coverage`.
@@ -64,7 +65,14 @@ fail coverage. This policy is tracked in [#1698](https://github.com/FastLED/fbui
   leave a truncated artifact that later runs adopt as current. Tested by
   `test_build_backend.py`.
 - **`build_dist.py`** -- Triggers GitHub Actions native builds, downloads artifacts, and assembles `dist/` for PyPI packaging
-- **`build_qemu_linux_runtime.py`** -- Builds the Linux runtime-library bundle Espressif QEMU needs (`ldd` closure minus glibc, built on ubuntu:22.04). Published to the `qemu-linux-runtime-v1` release and downloaded on demand by `fbuild-toolchain`'s `esp_qemu_runtime` module; run in CI by `qemu-runtime-bundle.yml`
+- **`build_qemu_linux_runtime.py`** -- Builds the Linux runtime-library bundle Espressif QEMU needs
+  (`ldd` closure minus glibc, built in `ubuntu:20.04` so the bundle's glibc floor stays at 2.30).
+  Published to the `qemu-linux-runtime-v1` release and downloaded on demand by `fbuild-toolchain`'s
+  `esp_qemu_runtime` module; run in CI by `qemu-runtime-bundle.yml`. The bundle's tag and its five
+  required libraries are declared once here and compared against their `esp_qemu*.rs` counterparts
+  by `test_build_qemu_linux_runtime.py`, which also runs the bash closure walk against a stubbed
+  `ldd`: an unsettled walk, a gap behind a bundled library, or a truncated `tar.zst` now fails the
+  build instead of being published. Covers the same seams through a fake `docker` for the Python half.
 - **`check_workspace_crates.py`** -- Monocrate guard: fails if the root `Cargo.toml` `[workspace] members` list gains a crate outside the approved allowlist (run by `crate-gate.yml`). Its `APPROVED_MEMBERS` and `ci/hooks/crate_guard.py`'s `APPROVED_CRATE_DIRS` are one policy in two files; `test_crate_guard_parity.py` asserts both against the real `Cargo.toml` -- and drives the hook itself -- so a drifted list fails a test instead of blocking a legitimate `Cargo.toml` edit with a "new crate" error.
 - **`check_workflow_concurrency.py`** -- Requires every `pull_request`-triggered workflow to declare an auto-cancel `concurrency:` block, so pushing again to a feature branch supersedes its in-flight runs instead of queueing ~80 more board builds. Run by `ci-workflow-drift.yml`; exemptions (reusable templates, `hw-ci.yml`, `add-to-project.yml`) carry a reason in the script. Tested by `test_workflow_concurrency.py`. See [.github/workflows/README.md](../.github/workflows/README.md#concurrency-auto-cancel-superseded-pr-runs).
 - **`cancel_superseded.py`** -- The merge-queue janitor: on every `merge_group` run it

@@ -41,6 +41,7 @@ DRIFT_UNITTEST_MODULES: tuple[str, ...] = (
     "ci.test_check_dylint_allowlists",
     "ci.test_validate_boards",
     "ci.test_build_backend",
+    "ci.test_build_qemu_linux_runtime",
 )
 
 # Modules the local gate additionally runs. Their subject is the local proof
