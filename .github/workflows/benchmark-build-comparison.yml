@@ -30,10 +30,8 @@ env:
   # after building fbuild, so the default 5 GiB free-space floor aborts the
   # build with "build volume has only N GiB free" on a fresh runner.
   SOLDR_TARGET_BLOCK_FREE_GB: '2'
-  PLATFORMIO_CORE_VERSION: '6.1.19'
+  PLATFORMIO_CORE_VERSION: '6.2.0'
   ARDUINO_CLI_VERSION: '1.5.0'
-  ARDUINO_AVR_CORE_VERSION: '1.8.8'
-  ARDUINO_ESP32_CORE_VERSION: '3.3.7'
   # Resolve against the registry index committed at this sha, not the copy
   # this very workflow is about to publish (FastLED/fbuild#1829).
   FBUILD_MIRROR_MANIFEST_URL: https://raw.githubusercontent.com/${{ github.repository }}/${{ github.sha }}/site/mirror/manifest.json
@@ -42,9 +40,9 @@ jobs:
   benchmark:
     name: Measure and publish Blink builds
     runs-on: ubuntu-24.04
-    # Cold trials download 271 MB per PlatformIO/arduino-cli run at 10 Mbit
-    # (>=3.6 min each) across 3 trials, so 60 min was not enough headroom.
-    timeout-minutes: 120
+    # Cold trials install from nothing at 10 Mbit: ~1 GB for PlatformIO and
+    # ~1.8 GB for Arduino CLI on ESP32-S3, three times each.
+    timeout-minutes: 300
     steps:
       - uses: actions/checkout@v6
         with:
@@ -75,11 +73,8 @@ jobs:
           uv tool install --with pip "platformio==${PLATFORMIO_CORE_VERSION}"
           arduino-cli config add board_manager.additional_urls \
             https://espressif.github.io/arduino-esp32/package_esp32_index.json
+          # Only the index is primed. Packages install inside the timed builds.
           arduino-cli core update-index
-          arduino-cli core install "arduino:avr@${ARDUINO_AVR_CORE_VERSION}"
-          arduino-cli core install "esp32:esp32@${ARDUINO_ESP32_CORE_VERSION}"
-          pio pkg install --project-dir bench/blink --environment uno
-          pio pkg install --project-dir bench/blink --environment esp32s3
 
       - name: Build fbuild and benchmark runner
         shell: bash
@@ -89,18 +84,6 @@ jobs:
             -p fbuild-cli --bin fbuild \
             -p fbuild-daemon --bin fbuild-daemon \
             -p fbuild-bench-fastled-examples --bin bench-build-comparison
-
-      - name: Warm fbuild toolchains
-        shell: bash
-        run: |
-          set -euo pipefail
-          # `fbuild install` also fetches the ESP32 framework, but the
-          # benchmark's cold cleanup deletes those packages before every
-          # timed build, so their download still lands inside the measured
-          # window. Only the ~175 MB toolchains stay warm, keeping the run
-          # under the 60-minute job timeout.
-          target/release/fbuild install bench/blink -e uno
-          target/release/fbuild install bench/blink -e esp32s3
 
       - name: Restore rolling history
         shell: bash

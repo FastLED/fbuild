@@ -7,16 +7,25 @@ is pinned independently in the benchmark workflow and `platformio.ini`.
 
 Each tool is measured for three trials by default:
 
-- **Cold** removes every tool's project outputs, reusable framework objects,
-  and compiler-object caches before compiling. Arduino CLI and PlatformIO
-  download/HTTP caches are also cleared. Installed packages/toolchains and
-  fbuild package archives remain available.
+- **Cold** is a first-time install. Every tool's project outputs, caches,
+  packages and toolchains are removed before the timer starts, on both boards,
+  so all downloads are inside the timed build.
 - **Warm** immediately repeats the same build without changing any input.
 
-Cleanup runs before the timer for every cold trial. Arduino CLI runs
-`arduino-cli cache clean` and removes its build directory; PlatformIO runs
-`pio system prune --cache --force` and its project clean target; fbuild runs
-`fbuild clean cache`. None of these operations uninstalls the pinned packages.
+Only cleanup is untimed. Arduino CLI loses its `packages/` and `staging/`
+directories and its timed window includes `arduino-cli core install`, because
+`arduino-cli compile` will not install a core. PlatformIO loses `packages`,
+`platforms`, `penv`, its caches and `.pio`. fbuild runs `fbuild clean cache`,
+stops its daemon, and empties its cache root and project `.fbuild`.
+
+ESP32-S3 uses Arduino-ESP32 3.3.12 in all three tools (pioarduino `55.03.312`,
+which needs PlatformIO Core 6.2.0) because fbuild publishes per-chip library
+slices for that release. The older `espressif32@6.x` stack ships one combined
+bundle, which has nothing to slice.
+
+Each cold trial records the bytes received (`cold_download_bytes`) from
+`/proc/net/dev`. On a shaped link, a cold build that received under 1 MB fails
+the run, since its packages must have survived cleanup.
 
 The Rust runner records every trial and publishes the median. Cold bars are
 drawn behind narrower warm overlays using the same GitHub-dark gray, blue, and
@@ -72,7 +81,7 @@ The `target/release/fbuild` path above is for Linux and CI. On Windows, use
 `target/x86_64-pc-windows-msvc/release/fbuild.exe`.
 
 The nightly workflow installs and records pinned Arduino CLI and PlatformIO
-versions, primes package downloads outside the timed region, carries forward a
+versions, primes only the Arduino package index, carries forward a
 365-run `history.jsonl`, and publishes:
 
 - `manifest.json` — stable discovery index for agents and other clients
