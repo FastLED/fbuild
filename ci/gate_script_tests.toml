@@ -11,9 +11,7 @@
 # without lowering something else: the list only shrinks.
 schema = 1
 
-untested = [
-  "build_qemu_linux_runtime",
-]
+untested = []
 
 [scripts.audit_ignored_tests]
 tests = ["ci/test_audit_ignored_tests.py"]
@@ -25,7 +23,11 @@ tests = ["ci/test_audit_ignored_tests.py"]
 tests = ["ci/test_build_backend.py"]
 
 [scripts.build_qemu_linux_runtime]
-tests = []
+# The QEMU runtime-library bundle builder: the closure walk/verification run
+# for real against a stubbed `ldd`, the constants shared with `esp_qemu*.rs`
+# are compared, and the fake-docker path proves an empty or missing artifact
+# cannot be hashed and published.
+tests = ["ci/test_build_qemu_linux_runtime.py"]
 
 [scripts.cancel_superseded]
 tests = ["ci/test_cancel_superseded.py"]
