@@ -16,7 +16,7 @@
 //! merges the key but never re-processes it, so any nesting is lost).
 
 use std::collections::HashMap;
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
 use super::parser::parse_ini;
 use super::values::parse_list_values;
@@ -41,11 +41,11 @@ pub(super) fn merge_extra_configs(
         Some(parent) if !parent.as_os_str().is_empty() => parent,
         _ => Path::new("."),
     };
-    let base_key = canonical_key(ini_path);
+    let base_key = fbuild_core::path::normalize_for_key(ini_path);
 
     for pattern in &patterns {
         for file in resolve_pattern(base_dir, pattern)? {
-            if canonical_key(&file) == base_key {
+            if fbuild_core::path::normalize_for_key(Path::new(&file)) == base_key {
                 return Err(config_error(format!(
                     "[platformio] extra_configs lists {pattern}, which resolves to the base \
                      platformio.ini itself; that would merge the file into itself"
@@ -53,9 +53,8 @@ pub(super) fn merge_extra_configs(
             }
             let content = std::fs::read_to_string(&file).map_err(|error| {
                 config_error(format!(
-                    "[platformio] extra_configs lists {pattern}, which resolves to {}, but it \
-                     could not be read: {error}",
-                    file.display()
+                    "[platformio] extra_configs lists {pattern}, which resolves to {file}, \
+                     but it could not be read: {error}"
                 ))
             })?;
             let extra = parse_ini(&content)?;
@@ -89,7 +88,7 @@ fn declared_patterns(sections: &Sections) -> Vec<String> {
 /// A literal path must exist. A wildcard must match at least one regular file:
 /// PlatformIO would expand it to nothing and carry on with a smaller config,
 /// which is exactly the silent divergence this module exists to prevent.
-fn resolve_pattern(base_dir: &Path, pattern: &str) -> fbuild_core::Result<Vec<PathBuf>> {
+fn resolve_pattern(base_dir: &Path, pattern: &str) -> fbuild_core::Result<Vec<String>> {
     if !has_wildcard(pattern) {
         let path = base_dir.join(pattern);
         if !path.is_file() {
@@ -99,7 +98,7 @@ fn resolve_pattern(base_dir: &Path, pattern: &str) -> fbuild_core::Result<Vec<Pa
                 path.display()
             )));
         }
-        return Ok(vec![path]);
+        return Ok(vec![path.to_string_lossy().into_owned()]);
     }
 
     let full = base_dir.join(pattern);
@@ -121,7 +120,7 @@ fn resolve_pattern(base_dir: &Path, pattern: &str) -> fbuild_core::Result<Vec<Pa
         ))
     })?;
 
-    let mut files: Vec<PathBuf> = Vec::new();
+    let mut files: Vec<String> = Vec::new();
     for entry in entries {
         let path = entry.map_err(|error| {
             config_error(format!(
@@ -129,7 +128,7 @@ fn resolve_pattern(base_dir: &Path, pattern: &str) -> fbuild_core::Result<Vec<Pa
             ))
         })?;
         if path.is_file() {
-            files.push(path);
+            files.push(path.to_string_lossy().into_owned());
         }
     }
     if files.is_empty() {
@@ -149,7 +148,7 @@ fn resolve_pattern(base_dir: &Path, pattern: &str) -> fbuild_core::Result<Vec<Pa
 /// PlatformIO merges the `extra_configs` option itself but only reads the
 /// option from the project config, so the nested include would vanish. Refusing
 /// is the only outcome that cannot build from a subset.
-fn reject_nested(file: &Path, extra: &Sections) -> fbuild_core::Result<()> {
+fn reject_nested(file: &str, extra: &Sections) -> fbuild_core::Result<()> {
     let nested = declared_patterns(extra);
     if nested.is_empty() {
         return Ok(());
@@ -158,7 +157,7 @@ fn reject_nested(file: &Path, extra: &Sections) -> fbuild_core::Result<()> {
         "{} declares [platformio] extra_configs = {}, but PlatformIO does not process \
          extra_configs recursively, so those files would never be read. Inline the settings, or \
          list every file from the base platformio.ini",
-        file.display(),
+        file,
         nested.join(", ")
     )))
 }
@@ -171,14 +170,6 @@ fn merge_into(sections: &mut Sections, extra: Sections) {
             target.insert(key, value);
         }
     }
-}
-
-/// A stable comparison key even when the path does not exist.
-fn canonical_key(path: &Path) -> String {
-    std::fs::canonicalize(path)
-        .unwrap_or_else(|_| path.to_path_buf())
-        .display()
-        .to_string()
 }
 
 fn has_wildcard(pattern: &str) -> bool {
