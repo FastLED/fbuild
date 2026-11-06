@@ -44,6 +44,7 @@ DRIFT_UNITTEST_MODULES: tuple[str, ...] = (
     "ci.test_build_qemu_linux_runtime",
     "ci.test_setup_soldr_cache_keys",
     "ci.test_gate_jobs",
+    "ci.test_wheel_check",
 )
 
 # Modules the local gate additionally runs. Their subject is the local proof
@@ -63,11 +64,13 @@ LOCAL_UNITTEST_MODULES: tuple[str, ...] = DRIFT_UNITTEST_MODULES + LOCAL_ONLY_MO
 # The guard fails if an entry disappears, becomes wired, or if the set outgrows
 # MAX_UNWIRED, so the list can only shrink.
 # The measured debt on 2026-11-06 was seven modules. `test_setup_soldr_cache_keys`
-# (the #1843 cache-key collision class) and `test_gate_jobs` (the `CI summary`
-# aggregator -- the required check that gates every merge here) are now wired
-# into the drift registry, so the budget is five. Raising it means the class
-# regrew -- wire the module, do not add a name.
-MAX_UNWIRED = 5
+# (the #1843 cache-key collision class), `test_gate_jobs` (the `CI summary`
+# aggregator -- the required check that gates every merge here) and
+# `test_wheel_check` (the release gate that keeps debug info out of the PyPI
+# wheels, #1756's stranded-release class) are now wired into the drift registry,
+# so the budget is four. Raising it means the class regrew -- wire the module,
+# do not add a name.
+MAX_UNWIRED = 4
 
 KNOWN_UNWIRED: frozenset[str] = frozenset(
     {
@@ -75,6 +78,5 @@ KNOWN_UNWIRED: frozenset[str] = frozenset(
         "test_lint_entrypoint",
         "test_run_dylint",
         "test_select_boards",
-        "test_wheel_check",
     }
 )
