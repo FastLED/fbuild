@@ -31,6 +31,7 @@ const PERF_PHASE_LABELS: &[&str] = &["avr-orchestrator", "esp32-orchestrator", "
 /// A cold build on the shaped link that fetched less than this reused an
 /// installed package, so its timing is not a cold measurement.
 const MIN_COLD_DOWNLOAD_BYTES: u64 = 1_000_000;
+const COLD_INSTALL_ATTEMPTS: usize = 3;
 const REGRESSION_WINDOW_S: u64 = 7 * 24 * 60 * 60;
 const DEFAULT_REPOSITORY: &str = "FastLED/fbuild";
 const DEFAULT_PAGES_URL: &str = "https://fastled.github.io/fbuild/";
@@ -570,15 +571,31 @@ fn timed_cold_install(
     if !matches!(kind, ToolKind::Arduino) {
         return Ok(0.0);
     }
+    // Multi-GB installs can hit transient HTTP/2 resets. Retries stay inside
+    // the timer, so they can only make Arduino CLI's cold time look worse.
     let started = Instant::now();
-    run_logged_env(
-        &options.arduino_cli,
-        &os_args(&["core", "install", board.arduino_core]),
-        repo_root,
-        log,
-        envs,
-    )?;
+    retry(COLD_INSTALL_ATTEMPTS, || {
+        run_logged_env(
+            &options.arduino_cli,
+            &os_args(&["core", "install", board.arduino_core]),
+            repo_root,
+            log,
+            envs,
+        )
+        .map(|_| ())
+    })?;
     Ok(started.elapsed().as_secs_f64() * 1000.0)
+}
+
+fn retry(attempts: usize, mut action: impl FnMut() -> AppResult<()>) -> AppResult<()> {
+    let mut remaining = attempts;
+    loop {
+        remaining -= 1;
+        match action() {
+            Err(_) if remaining > 0 => {}
+            result => return result,
+        }
+    }
 }
 
 /// Bytes received on non-loopback interfaces, per Linux `/proc/net/dev`

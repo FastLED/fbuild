@@ -230,6 +230,29 @@ fn every_tool_loses_all_packages_on_every_board() {
 }
 
 #[test]
+fn retry_stops_on_success_and_reports_the_last_failure() {
+    let mut calls = 0;
+    let result = retry(3, || {
+        calls += 1;
+        if calls < 2 {
+            Err(io::Error::other("transient").into())
+        } else {
+            Ok(())
+        }
+    });
+    assert!(result.is_ok());
+    assert_eq!(calls, 2);
+
+    let mut calls = 0;
+    let result = retry(3, || {
+        calls += 1;
+        Err(io::Error::other("down").into())
+    });
+    assert!(result.is_err());
+    assert_eq!(calls, 3);
+}
+
+#[test]
 fn durations_use_seconds_or_minutes_with_two_decimals() {
     assert_eq!(format_duration(48.6), "0.05 s");
     assert_eq!(format_duration(13_239.6), "13.24 s");
