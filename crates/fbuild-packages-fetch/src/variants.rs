@@ -11,7 +11,26 @@ use crate::downloader::{
 
 const LIBS: &str = "framework-arduinoespressif32-libs";
 
-/// A package fetch with an optional board MCU hint. Only ESP SDK libs use it.
+/// The unified Xtensa toolchain. It is also published as per-chip slices,
+/// because `lib/<chip>` is the bulk of the 660 MB tree (FastLED/fbuild#1944).
+const XTENSA_TOOLCHAIN: &str = "toolchain-xtensa-esp-elf";
+
+/// Manifest shard that lists the slices for `name`, when the artifact is
+/// published as per-chip slices at all.
+///
+/// The RISC-V toolchain stays whole: its multilib directories are ISA
+/// variants (`rv32imc/ilp32`), not chips, so there is nothing chip-shaped to
+/// slice. `select` therefore returns the whole bundle for it by construction.
+fn slice_shard(name: &str) -> Option<&'static str> {
+    match name {
+        LIBS => Some("@esp-libs"),
+        XTENSA_TOOLCHAIN => Some("@esp-toolchain"),
+        _ => None,
+    }
+}
+
+/// A package fetch with an optional board MCU hint. ESP SDK libs and the
+/// unified Xtensa toolchain use it.
 pub struct FetchRequest<'a> {
     pub name: &'a str,
     pub version: &'a str,
@@ -26,7 +45,7 @@ struct Selection {
     checksum: Option<String>,
 }
 
-fn chip_name(mcu: &str) -> String {
+pub(crate) fn chip_name(mcu: &str) -> String {
     mcu.to_ascii_lowercase()
         .replace('-', "")
         .replacen("esp32_", "esp32", 1)
@@ -39,7 +58,7 @@ fn select(
 ) -> Result<Selection> {
     let chip = request
         .variant
-        .filter(|_| request.name == LIBS)
+        .filter(|_| slice_shard(request.name).is_some())
         .map(chip_name);
     if let (Some(chip), Some(entry)) = (&chip, entry) {
         if !entry.yanked {
@@ -67,6 +86,56 @@ fn select(
         slice: None,
         chip: None,
         checksum: entry.filter(|e| !e.yanked).and_then(|e| e.sha256.clone()),
+    })
+}
+
+/// A chip slice the mirror publishes for one artifact, with its integrity
+/// pins. Exactly what a download needs; no cache layout, no extraction.
+#[derive(Debug, Clone)]
+pub(crate) struct SliceFetch {
+    pub url: String,
+    pub sha256: String,
+    pub size: u64,
+}
+
+/// Look up the published slice for `chip` without downloading it.
+///
+/// `None` means "use the artifact's own URL": no slice is published for this
+/// name, this chip, or this artifact, or the manifest is unavailable. A slice
+/// that IS listed is authoritative — a corrupt one is a hard error upstream,
+/// not a reason to silently fetch the whole archive.
+pub(crate) async fn published_slice(
+    name: &str,
+    version: &str,
+    url: &str,
+    chip: &str,
+) -> Option<SliceFetch> {
+    let shard = slice_shard(name)?;
+    if !downloader::manifest_enabled(url) {
+        return None;
+    }
+    let manifest = downloader::published_manifest().await?;
+    let entry = match manifest.entry_lookup(url, Some(shard)).await {
+        EntryLookup::Found(entry) => Some(entry),
+        EntryLookup::NotListed | EntryLookup::Unavailable => None,
+    };
+    let request = FetchRequest {
+        name,
+        version,
+        url,
+        variant: Some(chip),
+    };
+    let selection = select(
+        &request,
+        entry.as_deref(),
+        manifest.base_url().unwrap_or(""),
+    )
+    .ok()?;
+    let slice = selection.slice?;
+    Some(SliceFetch {
+        url: selection.url,
+        sha256: slice.sha256,
+        size: slice.size,
     })
 }
 
@@ -101,7 +170,13 @@ impl FetchRequest<'_> {
             None
         };
         let entry = match &manifest {
-            Some(m) => match m.entry_lookup(self.url, Some("@esp-libs")).await {
+            Some(m) => match m
+                .entry_lookup(
+                    self.url,
+                    Some(slice_shard(self.name).unwrap_or("@esp-libs")),
+                )
+                .await
+            {
                 EntryLookup::Found(e) => Some(e),
                 EntryLookup::NotListed | EntryLookup::Unavailable => None,
             },
@@ -192,6 +267,64 @@ mod tests {
             asset["slices"] = serde_json::json!({"esp32s3": {"url": "slices/s3.tar.zst", "size": 3, "sha256": "b".repeat(64), "format": "tar.zst"}});
         }
         MirrorManifest::parse(&serde_json::to_vec(&serde_json::json!({"kind":"Release", "schema_version":1,"components":[{"asset":asset}]})).unwrap()).unwrap()
+    }
+
+    /// The toolchain slice has to be selected for the SAME chip token the
+    /// slicer names its archives with, and never for a chip it has no slice
+    /// for -- silently using another chip's compiler tree fails at link.
+    #[tokio::test]
+    async fn toolchain_slices_are_chip_scoped_and_xtensa_only() {
+        let mut asset = serde_json::json!({"urls": ["https://mirror.example/tc.tar.gz", VENDOR]});
+        asset["slices"] = serde_json::json!({
+            "esp32s3": {"url": "slices/tc-esp32s3.tar.zst", "size": 3, "sha256": "c".repeat(64), "format": "tar.zst"}
+        });
+        let manifest = MirrorManifest::parse(
+            &serde_json::to_vec(&serde_json::json!({
+                "kind": "Release", "schema_version": 1,
+                "components": [{"asset": asset}]
+            }))
+            .unwrap(),
+        )
+        .unwrap();
+        let entry = match manifest.entry_lookup(VENDOR, None).await {
+            EntryLookup::Found(entry) => entry,
+            _ => panic!("missing entry"),
+        };
+
+        let toolchain = |chip: &'static str| FetchRequest {
+            name: "toolchain-xtensa-esp-elf",
+            version: "14.2.0_20241119",
+            url: VENDOR,
+            variant: Some(chip),
+        };
+        let sliced = select(&toolchain("ESP32-S3"), Some(&entry), BASE).unwrap();
+        assert_eq!(
+            sliced.url,
+            "https://bucket.example/slices/tc-esp32s3.tar.zst"
+        );
+        assert_eq!(sliced.chip.as_deref(), Some("esp32s3"));
+        // No slice for this chip: the whole archive is the fallback -- the
+        // mirrored copy when the entry names one, else the vendor URL.
+        let whole = select(&toolchain("esp32c2"), Some(&entry), BASE).unwrap();
+        assert_eq!(whole.url, "https://mirror.example/tc.tar.gz");
+        assert!(whole.slice.is_none());
+        assert_eq!(
+            select(&toolchain("esp32c2"), None, BASE).unwrap().url,
+            VENDOR
+        );
+        // RISC-V multilibs are ISA-shaped, not chip-shaped: never sliced.
+        let riscv = FetchRequest {
+            name: "toolchain-riscv32-esp",
+            ..toolchain("esp32c3")
+        };
+        assert!(select(&riscv, Some(&entry), BASE).unwrap().slice.is_none());
+        assert_eq!(slice_shard(LIBS), Some("@esp-libs"));
+        assert_eq!(
+            slice_shard("toolchain-xtensa-esp-elf"),
+            Some("@esp-toolchain")
+        );
+        assert_eq!(slice_shard("toolchain-riscv32-esp"), None);
+        assert_eq!(slice_shard("platform-espressif32"), None);
     }
 
     #[test]

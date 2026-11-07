@@ -151,12 +151,24 @@ the extraction, and a real `-std=gnu++17 -Os -c`. `--check` recomputes without
 writing. Measured on the cached `xtensa-esp-elf` 13.2.0 tree: 660 MB extracted
 -> a 75.3 MB esp32s3 slice (vendor download is 168 MB) in 4m50s including
 verification. Uploading is a separate step (`publish_esp_slices.py` models it);
-no client resolves toolchain slices yet.
+no toolchain shard is published yet, so clients resolve the whole vendor
+archive until one is.
 
 Offline slice tests: `uv run --no-project --with zstandard python -m unittest
-ci.test_slice_esp_libs -v`. MCU slice selection is limited to SDK libs;
-archives are retained under the framework's `tools/.libs-archives/` in
+ci.test_slice_esp_libs -v`. Archives are retained under the framework's
+`tools/.libs-archives/` in
 vendor-identity / package@version+chip directories. An already complete MCU
 install still skips fetching; a cached whole archive serves any MCU. Slice
 cache hits verify their size and SHA-256; integrity errors never trigger a
 whole-bundle retry. Artifacts and manifest publication remain separate steps.
+
+Sliced packages: SDK libs (`@esp-libs`, keyed `esp32s3`...) and the unified
+Xtensa toolchain `toolchain-xtensa-esp-elf` (`@esp-toolchain`). The RISC-V
+toolchain is never sliced -- its multilibs are ISA variants, not chips. A client
+that knows its chip (`Esp32Toolchain::with_slice_variant`) installs into a
+chip-scoped cache directory `<version>+<chip>`, and prefers the shared
+whole-archive directory when one is already installed, so a host that predates
+slicing never re-downloads. A slice the manifest lists is authoritative: a
+corrupt one fails the install rather than silently fetching the whole archive,
+and one chip's slice never satisfies a different chip. The whole archive remains
+the fallback when no slice is listed for the chip.
