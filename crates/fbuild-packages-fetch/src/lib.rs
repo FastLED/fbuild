@@ -526,10 +526,12 @@ impl PackageBase {
         })?;
 
         // Download (a published chip slice when one exists) with progress.
-        let archive_path = self.acquire_archive(&staging_path).await?;
+        let (archive_path, from_slice) = self.acquire_archive(&staging_path).await?;
 
-        // Verify checksum
-        if let Some(ref expected) = self.checksum {
+        // Verify checksum. A slice was already verified against its own
+        // published digest; `self.checksum` pins the whole archive, so applying
+        // it here rejects every slice (FastLED/fbuild#1944).
+        if let Some(expected) = self.checksum.as_ref().filter(|_| !from_slice) {
             install_status::publish_install_status(install_status::status(
                 &self.name,
                 Some(&self.version),

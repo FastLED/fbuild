@@ -79,33 +79,45 @@ impl PackageBase {
         }
     }
 
-    /// The archive to install: a published slice for this chip when the mirror
-    /// lists one, else the artifact's own URL.
-    pub(crate) async fn acquire_archive(&self, dir: &Path) -> fbuild_core::Result<NormalizedPath> {
+    /// The archive to install, and whether it is a chip slice rather than the
+    /// whole artifact.
+    ///
+    /// The caller must know: `self.checksum` pins the WHOLE archive, so a slice
+    /// — already verified against its own published digest in
+    /// [`Self::download_slice`] — must not be re-checked against it. Doing so
+    /// failed every slice install with `expected <whole sha>, got <slice sha>`
+    /// (FastLED/fbuild#1944).
+    pub(crate) async fn acquire_archive(
+        &self,
+        dir: &Path,
+    ) -> fbuild_core::Result<(NormalizedPath, bool)> {
         match self.published_slice().await {
-            Some(slice) => self.download_slice(&slice, dir).await,
-            None => {
-                tracing::info!("downloading {} v{}", self.name, self.version);
-                let name = self.name.clone();
-                let version = self.version.clone();
-                downloader::download_file_with_progress(
-                    &self.url,
-                    dir,
-                    &mut |progress: &downloader::DownloadProgress| {
-                        install_status::publish_install_status(install_status::status(
-                            &name,
-                            Some(&version),
-                            InstallPhase::Downloading,
-                            InstallRole::Installer,
-                            progress.format_message(),
-                            None::<String>,
-                        ));
-                    },
-                )
-                .await
-                .map(NormalizedPath::new)
-            }
+            Some(slice) => Ok((self.download_slice(&slice, dir).await?, true)),
+            None => Ok((self.download_whole(dir).await?, false)),
         }
+    }
+
+    /// The whole artifact, from its own URL.
+    async fn download_whole(&self, dir: &Path) -> fbuild_core::Result<NormalizedPath> {
+        tracing::info!("downloading {} v{}", self.name, self.version);
+        let name = self.name.clone();
+        let version = self.version.clone();
+        downloader::download_file_with_progress(
+            &self.url,
+            dir,
+            &mut |progress: &downloader::DownloadProgress| {
+                install_status::publish_install_status(install_status::status(
+                    &name,
+                    Some(&version),
+                    InstallPhase::Downloading,
+                    InstallRole::Installer,
+                    progress.format_message(),
+                    None::<String>,
+                ));
+            },
+        )
+        .await
+        .map(NormalizedPath::new)
     }
 
     async fn published_slice(&self) -> Option<variants::SliceFetch> {
