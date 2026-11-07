@@ -221,7 +221,15 @@ fn committed_toolchain_shard_resolves_the_esp32s3_slice() {
         "../../../site/mirror/shards/esp-toolchain.json"
     ));
     let entry = m.lookup(VENDOR_XTENSA).expect("committed toolchain URL");
-    assert_eq!(entry.urls, vec![VENDOR_XTENSA.to_string()]);
+    // Bucket first, vendor as the fallback: the invariant the whole mirror
+    // document is held to.
+    assert_eq!(entry.urls.len(), 2);
+    assert!(
+        entry.urls[0].starts_with("https://fbuild.sfo3."),
+        "{:?}",
+        entry.urls
+    );
+    assert_eq!(entry.urls[1], VENDOR_XTENSA);
     let slice = entry
         .slices
         .as_ref()

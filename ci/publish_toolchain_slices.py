@@ -28,10 +28,11 @@ strict improvement for ESP32-S3 and a no-op for every other chip.
 
 Integrity pins come from the metadata, never from a local archive: `sha256` and
 `size` are what the vendor publishes for that exact URL, so a mismatched local
-tree cannot relabel the asset. `--archive` optionally mirrors the whole bundle
-into the bucket first (and refuses a file that disagrees with the metadata);
-without it the entry lists the vendor URL alone, i.e. today's download behaviour
-is preserved for every chip and host that has no slice.
+tree cannot relabel the asset. `--archive` must be the whole bundle: it is
+verified against those pins and mirrored into the bucket, because the committed
+manifest contract requires every entry to serve the mirror first and keep the
+vendor URL as the fallback. A slice-less chip or an unpublished host therefore
+keeps exactly today's behaviour.
 
 Objects land under
 `v1/espressif/<toolchain>/release/<version>/<host>/<chip>/`, all `public-read`
@@ -156,12 +157,21 @@ def build_component(
     host: str,
     entry: dict,
     slices: dict[str, dict],
-    whole_url: str | None,
+    whole_url: str,
 ) -> dict:
-    """One shard component: the vendor asset plus its per-chip slices."""
+    """One shard component: the mirrored asset plus its per-chip slices.
+
+    The bucket copy is not optional: the committed-manifest contract (and
+    `committed_manifest_is_accepted_and_prefers_the_bucket`) requires every
+    published entry to serve from the mirror first, with the vendor URL kept as
+    the fallback. A vendor-first entry would also make the fallback for every
+    chip without a slice depend on GitHub being reachable.
+    """
     if not slices:
         raise ValueError("refusing to publish a component with no slices")
-    urls = [whole_url, entry["url"]] if whole_url else [entry["url"]]
+    if not whole_url:
+        raise ValueError("the whole archive must be mirrored before it is listed")
+    urls = [whole_url, entry["url"]]
     return {
         "id": f"{toolchain}/{version}/{host}",
         "required": False,
@@ -350,6 +360,10 @@ def publish(
         record["chip"]: _uploaded(s3, slices_dir, record, version, host, toolchain)
         for record in slices["slices"]
     }
+    if archive is None:
+        raise ValueError(
+            "--archive is required: the whole bundle must be mirrored first"
+        )
     whole_url = _mirror_whole(s3, archive, entry, version, host, toolchain)
     component = build_component(toolchain, version, host, entry, published, whole_url)
     registered = register(shard_path, index_path, component)
@@ -415,7 +429,10 @@ def main() -> None:
         "--slices-dir", type=Path, default=None, help="reuse an existing slicer output"
     )
     parser.add_argument(
-        "--archive", type=Path, default=None, help="mirror the whole vendor archive too"
+        "--archive",
+        type=Path,
+        default=None,
+        help="the vendor archive to mirror (required unless --check)",
     )
     parser.add_argument("--level", type=int, default=19)
     parser.add_argument("--shard", type=Path, required=True)
@@ -432,7 +449,7 @@ def main() -> None:
         return
     missing = [
         name
-        for name in ("metadata", "toolchain", "host", "credentials")
+        for name in ("metadata", "toolchain", "host", "credentials", "archive")
         if getattr(args, name) is None
     ]
     if missing:

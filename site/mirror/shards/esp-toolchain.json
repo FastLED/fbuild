@@ -13,6 +13,7 @@
     "size_bytes": 176559292,
     "sha256": "da31f36d79d4e99f24e55a90a71e65d5694714f16199960bf7885724b706a48c",
     "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/toolchain-xtensa-esp-elf/release/14.2.0_20260121/linux-amd64/whole/xtensa-esp-elf-14.2.0_20260121-x86_64-linux-gnu.tar.xz",
      "https://github.com/espressif/crosstool-NG/releases/download/esp-14.2.0_20260121/xtensa-esp-elf-14.2.0_20260121-x86_64-linux-gnu.tar.xz"
     ],
     "slices": {

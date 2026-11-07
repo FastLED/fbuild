@@ -160,10 +160,13 @@ ONE host package, because a slice carries that host's compilers; chips are
 additive, so publishing `esp32s3` first is a strict improvement for ESP32-S3
 and a no-op elsewhere (a chip with no slice keeps the whole-archive fallback).
 Integrity pins come from the vendor metadata, never from a local archive, so a
-mismatched tree cannot relabel the asset; `--archive` additionally mirrors the
-whole bundle (only when its bytes match those pins). Files are written only
-after every upload passed a HEAD size check, so an entry never points at a
-missing object. `--check --shard ... --index ...` needs no network and fails
+mismatched tree cannot relabel the asset. `--archive` is required: the whole
+bundle is verified against those pins, mirrored to the bucket, and listed FIRST
+with the vendor URL as the fallback -- every entry in the committed manifest sits
+behind the mirror (`committed_manifest_is_accepted_and_prefers_the_bucket`
+enforces it), so a slice-less chip never depends on the vendor being up. Files
+are written only after every upload passed a HEAD size check, so an entry never
+points at a missing object. `--check --shard ... --index ...` needs no network and fails
 when the Index descriptor no longer hashes the committed shard -- the Index is a
 generated document, so a regeneration that does not know about `@esp-toolchain`
 would otherwise drop the owner and silently return every client to whole

@@ -17,6 +17,8 @@ from ci.publish_toolchain_slices import (
     validate_host,
 )
 
+VENDOR_BYTES = b"vendor-bytes-that-the-metadata-pins"
+
 VENDOR = (
     "https://github.com/espressif/crosstool-NG/releases/download/"
     "esp-14.2.0_20260121/xtensa-esp-elf-14.2.0_20260121-x86_64-linux-gnu.tar.xz"
@@ -96,6 +98,12 @@ def slices(chips=("esp32s3", "esp32")):
     }
 
 
+def sha256(data: bytes) -> str:
+    import hashlib
+
+    return hashlib.sha256(data).hexdigest()
+
+
 def write(path: Path, text: str) -> Path:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(text)
@@ -131,8 +139,9 @@ class Temp(unittest.TestCase):
         s3 = s3 or FakeS3()
         kwargs.setdefault("slices", slices())
         kwargs.setdefault("slices_dir", self.prepared())
+        kwargs.setdefault("archive", self.archive())
         result = publish(
-            metadata(),
+            self.meta(),
             "toolchain-xtensa-esp-elf",
             "linux-amd64",
             self.shard,
@@ -141,6 +150,15 @@ class Temp(unittest.TestCase):
             **kwargs,
         )
         return s3, result
+
+    def archive(self):
+        """A stand-in vendor bundle whose pins are what `metadata()` declares."""
+        path = self.root / "xtensa-esp-elf-14.2.0_20260121-x86_64-linux-gnu.tar.xz"
+        path.write_bytes(VENDOR_BYTES)
+        return path
+
+    def meta(self):
+        return metadata(sha=sha256(VENDOR_BYTES), size=len(VENDOR_BYTES))
 
     def prepared(self, chips=("esp32s3", "esp32")):
         """Slice files on disk matching the fabricated index."""
@@ -200,20 +218,7 @@ class ComponentTests(unittest.TestCase):
         _, hosts = load_hosts(metadata(), "toolchain-xtensa-esp-elf")
         return validate_host(hosts, "linux-amd64")
 
-    def test_the_vendor_url_stays_last_so_an_unmirrored_asset_downloads_as_before(self):
-        component = build_component(
-            "toolchain-xtensa-esp-elf",
-            "14.2.0_20260121",
-            "linux-amd64",
-            self.entry(),
-            {"esp32s3": {}},
-            None,
-        )
-        self.assertEqual(component["asset"]["urls"], [VENDOR])
-        self.assertEqual(component["asset"]["sha256"], SHA)
-        self.assertEqual(component["asset"]["size_bytes"], 176559292)
-
-    def test_a_mirrored_whole_archive_is_preferred_but_the_vendor_url_is_kept(self):
+    def test_the_bucket_copy_comes_first_and_the_vendor_url_stays_as_fallback(self):
         component = build_component(
             "toolchain-xtensa-esp-elf",
             "14.2.0_20260121",
@@ -225,6 +230,20 @@ class ComponentTests(unittest.TestCase):
         self.assertEqual(
             component["asset"]["urls"], ["https://bucket/whole.tar.xz", VENDOR]
         )
+        self.assertEqual(component["asset"]["sha256"], SHA)
+        self.assertEqual(component["asset"]["size_bytes"], 176559292)
+
+    def test_an_unmirrored_component_is_refused(self):
+        # The committed-manifest invariant every client relies on: bucket first.
+        with self.assertRaisesRegex(ValueError, "mirrored"):
+            build_component(
+                "toolchain-xtensa-esp-elf",
+                "14.2.0_20260121",
+                "linux-amd64",
+                self.entry(),
+                {"esp32s3": {}},
+                "",
+            )
 
     def test_a_component_with_no_slice_is_refused(self):
         with self.assertRaisesRegex(ValueError, "no slices"):
@@ -293,7 +312,10 @@ class PublishTests(Temp):
     def test_every_slice_is_uploaded_public_read_and_head_checked(self):
         s3, result = self.run_publish()
         self.assertEqual(result["chips"], ["esp32", "esp32s3"])
-        self.assertEqual(len(s3.objects), 2)
+        slices = {key for key in s3.objects if "/whole/" not in key}
+        whole = {key for key in s3.objects if "/whole/" in key}
+        self.assertEqual(len(slices), 2)
+        self.assertEqual(len(whole), 1, "the whole archive is mirrored bucket-first")
         self.assertEqual({acl for _, acl in s3.acls}, {"public-read"})
         self.assertTrue(
             all(
@@ -361,7 +383,7 @@ class PublishTests(Temp):
         src = tree(self.root / "tree")
         s3 = FakeS3()
         result = publish(
-            metadata(),
+            self.meta(),
             "toolchain-xtensa-esp-elf",
             "linux-amd64",
             self.shard,
@@ -370,10 +392,11 @@ class PublishTests(Temp):
             tree=src,
             chips=("esp32s3",),
             slices_dir=self.out,
+            archive=self.archive(),
         )
         self.assertEqual(result["chips"], ["esp32s3"])
-        self.assertEqual(len(s3.objects), 1)
-        key = next(iter(s3.objects))
+        self.assertEqual(len(s3.objects), 2)
+        key = next(k for k in s3.objects if "/whole/" not in k)
         self.assertIn(
             "/linux-amd64/esp32s3/xtensa-esp-elf-14.2.0_20260121-esp32s3.", key
         )
