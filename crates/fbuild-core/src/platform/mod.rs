@@ -4,6 +4,7 @@
 //! Callers use the capability modules and cannot name the private concrete
 //! implementation selected below.
 
+pub mod ape;
 pub mod device;
 pub mod executable;
 pub mod fs;

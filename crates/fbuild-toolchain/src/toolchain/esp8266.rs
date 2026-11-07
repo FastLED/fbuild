@@ -110,9 +110,7 @@ impl crate::Package for Esp8266Toolchain {
             return false;
         }
         let root = find_bin_root(&self.base.install_path());
-        root.join("bin")
-            .join(tool_name(&format!("{PREFIX}gcc")))
-            .exists()
+        tool_binary(&root.join("bin"), &format!("{PREFIX}gcc")).exists()
     }
 
     fn get_info(&self) -> PackageInfo {
@@ -249,12 +247,9 @@ fn find_bin_root(install_dir: &Path) -> PathBuf {
     install_dir.to_path_buf()
 }
 
-fn tool_name(name: &str) -> String {
-    fbuild_core::platform::executable::native_name(name)
-}
-
+/// Get the full path to a tool binary (native spelling, or a `.com`/`.exe` APE).
 fn tool_binary(bin_dir: &Path, name: &str) -> PathBuf {
-    bin_dir.join(tool_name(name))
+    fbuild_core::platform::executable::resolve_tool_in(bin_dir, name).into_path_buf()
 }
 
 #[cfg(test)]
@@ -267,15 +262,6 @@ mod tests {
         let (url, _checksum) = platform_package();
         assert!(url.contains("xtensa-lx106-elf"));
         assert!(url.contains("earlephilhower"));
-    }
-
-    #[test]
-    fn test_tool_name_platform() {
-        let name = tool_name("xtensa-lx106-elf-gcc");
-        assert_eq!(
-            name,
-            fbuild_core::platform::executable::native_name("xtensa-lx106-elf-gcc")
-        );
     }
 
     #[test]

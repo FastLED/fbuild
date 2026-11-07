@@ -255,9 +255,9 @@ async fn ensure_running_async_impl(
     // stale user-level daemon on PATH.
     let mut cmd = match spawn_target {
         // allow-direct-spawn: construction only; execution uses platform::process::spawn_detached.
-        Some(path) => std::process::Command::new(path),
+        Some(path) => fbuild_core::platform::process::command(path),
         // allow-direct-spawn: construction only; execution uses platform::process::spawn_detached.
-        None => std::process::Command::new(DAEMON_BIN_NAME),
+        None => fbuild_core::platform::process::command(DAEMON_BIN_NAME),
     };
     if dev_mode {
         cmd.arg("--dev");

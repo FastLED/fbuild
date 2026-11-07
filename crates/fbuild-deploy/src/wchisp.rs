@@ -103,9 +103,11 @@ fn extract_wchisp(archive: &Path, staging: &Path, dest: &Path) -> Result<()> {
             .unpack(&extract_dir)
             .map_err(|e| FbuildError::PackageError(format!("extract wchisp archive: {e}")))?;
     }
-    let name = fbuild_core::platform::executable::native_name("wchisp");
-    let binary = find_file(&extract_dir, &name)
-        .ok_or_else(|| FbuildError::PackageError(format!("wchisp archive lacks {name}")))?;
+    let binary = fbuild_core::platform::executable::find_tool_in_tree(&extract_dir, "wchisp")
+        .ok_or_else(|| {
+            let name = fbuild_core::platform::executable::native_name("wchisp");
+            FbuildError::PackageError(format!("wchisp archive lacks {name}"))
+        })?;
     if let Some(parent) = dest.parent() {
         std::fs::create_dir_all(parent)
             .map_err(|e| FbuildError::PackageError(format!("create wchisp install dir: {e}")))?;
@@ -115,21 +117,6 @@ fn extract_wchisp(archive: &Path, staging: &Path, dest: &Path) -> Result<()> {
     fbuild_core::platform::fs::set_executable(dest)
         .map_err(|e| FbuildError::PackageError(format!("make wchisp executable: {e}")))?;
     Ok(())
-}
-
-fn find_file(root: &Path, name: &str) -> Option<PathBuf> {
-    for entry in std::fs::read_dir(root).ok()?.flatten() {
-        let path = entry.path();
-        if path.is_file() && path.file_name().and_then(|n| n.to_str()) == Some(name) {
-            return Some(path);
-        }
-        if path.is_dir() {
-            if let Some(found) = find_file(&path, name) {
-                return Some(found);
-            }
-        }
-    }
-    None
 }
 
 /// Factory USB-ISP support excludes V003/V006, which have no USB peripheral.
