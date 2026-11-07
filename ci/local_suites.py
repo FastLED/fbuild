@@ -56,6 +56,7 @@ DRIFT_UNITTEST_MODULES: tuple[str, ...] = (
 # only `ci/local_gate.py` installs -- hosted CI deliberately does not.
 LOCAL_ONLY_MODULES: tuple[str, ...] = (
     "ci.test_slice_esp_libs",
+    "ci.test_slice_toolchain",
     "ci.test_shared_replay",
     "ci.test_test_cache_status",
 )
