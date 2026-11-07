@@ -136,6 +136,23 @@ The slicer never writes `site/mirror`. Pass a JSON component list with existing
 whole-asset fields plus `slices` to `gen_mirror_manifest.py --prebuilt FILE`;
 its `@esp-libs` shard preserves the whole bundle for older clients.
 
+Toolchain slices (#1944): `uv run --no-project ci/slice_toolchain.py
+<extracted-toolchain-dir> --out-dir OUTPUT --chips esp32s3 --verify` writes one
+deterministic `tar.zst` per chip. Selection is by path component -- a member is
+chip-specific when a component of its path names a chip (`lib/esp32s3`,
+`lib/gcc/<triple>/<version>/esp32s3`) -- so `bin`, `libexec`, `include` and the
+top-level multilib archives stay in every slice. It fails closed on a requested
+chip with no directory, a tree with no per-chip directories, an escaping
+symlink, and a symlink whose in-tree target the slice drops; an in-tree `..`
+link (`lib/lto_plugin -> ../../libexec/...`) is kept. The install marker is
+never archived. `--verify` extracts each slice and runs that chip's compiler
+from it: `--version`, a `-print-libgcc-file-name` that must resolve *inside*
+the extraction, and a real `-std=gnu++17 -Os -c`. `--check` recomputes without
+writing. Measured on the cached `xtensa-esp-elf` 13.2.0 tree: 660 MB extracted
+-> a 75.3 MB esp32s3 slice (vendor download is 168 MB) in 4m50s including
+verification. Uploading is a separate step (`publish_esp_slices.py` models it);
+no client resolves toolchain slices yet.
+
 Offline slice tests: `uv run --no-project --with zstandard python -m unittest
 ci.test_slice_esp_libs -v`. MCU slice selection is limited to SDK libs;
 archives are retained under the framework's `tools/.libs-archives/` in
