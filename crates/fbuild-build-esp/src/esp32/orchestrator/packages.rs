@@ -436,7 +436,8 @@ async fn resolve_and_create_toolchain(
                         resolved.sha256.as_deref(),
                         is_riscv,
                         &prefix,
-                    ))
+                    )
+                    .with_slice_variant(&mcu_config.mcu))
                 }
                 Err(e) => {
                     tracing::warn!("metadata resolution failed, using legacy URLs: {}", e);
@@ -570,6 +571,7 @@ fn cached_toolchain(
             is_riscv,
             &prefix,
         )
+        .with_slice_variant(&mcu_config.mcu)
     }))
 }
 
