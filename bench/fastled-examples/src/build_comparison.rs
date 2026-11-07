@@ -1936,7 +1936,7 @@ fn write_history(
 
 #[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 fn render_svg(metadata: &Metadata, results: &[ToolResult]) -> String {
-    let width = 960.0;
+    let width = 1100.0;
     let height = 748.0;
     let bar_x = 190.0;
     let bar_width = 480.0;
@@ -2035,7 +2035,7 @@ fn render_svg(metadata: &Metadata, results: &[ToolResult]) -> String {
     <text id="esp32s3-title" x="24" y="452" class="board">ESP32-S3</text>
     <text x="24" y="474" class="legend">Scale: slowest median = {esp32s3_max}{esp32_stack_note}</text>
 {esp32_rows}  </g>
-  <line x1="24" y1="720" x2="936" y2="720" stroke="#30363d" stroke-width="2" />
+  <line x1="24" y1="720" x2="1076" y2="720" stroke="#30363d" stroke-width="2" />
   <text x="24" y="740" class="meta">Machine data: manifest.json | latest.json | history.jsonl</text>
 </svg>
 "##,
@@ -2077,7 +2077,7 @@ fn svg_floor_line(metadata: &Metadata, results: &[ToolResult]) -> String {
         String::new()
     } else {
         format!(
-            "  <text x=\"692\" y=\"95\" class=\"meta\">{}</text>\n",
+            "  <text x=\"1076\" y=\"95\" text-anchor=\"end\" class=\"meta\">{}</text>\n",
             xml_escape(&parts.join(" | "))
         )
     }
