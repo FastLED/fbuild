@@ -30,6 +30,14 @@ pub struct SamMcuConfig {
     pub profiles: HashMap<String, ProfileFlags>,
     #[serde(default)]
     pub defines: Vec<DefineEntry>,
+    /// Symbols the linked image must define, verified after a successful link.
+    ///
+    /// A zero-exit link can still emit an image with no application in it
+    /// (`--gc-sections` drops everything nothing references), so a platform
+    /// whose linker script does not root the startup object itself declares
+    /// the symbols it needs here (FastLED/fbuild#1939).
+    #[serde(default)]
+    pub required_link_symbols: Vec<String>,
 }
 
 impl SamMcuConfig {

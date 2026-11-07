@@ -11,6 +11,26 @@ use fbuild_core::{BuildProfile, Result, SizeInfo};
 use super::mcu_config::SamMcuConfig;
 use crate::linker::{LinkExtraArgs, Linker, link_cwd_for};
 
+/// Declared link symbols that are absent from the linked image.
+///
+/// A link can exit 0 and still produce a firmware that contains no
+/// application: with `--gc-sections`, any section nothing references is
+/// discarded, so a missing startup object leaves an image with no reset
+/// handler, no `main` and no sketch (FastLED/fbuild#1939). The exit status
+/// cannot see that, so platforms declare the symbols their image must contain
+/// (`required_link_symbols` in the MCU config) and the linker verifies them.
+fn missing_required_symbols<'a>(
+    required: &'a [String],
+    present: impl Iterator<Item = &'a str>,
+) -> Vec<&'a str> {
+    let present: std::collections::HashSet<&str> = present.collect();
+    required
+        .iter()
+        .map(String::as_str)
+        .filter(|symbol| !present.contains(symbol))
+        .collect()
+}
+
 /// SAM-specific linker using arm-none-eabi-gcc (link driver), ar, objcopy, size.
 pub struct SamLinker {
     gcc_path: PathBuf,
@@ -73,6 +93,34 @@ impl SamLinker {
     /// Add extra libraries to link (passed as `-l<name>` to linker).
     pub fn add_libs(&mut self, libs: Vec<String>) {
         self.extra_libs.extend(libs);
+    }
+
+    /// Fail the build when the linked image is missing a symbol the platform
+    /// declares mandatory. No-op when the MCU config declares none.
+    async fn require_link_symbols(&self, elf_path: &Path) -> Result<()> {
+        if self.mcu_config.required_link_symbols.is_empty() {
+            return Ok(());
+        }
+        let map = crate::linker::LinkerBase::analyze_symbols(&self.size_path, elf_path).await?;
+        let missing = missing_required_symbols(
+            &self.mcu_config.required_link_symbols,
+            map.symbols.iter().map(|entry| entry.name.as_str()),
+        );
+        if missing.is_empty() {
+            return Ok(());
+        }
+        Err(fbuild_core::FbuildError::BuildFailed(format!(
+            "link succeeded but firmware.elf is missing {} ({}). Nothing rooted {}, so \
+             --gc-sections discarded the application: this image would boot into nothing. \
+             Check the linker script's ENTRY and the platform's entry flags.",
+            if missing.len() == 1 {
+                "symbol"
+            } else {
+                "symbols"
+            },
+            missing.join(", "),
+            if missing.len() == 1 { "it" } else { "them" }
+        )))
     }
 }
 
@@ -199,6 +247,12 @@ impl Linker for SamLinker {
             )));
         }
 
+        // FastLED/fbuild#1939: a zero exit status is not proof the application
+        // was linked -- `--gc-sections` will happily emit an image holding only
+        // library leftovers. Verify the symbols this platform's firmware must
+        // define before reporting success.
+        self.require_link_symbols(&elf_path).await?;
+
         Ok(elf_path)
     }
 
@@ -263,6 +317,60 @@ mod tests {
         );
         assert_eq!(linker.max_flash, Some(524288));
         assert_eq!(linker.max_ram, Some(98304));
+    }
+
+    /// Atmel's Due `flash.ld` declares no `ENTRY()`, and Arduino's own SAM3X
+    /// recipe supplies the entry on the link line. Without it the link pulls
+    /// no startup object and `--gc-sections` discards the whole application.
+    #[test]
+    fn sam3x_link_roots_the_atmel_startup_entry() {
+        let config = get_sam_config_for_mcu("at91sam3x8e").unwrap();
+        assert!(
+            config
+                .linker_flags
+                .iter()
+                .any(|flag| flag == "-Wl,--entry=Reset_Handler"),
+            "SAM3X must set the ELF entry to Reset_Handler: {}",
+            config.linker_flags.join(" ")
+        );
+        assert!(
+            config
+                .linker_flags
+                .iter()
+                .any(|flag| flag == "-Wl,--undefined=Reset_Handler"),
+            "SAM3X must reference Reset_Handler so a missing startup fails the link"
+        );
+    }
+
+    /// The classic-SAM image is inert without its reset handler, so the config
+    /// must declare it and the link must root it.
+    #[test]
+    fn sam3x_requires_the_reset_handler_in_the_image() {
+        let config = get_sam_config_for_mcu("at91sam3x8e").unwrap();
+        assert_eq!(config.required_link_symbols, vec!["Reset_Handler"]);
+    }
+
+    #[test]
+    fn missing_required_symbols_names_only_the_absent_ones() {
+        let required = ["Reset_Handler".to_string(), "main".to_string()];
+        let present = ["main", "setup"];
+        assert_eq!(
+            missing_required_symbols(&required, present.into_iter()),
+            vec!["Reset_Handler"]
+        );
+        assert!(
+            missing_required_symbols(&required, ["Reset_Handler", "main"].into_iter()).is_empty()
+        );
+    }
+
+    #[test]
+    fn mcu_configs_without_declared_symbols_skip_the_check() {
+        // SAMD/ClearCore scripts declare ENTRY(), so they need no config-level
+        // declaration and must not pay an extra nm invocation.
+        for mcu in ["samd21g18a", "samd51j19a", "same53n19a"] {
+            let config = get_sam_config_for_mcu(mcu).unwrap();
+            assert!(config.required_link_symbols.is_empty(), "{mcu}");
+        }
     }
 
     #[test]
