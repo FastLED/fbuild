@@ -207,6 +207,40 @@ fn malformed_assets_are_rejected() {
     );
 }
 
+/// The committed `@esp-toolchain` shard ships to every client as one document,
+/// and one bad entry rejects the WHOLE manifest, so a malformed publish is
+/// silent global breakage rather than a local miss. Parsing it here means a
+/// publish is verified by the real client parser (FastLED/fbuild#1944).
+#[test]
+fn committed_toolchain_shard_resolves_the_esp32s3_slice() {
+    const VENDOR_XTENSA: &str = concat!(
+        "https://github.com/espressif/crosstool-NG/releases/download/",
+        "esp-14.2.0_20260121/xtensa-esp-elf-14.2.0_20260121-x86_64-linux-gnu.tar.xz"
+    );
+    let m = parse(include_str!(
+        "../../../site/mirror/shards/esp-toolchain.json"
+    ));
+    let entry = m.lookup(VENDOR_XTENSA).expect("committed toolchain URL");
+    assert_eq!(entry.urls, vec![VENDOR_XTENSA.to_string()]);
+    let slice = entry
+        .slices
+        .as_ref()
+        .and_then(|slices| slices.get("esp32s3"))
+        .expect("esp32s3 slice");
+    assert_eq!(slice.format, "tar.zst");
+    assert!(
+        slice.url.starts_with("https://fbuild.sfo3."),
+        "{}",
+        slice.url
+    );
+    assert!(slice.size > 0);
+    assert_ne!(
+        slice.sha256,
+        entry.sha256.clone().unwrap_or_default(),
+        "the slice is a different object from the whole archive"
+    );
+}
+
 #[test]
 fn url_policy_allows_https_and_loopback_http_only() {
     for ok in [

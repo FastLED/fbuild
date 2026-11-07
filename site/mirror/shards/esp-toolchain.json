@@ -1,0 +1,41 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/esp-toolchain",
+ "version": "1",
+ "components": [
+  {
+   "id": "toolchain-xtensa-esp-elf/14.2.0_20260121/linux-amd64",
+   "required": false,
+   "asset": {
+    "filename": "xtensa-esp-elf-14.2.0_20260121-x86_64-linux-gnu.tar.xz",
+    "size_bytes": 176559292,
+    "sha256": "da31f36d79d4e99f24e55a90a71e65d5694714f16199960bf7885724b706a48c",
+    "urls": [
+     "https://github.com/espressif/crosstool-NG/releases/download/esp-14.2.0_20260121/xtensa-esp-elf-14.2.0_20260121-x86_64-linux-gnu.tar.xz"
+    ],
+    "slices": {
+     "esp32s3": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/toolchain-xtensa-esp-elf/release/14.2.0_20260121/linux-amd64/esp32s3/xtensa-esp-elf-14.2.0_20260121-esp32s3.36a9f0e7d232506f.tar.zst",
+      "sha256": "36a9f0e7d232506fca8411de1171249c7e38f9a2d05ec69b6a8e0425230f0858",
+      "size": 106462349,
+      "format": "tar.zst"
+     },
+     "esp32": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/toolchain-xtensa-esp-elf/release/14.2.0_20260121/linux-amd64/esp32/xtensa-esp-elf-14.2.0_20260121-esp32.037802e0290c87bd.tar.zst",
+      "sha256": "037802e0290c87bdf7ec15816b057ad14715aafda2dd8ab050b079a41fb4374d",
+      "size": 141361956,
+      "format": "tar.zst"
+     },
+     "esp32s2": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/toolchain-xtensa-esp-elf/release/14.2.0_20260121/linux-amd64/esp32s2/xtensa-esp-elf-14.2.0_20260121-esp32s2.11564ea640671e6c.tar.zst",
+      "sha256": "11564ea640671e6c5475d4d62a68ef7aa6fe80ca929066e8f87d7c754a68c553",
+      "size": 106655161,
+      "format": "tar.zst"
+     }
+    }
+   }
+  }
+ ]
+}

@@ -64330,6 +64330,14 @@
     "size_bytes": 25690
    },
    "kind_hint": "data"
+  },
+  "@esp-toolchain": {
+   "descriptor": {
+    "url": "shards/esp-toolchain.json",
+    "sha256": "678d37135e097ccb3a69392685023a6ff96bda238f26e81b0b1fc47273dc237b",
+    "size_bytes": 1786
+   },
+   "kind_hint": "data"
   }
  }
 }

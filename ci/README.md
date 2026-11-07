@@ -150,9 +150,26 @@ from it: `--version`, a `-print-libgcc-file-name` that must resolve *inside*
 the extraction, and a real `-std=gnu++17 -Os -c`. `--check` recomputes without
 writing. Measured on the cached `xtensa-esp-elf` 13.2.0 tree: 660 MB extracted
 -> a 75.3 MB esp32s3 slice (vendor download is 168 MB) in 4m50s including
-verification. Uploading is a separate step (`publish_esp_slices.py` models it);
-no toolchain shard is published yet, so clients resolve the whole vendor
-archive until one is.
+verification. Uploading is `publish_toolchain_slices.py`, which owns the
+`@esp-toolchain` shard: `--metadata <tools.json> --toolchain
+toolchain-xtensa-esp-elf --host linux-amd64` picks the version entry the
+platform recommends (or `--version-name esp-<v>`), slices `--tree`, uploads each
+slice under `v1/espressif/<toolchain>/release/<version>/<host>/<chip>/`, and
+writes the shard component plus its Index descriptor. One invocation publishes
+ONE host package, because a slice carries that host's compilers; chips are
+additive, so publishing `esp32s3` first is a strict improvement for ESP32-S3
+and a no-op elsewhere (a chip with no slice keeps the whole-archive fallback).
+Integrity pins come from the vendor metadata, never from a local archive, so a
+mismatched tree cannot relabel the asset; `--archive` additionally mirrors the
+whole bundle (only when its bytes match those pins). Files are written only
+after every upload passed a HEAD size check, so an entry never points at a
+missing object. `--check --shard ... --index ...` needs no network and fails
+when the Index descriptor no longer hashes the committed shard -- the Index is a
+generated document, so a regeneration that does not know about `@esp-toolchain`
+would otherwise drop the owner and silently return every client to whole
+archives. Published linux-amd64 slices of 14.2.0_20260121 (1.1 GB extracted,
+verified in 6m24s + 11m for the other two): `esp32s3` 106,462,349 B, `esp32s2`
+106,655,161 B, `esp32` 141,361,956 B, against the vendor archive's 176,559,292 B.
 
 Offline slice tests: `uv run --no-project --with zstandard python -m unittest
 ci.test_slice_esp_libs -v`. Archives are retained under the framework's
