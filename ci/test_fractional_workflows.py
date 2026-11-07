@@ -672,6 +672,32 @@ class FractionalWorkflowTests(unittest.TestCase):
             self.assertIn("https://", pinned)
             self.assertRegex(pinned, r"\b[0-9a-f]{64}\b")
 
+            # A pull request and a merge-queue entry run the board MATRIX, not
+            # build-<board>.yml, and those jobs pass template inputs from
+            # matrix values -- a cache that only the per-board workflow sets
+            # never reaches the jobs that gate the merge. Carry it on the
+            # matrix too, in every tier.
+            expected = {
+                "package_cache_path": cache["path"],
+                "package_cache_hash_files": cache["hash_files"],
+            }
+            for matrix_job, workflow_file in (
+                ("pr_boards", "ci-minimal.yml"),
+                ("boards", "ci-test.yml"),
+                ("boards", "ci-full.yml"),
+            ):
+                with self.subTest(matrix_job=f"{workflow_file}:{matrix_job}"):
+                    passed = self.load(workflow_file)["jobs"][matrix_job]["with"]
+                    self.assertEqual("${{ matrix.package_cache_path }}", passed["package-cache-path"])
+                    self.assertEqual(
+                        "${{ matrix.package_cache_hash_files }}",
+                        passed["package-cache-hash-files"],
+                    )
+            include = self.load("ci-full.yml")["jobs"]["boards"]["strategy"]["matrix"]["include"]
+            entry = next(row for row in include if row["workflow"] == workflow)
+            for key, value in expected.items():
+                self.assertEqual(value, entry[key], f"ci-full board matrix {key}")
+
         # The renderer must refuse a half record instead of emitting half a pair.
         for broken in (
             {"path": "~/.fbuild/prod/cache/platforms/x", "note": "n"},

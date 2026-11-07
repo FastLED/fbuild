@@ -111,6 +111,8 @@ jobs:
             firmware_ext: "hex"
             workflow_aliases: ["build-uno.yml"]
             toolchain_cache: false
+            package_cache_path: ""
+            package_cache_hash_files: ""
     uses: ./.github/workflows/template_build.yml
     secrets: inherit
     with:
@@ -121,6 +123,8 @@ jobs:
       checkout_ref: ${{ needs.verify.outputs.candidate_sha }}
       fbuild-artifact: fbuild-bin-linux-debug
       toolchain-cache: ${{ matrix.toolchain_cache }}
+      package-cache-path: ${{ matrix.package_cache_path }}
+      package-cache-hash-files: ${{ matrix.package_cache_hash_files }}
   coverage:
     name: ci-test coverage
     if: always()

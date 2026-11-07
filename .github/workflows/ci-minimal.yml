@@ -162,6 +162,8 @@ jobs:
       checkout_ref: ${{ github.event.pull_request.head.sha }}
       fbuild-artifact: fbuild-bin-linux-debug
       toolchain-cache: ${{ matrix.toolchain_cache }}
+      package-cache-path: ${{ matrix.package_cache_path }}
+      package-cache-hash-files: ${{ matrix.package_cache_hash_files }}
   reuse_decision:
     name: Verified reuse decision (shadow)
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'

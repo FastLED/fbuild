@@ -17,6 +17,7 @@ from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
+import render_workflows  # noqa: E402
 import select_boards  # noqa: E402
 from select_boards import (  # noqa: E402
     ZERO_SHA,
@@ -42,6 +43,37 @@ BOARDS = [
 def select(changed):
     return select_workflows(BOARDS, FAMILIES, COMMON, changed)
 
+
+
+class PackageCacheMatrixTests(unittest.TestCase):
+    """The PR board matrix must carry a board's vendor package-cache opt-in.
+
+    `pr_boards` calls `template_build.yml` with an explicit `with:` list taken
+    from this matrix, so a cache configured only on build-<board>.yml is
+    invisible to every pull request and merge-queue entry.
+    """
+
+    def test_matrix_carries_the_sot_package_cache(self):
+        sot = render_workflows.load_sot()
+        caches = {
+            board["workflow"]: board["package_cache"]
+            for board in sot["boards"]
+            if board.get("package_cache")
+        }
+        self.assertTrue(caches, "no board opts into the package cache")
+        for workflow, cache in caches.items():
+            with self.subTest(workflow=workflow):
+                rows = select_boards.matrix_entries(sot["boards"], sot["families"], [workflow])
+                self.assertEqual(1, len(rows))
+                self.assertEqual(cache["path"], rows[0]["package_cache_path"])
+                self.assertEqual(cache["hash_files"], rows[0]["package_cache_hash_files"])
+
+    def test_matrix_carries_an_empty_pair_for_every_other_board(self):
+        sot = render_workflows.load_sot()
+        plain = next(board for board in sot["boards"] if not board.get("package_cache"))
+        rows = select_boards.matrix_entries(sot["boards"], sot["families"], [plain["workflow"]])
+        self.assertEqual("", rows[0]["package_cache_path"])
+        self.assertEqual("", rows[0]["package_cache_hash_files"])
 
 class PathMatchTests(unittest.TestCase):
     def test_double_star_crosses_directories(self):
