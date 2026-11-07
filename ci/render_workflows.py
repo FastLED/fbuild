@@ -28,6 +28,7 @@ from __future__ import annotations
 import argparse
 import glob
 import json
+import textwrap
 import sys
 from pathlib import Path
 
@@ -58,11 +59,46 @@ def load_sot() -> dict:
     return json.loads(SOT_PATH.read_text(encoding="utf-8"))
 
 
+def validate_package_cache(sot: dict) -> list[str]:
+    """Reject a package-cache record the renderer cannot honour.
+
+    Fails closed on a half record (a path with no pinning file would build a
+    key that never invalidates), on a path outside `~/.fbuild/` (the runners'
+    cache root the downloader actually checks), and on two aliases of one
+    build disagreeing -- `execution_boards` runs the build once, so the pair
+    must be identical or half the aliases silently lose it.
+    """
+    paths: list[str] = []
+    by_build: dict[tuple, dict | None] = {}
+    for board in sot["boards"]:
+        cache = board.get("package_cache") or None
+        if cache:
+            missing = {"path", "hash_files", "note"} - set(cache)
+            if missing:
+                raise ValueError(f"{board['workflow']}: package_cache lacks {sorted(missing)}")
+            if not cache["path"].startswith("~/.fbuild/"):
+                raise ValueError(
+                    f"{board['workflow']}: package_cache path must live under ~/.fbuild/, "
+                    f"got {cache['path']!r}"
+                )
+            paths.append(cache["hash_files"])
+        key = (board["test_dir"], board["env_name"], board["firmware_ext"])
+        if key in by_build and by_build[key] != cache:
+            raise ValueError(
+                f"{board['workflow']}: aliases of one build disagree about package_cache "
+                f"({by_build[key]!r} vs {cache!r})"
+            )
+        by_build[key] = cache
+    return paths
+
+
 def validate_source_paths(sot: dict, common_paths: list[str]) -> None:
     """Reject stale source-of-truth paths before generating workflows."""
     paths = list(common_paths)
     for family in sot["families"].values():
         paths.extend(family["crate_paths"])
+
+    paths.extend(validate_package_cache(sot))
 
     dead: list[str] = []
     for pattern in paths:
@@ -163,6 +199,45 @@ def toolchain_cache(board: dict, families: dict) -> bool:
     return bool(families[board["family"]].get("toolchain_cache", False))
 
 
+def package_cache_fields(board: dict) -> dict:
+    """Matrix fields that carry a board's vendor package-cache opt-in.
+
+    The board MATRIX is what actually gates a pull request and a merge queue
+    entry: `pr_boards`/`boards` call `template_build.yml` with an explicit
+    `with:` list built from matrix values, so a package cache that only
+    build-<board>.yml sets never reaches those jobs. Empty strings mean "no
+    package cache" and keep `inputs.package-cache-path != ''` false.
+    """
+    cache = board.get("package_cache") or {}
+    return {
+        "package_cache_path": cache.get("path", ""),
+        "package_cache_hash_files": cache.get("hash_files", ""),
+    }
+
+
+def render_package_cache_block(board: dict) -> str:
+    """Emit a board's vendor package-cache opt-in, with its justification.
+
+    `template_build.yml` restores/saves ONE installed vendor package across
+    runs when `package-cache-path` is set, keyed on the file that pins that
+    package's URL and checksum. It is opted in per board -- not per family --
+    because it exists for single vendor hosts that have no CDN and have
+    already lost a gate fetch (FastLED/fbuild#1463 for teknic.com), and the
+    record carries the `note` rendered as comments so the generated workflow
+    explains itself.
+    """
+    cache = board.get("package_cache")
+    if not cache:
+        return ""
+    note = " ".join(cache["note"].split())
+    comments = "".join(f"      # {line}\n" for line in textwrap.wrap(note, 76))
+    return (
+        comments
+        + f"      package-cache-path: {cache['path']}\n"
+        + f"      package-cache-hash-files: {cache['hash_files']}\n"
+    )
+
+
 def render_board_jobs(board: dict, families: dict) -> str:
     return (
         "jobs:\n"
@@ -178,7 +253,7 @@ def render_board_jobs(board: dict, families: dict) -> str:
         f"      fbuild-artifact: ${{{{ inputs.fbuild-run-id && '{FBUILD_BIN_ARTIFACT}' || '' }}}}\n"
         "      fbuild-run-id: ${{ inputs.fbuild-run-id }}\n"
         f"      toolchain-cache: {json.dumps(toolchain_cache(board, families))}\n"
-    )
+    ) + render_package_cache_block(board)
 
 
 def execution_boards(boards: list[dict]) -> list[dict]:
@@ -309,6 +384,8 @@ def render_pr_boards() -> str:
         f"      checkout_ref: {head}\n"
         f"      fbuild-artifact: {FBUILD_BIN_ARTIFACT}\n"
         "      toolchain-cache: ${{ matrix.toolchain_cache }}\n"
+        "      package-cache-path: ${{ matrix.package_cache_path }}\n"
+        "      package-cache-hash-files: ${{ matrix.package_cache_hash_files }}\n"
     )
 
 
@@ -587,6 +664,8 @@ def render_ci(boards: list[dict], tier: str, families: dict) -> str:
         f"            firmware_ext: {json.dumps(b['firmware_ext'])}\n"
         f"            workflow_aliases: {json.dumps(b['workflow_aliases'])}\n"
         f"            toolchain_cache: {json.dumps(toolchain_cache(b, families))}\n"
+        f"            package_cache_path: {json.dumps(package_cache_fields(b)['package_cache_path'])}\n"
+        f"            package_cache_hash_files: {json.dumps(package_cache_fields(b)['package_cache_hash_files'])}\n"
         for b in selected
     )
     if not selected:
@@ -766,7 +845,9 @@ def render_ci(boards: list[dict], tier: str, families: dict) -> str:
            + "      firmware-ext: ${{ matrix.firmware_ext }}\n"
            + f"      checkout_ref: {verified_ref}\n"
            + f"      fbuild-artifact: {FBUILD_BIN_ARTIFACT}\n"
-           + "      toolchain-cache: ${{ matrix.toolchain_cache }}\n")
+           + "      toolchain-cache: ${{ matrix.toolchain_cache }}\n"
+           + "      package-cache-path: ${{ matrix.package_cache_path }}\n"
+           + "      package-cache-hash-files: ${{ matrix.package_cache_hash_files }}\n")
         + ("" if minimal else
             "  coverage:\n"
             + ("    name: Full coverage\n" if full else "    name: ci-test coverage\n")

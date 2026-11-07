@@ -24,6 +24,7 @@ from render_workflows import (
     execution_boards,
     load_common_paths,
     load_sot,
+    package_cache_fields,
     render_paths_for_board,
     toolchain_cache,
 )
@@ -94,6 +95,7 @@ def matrix_entries(boards, families, workflows):
             "env_name": b["env_name"],
             "firmware_ext": b["firmware_ext"],
             "toolchain_cache": toolchain_cache(b, families),
+            **package_cache_fields(b),
         }
         for b in execution_boards([b for b in boards if b["workflow"] in chosen])
     ]
