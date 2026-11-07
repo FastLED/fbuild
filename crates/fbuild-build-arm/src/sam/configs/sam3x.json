@@ -7,8 +7,16 @@
     "c": ["-std=gnu11"],
     "cxx": ["-std=gnu++17", "-fno-exceptions", "-fno-rtti", "-fno-threadsafe-statics"]
   },
-  "linker_flags": ["-mcpu=cortex-m3", "-mthumb", "-Wl,--gc-sections", "-Wl,--print-memory-usage"],
+  "linker_flags": [
+    "-mcpu=cortex-m3",
+    "-mthumb",
+    "-Wl,--gc-sections",
+    "-Wl,--print-memory-usage",
+    "-Wl,--entry=Reset_Handler",
+    "-Wl,--undefined=Reset_Handler"
+  ],
   "linker_libs": ["-lgcc", "-lstdc++", "-lm", "-lc"],
+  "required_link_symbols": ["Reset_Handler"],
   "objcopy": {"output_format": "binary", "remove_sections": [".eeprom"]},
   "profiles": {
     "release": {"compile_flags": ["-Os"], "link_flags": []},
