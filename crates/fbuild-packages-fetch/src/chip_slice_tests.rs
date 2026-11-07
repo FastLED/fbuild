@@ -72,12 +72,18 @@ async fn serve(bodies: Vec<(&'static str, Vec<u8>)>) -> (String, Arc<Mutex<Vec<S
 }
 
 fn base_with(tmp: &Path, cache_root: &Path, url: &str) -> PackageBase {
+    base_pinned(tmp, cache_root, url, None)
+}
+
+/// `checksum` is the vendor's whole-archive pin, exactly as the real
+/// `Esp32Toolchain` carries it.
+fn base_pinned(tmp: &Path, cache_root: &Path, url: &str, checksum: Option<&str>) -> PackageBase {
     PackageBase::with_cache_root(
         "esp32-xtensa-gcc",
         "14.2.0_20241119",
         url,
         "toolchain-xtensa-esp-elf",
-        None,
+        checksum,
         CacheSubdir::Toolchains,
         tmp,
         cache_root,
@@ -138,6 +144,70 @@ async fn slice_installs_into_its_own_chip_path_and_never_fetches_the_whole_archi
         hits.lock().expect("hits").clone(),
         vec!["/slice.tar.zst".to_string()],
         "the whole archive must never be requested once a slice is listed"
+    );
+}
+
+/// The package's `checksum` pins the WHOLE archive. A slice carries its own
+/// digest, so re-checking it against the vendor pin failed every real slice
+/// install with `expected <whole sha>, got <slice sha>` -- invisible to the
+/// tests above because they never set a checksum (FastLED/fbuild#1944).
+#[tokio::test]
+async fn a_slice_is_not_checked_against_the_whole_archive_checksum() {
+    let payload = tar_zst(&[("bin/xtensa-esp-elf-gcc", b"#!/bin/sh\n")]);
+    let (url, hits) = serve(vec![
+        ("/slice.tar.zst", payload.clone()),
+        ("/vendor.tar.zst", vec![b'X'; 4096]),
+    ])
+    .await;
+    let tmp = tempfile::TempDir::new().expect("tempdir");
+    let cache_root = tmp.path().join("cache");
+    let whole_sha = sha256_hex(b"the whole archive these bytes are not");
+    let mut base = base_pinned(
+        tmp.path(),
+        &cache_root,
+        &format!("{url}/vendor.tar.zst"),
+        Some(&whole_sha),
+    );
+    assert_eq!(base.checksum.as_deref(), Some(whole_sha.as_str()));
+    base.forced_slice = Some(SliceFetch {
+        url: format!("{url}/slice.tar.zst"),
+        sha256: sha256_hex(&payload),
+        size: payload.len() as u64,
+    });
+    let base = base.with_slice_variant(CHIP);
+
+    let installed = base
+        .staged_install(validate_gcc)
+        .await
+        .expect("a verified slice must not be re-checked against the whole archive");
+
+    assert!(installed.as_path().is_dir());
+    assert_eq!(
+        hits.lock().expect("hits").clone(),
+        vec!["/slice.tar.zst".to_string()]
+    );
+}
+
+#[tokio::test]
+async fn a_whole_archive_is_still_checked_against_its_pin() {
+    let (url, hits) = serve(vec![("/vendor.tar.zst", vec![b'X'; 4096])]).await;
+    let tmp = tempfile::TempDir::new().expect("tempdir");
+    let cache_root = tmp.path().join("cache");
+    let base = base_pinned(
+        tmp.path(),
+        &cache_root,
+        &format!("{url}/vendor.tar.zst"),
+        Some(&sha256_hex(b"not those bytes")),
+    );
+
+    let error = base
+        .staged_install(validate_gcc)
+        .await
+        .expect_err("a whole archive must still be verified");
+    assert!(error.to_string().contains("checksum mismatch"), "{error}");
+    assert_eq!(
+        hits.lock().expect("hits").clone(),
+        vec!["/vendor.tar.zst".to_string()]
     );
 }
 

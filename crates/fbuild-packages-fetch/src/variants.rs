@@ -15,6 +15,17 @@ const LIBS: &str = "framework-arduinoespressif32-libs";
 /// because `lib/<chip>` is the bulk of the 660 MB tree (FastLED/fbuild#1944).
 const XTENSA_TOOLCHAIN: &str = "toolchain-xtensa-esp-elf";
 
+/// The SAME artifact under the name `Esp32Toolchain` gives it
+/// (`crates/fbuild-toolchain/src/toolchain/esp32.rs`, `new`/`from_resolved`).
+///
+/// The shard is looked up by URL, so the name only selects the owner -- but a
+/// name the map does not know means "not sliced", silently. Publishing the
+/// slices while this alias was missing made every ESP32-S3 build download the
+/// whole 176 MB unified archive: the `@esp-toolchain` shard was never even
+/// fetched, because the toolchain package is called `esp32-xtensa-gcc`
+/// (FastLED/fbuild#1944).
+const XTENSA_TOOLCHAIN_PACKAGE: &str = "esp32-xtensa-gcc";
+
 /// Manifest shard that lists the slices for `name`, when the artifact is
 /// published as per-chip slices at all.
 ///
@@ -24,7 +35,7 @@ const XTENSA_TOOLCHAIN: &str = "toolchain-xtensa-esp-elf";
 fn slice_shard(name: &str) -> Option<&'static str> {
     match name {
         LIBS => Some("@esp-libs"),
-        XTENSA_TOOLCHAIN => Some("@esp-toolchain"),
+        XTENSA_TOOLCHAIN | XTENSA_TOOLCHAIN_PACKAGE => Some("@esp-toolchain"),
         _ => None,
     }
 }
@@ -325,6 +336,25 @@ mod tests {
         );
         assert_eq!(slice_shard("toolchain-riscv32-esp"), None);
         assert_eq!(slice_shard("platform-espressif32"), None);
+    }
+
+    /// Both names this artifact is constructed under must reach the shard.
+    ///
+    /// `esp32-xtensa-gcc` is what `Esp32Toolchain::new`/`from_resolved` pass to
+    /// `PackageBase` in `crates/fbuild-toolchain/src/toolchain/esp32.rs`; the
+    /// manifest name is what the slicer/publisher use. Looking the shard up by
+    /// URL hides the difference until a real build silently downloads the whole
+    /// archive (FastLED/fbuild#1944).
+    #[test]
+    fn every_name_the_esp_orchestrator_builds_resolves_to_the_toolchain_shard() {
+        for name in [XTENSA_TOOLCHAIN, "esp32-xtensa-gcc"] {
+            assert_eq!(slice_shard(name), Some("@esp-toolchain"), "{name}");
+        }
+        // The RISC-V toolchain keeps the whole archive under either of its
+        // names: its multilibs are ISA variants, not chips.
+        for name in ["toolchain-riscv32-esp", "esp32-riscv-gcc"] {
+            assert_eq!(slice_shard(name), None, "{name}");
+        }
     }
 
     #[test]
