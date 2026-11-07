@@ -376,24 +376,20 @@ fn download_url_matches_the_url_ensure_installed_uses() {
     );
 
     assert_eq!(esptool.version(), "5.3.0");
-    if fbuild_core::platform::host::is_windows() {
-        assert_eq!(
-            esptool.download_url().unwrap(),
-            "https://github.com/pioarduino/esptool/releases/download/v5.3.0/esptool.zip"
-        );
-    } else if let Some(tag) = tasmota_platform_tag() {
-        assert_eq!(
-            esptool.download_url().unwrap(),
-            Esptool::release_url("5.3.0", tag)
-        );
-    }
+    // Every host takes the 617 KiB source archive (FastLED/fbuild#1944); the
+    // 82 MiB standalone binary is only a fallback.
+    assert_eq!(
+        esptool.download_url().unwrap(),
+        "https://github.com/pioarduino/esptool/releases/download/v5.3.0/esptool.zip"
+    );
 }
 
 #[test]
-fn windows_registry_esptool_uses_published_source_archives() {
+fn registry_esptool_uses_published_source_archives() {
     let tmp = tempfile::TempDir::new().unwrap();
     // The real 5.1.0 registry tools.json publishes this any-host source URL;
-    // its upstream release has no esptool-windows-amd64.zip asset.
+    // its upstream release has no esptool-windows-amd64.zip asset. Unix takes
+    // the same 617 KiB archive for the cold-install byte budget (#1944).
     for version in ["5.1.0", "5.3.0"] {
         let metadata = format!(
             "https://github.com/pioarduino/registry/releases/download/0.0.1/esptoolpy-v{version}.zip"
@@ -401,27 +397,49 @@ fn windows_registry_esptool_uses_published_source_archives() {
         let source = format!(
             "https://github.com/pioarduino/esptool/releases/download/v{version}/esptool.zip"
         );
-        let windows = Esptool::from_metadata_url_for_host(tmp.path(), &metadata, true);
-        assert_eq!(windows.version(), version);
-        assert_eq!(windows.download_url().unwrap(), source);
-        assert_eq!(windows.source_url.as_deref(), Some(source.as_str()));
-        assert_eq!(windows.expected_runtime_version.as_deref(), Some(version));
-
-        let unix = Esptool::from_metadata_url_for_host(tmp.path(), &metadata, false);
-        assert!(unix.source_url.is_none());
-        assert_eq!(unix.version(), version);
+        let esptool = Esptool::from_metadata_url(tmp.path(), &metadata);
+        assert_eq!(esptool.version(), version);
+        assert_eq!(esptool.download_url().unwrap(), source);
+        assert_eq!(esptool.source_url.as_deref(), Some(source.as_str()));
+        assert_eq!(esptool.expected_runtime_version.as_deref(), Some(version));
     }
+}
+
+/// The byte budget is only real if the alternative is still reachable: the
+/// source archive needs `uv` + an interpreter, and a host that cannot build
+/// that environment must degrade to the 82 MiB standalone binary rather than
+/// fail the build. Windows has source-only releases, so there the failure is
+/// fatal and the fallback must not engage.
+#[test]
+fn standalone_fallback_is_permitted_only_where_a_binary_exists() {
+    assert!(standalone_fallback_permitted(false));
+    assert!(!standalone_fallback_permitted(true));
+}
+
+/// The rewrite is keyed on the exact `esptoolpy-v<version>.zip` filename. Any
+/// other registry shape must keep the standalone path instead of guessing a
+/// `v{tag}/esptool.zip` source URL: a wrong-version flash tool is worse than a
+/// large download (#1217).
+#[test]
+fn registry_url_with_an_unexpected_filename_keeps_the_standalone_path() {
+    let tmp = tempfile::TempDir::new().unwrap();
+    let esptool = Esptool::from_metadata_url(
+        tmp.path(),
+        "https://github.com/pioarduino/registry/releases/download/v4.8.5/esptoolpy.zip",
+    );
+    assert_eq!(esptool.version(), "4.8.5");
+    assert!(esptool.source_url.is_none());
+    let url = esptool.download_url().unwrap();
+    assert!(!url.ends_with("/esptool.zip"), "{url}");
 }
 
 #[test]
 fn windows_source_selection_preserves_direct_and_platformio_archives() {
     let tmp = tempfile::TempDir::new().unwrap();
     let source = "https://github.com/pioarduino/esptool/releases/download/v4.7.5/esptool.zip";
-    for windows in [false, true] {
-        let esptool = Esptool::from_metadata_url_for_host(tmp.path(), source, windows);
-        assert_eq!(esptool.download_url().unwrap(), source);
-        assert_eq!(esptool.expected_runtime_version.as_deref(), Some("4.7.5"));
-    }
+    let esptool = Esptool::from_metadata_url(tmp.path(), source);
+    assert_eq!(esptool.download_url().unwrap(), source);
+    assert_eq!(esptool.expected_runtime_version.as_deref(), Some("4.7.5"));
     let payload = fbuild_core::platformio_package::ResolvedPayload {
         owner: "platformio".into(),
         kind: fbuild_core::platformio_package::PackageKind::Tool,
@@ -485,4 +503,35 @@ fn legacy_platformio_esptool_setup_py_archive_is_valid() {
     std::fs::write(tmp.path().join("esptool.py"), "print('esptool')\n").unwrap();
 
     validate_source_esptool(tmp.path()).unwrap();
+}
+
+/// Live check that the pinned 617 KiB source archive really provisions a
+/// runnable esptool on this host (FastLED/fbuild#1944). Ignored: it needs the
+/// network and `uv`, and it installs into a throwaway cache root.
+///
+///     soldr cargo test -p fbuild-library --lib live_registry_source -- --ignored --nocapture
+#[tokio::test]
+#[ignore = "downloads the pinned esptool source archive; needs network + uv"]
+async fn live_registry_source_install_provisions_a_runnable_esptool() {
+    let cache = tempfile::TempDir::new().unwrap();
+    let project = tempfile::TempDir::new().unwrap();
+    // SAFETY: this test is run alone (`--ignored` with a name filter), so no
+    // sibling test observes the process-global cache root.
+    std::env::set_var("FBUILD_CACHE_DIR", cache.path());
+
+    let esptool = Esptool::from_metadata_url(
+        project.path(),
+        "https://github.com/pioarduino/registry/releases/download/0.0.1/esptoolpy-v5.3.0.zip",
+    );
+    assert!(esptool.source_url.is_some());
+
+    let binary = esptool.ensure_installed().await.expect("source install");
+    assert!(binary.as_path().is_file(), "{}", binary.display());
+    // The managed layout is load-bearing: `ensure_source_installed` locates the
+    // uv launcher, not a PATH lookup.
+    assert!(
+        binary.as_path().to_string_lossy().ends_with("esptool.py"),
+        "{}",
+        binary.display()
+    );
 }

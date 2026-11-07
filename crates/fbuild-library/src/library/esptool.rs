@@ -8,11 +8,15 @@
 //! provisions esptool as a managed package instead, so no user `pip install`
 //! is required.
 //!
-//! Modern metadata URLs on Unix use the **PyInstaller standalone binary** from
-//! [`tasmota/esptool`](https://github.com/tasmota/esptool). Older pioarduino
-//! releases instead pin a source-only `pioarduino/esptool` archive; those are
-//! installed at the exact URL in a private `uv tool` environment so their
-//! Python dependencies do not leak into fbuild's runtime.
+//! Modern metadata URLs use the 617 KiB **source archive** from
+//! [`pioarduino/esptool`](https://github.com/pioarduino/esptool) (FastLED/fbuild#1944):
+//! the equivalent PyInstaller standalone binaries are 60-86 MiB, and a cold
+//! `fbuild install` on a 10 Mbit link is bandwidth-bound, so 82 MiB of flash
+//! tool was 20% of a 399 MiB first-time install. The archive is installed at
+//! the exact URL in a private `uv tool` environment so its Python dependencies
+//! do not leak into fbuild's runtime. A host that cannot build that environment
+//! (no `uv`, no interpreter, no PyPI) falls back to the standalone binary,
+//! which is why the standalone path (`ensure_standalone_installed`) still exists.
 //!
 //! Flow:
 //! 1. The version is taken from the pioarduino `tool-esptoolpy` metadata URL,
@@ -90,33 +94,8 @@ impl Esptool {
     /// embedded in registry URLs is used — from the filename. Direct source
     /// archive URLs are retained, with the version taken from the release tag.
     pub fn from_metadata_url(project_dir: &Path, metadata_url: &str) -> Self {
-        Self::from_metadata_url_for_host(
-            project_dir,
-            metadata_url,
-            fbuild_core::platform::host::is_windows(),
-        )
-    }
-
-    fn from_metadata_url_for_host(project_dir: &Path, metadata_url: &str, windows: bool) -> Self {
         let version = extract_esptool_version(metadata_url);
-        let source_url = if metadata_url
-            .starts_with("https://github.com/pioarduino/esptool/releases/download/")
-        {
-            Some(metadata_url.to_string())
-        } else if windows
-            && metadata_url.starts_with("https://github.com/pioarduino/registry/releases/download/")
-            && version != "unknown"
-            && metadata_url.ends_with(&format!("/esptoolpy-v{version}.zip"))
-        {
-            // This is the any-host source URL published in the registry's
-            // tools.json, not a renamed binary asset. Keep the SDK's version;
-            // ensure_source_installed verifies the resulting uv launcher.
-            Some(format!(
-                "https://github.com/pioarduino/esptool/releases/download/v{version}/esptool.zip"
-            ))
-        } else {
-            None
-        };
+        let source_url = Self::select_source_url(metadata_url, &version);
         Self {
             project_dir: NormalizedPath::from(project_dir),
             version: version.clone(),
@@ -124,6 +103,27 @@ impl Esptool {
             source_checksum: None,
             expected_runtime_version: Some(version),
         }
+    }
+
+    fn select_source_url(metadata_url: &str, version: &str) -> Option<String> {
+        if metadata_url.starts_with("https://github.com/pioarduino/esptool/releases/download/") {
+            return Some(metadata_url.to_string());
+        }
+        let registry_shaped = metadata_url
+            .starts_with("https://github.com/pioarduino/registry/releases/download/")
+            && version != "unknown"
+            && metadata_url.ends_with(&format!("/esptoolpy-v{version}.zip"));
+        if !registry_shaped {
+            return None;
+        }
+        // This is the any-host source URL published in the registry's tools.json,
+        // not a renamed binary asset. Keep the SDK's version; ensure_source_installed
+        // verifies the resulting uv launcher. Every host uses it (FastLED/fbuild#1944):
+        // it is ~135x smaller than the standalone binary and produces
+        // byte-identical images.
+        Some(format!(
+            "https://github.com/pioarduino/esptool/releases/download/v{version}/esptool.zip"
+        ))
     }
 
     /// Use the exact PlatformIO-hosted source archive and published digest.
@@ -221,9 +221,33 @@ impl Esptool {
         }
 
         if let Some(url) = &self.source_url {
-            return self.ensure_source_installed(url).await;
+            match self.ensure_source_installed(url).await {
+                Ok(binary) => return Ok(binary),
+                // The 617 KiB source archive costs a `uv` environment; spending
+                // one 82 MiB download beats failing a build that has a working
+                // standalone binary available (FastLED/fbuild#1944). Windows has
+                // releases (5.1.0) with no binary at all, so there it stays fatal.
+                Err(error)
+                    if standalone_fallback_permitted(fbuild_core::platform::host::is_windows()) =>
+                {
+                    tracing::warn!(
+                        %url,
+                        error = %error,
+                        "pinned esptool source install failed; falling back to the standalone binary"
+                    );
+                }
+                Err(error) => return Err(error),
+            }
         }
 
+        self.ensure_standalone_installed().await
+    }
+
+    /// Install the host's PyInstaller `esptool-<platform>.zip` (60-86 MiB).
+    ///
+    /// Only reached when the pinned source archive is unavailable or cannot be
+    /// built on this host; see [`Self::ensure_installed`].
+    async fn ensure_standalone_installed(&self) -> Result<NormalizedPath> {
         let platform = host_platform_tag()?;
         let url = Self::release_url(&self.version, platform);
 
@@ -331,6 +355,14 @@ impl Esptool {
         }
         unreachable!("the second attempt always returns")
     }
+}
+
+/// Whether a failed source install may fall back to the standalone binary.
+///
+/// Windows publishes some esptool versions (5.1.0) only as source, so there the
+/// source install IS the install and its failure must surface (FastLED/fbuild#1944).
+fn standalone_fallback_permitted(windows: bool) -> bool {
+    !windows
 }
 
 fn validate_source_esptool(dir: &Path) -> Result<()> {
