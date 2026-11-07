@@ -28,6 +28,7 @@ from __future__ import annotations
 import argparse
 import glob
 import json
+import textwrap
 import sys
 from pathlib import Path
 
@@ -63,6 +64,20 @@ def validate_source_paths(sot: dict, common_paths: list[str]) -> None:
     paths = list(common_paths)
     for family in sot["families"].values():
         paths.extend(family["crate_paths"])
+
+    for board in sot["boards"]:
+        cache = board.get("package_cache")
+        if not cache:
+            continue
+        missing = {"path", "hash_files", "note"} - set(cache)
+        if missing:
+            raise ValueError(f"{board['workflow']}: package_cache lacks {sorted(missing)}")
+        if not cache["path"].startswith("~/.fbuild/"):
+            raise ValueError(
+                f"{board['workflow']}: package_cache path must live under ~/.fbuild/, "
+                f"got {cache['path']!r}"
+            )
+        paths.append(cache["hash_files"])
 
     dead: list[str] = []
     for pattern in paths:
@@ -163,6 +178,29 @@ def toolchain_cache(board: dict, families: dict) -> bool:
     return bool(families[board["family"]].get("toolchain_cache", False))
 
 
+def render_package_cache_block(board: dict) -> str:
+    """Emit a board's vendor package-cache opt-in, with its justification.
+
+    `template_build.yml` restores/saves ONE installed vendor package across
+    runs when `package-cache-path` is set, keyed on the file that pins that
+    package's URL and checksum. It is opted in per board -- not per family --
+    because it exists for single vendor hosts that have no CDN and have
+    already lost a gate fetch (FastLED/fbuild#1463 for teknic.com), and the
+    record carries the `note` rendered as comments so the generated workflow
+    explains itself.
+    """
+    cache = board.get("package_cache")
+    if not cache:
+        return ""
+    note = " ".join(cache["note"].split())
+    comments = "".join(f"      # {line}\n" for line in textwrap.wrap(note, 76))
+    return (
+        comments
+        + f"      package-cache-path: {cache['path']}\n"
+        + f"      package-cache-hash-files: {cache['hash_files']}\n"
+    )
+
+
 def render_board_jobs(board: dict, families: dict) -> str:
     return (
         "jobs:\n"
@@ -178,7 +216,7 @@ def render_board_jobs(board: dict, families: dict) -> str:
         f"      fbuild-artifact: ${{{{ inputs.fbuild-run-id && '{FBUILD_BIN_ARTIFACT}' || '' }}}}\n"
         "      fbuild-run-id: ${{ inputs.fbuild-run-id }}\n"
         f"      toolchain-cache: {json.dumps(toolchain_cache(board, families))}\n"
-    )
+    ) + render_package_cache_block(board)
 
 
 def execution_boards(boards: list[dict]) -> list[dict]:
