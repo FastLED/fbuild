@@ -1140,15 +1140,7 @@ fn timed_build(
         ),
         ToolKind::PlatformIo => (
             options.platformio.as_os_str(),
-            os_args(&[
-                "run",
-                "--project-dir",
-                &project_dir.to_string_lossy(),
-                "--environment",
-                board.environment,
-                // Prints each command as it starts: the phase breakdown's input.
-                "-v",
-            ]),
+            platformio_build_args(board, project_dir),
         ),
         ToolKind::Fbuild => (
             fbuild.as_os_str(),
@@ -1180,6 +1172,23 @@ fn timed_build(
         packages,
         phases,
     })
+}
+
+/// `-v` prints each command as it starts, the phase breakdown's input. pioarduino
+/// crashes SCons under `-v` (`'_Null' + str`), so ESP32-S3 has no PlatformIO phases.
+fn platformio_build_args(board: Board, project_dir: &Path) -> Vec<OsString> {
+    let project = project_dir.to_string_lossy();
+    let mut args = vec![
+        "run",
+        "--project-dir",
+        &project,
+        "--environment",
+        board.environment,
+    ];
+    if board.key != "esp32s3" {
+        args.push("-v");
+    }
+    os_args(&args)
 }
 
 struct TimedBuild {

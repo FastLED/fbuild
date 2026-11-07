@@ -253,6 +253,13 @@ fn retry_stops_on_success_and_reports_the_last_failure() {
 }
 
 #[test]
+fn only_pioarduino_builds_run_without_verbose_output() {
+    let project = Path::new("bench/blink");
+    assert!(platformio_build_args(BOARDS[0], project).contains(&OsString::from("-v")));
+    assert!(!platformio_build_args(BOARDS[1], project).contains(&OsString::from("-v")));
+}
+
+#[test]
 fn durations_use_seconds_or_minutes_with_two_decimals() {
     assert_eq!(format_duration(48.6), "0.05 s");
     assert_eq!(format_duration(13_239.6), "13.24 s");
