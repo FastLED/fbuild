@@ -34,14 +34,15 @@ mod fingerprint;
 mod framework_library_cache;
 mod framework_libs;
 mod helpers;
+mod idf;
 mod job_pool;
 mod local_libs;
 mod packages;
 mod prefix_map;
 mod shrink_link;
 
+pub(crate) use packages::downloadable_lib_deps;
 pub use packages::resolve_deploy_esptool;
-pub(crate) use packages::{downloadable_lib_deps, provision_esp32};
 
 #[cfg(test)]
 mod tests;
@@ -49,4 +50,39 @@ mod tests;
 /// ESP32 platform build orchestrator.
 pub struct Esp32Orchestrator;
 
+#[async_trait::async_trait]
+impl crate::BuildOrchestrator for Esp32Orchestrator {
+    fn platform(&self) -> fbuild_core::Platform {
+        fbuild_core::Platform::Espressif32
+    }
+
+    async fn build(&self, params: &crate::BuildParams) -> fbuild_core::Result<crate::BuildResult> {
+        let config = fbuild_config::PlatformIOConfig::from_path_with_overrides(
+            &params.project_dir.join("platformio.ini"),
+            fbuild_config::PioEnvOverrides::from_map(params.pio_env.clone()),
+        )?;
+        if idf::requested(&config, &params.env_name)? {
+            return idf::build(params, &config).await;
+        }
+        Box::pin(self.build_arduino(params)).await
+    }
+}
+
 pub use cdc::{cdc_on_boot_enabled, create, is_esp32_project, warn_if_cdc_on_boot};
+
+/// Installing Arduino packages for an IDF environment would report the wrong stack.
+pub(crate) async fn provision_esp32(
+    inputs: &crate::provision::ProvisionInputs<'_>,
+    mode: crate::provision::ProvisionMode,
+) -> fbuild_core::Result<Vec<crate::provision::ProvisionedPackage>> {
+    let frameworks = helpers::requested_frameworks(
+        inputs
+            .env_config
+            .get("framework")
+            .map_or("", String::as_str),
+    );
+    if frameworks.espidf && !frameworks.arduino {
+        return Err(fbuild_core::FbuildError::ConfigError("fbuild install for framework=espidf is not yet supported; fbuild build provisions its IDF packages automatically".into()));
+    }
+    packages::provision_esp32(inputs, mode).await
+}
