@@ -18,7 +18,9 @@ on:
 
 concurrency:
   group: benchmark-build-comparison-${{ github.ref }}
-  cancel-in-progress: true
+  # A run takes ~2.5 h, so a later push or the nightly cron would cancel almost
+  # every run before it publishes (run 42349265922). Queue instead.
+  cancel-in-progress: false
 
 permissions:
   contents: read
