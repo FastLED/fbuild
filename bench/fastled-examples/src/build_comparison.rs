@@ -28,6 +28,10 @@ const DAEMON_RESTART_NOTICE: &str = "daemon binary updated, restarting";
 /// Lines of the daemon's own log appended to `benchmark.log` on restart mode.
 const DAEMON_LOG_TAIL_LINES: usize = 200;
 const PERF_PHASE_LABELS: &[&str] = &["avr-orchestrator", "esp32-orchestrator", "pipeline"];
+/// A cold build on the shaped link that fetched less than this reused an
+/// installed package, so its timing is not a cold measurement.
+const MIN_COLD_DOWNLOAD_BYTES: u64 = 1_000_000;
+const COLD_INSTALL_ATTEMPTS: usize = 3;
 const REGRESSION_WINDOW_S: u64 = 7 * 24 * 60 * 60;
 const DEFAULT_REPOSITORY: &str = "FastLED/fbuild";
 const DEFAULT_PAGES_URL: &str = "https://fastled.github.io/fbuild/";
@@ -40,6 +44,9 @@ struct Board {
     name: &'static str,
     environment: &'static str,
     fqbn: &'static str,
+    /// Exact `arduino-cli core install` spec, run inside the timed cold window
+    /// because `arduino-cli compile` does not install missing cores.
+    arduino_core: &'static str,
 }
 
 const BOARDS: [Board; 2] = [
@@ -48,12 +55,14 @@ const BOARDS: [Board; 2] = [
         name: "Arduino Uno",
         environment: "uno",
         fqbn: "arduino:avr:uno",
+        arduino_core: "arduino:avr@1.8.8",
     },
     Board {
         key: "esp32s3",
         name: "ESP32-S3",
         environment: "esp32s3",
         fqbn: "esp32:esp32:esp32s3",
+        arduino_core: "esp32:esp32@3.3.12",
     },
 ];
 
@@ -166,6 +175,9 @@ struct ToolResult {
     speedup: f64,
     cold_trials_ms: Vec<f64>,
     warm_trials_ms: Vec<f64>,
+    /// Median bytes received during a cold build; `None` when unmeasured.
+    cold_download_bytes: Option<u64>,
+    cold_download_trials_bytes: Vec<u64>,
     /// Per-phase cold medians: fbuild's perf log, or PlatformIO's `-v` output
     /// split by `pio_phases` (empty for other tools).
     cold_phases_ms: BTreeMap<String, f64>,
@@ -351,6 +363,7 @@ fn measure_tool(
     let mut cold_trials_ms = Vec::with_capacity(options.trials);
     let mut warm_trials_ms = Vec::with_capacity(options.trials);
     let mut cold_phase_trials = Vec::new();
+    let mut cold_download_trials_bytes = Vec::new();
     let mut daemon_restarts = 0;
     let mut resolved_packages = BTreeMap::new();
     let mut package_metadata_warning = None;
@@ -391,6 +404,8 @@ fn measure_tool(
             }
             MeasurementStep::ColdBuild(trial) => {
                 let offset = perf_line_count(&perf_log);
+                let rx_before = network_rx_bytes();
+                let install_ms = timed_cold_install(kind, board, options, repo_root, log, &envs)?;
                 let TimedBuild {
                     elapsed_ms: elapsed,
                     restarted,
@@ -407,6 +422,12 @@ fn measure_tool(
                     log,
                     &envs,
                 )?;
+                let elapsed = elapsed + install_ms;
+                if let (Some(before), Some(after)) = (rx_before, network_rx_bytes()) {
+                    let received = after.saturating_sub(before);
+                    check_cold_download(options.network_mbit, received, kind, board)?;
+                    cold_download_trials_bytes.push(received);
+                }
                 daemon_restarts += usize::from(restarted);
                 if matches!(kind, ToolKind::PlatformIo | ToolKind::Fbuild) {
                     record_package_metadata(
@@ -525,6 +546,8 @@ fn measure_tool(
         speedup,
         cold_trials_ms,
         warm_trials_ms,
+        cold_download_bytes: median_bytes(&cold_download_trials_bytes),
+        cold_download_trials_bytes,
         cold_phases_ms: phase_medians(&cold_phase_trials),
         cold_phase_trials,
         daemon_restarts,
@@ -533,6 +556,121 @@ fn measure_tool(
         core_source_count,
         core_compile_argv,
     })
+}
+
+/// Install what the build needs when the tool's build does not do it itself.
+/// Only Arduino CLI needs this; it is part of that tool's cold cost.
+fn timed_cold_install(
+    kind: ToolKind,
+    board: Board,
+    options: &Options,
+    repo_root: &Path,
+    log: &mut File,
+    envs: &[(&str, OsString)],
+) -> AppResult<f64> {
+    if !matches!(kind, ToolKind::Arduino) {
+        return Ok(0.0);
+    }
+    // Multi-GB installs can hit transient HTTP/2 resets. Retries stay inside
+    // the timer, so they can only make Arduino CLI's cold time look worse.
+    let started = Instant::now();
+    retry(COLD_INSTALL_ATTEMPTS, || {
+        run_logged_env(
+            &options.arduino_cli,
+            &os_args(&["core", "install", board.arduino_core]),
+            repo_root,
+            log,
+            envs,
+        )
+        .map(|_| ())
+    })?;
+    Ok(started.elapsed().as_secs_f64() * 1000.0)
+}
+
+fn retry(attempts: usize, mut action: impl FnMut() -> AppResult<()>) -> AppResult<()> {
+    let mut remaining = attempts;
+    loop {
+        remaining -= 1;
+        match action() {
+            Err(_) if remaining > 0 => {}
+            result => return result,
+        }
+    }
+}
+
+/// Bytes received on non-loopback interfaces, per Linux `/proc/net/dev`
+/// content. Inside the benchmark namespace that is exactly the shaped link.
+fn parse_net_dev_rx(content: &str) -> Option<u64> {
+    let mut total = None;
+    for line in content.lines().skip(2) {
+        let (name, counters) = line.split_once(':')?;
+        if name.trim() == "lo" {
+            continue;
+        }
+        let received: u64 = counters.split_whitespace().next()?.parse().ok()?;
+        total = Some(total.unwrap_or(0) + received);
+    }
+    total
+}
+
+fn network_rx_bytes() -> Option<u64> {
+    parse_net_dev_rx(&fs::read_to_string("/proc/net/dev").ok()?)
+}
+
+/// Fail the run rather than publish a "cold" time that downloaded nothing.
+fn check_cold_download(
+    network_mbit: u32,
+    received: u64,
+    kind: ToolKind,
+    board: Board,
+) -> AppResult<()> {
+    if network_mbit > 0 && received < MIN_COLD_DOWNLOAD_BYTES {
+        return Err(io::Error::other(format!(
+            "{} cold build on {} received only {received} bytes; cold cleanup left packages installed",
+            kind.style().label,
+            board.name
+        ))
+        .into());
+    }
+    Ok(())
+}
+
+fn median_bytes(values: &[u64]) -> Option<u64> {
+    if values.is_empty() {
+        return None;
+    }
+    let samples = values.iter().map(|value| *value as f64).collect::<Vec<_>>();
+    Some(median(&samples).round() as u64)
+}
+
+/// Human duration: seconds under a minute, otherwise minutes, two decimals.
+fn format_duration(ms: f64) -> String {
+    if ms >= 60_000.0 {
+        format!("{:.2} min", ms / 60_000.0)
+    } else {
+        format!("{:.2} s", ms / 1000.0)
+    }
+}
+
+fn format_bytes(bytes: u64) -> String {
+    let bytes = bytes as f64;
+    if bytes >= 1e9 {
+        format!("{:.2} GB", bytes / 1e9)
+    } else {
+        format!("{:.1} MB", bytes / 1e6)
+    }
+}
+
+/// Arduino CLI's data directory, holding `packages/` and `staging/`.
+fn arduino_data_dir(arduino_cli: &OsStr) -> AppResult<NormalizedPath> {
+    let output = Command::new(arduino_cli)
+        .args(["config", "get", "directories.data"])
+        .output()?;
+    let dir = String::from_utf8_lossy(&output.stdout).trim().to_string();
+    if !output.status.success() || dir.is_empty() {
+        return Err(io::Error::other("arduino-cli did not report directories.data").into());
+    }
+    Ok(NormalizedPath::new(Path::new(&dir)))
 }
 
 /// Whether a command's stderr carries the CLI's daemon restart notice.
@@ -898,6 +1036,7 @@ fn prepare_cold(
         arduino_build_dir,
         &fbuild_paths::get_cache_root(),
         &fbuild_paths::get_platformio_home(),
+        &arduino_data_dir(&options.arduino_cli)?,
     ) {
         match step {
             ColdCleanupStep::Command { program, args } => {
@@ -924,54 +1063,37 @@ fn cold_cleanup_steps(
     arduino_build_dir: &Path,
     fbuild_cache_root: &Path,
     platformio_home: &Path,
+    arduino_data: &Path,
 ) -> Vec<ColdCleanupStep> {
     let command = |program: &OsStr, args: Vec<OsString>| ColdCleanupStep::Command {
         program: program.to_os_string(),
         args,
     };
+    let entries = |parent: &Path, prefix: &str| ColdCleanupStep::RemoveCacheEntries {
+        parent: NormalizedPath::new(parent),
+        prefix: prefix.to_string(),
+    };
+    // Cold means a first-time install: every tool loses all packages and
+    // toolchains, on every board, so the download lands in the timed build.
     match kind {
         ToolKind::Arduino => vec![
             command(arduino_cli, os_args(&["cache", "clean"])),
             ColdCleanupStep::RemoveDir(NormalizedPath::new(arduino_build_dir)),
+            entries(arduino_data, "packages"),
+            entries(arduino_data, "staging"),
         ],
-        ToolKind::PlatformIo => {
-            let mut steps = vec![
-                command(
-                    platformio,
-                    os_args(&["system", "prune", "--cache", "--force"]),
-                ),
-                command(
-                    platformio,
-                    os_args(&[
-                        "run",
-                        "--project-dir",
-                        &project_dir.to_string_lossy(),
-                        "--environment",
-                        board.environment,
-                        "--target",
-                        "clean",
-                    ]),
-                ),
-            ];
-            if board.key == "esp32s3" {
-                // Cold must include the framework/libs download, so drop the
-                // ESP32 framework packages (core, -libs, @src) and PlatformIO's
-                // download caches. toolchain-* is deliberately untouched: a
-                // ~175 MB toolchain download on a 10 Mbit link would push the
-                // run past the 60-minute CI timeout.
-                steps.push(ColdCleanupStep::RemoveCacheEntries {
-                    parent: NormalizedPath::new(platformio_home.join("packages")),
-                    prefix: "framework-arduinoespressif32".to_string(),
-                });
-                steps.push(ColdCleanupStep::RemoveCacheEntries {
-                    parent: NormalizedPath::new(platformio_home),
-                    prefix: "cache".to_string(),
-                });
-            }
-            steps
-        }
-        ToolKind::Fbuild => {
-            let mut steps = vec![command(
+        ToolKind::PlatformIo => vec![
+            command(
+                platformio,
+                os_args(&["system", "prune", "--cache", "--force"]),
+            ),
+            ColdCleanupStep::RemoveDir(NormalizedPath::new(project_dir.join(".pio"))),
+            // The whole home: pioarduino also reuses downloads from `dist` and
+            // `tools`, which made later trials fetch ~230 MB less than the first.
+            entries(platformio_home, ""),
+        ],
+        ToolKind::Fbuild => vec![
+            command(
                 fbuild.as_os_str(),
                 os_args(&[
                     "clean",
@@ -981,36 +1103,13 @@ fn cold_cleanup_steps(
                     board.environment,
                     "--release",
                 ]),
-            )];
-            if board.key == "esp32s3" {
-                // Discovered layout: fbuild installs framework packages under
-                // <cache>/platforms/<stem>/<hash>/<version>/ (see
-                // fbuild-packages-fetch's Cache::platforms_dir and
-                // PackageBase::install_path). The ESP-IDF libs archive is
-                // cached inside that tree at tools/.libs-archives, so removing
-                // the stem forces both the core and the libs slice to be
-                // re-downloaded during the timed build. Only the ESP32
-                // framework stem matches this prefix; toolchains/ is a
-                // separate cache root and is left warm on purpose.
-                steps.push(ColdCleanupStep::RemoveCacheEntries {
-                    parent: NormalizedPath::new(fbuild_cache_root.join("platforms")),
-                    prefix: "framework-arduinoespressif32".to_string(),
-                });
-                // Belt and braces: the install has also been observed under
-                // sibling cache roots and under the project's own .fbuild
-                // state. Any of them surviving makes "cold" skip the download
-                // entirely (observed: fw-libs 9.6 ms, 3.5 s cold), so remove
-                // every variant before the timed build.
-                steps.push(ColdCleanupStep::RemoveCacheEntries {
-                    parent: NormalizedPath::new(fbuild_cache_root),
-                    prefix: "framework-arduinoespressif32".to_string(),
-                });
-                steps.push(ColdCleanupStep::RemoveDir(NormalizedPath::new(
-                    get_project_fbuild_dir(project_dir),
-                )));
-            }
-            steps
-        }
+            ),
+            // The daemon holds the cache database open; the timed build starts
+            // a new one, which a first-time user pays for too.
+            command(fbuild.as_os_str(), os_args(&["daemon", "stop"])),
+            entries(fbuild_cache_root, ""),
+            ColdCleanupStep::RemoveDir(NormalizedPath::new(get_project_fbuild_dir(project_dir))),
+        ],
     }
 }
 
@@ -1040,15 +1139,7 @@ fn timed_build(
         ),
         ToolKind::PlatformIo => (
             options.platformio.as_os_str(),
-            os_args(&[
-                "run",
-                "--project-dir",
-                &project_dir.to_string_lossy(),
-                "--environment",
-                board.environment,
-                // Prints each command as it starts: the phase breakdown's input.
-                "-v",
-            ]),
+            platformio_build_args(board, project_dir),
         ),
         ToolKind::Fbuild => (
             fbuild.as_os_str(),
@@ -1080,6 +1171,23 @@ fn timed_build(
         packages,
         phases,
     })
+}
+
+/// `-v` prints each command as it starts, the phase breakdown's input. pioarduino
+/// crashes SCons under `-v` (`'_Null' + str`), so ESP32-S3 has no PlatformIO phases.
+fn platformio_build_args(board: Board, project_dir: &Path) -> Vec<OsString> {
+    let project = project_dir.to_string_lossy();
+    let mut args = vec![
+        "run",
+        "--project-dir",
+        &project,
+        "--environment",
+        board.environment,
+    ];
+    if board.key != "esp32s3" {
+        args.push("-v");
+    }
+    os_args(&args)
 }
 
 struct TimedBuild {
@@ -1209,7 +1317,7 @@ fn parse_fbuild_build_packages(stdout: &[u8], board: Board) -> BTreeMap<String, 
                 {
                     let version = value.rsplit_once('@').map_or(value, |(_, version)| version);
                     if !version.is_empty() {
-                        packages.insert(key.to_string(), version.to_string());
+                        packages.insert(key.to_string(), normalize_toolchain_version(version));
                     }
                 }
             }
@@ -1239,6 +1347,24 @@ fn parse_fbuild_build_packages(stdout: &[u8], board: Board) -> BTreeMap<String, 
     packages
 }
 
+/// fbuild names a toolchain by its archive stem
+/// (`xtensa-esp-elf-14.2.0_20260121-x86_64-linux-gnu`) where PlatformIO reports
+/// the same release as `14.2.0+20260121`.
+fn normalize_toolchain_version(version: &str) -> String {
+    version
+        .strip_prefix("xtensa-esp-elf-")
+        .and_then(|rest| rest.split('-').next())
+        .map_or_else(|| version.to_string(), |rest| rest.replace('_', "+"))
+}
+
+/// Version from a platform pin: `name@1.2.3`, or a `.../download/<tag>/x.zip` URL.
+fn platform_pin_version(pin: &str) -> &str {
+    if let Some((_, rest)) = pin.split_once("/download/") {
+        return rest.split('/').next().unwrap_or(pin);
+    }
+    pin.rsplit_once('@').map_or(pin, |(_, version)| version)
+}
+
 fn parse_platformio_packages(stdout: &[u8], board: Board) -> BTreeMap<String, String> {
     let mut packages = BTreeMap::new();
     for line in String::from_utf8_lossy(stdout).lines() {
@@ -1246,10 +1372,7 @@ fn parse_platformio_packages(stdout: &[u8], board: Board) -> BTreeMap<String, St
             if let Some(pin) = spec.split(';').next() {
                 packages.insert(
                     "platform".to_string(),
-                    pin.trim()
-                        .rsplit_once('@')
-                        .map_or(pin.trim(), |(_, version)| version)
-                        .to_string(),
+                    platform_pin_version(pin.trim()).to_string(),
                 );
             }
         }
@@ -1260,10 +1383,10 @@ fn parse_platformio_packages(stdout: &[u8], board: Board) -> BTreeMap<String, St
         else {
             continue;
         };
-        let key = if name.starts_with("framework-") {
+        let key = if name.starts_with("framework-") && !name.ends_with("-libs") {
             Some("framework")
         } else if name.starts_with("toolchain-")
-            && (board.key != "esp32s3" || name == "toolchain-xtensa-esp32s3")
+            && (board.key != "esp32s3" || name.starts_with("toolchain-xtensa-esp"))
         {
             Some("toolchain")
         } else if name == "tool-esptoolpy" {
@@ -1497,15 +1620,15 @@ fn latest_payload(metadata: &Metadata, results: &[ToolResult]) -> Value {
                     "platformio_platform": "atmelavr@5.1.0",
                 },
                 "esp32s3": {
-                    "arduino_core": "esp32:esp32@3.3.7",
-                    "platformio_platform": "espressif32@6.13.0",
+                    "arduino_core": "esp32:esp32@3.3.12",
+                    "platformio_platform": "pioarduino espressif32 55.03.312",
                 },
-                "note": "ecosystem framework distributions are pinned independently",
+                "note": "all three tools build ESP32-S3 against Arduino-ESP32 3.3.12",
             },
             "trials": metadata.trials,
             "network_mbit": metadata.network_mbit,
             "statistic": "median",
-            "cold_definition": "project outputs, reusable framework objects, compiler-object caches, and Arduino/PlatformIO download/HTTP caches removed; on ESP32-S3 the Arduino-ESP32 framework/lib packages are also removed so they are re-downloaded inside the timed window; installed toolchains remain warm",
+            "cold_definition": "first-time install: project outputs, caches, packages and toolchains removed for every tool and board, so all downloads land inside the timed window (Arduino CLI's includes core install)",
             "warm_definition": "immediate no-change rebuild after the cold build",
         },
         "comparison_board": comparison_board(results),
@@ -1813,7 +1936,7 @@ fn write_history(
 
 #[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 fn render_svg(metadata: &Metadata, results: &[ToolResult]) -> String {
-    let width = 960.0;
+    let width = 1100.0;
     let height = 748.0;
     let bar_x = 190.0;
     let bar_width = 480.0;
@@ -1849,13 +1972,13 @@ fn render_svg(metadata: &Metadata, results: &[ToolResult]) -> String {
     <text x="24" y="{label_y:.1}" class="tool" fill="{warm}">{label}</text>
     <rect x="{bar_x:.1}" y="{cold_y:.1}" width="{bar_width:.1}" height="28" rx="4" fill="#21262d" />
     <rect x="{bar_x:.1}" y="{cold_y:.1}" width="{cold_width:.1}" height="28" rx="4" fill="{cold}">
-      <title>{label} cold median: {cold_ms:.3} ms</title>
+      <title>{label} cold median: {cold_text}</title>
     </rect>
     <rect x="{bar_x:.1}" y="{warm_y:.1}" width="{warm_width:.1}" height="14" rx="3" fill="{warm}">
-      <title>{label} warm median: {warm_ms:.3} ms</title>
+      <title>{label} warm median: {warm_text}</title>
     </rect>
-    <text x="692" y="{value_y:.1}" class="value">cold {cold_ms:.1} ms  |  warm {warm_ms:.1} ms</text>
-    <text x="692" y="{speed_y:.1}" class="speed">{speedup:.2}x cold / warm</text>
+    <text x="692" y="{value_y:.1}" class="value">cold {cold_text}  |  warm {warm_text}</text>
+    <text x="692" y="{speed_y:.1}" class="speed">{speedup:.2}x cold / warm{download}</text>
   </g>
 "##,
             label_y = y + 21.0,
@@ -1866,10 +1989,15 @@ fn render_svg(metadata: &Metadata, results: &[ToolResult]) -> String {
             bar_width = bar_width,
             cold_width = cold_width,
             cold = style.cold_color,
-            cold_ms = result.cold_ms,
+            cold_text = format_duration(result.cold_ms),
+            download = result
+                .cold_download_bytes
+                .map_or_else(String::new, |bytes| {
+                    format!("  |  {} download", format_bytes(bytes))
+                }),
             warm_y = y + 7.0,
             warm_width = warm_width,
-            warm_ms = result.warm_ms,
+            warm_text = format_duration(result.warm_ms),
             value_y = y + 13.0,
             speed_y = y + 34.0,
             speedup = result.speedup,
@@ -1894,30 +2022,38 @@ fn render_svg(metadata: &Metadata, results: &[ToolResult]) -> String {
   <rect width="{width:.0}" height="{height:.0}" fill="#0d1117" />
   <rect width="{width:.0}" height="112" fill="#161b22" />
   <text x="24" y="43" class="heading">Arduino Uno + ESP32-S3 Blink build times</text>
-  <text x="24" y="72" class="meta">Arduino CLI vs PlatformIO vs fbuild | median of {trials} trials</text>
+  <text x="24" y="72" class="meta">Arduino CLI vs PlatformIO vs fbuild | median of {trials} trials{link}</text>
   <text x="24" y="95" class="meta">Generated {generated_at} | sha {sha}</text>
 {floor_line}  <rect x="24" y="128" width="76" height="24" rx="4" fill="#5b1f1c" />
   <rect x="24" y="134" width="34" height="12" rx="3" fill="#f85149" />
   <text x="112" y="146" class="legend">cold (back) + warm (front overlay)</text>
   <g role="group" aria-labelledby="uno-title">
     <text id="uno-title" x="24" y="182" class="board">Arduino Uno</text>
-    <text x="24" y="204" class="legend">Scale: slowest median = {uno_max_ms:.1} ms{uno_stack_note}</text>
+    <text x="24" y="204" class="legend">Scale: slowest median = {uno_max}{uno_stack_note}</text>
 {uno_rows}  </g>
   <g role="group" aria-labelledby="esp32s3-title">
     <text id="esp32s3-title" x="24" y="452" class="board">ESP32-S3</text>
-    <text x="24" y="474" class="legend">Scale: slowest median = {esp32s3_max_ms:.1} ms{esp32_stack_note}</text>
+    <text x="24" y="474" class="legend">Scale: slowest median = {esp32s3_max}{esp32_stack_note}</text>
 {esp32_rows}  </g>
-  <line x1="24" y1="720" x2="936" y2="720" stroke="#30363d" stroke-width="2" />
+  <line x1="24" y1="720" x2="1076" y2="720" stroke="#30363d" stroke-width="2" />
   <text x="24" y="740" class="meta">Machine data: manifest.json | latest.json | history.jsonl</text>
 </svg>
 "##,
         width = width,
         height = height,
         trials = metadata.trials,
+        link = if metadata.network_mbit > 0 {
+            format!(
+                " | {} Mbit/s link, nothing installed when cold",
+                metadata.network_mbit
+            )
+        } else {
+            String::new()
+        },
         generated_at = xml_escape(&metadata.generated_at),
         sha = xml_escape(&short_sha),
-        uno_max_ms = board_max_ms("uno"),
-        esp32s3_max_ms = board_max_ms("esp32s3"),
+        uno_max = format_duration(board_max_ms("uno")),
+        esp32s3_max = format_duration(board_max_ms("esp32s3")),
         uno_stack_note = stack_note("uno"),
         esp32_stack_note = stack_note("esp32s3"),
         uno_rows = rows[0],
@@ -1929,8 +2065,9 @@ fn render_svg(metadata: &Metadata, results: &[ToolResult]) -> String {
 fn svg_floor_line(metadata: &Metadata, results: &[ToolResult]) -> String {
     let parts = [
         selected_raw_baseline_ms(metadata, results)
-            .map(|ms| format!("raw compiler floor: {ms:.1} ms")),
-        fbuild_overhead_ms(metadata, results).map(|ms| format!("fbuild overhead: {ms:.1} ms")),
+            .map(|ms| format!("raw compiler floor: {}", format_duration(ms))),
+        fbuild_overhead_ms(metadata, results)
+            .map(|ms| format!("fbuild overhead: {}", format_duration(ms))),
         fbuild_vs_platformio_cold(results).map(|ratio| format!("fbuild/PIO cold: {ratio:.3}")),
     ]
     .into_iter()
@@ -1940,7 +2077,7 @@ fn svg_floor_line(metadata: &Metadata, results: &[ToolResult]) -> String {
         String::new()
     } else {
         format!(
-            "  <text x=\"692\" y=\"95\" class=\"meta\">{}</text>\n",
+            "  <text x=\"1076\" y=\"95\" text-anchor=\"end\" class=\"meta\">{}</text>\n",
             xml_escape(&parts.join(" | "))
         )
     }
@@ -1964,11 +2101,12 @@ fn render_html(metadata: &Metadata, results: &[ToolResult]) -> String {
         .iter()
         .map(|result| {
             format!(
-                "<tr><th>{}</th><th>{}</th><td>{:.3} ms</td><td>{:.3} ms</td><td>{:.2}x</td><td>{}</td></tr>",
+                "<tr><th>{}</th><th>{}</th><td>{}</td><td>{}</td><td>{}</td><td>{:.2}x</td><td>{}</td></tr>",
                 html_escape(&result.board_name),
                 html_escape(&result.display_name),
-                result.cold_ms,
-                result.warm_ms,
+                format_duration(result.cold_ms),
+                format_duration(result.warm_ms),
+                result.cold_download_bytes.map_or_else(|| "n/a".to_string(), format_bytes),
                 result.speedup,
                 html_escape(&result.version)
             )
@@ -1986,10 +2124,11 @@ fn render_html(metadata: &Metadata, results: &[ToolResult]) -> String {
         })
         .map(|(result, phase, ms)| {
             format!(
-                "<tr><td>{}</td><td>{}</td><td>{}</td><td>{ms:.3} ms</td></tr>",
+                "<tr><td>{}</td><td>{}</td><td>{}</td><td>{}</td></tr>",
                 html_escape(&result.board_name),
                 html_escape(&result.display_name),
-                html_escape(phase)
+                html_escape(phase),
+                format_duration(*ms)
             )
         })
         .collect::<Vec<_>>()
@@ -2010,7 +2149,7 @@ fn render_html(metadata: &Metadata, results: &[ToolResult]) -> String {
     };
     let network_note = if metadata.network_mbit > 0 {
         format!(
-            "\n      <p class=\"note\">* Measured on a link limited to {} Mbit/s (the benchmark runs in its own shaped network namespace); cold includes framework/lib download time.</p>",
+            "\n      <p class=\"note\">* Measured on a link limited to {} Mbit/s (the benchmark runs in its own shaped network namespace); cold includes every package and toolchain download.</p>",
             metadata.network_mbit
         )
     } else {
@@ -2044,12 +2183,12 @@ fn render_html(metadata: &Metadata, results: &[ToolResult]) -> String {
     <main>
       <h1>fbuild Blink build benchmark</h1>
       <p class="meta">Generated {generated_at} from <code>{sha}</code>. Median of {trials} trials on {os}/{arch}.</p>
-      <p class="note">All three tools compile the same Arduino Uno and ESP32-S3 <code>bench/blink/blink.ino</code>. Cold removes project outputs, reusable framework objects, compiler-object caches, and Arduino/PlatformIO download/HTTP caches; on ESP32-S3 it also removes the cached Arduino-ESP32 framework/lib packages so they are re-downloaded inside the timed build. Installed toolchains stay warm. Warm is the immediate no-change rebuild. The narrower warm bar overlays the cold bar.</p>{network_note}
+      <p class="note">All three tools compile the same Arduino Uno and ESP32-S3 <code>bench/blink/blink.ino</code>. Cold is a first-time install: each tool's project outputs, caches, packages and toolchains are removed before the timer, so every download lands inside the timed build (for Arduino CLI, that includes <code>arduino-cli core install</code>). Warm is the immediate no-change rebuild. The narrower warm bar overlays the cold bar.</p>{network_note}
       <p class="note">Resolved package stacks: {comparison_note}. Exact package versions and representative core compiler commands are in <a href="latest.json">latest.json</a>.</p>
       <a href="benchmark.svg"><img src="benchmark.svg" alt="Arduino CLI vs PlatformIO vs fbuild cold and warm Blink build timings" /></a>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Board</th><th>Tool</th><th>Cold median</th><th>Warm median</th><th>Cold / warm</th><th>Version</th></tr></thead>
+          <thead><tr><th>Board</th><th>Tool</th><th>Cold median</th><th>Warm median</th><th>Cold download</th><th>Cold / warm</th><th>Version</th></tr></thead>
           <tbody>{rows}</tbody>
         </table>
       </div>

@@ -32,6 +32,8 @@ fn sample_results() -> Vec<ToolResult> {
             speedup: 1.5,
             cold_trials_ms: vec![1100.0, 1200.0, 1300.0],
             warm_trials_ms: vec![750.0, 800.0, 850.0],
+            cold_download_bytes: None,
+            cold_download_trials_bytes: Vec::new(),
             cold_phases_ms: BTreeMap::new(),
             cold_phase_trials: Vec::new(),
             daemon_restarts: 0,
@@ -54,6 +56,8 @@ fn sample_results() -> Vec<ToolResult> {
             speedup: 3.0,
             cold_trials_ms: vec![850.0, 900.0, 950.0],
             warm_trials_ms: vec![280.0, 300.0, 320.0],
+            cold_download_bytes: None,
+            cold_download_trials_bytes: Vec::new(),
             cold_phases_ms: BTreeMap::new(),
             cold_phase_trials: Vec::new(),
             daemon_restarts: 0,
@@ -69,6 +73,8 @@ fn sample_results() -> Vec<ToolResult> {
             board: "uno".into(),
             board_name: "Arduino Uno".into(),
             tool: "fbuild".into(),
+            cold_download_bytes: None,
+            cold_download_trials_bytes: Vec::new(),
             display_name: "fbuild".into(),
             version: "fbuild 0.1.0".into(),
             cold_ms: 600.0,
@@ -152,177 +158,146 @@ fn every_trial_prepares_cold_once_and_never_prepares_warm() {
     );
 }
 
-#[test]
-fn each_tool_has_the_complete_cold_cleanup_sequence() {
-    let project = Path::new("bench/blink");
-    let arduino_build = Path::new("benchmark-output/arduino-build");
-    let fbuild = Path::new("target/release/fbuild");
-    let cache_root = Path::new("fbuild-cache");
-    let platformio_home = Path::new("platformio-home");
-
-    assert_eq!(
-        cold_cleanup_steps(
-            ToolKind::Arduino,
-            BOARDS[0],
-            OsStr::new("arduino-cli"),
-            OsStr::new("pio"),
-            project,
-            fbuild,
-            arduino_build,
-            cache_root,
-            platformio_home,
-        ),
-        vec![
-            command("arduino-cli", &["cache", "clean"]),
-            ColdCleanupStep::RemoveDir(NormalizedPath::new(arduino_build)),
-        ]
-    );
-    assert_eq!(
-        cold_cleanup_steps(
-            ToolKind::PlatformIo,
-            BOARDS[0],
-            OsStr::new("arduino-cli"),
-            OsStr::new("pio"),
-            project,
-            fbuild,
-            arduino_build,
-            cache_root,
-            platformio_home,
-        ),
-        vec![
-            command("pio", &["system", "prune", "--cache", "--force"]),
-            command(
-                "pio",
-                &[
-                    "run",
-                    "--project-dir",
-                    "bench/blink",
-                    "--environment",
-                    "uno",
-                    "--target",
-                    "clean",
-                ],
-            ),
-        ]
-    );
-    assert_eq!(
-        cold_cleanup_steps(
-            ToolKind::Fbuild,
-            BOARDS[0],
-            OsStr::new("arduino-cli"),
-            OsStr::new("pio"),
-            project,
-            fbuild,
-            arduino_build,
-            cache_root,
-            platformio_home,
-        ),
-        vec![command(
-            "target/release/fbuild",
-            &[
-                "clean",
-                "cache",
-                "bench/blink",
-                "--environment",
-                "uno",
-                "--release",
-            ],
-        )]
-    );
-}
-
-#[test]
-fn esp32s3_cleanup_uses_its_environment() {
-    let steps = cold_cleanup_steps(
-        ToolKind::PlatformIo,
-        BOARDS[1],
+fn cleanup(kind: ToolKind, board: Board) -> Vec<ColdCleanupStep> {
+    cold_cleanup_steps(
+        kind,
+        board,
         OsStr::new("arduino-cli"),
         OsStr::new("pio"),
         Path::new("bench/blink"),
         Path::new("target/release/fbuild"),
-        Path::new("benchmark-output/arduino-esp32s3"),
+        Path::new("benchmark-output/arduino-build"),
         Path::new("fbuild-cache"),
         Path::new("platformio-home"),
-    );
-    assert!(matches!(
-        &steps[1],
-        ColdCleanupStep::Command { args, .. }
-            if args.windows(2).any(|pair| pair == os_args(&["--environment", "esp32s3"]))
-    ));
+        Path::new("arduino-data"),
+    )
+}
+
+fn entries(parent: &str, prefix: &str) -> ColdCleanupStep {
+    ColdCleanupStep::RemoveCacheEntries {
+        parent: NormalizedPath::new(parent),
+        prefix: prefix.into(),
+    }
+}
+
+/// Cold is a first-time install on both boards: nothing a tool downloads may
+/// survive, or the 10 Mbit link never affects its timing.
+#[test]
+fn every_tool_loses_all_packages_on_every_board() {
+    for board in BOARDS {
+        assert_eq!(
+            cleanup(ToolKind::Arduino, board),
+            vec![
+                command("arduino-cli", &["cache", "clean"]),
+                ColdCleanupStep::RemoveDir(NormalizedPath::new("benchmark-output/arduino-build")),
+                entries("arduino-data", "packages"),
+                entries("arduino-data", "staging"),
+            ]
+        );
+        assert_eq!(
+            cleanup(ToolKind::PlatformIo, board),
+            vec![
+                command("pio", &["system", "prune", "--cache", "--force"]),
+                ColdCleanupStep::RemoveDir(NormalizedPath::new("bench/blink/.pio")),
+                entries("platformio-home", ""),
+            ]
+        );
+        assert_eq!(
+            cleanup(ToolKind::Fbuild, board),
+            vec![
+                command(
+                    "target/release/fbuild",
+                    &[
+                        "clean",
+                        "cache",
+                        "bench/blink",
+                        "--environment",
+                        board.environment,
+                        "--release",
+                    ],
+                ),
+                command("target/release/fbuild", &["daemon", "stop"]),
+                entries("fbuild-cache", ""),
+                ColdCleanupStep::RemoveDir(NormalizedPath::new(get_project_fbuild_dir(Path::new(
+                    "bench/blink"
+                )))),
+            ]
+        );
+    }
 }
 
 #[test]
-fn esp32s3_cold_removes_framework_packages_but_keeps_toolchains() {
-    let cache_root = Path::new("fbuild-cache");
-    let platformio_home = Path::new("platformio-home");
+fn retry_stops_on_success_and_reports_the_last_failure() {
+    let mut calls = 0;
+    let result = retry(3, || {
+        calls += 1;
+        if calls < 2 {
+            Err(io::Error::other("transient").into())
+        } else {
+            Ok(())
+        }
+    });
+    assert!(result.is_ok());
+    assert_eq!(calls, 2);
 
-    let fbuild_steps = cold_cleanup_steps(
-        ToolKind::Fbuild,
-        BOARDS[1],
-        OsStr::new("arduino-cli"),
-        OsStr::new("pio"),
-        Path::new("bench/blink"),
-        Path::new("target/release/fbuild"),
-        Path::new("benchmark-output/arduino-esp32s3"),
-        cache_root,
-        platformio_home,
-    );
-    assert!(fbuild_steps.contains(&ColdCleanupStep::RemoveCacheEntries {
-        parent: NormalizedPath::new(cache_root.join("platforms")),
-        prefix: "framework-arduinoespressif32".into(),
-    }));
-    // Sibling cache roots and the per-project state are cleared as well, so a
-    // surviving install cannot make the "cold" arm skip the download.
-    assert!(fbuild_steps.contains(&ColdCleanupStep::RemoveCacheEntries {
-        parent: NormalizedPath::new(cache_root),
-        prefix: "framework-arduinoespressif32".into(),
-    }));
-    assert!(
-        fbuild_steps.contains(&ColdCleanupStep::RemoveDir(NormalizedPath::new(
-            get_project_fbuild_dir(Path::new("bench/blink"))
-        )))
-    );
+    let mut calls = 0;
+    let result = retry(3, || {
+        calls += 1;
+        Err(io::Error::other("down").into())
+    });
+    assert!(result.is_err());
+    assert_eq!(calls, 3);
+}
 
-    let pio_steps = cold_cleanup_steps(
-        ToolKind::PlatformIo,
-        BOARDS[1],
-        OsStr::new("arduino-cli"),
-        OsStr::new("pio"),
-        Path::new("bench/blink"),
-        Path::new("target/release/fbuild"),
-        Path::new("benchmark-output/arduino-esp32s3"),
-        cache_root,
-        platformio_home,
-    );
-    assert!(pio_steps.contains(&ColdCleanupStep::RemoveCacheEntries {
-        parent: NormalizedPath::new(platformio_home.join("packages")),
-        prefix: "framework-arduinoespressif32".into(),
-    }));
-    assert!(pio_steps.contains(&ColdCleanupStep::RemoveCacheEntries {
-        parent: NormalizedPath::new(platformio_home),
-        prefix: "cache".into(),
-    }));
+#[test]
+fn only_pioarduino_builds_run_without_verbose_output() {
+    let project = Path::new("bench/blink");
+    assert!(platformio_build_args(BOARDS[0], project).contains(&OsString::from("-v")));
+    assert!(!platformio_build_args(BOARDS[1], project).contains(&OsString::from("-v")));
+}
 
-    // Uno keeps the original non-download cold: no cache-entry removals.
-    for kind in [ToolKind::Arduino, ToolKind::PlatformIo, ToolKind::Fbuild] {
-        let steps = cold_cleanup_steps(
-            kind,
-            BOARDS[0],
-            OsStr::new("arduino-cli"),
-            OsStr::new("pio"),
-            Path::new("bench/blink"),
-            Path::new("target/release/fbuild"),
-            Path::new("benchmark-output/arduino-build"),
-            cache_root,
-            platformio_home,
-        );
-        assert!(
-            !steps
-                .iter()
-                .any(|step| matches!(step, ColdCleanupStep::RemoveCacheEntries { .. })),
-            "{kind:?} Uno cleanup must not delete package caches"
-        );
-    }
+#[test]
+fn durations_use_seconds_or_minutes_with_two_decimals() {
+    assert_eq!(format_duration(48.6), "0.05 s");
+    assert_eq!(format_duration(13_239.6), "13.24 s");
+    assert_eq!(format_duration(60_000.0), "1.00 min");
+    assert_eq!(format_duration(226_473.2), "3.77 min");
+}
+
+#[test]
+fn rendered_reports_never_show_milliseconds() {
+    let metadata = sample_metadata();
+    let results = sample_results();
+    let svg = render_svg(&metadata, &results);
+    assert!(!svg.contains(" ms"), "{svg}");
+    assert!(svg.contains("cold 1.20 s"), "{svg}");
+    assert!(!render_html(&metadata, &results).contains(" ms<"));
+}
+
+#[test]
+fn download_size_is_rendered_when_measured() {
+    let mut results = sample_results();
+    results[1].cold_download_bytes = Some(1_011_000_000);
+    results[2].cold_download_bytes = Some(205_400_000);
+    let svg = render_svg(&sample_metadata(), &results);
+    assert!(svg.contains("1.01 GB download"), "{svg}");
+    assert!(svg.contains("205.4 MB download"), "{svg}");
+    assert!(render_html(&sample_metadata(), &results).contains("<td>1.01 GB</td>"));
+}
+
+#[test]
+fn net_dev_rx_sums_real_interfaces_and_skips_loopback() {
+    let content = "Inter-|   Receive\n face |bytes packets\n    lo: 999 1 0\nveth-b: 1000 2 0\n  eth0: 24 2 0\n";
+    assert_eq!(parse_net_dev_rx(content), Some(1024));
+    assert_eq!(parse_net_dev_rx("h\nh\n    lo: 9 1\n"), None);
+}
+
+#[test]
+fn cold_build_without_a_download_fails_on_a_shaped_link() {
+    let board = BOARDS[1];
+    assert!(check_cold_download(10, 500, ToolKind::Arduino, board).is_err());
+    assert!(check_cold_download(10, 5_000_000, ToolKind::Arduino, board).is_ok());
+    assert!(check_cold_download(0, 500, ToolKind::Arduino, board).is_ok());
 }
 
 #[test]
@@ -411,8 +386,8 @@ fn svg_scales_each_board_independently() {
         2,
         "the longest cold bar must fill each board section: {svg}"
     );
-    assert!(svg.contains("Scale: slowest median = 1200.0 ms"));
-    assert!(svg.contains("Scale: slowest median = 12000.0 ms"));
+    assert!(svg.contains("Scale: slowest median = 1.20 s"));
+    assert!(svg.contains("Scale: slowest median = 12.00 s"));
 }
 
 #[test]
@@ -463,18 +438,18 @@ fn outputs_include_agent_discovery_and_bounded_history() {
     assert_eq!(latest["metadata"]["boards"][1]["name"], "ESP32-S3");
     assert_eq!(
         latest["metadata"]["toolchain_pins"]["esp32s3"]["arduino_core"],
-        "esp32:esp32@3.3.7"
+        "esp32:esp32@3.3.12"
     );
     assert_eq!(
         latest["metadata"]["cold_definition"],
-        "project outputs, reusable framework objects, compiler-object caches, and Arduino/PlatformIO download/HTTP caches removed; on ESP32-S3 the Arduino-ESP32 framework/lib packages are also removed so they are re-downloaded inside the timed window; installed toolchains remain warm"
+        "first-time install: project outputs, caches, packages and toolchains removed for every tool and board, so all downloads land inside the timed window (Arduino CLI's includes core install)"
     );
     let html = fs::read_to_string(temp.path().join("index.html")).unwrap();
     assert!(html.contains("stable discovery index for agents"));
-    assert!(html.contains("compiler-object caches"));
-    assert!(html.contains("Arduino/PlatformIO download/HTTP caches"));
-    assert!(html.contains("re-downloaded inside the timed build"));
-    assert!(html.contains("Installed toolchains stay warm"));
+    assert!(html.contains("first-time install"));
+    assert!(html.contains("arduino-cli core install"));
+    assert!(html.contains("every download lands inside the timed build"));
+    assert!(html.contains("packages and toolchains are removed"));
     assert!(!html.contains("Mbit/s"));
 }
 
@@ -650,7 +625,7 @@ fn network_mbit_is_disclosed_in_metadata_and_html() {
     let html = render_html(&metadata, &sample_results());
     assert!(html.contains("* Measured on a link limited to 10 Mbit/s"));
     assert!(html.contains("shaped network namespace"));
-    assert!(html.contains("cold includes framework/lib download time."));
+    assert!(html.contains("cold includes every package and toolchain download."));
 
     let html = render_html(&sample_metadata(), &sample_results());
     assert!(
@@ -751,6 +726,23 @@ fn build_output_package_parsers_capture_the_same_esp32_stack() {
         board_stack_status(&results, "esp32s3"),
         StackStatus::Matched
     );
+}
+
+#[test]
+fn pioarduino_stack_matches_across_real_output_formats() {
+    let board = BOARDS[1];
+    let pio = parse_platformio_packages(
+        b"Processing esp32s3 (platform: https://github.com/pioarduino/platform-espressif32/releases/download/55.03.312/platform-espressif32.zip; board: esp32-s3-devkitc-1; framework: arduino)\nPACKAGES:\n - framework-arduinoespressif32 @ 3.3.12\n - framework-arduinoespressif32-libs @ 5.5.5+sha.b774170ff46\n - toolchain-xtensa-esp-elf @ 14.2.0+20260121\n",
+        board,
+    );
+    let fbuild = parse_fbuild_build_packages(
+        b"ESP32 packages: requested platform=x, framework=arduino; resolved platform=platform-espressif32@55.03.312, framework=esp32-arduino@3.3.12, toolchain=esp32-xtensa-gcc@xtensa-esp-elf-14.2.0_20260121-x86_64-linux-gnu, ESP-IDF SDK=5.5.5\n",
+        board,
+    );
+    for key in ["platform", "framework", "toolchain"] {
+        assert_eq!(pio[key], fbuild[key], "{key}");
+    }
+    assert_eq!(pio["framework"], "3.3.12");
 }
 
 #[test]
@@ -952,7 +944,7 @@ fn svg_shows_raw_floor_and_overhead() {
     let svg = render_svg(&sample_metadata(), &sample_results());
     assert!(
         svg.contains(
-            "raw compiler floor: 450.0 ms | fbuild overhead: 150.0 ms | fbuild/PIO cold: 0.667"
+            "raw compiler floor: 0.45 s | fbuild overhead: 0.15 s | fbuild/PIO cold: 0.667"
         ),
         "{svg}"
     );
