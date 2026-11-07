@@ -14,8 +14,8 @@ Each tool is measured for three trials by default:
 
 Only cleanup is untimed. Arduino CLI loses its `packages/` and `staging/`
 directories and its timed window includes `arduino-cli core install`, because
-`arduino-cli compile` will not install a core. PlatformIO loses `packages`,
-`platforms`, `penv`, its caches and `.pio`. fbuild runs `fbuild clean cache`,
+`arduino-cli compile` will not install a core. PlatformIO loses its entire
+home directory (pioarduino also reuses `dist` and `tools`) and `.pio`. fbuild runs `fbuild clean cache`,
 stops its daemon, and empties its cache root and project `.fbuild`.
 
 ESP32-S3 uses Arduino-ESP32 3.3.12 in all three tools (pioarduino `55.03.312`,

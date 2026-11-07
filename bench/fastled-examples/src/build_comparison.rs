@@ -1088,10 +1088,9 @@ fn cold_cleanup_steps(
                 os_args(&["system", "prune", "--cache", "--force"]),
             ),
             ColdCleanupStep::RemoveDir(NormalizedPath::new(project_dir.join(".pio"))),
-            entries(platformio_home, "packages"),
-            entries(platformio_home, "platforms"),
-            entries(platformio_home, "penv"),
-            entries(platformio_home, "cache"),
+            // The whole home: pioarduino also reuses downloads from `dist` and
+            // `tools`, which made later trials fetch ~230 MB less than the first.
+            entries(platformio_home, ""),
         ],
         ToolKind::Fbuild => vec![
             command(

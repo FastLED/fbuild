@@ -199,10 +199,7 @@ fn every_tool_loses_all_packages_on_every_board() {
             vec![
                 command("pio", &["system", "prune", "--cache", "--force"]),
                 ColdCleanupStep::RemoveDir(NormalizedPath::new("bench/blink/.pio")),
-                entries("platformio-home", "packages"),
-                entries("platformio-home", "platforms"),
-                entries("platformio-home", "penv"),
-                entries("platformio-home", "cache"),
+                entries("platformio-home", ""),
             ]
         );
         assert_eq!(

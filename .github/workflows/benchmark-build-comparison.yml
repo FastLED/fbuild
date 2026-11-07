@@ -40,7 +40,7 @@ jobs:
   benchmark:
     name: Measure and publish Blink builds
     runs-on: ubuntu-24.04
-    # Cold trials install from nothing at 10 Mbit: ~1 GB for PlatformIO and
+    # Cold trials install from nothing at 10 Mbit: ~670 MB for PlatformIO and
     # ~1.8 GB for Arduino CLI on ESP32-S3, three times each.
     timeout-minutes: 300
     steps:
