@@ -9,7 +9,7 @@
     },
     "image": {
       "content_type": "image/svg+xml",
-      "description": "GitHub-dark cold bars with narrower warm timing overlays.",
+      "description": "GitHub-dark charts: separate cold and warm panels per board.",
       "url": "https://raw.githubusercontent.com/FastLED/fbuild/benchmark-stats/benchmark.svg"
     },
     "latest": {
@@ -31,8 +31,8 @@
     }
   },
   "branch": "benchmark-stats",
-  "generated_at": "2026-11-08T01:10:42Z",
-  "git_sha": "6e5be796cd0558e44917a33da81c1c757a01117c",
+  "generated_at": "2026-11-08T04:06:30Z",
+  "git_sha": "16e4e2e58728721d2089673040e1e5c2a5cae354",
   "repository": "FastLED/fbuild",
   "schema_version": 1
 }
