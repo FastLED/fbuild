@@ -64334,8 +64334,8 @@
   "@esp-toolchain": {
    "descriptor": {
     "url": "shards/esp-toolchain.json",
-    "sha256": "bd447a6da6d534cbae70cfed1096d071ff6a9195f2a0b9cc54f0a1d9178ee70b",
-    "size_bytes": 1972
+    "sha256": "ab46b1ac4ecbb9d6a2ba41633e32de691450a5212e4c7f9204de4e08561f5885",
+    "size_bytes": 3011
    },
    "kind_hint": "data"
   }

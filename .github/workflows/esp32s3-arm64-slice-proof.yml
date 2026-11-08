@@ -1,12 +1,20 @@
 name: ESP32-S3 arm64 slice proof (#1956)
 
-# Proof host for the linux-arm64 @esp-toolchain slice: a slice is only listed
-# after a real ESP32-S3 build on a machine of that host's OS/arch (#1949/#1953
-# accepted linux-amd64 exactly this way).
+# A per-host `@esp-toolchain` slice is AUTHORITATIVE once listed
+# (`crates/fbuild-packages-fetch/src/variants.rs`): a listed slice that is
+# missing one file fails the install instead of falling back to the whole
+# archive. So a new host is only listed after a real ESP32-S3 build on a
+# machine of that OS/arch -- exactly how linux-amd64 was accepted in
+# #1949/#1953 (`flash 355899 / ram 74919`, identical to the whole archive).
+#
+# This workflow is the arm64 proof host: it builds the ESP32-S3 fixture twice
+# from empty caches -- once resolving the published linux-arm64 slice, once
+# downloading the vendor whole archive -- and requires identical firmware
+# sizes. Manual dispatch only: it downloads ~500 MB and compiles twice.
 on:
   workflow_dispatch:
   push:
-    branches: [agent/arm64-slice-proof]
+    branches: [agent/arm64-slice-proof]  # TEMP proof run; removed before merge
 
 concurrency:
   group: esp32s3-arm64-slice-proof.yml-${{ github.run_id }}
@@ -15,15 +23,88 @@ concurrency:
 permissions:
   contents: read
 
+env:
+  # The last release whose wheels include the per-chip slice client. Bump when
+  # a newer release is published.
+  FBUILD_VERSION: "2.5.51"
+  FIXTURE: tests/platform/esp32s3
+  # Manifest of THIS ref: it lists the linux-arm64 slice, so the client resolves
+  # the slice instead of the whole archive. raw.githubusercontent.com serves any
+  # pushed ref, so the entry is exercised before it reaches `main`.
+  SLICE_MANIFEST_URL: https://raw.githubusercontent.com/FastLED/fbuild/${{ github.ref_name }}/site/mirror/manifest.json
+
 jobs:
-  runner-probe:
-    name: arm64 runner probe
+  arm64-slice:
+    name: arm64 slice == whole archive (esp32s3 Blink)
     runs-on: ubuntu-24.04-arm
-    timeout-minutes: 10
+    timeout-minutes: 60
     steps:
-      - name: Machine facts
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - uses: astral-sh/setup-uv@v3
+
+      - name: Install fbuild
         run: |
-          uname -m
-          uname -a
-          nproc
-          df -h /
+          uv tool install --python 3.13 "fbuild==${FBUILD_VERSION}"
+          fbuild --version
+
+      - name: Confirm this runner is the arm64 host the slice is for
+        run: |
+          test "$(uname -m)" = aarch64
+          # The slice is only meaningful on the host key it was built for.
+          grep -q '"linux-arm64"' site/mirror/shards/esp-toolchain.json
+
+      - name: Build with the published linux-arm64 slice
+        run: |
+          set -euo pipefail
+          export FBUILD_CACHE_DIR="$RUNNER_TEMP/cache-slice"
+          export FBUILD_BUILD_DIR="$RUNNER_TEMP/build-slice"
+          export FBUILD_MIRROR_MANIFEST_URL="${SLICE_MANIFEST_URL}"
+          fbuild daemon stop >/dev/null 2>&1 || true
+          sleep 2
+          fbuild build "${FIXTURE}" -e esp32s3 2>&1 | tee "$RUNNER_TEMP/slice.log"
+
+      - name: Build with the vendor whole archive (control)
+        run: |
+          set -euo pipefail
+          # Empty value disables the manifest override -> vendor whole archive.
+          export FBUILD_CACHE_DIR="$RUNNER_TEMP/cache-whole"
+          export FBUILD_BUILD_DIR="$RUNNER_TEMP/build-whole"
+          export FBUILD_MIRROR_MANIFEST_URL=""
+          fbuild daemon stop >/dev/null 2>&1 || true
+          sleep 2
+          fbuild build "${FIXTURE}" -e esp32s3 2>&1 | tee "$RUNNER_TEMP/whole.log"
+
+      - name: Slice == whole archive, and the whole archive was never used
+        run: |
+          set -euo pipefail
+          uv run --no-project python - <<'PY'
+          import os, re, sys
+          from pathlib import Path
+
+          tmp = Path(os.environ["RUNNER_TEMP"])
+          sizes = {}
+          for name in ("slice", "whole"):
+              log = (tmp / f"{name}.log").read_text(errors="replace")
+              if "build succeeded" not in log:
+                  sys.exit(f"{name} build did not succeed")
+              flash = re.search(r"flash[:= ]+(\d+)", log)
+              ram = re.search(r"ram[:= ]+(\d+)", log)
+              if not (flash and ram):
+                  sys.exit(f"{name} build printed no flash/ram sizes")
+              sizes[name] = (int(flash.group(1)), int(ram.group(1)))
+              print(f"{name}: flash {sizes[name][0]} / ram {sizes[name][1]}")
+
+          if sizes["slice"] != sizes["whole"]:
+              sys.exit(f"slice build differs from whole archive: {sizes}")
+
+          cache = tmp / "cache-slice"
+          if not any("+esp32s3" in p.name for p in cache.rglob("*") if p.is_dir()):
+              sys.exit("no per-chip '+esp32s3' install directory: the slice path was not used")
+          whole = [p for p in cache.rglob("*.tar.xz")]
+          if whole:
+              sys.exit(f"the slice build downloaded a whole archive: {whole}")
+          print("slice build used the per-chip install and downloaded no whole archive")
+          PY

@@ -15,6 +15,7 @@ from ci.publish_toolchain_slices import (
     slice_key,
     upsert_component,
     validate_host,
+    whole_key,
 )
 
 VENDOR_BYTES = b"vendor-bytes-that-the-metadata-pins"
@@ -308,7 +309,44 @@ class ComponentTests(unittest.TestCase):
         self.assertEqual(shard["components"][1]["asset"], {"urls": ["u"]})
 
 
+class WholeKeyTests(unittest.TestCase):
+    def test_the_key_follows_the_vendor_filename_given_to_it(self):
+        self.assertEqual(
+            whole_key("1.0", "linux-amd64", "a-b.tar.xz", "toolchain-x"),
+            "v1/espressif/toolchain-x/release/1.0/linux-amd64/whole/a-b.tar.xz",
+        )
+
+    def test_a_filename_that_is_not_a_safe_token_is_refused(self):
+        with self.assertRaisesRegex(ValueError, "unsafe"):
+            whole_key("1.0", "linux-amd64", "bundle name.tar.xz", "toolchain-x")
+
+    def test_a_path_in_the_filename_cannot_escape_the_whole_prefix(self):
+        # `.name` keeps the traversal out of the key; the prefix is still fixed.
+        key = whole_key("1.0", "linux-amd64", "../../etc/passwd", "toolchain-x")
+        self.assertEqual(
+            key, "v1/espressif/toolchain-x/release/1.0/linux-amd64/whole/passwd"
+        )
+
+
 class PublishTests(Temp):
+    def test_the_whole_archive_is_stored_under_the_vendor_filename(self):
+        # An operator downloads into whatever name is convenient (`arm64.tar.xz`
+        # is how the linux-arm64 bundle arrived). The key must still be the
+        # vendor asset name, or the shard's filename and object diverge.
+        alias = self.root / "arm64.tar.xz"
+        alias.write_bytes(VENDOR_BYTES)
+        s3, _ = self.run_publish(archive=alias)
+        whole = [key for key in s3.objects if "/whole/" in key]
+        self.assertEqual(len(whole), 1)
+        self.assertTrue(
+            whole[0].endswith(
+                "/xtensa-esp-elf-14.2.0_20260121-x86_64-linux-gnu.tar.xz"
+            ),
+            whole[0],
+        )
+        asset = self.shard_doc()["components"][0]["asset"]
+        self.assertEqual(Path(asset["urls"][0]).name, asset["filename"])
+
     def test_every_slice_is_uploaded_public_read_and_head_checked(self):
         s3, result = self.run_publish()
         self.assertEqual(result["chips"], ["esp32", "esp32s3"])
