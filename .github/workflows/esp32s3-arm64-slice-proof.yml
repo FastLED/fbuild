@@ -1,0 +1,27 @@
+name: ESP32-S3 arm64 slice proof (#1956)
+
+# Proof host for the linux-arm64 @esp-toolchain slice: a slice is only listed
+# after a real ESP32-S3 build on a machine of that host's OS/arch (#1949/#1953
+# accepted linux-amd64 exactly this way).
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: esp32s3-arm64-slice-proof.yml-${{ github.run_id }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  runner-probe:
+    name: arm64 runner probe
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 10
+    steps:
+      - name: Machine facts
+        run: |
+          uname -m
+          uname -a
+          nproc
+          df -h /
