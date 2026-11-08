@@ -5,6 +5,8 @@ name: ESP32-S3 arm64 slice proof (#1956)
 # accepted linux-amd64 exactly this way).
 on:
   workflow_dispatch:
+  push:
+    branches: [agent/arm64-slice-proof]
 
 concurrency:
   group: esp32s3-arm64-slice-proof.yml-${{ github.run_id }}
