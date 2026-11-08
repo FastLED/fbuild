@@ -26,6 +26,7 @@ use super::helpers::{
 };
 use super::local_libs::compile_local_libraries;
 use super::packages::resolve_pioarduino_packages;
+use super::prefix_map;
 
 use crate::build_fingerprint::{
     BUILD_FINGERPRINT_VERSION, FastPathCheckInputs, FastPathContract, FastPathPersistInputs,
@@ -102,13 +103,9 @@ impl BuildOrchestrator for Esp32Orchestrator {
             super::disk_requirements::footprint_roots(&params.project_dir),
         );
         let _resolve_phase = perf.phase("pioarduino-resolve");
-        let (toolchain, framework, esptool_bin, platform_info) = resolve_pioarduino_packages(
-            &params.project_dir,
-            &ctx.board.mcu,
-            &mcu_config,
-            env_config,
-        )
-        .await?;
+        let (toolchain, framework, esptool_bin, platform_info) =
+            resolve_pioarduino_packages(&params.project_dir, &ctx.board, &mcu_config, env_config)
+                .await?;
         drop(_resolve_phase);
         footprint.sample("pioarduino-resolve");
         let toolchain_info = fbuild_packages::Package::get_info(&toolchain);
@@ -292,7 +289,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
         let builtin_libs_dir = framework.get_libraries_dir();
 
         include_dirs.push(ctx.src_dir.clone());
-        crate::pipeline::discover_project_includes(&params.project_dir, &mut include_dirs);
+        crate::pipeline::discover_project_includes(&params.project_dir, &mut include_dirs)?;
         // Toolchain sysroot includes (xtensa headers, etc.)
         include_dirs.extend(toolchain.get_include_dirs());
 
@@ -345,10 +342,14 @@ impl BuildOrchestrator for Esp32Orchestrator {
         // identical sketches in two directories compile to different objects
         // and zccache can never serve the second one. Both the framework and
         // the sketch stage get the same mapping, so a hydrated core object and a
-        // freshly compiled one still compare equal. `-fdebug-prefix-map` exists
-        // back to GCC 4.3, so the legacy ESP32 GCC 5 toolchain is covered too
-        // (unlike `-fmacro-prefix-map` just above).
-        user_flags.extend(fbuild_paths::debug_prefix_map_args(
+        // freshly compiled one still compare equal. Modern toolchains also map
+        // the `-ffile-prefix-map`/`-fmacro-prefix-map` channels: a shared cache
+        // only reuses an object across project dirs once every channel covers
+        // the root, so the debug-only spelling keeps the sketch worktree-scoped.
+        // `-fdebug-prefix-map` exists back to GCC 4.3, so the legacy ESP32 GCC 5
+        // toolchain is covered too (unlike the other two, which are GCC 8+).
+        user_flags.extend(prefix_map::sketch_prefix_map_args(
+            fixups::supports_macro_prefix_map(&toolchain_info),
             &params.project_dir,
             &ctx.build_dir,
         ));
@@ -440,7 +441,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
             &declared_lib_deps,
             &external_library_sources,
             &include_dirs,
-        );
+        )?;
         let selected_framework_libraries: Vec<_> = framework_libraries
             .iter()
             .filter(|library| {
@@ -589,7 +590,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 .as_ref()
                 .map(|plan| plan.archive_names())
                 .unwrap_or_default(),
-            project_library.name(&params.project_dir, &ctx.src_dir),
+            project_library.name(&params.project_dir, &ctx.src_dir)?,
         );
         let fw_libs = prepare_framework_libs(
             params,
@@ -693,7 +694,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
             &params.project_dir,
             &ctx.src_dir,
             &declared_lib_deps,
-        );
+        )?;
         let library_jobs = super::job_pool::LibraryJobs {
             lib_deps: async {
                 match lib_deps_plan {
@@ -902,7 +903,10 @@ impl BuildOrchestrator for Esp32Orchestrator {
             &params.project_dir,
             &framework,
             &ctx.board,
-        ));
+        ))
+        .with_link_output_cache_dir(Some(fbuild_core::path::NormalizedPath::new(
+            fbuild_paths::get_cache_root().join("link-output"),
+        )));
 
         // `--shrink=printf` (FastLED/fbuild#1459): opt-in, probed, and
         // arch-gated -- see `shrink_link::resolve_shrink`.
@@ -917,22 +921,22 @@ impl BuildOrchestrator for Esp32Orchestrator {
             &mut build_log,
         )
         .await;
-        let link_result = {
-            let _g = perf.phase("link-convert-size");
-            crate::linker::Linker::link_all(
-                &linker,
-                &sketch_objects,
-                &all_archives,
-                build_dir,
-                &crate::linker::LinkExtraArgs {
-                    flags: overlay_link_flags.clone(),
-                    libs: ctx.overlay_link_libs.clone(),
-                    bloat_analysis: false,
-                },
-                params.symbol_analysis,
-            )
-            .await?
-        };
+        let link_started = Instant::now();
+        let link_result = crate::linker::Linker::link_all(
+            &linker,
+            &sketch_objects,
+            &all_archives,
+            build_dir,
+            &crate::linker::LinkExtraArgs {
+                flags: overlay_link_flags.clone(),
+                libs: ctx.overlay_link_libs.clone(),
+                bloat_analysis: false,
+            },
+            params.symbol_analysis,
+            &mut perf,
+        )
+        .await?;
+        perf.record("link-convert-size", link_started.elapsed());
 
         footprint.sample("link-convert");
 

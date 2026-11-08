@@ -351,6 +351,7 @@ impl BoardConfig {
             Some(fbuild_core::Platform::AtmelSam) => sam_architecture(&self.mcu),
             Some(fbuild_core::Platform::Teensy) => "TEENSY".to_string(),
             Some(fbuild_core::Platform::Ch32v) => "CH32V".to_string(),
+            Some(fbuild_core::Platform::Ci13xx) => "CI13XX".to_string(),
             Some(fbuild_core::Platform::Apollo3) => "APOLLO3".to_string(),
             Some(fbuild_core::Platform::Wasm) | None => String::new(),
         }

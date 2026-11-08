@@ -138,6 +138,7 @@ pub enum Platform {
     AtmelMegaAvr,
     AtmelSam,
     Ch32v,
+    Ci13xx,
     Espressif32,
     Espressif8266,
     NordicNrf52,
@@ -174,6 +175,10 @@ impl Platform {
             Some(Self::AtmelAvr)
         } else if s.contains("ch32v") {
             Some(Self::Ch32v)
+        // The vendor Arduino core uses ci130x in its repository name;
+        // its architecture and canonical platform identity are ci13xx.
+        } else if s.contains("ci13xx") || s.contains("arduino-ci130x") {
+            Some(Self::Ci13xx)
         } else if s.contains("nordicnrf52") {
             Some(Self::NordicNrf52)
         // FastLED/fbuild#XXX: GitHub URL form is `platform-nxp-lpc8xx`
@@ -693,6 +698,42 @@ mod tests {
             Platform::from_platform_str("TEENSY"),
             Some(Platform::Teensy)
         );
+    }
+
+    #[test]
+    fn platform_from_str_ci13xx_canonical_identity() {
+        // FastLED/fbuild#1914: the Arduino vendor core is named ci130x,
+        // while its architecture and fbuild platform identity are ci13xx.
+        // These URL forms identify that existing vendor source, not a
+        // hypothetical PlatformIO platform repository.
+        for spec in [
+            "ci13xx",
+            "CI13XX",
+            "ci13xx@1.0.18",
+            "chipintelli/ci13xx",
+            "chipintelli/ci13xx@1.0.18",
+            "https://github.com/coloz/arduino-ci130x.git",
+            "https://github.com/coloz/arduino-ci130x.git#6a7f7ab6e526d92d619d4e46923dbe38b9454b8f",
+        ] {
+            let serialized = Platform::from_platform_str(spec)
+                .map(|platform| serde_json::to_string(&platform).unwrap());
+            assert_eq!(
+                serialized.as_deref(),
+                Some("\"ci13xx\""),
+                "CI13xx platform spec must retain its canonical identity: {spec}"
+            );
+        }
+
+        // A new RISC-V family must not steal another native platform's identity.
+        for (spec, expected) in [
+            ("ch32v", "\"ch32v\""),
+            ("platformio/espressif32@6.3.0", "\"espressif32\""),
+            ("atmelavr", "\"atmelavr\""),
+        ] {
+            let serialized = Platform::from_platform_str(spec)
+                .map(|platform| serde_json::to_string(&platform).unwrap());
+            assert_eq!(serialized.as_deref(), Some(expected), "{spec}");
+        }
     }
 
     #[test]

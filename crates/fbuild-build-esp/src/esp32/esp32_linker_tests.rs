@@ -508,3 +508,212 @@ fn an_ordinary_elf2image_error_keeps_its_original_text() {
     assert!(message.contains("invalid chip"), "{message}");
     assert!(!message.contains("insufficient disk space"), "{message}");
 }
+
+// ---------------------------------------------------------------------------
+// Cross-project `elf2image` reuse (FastLED/fbuild#1894)
+// ---------------------------------------------------------------------------
+
+use crate::esp32::firmware_bin_cache;
+
+fn linker_with_bin_cache(root: &Path) -> Esp32Linker {
+    let mut linker = test_linker("esp32s3");
+    linker.link_output_cache_dir = Some(NormalizedPath::new(root));
+    // A converter that cannot possibly run: any spawn is a hard error, so a
+    // green `convert_firmware` on the reuse path proves esptool never ran.
+    linker.esptool_bin = Some(NormalizedPath::new("/nonexistent/esptool-elf2image"));
+    linker
+}
+
+/// The image is reused across directories, so its key must ignore the path and
+/// follow exactly the inputs that change the bytes.
+#[test]
+fn firmware_bin_key_ignores_path_and_follows_inputs() {
+    let first = tempfile::TempDir::new().unwrap();
+    let second = tempfile::TempDir::new().unwrap();
+    let elf_a = first.path().join("firmware.elf");
+    let elf_b = second.path().join("firmware.elf");
+    std::fs::write(&elf_a, b"elf-bytes").unwrap();
+    std::fs::write(&elf_b, b"elf-bytes").unwrap();
+
+    let identity = ["chip=esp32s3", "mode=qio"];
+    let key_a = firmware_bin_cache::content_key(&elf_a, &identity).unwrap();
+    let key_b = firmware_bin_cache::content_key(&elf_b, &identity).unwrap();
+    assert_eq!(
+        key_a, key_b,
+        "same bytes in another directory must share a key"
+    );
+
+    std::fs::write(&elf_b, b"elf-bytez").unwrap();
+    let key_changed_elf = firmware_bin_cache::content_key(&elf_b, &identity).unwrap();
+    assert_ne!(
+        key_a, key_changed_elf,
+        "different ELF bytes must not share a key"
+    );
+
+    let other_identity = ["chip=esp32s3", "mode=dio"];
+    let key_changed_flash = firmware_bin_cache::content_key(&elf_a, &other_identity).unwrap();
+    assert_ne!(
+        key_a, key_changed_flash,
+        "different flash parameters must not share a key"
+    );
+
+    assert!(
+        firmware_bin_cache::content_key(&second.path().join("absent.elf"), &identity).is_none(),
+        "an unreadable ELF is a miss, never a panic"
+    );
+}
+
+#[test]
+fn firmware_bin_round_trip_across_directories() {
+    let cache = tempfile::TempDir::new().unwrap();
+    let built = tempfile::TempDir::new().unwrap();
+    let fresh = tempfile::TempDir::new().unwrap();
+
+    let image = built.path().join("firmware.bin");
+    std::fs::write(&image, b"converted-image").unwrap();
+    firmware_bin_cache::store(cache.path(), "deadbeef", &image);
+
+    let dest = fresh.path().join("firmware.bin");
+    assert!(
+        firmware_bin_cache::restore(cache.path(), "deadbeef", &dest),
+        "a stored image must restore into another directory"
+    );
+    assert_eq!(std::fs::read(&dest).unwrap(), b"converted-image");
+
+    let missing = fresh.path().join("missing.bin");
+    assert!(
+        !firmware_bin_cache::restore(cache.path(), "cafebabe", &missing),
+        "an unknown key is a miss"
+    );
+    assert!(!missing.exists(), "a miss must not create the destination");
+}
+
+#[test]
+fn firmware_bin_prune_keeps_the_newest_images() {
+    let cache = tempfile::TempDir::new().unwrap();
+    for key in ["older", "newest"] {
+        let source = cache.path().join(format!("{key}-source"));
+        std::fs::write(&source, vec![0u8; 10]).unwrap();
+        firmware_bin_cache::store(cache.path(), key, &source);
+        std::fs::remove_file(&source).unwrap();
+        // Distinct mtimes decide the eviction order. A 30 ms step is far above
+        // the timestamp granularity of every filesystem CI runs on.
+        std::thread::sleep(std::time::Duration::from_millis(30));
+    }
+
+    firmware_bin_cache::prune_to(cache.path(), 10);
+    assert!(
+        !cache.path().join("older.bin").exists(),
+        "the oldest image must be evicted first"
+    );
+    assert!(
+        cache.path().join("newest.bin").exists(),
+        "the newest image must survive the prune"
+    );
+}
+
+/// The whole point: a fresh directory whose ELF came from the link cache must
+/// not spawn esptool at all, and must still produce the cached bytes.
+#[tokio::test]
+async fn converted_firmware_is_reused_without_running_esptool() {
+    let cache = tempfile::TempDir::new().unwrap();
+    let out = tempfile::TempDir::new().unwrap();
+    let linker = linker_with_bin_cache(cache.path());
+    let flash_size = linker.flash_size();
+
+    let elf = out.path().join("firmware.elf");
+    std::fs::write(&elf, b"elf-payload").unwrap();
+    let (root, key) = linker.firmware_bin_entry(&elf, &flash_size).unwrap();
+    let prebuilt = cache.path().join("prebuilt.bin");
+    std::fs::write(&prebuilt, b"image-from-a-previous-project").unwrap();
+    firmware_bin_cache::store(root.as_path(), &key, &prebuilt);
+
+    let converted = linker.convert_firmware(&elf, out.path()).await.unwrap();
+    assert_eq!(
+        std::fs::read(&converted).unwrap(),
+        b"image-from-a-previous-project",
+        "the cached image must be what the build ships"
+    );
+
+    // The restore also records the per-project cache, so the next build in
+    // this directory never even consults the shared cache.
+    let local = out.path().join(".firmware_bin_cache.json");
+    assert!(local.exists(), "a restore must record the local bin cache");
+    let again = linker.convert_firmware(&elf, out.path()).await.unwrap();
+    assert_eq!(
+        std::fs::read(&again).unwrap(),
+        b"image-from-a-previous-project"
+    );
+}
+
+// ---------------------------------------------------------------------------
+// Cross-project `size` report reuse (FastLED/fbuild#1894)
+// ---------------------------------------------------------------------------
+
+use crate::esp32::size_report_cache;
+
+fn linker_with_size_cache(root: &Path) -> Esp32Linker {
+    let mut linker = test_linker("esp32s3");
+    linker.link_output_cache_dir = Some(NormalizedPath::new(root));
+    // A `size` binary that cannot possibly run: any spawn is a hard error, so
+    // a successful `report_size` on the reuse path proves it never ran.
+    linker.size_path = NormalizedPath::new("/nonexistent/size-tool");
+    linker
+}
+
+/// The point: a fresh directory whose ELF came from the link cache must not
+/// spawn the size tool, and must still report the same numbers.
+#[tokio::test]
+async fn size_report_is_reused_without_running_the_size_tool() {
+    let cache = tempfile::TempDir::new().unwrap();
+    let out = tempfile::TempDir::new().unwrap();
+    let linker = linker_with_size_cache(cache.path());
+
+    let elf = out.path().join("firmware.elf");
+    std::fs::write(&elf, b"elf-payload").unwrap();
+    let (root, key) = linker.size_report_entry(&elf).unwrap();
+    let recorded = SizeInfo {
+        text: 1000,
+        data: 20,
+        bss: 30,
+        total_flash: 1050,
+        total_ram: 50,
+        max_flash: None,
+        max_ram: None,
+    };
+    size_report_cache::store(root.as_path(), &key, &recorded);
+
+    let info = linker.report_size(&elf).await.unwrap();
+    assert_eq!(
+        info.total_flash, 1050,
+        "the cached numbers must be reported"
+    );
+    assert_eq!(info.total_ram, 50);
+    assert_eq!(
+        info.max_flash,
+        linker.flash_limit(),
+        "limits come from config, never from the cache"
+    );
+    assert_eq!(info.max_ram, linker.max_ram);
+
+    // The restore also records the per-project stamp, so the next build in this
+    // directory never even consults the shared cache.
+    assert!(
+        out.path().join(".firmware_size_cache.json").exists(),
+        "a restore must record the local size cache"
+    );
+    let again = linker.report_size(&elf).await.unwrap();
+    assert_eq!(again.total_flash, 1050);
+
+    // And an ELF with no entry anywhere still fails when the tool cannot run —
+    // so the assertions above really did skip the spawn.
+    let cold_root = tempfile::TempDir::new().unwrap();
+    let cold_out = tempfile::TempDir::new().unwrap();
+    let cold = linker_with_size_cache(cold_root.path());
+    let cold_elf = cold_out.path().join("firmware.elf");
+    std::fs::write(&cold_elf, b"elf-payload").unwrap();
+    assert!(
+        cold.report_size(&cold_elf).await.is_err(),
+        "an uncached ELF must fail when the size tool cannot run"
+    );
+}

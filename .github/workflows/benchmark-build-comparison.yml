@@ -18,7 +18,9 @@ on:
 
 concurrency:
   group: benchmark-build-comparison-${{ github.ref }}
-  cancel-in-progress: true
+  # A run takes ~2.5 h, so a later push or the nightly cron would cancel almost
+  # every run before it publishes (run 42349265922). Queue instead.
+  cancel-in-progress: false
 
 permissions:
   contents: read
@@ -26,10 +28,12 @@ permissions:
 env:
   CARGO_TERM_COLOR: always
   RUSTFLAGS: '-D warnings'
-  PLATFORMIO_CORE_VERSION: '6.1.19'
+  # Match the rest of the fleet: the benchmark job installs two toolchains
+  # after building fbuild, so the default 5 GiB free-space floor aborts the
+  # build with "build volume has only N GiB free" on a fresh runner.
+  SOLDR_TARGET_BLOCK_FREE_GB: '2'
+  PLATFORMIO_CORE_VERSION: '6.2.0'
   ARDUINO_CLI_VERSION: '1.5.0'
-  ARDUINO_AVR_CORE_VERSION: '1.8.8'
-  ARDUINO_ESP32_CORE_VERSION: '3.3.7'
   # Resolve against the registry index committed at this sha, not the copy
   # this very workflow is about to publish (FastLED/fbuild#1829).
   FBUILD_MIRROR_MANIFEST_URL: https://raw.githubusercontent.com/${{ github.repository }}/${{ github.sha }}/site/mirror/manifest.json
@@ -38,7 +42,9 @@ jobs:
   benchmark:
     name: Measure and publish Blink builds
     runs-on: ubuntu-24.04
-    timeout-minutes: 60
+    # Cold trials install from nothing at 10 Mbit: ~670 MB for PlatformIO and
+    # ~1.8 GB for Arduino CLI on ESP32-S3, three times each.
+    timeout-minutes: 300
     steps:
       - uses: actions/checkout@v6
         with:
@@ -69,11 +75,8 @@ jobs:
           uv tool install --with pip "platformio==${PLATFORMIO_CORE_VERSION}"
           arduino-cli config add board_manager.additional_urls \
             https://espressif.github.io/arduino-esp32/package_esp32_index.json
+          # Only the index is primed. Packages install inside the timed builds.
           arduino-cli core update-index
-          arduino-cli core install "arduino:avr@${ARDUINO_AVR_CORE_VERSION}"
-          arduino-cli core install "esp32:esp32@${ARDUINO_ESP32_CORE_VERSION}"
-          pio pkg install --project-dir bench/blink --environment uno
-          pio pkg install --project-dir bench/blink --environment esp32s3
 
       - name: Build fbuild and benchmark runner
         shell: bash
@@ -83,27 +86,6 @@ jobs:
             -p fbuild-cli --bin fbuild \
             -p fbuild-daemon --bin fbuild-daemon \
             -p fbuild-bench-fastled-examples --bin bench-build-comparison
-
-      - name: Prime package downloads outside timed measurements
-        shell: bash
-        run: |
-          set -euo pipefail
-          mkdir -p benchmark-output/bootstrap-arduino
-          arduino-cli compile \
-            --fqbn arduino:avr:uno \
-            --build-path benchmark-output/bootstrap-arduino \
-            bench/blink
-          target/release/fbuild build bench/blink -e uno --release
-          target/release/fbuild clean all bench/blink -e uno --release
-          rm -rf benchmark-output/bootstrap-arduino
-          mkdir -p benchmark-output/bootstrap-arduino
-          arduino-cli compile \
-            --fqbn esp32:esp32:esp32s3 \
-            --build-path benchmark-output/bootstrap-arduino \
-            bench/blink
-          target/release/fbuild build bench/blink -e esp32s3 --release
-          target/release/fbuild clean all bench/blink -e esp32s3 --release
-          rm -rf benchmark-output/bootstrap-arduino
 
       - name: Restore rolling history
         shell: bash
@@ -122,23 +104,83 @@ jobs:
             fi
           fi
 
+      - name: Create the 10 Mbit/s benchmark network namespace
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Do NOT shape the runner's own interface. Throttling all ingress
+          # starves the runner's control channel to GitHub and the job dies with
+          # "the hosted runner lost communication with the server" (run
+          # 41969830529). Instead put the benchmark in its own netns behind a
+          # veth pair and shape only that veth, so every process in the
+          # benchmark tree is limited and the runner keeps full connectivity.
+          iface="$(ip route | awk '/^default/{print $5; exit}')"
+          if [[ -z "${iface}" ]]; then
+            echo "::error::no default-route interface found"
+            exit 1
+          fi
+          sudo -S -p '' ip netns add bench
+          sudo -S -p '' ip link add veth-h type veth peer name veth-b
+          sudo -S -p '' ip link set veth-b netns bench
+          sudo -S -p '' ip addr add 10.200.0.1/24 dev veth-h
+          sudo -S -p '' ip link set veth-h up
+          sudo -S -p '' ip netns exec bench ip link set lo up
+          sudo -S -p '' ip netns exec bench ip addr add 10.200.0.2/24 dev veth-b
+          sudo -S -p '' ip netns exec bench ip link set veth-b up
+          sudo -S -p '' ip netns exec bench ip route add default via 10.200.0.1
+          sudo -S -p '' sysctl -qw net.ipv4.ip_forward=1
+          sudo -S -p '' iptables -t nat -A POSTROUTING -s 10.200.0.0/24 -o "${iface}" -j MASQUERADE
+          sudo -S -p '' iptables -A FORWARD -i veth-h -o "${iface}" -j ACCEPT
+          sudo -S -p '' iptables -A FORWARD -i "${iface}" -o veth-h -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+          sudo -S -p '' mkdir -p /etc/netns/bench
+          echo 'nameserver 1.1.1.1' | sudo -S -p '' tee /etc/netns/bench/resolv.conf >/dev/null
+          # Host->namespace traffic is what downloads traverse; shape it.
+          sudo -S -p '' tc qdisc replace dev veth-h root tbf rate 10mbit burst 64kb latency 400ms
+          echo "bench netns up; veth-h shaped to 10 Mbit/s (egress into bench)"
+
+          read -r speed size elapsed <<<"$(sudo ip netns exec bench curl -sS -o /dev/null --max-time 240             -w '%{speed_download} %{size_download} %{time_total}'             'https://speed.cloudflare.com/__down?bytes=10000000')"
+          echo "namespace download probe: ${size} bytes at ${speed} B/s in ${elapsed}s"
+          # Reject an unshaped link (>1.8 MB/s) and an over-throttled one
+          # (<0.9 MB/s), so "10 Mbit" means ~10 Mbit rather than "some number".
+          if ! awk -v s="${speed}" -v n="${size}" 'BEGIN { exit !(n >= 9000000 && s <= 1800000 && s >= 900000) }'; then
+            echo "::error::namespace probe got ${speed} B/s for ${size} bytes; not ~10 Mbit/s (0.9-1.8 MB/s)"
+            exit 1
+          fi
+
       - name: Run cold/warm comparison and render site
         shell: bash
         run: |
           set -euo pipefail
           echo "Runner parallelism: nproc=$(nproc)"
           generated_at="$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+          sudo ip netns exec bench runuser -u "$(id -un)" -- \
+            env HOME="${HOME}" PATH="${PATH}" \
           target/release/bench-build-comparison \
             --project-dir bench/blink \
             --fbuild target/release/fbuild \
             --output-dir benchmark-stats \
             --trials 3 \
+            --network-mbit 10 \
             --repository "${GITHUB_REPOSITORY}" \
             --git-sha "${GITHUB_SHA}" \
             --generated-at "${generated_at}" \
             --run-url "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" \
             --pages-url https://fastled.github.io/fbuild/ \
             --raw-base-url https://raw.githubusercontent.com/FastLED/fbuild/benchmark-stats
+
+      - name: Remove the benchmark network namespace
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo -S -p '' ip netns del bench 2>/dev/null || true
+          sudo -S -p '' ip link del veth-h 2>/dev/null || true
+          iface="$(ip route | awk '/^default/{print $5; exit}')"
+          if [[ -n "${iface}" ]]; then
+            sudo -S -p '' iptables -t nat -D POSTROUTING -s 10.200.0.0/24 -o "${iface}" -j MASQUERADE 2>/dev/null || true
+            sudo -S -p '' iptables -D FORWARD -i veth-h -o "${iface}" -j ACCEPT 2>/dev/null || true
+            sudo -S -p '' iptables -D FORWARD -i "${iface}" -o veth-h -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT 2>/dev/null || true
+          fi
 
       - name: Summarize cold-build breakdown
         if: always()

@@ -234,6 +234,13 @@ fn resolve_framework(
             "framework-arduinoch32v",
             Ch32vCores::new(project_dir).get_libraries_dir(),
         ),
+        Platform::Ci13xx => info(
+            "arduino-ci13xx",
+            fbuild_build::ci13xx::installed_framework_root(project_dir)
+                .map_err(|error| error.to_string())?
+                .join("libraries")
+                .into_path_buf(),
+        ),
         Platform::Apollo3 => info(
             "framework-arduinoapollo3",
             Apollo3Cores::new(project_dir).get_libraries_dir(),

@@ -362,7 +362,7 @@ impl BuildOrchestrator for Nrf52Orchestrator {
         // directory` when compiling cores/nRF5/{Uart,delay}.h.
         let mut include_dirs = vec![core_dir.clone(), variant_dir.clone()];
         include_dirs.push(ctx.src_dir.clone());
-        pipeline::discover_project_includes(&params.project_dir, &mut include_dirs);
+        pipeline::discover_project_includes(&params.project_dir, &mut include_dirs)?;
         // Toolchain sysroot includes
         include_dirs.extend(toolchain.get_include_dirs());
         // CMSIS Core includes (core_cm4.h, etc.)

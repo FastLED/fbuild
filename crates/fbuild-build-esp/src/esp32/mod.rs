@@ -1,12 +1,14 @@
-﻿//! ESP32 platform build support (all variants: ESP32, C2, C3, C5, C6, P4, S3)
+//! ESP32 platform build support (all variants: ESP32, C2, C3, C5, C6, P4, S3)
 
 pub mod esp32_compiler;
 pub mod esp32_linker;
+pub(crate) mod firmware_bin_cache;
 pub mod fixups;
 pub mod mcu_config;
 pub mod orchestrator;
 pub mod printf_thin;
 pub(crate) mod size_report;
+pub(crate) mod size_report_cache;
 
 pub use esp32_compiler::Esp32Compiler;
 pub use esp32_linker::Esp32Linker;

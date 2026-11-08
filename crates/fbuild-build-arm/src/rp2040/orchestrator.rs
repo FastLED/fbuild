@@ -359,7 +359,7 @@ impl BuildOrchestrator for Rp2040Orchestrator {
                     &ctx.src_dir,
                     &key_inputs,
                     store,
-                )
+                )?
             }
             None => resolve_framework_library_sources_active_declared(
                 &framework_libs,
@@ -367,7 +367,7 @@ impl BuildOrchestrator for Rp2040Orchestrator {
                 &ctx.src_dir,
                 &defines,
                 &declared_deps,
-            ),
+            )?,
         };
         if !framework_library_sources.is_empty() {
             tracing::info!(
@@ -393,7 +393,7 @@ impl BuildOrchestrator for Rp2040Orchestrator {
         add_rp_board_includes(&board_props, &framework_dir, &mut include_dirs);
         include_dirs.extend(framework.get_framework_library_include_dirs());
         include_dirs.push(ctx.src_dir.clone());
-        pipeline::discover_project_includes(&params.project_dir, &mut include_dirs);
+        pipeline::discover_project_includes(&params.project_dir, &mut include_dirs)?;
         // Toolchain sysroot includes
         include_dirs.extend(toolchain.get_include_dirs());
         // Pico SDK includes

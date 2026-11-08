@@ -378,7 +378,8 @@ def names_documents(
 
 
 def build_documents(
-    hashed: dict[str, tuple[int, str]], systems: dict[str, list[str]], version: str
+    hashed: dict[str, tuple[int, str]], systems: dict[str, list[str]], version: str,
+    prebuilt: list[dict] | None = None,
 ) -> dict[str, str]:
     """Relative path -> rendered document."""
     unknown = sorted(set(hashed) - set(systems))
@@ -407,6 +408,22 @@ def build_documents(
         rel = f"shards/{shard_id(owner)}.json"
         docs[rel] = shard
         tools[owner] = descriptor(rel, shard)
+    if prebuilt:
+        # Assets retain the original whole-bundle URLs/digests. Optional slices
+        # are additive on the existing vendor-URL-keyed asset, never new tools.
+        rel = "shards/esp-libs.json"
+        text = render(
+            {
+                "$schema": SCHEMA,
+                "kind": "Release",
+                "schema_version": 1,
+                "tool": f"{TOOL}/esp-libs",
+                "version": version,
+                "components": prebuilt,
+            }
+        )
+        docs[rel] = text
+        tools["@esp-libs"] = descriptor(rel, text)
     for bucket, text in names_documents(hashed, systems, version).items():
         rel = f"shards/names-{bucket}.json"
         docs[rel] = text
@@ -426,6 +443,8 @@ def main() -> int:
         "--version",
         help=f"shard version (default: the version the shards on disk carry, else {DEFAULT_VERSION})",
     )
+    parser.add_argument("--prebuilt", type=Path,
+                        help="JSON component list with whole assets and optional slices maps")
     parser.add_argument("--workers", type=int, default=32)
     parser.add_argument(
         "--checkpoint",
@@ -451,7 +470,8 @@ def main() -> int:
     hashed = {key: (seen.size, seen.sha256) for key, seen in recorded.items()}
     missing = set(objects) - set(hashed)
     version = args.version or existing_version(args.out_dir)
-    docs = build_documents(hashed, load_systems(s3, args.state_db), version)
+    prebuilt = json.loads(args.prebuilt.read_text()) if args.prebuilt else None
+    docs = build_documents(hashed, load_systems(s3, args.state_db), version, prebuilt)
     shards_dir = args.out_dir / "shards"
     shards_dir.mkdir(parents=True, exist_ok=True)
     keep = {args.out_dir / rel for rel in docs}

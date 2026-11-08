@@ -55,21 +55,60 @@ impl BuildLayout {
 /// compile into it without a `.fbuild` component pass absolute paths, and
 /// those would otherwise keep the machine-specific tree.
 pub fn debug_prefix_map_args(project_dir: &Path, build_dir: &Path) -> Vec<String> {
+    prefix_map_args(project_dir, build_dir, &["-fdebug-prefix-map"])
+}
+
+/// Prefix-map arguments that cover **every** path-bearing channel a GCC 8+
+/// or clang toolchain understands: `-ffile-prefix-map`,
+/// `-fmacro-prefix-map` and `-fdebug-prefix-map`.
+///
+/// [`debug_prefix_map_args`] alone makes the *object bytes* independent of
+/// the project directory, but it is not enough for a shared cache key: a
+/// compiler-cache may only reuse an object across checkouts once the argv
+/// proves that file, macro and debug path remapping all cover the checkout
+/// root (zccache's `cc_prefix_maps_cover_root`). With only the debug channel
+/// mapped, the entry stays scoped to one worktree, so a brand-new project
+/// directory recompiles the sketch even though the artifact it would reuse is
+/// byte-identical (FastLED/fbuild#1414).
+///
+/// Use this on toolchains that accept all three flags (GCC 8+, clang). Older
+/// GCC releases (avr-gcc 7.3, the legacy ESP32 GCC 5) only have
+/// `-fdebug-prefix-map`; call [`debug_prefix_map_args`] there.
+pub fn portable_prefix_map_args(project_dir: &Path, build_dir: &Path) -> Vec<String> {
+    prefix_map_args(
+        project_dir,
+        build_dir,
+        &[
+            "-ffile-prefix-map",
+            "-fmacro-prefix-map",
+            "-fdebug-prefix-map",
+        ],
+    )
+}
+
+/// Shared body of the two public spellings: one flag per (channel, root).
+fn prefix_map_args(project_dir: &Path, build_dir: &Path, channels: &[&str]) -> Vec<String> {
     // Forward slashes, not the native rendering: the whole point of these
     // flags is that the recorded path is identical in every checkout, and that
     // includes checkouts on another OS. Native separators made the same
     // project emit `/p/sketch=...` on Linux and a backslash-spelled variant on Windows,
     // so the core cache could never share objects across hosts
     // (FastLED/fbuild#1780). Both spellings compile; only one is stable.
-    let mut args = vec![format!(
-        "-fdebug-prefix-map={}={DEBUG_PREFIX_MAP_ROOT}",
-        NormalizedPath::new(project_dir).display_slash()
+    let mut roots = vec![(
+        NormalizedPath::new(project_dir).display_slash(),
+        DEBUG_PREFIX_MAP_ROOT.to_string(),
     )];
     if !is_within(build_dir, project_dir) {
-        args.push(format!(
-            "-fdebug-prefix-map={}=fbuild-build",
-            NormalizedPath::new(build_dir).display_slash()
+        roots.push((
+            NormalizedPath::new(build_dir).display_slash(),
+            "fbuild-build".to_string(),
         ));
+    }
+    let mut args = Vec::with_capacity(roots.len() * channels.len());
+    for (root, label) in roots {
+        for channel in channels {
+            args.push(format!("{channel}={root}={label}"));
+        }
     }
     args
 }

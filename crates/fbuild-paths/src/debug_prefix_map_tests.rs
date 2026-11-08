@@ -8,7 +8,7 @@ use std::path::Path;
 
 use fbuild_core::BuildProfile;
 
-use crate::{BuildLayout, debug_prefix_map_args};
+use crate::{BuildLayout, debug_prefix_map_args, portable_prefix_map_args};
 
 #[test]
 fn debug_prefix_map_covers_a_build_dir_inside_the_project() {
@@ -76,5 +76,63 @@ fn debug_prefix_map_targets_do_not_depend_on_the_project_path() {
     for (left, right) in a.iter().zip(&b) {
         let target = |flag: &str| flag.rsplit_once('=').unwrap().1.to_string();
         assert_eq!(target(left), target(right), "{left} vs {right}");
+    }
+}
+
+/// The channels a shared compiler cache requires before it will reuse an
+/// object across project directories (zccache's `cc_prefix_maps_cover_root`
+/// needs file + macro + debug), in emission order.
+const PORTABLE_CHANNELS: [&str; 3] = [
+    "-ffile-prefix-map",
+    "-fmacro-prefix-map",
+    "-fdebug-prefix-map",
+];
+
+#[test]
+fn portable_prefix_map_covers_every_channel_for_the_project_root() {
+    let args = portable_prefix_map_args(Path::new("/work/sketch"), Path::new("/work/sketch"));
+    assert_eq!(
+        args,
+        PORTABLE_CHANNELS
+            .iter()
+            .map(|channel| format!("{channel}=/work/sketch=."))
+            .collect::<Vec<_>>()
+    );
+}
+
+#[test]
+fn portable_prefix_map_covers_an_external_build_root_on_every_channel() {
+    let args = portable_prefix_map_args(Path::new("/work/sketch"), Path::new("/tmp/out"));
+    assert_eq!(args.len(), 6, "{args:?}");
+    for channel in PORTABLE_CHANNELS {
+        assert!(
+            args.iter()
+                .any(|arg| arg == &format!("{channel}=/work/sketch=.")),
+            "{channel} must cover the project root: {args:?}"
+        );
+        assert!(
+            args.iter()
+                .any(|arg| arg == &format!("{channel}=/tmp/out=fbuild-build")),
+            "{channel} must cover the external build root: {args:?}"
+        );
+    }
+}
+
+/// The whole point of the trio: the remapped *targets* never depend on where
+/// the project lives, so two checkouts of one sketch produce one cache key.
+#[test]
+fn portable_prefix_map_targets_do_not_depend_on_the_project_path() {
+    let args_for = |project: &str| portable_prefix_map_args(Path::new(project), Path::new(project));
+    let a = args_for("/home/one/blink");
+    let b = args_for("/home/two/other-blink");
+    assert_eq!(a.len(), b.len());
+    for (left, right) in a.iter().zip(&b) {
+        let (left_flag, left_target) = left.split_once('=').expect("flag=root=target");
+        let (right_flag, right_target) = right.split_once('=').expect("flag=root=target");
+        assert_eq!(left_flag, right_flag);
+        assert_eq!(
+            left_target.split_once('=').expect("root=target").1,
+            right_target.split_once('=').expect("root=target").1
+        );
     }
 }

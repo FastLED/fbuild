@@ -49,6 +49,7 @@ fn platform_id(platform: Platform) -> &'static str {
         Platform::AtmelMegaAvr => "atmelmegaavr",
         Platform::AtmelSam => "atmelsam",
         Platform::Ch32v => "ch32v",
+        Platform::Ci13xx => "ci13xx",
         Platform::Espressif32 => "espressif32",
         Platform::Espressif8266 => "espressif8266",
         Platform::NordicNrf52 => "nordicnrf52",
@@ -259,6 +260,7 @@ mod tests {
 
     #[test]
     fn platform_id_covers_every_slice_of_the_report() {
+        assert_eq!(platform_id(Platform::Ci13xx), "ci13xx");
         assert_eq!(platform_id(Platform::Espressif32), "espressif32");
         assert_eq!(platform_id(Platform::RaspberryPi), "raspberrypi");
         assert_eq!(platform_id(Platform::AtmelAvr), "atmelavr");

@@ -7,10 +7,16 @@
 //! - Multi-line values (continuation lines starting with whitespace)
 //! - Inline comments (` ; comment` or ` # comment`)
 //! - Base `[env]` section merged into all `[env:*]` sections
+//! - `[platformio] extra_configs`: the listed INI files are merged over
+//!   `platformio.ini` (declaration order, later wins, wildcards allowed)
 
+mod extra_configs;
 mod parser;
 #[cfg(test)]
 mod tests;
+#[cfg(test)]
+#[path = "tests_extra_configs.rs"]
+mod tests_extra_configs;
 #[cfg(test)]
 #[path = "tests_library_archive.rs"]
 mod tests_library_archive;
@@ -21,7 +27,7 @@ use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 
 use self::parser::{parse_ini, resolve_all_envs};
-pub(crate) use self::values::parse_flags;
+pub use self::values::parse_flags;
 use self::values::{parse_lib_deps, parse_list_values, parse_path_list, strip_inline_comment};
 use crate::pio_env::PioEnvOverrides;
 
@@ -66,7 +72,8 @@ impl PlatformIOConfig {
             ))
         })?;
 
-        let sections = parse_ini(&content)?;
+        let mut sections = parse_ini(&content)?;
+        extra_configs::merge_extra_configs(path, &mut sections)?;
         let resolved_envs = resolve_all_envs(&sections)?;
 
         Ok(Self {

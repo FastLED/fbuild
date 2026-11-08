@@ -147,11 +147,20 @@ impl Esp32Toolchain {
         }
     }
 
+    /// Prefer a published per-chip slice of the unified toolchain for `chip`
+    /// (FastLED/fbuild#1944). The install lands in a chip-scoped cache
+    /// directory, because a slice holds ONE chip's SDK libs; a whole archive
+    /// keeps the shared directory that serves every chip.
+    pub fn with_slice_variant(mut self, chip: &str) -> Self {
+        self.base = self.base.with_slice_variant(chip);
+        self
+    }
+
     /// Get the resolved install directory, or compute it.
     fn resolved_dir(&self) -> PathBuf {
         self.install_dir
             .clone()
-            .unwrap_or_else(|| find_bin_root(&self.base.install_path()))
+            .unwrap_or_else(|| find_bin_root(&self.base.installed_path()))
     }
 
     /// Validate the toolchain installation.
@@ -203,7 +212,7 @@ impl crate::Package for Esp32Toolchain {
         if !self.base.is_cached() {
             return false;
         }
-        let root = find_bin_root(&self.base.install_path());
+        let root = find_bin_root(&self.base.installed_path());
         tool_binary(&root.join("bin"), &format!("{}gcc", self.prefix)).exists()
     }
 
@@ -427,6 +436,33 @@ mod tests {
         let nested = tmp.path().join("riscv32-esp-elf");
         std::fs::create_dir_all(nested.join("bin")).unwrap();
         assert_eq!(find_bin_root(tmp.path()), nested);
+    }
+
+    /// A chip-scoped slice install lives beside the shared directory, and
+    /// `is_installed`/`get_gcc_path` must find it there (FastLED/fbuild#1944).
+    #[test]
+    fn test_slice_variant_installs_into_a_chip_scoped_directory() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let cache = tmp.path().join("cache");
+        let shared = Esp32Toolchain::with_cache_root(tmp.path(), &cache, false, "xtensa-esp-elf-");
+        let tc = Esp32Toolchain::with_cache_root(tmp.path(), &cache, false, "xtensa-esp-elf-")
+            .with_slice_variant("ESP32-S3");
+        let chip_dir = tc.base.chip_install_path().expect("chip install path");
+        assert_ne!(chip_dir.as_path(), shared.base.install_path());
+        assert!(!tc.is_installed());
+
+        let bin = find_bin_root(&chip_dir).join("bin");
+        std::fs::create_dir_all(&bin).unwrap();
+        std::fs::write(bin.join("xtensa-esp-elf-gcc"), b"").unwrap();
+        std::fs::write(
+            crate::disk_cache::paths::install_complete_sentinel(&chip_dir),
+            b"",
+        )
+        .unwrap();
+
+        assert!(tc.is_installed(), "a chip-scoped install must be found");
+        assert_eq!(tc.get_gcc_path(), bin.join("xtensa-esp-elf-gcc"));
+        assert_eq!(tc.get_info().install_path, find_bin_root(&chip_dir));
     }
 
     #[test]

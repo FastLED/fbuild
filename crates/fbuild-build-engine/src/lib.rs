@@ -26,6 +26,7 @@ pub mod framework_core_cache;
 pub mod framework_libs;
 pub mod include_farm;
 mod link_digest;
+mod link_output_cache;
 mod link_overflow;
 pub mod linker;
 pub mod mcu_config;

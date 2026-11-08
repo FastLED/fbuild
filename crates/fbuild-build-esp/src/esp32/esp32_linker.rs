@@ -219,6 +219,9 @@ pub struct Esp32Linker {
     /// The app partition's size, which is what the image must fit. `None`
     /// falls back to `max_flash` (FastLED/fbuild#1409).
     app_size_limit: Option<u64>,
+    /// Cross-project link-output cache root (FastLED/fbuild#1894). `None`
+    /// disables reuse, which is the historical behaviour.
+    link_output_cache_dir: Option<NormalizedPath>,
     print_memory_usage: bool,
 }
 
@@ -261,12 +264,19 @@ impl Esp32Linker {
             caller_path: None,
             app_size_limit: None,
             print_memory_usage: true,
+            link_output_cache_dir: None,
         }
     }
 
     /// Builder: size-check the image against the app partition instead of
     /// the board's flash size. `max_flash` still drives esptool's
     /// `--flash-size`, so it cannot carry this limit.
+    /// Enable cross-project link-output reuse under `dir` (FastLED/fbuild#1894).
+    pub fn with_link_output_cache_dir(mut self, dir: Option<NormalizedPath>) -> Self {
+        self.link_output_cache_dir = dir;
+        self
+    }
+
     pub fn with_app_size_limit(mut self, limit: Option<u64>) -> Self {
         self.app_size_limit = limit;
         self
@@ -399,6 +409,132 @@ impl Esp32Linker {
         }
     }
 
+    /// Cross-project `elf2image` reuse lives beside the link-output cache
+    /// (FastLED/fbuild#1894): the ELF restored there is exactly the input whose
+    /// converted image we want back.
+    fn firmware_bin_cache_dir(&self) -> Option<NormalizedPath> {
+        self.link_output_cache_dir
+            .as_ref()
+            .map(|root| root.join("firmware-bin"))
+    }
+
+    /// Everything besides the ELF that changes what esptool emits. The
+    /// provisioned esptool binary lives under a versioned path, so its path and
+    /// length pin the converter; a bare name is pinned by
+    /// [`Self::esptool_fingerprint`] instead.
+    fn firmware_bin_identity(&self, flash_size: &str) -> Vec<String> {
+        let mut identity = vec![
+            format!("fingerprint={BUILD_FINGERPRINT_VERSION}"),
+            format!("chip={}", self.mcu_config.mcu),
+            format!("mode={}", self.flash_mode),
+            format!("freq={}", self.flash_freq),
+            format!("size={flash_size}"),
+            format!("esptool_path={}", self.esptool_fingerprint()),
+        ];
+        if let Some(bin) = self.esptool_bin.as_ref() {
+            identity.push(format!("esptool={}", bin.as_path().display()));
+            if let Ok(metadata) = std::fs::metadata(bin.as_path()) {
+                identity.push(format!("esptool_bytes={}", metadata.len()));
+            }
+        }
+        identity
+    }
+
+    /// Shared-cache root plus content key for the image `elf_out` converts to,
+    /// when the cache is enabled and the ELF is readable.
+    fn firmware_bin_entry(
+        &self,
+        elf_out: &Path,
+        flash_size: &str,
+    ) -> Option<(NormalizedPath, String)> {
+        let root = self.firmware_bin_cache_dir()?;
+        let identity = self.firmware_bin_identity(flash_size);
+        let identity: Vec<&str> = identity.iter().map(String::as_str).collect();
+        let key = super::firmware_bin_cache::content_key(elf_out, &identity)?;
+        Some((root, key))
+    }
+
+    /// Restore an image converted for another directory whose ELF was
+    /// byte-identical to this one. `true` means `bin_out` is ready and esptool
+    /// never ran.
+    fn restore_converted(&self, elf_out: &Path, bin_out: &Path, flash_size: &str) -> bool {
+        let Some((root, key)) = self.firmware_bin_entry(elf_out, flash_size) else {
+            return false;
+        };
+        if !super::firmware_bin_cache::restore(root.as_path(), &key, bin_out) {
+            return false;
+        }
+        tracing::info!("elf2image: restored firmware.bin (key={})", &key[..16]);
+        self.remember_bin(elf_out, flash_size);
+        true
+    }
+
+    fn store_converted(&self, elf_out: &Path, bin_out: &Path, flash_size: &str) {
+        let Some((root, key)) = self.firmware_bin_entry(elf_out, flash_size) else {
+            return;
+        };
+        super::firmware_bin_cache::store(root.as_path(), &key, bin_out);
+    }
+
+    /// Record the per-project bin cache after a cross-project restore, so the
+    /// next build in this directory takes the cheap path as well.
+    fn remember_bin(&self, elf_out: &Path, flash_size: &str) {
+        let Ok(cache) = self.current_bin_cache(elf_out, flash_size) else {
+            return;
+        };
+        let Some(output_dir) = elf_out.parent() else {
+            return;
+        };
+        if let Err(error) = save_json(&self.bin_cache_path(output_dir), &cache) {
+            tracing::warn!("failed to write firmware bin cache: {}", error);
+        }
+    }
+
+    /// Cross-project `size` reuse lives beside the link-output cache
+    /// (FastLED/fbuild#1894): `size` only reads the ELF, so an ELF restored from
+    /// another directory already has a report.
+    fn size_report_cache_dir(&self) -> Option<NormalizedPath> {
+        self.link_output_cache_dir
+            .as_ref()
+            .map(|root| root.join("firmware-size"))
+    }
+
+    /// Shared-cache root plus content key for the report of `elf_path`.
+    ///
+    /// The board limits are excluded on purpose: they come from config, can
+    /// change without a relink, and [`Self::report_size`] re-applies them.
+    fn size_report_entry(&self, elf_path: &Path) -> Option<(NormalizedPath, String)> {
+        let root = self.size_report_cache_dir()?;
+        let mut identity = vec![format!("fingerprint={BUILD_FINGERPRINT_VERSION}")];
+        identity.push(format!("size_tool={}", self.size_path.as_path().display()));
+        if let Ok(metadata) = std::fs::metadata(self.size_path.as_path()) {
+            identity.push(format!("size_tool_bytes={}", metadata.len()));
+        }
+        let identity: Vec<&str> = identity.iter().map(String::as_str).collect();
+        let key = super::size_report_cache::content_key(elf_path, &identity)?;
+        Some((root, key))
+    }
+
+    /// Restore the report another directory recorded for this ELF, patching in
+    /// this board's limits and recording the per-project cache so the next
+    /// build in this directory never consults the shared one.
+    fn restore_size_report(&self, elf_path: &Path) -> Option<SizeInfo> {
+        let (root, key) = self.size_report_entry(elf_path)?;
+        let mut size_info = super::size_report_cache::restore(root.as_path(), &key)?;
+        size_info.max_flash = self.flash_limit();
+        size_info.max_ram = self.max_ram;
+        tracing::info!("size: restored report (key={})", &key[..16]);
+        self.save_size_cache(elf_path, &size_info);
+        Some(size_info)
+    }
+
+    fn store_size_report(&self, elf_path: &Path, size_info: &SizeInfo) {
+        let Some((root, key)) = self.size_report_entry(elf_path) else {
+            return;
+        };
+        super::size_report_cache::store(root.as_path(), &key, size_info);
+    }
+
     fn load_cached_size(&self, elf_path: &Path) -> Option<SizeInfo> {
         let output_dir = elf_path.parent().unwrap_or_else(|| Path::new("."));
         let expected_stamp = match FileStamp::from_path(elf_path) {
@@ -506,6 +642,38 @@ impl Esp32Linker {
 
 #[async_trait::async_trait]
 impl Linker for Esp32Linker {
+    fn link_output_cache_dir(&self) -> Option<&Path> {
+        self.link_output_cache_dir
+            .as_ref()
+            .map(|path| path.as_path())
+    }
+
+    /// SDK flags and linker-script *contents*, which the generic digest cannot
+    /// see because they live on the linker rather than in `LinkExtraArgs`
+    /// (FastLED/fbuild#1894). Without this a cross-project cache key could
+    /// collide across two SDKs whose scripts differ at the same path.
+    fn link_fingerprint(&self) -> String {
+        use sha2::{Digest, Sha256};
+        let mut hasher = Sha256::new();
+        hasher.update(self.mcu_config.mcu.as_bytes());
+        hasher.update(self.mcu_config.linker_flags.join("\u{1f}").as_bytes());
+        hasher.update(self.mcu_config.linker_libs.join("\u{1f}").as_bytes());
+        hasher.update(self.sdk_ld_flags.join("\u{1f}").as_bytes());
+        hasher.update(self.sdk_lib_flags.join("\u{1f}").as_bytes());
+        for script in &self.linker_scripts.scripts {
+            hasher.update(script.as_bytes());
+            let direct = Path::new(script);
+            let contents = std::fs::read(direct).ok().or_else(|| {
+                self.linker_scripts
+                    .search_dirs
+                    .iter()
+                    .find_map(|dir| std::fs::read(dir.join(script)).ok())
+            });
+            hasher.update(contents.unwrap_or_default());
+        }
+        format!("{:x}", hasher.finalize())
+    }
+
     async fn archive(&self, objects: &[PathBuf], output: &Path) -> Result<()> {
         crate::linker::LinkerBase::archive(&self.ar_path, objects, output, "ar").await
     }
@@ -580,6 +748,11 @@ impl Linker for Esp32Linker {
             tracing::info!("elf2image: firmware.bin is current, skipping conversion");
             return Ok(bin_out);
         }
+        // A fresh project directory has no local bin cache, but its ELF is
+        // byte-identical to one already converted (FastLED/fbuild#1894).
+        if self.restore_converted(&elf_out, &bin_out, &flash_size) {
+            return Ok(bin_out);
+        }
         // Determine flash size from max_flash config (bytes → human-readable).
         // elf2image doesn't support "detect" — needs an explicit size.
         // Prefer the provisioned standalone esptool binary; fall back to an
@@ -612,6 +785,7 @@ impl Linker for Esp32Linker {
                 if let Err(e) = save_json(&self.bin_cache_path(output_dir), &cache) {
                     tracing::warn!("failed to write firmware bin cache: {}", e);
                 }
+                self.store_converted(&elf_out, &bin_out, &flash_size);
                 tracing::info!("converted firmware.elf → firmware.bin");
                 Ok(bin_out)
             }
@@ -651,6 +825,13 @@ impl Linker for Esp32Linker {
             return Ok(size_info);
         }
 
+        // A fresh directory has no local stamp, but its ELF came from the
+        // cross-project link cache and is byte-identical to one that was
+        // already sized (FastLED/fbuild#1894).
+        if let Some(size_info) = self.restore_size_report(elf_path) {
+            return Ok(size_info);
+        }
+
         let size_info = super::size_report::esp32_report_size(
             &self.size_path,
             elf_path,
@@ -659,6 +840,7 @@ impl Linker for Esp32Linker {
         )
         .await?;
         self.save_size_cache(elf_path, &size_info);
+        self.store_size_report(elf_path, &size_info);
         Ok(size_info)
     }
 }

@@ -1,0 +1,99 @@
+# Coverage registry for `ci` modules that a workflow invokes as a gate.
+#
+# A gate script enforces a policy with `--fail`; if nothing tests it, the policy
+# can be loosened and every job stays green. `ci/gate_script_coverage.py` fails
+# when a workflow invokes a module that is not declared here, when a declared
+# test path is missing or never mentions its subject, and when `untested` grows
+# past the budget pinned in `ci/test_gate_script_coverage.py`.
+#
+# `untested = []` means the gap is known and still open. Land a test, then
+# DELETE the entry -- the guard fails on a stale one. Never add an entry
+# without lowering something else: the list only shrinks.
+schema = 1
+
+untested = []
+
+[scripts.audit_ignored_tests]
+tests = ["ci/test_audit_ignored_tests.py"]
+
+[scripts.build_backend]
+# The PEP 517/660 backend every `pip install .` goes through: staleness cache
+# key (mtime + cargo profile + non-empty), atomic staging, cargo artifact
+# selection, and real wheel assembly (RECORD hashes/modes, METADATA, tag).
+tests = ["ci/test_build_backend.py"]
+
+[scripts.build_qemu_linux_runtime]
+# The QEMU runtime-library bundle builder: the closure walk/verification run
+# for real against a stubbed `ldd`, the constants shared with `esp_qemu*.rs`
+# are compared, and the fake-docker path proves an empty or missing artifact
+# cannot be hashed and published.
+tests = ["ci/test_build_qemu_linux_runtime.py"]
+
+[scripts.cancel_superseded]
+tests = ["ci/test_cancel_superseded.py"]
+
+[scripts.check_dylint_allowlists]
+tests = ["ci/test_check_dylint_allowlists.py"]
+
+[scripts.check_fbuild_path_baseline]
+tests = ["ci/test_check_fbuild_path_baseline.py"]
+
+[scripts.check_flash_offsets]
+tests = ["ci/test_check_flash_offsets.py"]
+
+[scripts.check_glibc_floor]
+tests = ["ci/test_check_glibc_floor.py"]
+
+[scripts.check_no_legacy_cross]
+tests = ["ci/test_no_legacy_cross.py"]
+
+[scripts.check_python_complexity]
+tests = ["ci/test_check_python_complexity.py"]
+
+[scripts.check_rust_toolchain_pins]
+tests = ["ci/test_rust_toolchain_pins.py"]
+
+[scripts.check_test_layout]
+tests = ["ci/test_check_test_layout.py"]
+
+[scripts.check_usb_vidpid_literals]
+tests = ["ci/test_check_usb_vidpid_literals.py"]
+
+[scripts.check_workflow_concurrency]
+tests = ["ci/test_workflow_concurrency.py"]
+
+[scripts.check_workspace_crates]
+tests = ["ci/test_crate_guard_parity.py"]
+
+[scripts.enforce_platform_boundary]
+tests = ["ci/test_enforce_platform_boundary.py"]
+
+[scripts.find_direct_subprocess]
+tests = ["ci/test_find_direct_subprocess.py"]
+
+[scripts.gate_jobs]
+tests = ["ci/test_gate_jobs.py"]
+
+[scripts.platform_boundary_research]
+tests = ["ci/test_platform_boundary_research.py"]
+
+[scripts.publish]
+tests = ["ci/test_publish_quota.py"]
+
+[scripts.reclaim_android_ndks]
+tests = ["ci/test_reclaim_android_ndks.py"]
+
+[scripts.render_workflows]
+tests = ["ci/test_fractional_workflows.py"]
+
+[scripts.select_boards]
+tests = ["ci/test_select_boards.py"]
+
+[scripts.sign_windows_release]
+tests = ["ci/test_sign_windows_release.py"]
+
+[scripts.validate_boards]
+tests = ["ci/test_validate_boards.py"]
+
+[scripts.wheel_check]
+tests = ["ci/test_wheel_check.py"]

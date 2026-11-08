@@ -959,7 +959,7 @@ pub async fn verify_checksum_async(path: &Path, expected: &str) -> Result<()> {
 }
 
 #[path = "downloader_mirror_manifest.rs"]
-mod manifest;
+pub(crate) mod manifest;
 pub(crate) use manifest::{
     CACHE_TTL, MirrorManifest, ShardLookup, current as published_manifest, load_with, names_key,
     owner_key,
@@ -972,6 +972,7 @@ mod manifest_tests;
 mod mirror_tests;
 #[path = "downloader_mirrors.rs"]
 mod mirrors;
+pub(crate) use mirrors::manifest_enabled;
 use mirrors::{download_from_candidates, get_from_candidates, resolve_candidates};
 
 #[cfg(test)]

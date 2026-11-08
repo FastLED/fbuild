@@ -32,3 +32,12 @@ jobs:
       fbuild-artifact: ${{ inputs.fbuild-run-id && 'fbuild-bin-linux-debug' || '' }}
       fbuild-run-id: ${{ inputs.fbuild-run-id }}
       toolchain-cache: false
+      # teknic.com is a single vendor host behind Sucuri with no CDN: the 2026-11-07
+      # push run lost ClearCore-1.7.4 after the downloader's 5 attempts (~4 min) and
+      # failed this gate before any compilation, and FastLED/fbuild#1463 lost the
+      # same fetch on a release gate. Keep the 32 MB installed core between runs;
+      # the key hashes the file that pins its URL and checksum, so a repin downloads
+      # instead of restoring the old archive (the rule check-windows.yml's cache
+      # already follows).
+      package-cache-path: ~/.fbuild/prod/cache/platforms/www-ClearCore-1.7.4
+      package-cache-hash-files: crates/fbuild-library/src/library/clearcore_core.rs

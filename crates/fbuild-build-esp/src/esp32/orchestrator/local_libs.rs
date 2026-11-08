@@ -178,7 +178,11 @@ impl ProjectLibrary {
     }
 
     /// The archive name (`lib{name}.a`) this produces, if any, before compiling.
-    pub(super) fn name(&self, project_dir: &Path, src_dir: &Path) -> Option<String> {
+    pub(super) fn name(
+        &self,
+        project_dir: &Path,
+        src_dir: &Path,
+    ) -> fbuild_core::Result<Option<String>> {
         crate::pipeline::project_library_name(project_dir, src_dir, &self.existing_lib_names)
     }
 

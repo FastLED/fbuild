@@ -30,13 +30,11 @@ use crate::provision::{
 /// downloads the selected framework + libs packages.
 ///
 /// `env_config` is the resolved `[env:<name>]` section from `platformio.ini`,
-/// used to honor `platform_packages` overrides for both
-/// `platform-espressif32` and `framework-arduinoespressif32`
-/// (FastLED/fbuild#672). Pass `None` if no env is in scope (cold-cache /
-/// diagnostic paths) — both packages will fall back to their pinned defaults.
+/// used to honor `platform_packages` overrides (FastLED/fbuild#672). Pass
+/// `None` if no env is in scope — packages then use their pinned defaults.
 pub(super) async fn resolve_pioarduino_packages(
     project_dir: &Path,
-    mcu: &str,
+    board: &fbuild_config::BoardConfig,
     mcu_config: &Esp32McuConfig,
     env_config: Option<&HashMap<String, String>>,
 ) -> Result<(
@@ -45,6 +43,9 @@ pub(super) async fn resolve_pioarduino_packages(
     Option<NormalizedPath>,
     fbuild_packages::PackageInfo,
 )> {
+    // `build.chip_variant` (e.g. `esp32p4_es`) needs its own per-chip libs tree.
+    let mcu = board.mcu.as_str();
+    let sdk_variant = board.sdk_variant();
     // Ensure pioarduino platform (contains platform.json with metadata URLs).
     let platform = pioarduino_platform(project_dir, env_config, true)
         .await?
@@ -89,6 +90,7 @@ pub(super) async fn resolve_pioarduino_packages(
         ensure_sdk_libs(
             &framework,
             mcu,
+            sdk_variant,
             libs_url.as_deref(),
             skeleton_url.as_deref(),
         )
@@ -185,6 +187,7 @@ pub(crate) async fn provision_esp32(
     let project_dir = inputs.project_dir;
     let env_config = Some(inputs.env_config);
     let mcu = inputs.board.mcu.as_str();
+    let sdk_variant = inputs.board.sdk_variant();
     let mcu_config = get_mcu_config(mcu)?;
     let mut rows = Vec::new();
 
@@ -225,6 +228,7 @@ pub(crate) async fn provision_esp32(
                 &framework,
                 framework_ready,
                 mcu,
+                sdk_variant,
                 libs_url.as_deref(),
                 skeleton_url.as_deref(),
                 mode,
@@ -432,7 +436,8 @@ async fn resolve_and_create_toolchain(
                         resolved.sha256.as_deref(),
                         is_riscv,
                         &prefix,
-                    ))
+                    )
+                    .with_slice_variant(&mcu_config.mcu))
                 }
                 Err(e) => {
                     tracing::warn!("metadata resolution failed, using legacy URLs: {}", e);
@@ -566,6 +571,7 @@ fn cached_toolchain(
             is_riscv,
             &prefix,
         )
+        .with_slice_variant(&mcu_config.mcu)
     }))
 }
 
@@ -661,6 +667,7 @@ async fn provision_sdk_libs(
     framework: &fbuild_packages::library::Esp32Framework,
     framework_ready: bool,
     mcu: &str,
+    sdk_variant: &str,
     libs_url: Option<&str>,
     skeleton_url: Option<&str>,
     mode: ProvisionMode,
@@ -676,11 +683,11 @@ async fn provision_sdk_libs(
             ProvisionStatus::WouldFetch,
         )
     };
-    if framework_ready && framework.sdk_libs_installed(mcu) {
+    if framework_ready && framework.sdk_libs_installed(mcu, sdk_variant) {
         row.status = ProvisionStatus::Present;
     } else if mode.fetches() {
         if framework_ready {
-            match ensure_sdk_libs(framework, mcu, libs_url, skeleton_url).await {
+            match ensure_sdk_libs(framework, mcu, sdk_variant, libs_url, skeleton_url).await {
                 Ok(()) => row.status = ProvisionStatus::Fetched,
                 Err(error) => {
                     row.status = ProvisionStatus::Failed;
@@ -832,162 +839,8 @@ pub(crate) fn downloadable_lib_deps(
 }
 
 #[cfg(test)]
-mod registry_toolchain_tests {
-    use super::*;
-    use fbuild_core::platformio_package::{PackageKind as RegistryKind, resolve_registry_json};
-
-    #[test]
-    fn legacy_esp32s3_manifest_selects_its_per_mcu_toolchain() {
-        let mcu = get_mcu_config("esp32s3").unwrap();
-        assert_eq!(
-            per_mcu_toolchain_name(&mcu).as_deref(),
-            Some("toolchain-xtensa-esp32s3")
-        );
-        assert_eq!(
-            primary_toolchain_name(mcu.is_riscv()),
-            "toolchain-xtensa-esp-elf"
-        );
-        assert_eq!(mcu.toolchain_prefix(), "xtensa-esp32s3-elf-");
-        assert_eq!(
-            per_mcu_toolchain_name(&get_mcu_config("esp32c3").unwrap()),
-            None
-        );
-    }
-
-    #[test]
-    fn declared_per_mcu_toolchain_wins_over_unified() {
-        let s3 = get_mcu_config("esp32s3").unwrap();
-        let c3 = get_mcu_config("esp32c3").unwrap();
-        // official espressif32 6.x/7.x: both declared, Arduino uses per-MCU.
-        let both = |n: &str| n == "toolchain-xtensa-esp32s3" || n == "toolchain-xtensa-esp-elf";
-        assert_eq!(toolchain_name_for(&s3, both), "toolchain-xtensa-esp32s3");
-        // pioarduino 51.x: per-MCU only.
-        assert_eq!(
-            toolchain_name_for(&s3, |n| n == "toolchain-xtensa-esp32s3"),
-            "toolchain-xtensa-esp32s3"
-        );
-        // pioarduino 53.x/54.x: unified only, by registry version.
-        assert_eq!(
-            toolchain_name_for(&s3, |n| n == "toolchain-xtensa-esp-elf"),
-            "toolchain-xtensa-esp-elf"
-        );
-        // RISC-V always uses the shared package.
-        assert_eq!(toolchain_name_for(&c3, both), "toolchain-riscv32-esp");
-    }
-
-    #[test]
-    fn registry_payload_becomes_exact_checked_toolchain_package() {
-        let manifest = r#"{"packages":{"toolchain-xtensa-esp32s3":{"type":"toolchain","owner":"espressif","version":"12.2.0+20230208"}}}"#;
-        let requirement =
-            fbuild_core::platformio_package::resolve_platform_requirements(manifest, &[])
-                .unwrap()
-                .remove(0);
-        let hash = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-        let response = format!(
-            "{{\"name\":\"toolchain-xtensa-esp32s3\",\"owner\":{{\"username\":\"espressif\"}},\"versions\":[{{\"name\":\"12.2.0+20230208\",\"files\":[{{\"system\":[\"linux_x86_64\"],\"download_url\":\"https://example.test/s3-gcc12.tar.gz\",\"checksum\":{{\"sha256\":\"{hash}\"}}}}]}}]}}"
-        );
-        let payload = resolve_registry_json(
-            requirement.spec.registry().unwrap(),
-            RegistryKind::Tool,
-            "linux_x86_64",
-            &response,
-        )
-        .unwrap();
-        let temp = tempfile::tempdir().unwrap();
-        let toolchain = fbuild_packages::toolchain::Esp32Toolchain::from_registry_payload(
-            temp.path(),
-            &payload,
-            "xtensa-esp32s3-elf-",
-        );
-        let info = fbuild_packages::Package::get_info(&toolchain);
-        assert_eq!(info.name, "toolchain-xtensa-esp32s3");
-        assert_eq!(info.version, "12.2.0+20230208");
-        assert_eq!(info.url, "https://example.test/s3-gcc12.tar.gz");
-        assert_eq!(info.checksum.as_deref(), Some(hash));
-
-        cache_registry_payload(
-            temp.path(),
-            requirement.spec.registry().unwrap(),
-            "linux_x86_64",
-            &payload,
-        )
-        .unwrap();
-        assert_eq!(
-            cached_registry_payload(
-                temp.path(),
-                requirement.spec.registry().unwrap(),
-                "linux_x86_64"
-            )
-            .unwrap(),
-            Some(payload)
-        );
-        assert!(
-            cached_registry_payload(
-                temp.path(),
-                requirement.spec.registry().unwrap(),
-                "darwin_arm64"
-            )
-            .unwrap()
-            .is_none()
-        );
-    }
-
-    #[test]
-    fn legacy_xtensa_and_riscv_registry_files_select_each_host() {
-        let digest = "b".repeat(64);
-        for (name, prefix) in [
-            ("toolchain-xtensa-esp32s3", "xtensa-esp32s3-elf-"),
-            ("toolchain-riscv32-esp", "riscv32-esp-elf-"),
-        ] {
-            let manifest = serde_json::json!({"packages": {
-                name: {"type":"toolchain", "owner":"espressif", "version":"12.2.0+20230208"}
-            }});
-            let requirement = fbuild_core::platformio_package::resolve_platform_requirements(
-                &manifest.to_string(),
-                &[],
-            )
-            .unwrap()
-            .remove(0);
-            let response = serde_json::json!({
-                "name": name,
-                "owner": {"username":"espressif"},
-                "versions": [{"name":"12.2.0+20230208", "files": [
-                    {"system":["linux_x86_64"], "download_url":format!("https://example.test/{name}-linux.tar.gz"), "checksum":{"sha256":digest}},
-                    {"system":["windows_amd64","windows_arm64"], "download_url":format!("https://example.test/{name}-windows.tar.gz"), "checksum":{"sha256":digest}},
-                    {"system":["darwin_arm64"], "download_url":format!("https://example.test/{name}-macos.tar.gz"), "checksum":{"sha256":digest}}
-                ]}]
-            });
-            for (system, suffix) in [
-                ("linux_x86_64", "linux"),
-                ("windows_amd64", "windows"),
-                ("darwin_arm64", "macos"),
-            ] {
-                let payload = resolve_registry_json(
-                    requirement.spec.registry().unwrap(),
-                    RegistryKind::Tool,
-                    system,
-                    &response.to_string(),
-                )
-                .unwrap();
-                assert_eq!(
-                    payload.url,
-                    format!("https://example.test/{name}-{suffix}.tar.gz")
-                );
-                assert_eq!(payload.sha256, digest);
-                let temp = tempfile::tempdir().unwrap();
-                let package = fbuild_packages::toolchain::Esp32Toolchain::from_registry_payload(
-                    temp.path(),
-                    &payload,
-                    prefix,
-                );
-                assert_eq!(
-                    fbuild_packages::Package::get_info(&package).version,
-                    "12.2.0+20230208"
-                );
-            }
-        }
-    }
-}
+#[path = "packages_registry_toolchain_tests.rs"]
+mod registry_toolchain_tests;
 
 #[cfg(test)]
 #[path = "packages_legacy_tests.rs"]

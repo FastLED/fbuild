@@ -246,7 +246,7 @@ impl BuildOrchestrator for AvrOrchestrator {
         // (e.g. MiniCore's core dir is "MCUdude_corefiles", not "MiniCore").
         let mut include_dirs = vec![core_dir.clone(), variant_dir.clone()];
         include_dirs.push(ctx.src_dir.clone());
-        pipeline::discover_project_includes(&params.project_dir, &mut include_dirs);
+        pipeline::discover_project_includes(&params.project_dir, &mut include_dirs)?;
         // Toolchain sysroot includes (avr/io.h, etc.)
         include_dirs.extend(toolchain.get_include_dirs());
 

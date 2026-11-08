@@ -207,6 +207,48 @@ fn malformed_assets_are_rejected() {
     );
 }
 
+/// The committed `@esp-toolchain` shard ships to every client as one document,
+/// and one bad entry rejects the WHOLE manifest, so a malformed publish is
+/// silent global breakage rather than a local miss. Parsing it here means a
+/// publish is verified by the real client parser (FastLED/fbuild#1944).
+#[test]
+fn committed_toolchain_shard_resolves_the_esp32s3_slice() {
+    const VENDOR_XTENSA: &str = concat!(
+        "https://github.com/espressif/crosstool-NG/releases/download/",
+        "esp-14.2.0_20260121/xtensa-esp-elf-14.2.0_20260121-x86_64-linux-gnu.tar.xz"
+    );
+    let m = parse(include_str!(
+        "../../../site/mirror/shards/esp-toolchain.json"
+    ));
+    let entry = m.lookup(VENDOR_XTENSA).expect("committed toolchain URL");
+    // Bucket first, vendor as the fallback: the invariant the whole mirror
+    // document is held to.
+    assert_eq!(entry.urls.len(), 2);
+    assert!(
+        entry.urls[0].starts_with("https://fbuild.sfo3."),
+        "{:?}",
+        entry.urls
+    );
+    assert_eq!(entry.urls[1], VENDOR_XTENSA);
+    let slice = entry
+        .slices
+        .as_ref()
+        .and_then(|slices| slices.get("esp32s3"))
+        .expect("esp32s3 slice");
+    assert_eq!(slice.format, "tar.zst");
+    assert!(
+        slice.url.starts_with("https://fbuild.sfo3."),
+        "{}",
+        slice.url
+    );
+    assert!(slice.size > 0);
+    assert_ne!(
+        slice.sha256,
+        entry.sha256.clone().unwrap_or_default(),
+        "the slice is a different object from the whole archive"
+    );
+}
+
 #[test]
 fn url_policy_allows_https_and_loopback_http_only() {
     for ok in [
@@ -837,7 +879,15 @@ async fn committed_manifest_is_accepted_and_prefers_the_bucket() {
                 .map(|u| u.as_str().unwrap())
                 .collect();
             assert!(urls[0].starts_with("https://fbuild.sfo3.digitaloceanspaces.com/"));
-            assert!(urls[1].starts_with("https://dl.registry.platformio.org/download/"));
+            // Registry shards pair the bucket copy with the PlatformIO vendor
+            // URL. The prebuilt ESP libs shard pairs it with the upstream
+            // GitHub release instead, and carries additive per-chip slices.
+            if urls
+                .iter()
+                .any(|u| u.contains("dl.registry.platformio.org"))
+            {
+                assert!(urls[1].starts_with("https://dl.registry.platformio.org/download/"));
+            }
             let c = resolve_with(urls[1], shard.lookup(urls[1]));
             assert_eq!(c.urls[c.order[0]], urls[0]);
             assert!(c.mirror_sha256.is_some());

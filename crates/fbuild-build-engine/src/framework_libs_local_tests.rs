@@ -16,6 +16,7 @@ fn write_local_lib(project: &Path, name: &str, cpp: &str) {
 
 fn selected_names(project: &Path, src: &Path, declared: &[String]) -> Vec<String> {
     select_local_libraries(project, src, declared)
+        .unwrap()
         .into_iter()
         .map(|library| library.name)
         .collect()
@@ -130,6 +131,7 @@ fn unselected_local_library_source_cannot_select_framework_library() {
     }];
 
     let sources =
-        resolve_framework_library_sources_active(&libraries, &project, &src, &HashMap::new());
+        resolve_framework_library_sources_active(&libraries, &project, &src, &HashMap::new())
+            .unwrap();
     assert!(sources.is_empty(), "{sources:?}");
 }

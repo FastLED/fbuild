@@ -29,13 +29,35 @@ DRIFT_UNITTEST_MODULES: tuple[str, ...] = (
     "ci.test_gen_mirror_manifest",
     "ci.test_benchmark_publish",
     "ci.test_sign_windows_release",
+    "ci.test_check_python_complexity",
+    "ci.test_crate_guard_parity",
+    "ci.test_find_direct_subprocess",
+    "ci.test_audit_ignored_tests",
     "ci.test_local_suites",
+    "ci.test_gate_script_coverage",
+    "ci.test_check_fbuild_path_baseline",
+    "ci.test_check_flash_offsets",
+    "ci.test_cancel_superseded",
+    "ci.test_check_dylint_allowlists",
+    "ci.test_validate_boards",
+    "ci.test_build_backend",
+    "ci.test_build_qemu_linux_runtime",
+    "ci.test_setup_soldr_cache_keys",
+    "ci.test_gate_jobs",
+    "ci.test_wheel_check",
+    "ci.test_check_test_layout",
+    "ci.test_lint_entrypoint",
+    "ci.test_select_boards",
+    "ci.test_run_dylint",
 )
 
 # Modules the local gate additionally runs. Their subject is the local proof
 # lane, and `ci.test_shared_replay` imports the pinned `ci-lint` package that
 # only `ci/local_gate.py` installs -- hosted CI deliberately does not.
 LOCAL_ONLY_MODULES: tuple[str, ...] = (
+    "ci.test_slice_esp_libs",
+    "ci.test_slice_toolchain",
+    "ci.test_publish_toolchain_slices",
     "ci.test_shared_replay",
     "ci.test_test_cache_status",
 )
@@ -45,16 +67,21 @@ LOCAL_UNITTEST_MODULES: tuple[str, ...] = DRIFT_UNITTEST_MODULES + LOCAL_ONLY_MO
 # Pre-existing decorative guards: unit tests whose tool exists and passes, but
 # which no workflow or script invokes. They predate this guard and are listed
 # here so it fails on NEW ones; wiring them into a lane is separate work.
-# The guard fails if an entry disappears or becomes wired, so the list can only
-# shrink.
-KNOWN_UNWIRED: frozenset[str] = frozenset(
-    {
-        "test_check_test_layout",
-        "test_gate_jobs",
-        "test_lint_entrypoint",
-        "test_run_dylint",
-        "test_select_boards",
-        "test_setup_soldr_cache_keys",
-        "test_wheel_check",
-    }
-)
+# The guard fails if an entry disappears, becomes wired, or if the set outgrows
+# MAX_UNWIRED, so the list can only shrink.
+# The measured debt on 2026-11-06 was seven modules. `test_setup_soldr_cache_keys`
+# (the #1843 cache-key collision class), `test_gate_jobs` (the `CI summary`
+# aggregator -- the required check that gates every merge here), `test_wheel_check`
+# (the release gate that keeps debug info out of the PyPI wheels, #1756's
+# stranded-release class), `test_check_test_layout` (the Crate Gate's #1577
+# no-stray-test-binary rule), `test_lint_entrypoint` (the `uv run --script lint`
+# entry point behind the RUST-033 clippy+dylint rule of #1793) and
+# `test_select_boards` (the fail-open diff->board dispatcher: an unknown diff must
+# select every board) and `test_run_dylint` (the two-step `soldr dylint prepare`
+# -> lint gate that `uv run --script lint` ends with: a failed prepare must stop
+# before the lint and report its own exit code) are now wired into the drift
+# registry, so the long-standing debt is zero and the list is empty. Adding a name
+# here means the class regrew -- wire the module, do not raise the budget.
+MAX_UNWIRED = 0
+
+KNOWN_UNWIRED: frozenset[str] = frozenset()

@@ -27,6 +27,7 @@ from ci.local_suites import (
     KNOWN_UNWIRED,
     LOCAL_ONLY_MODULES,
     LOCAL_UNITTEST_MODULES,
+    MAX_UNWIRED,
 )
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -107,6 +108,21 @@ class CoverageTests(unittest.TestCase):
             "a ci/test_*.py file that nothing runs is a decorative guard: "
             "register it in the drift workflow and ci/local_suites.py, or add "
             "it to KNOWN_UNWIRED with the reason",
+        )
+
+    def test_unwired_budget_never_grows(self) -> None:
+        """`KNOWN_UNWIRED` claims to only shrink; without a count it can grow.
+
+        The two tests above both stay green when a brand new module is added to
+        the allowlist: the name exists and it is (of course) still unwired. The
+        budget is what makes the docstring true -- shrink it with the wiring.
+        """
+        self.assertLessEqual(
+            len(KNOWN_UNWIRED),
+            MAX_UNWIRED,
+            "a new decorative guard was allowlisted instead of wired: register "
+            "it in the drift workflow and ci/local_suites.py, or argue the case "
+            "to raise MAX_UNWIRED in this test -- the list is meant to shrink",
         )
 
     def test_known_unwired_allowlist_has_no_stale_entries(self) -> None:

@@ -226,7 +226,7 @@ impl BuildOrchestrator for SilabsOrchestrator {
         if stack_include.is_dir() {
             include_dirs.push(stack_include);
         }
-        pipeline::discover_project_includes(&params.project_dir, &mut include_dirs);
+        pipeline::discover_project_includes(&params.project_dir, &mut include_dirs)?;
         include_dirs.extend(toolchain.get_include_dirs());
 
         // 6a. Download `lib_deps` from the registry / remote URLs before

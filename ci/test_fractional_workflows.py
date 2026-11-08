@@ -598,6 +598,117 @@ class FractionalWorkflowTests(unittest.TestCase):
             release["jobs"]["publish-pypi"]["permissions"],
         )
 
+    def test_board_workflows_pass_only_declared_template_inputs(self):
+        """A reusable workflow rejects an undeclared input at run startup.
+
+        Every `build-*.yml` entry point forwards its board configuration to
+        `template_build.yml`, and GitHub fails the whole run before the first
+        step when a caller passes an input the callee does not declare (or
+        omits a required one). Nothing read the two lists together, so a new
+        optional input -- like the package cache below -- could be added to
+        the template and dropped by the one board that needs it, silently
+        leaving that board on the uncached path.
+        """
+        declared = self.load("template_build.yml")[True]["workflow_call"]["inputs"]
+        required = {name for name, spec in declared.items() if spec.get("required")}
+        callers = 0
+        for workflow in sorted(render_workflows.WORKFLOWS_DIR.glob("build-*.yml")):
+            for job_name, job in self.load(workflow.name)["jobs"].items():
+                if job.get("uses") != "./.github/workflows/template_build.yml":
+                    continue
+                callers += 1
+                passed = set(job.get("with") or {})
+                self.assertEqual(
+                    set(), passed - set(declared),
+                    f"{workflow.name}:{job_name} passes undeclared template inputs",
+                )
+                self.assertEqual(
+                    set(), required - passed,
+                    f"{workflow.name}:{job_name} omits required template inputs",
+                )
+        # A glob that matches nothing would satisfy every assertion above.
+        self.assertGreater(callers, 50)
+
+    def test_vendor_package_cache_is_opted_in_whole(self):
+        """Half a package cache is worse than none: it restores nothing useful.
+
+        `package-cache-path`/`package-cache-hash-files` only work as a pair --
+        the key hashes the file that pins the package's URL and checksum, so a
+        board that sets one alone either cannot form a key or (with a
+        restore-keys fallback) restores a different vendor archive under the
+        pinned name. teknic.com lost the ClearCore core for a gate run on
+        2026-11-07 (FastLED/fbuild#1463 is the earlier loss), which is why that
+        board is the one opt-in.
+        """
+        steps = self.load("template_build.yml")["jobs"]["build"]["steps"]
+        restore = next(step for step in steps if step.get("id") == "board-package-cache")
+        save = next(step for step in steps if step.get("name") == "Save board package cache")
+        for step in (restore, save):
+            key = step["with"]["key"]
+            self.assertIn("hashFiles(inputs.package-cache-hash-files)", key)
+            self.assertIn("${{ inputs.env-name }}", key)
+            self.assertNotIn("restore-keys", step["with"])
+        self.assertIn("inputs.package-cache-path", restore["if"])
+        self.assertIn("always()", save["if"])
+        self.assertIn("cache-hit != 'true'", save["if"])
+
+        board_cache = {
+            board["workflow"]: board["package_cache"]
+            for board in render_workflows.load_sot()["boards"]
+            if board.get("package_cache")
+        }
+        self.assertEqual({"build-clearcore.yml"}, set(board_cache))
+        root = render_workflows.WORKFLOWS_DIR.parents[1]
+        for workflow, cache in board_cache.items():
+            passed = self.load(workflow)["jobs"]["build"]["with"]
+            self.assertEqual(cache["path"], passed["package-cache-path"])
+            self.assertEqual(cache["hash_files"], passed["package-cache-hash-files"])
+            # The downloader only skips its fetch when the installed tree sits
+            # at {cache_root}/platforms/<stem>/<hash>/<version> with the
+            # `.install_complete` sentinel, and the runners' root is prod.
+            self.assertTrue(cache["path"].startswith("~/.fbuild/prod/cache/platforms/"))
+            pinned = (root / cache["hash_files"]).read_text()
+            # The pinning file must actually pin: a URL and a sha256 literal.
+            self.assertIn("https://", pinned)
+            self.assertRegex(pinned, r"\b[0-9a-f]{64}\b")
+
+            # A pull request and a merge-queue entry run the board MATRIX, not
+            # build-<board>.yml, and those jobs pass template inputs from
+            # matrix values -- a cache that only the per-board workflow sets
+            # never reaches the jobs that gate the merge. Carry it on the
+            # matrix too, in every tier.
+            expected = {
+                "package_cache_path": cache["path"],
+                "package_cache_hash_files": cache["hash_files"],
+            }
+            for matrix_job, workflow_file in (
+                ("pr_boards", "ci-minimal.yml"),
+                ("boards", "ci-test.yml"),
+                ("boards", "ci-full.yml"),
+            ):
+                with self.subTest(matrix_job=f"{workflow_file}:{matrix_job}"):
+                    passed = self.load(workflow_file)["jobs"][matrix_job]["with"]
+                    self.assertEqual("${{ matrix.package_cache_path }}", passed["package-cache-path"])
+                    self.assertEqual(
+                        "${{ matrix.package_cache_hash_files }}",
+                        passed["package-cache-hash-files"],
+                    )
+            include = self.load("ci-full.yml")["jobs"]["boards"]["strategy"]["matrix"]["include"]
+            entry = next(row for row in include if row["workflow"] == workflow)
+            for key, value in expected.items():
+                self.assertEqual(value, entry[key], f"ci-full board matrix {key}")
+
+        # The renderer must refuse a half record instead of emitting half a pair.
+        for broken in (
+            {"path": "~/.fbuild/prod/cache/platforms/x", "note": "n"},
+            {"path": "/elsewhere", "hash_files": "Cargo.toml", "note": "n"},
+        ):
+            with self.subTest(broken=broken), self.assertRaises(ValueError):
+                render_workflows.validate_source_paths(
+                    {"families": {}, "boards": [{"workflow": "x.yml", "package_cache": broken}]},
+                    [],
+                )
+
     def test_called_workflows_fit_inside_their_callers_grant(self):
         workflows = {path.name: self.load(path.name) for path in render_workflows.WORKFLOWS_DIR.glob("*.yml")}
         failures = called_workflow_failures(workflows)

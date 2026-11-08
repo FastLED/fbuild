@@ -26,6 +26,8 @@
 //! the public API.
 
 mod deployer;
+#[cfg(test)]
+mod deployer_containment_tests;
 mod image;
 mod native_usb;
 mod parse;

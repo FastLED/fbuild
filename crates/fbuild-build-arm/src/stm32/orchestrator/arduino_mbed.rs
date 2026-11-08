@@ -97,7 +97,7 @@ pub(super) async fn build_arduino_mbed_stm32(
     ];
     include_dirs.extend(framework.get_variant_includes(&ctx.board.variant));
     include_dirs.push(ctx.src_dir.clone());
-    pipeline::discover_project_includes(&params.project_dir, &mut include_dirs);
+    pipeline::discover_project_includes(&params.project_dir, &mut include_dirs)?;
     dedupe_paths(&mut include_dirs);
 
     let mut variant_ldflags = fbuild_core::shell_split::split(
@@ -313,18 +313,48 @@ fn build_arduino_mbed_mcu_config(
     mbed_lib: PathBuf,
     board_ldflags: &[String],
 ) -> crate::generic_arm::ArmMcuConfig {
-    let cflags =
-        fbuild_core::shell_split::split(&framework.read_variant_file(variant_name, "cflags.txt"));
-    let cxxflags =
-        fbuild_core::shell_split::split(&framework.read_variant_file(variant_name, "cxxflags.txt"));
-    let ldflags =
-        fbuild_core::shell_split::split(&framework.read_variant_file(variant_name, "ldflags.txt"));
+    arduino_mbed_mcu_config_from_variant_text(
+        variant_name,
+        &framework.read_variant_file(variant_name, "cflags.txt"),
+        &framework.read_variant_file(variant_name, "cxxflags.txt"),
+        &framework.read_variant_file(variant_name, "ldflags.txt"),
+        mbed_lib,
+        board_ldflags,
+    )
+}
+
+/// Build the mbed MCU config from the variant's three flag files, verbatim.
+///
+/// Split out from [`build_arduino_mbed_mcu_config`] so the flag policy can be
+/// asserted without an installed `ArduinoCore-mbed` on disk.
+fn arduino_mbed_mcu_config_from_variant_text(
+    variant_name: &str,
+    cflags_text: &str,
+    cxxflags_text: &str,
+    ldflags_text: &str,
+    mbed_lib: PathBuf,
+    board_ldflags: &[String],
+) -> crate::generic_arm::ArmMcuConfig {
+    let cflags = fbuild_core::shell_split::split(cflags_text);
+    let cxxflags = fbuild_core::shell_split::split(cxxflags_text);
+    let ldflags = fbuild_core::shell_split::split(ldflags_text);
 
     let mut common_flags: Vec<String> = cflags
         .into_iter()
         .filter(|f| f != "-c" && !f.starts_with("-std="))
         .collect();
     common_flags.push("-nostdlib".to_string());
+    // ArduinoCore-mbed's `variants/<name>/cflags.txt` is only the *body* of
+    // Arduino's compile recipe: the `-MMD` that makes gcc emit a per-TU `.d`
+    // sits in `platform.txt`'s recipe, which this path never replays. Every
+    // other MCU config carries `-MMD` in its JSON, so without this line the
+    // mbed path is the only one that produces ZERO depfiles and
+    // `CompilerBase::needs_rebuild` degrades to a source-mtime comparison --
+    // and the source it stats is the *generated* `main.cpp`, whose mtime does
+    // not move when an included sketch tab or header is edited. Editing an
+    // included file therefore kept reporting a stale "compilation succeeded"
+    // (FastLED/fbuild#1948).
+    common_flags.push("-MMD".to_string());
     dedupe_strings(&mut common_flags);
 
     let c_flags = vec!["-std=gnu11".to_string()];
@@ -433,6 +463,94 @@ async fn preprocess_linker_script(
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    /// Verbatim shape of `ArduinoCore-mbed 4.5.0/variants/GIGA/cflags.txt`:
+    /// note the ABSENCE of `-MMD` — Arduino puts it in `platform.txt`'s
+    /// recipe, which this build path never replays.
+    const GIGA_CFLAGS: &str = "-c -std=gnu11 -DAPPLICATION_ADDR=0x8040000 -Os -Wall \
+-Wextra -Wno-missing-field-initializers -fdata-sections -ffunction-sections -mcpu=cortex-m7 \
+-mfloat-abi=softfp -mfpu=fpv5-d16 -mthumb";
+    const GIGA_CXXFLAGS: &str =
+        "-Wvla -c -fno-rtti -std=gnu++14 -Os -Wall -mcpu=cortex-m7 -mfloat-abi=softfp -mthumb";
+    const GIGA_LDFLAGS: &str = "-mcpu=cortex-m7 -mthumb -Wl,--gc-sections --specs=nano.specs";
+
+    fn giga_config() -> crate::generic_arm::ArmMcuConfig {
+        arduino_mbed_mcu_config_from_variant_text(
+            "GIGA",
+            GIGA_CFLAGS,
+            GIGA_CXXFLAGS,
+            GIGA_LDFLAGS,
+            PathBuf::from("/framework/libmbed.a"),
+            &[],
+        )
+    }
+
+    /// FastLED/fbuild#1948: without `-MMD` gcc writes no `.d`, so
+    /// `CompilerBase::needs_rebuild` only compares the *generated* `main.cpp`
+    /// against the object and an edited sketch tab or header never
+    /// invalidates it — the build reports success with stale objects.
+    #[test]
+    fn mbed_flags_request_a_depfile_so_included_files_invalidate() {
+        let config = giga_config();
+        let common = &config.compiler_flags.common;
+        assert_eq!(
+            common.iter().filter(|flag| *flag == "-MMD").count(),
+            1,
+            "mbed common flags must request exactly one depfile: {common:?}"
+        );
+        // `-c` is a driver flag and `-std=` is language-specific; neither may
+        // leak out of cflags.txt into the shared block.
+        assert!(!common.iter().any(|flag| flag == "-c"), "{common:?}");
+        assert!(
+            !common.iter().any(|flag| flag.starts_with("-std=")),
+            "{common:?}"
+        );
+        // The flag has to survive into both language-specific sets gcc sees.
+        for flags in [
+            crate::compiler::build_c_flags(common.clone(), &config),
+            crate::compiler::build_cpp_flags(common.clone(), &config),
+        ] {
+            assert!(flags.iter().any(|flag| flag == "-MMD"), "{flags:?}");
+        }
+    }
+
+    /// The mbed path is the only one that builds flags from text; every other
+    /// MCU config is a JSON file checked in beside its platform module. Guard
+    /// the whole set so a new platform cannot ship without dependency tracking.
+    #[test]
+    fn every_mcu_config_json_requests_a_depfile() {
+        let src = Path::new(env!("CARGO_MANIFEST_DIR")).join("src");
+        let mut checked = 0;
+        for entry in walkdir::WalkDir::new(&src).into_iter().flatten() {
+            let path = entry.path();
+            if path.extension().and_then(|ext| ext.to_str()) != Some("json") {
+                continue;
+            }
+            let text = std::fs::read_to_string(path).unwrap();
+            let config: serde_json::Value = serde_json::from_str(&text)
+                .unwrap_or_else(|error| panic!("{}: {error}", path.display()));
+            let groups = config["compiler_flags"]
+                .as_object()
+                .unwrap_or_else(|| panic!("{}: no compiler_flags block", path.display()));
+            let declares_depfile = ["common", "c", "cxx"].iter().any(|group| {
+                groups
+                    .get(*group)
+                    .and_then(serde_json::Value::as_array)
+                    .is_some_and(|list| list.iter().any(|flag| flag.as_str() == Some("-MMD")))
+            });
+            assert!(
+                declares_depfile,
+                "{} declares no -MMD, so its builds emit no depfiles and reuse \
+                 objects across header/sketch edits (FastLED/fbuild#1948)",
+                path.display()
+            );
+            checked += 1;
+        }
+        assert!(
+            checked >= 20,
+            "expected the full MCU config set, found {checked}"
+        );
+    }
 
     #[test]
     fn giga_flash_layout_matches_platformio_default_and_override() {

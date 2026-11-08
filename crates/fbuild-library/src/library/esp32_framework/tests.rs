@@ -717,3 +717,49 @@ fn sdk_defines_prefer_flags_defines_over_the_pio_build_script() {
 
     assert_eq!(fw.get_sdk_defines("esp32s3"), ["-DFROM_FLAGS"]);
 }
+
+/// A board whose `build.chip_variant` differs from `build.mcu` (ESP32-P4 ES)
+/// links against `esp32-arduino-libs/<chip_variant>/`. The install check must
+/// require BOTH trees: a per-chip libs slice supplies only the `mcu` one, so a
+/// "present" verdict sent the build into a missing SDK dir and it died on
+/// `soc/soc_caps.h` (FastLED/fbuild#1897).
+#[test]
+fn sdk_libs_installed_requires_the_board_chip_variant_tree() {
+    let tmp = tempfile::TempDir::new().unwrap();
+    let sdk_dir = tmp.path().join("tools").join("esp32-arduino-libs");
+    let seed = |dir: &std::path::Path| {
+        let kernel = dir
+            .join("include")
+            .join("freertos")
+            .join("FreeRTOS-Kernel")
+            .join("include")
+            .join("freertos")
+            .join("FreeRTOS.h");
+        std::fs::create_dir_all(kernel.parent().unwrap()).unwrap();
+        std::fs::write(&kernel, "").unwrap();
+        std::fs::create_dir_all(dir.join("flags")).unwrap();
+        std::fs::write(dir.join("flags").join("includes"), "").unwrap();
+        std::fs::create_dir_all(dir.join("lib")).unwrap();
+        std::fs::write(dir.join("lib").join("libfreertos.a"), "").unwrap();
+    };
+    seed(&sdk_dir.join("esp32p4"));
+
+    let fw = Esp32Framework {
+        base: PackageBase::new(
+            "test",
+            "1.0",
+            "http://example.com",
+            "http://example.com",
+            None,
+            CacheSubdir::Platforms,
+            tmp.path(),
+        ),
+        install_dir: Some(tmp.path().to_path_buf()),
+    };
+
+    assert!(fw.sdk_libs_installed("esp32p4", "esp32p4"));
+    assert!(!fw.sdk_libs_installed("esp32p4", "esp32p4_es"));
+
+    seed(&sdk_dir.join("esp32p4_es"));
+    assert!(fw.sdk_libs_installed("esp32p4", "esp32p4_es"));
+}

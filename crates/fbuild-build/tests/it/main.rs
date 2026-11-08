@@ -4,6 +4,10 @@
 
 mod ape_toolchain;
 mod cache_survives_tar_extract;
+mod ci13xx_acceptance;
+mod ci13xx_configuration_acceptance;
+mod ci13xx_fastled_acceptance;
+mod ci13xx_project_library_policy;
 mod clangd_check_parity;
 mod compile_many_stage2_perf;
 mod compile_many_two_stage;
@@ -17,6 +21,7 @@ mod nxplpc_build_flags;
 mod nxplpc_core_compile_commands;
 mod renesas_acceptance;
 mod rp2040_acceptance;
+mod sam3x_acceptance;
 mod samd_acceptance;
 mod stm32_acceptance;
 mod teensy30_acceptance;

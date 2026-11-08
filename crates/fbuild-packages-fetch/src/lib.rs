@@ -6,6 +6,9 @@
 //! crates build on. Re-exported (with those two) by the `fbuild-packages` facade.
 
 pub mod cache;
+mod chip_slice;
+mod variants;
+pub use variants::FetchRequest;
 pub mod cache_archive;
 pub mod disk_cache;
 pub mod downloader;
@@ -77,6 +80,73 @@ pub trait Package: Send + Sync {
 
     /// Get package metadata.
     fn get_info(&self) -> PackageInfo;
+}
+
+/// Concrete archive package whose installed root contains a required marker.
+/// Owns extraction/root validation at the legacy `Package` API boundary.
+pub struct MarkerArchivePackage {
+    base: PackageBase,
+    marker: String,
+}
+
+impl MarkerArchivePackage {
+    pub fn new(base: PackageBase, marker: &str) -> Self {
+        Self {
+            base,
+            marker: marker.to_owned(),
+        }
+    }
+    fn root(&self, installed: &Path) -> fbuild_core::Result<fbuild_core::path::NormalizedPath> {
+        for entry in walkdir::WalkDir::new(installed).max_depth(3) {
+            let entry =
+                entry.map_err(|error| fbuild_core::FbuildError::PackageError(error.to_string()))?;
+            let root = fbuild_core::path::NormalizedPath::new(entry.path());
+            if entry.file_type().is_dir() && root.join(&self.marker).is_file() {
+                return Ok(root);
+            }
+        }
+        Err(fbuild_core::FbuildError::PackageError(format!(
+            "package missing marker {} in {}",
+            self.marker,
+            installed.display()
+        )))
+    }
+    pub fn installed_root(&self) -> fbuild_core::Result<fbuild_core::path::NormalizedPath> {
+        if !self.is_installed() {
+            return Err(fbuild_core::FbuildError::PackageError(format!(
+                "{} not installed; run fbuild install",
+                self.base.name
+            )));
+        }
+        self.root(&self.base.install_path())
+    }
+    pub async fn ensure_normalized(
+        &self,
+    ) -> fbuild_core::Result<fbuild_core::path::NormalizedPath> {
+        if self.is_installed() {
+            return self.installed_root();
+        }
+        let installed = self
+            .base
+            .staged_install(|path| self.root(path).map(|_| ()))
+            .await?;
+        self.root(&installed)
+    }
+}
+
+#[async_trait]
+impl Package for MarkerArchivePackage {
+    async fn ensure_installed(&self) -> fbuild_core::Result<PathBuf> {
+        self.ensure_normalized()
+            .await
+            .map(|path| path.into_path_buf())
+    }
+    fn is_installed(&self) -> bool {
+        self.base.is_cached() && self.root(&self.base.install_path()).is_ok()
+    }
+    fn get_info(&self) -> PackageInfo {
+        self.base.get_info()
+    }
 }
 
 /// Base trait for toolchain packages (GCC, etc.).
@@ -188,6 +258,13 @@ pub struct PackageBase {
     /// How declared submodules are handled at unpack (FastLED/fbuild#1420,
     /// #1422). Empty for almost every package.
     submodules: submodules::SubmodulePlan,
+    /// The board MCU whose published chip slice this package may install
+    /// (`esp32s3`). `None` keeps the plain single-archive behaviour.
+    pub(crate) slice_chip: Option<String>,
+    /// Stands in for a published slice under `cfg(test)`, where the mirror
+    /// manifest is never loaded.
+    #[cfg(test)]
+    pub(crate) forced_slice: Option<variants::SliceFetch>,
 }
 
 /// Which cache subdirectory to use.
@@ -228,6 +305,9 @@ impl PackageBase {
             cache_subdir,
             disk_cache,
             submodules: submodules::SubmodulePlan::default(),
+            slice_chip: None,
+            #[cfg(test)]
+            forced_slice: None,
         }
     }
 
@@ -254,6 +334,9 @@ impl PackageBase {
             cache_subdir,
             disk_cache,
             submodules: submodules::SubmodulePlan::default(),
+            slice_chip: None,
+            #[cfg(test)]
+            forced_slice: None,
         }
     }
 
@@ -311,12 +394,11 @@ impl PackageBase {
     ///
     /// On a cache hit, bumps the LRU timestamp in the DiskCache index.
     pub fn is_cached(&self) -> bool {
-        let path = self.install_path();
-        if !path.exists() || !path.is_dir() {
-            return false;
-        }
-        let sentinel = disk_cache::paths::install_complete_sentinel(&path);
-        if !sentinel.exists() {
+        let complete = self
+            .installed_dirs()
+            .iter()
+            .any(|path| Self::is_complete_install(path));
+        if !complete {
             return false;
         }
         self.touch_disk_cache();
@@ -341,7 +423,7 @@ impl PackageBase {
     /// Best-effort: record a completed install in the DiskCache index.
     /// Only records if `install_path` is under the DiskCache root — legacy
     /// Cache paths are skipped to avoid indexing absolute legacy paths.
-    fn record_install_in_disk_cache(&self, install_path: &Path) {
+    fn record_install_in_disk_cache(&self, install_path: &Path, version: &str) {
         if let Some(ref dc) = self.disk_cache {
             let rel_path = match install_path.strip_prefix(dc.cache_root()) {
                 Ok(rel) => rel,
@@ -352,7 +434,7 @@ impl PackageBase {
             let _ = dc.record_install(
                 kind,
                 &self.cache_key,
-                &self.version,
+                version,
                 &rel_path.to_string_lossy(),
                 installed_bytes,
             );
@@ -391,6 +473,11 @@ impl PackageBase {
         validate: BoxedValidate<'_>,
     ) -> fbuild_core::Result<PathBuf> {
         let install_path = self.install_path();
+        // A slice ships one chip, so it installs into its own chip-scoped
+        // directory; a whole archive keeps the shared path every chip uses.
+        let target_path = self
+            .chip_install_path()
+            .map_or_else(|| install_path.clone(), |path| path.into_path_buf());
 
         if install_path.exists() && ape_perms::is_repaired(&install_path) {
             // An existing-install hit is a use: refresh the DiskCache LRU so
@@ -398,6 +485,14 @@ impl PackageBase {
             // entry and delete it mid-build (FastLED/fbuild#1341).
             self.touch_disk_cache();
             return Ok(install_path);
+        }
+
+        // A tree that predates APE support still needs its one-time exec-bit
+        // repair, which runs under the install lock below; only take the
+        // lock-free fast path when the hit has already been scanned.
+        if target_path.exists() && ape_perms::is_repaired(&target_path) {
+            self.touch_disk_cache();
+            return Ok(target_path);
         }
 
         // Ensure parent directory exists
@@ -409,16 +504,20 @@ impl PackageBase {
 
         // Append _staging to dir name (can't use with_extension — version has dots)
         let _install_lock =
-            install_lock::acquire_for_install(&install_path, &self.name, &self.version).await?;
+            install_lock::acquire_for_install(&target_path, &self.name, &self.version).await?;
         if install_path.exists() {
             ape_perms::repair_once(&install_path);
             self.touch_disk_cache();
             return Ok(install_path);
         }
+        if target_path.exists() {
+            self.touch_disk_cache();
+            return Ok(target_path);
+        }
 
-        let staging_path = install_path.with_file_name(format!(
+        let staging_path = target_path.with_file_name(format!(
             "{}_staging",
-            install_path
+            target_path
                 .file_name()
                 .unwrap_or_default()
                 .to_string_lossy()
@@ -433,28 +532,13 @@ impl PackageBase {
             fbuild_core::FbuildError::PackageError(format!("failed to create staging dir: {}", e))
         })?;
 
-        // Download with progress reporting
-        tracing::info!("downloading {} v{}", self.name, self.version);
-        let name = self.name.clone();
-        let version = self.version.clone();
-        let archive_path = downloader::download_file_with_progress(
-            &self.url,
-            &staging_path,
-            &mut |progress: &downloader::DownloadProgress| {
-                install_status::publish_install_status(install_status::status(
-                    &name,
-                    Some(&version),
-                    InstallPhase::Downloading,
-                    InstallRole::Installer,
-                    progress.format_message(),
-                    None::<String>,
-                ));
-            },
-        )
-        .await?;
+        // Download (a published chip slice when one exists) with progress.
+        let (archive_path, from_slice) = self.acquire_archive(&staging_path).await?;
 
-        // Verify checksum
-        if let Some(ref expected) = self.checksum {
+        // Verify checksum. A slice was already verified against its own
+        // published digest; `self.checksum` pins the whole archive, so applying
+        // it here rejects every slice (FastLED/fbuild#1944).
+        if let Some(expected) = self.checksum.as_ref().filter(|_| !from_slice) {
             install_status::publish_install_status(install_status::status(
                 &self.name,
                 Some(&self.version),
@@ -496,20 +580,20 @@ impl PackageBase {
         validate(&staging_path)?;
 
         // Atomic commit: rename staging → final
-        fbuild_core::platform::fs::replace_file(&staging_path, &install_path).map_err(|e| {
+        fbuild_core::platform::fs::replace_file(&staging_path, &target_path).map_err(|e| {
             fbuild_core::FbuildError::PackageError(format!("failed to commit installation: {}", e))
         })?;
 
         // Write sentinel so GC reconciliation recognizes this as a complete install.
         // Best-effort: the install succeeded (rename was atomic), so a sentinel
         // failure should not cause the caller to see an error.
-        let sentinel = disk_cache::paths::install_complete_sentinel(&install_path);
+        let sentinel = disk_cache::paths::install_complete_sentinel(&target_path);
         if let Err(e) = std::fs::write(&sentinel, b"") {
             tracing::warn!("failed to write install sentinel: {}", e);
         }
 
         // Best-effort: record in DiskCache index for LRU tracking
-        self.record_install_in_disk_cache(&install_path);
+        self.record_install_in_disk_cache(&target_path, &self.effective_version());
 
         install_status::publish_install_status(install_status::status(
             &self.name,
@@ -520,7 +604,7 @@ impl PackageBase {
             None::<String>,
         ));
         tracing::info!("installed {} v{}", self.name, self.version);
-        Ok(install_path)
+        Ok(target_path)
     }
 
     pub fn get_info(&self) -> PackageInfo {
@@ -528,7 +612,9 @@ impl PackageBase {
             name: self.name.clone(),
             version: self.version.clone(),
             url: self.url.clone(),
-            install_path: self.install_path(),
+            // The tree actually on disk: a chip slice lives beside the shared
+            // directory, not in it.
+            install_path: self.installed_path().to_path_buf(),
             checksum: self.checksum.clone(),
             installed_bytes: self.recorded_installed_bytes(),
         }
@@ -540,7 +626,11 @@ impl PackageBase {
     fn recorded_installed_bytes(&self) -> Option<u64> {
         let dc = self.disk_cache.as_ref()?;
         let entry = dc
-            .lookup(self.cache_subdir.into(), &self.cache_key, &self.version)
+            .lookup(
+                self.cache_subdir.into(),
+                &self.cache_key,
+                &self.effective_version(),
+            )
             .ok()??;
         u64::try_from(entry.installed_bytes?).ok()
     }
@@ -856,5 +946,7 @@ mod toolchain_gcc_ar_tests {
     }
 }
 
+#[cfg(test)]
+mod chip_slice_tests;
 #[cfg(test)]
 mod package_override_tests;

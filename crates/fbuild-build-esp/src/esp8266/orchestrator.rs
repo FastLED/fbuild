@@ -427,7 +427,7 @@ impl BuildOrchestrator for Esp8266Orchestrator {
             }
         }
         include_dirs.push(ctx.src_dir.clone());
-        pipeline::discover_project_includes(&params.project_dir, &mut include_dirs);
+        pipeline::discover_project_includes(&params.project_dir, &mut include_dirs)?;
 
         // 6a. Download `lib_deps` from the registry / remote URLs before
         // creating the compiler, so the downloaded library include directories

@@ -43,6 +43,28 @@ on:
           default: for most boards a cold download is faster than the cache
           round-trip. Opted in per family in ci/board_families.json with the
           measurement that justifies it.
+      package-cache-path:
+        required: false
+        type: string
+        default: ""
+        description: >-
+          One vendor package install inside the fbuild cache, carried across
+          runs, e.g. `~/.fbuild/prod/cache/platforms/www-ClearCore-1.7.4`.
+          Opted in per board when its framework comes from a single vendor
+          host that has no CDN: FastLED/fbuild#1463 lost a ClearCore fetch
+          after the downloader's 5 attempts over ~110 s, and the 2026-11-07
+          push run lost it again and failed this board's gate with no
+          compilation attempted. Empty means no package cache; pair it with
+          `package-cache-hash-files`.
+      package-cache-hash-files:
+        required: false
+        type: string
+        default: ""
+        description: >-
+          File that pins the package's identity (URL, version and checksum),
+          hashed into the cache key so a repinned package can never restore
+          the previous archive under the new name. Required when
+          `package-cache-path` is set.
       fbuild-run-id:
         required: false
         type: string
@@ -148,6 +170,19 @@ jobs:
           restore-keys: |
             fbuild-build-${{ runner.os }}-${{ inputs.env-name }}-
 
+      - name: Restore board package cache
+        id: board-package-cache
+        if: inputs.package-cache-path != ''
+        timeout-minutes: 10
+        uses: actions/cache/restore@v5
+        with:
+          path: ${{ inputs.package-cache-path }}
+          # No restore-keys on purpose: the key hashes the file that pins the
+          # package's URL + checksum, so any fallback would restore a
+          # different vendor archive under the pinned name. A miss must
+          # download (FastLED/fbuild#1463).
+          key: fbuild-package-${{ runner.os }}-${{ inputs.env-name }}-${{ hashFiles(inputs.package-cache-hash-files) }}
+
       - name: Install Linux dependencies
         # Build-time only (libudev headers for the Rust compile); the runtime
         # libudev1 ships with the hosted image.
@@ -240,6 +275,16 @@ jobs:
         with:
           path: ~/.fbuild/prod/cache
           key: fbuild-toolchain-${{ runner.os }}-${{ inputs.env-name }}-${{ hashFiles(format('{0}/platformio.ini', inputs.test-dir)) }}
+
+      - name: Save board package cache
+        # Default branch only, like every other cache in this file: re-saving
+        # the same entry from branch runs only evicts main's (CACHE-003).
+        if: always() && inputs.package-cache-path != '' && github.ref == 'refs/heads/main' && steps.board-package-cache.outputs.cache-hit != 'true'
+        timeout-minutes: 10
+        uses: actions/cache/save@v5
+        with:
+          path: ${{ inputs.package-cache-path }}
+          key: fbuild-package-${{ runner.os }}-${{ inputs.env-name }}-${{ hashFiles(inputs.package-cache-hash-files) }}
 
       - name: Save platform build artifacts
         if: always() && github.ref == 'refs/heads/main'

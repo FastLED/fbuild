@@ -64322,6 +64322,22 @@
     "size_bytes": 600187
    },
    "kind_hint": "data"
+  },
+  "@esp-libs": {
+   "descriptor": {
+    "url": "shards/esp-libs.json",
+    "sha256": "9020d1da2e894dd229d4998258656b43b76d369a706b76a12ad10920450fad4d",
+    "size_bytes": 25690
+   },
+   "kind_hint": "data"
+  },
+  "@esp-toolchain": {
+   "descriptor": {
+    "url": "shards/esp-toolchain.json",
+    "sha256": "bd447a6da6d534cbae70cfed1096d071ff6a9195f2a0b9cc54f0a1d9178ee70b",
+    "size_bytes": 1972
+   },
+   "kind_hint": "data"
   }
  }
 }
