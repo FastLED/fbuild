@@ -358,6 +358,34 @@ fn toolchain_name_for(mcu_config: &Esp32McuConfig, declares: impl Fn(&str) -> bo
         .unwrap_or_else(|| primary_toolchain_name(mcu_config.is_riscv()).to_string())
 }
 
+/// The toolchain package for a PlatformIO-registry payload, scoped to the MCU
+/// it was resolved for.
+///
+/// The chip is what lets [`fbuild_packages::PackageBase`] prefer a published
+/// per-chip slice of the unified Xtensa toolchain. Without it the package has
+/// no `slice_chip`, so `published_slice` returns before it ever looks at the
+/// mirror manifest and every build downloads the whole 168 MB archive -- a
+/// manifest override cannot help, because nothing asks the manifest
+/// (FastLED/fbuild#1961). RISC-V toolchains are never sliced, so they keep the
+/// shared directory.
+fn registry_toolchain(
+    project_dir: &Path,
+    payload: &fbuild_core::platformio_package::ResolvedPayload,
+    prefix: &str,
+    mcu_config: &Esp32McuConfig,
+) -> fbuild_packages::toolchain::Esp32Toolchain {
+    let toolchain = fbuild_packages::toolchain::Esp32Toolchain::from_registry_payload(
+        project_dir,
+        payload,
+        prefix,
+    );
+    if mcu_config.is_riscv() {
+        toolchain
+    } else {
+        toolchain.with_slice_variant(&mcu_config.mcu)
+    }
+}
+
 #[expect(clippy::cognitive_complexity, reason = "baseline, zackees/ci.yml#229")]
 async fn resolve_and_create_toolchain(
     platform: &fbuild_packages::library::Esp32Platform,
@@ -406,13 +434,12 @@ async fn resolve_and_create_toolchain(
             payload.url,
             payload.sha256
         );
-        return Ok(
-            fbuild_packages::toolchain::Esp32Toolchain::from_registry_payload(
-                project_dir,
-                &payload,
-                &prefix,
-            ),
-        );
+        return Ok(registry_toolchain(
+            project_dir,
+            &payload,
+            &prefix,
+            mcu_config,
+        ));
     }
 
     // Try metadata-based resolution
@@ -547,15 +574,8 @@ fn cached_toolchain(
                     fbuild_core::FbuildError::PackageError("unsupported PlatformIO host".into())
                 })?;
         let cache_root = fbuild_packages::Cache::new(project_dir).toolchains_dir();
-        return Ok(
-            cached_registry_payload(&cache_root, registry, host)?.map(|payload| {
-                fbuild_packages::toolchain::Esp32Toolchain::from_registry_payload(
-                    project_dir,
-                    &payload,
-                    &prefix,
-                )
-            }),
-        );
+        return Ok(cached_registry_payload(&cache_root, registry, host)?
+            .map(|payload| registry_toolchain(project_dir, &payload, &prefix, mcu_config)));
     }
     let name = primary_toolchain_name(is_riscv);
     let cache_dir = fbuild_packages::Cache::new(project_dir)

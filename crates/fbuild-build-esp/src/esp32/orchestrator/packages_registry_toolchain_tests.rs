@@ -157,3 +157,51 @@ fn legacy_xtensa_and_riscv_registry_files_select_each_host() {
         }
     }
 }
+
+/// The registry payload is the toolchain package on every platform that
+/// declares a registry version instead of a metadata URL -- including the
+/// bundled `espressif32` (FastLED/fbuild#1961). It must carry the MCU's chip,
+/// or `published_slice` returns before it ever consults the mirror manifest
+/// and the whole 168 MB archive is downloaded for a chip whose slice is
+/// published (the 2026-11-08 repro downloaded `esp32-xtensa-gcc`'s whole
+/// archive and created no `+esp32s3` install dir).
+#[test]
+fn registry_toolchain_scopes_the_chip_so_a_published_slice_can_be_selected() {
+    let digest = "c".repeat(64);
+    let manifest = r#"{"packages":{"toolchain-xtensa-esp-elf":{"type":"toolchain","owner":"platformio","version":"14.2.0+r1"}}}"#;
+    let requirement = fbuild_core::platformio_package::resolve_platform_requirements(manifest, &[])
+        .unwrap()
+        .remove(0);
+    let response = format!(
+        "{{\"name\":\"toolchain-xtensa-esp-elf\",\"owner\":{{\"username\":\"platformio\"}},\"versions\":[{{\"name\":\"14.2.0+r1\",\"files\":[{{\"system\":[\"linux_x86_64\"],\"download_url\":\"https://example.test/xtensa-esp-elf-linux-amd64.tar.gz\",\"checksum\":{{\"sha256\":\"{digest}\"}}}}]}}]}}"
+    );
+    let payload = resolve_registry_json(
+        requirement.spec.registry().unwrap(),
+        RegistryKind::Tool,
+        "linux_x86_64",
+        &response,
+    )
+    .unwrap();
+    let temp = tempfile::tempdir().unwrap();
+
+    let s3 = get_mcu_config("esp32s3").unwrap();
+    let toolchain = registry_toolchain(temp.path(), &payload, &s3.toolchain_prefix(), &s3);
+    let chip_path = toolchain
+        .chip_install_path()
+        .expect("the registry toolchain must carry its MCU's chip");
+    let chip_path = chip_path.as_path();
+    assert!(
+        chip_path.to_string_lossy().ends_with("+esp32s3"),
+        "chip install path was {}",
+        chip_path.display()
+    );
+
+    // RISC-V multilibs are ISA-shaped: never sliced, so it keeps the shared
+    // directory every RISC-V MCU can use.
+    let c3 = get_mcu_config("esp32c3").unwrap();
+    assert!(
+        registry_toolchain(temp.path(), &payload, &c3.toolchain_prefix(), &c3)
+            .chip_install_path()
+            .is_none()
+    );
+}
