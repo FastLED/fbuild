@@ -73,26 +73,114 @@ void loop() {
     .unwrap();
 }
 
+/// How many times PlatformIO is attempted before the parity check gives up.
+const PLATFORMIO_ATTEMPTS: u32 = 3;
+
+/// Backoff between PlatformIO attempts, multiplied by the attempt number.
+const RETRY_BACKOFF: std::time::Duration = std::time::Duration::from_secs(30);
+
+/// True when PlatformIO's combined output shows a transient download/network
+/// fault -- a release-CDN 5xx, a reset connection, a timeout -- rather than a
+/// build defect.
+///
+/// The 2026-11-08 nightly (run 42464103663) failed with `Got the unrecognized
+/// status code '504'` while fetching `esp_install-v5.3.4.zip` from GitHub, so a
+/// CDN hiccup read as a size-parity regression and turned `main` red. Such
+/// failures are retried; a compiler error or a `.pio` build error is not.
+fn is_transient_download_failure(output: &str) -> bool {
+    const TRANSIENT_MARKERS: &[&str] = &[
+        "unrecognized status code '5",
+        "HTTP Error 50",
+        "Gateway Timeout",
+        "Bad Gateway",
+        "Service Unavailable",
+        "Connection reset",
+        "Connection aborted",
+        "Read timed out",
+        "timed out",
+        "Temporary failure in name resolution",
+        "No route to host",
+        "IncompleteRead",
+        "RemoteDisconnected",
+    ];
+    TRANSIENT_MARKERS
+        .iter()
+        .any(|marker| output.contains(marker))
+}
+
+/// One PlatformIO invocation's result.
+struct AttemptOutcome {
+    success: bool,
+    exit_code: i32,
+    output: String,
+}
+
+/// Run `attempt_fn` until it succeeds, it fails for a non-transient reason, or
+/// the attempt budget is spent. Returns the attempts made and the last outcome.
+///
+/// Split out of [`build_with_platformio`] so the retry policy itself is
+/// testable without PlatformIO, a toolchain download, or a network fault.
+async fn run_with_transient_retry<F, Fut>(
+    attempts: u32,
+    backoff: std::time::Duration,
+    mut attempt_fn: F,
+) -> (u32, AttemptOutcome)
+where
+    F: FnMut() -> Fut,
+    Fut: std::future::Future<Output = AttemptOutcome>,
+{
+    let mut attempt: u32 = 1;
+    loop {
+        let outcome = attempt_fn().await;
+        if outcome.success {
+            return (attempt, outcome);
+        }
+        if attempt >= attempts || !is_transient_download_failure(&outcome.output) {
+            return (attempt, outcome);
+        }
+        let delay = backoff * attempt;
+        println!(
+            "PlatformIO attempt {attempt}/{attempts} failed on a transient download fault; \
+             retrying in {}s",
+            delay.as_secs()
+        );
+        tokio::time::sleep(delay).await;
+        attempt += 1;
+    }
+}
+
 /// Build with PlatformIO and return the directory holding its artifacts.
+///
+/// A transient download failure is retried (`PLATFORMIO_ATTEMPTS`, backoff
+/// `RETRY_BACKOFF * attempt`): the ESP32 platform and toolchain are fetched
+/// from GitHub release assets on every run, so an external CDN fault must not
+/// be reported as a firmware-size regression.
 async fn build_with_platformio(project_dir: &Path) -> NormalizedPath {
     let pio = std::env::var("FBUILD_PARITY_PIO").unwrap_or_else(|_| "pio".to_string());
     let project = project_dir.to_str().expect("temp project path is UTF-8");
-    // Same budget as the fbuild build: a stalled PlatformIO build must not
-    // hold the job past it (FastLED/fbuild#806).
-    let output = fbuild_core::subprocess::run_command(
-        &[pio.as_str(), "run", "-e", ENV_NAME, "-d", project],
-        None,
-        None,
-        Some(REAL_BUILD_TIMEOUT),
-    )
-    .await
-    .unwrap_or_else(|e| panic!("failed to run PlatformIO ({pio}): {e}"));
+    let (attempt, outcome) =
+        run_with_transient_retry(PLATFORMIO_ATTEMPTS, RETRY_BACKOFF, || async {
+            // Same budget as the fbuild build: a stalled PlatformIO build must
+            // not hold the job past it (FastLED/fbuild#806).
+            let output = fbuild_core::subprocess::run_command(
+                &[pio.as_str(), "run", "-e", ENV_NAME, "-d", project],
+                None,
+                None,
+                Some(REAL_BUILD_TIMEOUT),
+            )
+            .await
+            .unwrap_or_else(|e| panic!("failed to run PlatformIO ({pio}): {e}"));
+            AttemptOutcome {
+                success: output.success(),
+                exit_code: output.exit_code,
+                output: format!("{}\n{}", output.stdout, output.stderr),
+            }
+        })
+        .await;
     assert!(
-        output.success(),
-        "PlatformIO build failed (exit {}):\n{}\n{}",
-        output.exit_code,
-        output.stdout,
-        output.stderr
+        outcome.success,
+        "PlatformIO build failed (attempt {attempt}/{PLATFORMIO_ATTEMPTS}, exit {}):\n{}",
+        outcome.exit_code, outcome.output
     );
     NormalizedPath::from(project_dir.join(".pio/build").join(ENV_NAME))
 }
@@ -184,4 +272,120 @@ async fn esp32s3_blink_is_no_larger_than_platformio() {
          (fbuild={fbuild_size} B, PlatformIO={pio_size} B); see the section tables above",
         fbuild_size - pio_size
     );
+}
+
+#[cfg(test)]
+mod tests {
+    use std::time::Duration;
+
+    use super::{
+        AttemptOutcome, PLATFORMIO_ATTEMPTS, RETRY_BACKOFF, is_transient_download_failure,
+        run_with_transient_retry,
+    };
+
+    fn outcome(success: bool, output: &str) -> AttemptOutcome {
+        AttemptOutcome {
+            success,
+            exit_code: if success { 0 } else { 1 },
+            output: output.to_string(),
+        }
+    }
+
+    /// Verbatim tail of the 2026-11-08 nightly failure (run 42464103663).
+    const PIO_504: &str = "Error installing tool-esp_install: Got the unrecognized status code \
+                           '504' when downloaded https://github.com/pioarduino/esp_install/\
+                           releases/download/v5.3.4/esp_install-v5.3.4.zip";
+
+    #[test]
+    fn classifies_the_nightly_504_as_transient() {
+        assert!(is_transient_download_failure(PIO_504));
+    }
+
+    #[test]
+    fn classifies_transport_faults_as_transient() {
+        for output in [
+            "ConnectionResetError: Connection reset by peer",
+            "requests.exceptions.ConnectionError: Read timed out.",
+            "urllib.error.URLError: <urlopen error [Errno -3] Temporary failure in name resolution>",
+            "HTTP Error 503: Service Unavailable",
+            "http.client.RemoteDisconnected: Remote end closed connection without response",
+        ] {
+            assert!(is_transient_download_failure(output), "{output}");
+        }
+    }
+
+    #[test]
+    fn does_not_retry_a_compiler_error() {
+        let output = "src/main.cpp:4:3: error: 'pinMode' was not declared in this scope";
+        assert!(!is_transient_download_failure(output));
+    }
+
+    #[test]
+    fn does_not_retry_an_unknown_environment() {
+        let output = "Error: Unknown environment names 'esp32s2'. Valid names are 'esp32s3'";
+        assert!(!is_transient_download_failure(output));
+    }
+
+    /// The policy that matters: an outage the retry absorbs still yields a
+    /// green parity check instead of a red `main`.
+    #[tokio::test]
+    async fn retries_a_transient_504_and_then_succeeds() {
+        let mut calls = 0u32;
+        let (attempts, last) =
+            run_with_transient_retry(PLATFORMIO_ATTEMPTS, Duration::from_millis(1), || {
+                calls += 1;
+                let this = calls;
+                async move {
+                    if this == 1 {
+                        outcome(false, PIO_504)
+                    } else {
+                        outcome(true, "PlatformIO build finished")
+                    }
+                }
+            })
+            .await;
+        assert_eq!(attempts, 2, "one retry should have absorbed the 504");
+        assert!(last.success);
+    }
+
+    #[tokio::test]
+    async fn exhausts_the_budget_on_a_persistent_outage() {
+        let mut calls = 0u32;
+        let (attempts, last) =
+            run_with_transient_retry(PLATFORMIO_ATTEMPTS, Duration::from_millis(1), || {
+                calls += 1;
+                async move { outcome(false, PIO_504) }
+            })
+            .await;
+        assert_eq!(attempts, PLATFORMIO_ATTEMPTS);
+        assert!(!last.success);
+        assert_eq!(calls, PLATFORMIO_ATTEMPTS);
+    }
+
+    #[tokio::test]
+    async fn does_not_retry_a_build_failure() {
+        let mut calls = 0u32;
+        let (attempts, last) =
+            run_with_transient_retry(PLATFORMIO_ATTEMPTS, Duration::from_millis(1), || {
+                calls += 1;
+                async move {
+                    outcome(
+                        false,
+                        "src/main.cpp:4:3: error: 'pinMode' was not declared in this scope",
+                    )
+                }
+            })
+            .await;
+        assert_eq!(
+            attempts, 1,
+            "a compiler error must fail on the first attempt"
+        );
+        assert_eq!(calls, 1);
+        assert!(!last.success);
+    }
+
+    /// The job's own 60-min timeout is the real budget: one attempt would
+    /// reintroduce the flake, an unbounded one could push the run past it.
+    const _: () = assert!(PLATFORMIO_ATTEMPTS >= 2 && PLATFORMIO_ATTEMPTS <= 3);
+    const _: () = assert!(RETRY_BACKOFF.as_secs() >= 10);
 }
