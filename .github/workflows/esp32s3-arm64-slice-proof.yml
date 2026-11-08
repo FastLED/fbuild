@@ -54,7 +54,7 @@ jobs:
         run: |
           test "$(uname -m)" = aarch64
           # The slice is only meaningful on the host key it was built for.
-          grep -q '"linux-arm64"' site/mirror/shards/esp-toolchain.json
+          grep -q '/linux-arm64/esp32s3/' site/mirror/shards/esp-toolchain.json
 
       - name: Build with the published linux-arm64 slice
         run: |
