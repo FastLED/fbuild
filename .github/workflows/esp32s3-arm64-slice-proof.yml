@@ -66,6 +66,16 @@ jobs:
           sleep 2
           fbuild build "${FIXTURE}" -e esp32s3 2>&1 | tee "$RUNNER_TEMP/slice.log"
 
+      - name: DEBUG where the toolchain landed
+        run: |
+          set -x
+          env | grep -E "^FBUILD" || true
+          fbuild daemon status || true
+          du -sh "$RUNNER_TEMP"/cache-slice "$HOME"/.fbuild 2>/dev/null || true
+          find "$HOME/.fbuild" "$RUNNER_TEMP" -maxdepth 7 -type d -name '*esp32s3*' 2>/dev/null | head -20
+          grep -icE 'digitaloceanspaces|mirror' "$RUNNER_TEMP/slice.log" || true
+          find "$HOME/.fbuild" "$RUNNER_TEMP" -name '*.tar.xz' -o -name '*.tar.zst' 2>/dev/null | head -20
+
       - name: Build with the vendor whole archive (control)
         run: |
           set -euo pipefail
