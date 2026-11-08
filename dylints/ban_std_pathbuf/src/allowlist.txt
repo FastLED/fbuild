@@ -193,6 +193,8 @@ crates/fbuild-library/src/library/library_compiler.rs
 crates/fbuild-library/src/library/library_downloader.rs
 crates/fbuild-library/src/library/library_info.rs
 crates/fbuild-library/src/library/library_manager.rs
+# `Package::ensure_installed` is trait-typed `Result<PathBuf>`; the inherent API is NormalizedPath.
+crates/fbuild-library/src/library/nrf51_core.rs
 crates/fbuild-library/src/library/nrf52_core.rs
 crates/fbuild-library/src/library/renesas_core.rs
 crates/fbuild-library/src/library/rp2040_core.rs

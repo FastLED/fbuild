@@ -1,0 +1,51 @@
+{
+  "name": "NRF51",
+  "description": "Nordic nRF51 series (ARM Cortex-M0, no FPU) on sandeepmistry arduino-nRF5",
+  "architecture": "arm-cortex-m0",
+  "compiler_flags": {
+    "common": [
+      "-mcpu=cortex-m0",
+      "-mthumb",
+      "-ffunction-sections",
+      "-fdata-sections",
+      "-Wall",
+      "-nostdlib",
+      "--param",
+      "max-inline-insns-single=500",
+      "-MMD"
+    ],
+    "c": ["-std=gnu11"],
+    "cxx": ["-std=gnu++17", "-Wno-register", "-fno-rtti", "-fno-exceptions", "-fno-threadsafe-statics"]
+  },
+  "linker_flags": [
+    "-mcpu=cortex-m0",
+    "-mthumb",
+    "-Os",
+    "-Wl,--gc-sections",
+    "--specs=nano.specs",
+    "--specs=nosys.specs",
+    "-Wl,--check-sections",
+    "-Wl,--unresolved-symbols=report-all",
+    "-Wl,--warn-common"
+  ],
+  "linker_libs": [
+    "-Wl,--start-group",
+    "-lstdc++",
+    "-lm",
+    "-lc",
+    "-lgcc",
+    "-lnosys",
+    "-Wl,--end-group"
+  ],
+  "objcopy": {"output_format": "ihex", "remove_sections": []},
+  "profiles": {
+    "release": {"compile_flags": ["-Os"], "link_flags": []},
+    "quick": {"compile_flags": ["-Os"], "link_flags": []}
+  },
+  "defines": [
+    ["ARDUINO", "10805"],
+    "ARDUINO_ARCH_NRF5",
+    "NRF5",
+    "NRF51"
+  ]
+}

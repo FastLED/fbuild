@@ -55,6 +55,7 @@ mod tests {
             Platform::Ch32v,
             Platform::Espressif32,
             Platform::Espressif8266,
+            Platform::NordicNrf51,
             Platform::NordicNrf52,
             Platform::NxpLpc,
             Platform::RaspberryPi,

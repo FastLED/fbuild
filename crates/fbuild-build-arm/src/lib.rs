@@ -7,6 +7,7 @@ pub use fbuild_build_engine::*;
 
 pub mod apollo3;
 pub mod generic_arm;
+pub mod nrf51;
 pub mod nrf52;
 pub mod nxplpc;
 pub mod renesas;

@@ -141,6 +141,7 @@ pub enum Platform {
     Ci13xx,
     Espressif32,
     Espressif8266,
+    NordicNrf51,
     NordicNrf52,
     NxpLpc,
     RaspberryPi,
@@ -179,6 +180,8 @@ impl Platform {
         // its architecture and canonical platform identity are ci13xx.
         } else if s.contains("ci13xx") || s.contains("arduino-ci130x") {
             Some(Self::Ci13xx)
+        } else if s.contains("nordicnrf51") {
+            Some(Self::NordicNrf51)
         } else if s.contains("nordicnrf52") {
             Some(Self::NordicNrf52)
         // FastLED/fbuild#XXX: GitHub URL form is `platform-nxp-lpc8xx`
@@ -669,6 +672,25 @@ mod tests {
         assert_eq!(
             Platform::from_platform_str("nxplpc"),
             Some(Platform::NxpLpc)
+        );
+    }
+
+    #[test]
+    fn platform_from_str_nordic_series_are_distinct() {
+        for spec in [
+            "nordicnrf51",
+            "platformio/nordicnrf51@10.0.0",
+            "https://github.com/platformio/platform-nordicnrf51.git",
+        ] {
+            assert_eq!(
+                Platform::from_platform_str(spec),
+                Some(Platform::NordicNrf51),
+                "{spec}"
+            );
+        }
+        assert_eq!(
+            Platform::from_platform_str("nordicnrf52"),
+            Some(Platform::NordicNrf52)
         );
     }
 

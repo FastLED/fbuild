@@ -186,6 +186,8 @@ impl BoardConfig {
             Some(fbuild_core::Platform::RaspberryPi)
         } else if mcu.starts_with("stm32") {
             Some(fbuild_core::Platform::Ststm32)
+        } else if mcu.starts_with("nrf51") {
+            Some(fbuild_core::Platform::NordicNrf51)
         } else if mcu.starts_with("nrf52") {
             Some(fbuild_core::Platform::NordicNrf52)
         } else if mcu.starts_with("at91sam") || mcu.starts_with("sam") {
@@ -342,6 +344,7 @@ impl BoardConfig {
             Some(fbuild_core::Platform::AtmelMegaAvr) => "MEGAAVR".to_string(),
             Some(fbuild_core::Platform::Espressif32) => "ESP32".to_string(),
             Some(fbuild_core::Platform::Espressif8266) => "ESP8266".to_string(),
+            Some(fbuild_core::Platform::NordicNrf51) => "NRF5".to_string(),
             Some(fbuild_core::Platform::NordicNrf52) => "NRF52".to_string(),
             Some(fbuild_core::Platform::NxpLpc) => "NXPLPC".to_string(),
             Some(fbuild_core::Platform::RaspberryPi) => "RP2040".to_string(),
