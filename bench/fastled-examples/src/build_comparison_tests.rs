@@ -337,57 +337,76 @@ fn remove_cache_entries_deletes_every_variant_of_the_stem() {
 }
 
 #[test]
-fn svg_uses_reference_palette_and_warm_overlay() {
+fn svg_uses_reference_palette() {
     let svg = render_svg(&sample_metadata(), &sample_results());
     for color in [
         "#3b4046", "#8b949e", "#1f3a7a", "#79c0ff", "#5b1f1c", "#f85149",
     ] {
         assert!(svg.contains(color), "missing {color}");
     }
-    assert!(svg.contains("height=\"28\""));
-    assert!(svg.contains("height=\"14\""));
-    assert!(svg.contains("cold (back) + warm (front overlay)"));
+    assert!(!svg.contains("overlay"));
 }
 
-#[test]
-fn svg_contains_uno_and_esp32s3_groups() {
+fn two_board_results(esp_scale: f64) -> Vec<ToolResult> {
     let mut results = sample_results();
     results.extend(sample_results().into_iter().map(|mut result| {
         result.board = "esp32s3".into();
         result.board_name = "ESP32-S3".into();
+        result.cold_ms *= esp_scale;
+        result.warm_ms *= esp_scale;
         result
     }));
-    let svg = render_svg(&sample_metadata(), &results);
-    for (id, label) in [("uno", "Arduino Uno"), ("esp32s3", "ESP32-S3")] {
+    results
+}
+
+#[test]
+fn svg_has_separate_cold_and_warm_panels_per_board() {
+    let svg = render_svg(&sample_metadata(), &two_board_results(1.0));
+    let ids = ["uno-cold", "uno-warm", "esp32s3-cold", "esp32s3-warm"];
+    let mut last = 0;
+    for id in ids {
         let marker = format!("<g role=\"group\" aria-labelledby=\"{id}-title\">");
-        let group = svg.split(&marker).nth(1).expect("labelled board graph");
-        let next_board = group.find("<g role=\"group\"").unwrap_or(group.len());
-        let group = &group[..next_board];
-        assert!(group.contains(&format!("class=\"board\">{label}</text>")));
-        assert_eq!(group.matches("class=\"tool\"").count(), 3);
+        let pos = svg
+            .find(&marker)
+            .unwrap_or_else(|| panic!("missing {id}: {svg}"));
+        assert!(pos > last, "{id} out of order");
+        last = pos;
+        let group = &svg[pos..];
+        let group = &group[..group.find("</g>").unwrap()];
+        assert_eq!(group.matches("class=\"tool\"").count(), 3, "{id}");
     }
+    assert_eq!(svg.matches("<g role=\"group\"").count(), 4);
 }
 
 #[test]
-fn svg_scales_each_board_independently() {
-    let mut results = sample_results();
-    results.extend(sample_results().into_iter().map(|mut result| {
-        result.board = "esp32s3".into();
-        result.board_name = "ESP32-S3".into();
-        result.cold_ms *= 10.0;
-        result.warm_ms *= 10.0;
-        result
-    }));
-
+fn svg_scales_each_panel_independently() {
+    let results = two_board_results(10.0);
     let svg = render_svg(&sample_metadata(), &results);
-    assert_eq!(
-        svg.matches("width=\"480.0\" height=\"28\" rx=\"4\" fill=\"#3b4046\"")
-            .count(),
-        2,
-        "the longest cold bar must fill each board section: {svg}"
-    );
-    assert!(svg.contains("Scale: slowest median = 1.20 s"));
-    assert!(svg.contains("Scale: slowest median = 12.00 s"));
+    // Each of the 4 panels has exactly one full-width bar: its slowest median.
+    let full = svg
+        .matches("width=\"480.0\" height=\"28\" rx=\"4\" fill=\"#")
+        .count();
+    let tracks = svg
+        .matches("height=\"28\" rx=\"4\" fill=\"#21262d\"")
+        .count();
+    assert_eq!(full - tracks, 4, "{svg}");
+    let max = |board: &str, f: fn(&ToolResult) -> f64| {
+        results
+            .iter()
+            .filter(|r| r.board == board)
+            .map(f)
+            .fold(0.0, f64::max)
+    };
+    for board in ["uno", "esp32s3"] {
+        assert!(svg.contains(&format!(
+            "Scale: slowest cold median = {}",
+            format_duration(max(board, |r| r.cold_ms))
+        )));
+        assert!(svg.contains(&format!(
+            "Scale: slowest warm median = {}",
+            format_duration(max(board, |r| r.warm_ms))
+        )));
+    }
 }
 
 #[test]
