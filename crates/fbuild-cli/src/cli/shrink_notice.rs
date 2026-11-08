@@ -52,6 +52,7 @@ fn platform_id(platform: Platform) -> &'static str {
         Platform::Ci13xx => "ci13xx",
         Platform::Espressif32 => "espressif32",
         Platform::Espressif8266 => "espressif8266",
+        Platform::NordicNrf51 => "nordicnrf51",
         Platform::NordicNrf52 => "nordicnrf52",
         Platform::NxpLpc => "nxplpc",
         Platform::RaspberryPi => "raspberrypi",

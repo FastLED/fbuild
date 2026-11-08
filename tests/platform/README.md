@@ -34,6 +34,7 @@ PlatformIO-compatible test projects for each supported hardware platform. Each s
 | `nano_every/` | ATmega4809 | MegaAVR | Arduino |
 | `adafruit_feather_nrf52840_sense/` | nRF52840 | ARM Cortex-M4F | Arduino |
 | `nrf52840_dk/` | nRF52840 | ARM Cortex-M4F | Arduino |
+| `bbcmicrobit/` | nRF51822 | ARM Cortex-M0 | Arduino |
 | `supermini_nrf52840/` | nRF52840 | ARM Cortex-M4F | Arduino |
 | `nice_nano_nrf52840/` | nRF52840 | ARM Cortex-M4F | Arduino |
 | `nrfmicro_nrf52840/` | nRF52840 | ARM Cortex-M4F | Arduino |

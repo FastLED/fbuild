@@ -25,7 +25,7 @@ pub mod compile_many;
 // existing `fbuild_build::esp32::…` / `fbuild_build::teensy::…` path — and the
 // `get_platform_support()` factory below — keeps resolving unchanged.
 pub use fbuild_build_arm::{
-    apollo3, generic_arm, nrf52, nxplpc, renesas, rp2040, sam, silabs, stm32, teensy,
+    apollo3, generic_arm, nrf51, nrf52, nxplpc, renesas, rp2040, sam, silabs, stm32, teensy,
 };
 pub use fbuild_build_esp::{esp32, esp8266};
 pub use fbuild_build_mcu::{avr, ch32v, ci13xx};
@@ -48,6 +48,7 @@ pub fn get_platform_support(platform: Platform) -> Result<Box<dyn PlatformSuppor
         Platform::Teensy => Ok(Box::new(teensy::TeensyPlatformSupport)),
         Platform::Ststm32 => Ok(Box::new(stm32::Stm32PlatformSupport)),
         Platform::RaspberryPi => Ok(Box::new(rp2040::Rp2040PlatformSupport)),
+        Platform::NordicNrf51 => Ok(Box::new(nrf51::Nrf51PlatformSupport)),
         Platform::NordicNrf52 => Ok(Box::new(nrf52::Nrf52PlatformSupport)),
         Platform::NxpLpc => Ok(Box::new(nxplpc::NxpLpcPlatformSupport)),
         Platform::AtmelSam => Ok(Box::new(sam::SamPlatformSupport)),

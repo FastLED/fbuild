@@ -183,6 +183,9 @@ impl BuildContext {
                 }
                 Some(fbuild_core::Platform::Teensy) => Some(fbuild_core::Platform::Teensy),
                 Some(fbuild_core::Platform::Ststm32) => Some(fbuild_core::Platform::Ststm32),
+                Some(fbuild_core::Platform::NordicNrf51) => {
+                    Some(fbuild_core::Platform::NordicNrf51)
+                }
                 Some(fbuild_core::Platform::NordicNrf52) => {
                     Some(fbuild_core::Platform::NordicNrf52)
                 }
@@ -216,6 +219,9 @@ impl BuildContext {
                     "framework-cmsis",
                     "toolchain-gccarmnoneeabi",
                 ],
+                Some(fbuild_core::Platform::NordicNrf51) => {
+                    &["framework-arduinonordicnrf5", "toolchain-gccarmnoneeabi"]
+                }
                 Some(fbuild_core::Platform::NordicNrf52) => &[
                     "framework-arduinoadafruitnrf52",
                     "framework-cmsis",

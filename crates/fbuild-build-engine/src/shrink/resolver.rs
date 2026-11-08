@@ -79,7 +79,7 @@ mod tests {
         ShrinkContext::new(platform, libc)
     }
 
-    const ALL_PLATFORMS: [Platform; 15] = [
+    const ALL_PLATFORMS: [Platform; 16] = [
         Platform::Apollo3,
         Platform::AtmelAvr,
         Platform::AtmelMegaAvr,
@@ -87,6 +87,7 @@ mod tests {
         Platform::Ch32v,
         Platform::Espressif32,
         Platform::Espressif8266,
+        Platform::NordicNrf51,
         Platform::NordicNrf52,
         Platform::NxpLpc,
         Platform::RaspberryPi,

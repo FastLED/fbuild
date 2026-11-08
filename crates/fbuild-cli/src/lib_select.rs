@@ -165,8 +165,8 @@ fn resolve_framework(
     env_config: &HashMap<String, String>,
 ) -> Result<FrameworkInfo, String> {
     use fbuild_packages::library::{
-        Apollo3Cores, AvrFramework, Ch32vCores, Esp32Framework, Esp8266Framework, Nrf52Cores,
-        RenesasCores, SamCores, SilabsCores, Stm32Cores, TeensyCores,
+        Apollo3Cores, AvrFramework, Ch32vCores, Esp32Framework, Esp8266Framework, Nrf51Cores,
+        Nrf52Cores, RenesasCores, SamCores, SilabsCores, Stm32Cores, TeensyCores,
     };
 
     /// Build a `FrameworkInfo` from a libraries dir + display name. Pulled out
@@ -213,6 +213,12 @@ fn resolve_framework(
         Platform::RaspberryPi => info(
             "framework-arduinopico",
             rp2040_framework_libraries_dir(project_dir, env_config),
+        ),
+        Platform::NordicNrf51 => info(
+            "framework-arduinonordicnrf5",
+            Nrf51Cores::new(project_dir)
+                .get_libraries_dir()
+                .into_path_buf(),
         ),
         Platform::NordicNrf52 => info(
             "framework-arduinoadafruitnrf52",
