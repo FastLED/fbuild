@@ -37,27 +37,6 @@
      }
     }
    }
-  },
-  {
-   "id": "toolchain-xtensa-esp-elf/14.2.0_20260121/linux-arm64",
-   "required": false,
-   "asset": {
-    "filename": "xtensa-esp-elf-14.2.0_20260121-aarch64-linux-gnu.tar.xz",
-    "size_bytes": 171504672,
-    "sha256": "80ae10ce3d6c02e8c06213f03cac343c4ef6f0fbd89f28530b918f7a1006f1eb",
-    "urls": [
-     "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/toolchain-xtensa-esp-elf/release/14.2.0_20260121/linux-arm64/whole/xtensa-esp-elf-14.2.0_20260121-aarch64-linux-gnu.tar.xz",
-     "https://github.com/espressif/crosstool-NG/releases/download/esp-14.2.0_20260121/xtensa-esp-elf-14.2.0_20260121-aarch64-linux-gnu.tar.xz"
-    ],
-    "slices": {
-     "esp32s3": {
-      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/toolchain-xtensa-esp-elf/release/14.2.0_20260121/linux-arm64/esp32s3/xtensa-esp-elf-14.2.0_20260121-esp32s3.15e485dddf36539a.tar.zst",
-      "sha256": "15e485dddf36539aca26627491961426a589e33c60f8f99fceba2e8e3cd33cda",
-      "size": 104408554,
-      "format": "tar.zst"
-     }
-    }
-   }
   }
  ]
 }

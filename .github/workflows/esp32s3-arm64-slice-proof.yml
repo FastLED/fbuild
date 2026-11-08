@@ -8,13 +8,18 @@ name: ESP32-S3 arm64 slice proof (#1956)
 # #1949/#1953 (`flash 355899 / ram 74919`, identical to the whole archive).
 #
 # This workflow is the arm64 proof host: it builds the ESP32-S3 fixture twice
-# from empty caches -- once resolving the published linux-arm64 slice, once
-# downloading the vendor whole archive -- and requires identical firmware
-# sizes. Manual dispatch only: it downloads ~500 MB and compiles twice.
+# from empty caches -- once resolving the linux-arm64 slice named by the
+# manifest of the dispatched ref, once downloading the vendor whole archive --
+# and requires identical firmware sizes plus a chip-scoped install.
+#
+# EXPECTED RED until FastLED/fbuild#1961: FBUILD_MIRROR_MANIFEST_URL does not
+# move slice resolution, so the first build silently uses the whole archive and
+# the `+esp32s3` assertion fails (that is what makes the harness trustworthy —
+# it fails rather than passing on a build that never touched the slice).
+#
+# Manual dispatch only: it downloads ~500 MB and compiles twice.
 on:
   workflow_dispatch:
-  push:
-    branches: [agent/arm64-slice-proof]  # TEMP proof run; removed before merge
 
 concurrency:
   group: esp32s3-arm64-slice-proof.yml-${{ github.run_id }}
@@ -51,10 +56,7 @@ jobs:
           fbuild --version
 
       - name: Confirm this runner is the arm64 host the slice is for
-        run: |
-          test "$(uname -m)" = aarch64
-          # The slice is only meaningful on the host key it was built for.
-          grep -q '/linux-arm64/esp32s3/' site/mirror/shards/esp-toolchain.json
+        run: test "$(uname -m)" = aarch64
 
       - name: Build with the published linux-arm64 slice
         run: |
@@ -65,16 +67,6 @@ jobs:
           fbuild daemon stop >/dev/null 2>&1 || true
           sleep 2
           fbuild build "${FIXTURE}" -e esp32s3 2>&1 | tee "$RUNNER_TEMP/slice.log"
-
-      - name: DEBUG where the toolchain landed
-        run: |
-          set -x
-          env | grep -E "^FBUILD" || true
-          fbuild daemon status || true
-          du -sh "$RUNNER_TEMP"/cache-slice "$HOME"/.fbuild 2>/dev/null || true
-          find "$HOME/.fbuild" "$RUNNER_TEMP" -maxdepth 7 -type d -name '*esp32s3*' 2>/dev/null | head -20
-          grep -icE 'digitaloceanspaces|mirror' "$RUNNER_TEMP/slice.log" || true
-          find "$HOME/.fbuild" "$RUNNER_TEMP" -name '*.tar.xz' -o -name '*.tar.zst' 2>/dev/null | head -20
 
       - name: Build with the vendor whole archive (control)
         run: |
