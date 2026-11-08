@@ -147,8 +147,19 @@ def slice_key(version: str, host: str, chip: str, record: dict, toolchain: str) 
     return f"{KEY_ROOT}/{toolchain}/release/{version}/{host}/{chip}/{stem}.{record['sha256'][:16]}.tar.zst"
 
 
-def whole_key(version: str, host: str, archive: Path, toolchain: str) -> str:
-    return f"{KEY_ROOT}/{toolchain}/release/{version}/{host}/whole/{archive.name}"
+def whole_key(version: str, host: str, filename: str, toolchain: str) -> str:
+    """Bucket key for the whole bundle, named after the VENDOR asset.
+
+    Never after the operator's local file name: the shard's `asset.filename`
+    comes from the vendor URL, so a bundle uploaded under an alias
+    (`arm64.tar.xz`) leaves the listed filename pointing at a second copy of the
+    same bytes that nothing names -- and a re-publish under another alias adds
+    yet another object for the same host.
+    """
+    name = Path(filename).name
+    if not TOKEN.match(name):
+        raise ValueError(f"unsafe whole-archive filename: {filename!r}")
+    return f"{KEY_ROOT}/{toolchain}/release/{version}/{host}/whole/{name}"
 
 
 def build_component(
@@ -402,7 +413,7 @@ def _mirror_whole(
         or archive.stat().st_size != entry["size"]
     ):
         raise ValueError(f"{archive} does not match the metadata pins for {host}")
-    key = whole_key(version, host, archive, toolchain)
+    key = whole_key(version, host, Path(str(entry["url"])).name, toolchain)
     upload(s3, archive, key)
     return f"{PUBLIC_BASE}/{key}"
 
