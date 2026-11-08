@@ -1872,7 +1872,7 @@ fn manifest_payload(metadata: &Metadata, pages_url: &str, raw_base_url: &str) ->
                 "max_lines": HISTORY_MAX_LINES,
             },
             "image": {
-                "description": "GitHub-dark cold bars with narrower warm timing overlays.",
+                "description": "GitHub-dark charts: separate cold and warm panels per board.",
                 "url": format!("{raw}/benchmark.svg"),
                 "content_type": "image/svg+xml",
             },
@@ -1934,81 +1934,146 @@ fn write_history(
     Ok(())
 }
 
-#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
-fn render_svg(metadata: &Metadata, results: &[ToolResult]) -> String {
-    let width = 1100.0;
-    let height = 748.0;
+/// Which median a chart panel plots.
+#[derive(Clone, Copy)]
+enum Phase {
+    Cold,
+    Warm,
+}
+
+impl Phase {
+    fn key(self) -> &'static str {
+        match self {
+            Phase::Cold => "cold",
+            Phase::Warm => "warm",
+        }
+    }
+
+    fn ms(self, result: &ToolResult) -> f64 {
+        match self {
+            Phase::Cold => result.cold_ms,
+            Phase::Warm => result.warm_ms,
+        }
+    }
+}
+
+const SVG_PANEL_TOP: f64 = 60.0;
+const SVG_ROW_HEIGHT: f64 = 48.0;
+const SVG_PANEL_GAP: f64 = 34.0;
+
+fn tool_kind(tool: &str) -> ToolKind {
+    match tool {
+        "arduino" => ToolKind::Arduino,
+        "platformio" => ToolKind::PlatformIo,
+        _ => ToolKind::Fbuild,
+    }
+}
+
+/// One board/phase chart panel scaled to its own slowest median; returns markup and height.
+fn svg_panel(results: &[ToolResult], board: &str, phase: Phase, y0: f64) -> (String, f64) {
     let bar_x = 190.0;
     let bar_width = 480.0;
-    let board_max_ms = |board: &str| {
-        results
-            .iter()
-            .filter(|result| result.board == board)
-            .flat_map(|result| [result.cold_ms, result.warm_ms])
-            .fold(0.0_f64, f64::max)
-            .max(1.0)
+    let rows = results
+        .iter()
+        .filter(|result| result.board == board)
+        .collect::<Vec<_>>();
+    let board_name = rows
+        .first()
+        .map_or(board, |result| result.board_name.as_str());
+    let max_ms = rows
+        .iter()
+        .map(|result| phase.ms(result))
+        .fold(0.0_f64, f64::max)
+        .max(0.001);
+    let stack_note = if matches!(phase, Phase::Cold) {
+        match board_stack_status(results, board) {
+            StackStatus::Matched => " | fbuild/PIO stack matched",
+            StackStatus::Different => " | fbuild/PIO stack differs; ratio excluded",
+            StackStatus::Unverified => " | fbuild/PIO stack unverified; ratio excluded",
+        }
+    } else {
+        ""
     };
-    let mut rows = [String::new(), String::new()];
-    let stack_note = |board: &str| match board_stack_status(results, board) {
-        StackStatus::Matched => " | fbuild/PIO stack matched",
-        StackStatus::Different => " | fbuild/PIO stack differs; ratio excluded",
-        StackStatus::Unverified => " | fbuild/PIO stack unverified; ratio excluded",
+    let (title, subtitle) = match phase {
+        Phase::Cold => (
+            "cold build (nothing installed)",
+            "Scale: slowest cold median",
+        ),
+        Phase::Warm => (
+            "warm build (no-change rebuild)",
+            "Scale: slowest warm median",
+        ),
     };
-    for (index, result) in results.iter().enumerate() {
-        let kind = match result.tool.as_str() {
-            "arduino" => ToolKind::Arduino,
-            "platformio" => ToolKind::PlatformIo,
-            _ => ToolKind::Fbuild,
-        };
-        let style = kind.style();
-        let board_index = usize::from(result.board == "esp32s3");
-        let board_gap = if board_index == 1 { 66.0 } else { 0.0 };
-        let y = 218.0 + index as f64 * 68.0 + board_gap;
-        let max_ms = board_max_ms(&result.board);
-        let cold_width = (result.cold_ms / max_ms * bar_width).max(3.0);
-        let warm_width = (result.warm_ms / max_ms * bar_width).max(3.0);
-        rows[board_index].push_str(&format!(
-            r##"  <g>
-    <text x="24" y="{label_y:.1}" class="tool" fill="{warm}">{label}</text>
-    <rect x="{bar_x:.1}" y="{cold_y:.1}" width="{bar_width:.1}" height="28" rx="4" fill="#21262d" />
-    <rect x="{bar_x:.1}" y="{cold_y:.1}" width="{cold_width:.1}" height="28" rx="4" fill="{cold}">
-      <title>{label} cold median: {cold_text}</title>
-    </rect>
-    <rect x="{bar_x:.1}" y="{warm_y:.1}" width="{warm_width:.1}" height="14" rx="3" fill="{warm}">
-      <title>{label} warm median: {warm_text}</title>
-    </rect>
-    <text x="692" y="{value_y:.1}" class="value">cold {cold_text}  |  warm {warm_text}</text>
-    <text x="692" y="{speed_y:.1}" class="speed">{speedup:.2}x cold / warm{download}</text>
-  </g>
+    let mut out = format!(
+        r##"  <g role="group" aria-labelledby="{board}-{key}-title">
+    <text id="{board}-{key}-title" x="24" y="{title_y:.1}" class="board">{name} — {title}</text>
+    <text x="24" y="{scale_y:.1}" class="legend">{subtitle} = {max}{stack_note}</text>
 "##,
-            label_y = y + 21.0,
-            label = xml_escape(&result.display_name),
-            warm = style.warm_color,
-            bar_x = bar_x,
-            cold_y = y,
-            bar_width = bar_width,
-            cold_width = cold_width,
-            cold = style.cold_color,
-            cold_text = format_duration(result.cold_ms),
-            download = result
+        key = phase.key(),
+        title_y = y0 + 22.0,
+        name = xml_escape(board_name),
+        scale_y = y0 + 44.0,
+        max = format_duration(max_ms),
+    );
+    for (index, result) in rows.iter().enumerate() {
+        let style = tool_kind(&result.tool).style();
+        let y = y0 + SVG_PANEL_TOP + index as f64 * SVG_ROW_HEIGHT;
+        let ms = phase.ms(result);
+        let fill = match phase {
+            Phase::Cold => style.cold_color,
+            Phase::Warm => style.warm_color,
+        };
+        let detail = match phase {
+            Phase::Cold => result
                 .cold_download_bytes
                 .map_or_else(String::new, |bytes| {
-                    format!("  |  {} download", format_bytes(bytes))
+                    format!("{} download", format_bytes(bytes))
                 }),
-            warm_y = y + 7.0,
-            warm_width = warm_width,
-            warm_text = format_duration(result.warm_ms),
+            Phase::Warm => format!("{:.2}x faster than cold", result.speedup),
+        };
+        out.push_str(&format!(
+            r##"    <text x="24" y="{label_y:.1}" class="tool" fill="{label_color}">{label}</text>
+    <rect x="{bar_x:.1}" y="{y:.1}" width="{bar_width:.1}" height="28" rx="4" fill="#21262d" />
+    <rect x="{bar_x:.1}" y="{y:.1}" width="{width:.1}" height="28" rx="4" fill="{fill}">
+      <title>{label} {key} median: {text}</title>
+    </rect>
+    <text x="692" y="{value_y:.1}" class="value">{key} {text}</text>
+    <text x="692" y="{detail_y:.1}" class="speed">{detail}</text>
+"##,
+            label_y = y + 21.0,
+            label_color = style.warm_color,
+            label = xml_escape(&result.display_name),
+            width = (ms / max_ms * bar_width).max(3.0),
+            key = phase.key(),
+            text = format_duration(ms),
             value_y = y + 13.0,
-            speed_y = y + 34.0,
-            speedup = result.speedup,
+            detail_y = y + 29.0,
         ));
     }
+    out.push_str("  </g>\n");
+    let height = SVG_PANEL_TOP + rows.len() as f64 * SVG_ROW_HEIGHT + SVG_PANEL_GAP;
+    (out, height)
+}
+
+fn render_svg(metadata: &Metadata, results: &[ToolResult]) -> String {
+    let width = 1100.0;
+    let mut y = 128.0;
+    let mut panels = String::new();
+    for board in BOARDS {
+        for phase in [Phase::Cold, Phase::Warm] {
+            let (markup, height) = svg_panel(results, board.key, phase, y);
+            panels.push_str(&markup);
+            y += height;
+        }
+    }
+    let rule_y = y;
+    let height = rule_y + 28.0;
     let short_sha = metadata.git_sha.chars().take(12).collect::<String>();
     let floor_line = svg_floor_line(metadata, results);
     format!(
         r##"<svg xmlns="http://www.w3.org/2000/svg" width="{width:.0}" height="{height:.0}" viewBox="0 0 {width:.0} {height:.0}" role="img" aria-labelledby="title description">
   <title id="title">Arduino Uno and ESP32-S3 Blink build benchmark</title>
-  <desc id="description">Cold build bars with narrower warm build timing overlays for Arduino Uno and ESP32-S3 Blink sketches.</desc>
+  <desc id="description">Separate cold and warm build charts for Arduino Uno and ESP32-S3 Blink sketches, each scaled to its own slowest median.</desc>
   <style>
     text {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }}
     .heading {{ font-size: 30px; font-weight: 700; fill: #f0f6fc; }}
@@ -2024,23 +2089,10 @@ fn render_svg(metadata: &Metadata, results: &[ToolResult]) -> String {
   <text x="24" y="43" class="heading">Arduino Uno + ESP32-S3 Blink build times</text>
   <text x="24" y="72" class="meta">Arduino CLI vs PlatformIO vs fbuild | median of {trials} trials{link}</text>
   <text x="24" y="95" class="meta">Generated {generated_at} | sha {sha}</text>
-{floor_line}  <rect x="24" y="128" width="76" height="24" rx="4" fill="#5b1f1c" />
-  <rect x="24" y="134" width="34" height="12" rx="3" fill="#f85149" />
-  <text x="112" y="146" class="legend">cold (back) + warm (front overlay)</text>
-  <g role="group" aria-labelledby="uno-title">
-    <text id="uno-title" x="24" y="182" class="board">Arduino Uno</text>
-    <text x="24" y="204" class="legend">Scale: slowest median = {uno_max}{uno_stack_note}</text>
-{uno_rows}  </g>
-  <g role="group" aria-labelledby="esp32s3-title">
-    <text id="esp32s3-title" x="24" y="452" class="board">ESP32-S3</text>
-    <text x="24" y="474" class="legend">Scale: slowest median = {esp32s3_max}{esp32_stack_note}</text>
-{esp32_rows}  </g>
-  <line x1="24" y1="720" x2="1076" y2="720" stroke="#30363d" stroke-width="2" />
-  <text x="24" y="740" class="meta">Machine data: manifest.json | latest.json | history.jsonl</text>
+{floor_line}{panels}  <line x1="24" y1="{rule_y:.0}" x2="1076" y2="{rule_y:.0}" stroke="#30363d" stroke-width="2" />
+  <text x="24" y="{foot_y:.0}" class="meta">Machine data: manifest.json | latest.json | history.jsonl</text>
 </svg>
 "##,
-        width = width,
-        height = height,
         trials = metadata.trials,
         link = if metadata.network_mbit > 0 {
             format!(
@@ -2052,12 +2104,7 @@ fn render_svg(metadata: &Metadata, results: &[ToolResult]) -> String {
         },
         generated_at = xml_escape(&metadata.generated_at),
         sha = xml_escape(&short_sha),
-        uno_max = format_duration(board_max_ms("uno")),
-        esp32s3_max = format_duration(board_max_ms("esp32s3")),
-        uno_stack_note = stack_note("uno"),
-        esp32_stack_note = stack_note("esp32s3"),
-        uno_rows = rows[0],
-        esp32_rows = rows[1],
+        foot_y = rule_y + 20.0,
     )
 }
 
@@ -2183,7 +2230,7 @@ fn render_html(metadata: &Metadata, results: &[ToolResult]) -> String {
     <main>
       <h1>fbuild Blink build benchmark</h1>
       <p class="meta">Generated {generated_at} from <code>{sha}</code>. Median of {trials} trials on {os}/{arch}.</p>
-      <p class="note">All three tools compile the same Arduino Uno and ESP32-S3 <code>bench/blink/blink.ino</code>. Cold is a first-time install: each tool's project outputs, caches, packages and toolchains are removed before the timer, so every download lands inside the timed build (for Arduino CLI, that includes <code>arduino-cli core install</code>). Warm is the immediate no-change rebuild. The narrower warm bar overlays the cold bar.</p>{network_note}
+      <p class="note">All three tools compile the same Arduino Uno and ESP32-S3 <code>bench/blink/blink.ino</code>. Cold is a first-time install: each tool's project outputs, caches, packages and toolchains are removed before the timer, so every download lands inside the timed build (for Arduino CLI, that includes <code>arduino-cli core install</code>). Warm is the immediate no-change rebuild. Cold and warm are charted separately, each scaled to its own slowest median, so sub-second warm times stay visible.</p>{network_note}
       <p class="note">Resolved package stacks: {comparison_note}. Exact package versions and representative core compiler commands are in <a href="latest.json">latest.json</a>.</p>
       <a href="benchmark.svg"><img src="benchmark.svg" alt="Arduino CLI vs PlatformIO vs fbuild cold and warm Blink build timings" /></a>
       <div class="table-wrap">
