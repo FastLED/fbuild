@@ -12,10 +12,13 @@ name: ESP32-S3 arm64 slice proof (#1956)
 # manifest of the dispatched ref, once downloading the vendor whole archive --
 # and requires identical firmware sizes plus a chip-scoped install.
 #
-# EXPECTED RED until FastLED/fbuild#1961: FBUILD_MIRROR_MANIFEST_URL does not
-# move slice resolution, so the first build silently uses the whole archive and
-# the `+esp32s3` assertion fails (that is what makes the harness trustworthy —
-# it fails rather than passing on a build that never touched the slice).
+# The client is built FROM THIS REF rather than installed from PyPI: the
+# registry-path slice fix (#1963) merged after the last release (2.5.51), and a
+# wheel without it silently ignores `FBUILD_MIRROR_MANIFEST_URL` (#1961), so a
+# wheel-based run would pass on a build that never touched the slice. Plain
+# `cargo` is deliberate -- this ephemeral ARM runner has no soldr broker and
+# the harness must exercise the ref's own CLI+daemon pair (the CLI prefers the
+# `fbuild-daemon` sitting next to it).
 #
 # Manual dispatch only: it downloads ~500 MB and compiles twice.
 on:
@@ -29,9 +32,6 @@ permissions:
   contents: read
 
 env:
-  # The last release whose wheels include the per-chip slice client. Bump when
-  # a newer release is published.
-  FBUILD_VERSION: "2.5.51"
   FIXTURE: tests/platform/esp32s3
   # Manifest of THIS ref: it lists the linux-arm64 slice, so the client resolves
   # the slice instead of the whole archive. raw.githubusercontent.com serves any
@@ -42,7 +42,7 @@ jobs:
   arm64-slice:
     name: arm64 slice == whole archive (esp32s3 Blink)
     runs-on: ubuntu-24.04-arm
-    timeout-minutes: 60
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@v6
         with:
@@ -50,17 +50,30 @@ jobs:
 
       - uses: astral-sh/setup-uv@v3
 
-      - name: Install fbuild
-        run: |
-          uv tool install --python 3.13 "fbuild==${FBUILD_VERSION}"
-          fbuild --version
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: "1.95.0"
+
+      - uses: swatinem/rust-cache@v2
+        with:
+          key: arm64-slice-proof
 
       - name: Confirm this runner is the arm64 host the slice is for
         run: test "$(uname -m)" = aarch64
 
+      - name: Build the client from this ref (CLI + daemon, dev profile)
+        run: |
+          set -euo pipefail
+          cargo build -p fbuild-cli -p fbuild-daemon
+          export PATH="$PWD/target/debug:$PATH"
+          fbuild --version
+          test -x target/debug/fbuild-daemon
+
       - name: Build with the published linux-arm64 slice
         run: |
           set -euo pipefail
+          export PATH="$PWD/target/debug:$PATH"
+          export FBUILD_DEV_MODE=1
           export FBUILD_CACHE_DIR="$RUNNER_TEMP/cache-slice"
           export FBUILD_BUILD_DIR="$RUNNER_TEMP/build-slice"
           export FBUILD_MIRROR_MANIFEST_URL="${SLICE_MANIFEST_URL}"
@@ -71,6 +84,8 @@ jobs:
       - name: Build with the vendor whole archive (control)
         run: |
           set -euo pipefail
+          export PATH="$PWD/target/debug:$PATH"
+          export FBUILD_DEV_MODE=1
           # Empty value disables the manifest override -> vendor whole archive.
           export FBUILD_CACHE_DIR="$RUNNER_TEMP/cache-whole"
           export FBUILD_BUILD_DIR="$RUNNER_TEMP/build-whole"
