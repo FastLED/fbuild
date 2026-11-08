@@ -3,10 +3,18 @@ name: Hardware CI
 # FastLED/fbuild#696 — nightly hardware-attached bring-up CI runner.
 #
 # Activates when a self-hosted runner with the `self-hosted` + `hw-ci`
-# labels is registered. Until that runner exists, the job skips
-# silently (the `if:` guard on each step checks `runner.environment`
-# and the per-board fingerprint set, both of which only resolve on
-# the self-hosted runner).
+# labels is registered. With no such runner the job does NOT "skip
+# silently": `runs-on: [self-hosted, hw-ci]` keeps every matrix leg
+# QUEUED until GitHub cancels it 24 h later, so the nightly schedule
+# used to end as a cancelled run (and five dead queue slots) every
+# night while also never executing a single step.
+#
+# The dormancy gate is therefore at the JOB level, not inside the
+# steps: `vars.HW_CI_ENABLED` must be `true` before the matrix is
+# scheduled at all, and a `dormant` job reports why nothing ran.
+# Enable the farm with
+#
+#     gh variable set HW_CI_ENABLED --body true -R FastLED/fbuild
 #
 # To register a runner, see `agents/docs/hardware-ci-setup.md`.
 
@@ -41,16 +49,36 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
-  bringup:
-    # Skip on hosted runners; this job is meant for the self-hosted
-    # `hw-ci` farm. The `if:` on the matrix steps below double-guards
-    # so a misconfigured hosted runner can't accidentally pretend to
-    # have hardware attached.
+  # Reports dormancy instead of queueing against a runner label that has
+  # no registered runner. This job needs no hardware, so it runs on a
+  # hosted runner in seconds and leaves the nightly run green with a
+  # visible reason rather than a 24 h queue that GitHub cancels.
+  dormant:
     if: |
       github.event_name == 'schedule'
-      || github.event_name == 'workflow_dispatch'
-      || (github.event_name == 'pull_request'
-          && contains(github.event.pull_request.labels.*.name, 'hw-ci'))
+      && vars.HW_CI_ENABLED != 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Hardware CI is dormant
+        run: |
+          echo "::notice::Hardware CI is dormant: no self-hosted runner carries the 'hw-ci' label, so the board matrix was not scheduled."
+          echo "Enable it after registering the runner farm: gh variable set HW_CI_ENABLED --body true -R ${{ github.repository }}"
+          echo "Setup: agents/docs/hardware-ci-setup.md"
+
+  bringup:
+    # Runs only when the farm is enabled AND this event wants hardware.
+    # Without the `vars.HW_CI_ENABLED` half, a bare `runs-on: [self-hosted,
+    # hw-ci]` with no registered runner sits queued for 24 h and is then
+    # cancelled, which is indistinguishable from a broken workflow. The
+    # steps below double-guard on the fingerprint set so a misconfigured
+    # runner can't accidentally pretend to have hardware attached.
+    if: |
+      vars.HW_CI_ENABLED == 'true'
+      && (github.event_name == 'schedule'
+          || github.event_name == 'workflow_dispatch'
+          || (github.event_name == 'pull_request'
+              && contains(github.event.pull_request.labels.*.name, 'hw-ci')))
     runs-on: [self-hosted, hw-ci]
     timeout-minutes: 30
     strategy:

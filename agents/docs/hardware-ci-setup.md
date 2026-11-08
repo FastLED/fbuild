@@ -4,6 +4,32 @@ How to register a self-hosted runner so the
 [`hw-ci.yml`](../../.github/workflows/hw-ci.yml) workflow has somewhere
 to run. FastLED/fbuild#696.
 
+## Dormant by default
+
+The workflow is gated on the repository variable `HW_CI_ENABLED`. With no
+runner farm registered, a job that requests `runs-on: [self-hosted, hw-ci]`
+does not skip — it stays **queued** until GitHub cancels it 24 hours later,
+so the nightly schedule burned five queue slots and ended as a cancelled run
+without executing a single step. The gate moves that decision ahead of
+scheduling:
+
+- `HW_CI_ENABLED` unset or not `true` → the `bringup` matrix is never
+  scheduled and the `dormant` job posts a notice explaining why.
+- `HW_CI_ENABLED == 'true'` → the matrix runs exactly as described below.
+
+Enable it after the runner farm below is registered and a manual run has
+passed:
+
+```bash
+gh variable set HW_CI_ENABLED --body true -R FastLED/fbuild
+```
+
+Disable it while the farm is away (host rebuild, boards unplugged):
+
+```bash
+gh variable delete HW_CI_ENABLED -R FastLED/fbuild
+```
+
 ## What you need
 
 - A Linux box (Pi 5, NUC, or similar) with at least four free USB
@@ -63,8 +89,9 @@ to run. FastLED/fbuild#696.
    See [`tests/hw/README.md`](../../tests/hw/README.md) for the
    layout convention.
 
-6. **Trigger the first run manually.**
+6. **Enable the gate, then trigger the first run manually.**
    ```bash
+   gh variable set HW_CI_ENABLED --body true -R FastLED/fbuild
    gh workflow run hw-ci.yml -f board=all
    ```
    The job should pick up the runner, walk the matrix, and either
