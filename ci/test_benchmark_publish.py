@@ -9,11 +9,22 @@ The fix keeps ONE site assembler (Pages deployments replace the whole site, so
 two publishers would clobber each other) but makes it tolerant of a missing
 measurement: it seeds from the last published `benchmark-stats` branch and only
 overlays fresh numbers when the benchmark produced them.
+
+`actions/deploy-pages` also lists the artifacts of the whole RUN, not of the
+current ATTEMPT, and refuses to deploy when two are named `github-pages`. Every
+re-run of this workflow -- the routine cure for a transient release-asset 504 --
+therefore stranded the deploy (runs 42444946413 and 42466790090) and the mirror
+manifest with it, so `publish` drops the stale copies before uploading its own.
 """
 
 from __future__ import annotations
 
+import json
+import os
+import subprocess
+import threading
 import unittest
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 import yaml
@@ -101,6 +112,103 @@ class MirrorDeployIsIndependentTests(unittest.TestCase):
         self.assertLess(
             script.index("diff --cached --quiet"), script.index("git -C \"${publish_dir}\" push")
         )
+
+
+class StalePagesArtifactTests(unittest.TestCase):
+    """A re-run must not accumulate a second `github-pages` artifact (fbuild#1960)."""
+
+    STEP = "Drop Pages artifacts uploaded by earlier attempts"
+    UPLOAD = "Upload GitHub Pages artifact"
+
+    def setUp(self) -> None:
+        self.jobs = load_workflow()["jobs"]
+
+    def test_publish_may_delete_run_artifacts(self):
+        # DELETE /actions/artifacts/<id> is gated on actions: write.
+        self.assertEqual("write", self.jobs["publish"]["permissions"]["actions"])
+
+    def test_stale_artifacts_are_dropped_before_the_upload(self):
+        names = [s.get("name") for s in steps_of(self.jobs["publish"])]
+        self.assertIn(self.STEP, names)
+        self.assertLess(names.index(self.STEP), names.index(self.UPLOAD))
+
+    def test_only_the_pages_artifact_is_deleted(self):
+        script = script_of(self.jobs["publish"], self.STEP)
+        self.assertIn('select(.name == "github-pages")', script)
+        # The benchmark snapshot/log artifacts must survive: they are inputs to
+        # the report and the log is the only trace of a failed measurement.
+        self.assertNotIn("build-comparison-site", script)
+        self.assertNotIn("build-comparison-log", script)
+
+    def _run(self, artifacts: list[dict]) -> tuple[subprocess.CompletedProcess[str], list[tuple[str, str]]]:
+        requests: list[tuple[str, str]] = []
+
+        class Handler(BaseHTTPRequestHandler):
+            def do_GET(self) -> None:
+                requests.append(("GET", self.path))
+                body = json.dumps({"total_count": len(artifacts), "artifacts": artifacts}).encode()
+                self.send_response(200)
+                self.send_header("Content-Type", "application/json")
+                self.send_header("Content-Length", str(len(body)))
+                self.end_headers()
+                self.wfile.write(body)
+
+            def do_DELETE(self) -> None:
+                requests.append(("DELETE", self.path))
+                self.send_response(204)
+                self.end_headers()
+
+            def log_message(self, *args: object) -> None:
+                return
+
+        server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+        thread = threading.Thread(target=server.serve_forever, daemon=True)
+        thread.start()
+        try:
+            env = {
+                **os.environ,
+                "GH_API_URL": f"http://127.0.0.1:{server.server_port}",
+                "GH_TOKEN": "test-token",
+                "GH_REPO": "FastLED/fbuild",
+                "RUN_ID": "42466790090",
+            }
+            script = script_of(self.jobs["publish"], self.STEP)
+            return subprocess.run(
+                ["bash", "-c", script], env=env, capture_output=True, text=True, check=False
+            ), requests
+        finally:
+            server.shutdown()
+            server.server_close()
+
+    def test_stale_artifacts_are_deleted_and_others_kept(self):
+        # Exactly the shape of run 42466790090: two `github-pages` uploads from
+        # two attempts plus the benchmark artifacts of the last attempt.
+        result, requests = self._run(
+            [
+                {"id": 11, "name": "github-pages"},
+                {"id": 13, "name": "build-comparison-site-deadbeef"},
+                {"id": 12, "name": "github-pages"},
+                {"id": 14, "name": "build-comparison-log-deadbeef"},
+            ]
+        )
+        self.assertEqual(0, result.returncode, result.stderr)
+        deleted = sorted(path for method, path in requests if method == "DELETE")
+        self.assertEqual(
+            ["/repos/FastLED/fbuild/actions/artifacts/11", "/repos/FastLED/fbuild/actions/artifacts/12"],
+            deleted,
+        )
+        gets = [path for method, path in requests if method == "GET"]
+        self.assertEqual(
+            ["/repos/FastLED/fbuild/actions/runs/42466790090/artifacts?per_page=100"], gets
+        )
+
+    def test_a_first_attempt_deletes_nothing(self):
+        result, requests = self._run(
+            [{"id": 13, "name": "build-comparison-site-deadbeef"}]
+        )
+        self.assertEqual(0, result.returncode, result.stderr)
+        self.assertEqual([], [path for method, path in requests if method == "DELETE"])
+        self.assertIn("No github-pages artifact", result.stdout)
 
 
 if __name__ == "__main__":
