@@ -339,12 +339,31 @@ fn remove_cache_entries_deletes_every_variant_of_the_stem() {
 #[test]
 fn svg_uses_reference_palette() {
     let svg = render_svg(&sample_metadata(), &sample_results());
-    for color in [
-        "#3b4046", "#8b949e", "#1f3a7a", "#79c0ff", "#5b1f1c", "#f85149",
-    ] {
+    for color in ["#8b949e", "#79c0ff", "#f85149"] {
         assert!(svg.contains(color), "missing {color}");
     }
     assert!(!svg.contains("overlay"));
+    for dull in ["#3b4046", "#1f3a7a", "#5b1f1c"] {
+        assert!(
+            !svg.contains(dull),
+            "cold bars must use the bright palette: {dull}"
+        );
+    }
+}
+
+#[test]
+fn svg_outlines_cold_ice_blue_and_warm_red() {
+    let svg = render_svg(&sample_metadata(), &sample_results());
+    let panel = |id: &str| {
+        let start = svg
+            .find(&format!("aria-labelledby=\"{id}-title\""))
+            .unwrap();
+        let rest = &svg[start..];
+        rest[..rest.find("</g>").unwrap()].to_string()
+    };
+    assert_eq!(panel("uno-cold").matches("stroke=\"#a5f3fc\"").count(), 3);
+    assert_eq!(panel("uno-warm").matches("stroke=\"#ff3b30\"").count(), 3);
+    assert!(!panel("uno-cold").contains("#ff3b30"));
 }
 
 fn two_board_results(esp_scale: f64) -> Vec<ToolResult> {
