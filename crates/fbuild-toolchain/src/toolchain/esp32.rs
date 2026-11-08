@@ -453,7 +453,10 @@ mod tests {
 
         let bin = find_bin_root(&chip_dir).join("bin");
         std::fs::create_dir_all(&bin).unwrap();
-        std::fs::write(bin.join("xtensa-esp-elf-gcc"), b"").unwrap();
+        // The native spelling is what a real install writes (.exe on Windows);
+        // an extensionless file is only accepted there when it is an APE.
+        let gcc = fbuild_core::platform::executable::native_name("xtensa-esp-elf-gcc");
+        std::fs::write(bin.join(&gcc), b"").unwrap();
         std::fs::write(
             crate::disk_cache::paths::install_complete_sentinel(&chip_dir),
             b"",
@@ -461,7 +464,7 @@ mod tests {
         .unwrap();
 
         assert!(tc.is_installed(), "a chip-scoped install must be found");
-        assert_eq!(tc.get_gcc_path(), bin.join("xtensa-esp-elf-gcc"));
+        assert_eq!(tc.get_gcc_path(), bin.join(&gcc));
         assert_eq!(tc.get_info().install_path, find_bin_root(&chip_dir));
     }
 
