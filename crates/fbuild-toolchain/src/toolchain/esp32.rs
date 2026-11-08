@@ -8,6 +8,8 @@
 
 use std::path::{Path, PathBuf};
 
+use fbuild_core::path::NormalizedPath;
+
 use crate::{CacheSubdir, PackageBase, PackageInfo, Toolchain};
 
 /// ESP32 toolchain version (matches pioarduino).
@@ -154,6 +156,16 @@ impl Esp32Toolchain {
     pub fn with_slice_variant(mut self, chip: &str) -> Self {
         self.base = self.base.with_slice_variant(chip);
         self
+    }
+
+    /// The chip-scoped install directory this toolchain will use, or `None`
+    /// when it installs the whole archive into the shared directory.
+    ///
+    /// `None` on the Xtensa path means the caller never said which chip it
+    /// builds for, so no published slice can be selected and every build
+    /// downloads the whole archive (FastLED/fbuild#1944, #1961).
+    pub fn chip_install_path(&self) -> Option<NormalizedPath> {
+        self.base.chip_install_path()
     }
 
     /// Get the resolved install directory, or compute it.
