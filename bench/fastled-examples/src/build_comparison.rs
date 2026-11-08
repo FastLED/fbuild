@@ -134,7 +134,6 @@ enum MeasurementStep {
 struct ToolStyle {
     key: &'static str,
     label: &'static str,
-    cold_color: &'static str,
     warm_color: &'static str,
 }
 
@@ -144,19 +143,16 @@ impl ToolKind {
             Self::Arduino => ToolStyle {
                 key: "arduino",
                 label: "Arduino CLI",
-                cold_color: "#3b4046",
                 warm_color: "#8b949e",
             },
             Self::PlatformIo => ToolStyle {
                 key: "platformio",
                 label: "PlatformIO",
-                cold_color: "#1f3a7a",
                 warm_color: "#79c0ff",
             },
             Self::Fbuild => ToolStyle {
                 key: "fbuild",
                 label: "fbuild",
-                cold_color: "#5b1f1c",
                 warm_color: "#f85149",
             },
         }
@@ -1960,6 +1956,10 @@ impl Phase {
 const SVG_PANEL_TOP: f64 = 60.0;
 const SVG_ROW_HEIGHT: f64 = 48.0;
 const SVG_PANEL_GAP: f64 = 34.0;
+/// Bar outline marking cold-build panels (ice blue).
+const SVG_COLD_OUTLINE: &str = "#a5f3fc";
+/// Bar outline marking warm-build panels (bright red).
+const SVG_WARM_OUTLINE: &str = "#ff3b30";
 
 fn tool_kind(tool: &str) -> ToolKind {
     match tool {
@@ -2019,9 +2019,10 @@ fn svg_panel(results: &[ToolResult], board: &str, phase: Phase, y0: f64) -> (Str
         let style = tool_kind(&result.tool).style();
         let y = y0 + SVG_PANEL_TOP + index as f64 * SVG_ROW_HEIGHT;
         let ms = phase.ms(result);
-        let fill = match phase {
-            Phase::Cold => style.cold_color,
-            Phase::Warm => style.warm_color,
+        let fill = style.warm_color;
+        let outline = match phase {
+            Phase::Cold => SVG_COLD_OUTLINE,
+            Phase::Warm => SVG_WARM_OUTLINE,
         };
         let detail = match phase {
             Phase::Cold => result
@@ -2034,7 +2035,7 @@ fn svg_panel(results: &[ToolResult], board: &str, phase: Phase, y0: f64) -> (Str
         out.push_str(&format!(
             r##"    <text x="24" y="{label_y:.1}" class="tool" fill="{label_color}">{label}</text>
     <rect x="{bar_x:.1}" y="{y:.1}" width="{bar_width:.1}" height="28" rx="4" fill="#21262d" />
-    <rect x="{bar_x:.1}" y="{y:.1}" width="{width:.1}" height="28" rx="4" fill="{fill}">
+    <rect x="{bar_x:.1}" y="{y:.1}" width="{width:.1}" height="28" rx="4" fill="{fill}" stroke="{outline}" stroke-width="2">
       <title>{label} {key} median: {text}</title>
     </rect>
     <text x="692" y="{value_y:.1}" class="value">{key} {text}</text>
