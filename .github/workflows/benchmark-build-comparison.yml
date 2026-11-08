@@ -239,6 +239,9 @@ jobs:
     permissions:
       contents: write
       pages: write
+      # Deleting a `github-pages` artifact left by an earlier attempt (see the
+      # duplicate-artifact step below) needs actions: write.
+      actions: write
     steps:
       - name: Check out the mirror manifest
         uses: actions/checkout@v6
@@ -290,6 +293,45 @@ jobs:
             git -C "${publish_dir}" push --force "${repo_url}" benchmark-stats
           fi
           echo "publish_dir=${publish_dir}" >> "${GITHUB_ENV}"
+
+      - name: Drop Pages artifacts uploaded by earlier attempts
+        # actions/deploy-pages lists THIS RUN's artifacts, not this attempt's,
+        # and refuses to deploy when it finds more than one named
+        # `github-pages` ("Multiple artifacts named \"github-pages\" were
+        # unexpectedly found ... Artifact count is 2"). A re-run -- the routine
+        # cure for a transient release-asset 504 -- uploads a second copy and
+        # the deploy then fails forever (runs 42444946413, 42466790090), taking
+        # the mirror manifest down with it. Drop the stale copies before the
+        # upload so the run always ends with exactly one.
+        if: ${{ !cancelled() }}
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RUN_ID: ${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          # GH_API_URL exists so ci/test_benchmark_publish.py can point the
+          # script at a fake API and execute it; runners use the default.
+          api="${GH_API_URL:-https://api.github.com}"
+          artifacts="${api}/repos/${GH_REPO}/actions/runs/${RUN_ID}/artifacts?per_page=100"
+          stale="$(curl -sS --fail-with-body \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H "Accept: application/vnd.github+json" \
+            "${artifacts}" \
+            | jq -r '.artifacts[] | select(.name == "github-pages") | .id')"
+          if [[ -z "${stale}" ]]; then
+            echo "No github-pages artifact from an earlier attempt."
+            exit 0
+          fi
+          for artifact_id in ${stale}; do
+            echo "Deleting stale github-pages artifact ${artifact_id}"
+            curl -sS --fail-with-body -X DELETE \
+              -H "Authorization: Bearer ${GH_TOKEN}" \
+              -H "Accept: application/vnd.github+json" \
+              "${api}/repos/${GH_REPO}/actions/artifacts/${artifact_id}" \
+              > /dev/null
+          done
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
