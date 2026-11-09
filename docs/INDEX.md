@@ -17,6 +17,7 @@ fbuild docs.
 | Why does a heap dump show `??` instead of function names? | [guides/heap-profiling.md](guides/heap-profiling.md#symbolizing-a-dump-the-part-that-is-easy-to-get-wrong) |
 | What is fbuild's PlatformIO compatibility policy? | [reference/platformio-compatibility.md](reference/platformio-compatibility.md) |
 | Why does fbuild strip `.eh_frame` on some builds? | [reference/platformio-compatibility.md#eh_frame-strip-policy](reference/platformio-compatibility.md#eh_frame-strip-policy) |
+| Can fbuild build a bare ESP-IDF / CMake component project? | [design/bare-idf-component-builds.md](design/bare-idf-component-builds.md) |
 | Why does fbuild exist? | [WHY.md](WHY.md) |
 | What are fbuild's key benefits and performance numbers? | [WHY.md](WHY.md#key-benefits) |
 | Is my board supported? | [BOARD_STATUS.md](BOARD_STATUS.md) |
