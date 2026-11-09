@@ -1,11 +1,13 @@
 """Contract tests for publishing per-chip toolchain slices (FastLED/fbuild#1944)."""
 
 import json
+import re
 import tempfile
 import unittest
 from pathlib import Path
 
 from ci.publish_toolchain_slices import (
+    HOST_KEYS,
     OWNER,
     build_component,
     check,
@@ -479,6 +481,41 @@ class RegisterTests(Temp):
             self.shard_doc()["tool"], "fbuild-download-mirror/esp-toolchain"
         )
         self.assertEqual(self.shard_doc()["components"][0]["id"], "x")
+
+
+class HostKeyParityTests(unittest.TestCase):
+    """The publisher must know every host key the client can ask for (#1956)."""
+
+    detect = (
+        Path(__file__).resolve().parents[1]
+        / "crates"
+        / "fbuild-toolchain"
+        / "src"
+        / "toolchain"
+        / "esp32_metadata.rs"
+    )
+
+    def client_keys(self) -> set[str]:
+        """The string literals `detect_platform()` can return."""
+        source = self.detect.read_text()
+        start = source.index("pub fn detect_platform()")
+        body = source[start : source.index("\n}\n\n", start)]
+        return set(re.findall(r'"([a-z0-9-]+)"', body))
+
+    def test_every_host_the_client_can_resolve_is_publishable(self):
+        keys = self.client_keys()
+        self.assertIn("win64", keys)  # the Windows host key, not the vendor's win32
+        self.assertEqual(keys - set(HOST_KEYS), set())
+
+    def test_a_win64_package_is_pinned_like_any_other_host(self):
+        doc = metadata()
+        doc["tools"][0]["versions"][0]["win64"] = {
+            "url": VENDOR + ".zip",
+            "sha256": SHA,
+            "size": 413859845,
+        }
+        _, hosts = load_hosts(doc, "toolchain-xtensa-esp-elf")
+        self.assertEqual(validate_host(hosts, "win64")["size"], 413859845)
 
 
 if __name__ == "__main__":

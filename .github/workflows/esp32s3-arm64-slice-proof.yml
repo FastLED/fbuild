@@ -7,10 +7,18 @@ name: ESP32-S3 arm64 slice proof (#1956)
 # machine of that OS/arch -- exactly how linux-amd64 was accepted in
 # #1949/#1953 and linux-arm64 in #1965.
 #
-# This workflow is the arm64 proof host (one leg per arm64 OS): it builds the
+# This workflow is the per-host proof harness (one leg per host): it builds the
 # ESP32-S3 fixture twice from empty caches -- once resolving the slice named by
 # the manifest of the dispatched ref, once downloading the vendor whole
 # archive -- and requires identical firmware sizes plus a chip-scoped install.
+#
+# The Windows leg is `win64`, not the vendor metadata's `win32`: `fbuild`'s
+# `detect_platform()` returns `win64` on every Windows host
+# (`crates/fbuild-toolchain/src/toolchain/esp32_metadata.rs`), so a `win32`
+# slice would be downloaded by nobody.
+#
+# The file name still says arm64 because `workflow_dispatch` resolves a workflow
+# on the DEFAULT branch: renaming it would 404 every dispatch from a branch.
 #
 # The client is built FROM THIS REF rather than installed from PyPI: the
 # registry-path slice fix (#1963) merged after the last release (2.5.51), and a
@@ -43,6 +51,11 @@ jobs:
   arm64-slice:
     name: ${{ matrix.host }} slice == whole archive (esp32s3 Blink)
     runs-on: ${{ matrix.runner }}
+    defaults:
+      run:
+        # Git Bash on Windows runners: one shell for every leg keeps the
+        # harness (and its assertions) identical across hosts.
+        shell: bash
     timeout-minutes: 90
     strategy:
       fail-fast: false
@@ -51,9 +64,15 @@ jobs:
           - runner: ubuntu-24.04-arm
             host: linux-arm64
             machine: aarch64
+            daemon: fbuild-daemon
           - runner: macos-15
             host: macos-arm64
             machine: arm64
+            daemon: fbuild-daemon
+          - runner: windows-latest
+            host: win64
+            machine: x86_64
+            daemon: fbuild-daemon.exe
     steps:
       - uses: actions/checkout@v6
         with:
@@ -78,7 +97,7 @@ jobs:
           cargo build -p fbuild-cli -p fbuild-daemon
           export PATH="$PWD/target/debug:$PATH"
           fbuild --version
-          test -x target/debug/fbuild-daemon
+          test -f "target/debug/${{ matrix.daemon }}"
 
       - name: Build with the published ${{ matrix.host }} slice
         run: |
@@ -131,7 +150,16 @@ jobs:
           cache = tmp / "cache-slice"
           if not any("+esp32s3" in p.name for p in cache.rglob("*") if p.is_dir()):
               sys.exit("no per-chip '+esp32s3' install directory: the slice path was not used")
-          whole = [p for p in cache.rglob("*.tar.xz")]
+          # The whole bundle is .tar.xz on unix and .zip on Windows, so key on
+          # the vendor asset name instead of an extension (a platform zip from
+          # the registry is a legitimate cache member).
+          whole = [
+              p
+              for p in cache.rglob("*")
+              if p.is_file()
+              and p.name.startswith("xtensa-esp-elf")
+              and p.suffix in (".xz", ".zip")
+          ]
           if whole:
               sys.exit(f"the slice build downloaded a whole archive: {whole}")
           print("slice build used the per-chip install and downloaded no whole archive")

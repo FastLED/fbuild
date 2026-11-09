@@ -62,6 +62,13 @@ KEY_ROOT = "v1/espressif"
 MAX_INDEX_BYTES = 8 * 1024 * 1024
 TOKEN = re.compile(r"^[0-9A-Za-z._+-]+$")
 SHA256 = re.compile(r"^[0-9a-f]{64}$")
+# Every host key `fbuild` itself can resolve. `win32` is listed by the vendor
+# metadata but is DEAD for fbuild: `detect_platform()` returns `win64` on every
+# Windows host (32-bit Windows is not a target), so a `win32` slice would be
+# downloaded by nobody -- `win64` is the key that wins bytes on Windows. The
+# parity test `test_publish_toolchain_slices.HostKeyParityTests` reads
+# `detect_platform()` and fails if a key it returns is missing here, so this
+# tuple can never fall behind the client again (#1956).
 HOST_KEYS = (
     "linux-amd64",
     "linux-arm64",
@@ -71,6 +78,7 @@ HOST_KEYS = (
     "macos",
     "macos-arm64",
     "win32",
+    "win64",
 )
 
 

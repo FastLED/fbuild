@@ -79,6 +79,27 @@
      }
     }
    }
+  },
+  {
+   "id": "toolchain-xtensa-esp-elf/14.2.0_20260121/win64",
+   "required": false,
+   "asset": {
+    "filename": "xtensa-esp-elf-14.2.0_20260121-x86_64-w64-mingw32.zip",
+    "size_bytes": 413859845,
+    "sha256": "82cbe0353c2e7c96acc8755c854aaa2d93d346c6a378fc692e60b3912c560108",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/toolchain-xtensa-esp-elf/release/14.2.0_20260121/win64/whole/xtensa-esp-elf-14.2.0_20260121-x86_64-w64-mingw32.zip",
+     "https://github.com/espressif/crosstool-NG/releases/download/esp-14.2.0_20260121/xtensa-esp-elf-14.2.0_20260121-x86_64-w64-mingw32.zip"
+    ],
+    "slices": {
+     "esp32s3": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/toolchain-xtensa-esp-elf/release/14.2.0_20260121/win64/esp32s3/xtensa-esp-elf-14.2.0_20260121-esp32s3.eefdb9381665d4ba.tar.zst",
+      "sha256": "eefdb9381665d4ba8557d10f10c2999ef92afb3f580d380051ccfbcbba84c462",
+      "size": 108967431,
+      "format": "tar.zst"
+     }
+    }
+   }
   }
  ]
 }
