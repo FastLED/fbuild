@@ -20,12 +20,13 @@
 //! environment are follow-up work (#1971 needs them to run `idf.py`); this
 //! module is the part `install.sh` gets wrong and the part that costs 3.4 GB.
 
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
+use fbuild_core::path::NormalizedPath;
 use fbuild_core::platform::host::{self, HostArch, HostOs, HostPlatform};
 use fbuild_core::{FbuildError, Result};
 
-use crate::{CacheSubdir, Package, PackageBase, PackageInfo};
+use crate::{CacheSubdir, PackageBase, PackageInfo};
 
 /// The single ESP-IDF release this module pins.
 pub const IDF_RELEASE_VERSION: &str = "v5.5.1";
@@ -377,39 +378,63 @@ impl EspIdfTool {
     }
 
     /// Where the component is (or would be) installed.
-    pub fn install_path(&self) -> PathBuf {
-        self.base.install_path()
+    pub fn install_path(&self) -> NormalizedPath {
+        NormalizedPath::new(self.base.install_path())
     }
-}
 
-#[async_trait::async_trait]
-impl Package for EspIdfTool {
-    async fn ensure_installed(&self) -> Result<PathBuf> {
+    /// True only when the archive is extracted **and** exports the directory
+    /// `tools.json` names: a half-extracted tree is not an install, and a
+    /// cache hit that lost the export dir must be repaired, not trusted.
+    pub fn is_installed(&self) -> bool {
+        self.base.is_cached() && tool_root(&self.base.install_path(), self.export_dir).is_ok()
+    }
+
+    /// Install the pinned archive and return the component's `export` root.
+    ///
+    /// Inherent, not a `Package` impl: `Package::ensure_installed` is typed
+    /// `std::path::PathBuf`, and `dylints/ban_std_pathbuf` holds that legacy
+    /// signature on a shrink-only allowlist of pre-existing files. New code
+    /// returns [`NormalizedPath`]; a consumer that needs the trait can convert
+    /// at its own legacy boundary (see `MarkerArchivePackage`).
+    pub async fn ensure_normalized(&self) -> Result<NormalizedPath> {
         let export_dir = self.export_dir;
         if self.is_installed() {
-            return Ok(tool_root(&self.base.install_path(), export_dir));
+            return tool_root(&self.base.install_path(), export_dir);
         }
         let installed = self
             .base
-            .staged_install(move |root: &Path| validate_tool_root(root, export_dir))
+            .staged_install(move |root: &Path| tool_root(root, export_dir).map(|_| ()))
             .await?;
-        Ok(tool_root(&installed, export_dir))
+        tool_root(&installed, export_dir)
     }
 
-    fn is_installed(&self) -> bool {
-        self.base.is_cached()
-    }
-
-    fn get_info(&self) -> PackageInfo {
+    /// Package metadata for install reports and logging.
+    pub fn get_info(&self) -> PackageInfo {
         self.base.get_info()
     }
 }
 
-/// Reject an archive that did not produce the directory `tools.json` exports.
-fn validate_tool_root(root: &Path, export_dir: &str) -> Result<()> {
-    let candidate = tool_root(root, export_dir);
-    if candidate.is_dir() {
-        return Ok(());
+/// The tool root inside an extracted archive: the export dir at the root or one
+/// level down (Espressif tarballs nest as `<name>-<version>/<name>/`).
+///
+/// Returns the error, rather than a path that may not exist, so the caller
+/// cannot install "successfully" into a directory the release never produced.
+fn tool_root(root: &Path, export_dir: &str) -> Result<NormalizedPath> {
+    let root = NormalizedPath::new(root);
+    if export_dir.is_empty() {
+        return Ok(root);
+    }
+    let direct = root.join(export_dir);
+    if direct.as_path().is_dir() {
+        return Ok(direct);
+    }
+    if let Ok(entries) = std::fs::read_dir(root.as_path()) {
+        for entry in entries.flatten() {
+            let nested = NormalizedPath::new(entry.path()).join(export_dir);
+            if nested.as_path().is_dir() {
+                return Ok(nested);
+            }
+        }
     }
     Err(FbuildError::PackageError(format!(
         "ESP-IDF archive did not produce {} (looked in {})",
@@ -418,29 +443,8 @@ fn validate_tool_root(root: &Path, export_dir: &str) -> Result<()> {
         } else {
             export_dir
         },
-        root.display()
+        root
     )))
-}
-
-/// The tool root inside an extracted archive: the export dir at the root or one
-/// level down (Espressif tarballs nest as `<name>-<version>/<name>/`).
-fn tool_root(root: &Path, export_dir: &str) -> PathBuf {
-    if export_dir.is_empty() {
-        return root.to_path_buf();
-    }
-    let direct = root.join(export_dir);
-    if direct.is_dir() {
-        return direct;
-    }
-    if let Ok(entries) = std::fs::read_dir(root) {
-        for entry in entries.flatten() {
-            let nested = entry.path().join(export_dir);
-            if nested.is_dir() {
-                return nested;
-            }
-        }
-    }
-    direct
 }
 
 #[cfg(test)]
@@ -585,12 +589,15 @@ mod tests {
             cache.path(),
             cache.path(),
         );
-        assert_ne!(v551.install_path(), other.install_path());
+        assert_ne!(v551.install_path().as_path(), other.install_path());
         assert_eq!(
-            v551.install_path().file_name().and_then(|n| n.to_str()),
+            v551.install_path()
+                .as_path()
+                .file_name()
+                .and_then(|n| n.to_str()),
             Some("v5.5.1+esp-14.2.0_20241119"),
             "install leaf must name the IDF release: {}",
-            v551.install_path().display()
+            v551.install_path()
         );
     }
 
@@ -614,10 +621,9 @@ mod tests {
             .join("xtensa-esp-elf")
             .join("bin");
         std::fs::create_dir_all(&nested).unwrap();
-        let root = tool_root(tmp.path(), "xtensa-esp-elf");
-        assert!(root.ends_with("xtensa-esp-elf"));
-        assert!(validate_tool_root(tmp.path(), "xtensa-esp-elf").is_ok());
-        assert!(validate_tool_root(tmp.path(), "riscv32-esp-elf").is_err());
+        let root = tool_root(tmp.path(), "xtensa-esp-elf").unwrap();
+        assert!(root.as_path().ends_with("xtensa-esp-elf"));
+        assert!(tool_root(tmp.path(), "riscv32-esp-elf").is_err());
     }
 
     /// Real download + sha256 verify + extract, through the shipped code path.
@@ -631,16 +637,15 @@ mod tests {
             EspIdfTool::with_cache_root(dir.path(), dir.path(), IdfComponent::EspRomElfs, linux())
                 .unwrap();
         assert!(!tool.is_installed());
-        let root = tool.ensure_installed().await.unwrap();
+        let root = tool.ensure_normalized().await.unwrap();
         assert!(tool.is_installed());
         // The archive is flat: the ROM ELFs land directly in the tool root.
         assert!(
-            root.join("esp32s3_rev0_rom.elf").is_file(),
-            "expected the extracted ROM ELFs in {}",
-            root.display()
+            root.join("esp32s3_rev0_rom.elf").as_path().is_file(),
+            "expected the extracted ROM ELFs in {root}"
         );
         // Second call is a cache hit: no re-download, same tree.
-        let again = tool.ensure_installed().await.unwrap();
+        let again = tool.ensure_normalized().await.unwrap();
         assert_eq!(root, again);
     }
 }
