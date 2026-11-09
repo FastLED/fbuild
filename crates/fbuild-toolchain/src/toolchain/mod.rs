@@ -7,6 +7,7 @@ pub mod clang;
 pub mod esp32;
 pub mod esp32_metadata;
 pub mod esp8266;
+pub mod esp_idf_release;
 pub mod esp_qemu;
 pub mod esp_qemu_runtime;
 pub mod gcc;
@@ -19,6 +20,9 @@ pub use arm::ArmToolchain;
 pub use arm_gcc8::ArmGcc8Toolchain;
 pub use avr::AvrToolchain;
 pub use clang::{ClangComponent, ClangComponentKind};
+pub use esp_idf_release::{
+    EspIdfPin, EspIdfTool, IDF_RELEASE_COMMIT, IDF_RELEASE_VERSION, IdfComponent, IdfProfile,
+};
 pub use esp_qemu::build_windows_qemu_path_env;
 pub use esp_qemu::{EspQemu, EspQemuArch, EspQemuRiscv32, EspQemuXtensa};
 pub use esp_qemu_runtime::{

@@ -10,6 +10,7 @@ Platform-specific toolchain management: download, cache, and provide tool paths 
 - **`teensy_arm.rs`** -- Teensy-pinned ARM GCC 11.3.1 package from PlatformIO/PJRC
 - **`esp32.rs`** -- ESP32 RISC-V (`riscv32-esp-elf`) and Xtensa (`xtensa-esp-elf`) GCC from Espressif
 - **`esp32_metadata.rs`** -- Resolves ESP32 toolchain URLs from `tools.json` metadata packages
+- **`esp_idf_release.rs`** -- Pinned ESP-IDF v5.5.1 *tool components* (Xtensa GCC, ULP binutils, ROM ELFs, OpenOCD) as fbuild packages, with an `Esp32S3Only` install profile; replaces `install.sh` provisioning (#1970)
 - **`esp8266.rs`** -- ESP8266 Xtensa LX106 GCC from esp-quick-toolchain releases
 - **`clang.rs`** -- LLVM/Clang toolchain components (clang, clang-tidy, include-what-you-use)
 
