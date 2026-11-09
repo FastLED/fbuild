@@ -5,22 +5,22 @@ name: ESP32-S3 arm64 slice proof (#1956)
 # missing one file fails the install instead of falling back to the whole
 # archive. So a new host is only listed after a real ESP32-S3 build on a
 # machine of that OS/arch -- exactly how linux-amd64 was accepted in
-# #1949/#1953 (`flash 355899 / ram 74919`, identical to the whole archive).
+# #1949/#1953 and linux-arm64 in #1965.
 #
-# This workflow is the arm64 proof host: it builds the ESP32-S3 fixture twice
-# from empty caches -- once resolving the linux-arm64 slice named by the
-# manifest of the dispatched ref, once downloading the vendor whole archive --
-# and requires identical firmware sizes plus a chip-scoped install.
+# This workflow is the arm64 proof host (one leg per arm64 OS): it builds the
+# ESP32-S3 fixture twice from empty caches -- once resolving the slice named by
+# the manifest of the dispatched ref, once downloading the vendor whole
+# archive -- and requires identical firmware sizes plus a chip-scoped install.
 #
 # The client is built FROM THIS REF rather than installed from PyPI: the
 # registry-path slice fix (#1963) merged after the last release (2.5.51), and a
 # wheel without it silently ignores `FBUILD_MIRROR_MANIFEST_URL` (#1961), so a
 # wheel-based run would pass on a build that never touched the slice. Plain
-# `cargo` is deliberate -- this ephemeral ARM runner has no soldr broker and
+# `cargo` is deliberate -- this ephemeral runner has no soldr broker and
 # the harness must exercise the ref's own CLI+daemon pair (the CLI prefers the
 # `fbuild-daemon` sitting next to it).
 #
-# Manual dispatch only: it downloads ~500 MB and compiles twice.
+# Manual dispatch only: it downloads ~500 MB and compiles twice per leg.
 on:
   workflow_dispatch:
 
@@ -33,16 +33,27 @@ permissions:
 
 env:
   FIXTURE: tests/platform/esp32s3
-  # Manifest of THIS ref: it lists the linux-arm64 slice, so the client resolves
-  # the slice instead of the whole archive. raw.githubusercontent.com serves any
-  # pushed ref, so the entry is exercised before it reaches `main`.
+  # Manifest of THIS ref: it lists the slice for the host under test, so the
+  # client resolves the slice instead of the whole archive.
+  # raw.githubusercontent.com serves any pushed ref, so the entry is exercised
+  # before it reaches `main`.
   SLICE_MANIFEST_URL: https://raw.githubusercontent.com/FastLED/fbuild/${{ github.ref_name }}/site/mirror/manifest.json
 
 jobs:
   arm64-slice:
-    name: arm64 slice == whole archive (esp32s3 Blink)
-    runs-on: ubuntu-24.04-arm
+    name: ${{ matrix.host }} slice == whole archive (esp32s3 Blink)
+    runs-on: ${{ matrix.runner }}
     timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: ubuntu-24.04-arm
+            host: linux-arm64
+            machine: aarch64
+          - runner: macos-15
+            host: macos-arm64
+            machine: arm64
     steps:
       - uses: actions/checkout@v6
         with:
@@ -56,10 +67,10 @@ jobs:
 
       - uses: swatinem/rust-cache@v2
         with:
-          key: arm64-slice-proof
+          key: ${{ matrix.host }}-slice-proof
 
-      - name: Confirm this runner is the arm64 host the slice is for
-        run: test "$(uname -m)" = aarch64
+      - name: Confirm this runner is the ${{ matrix.machine }} host the slice is for
+        run: test "$(uname -m)" = "${{ matrix.machine }}"
 
       - name: Build the client from this ref (CLI + daemon, dev profile)
         run: |
@@ -69,7 +80,7 @@ jobs:
           fbuild --version
           test -x target/debug/fbuild-daemon
 
-      - name: Build with the published linux-arm64 slice
+      - name: Build with the published ${{ matrix.host }} slice
         run: |
           set -euo pipefail
           export PATH="$PWD/target/debug:$PATH"
