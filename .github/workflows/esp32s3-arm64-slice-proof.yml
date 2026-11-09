@@ -73,6 +73,13 @@ jobs:
             host: win64
             machine: x86_64
             daemon: fbuild-daemon.exe
+          # Intel macOS resolves `macos` (detect_platform(): non-aarch64 macOS),
+          # never `macos-arm64`; `macos-15-intel` is the hosted x86_64 runner this
+          # repo already uses in check-macos.yml / release-auto.yml.
+          - runner: macos-15-intel
+            host: macos
+            machine: x86_64
+            daemon: fbuild-daemon
     steps:
       - uses: actions/checkout@v6
         with:
