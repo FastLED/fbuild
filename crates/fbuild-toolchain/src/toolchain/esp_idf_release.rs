@@ -317,7 +317,7 @@ impl EspIdfTool {
 
     /// Install into an explicit cache root (tests and the end-to-end proof).
     #[cfg(test)]
-    fn with_cache_root(
+    pub(super) fn with_cache_root(
         project_dir: &Path,
         cache_root: &Path,
         component: IdfComponent,
