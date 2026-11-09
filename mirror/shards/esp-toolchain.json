@@ -100,6 +100,27 @@
      }
     }
    }
+  },
+  {
+   "id": "toolchain-xtensa-esp-elf/14.2.0_20260121/macos",
+   "required": false,
+   "asset": {
+    "filename": "xtensa-esp-elf-14.2.0_20260121-x86_64-apple-darwin.tar.xz",
+    "size_bytes": 177355744,
+    "sha256": "02e5e3421222c9a708b21eca7826acb137668b188cb46fbde46339b26d4b2eeb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/toolchain-xtensa-esp-elf/release/14.2.0_20260121/macos/whole/xtensa-esp-elf-14.2.0_20260121-x86_64-apple-darwin.tar.xz",
+     "https://github.com/espressif/crosstool-NG/releases/download/esp-14.2.0_20260121/xtensa-esp-elf-14.2.0_20260121-x86_64-apple-darwin.tar.xz"
+    ],
+    "slices": {
+     "esp32s3": {
+      "url": "https://fbuild.sfo3.digitaloceanspaces.com/v1/espressif/toolchain-xtensa-esp-elf/release/14.2.0_20260121/macos/esp32s3/xtensa-esp-elf-14.2.0_20260121-esp32s3.125c9d65a0fd8512.tar.zst",
+      "sha256": "125c9d65a0fd8512c710b8cb1a1d33216d6c7a0ed431a01ff368f1635dbf28f8",
+      "size": 99848668,
+      "format": "tar.zst"
+     }
+    }
+   }
   }
  ]
 }
