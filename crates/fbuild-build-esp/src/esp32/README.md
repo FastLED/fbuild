@@ -16,6 +16,9 @@ Platform-specific build orchestration for all ESP32 MCU variants.
 - `espidf_artifacts` — Discovers a delegated build's artifacts from IDF's own
   `flasher_args.json`, publishes them flat under `<build>/idf/`, and records
   `idf-artifacts.json` as the artifact proof
+- `espidf_compile_db` — Re-roots the delegated `compile_commands.json` onto the
+  project and merges it with fbuild's own database, publishing the result at the
+  documented project path (FastLED/fbuild#1973)
 
 ## Architecture
 
