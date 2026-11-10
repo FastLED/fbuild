@@ -9,6 +9,7 @@ pub mod esp32_metadata;
 pub mod esp8266;
 pub mod esp_idf_release;
 pub mod esp_idf_release_profile;
+pub mod esp_idf_source;
 pub mod esp_qemu;
 pub mod esp_qemu_runtime;
 pub mod gcc;
@@ -25,6 +26,7 @@ pub use esp_idf_release::{
     EspIdfPin, EspIdfTool, IDF_RELEASE_COMMIT, IDF_RELEASE_VERSION, IdfComponent, IdfProfile,
 };
 pub use esp_idf_release_profile::{EspIdfRelease, IdfEnvironment};
+pub use esp_idf_source::{EspIdfSource, IDF_SOURCE_SHA256, IDF_SOURCE_URL, IdfSubmodulePin};
 pub use esp_qemu::build_windows_qemu_path_env;
 pub use esp_qemu::{EspQemu, EspQemuArch, EspQemuRiscv32, EspQemuXtensa};
 pub use esp_qemu_runtime::{
