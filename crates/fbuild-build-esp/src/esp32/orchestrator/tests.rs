@@ -1,6 +1,6 @@
 //! Unit tests for the ESP32 orchestrator's helpers and public API.
 
-use super::super::espidf_delegate::{BUILD_SYSTEM_KEY, EspBuildSystem};
+use super::super::espidf_delegate::{BUILD_SYSTEM_KEY, EspBuildSystem, IdfCacheMode};
 use super::Esp32Orchestrator;
 use super::cdc::{cdc_on_boot_enabled, is_esp32_project, warn_if_cdc_on_boot};
 use super::helpers::{
@@ -518,12 +518,31 @@ fn idf_cmake_proof_is_refused_without_artifacts() {
 fn idf_cmake_summary_names_the_pinned_idf_and_proof() {
     let (_root, complete) = artifact_fixture(b"\x7fELFbin", b"\x7fELFelf", ONE_ENTRY_DB);
     let proof = IdfCmakeProof::verified(&complete, "v5.5.1").unwrap();
-    let summary = esp32_idf_cmake_stack_summary(&proof, "esp32s3");
+    let summary = esp32_idf_cmake_stack_summary(&proof, "esp32s3", IdfCacheMode::ColdOnly);
     assert!(summary.contains("integration=idf-cmake"), "{summary}");
     assert!(summary.contains("idf=v5.5.1"), "{summary}");
     assert!(summary.contains("chip=esp32s3"), "{summary}");
     assert!(summary.contains("compile_db_entries=1"), "{summary}");
     assert!(summary.contains("sdkconfig_sha256="), "{summary}");
+}
+
+/// The summary states the caching mode the build actually ran in, and the
+/// delegated path has none: it must say `cold-only` and must never read as if
+/// objects came out of a cache (FastLED/fbuild#1974).
+#[test]
+fn idf_cmake_summary_claims_cold_only_caching_and_no_cache_hit() {
+    let (_root, complete) = artifact_fixture(b"\x7fELFbin", b"\x7fELFelf", ONE_ENTRY_DB);
+    let proof = IdfCmakeProof::verified(&complete, "v5.5.1").unwrap();
+    let summary = esp32_idf_cmake_stack_summary(&proof, "esp32s3", IdfCacheMode::ColdOnly);
+    assert!(summary.contains("cache=cold-only"), "{summary}");
+    assert!(
+        !summary.to_ascii_lowercase().contains("cached"),
+        "a delegated build serves nothing from a cache: {summary}"
+    );
+    assert!(
+        !summary.contains("cache=hit"),
+        "an unwrapped build cannot claim a cache hit: {summary}"
+    );
 }
 
 /// The requested-framework path inspects `framework =` only, so it has no

@@ -364,3 +364,16 @@ fn an_unsupported_chip_is_refused_by_name() {
     assert!(error.to_string().contains("esp32c6"), "{error}");
     assert!(error.to_string().contains("#1971"), "{error}");
 }
+
+/// The delegated build reports its caching mode, and the mode it reports is
+/// the one that ran: no compiler wrapper, so the log line says so and never
+/// reads as if objects had been reused (FastLED/fbuild#1974).
+#[test]
+fn the_delegated_build_reports_cold_only_caching() {
+    let mode = IdfCacheMode::ColdOnly;
+    assert_eq!(mode.label(), "cold-only");
+    let line = mode.log_line();
+    assert!(line.contains("caching: cold-only"), "{line}");
+    assert!(line.contains("no object is served"), "{line}");
+    assert!(line.contains("FastLED/fbuild#1974"), "{line}");
+}

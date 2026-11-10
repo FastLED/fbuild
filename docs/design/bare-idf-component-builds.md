@@ -138,12 +138,56 @@ additional inputs whenever a project uses managed components.
   no new design needed.
 - Caching: IDF drives **gcc directly from ninja**, so there is no CMake-level
   cache. The only insertion point for zccache is a compiler wrapper
-  (`CC`/`CXX`/`CMAKE_C_COMPILER_LAUNCHER`) exported by `idf_tools`; unless
-  fbuild wraps the compiler, delegation inherits ninja's incremental behaviour
-  (10.8 s for one file, 50.3 s cold here) and loses zccache entirely.
+  (`CC`/`CXX`/`CMAKE_C_COMPILER_LAUNCHER`) exported by `idf_tools`; without one,
+  delegation inherits ninja's incremental behaviour (10.8 s for one file, 50.3 s
+  cold here) and has no zccache. The wrapper was measured and **rejected** —
+  see "Caching decision" below.
 - Artifacts land in `<project>/build/` (144 MB per project/config) and are the
   proof of what was built: ELF, bin, map, sdkconfig, partition table,
   compile database.
+
+## Caching decision (follow-up 5, FastLED/fbuild#1974)
+
+Measured 2026-11-10 on the steward host (16 vCPU, load average 9-30 during the
+runs, so the deltas below are far outside that noise) against the pinned release
+(v5.5.1, `fcae3288`) and the spike project now committed as
+`tests/platform/espidf_component`: 1047 ninja compile actions, 8 MB flash.
+Harness: `fbuild-steward/probes/idf_cache_bench.py`, which reconstructs the
+delegated child environment (`IDF_PATH`, `IDF_PYTHON_ENV_PATH`,
+`IDF_TOOLS_PATH`, the profile's `PATH` entries prepended to the host `PATH`) and
+passes the launcher as `-DCMAKE_C_COMPILER_LAUNCHER=… -DCMAKE_CXX_COMPILER_LAUNCHER=…`
+— the only insertion point that exists, because ninja, not CMake, spawns gcc.
+
+| Run | Wall time | Cache behaviour |
+|---|---|---|
+| cold, no launcher | **41.8 s** | configure 6.2 s + 1047 compiles |
+| no-op (`ninja` up to date) | **1.2 s** | the existing build dir |
+| `idf.py fullclean` + build, no launcher | **34.0 s** | same build dir |
+| cold, `zccache` launcher, empty cache | 50.6 s | 233 MB stored |
+| new build dir, launcher, cache warm | 67.4 s | **no reuse** — a second full object set (436 MB) |
+| `idf.py fullclean` + build, launcher | 110.6 s | **no reuse** — a third set (640 MB) |
+
+`zccache --show-stats` after those runs: 2838 compilations, 0.2 % hit rate. The
+wrapper is not broken — replaying one identical entry (same cwd, same argv) does
+hit — but the key it computes covers ninja's command line, which embeds the
+absolute build directory (`-o`, `-MF`, `-I`, `-fmacro-prefix-map`). Every build
+directory, and every `fullclean`, therefore re-compiles everything, at 1.2-3.3x
+the unwrapped wall time. The only reuse the wrapper could offer inside one build
+directory is a rebuild that ninja already serves as a 1.2 s no-op.
+
+**Decision: cold-only, declared.** No compiler wrapper is wired. The delegated
+build reports the mode rather than leaving a slow build unexplained:
+
+- the stack summary carries `cache=cold-only` next to `integration=idf-cmake`;
+- the build log gets an `idf.py caching: cold-only …` line naming ninja as the
+  compiler driver;
+- `<build>/idf/idf-artifacts.json` records `"cache": "cold-only"`.
+
+A future launcher has to change that value (and the tests that pin it), and its
+cache key has to cover the IDF release and the `sdkconfig` digest instead of the
+raw command line — the measurement above is the cost of entry, not a design
+sketch. Storing 640 MB of duplicates for zero hits is not a trade this path
+makes.
 
 ## Metadata / false-coverage guard (research question 4)
 
@@ -218,7 +262,8 @@ the framework half; an IDF release has no equivalent slicing story yet.
    survives (`..` is kept for framework sources; a Windows drive split falls
    back to the absolute spelling, which is the only resolvable option).
 5. Caching decision: compiler wrapper into zccache, or document a cold-only
-   path with its own metric.
+   path with its own metric. **Decided cold-only** and implemented (#1974) — the
+   wrapper measured slower with no reuse, see below.
 6. Report `framework = arduino, espidf` honestly everywhere (it is
    `integration=arduino-on-idf`) so no board is described as component
    coverage before follow-up 2 lands.
