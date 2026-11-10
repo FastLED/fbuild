@@ -3,6 +3,8 @@
 mod bluetooth_libs;
 mod board_props;
 mod core_select;
+mod mbed;
+mod mbed_libraries;
 pub mod mcu_config;
 pub mod orchestrator;
 mod tinyusb_libs;
@@ -25,6 +27,15 @@ impl crate::PlatformSupport for Rp2040PlatformSupport {
         mode: crate::provision::ProvisionMode,
     ) -> fbuild_core::Result<Vec<crate::provision::ProvisionedPackage>> {
         use crate::provision::{PackageKind, provision_package};
+        if core_select::selected_core(inputs.env_config)? == core_select::ArduinoCore::Mbed {
+            let (toolchain, framework, picotool) =
+                mbed::packages(inputs.project_dir, inputs.env_config);
+            return Ok(vec![
+                provision_package(PackageKind::Toolchain, &toolchain, mode).await,
+                provision_package(PackageKind::Framework, &framework, mode).await,
+                provision_package(PackageKind::Tool, &picotool, mode).await,
+            ]);
+        }
         let (toolchain, picotool, cores) =
             orchestrator::rp2040_packages_resolved(inputs.project_dir, Some(inputs.env_config))
                 .await?;
@@ -35,7 +46,7 @@ impl crate::PlatformSupport for Rp2040PlatformSupport {
         ])
     }
 
-    /// arduino-pico bundles libraries (Wire, SPI, ...) that `lib_deps` may
+    /// Both Arduino cores bundle libraries (Wire, SPI, ...) that `lib_deps` may
     /// name; the build filters them out before downloading, so provisioning
     /// must too. That needs the installed cores — without them, every entry
     /// is reported.
@@ -44,7 +55,20 @@ impl crate::PlatformSupport for Rp2040PlatformSupport {
         inputs: &crate::provision::ProvisionInputs<'_>,
         lib_deps: Vec<String>,
     ) -> fbuild_core::Result<Vec<String>> {
-        use fbuild_packages::Package;
+        use fbuild_packages::{Framework, Package};
+        if core_select::selected_core(inputs.env_config)? == core_select::ArduinoCore::Mbed {
+            let (_, framework, _) = mbed::packages(inputs.project_dir, inputs.env_config);
+            if !framework.is_installed() {
+                return Ok(lib_deps);
+            }
+            let libraries =
+                fbuild_packages::library::framework_library::discover_framework_libraries(
+                    &framework.get_libraries_dir(),
+                );
+            return Ok(fbuild_library_select::external_declared_deps(
+                &lib_deps, &libraries,
+            ));
+        }
         let (_, _, cores) =
             orchestrator::rp2040_packages_resolved(inputs.project_dir, Some(inputs.env_config))
                 .await?;

@@ -41,6 +41,8 @@ const RP_DEFINE_POLICY: &str = "platform-sdfatdefaults-board-defines-v2";
 /// RP2040 platform build orchestrator.
 pub struct Rp2040Orchestrator;
 
+struct ArduinoPicoOrchestrator;
+
 #[derive(Debug, Serialize)]
 struct Rp2040FingerprintMetadata {
     version: u32,
@@ -157,16 +159,34 @@ impl BuildOrchestrator for Rp2040Orchestrator {
     }
 
     async fn build(&self, params: &BuildParams) -> Result<BuildResult> {
-        self.build_pico(params).await
+        // Select the recipe before BuildContext runs scripts or prepares outputs.
+        // Use the same caller overrides as BuildContext; each recipe owns one context.
+        let overrides = fbuild_config::PioEnvOverrides::from_map(params.pio_env.clone());
+        let config = fbuild_config::PlatformIOConfig::from_path_with_overrides(
+            &params.project_dir.join("platformio.ini"),
+            overrides,
+        )?;
+        if super::core_select::selected_core(config.get_env_config(&params.env_name)?)?
+            == super::core_select::ArduinoCore::Mbed
+        {
+            let start = Instant::now();
+            let ctx = pipeline::BuildContext::new(params).await?;
+            return super::mbed::build(params, ctx, start).await;
+        }
+        ArduinoPicoOrchestrator.build(params).await
     }
 }
 
-impl Rp2040Orchestrator {
+#[async_trait::async_trait]
+impl BuildOrchestrator for ArduinoPicoOrchestrator {
+    fn platform(&self) -> Platform {
+        Platform::RaspberryPi
+    }
+
     #[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
-    async fn build_pico(&self, params: &BuildParams) -> Result<BuildResult> {
+    async fn build(&self, params: &BuildParams) -> Result<BuildResult> {
         let start = Instant::now();
         let compiler_cache: Option<std::path::PathBuf> = None;
-
         let mut ctx = pipeline::BuildContext::new(params).await?;
 
         // Compute eh_frame strip policy once per build (FastLED/fbuild#244).
