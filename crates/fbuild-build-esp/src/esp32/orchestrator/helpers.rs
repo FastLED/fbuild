@@ -11,7 +11,11 @@
 use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 
-use fbuild_core::Result;
+use fbuild_core::path::NormalizedPath;
+use fbuild_core::{FbuildError, Result};
+use sha2::{Digest, Sha256};
+
+use super::super::espidf_artifacts::IdfArtifacts;
 
 use super::super::espidf_delegate::EspBuildSystem;
 
@@ -21,22 +25,181 @@ use super::super::espidf_delegate::EspBuildSystem;
 /// compiled with the Arduino core. Recording the mode beside the requested and
 /// resolved frameworks keeps a build log from claiming IDF component coverage
 /// it never produced (FastLED/fbuild#1664).
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub(super) enum Esp32Integration {
     /// `framework = arduino`: the Arduino core only.
     ArduinoCore,
     /// `framework = arduino, espidf`: the Arduino core links the precompiled
     /// ESP-IDF SDK. Not an ESP-IDF component build.
     ArduinoOnIdf,
+    /// A delegated CMake/`idf.py` build (FastLED/fbuild#1971). The variant
+    /// carries [`IdfCmakeProof`], so no code can name this mode — and
+    /// `RequestedFrameworks::integration`, which has no build result to
+    /// inspect, cannot produce it at all — without the artifacts behind it
+    /// (FastLED/fbuild#1972).
+    IdfCmake(IdfCmakeProof),
 }
 
 impl Esp32Integration {
-    pub(super) fn label(self) -> &'static str {
+    pub(super) fn label(&self) -> &'static str {
         match self {
             Self::ArduinoCore => "arduino-core",
             Self::ArduinoOnIdf => "arduino-on-idf",
+            Self::IdfCmake(_) => IdfCmakeProof::INTEGRATION_LABEL,
         }
     }
+}
+
+/// Proof that a delegated `idf.py` build actually produced an application.
+///
+/// `integration=idf-cmake` is a claim about what a build did, and the whole
+/// point of recording it is that a claim must never outrun the artifacts
+/// behind it (FastLED/fbuild#1972, #1730). The fields are private and
+/// [`IdfCmakeProof::verified`] is the only constructor, so a value of this
+/// type exists only after the app image and ELF were measured non-empty, the
+/// compile database was seen to hold at least one entry, and the generated
+/// `sdkconfig` was hashed. A build that cannot produce that proof is an error,
+/// never a silent downgrade to a weaker label.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub(crate) struct IdfCmakeProof {
+    idf_release: String,
+    app_bin_bytes: u64,
+    elf_bytes: u64,
+    compile_db_entries: usize,
+    sdkconfig_sha256: String,
+}
+
+impl IdfCmakeProof {
+    /// The only spelling of the integration mode; [`Esp32Integration::label`]
+    /// reads it from here so the literal has a single owner.
+    pub(crate) const INTEGRATION_LABEL: &'static str = "idf-cmake";
+
+    /// Measure `artifacts` and accept the claim only if every proof element is
+    /// present: non-empty app image and ELF, a non-empty compile database and
+    /// a readable `sdkconfig` digest.
+    pub(crate) fn verified(artifacts: &IdfArtifacts, idf_release: &str) -> Result<Self> {
+        let app_bin_bytes = nonempty_bytes(&artifacts.app_bin, "app image")?;
+        let elf_bytes = nonempty_bytes(&artifacts.elf, "app ELF")?;
+        let compile_db_entries = compile_db_entry_count(&artifacts.compile_commands)?;
+        if compile_db_entries == 0 {
+            return Err(FbuildError::Other(format!(
+                "the delegated ESP-IDF build produced an empty compile database ({}): a                  CMake/component build compiles at least one translation unit, so                  {}={} cannot be claimed for it",
+                artifacts.compile_commands,
+                "integration",
+                Self::INTEGRATION_LABEL
+            )));
+        }
+        let sdkconfig_sha256 = sha256_file(&artifacts.sdkconfig, "generated sdkconfig")?;
+        Ok(Self {
+            idf_release: idf_release.to_string(),
+            app_bin_bytes,
+            elf_bytes,
+            compile_db_entries,
+            sdkconfig_sha256,
+        })
+    }
+
+    pub(crate) fn idf_release(&self) -> &str {
+        &self.idf_release
+    }
+
+    pub(crate) fn app_bin_bytes(&self) -> u64 {
+        self.app_bin_bytes
+    }
+
+    pub(crate) fn elf_bytes(&self) -> u64 {
+        self.elf_bytes
+    }
+
+    pub(crate) fn compile_db_entries(&self) -> usize {
+        self.compile_db_entries
+    }
+
+    pub(crate) fn sdkconfig_sha256(&self) -> &str {
+        &self.sdkconfig_sha256
+    }
+}
+
+/// The stack summary for a delegated build — the only summary line allowed to
+/// name `integration=idf-cmake`, and it cannot be written without the proof.
+/// The pinned IDF release is part of the line so a log says *what* it built
+/// with, not merely that it was "espidf".
+pub(crate) fn esp32_idf_cmake_stack_summary(proof: &IdfCmakeProof, chip: &str) -> String {
+    let integration = Esp32Integration::IdfCmake(proof.clone());
+    format!(
+        "ESP32 packages: build_system=espidf, chip={chip}, integration={}, idf={};          proof: app_bin_bytes={}, elf_bytes={}, compile_db_entries={}, sdkconfig_sha256={}",
+        integration.label(),
+        proof.idf_release(),
+        proof.app_bin_bytes(),
+        proof.elf_bytes(),
+        proof.compile_db_entries(),
+        proof.sdkconfig_sha256(),
+    )
+}
+
+/// A required artifact's byte count; zero bytes is a failed build, not proof.
+fn nonempty_bytes(path: &NormalizedPath, label: &str) -> Result<u64> {
+    let bytes = std::fs::metadata(path.as_path())
+        .map_err(|error| {
+            FbuildError::Other(format!(
+                "the delegated ESP-IDF build's {label} {path} is unreadable ({error});                  {}={} needs it as proof",
+                "integration",
+                IdfCmakeProof::INTEGRATION_LABEL
+            ))
+        })?
+        .len();
+    if bytes == 0 {
+        return Err(FbuildError::Other(format!(
+            "the delegated ESP-IDF build's {label} {path} is empty; {}={} cannot be claimed              for a build with no {label}",
+            "integration",
+            IdfCmakeProof::INTEGRATION_LABEL
+        )));
+    }
+    Ok(bytes)
+}
+
+/// How many translation units the delegated build's compile database names.
+fn compile_db_entry_count(path: &NormalizedPath) -> Result<usize> {
+    let raw = std::fs::read(path.as_path()).map_err(|error| {
+        FbuildError::Other(format!(
+            "the delegated ESP-IDF build's compile database {path} is unreadable ({error})"
+        ))
+    })?;
+    let entries: serde_json::Value = serde_json::from_slice(&raw).map_err(|error| {
+        FbuildError::Other(format!(
+            "the delegated ESP-IDF build's compile database {path} is not valid JSON ({error})"
+        ))
+    })?;
+    entries.as_array().map(Vec::len).ok_or_else(|| {
+        FbuildError::Other(format!(
+            "the delegated ESP-IDF build's compile database {path} is not a JSON array of              compile commands"
+        ))
+    })
+}
+
+/// SHA-256 of a file, streamed so a large `sdkconfig` is not held in memory.
+fn sha256_file(path: &NormalizedPath, label: &str) -> Result<String> {
+    use std::io::Read;
+
+    let mut file = std::fs::File::open(path.as_path()).map_err(|error| {
+        FbuildError::Other(format!(
+            "the delegated ESP-IDF build's {label} {path} is unreadable ({error})"
+        ))
+    })?;
+    let mut hasher = Sha256::new();
+    let mut buffer = vec![0u8; 64 * 1024];
+    loop {
+        let read = file.read(&mut buffer).map_err(|error| {
+            FbuildError::Other(format!(
+                "reading the delegated ESP-IDF build's {label} {path} failed: {error}"
+            ))
+        })?;
+        if read == 0 {
+            break;
+        }
+        hasher.update(&buffer[..read]);
+    }
+    Ok(format!("{:x}", hasher.finalize()))
 }
 
 /// The frameworks an environment's `framework =` value requests.
@@ -98,7 +261,7 @@ pub(super) fn esp32_package_stack_summary(
         .map_or("<platform manifest>", str::trim);
     let integration = requested_frameworks(requested_framework)
         .integration()
-        .map_or("unsupported-espidf", Esp32Integration::label);
+        .map_or("unsupported-espidf", |integration| integration.label());
     let sdk_version = installed_framework
         .bundled_esp_idf_version(mcu)
         .unwrap_or_else(|| "unknown (bundled with framework)".to_string());

@@ -32,9 +32,12 @@ use fbuild_config::PlatformIOConfig;
 use fbuild_core::path::NormalizedPath;
 use fbuild_core::subprocess::{CommandReport, run_command_reporting};
 use fbuild_core::{FbuildError, Result};
-use fbuild_toolchain::toolchain::{EspIdfInstall, IdfProfile, InstalledEspIdf};
+use fbuild_toolchain::toolchain::{
+    EspIdfInstall, IDF_RELEASE_VERSION, IdfProfile, InstalledEspIdf,
+};
 
 use super::espidf_artifacts::{IdfArtifacts, discover_and_publish};
+use super::orchestrator::helpers::{IdfCmakeProof, esp32_idf_cmake_stack_summary};
 
 /// `platformio.ini` key that opts an environment into the delegated build.
 ///
@@ -401,6 +404,15 @@ pub(super) async fn delegate_build(
         outcome.build.exit_code,
         outcome.build.stdout_bytes
     ));
+
+    // #1972: a delegated build may report `integration=idf-cmake`, but only
+    // once its own artifacts prove it. `verified` fails the build rather than
+    // letting the run continue with a weaker label, so a build that produced
+    // no bin/ELF, no compile commands or no sdkconfig is never described as a
+    // CMake/component build.
+    let proof = IdfCmakeProof::verified(&outcome.artifacts, IDF_RELEASE_VERSION)?;
+    ctx.build_log
+        .push(esp32_idf_cmake_stack_summary(&proof, &chip));
 
     let index = outcome.artifacts.write_index(&chip, &build_dir)?;
     let message = format!(

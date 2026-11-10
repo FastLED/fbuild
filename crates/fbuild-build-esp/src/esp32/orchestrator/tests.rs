@@ -4,8 +4,9 @@ use super::super::espidf_delegate::{BUILD_SYSTEM_KEY, EspBuildSystem};
 use super::Esp32Orchestrator;
 use super::cdc::{cdc_on_boot_enabled, is_esp32_project, warn_if_cdc_on_boot};
 use super::helpers::{
-    Esp32Integration, apply_effective_define_flags, esp32_package_stack_summary,
-    reject_unsupported_esp_framework, reject_unsupported_sdkconfig_overlay, requested_frameworks,
+    Esp32Integration, IdfCmakeProof, apply_effective_define_flags, esp32_idf_cmake_stack_summary,
+    esp32_package_stack_summary, reject_unsupported_esp_framework,
+    reject_unsupported_sdkconfig_overlay, requested_frameworks,
 };
 use super::helpers::{
     framework_failure_marker, framework_signature, record_failed_framework_lib,
@@ -13,6 +14,7 @@ use super::helpers::{
 };
 use crate::BuildOrchestrator;
 use fbuild_core::Platform;
+use fbuild_core::path::NormalizedPath;
 use std::collections::HashMap;
 use std::path::PathBuf;
 use std::time::Duration;
@@ -444,4 +446,102 @@ fn stack_summary_records_requested_framework_and_integration_mode() {
         "{plain}"
     );
     assert!(plain.contains("integration=arduino-core"), "{plain}");
+}
+
+/// A set of published delegated artifacts in a throwaway root, so the proof
+/// gate can be exercised against real files instead of fabricated counts.
+fn artifact_fixture(
+    app_bin: &[u8],
+    elf: &[u8],
+    compile_db: &str,
+) -> (
+    tempfile::TempDir,
+    super::super::espidf_artifacts::IdfArtifacts,
+) {
+    let root = tempfile::TempDir::new().unwrap();
+    let dir = NormalizedPath::new(root.path());
+    let write = |name: &str, bytes: &[u8]| {
+        let path = dir.join(name);
+        std::fs::write(path.as_path(), bytes).unwrap();
+        path
+    };
+    let artifacts = super::super::espidf_artifacts::IdfArtifacts {
+        project: "hello_world".to_string(),
+        app_bin: write("hello_world.bin", app_bin),
+        elf: write("hello_world.elf", elf),
+        map: write("hello_world.map", b"map"),
+        bootloader_bin: write("bootloader.bin", b"boot"),
+        partition_table_bin: write("partition-table.bin", b"pt"),
+        sdkconfig: write("sdkconfig", b"CONFIG_IDF_TARGET=\"esp32s3\"\n"),
+        compile_commands: write("compile_commands.json", compile_db.as_bytes()),
+    };
+    (root, artifacts)
+}
+
+const ONE_ENTRY_DB: &str =
+    r#"[{"directory":"/proj/build","file":"/proj/main/app_main.c","command":"cc app_main.c"}]"#;
+
+/// The gate is the constructor: `integration=idf-cmake` cannot be produced
+/// from a build that did not leave an app image, an ELF and a compile database
+/// entry behind (FastLED/fbuild#1972).
+#[test]
+fn idf_cmake_proof_is_refused_without_artifacts() {
+    let valid_db = ONE_ENTRY_DB;
+    let (_root, complete) = artifact_fixture(b"\x7fELFbin", b"\x7fELFelf", valid_db);
+    let proof = IdfCmakeProof::verified(&complete, "v5.5.1").expect("complete artifacts prove it");
+    assert!(proof.app_bin_bytes() > 0, "app image bytes are recorded");
+    assert!(proof.elf_bytes() > 0, "ELF bytes are recorded");
+    assert_eq!(proof.compile_db_entries(), 1);
+    assert_eq!(proof.sdkconfig_sha256().len(), 64, "sdkconfig is digested");
+
+    // Each proof element on its own is enough to refuse the claim.
+    let (_root, empty_bin) = artifact_fixture(b"", b"\x7fELFelf", valid_db);
+    let refused =
+        IdfCmakeProof::verified(&empty_bin, "v5.5.1").expect_err("an empty app image is not proof");
+    assert!(refused.to_string().contains("empty"), "{refused}");
+
+    let (_root, empty_elf) = artifact_fixture(b"\x7fELFbin", b"", valid_db);
+    assert!(IdfCmakeProof::verified(&empty_elf, "v5.5.1").is_err());
+
+    let (_root, empty_db) = artifact_fixture(b"\x7fELFbin", b"\x7fELFelf", "[]");
+    let refused = IdfCmakeProof::verified(&empty_db, "v5.5.1")
+        .expect_err("zero compile commands is not proof");
+    assert!(
+        refused.to_string().contains("empty compile database"),
+        "{refused}"
+    );
+}
+
+/// The claimed mode and the pinned release are on the summary line, and the
+/// proof numbers travel with it so a log can be checked against the artifacts.
+#[test]
+fn idf_cmake_summary_names_the_pinned_idf_and_proof() {
+    let (_root, complete) = artifact_fixture(b"\x7fELFbin", b"\x7fELFelf", ONE_ENTRY_DB);
+    let proof = IdfCmakeProof::verified(&complete, "v5.5.1").unwrap();
+    let summary = esp32_idf_cmake_stack_summary(&proof, "esp32s3");
+    assert!(summary.contains("integration=idf-cmake"), "{summary}");
+    assert!(summary.contains("idf=v5.5.1"), "{summary}");
+    assert!(summary.contains("chip=esp32s3"), "{summary}");
+    assert!(summary.contains("compile_db_entries=1"), "{summary}");
+    assert!(summary.contains("sdkconfig_sha256="), "{summary}");
+}
+
+/// The requested-framework path inspects `framework =` only, so it has no
+/// build result to prove anything with and must never name `idf-cmake`.
+#[test]
+fn requested_frameworks_can_never_claim_idf_cmake() {
+    for raw in [
+        "arduino",
+        "espidf",
+        "arduino, espidf",
+        "",
+        "ESPIDF",
+        "espidf, espidf",
+    ] {
+        let integration = requested_frameworks(raw).integration();
+        assert!(
+            !matches!(integration, Some(Esp32Integration::IdfCmake(_))),
+            "framework = {raw} must not name idf-cmake"
+        );
+    }
 }
