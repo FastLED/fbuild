@@ -27,7 +27,7 @@ pub(super) const INDEX_FILE: &str = "idf-artifacts.json";
 
 /// The seven artifacts a delegated build must produce (FastLED/fbuild#1971).
 #[derive(Debug, Clone)]
-pub(super) struct IdfArtifacts {
+pub(crate) struct IdfArtifacts {
     /// Project name as IDF named the image (`<name>.bin`).
     pub project: String,
     pub app_bin: NormalizedPath,

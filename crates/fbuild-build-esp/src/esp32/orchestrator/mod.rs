@@ -33,7 +33,7 @@ mod embed_stage;
 mod fingerprint;
 mod framework_library_cache;
 mod framework_libs;
-mod helpers;
+pub(crate) mod helpers;
 mod job_pool;
 mod local_libs;
 mod packages;
