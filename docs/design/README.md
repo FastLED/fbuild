@@ -12,7 +12,9 @@ architecture doc for the subsystem once the feature lands.
   slices served from object storage (FastLED/fbuild#1890): CLI opt-out flag,
   bucket key scheme, manifest freshness, streaming/resume/GC, mirror failover
   ladder, benchmark metrics, and the required test matrix.
-- **`bare-idf-component-builds.md`** — research note for FastLED/fbuild#1761:
-  whether fbuild should honor genuine bare-IDF / CMake-component projects.
-  Contains a measured `idf.py` spike (ESP-IDF v5.5.1, esp32s3), the three
-  option costs, the false-coverage metadata guard, and the proposed follow-ups.
+- **`bare-idf-component-builds.md`** — decision record for FastLED/fbuild#1761:
+  fbuild honors genuine bare-IDF / CMake-component projects through an opt-in
+  (`board_build.build_system = espidf`) that delegates to a pinned ESP-IDF
+  release. Contains a measured `idf.py` spike (v5.5.1, esp32s3), the three
+  option costs, the measured cold-only caching decision, the
+  false-coverage proof gate, and the delivery map for follow-ups #1970-#1974.
