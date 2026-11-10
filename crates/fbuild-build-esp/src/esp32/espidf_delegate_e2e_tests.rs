@@ -31,14 +31,18 @@ fn copy_fixture(destination: &Path) {
         .join("platform")
         .join("espidf_component");
     std::fs::create_dir_all(destination).unwrap();
-    for entry in walkdir::WalkDir::new(&source) {
+    let source = NormalizedPath::new(&source);
+    let destination = NormalizedPath::new(destination);
+    for entry in walkdir::WalkDir::new(source.as_path()) {
         let entry = entry.unwrap();
-        let relative = entry.path().strip_prefix(&source).unwrap();
-        let target = destination.join(relative);
+        let relative = NormalizedPath::new(entry.path())
+            .relative_to(&source)
+            .unwrap();
+        let target = destination.join(relative.as_path());
         if entry.file_type().is_dir() {
-            std::fs::create_dir_all(&target).unwrap();
+            std::fs::create_dir_all(target.as_path()).unwrap();
         } else {
-            std::fs::copy(entry.path(), &target).unwrap();
+            std::fs::copy(entry.path(), target.as_path()).unwrap();
         }
     }
 }

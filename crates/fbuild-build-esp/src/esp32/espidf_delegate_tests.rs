@@ -207,9 +207,11 @@ async fn set_target_then_build_runs_with_the_installed_environment() {
     assert_eq!(fields.len(), 3, "{environment}");
     assert_eq!(fields[0], fake.source().to_string(), "{environment}");
     assert_eq!(fields[1], fake.path().to_string(), "{environment}");
-    let path_entries: Vec<std::path::PathBuf> = std::env::split_paths(fields[2]).collect();
+    let path_entries: Vec<NormalizedPath> = std::env::split_paths(fields[2])
+        .map(NormalizedPath::new)
+        .collect();
     assert_eq!(
-        path_entries[0],
+        path_entries[0].as_path(),
         fake.venv().join("bin").as_path(),
         "{environment}"
     );
