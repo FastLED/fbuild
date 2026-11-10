@@ -156,8 +156,14 @@ impl BuildOrchestrator for Rp2040Orchestrator {
         Platform::RaspberryPi
     }
 
-    #[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
     async fn build(&self, params: &BuildParams) -> Result<BuildResult> {
+        self.build_pico(params).await
+    }
+}
+
+impl Rp2040Orchestrator {
+    #[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
+    async fn build_pico(&self, params: &BuildParams) -> Result<BuildResult> {
         let start = Instant::now();
         let compiler_cache: Option<std::path::PathBuf> = None;
 
