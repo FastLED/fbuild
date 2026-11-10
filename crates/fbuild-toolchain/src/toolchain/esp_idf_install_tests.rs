@@ -197,7 +197,8 @@ fn an_empty_cache_reports_the_whole_release_missing() {
 async fn esp_idf_release_install_provisions_the_whole_release() {
     let (dir, cache_root, persistent) = proof_cache();
     let install =
-        EspIdfInstall::with_cache_root(dir.path(), &cache_root, IdfProfile::Esp32S3Only).unwrap();
+        EspIdfInstall::with_cache_root(dir.path(), cache_root.as_path(), IdfProfile::Esp32S3Only)
+            .unwrap();
     // Only a cold cache can prove "not installed to start with"; a reused proof
     // cache starts warm, and the no-op half of the test still runs.
     if persistent.is_none() {
@@ -216,19 +217,16 @@ async fn esp_idf_release_install_provisions_the_whole_release() {
 /// Cache root for the proof: a fresh temp dir, or `FBUILD_IDF_PROOF_CACHE`
 /// when set, so iterating on the *build* half does not repay ~500 MB of
 /// downloads and a 1.7 GB extract on every attempt.
-fn proof_cache() -> (
-    tempfile::TempDir,
-    std::path::PathBuf,
-    Option<std::path::PathBuf>,
-) {
-    let persistent = std::env::var_os("FBUILD_IDF_PROOF_CACHE").map(std::path::PathBuf::from);
+fn proof_cache() -> (tempfile::TempDir, NormalizedPath, Option<NormalizedPath>) {
+    let persistent = std::env::var_os("FBUILD_IDF_PROOF_CACHE")
+        .map(|value| NormalizedPath::new(std::path::Path::new(&value)));
     let dir = match &persistent {
-        Some(path) => tempfile::TempDir::new_in(path).unwrap(),
+        Some(path) => tempfile::TempDir::new_in(path.as_path()).unwrap(),
         None => tempfile::TempDir::new().unwrap(),
     };
     let cache_root = match &persistent {
         Some(path) => path.clone(),
-        None => dir.path().to_path_buf(),
+        None => NormalizedPath::new(dir.path()),
     };
     (dir, cache_root, persistent)
 }
@@ -451,13 +449,15 @@ async fn run_in_installed_env(
     // friends, so a PATH holding only the pinned tool dirs makes CMake fail
     // deep inside mbedtls with "Could not create symbolic link" -- measured
     // 2026-11-10. A real invocation starts from the user's shell PATH.
-    let mut entries: Vec<std::path::PathBuf> = installed
+    // `OsString` plus the std join/split helpers keep this portable (the
+    // separator is the host's) without naming a host path type.
+    let mut entries: Vec<std::ffi::OsString> = installed
         .path_dirs()
         .iter()
-        .map(|dir| dir.as_path().to_path_buf())
+        .map(|dir| dir.as_path().as_os_str().to_os_string())
         .collect();
     if let Some(host_path) = std::env::var_os("PATH") {
-        entries.extend(std::env::split_paths(&host_path));
+        entries.extend(std::env::split_paths(&host_path).map(std::ffi::OsString::from));
     }
     let path = std::env::join_paths(entries).expect("PATH entries must be joinable");
     let mut owned: Vec<(&str, String)> = vec![("PATH", path.to_string_lossy().into_owned())];
