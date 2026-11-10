@@ -140,7 +140,11 @@ async fn assert_mbed_build(template: BuildParams) {
         project_dir: project.path().to_path_buf(),
         env_name: "mbed".into(),
         extra_build_flags: vec!["-DMBED_LIBRARY_FLAG=42".into()],
-        build_dir: project.path().join(".fbuild/build/mbed/release"),
+        build_dir: project
+            .path()
+            .join(fbuild_paths::FBUILD_DIR_NAME)
+            .join(fbuild_paths::BUILD_DIR_NAME)
+            .join("mbed/release"),
         ..template
     };
     let result = tokio::time::timeout(
