@@ -22,8 +22,7 @@ use super::fingerprint::Esp32FingerprintMetadata;
 use super::framework_libs::prepare_framework_libs;
 use super::helpers::{
     SdkIncludeFarm, apply_effective_define_flags, compile_db_is_current, compile_include_dirs,
-    framework_macro_prefix_map, profile_label, reject_unsupported_esp_framework,
-    reject_unsupported_sdkconfig_overlay,
+    framework_macro_prefix_map, prepare_build_system, profile_label,
 };
 use super::local_libs::compile_local_libraries;
 use super::packages::resolve_pioarduino_packages;
@@ -49,16 +48,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
             &params.project_dir.join("platformio.ini"),
             fbuild_config::PioEnvOverrides::from_map(params.pio_env.clone()),
         )?;
-        // The opt-in decides which build runs before anything Arduino-specific
-        // is rejected or resolved (FastLED/fbuild#1971).
-        let build_system = espidf_delegate::build_system(&config, &params.env_name)?;
-        reject_unsupported_esp_framework(&config, &params.env_name, build_system)?;
-        // An sdkconfig overlay is rejected only for the Arduino path: an
-        // opted-in environment hands its own sdkconfig.defaults to IDF, which
-        // is where an overlay belongs (FastLED/fbuild#1971).
-        if build_system == EspBuildSystem::Native {
-            reject_unsupported_sdkconfig_overlay(&config, &params.env_name)?;
-        }
+        let build_system = prepare_build_system(&config, &params.env_name)?;
 
         let start = Instant::now();
         // Env-gated per-phase timer (FBUILD_PERF_LOG=1); zero overhead when unset.
@@ -71,11 +61,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
         // 1-2. Parse config, load board, setup build dirs, resolve src dir, collect flags
         let mut ctx = crate::pipeline::BuildContext::new_with_perf(params, Some(&mut perf)).await?;
 
-        // The delegated path owns the whole build from here: the project's own
-        // CMakeLists.txt is built by the pinned ESP-IDF release and its
-        // artifacts are published under `<build>/idf/`. Nothing below this
-        // point — the Arduino core, its archives, its linker recipe — runs for
-        // an opted-in environment (FastLED/fbuild#1971).
+        // An opted-in environment is finished here (FastLED/fbuild#1971).
         if build_system == EspBuildSystem::EspIdf {
             return espidf_delegate::delegate_build(params, ctx).await;
         }
@@ -107,14 +93,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
         // packages can honor consumer-pinned URLs (FastLED/fbuild#672).
         let env_config = ctx.config.get_env_config(&params.env_name).ok();
         let archive_override = ctx.lib_archive;
-        // Fail before package resolution when a root the build writes cannot
-        // hold what a cold ESP32 build needs (FastLED/fbuild#1750): a full disk
-        // otherwise surfaces as a raw ENOSPC from whichever subprocess writes
-        // next, with no statement of the path or the shortfall.
-        if super::disk_requirements::should_preflight(params.clean_only, params.clean_all) {
-            let _disk_phase = perf.phase("disk-preflight");
-            super::disk_requirements::preflight_esp32_disk(&params.project_dir)?;
-        }
+        super::disk_requirements::preflight_if_needed(params, &mut perf)?;
         let mut footprint = fbuild_build_engine::disk_footprint::DiskFootprint::new(
             "esp32",
             &fbuild_build_engine::disk_preflight::HostFreeSpace,

@@ -176,6 +176,23 @@ pub(super) fn reject_unsupported_esp_framework(
     Ok(())
 }
 
+/// Decide and validate how this environment is built (FastLED/fbuild#1971).
+///
+/// Read before anything Arduino-specific is rejected: the opt-in is what makes
+/// a bare `framework = espidf` project buildable, and an opted-in environment
+/// hands its own sdkconfig to IDF, so neither Arduino guard applies to it.
+pub(super) fn prepare_build_system(
+    config: &fbuild_config::PlatformIOConfig,
+    env_name: &str,
+) -> Result<EspBuildSystem> {
+    let system = super::super::espidf_delegate::build_system(config, env_name)?;
+    reject_unsupported_esp_framework(config, env_name, system)?;
+    if system == EspBuildSystem::Native {
+        reject_unsupported_sdkconfig_overlay(config, env_name)?;
+    }
+    Ok(system)
+}
+
 /// Arduino's packaged ESP-IDF libraries cannot reflect sdkconfig changes without
 /// a hybrid IDF rebuild. Reject overlays before context setup has side effects.
 pub(super) fn reject_unsupported_sdkconfig_overlay(
