@@ -2,6 +2,8 @@
 
 pub mod esp32_compiler;
 pub mod esp32_linker;
+pub(crate) mod espidf_artifacts;
+pub(crate) mod espidf_delegate;
 pub(crate) mod firmware_bin_cache;
 pub mod fixups;
 pub mod mcu_config;

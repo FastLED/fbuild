@@ -11,6 +11,7 @@ use fbuild_packages::Framework;
 
 use super::super::esp32_compiler::Esp32Compiler;
 use super::super::esp32_linker::Esp32Linker;
+use super::super::espidf_delegate::{self, EspBuildSystem};
 use super::super::fixups;
 use super::super::mcu_config::get_mcu_config;
 use super::Esp32Orchestrator;
@@ -21,8 +22,7 @@ use super::fingerprint::Esp32FingerprintMetadata;
 use super::framework_libs::prepare_framework_libs;
 use super::helpers::{
     SdkIncludeFarm, apply_effective_define_flags, compile_db_is_current, compile_include_dirs,
-    framework_macro_prefix_map, profile_label, reject_unsupported_esp_framework,
-    reject_unsupported_sdkconfig_overlay,
+    framework_macro_prefix_map, prepare_build_system, profile_label,
 };
 use super::local_libs::compile_local_libraries;
 use super::packages::resolve_pioarduino_packages;
@@ -48,8 +48,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
             &params.project_dir.join("platformio.ini"),
             fbuild_config::PioEnvOverrides::from_map(params.pio_env.clone()),
         )?;
-        reject_unsupported_esp_framework(&config, &params.env_name)?;
-        reject_unsupported_sdkconfig_overlay(&config, &params.env_name)?;
+        let build_system = prepare_build_system(&config, &params.env_name)?;
 
         let start = Instant::now();
         // Env-gated per-phase timer (FBUILD_PERF_LOG=1); zero overhead when unset.
@@ -61,6 +60,11 @@ impl BuildOrchestrator for Esp32Orchestrator {
 
         // 1-2. Parse config, load board, setup build dirs, resolve src dir, collect flags
         let mut ctx = crate::pipeline::BuildContext::new_with_perf(params, Some(&mut perf)).await?;
+
+        // An opted-in environment is finished here (FastLED/fbuild#1971).
+        if build_system == EspBuildSystem::EspIdf {
+            return espidf_delegate::delegate_build(params, ctx).await;
+        }
 
         // Compute eh_frame strip policy once per build (FastLED/fbuild#243).
         // Reads sdkconfig from the project dir (ESP32 only) so panic-backtrace
@@ -89,14 +93,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
         // packages can honor consumer-pinned URLs (FastLED/fbuild#672).
         let env_config = ctx.config.get_env_config(&params.env_name).ok();
         let archive_override = ctx.lib_archive;
-        // Fail before package resolution when a root the build writes cannot
-        // hold what a cold ESP32 build needs (FastLED/fbuild#1750): a full disk
-        // otherwise surfaces as a raw ENOSPC from whichever subprocess writes
-        // next, with no statement of the path or the shortfall.
-        if super::disk_requirements::should_preflight(params.clean_only, params.clean_all) {
-            let _disk_phase = perf.phase("disk-preflight");
-            super::disk_requirements::preflight_esp32_disk(&params.project_dir)?;
-        }
+        super::disk_requirements::preflight_if_needed(params, &mut perf)?;
         let mut footprint = fbuild_build_engine::disk_footprint::DiskFootprint::new(
             "esp32",
             &fbuild_build_engine::disk_preflight::HostFreeSpace,

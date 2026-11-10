@@ -133,6 +133,23 @@ pub fn should_preflight(clean_only: bool, clean_all: bool) -> bool {
     !(clean_only || clean_all)
 }
 
+/// Run the cold-build pre-flight when this build can need one.
+///
+/// Fail before package resolution when a root the build writes cannot hold what
+/// a cold ESP32 build needs (FastLED/fbuild#1750): a full disk otherwise
+/// surfaces as a raw ENOSPC from whichever subprocess writes next, with no
+/// statement of the path or the shortfall.
+pub(crate) fn preflight_if_needed(
+    params: &crate::BuildParams,
+    perf: &mut crate::perf_log::PerfTimer,
+) -> Result<()> {
+    if !should_preflight(params.clean_only, params.clean_all) {
+        return Ok(());
+    }
+    let _phase = perf.phase("disk-preflight");
+    preflight_esp32_disk(&params.project_dir)
+}
+
 /// Run the pre-flight check for this project before package resolution.
 pub fn preflight_esp32_disk(project_dir: &Path) -> Result<()> {
     // Commit the ENOSPC emergency reserve before anything else writes

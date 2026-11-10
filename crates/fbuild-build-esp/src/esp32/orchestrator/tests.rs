@@ -1,5 +1,6 @@
 //! Unit tests for the ESP32 orchestrator's helpers and public API.
 
+use super::super::espidf_delegate::{BUILD_SYSTEM_KEY, EspBuildSystem};
 use super::Esp32Orchestrator;
 use super::cdc::{cdc_on_boot_enabled, is_esp32_project, warn_if_cdc_on_boot};
 use super::helpers::{
@@ -59,15 +60,27 @@ fn env_with_framework(framework: &str) -> (tempfile::TempDir, fbuild_config::Pla
 #[test]
 fn bare_espidf_framework_is_rejected_before_building() {
     let (_tmp, config) = env_with_framework("espidf");
-    let error = reject_unsupported_esp_framework(&config, "esp32dev").unwrap_err();
+    let error =
+        reject_unsupported_esp_framework(&config, "esp32dev", EspBuildSystem::Native).unwrap_err();
     assert!(error.to_string().contains("#1664"), "{error}");
+    assert!(error.to_string().contains(BUILD_SYSTEM_KEY), "{error}");
+}
+
+/// The delegated-build opt-in is what permits a bare `framework = espidf`
+/// project; without it the #1730 rejection is unchanged (FastLED/fbuild#1971
+/// AC2).
+#[test]
+fn the_delegated_opt_in_permits_a_bare_espidf_project() {
+    let (_tmp, config) = env_with_framework("espidf");
+    reject_unsupported_esp_framework(&config, "esp32dev", EspBuildSystem::EspIdf)
+        .expect("the opt-in must permit the delegated build");
 }
 
 #[test]
 fn arduino_and_dual_frameworks_are_accepted() {
     for framework in ["arduino", "arduino, espidf", "espidf, arduino"] {
         let (_tmp, config) = env_with_framework(framework);
-        reject_unsupported_esp_framework(&config, "esp32dev")
+        reject_unsupported_esp_framework(&config, "esp32dev", EspBuildSystem::Native)
             .unwrap_or_else(|error| panic!("{framework}: {error}"));
     }
 }

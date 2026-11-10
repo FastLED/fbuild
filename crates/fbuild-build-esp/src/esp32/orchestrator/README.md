@@ -6,7 +6,7 @@ exceeds the 1000-LOC gate.
 | File | Responsibility |
 |---|---|
 | `mod.rs` | Module root; exposes `Esp32Orchestrator` and the small public helpers (`create`, `is_esp32_project`, `cdc_on_boot_enabled`, `warn_if_cdc_on_boot`). |
-| `build.rs` | `impl BuildOrchestrator for Esp32Orchestrator`. Top-level phase wiring. |
+| `build.rs` | `impl BuildOrchestrator for Esp32Orchestrator`. Top-level phase wiring; branches to `super::espidf_delegate` when the environment opts into `board_build.build_system = espidf` (FastLED/fbuild#1971). |
 | `packages.rs` | pioarduino platform / framework / toolchain resolution. |
 | `job_pool.rs` | The build's single compile job pool (FastLED/fbuild#1559): one `tokio::join!` of lib_deps, framework libs, project-as-library, core + sketch, local libs and boot artifacts on one job gate; `link_order` keeps the archive order. Tests in `job_pool_tests.rs`. |
 | `compile_phases.rs` | Core + sketch compile on the caller's shared job gate. |

@@ -35,6 +35,12 @@ use tokio::process::{Child, Command as TokioCommand};
 use crate::platform::process;
 use crate::{FbuildError, Result};
 
+#[path = "subprocess_report.rs"]
+mod report;
+pub use report::{
+    CommandReport, STREAM_CAPTURE_LIMIT, run_command_reporting, run_command_reporting_with_limit,
+};
+
 /// Default cap applied to every `run_command*` call that passes
 /// `timeout: None`. Picked at 15 minutes so even the slowest real
 /// production invocation (a cold ESP32 toolchain link + lto) finishes
