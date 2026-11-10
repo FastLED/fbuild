@@ -172,7 +172,7 @@ impl EspIdfRelease {
 /// A dangling entry contributes 0 rather than an error: this is a budget
 /// measurement, and a tree that cannot be fully read must not read as "the
 /// install failed".
-fn dir_bytes(root: &Path, seen: &mut HashSet<FileIdentity>) -> u64 {
+pub(super) fn dir_bytes(root: &Path, seen: &mut HashSet<FileIdentity>) -> u64 {
     let Ok(entries) = std::fs::read_dir(root) else {
         return 0;
     };
