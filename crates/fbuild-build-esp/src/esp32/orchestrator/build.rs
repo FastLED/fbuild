@@ -11,6 +11,7 @@ use fbuild_packages::Framework;
 
 use super::super::esp32_compiler::Esp32Compiler;
 use super::super::esp32_linker::Esp32Linker;
+use super::super::espidf_delegate::{self, EspBuildSystem};
 use super::super::fixups;
 use super::super::mcu_config::get_mcu_config;
 use super::Esp32Orchestrator;
@@ -48,8 +49,16 @@ impl BuildOrchestrator for Esp32Orchestrator {
             &params.project_dir.join("platformio.ini"),
             fbuild_config::PioEnvOverrides::from_map(params.pio_env.clone()),
         )?;
-        reject_unsupported_esp_framework(&config, &params.env_name)?;
-        reject_unsupported_sdkconfig_overlay(&config, &params.env_name)?;
+        // The opt-in decides which build runs before anything Arduino-specific
+        // is rejected or resolved (FastLED/fbuild#1971).
+        let build_system = espidf_delegate::build_system(&config, &params.env_name)?;
+        reject_unsupported_esp_framework(&config, &params.env_name, build_system)?;
+        // An sdkconfig overlay is rejected only for the Arduino path: an
+        // opted-in environment hands its own sdkconfig.defaults to IDF, which
+        // is where an overlay belongs (FastLED/fbuild#1971).
+        if build_system == EspBuildSystem::Native {
+            reject_unsupported_sdkconfig_overlay(&config, &params.env_name)?;
+        }
 
         let start = Instant::now();
         // Env-gated per-phase timer (FBUILD_PERF_LOG=1); zero overhead when unset.
@@ -61,6 +70,15 @@ impl BuildOrchestrator for Esp32Orchestrator {
 
         // 1-2. Parse config, load board, setup build dirs, resolve src dir, collect flags
         let mut ctx = crate::pipeline::BuildContext::new_with_perf(params, Some(&mut perf)).await?;
+
+        // The delegated path owns the whole build from here: the project's own
+        // CMakeLists.txt is built by the pinned ESP-IDF release and its
+        // artifacts are published under `<build>/idf/`. Nothing below this
+        // point — the Arduino core, its archives, its linker recipe — runs for
+        // an opted-in environment (FastLED/fbuild#1971).
+        if build_system == EspBuildSystem::EspIdf {
+            return espidf_delegate::delegate_build(params, ctx).await;
+        }
 
         // Compute eh_frame strip policy once per build (FastLED/fbuild#243).
         // Reads sdkconfig from the project dir (ESP32 only) so panic-backtrace

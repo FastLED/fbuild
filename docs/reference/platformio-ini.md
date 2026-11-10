@@ -160,6 +160,34 @@ ESP-IDF `CONFIG_*` override design is documented in
 config changes; use `build_flags = -D CONFIG_*` for simple PlatformIO-compatible
 overrides.
 
+## ESP-IDF (CMake) component builds
+
+By default fbuild builds ESP32 environments with the Arduino core and its
+precompiled ESP-IDF libraries, so a genuine `idf_component_register()` project
+is rejected (FastLED/fbuild#1664). Opt in to the delegated build to have the
+project's own `CMakeLists.txt` built by fbuild's pinned ESP-IDF release:
+
+```ini
+[env:esp32s3]
+platform = espressif32
+board = esp32-s3-devkitc-1
+framework = espidf
+board_build.build_system = espidf
+```
+
+- `native` (default) keeps the Arduino path unchanged.
+- `espidf` provisions the pinned ESP-IDF release (source, toolchains, CMake,
+  Ninja, Python environment — ~1.8 GB on first use), runs
+  `idf.py set-target <chip>` and `idf.py build`, and publishes
+  `bin`/`elf`/`map`/`bootloader.bin`/`partition-table.bin`/`sdkconfig`/
+  `compile_commands.json` under `<build>/idf/`, with an `idf-artifacts.json`
+  index recording each file's byte count.
+- Only the `esp32s3` target is provisioned today; another MCU is a
+  configuration error naming the chip.
+
+A failing or timed-out delegated build reports its stage, argv, exit code and
+the tail of both streams.
+
 ## Native `extra_scripts`
 
 Native fbuild interprets `extra_scripts` against a mock SCons `env` — it does not

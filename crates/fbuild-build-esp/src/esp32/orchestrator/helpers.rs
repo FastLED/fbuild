@@ -13,6 +13,8 @@ use std::path::{Path, PathBuf};
 
 use fbuild_core::Result;
 
+use super::super::espidf_delegate::EspBuildSystem;
+
 /// How fbuild integrates ESP-IDF for an environment.
 ///
 /// fbuild has no CMake/`idf.py` component build: every ESP32 environment is
@@ -133,17 +135,23 @@ pub(super) fn flash_settings(
     (flash_freq, flash_mode, flash_size)
 }
 
-/// fbuild builds ESP32 projects only through the Arduino core and its
-/// precompiled ESP-IDF libraries; it has no CMake/`idf.py` component build.
-/// A bare `framework = espidf` project has an `app_main()` and no
-/// `setup()`/`loop()`, so building it as Arduino reports a success that is not
-/// the requested build. Reject it before anything runs (FastLED/fbuild#1664).
+/// fbuild builds ESP32 projects through the Arduino core and its precompiled
+/// ESP-IDF libraries by default; a bare `framework = espidf` project has an
+/// `app_main()` and no `setup()`/`loop()`, so building it as Arduino reports a
+/// success that is not the requested build. Reject it before anything runs
+/// (FastLED/fbuild#1664) — unless the environment opted into the delegated
+/// CMake build, which is exactly the path that can build it
+/// (FastLED/fbuild#1971).
 /// `arduino, espidf` still builds, since Arduino-on-IDF links the same SDK,
 /// but it is not an IDF component build and the warning says so.
 pub(super) fn reject_unsupported_esp_framework(
     config: &fbuild_config::PlatformIOConfig,
     env_name: &str,
+    build_system: EspBuildSystem,
 ) -> Result<()> {
+    if build_system == EspBuildSystem::EspIdf {
+        return Ok(());
+    }
     let env = config.get_env_config(env_name)?;
     let Some(framework) = env.get("framework") else {
         return Ok(());
@@ -153,8 +161,9 @@ pub(super) fn reject_unsupported_esp_framework(
         return Err(fbuild_core::FbuildError::ConfigError(format!(
             "framework = {framework} is unsupported for environment '{env_name}': fbuild builds \
              ESP32 projects through the Arduino core only and has no ESP-IDF (CMake/idf.py) \
-             build. Use `framework = arduino`, or build this environment with PlatformIO \
-             (see FastLED/fbuild#1664)"
+             build. Use `framework = arduino`, set `board_build.build_system = espidf` to build \
+             the project's own CMakeLists.txt with the pinned ESP-IDF release, or build this \
+             environment with PlatformIO (see FastLED/fbuild#1664, #1971)"
         )));
     }
     if espidf {

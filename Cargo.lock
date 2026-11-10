@@ -1037,6 +1037,7 @@ dependencies = [
  "fbuild-packages",
  "fbuild-paths",
  "fbuild-test-support",
+ "fbuild-toolchain",
  "filetime",
  "flate2",
  "futures",
