@@ -1,13 +1,17 @@
-# Bare ESP-IDF / CMake component builds — research and recommendation
+# Bare ESP-IDF / CMake component builds — research, decision and delivered implementation
 
-**Status:** research complete (spike below), no implementation · **Issue:** FastLED/fbuild#1761
-(parent #1664; the *reject* half landed in #1730) · **Date:** 2026-11-09
+**Status:** research complete 2026-11-09, **delivered 2026-11-10** (PRs #1975-#1987;
+follow-ups #1970-#1974 all merged) · **Issue:** FastLED/fbuild#1761 (parent #1664;
+the *reject* half landed in #1730) · **Dates:** research 2026-11-09, delivery 2026-11-10
 
-fbuild builds ESP32 projects only through the Arduino core and its precompiled
-ESP-IDF libraries. A bare `framework = espidf` project is now rejected instead
-of silently producing an Arduino-only build (#1730), but there is still no way
-to *honor* a genuine CMake/`idf_component_register()` project. This note
-compares the options with measured evidence and recommends one.
+fbuild used to build ESP32 projects only through the Arduino core and its
+precompiled ESP-IDF libraries, so a bare `framework = espidf` project was
+rejected rather than silently producing an Arduino-only build (#1730). This note
+compares the options with measured evidence (the spike below), recommends
+option 3, and records the delivered implementation: an **opt-in** delegating
+path that builds the project's own `idf.py`/CMake project with a pinned ESP-IDF
+release and publishes the artifacts as the proof. Every number here is measured
+on the steward host; the delivery table says where each piece lives.
 
 ## Recommendation
 
@@ -18,28 +22,64 @@ artifacts it produced. Do not implement the native component model (option 2):
 the measured cost of delegation is bounded and the cost of re-implementing
 IDF's build layer is unbounded.
 
-The delegation must be **explicit** (a project opt-in, e.g.
+The delegation must be **explicit** (the delivered opt-in is
 `board_build.build_system = espidf`), because it changes the caching story,
-the install footprint (+1.2 GB per IDF version per chip family, measured below)
+the install footprint (~1.8 GB per release per chip family, measured below)
 and the meaning of "cold build".
 
-## What exists today
+## What exists today (after delivery)
 
-- The ESP32 path resolves pioarduino (`platform-espressif32` +
-  `framework-arduinoespressif32`) and compiles sketch, cores and libraries
-  itself — `crates/fbuild-build-esp/src/esp32/orchestrator/packages.rs`.
-- IDF is consumed as **precompiled `.a` libraries** linked by fbuild's own
-  recipe — `crates/fbuild-build-esp/src/esp32/esp32_linker.rs:3-4`
-  ("100+ precompiled `.a` libraries from ESP-IDF").
-- There is **no CMake and no `idf.py`** anywhere in the ESP crates:
-  `crates/fbuild-build-esp/src/esp32/orchestrator/helpers.rs:18,137` state it
-  verbatim, and `reject_unsupported_esp_framework` (`helpers.rs:143-168`)
-  errors for `framework = espidf` alone while only warning for
-  `arduino, espidf`.
-- `framework = arduino, espidf` therefore links IDF *through the Arduino core*.
-  FastLED's `ci/boards.py:900` (`ESP32DEV_IDF5_COMPONENT`) declares exactly
-  that framework pair, so the claim that it exercises
-  `idf_component_register()` is not proven under fbuild.
+Two paths, one per-environment switch, and the native one is unchanged.
+
+- **Native (the default).** pioarduino `platform-espressif32` +
+  `framework-arduinoespressif32`: fbuild compiles sketch, cores and libraries
+  itself and links the precompiled IDF archives
+  (`crates/fbuild-build-esp/src/esp32/esp32_linker.rs`). Untouched by this work.
+- **Delegated (`board_build.build_system = espidf`).** The project's own
+  `CMakeLists.txt` is built by the pinned ESP-IDF v5.5.1 (`fcae3288`) that
+  fbuild installs as packages —
+  `crates/fbuild-build-esp/src/esp32/espidf_delegate.rs`, entered from
+  `orchestrator/build.rs` after `prepare_build_system`. `native` and `arduino`
+  mean the native path; an unknown value is a configuration error that names the
+  valid ones instead of silently picking one.
+- **The artifacts are the proof.** `espidf_artifacts.rs` derives the layout from
+  the `flasher_args.json` the IDF build itself writes — no second copy of IDF's
+  layout knowledge — and publishes the app bin, ELF, map, bootloader, partition
+  table, generated `sdkconfig` and `compile_commands.json` flat under
+  `<build>/idf/`, indexed in `idf-artifacts.json` with byte counts and
+  `"cache": "cold-only"`.
+- **One compile database.** `espidf_compile_db.rs` re-roots and merges the
+  delegated database into `CompileDatabase::expected_output_path`, the location
+  the native path already publishes to.
+- **A component build cannot be claimed without proof** — `IdfCmakeProof`, see
+  "Metadata / false-coverage guard" below.
+- **Caching is declared cold-only**, with the measurement in this note.
+- **The reject half still holds.** Without the opt-in, a bare
+  `framework = espidf` fails fast (`reject_unsupported_esp_framework` now takes
+  the resolved build system and its message points at the switch), and
+  `framework = arduino, espidf` still builds through the Arduino core with a
+  warning — that pair is `integration=arduino-on-idf`, not component coverage.
+
+### Delivery map
+
+| Piece | PR | What landed |
+|---|---|---|
+| Tool components pinned | #1975 | one fbuild package per component, sha256 from the release's `tools/tools.json`; `linux-armel/armhf/i686` deliberately unpinned |
+| Install profile | #1976 | esp32s3-only profile (`1149.2 MB` of toolchains) + the environment description |
+| IDF source tree | #1978 | v5.5.1 checkout as a package (`450.0 MB`) |
+| Python environment | #1980 | pinned constraints + lock, `85.5 MB` venv |
+| Whole-release install | #1981 | `EspIdfInstall::install()` — one operation, no `install.sh` |
+| CMake + Ninja | #1983 | Kitware CMake 3.30.2 + Ninja 1.12.1 as `Esp32S3Only` components (`153.6 MB`), addressed through `IdfComponent::root_rule()` because neither archive has a fixed container |
+| Delegated build | #1984 | `board_build.build_system = espidf`, artifacts under `<build>/idf/`, supervised child with a structured failure |
+| Proof gate | #1985 | `IdfCmakeProof` + `Esp32Integration::IdfCmake(proof)` |
+| Compile database | #1986 | re-root + merge, published at the documented path |
+| Caching decision | #1987 | `IdfCacheMode::ColdOnly` in the stack summary, the build log and the index |
+
+The whole path is exercised end to end by
+`crates/fbuild-build-esp/src/esp32/espidf_delegate_e2e_tests.rs` against the
+committed fixture `tests/platform/espidf_component` (a real
+`idf_component_register()` project with a second component and `app_main()`);
+the ignored test passed in **48.4 s** against the pinned release.
 
 ## Spike — a real component project built under option 1
 
@@ -97,7 +137,7 @@ Any delegating path must provision cmake/ninja/python/constraints itself
 instead of assuming a working host interpreter.
 
 Reference point from the org's own CI: FastLED's bare-IDF app
-(`ci/idf_app`, esp32, `espressif/idf:v5.5` image) is validated at
+(FastLED/FastLED `ci/idf_app`, esp32, `espressif/idf:v5.5` image) is validated at
 **240,368 B**, i.e. the same order as this spike's 208,528 B.
 
 ## Demand (research question 1)
@@ -106,7 +146,7 @@ The demand is proven *inside* the org, not speculated:
 
 - `FastLED/FastLED` **is** an IDF component: root `CMakeLists.txt:79` calls
   `idf_component_register(SRCS ${FastLED_SRCS} INCLUDE_DIRS "src" REQUIRES ...)`.
-- `ci/idf_app/` is a pure ESP-IDF application (`app_main()`, no Arduino
+- `FastLED/FastLED`'s `ci/idf_app/` is a pure ESP-IDF application (`app_main()`, no Arduino
   component) and `.github/workflows/build_bare_idf.yml` builds it for IDF 5.5
   (esp32, esp32s3, esp32c3, esp32c6, esp32p4) plus 5.1 and 4.4 (esp32,
   esp32s3). That is the reference implementation option 1 must match.
@@ -189,22 +229,32 @@ raw command line — the measurement above is the cost of entry, not a design
 sketch. Storing 640 MB of duplicates for zero hits is not a trade this path
 makes.
 
-## Metadata / false-coverage guard (research question 4)
+## Metadata / false-coverage guard (research question 4) — delivered in #1972/#1985
 
-`esp32_package_stack_summary` (`helpers.rs`, tested in
-`orchestrator/tests.rs::stack_summary_records_requested_framework_and_integration_mode`)
-already records the request *and* the effective integration:
+`esp32_package_stack_summary` records the request *and* the effective
+integration (tested in
+`orchestrator/tests.rs::stack_summary_records_requested_framework_and_integration_mode`):
 
 ```
 framework=arduino, espidf framework_pin=... resolved platform=espressif32@6.13.0, framework=framework-arduinoespressif32@3.3.7 integration=arduino-on-idf
 ```
 
-That is **sufficient to prevent false claims today**, because a delegated
-build would need a new value (`integration=idf-cmake`) that only the delegating
-path can emit. The guard to add with it: `integration=idf-cmake` is only valid
-when the build result carries proof — ELF and app bin bytes, the entry count of
-`compile_commands.json`, and the `sdkconfig` digest. A bare `espidf` request
-continues to fail fast (`helpers.rs:143-168`).
+`integration=idf-cmake` is a claim about what a build *did*, and it is now
+unrepresentable without proof. `IdfCmakeProof` (`orchestrator/helpers.rs`) has
+private fields and a single constructor, `verified(artifacts, idf_release)`,
+which measures a non-empty app image and ELF, at least one
+`compile_commands.json` entry and the SHA-256 of the generated `sdkconfig`; a
+build that cannot produce that proof is an **error**, never a silent downgrade
+to a weaker label. `Esp32Integration::IdfCmake(proof)` carries it, and
+`RequestedFrameworks::integration` can never produce it, so a request cannot
+manufacture the claim. Only `esp32_idf_cmake_stack_summary` may spell it:
+
+```
+ESP32 packages: build_system=espidf, chip=esp32s3, integration=idf-cmake, cache=cold-only, idf=v5.5.1; proof: app_bin_bytes=..., elf_bytes=..., compile_db_entries=..., sdkconfig_sha256=...
+```
+
+A bare `espidf` request without the opt-in still fails fast, so the two
+protections compose: the request gate (#1730) and the artifact gate (#1972).
 
 ## Toolchain cost (research question 5)
 
@@ -224,8 +274,22 @@ Measured on the esp32s3-only install (same host, `du -sh`):
 So the honest marginal cost of one extra IDF version for one chip family is
 ~1.2 GB of toolchain + 667 MB of source, versus the current Arduino-on-IDF
 stack already installed here (`framework-arduinoespressif32-libs` 1.9 GB +
-`toolchain-xtensa-esp-elf` 1.2 GB). Per-chip slices (#1949/#1951) already cut
-the framework half; an IDF release has no equivalent slicing story yet.
+`toolchain-xtensa-esp-elf` 1.2 GB).
+
+**As delivered** (measured on the esp32s3 profile, `EspIdfInstall`): toolchains
+**1149.2 MB** (the #1970 AC2 budget is 1.3 GB), IDF source tree **450.0 MB**,
+Python env **85.5 MB** (312.6 MB including its CPython), CMake + Ninja
+**153.6 MB** — about **1.8 GB** per release for one chip family, installed as a
+single fbuild operation with every archive sha256-pinned from the release's own
+`tools/tools.json` (no `install.sh`, no host `~/.espressif`). Two environment
+requirements were measured and are pinned by tests: `IDF_TOOLS_PATH` must point
+at the python entry's `python_env/` (constraints lookup is offline, so a missing
+file is fatal), and the profile's `PATH` entries are *prepended* to the host
+`PATH` rather than substituted, because `idf.py`/CMake shell out to `ln`/`git`.
+
+Per-chip slices (#1949/#1951) cut the *framework* half; an IDF release has no
+equivalent slicing story — the profile is chip-scoped (esp32s3), but a second
+family adds its own cross toolchain.
 
 ## Options
 
@@ -238,19 +302,26 @@ the framework half; an IDF release has no equivalent slicing story yet.
    fragments, bootloader and partition generation, and would lag every IDF
    release; measured surface (1064 objects and 108 component archives) makes this a
    permanent treadmill. Not recommended.
-3. **Hybrid (recommended).** Native Arduino-on-IDF stays the default and keeps
+3. **Hybrid (chosen and delivered).** Native Arduino-on-IDF stays the default and keeps
    zccache, slices and its current diagnostics. Genuine component projects opt
    in to delegation, which must publish its artifacts as proof.
 
-## Proposed follow-ups
+## Follow-ups (all delivered)
 
 1. Toolchain: pin an ESP-IDF release (source + toolchains) as fbuild packages,
    with an esp32s3-only install profile so the default is ~1.2 GB, not 3.8 GB.
+   **Done in #1975/#1976/#1978/#1980/#1981/#1983** — the delivered profile
+   installs ~1.8 GB for esp32s3, including the source tree, the Python env and
+   CMake/Ninja (the "Toolchain cost" table has the split).
 2. `fbuild build` delegating path behind the explicit opt-in, producing
    `<build>/idf/` artifacts (elf, bin, map, sdkconfig, compile DB).
+   **Done in #1971 / PR #1984** — `espidf_delegate.rs` + `espidf_artifacts.rs`;
+   the artifact set is discovered from IDF's own `flasher_args.json` and
+   indexed in `idf-artifacts.json`.
 3. False-coverage gate: `integration=idf-cmake` only with artifact proof
    (bytes + compile-db entries + sdkconfig digest); extend the #1730 summary
-   test.
+   test. **Done in #1972 / PR #1985** — `IdfCmakeProof` (private fields, one
+   `verified` constructor); `delegate_build` fails rather than downgrading.
 4. Compile-database re-rooting + daemon/indexer merge for delegated builds.
    **Done in #1973** (`compile_database::merge` + `espidf_compile_db`): entries
    are keyed by the normalized absolute source path, fbuild's entry wins an
@@ -266,12 +337,32 @@ the framework half; an IDF release has no equivalent slicing story yet.
    wrapper measured slower with no reuse, see below.
 6. Report `framework = arduino, espidf` honestly everywhere (it is
    `integration=arduino-on-idf`) so no board is described as component
-   coverage before follow-up 2 lands.
+   coverage before follow-up 2 lands. **Done** — the stack summary states the
+   integration mode, the cache mode and the IDF release, and
+   `integration=idf-cmake` is only reachable through proof.
 
-## Non-goals
+## What remains
+
+- **The switch is per environment.** No project gets a delegated build by
+  accident; a project has to set `board_build.build_system = espidf`.
+- **The native IDF-only path (#1878) is a separate, still-draft track** for the
+  silicon families pioarduino cannot serve (C5, P4). #1880 (sdkconfig in the
+  sketch root + an in-sketch directive) is scoped to it and gated on it.
+- **No per-chip slicing of a release**, and no second chip family's profile
+  measured (see "Toolchain cost").
+- **No CI lane builds the delegated fixture**: the end-to-end test is `#[ignore]`
+  and run deliberately (48.4 s here); wiring a hosted lane was an #1974
+  non-goal.
+- **A compiler-launcher cache** stays a future option with a cost of entry: its
+  key must cover the IDF release and the `sdkconfig` digest rather than the raw
+  compile command (see "Caching decision").
+
+## Non-goals (held through delivery)
 
 - No CMake or `idf_component_register()` coverage claim until artifacts prove
   the registration executed and the intended entry point ran.
 - No regression of the current Arduino path and no weakening of #1730's
   rejection of unsupported bare `espidf`.
-- No implementation in this pass.
+- **Held:** no coverage claim is made anywhere that artifacts do not back, the
+  Arduino path is the same code path it was, and a bare `espidf` request
+  without the opt-in still fails fast.
