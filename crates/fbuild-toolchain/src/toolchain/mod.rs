@@ -7,6 +7,7 @@ pub mod clang;
 pub mod esp32;
 pub mod esp32_metadata;
 pub mod esp8266;
+pub mod esp_idf_install;
 pub mod esp_idf_python;
 pub mod esp_idf_release;
 pub mod esp_idf_release_profile;
@@ -23,6 +24,7 @@ pub use arm::ArmToolchain;
 pub use arm_gcc8::ArmGcc8Toolchain;
 pub use avr::AvrToolchain;
 pub use clang::{ClangComponent, ClangComponentKind};
+pub use esp_idf_install::{EspIdfInstall, IdfInstallUnit, InstalledEspIdf};
 pub use esp_idf_python::{
     EspIdfPython, IDF_PYTHON_ENV_NAME, IdfPythonEnvironment, PYTHON_INTERPRETERS, PYTHON_VERSION,
     PythonInterpreterPin, REQUIREMENTS_CONSTRAINTS, REQUIREMENTS_LOCK,
