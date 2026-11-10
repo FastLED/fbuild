@@ -1,9 +1,10 @@
 //! Arduino Mbed bundled-library selection and effective library compile inputs.
 
 use std::collections::HashMap;
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
 use fbuild_core::Result;
+use fbuild_core::path::NormalizedPath;
 use fbuild_packages::library::FrameworkLibrary;
 
 use crate::BuildParams;
@@ -12,9 +13,9 @@ use crate::flag_overlay::LanguageExtraFlags;
 use crate::pipeline;
 
 pub(super) struct Bundled {
-    pub sources: Vec<PathBuf>,
-    pub includes: Vec<PathBuf>,
-    pub archives: Vec<PathBuf>,
+    pub sources: Vec<NormalizedPath>,
+    pub includes: Vec<NormalizedPath>,
+    pub archives: Vec<NormalizedPath>,
     pub external: Vec<String>,
 }
 
@@ -35,9 +36,17 @@ pub(super) fn bundled(
         archive_override,
     )?;
     Ok(Bundled {
-        sources: selected.source_files,
-        includes: selected.include_dirs,
-        archives,
+        sources: selected
+            .source_files
+            .into_iter()
+            .map(NormalizedPath::new)
+            .collect(),
+        includes: selected
+            .include_dirs
+            .into_iter()
+            .map(NormalizedPath::new)
+            .collect(),
+        archives: archives.into_iter().map(NormalizedPath::new).collect(),
         external: fbuild_library_select::external_declared_deps(declared, libraries),
     })
 }
@@ -84,7 +93,7 @@ pub(super) async fn dependencies(
     ctx: &pipeline::BuildContext,
     compiler: &dyn Compiler,
     toolchain: &fbuild_packages::toolchain::ArmToolchain,
-    includes: &mut Vec<PathBuf>,
+    includes: &mut Vec<NormalizedPath>,
     declared: &[String],
 ) -> Result<pipeline::LibDeps> {
     use fbuild_packages::Toolchain;
@@ -93,7 +102,12 @@ pub(super) async fn dependencies(
         .get_lib_ignore(&params.env_name)
         .unwrap_or_default();
     let (c, cpp) = flags(compiler, ctx, false);
-    pipeline::resolve_lib_deps(
+    // The shared resolver still exposes a legacy mutable path vector.
+    let mut legacy_includes = includes
+        .iter()
+        .map(|path| path.as_path().to_path_buf())
+        .collect();
+    let plan = pipeline::resolve_lib_deps(
         declared,
         &ignored,
         &params.project_dir,
@@ -104,11 +118,16 @@ pub(super) async fn dependencies(
         &toolchain.get_gcc_ar_path(),
         &c,
         &cpp,
-        includes,
+        &mut legacy_includes,
         params.verbose,
         None,
     )
-    .await
+    .await?;
+    *includes = legacy_includes
+        .into_iter()
+        .map(NormalizedPath::new)
+        .collect();
+    Ok(plan)
 }
 
 #[cfg(test)]

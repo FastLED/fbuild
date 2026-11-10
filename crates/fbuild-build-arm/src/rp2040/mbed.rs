@@ -7,10 +7,11 @@
 //! this RP recipe deliberately owns its independent platform boundary.
 
 use std::collections::HashMap;
-use std::path::{Path, PathBuf};
+use std::path::Path;
 use std::time::Instant;
 
 use fbuild_core::Result;
+use fbuild_core::path::NormalizedPath;
 use fbuild_packages::{Framework, Package, Toolchain};
 
 use super::mbed_libraries;
@@ -165,6 +166,48 @@ fn sources(
     })
 }
 
+fn include_dirs(
+    core: &Path,
+    variant: &Path,
+    ctx: &pipeline::BuildContext,
+    project: &Path,
+) -> Result<Vec<NormalizedPath>> {
+    // Normalize once after the legacy discovery API has populated its vector.
+    let mut paths = vec![
+        core.to_path_buf(),
+        core.join("api/deprecated"),
+        core.join("api/deprecated-avr-comp"),
+        variant.to_path_buf(),
+        ctx.src_dir.clone(),
+    ];
+    pipeline::discover_project_includes(project, &mut paths)?;
+    Ok(paths.into_iter().map(NormalizedPath::new).collect())
+}
+
+fn make_compiler(
+    params: &BuildParams,
+    ctx: &pipeline::BuildContext,
+    toolchain: &fbuild_packages::toolchain::ArmToolchain,
+    values: HashMap<String, String>,
+    includes: &[NormalizedPath],
+    config: ArmMcuConfig,
+) -> ArmCompiler {
+    ArmCompiler::new(
+        toolchain.get_gcc_path(),
+        toolchain.get_gxx_path(),
+        &ctx.board.mcu,
+        &ctx.board.f_cpu,
+        values,
+        includes
+            .iter()
+            .map(|path| path.as_path().to_path_buf())
+            .collect(),
+        config,
+        params.profile,
+        params.verbose,
+    )
+}
+
 pub(super) async fn build(
     params: &BuildParams,
     ctx: pipeline::BuildContext,
@@ -183,26 +226,16 @@ pub(super) async fn build(
         .compiler_flags
         .common
         .extend(sdk_include_flags(&core, &variant)?);
-    let mut includes = vec![
-        core.clone(),
-        core.join("api/deprecated"),
-        core.join("api/deprecated-avr-comp"),
-        variant.clone(),
-    ];
-    includes.push(ctx.src_dir.clone());
-    pipeline::discover_project_includes(&params.project_dir, &mut includes)?;
+    let mut includes = include_dirs(&core, &variant, &ctx, &params.project_dir)?;
     let mut sources = sources(&ctx, &framework)?;
     let flags = defines(&ctx, &variant)?;
-    let mut compiler = ArmCompiler::new(
-        toolchain.get_gcc_path(),
-        toolchain.get_gxx_path(),
-        &ctx.board.mcu,
-        &ctx.board.f_cpu,
+    let mut compiler = make_compiler(
+        params,
+        &ctx,
+        &toolchain,
         flags.clone(),
-        includes.clone(),
+        &includes,
         config.clone(),
-        params.profile,
-        params.verbose,
     );
     let declared = ctx.config.get_lib_deps(&params.env_name)?;
     let libraries = fbuild_packages::library::framework_library::discover_framework_libraries(
@@ -219,7 +252,12 @@ pub(super) async fn build(
         ctx.lib_archive,
     )?;
     includes.extend(bundled.includes);
-    sources.core_sources.extend(bundled.sources);
+    sources.core_sources.extend(
+        bundled
+            .sources
+            .into_iter()
+            .map(NormalizedPath::into_path_buf),
+    );
     let plan = mbed_libraries::dependencies(
         params,
         &ctx,
@@ -231,19 +269,9 @@ pub(super) async fn build(
     .await?;
     let policy =
         crate::eh_frame_policy_compute::compute_eh_frame_policy(&ctx, params.profile, None);
-    compiler = ArmCompiler::new(
-        toolchain.get_gcc_path(),
-        toolchain.get_gxx_path(),
-        &ctx.board.mcu,
-        &ctx.board.f_cpu,
-        flags,
-        includes.clone(),
-        config.clone(),
-        params.profile,
-        params.verbose,
-    )
-    .with_build_unflags(ctx.build_unflags.clone())
-    .with_eh_frame_policy(policy);
+    compiler = make_compiler(params, &ctx, &toolchain, flags, &includes, config.clone())
+        .with_build_unflags(ctx.build_unflags.clone())
+        .with_eh_frame_policy(policy);
     let linker = ArmLinker::new(
         toolchain.get_gcc_path(),
         toolchain.get_ar_path(),
@@ -271,13 +299,13 @@ pub(super) async fn build(
 }
 
 struct Prepared {
-    archives: Vec<PathBuf>,
+    archives: Vec<NormalizedPath>,
     project_flags: (Vec<String>, Vec<String>),
     compiler: ArmCompiler,
     linker: ArmLinker,
     sources: SourceCollection,
     plan: pipeline::LibDeps,
-    includes: Vec<PathBuf>,
+    includes: Vec<NormalizedPath>,
     picotool: fbuild_packages::toolchain::Rp2040Picotool,
 }
 
@@ -303,6 +331,15 @@ async fn finish(
     let ar = toolchain.get_ar_path();
     let gcc_ar = toolchain.get_gcc_ar_path();
     let (c, cpp) = project_flags;
+    // Adapt normalized owned state only at the legacy shared pipeline boundary.
+    let includes: Vec<_> = includes
+        .into_iter()
+        .map(NormalizedPath::into_path_buf)
+        .collect();
+    let archives: Vec<_> = archives
+        .into_iter()
+        .map(NormalizedPath::into_path_buf)
+        .collect();
     let env = pipeline::LibraryBuildEnv {
         gcc_path: &gcc,
         gxx_path: &gxx,
