@@ -170,4 +170,65 @@ async fn assert_mbed_build(template: BuildParams) {
     assert!(cleaned.success);
     assert!(cleaned.elf_path.is_none());
     assert!(cleaned.firmware_path.is_none());
+    assert_same_environment_core_switch(clean).await;
+}
+
+// The default no-op shortcut watches the generated compile database. Switching
+// cores must not let an earlier Pico snapshot accept the intervening Mbed ELF,
+// even after the original source and configuration bytes have been restored.
+async fn assert_same_environment_core_switch(mut params: BuildParams) {
+    let project = tempfile::tempdir().unwrap();
+    std::fs::create_dir(project.path().join("src")).unwrap();
+    std::fs::write(
+        project.path().join("src/main.cpp"),
+        r#"
+#include <Arduino.h>
+volatile unsigned core_marker;
+void setup() {
+#ifdef ARDUINO_ARCH_MBED_RP2040
+    core_marker = 1;
+#else
+    core_marker = 2;
+#endif
+}
+void loop() {}
+"#,
+    )
+    .unwrap();
+    let pico = "[env:core_switch]\nplatform = raspberrypi\nboard = rpipico\nframework = arduino\nboard_build.core = earlephilhower\n";
+    let mbed = "[env:core_switch]\nplatform = raspberrypi\nboard = pico\nframework = arduino\n";
+    params.project_dir = project.path().to_path_buf();
+    params.env_name = "core_switch".into();
+    params.build_dir = project
+        .path()
+        .join(fbuild_paths::FBUILD_DIR_NAME)
+        .join(fbuild_paths::BUILD_DIR_NAME)
+        .join("core_switch/release");
+    params.extra_build_flags.clear();
+    params.clean = false;
+    params.clean_all = false;
+    params.clean_only = false;
+    params.generate_compiledb = true;
+    let mut hashes = Vec::with_capacity(3);
+    for config in [pico, mbed, pico] {
+        std::fs::write(project.path().join("platformio.ini"), config).unwrap();
+        let result = tokio::time::timeout(
+            std::time::Duration::from_secs(900),
+            fbuild_build::rp2040::Rp2040Orchestrator.build(&params),
+        )
+        .await
+        .expect("same-environment core switch timed out")
+        .expect("same-environment core switch must build");
+        assert!(result.success);
+        let elf = std::fs::read(result.elf_path.expect("core-switch ELF")).unwrap();
+        hashes.push(blake3::hash(&elf));
+    }
+    assert_ne!(
+        hashes[0], hashes[1],
+        "different cores must produce different firmware"
+    );
+    assert_eq!(
+        hashes[0], hashes[2],
+        "restored Pico inputs must not reuse the Mbed firmware"
+    );
 }
