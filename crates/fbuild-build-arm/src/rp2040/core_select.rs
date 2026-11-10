@@ -3,40 +3,51 @@
 //! PlatformIO's `raspberrypi` platform builds the `pico` and
 //! `nanorp2040connect` boards with the Arduino **Mbed OS RP2040** core
 //! (`framework-arduino-mbed`) unless `board_build.core = earlephilhower`
-//! selects Arduino-Pico. fbuild only implements Arduino-Pico, and the two
-//! cores are not interchangeable, so an Mbed-core env is rejected up front
-//! with an actionable error instead of being silently built against
-//! Arduino-Pico (which previously failed later with a bare ENOENT).
+//! selects Arduino-Pico. The two cores are not interchangeable: dispatch to
+//! their distinct build recipes, and prevent the Arduino-Pico-only package
+//! resolver from silently provisioning the wrong SDK for a Mbed environment.
 
 use std::collections::HashMap;
 
 /// Boards whose PlatformIO default Arduino core is Mbed OS RP2040.
 const MBED_DEFAULT_BOARDS: &[&str] = &["pico", "nanorp2040connect"];
 
-/// Fail fast when `env` selects the Arduino Mbed OS RP2040 core.
-pub(crate) fn ensure_arduino_pico_core(env: &HashMap<String, String>) -> fbuild_core::Result<()> {
+/// Framework family selected by an RP2040 environment.
+#[derive(Debug, PartialEq, Eq)]
+pub(crate) enum ArduinoCore {
+    Pico,
+    Mbed,
+}
+
+pub(crate) fn selected_core(env: &HashMap<String, String>) -> fbuild_core::Result<ArduinoCore> {
     let board = env.get("board").map(|b| b.trim()).unwrap_or_default();
     let core = env
         .get("board_build.core")
         .map(|c| c.trim().to_ascii_lowercase())
         .unwrap_or_default();
-    let mbed = match core.as_str() {
-        "earlephilhower" => false,
-        "" => MBED_DEFAULT_BOARDS.contains(&board),
-        // Explicit `arduino`/`mbed` (or anything else) is not Arduino-Pico.
-        _ => true,
-    };
-    if !mbed {
+    match core.as_str() {
+        "earlephilhower" => Ok(ArduinoCore::Pico),
+        "arduino" | "mbed" => Ok(ArduinoCore::Mbed),
+        "" if MBED_DEFAULT_BOARDS.contains(&board) => Ok(ArduinoCore::Mbed),
+        "" => Ok(ArduinoCore::Pico),
+        _ => Err(fbuild_core::FbuildError::ConfigError(format!(
+            "unsupported RP2040 Arduino core `{core}`"
+        ))),
+    }
+}
+
+/// Guard callers of the Arduino-Pico-only package resolver.
+pub(crate) fn ensure_arduino_pico_core(env: &HashMap<String, String>) -> fbuild_core::Result<()> {
+    let board = env.get("board").map(|b| b.trim()).unwrap_or_default();
+    if selected_core(env)? == ArduinoCore::Pico {
         return Ok(());
     }
     Err(fbuild_core::FbuildError::ConfigError(format!(
         "board `{board}` selects the Arduino Mbed OS RP2040 core \
-         (framework-arduino-mbed), which fbuild does not support \
-         (FastLED/fbuild#1977). fbuild builds RP2040 only with the \
-         Arduino-Pico core. To use it, set `board_build.core = earlephilhower` \
-         (and preferably `platform = https://github.com/maxgerhardt/platform-raspberrypi.git`, \
-         `board = rpipico`); note Arduino-Pico is a different core than Mbed. \
-         Otherwise build this env with PlatformIO."
+         (framework-arduino-mbed), not Arduino-Pico. Use the Mbed recipe \
+         instead of the Arduino-Pico package resolver. To explicitly select \
+         Arduino-Pico, set `board_build.core = earlephilhower`; the two cores \
+         are not interchangeable (FastLED/fbuild#1977)."
     )))
 }
 
@@ -49,6 +60,33 @@ mod tests {
             .iter()
             .map(|(k, v)| ((*k).to_string(), (*v).to_string()))
             .collect()
+    }
+
+    #[test]
+    fn stock_pico_selects_mbed_and_explicit_pico_override_is_preserved() {
+        assert_eq!(
+            selected_core(&env(&[("board", "pico")])).unwrap(),
+            ArduinoCore::Mbed
+        );
+        assert_eq!(
+            selected_core(&env(&[("board", "nanorp2040connect")])).unwrap(),
+            ArduinoCore::Mbed
+        );
+        assert_eq!(
+            selected_core(&env(&[("board", "rpipico")])).unwrap(),
+            ArduinoCore::Pico
+        );
+        assert_eq!(
+            selected_core(&env(&[
+                ("board", "pico"),
+                ("board_build.core", "earlephilhower")
+            ]))
+            .unwrap(),
+            ArduinoCore::Pico
+        );
+        assert!(
+            selected_core(&env(&[("board", "pico"), ("board_build.core", "unknown")])).is_err()
+        );
     }
 
     #[test]

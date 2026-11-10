@@ -1,11 +1,11 @@
-//! Real default Raspberry Pi Pico build regression for FastLED/fbuild#1670.
+//! Real Arduino-Pico and Arduino Mbed RP2040 build regressions (#1670, #1977).
 
 use fbuild_build::{BuildOrchestrator, BuildParams, compile_backend};
 use fbuild_core::BuildProfile;
 
 #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
-#[ignore = "#1670: downloads Arduino-Pico, matching pqt-gcc and published USB profiles"]
-async fn pico_default_build_assembles_boot2_and_preserves_string_defines() {
+#[ignore = "#1670/#1977: downloads both RP2040 cores, matching ARM toolchains and published USB profiles"]
+async fn pico_core_families_link_with_their_own_sdk_and_boot_layout() {
     tokio::task::spawn_blocking(|| {
         let registry = tempfile::tempdir().unwrap();
         assert!(fbuild_core::usb::profiles::populate_profiles_from_paths(
@@ -21,7 +21,7 @@ async fn pico_default_build_assembles_boot2_and_preserves_string_defines() {
     let project = tmp.path();
     std::fs::write(
         project.join("platformio.ini"),
-        "[env:pico]\nplatform = raspberrypi\nboard = pico\nframework = arduino\n",
+        "[env:pico]\nplatform = raspberrypi\nboard = rpipico\nframework = arduino\nboard_build.core = earlephilhower\n",
     )
     .unwrap();
     std::fs::create_dir(project.join("src")).unwrap();
@@ -78,4 +78,162 @@ void loop() { digitalWrite(LED_BUILTIN, HIGH); }
     assert!(build_dir.join("boot2.o").is_file(), "boot2 assembly output");
     assert!(result.elf_path.as_ref().expect("firmware ELF").is_file());
     assert!(result.size_info.as_ref().unwrap().total_flash > 0);
+    assert_mbed_build(params).await;
+}
+
+fn mbed_fixture() -> (tempfile::TempDir, tempfile::TempDir) {
+    let project = tempfile::tempdir().unwrap();
+    let dependency = tempfile::tempdir().unwrap();
+    std::fs::create_dir(dependency.path().join("src")).unwrap();
+    std::fs::write(
+        dependency.path().join("library.json"),
+        r#"{"name":"MbedFeatureGuard","version":"1.0.0"}"#,
+    )
+    .unwrap();
+    std::fs::write(
+        dependency.path().join("src/FeatureGuard.h"),
+        "int mbed_library_value();\n",
+    )
+    .unwrap();
+    std::fs::write(
+        dependency.path().join("src/FeatureGuard.cpp"),
+        r#"
+#include "FeatureGuard.h"
+#if !defined(MBED_LIBRARY_FLAG) || MBED_LIBRARY_FLAG != 42
+#error Dependency lost the caller compile overlay
+#endif
+#ifdef PROJECT_ONLY
+#error Source-only flags leaked into a foreign dependency
+#endif
+int mbed_library_value() { return MBED_LIBRARY_FLAG; }
+"#,
+    )
+    .unwrap();
+    std::fs::write(project.path().join("platformio.ini"), format!(
+        "[env:mbed]\nplatform = raspberrypi\nboard = pico\nframework = arduino\nlib_deps = {}\nbuild_src_flags = -DPROJECT_ONLY=1\n", dependency.path().display())).unwrap();
+    std::fs::create_dir(project.path().join("src")).unwrap();
+    std::fs::write(
+        project.path().join("src/main.cpp"),
+        r#"
+#include <Arduino.h>
+#include <SPI.h>
+#include <Wire.h>
+#include <FeatureGuard.h>
+#ifndef ARDUINO_ARCH_MBED_RP2040
+#error Wrong core selected
+#endif
+#ifndef PROJECT_ONLY
+#error Sketch lost source-only compile flags
+#endif
+volatile int feature_value;
+void setup() { SPI.begin(); Wire.begin(); feature_value = mbed_library_value(); }
+void loop() {}
+"#,
+    )
+    .unwrap();
+    (project, dependency)
+}
+
+async fn assert_mbed_build(template: BuildParams) {
+    let (project, _dependency) = mbed_fixture();
+    let params = BuildParams {
+        project_dir: project.path().to_path_buf(),
+        env_name: "mbed".into(),
+        extra_build_flags: vec!["-DMBED_LIBRARY_FLAG=42".into()],
+        build_dir: project
+            .path()
+            .join(fbuild_paths::FBUILD_DIR_NAME)
+            .join(fbuild_paths::BUILD_DIR_NAME)
+            .join("mbed/release"),
+        ..template
+    };
+    let result = tokio::time::timeout(
+        std::time::Duration::from_secs(900),
+        fbuild_build::rp2040::Rp2040Orchestrator.build(&params),
+    )
+    .await
+    .expect("Mbed build timed out")
+    .expect("stock pico Mbed build must succeed");
+    assert!(result.success);
+    let firmware = result.firmware_path.expect("Mbed firmware");
+    assert_eq!(
+        firmware.extension().and_then(|ext| ext.to_str()),
+        Some("uf2")
+    );
+    assert!(firmware.is_file());
+    assert!(result.elf_path.expect("Mbed ELF").is_file());
+    assert!(result.size_info.unwrap().total_flash > 0);
+    let clean = BuildParams {
+        clean_only: true,
+        ..params
+    };
+    let cleaned = fbuild_build::rp2040::Rp2040Orchestrator
+        .build(&clean)
+        .await
+        .expect("clean-only must not attempt firmware conversion");
+    assert!(cleaned.success);
+    assert!(cleaned.elf_path.is_none());
+    assert!(cleaned.firmware_path.is_none());
+    assert_same_environment_core_switch(clean).await;
+}
+
+// The default no-op shortcut watches the generated compile database. Switching
+// cores must not let an earlier Pico snapshot accept the intervening Mbed ELF,
+// even after the original source and configuration bytes have been restored.
+async fn assert_same_environment_core_switch(mut params: BuildParams) {
+    let project = tempfile::tempdir().unwrap();
+    std::fs::create_dir(project.path().join("src")).unwrap();
+    std::fs::write(
+        project.path().join("src/main.cpp"),
+        r#"
+#include <Arduino.h>
+volatile unsigned core_marker;
+void setup() {
+#ifdef ARDUINO_ARCH_MBED_RP2040
+    core_marker = 1;
+#else
+    core_marker = 2;
+#endif
+}
+void loop() {}
+"#,
+    )
+    .unwrap();
+    let pico = "[env:core_switch]\nplatform = raspberrypi\nboard = pico\nframework = arduino\nboard_build.core = earlephilhower\n";
+    let mbed = "[env:core_switch]\nplatform = raspberrypi\nboard = pico\nframework = arduino\n";
+    params.project_dir = project.path().to_path_buf();
+    params.env_name = "core_switch".into();
+    params.build_dir = project
+        .path()
+        .join(fbuild_paths::FBUILD_DIR_NAME)
+        .join(fbuild_paths::BUILD_DIR_NAME)
+        .join("core_switch/release");
+    params.extra_build_flags.clear();
+    params.clean = false;
+    params.clean_all = false;
+    params.clean_only = false;
+    // Exercise the ordinary build API without requesting an IDE database.
+    params.generate_compiledb = false;
+    let mut hashes = Vec::with_capacity(3);
+    for config in [pico, mbed, pico] {
+        std::fs::write(project.path().join("platformio.ini"), config).unwrap();
+        let result = tokio::time::timeout(
+            std::time::Duration::from_secs(900),
+            fbuild_build::rp2040::Rp2040Orchestrator.build(&params),
+        )
+        .await
+        .expect("same-environment core switch timed out")
+        .expect("same-environment core switch must build");
+        assert!(result.success);
+        let elf = std::fs::read(result.elf_path.expect("core-switch ELF")).unwrap();
+        hashes.push(blake3::hash(&elf));
+    }
+    assert_ne!(
+        hashes[0], hashes[1],
+        "different cores must produce different firmware"
+    );
+    assert_eq!(
+        hashes[0], hashes[2],
+        "restored Pico inputs must not reuse the Mbed firmware"
+    );
 }
