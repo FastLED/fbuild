@@ -15,8 +15,8 @@ use fbuild_core::Result;
 
 /// How fbuild integrates ESP-IDF for an environment.
 ///
-/// fbuild has no CMake/`idf.py` component build: every ESP32 environment is
-/// compiled with the Arduino core. Recording the mode beside the requested and
+/// This adapter compiles with the Arduino core. The separate IDF adapter handles
+/// supported bare-IDF requests. Recording the mode beside the requested and
 /// resolved frameworks keeps a build log from claiming IDF component coverage
 /// it never produced (FastLED/fbuild#1664).
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -45,8 +45,8 @@ pub(super) struct RequestedFrameworks {
 }
 
 impl RequestedFrameworks {
-    /// `None` when the request is a bare `espidf` build fbuild cannot perform,
-    /// otherwise the integration mode the build will actually use.
+    /// `None` for bare `espidf`, which is dispatched to the separate IDF adapter;
+    /// otherwise the integration mode this Arduino adapter will use.
     pub(super) fn integration(self) -> Option<Esp32Integration> {
         match (self.arduino, self.espidf) {
             (true, true) => Some(Esp32Integration::ArduinoOnIdf),
@@ -133,8 +133,7 @@ pub(super) fn flash_settings(
     (flash_freq, flash_mode, flash_size)
 }
 
-/// fbuild builds ESP32 projects only through the Arduino core and its
-/// precompiled ESP-IDF libraries; it has no CMake/`idf.py` component build.
+/// This Arduino adapter uses the Arduino core and its precompiled IDF libraries.
 /// A bare `framework = espidf` project has an `app_main()` and no
 /// `setup()`/`loop()`, so building it as Arduino reports a success that is not
 /// the requested build. Reject it before anything runs (FastLED/fbuild#1664).
@@ -151,9 +150,9 @@ pub(super) fn reject_unsupported_esp_framework(
     let RequestedFrameworks { arduino, espidf } = requested_frameworks(framework);
     if espidf && !arduino {
         return Err(fbuild_core::FbuildError::ConfigError(format!(
-            "framework = {framework} is unsupported for environment '{env_name}': fbuild builds \
-             ESP32 projects through the Arduino core only and has no ESP-IDF (CMake/idf.py) \
-             build. Use `framework = arduino`, or build this environment with PlatformIO \
+            "framework = {framework} is unsupported by the Arduino adapter for environment '{env_name}'. \
+             The separate ESP-IDF CMake/ninja adapter currently supports ESP32-S3 only. \
+             Use `framework = arduino`, or build this environment with PlatformIO \
              (see FastLED/fbuild#1664)"
         )));
     }

@@ -6,7 +6,7 @@
 use std::time::Instant;
 
 use fbuild_build_engine::framework_libs::resolve_framework_library_selection_active_declared_with_extra;
-use fbuild_core::{Platform, Result};
+use fbuild_core::Result;
 use fbuild_packages::Framework;
 
 use super::super::esp32_compiler::Esp32Compiler;
@@ -34,16 +34,15 @@ use crate::build_fingerprint::{
 };
 use crate::compiler::Compiler as _;
 use crate::linker::LinkerScripts;
-use crate::{BuildOrchestrator, BuildParams, BuildResult, SourceScanner};
+use crate::{BuildParams, BuildResult, SourceScanner};
 
-#[async_trait::async_trait]
-impl BuildOrchestrator for Esp32Orchestrator {
-    fn platform(&self) -> Platform {
-        Platform::Espressif32
-    }
-
+impl Esp32Orchestrator {
     #[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
-    async fn build(&self, params: &BuildParams) -> Result<BuildResult> {
+    #[expect(
+        clippy::cognitive_complexity,
+        reason = "existing Arduino build body previously inside async_trait expansion"
+    )]
+    pub(super) async fn build_arduino(&self, params: &BuildParams) -> Result<BuildResult> {
         let config = fbuild_config::PlatformIOConfig::from_path_with_overrides(
             &params.project_dir.join("platformio.ini"),
             fbuild_config::PioEnvOverrides::from_map(params.pio_env.clone()),

@@ -1,0 +1,4 @@
+sdkconfig.esp32h2-idf
+sdkconfig.esp32h2-idf.old
+dependencies.lock
+managed_components/
