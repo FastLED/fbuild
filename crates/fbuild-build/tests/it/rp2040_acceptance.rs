@@ -195,7 +195,7 @@ void loop() {}
 "#,
     )
     .unwrap();
-    let pico = "[env:core_switch]\nplatform = raspberrypi\nboard = rpipico\nframework = arduino\nboard_build.core = earlephilhower\n";
+    let pico = "[env:core_switch]\nplatform = raspberrypi\nboard = pico\nframework = arduino\nboard_build.core = earlephilhower\n";
     let mbed = "[env:core_switch]\nplatform = raspberrypi\nboard = pico\nframework = arduino\n";
     params.project_dir = project.path().to_path_buf();
     params.env_name = "core_switch".into();
@@ -208,7 +208,8 @@ void loop() {}
     params.clean = false;
     params.clean_all = false;
     params.clean_only = false;
-    params.generate_compiledb = true;
+    // Exercise the ordinary build API without requesting an IDE database.
+    params.generate_compiledb = false;
     let mut hashes = Vec::with_capacity(3);
     for config in [pico, mbed, pico] {
         std::fs::write(project.path().join("platformio.ini"), config).unwrap();
