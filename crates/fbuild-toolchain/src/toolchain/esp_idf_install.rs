@@ -15,11 +15,12 @@
 //!   from `IDF_PATH`. So the venv's `bin/` must come *before* the tool `bin/`
 //!   directories on `PATH`; otherwise a host `python3` wins and ESP-IDF's own
 //!   dependency checker rejects an environment that is in fact correct.
-//! - **The environment never mentions `IDF_TOOLS_PATH`.** That variable makes
-//!   `idf_tools.py` look for an `~/.espressif`-shaped tree, which is exactly the
-//!   side tree this design removes; the tool roots are exported directly as
+//! - **No `~/.espressif`-shaped side tree exists.** Tool roots are exported as
 //!   `PATH` entries plus the two variables CMake reads (`ESP_ROM_ELF_DIR`,
-//!   `OPENOCD_SCRIPTS`).
+//!   `OPENOCD_SCRIPTS`). `IDF_TOOLS_PATH` is still set, but to the python
+//!   entry's `python_env/` — the directory holding this release's constraints
+//!   file, which `idf_tools.py` refuses to run without. It is a location, not a
+//!   tool tree; see [`InstalledEspIdf::env_vars`].
 //!
 //! Nothing here builds anything. It is the input to #1971.
 
@@ -120,10 +121,21 @@ impl InstalledEspIdf {
     /// `IDF_PATH` is exported rather than passed as `--idf-path` because
     /// `idf.py` re-invokes `idf_tools.py` and CMake from child processes, and
     /// children inherit the environment — not the parent's argv.
+    ///
+    /// `IDF_TOOLS_PATH` **is** set, and that is deliberate: not to
+    /// `~/.espressif`, but to the python entry's `python_env/`, the directory
+    /// holding this release's `espidf.constraints.v5.5.txt`.
+    /// `idf_tools.py::get_constraints(online=False)` looks for that file under
+    /// `IDF_TOOLS_PATH` and calls `fatal()` when it is missing, so without this
+    /// entry `idf.py --version` never gets as far as printing a version. The
+    /// variable is a *location*, not a side tree: no tool is installed through
+    /// it, `IDF_PYTHON_ENV_PATH` governs the venv, and every tool is on `PATH`
+    /// because [`Self::path_dirs`] put it there.
     pub fn env_vars(&self) -> Vec<(&'static str, NormalizedPath)> {
         let mut vars = vec![
             ("IDF_PATH", self.source_root.clone()),
             ("IDF_PYTHON_ENV_PATH", self.python.env_dir().clone()),
+            ("IDF_TOOLS_PATH", self.python.python_env_dir()),
         ];
         vars.extend(self.tools.env_vars());
         vars

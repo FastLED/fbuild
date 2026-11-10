@@ -52,15 +52,16 @@ impl IdfEnvironment {
 
     /// Directories a delegated build must see on `PATH`.
     ///
-    /// Decided by the archive, not by a table: a component that exports a `bin/`
-    /// directory contributes it, and one that does not (`esp-rom-elfs`) is data
-    /// the linker reads by absolute path instead. That keeps a future component
-    /// pinned in the parent module from silently never reaching `PATH`.
+    /// Decided by the installed tree, not by a table: a component that has a
+    /// `bin/` contributes it, a flat archive contributes its root (`ninja`
+    /// unpacks as a single file), and a data-only component (`esp-rom-elfs`)
+    /// contributes nothing because the linker reads it by absolute path. That
+    /// keeps a component added to the profile from silently never reaching
+    /// `PATH`.
     pub fn path_dirs(&self) -> Vec<NormalizedPath> {
         self.roots
             .iter()
-            .map(|(_, root)| root.join("bin"))
-            .filter(|bin| bin.as_path().is_dir())
+            .filter_map(|(component, root)| component.path_dir(root))
             .collect()
     }
 
@@ -151,9 +152,31 @@ impl EspIdfRelease {
     pub fn installed_bytes(&self) -> u64 {
         // One `seen` set for the whole profile, so a file hardlinked across two
         // components is also counted once.
+        self.sum_bytes(|_| true)
+    }
+
+    /// Real bytes of the target cross toolchains only -- the set #1970 AC2
+    /// capped at 1.3 GB.
+    pub fn target_toolchain_bytes(&self) -> u64 {
+        self.sum_bytes(|component| !component.is_build_tool())
+    }
+
+    /// Real bytes of the host build tools (CMake, Ninja), budgeted separately
+    /// because AC2 never measured them.
+    pub fn build_tool_bytes(&self) -> u64 {
+        self.sum_bytes(IdfComponent::is_build_tool)
+    }
+
+    /// `du`-style byte total of the components `keep` accepts.
+    ///
+    /// Each category gets its own `seen` set; the archives are disjoint, so
+    /// nothing is counted twice between them and neither total depends on the
+    /// order of the other's walk.
+    fn sum_bytes(&self, keep: impl Fn(IdfComponent) -> bool) -> u64 {
         let mut seen = HashSet::new();
         self.tools
             .iter()
+            .filter(|tool| keep(tool.component()))
             .map(|tool| dir_bytes(tool.install_path().as_path(), &mut seen))
             .sum()
     }
@@ -259,6 +282,30 @@ mod tests {
     }
 
     #[test]
+    fn cmake_contributes_its_bin_and_ninja_its_whole_root() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        // CMake as its archive really extracts: `<container>/bin/{cmake,...}`.
+        let cmake_root = NormalizedPath::new(tmp.path()).join("cmake-3.30.2-linux-x86_64");
+        std::fs::create_dir_all(cmake_root.join("bin").as_path()).unwrap();
+        // Ninja as its archive really extracts: one binary, no `bin/`.
+        let ninja_root = NormalizedPath::new(tmp.path()).join("ninja");
+        std::fs::create_dir_all(ninja_root.as_path()).unwrap();
+        std::fs::write(
+            ninja_root
+                .join(fbuild_core::platform::executable::native_name("ninja"))
+                .as_path(),
+            b"#!",
+        )
+        .unwrap();
+
+        let env = IdfEnvironment::from_roots(vec![
+            (IdfComponent::Cmake, cmake_root.clone()),
+            (IdfComponent::Ninja, ninja_root.clone()),
+        ]);
+        assert_eq!(env.path_dirs(), vec![cmake_root.join("bin"), ninja_root]);
+    }
+
+    #[test]
     fn env_vars_point_at_real_directories_only() {
         let tmp = tempfile::TempDir::new().unwrap();
         let openocd = fabricated_root(tmp.path(), IdfComponent::OpenocdEsp32, true);
@@ -350,8 +397,11 @@ mod tests {
 
         let env = release.install().await.unwrap();
         assert!(release.is_installed());
-        assert_eq!(env.tool_roots().len(), 4);
-        assert_eq!(env.path_dirs().len(), 3);
+        // Four target toolchains + CMake + Ninja.
+        assert_eq!(env.tool_roots().len(), 6);
+        // Five PATH entries: the three tool `bin`s, CMake's `bin`, and Ninja's
+        // own root (its zip is a single binary, not a `bin/` tree).
+        assert_eq!(env.path_dirs().len(), 5);
 
         // The compilers are real binaries at the pinned versions.
         let gcc = env
@@ -387,17 +437,54 @@ mod tests {
             .join("esp32s3_rev0_rom.elf");
         assert!(rom_elf.as_path().is_file(), "missing {rom_elf}");
 
+        // The host build tools the profile now owns are real, at their pins.
+        let cmake = env
+            .tool_root(IdfComponent::Cmake)
+            .unwrap()
+            .join("bin")
+            .join(fbuild_core::platform::executable::native_name("cmake"));
+        let ninja = env
+            .tool_root(IdfComponent::Ninja)
+            .unwrap()
+            .join(fbuild_core::platform::executable::native_name("ninja"));
+        for (tool, expected) in [(&cmake, "cmake version 3.30.2"), (&ninja, "1.12.1")] {
+            let out = fbuild_core::subprocess::run_command(
+                &[tool.as_path().to_string_lossy().as_ref(), "--version"],
+                None,
+                None,
+                None,
+            )
+            .await
+            .unwrap();
+            assert!(
+                out.success() && out.stdout.contains(expected),
+                "{} is not the pinned build tool:\n{}",
+                tool,
+                out.stdout
+            );
+        }
+
         // AC2: measured on disk, not estimated from the manifest.
+        let toolchains = release.target_toolchain_bytes();
+        let build_tools = release.build_tool_bytes();
         let bytes = release.installed_bytes();
         eprintln!(
-            "esp-idf S3 profile installed {bytes} B ({:.1} MB)",
+            "esp-idf S3 profile installed {bytes} B ({:.1} MB): toolchains {toolchains} B, build tools {build_tools} B",
             bytes as f64 / 1e6
         );
         assert!(
-            bytes > 1_000_000_000,
-            "measurement looks truncated: {bytes} B"
+            toolchains > 1_000_000_000,
+            "measurement looks truncated: {toolchains} B"
         );
-        assert!(bytes <= 1_300_000_000, "S3 profile measured {bytes} B");
+        assert!(
+            toolchains <= 1_300_000_000,
+            "S3 target toolchains measured {toolchains} B"
+        );
+        assert!(
+            build_tools > 100_000_000 && build_tools <= 200_000_000,
+            "build tools measured {build_tools} B"
+        );
+        assert_eq!(bytes, toolchains + build_tools);
 
         // AC4: second install is a no-op -- nothing is fetched or re-extracted.
         let sentinel = env
