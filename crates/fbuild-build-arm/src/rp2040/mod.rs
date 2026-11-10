@@ -2,6 +2,7 @@
 
 mod bluetooth_libs;
 mod board_props;
+mod core_select;
 pub mod mcu_config;
 pub mod orchestrator;
 mod tinyusb_libs;

@@ -85,6 +85,9 @@ pub(crate) async fn rp2040_packages_resolved(
     fbuild_packages::toolchain::Rp2040Picotool,
     fbuild_packages::library::Rp2040Cores,
 )> {
+    if let Some(env) = env_config {
+        super::core_select::ensure_arduino_pico_core(env)?;
+    }
     let registry_overrides = match env_config {
         Some(env) => {
             crate::package_override::resolve_registry_overrides(
