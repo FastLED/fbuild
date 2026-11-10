@@ -140,7 +140,10 @@ async fn espidf_component_project_builds_and_publishes_artifacts() {
         std::fs::metadata(elf.as_path()).unwrap().len() > 1_000_000,
         "{elf} looks too small to be a linked image"
     );
-    let compiledb = idf_dir.join("compile_commands.json");
+    // #1973: the database fbuild publishes is the re-rooted, merged one at the
+    // documented project path; `idf.py`'s own copy under `<build>/idf/` stays
+    // behind as the delegate's raw output.
+    let compiledb = project.join("compile_commands.json");
     let entries: serde_json::Value =
         serde_json::from_slice(&std::fs::read(compiledb.as_path()).unwrap()).unwrap();
     let entries = entries
@@ -151,6 +154,19 @@ async fn espidf_component_project_builds_and_publishes_artifacts() {
         "only {} compile commands: the IDF graph did not build",
         entries.len()
     );
+    let project_spelling = project.display_slash();
+    for entry in entries {
+        assert_eq!(
+            entry["directory"], project_spelling,
+            "an entry is still rooted in the build directory: {entry}"
+        );
+        let file = entry["file"].as_str().unwrap_or_default();
+        assert!(
+            !file.starts_with(&idf_dir.display_slash())
+                && !file.starts_with(&build_dir.display_slash()),
+            "a scratch prefix survived in {file}"
+        );
+    }
 
     // The index is the artifact proof the follow-ups consume.
     let index: serde_json::Value = serde_json::from_slice(

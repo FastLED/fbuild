@@ -208,6 +208,15 @@ the framework half; an IDF release has no equivalent slicing story yet.
    (bytes + compile-db entries + sdkconfig digest); extend the #1730 summary
    test.
 4. Compile-database re-rooting + daemon/indexer merge for delegated builds.
+   **Done in #1973** (`compile_database::merge` + `espidf_compile_db`): entries
+   are keyed by the normalized absolute source path, fbuild's entry wins an
+   overlap, the delegated invocation (`command` or `arguments`) is carried over
+   unsplit, the file is written at `CompileDatabase::expected_output_path`
+   (the native path's location) and is byte-identical between two identical
+   builds. `directory` becomes the project directory and `file`/`output` are
+   spelled relative to it, so no scratch build-directory or IDF-checkout prefix
+   survives (`..` is kept for framework sources; a Windows drive split falls
+   back to the absolute spelling, which is the only resolvable option).
 5. Caching decision: compiler wrapper into zccache, or document a cold-only
    path with its own metric.
 6. Report `framework = arduino, espidf` honestly everywhere (it is

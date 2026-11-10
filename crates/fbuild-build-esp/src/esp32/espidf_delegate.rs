@@ -37,6 +37,7 @@ use fbuild_toolchain::toolchain::{
 };
 
 use super::espidf_artifacts::{IdfArtifacts, discover_and_publish};
+use super::espidf_compile_db;
 use super::orchestrator::helpers::{IdfCmakeProof, esp32_idf_cmake_stack_summary};
 
 /// `platformio.ini` key that opts an environment into the delegated build.
@@ -396,7 +397,27 @@ pub(super) async fn delegate_build(
         chip: chip.clone(),
     };
     let delegate = IdfDelegate::new(installed);
-    let outcome = delegate.run(&request).await?;
+    let mut outcome = delegate.run(&request).await?;
+
+    // #1973: `idf.py`'s database is rooted in the delegated build directory and
+    // the IDF checkout, and it is not the path fbuild documents. Re-root it,
+    // merge it with fbuild's own entries and publish the result where every
+    // other fbuild database lives — before the artifact index and the
+    // `integration=idf-cmake` proof read it.
+    let published = espidf_compile_db::publish(
+        &request.build_dir,
+        &NormalizedPath::new(&ctx.build_dir),
+        &request.project_dir,
+    )?;
+    outcome.artifacts.compile_commands = published.path.clone();
+    let digest: String = published.digest.chars().take(16).collect();
+    ctx.build_log.push(format!(
+        "compile database: {} entries ({} kept from fbuild, {} re-rooted from idf.py) at {} sha256:{digest}",
+        published.entries,
+        published.from_fbuild,
+        published.from_delegated,
+        published.path
+    ));
     ctx.build_log.push(format!(
         "idf.py steps: set-target exit {:?} ({} bytes of output), build exit {:?} ({} bytes)",
         outcome.configure.exit_code,

@@ -1,0 +1,38 @@
+[
+  {
+    "command": "/opt/tools/xtensa-esp32s3-elf/bin/xtensa-esp32s3-elf-gcc -DMBEDTLS_CONFIG_FILE=\"/opt/idf/components/mbedtls/port/include/mbedtls/esp_config.h\" -I/proj/build/idf/config -I/opt/idf/components/esp_common/include -I/opt/idf/components/freertos/FreeRTOS-Kernel/include -I/proj/main -o /proj/build/idf/esp-idf/main/CMakeFiles/__idf_main.dir/main.c.obj -c /proj/main/main.c",
+    "directory": "/proj/build/idf",
+    "file": "/proj/main/main.c",
+    "output": "/proj/build/idf/esp-idf/main/CMakeFiles/__idf_main.dir/main.c.obj"
+  },
+  {
+    "command": "/opt/tools/xtensa-esp32s3-elf/bin/xtensa-esp32s3-elf-gcc -I/proj/build/idf/config -I/proj/components/mycomp/include -o /proj/build/idf/esp-idf/mycomp/CMakeFiles/__idf_mycomp.dir/mycomp.c.obj -c /proj/components/mycomp/mycomp.c",
+    "directory": "/proj/build/idf",
+    "file": "/proj/components/mycomp/mycomp.c",
+    "output": "/proj/build/idf/esp-idf/mycomp/CMakeFiles/__idf_mycomp.dir/mycomp.c.obj"
+  },
+  {
+    "command": "/opt/tools/xtensa-esp32s3-elf/bin/xtensa-esp32s3-elf-gcc -I/proj/build/idf/config -I/opt/idf/components/freertos/FreeRTOS-Kernel/include -o /proj/build/idf/esp-idf/freertos/CMakeFiles/__idf_freertos.dir/FreeRTOS-Kernel/tasks.c.obj -c /opt/idf/components/freertos/FreeRTOS-Kernel/tasks.c",
+    "directory": "/proj/build/idf",
+    "file": "/opt/idf/components/freertos/FreeRTOS-Kernel/tasks.c",
+    "output": "/proj/build/idf/esp-idf/freertos/CMakeFiles/__idf_freertos.dir/FreeRTOS-Kernel/tasks.c.obj"
+  },
+  {
+    "command": "/opt/tools/xtensa-esp32s3-elf/bin/xtensa-esp32s3-elf-gcc -I/proj/build/idf/config -I/opt/idf/components/esp_system/include -o /proj/build/idf/esp-idf/esp_system/CMakeFiles/__idf_esp_system.dir/port/panic_handler.c.obj -c /opt/idf/components/esp_system/port/panic_handler.c",
+    "directory": "/proj/build/idf",
+    "file": "/opt/idf/components/esp_system/port/panic_handler.c",
+    "output": "/proj/build/idf/esp-idf/esp_system/CMakeFiles/__idf_esp_system.dir/port/panic_handler.c.obj"
+  },
+  {
+    "arguments": [
+      "/opt/tools/xtensa-esp32s3-elf/bin/xtensa-esp32s3-elf-gcc",
+      "-I/proj/build/idf/config",
+      "-o",
+      "/proj/build/idf/CMakeFiles/app.dir/project_elf_src_esp32s3.c.obj",
+      "-c",
+      "/proj/build/idf/project_elf_src_esp32s3.c"
+    ],
+    "directory": "/proj/build/idf",
+    "file": "/proj/build/idf/project_elf_src_esp32s3.c"
+  }
+]
