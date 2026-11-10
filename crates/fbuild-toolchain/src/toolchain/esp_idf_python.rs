@@ -210,11 +210,30 @@ impl IdfPythonEnvironment {
         self.env_dir.join(leaf)
     }
 
+    /// The `python_env/` directory the venv lives in, one level above it.
+    ///
+    /// It is also the one directory in the cache entry that carries the
+    /// release's `espidf.constraints.v5.5.txt`, which is why *this* path — and
+    /// never `~/.espressif` — is what `IDF_TOOLS_PATH` has to name: measured
+    /// 2026-11-10, `idf.py` aborts in `check_environment()` with
+    /// `... espidf.constraints.v5.5.txt doesn't exist. Perhaps you've forgotten
+    /// to run the install scripts` when nothing is there, because
+    /// `idf_tools.py::get_constraints(online=False)` looks for the file under
+    /// `IDF_TOOLS_PATH` and treats its absence as a failed install.
+    pub fn python_env_dir(&self) -> NormalizedPath {
+        match self.env_dir.as_path().parent() {
+            Some(parent) => NormalizedPath::new(parent),
+            None => self.env_dir.clone(),
+        }
+    }
+
     /// Variables `idf.py` and `idf_tools.py` read instead of deriving the env.
     ///
-    /// `IDF_PYTHON_ENV_PATH` is the one that matters: both scripts take it over
-    /// `IDF_TOOLS_PATH`, which is how a delegated build points at a cache entry
-    /// that is not shaped like a full `~/.espressif`.
+    /// `IDF_PYTHON_ENV_PATH` is the one that matters for the venv: both scripts
+    /// take it over `IDF_TOOLS_PATH`. `IDF_TOOLS_PATH` still has to be named,
+    /// because `idf_tools.py` refuses to run without a constraints file at its
+    /// root; it points into our own cache entry (see [`Self::python_env_dir`]),
+    /// never at the `~/.espressif` side tree this design deletes.
     pub fn env_vars(&self) -> Vec<(&'static str, NormalizedPath)> {
         vec![("IDF_PYTHON_ENV_PATH", self.env_dir.clone())]
     }

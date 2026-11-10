@@ -46,10 +46,44 @@ pub enum IdfComponent {
     EspRomElfs,
     /// On-chip debugger; needed only for `idf.py openocd` / JTAG debugging.
     OpenocdEsp32,
+    /// CMake, the build system generator `idf.py` drives.
+    Cmake,
+    /// Ninja, the build tool CMake generates for. Both are `install:
+    /// "on_request"` in `tools.json`: ESP-IDF expects the *host* to provide
+    /// them on Linux and macOS, and installs them itself only on Windows.
+    /// Pinning both is what makes an fbuild-provisioned release self-contained
+    /// -- without them `idf.py build` dead-ends on `cmake not found`, which is
+    /// exactly the host dependency `install.sh` left behind.
+    Ninja,
+}
+
+/// Where a component's tool root sits inside its extracted archive.
+///
+/// `idf_tools.py` deletes each archive's container directory before exporting
+/// `export_paths`, so upstream never has to name it. fbuild keeps the archive
+/// exactly as published and therefore has to *find* the root; this is that
+/// rule, and it is per-archive data rather than a heuristic applied to all.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum RootRule {
+    /// The archive root itself, holding data rather than a program.
+    ArchiveRoot,
+    /// A fixed directory name, at the archive root or one level down
+    /// (`<name>-<version>/<name>/`).
+    Named(&'static str),
+    /// The archive's only payload is a binary at its root, so the tool root is
+    /// the root itself and belongs on `PATH` unchanged
+    /// (`ninja-linux.zip` unpacks as one `ninja` file).
+    Flat,
+    /// The directory that owns this archive-relative executable. CMake's
+    /// container names its own release (`cmake-3.30.2-linux-x86_64`) and on
+    /// macOS buries the binary under `CMake.app/Contents/bin`, so neither the
+    /// directory nor its depth can be spelled as a constant.
+    Owning(&'static str),
 }
 
 impl IdfComponent {
-    /// Every component [`IdfProfile::Esp32S3Only`] installs, in install order.
+    /// Every target toolchain component [`IdfProfile::Esp32S3Only`] installs, in
+    /// install order. This is the set #1970's 1.3 GB budget was measured on.
     pub const ALL: [Self; 4] = [
         Self::XtensaEspElf,
         Self::Esp32UlpElf,
@@ -57,23 +91,87 @@ impl IdfComponent {
         Self::OpenocdEsp32,
     ];
 
-    /// `tools.json` name — also the directory name the archive exports.
+    /// The host build tools, installed after the target toolchains.
+    pub const BUILD_TOOLS: [Self; 2] = [Self::Cmake, Self::Ninja];
+
+    /// `tools.json` name — also the directory name most archives export.
     pub const fn id(self) -> &'static str {
         match self {
             Self::XtensaEspElf => "xtensa-esp-elf",
             Self::Esp32UlpElf => "esp32ulp-elf",
             Self::EspRomElfs => "esp-rom-elfs",
             Self::OpenocdEsp32 => "openocd-esp32",
+            Self::Cmake => "cmake",
+            Self::Ninja => "ninja",
         }
     }
 
-    /// Directory inside the extracted archive that is the tool root.
-    /// Empty string means "the archive root itself".
-    const fn export_dir(self) -> &'static str {
+    /// True for a host build tool rather than a target cross toolchain.
+    ///
+    /// The split exists because they answer different budgets: the cross
+    /// toolchains are what #1970 AC2 capped at 1.3 GB, while CMake and Ninja
+    /// are ~154 MB of host programs that any `idf.py build` needs.
+    pub const fn is_build_tool(self) -> bool {
+        matches!(self, Self::Cmake | Self::Ninja)
+    }
+
+    const fn root_rule(self) -> RootRule {
         match self {
-            Self::EspRomElfs => "",
-            Self::XtensaEspElf | Self::Esp32UlpElf | Self::OpenocdEsp32 => self.id(),
+            Self::EspRomElfs => RootRule::ArchiveRoot,
+            Self::XtensaEspElf | Self::Esp32UlpElf | Self::OpenocdEsp32 => {
+                RootRule::Named(self.id())
+            }
+            Self::Cmake => RootRule::Owning("bin/cmake"),
+            Self::Ninja => RootRule::Flat,
         }
+    }
+
+    /// The directory this component contributes to `PATH` under `root`, if
+    /// any: `root/bin` for an archive that ships a `bin/`, `root` itself for a
+    /// [flat](RootRule::Flat) one, and nothing for data-only components.
+    ///
+    /// Derived from the installed tree rather than from a table, so a component
+    /// added to the profile cannot silently never reach `PATH`; the FLAT case
+    /// is the one the archive itself decides.
+    pub fn path_dir(self, root: &NormalizedPath) -> Option<NormalizedPath> {
+        match self.root_rule() {
+            RootRule::ArchiveRoot => None,
+            RootRule::Flat => Some(root.clone()),
+            RootRule::Named(_) | RootRule::Owning(_) => {
+                let bin = root.join("bin");
+                bin.as_path().is_dir().then_some(bin)
+            }
+        }
+    }
+
+    /// The program this component must produce, relative to its tool root.
+    /// `None` for a data-only component: `esp-rom-elfs` ships ROM symbol files
+    /// the linker reads by path, not something a `PATH` entry can run.
+    ///
+    /// Used as the install marker, so "the archive extracted" is not mistaken
+    /// for "the tool is there" -- a half-extracted CMake tree has a `bin/` that
+    /// is missing its `cmake`.
+    fn executable(self) -> Option<String> {
+        let rel = match self {
+            Self::Cmake => "bin/cmake",
+            Self::Ninja => "ninja",
+            _ => return None,
+        };
+        Some(relative_native_name(rel))
+    }
+}
+
+/// `rel` with the host's executable suffix on its leaf (`bin/cmake` ->
+/// `bin/cmake.exe` on Windows), so the marker matches what the extraction
+/// actually wrote.
+fn relative_native_name(rel: &str) -> String {
+    match rel.rsplit_once('/') {
+        Some((dir, stem)) => format!(
+            "{}/{}",
+            dir,
+            fbuild_core::platform::executable::native_name(stem)
+        ),
+        None => fbuild_core::platform::executable::native_name(rel),
     }
 }
 
@@ -86,13 +184,31 @@ pub const S3_EXCLUDED: &[(&str, u64)] = &[
     ("xtensa-esp-elf-gdb", 108_817_092),
 ];
 
-/// Installed bytes of the ESP32-S3 profile, measured with `du -sb` on linux-amd64
-/// (2026-11-09, ESP-IDF v5.5.1 as installed by `install.sh` into a scratch tree).
+/// Installed bytes of the ESP32-S3 profile's **target toolchains**, measured with
+/// `du -sb` on linux-amd64 (2026-11-09, ESP-IDF v5.5.1 as installed by
+/// `install.sh` into a scratch tree). This is the set #1970 AC2 capped at
+/// 1.3 GB.
 pub const S3_MEASURED_INSTALLED_BYTES: &[(&str, u64)] = &[
     ("xtensa-esp-elf", 1_103_937_348),
     ("esp32ulp-elf", 31_188_493),
     ("esp-rom-elfs", 6_918_628),
     ("openocd-esp32", 7_153_401),
+];
+
+/// Installed bytes of the two host build tools, measured with `du -sb` on
+/// linux-amd64 (2026-11-10, extracted from the pinned archives).
+pub const BUILD_TOOLS_MEASURED_INSTALLED_BYTES: &[(&str, u64)] =
+    &[("cmake", 153_276_700), ("ninja", 273_768)];
+
+/// Every component [`IdfProfile::Esp32S3Only`] installs, in install order:
+/// target toolchains first, then the host build tools they are driven by.
+const S3_COMPONENTS: [IdfComponent; 6] = [
+    IdfComponent::XtensaEspElf,
+    IdfComponent::Esp32UlpElf,
+    IdfComponent::EspRomElfs,
+    IdfComponent::OpenocdEsp32,
+    IdfComponent::Cmake,
+    IdfComponent::Ninja,
 ];
 
 /// Which components an install pulls.
@@ -104,17 +220,32 @@ pub enum IdfProfile {
 }
 
 impl IdfProfile {
-    /// Components this profile installs.
+    /// Components this profile installs: the target toolchains, then the host
+    /// build tools.
+    ///
+    /// `idf.py build` needs both halves, so the profile owns both; the two
+    /// budgets stay separable through [`IdfComponent::is_build_tool`].
     pub fn components(self) -> &'static [IdfComponent] {
         match self {
-            Self::Esp32S3Only => &IdfComponent::ALL,
+            Self::Esp32S3Only => &S3_COMPONENTS,
         }
     }
 
-    /// Measured installed bytes of the profile (`S3_MEASURED_INSTALLED_BYTES`).
+    /// Measured installed bytes of the target toolchains
+    /// (`S3_MEASURED_INSTALLED_BYTES`), the set #1970 AC2 measured.
     pub fn measured_installed_bytes(self) -> u64 {
         match self {
             Self::Esp32S3Only => S3_MEASURED_INSTALLED_BYTES.iter().map(|(_, b)| b).sum(),
+        }
+    }
+
+    /// Measured installed bytes of the host build tools.
+    pub fn measured_build_tools_bytes(self) -> u64 {
+        match self {
+            Self::Esp32S3Only => BUILD_TOOLS_MEASURED_INSTALLED_BYTES
+                .iter()
+                .map(|(_, b)| b)
+                .sum(),
         }
     }
 
@@ -163,7 +294,7 @@ pub fn pin(component: IdfComponent, host: HostPlatform) -> Result<&'static EspId
 
 fn unsupported_host(component: IdfComponent, host: HostPlatform) -> FbuildError {
     FbuildError::PackageError(format!(
-        "no pinned ESP-IDF {} archive for {:?} {:?} (pinned: linux-amd64, linux-arm64, macos, macos-arm64, win32)",
+        "no pinned ESP-IDF {} archive for {:?} {:?} (pinned: linux-amd64, linux-arm64, macos, macos-arm64, win32; linux-armel/armhf/i686 are deliberately unpinned)",
         component.id(),
         host.os(),
         host.arch()
@@ -300,13 +431,92 @@ const PINS: &[EspIdfPin] = &[
         bytes: 3034680,
         url: "https://github.com/espressif/openocd-esp32/releases/download/v0.12.0-esp32-20250707/openocd-esp32-win32-0.12.0-esp32-20250707.zip",
     },
+    // CMake 3.30.2, `tools.json` `status: recommended`. Kitware's own release
+    // assets; the 3.16.3 entry `tools.json` also carries is `supported`, not
+    // recommended, and is not pinned.
+    EspIdfPin {
+        component: "cmake",
+        platform: "linux-amd64",
+        version: "3.30.2",
+        sha256: "cdd7fb352605cee3ae53b0e18b5929b642900e33d6b0173e19f6d4f2067ebf16",
+        bytes: 53635506,
+        url: "https://github.com/Kitware/CMake/releases/download/v3.30.2/cmake-3.30.2-linux-x86_64.tar.gz",
+    },
+    EspIdfPin {
+        component: "cmake",
+        platform: "linux-arm64",
+        version: "3.30.2",
+        sha256: "d18f50f01b001303d21f53c6c16ff12ee3aa45df5da1899c2fe95be7426aa026",
+        bytes: 54889935,
+        url: "https://github.com/Kitware/CMake/releases/download/v3.30.2/cmake-3.30.2-linux-aarch64.tar.gz",
+    },
+    EspIdfPin {
+        component: "cmake",
+        platform: "macos",
+        version: "3.30.2",
+        sha256: "c6fdda745f9ce69bca048e91955c7d043ba905d6388a62e0ff52b681ac17183c",
+        bytes: 79199037,
+        url: "https://github.com/Kitware/CMake/releases/download/v3.30.2/cmake-3.30.2-macos-universal.tar.gz",
+    },
+    EspIdfPin {
+        component: "cmake",
+        platform: "macos-arm64",
+        version: "3.30.2",
+        sha256: "c6fdda745f9ce69bca048e91955c7d043ba905d6388a62e0ff52b681ac17183c",
+        bytes: 79199037,
+        url: "https://github.com/Kitware/CMake/releases/download/v3.30.2/cmake-3.30.2-macos-universal.tar.gz",
+    },
+    EspIdfPin {
+        // `tools.json` publishes the same x86_64 archive under `win32` and
+        // `win64`; fbuild's Windows host key is `win32`.
+        component: "cmake",
+        platform: "win32",
+        version: "3.30.2",
+        sha256: "48bf4b3dc2d668c578e0884cac7878e146b036ca6b5ce4f8b5572f861b004c25",
+        bytes: 45404613,
+        url: "https://github.com/Kitware/CMake/releases/download/v3.30.2/cmake-3.30.2-windows-x86_64.zip",
+    },
+    // Ninja 1.12.1, one single-file zip per host.
+    EspIdfPin {
+        component: "ninja",
+        platform: "linux-amd64",
+        version: "1.12.1",
+        sha256: "6f98805688d19672bd699fbbfa2c2cf0fc054ac3df1f0e6a47664d963d530255",
+        bytes: 123084,
+        url: "https://github.com/ninja-build/ninja/releases/download/v1.12.1/ninja-linux.zip",
+    },
+    EspIdfPin {
+        component: "ninja",
+        platform: "macos",
+        version: "1.12.1",
+        sha256: "89a287444b5b3e98f88a945afa50ce937b8ffd1dcc59c555ad9b1baf855298c9",
+        bytes: 281130,
+        url: "https://github.com/ninja-build/ninja/releases/download/v1.12.1/ninja-mac.zip",
+    },
+    EspIdfPin {
+        component: "ninja",
+        platform: "macos-arm64",
+        version: "1.12.1",
+        sha256: "89a287444b5b3e98f88a945afa50ce937b8ffd1dcc59c555ad9b1baf855298c9",
+        bytes: 281130,
+        url: "https://github.com/ninja-build/ninja/releases/download/v1.12.1/ninja-mac.zip",
+    },
+    EspIdfPin {
+        // `tools.json` spells this one `win64` (last entry of a `versions`
+        // object); fbuild's key for the same host is `win32`.
+        component: "ninja",
+        platform: "win32",
+        version: "1.12.1",
+        sha256: "f550fec705b6d6ff58f2db3c374c2277a37691678d6aba463adcbb129108467a",
+        bytes: 275425,
+        url: "https://github.com/ninja-build/ninja/releases/download/v1.12.1/ninja-win.zip",
+    },
 ];
 
 /// An installable ESP-IDF tool component.
 pub struct EspIdfTool {
     base: PackageBase,
     component: IdfComponent,
-    export_dir: &'static str,
 }
 
 impl EspIdfTool {
@@ -365,11 +575,7 @@ impl EspIdfTool {
                 project_dir,
             ),
         };
-        Ok(Self {
-            base,
-            component,
-            export_dir: component.export_dir(),
-        })
+        Ok(Self { base, component })
     }
 
     /// The pinned component.
@@ -382,11 +588,11 @@ impl EspIdfTool {
         NormalizedPath::new(self.base.install_path())
     }
 
-    /// True only when the archive is extracted **and** exports the directory
-    /// `tools.json` names: a half-extracted tree is not an install, and a
-    /// cache hit that lost the export dir must be repaired, not trusted.
+    /// True only when the archive is extracted **and** the component's root
+    /// exists inside it: a half-extracted tree is not an install, and a cache
+    /// hit that lost the root must be repaired, not trusted.
     pub fn is_installed(&self) -> bool {
-        self.base.is_cached() && tool_root(&self.base.install_path(), self.export_dir).is_ok()
+        self.base.is_cached() && tool_root(&self.base.install_path(), self.component).is_ok()
     }
 
     /// Install the pinned archive and return the component's `export` root.
@@ -397,15 +603,15 @@ impl EspIdfTool {
     /// returns [`NormalizedPath`]; a consumer that needs the trait can convert
     /// at its own legacy boundary (see `MarkerArchivePackage`).
     pub async fn ensure_normalized(&self) -> Result<NormalizedPath> {
-        let export_dir = self.export_dir;
+        let component = self.component;
         if self.is_installed() {
-            return tool_root(&self.base.install_path(), export_dir);
+            return tool_root(&self.base.install_path(), component);
         }
         let installed = self
             .base
-            .staged_install(move |root: &Path| tool_root(root, export_dir).map(|_| ()))
+            .staged_install(move |root: &Path| tool_root(root, component).map(|_| ()))
             .await?;
-        tool_root(&installed, export_dir)
+        tool_root(&installed, component)
     }
 
     /// Package metadata for install reports and logging.
@@ -414,238 +620,80 @@ impl EspIdfTool {
     }
 }
 
-/// The tool root inside an extracted archive: the export dir at the root or one
-/// level down (Espressif tarballs nest as `<name>-<version>/<name>/`).
+/// The tool root inside an extracted archive, per the component's
+/// [`RootRule`], or the error naming what the archive failed to produce.
 ///
 /// Returns the error, rather than a path that may not exist, so the caller
 /// cannot install "successfully" into a directory the release never produced.
-fn tool_root(root: &Path, export_dir: &str) -> Result<NormalizedPath> {
+fn tool_root(root: &Path, component: IdfComponent) -> Result<NormalizedPath> {
     let root = NormalizedPath::new(root);
-    if export_dir.is_empty() {
-        return Ok(root);
-    }
-    let direct = root.join(export_dir);
-    if direct.as_path().is_dir() {
-        return Ok(direct);
-    }
-    if let Ok(entries) = std::fs::read_dir(root.as_path()) {
-        for entry in entries.flatten() {
-            let nested = NormalizedPath::new(entry.path()).join(export_dir);
-            if nested.as_path().is_dir() {
-                return Ok(nested);
+    match component.root_rule() {
+        RootRule::ArchiveRoot => Ok(root),
+        RootRule::Named(name) => match named_child(&root, name) {
+            Some(found) => Ok(found),
+            None => Err(missing_component(component, &root, name)),
+        },
+        RootRule::Flat => match component.executable() {
+            Some(exe) if root.join(&exe).as_path().is_file() => Ok(root),
+            Some(exe) => Err(missing_component(component, &root, &exe)),
+            None => Ok(root),
+        },
+        RootRule::Owning(rel) => {
+            let probe = relative_native_name(rel);
+            match owning_dir(root.as_path(), &probe, OWNING_SEARCH_DEPTH) {
+                Some(found) => Ok(found),
+                None => Err(missing_component(component, &root, &probe)),
             }
         }
     }
-    Err(FbuildError::PackageError(format!(
-        "ESP-IDF archive did not produce {} (looked in {})",
-        if export_dir.is_empty() {
-            "a non-empty root"
-        } else {
-            export_dir
-        },
+}
+
+/// Depth budget for [`RootRule::Owning`]: enough for macOS CMake, whose binary
+/// is `<container>/CMake.app/Contents/bin/cmake` (three levels below the
+/// archive root), and small enough that the search cannot walk a toolchain.
+const OWNING_SEARCH_DEPTH: u8 = 4;
+
+/// The directory at the archive root or one level down called `name`
+/// (Espressif tarballs nest as `<name>-<version>/<name>/`).
+fn named_child(root: &NormalizedPath, name: &str) -> Option<NormalizedPath> {
+    let direct = root.join(name);
+    if direct.as_path().is_dir() {
+        return Some(direct);
+    }
+    let entries = std::fs::read_dir(root.as_path()).ok()?;
+    entries
+        .flatten()
+        .map(|entry| NormalizedPath::new(entry.path()).join(name))
+        .find(|nested| nested.as_path().is_dir())
+}
+
+/// The shallowest directory under `root` that holds `rel`, searched
+/// depth-first with a bounded depth.
+fn owning_dir(root: &Path, rel: &str, depth: u8) -> Option<NormalizedPath> {
+    let here = NormalizedPath::new(root);
+    if here.join(rel).as_path().is_file() {
+        return Some(here);
+    }
+    if depth == 0 {
+        return None;
+    }
+    let entries = std::fs::read_dir(root).ok()?;
+    entries
+        .flatten()
+        .map(|entry| entry.path())
+        .filter(|path| path.is_dir())
+        .find_map(|dir| owning_dir(&dir, rel, depth - 1))
+}
+
+fn missing_component(component: IdfComponent, root: &NormalizedPath, wanted: &str) -> FbuildError {
+    FbuildError::PackageError(format!(
+        "ESP-IDF archive did not produce {} (expected `{}`, looked in {})",
+        component.id(),
+        wanted,
         root
-    )))
+    ))
 }
 
 #[cfg(test)]
-mod tests {
-    use super::*;
-
-    fn linux() -> HostPlatform {
-        HostPlatform::new(HostOs::Linux, HostArch::X86_64)
-    }
-
-    #[test]
-    fn s3_profile_installs_exactly_the_xtensa_side_components() {
-        let ids: Vec<&str> = IdfProfile::Esp32S3Only
-            .components()
-            .iter()
-            .map(|c| c.id())
-            .collect();
-        assert_eq!(
-            ids,
-            [
-                "xtensa-esp-elf",
-                "esp32ulp-elf",
-                "esp-rom-elfs",
-                "openocd-esp32"
-            ]
-        );
-    }
-
-    #[test]
-    fn the_other_targets_toolchains_are_not_pinned_at_all() {
-        // Not "filtered out at install time": absent from the pin table, so no
-        // code path can install 2.1 GiB of RISC-V bits into an S3 profile.
-        for excluded in [
-            "riscv32-esp-elf",
-            "riscv32-esp-elf-gdb",
-            "xtensa-esp-elf-gdb",
-        ] {
-            assert!(
-                !PINS.iter().any(|p| p.component == excluded),
-                "{excluded} must not be pinned"
-            );
-            assert!(
-                S3_EXCLUDED.iter().any(|(name, _)| *name == excluded)
-                    || excluded == "riscv32-esp-elf-gdb"
-            );
-        }
-    }
-
-    #[test]
-    fn every_s3_component_pins_a_verifiable_linux_archive() {
-        for component in IdfProfile::Esp32S3Only.components() {
-            let pin = pin(*component, linux()).unwrap();
-            assert_eq!(pin.component, component.id());
-            assert_eq!(
-                pin.sha256.len(),
-                64,
-                "{} needs a full sha256",
-                pin.component
-            );
-            assert!(
-                pin.sha256
-                    .chars()
-                    .all(|c| c.is_ascii_hexdigit() || c.is_ascii_uppercase()),
-                "{} sha256 is not hex",
-                pin.component
-            );
-            assert!(
-                pin.url.starts_with("https://github.com/espressif/"),
-                "{} must come from an Espressif release: {}",
-                pin.component,
-                pin.url
-            );
-            assert!(pin.bytes > 1_000_000, "{} pin has no size", pin.component);
-            assert!(!pin.version.is_empty());
-        }
-    }
-
-    #[test]
-    fn platform_keys_match_tools_json_spellings() {
-        assert_eq!(platform_key(linux()), Some("linux-amd64"));
-        assert_eq!(
-            platform_key(HostPlatform::new(HostOs::Linux, HostArch::Aarch64)),
-            Some("linux-arm64")
-        );
-        assert_eq!(
-            platform_key(HostPlatform::new(HostOs::Macos, HostArch::Aarch64)),
-            Some("macos-arm64")
-        );
-        assert_eq!(
-            platform_key(HostPlatform::new(HostOs::Macos, HostArch::X86_64)),
-            Some("macos")
-        );
-        assert_eq!(
-            platform_key(HostPlatform::new(HostOs::Windows, HostArch::X86_64)),
-            Some("win32")
-        );
-        // Unpinned hosts must error rather than borrow another host's binaries.
-        assert_eq!(
-            platform_key(HostPlatform::new(HostOs::Linux, HostArch::Arm)),
-            None
-        );
-        assert_eq!(
-            platform_key(HostPlatform::new(HostOs::Linux, HostArch::X86)),
-            None
-        );
-        assert!(
-            pin(
-                IdfComponent::XtensaEspElf,
-                HostPlatform::new(HostOs::Linux, HostArch::Arm)
-            )
-            .is_err()
-        );
-    }
-
-    #[test]
-    fn esp_rom_elfs_falls_back_to_the_host_independent_archive() {
-        let pin = pin(
-            IdfComponent::EspRomElfs,
-            HostPlatform::new(HostOs::Windows, HostArch::X86_64),
-        )
-        .unwrap();
-        assert_eq!(pin.platform, "any");
-    }
-
-    #[test]
-    fn two_idf_releases_install_side_by_side() {
-        let cache = tempfile::TempDir::new().unwrap();
-        let v551 = EspIdfTool::with_cache_root(
-            cache.path(),
-            cache.path(),
-            IdfComponent::XtensaEspElf,
-            linux(),
-        )
-        .unwrap();
-        let other = PackageBase::with_cache_root(
-            "esp-idf-v5.4.0-xtensa-esp-elf",
-            "v5.4.0+esp-14.2.0_20241119",
-            "https://example.invalid/xtensa.tar.xz",
-            "esp-idf-v5.4.0/xtensa-esp-elf",
-            None,
-            CacheSubdir::Toolchains,
-            cache.path(),
-            cache.path(),
-        );
-        assert_ne!(v551.install_path().as_path(), other.install_path());
-        assert_eq!(
-            v551.install_path()
-                .as_path()
-                .file_name()
-                .and_then(|n| n.to_str()),
-            Some("v5.5.1+esp-14.2.0_20241119"),
-            "install leaf must name the IDF release: {}",
-            v551.install_path()
-        );
-    }
-
-    #[test]
-    fn s3_profile_measured_size_fits_the_budget() {
-        let bytes = IdfProfile::Esp32S3Only.measured_installed_bytes();
-        // AC2 of #1970: <= 1.3 GB against `du`, not against an estimate.
-        assert!(bytes <= 1_300_000_000, "S3 profile measured {bytes} B");
-        assert!(
-            bytes >= 1_100_000_000,
-            "measurement looks truncated: {bytes} B"
-        );
-    }
-
-    #[test]
-    fn tool_root_finds_the_nested_export_dir() {
-        let tmp = tempfile::TempDir::new().unwrap();
-        let nested = tmp
-            .path()
-            .join("xtensa-esp-elf-14.2.0")
-            .join("xtensa-esp-elf")
-            .join("bin");
-        std::fs::create_dir_all(&nested).unwrap();
-        let root = tool_root(tmp.path(), "xtensa-esp-elf").unwrap();
-        assert!(root.as_path().ends_with("xtensa-esp-elf"));
-        assert!(tool_root(tmp.path(), "riscv32-esp-elf").is_err());
-    }
-
-    /// Real download + sha256 verify + extract, through the shipped code path.
-    /// Ignored by default (needs network, ~3.5 MB); run with
-    /// `soldr cargo test -p fbuild-toolchain --lib -- --ignored esp_rom_elfs`.
-    #[tokio::test]
-    #[ignore = "downloads the pinned esp-rom-elfs archive"]
-    async fn esp_rom_elfs_installs_from_the_pinned_archive() {
-        let dir = tempfile::TempDir::new().unwrap();
-        let tool =
-            EspIdfTool::with_cache_root(dir.path(), dir.path(), IdfComponent::EspRomElfs, linux())
-                .unwrap();
-        assert!(!tool.is_installed());
-        let root = tool.ensure_normalized().await.unwrap();
-        assert!(tool.is_installed());
-        // The archive is flat: the ROM ELFs land directly in the tool root.
-        assert!(
-            root.join("esp32s3_rev0_rom.elf").as_path().is_file(),
-            "expected the extracted ROM ELFs in {root}"
-        );
-        // Second call is a cache hit: no re-download, same tree.
-        let again = tool.ensure_normalized().await.unwrap();
-        assert_eq!(root, again);
-    }
-}
+#[path = "esp_idf_release_tests.rs"]
+mod esp_idf_release_tests;
