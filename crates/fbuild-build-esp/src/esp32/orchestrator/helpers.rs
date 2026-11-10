@@ -17,7 +17,7 @@ use sha2::{Digest, Sha256};
 
 use super::super::espidf_artifacts::IdfArtifacts;
 
-use super::super::espidf_delegate::EspBuildSystem;
+use super::super::espidf_delegate::{EspBuildSystem, IdfCacheMode};
 
 /// How fbuild integrates ESP-IDF for an environment.
 ///
@@ -124,11 +124,16 @@ impl IdfCmakeProof {
 /// name `integration=idf-cmake`, and it cannot be written without the proof.
 /// The pinned IDF release is part of the line so a log says *what* it built
 /// with, not merely that it was "espidf".
-pub(crate) fn esp32_idf_cmake_stack_summary(proof: &IdfCmakeProof, chip: &str) -> String {
+pub(in crate::esp32) fn esp32_idf_cmake_stack_summary(
+    proof: &IdfCmakeProof,
+    chip: &str,
+    cache: IdfCacheMode,
+) -> String {
     let integration = Esp32Integration::IdfCmake(proof.clone());
     format!(
-        "ESP32 packages: build_system=espidf, chip={chip}, integration={}, idf={};          proof: app_bin_bytes={}, elf_bytes={}, compile_db_entries={}, sdkconfig_sha256={}",
+        "ESP32 packages: build_system=espidf, chip={chip}, integration={}, cache={}, idf={}; proof: app_bin_bytes={}, elf_bytes={}, compile_db_entries={}, sdkconfig_sha256={}",
         integration.label(),
+        cache.label(),
         proof.idf_release(),
         proof.app_bin_bytes(),
         proof.elf_bytes(),

@@ -125,13 +125,18 @@ fn discovery_publishes_all_artifacts_flat() {
 fn index_records_every_artifact_with_bytes() {
     let fake = FakeBuildRoot::new("component_demo");
     let artifacts = discover_and_publish(&fake.root(), &fake.project()).unwrap();
-    let index_path = artifacts.write_index("esp32s3", &fake.root()).unwrap();
+    let index_path = artifacts
+        .write_index("esp32s3", &fake.root(), "cold-only")
+        .unwrap();
     assert_eq!(index_path.as_path(), fake.path().join(INDEX_FILE));
 
     let index: serde_json::Value =
         serde_json::from_slice(&std::fs::read(index_path.as_path()).unwrap()).unwrap();
     assert_eq!(index["project"], "component_demo");
     assert_eq!(index["chip"], "esp32s3");
+    // The index says how the build was cached, so a slow delegated build is
+    // explained by its own artifact record (FastLED/fbuild#1974).
+    assert_eq!(index["cache"], "cold-only");
     let files = index["files"].as_array().unwrap();
     assert_eq!(files.len(), 7);
     let names: Vec<&str> = files

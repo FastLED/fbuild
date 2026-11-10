@@ -63,7 +63,12 @@ impl IdfArtifacts {
     }
 
     /// Write [`INDEX_FILE`] beside the artifacts.
-    pub(super) fn write_index(&self, chip: &str, root: &NormalizedPath) -> Result<NormalizedPath> {
+    pub(super) fn write_index(
+        &self,
+        chip: &str,
+        root: &NormalizedPath,
+        cache: &'static str,
+    ) -> Result<NormalizedPath> {
         let files = self
             .files()
             .iter()
@@ -81,6 +86,7 @@ impl IdfArtifacts {
         let index = Index {
             project: &self.project,
             chip,
+            cache,
             root: root.display_slash(),
             files,
         };
@@ -105,6 +111,9 @@ struct FileEntry {
 struct Index<'a> {
     project: &'a str,
     chip: &'a str,
+    /// How the build was cached; a reader of the index must not have to infer
+    /// it from a wall-clock number (FastLED/fbuild#1974).
+    cache: &'static str,
     root: String,
     files: Vec<FileEntry>,
 }

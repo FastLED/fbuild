@@ -79,6 +79,51 @@ pub(super) fn build_system(config: &PlatformIOConfig, env_name: &str) -> Result<
     }
 }
 
+/// How the delegated build's compilations are cached.
+///
+/// A delegated build hands compilation to `idf.py`/CMake/Ninja, so the compiler
+/// is spawned by ninja and never by fbuild's embedded zccache dispatcher: the
+/// Arduino path's warm object reuse does not apply here (FastLED/fbuild#1974).
+/// The measured decision is **cold-only**, and it is a type rather than a
+/// comment so the *report* has to state it: a stack summary or an artifact
+/// index that names a cache mode names this one, and wiring a compiler launcher
+/// later has to change the value (and the tests that pin it) instead of
+/// silently starting to claim cached objects the build did not have.
+///
+/// Measured on the spike project with the pinned release (1047 ninja actions,
+/// 2026-11-10): cold 41.8 s, `fullclean` + build 34.0 s, no-op 1.2 s unwrapped;
+/// with `-DCMAKE_C_COMPILER_LAUNCHER=zccache` cold 50.6 s and `fullclean` +
+/// build 110.6 s at a 0.2% hit rate — a pessimization with no reuse, because
+/// zccache keys on the absolute compile command that IDF rewrites per build
+/// directory. Numbers and method: `docs/design/bare-idf-component-builds.md`.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub(super) enum IdfCacheMode {
+    /// No compiler wrapper: every ninja action compiles. Ninja's own
+    /// incremental state inside the delegated build directory is the only
+    /// reuse the path has.
+    ColdOnly,
+}
+
+impl IdfCacheMode {
+    /// The spelling used by the stack summary and the artifact index.
+    pub(super) fn label(self) -> &'static str {
+        match self {
+            Self::ColdOnly => "cold-only",
+        }
+    }
+
+    /// The build-log line, so a slow delegated build is explained rather than
+    /// investigated: it names the mode and says nothing was served from cache.
+    pub(super) fn log_line(self) -> String {
+        format!(
+            "idf.py caching: {} — compiler invocations are driven by ninja, so no object is \
+             served from fbuild's zccache; the delegated build directory's own incremental state \
+             is the only reuse (FastLED/fbuild#1974)",
+            self.label()
+        )
+    }
+}
+
 /// The IDF profile that provisions `chip`, or an error naming what exists.
 ///
 /// The pinned release currently provisions one target (ESP32-S3) — widening it
@@ -397,6 +442,8 @@ pub(super) async fn delegate_build(
         chip: chip.clone(),
     };
     let delegate = IdfDelegate::new(installed);
+    let cache = IdfCacheMode::ColdOnly;
+    ctx.build_log.push(cache.log_line());
     let mut outcome = delegate.run(&request).await?;
 
     // #1973: `idf.py`'s database is rooted in the delegated build directory and
@@ -433,9 +480,11 @@ pub(super) async fn delegate_build(
     // CMake/component build.
     let proof = IdfCmakeProof::verified(&outcome.artifacts, IDF_RELEASE_VERSION)?;
     ctx.build_log
-        .push(esp32_idf_cmake_stack_summary(&proof, &chip));
+        .push(esp32_idf_cmake_stack_summary(&proof, &chip, cache));
 
-    let index = outcome.artifacts.write_index(&chip, &build_dir)?;
+    let index = outcome
+        .artifacts
+        .write_index(&chip, &build_dir, cache.label())?;
     let message = format!(
         "ESP-IDF delegated build ({chip}): {} app image, {} bytes of artifacts, index {index}",
         outcome.artifacts.project,
