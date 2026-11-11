@@ -91,8 +91,9 @@ pub fn run() -> i32 {
 /// the bug (FastLED/fbuild#1990): `Runtime::drop` waits for every
 /// `spawn_blocking` task, so a `drop(runtime)` here re-creates the minute-long
 /// linger that keeps zccache's cache-root writer lock held after
-/// `daemon exiting`. [`entry::tests::runtime_teardown_does_not_wait_for_an_abandoned_blocking_task`]
-/// pins that contract.
+/// `daemon exiting`.
+/// [`crate::shutdown::tests::runtime_teardown_does_not_wait_for_an_abandoned_blocking_task`]
+/// pins that contract, next to the other exit-path tests.
 pub(crate) fn finish_runtime(runtime: tokio::runtime::Runtime, code: i32) -> i32 {
     runtime.shutdown_timeout(RUNTIME_TEARDOWN_BUDGET);
     code
