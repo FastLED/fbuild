@@ -4,6 +4,7 @@ mod board_props;
 pub mod elf2bin;
 pub mod esp8266_compiler;
 pub mod esp8266_linker;
+mod framework_libs;
 pub mod mcu_config;
 pub mod orchestrator;
 
