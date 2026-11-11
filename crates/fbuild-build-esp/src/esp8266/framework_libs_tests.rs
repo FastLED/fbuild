@@ -1,7 +1,6 @@
 //! Tests for bundled Arduino-library selection (FastLED/fbuild#1994).
 
 use std::collections::HashMap;
-use std::path::PathBuf;
 
 use fbuild_core::path::NormalizedPath;
 use fbuild_packages::library::FrameworkLibrary;
@@ -15,8 +14,8 @@ const LIBS: [&str; 3] = ["ESP8266WiFi", "ESP8266WebServer", "UnusedLib"];
 /// and a project holding a single sketch.
 struct Fixture {
     _dir: tempfile::TempDir,
-    project_dir: PathBuf,
-    src_dir: PathBuf,
+    project_dir: NormalizedPath,
+    src_dir: NormalizedPath,
     libraries: Vec<FrameworkLibrary>,
     include_dirs: Vec<NormalizedPath>,
 }
@@ -58,8 +57,8 @@ impl Fixture {
 
         Self {
             _dir: dir,
-            project_dir,
-            src_dir,
+            project_dir: NormalizedPath::new(&project_dir),
+            src_dir: NormalizedPath::new(&src_dir),
             libraries,
             include_dirs,
         }
@@ -72,8 +71,8 @@ impl Fixture {
     ) -> super::BundledLibraries {
         select_bundled_libraries(
             &self.libraries,
-            &self.project_dir,
-            &self.src_dir,
+            self.project_dir.as_path(),
+            self.src_dir.as_path(),
             defines,
             declared,
             &self.include_dirs,
