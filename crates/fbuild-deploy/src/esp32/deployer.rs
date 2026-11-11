@@ -299,6 +299,22 @@ impl Esp32Deployer {
 
     /// The esptool program: the resolved path when one was supplied,
     /// otherwise the bare `esptool` command found on PATH.
+    /// Refuse to write an image whose header declares more flash than the
+    /// chip reports — that image panics at boot in `spi_flash`
+    /// (FastLED/fbuild#1992). Best-effort probe: see
+    /// [`super::flash_size::ensure_flash_size_fits`].
+    pub(super) async fn ensure_flash_size_fits(&self, port: &str) -> Result<()> {
+        super::flash_size::ensure_flash_size_fits(
+            &self.find_esptool(),
+            &self.chip,
+            port,
+            &self.flash_size,
+            self.caller_path.as_deref(),
+            self.flash_timeout,
+        )
+        .await
+    }
+
     pub(super) fn find_esptool(&self) -> Vec<String> {
         match &self.esptool_path {
             Some(path) => vec![path.to_string_lossy().into_owned()],
@@ -772,6 +788,8 @@ impl Esp32Deployer {
             ));
         }
 
+        self.ensure_flash_size_fits(port).await?;
+
         // Fail loudly if the caller asked for a region whose file isn't
         // on disk. Without this check `build_write_flash_args` would
         // silently drop the request and esptool would complain with an
@@ -873,6 +891,8 @@ impl Deployer for Esp32Deployer {
                 "serial port required for ESP32 deploy (use --port)".to_string(),
             )
         })?;
+
+        self.ensure_flash_size_fits(port).await?;
 
         #[cfg(feature = "espflash-native")]
         if self.use_native_write {
