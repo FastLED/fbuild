@@ -13,13 +13,14 @@
 //! the libraries the sketch actually reaches join the compile set.
 
 use std::collections::HashMap;
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
 use fbuild_build_engine::framework_libs::{
     resolve_framework_library_selection_active_declared_with_extra,
     warn_if_lib_ldf_mode_unsupported,
 };
 use fbuild_core::Result;
+use fbuild_core::path::NormalizedPath;
 use fbuild_packages::library::FrameworkLibrary;
 
 /// Bundled libraries one project actually reaches.
@@ -28,7 +29,7 @@ pub(super) struct BundledLibraries {
     /// Reached library names, sorted and deduplicated (logging and tests).
     pub names: Vec<String>,
     /// Sources of those libraries, to be added to the core compile set.
-    pub sources: Vec<PathBuf>,
+    pub sources: Vec<NormalizedPath>,
 }
 
 impl BundledLibraries {
@@ -39,7 +40,7 @@ impl BundledLibraries {
 
 /// Resolve which bundled Arduino libraries `project_dir` uses.
 ///
-/// `libraries` comes from [`Esp8266Framework::get_framework_libraries`];
+/// `libraries` comes from `Esp8266Framework::get_framework_libraries`;
 /// `compiler_include_dirs` must be the compiler's complete include path so the
 /// finder resolves headers exactly as the compiler will (capability macros
 /// live in SDK headers). Every reached library's sources are returned for
@@ -50,11 +51,15 @@ pub(super) fn select_bundled_libraries(
     src_dir: &Path,
     defines: &HashMap<String, String>,
     declared: &[String],
-    compiler_include_dirs: &[PathBuf],
+    compiler_include_dirs: &[NormalizedPath],
 ) -> Result<BundledLibraries> {
     if libraries.is_empty() {
         return Ok(BundledLibraries::default());
     }
+    let search_path = compiler_include_dirs
+        .iter()
+        .map(|dir| dir.as_path().to_path_buf())
+        .collect::<Vec<_>>();
     let selection = resolve_framework_library_selection_active_declared_with_extra(
         libraries,
         project_dir,
@@ -62,11 +67,15 @@ pub(super) fn select_bundled_libraries(
         defines,
         declared,
         &[],
-        compiler_include_dirs,
+        &search_path,
     )?;
     Ok(BundledLibraries {
         names: selection.required_libraries,
-        sources: selection.source_files,
+        sources: selection
+            .source_files
+            .into_iter()
+            .map(NormalizedPath::from)
+            .collect(),
     })
 }
 
@@ -75,18 +84,17 @@ pub(super) fn warn_unsupported_ldf_mode(mode: Option<&str>) {
     warn_if_lib_ldf_mode_unsupported(mode);
 }
 
-/// Log the resolved selection at the same level the ESP32 path does.
+/// Log the resolved selection.
 pub(super) fn log_selection(bundled: &BundledLibraries) {
     if bundled.is_empty() {
-        tracing::debug!("framework-libs cache: no bundled Arduino library reached");
+        tracing::debug!("bundled Arduino libraries: none reached by this project");
         return;
     }
     tracing::info!(
-        libraries = %bundled.names.join(", "),
-        sources = bundled.sources.len(),
-        "bundled Arduino libraries: compiled {} source file(s) from {}",
+        "bundled Arduino libraries: compiled {} source file(s) from {} ({})",
         bundled.sources.len(),
         bundled.names.len(),
+        bundled.names.join(", "),
     );
 }
 

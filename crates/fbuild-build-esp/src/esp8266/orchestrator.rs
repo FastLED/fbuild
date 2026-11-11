@@ -14,6 +14,7 @@ use std::collections::HashMap;
 use std::path::Path;
 use std::time::Instant;
 
+use fbuild_core::path::NormalizedPath;
 use fbuild_core::{Platform, Result};
 
 use crate::build_fingerprint::{
@@ -436,18 +437,23 @@ impl BuildOrchestrator for Esp8266Orchestrator {
                 .flatten()
                 .as_deref(),
         );
+        let normalized_include_dirs: Vec<NormalizedPath> =
+            include_dirs.iter().map(NormalizedPath::new).collect();
         let bundled_libraries = framework_libs::select_bundled_libraries(
             &framework.get_framework_libraries(),
             &params.project_dir,
             &ctx.src_dir,
             &defines,
             &lib_deps,
-            &include_dirs,
+            &normalized_include_dirs,
         )?;
         framework_libs::log_selection(&bundled_libraries);
-        sources
-            .core_sources
-            .extend(bundled_libraries.sources.iter().cloned());
+        sources.core_sources.extend(
+            bundled_libraries
+                .sources
+                .iter()
+                .map(|source| source.as_path().to_path_buf()),
+        );
         let lib_ignore = ctx
             .config
             .get_lib_ignore(&params.env_name)
