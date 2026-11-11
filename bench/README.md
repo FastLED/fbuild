@@ -23,9 +23,10 @@ soldr cargo bench -p fbuild-header-scan  --bench scan_throughput
   nightly Arduino CLI vs PlatformIO vs fbuild whole-build benchmark.
 - [`fastled-examples/`](fastled-examples/README.md) — real-FastLED
   warm-cache library-selection matrix (`FastLED/fbuild#205` AC#5, P-01).
-  Discovers examples under `$FASTLED_DIR` (default `~/dev/fastled`),
+  Discovers examples under the required `$FASTLED_DIR` (no implicit
+  default; see its README),
   runs the resolver cold + warm per example, and reports timings.
-  Run with `soldr cargo run --release -p fbuild-bench-fastled-examples`.
+  Run with `soldr cargo run --release -p fbuild-bench-fastled-examples --bin bench-fastled-examples`.
   The synthetic warm-path baseline lives in
   `crates/fbuild-library-select/benches/resolve_warm.rs`.
 
