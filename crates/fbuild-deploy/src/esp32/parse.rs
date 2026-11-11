@@ -49,3 +49,16 @@ pub(super) fn parse_flash_size_bytes(raw: &str) -> Result<u64> {
         raw
     )))
 }
+
+/// Parse the flash size out of `esptool flash-id` output — a line of the form
+/// `Detected flash size: 4MB`.
+///
+/// Returns `None` when no such line is present (a wedged or older tool), so
+/// the caller can treat the probe as "unknown" instead of blocking a deploy
+/// that would otherwise work.
+pub(super) fn parse_detected_flash_size(output: &str) -> Option<u64> {
+    output.lines().find_map(|line| {
+        let (_, rest) = line.split_once("Detected flash size:")?;
+        parse_flash_size_bytes(rest.trim()).ok()
+    })
+}

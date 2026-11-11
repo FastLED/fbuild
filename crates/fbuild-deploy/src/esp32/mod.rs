@@ -21,6 +21,9 @@
 //! * `native_usb` — 1200-bps bootloader entry for S2/S3 TinyUSB CDC apps.
 //! * `parse`    — Hex offset / flash-size string parsers shared across
 //!   the submodules.
+//! * `flash_size` — declared-vs-detected flash-size preflight that refuses a
+//!   flash whose image header cannot boot on the attached chip
+//!   (FastLED/fbuild#1992).
 //!
 //! All submodules are private; only the types re-exported below form
 //! the public API.
@@ -28,6 +31,9 @@
 mod deployer;
 #[cfg(test)]
 mod deployer_containment_tests;
+mod flash_size;
+#[cfg(test)]
+mod flash_size_tests;
 mod image;
 mod native_usb;
 mod parse;
