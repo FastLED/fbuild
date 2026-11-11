@@ -15,6 +15,7 @@
 
 use std::path::{Path, PathBuf};
 
+use crate::library::framework_library::{FrameworkLibrary, discover_framework_libraries};
 use crate::{CacheSubdir, Framework, PackageBase, PackageInfo};
 
 /// Framework version matching espressif8266@4.2.1.
@@ -216,6 +217,29 @@ impl Esp8266Framework {
     /// Get path to boards.txt.
     pub fn get_boards_txt(&self) -> PathBuf {
         self.resolved_dir().join("boards.txt")
+    }
+
+    /// List the bundled Arduino libraries (`ESP8266WiFi`, `ESP8266WebServer`,
+    /// `ESP8266mDNS`, `WiFiUdp`, ...) shipped under the framework's
+    /// `libraries/` directory.
+    ///
+    /// Only the libraries a sketch's include graph actually reaches are
+    /// compiled and linked -- see `esp8266::framework_libs`.
+    /// FastLED/fbuild#1994.
+    pub fn get_framework_libraries(&self) -> Vec<FrameworkLibrary> {
+        discover_framework_libraries(&self.get_libraries_dir())
+    }
+
+    /// Include search paths of every bundled Arduino library.
+    ///
+    /// A superset of the historical hand-rolled `libraries/<name>/src` walk:
+    /// also covers 1.0-layout libraries (headers in the library root) and
+    /// `utility/` / `include/` subdirectories.
+    pub fn get_framework_library_include_dirs(&self) -> Vec<PathBuf> {
+        self.get_framework_libraries()
+            .into_iter()
+            .flat_map(|library| library.include_dirs)
+            .collect()
     }
 }
 

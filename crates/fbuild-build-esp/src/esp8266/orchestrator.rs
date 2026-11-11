@@ -14,8 +14,8 @@ use std::collections::HashMap;
 use std::path::Path;
 use std::time::Instant;
 
+use fbuild_core::path::NormalizedPath;
 use fbuild_core::{Platform, Result};
-use fbuild_packages::Framework as _;
 
 use crate::build_fingerprint::{
     CoreFingerprintMetadata, FastPathCheckInputs, FastPathContract, FastPathPersistInputs,
@@ -28,6 +28,7 @@ use crate::{BuildOrchestrator, BuildParams, BuildResult, SourceScanner};
 use super::board_props::for_board_props;
 use super::esp8266_compiler::Esp8266Compiler;
 use super::esp8266_linker::Esp8266Linker;
+use super::framework_libs;
 use super::mcu_config::get_esp8266_config;
 
 /// ESP8266 platform build orchestrator.
@@ -382,7 +383,7 @@ impl BuildOrchestrator for Esp8266Orchestrator {
         } else {
             None
         };
-        let sources = scanner.scan_all_filtered(
+        let mut sources = scanner.scan_all_filtered(
             Some(&core_dir),
             variant_dir_opt,
             ctx.source_filter.as_deref(),
@@ -412,20 +413,7 @@ impl BuildOrchestrator for Esp8266Orchestrator {
         // SDK libc headers (platform.txt compiler.libc.path)
         include_dirs.extend(framework.get_libc_include_dirs());
         // Built-in Arduino libraries (ESP8266WiFi, etc.)
-        let builtin_libs_dir = framework.get_libraries_dir();
-        if builtin_libs_dir.is_dir() {
-            if let Ok(entries) = std::fs::read_dir(&builtin_libs_dir) {
-                for entry in entries.flatten() {
-                    let path = entry.path();
-                    if path.is_dir() {
-                        let lib_src = path.join("src");
-                        if lib_src.is_dir() {
-                            include_dirs.push(lib_src);
-                        }
-                    }
-                }
-            }
-        }
+        include_dirs.extend(framework.get_framework_library_include_dirs());
         include_dirs.push(ctx.src_dir.clone());
         pipeline::discover_project_includes(&params.project_dir, &mut include_dirs)?;
 
@@ -433,6 +421,39 @@ impl BuildOrchestrator for Esp8266Orchestrator {
         // creating the compiler, so the downloaded library include directories
         // are available during compilation (FastLED/fbuild#1276).
         let lib_deps = ctx.config.get_lib_deps(&params.env_name)?;
+
+        // 6b. Compile the bundled Arduino libraries this project reaches
+        // (FastLED/fbuild#1994). Their headers were always on the include
+        // path, but their sources were never compiled, so `#include
+        // <ESP8266WiFi.h>` compiled and then failed at link time with
+        // undefined references to `WiFi`/`ESP8266WiFi*`. Resolve the same
+        // library-dependency selection the Teensy/STM32/RP2040 orchestrators
+        // use and add the reached libraries' sources to the core compile set;
+        // the shared pipeline links those objects directly.
+        framework_libs::warn_unsupported_ldf_mode(
+            ctx.config
+                .get_lib_ldf_mode(&params.env_name)
+                .ok()
+                .flatten()
+                .as_deref(),
+        );
+        let normalized_include_dirs: Vec<NormalizedPath> =
+            include_dirs.iter().map(NormalizedPath::new).collect();
+        let bundled_libraries = framework_libs::select_bundled_libraries(
+            &framework.get_framework_libraries(),
+            &params.project_dir,
+            &ctx.src_dir,
+            &defines,
+            &lib_deps,
+            &normalized_include_dirs,
+        )?;
+        framework_libs::log_selection(&bundled_libraries);
+        sources.core_sources.extend(
+            bundled_libraries
+                .sources
+                .iter()
+                .map(|source| source.as_path().to_path_buf()),
+        );
         let lib_ignore = ctx
             .config
             .get_lib_ignore(&params.env_name)
