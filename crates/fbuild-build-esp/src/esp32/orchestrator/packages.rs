@@ -150,28 +150,100 @@ pub async fn resolve_deploy_esptool(
         return Ok(None);
     };
     fbuild_packages::Package::ensure_installed(&platform).await?;
-    // The file-name check only applies to the package fbuild provisioned,
-    // where `esptool.py` means the v4 source package.
-    Ok(resolve_esptool(&platform, project_dir).await?.filter(|path| {
-        let usable = speaks_v5_cli(path);
-        if !usable {
-            tracing::info!(
-                "resolved esptool {} is the v4 source package; deploy uses an `esptool` on PATH",
-                path.display()
-            );
-        }
-        usable
-    }))
+    let Some(path) = resolve_esptool(&platform, project_dir).await? else {
+        return Ok(None);
+    };
+    // Ask the binary which CLI it speaks. The ENTRY-POINT NAME cannot answer
+    // this: esptool 5.x still ships a deprecated `esptool.py` shim (the
+    // `pioarduino-esptool` 5.4.0 package installs exactly that), so a v5
+    // esptool named `esptool.py` used to be discarded as "v4" and deploy fell
+    // back to a bare `esptool` that need not exist.
+    let probed = probe_esptool_generation(&path).await;
+    if deploy_esptool_usable(&path, probed) {
+        return Ok(Some(path));
+    }
+    tracing::info!(
+        "resolved esptool {} speaks the v4 CLI; deploy uses an `esptool` on PATH",
+        path.display()
+    );
+    Ok(None)
 }
 
-/// Whether `esptool` speaks the v5 hyphenated CLI the deployer emits. The v4
-/// source package installs an `esptool.py` entry point (the same signal
-/// `esp32_linker` uses to pick underscore flags for `elf2image`).
+/// The `esptool` CLI generation, which decides the flag spelling
+/// (`--write-flash`-style hyphens for v5, underscores for v4).
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub(crate) enum EsptoolGeneration {
+    V4,
+    V5,
+}
+
+/// Parse `<esptool> version` output.
+///
+/// v5 prints `esptool v5.4.0`; v4 prints `esptool.py v4.7.0`; the v5 shim also
+/// prints a `WARNING: DEPRECATED` line first, so every line is considered.
+pub(crate) fn esptool_generation_from_version(output: &str) -> Option<EsptoolGeneration> {
+    output.lines().find_map(|line| {
+        let rest = line.split("esptool").nth(1)?;
+        let rest = rest.strip_prefix(".py").unwrap_or(rest).trim_start();
+        // `esptool v5.4.0` / `esptool version 6.0.0` / `esptool.py v4.7.0`.
+        let rest = rest.strip_prefix("version").unwrap_or(rest).trim_start();
+        let rest = rest.strip_prefix('v').unwrap_or(rest);
+        let digits: String = rest.chars().take_while(char::is_ascii_digit).collect();
+        let major: u32 = digits.parse().ok()?;
+        Some(if major >= 5 {
+            EsptoolGeneration::V5
+        } else {
+            EsptoolGeneration::V4
+        })
+    })
+}
+
+/// Whether the deployer (which emits v5's hyphenated CLI) may spawn this
+/// esptool. `probed` is what the binary reported for itself; only when it
+/// could not be asked does the entry-point name decide, and then `esptool.py`
+/// means the v4 source package (the same signal `esp32_linker` uses to pick
+/// underscore flags for `elf2image`).
+pub(crate) fn deploy_esptool_usable(esptool: &Path, probed: Option<EsptoolGeneration>) -> bool {
+    let generation = probed.unwrap_or_else(|| {
+        if speaks_v5_cli(esptool) {
+            EsptoolGeneration::V5
+        } else {
+            EsptoolGeneration::V4
+        }
+    });
+    generation == EsptoolGeneration::V5
+}
+
+/// Filename-only fallback for a binary that did not answer `<esptool> version`.
 pub(super) fn speaks_v5_cli(esptool: &Path) -> bool {
     !esptool
         .file_name()
         .and_then(|name| name.to_str())
         .is_some_and(|name| name.starts_with("esptool.py"))
+}
+
+/// Ask the resolved esptool which CLI it speaks, bounded so a wedged binary
+/// cannot stall a deploy.
+async fn probe_esptool_generation(esptool: &Path) -> Option<EsptoolGeneration> {
+    let bin = esptool.to_string_lossy().to_string();
+    match fbuild_core::subprocess::run_command(
+        &[&bin, "version"],
+        None,
+        None,
+        Some(std::time::Duration::from_secs(20)),
+    )
+    .await
+    {
+        Ok(output) => esptool_generation_from_version(&output.stdout)
+            .or_else(|| esptool_generation_from_version(&output.stderr)),
+        Err(error) => {
+            tracing::info!(
+                "could not probe esptool {} ({error}); falling back to its file name",
+                esptool.display()
+            );
+            None
+        }
+    }
 }
 
 /// Provision what [`resolve_pioarduino_packages`] installs — platform,
