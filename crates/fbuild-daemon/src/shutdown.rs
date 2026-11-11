@@ -187,6 +187,41 @@ mod tests {
         assert!(waited < Duration::from_secs(2), "{waited:?}");
     }
 
+    #[test]
+    fn runtime_teardown_does_not_wait_for_an_abandoned_blocking_task() {
+        // FastLED/fbuild#1990: the zccache exit flush runs on a
+        // `spawn_blocking` thread. `persist_and_clean_up` stops waiting for it
+        // after `EXIT_FLUSH_BUDGET` and logs the timeout, but the abandoned
+        // write keeps running — and a plain `Runtime::drop` waits for it, which
+        // kept the process (and the zccache cache-root writer lock it holds)
+        // alive for minutes after `daemon exiting`. The next daemon on that root
+        // then could not start, so `fbuild build`/`deploy` failed with "daemon
+        // did not become healthy after 3 spawn attempts".
+        //
+        // The abandoned task sleeps far past `RUNTIME_TEARDOWN_BUDGET`; the
+        // bounded teardown must return anyway, and it passes the exit code
+        // through. The task dies with the process, exactly as it does on the
+        // SIGTERM path (`process::exit`).
+        let runtime = tokio::runtime::Builder::new_multi_thread()
+            .enable_all()
+            .build()
+            .expect("failed to build tokio runtime");
+        runtime.spawn_blocking(|| std::thread::sleep(std::time::Duration::from_secs(10)));
+        // Give the blocking task time to actually start before tearing down.
+        std::thread::sleep(std::time::Duration::from_millis(100));
+
+        let started = std::time::Instant::now();
+        let code = crate::entry::finish_runtime(runtime, 7);
+        let elapsed = started.elapsed();
+        assert_eq!(code, 7, "the daemon's exit code must be passed through");
+        assert!(
+            elapsed < std::time::Duration::from_secs(2),
+            "runtime teardown waited {elapsed:?} for an abandoned blocking task; \
+             it must be bounded by RUNTIME_TEARDOWN_BUDGET ({:?})",
+            crate::entry::RUNTIME_TEARDOWN_BUDGET
+        );
+    }
+
     #[tokio::test]
     async fn drain_gives_up_at_its_budget() {
         let ctx = context();
