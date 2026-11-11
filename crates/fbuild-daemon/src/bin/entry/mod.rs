@@ -75,8 +75,37 @@ pub fn run() -> i32 {
         .enable_all()
         .build()
         .expect("failed to build tokio runtime");
-    runtime.block_on(run_async(heap_profile_rate))
+    let code = runtime.block_on(run_async(heap_profile_rate));
+    // FastLED/fbuild#1990: bound the runtime teardown. `Runtime::drop` waits for
+    // every `spawn_blocking` task, including a zccache exit flush that
+    // `persist_and_clean_up` already gave up on — so the abandoned write kept
+    // the process (and its cache-root writer lock) alive after `daemon exiting`,
+    // and every replacement daemon refused to start. See `finish_runtime`.
+    finish_runtime(runtime, code)
 }
+
+/// Tear the runtime down without waiting on abandoned blocking tasks, and pass
+/// the daemon's exit code through.
+///
+/// This exists as a named seam because the *absence* of the bounded teardown is
+/// the bug (FastLED/fbuild#1990): `Runtime::drop` waits for every
+/// `spawn_blocking` task, so a `drop(runtime)` here re-creates the minute-long
+/// linger that keeps zccache's cache-root writer lock held after
+/// `daemon exiting`.
+/// [`crate::shutdown::tests::runtime_teardown_does_not_wait_for_an_abandoned_blocking_task`]
+/// pins that contract, next to the other exit-path tests.
+pub(crate) fn finish_runtime(runtime: tokio::runtime::Runtime, code: i32) -> i32 {
+    runtime.shutdown_timeout(RUNTIME_TEARDOWN_BUDGET);
+    code
+}
+
+/// How long the daemon waits for abandoned blocking tasks (the zccache exit
+/// flush) when the runtime is torn down.
+///
+/// The flush already had [`EXIT_FLUSH_BUDGET`](fbuild_core::daemon_health::EXIT_FLUSH_BUDGET)
+/// and a `spawn_blocking` task cannot be cancelled, so the only thing left at
+/// this point is to stop holding the cache-root writer lock.
+pub const RUNTIME_TEARDOWN_BUDGET: std::time::Duration = std::time::Duration::from_millis(250);
 
 // Same body that used to be `main()`; clippy exempts a function literally
 // named `main` from these two lints, so the baseline expectations carry over
