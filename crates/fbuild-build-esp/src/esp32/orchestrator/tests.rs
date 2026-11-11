@@ -403,7 +403,9 @@ fn esptool_generation_comes_from_the_version_output() {
 fn deploy_esptool_usable_prefers_the_probe() {
     use super::packages::{EsptoolGeneration, deploy_esptool_usable};
     use std::path::Path;
-    let shim = Path::new("/cache/pioarduino-esptool/5.4.0/.fbuild-tools/esptool/bin/esptool.py");
+    // No dot-dir in the fixture path: the path lints (rightly) ban `.fbuild`
+    // literals, and this test only cares about the entry-point NAME.
+    let shim = Path::new("/cache/pioarduino-esptool/5.4.0/esptool-bin/esptool.py");
     assert!(
         deploy_esptool_usable(shim, Some(EsptoolGeneration::V5)),
         "a v5 esptool named esptool.py must be deployable"
@@ -431,7 +433,7 @@ fn deploy_esptool_usable_falls_back_to_the_file_name() {
         None
     ));
     assert!(!deploy_esptool_usable(
-        Path::new("/cache/tool-esptoolpy/.fbuild-tools/esptool/bin/esptool.py"),
+        Path::new("/cache/tool-esptoolpy/esptool-bin/esptool.py"),
         None
     ));
 }
