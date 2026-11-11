@@ -33,18 +33,22 @@ silent fallback would mask configuration mistakes.
 
 ```bash
 FASTLED_DIR=/path/to/fastled \
-  soldr cargo run --release -p fbuild-bench-fastled-examples
+  soldr cargo run --release -p fbuild-bench-fastled-examples --bin bench-fastled-examples
 
 # Emit a JSON report alongside stdout
 FASTLED_DIR=/path/to/fastled \
-  soldr cargo run --release -p fbuild-bench-fastled-examples \
+  soldr cargo run --release -p fbuild-bench-fastled-examples --bin bench-fastled-examples \
   -- --json bench/fastled-examples/report.json
 
 # Enforce AC#5 (≤ 50 ms warm per example). Exits 1 on breach.
 FASTLED_DIR=/path/to/fastled \
-  soldr cargo run --release -p fbuild-bench-fastled-examples \
+  soldr cargo run --release -p fbuild-bench-fastled-examples --bin bench-fastled-examples \
   -- --max-warm-ms 50
 ```
+
+The crate carries two binaries (`bench-fastled-examples` and
+`bench-build-comparison`), so `--bin bench-fastled-examples` is required:
+without it cargo refuses with `could not determine which binary to run`.
 
 If any example fails to measure (missing sketch, cache error, warm
 miss) the binary exits non-zero rather than skipping the row. CI must
@@ -109,6 +113,23 @@ Every row reported `hit=yes` and both runs exited 0 under
 `--max-warm-ms 50`. Warm spread across the two runs (31.2-40.9 ms) tracks
 host load, so a bare warm number is only meaningful beside the load it
 was taken at.
+
+Captured 2026-11-11 on the same NixOS / 16-core host at `origin/main`
+`a4004365`, two consecutive runs of the `--max-warm-ms 50` command
+above, host load 9.9-13.3/16:
+
+| example       | cold (ms) | warm (ms) | speedup |
+|---------------|----------:|----------:|--------:|
+| Blink         |     96-131 |     37-39 |   2.5-3.5x |
+| Pacifica      |        86  |     36-37 |   2.3-2.4x |
+| Animartrix    |    102-112 |     42-43 |   2.4-2.7x |
+| Audio         |     87-105 |     38-43 |   2.0-2.8x |
+| BlurBenchmark |     92-95  |     35-40 |   2.4-2.7x |
+| Chromancer    |     89-99  |     39-45 |   2.2-2.3x |
+
+Every row reported `hit=yes` and both runs exited 0 under
+`--max-warm-ms 50`, so warm 34.5-44.7 ms still clears AC#5 with ~1.1-1.4x
+headroom at the load above. No resolver regression against 2026-11-01.
 
 ## Curated example set
 
