@@ -371,6 +371,73 @@ fn deploy_esptool_requires_v5_cli() {
     )));
 }
 
+/// The generation must come from the binary, not its name: `pioarduino-esptool`
+/// 5.4.0 installs a v5 esptool whose entry point is still `esptool.py` (the
+/// deprecated shim), so a name-only check discarded it and `fbuild deploy`
+/// spawned a bare `esptool` that need not exist.
+#[test]
+fn esptool_generation_comes_from_the_version_output() {
+    use super::packages::{EsptoolGeneration, esptool_generation_from_version};
+    // The real v5 shim output: a deprecation warning, then the version.
+    assert_eq!(
+        esptool_generation_from_version(
+            "WARNING: DEPRECATED: 'esptool.py' is deprecated. Please use 'esptool' instead.\n\
+             esptool v5.4.0\n5.4.0\n"
+        ),
+        Some(EsptoolGeneration::V5)
+    );
+    assert_eq!(
+        esptool_generation_from_version("esptool.py v4.7.0\n"),
+        Some(EsptoolGeneration::V4)
+    );
+    assert_eq!(
+        esptool_generation_from_version("esptool version 6.0.0"),
+        Some(EsptoolGeneration::V5)
+    );
+    assert_eq!(esptool_generation_from_version("command not found"), None);
+    assert_eq!(esptool_generation_from_version(""), None);
+}
+
+/// A probed generation always beats the entry-point name.
+#[test]
+fn deploy_esptool_usable_prefers_the_probe() {
+    use super::packages::{EsptoolGeneration, deploy_esptool_usable};
+    use std::path::Path;
+    // No dot-dir in the fixture path: the path lints (rightly) ban `.fbuild`
+    // literals, and this test only cares about the entry-point NAME.
+    let shim = Path::new("/cache/pioarduino-esptool/5.4.0/esptool-bin/esptool.py");
+    assert!(
+        deploy_esptool_usable(shim, Some(EsptoolGeneration::V5)),
+        "a v5 esptool named esptool.py must be deployable"
+    );
+    assert!(
+        !deploy_esptool_usable(shim, Some(EsptoolGeneration::V4)),
+        "the v4 source package keeps the PATH fallback"
+    );
+    assert!(
+        !deploy_esptool_usable(
+            Path::new("/cache/tasmota-esptool/5.1.0/esptool-linux-amd64/esptool"),
+            Some(EsptoolGeneration::V4)
+        ),
+        "a v4 binary is rejected whatever it is called"
+    );
+}
+
+/// With no probed generation the historical file-name rule still decides.
+#[test]
+fn deploy_esptool_usable_falls_back_to_the_file_name() {
+    use super::packages::deploy_esptool_usable;
+    use std::path::Path;
+    assert!(deploy_esptool_usable(
+        Path::new("/cache/pioarduino-esptool/5.4.0/esptool"),
+        None
+    ));
+    assert!(!deploy_esptool_usable(
+        Path::new("/cache/tool-esptoolpy/esptool-bin/esptool.py"),
+        None
+    ));
+}
+
 fn package_info(name: &str, version: &str) -> fbuild_packages::PackageInfo {
     fbuild_packages::PackageInfo {
         name: name.to_string(),
