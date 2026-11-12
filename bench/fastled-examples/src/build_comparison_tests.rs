@@ -933,110 +933,177 @@ fn ratio_regression_uses_seven_day_median() {
     let now = parse_timestamp_unix_s("2026-07-22T12:00:00Z").unwrap();
     assert_eq!(now, 1_784_721_600);
     let day = 86_400;
+    let env = RunEnvironment::new(10);
+    let row = |days_ago: u64, ratio: f64| {
+        json!({
+            "ts": format!("unix:{}", now - days_ago * day),
+            "fbuild_vs_platformio_cold": ratio,
+            "env": env.to_json(),
+        })
+    };
     let history = vec![
-        json!({"ts": format!("unix:{}", now - 10 * day), "fbuild_vs_platformio_cold": 5.0}),
-        json!({"ts": format!("unix:{}", now - 8 * day), "fbuild_vs_platformio_cold": 5.0}),
-        json!({"ts": format!("unix:{}", now - 3 * day), "fbuild_vs_platformio_cold": 0.6}),
-        json!({"ts": "2026-07-20T12:00:00Z", "fbuild_vs_platformio_cold": 0.7}),
-        json!({"ts": format!("unix:{}", now - day), "fbuild_vs_platformio_cold": 0.8}),
-        json!({"ts": "garbage", "fbuild_vs_platformio_cold": 9.0}),
-        json!({"ts": format!("unix:{}", now - day)}),
+        row(10, 5.0),
+        row(8, 5.0),
+        row(3, 0.6),
+        row(2, 0.7),
+        row(1, 0.8),
+        json!({"ts": "garbage", "fbuild_vs_platformio_cold": 9.0, "env": env.to_json()}),
+        json!({"ts": format!("unix:{}", now - day), "env": env.to_json()}),
     ];
-    assert_eq!(ratio_regressed(&history, now, 0.75), Some(0.7));
-    assert_eq!(ratio_regressed(&history, now, 0.7), None);
-    assert_eq!(ratio_regressed(&history, now, 0.5), None);
-    assert_eq!(ratio_regressed(&[], now, 9.0), None);
+    assert_eq!(ratio_regressed(&history, now, 0.75, env), Some(0.7));
+    assert_eq!(ratio_regressed(&history, now, 0.7, env), None);
+    assert_eq!(ratio_regressed(&history, now, 0.5, env), None);
+    assert_eq!(ratio_regressed(&[], now, 9.0, env), None);
+}
+
+#[test]
+fn ratio_regression_ignores_rows_from_another_environment() {
+    let now = parse_timestamp_unix_s("2026-07-22T12:00:00Z").unwrap();
+    let day = 86_400;
+    let shaped = RunEnvironment::new(10);
+    let unshaped = RunEnvironment::new(0);
+    let row = |days_ago: u64, ratio: f64, env: RunEnvironment| {
+        json!({
+            "ts": format!("unix:{}", now - days_ago * day),
+            "fbuild_vs_platformio_cold": ratio,
+            "env": env.to_json(),
+        })
+    };
+    // The 2026-11-07 boundary: compile-only rows (ratio ~0.45) followed by
+    // install-inclusive rows (ratio ~0.90). Comparing across it would report a
+    // regression in fbuild when only the measurement changed.
+    let history = vec![
+        row(3, 0.45, unshaped),
+        row(2, 0.45, unshaped),
+        row(1, 0.46, unshaped),
+    ];
+    assert_eq!(ratio_regressed(&history, now, 0.9, shaped), None);
+    assert_eq!(ratio_regressed(&history, now, 0.9, unshaped), Some(0.45));
+    // Rows written before the environment was recorded are not comparable
+    // either, so the gate stays quiet instead of inventing a regression.
+    let legacy =
+        vec![json!({"ts": format!("unix:{}", now - day), "fbuild_vs_platformio_cold": 0.45})];
+    assert_eq!(ratio_regressed(&legacy, now, 0.9, shaped), None);
 }
 
 #[test]
 fn ratio_regression_uses_only_matching_board_history() {
     let now = parse_timestamp_unix_s("2026-07-22T12:00:00Z").unwrap();
     let ts = format!("unix:{}", now - 86_400);
+    let env = RunEnvironment::new(10);
     let history = vec![
-        json!({"ts": ts, "fbuild_vs_platformio_cold": 0.7}),
-        json!({"ts": ts, "comparison_board": "esp32s3", "board_metrics": {
+        json!({"ts": ts, "fbuild_vs_platformio_cold": 0.7, "env": env.to_json()}),
+        json!({"ts": ts, "comparison_board": "esp32s3", "env": env.to_json(), "board_metrics": {
             "uno": {"fbuild_vs_platformio_cold": null},
             "esp32s3": {"fbuild_vs_platformio_cold": 1.5}
         }}),
     ];
     assert_eq!(
-        ratio_regressed_for_board(&history, now, 1.6, "esp32s3"),
+        ratio_regressed_for_board(&history, now, 1.6, "esp32s3", env),
         Some(1.5)
     );
     assert_eq!(
-        ratio_regressed_for_board(&history, now, 0.8, "uno"),
+        ratio_regressed_for_board(&history, now, 0.8, "uno", env),
         Some(0.7)
     );
     assert_eq!(
-        ratio_regressed_for_board(&history, now, 1.4, "esp32s3"),
+        ratio_regressed_for_board(&history, now, 1.4, "esp32s3", env),
         None
     );
     assert_eq!(
-        ratio_regressed_for_board(&history, now, 1.0, "unknown"),
+        ratio_regressed_for_board(&history, now, 1.0, "unknown", env),
         None
     );
 }
 
-/// The 2026-11-12 nightly (sha 5360eae2) published a `fbuild cold regression` warning for uno
-/// at ratio 0.898 against a 7-day median of 0.896 -- a 0.2% miss that is pure noise, on a run
-/// where fbuild was 3.3x faster than PlatformIO on ESP32-S3 and ~10% faster on the Uno. These
-/// are the real values inside the 7-day window (07:39:48Z minus 7 days) of
-/// benchmark-stats:history.jsonl at that run, unsorted.
 #[test]
 fn ratio_regression_ignores_nightly_noise_inside_margin() {
     let now = parse_timestamp_unix_s("2026-11-12T07:39:48Z").unwrap();
-    // 8 h apart: all 18 samples fall inside the 7-day window.
+    // 8 h apart: all samples fall inside the 7-day window.
     let step = 8 * 3_600;
     let observed = [
         0.887, 0.905, 0.897, 0.896, 0.904, 0.886, 0.9, 0.9, 0.901, 0.879, 0.898, 0.896, 0.882,
-        0.882, 0.902, 0.473, 0.488, 0.425,
+        0.882, 0.902,
     ];
+    let env = RunEnvironment::new(10);
     let history = observed
         .iter()
         .enumerate()
-        .map(|(i, ratio)| json!({"ts": format!("unix:{}", now - step * (i as u64 + 1)), "fbuild_vs_platformio_cold": ratio}))
+        .map(|(i, ratio)| {
+            json!({
+                "ts": format!("unix:{}", now - step * (i as u64 + 1)),
+                "env": env.to_json(),
+                "fbuild_vs_platformio_cold": ratio,
+            })
+        })
         .collect::<Vec<_>>();
-    // Baseline is the median of those 18 samples; 0.898 beat it by 0.002 and used to fire.
-    assert_eq!(median(&observed), 0.896);
-    assert_eq!(ratio_regressed(&history, now, 0.898), None);
+    // Baseline is the median of the quiet window; 0.002 above it used to fire.
+    assert_eq!(median(&observed), 0.897);
+    assert_eq!(ratio_regressed(&history, now, 0.898, env), None);
     // A 6% regression is real signal and must still fire.
-    assert_eq!(ratio_regressed(&history, now, 0.95), Some(0.896));
+    assert_eq!(ratio_regressed(&history, now, 0.95, env), Some(0.897));
 }
 
 #[test]
 fn ratio_regression_fires_at_the_margin_boundary_only_past_it() {
     let now = parse_timestamp_unix_s("2026-11-12T07:39:48Z").unwrap();
     let day = 86_400;
-    let history = vec![
-        json!({"ts": format!("unix:{}", now - day), "fbuild_vs_platformio_cold": 0.4}),
-        json!({"ts": format!("unix:{}", now - 2 * day), "fbuild_vs_platformio_cold": 0.4}),
-        json!({"ts": format!("unix:{}", now - 3 * day), "fbuild_vs_platformio_cold": 0.4}),
-    ];
-    assert_eq!(ratio_regressed(&history, now, 0.4), None);
+    let env = RunEnvironment::new(10);
+    let row = |days_ago: u64| {
+        json!({
+            "ts": format!("unix:{}", now - days_ago * day),
+            "env": env.to_json(),
+            "fbuild_vs_platformio_cold": 0.4,
+        })
+    };
+    let history = vec![row(1), row(2), row(3)];
+    assert_eq!(ratio_regressed(&history, now, 0.4, env), None);
     assert_eq!(
-        ratio_regressed(&history, now, 0.4 * (1.0 + REGRESSION_MARGIN)),
+        ratio_regressed(&history, now, 0.4 * (1.0 + REGRESSION_MARGIN), env),
         None
     );
     assert_eq!(
-        ratio_regressed(&history, now, 0.4 * (1.0 + REGRESSION_MARGIN) + 0.001),
+        ratio_regressed(&history, now, 0.4 * (1.0 + REGRESSION_MARGIN) + 0.001, env),
         Some(0.4)
     );
 }
 
-/// A genuine regime shift (the 2026-11-07 change: esp32s3 0.945 -> 0.416, uno 0.473 -> 0.887)
-/// is far outside the noise margin, so the gate still catches real regressions.
+/// A step change inside one measurement environment is far outside the noise
+/// margin, so the gate still catches a real cold-build regression. (A change in
+/// what the cold trial measures is handled by [`COLD_TRIAL_SIGNATURE`], not by
+/// this margin.)
 #[test]
-fn ratio_regression_catches_a_regime_shift() {
+fn ratio_regression_catches_a_step_change_inside_one_environment() {
     let now = parse_timestamp_unix_s("2026-11-12T07:39:48Z").unwrap();
     let day = 86_400;
-    let old_regime = [0.306, 0.312, 0.307, 0.302, 0.309, 0.315, 0.306];
-    let history = old_regime
+    let env = RunEnvironment::new(10);
+    let baseline = [0.306, 0.312, 0.307, 0.302, 0.309, 0.315, 0.306];
+    let history = baseline
         .iter()
         .enumerate()
-        .map(|(i, ratio)| json!({"ts": format!("unix:{}", now - day * (i as u64 + 1)), "fbuild_vs_platformio_cold": ratio}))
+        .map(|(i, ratio)| {
+            json!({
+                "ts": format!("unix:{}", now - day * (i as u64 + 1)),
+                "env": env.to_json(),
+                "fbuild_vs_platformio_cold": ratio,
+            })
+        })
         .collect::<Vec<_>>();
-    assert_eq!(ratio_regressed(&history, now, 0.95), Some(0.307));
+    assert_eq!(ratio_regressed(&history, now, 0.95, env), Some(0.307));
 }
+
+#[test]
+fn history_rows_record_the_measurement_environment() {
+    let temp = tempfile::tempdir().unwrap();
+    let path = NormalizedPath::new(temp.path().join("history.jsonl"));
+    let mut metadata = sample_metadata();
+    metadata.network_mbit = 10;
+    write_history(path.clone(), &metadata, &sample_results()).unwrap();
+    let line: Value = serde_json::from_str(fs::read_to_string(&path).unwrap().trim()).unwrap();
+    assert_eq!(line["env"]["network_mbit"], 10);
+    assert_eq!(line["env"]["cold_trial"], COLD_TRIAL_SIGNATURE);
+}
+
 #[test]
 fn svg_shows_raw_floor_and_overhead() {
     let svg = render_svg(&sample_metadata(), &sample_results());
