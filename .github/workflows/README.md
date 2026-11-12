@@ -72,6 +72,18 @@ load-bearing:
   nothing on `main` is ever cancelled or dropped.
 - **`cancel-in-progress` is PR-only** for the same reason.
 
+- **A nightly never shares a group** with push/PR runs. The pending-run rule
+  above cuts the other way for a scheduled workflow: `cancel-in-progress: false`
+  protects the *running* run, never the pending one, so a nightly that queues
+  behind a benchmark and is then overtaken by the next merge is simply
+  cancelled. That is how the 2026-11-12 nightly (run `43190818367`, queued
+  09:21:59Z) died two seconds after the push run for the merge of #2004 was
+  created, losing the night's measurement. A scheduled workflow either declares
+  no `concurrency:` at all (`nightly-platforms.yml`), scopes the group by
+  `github.event_name` (`benchmark-build-comparison.yml` keeps its own `nightly`
+  slot), or is unique per run via `github.run_id` (`esp32s3-size-parity.yml`).
+  `ci/check_workflow_concurrency.py` enforces this too.
+
 Exempt, with the reason recorded in `ci/check_workflow_concurrency.py`:
 `template_build.yml` / `template_native_build.yml` (in a reusable workflow the
 `github` context is the *caller's*, so all ~80 nightly template invocations
@@ -85,7 +97,7 @@ block fails CI with a copy-paste fix.
 
 ## Scheduled Benchmarks
 
-- **`benchmark-build-comparison.yml`** -- Arduino CLI vs PlatformIO vs fbuild Blink cold/warm benchmark; runs nightly, manually, and for relevant pushes to `main`, then force-publishes the one-commit `benchmark-stats` branch and deploys its site to GitHub Pages
+- **`benchmark-build-comparison.yml`** -- Arduino CLI vs PlatformIO vs fbuild Blink cold/warm benchmark; runs nightly, manually, and for relevant pushes to `main`, then force-publishes the one-commit `benchmark-stats` branch and deploys its site to GitHub Pages. The nightly owns its own concurrency slot, so it can overlap a push run; the publisher therefore unions `history.jsonl` (`ci/merge_bench_history.py`) instead of overwriting it
 - **`esp32s3-size-parity.yml`** -- builds an ESP32-S3 Blink with PlatformIO and fbuild on the same pinned pioarduino platform and fails if fbuild's `firmware.bin` is larger (#1432); runs once a day and manually, never on push/PR
 
 ## Per-Board Builds (manual/reusable, called by CI tiers)
