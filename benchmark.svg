@@ -15,107 +15,107 @@
   <rect width="1100" height="112" fill="#161b22" />
   <text x="24" y="43" class="heading">Arduino Uno + ESP32-S3 Blink build times</text>
   <text x="24" y="72" class="meta">Arduino CLI vs PlatformIO vs fbuild | median of 3 trials | 10 Mbit/s link, nothing installed when cold</text>
-  <text x="24" y="95" class="meta">Generated 2026-11-12T02:54:33Z | sha a9e572bad3b2</text>
-  <text x="1076" y="95" text-anchor="end" class="meta">raw compiler floor: 0.26 s | fbuild overhead: 54.55 s | fbuild/PIO cold: 0.902</text>
+  <text x="24" y="95" class="meta">Generated 2026-11-12T05:20:55Z | sha 5360eae2d89e</text>
+  <text x="1076" y="95" text-anchor="end" class="meta">raw compiler floor: 0.20 s | fbuild overhead: 54.43 s | fbuild/PIO cold: 0.898</text>
   <g role="group" aria-labelledby="uno-cold-title">
     <text id="uno-cold-title" x="24" y="150.0" class="board">Arduino Uno — cold build (nothing installed)</text>
-    <text x="24" y="172.0" class="legend">Scale: slowest cold median = 1.01 min | fbuild/PIO stack matched</text>
+    <text x="24" y="172.0" class="legend">Scale: slowest cold median = 1.03 min | fbuild/PIO stack matched</text>
     <text x="24" y="209.0" class="tool" fill="#8b949e">Arduino CLI</text>
     <rect x="190.0" y="188.0" width="480.0" height="28" rx="4" fill="#21262d" />
-    <rect x="190.0" y="188.0" width="477.1" height="28" rx="4" fill="#8b949e" stroke="#a5f3fc" stroke-width="2">
-      <title>Arduino CLI cold median: 1.01 min</title>
+    <rect x="190.0" y="188.0" width="480.0" height="28" rx="4" fill="#8b949e" stroke="#a5f3fc" stroke-width="2">
+      <title>Arduino CLI cold median: 1.03 min</title>
     </rect>
-    <text x="692" y="201.0" class="value">cold 1.01 min</text>
-    <text x="692" y="217.0" class="speed">60.4 MB download</text>
+    <text x="692" y="201.0" class="value">cold 1.03 min</text>
+    <text x="692" y="217.0" class="speed">60.5 MB download</text>
     <text x="24" y="257.0" class="tool" fill="#79c0ff">PlatformIO</text>
     <rect x="190.0" y="236.0" width="480.0" height="28" rx="4" fill="#21262d" />
-    <rect x="190.0" y="236.0" width="480.0" height="28" rx="4" fill="#79c0ff" stroke="#a5f3fc" stroke-width="2">
+    <rect x="190.0" y="236.0" width="472.9" height="28" rx="4" fill="#79c0ff" stroke="#a5f3fc" stroke-width="2">
       <title>PlatformIO cold median: 1.01 min</title>
     </rect>
     <text x="692" y="249.0" class="value">cold 1.01 min</text>
     <text x="692" y="265.0" class="speed">59.4 MB download</text>
     <text x="24" y="305.0" class="tool" fill="#f85149">fbuild</text>
     <rect x="190.0" y="284.0" width="480.0" height="28" rx="4" fill="#21262d" />
-    <rect x="190.0" y="284.0" width="433.0" height="28" rx="4" fill="#f85149" stroke="#a5f3fc" stroke-width="2">
-      <title>fbuild cold median: 54.81 s</title>
+    <rect x="190.0" y="284.0" width="424.6" height="28" rx="4" fill="#f85149" stroke="#a5f3fc" stroke-width="2">
+      <title>fbuild cold median: 54.63 s</title>
     </rect>
-    <text x="692" y="297.0" class="value">cold 54.81 s</text>
-    <text x="692" y="313.0" class="speed">65.3 MB download</text>
+    <text x="692" y="297.0" class="value">cold 54.63 s</text>
+    <text x="692" y="313.0" class="speed">65.5 MB download</text>
   </g>
   <g role="group" aria-labelledby="uno-warm-title">
     <text id="uno-warm-title" x="24" y="388.0" class="board">Arduino Uno — warm build (no-change rebuild)</text>
-    <text x="24" y="410.0" class="legend">Scale: slowest warm median = 0.64 s</text>
+    <text x="24" y="410.0" class="legend">Scale: slowest warm median = 0.59 s</text>
     <text x="24" y="447.0" class="tool" fill="#8b949e">Arduino CLI</text>
     <rect x="190.0" y="426.0" width="480.0" height="28" rx="4" fill="#21262d" />
-    <rect x="190.0" y="426.0" width="318.9" height="28" rx="4" fill="#8b949e" stroke="#ff3b30" stroke-width="2">
-      <title>Arduino CLI warm median: 0.42 s</title>
+    <rect x="190.0" y="426.0" width="307.5" height="28" rx="4" fill="#8b949e" stroke="#ff3b30" stroke-width="2">
+      <title>Arduino CLI warm median: 0.38 s</title>
     </rect>
-    <text x="692" y="439.0" class="value">warm 0.42 s</text>
-    <text x="692" y="455.0" class="speed">142.40x faster than cold</text>
+    <text x="692" y="439.0" class="value">warm 0.38 s</text>
+    <text x="692" y="455.0" class="speed">163.39x faster than cold</text>
     <text x="24" y="495.0" class="tool" fill="#79c0ff">PlatformIO</text>
     <rect x="190.0" y="474.0" width="480.0" height="28" rx="4" fill="#21262d" />
     <rect x="190.0" y="474.0" width="480.0" height="28" rx="4" fill="#79c0ff" stroke="#ff3b30" stroke-width="2">
-      <title>PlatformIO warm median: 0.64 s</title>
+      <title>PlatformIO warm median: 0.59 s</title>
     </rect>
-    <text x="692" y="487.0" class="value">warm 0.64 s</text>
-    <text x="692" y="503.0" class="speed">95.17x faster than cold</text>
+    <text x="692" y="487.0" class="value">warm 0.59 s</text>
+    <text x="692" y="503.0" class="speed">103.12x faster than cold</text>
     <text x="24" y="543.0" class="tool" fill="#f85149">fbuild</text>
     <rect x="190.0" y="522.0" width="480.0" height="28" rx="4" fill="#21262d" />
-    <rect x="190.0" y="522.0" width="36.6" height="28" rx="4" fill="#f85149" stroke="#ff3b30" stroke-width="2">
+    <rect x="190.0" y="522.0" width="39.2" height="28" rx="4" fill="#f85149" stroke="#ff3b30" stroke-width="2">
       <title>fbuild warm median: 0.05 s</title>
     </rect>
     <text x="692" y="535.0" class="value">warm 0.05 s</text>
-    <text x="692" y="551.0" class="speed">1125.80x faster than cold</text>
+    <text x="692" y="551.0" class="speed">1133.16x faster than cold</text>
   </g>
   <g role="group" aria-labelledby="esp32s3-cold-title">
     <text id="esp32s3-cold-title" x="24" y="626.0" class="board">ESP32-S3 — cold build (nothing installed)</text>
-    <text x="24" y="648.0" class="legend">Scale: slowest cold median = 26.77 min | fbuild/PIO stack matched</text>
+    <text x="24" y="648.0" class="legend">Scale: slowest cold median = 26.73 min | fbuild/PIO stack matched</text>
     <text x="24" y="685.0" class="tool" fill="#8b949e">Arduino CLI</text>
     <rect x="190.0" y="664.0" width="480.0" height="28" rx="4" fill="#21262d" />
     <rect x="190.0" y="664.0" width="480.0" height="28" rx="4" fill="#8b949e" stroke="#a5f3fc" stroke-width="2">
-      <title>Arduino CLI cold median: 26.77 min</title>
+      <title>Arduino CLI cold median: 26.73 min</title>
     </rect>
-    <text x="692" y="677.0" class="value">cold 26.77 min</text>
-    <text x="692" y="693.0" class="speed">1.90 GB download</text>
+    <text x="692" y="677.0" class="value">cold 26.73 min</text>
+    <text x="692" y="693.0" class="speed">1.91 GB download</text>
     <text x="24" y="733.0" class="tool" fill="#79c0ff">PlatformIO</text>
     <rect x="190.0" y="712.0" width="480.0" height="28" rx="4" fill="#21262d" />
-    <rect x="190.0" y="712.0" width="200.5" height="28" rx="4" fill="#79c0ff" stroke="#a5f3fc" stroke-width="2">
-      <title>PlatformIO cold median: 11.18 min</title>
+    <rect x="190.0" y="712.0" width="201.0" height="28" rx="4" fill="#79c0ff" stroke="#a5f3fc" stroke-width="2">
+      <title>PlatformIO cold median: 11.20 min</title>
     </rect>
-    <text x="692" y="725.0" class="value">cold 11.18 min</text>
-    <text x="692" y="741.0" class="speed">668.8 MB download</text>
+    <text x="692" y="725.0" class="value">cold 11.20 min</text>
+    <text x="692" y="741.0" class="speed">671.7 MB download</text>
     <text x="24" y="781.0" class="tool" fill="#f85149">fbuild</text>
     <rect x="190.0" y="760.0" width="480.0" height="28" rx="4" fill="#21262d" />
-    <rect x="190.0" y="760.0" width="61.2" height="28" rx="4" fill="#f85149" stroke="#a5f3fc" stroke-width="2">
-      <title>fbuild cold median: 3.41 min</title>
+    <rect x="190.0" y="760.0" width="60.7" height="28" rx="4" fill="#f85149" stroke="#a5f3fc" stroke-width="2">
+      <title>fbuild cold median: 3.38 min</title>
     </rect>
-    <text x="692" y="773.0" class="value">cold 3.41 min</text>
-    <text x="692" y="789.0" class="speed">237.1 MB download</text>
+    <text x="692" y="773.0" class="value">cold 3.38 min</text>
+    <text x="692" y="789.0" class="speed">237.3 MB download</text>
   </g>
   <g role="group" aria-labelledby="esp32s3-warm-title">
     <text id="esp32s3-warm-title" x="24" y="864.0" class="board">ESP32-S3 — warm build (no-change rebuild)</text>
-    <text x="24" y="886.0" class="legend">Scale: slowest warm median = 3.85 s</text>
+    <text x="24" y="886.0" class="legend">Scale: slowest warm median = 3.04 s</text>
     <text x="24" y="923.0" class="tool" fill="#8b949e">Arduino CLI</text>
     <rect x="190.0" y="902.0" width="480.0" height="28" rx="4" fill="#21262d" />
-    <rect x="190.0" y="902.0" width="343.3" height="28" rx="4" fill="#8b949e" stroke="#ff3b30" stroke-width="2">
-      <title>Arduino CLI warm median: 2.76 s</title>
+    <rect x="190.0" y="902.0" width="393.7" height="28" rx="4" fill="#8b949e" stroke="#ff3b30" stroke-width="2">
+      <title>Arduino CLI warm median: 2.49 s</title>
     </rect>
-    <text x="692" y="915.0" class="value">warm 2.76 s</text>
-    <text x="692" y="931.0" class="speed">582.78x faster than cold</text>
+    <text x="692" y="915.0" class="value">warm 2.49 s</text>
+    <text x="692" y="931.0" class="speed">642.99x faster than cold</text>
     <text x="24" y="971.0" class="tool" fill="#79c0ff">PlatformIO</text>
     <rect x="190.0" y="950.0" width="480.0" height="28" rx="4" fill="#21262d" />
     <rect x="190.0" y="950.0" width="480.0" height="28" rx="4" fill="#79c0ff" stroke="#ff3b30" stroke-width="2">
-      <title>PlatformIO warm median: 3.85 s</title>
+      <title>PlatformIO warm median: 3.04 s</title>
     </rect>
-    <text x="692" y="963.0" class="value">warm 3.85 s</text>
-    <text x="692" y="979.0" class="speed">174.10x faster than cold</text>
+    <text x="692" y="963.0" class="value">warm 3.04 s</text>
+    <text x="692" y="979.0" class="speed">220.91x faster than cold</text>
     <text x="24" y="1019.0" class="tool" fill="#f85149">fbuild</text>
     <rect x="190.0" y="998.0" width="480.0" height="28" rx="4" fill="#21262d" />
-    <rect x="190.0" y="998.0" width="6.0" height="28" rx="4" fill="#f85149" stroke="#ff3b30" stroke-width="2">
+    <rect x="190.0" y="998.0" width="7.6" height="28" rx="4" fill="#f85149" stroke="#ff3b30" stroke-width="2">
       <title>fbuild warm median: 0.05 s</title>
     </rect>
     <text x="692" y="1011.0" class="value">warm 0.05 s</text>
-    <text x="692" y="1027.0" class="speed">4214.63x faster than cold</text>
+    <text x="692" y="1027.0" class="speed">4188.52x faster than cold</text>
   </g>
   <line x1="24" y1="1080" x2="1076" y2="1080" stroke="#30363d" stroke-width="2" />
   <text x="24" y="1100" class="meta">Machine data: manifest.json | latest.json | history.jsonl</text>
