@@ -26,7 +26,11 @@ class WorkflowConcurrencyTests(unittest.TestCase):
 
     def test_pr_workflow_without_concurrency_is_rejected(self) -> None:
         with TemporaryDirectory() as tmp:
-            path = write(tmp, "sample.yml", "on:\n  pull_request:\n    branches: [main]\njobs: {}\n")
+            path = write(
+                tmp,
+                "sample.yml",
+                "on:\n  pull_request:\n    branches: [main]\njobs: {}\n",
+            )
 
             problems = guard.check_file(path)
 
@@ -37,7 +41,9 @@ class WorkflowConcurrencyTests(unittest.TestCase):
             path = write(
                 tmp,
                 "sample.yml",
-                "on:\n  pull_request:\n    branches: [main]\n\n" + CANONICAL + "jobs: {}\n",
+                "on:\n  pull_request:\n    branches: [main]\n\n"
+                + CANONICAL
+                + "jobs: {}\n",
             )
 
             self.assertEqual(guard.check_file(path), [])
@@ -90,7 +96,9 @@ class WorkflowConcurrencyTests(unittest.TestCase):
 
             problems = guard.check_file(path)
 
-        self.assertTrue(any("scheduled" in p and "pending" in p for p in problems), problems)
+        self.assertTrue(
+            any("scheduled" in p and "pending" in p for p in problems), problems
+        )
 
     def test_a_nightly_with_its_own_group_is_accepted(self) -> None:
         with TemporaryDirectory() as tmp:
@@ -124,7 +132,11 @@ class WorkflowConcurrencyTests(unittest.TestCase):
 
     def test_workflow_without_pr_trigger_is_ignored(self) -> None:
         with TemporaryDirectory() as tmp:
-            path = write(tmp, "sample.yml", "on:\n  schedule:\n    - cron: '0 9 * * *'\njobs: {}\n")
+            path = write(
+                tmp,
+                "sample.yml",
+                "on:\n  schedule:\n    - cron: '0 9 * * *'\njobs: {}\n",
+            )
 
             self.assertEqual(guard.check_file(path), [])
 
@@ -138,6 +150,101 @@ class WorkflowConcurrencyTests(unittest.TestCase):
         self.assertGreater(len(boards), 50)
         for path in boards:
             self.assertEqual(guard.check_file(path), [], path.name)
+
+
+def deploy_workflow(job_extra: str) -> str:
+    """A workflow whose single job deploys GitHub Pages."""
+    return (
+        "on:\n  push:\n    branches: [main]\n"
+        "jobs:\n"
+        "  deploy-pages:\n"
+        "    runs-on: ubuntu-24.04\n"
+        f"{job_extra}"
+        "    steps:\n"
+        "      - uses: actions/deploy-pages@v4\n"
+    )
+
+
+class PagesDeployConcurrencyTests(unittest.TestCase):
+    """Pages allows ONE in-flight deployment per environment.
+
+    `benchmark-build-comparison.yml` now runs two publishers (nightly + push)
+    that can overlap on purpose (FastLED/fbuild#2005), and both reach the
+    `deploy-pages` job. Without a job-level group the loser's deploy fails with
+    "Deployment failed, try again later" (actions/deploy-pages#406), which is
+    what GitHub's own Pages template guards against.
+    """
+
+    def test_deploy_job_without_concurrency_is_rejected(self) -> None:
+        with TemporaryDirectory() as tmp:
+            path = write(tmp, "sample.yml", deploy_workflow(""))
+
+            problems = guard.check_file(path)
+
+        self.assertTrue(any("deploy-pages" in p for p in problems), problems)
+
+    def test_serialised_pages_group_is_accepted(self) -> None:
+        with TemporaryDirectory() as tmp:
+            path = write(
+                tmp,
+                "sample.yml",
+                deploy_workflow(
+                    "    concurrency:\n"
+                    "      group: github-pages\n"
+                    "      cancel-in-progress: false\n"
+                ),
+            )
+
+            self.assertEqual(guard.check_file(path), [])
+
+    def test_per_run_pages_group_is_rejected(self) -> None:
+        """A per-run group serialises nothing -- every run gets its own slot."""
+        with TemporaryDirectory() as tmp:
+            path = write(
+                tmp,
+                "sample.yml",
+                deploy_workflow(
+                    "    concurrency:\n"
+                    "      group: pages-${{ github.run_id }}\n"
+                    "      cancel-in-progress: false\n"
+                ),
+            )
+
+            problems = guard.check_file(path)
+
+        self.assertTrue(any("deploy-pages" in p for p in problems), problems)
+
+    def test_cancelling_a_pages_deploy_is_rejected(self) -> None:
+        """Cancelling mid-deployment can leave the environment stuck."""
+        with TemporaryDirectory() as tmp:
+            path = write(
+                tmp,
+                "sample.yml",
+                deploy_workflow(
+                    "    concurrency:\n"
+                    "      group: github-pages\n"
+                    "      cancel-in-progress: true\n"
+                ),
+            )
+
+            problems = guard.check_file(path)
+
+        self.assertTrue(any("deploy-pages" in p for p in problems), problems)
+
+    def test_uploading_a_pages_artifact_is_not_a_deploy(self) -> None:
+        with TemporaryDirectory() as tmp:
+            path = write(
+                tmp,
+                "sample.yml",
+                "on:\n  push:\n    branches: [main]\n"
+                "jobs:\n"
+                "  publish:\n"
+                "    runs-on: ubuntu-24.04\n"
+                "    steps:\n"
+                "      - uses: actions/upload-pages-artifact@v4\n",
+            )
+
+            self.assertEqual(guard.check_file(path), [])
 
 
 if __name__ == "__main__":
