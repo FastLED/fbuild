@@ -33,6 +33,16 @@ const PERF_PHASE_LABELS: &[&str] = &["avr-orchestrator", "esp32-orchestrator", "
 const MIN_COLD_DOWNLOAD_BYTES: u64 = 1_000_000;
 const COLD_INSTALL_ATTEMPTS: usize = 3;
 const REGRESSION_WINDOW_S: u64 = 7 * 24 * 60 * 60;
+/// Relative margin a board's `fbuild/PlatformIO` cold ratio must exceed the
+/// trailing 7-day median by before the run reports a cold regression. Without
+/// it the gate fires whenever the ratio is above the median — true by
+/// construction about half the time, because a median sits in the middle of the
+/// distribution. Measured on `benchmark-stats:history.jsonl`: the 2026-11-08..12
+/// regime holds uno at 0.879-0.905 and esp32s3 at 0.302-0.316 (worst deviation
+/// from the median +1.3%), while the real 2026-11-07 shift moved uno 0.473 ->
+/// 0.887 and esp32s3 0.945 -> 0.416. 5% is ~4x the observed night-to-night
+/// noise and still catches a shift of that size (FastLED/fbuild#2002).
+const REGRESSION_MARGIN: f64 = 0.05;
 const DEFAULT_REPOSITORY: &str = "FastLED/fbuild";
 const DEFAULT_PAGES_URL: &str = "https://fastled.github.io/fbuild/";
 const DEFAULT_RAW_BASE_URL: &str =
@@ -339,8 +349,9 @@ fn run() -> AppResult<()> {
                 continue;
             };
             println!(
-                "::warning title=fbuild cold regression ({})::fbuild/PlatformIO cold ratio {ratio:.3} exceeds 7-day median {baseline:.3}",
-                board.name
+                "::warning title=fbuild cold regression ({})::fbuild/PlatformIO cold ratio {ratio:.3} exceeds the 7-day median {baseline:.3} by more than the {margin_pct:.0}% noise margin",
+                board.name,
+                margin_pct = REGRESSION_MARGIN * 100.0
             );
         }
     }
@@ -1812,7 +1823,8 @@ fn parse_timestamp_unix_s(ts: &str) -> Option<u64> {
     u64::try_from(seconds).ok()
 }
 
-/// 7-day median of `fbuild_vs_platformio_cold`, returned only when `current_ratio` exceeds it.
+/// 7-day median of `fbuild_vs_platformio_cold`, returned only when `current_ratio`
+/// exceeds it by more than [`REGRESSION_MARGIN`] (run-to-run noise is not a regression).
 fn ratio_regressed(history: &[Value], now_unix_s: u64, current_ratio: f64) -> Option<f64> {
     let recent = history
         .iter()
@@ -1828,7 +1840,7 @@ fn ratio_regressed(history: &[Value], now_unix_s: u64, current_ratio: f64) -> Op
         return None;
     }
     let baseline = median(&recent);
-    (current_ratio > baseline).then_some(baseline)
+    (current_ratio > baseline * (1.0 + REGRESSION_MARGIN)).then_some(baseline)
 }
 
 fn ratio_regressed_for_board(
