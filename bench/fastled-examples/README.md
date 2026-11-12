@@ -170,15 +170,30 @@ the middle of the distribution. Replaying
 `benchmark-stats:history.jsonl` through the old rule: uno fired on **50%**
 of the 2026-11-08..12 nights and esp32s3 on **33%**, on runs where fbuild was
 in fact 3.3x faster than PlatformIO on ESP32-S3. With the margin both boards
-fire **0%** across that window, while the genuine 2026-11-07 shift
-(uno 0.473 -> 0.887, esp32s3 0.945 -> 0.416) is still caught, 10x outside the
-margin.
+fire **0%** across that window.
+
+Only rows measured **the same way** are compared. Every new history row
+carries an `env` block — the link shaping (`network_mbit`) and the
+cold-trial semantics (`COLD_TRIAL_SIGNATURE`) — and the gate skips any row
+whose `env` differs, including older rows with no `env` at all. A ratio is a
+property of the harness as much as of fbuild: the first nightly after
+`0663b5da`/`4179d196`/`8943ee99` made cold include first-time installs
+(2026-11-07) moved **every** tool on both boards together — uno Arduino CLI
+1.0 s -> 59.4 s, ESP32-S3 Arduino CLI 13.2 s -> 1598.4 s, uno fbuild/PIO
+0.473 -> 0.887 — which is a change in what "cold" measures, not an fbuild
+regression. Cross-environment comparison would have reported it as one.
+
+**When you change what a cold trial pays for, bump `COLD_TRIAL_SIGNATURE`.**
+The gate then stays quiet until the 7-day window refills with rows of the new
+signature, instead of warning for a week against a baseline of a different
+measurement.
 
 Observed night-to-night spread in the current regime is ±1.5% (uno
 0.879-0.905, esp32s3 0.302-0.316), so 5% is ~4x the noise. The gate is a
 warning only — it never fails the job — and it is deliberately insensitive to
 slow drift, because the baseline is a trailing median that moves with the
-data.
+data (weekly medians over the 7 weeks to 2026-11-12 stay inside ±5%, so no
+slower drift gate is warranted yet).
 
 ## Cross-links
 

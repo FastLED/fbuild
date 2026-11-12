@@ -37,12 +37,23 @@ const REGRESSION_WINDOW_S: u64 = 7 * 24 * 60 * 60;
 /// trailing 7-day median by before the run reports a cold regression. Without
 /// it the gate fires whenever the ratio is above the median — true by
 /// construction about half the time, because a median sits in the middle of the
-/// distribution. Measured on `benchmark-stats:history.jsonl`: the 2026-11-08..12
-/// regime holds uno at 0.879-0.905 and esp32s3 at 0.302-0.316 (worst deviation
-/// from the median +1.3%), while the real 2026-11-07 shift moved uno 0.473 ->
-/// 0.887 and esp32s3 0.945 -> 0.416. 5% is ~4x the observed night-to-night
-/// noise and still catches a shift of that size (FastLED/fbuild#2002).
+/// distribution. Measured on `benchmark-stats:history.jsonl`: uno holds
+/// 0.879-0.905 and esp32s3 0.302-0.316 (worst deviation from the median +1.3%)
+/// across 2026-11-08..12, so 5% is ~4x the observed night-to-night noise
+/// (FastLED/fbuild#2002). The excursion that motivated this gate — uno
+/// 0.473 -> 0.887 and esp32s3 0.945 -> 0.416 on 2026-11-07 — turned out to be a
+/// cold-trial semantics change, not an fbuild slowdown: every tool on both
+/// boards rose together (uno Arduino 1.0 s -> 59.4 s, esp32s3 Arduino 13.2 s ->
+/// 1598.4 s) once cold included first-time installs. Cross-environment rows are
+/// therefore excluded outright, see [`COLD_TRIAL_SIGNATURE`].
 const REGRESSION_MARGIN: f64 = 0.05;
+/// Cold-trial semantics recorded in every new `history.jsonl` row. A ratio is
+/// only comparable to ratios measured the same way, so the regression gate
+/// ignores rows with a different `env`. Bump this whenever the cold trial starts
+/// or stops paying for something (2026-11-06: `0663b5da`, `4179d196` and
+/// `8943ee99` made cold include first-time installs; rows before that boundary
+/// timed a compile-only build and are not comparable — FastLED/fbuild#2003).
+const COLD_TRIAL_SIGNATURE: &str = "first-time-install/1";
 const DEFAULT_REPOSITORY: &str = "FastLED/fbuild";
 const DEFAULT_PAGES_URL: &str = "https://fastled.github.io/fbuild/";
 const DEFAULT_RAW_BASE_URL: &str =
@@ -342,14 +353,16 @@ fn run() -> AppResult<()> {
         .duration_since(UNIX_EPOCH)
         .unwrap_or_default()
         .as_secs();
+    let environment = RunEnvironment::new(options.network_mbit);
     for board in options.boards.iter().copied() {
         if let Some(ratio) = board_cold_ratio(&results, board.key) {
-            let Some(baseline) = ratio_regressed_for_board(&history, now_unix_s, ratio, board.key)
+            let Some(baseline) =
+                ratio_regressed_for_board(&history, now_unix_s, ratio, board.key, environment)
             else {
                 continue;
             };
             println!(
-                "::warning title=fbuild cold regression ({})::fbuild/PlatformIO cold ratio {ratio:.3} exceeds the 7-day median {baseline:.3} by more than the {margin_pct:.0}% noise margin",
+                "::warning title=fbuild cold regression ({})::fbuild/PlatformIO cold ratio {ratio:.3} exceeds the same-environment 7-day median {baseline:.3} by more than the {margin_pct:.0}% noise margin",
                 board.name,
                 margin_pct = REGRESSION_MARGIN * 100.0
             );
@@ -1823,9 +1836,45 @@ fn parse_timestamp_unix_s(ts: &str) -> Option<u64> {
     u64::try_from(seconds).ok()
 }
 
-/// 7-day median of `fbuild_vs_platformio_cold`, returned only when `current_ratio`
-/// exceeds it by more than [`REGRESSION_MARGIN`] (run-to-run noise is not a regression).
-fn ratio_regressed(history: &[Value], now_unix_s: u64, current_ratio: f64) -> Option<f64> {
+/// The measurement environment a run was produced in. Two runs are only
+/// comparable when the link shaping and the cold-trial semantics agree: the
+/// `fbuild/PlatformIO` ratio moves with how much of a cold build is download
+/// time, which is a property of the harness, not of fbuild.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+struct RunEnvironment {
+    network_mbit: u32,
+}
+
+impl RunEnvironment {
+    fn new(network_mbit: u32) -> Self {
+        Self { network_mbit }
+    }
+
+    fn to_json(self) -> Value {
+        json!({
+            "network_mbit": self.network_mbit,
+            "cold_trial": COLD_TRIAL_SIGNATURE,
+        })
+    }
+
+    /// Rows from another environment — or written before the environment was
+    /// recorded — cannot baseline this run, so they are skipped rather than
+    /// compared.
+    fn matches(self, entry: &Value) -> bool {
+        entry["env"]["network_mbit"].as_u64() == Some(u64::from(self.network_mbit))
+            && entry["env"]["cold_trial"].as_str() == Some(COLD_TRIAL_SIGNATURE)
+    }
+}
+
+/// 7-day median of same-environment `fbuild_vs_platformio_cold` runs, returned
+/// only when `current_ratio` exceeds it by more than [`REGRESSION_MARGIN`]
+/// (run-to-run noise is not a regression).
+fn ratio_regressed(
+    history: &[Value],
+    now_unix_s: u64,
+    current_ratio: f64,
+    environment: RunEnvironment,
+) -> Option<f64> {
     let recent = history
         .iter()
         .filter(|entry| {
@@ -1834,6 +1883,7 @@ fn ratio_regressed(history: &[Value], now_unix_s: u64, current_ratio: f64) -> Op
                 .and_then(parse_timestamp_unix_s)
                 .is_some_and(|ts| ts <= now_unix_s && now_unix_s - ts <= REGRESSION_WINDOW_S)
         })
+        .filter(|entry| environment.matches(entry))
         .filter_map(|entry| entry["fbuild_vs_platformio_cold"].as_f64())
         .collect::<Vec<_>>();
     if recent.is_empty() {
@@ -1848,6 +1898,7 @@ fn ratio_regressed_for_board(
     now_unix_s: u64,
     current_ratio: f64,
     board: &str,
+    environment: RunEnvironment,
 ) -> Option<f64> {
     let matching = history
         .iter()
@@ -1859,10 +1910,14 @@ fn ratio_regressed_for_board(
             } else {
                 None
             }?;
-            Some(json!({"ts": entry["ts"], "fbuild_vs_platformio_cold": ratio}))
+            Some(json!({
+                "ts": entry["ts"],
+                "env": entry["env"],
+                "fbuild_vs_platformio_cold": ratio,
+            }))
         })
         .collect::<Vec<_>>();
-    ratio_regressed(&matching, now_unix_s, current_ratio)
+    ratio_regressed(&matching, now_unix_s, current_ratio, environment)
 }
 
 fn manifest_payload(metadata: &Metadata, pages_url: &str, raw_base_url: &str) -> Value {
@@ -1930,6 +1985,7 @@ fn write_history(
         let discard = prior.len() - (HISTORY_MAX_LINES - 1);
         prior.drain(..discard);
     }
+    let environment = RunEnvironment::new(metadata.network_mbit);
     let compact_results = results
         .iter()
         .map(|result| {
@@ -1947,6 +2003,7 @@ fn write_history(
         "ts": metadata.generated_at,
         "sha": metadata.git_sha,
         "comparison_board": comparison_board(results),
+        "env": environment.to_json(),
         "fbuild_overhead_ms": fbuild_overhead_ms(metadata, results),
         "fbuild_vs_platformio_cold": fbuild_vs_platformio_cold(results),
         "board_metrics": board_metrics(metadata, results),
