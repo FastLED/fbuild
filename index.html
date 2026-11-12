@@ -24,7 +24,7 @@
   <body>
     <main>
       <h1>fbuild Blink build benchmark</h1>
-      <p class="meta">Generated 2026-11-11T09:32:26Z from <code>e5f07e0a08d39d74bd96a85603aca6199793079b</code>. Median of 3 trials on linux/x86_64.</p>
+      <p class="meta">Generated 2026-11-12T02:54:33Z from <code>a9e572bad3b2226cfe92064b23b284da0f06f9f6</code>. Median of 3 trials on linux/x86_64.</p>
       <p class="note">All three tools compile the same Arduino Uno and ESP32-S3 <code>bench/blink/blink.ino</code>. Cold is a first-time install: each tool's project outputs, caches, packages and toolchains are removed before the timer, so every download lands inside the timed build (for Arduino CLI, that includes <code>arduino-cli core install</code>). Warm is the immediate no-change rebuild. Cold and warm are charted separately, each scaled to its own slowest median, so sub-second warm times stay visible.</p>
       <p class="note">* Measured on a link limited to 10 Mbit/s (the benchmark runs in its own shaped network namespace); cold includes every package and toolchain download.</p>
       <p class="note">Resolved package stacks: Arduino Uno: matched; fbuild/PlatformIO ratio shown. ESP32-S3: matched; fbuild/PlatformIO ratio shown. Exact package versions and representative core compiler commands are in <a href="latest.json">latest.json</a>.</p>
@@ -32,12 +32,12 @@
       <div class="table-wrap">
         <table>
           <thead><tr><th>Board</th><th>Tool</th><th>Cold median</th><th>Warm median</th><th>Cold download</th><th>Cold / warm</th><th>Version</th></tr></thead>
-          <tbody><tr><th>Arduino Uno</th><th>Arduino CLI</th><td>1.03 min</td><td>0.43 s</td><td>60.2 MB</td><td>144.56x</td><td>arduino-cli  Version: 1.5.0 Commit: dd407d42d Date: 2026-05-19T14:07:51Z</td></tr>
-<tr><th>Arduino Uno</th><th>PlatformIO</th><td>1.03 min</td><td>0.63 s</td><td>59.0 MB</td><td>97.12x</td><td>PlatformIO Core, version 6.2.0</td></tr>
-<tr><th>Arduino Uno</th><th>fbuild</th><td>54.38 s</td><td>0.05 s</td><td>64.5 MB</td><td>1146.65x</td><td>fbuild 2.5.52+git.e5f07e0a08d3</td></tr>
-<tr><th>ESP32-S3</th><th>Arduino CLI</th><td>26.82 min</td><td>2.67 s</td><td>1.90 GB</td><td>602.11x</td><td>arduino-cli  Version: 1.5.0 Commit: dd407d42d Date: 2026-05-19T14:07:51Z</td></tr>
-<tr><th>ESP32-S3</th><th>PlatformIO</th><td>11.17 min</td><td>3.76 s</td><td>667.2 MB</td><td>178.12x</td><td>PlatformIO Core, version 6.2.0</td></tr>
-<tr><th>ESP32-S3</th><th>fbuild</th><td>3.42 min</td><td>0.05 s</td><td>234.3 MB</td><td>4280.33x</td><td>fbuild 2.5.52+git.e5f07e0a08d3</td></tr></tbody>
+          <tbody><tr><th>Arduino Uno</th><th>Arduino CLI</th><td>1.01 min</td><td>0.42 s</td><td>60.4 MB</td><td>142.40x</td><td>arduino-cli  Version: 1.5.0 Commit: dd407d42d Date: 2026-05-19T14:07:51Z</td></tr>
+<tr><th>Arduino Uno</th><th>PlatformIO</th><td>1.01 min</td><td>0.64 s</td><td>59.4 MB</td><td>95.17x</td><td>PlatformIO Core, version 6.2.0</td></tr>
+<tr><th>Arduino Uno</th><th>fbuild</th><td>54.81 s</td><td>0.05 s</td><td>65.3 MB</td><td>1125.80x</td><td>fbuild 2.5.52+git.a9e572bad3b2</td></tr>
+<tr><th>ESP32-S3</th><th>Arduino CLI</th><td>26.77 min</td><td>2.76 s</td><td>1.90 GB</td><td>582.78x</td><td>arduino-cli  Version: 1.5.0 Commit: dd407d42d Date: 2026-05-19T14:07:51Z</td></tr>
+<tr><th>ESP32-S3</th><th>PlatformIO</th><td>11.18 min</td><td>3.85 s</td><td>668.8 MB</td><td>174.10x</td><td>PlatformIO Core, version 6.2.0</td></tr>
+<tr><th>ESP32-S3</th><th>fbuild</th><td>3.41 min</td><td>0.05 s</td><td>237.1 MB</td><td>4214.63x</td><td>fbuild 2.5.52+git.a9e572bad3b2</td></tr></tbody>
         </table>
       </div>
       <h2>Cold phase breakdown</h2>
@@ -47,11 +47,11 @@
           <tbody><tr><td>Arduino Uno</td><td>PlatformIO</td><td>compile</td><td>0.32 s</td></tr>
 <tr><td>Arduino Uno</td><td>PlatformIO</td><td>convert-size</td><td>0.08 s</td></tr>
 <tr><td>Arduino Uno</td><td>PlatformIO</td><td>link</td><td>0.04 s</td></tr>
-<tr><td>Arduino Uno</td><td>PlatformIO</td><td>pre-compile</td><td>1.02 min</td></tr>
+<tr><td>Arduino Uno</td><td>PlatformIO</td><td>pre-compile</td><td>1.00 min</td></tr>
 <tr><td>Arduino Uno</td><td>fbuild</td><td>board-load</td><td>0.01 s</td></tr>
 <tr><td>Arduino Uno</td><td>fbuild</td><td>build-dirs</td><td>0.00 s</td></tr>
 <tr><td>Arduino Uno</td><td>fbuild</td><td>build-info</td><td>0.00 s</td></tr>
-<tr><td>Arduino Uno</td><td>fbuild</td><td>compile-core</td><td>0.36 s</td></tr>
+<tr><td>Arduino Uno</td><td>fbuild</td><td>compile-core</td><td>0.37 s</td></tr>
 <tr><td>Arduino Uno</td><td>fbuild</td><td>compile-db</td><td>0.00 s</td></tr>
 <tr><td>Arduino Uno</td><td>fbuild</td><td>compile-lib-deps</td><td>0.00 s</td></tr>
 <tr><td>Arduino Uno</td><td>fbuild</td><td>compile-local-libs</td><td>0.00 s</td></tr>
@@ -63,23 +63,23 @@
 <tr><td>Arduino Uno</td><td>fbuild</td><td>fast-path-check</td><td>0.00 s</td></tr>
 <tr><td>Arduino Uno</td><td>fbuild</td><td>flag-collect</td><td>0.00 s</td></tr>
 <tr><td>Arduino Uno</td><td>fbuild</td><td>fp-watches-collect</td><td>0.00 s</td></tr>
-<tr><td>Arduino Uno</td><td>fbuild</td><td>framework-ensure</td><td>3.49 s</td></tr>
+<tr><td>Arduino Uno</td><td>fbuild</td><td>framework-ensure</td><td>3.55 s</td></tr>
 <tr><td>Arduino Uno</td><td>fbuild</td><td>link</td><td>0.05 s</td></tr>
 <tr><td>Arduino Uno</td><td>fbuild</td><td>link-convert</td><td>0.01 s</td></tr>
 <tr><td>Arduino Uno</td><td>fbuild</td><td>link-elf</td><td>0.05 s</td></tr>
 <tr><td>Arduino Uno</td><td>fbuild</td><td>link-size</td><td>0.00 s</td></tr>
 <tr><td>Arduino Uno</td><td>fbuild</td><td>project-as-lib</td><td>0.00 s</td></tr>
 <tr><td>Arduino Uno</td><td>fbuild</td><td>source-scan</td><td>0.00 s</td></tr>
-<tr><td>Arduino Uno</td><td>fbuild</td><td>toolchain-ensure</td><td>45.13 s</td></tr>
+<tr><td>Arduino Uno</td><td>fbuild</td><td>toolchain-ensure</td><td>45.23 s</td></tr>
 <tr><td>ESP32-S3</td><td>fbuild</td><td>archive-core</td><td>0.02 s</td></tr>
 <tr><td>ESP32-S3</td><td>fbuild</td><td>board-load</td><td>0.01 s</td></tr>
-<tr><td>ESP32-S3</td><td>fbuild</td><td>boot-artifacts</td><td>0.25 s</td></tr>
+<tr><td>ESP32-S3</td><td>fbuild</td><td>boot-artifacts</td><td>0.24 s</td></tr>
 <tr><td>ESP32-S3</td><td>fbuild</td><td>build-dirs</td><td>0.00 s</td></tr>
-<tr><td>ESP32-S3</td><td>fbuild</td><td>compile-core</td><td>8.38 s</td></tr>
-<tr><td>ESP32-S3</td><td>fbuild</td><td>compile-core-variant</td><td>8.38 s</td></tr>
+<tr><td>ESP32-S3</td><td>fbuild</td><td>compile-core</td><td>8.10 s</td></tr>
+<tr><td>ESP32-S3</td><td>fbuild</td><td>compile-core-variant</td><td>8.10 s</td></tr>
 <tr><td>ESP32-S3</td><td>fbuild</td><td>compile-db</td><td>0.01 s</td></tr>
 <tr><td>ESP32-S3</td><td>fbuild</td><td>compile-local-libs</td><td>0.00 s</td></tr>
-<tr><td>ESP32-S3</td><td>fbuild</td><td>compile-sketch</td><td>1.09 s</td></tr>
+<tr><td>ESP32-S3</td><td>fbuild</td><td>compile-sketch</td><td>1.07 s</td></tr>
 <tr><td>ESP32-S3</td><td>fbuild</td><td>config-parse</td><td>0.00 s</td></tr>
 <tr><td>ESP32-S3</td><td>fbuild</td><td>core-cache-hydrate</td><td>0.00 s</td></tr>
 <tr><td>ESP32-S3</td><td>fbuild</td><td>core-cache-store</td><td>0.01 s</td></tr>
@@ -92,9 +92,9 @@
 <tr><td>ESP32-S3</td><td>fbuild</td><td>lib-deps</td><td>0.00 s</td></tr>
 <tr><td>ESP32-S3</td><td>fbuild</td><td>link-convert</td><td>0.15 s</td></tr>
 <tr><td>ESP32-S3</td><td>fbuild</td><td>link-convert-size</td><td>1.09 s</td></tr>
-<tr><td>ESP32-S3</td><td>fbuild</td><td>link-elf</td><td>0.93 s</td></tr>
-<tr><td>ESP32-S3</td><td>fbuild</td><td>link-size</td><td>0.01 s</td></tr>
-<tr><td>ESP32-S3</td><td>fbuild</td><td>pioarduino-resolve</td><td>3.20 min</td></tr>
+<tr><td>ESP32-S3</td><td>fbuild</td><td>link-elf</td><td>0.94 s</td></tr>
+<tr><td>ESP32-S3</td><td>fbuild</td><td>link-size</td><td>0.02 s</td></tr>
+<tr><td>ESP32-S3</td><td>fbuild</td><td>pioarduino-resolve</td><td>3.19 min</td></tr>
 <tr><td>ESP32-S3</td><td>fbuild</td><td>project-lib</td><td>0.00 s</td></tr>
 <tr><td>ESP32-S3</td><td>fbuild</td><td>scan-sources</td><td>0.00 s</td></tr></tbody>
         </table>
@@ -105,7 +105,7 @@
         <li><a href="latest.json">latest.json</a> — metadata, raw trials, and medians</li>
         <li><a href="history.jsonl">history.jsonl</a> — rolling 365-run history</li>
       </ul>
-      <p><a href="https://github.com/FastLED/fbuild/actions/runs/42994508056">Benchmark workflow run</a> | <a href="https://github.com/FastLED/fbuild/tree/benchmark-stats">one-commit publication branch</a></p>
+      <p><a href="https://github.com/FastLED/fbuild/actions/runs/43143383477">Benchmark workflow run</a> | <a href="https://github.com/FastLED/fbuild/tree/benchmark-stats">one-commit publication branch</a></p>
     </main>
   </body>
 </html>
