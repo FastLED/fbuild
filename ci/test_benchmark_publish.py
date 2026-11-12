@@ -37,6 +37,13 @@ WORKFLOW = (
 )
 
 
+PUBLISHER = Path(__file__).resolve().parents[1] / "ci" / "publish_bench_site.py"
+
+
+def publisher_source() -> str:
+    return PUBLISHER.read_text()
+
+
 def load_workflow() -> dict:
     return yaml.safe_load(WORKFLOW.read_text())
 
@@ -72,16 +79,18 @@ class MirrorDeployIsIndependentTests(unittest.TestCase):
 
     def test_assembler_seeds_from_the_last_published_site(self):
         # Without last-good seeding, an always-running publish would replace the
-        # whole site with a mirror-only tree and drop the benchmark report.
+        # whole site with a mirror-only tree and drop the benchmark report. The
+        # step delegates that to `ci/publish_bench_site.py`, which reads the
+        # published branch before it overlays anything (see
+        # `ci/test_publish_bench_site.py` for the behavioural proof).
         script = script_of(
-            self.jobs["publish"], "Assemble the site from the last publish plus fresh inputs"
+            self.jobs["publish"],
+            "Assemble the site from the last publish plus fresh inputs",
         )
-        self.assertIn("refs/heads/benchmark-stats", script)
-        self.assertIn("reset --hard FETCH_HEAD", script)
-        self.assertLess(
-            script.index("refs/heads/benchmark-stats"),
-            script.index("cp -a repo/site/mirror/."),
-        )
+        self.assertIn("-m ci.publish_bench_site", script)
+        source = publisher_source()
+        self.assertLess(source.index("def read_published"), source.index("def overlay"))
+        self.assertIn('"reset", "--hard", "FETCH_HEAD"', source)
 
     def test_the_nightly_does_not_share_the_push_concurrency_group(self):
         """A queued nightly is evicted by the next merge (run 43190818367, 2026-11-12)."""
@@ -92,27 +101,39 @@ class MirrorDeployIsIndependentTests(unittest.TestCase):
     def test_assembler_unions_history_instead_of_overwriting_it(self):
         # Overlapping nightly and push runs publish history snapshots taken at
         # different times; the later publisher must not revert the other's row.
-        script = script_of(
-            self.jobs["publish"], "Assemble the site from the last publish plus fresh inputs"
-        )
-        self.assertIn("repo/ci/merge_bench_history.py", script)
-        self.assertIn("--fresh benchmark-measurements/history.jsonl", script)
-        # The published copy must be captured BEFORE the overlay overwrites it.
+        source = publisher_source()
+        self.assertIn("from ci.merge_bench_history import merge_history", source)
+        # Every attempt reads the published copy BEFORE the overlay overwrites it.
         self.assertLess(
-            script.index('published_history="$(mktemp)"'),
-            script.index("cp -a benchmark-measurements/."),
+            source.index("overlay(spec, read_history(spec))"),
+            source.index("if not stage_and_commit(spec)"),
         )
+        self.assertIn("merge_history(published_history", source)
 
-    def test_the_history_merger_is_checked_out_for_the_publisher(self):
+    def test_the_publisher_and_its_merger_are_checked_out(self):
+        # The step runs `python3 -m ci.publish_bench_site`, so the sparse checkout
+        # needs the package marker plus both modules.
         checkout = step_named(self.jobs["publish"], "Check out the mirror manifest")
-        self.assertIn("ci/merge_bench_history.py", checkout["with"]["sparse-checkout"])
+        sparse = checkout["with"]["sparse-checkout"]
+        for entry in ("ci/merge_bench_history.py", "ci/publish_bench_site.py"):
+            self.assertIn(entry, sparse)
+        # `ci` is imported as a namespace package: checking the marker out would
+        # make `ci/gate_script_coverage.py` read it as an invoked gate script.
+        self.assertNotIn("ci/__init__.py", sparse)
 
     def test_mirror_is_copied_by_the_assembler_not_the_benchmark(self):
         script = script_of(
-            self.jobs["publish"], "Assemble the site from the last publish plus fresh inputs"
+            self.jobs["publish"],
+            "Assemble the site from the last publish plus fresh inputs",
         )
-        self.assertIn("cp -a repo/site/mirror/.", script)
-        benchmark_scripts = " ".join(s.get("run", "") for s in steps_of(self.jobs["benchmark"]))
+        self.assertIn("--mirror-dir repo/site/mirror", script)
+        self.assertIn(
+            'copy_tree(spec.mirror_dir, spec.publish_dir / "mirror")',
+            publisher_source(),
+        )
+        benchmark_scripts = " ".join(
+            s.get("run", "") for s in steps_of(self.jobs["benchmark"])
+        )
         self.assertNotIn("repo/site/mirror", benchmark_scripts)
 
     def test_pages_artifact_uploads_the_assembled_site(self):
@@ -129,13 +150,10 @@ class MirrorDeployIsIndependentTests(unittest.TestCase):
 
     def test_a_no_op_publish_never_pushes(self):
         # A failing benchmark on an unchanged tree must not rewrite the branch.
-        script = script_of(
-            self.jobs["publish"], "Assemble the site from the last publish plus fresh inputs"
-        )
-        self.assertIn("diff --cached --quiet", script)
-        self.assertLess(
-            script.index("diff --cached --quiet"), script.index("git -C \"${publish_dir}\" push")
-        )
+        source = publisher_source()
+        self.assertIn('"diff", "--cached", "--quiet"', source)
+        self.assertIn("No site changes to publish.", source)
+        self.assertLess(source.index("def stage_and_commit"), source.index("def push"))
 
 
 class StalePagesArtifactTests(unittest.TestCase):
@@ -164,13 +182,17 @@ class StalePagesArtifactTests(unittest.TestCase):
         self.assertNotIn("build-comparison-site", script)
         self.assertNotIn("build-comparison-log", script)
 
-    def _run(self, artifacts: list[dict]) -> tuple[subprocess.CompletedProcess[str], list[tuple[str, str]]]:
+    def _run(
+        self, artifacts: list[dict]
+    ) -> tuple[subprocess.CompletedProcess[str], list[tuple[str, str]]]:
         requests: list[tuple[str, str]] = []
 
         class Handler(BaseHTTPRequestHandler):
             def do_GET(self) -> None:
                 requests.append(("GET", self.path))
-                body = json.dumps({"total_count": len(artifacts), "artifacts": artifacts}).encode()
+                body = json.dumps(
+                    {"total_count": len(artifacts), "artifacts": artifacts}
+                ).encode()
                 self.send_response(200)
                 self.send_header("Content-Type", "application/json")
                 self.send_header("Content-Length", str(len(body)))
@@ -198,7 +220,11 @@ class StalePagesArtifactTests(unittest.TestCase):
             }
             script = script_of(self.jobs["publish"], self.STEP)
             return subprocess.run(
-                ["bash", "-c", script], env=env, capture_output=True, text=True, check=False
+                ["bash", "-c", script],
+                env=env,
+                capture_output=True,
+                text=True,
+                check=False,
             ), requests
         finally:
             server.shutdown()
@@ -218,12 +244,16 @@ class StalePagesArtifactTests(unittest.TestCase):
         self.assertEqual(0, result.returncode, result.stderr)
         deleted = sorted(path for method, path in requests if method == "DELETE")
         self.assertEqual(
-            ["/repos/FastLED/fbuild/actions/artifacts/11", "/repos/FastLED/fbuild/actions/artifacts/12"],
+            [
+                "/repos/FastLED/fbuild/actions/artifacts/11",
+                "/repos/FastLED/fbuild/actions/artifacts/12",
+            ],
             deleted,
         )
         gets = [path for method, path in requests if method == "GET"]
         self.assertEqual(
-            ["/repos/FastLED/fbuild/actions/runs/42466790090/artifacts?per_page=100"], gets
+            ["/repos/FastLED/fbuild/actions/runs/42466790090/artifacts?per_page=100"],
+            gets,
         )
 
     def test_a_first_attempt_deletes_nothing(self):

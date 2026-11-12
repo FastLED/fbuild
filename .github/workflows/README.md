@@ -97,7 +97,7 @@ block fails CI with a copy-paste fix.
 
 ## Scheduled Benchmarks
 
-- **`benchmark-build-comparison.yml`** -- Arduino CLI vs PlatformIO vs fbuild Blink cold/warm benchmark; runs nightly, manually, and for relevant pushes to `main`, then force-publishes the one-commit `benchmark-stats` branch and deploys its site to GitHub Pages. The nightly owns its own concurrency slot, so it can overlap a push run; the publisher therefore unions `history.jsonl` (`ci/merge_bench_history.py`) instead of overwriting it
+- **`benchmark-build-comparison.yml`** -- Arduino CLI vs PlatformIO vs fbuild Blink cold/warm benchmark; runs nightly, manually, and for relevant pushes to `main`, then publishes the one-commit `benchmark-stats` branch and deploys its site to GitHub Pages. The nightly owns its own concurrency slot, so it can overlap a push run; the publisher (`ci/publish_bench_site.py`) therefore pushes under `--force-with-lease` and retries a rejected attempt, so a rival publish can neither revert that run's `history.jsonl` row (`ci/merge_bench_history.py` unions it) nor lose its own
 - **`esp32s3-size-parity.yml`** -- builds an ESP32-S3 Blink with PlatformIO and fbuild on the same pinned pioarduino platform and fails if fbuild's `firmware.bin` is larger (#1432); runs once a day and manually, never on push/PR
 
 ## Per-Board Builds (manual/reusable, called by CI tiers)

@@ -50,6 +50,7 @@ DRIFT_UNITTEST_MODULES: tuple[str, ...] = (
     "ci.test_select_boards",
     "ci.test_run_dylint",
     "ci.test_merge_bench_history",
+    "ci.test_publish_bench_site",
 )
 
 # Modules the local gate additionally runs. Their subject is the local proof
