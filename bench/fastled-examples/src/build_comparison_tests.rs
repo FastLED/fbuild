@@ -1045,3 +1045,91 @@ fn clean_command_stderr_is_not_a_restart() {
     assert!(!restarted_daemon(b"build succeeded in 0.0s\n"));
     assert!(!restarted_daemon(b""));
 }
+
+fn parse(args: &[&str]) -> AppResult<Options> {
+    parse_options_from(args.iter().map(OsString::from))
+}
+
+fn board_keys(boards: &[Board]) -> Vec<&'static str> {
+    boards.iter().map(|board| board.key).collect()
+}
+
+#[test]
+fn boards_default_to_the_whole_matrix() {
+    let options = parse(&[]).unwrap();
+    assert_eq!(board_keys(&options.boards), board_keys(&BOARDS));
+}
+
+#[test]
+fn boards_flag_selects_one_board() {
+    let options = parse(&["--boards", "uno"]).unwrap();
+    assert_eq!(board_keys(&options.boards), vec!["uno"]);
+    // The rest of the defaults must survive a filtered selection.
+    assert_eq!(options.trials, 3);
+    assert_eq!(options.project_dir.display_slash(), "bench/blink");
+}
+
+#[test]
+fn boards_flag_keeps_the_order_given_and_collapses_duplicates() {
+    let options = parse(&["--boards", " esp32s3 , uno ,esp32s3"]).unwrap();
+    assert_eq!(board_keys(&options.boards), vec!["esp32s3", "uno"]);
+}
+
+#[test]
+fn unknown_board_is_an_error_that_names_the_valid_keys() {
+    let error = parse(&["--boards", "esp32c6"]).unwrap_err().to_string();
+    assert!(error.contains("esp32c6"), "{error}");
+    assert!(error.contains("uno, esp32s3"), "{error}");
+}
+
+#[test]
+fn boards_flag_rejects_an_empty_selection() {
+    let error = parse(&["--boards", " , "]).unwrap_err().to_string();
+    assert!(error.contains("at least one board"), "{error}");
+}
+
+#[test]
+fn a_filtered_selection_writes_only_the_selected_boards() {
+    let selected = parse_boards("esp32s3").unwrap();
+    let results = sample_results()
+        .into_iter()
+        .filter(|result| selected.iter().any(|board| board.key == result.board))
+        .collect::<Vec<_>>();
+    assert!(results.iter().all(|result| result.board == "esp32s3"));
+    // The regression guard only fires for boards that were measured.
+    assert_eq!(board_cold_ratio(&results, "uno"), None);
+}
+
+#[test]
+fn explicit_homes_pass_the_guard() {
+    assert!(require_explicit_homes(true, true, true).is_ok());
+}
+
+#[test]
+fn every_default_home_is_named_in_the_refusal() {
+    let error = require_explicit_homes(false, false, false)
+        .unwrap_err()
+        .to_string();
+    assert!(error.contains("PLATFORMIO_HOME"), "{error}");
+    assert!(error.contains("FBUILD_CACHE_DIR"), "{error}");
+    assert!(error.contains("ARDUINO_DIRECTORIES_DATA"), "{error}");
+    assert!(error.contains("--allow-default-homes"), "{error}");
+}
+
+#[test]
+fn one_missing_home_names_only_that_variable() {
+    let error = require_explicit_homes(true, false, true)
+        .unwrap_err()
+        .to_string();
+    assert!(error.contains("FBUILD_CACHE_DIR"), "{error}");
+    assert!(!error.contains("PLATFORMIO_HOME"), "{error}");
+}
+
+#[test]
+fn allow_default_homes_is_off_by_default_and_swallows_no_argument() {
+    assert!(!parse(&[]).unwrap().allow_default_homes);
+    let options = parse(&["--allow-default-homes", "--trials", "2"]).unwrap();
+    assert!(options.allow_default_homes);
+    assert_eq!(options.trials, 2);
+    assert_eq!(board_keys(&options.boards), board_keys(&BOARDS));
+}

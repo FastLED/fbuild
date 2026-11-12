@@ -153,9 +153,13 @@ jobs:
           set -euo pipefail
           echo "Runner parallelism: nproc=$(nproc)"
           generated_at="$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+          # The runner is throwaway, so cold preparation may delete the default
+          # tool homes (PLATFORMIO_HOME, FBUILD_CACHE_DIR, ARDUINO_DIRECTORIES_DATA);
+          # a developer machine must name them explicitly instead.
           sudo ip netns exec bench runuser -u "$(id -un)" -- \
             env HOME="${HOME}" PATH="${PATH}" \
           target/release/bench-build-comparison \
+            --allow-default-homes \
             --project-dir bench/blink \
             --fbuild target/release/fbuild \
             --output-dir benchmark-stats \
