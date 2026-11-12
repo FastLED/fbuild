@@ -977,6 +977,66 @@ fn ratio_regression_uses_only_matching_board_history() {
     );
 }
 
+/// The 2026-11-12 nightly (sha 5360eae2) published a `fbuild cold regression` warning for uno
+/// at ratio 0.898 against a 7-day median of 0.896 -- a 0.2% miss that is pure noise, on a run
+/// where fbuild was 3.3x faster than PlatformIO on ESP32-S3 and ~10% faster on the Uno. These
+/// are the real values inside the 7-day window (07:39:48Z minus 7 days) of
+/// benchmark-stats:history.jsonl at that run, unsorted.
+#[test]
+fn ratio_regression_ignores_nightly_noise_inside_margin() {
+    let now = parse_timestamp_unix_s("2026-11-12T07:39:48Z").unwrap();
+    // 8 h apart: all 18 samples fall inside the 7-day window.
+    let step = 8 * 3_600;
+    let observed = [
+        0.887, 0.905, 0.897, 0.896, 0.904, 0.886, 0.9, 0.9, 0.901, 0.879, 0.898, 0.896, 0.882,
+        0.882, 0.902, 0.473, 0.488, 0.425,
+    ];
+    let history = observed
+        .iter()
+        .enumerate()
+        .map(|(i, ratio)| json!({"ts": format!("unix:{}", now - step * (i as u64 + 1)), "fbuild_vs_platformio_cold": ratio}))
+        .collect::<Vec<_>>();
+    // Baseline is the median of those 18 samples; 0.898 beat it by 0.002 and used to fire.
+    assert_eq!(median(&observed), 0.896);
+    assert_eq!(ratio_regressed(&history, now, 0.898), None);
+    // A 6% regression is real signal and must still fire.
+    assert_eq!(ratio_regressed(&history, now, 0.95), Some(0.896));
+}
+
+#[test]
+fn ratio_regression_fires_at_the_margin_boundary_only_past_it() {
+    let now = parse_timestamp_unix_s("2026-11-12T07:39:48Z").unwrap();
+    let day = 86_400;
+    let history = vec![
+        json!({"ts": format!("unix:{}", now - day), "fbuild_vs_platformio_cold": 0.4}),
+        json!({"ts": format!("unix:{}", now - 2 * day), "fbuild_vs_platformio_cold": 0.4}),
+        json!({"ts": format!("unix:{}", now - 3 * day), "fbuild_vs_platformio_cold": 0.4}),
+    ];
+    assert_eq!(ratio_regressed(&history, now, 0.4), None);
+    assert_eq!(
+        ratio_regressed(&history, now, 0.4 * (1.0 + REGRESSION_MARGIN)),
+        None
+    );
+    assert_eq!(
+        ratio_regressed(&history, now, 0.4 * (1.0 + REGRESSION_MARGIN) + 0.001),
+        Some(0.4)
+    );
+}
+
+/// A genuine regime shift (the 2026-11-07 change: esp32s3 0.945 -> 0.416, uno 0.473 -> 0.887)
+/// is far outside the noise margin, so the gate still catches real regressions.
+#[test]
+fn ratio_regression_catches_a_regime_shift() {
+    let now = parse_timestamp_unix_s("2026-11-12T07:39:48Z").unwrap();
+    let day = 86_400;
+    let old_regime = [0.306, 0.312, 0.307, 0.302, 0.309, 0.315, 0.306];
+    let history = old_regime
+        .iter()
+        .enumerate()
+        .map(|(i, ratio)| json!({"ts": format!("unix:{}", now - day * (i as u64 + 1)), "fbuild_vs_platformio_cold": ratio}))
+        .collect::<Vec<_>>();
+    assert_eq!(ratio_regressed(&history, now, 0.95), Some(0.307));
+}
 #[test]
 fn svg_shows_raw_floor_and_overhead() {
     let svg = render_svg(&sample_metadata(), &sample_results());

@@ -154,6 +154,32 @@ a breach fails the job and blocks the PR. Bumping the FastLED pin is a
 deliberate baseline event — update both the workflow `ref:` and the
 sample-numbers table above in lockstep.
 
+## Cold-regression gate (nightly `bench-build-comparison`)
+
+After the measurements, `bench-build-comparison` compares each board's
+`fbuild/PlatformIO` cold ratio against the median of the trailing 7 days in
+`benchmark-stats:history.jsonl` and prints a GitHub Actions
+`::warning title=fbuild cold regression (<board>)` annotation when the ratio
+is worse.
+
+The warning only fires when the current ratio exceeds that median by more
+than **5%** (`REGRESSION_MARGIN` in `src/build_comparison.rs`). Without the
+margin the gate fired whenever the ratio merely landed above the median —
+which is true by construction about half the time, because a median sits in
+the middle of the distribution. Replaying
+`benchmark-stats:history.jsonl` through the old rule: uno fired on **50%**
+of the 2026-11-08..12 nights and esp32s3 on **33%**, on runs where fbuild was
+in fact 3.3x faster than PlatformIO on ESP32-S3. With the margin both boards
+fire **0%** across that window, while the genuine 2026-11-07 shift
+(uno 0.473 -> 0.887, esp32s3 0.945 -> 0.416) is still caught, 10x outside the
+margin.
+
+Observed night-to-night spread in the current regime is ±1.5% (uno
+0.879-0.905, esp32s3 0.302-0.316), so 5% is ~4x the noise. The gate is a
+warning only — it never fails the job — and it is deliberately insensitive to
+slow drift, because the baseline is a trailing median that moves with the
+data.
+
 ## Cross-links
 
 - `bench-build-comparison` (the Blink whole-build comparison binary in this
