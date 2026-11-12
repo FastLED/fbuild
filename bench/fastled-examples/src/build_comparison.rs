@@ -90,8 +90,15 @@ struct Options {
     arduino_cli: OsString,
     platformio: OsString,
     trials: usize,
+    /// Boards to measure, in the order given on the command line. Defaults to
+    /// every board in [`BOARDS`]; a local run can name one board so it does not
+    /// have to pay for the whole matrix.
+    boards: Vec<Board>,
     /// Link rate the runner was shaped to, in Mbit/s. 0 means unthrottled.
     network_mbit: u32,
+    /// Permit cold preparation to delete the tool homes at their default
+    /// locations. Only a throwaway runner may set this.
+    allow_default_homes: bool,
     repository: String,
     git_sha: String,
     generated_at: String,
@@ -229,6 +236,13 @@ fn main() {
 #[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 fn run() -> AppResult<()> {
     let options = parse_options()?;
+    if !options.allow_default_homes {
+        require_explicit_homes(
+            env::var_os("PLATFORMIO_HOME").is_some(),
+            env::var_os("FBUILD_CACHE_DIR").is_some(),
+            env::var_os("ARDUINO_DIRECTORIES_DATA").is_some(),
+        )?;
+    }
     let repo_root = env::current_dir()?;
     let project_dir = absolute_from(&repo_root, &options.project_dir);
     let output_dir = absolute_from(&repo_root, &options.output_dir);
@@ -270,9 +284,9 @@ fn run() -> AppResult<()> {
         ),
     ];
 
-    let mut results = Vec::with_capacity(versions.len() * BOARDS.len());
+    let mut results = Vec::with_capacity(versions.len() * options.boards.len());
     let mut raw_baselines_ms = BTreeMap::new();
-    for board in BOARDS {
+    for board in options.boards.iter().copied() {
         let arduino_build_dir = repo_root.join(format!("benchmark-output/arduino-{}", board.key));
         for (kind, version) in &versions {
             let result = measure_tool(
@@ -318,7 +332,7 @@ fn run() -> AppResult<()> {
         .duration_since(UNIX_EPOCH)
         .unwrap_or_default()
         .as_secs();
-    for board in BOARDS {
+    for board in options.boards.iter().copied() {
         if let Some(ratio) = board_cold_ratio(&results, board.key) {
             let Some(baseline) = ratio_regressed_for_board(&history, now_unix_s, ratio, board.key)
             else {
@@ -2278,7 +2292,86 @@ fn html_escape(value: &str) -> String {
     xml_escape(value)
 }
 
+/// Resolve a `--boards` value into the boards to measure.
+///
+/// Keys are matched case-sensitively against [`BOARDS`]; order is preserved and
+/// duplicates collapse to their first mention. An unknown key is an error that
+/// lists the valid keys, so a typo cannot silently benchmark nothing.
+fn parse_boards(spec: &str) -> AppResult<Vec<Board>> {
+    let mut selected: Vec<Board> = Vec::new();
+    for raw in spec.split(',') {
+        let key = raw.trim();
+        if key.is_empty() {
+            continue;
+        }
+        let board = BOARDS
+            .iter()
+            .find(|board| board.key == key)
+            .ok_or_else(|| {
+                io::Error::new(
+                    io::ErrorKind::InvalidInput,
+                    format!(
+                        "unknown board {key:?} in --boards; valid keys: {}",
+                        BOARDS
+                            .iter()
+                            .map(|board| board.key)
+                            .collect::<Vec<_>>()
+                            .join(", ")
+                    ),
+                )
+            })?;
+        if !selected.iter().any(|board| board.key == key) {
+            selected.push(*board);
+        }
+    }
+    if selected.is_empty() {
+        return Err(io::Error::new(
+            io::ErrorKind::InvalidInput,
+            "--boards needs at least one board key",
+        )
+        .into());
+    }
+    Ok(selected)
+}
+
+/// Refuse to run when cold preparation would delete a tool home the caller did
+/// not name, because the defaults are the developer's real installs.
+///
+/// Each argument is `true` when the corresponding variable IS set, so the check
+/// stays pure and testable; `run` reads the process environment.
+fn require_explicit_homes(platformio: bool, cache: bool, arduino: bool) -> AppResult<()> {
+    let mut missing: Vec<&str> = Vec::new();
+    if !platformio {
+        missing.push("PLATFORMIO_HOME (falls back to ~/.platformio)");
+    }
+    if !cache {
+        missing.push("FBUILD_CACHE_DIR (falls back to the warm fbuild cache)");
+    }
+    if !arduino {
+        missing.push("ARDUINO_DIRECTORIES_DATA (falls back to the real Arduino data dir)");
+    }
+    if missing.is_empty() {
+        return Ok(());
+    }
+    Err(io::Error::new(
+        io::ErrorKind::InvalidInput,
+        format!(
+            "cold preparation deletes every tool home, and these are not set: {}; point them \
+             at scratch, or pass --allow-default-homes on a throwaway CI runner, because \
+             otherwise this run deletes a real install",
+            missing.join(", ")
+        ),
+    )
+    .into())
+}
+
 fn parse_options() -> AppResult<Options> {
+    parse_options_from(env::args_os().skip(1))
+}
+
+/// Split from [`parse_options`] so tests can drive the flag parser without
+/// touching this process's real argv.
+fn parse_options_from(args: impl Iterator<Item = OsString>) -> AppResult<Options> {
     let mut options = Options {
         output_dir: NormalizedPath::new("benchmark-stats"),
         project_dir: NormalizedPath::new("bench/blink"),
@@ -2294,7 +2387,9 @@ fn parse_options() -> AppResult<Options> {
         }),
         platformio: OsString::from(if cfg!(windows) { "pio.exe" } else { "pio" }),
         trials: 3,
+        boards: BOARDS.to_vec(),
         network_mbit: 0,
+        allow_default_homes: false,
         repository: DEFAULT_REPOSITORY.to_string(),
         git_sha: env::var("GITHUB_SHA").unwrap_or_else(|_| "local".to_string()),
         generated_at: default_generated_at(),
@@ -2303,12 +2398,17 @@ fn parse_options() -> AppResult<Options> {
         raw_base_url: DEFAULT_RAW_BASE_URL.to_string(),
     };
 
-    let mut args = env::args_os().skip(1);
+    let mut args = args;
     while let Some(flag) = args.next() {
         let flag_text = flag.to_string_lossy();
         if flag_text == "--help" || flag_text == "-h" {
             print_help();
             std::process::exit(0);
+        }
+        if flag_text == "--allow-default-homes" {
+            // A bare switch: it must never consume the next argument.
+            options.allow_default_homes = true;
+            continue;
         }
         let value = args.next().ok_or_else(|| {
             io::Error::new(
@@ -2332,6 +2432,7 @@ fn parse_options() -> AppResult<Options> {
                     .into());
                 }
             }
+            "--boards" => options.boards = parse_boards(&value.to_string_lossy())?,
             "--network-mbit" => {
                 options.network_mbit = value.to_string_lossy().parse()?;
             }
@@ -2373,7 +2474,11 @@ fn print_help() {
          --arduino-cli COMMAND   Arduino CLI executable\n\
          --platformio COMMAND    PlatformIO executable\n\
          --trials N              Cold/warm trial pairs (default: 3)\n\
+         --boards KEYS           Comma-separated board keys, e.g. uno,esp32s3\n\
+                                 (default: every board)\n\
          --network-mbit N        Link rate for disclosure, Mbit/s (default: 0 = unthrottled)\n\
+         --allow-default-homes   Delete the tool homes at their DEFAULT locations;\n\
+                                 only for throwaway CI runners\n\
          --repository OWNER/REPO Metadata repository\n\
          --git-sha SHA           Commit measured\n\
          --generated-at ISO8601  Run timestamp\n\

@@ -108,12 +108,27 @@ defaults to 3, and `--network-mbit` shapes the cold download window the way CI
 does (0, the default, is unshaped). The artifacts land in `--output-dir` in the
 same layout the nightly publishes.
 
+`--boards` narrows the matrix to the board keys you name (`uno`, `esp32s3`),
+which is how a developer iterates: the whole matrix costs ~25 minutes and ~14 GB
+of scratch because of the ESP32-S3 toolchains, while `--boards uno` finishes in
+about a minute once the toolchains are installed. An unknown key fails the run
+and lists the valid ones, so a typo cannot silently benchmark nothing.
+
+Cold preparation is destructive by design, so the harness refuses to start when
+`PLATFORMIO_HOME`, `FBUILD_CACHE_DIR` or `ARDUINO_DIRECTORIES_DATA` is unset —
+those defaults are the real `~/.platformio`, the warm fbuild cache and
+`~/.arduino15`. The nightly runner passes `--allow-default-homes` because it is
+throwaway and is meant to start cold.
+
 The `target/release/fbuild` path above is for Linux and CI. On Windows, use
 `target/x86_64-pc-windows-msvc/release/fbuild.exe`.
 
-Budget: with `--trials 1` on a 16-core Linux host on an unshaped link the run
-takes about 25 minutes and about 14 GB of scratch (Arduino CLI 7.8 GB,
+Budget: with `--trials 1` on a 16-core Linux host on an unshaped link the whole
+matrix takes about 25 minutes and about 14 GB of scratch (Arduino CLI 7.8 GB,
 PlatformIO 5.9 GB, fbuild cache 0.3 GB), almost all of it ESP32-S3 toolchains.
+A single board is about a minute; `--boards uno --trials 1` measured 48.9 s
+(Arduino CLI 15.52 s cold / 550 ms warm, PlatformIO 18.63 s / 630 ms, fbuild
+11.45 s / 73 ms) on 2026-11-11 against `a9e572ba`, unshaped.
 
 ### Recorded local run
 
