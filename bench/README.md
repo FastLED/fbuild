@@ -29,9 +29,13 @@ soldr cargo bench -p fbuild-header-scan  --bench scan_throughput
   Run with `soldr cargo run --release -p fbuild-bench-fastled-examples --bin bench-fastled-examples`.
   The synthetic warm-path baseline lives in
   `crates/fbuild-library-select/benches/resolve_warm.rs`.
+- [`deploy-latency/`](deploy-latency/README.md) — flash-path timing and
+  boot verification against a real attached board, including the
+  flash-size preflight refusal case (FastLED/fbuild#1992/#1993). Manual,
+  hardware-required, no CI gate.
 
-Other end-to-end matrices (whole-build wall-clock, deploy+flash latency,
-emulator boot) may join this directory in the future. Each subdirectory
+Other end-to-end matrices (whole-build wall-clock, emulator boot) may join
+this directory in the future. Each subdirectory
 must carry its own `README.md` explaining what it measures, how to run it,
 and which CI gate (if any) it feeds.
 
