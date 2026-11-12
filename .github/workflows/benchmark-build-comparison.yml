@@ -243,8 +243,13 @@ jobs:
     # hinge on the ESP32-S3 benchmark (FastLED/fbuild#1825). This job therefore
     # runs whenever the measurement job is DONE, not when it SUCCEEDED: it seeds
     # the site from the last published `benchmark-stats` branch and overlays fresh
-    # measurements only if they exist. Pages deploys replace the whole site, so a
-    # single assembler stays authoritative -- two publishers would clobber.
+    # measurements only if they exist. Pages deploys replace the whole site, so
+    # only ONE publisher may assemble at a time: the nightly owns its own
+    # `concurrency:` group now (FastLED/fbuild#2005), so a nightly and a push run
+    # can overlap. `ci/publish_bench_site.py` makes that safe on the branch (it
+    # re-reads `benchmark-stats` per attempt, unions `history.jsonl` by `(ts,
+    # sha)` and pushes under `--force-with-lease`, #2006/#2007); the deployment
+    # itself is serialised by the job-level `concurrency:` block below.
     needs: benchmark
     if: ${{ !cancelled() && github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-24.04
@@ -352,6 +357,17 @@ jobs:
     needs: publish
     if: ${{ needs.publish.result == 'success' }}
     runs-on: ubuntu-24.04
+    # GitHub Pages allows ONE deployment in progress per environment. Two
+    # publishers can reach this job at the same time (the nightly and a push run
+    # own separate workflow-level groups since #2005), and the run that loses
+    # that race fails here with "Deployment failed, try again later"
+    # (actions/deploy-pages#406, #418) -- red bench runs on main for a reason
+    # that has nothing to do with the measurement. Queue instead of cancelling,
+    # exactly like GitHub's own Pages template; `ci/check_workflow_concurrency.py`
+    # enforces this block.
+    concurrency:
+      group: github-pages
+      cancel-in-progress: false
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

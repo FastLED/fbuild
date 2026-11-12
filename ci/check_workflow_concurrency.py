@@ -103,6 +103,7 @@ def check_file(path: Path) -> list[str]:
     on_block = load_on_block(doc)
     problems = check_pull_request_rules(path, doc, on_block)
     problems.extend(check_schedule_rules(path, doc, on_block))
+    problems.extend(check_pages_rules(path, doc))
     return problems
 
 
@@ -181,6 +182,98 @@ def check_schedule_rules(path: Path, doc: dict, on_block: object) -> list[str]:
         f"group by `github.event_name`, e.g. ${{{{ github.event_name == "
         f"'schedule' && 'nightly' || github.ref }}}}"
     ]
+
+
+# GitHub Pages allows ONE in-flight deployment per environment. A deployment
+# job therefore has to serialise on a *shared* group: a group that varies per
+# run (or per ref) hands every run its own slot and serialises nothing.
+DEPLOY_ACTION_PREFIX = "actions/deploy-pages"
+PER_RUN_GROUP_TOKENS = (
+    "github.run_id",
+    "github.run_number",
+    "github.sha",
+    "github.head_ref",
+    "github.ref",
+)
+
+
+def job_deploys_pages(job: object) -> bool:
+    """True when a job runs the Pages deployment action (not just the upload)."""
+    if not isinstance(job, dict):
+        return False
+    steps = job.get("steps")
+    if not isinstance(steps, list):
+        return False
+    return any(
+        isinstance(step, dict)
+        and str(step.get("uses", "")).startswith(DEPLOY_ACTION_PREFIX)
+        for step in steps
+    )
+
+
+def check_pages_rules(path: Path, doc: dict) -> list[str]:
+    """A Pages deployment job must serialise on one shared concurrency group.
+
+    `benchmark-build-comparison.yml` publishes from two slots that are allowed to
+    overlap: the nightly owns its own `concurrency:` group and a push run keeps
+    the per-ref one (FastLED/fbuild#2005), because GitHub cancels a queued run
+    when a new one arrives in the same group. The history union and the leased
+    push (#2006/#2007) make overlapping *publishers* safe, but the Pages
+    deployment itself is not: GitHub allows one deployment in progress per
+    environment, and the run that loses that race fails the `deploy-pages` step
+    with "Deployment failed, try again later" (actions/deploy-pages#406, #418).
+    GitHub's own Pages template prevents this with
+    `concurrency: {group: github-pages, cancel-in-progress: false}`; this rule
+    makes that structural instead of tribal knowledge.
+
+    A job that only UPLOADS the artifact (`actions/upload-pages-artifact`) is
+    not a deployment and is unaffected.
+    """
+    jobs = doc.get("jobs")
+    if not isinstance(jobs, dict):
+        return []
+
+    problems: list[str] = []
+    for name, job in jobs.items():
+        if not job_deploys_pages(job):
+            continue
+        conc = job.get("concurrency")
+        if conc is None:
+            problems.append(
+                f"{path.name}: job {name!r} runs {DEPLOY_ACTION_PREFIX} but has no "
+                f"job-level `concurrency:` block -- two overlapping runs reach it "
+                f"and the loser fails with 'Deployment failed, try again later'. "
+                f"Add `concurrency: {{group: github-pages, "
+                f"cancel-in-progress: false}}`"
+            )
+            continue
+        if not isinstance(conc, dict):
+            problems.append(
+                f"{path.name}: job {name!r} `concurrency:` must be a mapping "
+                f"with `group:`"
+            )
+            continue
+        group = str(conc.get("group", ""))
+        if not group:
+            problems.append(
+                f"{path.name}: job {name!r} `concurrency:` needs a non-empty "
+                f"`group:` -- use a shared name such as `github-pages`"
+            )
+        elif any(token in group for token in PER_RUN_GROUP_TOKENS):
+            problems.append(
+                f"{path.name}: job {name!r} deploy-pages group {group!r} varies "
+                f"per run, so it serialises nothing -- use one shared group "
+                f"(e.g. `github-pages`)"
+            )
+        cancel = str(conc.get("cancel-in-progress", "")).lower()
+        if "true" in cancel:
+            problems.append(
+                f"{path.name}: job {name!r} sets `cancel-in-progress: true` on a "
+                f"deploy-pages job -- cancelling a deployment mid-flight can leave "
+                f"the Pages environment stuck ('Deployment failed, try again "
+                f"later'); let deployments queue instead"
+            )
+    return problems
 
 
 def main() -> int:
