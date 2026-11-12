@@ -65,8 +65,31 @@ the median is available, and writes these fields to the job step summary.
 
 ## Run locally
 
-Install Arduino CLI, its `arduino:avr` core, and PlatformIO first. Build fbuild
-and run the harness through `soldr`:
+Install Arduino CLI and PlatformIO Core first. The ESP32-S3 environment pulls the
+pioarduino `55.03.312` bundle, which needs **PlatformIO Core 6.2.0**; a
+distribution `pio` (6.1.x) cannot build that platform. Arduino CLI 1.1.x is
+enough.
+
+> **Warning: every cold trial deletes installs, untimed, before the timer
+> starts.** For each board and tool the preparation step removes
+> `<arduino data>/packages` and `staging`, the whole `PLATFORMIO_HOME`
+> (pioarduino also reuses `dist` and `tools`), the whole fbuild cache root, and
+> the project's `.pio` and `.fbuild`. With default locations that means your
+> real `~/.platformio` and fbuild cache. Point each tool at a scratch directory
+> instead; the harness cleans only what these variables name. It reads
+> `PLATFORMIO_HOME`, while PlatformIO itself reads `PLATFORMIO_CORE_DIR`, so
+> export both:
+
+```bash
+S=/path/to/scratch/bench-blink
+export PLATFORMIO_HOME=$S/platformio PLATFORMIO_CORE_DIR=$S/platformio
+export ARDUINO_DIRECTORIES_DATA=$S/arduino \
+       ARDUINO_DIRECTORIES_DOWNLOADS=$S/arduino/staging \
+       ARDUINO_DIRECTORIES_USER=$S/arduino/user
+export FBUILD_CACHE_DIR=$S/fb-cache
+```
+
+Then build fbuild and run the harness through `soldr`:
 
 ```bash
 soldr cargo build --release -p fbuild-cli --bin fbuild -p fbuild-daemon --bin fbuild-daemon
@@ -74,11 +97,44 @@ soldr cargo run --release -p fbuild-bench-fastled-examples \
   --bin bench-build-comparison -- \
   --project-dir bench/blink \
   --fbuild target/release/fbuild \
-  --output-dir benchmark-stats
+  --arduino-cli $S/bin/arduino-cli \
+  --platformio $S/pio-venv/bin/pio \
+  --output-dir $S/out \
+  --trials 1
 ```
+
+`--arduino-cli` and `--platformio` default to a PATH lookup, `--trials`
+defaults to 3, and `--network-mbit` shapes the cold download window the way CI
+does (0, the default, is unshaped). The artifacts land in `--output-dir` in the
+same layout the nightly publishes.
 
 The `target/release/fbuild` path above is for Linux and CI. On Windows, use
 `target/x86_64-pc-windows-msvc/release/fbuild.exe`.
+
+Budget: with `--trials 1` on a 16-core Linux host on an unshaped link the run
+takes about 25 minutes and about 14 GB of scratch (Arduino CLI 7.8 GB,
+PlatformIO 5.9 GB, fbuild cache 0.3 GB), almost all of it ESP32-S3 toolchains.
+
+### Recorded local run
+
+2026-11-11 against origin/main `9933d9e9`, 16-core Linux, unshaped link,
+`--trials 1`. Absolute numbers are not comparable with the nightly (shaped link,
+median of 3, cold runner); the fbuild/PlatformIO ratio is.
+
+| Board | Tool | Cold | Warm | Cold download |
+|---|---|---|---|---|
+| Arduino Uno | Arduino CLI | 20.56 s | 593 ms | 70 MB |
+| Arduino Uno | PlatformIO | 20.24 s | 668 ms | 62 MB |
+| Arduino Uno | fbuild | 19.16 s | 65 ms | 68 MB |
+| ESP32-S3 | Arduino CLI | 490.7 s | 5.91 s | 1.16 GB |
+| ESP32-S3 | PlatformIO | 257.3 s | 4.45 s | 691 MB |
+| ESP32-S3 | fbuild | 60.8 s | 53 ms | 242 MB |
+
+`fbuild_vs_platformio_cold` is 0.946 (Uno) and 0.236 (ESP32-S3), in the same
+direction as the published nightly (0.88 and 0.31). fbuild's ESP32-S3 cold
+window is dominated by `pioarduino-resolve` (52.4 s of 60.8 s in
+`fbuild-perf.jsonl`), the one-time framework download; the raw compile floor was
+2.6 s and 121 ms for Uno.
 
 The nightly workflow installs and records pinned Arduino CLI and PlatformIO
 versions, primes only the Arduino package index, carries forward a
