@@ -15,6 +15,7 @@ plus B's row survive, A's row is missing.
 
 from __future__ import annotations
 
+import json
 import subprocess
 import tempfile
 import unittest
@@ -72,14 +73,17 @@ class BenchSitePublishTests(unittest.TestCase):
             cwd=seed,
         )
 
-    def _mirror(self) -> Path:
+    def _mirror(self, tag: str | None = None) -> Path:
         mirror = self.root / "mirror-src"
         (mirror / "nested").mkdir(parents=True, exist_ok=True)
-        (mirror / "manifest.json").write_text('{"schema": 3}', encoding="utf-8")
+        payload = '{"schema": 3}' if tag is None else f'{{"schema": 3, "tag": "{tag}"}}'
+        (mirror / "manifest.json").write_text(payload, encoding="utf-8")
         (mirror / "nested" / "owner.json").write_text("{}", encoding="utf-8")
         return mirror
 
-    def _measurements(self, name: str, sha: str, offset: int) -> Path:
+    def _measurements(
+        self, name: str, sha: str, offset: int, generated_at: str | None = None
+    ) -> Path:
         measurements = self.root / name
         measurements.mkdir(parents=True, exist_ok=True)
         (measurements / "history.jsonl").write_text(
@@ -88,16 +92,25 @@ class BenchSitePublishTests(unittest.TestCase):
         (measurements / "index.html").write_text(
             f"<html>{sha}</html>", encoding="utf-8"
         )
+        if generated_at is not None:
+            report = {"metadata": {"generated_at": generated_at, "git_sha": sha}}
+            (measurements / "latest.json").write_text(
+                json.dumps(report), encoding="utf-8"
+            )
         return measurements
 
     def _spec(
-        self, name: str, measurements: Path | None, attempts: int = 5
+        self,
+        name: str,
+        measurements: Path | None,
+        attempts: int = 5,
+        mirror_tag: str | None = None,
     ) -> PublishSpec:
         return PublishSpec(
             repo_url=str(self.origin),
             publish_dir=self.root / name,
             measurements=measurements,
-            mirror_dir=self._mirror(),
+            mirror_dir=self._mirror(mirror_tag),
             message=f"publish {name}",
             max_attempts=attempts,
         )
@@ -238,6 +251,74 @@ class BenchSitePublishTests(unittest.TestCase):
             "\"--force-with-lease=refs/heads/{spec.branch}:{expected or ''}\"", source
         )
         self.assertNotIn('"--force"', source)
+
+    def _published_shas(self) -> list[str]:
+        return [
+            row_text.split('"sha": "')[1].split('"')[0]
+            for row_text in self._published_rows()
+        ]
+
+    def test_an_older_run_publishing_later_keeps_the_newer_report(self):
+        """The nightly can finish AFTER a later merge's push run (#2005).
+
+        Both measurements are legitimate and both history rows must survive, but
+        the site's `latest.json`/`index.html` describe exactly ONE run: publishing
+        an older one on top of a newer one makes the whole report a lie until the
+        next measurement lands. Unioning the branch is not enough -- the site
+        tree has to be recency-gated too.
+        """
+        newer = self._spec(
+            "publish-newer",
+            self._measurements(
+                "measure-newer", "runNEW00", 300, generated_at="2026-11-12T16:00:00Z"
+            ),
+        )
+        older = self._spec(
+            "publish-older",
+            self._measurements(
+                "measure-older", "runOLD00", 200, generated_at="2026-11-12T14:00:00Z"
+            ),
+        )
+        self.assertEqual(0, publish(newer))
+        self.assertEqual(0, publish(older))
+        self.assertEqual("<html>runNEW00</html>", self._published_file("index.html"))
+        shas = self._published_shas()
+        self.assertEqual(SEED_ROWS + 2, len(shas))
+        self.assertIn("runOLD00", shas)
+
+    def test_an_undated_published_report_never_blocks_a_publish(self):
+        """An older-schema branch carries no `metadata.generated_at`: overwrite."""
+        spec = self._spec(
+            "publish-a",
+            self._measurements(
+                "measure-a", "runAAAA", 100, generated_at="2000-01-01T00:00:00Z"
+            ),
+        )
+        self.assertEqual(0, publish(spec))
+        self.assertEqual("<html>runAAAA</html>", self._published_file("index.html"))
+
+    def test_a_stale_run_still_publishes_the_mirror(self):
+        """Recency gates the measurement report only; `site/mirror` is content."""
+        newer = self._spec(
+            "publish-newer",
+            self._measurements(
+                "measure-newer", "runNEW00", 300, generated_at="2026-11-12T16:00:00Z"
+            ),
+            mirror_tag="v2",
+        )
+        older = self._spec(
+            "publish-older",
+            self._measurements(
+                "measure-older", "runOLD00", 200, generated_at="2026-11-12T14:00:00Z"
+            ),
+            mirror_tag="v3",
+        )
+        self.assertEqual(0, publish(newer))
+        self.assertEqual(0, publish(older))
+        self.assertEqual("<html>runNEW00</html>", self._published_file("index.html"))
+        self.assertEqual(
+            '{"schema": 3, "tag": "v3"}', self._published_file("mirror/manifest.json")
+        )
 
 
 if __name__ == "__main__":

@@ -296,7 +296,12 @@ jobs:
           # and pushes under `--force-with-lease`, so a rival publisher (the
           # nightly and a push run now own separate concurrency slots and can
           # overlap) turns into a retry instead of a silently reverted
-          # `history.jsonl` row (FastLED/fbuild#2006).
+          # `history.jsonl` row (FastLED/fbuild#2006). The same overlap can make
+          # the run that finishes LAST the one that measured FIRST, so the
+          # publisher also gates the measurement overlay on
+          # `metadata.generated_at`: an older report never replaces a newer one
+          # on the site, while its history row is still unioned and the mirror
+          # (always current checkout content) is still published (#2009).
           PYTHONPATH="${PWD}/repo" python3 -m ci.publish_bench_site \
             --repo-url "${repo_url}" \
             --publish-dir "${publish_dir}" \

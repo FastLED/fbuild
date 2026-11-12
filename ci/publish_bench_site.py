@@ -25,6 +25,16 @@ The fix is a lease plus a bounded retry:
     idempotent, because the union de-duplicates by ``(ts, sha)``;
   * after `--max-attempts` the step fails loudly rather than clobbering.
 
+Unioning ``history.jsonl`` is only half of it: the rest of the site tree
+(``index.html``, ``benchmark.svg``, ``latest.json``) describes exactly ONE run.
+The nightly now owns its own concurrency slot (#2005), so the run that finishes
+LAST is not always the run that measured LAST -- a nightly that started at 09:17Z
+can publish after a later merge's push run and would then hand the site an older
+``latest.json`` than the one already published. The measurement overlay is
+therefore recency-gated on ``metadata.generated_at``: an older report never
+replaces a newer one, while its history row is still unioned and ``site/mirror``
+(which is checked-out content, always current) is still published.
+
 Usage (from the repository root, so ``ci`` is importable as a package):
 
     python3 -m ci.publish_bench_site \\
@@ -36,16 +46,22 @@ Usage (from the repository root, so ``ci`` is importable as a package):
 from __future__ import annotations
 
 import argparse
+import json
 import shutil
 import subprocess
 import sys
 from dataclasses import dataclass
+from datetime import datetime
 from pathlib import Path
 
 from ci.merge_bench_history import merge_history
 
 MAX_ATTEMPTS = 5
 HISTORY = "history.jsonl"
+LATEST = "latest.json"
+# Every report is stamped by the harness with `date -u +'%Y-%m-%dT%H:%M:%SZ'`,
+# so the comparison is a parse of that one format; anything else is unknown.
+REPORT_TIMESTAMP = "%Y-%m-%dT%H:%M:%SZ"
 # A rejected push means the branch moved under us; anything else is a real
 # failure (auth, network) and retrying would only burn the budget.
 RETRYABLE = ("stale info", "non-fast-forward", "cannot lock ref", "failed to push")
@@ -134,10 +150,42 @@ def copy_tree(source: Path, destination: Path) -> None:
     shutil.copytree(source, destination, dirs_exist_ok=True)
 
 
+def report_timestamp(directory: Path) -> datetime | None:
+    """`metadata.generated_at` of the report in `directory`, or None if unknown."""
+    try:
+        report = json.loads((directory / LATEST).read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return None
+    metadata = report.get("metadata") if isinstance(report, dict) else None
+    raw = metadata.get("generated_at") if isinstance(metadata, dict) else None
+    if not isinstance(raw, str):
+        return None
+    try:
+        return datetime.strptime(raw, REPORT_TIMESTAMP)
+    except ValueError:
+        return None
+
+
+def report_is_older(published: Path, fresh: Path) -> bool:
+    """True when `fresh` measured before the report already on the branch."""
+    fresh_at = report_timestamp(fresh)
+    published_at = report_timestamp(published)
+    if fresh_at is None or published_at is None:
+        # Unknown on either side: fall back to "publish it", never to silence.
+        return False
+    return fresh_at <= published_at
+
+
 def overlay(spec: PublishSpec, published_history: str) -> None:
     """Overlay this run's measurements and mirror, unioning history."""
     if spec.measurements is not None and spec.measurements.is_dir():
-        copy_tree(spec.measurements, spec.publish_dir)
+        if report_is_older(spec.publish_dir, spec.measurements):
+            print(
+                "Published report is newer than this run's; keeping the published "
+                "site and unioning history only."
+            )
+        else:
+            copy_tree(spec.measurements, spec.publish_dir)
         fresh = spec.measurements / HISTORY
         if fresh.is_file():
             merged = merge_history(published_history, fresh.read_text(encoding="utf-8"))
