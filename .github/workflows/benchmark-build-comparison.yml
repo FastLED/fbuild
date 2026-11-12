@@ -259,10 +259,14 @@ jobs:
         uses: actions/checkout@v6
         with:
           path: repo
-          # `ci/merge_bench_history.py` unions the published history with this
-          # run's rows (overlapping nightly/push runs).
+          # `ci/publish_bench_site.py` retries its push under a lease and unions
+          # the published history with this run's rows (overlapping nightly/push
+          # runs). `ci` is imported as a namespace package here, so the sparse
+          # checkout needs only the two modules: also listing the package marker
+          # would make the gate-script coverage ratchet read it as a gate.
           sparse-checkout: |
             ci/merge_bench_history.py
+            ci/publish_bench_site.py
             site/mirror
           sparse-checkout-cone-mode: false
 
@@ -283,47 +287,17 @@ jobs:
           set -euo pipefail
           publish_dir="$(mktemp -d)"
           repo_url="https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-          git -C "${publish_dir}" init --quiet
-          git -C "${publish_dir}" config user.name 'github-actions[bot]'
-          git -C "${publish_dir}" config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          # Pages deploys replace the whole site, so start from the last good
-          # publish rather than from an empty tree (FastLED/fbuild#1825).
-          if git ls-remote --exit-code "${repo_url}" refs/heads/benchmark-stats >/dev/null 2>&1; then
-            git -C "${publish_dir}" fetch --depth=1 "${repo_url}" refs/heads/benchmark-stats
-            git -C "${publish_dir}" reset --hard FETCH_HEAD
-          fi
-          git -C "${publish_dir}" checkout -B benchmark-stats
-          # The nightly and a push run may overlap, so this run's history.jsonl
-          # was snapshotted at benchmark START and can be older than what is
-          # published now. Keep the published copy and union it back after the
-          # overlay; a plain overwrite would revert the other run's row.
-          published_history=""
-          if [[ -f "${publish_dir}/history.jsonl" ]]; then
-            published_history="$(mktemp)"
-            cp "${publish_dir}/history.jsonl" "${published_history}"
-          fi
-          if [[ -d benchmark-measurements ]]; then
-            cp -a benchmark-measurements/. "${publish_dir}/"
-          else
-            echo "No benchmark measurements this run; keeping the last published report."
-          fi
-          if [[ -n "${published_history}" && -f benchmark-measurements/history.jsonl ]]; then
-            python3 repo/ci/merge_bench_history.py \
-              --published "${published_history}" \
-              --fresh benchmark-measurements/history.jsonl \
-              --output "${publish_dir}/history.jsonl"
-            rm -f "${published_history}"
-          fi
-          # The Index points at per-owner shards (FastLED/fbuild#1815); ship them too.
-          mkdir -p "${publish_dir}/mirror"
-          cp -a repo/site/mirror/. "${publish_dir}/mirror/"
-          git -C "${publish_dir}" add -A
-          if git -C "${publish_dir}" diff --cached --quiet; then
-            echo "No site changes to publish."
-          else
-            git -C "${publish_dir}" commit -m "chore: publish build benchmark for ${GITHUB_SHA}"
-            git -C "${publish_dir}" push --force "${repo_url}" benchmark-stats
-          fi
+          # `ci/publish_bench_site.py` re-reads `benchmark-stats` on EVERY attempt
+          # and pushes under `--force-with-lease`, so a rival publisher (the
+          # nightly and a push run now own separate concurrency slots and can
+          # overlap) turns into a retry instead of a silently reverted
+          # `history.jsonl` row (FastLED/fbuild#2006).
+          PYTHONPATH="${PWD}/repo" python3 -m ci.publish_bench_site \
+            --repo-url "${repo_url}" \
+            --publish-dir "${publish_dir}" \
+            --measurements benchmark-measurements \
+            --mirror-dir repo/site/mirror \
+            --message "chore: publish build benchmark for ${GITHUB_SHA}"
           echo "publish_dir=${publish_dir}" >> "${GITHUB_ENV}"
 
       - name: Drop Pages artifacts uploaded by earlier attempts

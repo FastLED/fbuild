@@ -65,6 +65,11 @@ tests = ["ci/test_check_usb_vidpid_literals.py"]
 # the 365-line bound trims the OLDEST row.
 tests = ["ci/test_merge_bench_history.py"]
 
+[scripts.publish_bench_site]
+# The Pages publisher: a rival publish must be retried under a lease, never
+# force-pushed over (FastLED/fbuild#2006).
+tests = ["ci/test_publish_bench_site.py"]
+
 [scripts.check_workflow_concurrency]
 tests = ["ci/test_workflow_concurrency.py"]
 
