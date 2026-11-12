@@ -17,9 +17,17 @@ on:
     - cron: '17 9 * * *'
 
 concurrency:
-  group: benchmark-build-comparison-${{ github.ref }}
-  # A run takes ~2.5 h, so a later push or the nightly cron would cancel almost
-  # every run before it publishes (run 42349265922). Queue instead.
+  # Push runs keep one shared slot per ref (a newer merge supersedes a queued
+  # measurement of the older sha). The NIGHTLY gets its own slot: GitHub keeps
+  # at most ONE *pending* run per group, and `cancel-in-progress: false` only
+  # protects the run that is already executing, so a merge landing while the
+  # nightly was queued replaced it -- run 43190818367 was cancelled 2 s after
+  # the 2026-11-12 push run started, costing that night's measurement. Enforced
+  # by ci/check_workflow_concurrency.py.
+  group: benchmark-build-comparison-${{ github.event_name == 'schedule' && 'nightly' || github.ref }}
+  # A run takes ~2.5 h, so a later push would cancel almost every run before it
+  # publishes (run 42349265922). Queue instead, and let the nightly overlap a
+  # push run: the publisher merges history.jsonl instead of overwriting it.
   cancel-in-progress: false
 
 permissions:
@@ -251,7 +259,11 @@ jobs:
         uses: actions/checkout@v6
         with:
           path: repo
-          sparse-checkout: site/mirror
+          # `ci/merge_bench_history.py` unions the published history with this
+          # run's rows (overlapping nightly/push runs).
+          sparse-checkout: |
+            ci/merge_bench_history.py
+            site/mirror
           sparse-checkout-cone-mode: false
 
       - name: Download benchmark site snapshot
@@ -281,10 +293,26 @@ jobs:
             git -C "${publish_dir}" reset --hard FETCH_HEAD
           fi
           git -C "${publish_dir}" checkout -B benchmark-stats
+          # The nightly and a push run may overlap, so this run's history.jsonl
+          # was snapshotted at benchmark START and can be older than what is
+          # published now. Keep the published copy and union it back after the
+          # overlay; a plain overwrite would revert the other run's row.
+          published_history=""
+          if [[ -f "${publish_dir}/history.jsonl" ]]; then
+            published_history="$(mktemp)"
+            cp "${publish_dir}/history.jsonl" "${published_history}"
+          fi
           if [[ -d benchmark-measurements ]]; then
             cp -a benchmark-measurements/. "${publish_dir}/"
           else
             echo "No benchmark measurements this run; keeping the last published report."
+          fi
+          if [[ -n "${published_history}" && -f benchmark-measurements/history.jsonl ]]; then
+            python3 repo/ci/merge_bench_history.py \
+              --published "${published_history}" \
+              --fresh benchmark-measurements/history.jsonl \
+              --output "${publish_dir}/history.jsonl"
+            rm -f "${published_history}"
           fi
           # The Index points at per-owner shards (FastLED/fbuild#1815); ship them too.
           mkdir -p "${publish_dir}/mirror"

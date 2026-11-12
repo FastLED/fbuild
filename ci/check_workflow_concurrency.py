@@ -15,6 +15,15 @@ The rule enforced here:
     shared group would silently DROP queued pushes to main -- exactly the SHAs
     that populate the soldr caches and feed the release flow.
 
+The same pending-run rule silently starves a NIGHTLY, which is worse than a
+dropped push (a push run is rebuilt by the next merge; a lost night is a hole in
+`benchmark-stats/history.jsonl` forever):
+
+  * a workflow with a `schedule:` trigger that declares a `concurrency:` group
+    MUST scope that group by `github.event_name`, so the cron run never shares
+    a group with push or PR runs. `cancel-in-progress: false` does NOT help --
+    it protects the running run and nothing else.
+
 Workflows may opt out by listing themselves in EXEMPT with a reason.
 
 Per-board `build-*.yml` files get their block from ci/render_workflows.py;
@@ -69,6 +78,14 @@ def load_on_block(doc: dict) -> object:
     return None
 
 
+def has_schedule_trigger(on_block: object) -> bool:
+    if isinstance(on_block, dict):
+        return "schedule" in on_block
+    if isinstance(on_block, list):
+        return "schedule" in on_block
+    return on_block == "schedule"
+
+
 def has_pull_request_trigger(on_block: object) -> bool:
     if isinstance(on_block, dict):
         return "pull_request" in on_block or "pull_request_target" in on_block
@@ -83,7 +100,15 @@ def check_file(path: Path) -> list[str]:
     if not isinstance(doc, dict):
         return [f"{path.name}: not a YAML mapping"]
 
-    if not has_pull_request_trigger(load_on_block(doc)):
+    on_block = load_on_block(doc)
+    problems = check_pull_request_rules(path, doc, on_block)
+    problems.extend(check_schedule_rules(path, doc, on_block))
+    return problems
+
+
+def check_pull_request_rules(path: Path, doc: dict, on_block: object) -> list[str]:
+    """PR runs must cancel their superseded predecessors."""
+    if not has_pull_request_trigger(on_block):
         return []
     if path.name in EXEMPT:
         return []
@@ -116,6 +141,46 @@ def check_file(path: Path) -> list[str]:
             f"EXEMPT in ci/check_workflow_concurrency.py with a reason"
         )
     return problems
+
+
+def check_schedule_rules(path: Path, doc: dict, on_block: object) -> list[str]:
+    """A scheduled run must not be cancellable by another event's run.
+
+    GitHub keeps at most one *pending* run per concurrency group, and
+    `cancel-in-progress: false` only protects the run that is already executing.
+    A nightly that shares its group with push-to-main runs is therefore replaced
+    the instant a merge arrives: on 2026-11-12 the nightly 43190818367 queued at
+    09:21:59Z was cancelled two seconds after the push run for the merge of #2004
+    was created (10:28:43Z), losing that night's measurement. A workflow with a
+    `schedule:` trigger either declares no group at all (nothing can evict it,
+    which is what nightly-platforms.yml does) or scopes its group by
+    a group scoped by `github.event_name` (one slot per trigger) or one that is
+    unique per run via `github.run_id`.
+    """
+    if not has_schedule_trigger(on_block):
+        return []
+    if path.name in EXEMPT:
+        return []
+
+    conc = doc.get("concurrency")
+    if conc is None:
+        return []
+    if not isinstance(conc, dict):
+        return [f"{path.name}: `concurrency:` must be a mapping with `group:`"]
+
+    group = str(conc.get("group", ""))
+    # `github.run_id` already makes the group unique per run (nothing can evict
+    # such a run); `github.event_name` scopes it per trigger.
+    if "github.event_name" in group or "github.run_id" in group:
+        return []
+    return [
+        f"{path.name}: the scheduled run shares concurrency group {group!r} with "
+        f"the other triggers -- GitHub keeps only ONE pending run per group, so "
+        f"the nightly is cancelled (not queued) whenever a push run arrives. "
+        f"`cancel-in-progress: false` does not protect a pending run; scope the "
+        f"group by `github.event_name`, e.g. ${{{{ github.event_name == "
+        f"'schedule' && 'nightly' || github.ref }}}}"
+    ]
 
 
 def main() -> int:

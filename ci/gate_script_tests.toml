@@ -59,6 +59,12 @@ tests = ["ci/test_check_test_layout.py"]
 [scripts.check_usb_vidpid_literals]
 tests = ["ci/test_check_usb_vidpid_literals.py"]
 
+[scripts.merge_bench_history]
+# The publisher's history union: both overlapping runs keep their rows, a
+# republish cannot duplicate one, order stays chronological (newest last) and
+# the 365-line bound trims the OLDEST row.
+tests = ["ci/test_merge_bench_history.py"]
+
 [scripts.check_workflow_concurrency]
 tests = ["ci/test_workflow_concurrency.py"]
 

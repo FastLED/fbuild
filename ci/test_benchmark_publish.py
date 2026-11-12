@@ -83,6 +83,30 @@ class MirrorDeployIsIndependentTests(unittest.TestCase):
             script.index("cp -a repo/site/mirror/."),
         )
 
+    def test_the_nightly_does_not_share_the_push_concurrency_group(self):
+        """A queued nightly is evicted by the next merge (run 43190818367, 2026-11-12)."""
+        group = load_workflow()["concurrency"]["group"]
+        self.assertIn("github.event_name", group)
+        self.assertIn("schedule", group)
+
+    def test_assembler_unions_history_instead_of_overwriting_it(self):
+        # Overlapping nightly and push runs publish history snapshots taken at
+        # different times; the later publisher must not revert the other's row.
+        script = script_of(
+            self.jobs["publish"], "Assemble the site from the last publish plus fresh inputs"
+        )
+        self.assertIn("repo/ci/merge_bench_history.py", script)
+        self.assertIn("--fresh benchmark-measurements/history.jsonl", script)
+        # The published copy must be captured BEFORE the overlay overwrites it.
+        self.assertLess(
+            script.index('published_history="$(mktemp)"'),
+            script.index("cp -a benchmark-measurements/."),
+        )
+
+    def test_the_history_merger_is_checked_out_for_the_publisher(self):
+        checkout = step_named(self.jobs["publish"], "Check out the mirror manifest")
+        self.assertIn("ci/merge_bench_history.py", checkout["with"]["sparse-checkout"])
+
     def test_mirror_is_copied_by_the_assembler_not_the_benchmark(self):
         script = script_of(
             self.jobs["publish"], "Assemble the site from the last publish plus fresh inputs"

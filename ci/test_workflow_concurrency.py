@@ -75,6 +75,53 @@ class WorkflowConcurrencyTests(unittest.TestCase):
 
         self.assertTrue(any("never cancels PR runs" in p for p in problems), problems)
 
+    def test_a_nightly_sharing_its_group_with_push_runs_is_rejected(self) -> None:
+        """The 2026-11-12 nightly was evicted by a merge: only one pending run per group."""
+        with TemporaryDirectory() as tmp:
+            path = write(
+                tmp,
+                "sample.yml",
+                "on:\n  push:\n    branches: [main]\n  schedule:\n    - cron: '17 9 * * *'\n"
+                "concurrency:\n"
+                "  group: sample-${{ github.ref }}\n"
+                "  cancel-in-progress: false\n"
+                "jobs: {}\n",
+            )
+
+            problems = guard.check_file(path)
+
+        self.assertTrue(any("scheduled" in p and "pending" in p for p in problems), problems)
+
+    def test_a_nightly_with_its_own_group_is_accepted(self) -> None:
+        with TemporaryDirectory() as tmp:
+            path = write(
+                tmp,
+                "sample.yml",
+                "on:\n  push:\n    branches: [main]\n  schedule:\n    - cron: '17 9 * * *'\n"
+                "concurrency:\n"
+                "  group: sample-${{ github.event_name == 'schedule' && 'nightly'"
+                " || github.ref }}\n"
+                "  cancel-in-progress: false\n"
+                "jobs: {}\n",
+            )
+
+            self.assertEqual(guard.check_file(path), [])
+
+    def test_a_per_run_group_is_a_safe_scheduled_choice(self) -> None:
+        """`github.run_id` is unique per run, so a nightly cannot be evicted."""
+        with TemporaryDirectory() as tmp:
+            path = write(
+                tmp,
+                "sample.yml",
+                "on:\n  schedule:\n    - cron: '17 9 * * *'\n"
+                "concurrency:\n"
+                "  group: sample-${{ github.run_id }}\n"
+                "  cancel-in-progress: false\n"
+                "jobs: {}\n",
+            )
+
+            self.assertEqual(guard.check_file(path), [])
+
     def test_workflow_without_pr_trigger_is_ignored(self) -> None:
         with TemporaryDirectory() as tmp:
             path = write(tmp, "sample.yml", "on:\n  schedule:\n    - cron: '0 9 * * *'\njobs: {}\n")
