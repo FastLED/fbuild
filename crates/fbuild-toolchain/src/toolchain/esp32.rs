@@ -225,9 +225,7 @@ impl crate::Package for Esp32Toolchain {
             return false;
         }
         let root = find_bin_root(&self.base.installed_path());
-        root.join("bin")
-            .join(tool_name(&format!("{}gcc", self.prefix)))
-            .exists()
+        tool_binary(&root.join("bin"), &format!("{}gcc", self.prefix)).exists()
     }
 
     fn get_info(&self) -> PackageInfo {
@@ -413,14 +411,9 @@ fn find_bin_root(install_dir: &Path) -> PathBuf {
     install_dir.to_path_buf()
 }
 
-/// Get the tool binary name with .exe extension on Windows.
-fn tool_name(name: &str) -> String {
-    fbuild_core::platform::executable::native_name(name)
-}
-
-/// Get the full path to a tool binary.
+/// Get the full path to a tool binary (native spelling, or a `.com`/`.exe` APE).
 fn tool_binary(bin_dir: &Path, name: &str) -> PathBuf {
-    bin_dir.join(tool_name(name))
+    fbuild_core::platform::executable::resolve_tool_in(bin_dir, name).into_path_buf()
 }
 
 #[cfg(test)]
@@ -440,15 +433,6 @@ mod tests {
         let (url, _checksum) = platform_package(false);
         assert!(url.contains("xtensa-esp-elf"));
         assert!(url.contains("espressif"));
-    }
-
-    #[test]
-    fn test_tool_name_platform() {
-        let name = tool_name("riscv32-esp-elf-gcc");
-        assert_eq!(
-            name,
-            fbuild_core::platform::executable::native_name("riscv32-esp-elf-gcc")
-        );
     }
 
     #[test]
@@ -481,7 +465,10 @@ mod tests {
 
         let bin = find_bin_root(&chip_dir).join("bin");
         std::fs::create_dir_all(&bin).unwrap();
-        std::fs::write(bin.join("xtensa-esp-elf-gcc"), b"").unwrap();
+        // The native spelling is what a real install writes (.exe on Windows);
+        // an extensionless file is only accepted there when it is an APE.
+        let gcc = fbuild_core::platform::executable::native_name("xtensa-esp-elf-gcc");
+        std::fs::write(bin.join(&gcc), b"").unwrap();
         std::fs::write(
             crate::disk_cache::paths::install_complete_sentinel(&chip_dir),
             b"",
@@ -489,7 +476,7 @@ mod tests {
         .unwrap();
 
         assert!(tc.is_installed(), "a chip-scoped install must be found");
-        assert_eq!(tc.get_gcc_path(), bin.join("xtensa-esp-elf-gcc"));
+        assert_eq!(tc.get_gcc_path(), bin.join(&gcc));
         assert_eq!(tc.get_info().install_path, find_bin_root(&chip_dir));
     }
 

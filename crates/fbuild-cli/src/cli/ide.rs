@@ -315,7 +315,7 @@ fn print_zed_install_guidance() {
 /// wait on the editor process).
 fn launch_zed(zed_path: &Path, project_dir: &str) -> fbuild_core::Result<()> {
     // allow-direct-spawn: editor is launched detached and must outlive the CLI; deliberately not in a containment group.
-    let mut cmd = std::process::Command::new(zed_path);
+    let mut cmd = fbuild_core::platform::process::command(zed_path);
     cmd.arg(project_dir);
     fbuild_core::platform::process::spawn_detached(
         &mut cmd,

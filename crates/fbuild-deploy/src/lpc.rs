@@ -63,13 +63,8 @@ pub fn find_lpc21isp() -> Option<PathBuf> {
         }
     }
 
-    if let Some(managed) = managed_lpc21isp_path() {
-        if managed.is_file() {
-            return Some(managed);
-        }
-    }
-
-    None
+    fbuild_core::platform::executable::find_tool_in(&fbuild_paths::try_get_tools_dir()?, "lpc21isp")
+        .map(fbuild_core::path::NormalizedPath::into_path_buf)
 }
 
 /// Build the "install lpc21isp" hint that surfaces on the failing

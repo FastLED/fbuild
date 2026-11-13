@@ -539,6 +539,8 @@ struct ResponseVersion {
 
 #[derive(Deserialize)]
 struct ResponseFile {
+    /// Host selector; a missing or `null` field means universal, like `"*"`.
+    #[serde(default)]
     system: serde_json::Value,
     download_url: String,
     checksum: Option<RegistryChecksum>,
@@ -566,7 +568,9 @@ impl From<RegistryResponse> for RegistryMetadata {
                                 .iter()
                                 .filter_map(|s| s.as_str().map(str::to_string))
                                 .collect(),
-                            _ => Vec::new(),
+                            // A missing or `null` host selector is universal,
+                            // exactly like an explicit `"*"` (fbuild#1633).
+                            _ => vec!["*".to_string()],
                         },
                         download_url: file.download_url,
                         sha256: file.checksum.and_then(|c| c.sha256),

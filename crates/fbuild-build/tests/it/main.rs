@@ -2,6 +2,7 @@
 //! each top-level `tests/*.rs` file links the crate's whole dependency
 //! graph separately, so these modules share one link instead.
 
+mod ape_toolchain;
 mod cache_survives_tar_extract;
 mod ci13xx_acceptance;
 mod ci13xx_configuration_acceptance;
