@@ -136,7 +136,7 @@ jobs:
         with:
           ref: ${{ needs.verify.outputs.candidate_sha }}
           persist-credentials: false
-      - uses: zackees/setup-soldr@9337570234850b50322e696037127fa3cf8ac703 # setup-soldr#629 S3 remote cache
+      - uses: zackees/setup-soldr@8382023c14d1727d20e0b15c818a10109ef78ad0 # setup-soldr#629 S3 remote cache
         with:
           s3-bucket: forge-ci-cache
           s3-endpoint: sfo3.digitaloceanspaces.com
