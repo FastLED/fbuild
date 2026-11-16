@@ -26,6 +26,7 @@ use crate::compile_database::TargetArchitecture;
 use crate::pipeline;
 use crate::{BuildOrchestrator, BuildParams, BuildResult, SourceScanner};
 
+use super::framework_libs;
 use super::renesas_compiler::RenesasCompiler;
 use super::renesas_linker::RenesasLinker;
 
@@ -221,7 +222,7 @@ impl BuildOrchestrator for RenesasOrchestrator {
         }
 
         let scanner = SourceScanner::new(&ctx.src_dir, &ctx.src_build_dir);
-        let sources = scanner.scan_all_filtered(
+        let mut sources = scanner.scan_all_filtered(
             Some(&core_dir),
             Some(&variant_dir),
             ctx.source_filter.as_deref(),
@@ -261,10 +262,54 @@ impl BuildOrchestrator for RenesasOrchestrator {
         // Toolchain sysroot includes (ARM CMSIS headers, etc.)
         include_dirs.extend(toolchain.get_include_dirs());
 
+        let lib_deps = ctx.config.get_lib_deps(&params.env_name)?;
+
+        // 6b. Bundled Arduino libraries this project reaches
+        // (FastLED/fbuild#2020). ArduinoCore-renesas ships `libraries/`
+        // (`WiFiS3`, `SPI`, `Wire`, ...) next to the core; none of it was on
+        // the include path, so `#include <WiFiS3.h>` died at the include with
+        // `fatal error: WiFiS3.h: No such file or directory`. Resolve the same
+        // library-dependency selection the Teensy/STM32/RP2040/ESP8266
+        // orchestrators use, with the include path built above so SDK headers
+        // resolve as they will at compile time, then add the reached
+        // libraries' include dirs and sources. Only reached libraries are
+        // added: an unreached one must never shadow a core header.
+        framework_libs::warn_unsupported_ldf_mode(
+            ctx.config
+                .get_lib_ldf_mode(&params.env_name)
+                .ok()
+                .flatten()
+                .as_deref(),
+        );
+        let normalized_include_dirs: Vec<fbuild_core::path::NormalizedPath> = include_dirs
+            .iter()
+            .map(fbuild_core::path::NormalizedPath::new)
+            .collect();
+        let bundled_libraries = framework_libs::select_bundled_libraries(
+            &framework.get_framework_libraries(),
+            &params.project_dir,
+            &ctx.src_dir,
+            &defines,
+            &lib_deps,
+            &normalized_include_dirs,
+        )?;
+        framework_libs::log_selection(&bundled_libraries);
+        include_dirs.extend(
+            bundled_libraries
+                .include_dirs
+                .iter()
+                .map(|dir| dir.as_path().to_path_buf()),
+        );
+        sources.core_sources.extend(
+            bundled_libraries
+                .sources
+                .iter()
+                .map(|source| source.as_path().to_path_buf()),
+        );
+
         // 6a. Download `lib_deps` from the registry / remote URLs before
         // creating the compiler, so the downloaded library include directories
         // are available during compilation (FastLED/fbuild#1276).
-        let lib_deps = ctx.config.get_lib_deps(&params.env_name)?;
         let lib_ignore = ctx
             .config
             .get_lib_ignore(&params.env_name)

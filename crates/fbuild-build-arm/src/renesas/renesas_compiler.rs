@@ -135,6 +135,38 @@ impl RenesasCompiler {
         let root = NormalizedPath::new(root).into_path_buf();
         source.starts_with(&root)
     }
+
+    /// `true` when `source` is a C++ translation unit of one of the core's own
+    /// bundled Arduino libraries (`<core>/libraries/<name>/...`), not the core
+    /// itself and not the sketch.
+    fn is_bundled_library_cpp(&self, source: &Path) -> bool {
+        let Some(root) = self.framework_root.as_ref() else {
+            return false;
+        };
+        if !is_cpp_source(source) {
+            return false;
+        }
+        let source = NormalizedPath::new(source).into_path_buf();
+        let libraries = NormalizedPath::new(root.join("libraries")).into_path_buf();
+        source.starts_with(&libraries)
+    }
+
+    /// The exact per-source flag set appended to the platform flags.
+    ///
+    /// One seam for every consumer — the real command line, the rebuild
+    /// signature and the artifact cache key — so a per-source accommodation
+    /// can never be applied on one path and missed on another
+    /// (FastLED/fbuild#404, #2020).
+    fn effective_extra_flags(&self, source: &Path, extra_flags: &[String]) -> Vec<String> {
+        let mut flags = extra_flags.to_vec();
+        if is_c_source(source) && self.is_framework_source(source) {
+            flags.extend(self.framework_c_suppressions().map(str::to_string));
+        }
+        if self.is_bundled_library_cpp(source) {
+            flags.push(BUNDLED_LIBRARY_CPP_STANDARD.to_string());
+        }
+        flags
+    }
 }
 
 /// Flags appended when compiling third-party Renesas FSP / ArduinoCore-renesas
@@ -162,6 +194,36 @@ fn framework_c_suppression_flags() -> &'static [&'static str] {
     ]
 }
 
+/// The C++ standard fbuild compiles the core's OWN bundled Arduino libraries
+/// with (`<core>/libraries/<name>/`).
+///
+/// fbuild pins a modern ARM GCC (15.2.x) for the renesas-ra platform, while
+/// ArduinoCore-renesas 1.6.0 is validated against the vendor's
+/// `toolchain-gccarmnoneeabi` 7.2.1. In `-std=gnu++17` the newer libstdc++
+/// declares `std::byte` from `<cstddef>` (pulled in by `<string>` since GCC
+/// 13), and Arduino's bundled libraries do `using namespace std;` right next
+/// to the core's `typedef uint8_t byte` — so every unqualified `byte` in
+/// `WiFiS3` (`WiFiSSLClient::setEccSlot`, ...) is
+/// `error: reference to 'byte' is ambiguous` (FastLED/fbuild#2020). Their code
+/// is C++11/14-era, so compiling the framework's own library translation units
+/// one standard back keeps them valid without touching the sketch's C++17
+/// surface, and `-fpermissive` does NOT downgrade this (it is a name-lookup
+/// error, verified against the pinned toolchain).
+const BUNDLED_LIBRARY_CPP_STANDARD: &str = "-std=gnu++14";
+
+/// `true` when `source` is a C++ source file (`.cpp`, `.cc`, `.cxx`).
+fn is_cpp_source(source: &Path) -> bool {
+    source
+        .extension()
+        .and_then(|e| e.to_str())
+        .map(|e| {
+            e.eq_ignore_ascii_case("cpp")
+                || e.eq_ignore_ascii_case("cc")
+                || e.eq_ignore_ascii_case("cxx")
+        })
+        .unwrap_or(false)
+}
+
 /// `true` when `source` is a C source file (`.c`). Assembly and C++ sources
 /// don't get the FSP demotion set.
 fn is_c_source(source: &Path) -> bool {
@@ -187,18 +249,8 @@ impl Compiler for RenesasCompiler {
         // sources rooted in the ArduinoCore-renesas install; sketch sources
         // and project libraries continue to see the full default `-Werror=`
         // posture for these four bug classes. See FastLED/fbuild#404.
-        let suppressed_extra: Vec<String>;
-        let effective_extra: &[String] = if is_c_source(source) && self.is_framework_source(source)
-        {
-            suppressed_extra = extra_flags
-                .iter()
-                .cloned()
-                .chain(self.framework_c_suppressions().map(str::to_string))
-                .collect();
-            &suppressed_extra
-        } else {
-            extra_flags
-        };
+        let effective_extra_owned = self.effective_extra_flags(source, extra_flags);
+        let effective_extra: &[String] = &effective_extra_owned;
 
         crate::compiler::compile_source(
             compiler_path,
@@ -250,15 +302,7 @@ impl Compiler for RenesasCompiler {
             "c" | "s" => (self.gcc_path(), self.c_flags()),
             _ => (self.gxx_path(), self.cpp_flags()),
         };
-        let extra_owned: Vec<String> = if is_c_source(source) && self.is_framework_source(source) {
-            extra_flags
-                .iter()
-                .cloned()
-                .chain(self.framework_c_suppressions().map(str::to_string))
-                .collect()
-        } else {
-            extra_flags.to_vec()
-        };
+        let extra_owned = self.effective_extra_flags(source, extra_flags);
         // build_unflags stripped inside build_rebuild_signature_for_workspace
         // (shared core), matching compile_c/compile_cpp on the write side
         // (FastLED/fbuild#970). The workspace anchor keeps sibling workspaces
@@ -288,15 +332,7 @@ impl Compiler for RenesasCompiler {
             "c" | "s" => (self.gcc_path(), self.c_flags()),
             _ => (self.gxx_path(), self.cpp_flags()),
         };
-        let extra_owned: Vec<String> = if is_c_source(source) && self.is_framework_source(source) {
-            extra_flags
-                .iter()
-                .cloned()
-                .chain(self.framework_c_suppressions().map(str::to_string))
-                .collect()
-        } else {
-            extra_flags.to_vec()
-        };
+        let extra_owned = self.effective_extra_flags(source, extra_flags);
         crate::compiler::build_rebuild_signature_for_project(
             project_dir,
             compiler_path,
@@ -527,6 +563,79 @@ mod tests {
             framework_cpp_sig, baseline_cpp_sig,
             "framework C++ sources must not pick up the C-only FSP \
              suppressions (FastLED/fbuild#404)"
+        );
+    }
+
+    /// FastLED/fbuild#2020: ArduinoCore-renesas' bundled libraries do
+    /// `using namespace std;` next to the core's `typedef uint8_t byte`, and
+    /// the pinned GCC 15 libstdc++ declares `std::byte` in gnu++17, so their
+    /// unqualified `byte` is ambiguous. They are compiled one standard back;
+    /// nothing else moves.
+    #[test]
+    fn test_bundled_library_cpp_gets_the_compatibility_standard() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let framework_root = tmp.path().join("ArduinoCore-renesas");
+        let lib_src_dir = framework_root.join("libraries/WiFiS3/src");
+        std::fs::create_dir_all(&lib_src_dir).unwrap();
+        let lib_cpp = lib_src_dir.join("WiFiSSLClient.cpp");
+        std::fs::write(&lib_cpp, "// stub").unwrap();
+        let lib_c = lib_src_dir.join("ModemC.c");
+        std::fs::write(&lib_c, "// stub").unwrap();
+        let core_cpp = framework_root.join("cores/arduino/Serial.cpp");
+        std::fs::create_dir_all(core_cpp.parent().unwrap()).unwrap();
+        std::fs::write(&core_cpp, "// stub").unwrap();
+        let sketch = tmp.path().join("project/src/main.cpp");
+        std::fs::create_dir_all(sketch.parent().unwrap()).unwrap();
+        std::fs::write(&sketch, "// stub").unwrap();
+
+        let compiler = test_compiler().with_framework_root(framework_root);
+
+        let lib_flags = compiler.effective_extra_flags(&lib_cpp, &[]);
+        assert_eq!(
+            lib_flags,
+            vec![BUNDLED_LIBRARY_CPP_STANDARD.to_string()],
+            "a bundled library C++ TU must be compiled at {BUNDLED_LIBRARY_CPP_STANDARD}"
+        );
+        assert!(
+            !compiler
+                .effective_extra_flags(&lib_c, &[])
+                .iter()
+                .any(|flag| flag == BUNDLED_LIBRARY_CPP_STANDARD),
+            "C sources never take the C++ standard flag"
+        );
+        assert!(compiler.effective_extra_flags(&core_cpp, &[]).is_empty());
+        assert!(compiler.effective_extra_flags(&sketch, &[]).is_empty());
+    }
+
+    /// The compatibility standard must reach the rebuild signature, or an
+    /// object cached before the change would be reused with the old flags.
+    #[test]
+    fn test_bundled_library_standard_is_in_the_rebuild_signature() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let framework_root = tmp.path().join("ArduinoCore-renesas");
+        let lib_cpp = framework_root.join("libraries/WiFiS3/src/WiFiSSLClient.cpp");
+        std::fs::create_dir_all(lib_cpp.parent().unwrap()).unwrap();
+        std::fs::write(&lib_cpp, "// stub").unwrap();
+        let baseline_cpp = tmp.path().join("WiFiSSLClient.cpp");
+        std::fs::write(&baseline_cpp, "// stub").unwrap();
+
+        let compiler = test_compiler().with_framework_root(framework_root);
+        let build_dir = fbuild_paths::BuildLayout::new(
+            tmp.path().to_path_buf(),
+            "uno_r4".to_string(),
+            BuildProfile::Release,
+        )
+        .resolve();
+        let lib_sig = compiler.rebuild_signature(
+            &lib_cpp,
+            &[],
+            &build_dir.join("core/libraries/WiFiS3/src/WiFiSSLClient.cpp.o"),
+        );
+        let baseline_sig =
+            compiler.rebuild_signature(&baseline_cpp, &[], &build_dir.join("WiFiSSLClient.cpp.o"));
+        assert_ne!(
+            lib_sig, baseline_sig,
+            "the bundled-library standard must change the rebuild signature"
         );
     }
 }
