@@ -93,9 +93,20 @@ PlatformIO's registry API:
   the asset), so owner-less specs can find their owner. `<h>` is the first
   hex digit of the SHA-256 of the ASCII-lowercased name.
 
+Component ids repeat the mirror bucket's key, which is the registry's own
+download path, so a name the registry percent-encodes arrives in that spelling:
+`owner/library/ESP32%20HUB75%20LED%20MATRIX%20PANEL%20DMA%20Display/...`.
+Resolution percent-decodes ids before comparing them with a spec's display
+name, and looks up the `@names-<h>` shard under both the display name and its
+encoded spelling, because the generator buckets those shards by the bucket
+key (FastLED/fbuild#2019).
+
 A package the index does not list fails with `RegistryError::NotIndexed`, and
 an unreachable index or shard with `RegistryError::IndexUnavailable`; neither
-falls back to PlatformIO. `platformio_registry_fixture` builds and serves an
+falls back to PlatformIO. The index lists only what the mirror bucket holds:
+`site/mirror/README.md` regenerates these documents from the bucket, and the
+bucket is filled by the separate mirroring tool, so a version the bucket has
+not received yet cannot resolve. `platformio_registry_fixture` builds and serves an
 index for tests in this and dependent crates.
 
 A failed fetch reports the attempt count and time spent, and names any mirrors tried.
