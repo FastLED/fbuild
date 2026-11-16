@@ -21,6 +21,7 @@ pub mod disk_footprint;
 pub mod disk_preflight;
 pub mod eh_frame_policy;
 pub mod eh_frame_policy_compute;
+pub mod elf_size;
 pub mod flag_overlay;
 pub mod framework_core_cache;
 pub mod framework_libs;
