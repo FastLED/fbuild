@@ -1,183 +1,88 @@
-//! ESP32 section-size reporting using SysV format (`size -A`).
+//! ESP32 firmware size reporting from ELF section headers.
 //!
-//! The default Berkeley `size` format lumps `.flash.rodata` (flash-resident)
-//! into the `data` column alongside `.dram0.data` (RAM-resident), inflating
-//! the RAM figure — for ESP32-C6 this can report 602% RAM usage
-//! (FastLED/fbuild#1261).
+//! The Berkeley `size` format lumps `.flash.rodata` (flash-resident) into the
+//! `data` column alongside `.dram0.data`, which once reported 602% RAM on an
+//! ESP32-C6 (FastLED/fbuild#1261). The replacement parsed `size -A` by section
+//! name, but counted every `.dram0.*` section as RAM: the S3/C3 linker scripts'
+//! `.dram0.dummy` is a `SHT_NOBITS` placeholder for the IRAM half of the shared
+//! DIRAM region, and it landed in RAM *and* in flash (FastLED/fbuild#2013).
 //!
-//! SysV format lists each section individually with its name and address,
-//! so flash and RAM sections can be classified by prefix.
+//! This module reads the section headers instead (shared reader:
+//! [`crate::elf_size::read_elf_section_sizes`]) and classifies:
+//!
+//! - **Flash** = every allocated section with contents, exactly the generic
+//!   rule of [`SizeInfo::from_elf_sections`] (FastLED/fbuild#2012): flash code
+//!   and rodata plus the initialised RAM images `elf2image` copies from flash
+//!   (`.iram0.*`, `.dram0.data`, `.rtc.*`) and `.eh_frame`. `SHT_NOBITS`
+//!   placeholders (`.dram0.dummy`, `.iram0.text_end`) carry no bytes.
+//! - **RAM** = static DRAM: [`DRAM_SECTIONS`], i.e. PlatformIO espressif32's
+//!   `SIZEDATAREGEXP` set. IRAM code is not RAM here, as in PlatformIO and in
+//!   the previous fbuild report (`idf_size` lists it as a separate IRAM row).
 
 use std::path::Path;
 
-use fbuild_core::SizeInfo;
-use fbuild_core::subprocess::run_command;
+use fbuild_core::{ElfSectionSize, SizeInfo};
 
-/// Run `size -A` and parse the SysV output for an ESP32 ELF.
+/// Bump whenever the classification changes, so cached reports computed by an
+/// older classifier are not served for an unchanged ELF. Version 2 matched
+/// `BUILD_FINGERPRINT_VERSION`, which the caches used before #2013.
+pub(crate) const SIZE_REPORT_VERSION: u32 = 3;
+
+/// The static DRAM sections of an ESP32 image (PlatformIO espressif32's
+/// `SIZEDATAREGEXP`). Matched by exact name: `.dram0.dummy` is deliberately
+/// absent (FastLED/fbuild#2013).
+const DRAM_SECTIONS: &[&str] = &[".dram0.data", ".dram0.bss", ".noinit"];
+
+/// Read `elf_path`'s section headers and classify them for an ESP32 target.
 ///
-/// Falls back to `None` when no `.flash.*` / `.dram0.*` sections are
-/// detected, so the caller can fall through to the standard Berkeley parser.
-pub(crate) async fn esp32_report_size(
-    size_path: &Path,
+/// Errors when the file is not ELF or has no ESP32 (`.flash.*` / `.dram0.*`)
+/// sections.
+pub(crate) fn esp32_report_size(
     elf_path: &Path,
     max_flash: Option<u64>,
     max_ram: Option<u64>,
 ) -> fbuild_core::Result<SizeInfo> {
-    let args = [
-        size_path.to_string_lossy().to_string(),
-        "-A".to_string(),
-        elf_path.to_string_lossy().to_string(),
-    ];
-    let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
-    let result = run_command(
-        &args_ref,
-        None,
-        None,
-        Some(std::time::Duration::from_secs(15)),
-    )
-    .await?;
-
-    if !result.success() {
-        return Err(fbuild_core::FbuildError::BuildFailed(format!(
-            "size -A failed: {}",
-            result.stderr
-        )));
-    }
-
-    parse_esp32_size_sysv(&result.stdout, max_flash, max_ram).ok_or_else(|| {
+    let sections = crate::elf_size::read_elf_section_sizes(elf_path)?;
+    esp32_size_from_sections(&sections, max_flash, max_ram).ok_or_else(|| {
         fbuild_core::FbuildError::BuildFailed(format!(
-            "failed to parse ESP32 size -A output:\n{}",
-            result.stdout
+            "size report: {} has no ESP32 .flash.*/.dram0.* sections",
+            elf_path.display()
         ))
     })
 }
 
-/// Parse `size -A` (SysV format) output for ESP32 targets.
-///
-/// ```text
-/// section             size         addr
-/// .flash.text        89012    0x42000020
-/// .flash.rodata      45678    0x42015c34
-/// .dram0.data         1234    0x3fc80000
-/// .dram0.bss          5678    0x3fc81234
-/// .iram0.text          789    0x40800000
-/// Total              142391
-/// ```
-///
-/// Classification:
-/// - Flash: `.flash.*`, `.rodata*`, `.iram0.*`, `.text`
-/// - RAM:   `.dram0.*`, `.dram.*`
-///
-/// Returns `None` when no ESP32-prefixed sections are detected.
-pub(crate) fn parse_esp32_size_sysv(
-    output: &str,
+/// Classify ESP32 ELF sections (see the module docs). Returns `None` when no
+/// ESP32-prefixed allocated section is present.
+pub(crate) fn esp32_size_from_sections(
+    sections: &[ElfSectionSize],
     max_flash: Option<u64>,
     max_ram: Option<u64>,
 ) -> Option<SizeInfo> {
-    let mut flash: u64 = 0;
-    let mut ram_data: u64 = 0;
-    let mut ram_bss: u64 = 0;
-    let mut has_esp_sections = false;
-
-    for line in output.lines() {
-        if line.starts_with("section") || line.starts_with("Total") {
-            continue;
-        }
-        let parts: Vec<&str> = line.split_whitespace().collect();
-        if parts.len() < 2 {
-            continue;
-        }
-        let section = parts[0];
-        let Ok(size) = parts[1].parse::<u64>() else {
-            continue;
-        };
-
-        if section.starts_with(".flash.") || section.starts_with(".rodata") {
-            flash += size;
-            has_esp_sections = true;
-        } else if section.starts_with(".dram0.") || section.starts_with(".dram.") {
-            if section.ends_with(".bss") || section.contains(".bss") {
-                ram_bss += size;
-            } else {
-                ram_data += size;
-            }
-            has_esp_sections = true;
-        } else if section.starts_with(".iram0.") || section.starts_with(".iram.") {
-            flash += size;
-            has_esp_sections = true;
-        } else if section == ".text" {
-            flash += size;
-        } else if section == ".data" {
-            ram_data += size;
-        } else if section == ".bss" {
-            ram_bss += size;
-        }
-    }
-
-    if !has_esp_sections {
+    let is_esp =
+        |s: &ElfSectionSize| s.name.starts_with(".flash.") || s.name.starts_with(".dram0.");
+    if !sections.iter().any(|s| s.alloc && is_esp(s)) {
         return None;
     }
-
+    let image = SizeInfo::from_elf_sections(sections, None, None).total_flash;
+    let (mut data, mut bss) = (0u64, 0u64);
+    for s in sections
+        .iter()
+        .filter(|s| s.alloc && DRAM_SECTIONS.contains(&s.name.as_str()))
+    {
+        let bucket = if s.has_contents { &mut data } else { &mut bss };
+        *bucket = bucket.saturating_add(s.size);
+    }
     Some(SizeInfo {
-        text: flash,
-        data: ram_data,
-        bss: ram_bss,
-        total_flash: flash + ram_data,
-        total_ram: ram_data + ram_bss,
+        text: image.saturating_sub(data),
+        data,
+        bss,
+        total_flash: image,
+        total_ram: data.saturating_add(bss),
         max_flash,
         max_ram,
     })
 }
 
 #[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn sysv_separates_flash_from_ram() {
-        // Simulates `size -A` output for an ESP32-C6 build.
-        // .flash.rodata (45KB in flash) must NOT inflate RAM.
-        let output = "\
-section             size         addr
-.flash.text        89012    0x42000020
-.flash.rodata      45678    0x42015c34
-.dram0.data         1234    0x3fc80000
-.dram0.bss          5678    0x3fc81234
-.iram0.text          789    0x40800000
-Total              142391
-";
-        let info = parse_esp32_size_sysv(output, Some(4_194_304), Some(327_680)).unwrap();
-        assert_eq!(info.text, 89012 + 45678 + 789);
-        assert_eq!(info.data, 1234);
-        assert_eq!(info.bss, 5678);
-        assert_eq!(info.total_flash, 89012 + 45678 + 789 + 1234);
-        // Only dram0 sections count as RAM — no .flash.rodata contamination
-        assert_eq!(info.total_ram, 1234 + 5678);
-        assert!(info.ram_percent().unwrap() < 100.0);
-    }
-
-    #[test]
-    fn returns_none_for_non_esp_output() {
-        // Standard Berkeley output without ESP32 section prefixes
-        // should return None, so the caller falls back to Berkeley parser.
-        let output = "\
-   text    data     bss     dec     hex filename
-   1234     56      78    1368     558 firmware.elf
-";
-        assert!(parse_esp32_size_sysv(output, None, None).is_none());
-    }
-
-    #[test]
-    fn ignores_total_and_header_lines() {
-        let output = "\
-section             size         addr
-.dram0.data         1000    0x3fc80000
-.dram0.bss          2000    0x3fc81000
-.flash.text        40000    0x42000020
-Total               43000
-";
-        let info = parse_esp32_size_sysv(output, None, None).unwrap();
-        assert_eq!(info.total_flash, 40000 + 1000);
-        assert_eq!(info.total_ram, 1000 + 2000);
-    }
-}
+#[path = "size_report_tests.rs"]
+mod tests;

@@ -655,9 +655,8 @@ use crate::esp32::size_report_cache;
 fn linker_with_size_cache(root: &Path) -> Esp32Linker {
     let mut linker = test_linker("esp32s3");
     linker.link_output_cache_dir = Some(NormalizedPath::new(root));
-    // A `size` binary that cannot possibly run: any spawn is a hard error, so
-    // a successful `report_size` on the reuse path proves it never ran.
-    linker.size_path = NormalizedPath::new("/nonexistent/size-tool");
+    // The tests feed a non-ELF payload, so computing a report is a hard error
+    // and a successful `report_size` proves the cached one was reused.
     linker
 }
 
@@ -705,8 +704,8 @@ async fn size_report_is_reused_without_running_the_size_tool() {
     let again = linker.report_size(&elf).await.unwrap();
     assert_eq!(again.total_flash, 1050);
 
-    // And an ELF with no entry anywhere still fails when the tool cannot run —
-    // so the assertions above really did skip the spawn.
+    // And the same payload with no entry anywhere fails to parse, so the
+    // assertions above really did skip the computation.
     let cold_root = tempfile::TempDir::new().unwrap();
     let cold_out = tempfile::TempDir::new().unwrap();
     let cold = linker_with_size_cache(cold_root.path());
@@ -714,6 +713,36 @@ async fn size_report_is_reused_without_running_the_size_tool() {
     std::fs::write(&cold_elf, b"elf-payload").unwrap();
     assert!(
         cold.report_size(&cold_elf).await.is_err(),
-        "an uncached ELF must fail when the size tool cannot run"
+        "an uncached non-ELF payload must fail to classify"
     );
+}
+
+/// FastLED/fbuild#2013: a per-project report written by the old classifier
+/// (version = `BUILD_FINGERPRINT_VERSION`, which counted `.dram0.dummy`) must
+/// not be served for an unchanged ELF after an upgrade.
+#[test]
+fn size_cache_from_older_classifier_is_ignored() {
+    let out = tempfile::TempDir::new().unwrap();
+    let linker = test_linker("esp32s3");
+    let elf = out.path().join("firmware.elf");
+    std::fs::write(&elf, b"elf-payload").unwrap();
+    let stale = SizeArtifactCache {
+        version: BUILD_FINGERPRINT_VERSION,
+        elf_stamp: FileStamp::from_path(&elf).unwrap(),
+        size_info: SizeInfo {
+            text: 1,
+            data: 2,
+            bss: 3,
+            total_flash: 3,
+            total_ram: 5,
+            max_flash: None,
+            max_ram: None,
+        },
+    };
+    save_json(&linker.size_cache_path(out.path()), &stale).unwrap();
+    assert!(linker.load_cached_size(&elf).is_none());
+
+    linker.save_size_cache(&elf, &stale.size_info);
+    let fresh = linker.load_cached_size(&elf).unwrap();
+    assert_eq!((fresh.total_flash, fresh.total_ram), (3, 5));
 }

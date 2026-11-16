@@ -505,13 +505,10 @@ impl Esp32Linker {
     /// change without a relink, and [`Self::report_size`] re-applies them.
     fn size_report_entry(&self, elf_path: &Path) -> Option<(NormalizedPath, String)> {
         let root = self.size_report_cache_dir()?;
-        let mut identity = vec![format!("fingerprint={BUILD_FINGERPRINT_VERSION}")];
-        identity.push(format!("size_tool={}", self.size_path.as_path().display()));
-        if let Ok(metadata) = std::fs::metadata(self.size_path.as_path()) {
-            identity.push(format!("size_tool_bytes={}", metadata.len()));
-        }
-        let identity: Vec<&str> = identity.iter().map(String::as_str).collect();
-        let key = super::size_report_cache::content_key(elf_path, &identity)?;
+        // The report is computed in-process from the ELF headers, so only the
+        // classifier version can change it (FastLED/fbuild#2013).
+        let identity = format!("size_report={}", super::size_report::SIZE_REPORT_VERSION);
+        let key = super::size_report_cache::content_key(elf_path, &[identity.as_str()])?;
         Some((root, key))
     }
 
@@ -543,7 +540,7 @@ impl Esp32Linker {
         };
         match load_json::<SizeArtifactCache>(&self.size_cache_path(output_dir)) {
             Ok(Some(cache))
-                if cache.version == BUILD_FINGERPRINT_VERSION
+                if cache.version == super::size_report::SIZE_REPORT_VERSION
                     && cache.elf_stamp == expected_stamp =>
             {
                 Some(cache.size_info)
@@ -560,7 +557,7 @@ impl Esp32Linker {
         let output_dir = elf_path.parent().unwrap_or_else(|| Path::new("."));
         let cache = match FileStamp::from_path(elf_path) {
             Ok(stamp) => SizeArtifactCache {
-                version: BUILD_FINGERPRINT_VERSION,
+                version: super::size_report::SIZE_REPORT_VERSION,
                 elf_stamp: stamp,
                 size_info: size_info.clone(),
             },
@@ -832,13 +829,8 @@ impl Linker for Esp32Linker {
             return Ok(size_info);
         }
 
-        let size_info = super::size_report::esp32_report_size(
-            &self.size_path,
-            elf_path,
-            self.flash_limit(),
-            self.max_ram,
-        )
-        .await?;
+        let size_info =
+            super::size_report::esp32_report_size(elf_path, self.flash_limit(), self.max_ram)?;
         self.save_size_cache(elf_path, &size_info);
         self.store_size_report(elf_path, &size_info);
         Ok(size_info)
