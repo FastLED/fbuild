@@ -563,44 +563,20 @@ impl LinkerBase {
         Ok(())
     }
 
-    /// Report firmware size by running the size tool and parsing its output.
-    pub async fn report_size(
-        size_path: &Path,
+    /// Report firmware size from the ELF section headers.
+    ///
+    /// Reads the headers directly instead of running the toolchain's `size`
+    /// tool: GNU `size`'s Berkeley format counts read-only `SHT_NOBITS`
+    /// reservations (Arduino-Pico's `.heap`) as `text`, so its flash figure
+    /// was off by the whole heap (FastLED/fbuild#2012). See
+    /// [`SizeInfo::from_elf_sections`] for the classification.
+    pub fn report_size(
         elf_path: &Path,
         max_flash: Option<u64>,
         max_ram: Option<u64>,
-        tool_label: &str,
     ) -> Result<SizeInfo> {
-        use fbuild_core::subprocess::run_command;
-
-        let args = [
-            size_path.to_string_lossy().to_string(),
-            elf_path.to_string_lossy().to_string(),
-        ];
-
-        let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
-        // FastLED/fbuild#809: size tool is trivial; bound to 15s.
-        let result = run_command(
-            &args_ref,
-            None,
-            None,
-            Some(std::time::Duration::from_secs(15)),
-        )
-        .await?;
-
-        if !result.success() {
-            return Err(fbuild_core::FbuildError::BuildFailed(format!(
-                "{} failed: {}",
-                tool_label, result.stderr
-            )));
-        }
-
-        SizeInfo::parse(&result.stdout, max_flash, max_ram).ok_or_else(|| {
-            fbuild_core::FbuildError::BuildFailed(format!(
-                "failed to parse {} output:\n{}",
-                tool_label, result.stdout
-            ))
-        })
+        let sections = crate::elf_size::read_elf_section_sizes(elf_path)?;
+        Ok(SizeInfo::from_elf_sections(&sections, max_flash, max_ram))
     }
 
     /// Derive the `nm` tool path from the `size` tool path.

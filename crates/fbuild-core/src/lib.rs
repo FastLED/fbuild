@@ -16,6 +16,7 @@ pub mod daemon_health;
 pub mod disk_full;
 pub mod disk_reserve;
 pub mod elapsed;
+pub mod elf_size;
 pub mod emulator;
 pub mod env_flag;
 pub mod env_namespace;
@@ -34,6 +35,7 @@ pub mod time;
 pub mod usb;
 
 pub use build_log::BuildLog;
+pub use elf_size::ElfSectionSize;
 pub use env_namespace::EnvNamespace;
 
 use serde::{Deserialize, Serialize};

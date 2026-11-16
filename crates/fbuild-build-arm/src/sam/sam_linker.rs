@@ -285,14 +285,7 @@ impl Linker for SamLinker {
     }
 
     async fn report_size(&self, elf_path: &Path) -> Result<SizeInfo> {
-        crate::linker::LinkerBase::report_size(
-            &self.size_path,
-            elf_path,
-            self.max_flash,
-            self.max_ram,
-            "arm-none-eabi-size",
-        )
-        .await
+        crate::linker::LinkerBase::report_size(elf_path, self.max_flash, self.max_ram)
     }
 }
 
