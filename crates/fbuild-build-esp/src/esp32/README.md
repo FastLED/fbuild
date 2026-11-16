@@ -9,6 +9,11 @@ Platform-specific build orchestration for all ESP32 MCU variants.
 - `esp32_linker` — Linker with multiple scripts, 100+ precompiled libs, response files
 - `firmware_bin_cache` — Cross-project reuse of the `elf2image` product, keyed on
   ELF contents plus the flash parameters (FastLED/fbuild#1894)
+- `size_report` — Firmware size summary from ELF section headers: flash is
+  every allocated section with contents, RAM is `.dram0.data` + `.dram0.bss` +
+  `.noinit` (the NOBITS `.dram0.dummy` placeholder is neither,
+  FastLED/fbuild#2013)
+- `size_report_cache` — Cross-project reuse of that report (FastLED/fbuild#1894)
 - `orchestrator` — Build phases: config, packages, compile, link, convert
 - `espidf_delegate` — The opt-in delegated build (`board_build.build_system =
   espidf`): runs the pinned ESP-IDF release's own `idf.py` against the
