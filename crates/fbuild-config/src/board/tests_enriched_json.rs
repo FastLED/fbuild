@@ -351,6 +351,27 @@ fn test_pico_2_w_enriched_fields() {
     }
 }
 
+/// Regression for FastLED/fbuild#2014: arduino-pico only compiles
+/// `cyw43_pinMode` / `cyw43_digitalWrite` / `init_cyw43_wifi` under
+/// `PICO_CYW43_SUPPORTED`, while the variant code calls them
+/// unconditionally. Every bundled board whose arduino-pico `boards.txt`
+/// `build.extra_flags` sets the CYW43 defines (audited against arduino-pico
+/// 4.5.3 and 5.7.0) must carry them too, or every sketch fails at link.
+#[test]
+fn test_cyw43_boards_define_pico_cyw43_supported() {
+    for board_id in ["rpipicow", "rpipico2w", "sparkfun_xrp_controller"] {
+        let config = BoardConfig::from_board_id(board_id, &HashMap::new()).unwrap();
+        let defines = config.get_defines();
+        for define in ["PICO_CYW43_SUPPORTED", "CYW43_PIN_WL_DYNAMIC"] {
+            assert_eq!(
+                defines.get(define).map(String::as_str),
+                Some("1"),
+                "{board_id} must define {define}=1 (see fbuild#2014)"
+            );
+        }
+    }
+}
+
 #[test]
 fn test_sparkfun_xrp_controller_board_config() {
     // SparkFun XRP Controller (RP2350B); maxgerhardt/platform-raspberrypi.
