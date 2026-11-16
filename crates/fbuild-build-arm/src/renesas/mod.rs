@@ -1,5 +1,6 @@
 ﻿//! Renesas RA platform build support (Arduino UNO R4, etc.)
 
+mod framework_libs;
 pub mod mcu_config;
 pub mod orchestrator;
 pub mod renesas_compiler;

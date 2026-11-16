@@ -471,6 +471,23 @@ fn test_esp32c3_devkitm1_board_config() {
     );
 }
 
+/// The ArduinoCore-renesas `WiFiS3` library guards its UNO R4 WiFi build on
+/// `ARDUINO_UNOWIFIR4` — the `build.board` macro from the core's `boards.txt`
+/// (`unor4wifi.build.board=UNOWIFIR4`), which Arduino CLI passes on every
+/// compilation as `-DARDUINO_{build.board}`. Without it the core's own bundled
+/// library takes its `#else` branch (`ModemClass(D24,D25)`) and fails to
+/// compile (FastLED/fbuild#2020).
+#[test]
+fn test_uno_r4_wifi_carries_the_arduino_boards_txt_macro() {
+    let config = BoardConfig::from_board_id("uno_r4_wifi", &HashMap::new()).unwrap();
+    let defines = config.get_defines();
+    assert_eq!(
+        defines.get("ARDUINO_UNOWIFIR4"),
+        Some(&"1".to_string()),
+        "boards.txt build.board macro must reach the compiler"
+    );
+}
+
 #[test]
 fn test_esp32c3_no_psram() {
     // The plain C3 DevKit has no PSRAM

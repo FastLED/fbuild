@@ -7,6 +7,7 @@
 
 use std::path::{Path, PathBuf};
 
+use crate::library::framework_library::{FrameworkLibrary, discover_framework_libraries};
 use crate::{CacheSubdir, Framework, PackageBase, PackageInfo};
 
 const RENESAS_CORE_VERSION: &str = "1.6.0";
@@ -170,6 +171,18 @@ impl RenesasCores {
     pub fn get_core_sources(&self, core_name: &str) -> Vec<PathBuf> {
         let core_dir = self.get_core_dir(core_name);
         collect_sources(&core_dir)
+    }
+
+    /// Bundled Arduino libraries shipped in the core's `libraries/` directory
+    /// (`WiFiS3`, `SPI`, `Wire`, `RTC`, ...).
+    ///
+    /// ArduinoCore-renesas ships 23 libraries next to the core. A sketch that
+    /// includes one of their headers must get the library's include dir on the
+    /// compiler's search path and its sources in the link set, exactly as the
+    /// Arduino IDE and Arduino CLI do for a `framework = arduino` build
+    /// (FastLED/fbuild#2020).
+    pub fn get_framework_libraries(&self) -> Vec<FrameworkLibrary> {
+        discover_framework_libraries(&self.get_libraries_dir())
     }
 }
 
