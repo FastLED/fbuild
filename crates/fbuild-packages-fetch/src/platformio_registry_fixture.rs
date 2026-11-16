@@ -8,7 +8,7 @@ use std::sync::atomic::{AtomicUsize, Ordering};
 use sha2::{Digest, Sha256};
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
 
-use crate::downloader::{names_key, owner_key};
+use crate::downloader::{encode_component, names_key, owner_key};
 
 /// One archive the index lists.
 pub struct IndexFile<'a> {
@@ -30,9 +30,13 @@ pub fn documents(files: &[IndexFile<'_>]) -> Vec<(String, Vec<u8>)> {
     let mut names: BTreeMap<String, Vec<serde_json::Value>> = BTreeMap::new();
     for file in files {
         let suffix: String = file.systems.iter().map(|s| format!("-{s}")).collect();
+        // Bucket keys are the registry's own download paths, so every segment
+        // carries the registry's percent-encoding, exactly like the published
+        // index (#2019).
+        let (owner, name) = (encode_component(file.owner), encode_component(file.name));
         let id = format!(
-            "{}/{}/{}/{}/{}-{}{suffix}.tar.gz",
-            file.owner, file.kind, file.name, file.version, file.name, file.version
+            "{owner}/{}/{name}/{}/{name}-{}{suffix}.tar.gz",
+            file.kind, file.version, file.version
         );
         let mut asset = serde_json::json!({
             "sha256": file.sha256,
@@ -44,8 +48,10 @@ pub fn documents(files: &[IndexFile<'_>]) -> Vec<(String, Vec<u8>)> {
         if !file.systems.is_empty() {
             asset["provides"] = serde_json::json!(file.systems);
         }
-        let package = format!("{}/{}/{}", file.kind, file.name, file.owner);
-        let listed = names.entry(names_key(file.name)).or_default();
+        // `names_bucket` in `ci/gen_mirror_manifest.py` hashes the bucket
+        // key's segment, i.e. the encoded spelling, not the display name.
+        let package = format!("{}/{}/{owner}", file.kind, name);
+        let listed = names.entry(names_key(&name)).or_default();
         if !listed.iter().any(|c| c["id"] == package.as_str()) {
             listed.push(serde_json::json!({ "id": package, "asset": asset.clone() }));
         }
@@ -76,6 +82,15 @@ pub fn documents(files: &[IndexFile<'_>]) -> Vec<(String, Vec<u8>)> {
     };
     for (owner, components) in by_owner {
         add(owner_key(owner), components);
+    }
+    // The published index carries all sixteen `@names-<h>` shards once it
+    // lists enough packages, so a lookup cannot treat a loaded shard as proof
+    // that the name was bucketed there (#2019).
+    for digit in '0'..='9' {
+        names.entry(format!("@names-{digit}")).or_default();
+    }
+    for digit in 'a'..='f' {
+        names.entry(format!("@names-{digit}")).or_default();
     }
     for (key, components) in names {
         add(key, components);

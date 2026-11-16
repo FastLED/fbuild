@@ -20,7 +20,8 @@ use std::path::Path;
 use std::time::{Duration, SystemTime};
 
 use crate::downloader::{
-    CACHE_TTL, MirrorManifest, ShardLookup, load_with, names_key, owner_key, published_manifest,
+    CACHE_TTL, MirrorManifest, ShardLookup, decode_component, load_with, names_keys, owner_key,
+    published_manifest,
 };
 
 /// Archives resolve to their registry download URL; fbuild's mirror flow
@@ -145,29 +146,35 @@ impl RegistryClient {
                 "the served index predates the registry index format (no @names shards)".into(),
             ));
         }
-        let names = match index.owner_shard(&names_key(name)).await {
-            ShardLookup::Loaded(names) => names,
-            // No indexed package hashes into this names shard.
-            ShardLookup::NotListed => return Ok(Vec::new()),
-            ShardLookup::Unavailable => {
-                return Err(RegistryError::IndexUnavailable(format!(
-                    "the names shard for {name}"
-                )));
-            }
-        };
+        // The index may key this shard by the display name or by the
+        // percent-encoded spelling the mirror bucket uses (#2019). Both are
+        // read, because every digit's shard exists once the index is large
+        // enough, so a loaded shard is not proof the name was bucketed there.
         let mut owners: Vec<String> = Vec::new();
-        for id in names.entries().iter().filter_map(|e| e.id.as_deref()) {
-            let Some((package_type, rest)) = id.split_once('/') else {
-                continue;
+        for key in names_keys(name) {
+            let shard = match index.owner_shard(&key).await {
+                ShardLookup::Loaded(shard) => shard,
+                ShardLookup::NotListed => continue,
+                ShardLookup::Unavailable => {
+                    return Err(RegistryError::IndexUnavailable(format!(
+                        "the names shard for {name}"
+                    )));
+                }
             };
-            let Some((package, owner)) = rest.rsplit_once('/') else {
-                continue;
-            };
-            if package_type == kind.registry_type()
-                && package.eq_ignore_ascii_case(name)
-                && !owners.iter().any(|o| o.eq_ignore_ascii_case(owner))
-            {
-                owners.push(owner.to_string());
+            for id in shard.entries().iter().filter_map(|e| e.id.as_deref()) {
+                let Some((package_type, rest)) = id.split_once('/') else {
+                    continue;
+                };
+                let Some((package, owner)) = rest.rsplit_once('/') else {
+                    continue;
+                };
+                let (package, owner) = (decode_component(package), decode_component(owner));
+                if package_type == kind.registry_type()
+                    && package.eq_ignore_ascii_case(name)
+                    && !owners.iter().any(|o| o.eq_ignore_ascii_case(&owner))
+                {
+                    owners.push(owner);
+                }
             }
         }
         Ok(owners)
@@ -318,6 +325,10 @@ fn metadata_from_shard(
         else {
             continue;
         };
+        // Component ids repeat the bucket key, so a name the registry
+        // percent-encodes arrives encoded: compare and report the decoded
+        // spelling a spec carries (#2019).
+        let (id_owner, id_name) = (decode_component(id_owner), decode_component(id_name));
         if id_type != package_type
             || !id_owner.eq_ignore_ascii_case(owner)
             || !id_name.eq_ignore_ascii_case(name)
@@ -341,8 +352,8 @@ fn metadata_from_shard(
             sha256: entry.sha256.clone(),
         };
         let metadata = metadata.get_or_insert_with(|| RegistryMetadata {
-            owner: id_owner.to_string(),
-            name: id_name.to_string(),
+            owner: id_owner.clone(),
+            name: id_name.clone(),
             versions: Vec::new(),
         });
         match metadata.versions.iter_mut().find(|v| v.name == version) {
