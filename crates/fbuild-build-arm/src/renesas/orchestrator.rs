@@ -159,7 +159,7 @@ impl BuildOrchestrator for RenesasOrchestrator {
 
         // 5. Scan sources
         let core_dir = framework.get_core_dir(&ctx.board.core);
-        let variant_dir = framework.get_variant_dir(&ctx.board.variant);
+        let variant_dir = require_variant_dir(&framework, &ctx.board.variant)?;
         let build_dir = &ctx.build_dir;
         let framework_info = fbuild_packages::Package::get_info(&framework);
         let metadata_hash = stable_hash_with_build_config(
@@ -444,6 +444,28 @@ pub fn create() -> Box<dyn BuildOrchestrator> {
     Box::new(RenesasOrchestrator)
 }
 
+/// Return the board's variant directory, failing fast if the core does not
+/// ship it. The variant's `includes.txt` is the only source of the FSP include
+/// path, so a missing variant otherwise surfaces much later as
+/// `bsp_api.h: No such file or directory` (FastLED/fbuild#2015).
+fn require_variant_dir(
+    framework: &fbuild_packages::library::RenesasCores,
+    variant: &str,
+) -> Result<PathBuf> {
+    check_variant_dir(framework.get_variant_dir(variant), variant)
+}
+
+fn check_variant_dir(variant_dir: PathBuf, variant: &str) -> Result<PathBuf> {
+    if variant_dir.is_dir() {
+        return Ok(variant_dir);
+    }
+    Err(fbuild_core::FbuildError::ConfigError(format!(
+        "Renesas variant '{variant}' not found at {}; the board definition needs a \
+         build.variant this ArduinoCore-renesas core ships",
+        variant_dir.display()
+    )))
+}
+
 /// Recursively find subdirectories that contain .h files and add them as include dirs.
 fn discover_header_subdirs(dir: &Path, include_dirs: &mut Vec<PathBuf>) {
     let entries = match std::fs::read_dir(dir) {
@@ -480,6 +502,21 @@ pub fn is_renesas_project(project_dir: &Path, env_name: &str) -> bool {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn check_variant_dir_rejects_a_variant_the_core_does_not_ship() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        std::fs::create_dir_all(tmp.path().join("variants/MINIMA")).unwrap();
+        let ok = check_variant_dir(tmp.path().join("variants/MINIMA"), "MINIMA").unwrap();
+        assert_eq!(ok, tmp.path().join("variants/MINIMA"));
+        // A board JSON with no `build.variant` falls back to a generic name
+        // that ArduinoCore-renesas does not ship (FastLED/fbuild#2015).
+        let err = check_variant_dir(tmp.path().join("variants/standard"), "standard")
+            .unwrap_err()
+            .to_string();
+        assert!(err.contains("'standard'"), "unexpected error: {err}");
+        assert!(err.contains("build.variant"), "unexpected error: {err}");
+    }
 
     #[test]
     fn uno_r4_consumes_registry_framework_and_toolchain() {
