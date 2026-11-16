@@ -212,7 +212,8 @@ mod tests {
         let compiler = test_compiler();
         let flags = compiler.common_flags();
         assert!(flags.contains(&"-Os".to_string()));
-        assert!(flags.contains(&"-flto".to_string()));
+        // FastLED/fbuild#2016: the Adafruit core is not LTO-safe.
+        assert!(!flags.iter().any(|flag| flag.starts_with("-flto")));
     }
 
     #[test]
