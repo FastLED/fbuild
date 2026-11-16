@@ -379,4 +379,61 @@ fn main() {
         let list: Vec<&str> = platforms_missing.iter().map(|s| s.as_str()).collect();
         println!("  Platforms without local installs: {}", list.join(", "));
     }
+
+    report_arduino_boards_without_variant(&board_files);
+}
+
+/// True when a board targets the Arduino framework but its JSON names no
+/// `build.variant` (or has no `build` block at all).
+fn arduino_board_lacks_variant(board: &Value) -> bool {
+    let is_arduino = board
+        .get("frameworks")
+        .and_then(Value::as_array)
+        .is_some_and(|fws| fws.iter().any(|fw| fw.as_str() == Some("arduino")));
+    let has_variant = board
+        .get("build")
+        .and_then(|build| build.get("variant"))
+        .and_then(Value::as_str)
+        .is_some_and(|variant| !variant.is_empty());
+    is_arduino && !has_variant
+}
+
+/// Loudly list Arduino boards that are still variant-less after enrichment.
+///
+/// A board this tool cannot enrich (its platform is not installed under
+/// `~/.platformio/platforms`, or PlatformIO ships no JSON for it) keeps its
+/// stripped form and later resolves to a fallback variant. For cores with
+/// per-board variants that drops the variant's include path entirely —
+/// `uno_r4_minima` shipped that way and failed at `bsp_api.h`
+/// (FastLED/fbuild#2015). Some cores (Teensy, ESP32) legitimately need no
+/// variant, so this is a report for the maintainer, not a hard failure.
+fn report_arduino_boards_without_variant(board_files: &[PathBuf]) {
+    let mut by_platform: std::collections::BTreeMap<String, Vec<String>> = Default::default();
+    for board_path in board_files {
+        let Ok(contents) = fs::read_to_string(board_path) else {
+            continue;
+        };
+        let Ok(board) = serde_json::from_str::<Value>(&contents) else {
+            continue;
+        };
+        if !arduino_board_lacks_variant(&board) {
+            continue;
+        }
+        let platform = board.get("platform").and_then(Value::as_str).unwrap_or("?");
+        let id = board_path.file_stem().unwrap_or_default().to_string_lossy();
+        by_platform
+            .entry(platform.to_string())
+            .or_default()
+            .push(id.into_owned());
+    }
+    if by_platform.is_empty() {
+        return;
+    }
+    let total: usize = by_platform.values().map(Vec::len).sum();
+    eprintln!(
+        "\nWarning: {total} arduino board(s) have no build.variant (fallback variant at build time):"
+    );
+    for (platform, ids) in &by_platform {
+        eprintln!("  {platform}: {}", ids.join(", "));
+    }
 }

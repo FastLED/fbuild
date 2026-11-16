@@ -103,11 +103,27 @@ def patch_bundle(only_platform: Optional[str] = None) -> tuple[int, int, int]:
             print(f"  - {board_id} ({platform}): no upstream JSON")
             continue
 
-        upstream_extra = upstream.get("build", {}).get("extra_flags")
+        upstream_build = upstream.get("build", {})
+        upstream_extra = upstream_build.get("extra_flags")
         if not upstream_extra:
             skipped_no_upstream += 1
             print(f"  - {board_id} ({platform}): upstream has no extra_flags")
             continue
+        # PlatformIO stores extra_flags as either a string or a list; fbuild's
+        # board loader only reads a space-separated string and would silently
+        # drop a list.
+        if isinstance(upstream_extra, list):
+            upstream_extra = " ".join(str(flag) for flag in upstream_extra)
+
+        # A board with no build block also has no core/variant. Emitting only
+        # extra_flags would leave it on the fallback variant, which drops the
+        # variant's include path (FastLED/fbuild#2015: uno_r4_minima). Fill
+        # them from upstream too; never overwrite an existing value.
+        for key in ("core", "variant"):
+            if key not in build and upstream_build.get(key):
+                build[key] = upstream_build[key]
+        if "variant" not in build:
+            print(f"  ! {board_id} ({platform}): no build.variant upstream either", file=sys.stderr)
 
         # Patch in place — insert extra_flags into existing build dict, keep
         # other fields and key order as much as possible. Re-serialize with
