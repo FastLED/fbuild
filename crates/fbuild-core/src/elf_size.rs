@@ -8,9 +8,12 @@ use crate::SizeInfo;
 
 /// The section-header facts size accounting needs for one ELF section
 /// (FastLED/fbuild#2012). Built from `SHF_ALLOC`, `sh_type != SHT_NOBITS`,
-/// `SHF_WRITE` and `SHF_EXECINSTR`.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+/// `SHF_WRITE` and `SHF_EXECINSTR`, plus the section name for platforms
+/// whose layout needs it (ESP32's `.dram0.*`, FastLED/fbuild#2013).
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub struct ElfSectionSize {
+    /// Section name from `.shstrtab`; empty when it cannot be read.
+    pub name: String,
     pub size: u64,
     /// `SHF_ALLOC`: occupies target memory at run time.
     pub alloc: bool,
@@ -73,6 +76,7 @@ mod tests {
     /// `(size, alloc, has_contents, writable, executable)` → section row.
     fn sec(size: u64, alloc: bool, contents: bool, w: bool, x: bool) -> ElfSectionSize {
         ElfSectionSize {
+            name: String::new(),
             size,
             alloc,
             has_contents: contents,

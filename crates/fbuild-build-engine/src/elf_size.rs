@@ -16,11 +16,17 @@ pub fn read_elf_section_sizes(elf_path: &Path) -> Result<Vec<ElfSectionSize>> {
         elf: &object::read::elf::ElfFile<'_, Elf>,
     ) -> Vec<ElfSectionSize> {
         let endian = elf.endian();
-        elf.elf_section_table()
+        let table = elf.elf_section_table();
+        table
             .iter()
             .map(|sh| {
                 let flags: u64 = sh.sh_flags(endian).into();
+                let name = table
+                    .section_name(endian, sh)
+                    .map(|n| String::from_utf8_lossy(n).into_owned())
+                    .unwrap_or_default();
                 ElfSectionSize {
+                    name,
                     size: sh.sh_size(endian).into(),
                     alloc: flags & u64::from(object::elf::SHF_ALLOC) != 0,
                     has_contents: sh.sh_type(endian) != object::elf::SHT_NOBITS,
@@ -90,6 +96,22 @@ mod tests {
         assert_eq!(info.total_flash, 0x100 + 0x30 + 0x10);
         assert_eq!(info.total_ram, 0x10 + 0x40);
         assert_eq!(info.max_flash, Some(0x20_0000));
+    }
+
+    #[test]
+    fn read_elf_section_sizes_reports_section_names() {
+        let tmp = tempfile::tempdir().unwrap();
+        let elf = tmp.path().join("firmware.elf");
+        write_pico_like_elf(&elf);
+        let sections = super::read_elf_section_sizes(&elf).unwrap();
+        let heap = sections.iter().find(|s| s.name == ".heap").unwrap();
+        assert_eq!(heap.size, 0x10_000);
+        assert!(heap.alloc && !heap.has_contents && !heap.writable);
+        assert!(
+            sections
+                .iter()
+                .any(|s| s.name == ".text" && s.size == 0x100)
+        );
     }
 
     #[test]
