@@ -190,14 +190,7 @@ impl Linker for Ch32vLinker {
     }
 
     async fn report_size(&self, elf_path: &Path) -> Result<SizeInfo> {
-        crate::linker::LinkerBase::report_size(
-            &self.size_path,
-            elf_path,
-            self.max_flash,
-            self.max_ram,
-            "riscv-none-elf-size",
-        )
-        .await
+        crate::linker::LinkerBase::report_size(elf_path, self.max_flash, self.max_ram)
     }
 }
 
