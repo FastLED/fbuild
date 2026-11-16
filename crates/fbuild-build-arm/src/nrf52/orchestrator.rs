@@ -165,6 +165,44 @@ fn without_flags(flags: Vec<String>, unwanted: &[&str]) -> Vec<String> {
         .collect()
 }
 
+/// Include directories the Adafruit-family nRF52 core ships inside
+/// `cores/nRF5`: the Nordic SDK (nrfx), the SoftDevice API headers, FreeRTOS
+/// and SEGGER SystemView.
+fn nrf52_core_include_dirs(core_dir: &Path) -> Vec<std::path::PathBuf> {
+    let mut include_dirs = Vec::new();
+    // Nordic SDK includes (bundled inside the core)
+    let nordic_dir = core_dir.join("nordic");
+    include_dirs.push(nordic_dir.clone());
+    include_dirs.push(nordic_dir.join("nrfx"));
+    include_dirs.push(nordic_dir.join("nrfx").join("hal"));
+    include_dirs.push(nordic_dir.join("nrfx").join("mdk"));
+    include_dirs.push(nordic_dir.join("nrfx").join("soc"));
+    include_dirs.push(nordic_dir.join("nrfx").join("drivers").join("include"));
+    include_dirs.push(nordic_dir.join("nrfx").join("drivers").join("src"));
+    // SoftDevice API includes (s140 for nRF52840)
+    let sd_dir = nordic_dir
+        .join("softdevice")
+        .join("s140_nrf52_6.1.1_API")
+        .join("include");
+    if sd_dir.exists() {
+        include_dirs.push(sd_dir.clone());
+        let sd_chip = sd_dir.join("nrf52");
+        if sd_chip.exists() {
+            include_dirs.push(sd_chip);
+        }
+    }
+    // FreeRTOS includes
+    let freertos = core_dir.join("freertos");
+    include_dirs.push(freertos.join("Source").join("include"));
+    include_dirs.push(freertos.join("config"));
+    include_dirs.push(freertos.join("portable").join("GCC").join("nrf52"));
+    include_dirs.push(freertos.join("portable").join("CMSIS").join("nrf52"));
+    // SEGGER SystemView includes
+    include_dirs.push(core_dir.join("sysview").join("SEGGER"));
+    include_dirs.push(core_dir.join("sysview").join("Config"));
+    include_dirs
+}
+
 #[async_trait::async_trait]
 impl BuildOrchestrator for Nrf52Orchestrator {
     fn platform(&self) -> Platform {
@@ -370,36 +408,7 @@ impl BuildOrchestrator for Nrf52Orchestrator {
         tracing::info!("CMSIS framework installed");
         include_dirs.push(cmsis.get_core_include_dir());
         include_dirs.push(cmsis.get_dsp_include_dir());
-        // Nordic SDK includes (bundled inside the core)
-        let nordic_dir = core_dir.join("nordic");
-        include_dirs.push(nordic_dir.clone());
-        include_dirs.push(nordic_dir.join("nrfx"));
-        include_dirs.push(nordic_dir.join("nrfx").join("hal"));
-        include_dirs.push(nordic_dir.join("nrfx").join("mdk"));
-        include_dirs.push(nordic_dir.join("nrfx").join("soc"));
-        include_dirs.push(nordic_dir.join("nrfx").join("drivers").join("include"));
-        include_dirs.push(nordic_dir.join("nrfx").join("drivers").join("src"));
-        // SoftDevice API includes (s140 for nRF52840)
-        let sd_dir = nordic_dir
-            .join("softdevice")
-            .join("s140_nrf52_6.1.1_API")
-            .join("include");
-        if sd_dir.exists() {
-            include_dirs.push(sd_dir.clone());
-            let sd_chip = sd_dir.join("nrf52");
-            if sd_chip.exists() {
-                include_dirs.push(sd_chip);
-            }
-        }
-        // FreeRTOS includes
-        let freertos = core_dir.join("freertos");
-        include_dirs.push(freertos.join("Source").join("include"));
-        include_dirs.push(freertos.join("config"));
-        include_dirs.push(freertos.join("portable").join("GCC").join("nrf52"));
-        include_dirs.push(freertos.join("portable").join("CMSIS").join("nrf52"));
-        // SEGGER SystemView includes
-        include_dirs.push(core_dir.join("sysview").join("SEGGER"));
-        include_dirs.push(core_dir.join("sysview").join("Config"));
+        include_dirs.extend(nrf52_core_include_dirs(&core_dir));
         // TinyUSB includes (USB CDC Serial support for nRF52840)
         let tinyusb_src = framework_dir
             .join("libraries")
