@@ -1,4 +1,9 @@
 {
+  "build": {
+    "core": "arduino",
+    "extra_flags": "-DF_CPU=48000000L -DARDUINO_NANO_R4 -DARDUINO_UNOR4_MINIMA -DARDUINO_nanor4 -DARDUINO_ARCH_RENESAS -DARDUINO_ARCH_RENESAS_UNO -DARDUINO_FSP -D_XOPEN_SOURCE=700 -DCFG_TUSB_MCU=OPT_MCU_RAXXX -D_RA_CORE=CM4 -D_RENESAS_RA_",
+    "variant": "NANOR4"
+  },
   "debug": {
     "tools": {
       "jlink": {},
