@@ -19,6 +19,8 @@ PlatformIO board JSON database. Re-exported from the parent crate as
   `from_board_id`.
 - `tests.rs` — Unit tests covering loaders, defaults, defines, ESP32 flash /
   PSRAM heuristics, and database invariants.
+- `tests_renesas_boards.rs` — Guards that every bundled Renesas RA board names
+  its ArduinoCore-renesas variant, core and defines (FastLED/fbuild#2015).
 
 This split was introduced to satisfy the CI LOC gate (no `.rs` file may
 exceed 1000 lines); behaviour and the public API are unchanged.

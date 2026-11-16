@@ -40,5 +40,8 @@ mod tests_usb_vid;
 #[cfg(test)]
 mod tests_common_board_vidpid;
 
+#[cfg(test)]
+mod tests_renesas_boards;
+
 pub use db::{BoardSummary, search_boards};
 pub use types::{BoardConfig, DebugToolMeta, Esp32QemuPsramConfig};

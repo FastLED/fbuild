@@ -71,6 +71,28 @@ def fetch_upstream_json(board_id: str, platform: str) -> Optional[dict]:
     return None
 
 
+def normalize_extra_flags(flags: object) -> str:
+    """PlatformIO stores `extra_flags` as a string or a list; fbuild's board
+    loader only reads a space-separated string and silently drops a list."""
+    if isinstance(flags, list):
+        return " ".join(str(flag) for flag in flags)
+    return flags if isinstance(flags, str) else ""
+
+
+def fill_core_and_variant(build: dict, upstream_build: dict, label: str) -> None:
+    """Copy a missing `core`/`variant` from upstream; never overwrite.
+
+    A board with no build block also has no core/variant. Emitting only
+    extra_flags would leave it on the fallback variant, which drops the
+    variant's include path (FastLED/fbuild#2015: uno_r4_minima).
+    """
+    for key in ("core", "variant"):
+        if key not in build and upstream_build.get(key):
+            build[key] = upstream_build[key]
+    if "variant" not in build:
+        print(f"  ! {label}: no build.variant upstream either", file=sys.stderr)
+
+
 def patch_bundle(only_platform: Optional[str] = None) -> tuple[int, int, int]:
     """Walk bundle, fetch upstream for those missing extra_flags, patch in place.
 
@@ -103,11 +125,13 @@ def patch_bundle(only_platform: Optional[str] = None) -> tuple[int, int, int]:
             print(f"  - {board_id} ({platform}): no upstream JSON")
             continue
 
-        upstream_extra = upstream.get("build", {}).get("extra_flags")
+        upstream_build = upstream.get("build", {})
+        upstream_extra = normalize_extra_flags(upstream_build.get("extra_flags"))
         if not upstream_extra:
             skipped_no_upstream += 1
             print(f"  - {board_id} ({platform}): upstream has no extra_flags")
             continue
+        fill_core_and_variant(build, upstream_build, f"{board_id} ({platform})")
 
         # Patch in place — insert extra_flags into existing build dict, keep
         # other fields and key order as much as possible. Re-serialize with
