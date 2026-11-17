@@ -213,16 +213,12 @@ pub async fn test_emu(
         }
     };
 
-    let platform_str = env_config.get("platform").cloned().unwrap_or_default();
-    let platform = match fbuild_core::Platform::from_platform_str(&platform_str) {
-        Some(p) => p,
-        None => {
+    let platform = match crate::handlers::operations::resolve_env_platform(env_config) {
+        Ok(p) => p,
+        Err(message) => {
             return (
                 StatusCode::BAD_REQUEST,
-                Json(OperationResponse::fail(
-                    request_id,
-                    format!("unsupported platform: {}", platform_str),
-                )),
+                Json(OperationResponse::fail(request_id, message)),
             );
         }
     };

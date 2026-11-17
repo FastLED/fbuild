@@ -209,6 +209,32 @@ class ValidateBoardTests(unittest.TestCase):
         write_pio_board(self.tree.pio, "espressif32", "esp32dev", build=PIO_BUILD, upload={"protocol": "esptool"})
         self.assertEqual(vb.validate_board(board, self.tree.pio).status, vb.MATCH)
 
+    def test_field_ahead_of_pin_is_skipped_only_while_upstream_lacks_it(self) -> None:
+        pio_build = {k: v for k, v in PIO_BUILD.items() if k != "variant"}
+        our = {k: v for k, v in OUR_BUILD.items() if k != "variant"}
+        board = write_board(
+            self.tree.boards,
+            "seeed_xiao_esp32c6",
+            "espressif32",
+            build={**our, "variant": "XIAO_ESP32C6"},
+            upload={"protocol": "esptool"},
+        )
+        write_pio_board(self.tree.pio, "espressif32", "seeed_xiao_esp32c6", build=pio_build, upload={"protocol": "esptool"})
+        self.assertEqual(vb.validate_board(board, self.tree.pio).status, vb.MATCH)
+        # Once the pin carries the field, a mismatch is drift again.
+        write_pio_board(
+            self.tree.pio, "espressif32", "seeed_xiao_esp32c6", build={**pio_build, "variant": "esp32c6"}, upload={"protocol": "esptool"}
+        )
+        outcome = vb.validate_board(board, self.tree.pio)
+        self.assertEqual(outcome.status, vb.DRIFT)
+        self.assertIn("build.variant", "\n".join(outcome.diffs))
+
+    def test_field_ahead_of_pin_is_per_board(self) -> None:
+        pio_build = {k: v for k, v in PIO_BUILD.items() if k != "variant"}
+        board = write_board(self.tree.boards, "esp32dev", "espressif32", build=OUR_BUILD, upload={"protocol": "esptool"})
+        write_pio_board(self.tree.pio, "espressif32", "esp32dev", build=pio_build, upload={"protocol": "esptool"})
+        self.assertEqual(vb.validate_board(board, self.tree.pio).status, vb.DRIFT)
+
     def test_upstream_without_a_build_section_still_reports_our_fields(self) -> None:
         # RED before the fix: `if expected_build and ...` made an upstream board
         # with no comparable build fields a silent match, so our asset could

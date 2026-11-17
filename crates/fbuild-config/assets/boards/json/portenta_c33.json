@@ -21,6 +21,7 @@
   "platform": "renesas-ra",
   "ram": 523624,
   "rom": 2097152,
+  "unsupported_reason": "it needs the separate Arduino renesas_portenta core and an RA6M5 MCU config, which fbuild does not support yet (FastLED/fbuild#2054)",
   "url": "https://www.arduino.cc/pro/hardware-product-portenta-c33",
   "vendor": "Arduino"
 }

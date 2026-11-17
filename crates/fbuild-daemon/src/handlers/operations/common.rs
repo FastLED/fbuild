@@ -145,6 +145,24 @@ fn env_default_enabled(name: &str) -> bool {
     }
 }
 
+/// Resolve an env's `platform =` value to the [`fbuild_core::Platform`] the
+/// build, deploy and emulator handlers dispatch on. `Err` carries the
+/// message those handlers return as `400 Bad Request`.
+///
+/// A bundled board fbuild cannot build is rejected first, so the message
+/// names the board and the reason rather than only its platform
+/// (FastLED/fbuild#2039).
+pub(crate) fn resolve_env_platform(
+    env_config: &std::collections::HashMap<String, String>,
+) -> Result<fbuild_core::Platform, String> {
+    if let Some(board) = env_config.get("board") {
+        fbuild_config::ensure_board_buildable(board.trim()).map_err(|e| e.to_string())?;
+    }
+    let platform_str = env_config.get("platform").map_or("", String::as_str);
+    fbuild_core::Platform::from_platform_str(platform_str)
+        .ok_or_else(|| format!("unsupported platform: {platform_str}"))
+}
+
 pub(crate) fn qemu_extra_build_flags(platform: fbuild_core::Platform, mcu: &str) -> Vec<String> {
     if platform == fbuild_core::Platform::Espressif32 && mcu.eq_ignore_ascii_case("esp32s3") {
         vec![

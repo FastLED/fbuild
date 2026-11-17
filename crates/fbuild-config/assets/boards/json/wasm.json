@@ -10,5 +10,6 @@
     "arduino"
   ],
   "vendor": "Emscripten",
-  "url": "https://emscripten.org/"
+  "url": "https://emscripten.org/",
+  "unsupported_reason": "fbuild has no WebAssembly (Emscripten) build orchestrator"
 }

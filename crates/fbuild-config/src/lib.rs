@@ -15,7 +15,10 @@ pub mod platform_packages;
 pub mod sdkconfig;
 pub mod source_filter;
 
-pub use board::{BoardConfig, BoardSummary, DebugToolMeta, Esp32QemuPsramConfig, search_boards};
+pub use board::{
+    BoardConfig, BoardSummary, DebugToolMeta, Esp32QemuPsramConfig, ensure_board_buildable,
+    search_boards,
+};
 pub use ini_parser::PlatformIOConfig;
 pub use lib_source::{ClassifiedDep, LockStatus, SourceType, classify as classify_lib_dep};
 pub use mcu::McuSpec;

@@ -86,6 +86,15 @@ pub enum FbuildError {
         supported: String,
     },
 
+    /// A bundled board fbuild knows it cannot build: its platform has no
+    /// orchestrator, or it needs a core fbuild does not install.
+    /// FastLED/fbuild#2039.
+    ///
+    /// Raised at board resolution, before any package download, so the user
+    /// sees the board and the reason instead of a compiler failure.
+    #[error("board '{board}' cannot be built by fbuild: {reason}")]
+    UnsupportedBoard { board: String, reason: String },
+
     #[error("serial error: {0}")]
     SerialError(String),
 

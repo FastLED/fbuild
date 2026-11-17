@@ -282,3 +282,79 @@ mod device_lease_admission_tests {
             .unwrap();
     }
 }
+
+mod resolve_env_platform_tests {
+    //! The build, deploy and emulator handlers share one env → platform
+    //! resolution and one `400` message for an unknown platform.
+    use super::super::common::resolve_env_platform;
+    use std::collections::HashMap;
+
+    fn env(pairs: &[(&str, &str)]) -> HashMap<String, String> {
+        pairs
+            .iter()
+            .map(|(k, v)| ((*k).to_string(), (*v).to_string()))
+            .collect()
+    }
+
+    #[test]
+    fn known_platform_resolves() {
+        let env = env(&[("platform", "atmelavr"), ("board", "uno")]);
+        assert_eq!(
+            resolve_env_platform(&env),
+            Ok(fbuild_core::Platform::AtmelAvr)
+        );
+    }
+
+    #[test]
+    fn unknown_platform_names_the_platform() {
+        let env = env(&[("platform", "made-up-platform")]);
+        assert_eq!(
+            resolve_env_platform(&env),
+            Err("unsupported platform: made-up-platform".to_string())
+        );
+    }
+
+    #[test]
+    fn missing_platform_is_unsupported() {
+        assert_eq!(
+            resolve_env_platform(&HashMap::new()),
+            Err("unsupported platform: ".to_string())
+        );
+    }
+}
+
+mod unbuildable_board_tests {
+    //! FastLED/fbuild#2039: a bundled board fbuild cannot build is rejected
+    //! by name before the platform check, in every handler that dispatches.
+    use super::super::common::resolve_env_platform;
+    use std::collections::HashMap;
+
+    fn env(platform: &str, board: &str) -> HashMap<String, String> {
+        HashMap::from([
+            ("platform".to_string(), platform.to_string()),
+            ("board".to_string(), board.to_string()),
+        ])
+    }
+
+    #[test]
+    fn unsupported_platform_board_is_named() {
+        assert_eq!(
+            resolve_env_platform(&env("heltec-cubecell", "cubecell_board")),
+            Err(
+                "board 'cubecell_board' cannot be built by fbuild: its PlatformIO platform \
+                 'heltec-cubecell' has no fbuild build orchestrator"
+                    .to_string()
+            )
+        );
+    }
+
+    #[test]
+    fn rejected_board_on_supported_platform_is_named() {
+        let err = resolve_env_platform(&env("renesas-ra", "portenta_c33")).unwrap_err();
+        assert!(
+            err.starts_with("board 'portenta_c33' cannot be built by fbuild: it needs"),
+            "{err}"
+        );
+        assert!(err.contains("FastLED/fbuild#2054"), "{err}");
+    }
+}

@@ -3,7 +3,8 @@
 use super::common::{
     DeployRoute, EmulatorKind, OperationGuard, compute_esp32_image_hash, export_artifacts_bundle,
     infer_default_emulator_kind, parse_deploy_route, qemu_extra_build_flags, resolve_build_dir,
-    resolve_client_path, resolve_request_project_dir, trust_device_hash_enabled,
+    resolve_client_path, resolve_env_platform, resolve_request_project_dir,
+    trust_device_hash_enabled,
 };
 use super::deploy_port::{append_warning_to_stderr, choose_deploy_port};
 use super::monitor::{MonitorOutcome, run_monitor_loop};
@@ -134,16 +135,12 @@ pub async fn deploy(
         .as_deref()
         .map(|p| resolve_client_path(p, req.caller_cwd.as_deref(), &project_dir));
 
-    let platform_str = env_config.get("platform").cloned().unwrap_or_default();
-    let platform = match fbuild_core::Platform::from_platform_str(&platform_str) {
-        Some(p) => p,
-        None => {
+    let platform = match resolve_env_platform(env_config) {
+        Ok(p) => p,
+        Err(message) => {
             return (
                 StatusCode::BAD_REQUEST,
-                Json(OperationResponse::fail(
-                    request_id,
-                    format!("unsupported platform: {}", platform_str),
-                )),
+                Json(OperationResponse::fail(request_id, message)),
             );
         }
     };

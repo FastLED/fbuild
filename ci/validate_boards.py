@@ -47,6 +47,17 @@ FBUILD_EXTENSION_BUILD_FIELDS = frozenset(
         "framework_package",
     }
 )
+# Per-board build fields fbuild carries ahead of the pinned platform release.
+# Skipped only while the pinned upstream JSON lacks the field; once a pin bump
+# brings it in, it is compared like any other field.
+BUILD_FIELDS_AHEAD_OF_PIN: dict[str, frozenset[str]] = {
+    # platform-espressif32 b306cf3c ("Enable Arduino frameworks for several
+    # boards"), after the v6.13.0 pin, adds these; arduino-esp32's boards.txt
+    # gives the same variants. Without them the XIAO falls back to the generic
+    # esp32c6 pin map (FastLED/fbuild#2039).
+    "esp32-c6-devkitc-1": frozenset({"variant"}),
+    "seeed_xiao_esp32c6": frozenset({"variant", "extra_flags"}),
+}
 UPLOAD_FIELDS = (
     "protocol",
     "speed",
@@ -311,7 +322,8 @@ def compare_board(board: dict, pio_board: dict) -> list[str]:
     actual_build = raw_build if isinstance(raw_build, dict) else {}
     # Strip intentional fbuild-only extensions from the actual side so
     # they aren't reported as drift (see FBUILD_EXTENSION_BUILD_FIELDS).
-    actual_build = {k: v for k, v in actual_build.items() if k not in FBUILD_EXTENSION_BUILD_FIELDS}
+    ahead = BUILD_FIELDS_AHEAD_OF_PIN.get(str(board.get("id", "")), frozenset()) - expected_build.keys()
+    actual_build = {k: v for k, v in actual_build.items() if k not in FBUILD_EXTENSION_BUILD_FIELDS | ahead}
     if expected_build or actual_build:
         diffs.extend(diff_dicts(expected_build, actual_build, "build"))
 

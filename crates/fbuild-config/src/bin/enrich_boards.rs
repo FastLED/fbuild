@@ -178,6 +178,49 @@ fn merge_extra_flags(core: Option<&str>, flags: &str) -> String {
     merged.join(" ")
 }
 
+/// Identity of a flag for de-duplication: the macro name for `-DNAME[=v]`,
+/// the whole token otherwise.
+fn flag_key(flag: &str) -> &str {
+    match flag.strip_prefix("-D") {
+        Some(define) => &flag[..2 + define.find('=').unwrap_or(define.len())],
+        None => flag,
+    }
+}
+
+/// Merge regenerated upstream `extra_flags` into the bundled ones instead of
+/// replacing them, so defines fbuild added by hand survive a re-run
+/// (FastLED/fbuild#2039: `uno_r4_wifi`'s `ARDUINO_FSP`, `_RA_CORE`, ...).
+///
+/// Upstream flags come first, in upstream order, and win when both define
+/// the same macro; bundled-only flags follow in their bundled order;
+/// duplicates (by macro name) are dropped. A board with no hand-added flags
+/// therefore regenerates to exactly the upstream string, which is what
+/// `ci/validate_boards.py` compares against.
+fn merge_with_bundled_flags(bundled: &str, upstream: &str) -> String {
+    let mut seen = BTreeSet::new();
+    let mut merged = Vec::new();
+    for flag in join_separated_defines(upstream)
+        .into_iter()
+        .chain(join_separated_defines(bundled))
+    {
+        if seen.insert(flag_key(&flag).to_string()) {
+            merged.push(flag);
+        }
+    }
+    merged.join(" ")
+}
+
+/// Fold the bundled `extra_flags` of `existing` into freshly extracted
+/// upstream `build` fields before they are merged over `existing`.
+fn keep_bundled_extra_flags(existing: &Map<String, Value>, build: &mut Map<String, Value>) {
+    let bundled = existing.get("extra_flags").and_then(Value::as_str);
+    let upstream = build.get("extra_flags").and_then(Value::as_str);
+    if let (Some(bundled), Some(upstream)) = (bundled, upstream) {
+        let merged = merge_with_bundled_flags(bundled, upstream);
+        build.insert("extra_flags".to_string(), Value::String(merged));
+    }
+}
+
 /// Extract relevant build fields from PlatformIO's build section.
 fn extract_build(pio_build: &Map<String, Value>) -> Map<String, Value> {
     let mut build = Map::new();
@@ -276,14 +319,16 @@ fn enrich_board(board_path: &Path, pio_dir: &Path) -> Result<bool, String> {
     // Merge build section. We MERGE rather than replace so existing fbuild
     // fields that PIO doesn't ship (e.g. legacy `arduino.ldscript` that
     // PlatformIO has since moved into its SCons builder scripts) survive a
-    // re-run of this tool. PIO-supplied fields still override existing values.
+    // re-run of this tool. PIO-supplied fields still override existing values,
+    // except `extra_flags`, which keeps hand-added defines (FastLED/fbuild#2039).
     if let Some(Value::Object(pio_build)) = pio_obj.get("build") {
-        let build = extract_build(pio_build);
+        let mut build = extract_build(pio_build);
         if !build.is_empty() {
             let existing = board_obj
                 .entry("build".to_string())
                 .or_insert_with(|| Value::Object(Map::new()));
             if let Value::Object(existing_build) = existing {
+                keep_bundled_extra_flags(existing_build, &mut build);
                 // USB identity belongs exclusively to the published
                 // FastLED/boards registry, never this bundled snapshot.
                 existing_build.remove("vid");
@@ -471,6 +516,59 @@ mod tests {
             "-DARDUINO_RASPBERRY_PI_PICO -DARDUINO_ARCH_RP2040"
         );
         assert_eq!(merge_extra_flags(None, "-DA -D"), "-DA -D");
+    }
+
+    /// FastLED/fbuild#2039: regenerating `uno_r4_wifi` from upstream
+    /// platform-renesas-ra must not drop the defines fbuild added by hand.
+    #[test]
+    fn regenerating_keeps_hand_added_extra_flags() {
+        let bundled = "-DF_CPU=48000000L -DARDUINO_UNOR4_WIFI -DARDUINO_UNOWIFIR4 -DNO_USB \
+                       -DBACKTRACE_SUPPORT -DARDUINO_ARCH_RENESAS -DARDUINO_ARCH_RENESAS_UNO \
+                       -DARDUINO_FSP -D_XOPEN_SOURCE=700 -DCFG_TUSB_MCU=OPT_MCU_RAXXX \
+                       -D_RA_CORE=CM4 -D_RENESAS_RA_";
+        let pio_build: Map<String, Value> = serde_json::from_value(serde_json::json!({
+            "core": "arduino",
+            "variant": "UNOWIFIR4",
+            "extra_flags": [
+                "-DARDUINO_UNOWIFIR4", "-DARDUINO_ARCH_RENESAS_UNO", "-DARDUINO_UNOR4_WIFI",
+                "-DNO_USB", "-DBACKTRACE_SUPPORT", "-DLWIP_DNS=1", "-DCFG_TUSB_MCU=OPT_MCU_RAXXX"
+            ]
+        }))
+        .unwrap();
+        let mut existing = Map::new();
+        existing.insert("extra_flags".into(), Value::String(bundled.into()));
+        let mut build = extract_build(&pio_build);
+        keep_bundled_extra_flags(&existing, &mut build);
+        merge_into(&mut existing, build);
+        assert_eq!(
+            existing["extra_flags"].as_str().unwrap(),
+            "-DARDUINO_UNOWIFIR4 -DARDUINO_ARCH_RENESAS_UNO -DARDUINO_UNOR4_WIFI -DNO_USB \
+             -DBACKTRACE_SUPPORT -DLWIP_DNS=1 -DCFG_TUSB_MCU=OPT_MCU_RAXXX \
+             -DF_CPU=48000000L -DARDUINO_ARCH_RENESAS -DARDUINO_FSP -D_XOPEN_SOURCE=700 \
+             -D_RA_CORE=CM4 -D_RENESAS_RA_"
+        );
+    }
+
+    #[test]
+    fn merge_with_bundled_flags_lets_upstream_values_win_and_dedupes() {
+        assert_eq!(
+            merge_with_bundled_flags("-DX=1 -DHAND -D Y -mthumb", "-DX=2 -DY -DUP"),
+            "-DX=2 -DY -DUP -DHAND -mthumb"
+        );
+        // No hand-added flags: the regenerated string is exactly upstream's.
+        assert_eq!(merge_with_bundled_flags("-DB -DA", "-DA -DB"), "-DA -DB");
+    }
+
+    #[test]
+    fn keep_bundled_extra_flags_needs_both_sides() {
+        let mut build = Map::new();
+        build.insert("core".into(), Value::String("arduino".into()));
+        let mut existing = Map::new();
+        existing.insert("extra_flags".into(), Value::String("-DHAND".into()));
+        keep_bundled_extra_flags(&existing, &mut build);
+        assert!(!build.contains_key("extra_flags"));
+        merge_into(&mut existing, build);
+        assert_eq!(existing["extra_flags"], "-DHAND");
     }
 
     #[test]
