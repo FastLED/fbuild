@@ -4,7 +4,9 @@
     "variant": "Seeed_XIAO_nRF52840_Sense",
     "arduino": {
       "ldscript": "nrf52840_s140_v7.ld"
-    }
+    },
+    "extra_flags": "-DARDUINO_Seeed_XIAO_nRF52840_Sense -DNRF52840_XXAA",
+    "framework_package": "framework-arduinoadafruitnrf52-seeed"
   },
   "connectivity": [
     "bluetooth"

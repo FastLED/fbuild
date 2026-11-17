@@ -137,6 +137,16 @@ pub struct BoardConfig {
     /// See FastLED/fbuild#300.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub cmsis_dsp_lib: Option<String>,
+    /// PlatformIO framework package the board builds against, from board
+    /// JSON `build.framework_package`, when it differs from the platform's
+    /// default Arduino core.
+    ///
+    /// fbuild-only metadata: PlatformIO selects such packages by board name
+    /// in `platform.py`. The Seeed XIAO nRF52840 boards set
+    /// `framework-arduinoadafruitnrf52-seeed`, the only core shipping their
+    /// variants (FastLED/fbuild#2017).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub framework_package: Option<String>,
     /// Debug tools from board JSON `debug.tools` section.
     /// Maps tool name (e.g. "simavr", "qemu", "renode") to its metadata.
     #[serde(default, skip_serializing_if = "Option::is_none")]

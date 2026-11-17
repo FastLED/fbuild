@@ -215,6 +215,7 @@ impl BoardConfig {
             openocd_target: get("openocd_target"),
             platform_str: get("platform_str"),
             cmsis_dsp_lib: get("cmsis_dsp_lib"),
+            framework_package: get("framework_package"),
             debug_tools: None, // boards.txt format does not contain debug metadata
         })
     }
@@ -284,7 +285,6 @@ impl BoardConfig {
     ///
     /// Pass `None` for `project_dir` to disable the fallback (equivalent
     /// to [`Self::from_board_id`]).
-    #[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
     pub fn from_board_id_in_project(
         board_id: &str,
         overrides: &HashMap<String, String>,
@@ -302,6 +302,12 @@ impl BoardConfig {
                 ))
             })?;
 
+        let opt = |key: &str| -> Option<String> {
+            overrides
+                .get(key)
+                .cloned()
+                .or_else(|| defaults.get(key).cloned())
+        };
         let get = |key: &str, default: &str| -> String {
             overrides
                 .get(key)
@@ -325,55 +331,19 @@ impl BoardConfig {
             board: get("board", &board_id_to_board_define(board_id)),
             core: get("core", "arduino"),
             variant: get("variant", "standard"),
-            variant_h: overrides
-                .get("variant_h")
-                .cloned()
-                .or_else(|| defaults.get("variant_h").cloned()),
-            chip_variant: overrides
-                .get("chip_variant")
-                .cloned()
-                .or_else(|| defaults.get("chip_variant").cloned()),
-            vid: overrides
-                .get("vid")
-                .cloned()
-                .or_else(|| defaults.get("vid").cloned()),
-            pid: overrides
-                .get("pid")
-                .cloned()
-                .or_else(|| defaults.get("pid").cloned()),
-            usb_product: overrides
-                .get("usb_product")
-                .cloned()
-                .or_else(|| defaults.get("usb_product").cloned()),
-            usb_manufacturer: overrides
-                .get("usb_manufacturer")
-                .cloned()
-                .or_else(|| defaults.get("usb_manufacturer").cloned()),
-            extra_flags: overrides
-                .get("extra_flags")
-                .cloned()
-                .or_else(|| defaults.get("extra_flags").cloned()),
-            march: overrides
-                .get("march")
-                .cloned()
-                .or_else(|| defaults.get("march").cloned()),
-            mabi: overrides
-                .get("mabi")
-                .cloned()
-                .or_else(|| defaults.get("mabi").cloned()),
-            upload_protocol: overrides
-                .get("upload.protocol")
-                .cloned()
-                .or_else(|| defaults.get("upload.protocol").cloned()),
-            upload_speed: overrides
-                .get("upload.speed")
-                .cloned()
-                .or_else(|| defaults.get("upload.speed").cloned()),
+            variant_h: opt("variant_h"),
+            chip_variant: opt("chip_variant"),
+            vid: opt("vid"),
+            pid: opt("pid"),
+            usb_product: opt("usb_product"),
+            usb_manufacturer: opt("usb_manufacturer"),
+            extra_flags: opt("extra_flags"),
+            march: opt("march"),
+            mabi: opt("mabi"),
+            upload_protocol: opt("upload.protocol"),
+            upload_speed: opt("upload.speed"),
             monitor_filters: resolve_monitor_filters(overrides, &defaults, is_esp32_family),
-            check_tool: overrides
-                .get("check_tool")
-                .cloned()
-                .or_else(|| defaults.get("check_tool").cloned()),
+            check_tool: opt("check_tool"),
             max_flash: resolve_max_flash(overrides, &defaults),
             max_ram: overrides
                 .get("maximum_data_size")
@@ -405,39 +375,16 @@ impl BoardConfig {
                     .cloned()
                     .or_else(|| defaults.get("flash_mode").cloned())
             },
-            memory_type: overrides
-                .get("memory_type")
-                .cloned()
-                .or_else(|| defaults.get("memory_type").cloned()),
-            psram_type: overrides
-                .get("psram_type")
-                .cloned()
-                .or_else(|| defaults.get("psram_type").cloned()),
-            f_flash: overrides
-                .get("f_flash")
-                .cloned()
-                .or_else(|| defaults.get("f_flash").cloned()),
-            f_image: overrides
-                .get("f_image")
-                .cloned()
-                .or_else(|| defaults.get("f_image").cloned()),
-            partitions: overrides
-                .get("partitions")
-                .cloned()
-                .or_else(|| defaults.get("partitions").cloned()),
-            ldscript: overrides
-                .get("ldscript")
-                .cloned()
-                .or_else(|| defaults.get("ldscript").cloned()),
-            openocd_target: overrides
-                .get("openocd_target")
-                .cloned()
-                .or_else(|| defaults.get("openocd_target").cloned()),
+            memory_type: opt("memory_type"),
+            psram_type: opt("psram_type"),
+            f_flash: opt("f_flash"),
+            f_image: opt("f_image"),
+            partitions: opt("partitions"),
+            ldscript: opt("ldscript"),
+            openocd_target: opt("openocd_target"),
             platform_str: defaults.get("platform_str").cloned(),
-            cmsis_dsp_lib: overrides
-                .get("cmsis_dsp_lib")
-                .cloned()
-                .or_else(|| defaults.get("cmsis_dsp_lib").cloned()),
+            cmsis_dsp_lib: opt("cmsis_dsp_lib"),
+            framework_package: opt("framework_package"),
             debug_tools: get_board_debug_tools(board_id),
         })
     }

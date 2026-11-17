@@ -22,6 +22,7 @@ Arduino library and framework dependency management: spec parsing, download, com
 - **`esp32_framework.rs`** -- ESP32 Arduino framework + ESP-IDF precompiled libraries
 - **`esp32_platform.rs`** -- ESP32 pioarduino platform package (provides `platform.json` with toolchain metadata)
 - **`esp8266_framework.rs`** -- ESP8266 Arduino framework package
+- **`nrf52_core.rs`** -- Adafruit-family nRF52 cores: Adafruit's (PlatformIO registry) and Seeed's fork (Seeed board-manager archive, SHA-256 pinned), selected by `Nrf52Framework`
 - **`teensy_core.rs`** -- Teensy cores framework package (PaulStoffregen/cores)
 
 Manifest-aware discovery uses fallible include/source APIs. `build.srcDir`, when
