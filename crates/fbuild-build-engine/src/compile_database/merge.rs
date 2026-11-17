@@ -177,11 +177,19 @@ pub fn reroot(entries: Vec<DatabaseEntry>, project_dir: &NormalizedPath) -> Vec<
         .collect()
 }
 
-/// `path` spelled relative to `project_dir`, or `None` when it already is
-/// relative or the two do not share a root.
+/// `path` spelled relative to `project_dir`, or `None` when it is relative
+/// already or the two do not share a root.
+///
+/// The predicate is *rooted*, not [`Path::is_absolute`]: on Windows a
+/// drive-relative path such as `/proj/main.c` has a root but no prefix, so it
+/// is not absolute, yet it is not relative either — leaving it alone kept an
+/// absolute-looking spelling in the database and made a Windows capture
+/// unrerootable. [`relative_spelling`] still returns `None` for the one case
+/// with no answer, two roots that do not meet (`/proj` against `C:/proj`),
+/// through its shared-component guard.
 fn respell(path: &str, project_dir: &NormalizedPath) -> Option<String> {
     let path = Path::new(path);
-    if !path.is_absolute() {
+    if !path.has_root() {
         return None;
     }
     relative_spelling(path, project_dir.as_path())

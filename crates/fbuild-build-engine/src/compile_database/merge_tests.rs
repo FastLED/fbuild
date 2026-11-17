@@ -330,3 +330,20 @@ fn relative_spelling_unchanged_when_the_key_does_not_fold() {
 fn merged_path(fixture: &Fixture, name: &str) -> NormalizedPath {
     fixture.root().join(name)
 }
+
+/// Re-rooting rewrites spelled (rooted) paths and nothing else.
+///
+/// On Windows a drive-relative spelling such as `/proj/main.c` is rooted but
+/// not [`std::path::Path::is_absolute`]; it must still be re-rooted, or a
+/// Windows capture keeps absolute-looking entries (`full / windows / Check`).
+/// A plain relative name is already the spelling the database wants.
+#[test]
+fn respell_rewrites_only_rooted_spellings() {
+    let project = NormalizedPath::new("/proj");
+
+    assert_eq!(respell("main/main.c", &project), None);
+    assert_eq!(
+        respell("/proj/main/main.c", &project),
+        Some("main/main.c".to_string())
+    );
+}
