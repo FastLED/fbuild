@@ -15,8 +15,7 @@ async fn uno_r4_default_core_builds_string_and_ipaddress() {
     })
     .await
     .unwrap();
-    let backend = compile_backend::CompileBackend::start().await.unwrap();
-    compile_backend::install_global(backend);
+    install_test_compile_backend().await;
     let tmp = tempfile::tempdir().unwrap();
     let project = tmp.path();
     std::fs::write(
@@ -116,8 +115,7 @@ async fn uno_r4_wifi_sketch_with_bundled_wifis3_library_builds() {
     })
     .await
     .unwrap();
-    let backend = compile_backend::CompileBackend::start().await.unwrap();
-    compile_backend::install_global(backend);
+    install_test_compile_backend().await;
     let tmp = tempfile::tempdir().unwrap();
     let project = tmp.path();
     std::fs::write(
@@ -202,4 +200,24 @@ void loop() {}
         !wifis3_sources.is_empty(),
         "WiFiS3 sources must be compiled from the core's libraries/ tree"
     );
+}
+
+/// The orchestrator compiles through the process-wide compile backend
+/// (FastLED/fbuild#800), which only the daemon wires at startup — this
+/// acceptance pair must install its own.
+///
+/// Initialized at most once per test process: `renesas_acceptance::` selects
+/// both tests in one process, and a second concurrent `CompileBackend::start()`
+/// cannot win the zccache cache-root writer slot from the first and fails with
+/// "another live daemon already holds this cache root".
+async fn install_test_compile_backend() {
+    static INSTALL: tokio::sync::OnceCell<()> = tokio::sync::OnceCell::const_new();
+    INSTALL
+        .get_or_init(|| async {
+            let backend = compile_backend::CompileBackend::start()
+                .await
+                .expect("compile backend starts for the renesas acceptance pair");
+            compile_backend::install_global(backend);
+        })
+        .await;
 }
