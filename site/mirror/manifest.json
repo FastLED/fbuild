@@ -13470,8 +13470,8 @@
   "fastled": {
    "descriptor": {
     "url": "shards/ab52dd1c4cd06e21.json",
-    "sha256": "96105dc4a0f59600f6d10302860449ddeb3a97652a4f36faed4308d4d4e2d691",
-    "size_bytes": 15390
+    "sha256": "a12203d3ef3a2d74d9ced4cf0edf6b39e9fab0a57a19f2ab417b7807a1cfa3f2",
+    "size_bytes": 15884
    },
    "kind_hint": "data"
   },
