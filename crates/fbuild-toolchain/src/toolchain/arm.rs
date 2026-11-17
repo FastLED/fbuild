@@ -1,6 +1,9 @@
 //! ARM GCC toolchain package.
 //!
 //! Downloads and manages the ARM GCC 15.2.Rel1 toolchain from developer.arm.com.
+//! fbuild's bucket mirrors that host under `vendor/developer.arm.com/<path>` and
+//! is tried first, so an ARM outage does not stop a build (FastLED/fbuild#2029);
+//! the install still verifies the pinned SHA-256 of whichever copy it uses.
 //! Provides paths to: arm-none-eabi-gcc, arm-none-eabi-g++, arm-none-eabi-ar,
 //! arm-none-eabi-objcopy, arm-none-eabi-size.
 

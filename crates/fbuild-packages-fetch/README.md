@@ -17,10 +17,19 @@ Extracted from `fbuild-packages` for compile parallelism (FastLED/fbuild#1008 Ph
 
 - a `dl.registry.platformio.org` download maps to the part after `/download/`,
   e.g. `platformio/tool/framework-arduino-avr/5.4.0/framework-arduino-avr-5.4.0.tar.gz`;
+- a `developer.arm.com` download keeps its whole path under `vendor/`, e.g.
+  `vendor/developer.arm.com/-/media/Files/downloads/gnu/15.2.rel1/binrel/arm-gnu-toolchain-15.2.rel1-x86_64-arm-none-eabi.tar.xz`
+  (FastLED/fbuild#2029: ARM answers 503 for hours and takes every nRF52 build
+  with it, so the bucket copy is tried first);
 - any other URL degrades to the file name, exactly as `{filename}` does.
 
 fbuild's own bucket uses this layout, so builds hit it by default. Downloads
-from other hosts skip the built-in mirror and go straight to the vendor.
+from other hosts skip the built-in mirror and go straight to the vendor. A
+host joins the mirrored set by naming it in `MIRRORED_VENDOR_HOSTS`
+(`downloader_mirrors.rs`); its objects live under `vendor/<host>/<path>`, a
+root the registry index ignores (those keys are not `<owner>/<type>/<name>/
+<version>/<file>`, so `ci/gen_mirror_manifest.py` leaves them out and no shard
+is ever looked up for the host).
 
 ```bash
 # Vendor first, bucket as fallback:
