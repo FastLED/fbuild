@@ -322,3 +322,39 @@ mod resolve_env_platform_tests {
         );
     }
 }
+
+mod unbuildable_board_tests {
+    //! FastLED/fbuild#2039: a bundled board fbuild cannot build is rejected
+    //! by name before the platform check, in every handler that dispatches.
+    use super::super::common::resolve_env_platform;
+    use std::collections::HashMap;
+
+    fn env(platform: &str, board: &str) -> HashMap<String, String> {
+        HashMap::from([
+            ("platform".to_string(), platform.to_string()),
+            ("board".to_string(), board.to_string()),
+        ])
+    }
+
+    #[test]
+    fn unsupported_platform_board_is_named() {
+        assert_eq!(
+            resolve_env_platform(&env("heltec-cubecell", "cubecell_board")),
+            Err(
+                "board 'cubecell_board' cannot be built by fbuild: its PlatformIO platform \
+                 'heltec-cubecell' has no fbuild build orchestrator"
+                    .to_string()
+            )
+        );
+    }
+
+    #[test]
+    fn rejected_board_on_supported_platform_is_named() {
+        let err = resolve_env_platform(&env("renesas-ra", "portenta_c33")).unwrap_err();
+        assert!(
+            err.starts_with("board 'portenta_c33' cannot be built by fbuild: it needs"),
+            "{err}"
+        );
+        assert!(err.contains("FastLED/fbuild#2054"), "{err}");
+    }
+}

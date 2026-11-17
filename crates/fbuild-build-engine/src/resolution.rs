@@ -66,11 +66,16 @@ impl<'a> ResolutionContext<'a> {
 /// calling [`BoardConfig::from_board_id_in_project`] directly, so a new
 /// resolution input (the next `project_dir`-style knob) is threaded in one
 /// place rather than re-plumbed into each consumer (FastLED/fbuild#519).
+///
+/// A bundled board fbuild cannot build fails here with
+/// [`FbuildError::UnsupportedBoard`], before any package is fetched
+/// (FastLED/fbuild#2039).
 pub fn resolve_board(
     board_id: &str,
     overrides: &HashMap<String, String>,
     project_dir: Option<&Path>,
 ) -> Result<BoardConfig> {
+    fbuild_config::ensure_board_buildable(board_id)?;
     BoardConfig::from_board_id_in_project(board_id, overrides, project_dir)
 }
 
@@ -129,6 +134,23 @@ mod tests {
     #[test]
     fn resolve_board_unknown_errors() {
         assert!(super::resolve_board("nonexistent_board", &HashMap::new(), None).is_err());
+    }
+
+    #[test]
+    fn unbuildable_bundled_board_fails_before_resolution() {
+        let dir = write_project("[env:c33]\nplatform = renesas-ra\nboard = portenta_c33\n");
+        let config = PlatformIOConfig::from_path(&dir.path().join("platformio.ini")).unwrap();
+        let err = ResolutionContext::new(dir.path(), "c33", &config)
+            .resolve_board()
+            .unwrap_err();
+        assert!(matches!(err, FbuildError::UnsupportedBoard { .. }), "{err}");
+        assert!(
+            err.to_string()
+                .starts_with("board 'portenta_c33' cannot be built by fbuild: it needs"),
+            "{err}"
+        );
+        let err = super::platform_for_board("bw12", None).unwrap_err();
+        assert!(err.to_string().contains("platform 'libretiny'"), "{err}");
     }
 
     #[test]

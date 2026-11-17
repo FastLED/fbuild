@@ -164,11 +164,17 @@ pub(super) fn registry_board_id(board_id: &str) -> &str {
     resolve_board_alias(board_id)
 }
 
+/// The bundled JSON entry for `board_id`, trying the id itself before its
+/// alias (the lookup order `from_board_id` uses).
+pub(super) fn bundled_board_entry(board_id: &str) -> Option<&'static serde_json::Value> {
+    let db = get_board_db();
+    db.get(board_id)
+        .or_else(|| db.get(resolve_board_alias(board_id)))
+}
+
 /// Extract debug tools from a board JSON entry's `debug.tools` section.
 pub(super) fn get_board_debug_tools(board_id: &str) -> Option<HashMap<String, DebugToolMeta>> {
-    let db = get_board_db();
-    let resolved = resolve_board_alias(board_id);
-    let entry = db.get(board_id).or_else(|| db.get(resolved))?;
+    let entry = bundled_board_entry(board_id)?;
 
     let tools = entry
         .get("debug")

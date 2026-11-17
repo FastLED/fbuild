@@ -20,6 +20,7 @@
 mod db;
 mod loaders;
 mod methods;
+mod support;
 mod types;
 
 #[cfg(test)]
@@ -43,5 +44,9 @@ mod tests_common_board_vidpid;
 #[cfg(test)]
 mod tests_renesas_boards;
 
+#[cfg(test)]
+mod tests_board_data_guard;
+
 pub use db::{BoardSummary, search_boards};
+pub use support::ensure_board_buildable;
 pub use types::{BoardConfig, DebugToolMeta, Esp32QemuPsramConfig};

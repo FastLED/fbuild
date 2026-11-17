@@ -19,8 +19,16 @@ PlatformIO board JSON database. Re-exported from the parent crate as
   `from_board_id`.
 - `tests.rs` — Unit tests covering loaders, defaults, defines, ESP32 flash /
   PSRAM heuristics, and database invariants.
+- `support.rs` — `ensure_board_buildable`: fails early with
+  `FbuildError::UnsupportedBoard` for a bundled board fbuild cannot build (its
+  platform has no orchestrator, or its JSON carries an `unsupported_reason`).
+  Called by the build-side board funnel and the daemon handlers
+  (FastLED/fbuild#2039).
 - `tests_renesas_boards.rs` — Guards that every bundled Renesas RA board names
   its ArduinoCore-renesas variant, core and defines (FastLED/fbuild#2015).
+- `tests_board_data_guard.rs` — Bundle-wide guard: every Arduino board has a
+  core and variant, is on an allow-list with a reason, or is rejected
+  (FastLED/fbuild#2039).
 
 This split was introduced to satisfy the CI LOC gate (no `.rs` file may
 exceed 1000 lines); behaviour and the public API are unchanged.
