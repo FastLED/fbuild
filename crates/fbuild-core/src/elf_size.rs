@@ -93,6 +93,29 @@ impl SizeInfo {
     }
 }
 
+/// Explain why RAM will read 0 bytes when no allocated section carries one
+/// of the platform's `ram_sections` names (FastLED/fbuild#2042).
+///
+/// The size report then cannot tell "no static RAM" from "a linker layout
+/// this table does not know", and the RAM limit check passes vacuously.
+/// Callers warn rather than fail: the link already succeeded and the linker
+/// script's own region checks still hold, so the report is what is
+/// incomplete, not the firmware. A present but empty RAM section is a real
+/// 0 and returns `None`.
+pub fn ram_sections_missing(sections: &[ElfSectionSize], ram_sections: &[&str]) -> Option<String> {
+    let present = sections
+        .iter()
+        .any(|s| s.alloc && ram_sections.contains(&s.name.as_str()));
+    if present {
+        return None;
+    }
+    Some(format!(
+        "no allocated RAM section ({}) in the ELF; RAM is reported as 0 bytes \
+         and the RAM limit is not checked",
+        ram_sections.join(", ")
+    ))
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -306,23 +329,46 @@ mod tests {
         assert_eq!(info.total_flash, 23_904);
     }
 
-    /// Arduino Renesas (`fsp.ld`): `.heap`, `.stack_dummy`, `.vector_table`
-    /// (which runs to the end of RAM) and the DTC table are reservations.
+    /// Writable but not `SHF_ALLOC` (`readelf` flag `W`): the empty
+    /// placeholders Arduino Renesas's `fsp.ld` emits.
+    fn writable_unalloc(name: &str) -> ElfSectionSize {
+        ElfSectionSize {
+            name: name.to_string(),
+            ..sec(0, false, true, true, false)
+        }
+    }
+
+    /// FastLED/fbuild#2042: `readelf -S` of a real Arduino Renesas
+    /// `uno_r4_minima` blink (`fsp.ld`, dev-mode `--clean` build), debug
+    /// sections omitted. `.heap`, `.stack_dummy` and `.vector_table` (which
+    /// runs to the end of RAM) are reservations. PlatformIO renesas-ra
+    /// (`SIZEDATAREGEXP = ^(?:\.data|\.bss|\.noinit)\s+(\d+)` over `size -A`)
+    /// reports 140 + 28 + 3_972 = 4_140 bytes of RAM for this ELF.
     #[test]
-    fn renesas_ram_excludes_heap_stack_and_vector_reservations() {
+    fn renesas_real_blink_ram_matches_platformio() {
         let sections = [
-            named(".text", 40_000, true, false, true),
-            named(".fsp_dtc_vector_table", 128, false, true, false),
-            named(".data", 300, true, true, false),
-            named(".noinit", 40, false, true, false),
-            named(".bss", 2_000, false, true, false),
-            named(".heap", 4_096, false, true, false),
+            named(".text", 27_884, true, false, true), // 0x00004000
+            named(".ARM.exidx", 8, true, false, false),
+            writable_unalloc(".fsp_dtc_vector_table"),
+            named(".data", 140, true, true, false), // 0x20000000
+            named(".noinit", 28, false, true, false),
+            named(".bss", 3_972, false, true, false),
+            named(".heap", 8_192, false, true, false),
             named(".stack_dummy", 1_024, false, true, false),
             named(".vector_table", 256, false, true, false),
+            writable_unalloc(".data_flash"),
+            named(".id_code", 28, true, false, false), // 0x01010018
+            writable_unalloc(".option_setting"),
+            writable_unalloc(".option_setting_ns"),
+            writable_unalloc(".option_setting_s"),
+            unalloc(".ARM.attributes", 48),
+            unalloc(".comment", 142),
         ];
         let info = SizeInfo::from_elf_sections(&sections, None, None);
-        assert_eq!(info.total_ram, 300 + 40 + 2_000);
-        assert_eq!((info.data, info.bss), (300, 2_040));
+        assert_eq!(info.total_ram, 4_140);
+        assert_eq!((info.data, info.bss), (140, 28 + 3_972));
+        // firmware.bin: .text + .ARM.exidx + .data + .id_code.
+        assert_eq!(info.total_flash, 28_060);
     }
 
     /// AVR (real `uno` ELF plus a `.noinit`): `.data + .bss + .noinit` was
@@ -371,6 +417,47 @@ mod tests {
         assert_eq!(info.total_ram, 10 + 30 + 256);
         assert_eq!(info.total_flash, 1_030);
         assert_eq!(info.text, 1_020);
+    }
+
+    /// FastLED/fbuild#2042: a layout with none of the platform's RAM
+    /// sections reports 0 bytes of RAM, which must be flagged rather than
+    /// passed off as a real figure.
+    #[test]
+    fn missing_ram_sections_are_reported() {
+        let sections = [
+            named(".text", 1_000, true, false, true),
+            named(".ram_data", 64, true, true, false),
+            named(".zero", 128, false, true, false),
+        ];
+        let info = SizeInfo::from_elf_sections(&sections, None, Some(2_048));
+        assert_eq!(info.total_ram, 0);
+        let warning = ram_sections_missing(&sections, PLATFORMIO_RAM_SECTIONS)
+            .expect("no .data/.bss/.noinit must be reported");
+        assert!(warning.contains(".data, .bss, .noinit"), "{warning}");
+    }
+
+    /// An empty but present RAM section is a real 0, not an unknown layout.
+    #[test]
+    fn present_but_empty_ram_section_is_not_reported() {
+        let sections = [
+            named(".text", 1_000, true, false, true),
+            named(".bss", 0, false, true, false),
+        ];
+        assert_eq!(
+            ram_sections_missing(&sections, PLATFORMIO_RAM_SECTIONS),
+            None
+        );
+    }
+
+    /// A RAM name on an unallocated section does not count as present,
+    /// matching how [`SizeInfo::from_elf_sections_with_ram`] ignores it.
+    #[test]
+    fn unallocated_ram_named_section_is_still_missing() {
+        let sections = [
+            named(".text", 1_000, true, false, true),
+            unalloc(".data", 64),
+        ];
+        assert!(ram_sections_missing(&sections, PLATFORMIO_RAM_SECTIONS).is_some());
     }
 
     /// Unallocated sections never count, even with a RAM name.

@@ -13,7 +13,6 @@ Platform-specific build orchestration for all ESP32 MCU variants.
   every allocated section with contents, RAM is `.dram0.data` + `.dram0.bss` +
   `.noinit` (the NOBITS `.dram0.dummy` placeholder is neither,
   FastLED/fbuild#2013)
-- `size_report_cache` — Cross-project reuse of that report (FastLED/fbuild#1894)
 - `orchestrator` — Build phases: config, packages, compile, link, convert
 - `espidf_delegate` — The opt-in delegated build (`board_build.build_system =
   espidf`): runs the pinned ESP-IDF release's own `idf.py` against the

@@ -17,12 +17,26 @@ pub fn report_size_with_ram(
     max_ram: Option<u64>,
 ) -> Result<SizeInfo> {
     let sections = read_elf_section_sizes(elf_path)?;
+    warn_if_ram_sections_missing(elf_path, &sections, ram_sections);
     Ok(SizeInfo::from_elf_sections_with_ram(
         &sections,
         ram_sections,
         max_flash,
         max_ram,
     ))
+}
+
+/// Warn when `sections` has none of `ram_sections`, so a 0-byte RAM figure
+/// is never passed off as real (FastLED/fbuild#2042). A warning, not an
+/// error: the link succeeded and the report is what is incomplete.
+pub fn warn_if_ram_sections_missing(
+    elf_path: &Path,
+    sections: &[ElfSectionSize],
+    ram_sections: &[&str],
+) {
+    if let Some(reason) = fbuild_core::ram_sections_missing(sections, ram_sections) {
+        tracing::warn!("size report: {reason}: {}", elf_path.display());
+    }
 }
 
 /// Read the size-relevant header facts of every section in an ELF file
@@ -149,6 +163,29 @@ mod tests {
         // Static RAM only (.data + .bss), not the 216_856-byte heap.
         assert_eq!(info.total_ram, 18_664);
         assert_eq!(info.total_flash, 0x200 + 820);
+    }
+
+    /// FastLED/fbuild#2042: a layout with none of the platform's RAM
+    /// sections still reports (the link succeeded), but says why RAM is 0.
+    #[tracing_test::traced_test]
+    #[test]
+    fn report_size_warns_when_no_ram_section_is_present() {
+        let tmp = tempfile::tempdir().unwrap();
+        let elf = tmp.path().join("firmware.elf");
+        write_nrf52_like_elf(&elf);
+        let info = super::report_size_with_ram(&elf, &[".dram0.bss"], None, Some(1_024)).unwrap();
+        assert_eq!(info.total_ram, 0);
+        assert!(logs_contain("no allocated RAM section (.dram0.bss)"));
+    }
+
+    #[tracing_test::traced_test]
+    #[test]
+    fn report_size_does_not_warn_when_ram_sections_are_present() {
+        let tmp = tempfile::tempdir().unwrap();
+        let elf = tmp.path().join("firmware.elf");
+        write_nrf52_like_elf(&elf);
+        super::report_size_with_ram(&elf, &[".bss"], None, None).unwrap();
+        assert!(!logs_contain("no allocated RAM section"));
     }
 
     #[test]
