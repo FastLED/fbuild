@@ -11430,8 +11430,8 @@
   "earlephilhower": {
    "descriptor": {
     "url": "shards/4d6e9fd4a906a6ab.json",
-    "sha256": "84a489665c74902fbd9f48a7941a0ed1742516bc846004d624d520d8c8ce44fd",
-    "size_bytes": 21702
+    "sha256": "3ba06addca94547354e08e467025f9ceecbfa38797a555b1d2604d2cacf3fa78",
+    "size_bytes": 22244
    },
    "kind_hint": "data"
   },
@@ -63182,8 +63182,8 @@
   "xylopyrographer": {
    "descriptor": {
     "url": "shards/8ec459e9320aedb6.json",
-    "sha256": "f199df6aa559fee25cbeb30d1cce08784d18bc1c78906bf946588d0c69306d2b",
-    "size_bytes": 5357
+    "sha256": "07ad584c6c0bb44ded33bc89a97590a027d1d3807b6897ba4968cc2e820e36c1",
+    "size_bytes": 5865
    },
    "kind_hint": "data"
   },

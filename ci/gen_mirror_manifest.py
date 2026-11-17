@@ -30,6 +30,12 @@ resolves package versions from them instead of PlatformIO's registry API.
 The ``system`` values come from the mirror's own state database
 (``_state/manifest.db`` in the bucket, or ``--state-db``).
 
+Each generated shard's ``version`` is the date its content last changed: a
+shard whose components are unchanged keeps the version on disk, and a new or
+changed one is stamped with ``--version`` (default: today's UTC date,
+``YYYY.MM.DD``). An incremental pass that adds one release therefore touches
+only that owner's shard, its names shard if that changed, and the Index.
+
 Re-runs are incremental: an object already recorded with the same size -- and,
 once the local hash record exists, the same ETag -- is not downloaded again, so
 a same-size replacement is still re-hashed (#1825). The record defaults to
@@ -40,6 +46,10 @@ avoids re-downloading the whole mirror.
 
     uv run --no-project --with boto3 python ci/gen_mirror_manifest.py
     uv run --no-project --with boto3 python ci/gen_mirror_manifest.py --check
+
+``--check`` fails when the committed shards are out of date with the bucket,
+or when the state database disagrees with the bucket (an object without a
+``done`` row, or a ``done`` row without an object).
 
 Listing the bucket needs read credentials: ``--credentials`` (a JSON file
 with ``access_key``/``secret_key``) or ``AWS_ACCESS_KEY_ID`` /
@@ -59,8 +69,8 @@ import sqlite3
 import sys
 import tempfile
 import threading
+import time
 import urllib.request
-from collections import Counter
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass
 from pathlib import Path
@@ -78,7 +88,6 @@ USER_AGENT = "fbuild-mirror-manifest/2"
 STATE_DB_KEY = "_state/manifest.db"
 NAMES_KEY = "@names-"  # '@' is escaped in owner keys, so no owner collides
 STATE_NAME = ".mirror-hashes.tsv"  # per-key size/ETag/sha256, local only (#1825)
-DEFAULT_VERSION = "1"
 
 
 class ForeignShardError(ValueError):
@@ -265,14 +274,31 @@ def load_existing(out_dir: Path) -> dict[str, RecordedObject]:
     return known
 
 
-def existing_version(out_dir: Path) -> str:
-    """Version the shards on disk carry, so ``--version`` can keep it (#1825)."""
-    versions: Counter[str] = Counter()
-    for shard in generated_shards(out_dir):
-        version = json.loads(shard.read_text()).get("version")
-        if isinstance(version, str) and version:
-            versions[version] += 1
-    return versions.most_common(1)[0][0] if versions else DEFAULT_VERSION
+def today_version(now: float | None = None) -> str:
+    """The stamp for shards whose content changed: the UTC date, ``YYYY.MM.DD``."""
+    return time.strftime("%Y.%m.%d", time.gmtime(now))
+
+
+def committed_shards(out_dir: Path) -> dict[str, str]:
+    """``shards/<file>`` -> text for every shard this generator owns on disk."""
+    shards_dir = out_dir / "shards"
+    names = list(shards_dir.glob("names-*.json")) if shards_dir.is_dir() else []
+    return {
+        f"shards/{path.name}": path.read_text(encoding="utf-8")
+        for path in [*generated_shards(out_dir), *names]
+    }
+
+
+def stamped(doc: dict, version: str, previous: str | None) -> str:
+    """Render ``doc``; keep ``previous`` (and its version) if only the stamp differs."""
+    if previous is not None:
+        try:
+            old = json.loads(previous).get("version")
+        except json.JSONDecodeError:
+            old = None
+        if isinstance(old, str) and render({**doc, "version": old}) == previous:
+            return previous
+    return render({**doc, "version": version})
 
 
 def default_state_path(out_dir: Path) -> Path:
@@ -439,7 +465,10 @@ def names_bucket(name: str) -> str:
 
 
 def names_documents(
-    hashed: dict[str, tuple[int, str]], systems: dict[str, list[str]], version: str
+    hashed: dict[str, tuple[int, str]],
+    systems: dict[str, list[str]],
+    version: str,
+    previous: dict[str, str] | None = None,
 ) -> dict[str, str]:
     """Bucket digit -> rendered names shard."""
     first_key: dict[str, str] = {}
@@ -455,8 +484,9 @@ def names_documents(
                 "asset": asset_of(key, *hashed[key], systems[key]),
             }
         )
+    previous = previous or {}
     return {
-        bucket: render(
+        bucket: stamped(
             {
                 "$schema": SCHEMA,
                 "kind": "Release",
@@ -464,7 +494,9 @@ def names_documents(
                 "tool": f"{TOOL}/names-{bucket}",
                 "version": version,
                 "components": components,
-            }
+            },
+            version,
+            previous.get(f"shards/names-{bucket}.json"),
         )
         for bucket, components in sorted(buckets.items())
     }
@@ -475,11 +507,15 @@ def build_documents(
     systems: dict[str, list[str]],
     version: str,
     foreign: dict[str, dict] | None = None,
+    previous: dict[str, str] | None = None,
 ) -> dict[str, str]:
     """Relative path -> rendered document.
 
     ``foreign`` entries are appended to the Index verbatim, after the
-    generated ones; their shards are not among the returned documents."""
+    generated ones; their shards are not among the returned documents.
+    A shard whose content equals its ``previous`` text apart from the
+    version is returned as that text; others are stamped ``version``."""
+    previous = previous or {}
     unknown = sorted(set(hashed) - set(systems))
     if unknown:
         raise ValueError(
@@ -499,7 +535,8 @@ def build_documents(
             }
             for key in sorted(by_owner[owner])
         ]
-        shard = render(
+        rel = f"shards/{shard_id(owner)}.json"
+        shard = stamped(
             {
                 "$schema": SCHEMA,
                 "kind": "Release",
@@ -507,12 +544,13 @@ def build_documents(
                 "tool": f"{TOOL}/{owner}",
                 "version": version,
                 "components": components,
-            }
+            },
+            version,
+            previous.get(rel),
         )
-        rel = f"shards/{shard_id(owner)}.json"
         docs[rel] = shard
         tools[owner] = descriptor(rel, shard)
-    for bucket, text in names_documents(hashed, systems, version).items():
+    for bucket, text in names_documents(hashed, systems, version, previous).items():
         rel = f"shards/names-{bucket}.json"
         docs[rel] = text
         tools[NAMES_KEY + bucket] = descriptor(rel, text)
@@ -536,11 +574,13 @@ def write_site(
 ) -> None:
     """Write the documents under ``out_dir`` and delete shards no longer listed.
 
-    Other tools' entries and shards are kept as committed; one that cannot be
-    kept raises :class:`ForeignShardError` before any file is touched."""
+    Unchanged shards keep the version on disk; new and changed ones get
+    ``version``. Other tools' entries and shards are kept as committed; one
+    that cannot be kept raises :class:`ForeignShardError` before any file is
+    touched."""
     foreign = foreign_entries(out_dir)
     verify_foreign(out_dir, foreign)
-    docs = build_documents(hashed, systems, version, foreign)
+    docs = build_documents(hashed, systems, version, foreign, committed_shards(out_dir))
     shards_dir = out_dir / "shards"
     shards_dir.mkdir(parents=True, exist_ok=True)
     keep = {out_dir / rel for rel in docs} | foreign_paths(out_dir, foreign)
@@ -554,6 +594,42 @@ def write_site(
     )
 
 
+def state_db_drift(
+    objects: dict[str, ListedObject], systems: dict[str, list[str]]
+) -> tuple[list[str], list[str]]:
+    """``(objects without a done row, done rows without an object)``.
+
+    Only registry-layout keys count; the state DB may also hold ``external/``
+    rows for files the registry does not host itself."""
+    recorded = {key for key in systems if is_registry_key(key)}
+    return sorted(set(objects) - recorded), sorted(recorded - set(objects))
+
+
+def check(s3, args: argparse.Namespace, objects: dict[str, ListedObject]) -> int:
+    """``--check``: committed shards and the state DB both match the bucket."""
+    state = args.checkpoint or default_state_path(args.out_dir)
+    known = {**load_existing(args.out_dir), **load_state(state)}
+    stale = stale_keys(objects, known)
+    gone = sorted(set(known) - set(objects))
+    unrecorded, orphaned = state_db_drift(objects, load_systems(s3, args.state_db))
+    status = 0
+    if stale or gone:
+        print(
+            f"{len(stale)} unhashed/changed and {len(gone)} removed objects; rerun",
+            file=sys.stderr,
+        )
+        status = 1
+    if unrecorded or orphaned:
+        print(
+            f"state db: {len(unrecorded)} objects have no done row"
+            f" (e.g. {unrecorded[:3]}), {len(orphaned)} done rows have no object"
+            f" (e.g. {orphaned[:3]})",
+            file=sys.stderr,
+        )
+        status = 1
+    return status
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--out-dir", type=Path, default=OUT_DIR)
@@ -565,7 +641,8 @@ def main() -> int:
     )
     parser.add_argument(
         "--version",
-        help=f"shard version (default: the version the shards on disk carry, else {DEFAULT_VERSION})",
+        help="version for new or changed shards; unchanged shards keep theirs"
+        " (default: today's UTC date, YYYY.MM.DD)",
     )
     parser.add_argument("--workers", type=int, default=32)
     parser.add_argument(
@@ -580,23 +657,15 @@ def main() -> int:
 
     s3 = s3_client(args.credentials)
     objects = list_bucket(s3)
+    if args.check:
+        return check(s3, args, objects)
     state = args.checkpoint or default_state_path(args.out_dir)
     known = {**load_existing(args.out_dir), **load_state(state)}
-    if args.check:
-        stale = stale_keys(objects, known)
-        gone = sorted(set(known) - set(objects))
-        if stale or gone:
-            print(
-                f"{len(stale)} unhashed/changed and {len(gone)} removed objects; rerun",
-                file=sys.stderr,
-            )
-            return 1
-        return 0
 
     recorded = hash_missing(objects, known, args.workers, state)
     hashed = {key: (seen.size, seen.sha256) for key, seen in recorded.items()}
     missing = set(objects) - set(hashed)
-    version = args.version or existing_version(args.out_dir)
+    version = args.version or today_version()
     write_site(args.out_dir, hashed, load_systems(s3, args.state_db), version)
     if missing:
         print(f"{len(missing)} objects left unhashed; rerun to retry", file=sys.stderr)

@@ -2,8 +2,9 @@
 
 ``mirror.py`` fills the bucket and writes the state DB that
 ``ci/gen_mirror_manifest.py`` reads; ``rotate.py`` supervises it on rotating
-droplets. These tests cover the pure helpers and the download/upload path
-against in-process fakes. Nothing here touches the network or the bucket.
+droplets; ``update.py`` runs the incremental pass (item 4). These tests cover
+the pure helpers, the catalog scan, and the download/upload path against
+in-process fakes. Nothing here touches the network or the bucket.
 """
 
 from __future__ import annotations
@@ -30,6 +31,7 @@ if str(MIRROR_DIR) not in sys.path:
 
 import mirror  # noqa: E402
 import rotate  # noqa: E402
+import update  # noqa: E402
 
 
 class FakeResponse:
@@ -125,20 +127,73 @@ class FetchOneTest(unittest.TestCase):
         with self.assertRaises(mirror._QuotaExhausted):
             fetch([quota], None)
 
-    def test_forbidden_is_an_error_not_gone(self) -> None:
-        forbidden = [FakeResponse(403) for _ in range(6)]
-        original = mirror.asyncio.sleep
-
-        async def no_sleep(_: float) -> None:
-            return None
-
-        mirror.asyncio.sleep = no_sleep
-        try:
-            result, s3, _ = fetch(forbidden, None)
-        finally:
-            mirror.asyncio.sleep = original
-        self.assertEqual(result, ("error", "HTTP 403", 0))
+    def test_forbidden_stops_the_run_at_once(self) -> None:
+        # #2040 item 3: a refused UA used to be retried 6 times per file and
+        # then recorded as that file's error, file after file.
+        body = b"This download method is not supported. Please use PlatformIO Core"
+        client = FakeClient([FakeResponse(403, body) for _ in range(6)])
+        s3 = FakeS3()
+        row = (URL, "tool-x-1.0.0.tar.gz", None, KEY, 0)
+        with tempfile.TemporaryDirectory() as tmp:
+            with self.assertRaisesRegex(mirror.RegistryRefused, "not supported"):
+                asyncio.run(mirror.fetch_one(client, s3, row, Path(tmp)))
+            self.assertEqual(list(Path(tmp).iterdir()), [])
+        self.assertEqual(len(client.urls), 1, "a 403 is not retried")
         self.assertEqual(s3.uploads, [])
+
+
+class RefusalTest(unittest.TestCase):
+    """A refusal stops the pass and leaves every other row queued."""
+
+    def setUp(self) -> None:
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        state = Path(self.tmp.name)
+        patcher = mock.patch.multiple(
+            mirror,
+            REFUSED_FILE=state / "registry_refused",
+            QUOTA_FILE=state / "quota_until",
+        )
+        patcher.start()
+        self.addCleanup(patcher.stop)
+
+    def run_chunk(self, failure: BaseException) -> tuple[int | None, list[int]]:
+        recorded: list[int] = []
+
+        async def worker(row: tuple[int]) -> None:
+            if row[0] == 0:
+                raise failure
+            await asyncio.sleep(0.05)
+            recorded.append(row[0])
+
+        status = asyncio.run(mirror.run_chunk(worker, [(i,) for i in range(5)]))
+        return status, recorded
+
+    def test_refusal_cancels_the_chunk_and_is_recorded(self) -> None:
+        status, recorded = self.run_chunk(mirror.RegistryRefused("HTTP 403 from x"))
+        self.assertEqual(status, mirror.EXIT_REFUSED)
+        self.assertEqual(recorded, [], "no other row may be recorded")
+        self.assertIn("HTTP 403", mirror.REFUSED_FILE.read_text())
+
+    def test_quota_still_pauses_instead_of_stopping(self) -> None:
+        status, _ = self.run_chunk(mirror._QuotaExhausted("Download limit exceeded"))
+        self.assertEqual(status, 0)
+        self.assertTrue(mirror.QUOTA_FILE.exists())
+        self.assertFalse(mirror.REFUSED_FILE.exists())
+
+    def test_other_failures_still_propagate(self) -> None:
+        with self.assertRaises(ExceptionGroup):
+            self.run_chunk(ValueError("bug"))
+
+    def test_run_will_not_restart_after_a_refusal(self) -> None:
+        mirror.REFUSED_FILE.write_text("HTTP 403 from x\n")
+        self.assertEqual(mirror.run("PlatformIO/6.2.0 (fbuild/1.0.0)"), 3)
+
+    def test_api_403_is_not_retried(self) -> None:
+        client = FakeApi({})
+        with self.assertRaises(mirror.RegistryRefused):
+            asyncio.run(mirror._search_page(client, 1))
+        self.assertEqual(len(client.calls), 1)
 
 
 class PureHelpersTest(unittest.TestCase):
@@ -304,6 +359,8 @@ class UserAgentTest(unittest.TestCase):
             'Environment="FBUILD_MIRROR_UA=PlatformIO/6.2.0 (fbuild/9.8.7)"\n',
             payloads[0],
         )
+        # A refused client exits 3; systemd must not restart it in a loop.
+        self.assertIn("RestartPreventExitStatus=3\n", payloads[0])
         restore.assert_not_called()
 
 
@@ -389,10 +446,7 @@ class StaleManifestGuardTest(unittest.TestCase):
             )
             local_before = (work / "manifest.db").read_bytes()
 
-            class BucketS3:
-                def download_file(self, bucket: str, key: str, dest: str) -> None:
-                    assert (bucket, key) == (rotate.BUCKET, rotate.STATE_KEY)
-                    shutil.copyfile(bucket_db, dest)
+            BucketS3 = bucket_s3(bucket_db)
 
             with (
                 mock.patch.object(rotate, "WORK", work),
@@ -416,9 +470,7 @@ class StaleManifestGuardTest(unittest.TestCase):
                 tmp_path / "bucket.db", [("a", "done", 5), ("b", "pending", 6)]
             )
 
-            class BucketS3:
-                def download_file(self, bucket: str, key: str, dest: str) -> None:
-                    shutil.copyfile(bucket_db, dest)
+            BucketS3 = bucket_s3(bucket_db)
 
             with (
                 mock.patch.object(rotate, "WORK", work),
@@ -432,11 +484,292 @@ class StaleManifestGuardTest(unittest.TestCase):
 
 
 class FakeClientError(Exception):
-    pass
+    def __init__(self, code: str) -> None:
+        super().__init__(code)
+        self.response = {"Error": {"Code": code}}
+
+
+def bucket_s3(bucket_db: Path | None, etag: str = '"e1"', put_error: str = ""):
+    """A fake `rotate.s3` serving `bucket_db` as the state DB; records writes."""
+
+    class BucketS3:
+        calls: list[tuple[str, dict]] = []
+
+        def __init__(self) -> None:
+            pass
+
+        def get_object(self, Bucket: str, Key: str) -> dict:
+            assert (Bucket, Key) == (rotate.BUCKET, rotate.STATE_KEY)
+            if bucket_db is None:
+                raise FakeClientError("NoSuchKey")
+            return {"Body": open(bucket_db, "rb"), "ETag": etag}
+
+        def put_object(self, **kwargs: object) -> None:
+            BucketS3.calls.append(("put_object", kwargs))
+            if put_error:
+                raise FakeClientError(put_error)
+
+        def copy_object(self, **kwargs: object) -> None:
+            BucketS3.calls.append(("copy_object", kwargs))
+
+    return BucketS3
+
+
+class ConditionalStateDbWriteTest(unittest.TestCase):
+    """#2040: `snapshot_manifest` uploaded with no ETag condition."""
+
+    def setUp(self) -> None:
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        self.db = make_db(Path(self.tmp.name) / "m.db", [("a", "done", 5)])
+        patcher = mock.patch.dict(
+            sys.modules, {"botocore.exceptions": FakeBotocoreExceptions}
+        )
+        patcher.start()
+        self.addCleanup(patcher.stop)
+
+    def test_download_keeps_the_etag_of_the_bytes_it_read(self) -> None:
+        dest = Path(self.tmp.name) / "got.db"
+        with mock.patch.object(rotate, "s3", bucket_s3(self.db, '"abc-3"')):
+            read = rotate.download_bucket_manifest(dest)
+        self.assertEqual(read, rotate.BucketCopy(S(1, 1, 5), '"abc-3"'))
+        self.assertEqual(dest.read_bytes(), self.db.read_bytes())
+
+    def test_upload_is_conditional_on_the_etag_read(self) -> None:
+        fake = bucket_s3(self.db)
+        with mock.patch.object(rotate, "s3", fake):
+            rotate.put_bucket_manifest(self.db, rotate.BucketCopy(S(1, 1, 5), '"e1"'))
+            rotate.put_bucket_manifest(self.db, None)
+        (_, first), (_, second) = fake.calls
+        self.assertEqual(first["IfMatch"], '"e1"')
+        self.assertNotIn("IfNoneMatch", first)
+        self.assertEqual(first["Key"], rotate.STATE_KEY)
+        self.assertEqual(second["IfNoneMatch"], "*")
+
+    def test_a_concurrent_write_is_a_conflict_not_an_overwrite(self) -> None:
+        for code in ("PreconditionFailed", "412"):
+            with (
+                self.subTest(code=code),
+                mock.patch.object(rotate, "s3", bucket_s3(self.db, put_error=code)),
+                self.assertRaisesRegex(rotate.ManifestConflict, "changed since"),
+            ):
+                rotate.put_bucket_manifest(self.db, rotate.BucketCopy(S(1, 1, 5), "e"))
+
+    def test_backup_copies_only_the_copy_read(self) -> None:
+        fake = bucket_s3(self.db)
+        with mock.patch.object(rotate, "s3", fake):
+            key = rotate.backup_bucket_manifest(rotate.BucketCopy(S(1, 1, 5), '"e1"'))
+        ((name, kwargs),) = fake.calls
+        self.assertEqual(name, "copy_object")
+        self.assertEqual(kwargs["CopySourceIfMatch"], '"e1"')
+        self.assertEqual(kwargs["Key"], key)
+        self.assertTrue(key.startswith(rotate.STATE_KEY + ".bak-"))
 
 
 FakeBotocoreExceptions = types.ModuleType("botocore.exceptions")
 FakeBotocoreExceptions.ClientError = FakeClientError
+
+
+class FakeApiResponse:
+    def __init__(self, status: int, body: object = None) -> None:
+        self.status_code = status
+        self.body = body
+        self.text = "This download method is not supported" if status == 403 else ""
+
+    def json(self) -> object:
+        return self.body
+
+    def raise_for_status(self) -> None:
+        if self.status_code >= 400:
+            raise RuntimeError(f"HTTP {self.status_code}")
+
+
+class FakeApi:
+    """The registry API: `search` is a newest-updated-first list of items,
+    `packages` maps `owner/type/name` to a `/packages` body. Anything else 403s."""
+
+    def __init__(self, packages: dict[str, dict], search: list[dict] | None = None):
+        self.packages = packages
+        self.search = search or []
+        self.calls: list[str] = []
+
+    async def get(self, url: str, params: dict | None = None) -> FakeApiResponse:
+        self.calls.append(url)
+        if url == f"{mirror.API}/search" and self.search:
+            assert params["sort"] == "updated"
+            start = (params["page"] - 1) * params["limit"]
+            items = self.search[start : start + params["limit"]]
+            return FakeApiResponse(200, {"total": len(self.search), "items": items})
+        label = url.removeprefix(f"{mirror.API}/packages/")
+        if label in self.packages:
+            return FakeApiResponse(200, self.packages[label])
+        return FakeApiResponse(403)
+
+
+def item(owner: str, name: str, updated: str) -> dict:
+    return {
+        "owner": {"username": owner},
+        "type": "library",
+        "name": name,
+        "updated_at": updated,
+    }
+
+
+def versions(owner: str, name: str, *names: str) -> dict:
+    return {
+        "versions": [
+            {
+                "name": v,
+                "files": [
+                    {
+                        "download_url": f"{mirror.DL_PREFIX}{owner}/library/{name}/{v}/{name}-{v}.tar.gz",
+                        "size": 10,
+                        "system": "*",
+                    }
+                ],
+            }
+            for v in names
+        ]
+    }
+
+
+T0 = mirror.registry_time("2026-10-30T08:41:57Z")
+
+
+class IncrementalCatalogTest(unittest.TestCase):
+    """#2040 item 4: `catalog` only read versions of packages it had never seen,
+    so a new release of a known package (FastLED 3.10.9) was never queued."""
+
+    def setUp(self) -> None:
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        self.conn = sqlite3.connect(Path(self.tmp.name) / "m.db")
+        self.addCleanup(self.conn.close)
+        self.conn.executescript(mirror.SCHEMA)
+        # The bucket DB's shape: every package fully catalogued, all done.
+        mirror._record_packages(
+            self.conn,
+            [item("fastled", "FastLED", ""), item("old", "Stale", "")],
+            T0,
+        )
+        for owner, name, body in (
+            ("fastled", "FastLED", versions("fastled", "FastLED", "3.10.8")),
+            ("old", "Stale", versions("old", "Stale", "1.0")),
+        ):
+            mirror._store_files(
+                self.conn,
+                mirror.file_rows(body, owner, "library", name, T0),
+                owner,
+                "library",
+                name,
+            )
+        self.conn.execute("update files set state = 'done'")
+        self.conn.commit()
+
+    def pending(self) -> list[str]:
+        return [
+            key
+            for (key,) in self.conn.execute(
+                "select key from files where state = 'pending' order by key"
+            )
+        ]
+
+    def scan(self, api: FakeApi, since: int | None) -> None:
+        async def go() -> None:
+            await mirror._scan(api, self.conn, T0 + 10, 500, since)
+            await mirror._fetch_pending_versions(api, self.conn, 0)
+
+        with mock.patch.object(mirror.asyncio, "sleep", mock.AsyncMock()):
+            asyncio.run(go())
+
+    def registry(self) -> FakeApi:
+        return FakeApi(
+            {
+                "fastled/library/FastLED": versions(
+                    "fastled", "FastLED", "3.10.9", "3.10.8"
+                ),
+                "new/library/Fresh": versions("new", "Fresh", "0.1"),
+            },
+            [
+                item("new", "Fresh", "2026-11-17T21:24:52Z"),
+                item("fastled", "FastLED", "2026-11-02T14:20:58Z"),
+                item("old", "Stale", "2026-10-01T00:00:00Z"),
+            ],
+        )
+
+    def test_new_release_of_a_known_package_is_queued(self) -> None:
+        api = self.registry()
+        self.scan(api, mirror.registry_time("2026-10-29T00:00:00Z"))
+        self.assertEqual(
+            self.pending(),
+            [
+                "fastled/library/FastLED/3.10.9/FastLED-3.10.9.tar.gz",
+                "new/library/Fresh/0.1/Fresh-0.1.tar.gz",
+            ],
+        )
+        self.assertNotIn(f"{mirror.API}/packages/old/library/Stale", api.calls)
+        self.assertEqual(
+            mirror.stored_watermark(self.conn),
+            mirror.registry_time("2026-11-17T21:24:52Z"),
+        )
+
+    def test_rescan_from_the_watermark_queues_nothing_new(self) -> None:
+        self.scan(self.registry(), mirror.registry_time("2026-10-29T00:00:00Z"))
+        self.conn.execute("update files set state = 'done'")
+        api = self.registry()
+        self.scan(api, None)
+        self.assertEqual(self.pending(), [])
+        # Only the package inside the overlap window is read again.
+        self.assertEqual(
+            [c for c in api.calls if "/packages/" in c],
+            [f"{mirror.API}/packages/new/library/Fresh"],
+        )
+
+    def test_legacy_db_without_watermark_only_adds_unknown_packages(self) -> None:
+        self.scan(self.registry(), None)
+        self.assertEqual(self.pending(), ["new/library/Fresh/0.1/Fresh-0.1.tar.gz"])
+        self.assertIsNone(mirror.stored_watermark(self.conn))
+
+    def test_named_package_refresh_leaves_the_watermark_alone(self) -> None:
+        api = self.registry()
+        mirror.request_refresh(self.conn, [("fastled", "library", "FastLED")], T0)
+
+        async def go() -> None:
+            await mirror._fetch_pending_versions(api, self.conn, 0)
+
+        asyncio.run(go())
+        self.assertEqual(
+            self.pending(), ["fastled/library/FastLED/3.10.9/FastLED-3.10.9.tar.gz"]
+        )
+        self.assertNotIn(f"{mirror.API}/search", api.calls)
+        self.assertIsNone(mirror.stored_watermark(self.conn))
+
+
+class WatermarkTest(unittest.TestCase):
+    def test_registry_time(self) -> None:
+        self.assertEqual(mirror.registry_time("1970-01-01T00:01:00Z"), 60)
+        for bad in (None, "", "yesterday", "2026-11-17T00:00:00"):
+            self.assertIsNone(mirror.registry_time(bad))
+
+    def test_split_stops_at_the_first_item_older_than_the_cutoff(self) -> None:
+        items = [
+            {"updated_at": "1970-01-01T00:03:00Z"},
+            {"updated_at": None},
+            {"updated_at": "1970-01-01T00:01:00Z"},
+            {"updated_at": "1970-01-01T00:05:00Z"},
+        ]
+        self.assertEqual(mirror.split_updated(items, 120), (items[:2], True))
+        self.assertEqual(mirror.split_updated(items, None), (items, False))
+        self.assertEqual(mirror.newest_update(items, None), 300)
+
+    def test_watermark_only_advances_over_a_covered_scan(self) -> None:
+        advance = mirror.watermark_may_advance
+        self.assertTrue(advance(None, None, fresh_db=True))  # first full pass
+        self.assertFalse(advance(None, None, fresh_db=False))  # legacy DB
+        self.assertTrue(advance(None, 100, fresh_db=False))  # operator's --since
+        self.assertTrue(advance(100, 100, fresh_db=False))
+        self.assertTrue(advance(100, 50, fresh_db=False))
+        self.assertFalse(advance(100, 150, fresh_db=False))  # a gap behind it
 
 
 class SharedStateDbTest(unittest.TestCase):
@@ -452,6 +785,17 @@ class SharedStateDbTest(unittest.TestCase):
                 gen.load_systems(None, db), {"o/tool/p/1/f": ["linux_x86_64"]}
             )
 
+    def test_watermark_table_does_not_disturb_the_generator(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            db = make_db(Path(tmp) / "m.db", [("o/tool/p/1/f", "done", 1)])
+            conn = sqlite3.connect(db)
+            mirror.store_watermark(conn, 42)
+            self.assertEqual(mirror.stored_watermark(conn), 42)
+            conn.close()
+            self.assertEqual(
+                gen.load_systems(None, db), {"o/tool/p/1/f": ["linux_x86_64"]}
+            )
+
     def test_bucket_and_key_constants_agree(self) -> None:
         self.assertEqual(rotate.STATE_KEY, gen.STATE_DB_KEY)
         self.assertEqual(rotate.BUCKET, gen.BUCKET_NAME)
@@ -461,3 +805,66 @@ class SharedStateDbTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class UpdateScriptTest(unittest.TestCase):
+    """ci/mirror/update.py: the guards around the incremental pass."""
+
+    def test_since_accepts_a_date_or_datetime_in_utc(self) -> None:
+        self.assertEqual(update.parse_since("1970-01-02"), 86400)
+        self.assertEqual(update.parse_since("1970-01-01T00:01:00Z"), 60)
+        with self.assertRaises(update.argparse.ArgumentTypeError):
+            update.parse_since("last week")
+
+    def test_package_must_be_owner_type_name(self) -> None:
+        self.assertEqual(
+            update.parse_package("fastled/library/FastLED"),
+            ("fastled", "library", "FastLED"),
+        )
+        for bad in ("FastLED", "fastled//FastLED", "a/b/c/d"):
+            with (
+                self.subTest(bad=bad),
+                self.assertRaises(update.argparse.ArgumentTypeError),
+            ):
+                update.parse_package(bad)
+
+    def test_queue_lists_exactly_what_transfer_picks_up(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            db = make_db(
+                Path(tmp) / "m.db",
+                [("b", "pending", 1), ("a", "error", 1), ("c", "done", 1)],
+            )
+            self.assertEqual(update.queued(db), [("a", 0), ("b", 0)])
+
+    def test_queue_over_the_cap_is_refused(self) -> None:
+        update.check_queue([("a", 5), ("b", 5)], 10)
+        with self.assertRaisesRegex(update.GuardError, "max-bytes"):
+            update.check_queue([("a", 5), ("b", 6)], 10)
+
+    def test_a_scan_needs_a_watermark_or_since(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            db = make_db(Path(tmp) / "m.db", [("a", "done", 1)])
+            args = update.parse_args([])
+            with self.assertRaisesRegex(update.GuardError, "--since"):
+                update.check_scan_source(db, args)
+            update.check_scan_source(db, update.parse_args(["--since", "2026-10-01"]))
+            update.check_scan_source(
+                db, update.parse_args(["--package", "fastled/library/FastLED"])
+            )
+            conn = sqlite3.connect(db)
+            mirror.store_watermark(conn, 1)
+            conn.close()
+            update.check_scan_source(db, args)
+
+    def test_upload_copy_is_self_contained(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            db = make_db(Path(tmp) / "manifest.db", [("a", "done", 3)])
+            conn = sqlite3.connect(db)
+            conn.execute("pragma journal_mode=wal")
+            mirror.store_watermark(conn, 7)  # lives in the WAL until checkpoint
+            out = update.snapshot_db(db)
+            conn.close()
+            self.assertEqual(rotate.summarize_manifest(out), S(1, 1, 3))
+            copy = sqlite3.connect(out)
+            self.assertEqual(mirror.stored_watermark(copy), 7)
+            copy.close()

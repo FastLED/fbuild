@@ -3,7 +3,7 @@
  "kind": "Release",
  "schema_version": 1,
  "tool": "fbuild-download-mirror/earlephilhower",
- "version": "2026.10.31",
+ "version": "2026.11.17",
  "components": [
   {
    "id": "earlephilhower/library/BackgroundAudio/1.4.1/BackgroundAudio-1.4.1.tar.gz",
@@ -171,6 +171,19 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/earlephilhower/library/ESP8266Audio/2.4.1/ESP8266Audio-2.4.1.tar.gz",
      "https://dl.registry.platformio.org/download/earlephilhower/library/ESP8266Audio/2.4.1/ESP8266Audio-2.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "earlephilhower/library/ESP8266Audio/2.4.3/ESP8266Audio-2.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266Audio-2.4.3.tar.gz",
+    "size_bytes": 6245069,
+    "sha256": "8bdd36aeb2f5a0682b1edda34662df386c77df69fc9b821db928ef71d82a5142",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/earlephilhower/library/ESP8266Audio/2.4.3/ESP8266Audio-2.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/earlephilhower/library/ESP8266Audio/2.4.3/ESP8266Audio-2.4.3.tar.gz"
     ]
    }
   },

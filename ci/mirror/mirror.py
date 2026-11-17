@@ -17,20 +17,25 @@ fbuild client can use it as a download mirror without credentials.
 
 Subcommands
 -----------
-catalog   Enumerate the registry (all packages, all versions, all files) into
-          the local SQLite manifest. Resumable and idempotent.
+catalog   Enumerate the registry into the local SQLite manifest. The first
+          pass reads every package; later passes page the registry search
+          newest-updated first, stop at the DB's watermark and re-read the
+          versions of every package updated since, so a new release of a
+          known package is queued too. Resumable and idempotent.
 transfer  Download every pending file from the registry, verify sha256, upload
           it to Spaces with a public-read ACL, mark it done. Resumable; safe to
           re-run after a crash or reboot.
 run       catalog then transfer, forever (re-catalogs periodically to pick up
-          new registry versions).
+          new registry versions). Exits 3 once the registry refuses the client.
 status    Print manifest progress by state.
 verify    Re-HEAD a sample (or all) of the done rows against Spaces.
 
 The registry's CDN rejects requests whose User-Agent does not start with
 `PlatformIO/` (HTTP 403 "This download method is not supported"), so every
 registry request sends a `PlatformIO/` User-Agent: `FBUILD_MIRROR_UA` when set,
-otherwise fbuild's own production format (see `resolve_user_agent`).
+otherwise fbuild's own production format (see `resolve_user_agent`). Any 403
+from the registry stops the run (exit 3) instead of failing file after file:
+it refuses the client, not one file (FastLED/fbuild#2040).
 """
 
 from __future__ import annotations
@@ -46,7 +51,8 @@ import sys
 import tempfile
 import time
 import tomllib
-from collections.abc import Mapping
+from collections.abc import Callable, Iterable, Mapping
+from datetime import datetime
 from pathlib import Path
 from typing import Any
 
@@ -120,6 +126,10 @@ DB_PATH = STATE_DIR / "manifest.db"
 CREDS_PATH = Path(
     os.environ.get("FBUILD_MIRROR_CREDS", "/etc/fbuild-mirror/spaces.json")
 )
+# Written when the registry refuses the client (any 403); `run` will not start
+# again while it exists, and rotate.py stops the supervisor when it sees it.
+REFUSED_FILE = STATE_DIR / "registry_refused"
+EXIT_REFUSED = 3
 BUCKET = os.environ.get("FBUILD_MIRROR_BUCKET", "fbuild")
 REGION = os.environ.get("FBUILD_MIRROR_REGION", "sfo3")
 CONCURRENCY = int(os.environ.get("FBUILD_MIRROR_CONCURRENCY", "3"))
@@ -155,7 +165,29 @@ create table if not exists files (
 );
 create index if not exists files_state on files(state);
 create index if not exists files_package on files(owner, type, package);
+create table if not exists meta (
+  key text primary key,
+  value text not null
+);
 """
+
+# `meta` key: the registry `updated_at` (epoch seconds) up to which every
+# package's versions are catalogued. A pass rescans from a little before it.
+WATERMARK_KEY = "registry_updated_since"
+WATERMARK_OVERLAP_SECONDS = 6 * 3600
+
+
+def configure(state_dir: Path, creds: Path) -> None:
+    """Point the module at a local state dir and credentials file.
+
+    On a droplet the unit file sets `FBUILD_MIRROR_STATE`/`_CREDS`; a local
+    pass (ci/mirror/update.py) calls this instead."""
+    global STATE_DIR, DB_PATH, CREDS_PATH, QUOTA_FILE, REFUSED_FILE
+    STATE_DIR = state_dir
+    DB_PATH = state_dir / "manifest.db"
+    CREDS_PATH = creds
+    QUOTA_FILE = state_dir / "quota_until"
+    REFUSED_FILE = state_dir / "registry_refused"
 
 
 def db() -> sqlite3.Connection:
@@ -203,20 +235,112 @@ def log(msg: str) -> None:
     print(f"{time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())} {msg}", flush=True)
 
 
+class RegistryRefused(Exception):
+    """The registry answered 403. It refuses the client (in practice the
+    User-Agent), so every other request would fail the same way: stop."""
+
+
+def check_refused(status: int, url: str, body: str) -> None:
+    if status == 403:
+        raise RegistryRefused(f"HTTP 403 from {url}: {body.strip()[:300]}")
+
+
+def record_refusal(exc: RegistryRefused) -> None:
+    """Make the refusal loud and sticky (see `REFUSED_FILE`)."""
+    log(f"REGISTRY REFUSED THIS CLIENT; stopping. {exc}")
+    REFUSED_FILE.parent.mkdir(parents=True, exist_ok=True)
+    REFUSED_FILE.write_text(f"{exc}\n")
+
+
+# --------------------------------------------------------------------------
+# watermark
+# --------------------------------------------------------------------------
+
+
+def registry_time(value: Any) -> int | None:
+    """Epoch seconds of a registry timestamp such as `2026-11-17T21:24:52Z`."""
+    if not isinstance(value, str) or not value:
+        return None
+    try:
+        parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    return int(parsed.timestamp()) if parsed.tzinfo else None
+
+
+def stored_watermark(conn: sqlite3.Connection) -> int | None:
+    row = conn.execute(
+        "select value from meta where key = ?", (WATERMARK_KEY,)
+    ).fetchone()
+    return int(row[0]) if row else None
+
+
+def store_watermark(conn: sqlite3.Connection, value: int) -> None:
+    with conn:
+        conn.execute(
+            "insert or replace into meta (key, value) values (?, ?)",
+            (WATERMARK_KEY, str(value)),
+        )
+
+
+def watermark_may_advance(
+    stored: int | None, scan_from: int | None, fresh_db: bool
+) -> bool:
+    """May a finished scan record a new watermark?
+
+    Only when it covered everything since the old one: a full scan of an empty
+    DB, or an incremental scan that started at or before the stored watermark.
+    With none stored, an explicit `--since` is the operator's word that the DB
+    covers everything before it. A full scan of a DB without a watermark (one
+    catalogued before it existed) proves nothing about known packages, and
+    neither does a later `--since`."""
+    if scan_from is None:
+        return fresh_db
+    return stored is None or scan_from <= stored
+
+
+def split_updated(
+    items: list[dict[str, Any]], cutoff: int | None
+) -> tuple[list[dict[str, Any]], bool]:
+    """`(items updated at or after cutoff, whether the cutoff was reached)`.
+
+    Search results come newest-updated first, so the first older item ends
+    the scan. An item without a readable `updated_at` is kept."""
+    if cutoff is None:
+        return items, False
+    fresh = []
+    for item in items:
+        updated = registry_time(item.get("updated_at"))
+        if updated is not None and updated < cutoff:
+            return fresh, True
+        fresh.append(item)
+    return fresh, False
+
+
+def newest_update(items: Iterable[dict[str, Any]], newest: int | None) -> int | None:
+    for item in items:
+        updated = registry_time(item.get("updated_at"))
+        if updated is not None and (newest is None or updated > newest):
+            newest = updated
+    return newest
+
+
 # --------------------------------------------------------------------------
 # catalog
 # --------------------------------------------------------------------------
 
 
 async def _search_page(client: Any, page: int) -> Any:
-    """One `/search` page, retried; the registry is flaky."""
+    """One `/search` page, newest-updated first, retried; the registry is flaky."""
+    params = {"query": "*", "page": page, "limit": 50, "sort": "updated"}
     for attempt in range(6):
         try:
-            r = await client.get(
-                f"{API}/search", params={"query": "*", "page": page, "limit": 50}
-            )
+            r = await client.get(f"{API}/search", params=params)
+            check_refused(r.status_code, f"{API}/search", r.text)
             r.raise_for_status()
             return r
+        except RegistryRefused:
+            raise
         except Exception as exc:  # registry is flaky
             log(f"search page {page} attempt {attempt + 1} failed: {exc}")
             await asyncio.sleep(2 * (attempt + 1))
@@ -224,22 +348,29 @@ async def _search_page(client: Any, page: int) -> Any:
 
 
 def _record_packages(
-    conn: sqlite3.Connection, items: list[dict[str, Any]], now: int
+    conn: sqlite3.Connection,
+    items: list[dict[str, Any]],
+    now: int,
+    refresh: bool = False,
 ) -> None:
+    """Upsert search results. `refresh` queues their versions to be read again
+    (an incremental scan); otherwise only unknown packages are queued."""
     with conn:
         for it in items:
             owner = (it.get("owner") or {}).get("username") or "?"
             conn.execute(
                 "insert or replace into packages"
                 " (owner, type, name, tier, seen_at, versions_fetched)"
-                " values (?,?,?,?,?, coalesce((select versions_fetched from packages"
-                "  where owner=? and type=? and name=?), 0))",
+                " values (?,?,?,?,?, case when ? then 0 else coalesce((select"
+                "  versions_fetched from packages where owner=? and type=? and name=?),"
+                "  0) end)",
                 (
                     owner,
                     it.get("type"),
                     it.get("name"),
                     it.get("tier"),
                     now,
+                    int(refresh),
                     owner,
                     it.get("type"),
                     it.get("name"),
@@ -247,24 +378,45 @@ def _record_packages(
             )
 
 
-async def _search_catalog(
-    client: Any, conn: sqlite3.Connection, now: int, log_every: int
+def request_refresh(
+    conn: sqlite3.Connection, packages: Iterable[tuple[str, str, str]], now: int
 ) -> None:
-    """Page through the whole registry search into the `packages` table."""
+    """Queue named `(owner, type, name)` packages for a version refresh."""
+    with conn:
+        for owner, kind, name in packages:
+            conn.execute(
+                "insert into packages (owner, type, name, seen_at, versions_fetched)"
+                " values (?,?,?,?,0) on conflict (owner, type, name)"
+                " do update set versions_fetched = 0",
+                (owner, kind, name, now),
+            )
+
+
+async def _search_catalog(
+    client: Any,
+    conn: sqlite3.Connection,
+    now: int,
+    log_every: int,
+    cutoff: int | None = None,
+) -> int | None:
+    """Page the registry search, newest-updated first, into `packages`.
+
+    With `cutoff`, stop at the first package last updated before it and queue
+    every package seen for a version refresh. Returns the newest `updated_at`
+    seen, or `None` when the scan saw nothing."""
     page = 1
     seen = 0
+    newest = None
     while True:
         data = (await _search_page(client, page)).json()
-        total = data["total"]
-        items = data["items"]
-        if not items:
-            break
-        _record_packages(conn, items, now)
-        seen += len(items)
-        if seen % log_every < len(items):
-            log(f"catalog search {seen}/{total}")
-        if seen >= total:
-            break
+        items, reached = split_updated(data["items"], cutoff)
+        _record_packages(conn, items, now, refresh=cutoff is not None)
+        newest = newest_update(items, newest)
+        seen += len(data["items"])
+        if seen % log_every < len(data["items"]):
+            log(f"catalog search {seen}/{data['total']}")
+        if reached or not data["items"] or seen >= data["total"]:
+            return newest
         page += 1
         await asyncio.sleep(0.05)
 
@@ -284,8 +436,11 @@ async def _get_versions(client: Any, url: str, label: str) -> tuple[str, Any]:
             rr = await client.get(url)
             if rr.status_code in (404, 410):
                 return "gone", None
+            check_refused(rr.status_code, url, rr.text)
             rr.raise_for_status()
             return "ok", rr.json()
+        except RegistryRefused:
+            raise
         except Exception as exc:
             if attempt == 3:
                 log(f"versions {label} failed: {exc}")
@@ -375,28 +530,66 @@ async def _fetch_versions(
             log(f"catalog metadata {progress['done']}/{progress['total']}")
 
 
-async def catalog(user_agent: str, log_every: int = 500, max_packages: int = 0) -> int:
+async def _scan(
+    client: Any, conn: sqlite3.Connection, now: int, log_every: int, since: int | None
+) -> None:
+    """Search the registry from `since` (else the stored watermark; else all of
+    it) and record the newest `updated_at` seen when the scan earned it."""
+    stored = stored_watermark(conn)
+    fresh_db = conn.execute("select count(*) from packages").fetchone()[0] == 0
+    scan_from = since if since is not None else stored
+    if scan_from is None and not fresh_db:
+        log(
+            "WARNING no watermark in this DB: only packages it has never seen are"
+            " catalogued; run `update.py --since <date>` once to pick up new"
+            " releases of known packages"
+        )
+    cutoff = None if scan_from is None else scan_from - WATERMARK_OVERLAP_SECONDS
+    newest = await _search_catalog(client, conn, now, log_every, cutoff)
+    if newest is not None and watermark_may_advance(stored, scan_from, fresh_db):
+        store_watermark(conn, max(newest, stored or 0))
+
+
+async def _fetch_pending_versions(
+    client: Any, conn: sqlite3.Connection, max_packages: int
+) -> None:
+    pending = conn.execute(
+        "select owner, type, name from packages where versions_fetched = 0"
+    ).fetchall()
+    if max_packages:
+        pending = pending[:max_packages]
+    log(f"catalog: {len(pending)} packages still need version metadata")
+    sem = asyncio.Semaphore(4)
+    progress = {"done": 0, "total": len(pending)}
+    tasks = [_fetch_versions(client, conn, sem, progress, tuple(p)) for p in pending]
+    for chunk_start in range(0, len(tasks), 400):
+        await asyncio.gather(*tasks[chunk_start : chunk_start + 400])
+
+
+async def catalog(
+    user_agent: str,
+    log_every: int = 500,
+    max_packages: int = 0,
+    since: int | None = None,
+    packages: Iterable[tuple[str, str, str]] = (),
+) -> int:
+    """Queue every registry file the DB lacks.
+
+    `packages` refreshes only those packages and leaves the watermark alone;
+    otherwise the registry search runs from `since` or the stored watermark."""
     import httpx
 
     conn = db()
     now = int(time.time())
+    packages = list(packages)
     async with httpx.AsyncClient(
         headers={"User-Agent": user_agent}, timeout=90.0
     ) as client:
-        await _search_catalog(client, conn, now, log_every)
-        pending = conn.execute(
-            "select owner, type, name from packages where versions_fetched = 0"
-        ).fetchall()
-        if max_packages:
-            pending = pending[:max_packages]
-        log(f"catalog: {len(pending)} packages still need version metadata")
-        sem = asyncio.Semaphore(4)
-        progress = {"done": 0, "total": len(pending)}
-        tasks = [
-            _fetch_versions(client, conn, sem, progress, tuple(p)) for p in pending
-        ]
-        for chunk_start in range(0, len(tasks), 400):
-            await asyncio.gather(*tasks[chunk_start : chunk_start + 400])
+        if packages:
+            request_refresh(conn, packages, now)
+        else:
+            await _scan(client, conn, now, log_every, since)
+        await _fetch_pending_versions(client, conn, max_packages)
     total_files, total_bytes = conn.execute(
         "select count(*), coalesce(sum(size),0) from files"
     ).fetchone()
@@ -476,6 +669,9 @@ async def _stream_once(
     async with client.stream("GET", url) as r:
         if r.status_code in (404, 410):
             return f"HTTP {r.status_code}"
+        if r.status_code == 403:
+            body = (await r.aread())[:400].decode("utf-8", "replace")
+            check_refused(r.status_code, url, body)
         if r.status_code == 429:
             await _raise_for_429(r, filename, attempt)
         r.raise_for_status()
@@ -500,7 +696,7 @@ async def _download(
             dest.unlink(missing_ok=True)
             if attempt == 5:
                 return "error", "HTTP 429 Too Many Requests (gave up)", 0
-        except _QuotaExhausted:
+        except (_QuotaExhausted, RegistryRefused):
             dest.unlink(missing_ok=True)
             raise
         except Exception:
@@ -547,8 +743,9 @@ async def fetch_one(
         if finished is not None:
             return finished
         return await _verify_and_upload(s3, dest, sha, key, size)
-    except _QuotaExhausted:
-        # Must escape fetch_one: the transfer pass turns it into a 24 h pause.
+    except (_QuotaExhausted, RegistryRefused):
+        # Must escape fetch_one: the transfer pass turns the quota into a 24 h
+        # pause and a refusal into a stop.
         raise
     except Exception as exc:  # recorded, retried next pass
         return "error", str(exc)[:500], 0
@@ -608,21 +805,48 @@ async def transfer(
                     f" {counters['bytes'] / 1e9:.2f}GB @ {rate:.1f}MB/s"
                 )
 
+        status = None
         for start in range(0, len(rows), 200):
-            try:
-                await asyncio.gather(*(worker(r) for r in rows[start : start + 200]))
-            except _QuotaExhausted as exc:
-                until = int(time.time()) + QUOTA_SLEEP_SECONDS
-                QUOTA_FILE.write_text(str(until))
-                log(
-                    f"registry quota exhausted ({str(exc)[:120]}); pausing until "
-                    f"{time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime(until))}"
-                )
+            status = await run_chunk(worker, rows[start : start + 200])
+            if status is not None:
                 break
 
     shutil.rmtree(workdir, ignore_errors=True)
     log(f"transfer pass finished: {counters}")
-    return 0
+    return status or 0
+
+
+def _pause_for_quota(exc: _QuotaExhausted) -> None:
+    until = int(time.time()) + QUOTA_SLEEP_SECONDS
+    QUOTA_FILE.write_text(str(until))
+    log(
+        f"registry quota exhausted ({str(exc)[:120]}); pausing until "
+        f"{time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime(until))}"
+    )
+
+
+async def run_chunk(
+    worker: Callable[[tuple[Any, ...]], Any], rows: list[tuple[Any, ...]]
+) -> int | None:
+    """Run `worker` over `rows`; `None` to go on, else the pass's exit status.
+
+    A spent quota or a refusal cancels the chunk's other downloads, so their
+    rows stay queued instead of being recorded as errors."""
+    try:
+        async with asyncio.TaskGroup() as group:
+            for row in rows:
+                group.create_task(worker(row))
+    except ExceptionGroup as errors:  # builtin on 3.11+, which the script requires
+        refused = errors.subgroup(RegistryRefused)
+        quota = errors.subgroup(_QuotaExhausted)
+        if refused is not None:
+            record_refusal(refused.exceptions[0])
+            return EXIT_REFUSED
+        if quota is not None:
+            _pause_for_quota(quota.exceptions[0])
+            return 0
+        raise
+    return None
 
 
 # --------------------------------------------------------------------------
@@ -672,38 +896,54 @@ def verify(sample: int = 50) -> int:
     return 1 if bad else 0
 
 
+def _quota_pause() -> int | None:
+    """Seconds still to wait for the daily quota, or `None` when it has reset."""
+    if not QUOTA_FILE.exists():
+        return None
+    try:
+        until = int(QUOTA_FILE.read_text().strip() or "0")
+    except ValueError:
+        until = 0
+    if until > time.time():
+        return min(3600, until - int(time.time()))
+    QUOTA_FILE.unlink(missing_ok=True)
+    return None
+
+
+def _needs_catalog(last_catalog: float) -> bool:
+    if (time.monotonic() - last_catalog) > RECATALOG_SECONDS:
+        return True
+    # Only re-page the registry when the last pass left packages without
+    # version metadata; otherwise a 75 s search pass every minute is waste.
+    conn = db()
+    try:
+        return (
+            conn.execute(
+                "select count(*) from packages where versions_fetched=0"
+            ).fetchone()[0]
+            > 0
+        )
+    finally:
+        conn.close()
+
+
 def run(user_agent: str) -> int:
+    if REFUSED_FILE.exists():
+        log(f"registry refused this client earlier: {REFUSED_FILE.read_text().strip()}")
+        return EXIT_REFUSED
     last_catalog = 0.0
     while True:
         try:
-            if QUOTA_FILE.exists():
-                try:
-                    until = int(QUOTA_FILE.read_text().strip() or "0")
-                except ValueError:
-                    until = 0
-                if until > time.time():
-                    nap = min(3600, until - int(time.time()))
-                    log(f"quota pause active; sleeping {nap}s")
-                    time.sleep(max(30, nap))
-                    continue
-                QUOTA_FILE.unlink(missing_ok=True)
-            now = time.monotonic()
-            need_catalog = (now - last_catalog) > RECATALOG_SECONDS
-            if not need_catalog:
-                # Only re-page the registry when the last pass left packages without
-                # version metadata; otherwise a 75 s search pass every minute is waste.
-                conn = db()
-                need_catalog = (
-                    conn.execute(
-                        "select count(*) from packages where versions_fetched=0"
-                    ).fetchone()[0]
-                    > 0
-                )
-                conn.close()
-            if need_catalog:
+            nap = _quota_pause()
+            if nap is not None:
+                log(f"quota pause active; sleeping {nap}s")
+                time.sleep(max(30, nap))
+                continue
+            if _needs_catalog(last_catalog):
                 asyncio.run(catalog(user_agent))
                 last_catalog = time.monotonic()
-            asyncio.run(transfer(user_agent))
+            if asyncio.run(transfer(user_agent)) == EXIT_REFUSED:
+                return EXIT_REFUSED
             remaining = (
                 db()
                 .execute(
@@ -720,6 +960,9 @@ def run(user_agent: str) -> int:
                 time.sleep(60)
         except KeyboardInterrupt:
             return 0
+        except RegistryRefused as exc:
+            record_refusal(exc)
+            return EXIT_REFUSED
         except Exception as exc:  # keep the service alive
             log(f"run loop error: {exc}")
             time.sleep(120)
@@ -748,11 +991,15 @@ def main() -> int:
         print(f"error: {exc}", file=sys.stderr)
         return 2
     log(f"registry User-Agent: {user_agent}")
-    if args.cmd == "catalog":
-        return asyncio.run(catalog(user_agent, max_packages=args.max_packages))
-    if args.cmd == "transfer":
+    if args.cmd == "run":
+        return run(user_agent)
+    try:
+        if args.cmd == "catalog":
+            return asyncio.run(catalog(user_agent, max_packages=args.max_packages))
         return asyncio.run(transfer(user_agent, args.limit, args.owner))
-    return run(user_agent)
+    except RegistryRefused as exc:
+        record_refusal(exc)
+        return EXIT_REFUSED
 
 
 if __name__ == "__main__":
