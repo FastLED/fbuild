@@ -1491,7 +1491,15 @@ mod tests {
         let tmp = tempfile::TempDir::new().unwrap();
         let build_dir = tmp.path().join("build");
         std::fs::create_dir_all(&build_dir).unwrap();
-        let framework = fbuild_packages::library::Rp2040Cores::new(tmp.path());
+        // An isolated cache root: `get_variant_dir` writes below the cache, and
+        // the ambient root is the user's real install. Writing the test's
+        // template there both pollutes a live framework and, when the core is
+        // not installed yet, creates a sentinel-less tree the installer used to
+        // trust (FastLED/fbuild#2043).
+        let framework = fbuild_packages::library::Rp2040Cores::with_cache_root(
+            tmp.path(),
+            &tmp.path().join("cache"),
+        );
         let mut board = fbuild_test_support::board_for_test("rpipico");
         board.variant = "fbuild-test-rpipico".to_string();
         board.max_flash = Some(2_097_152);

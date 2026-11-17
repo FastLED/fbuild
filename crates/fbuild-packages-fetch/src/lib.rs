@@ -35,6 +35,7 @@ type BoxedValidate<'a> = Box<dyn FnOnce(&Path) -> fbuild_core::Result<()> + Send
 
 use async_trait::async_trait;
 use fbuild_core::install_status::{self, InstallPhase, InstallRole};
+use fbuild_core::path::NormalizedPath;
 
 static PACKAGE_TOUCHES: OnceLock<Mutex<HashSet<String>>> = OnceLock::new();
 
@@ -402,6 +403,54 @@ impl PackageBase {
         true
     }
 
+    /// The first candidate install dir that is a *complete* install.
+    ///
+    /// Candidates are the shared path and this chip's slice dir, in that
+    /// order (see `installed_dirs`). Existence alone is not a hit: only a
+    /// directory carrying the `.install_complete` sentinel counts, because
+    /// anything else is a partial tree that must be repaired
+    /// (FastLED/fbuild#2043).
+    fn complete_install_dir(&self) -> Option<NormalizedPath> {
+        self.installed_dirs()
+            .into_iter()
+            .find(|path| Self::is_complete_install(path.as_path()))
+    }
+
+    /// Move a sentinel-less install directory aside so a fresh install can
+    /// commit atomically at its path.
+    ///
+    /// Never deletes: the tree may hold a partial extract still worth
+    /// diagnosing, and a repair must not destroy a user's data. The successor
+    /// name is deterministic (`<name>.incomplete`), so repeated repairs replace
+    /// the previous quarantine instead of accumulating trees.
+    fn quarantine_incomplete_install(path: &Path) -> fbuild_core::Result<()> {
+        if !path.exists() {
+            return Ok(());
+        }
+        let aside = path.with_file_name(format!(
+            "{}.incomplete",
+            path.file_name().unwrap_or_default().to_string_lossy()
+        ));
+        if aside.is_dir() {
+            let _ = std::fs::remove_dir_all(&aside);
+        } else if aside.exists() {
+            let _ = std::fs::remove_file(&aside);
+        }
+        fbuild_core::platform::fs::rename_path(path, &aside).map_err(|e| {
+            fbuild_core::FbuildError::PackageError(format!(
+                "failed to quarantine incomplete install at {}: {}",
+                path.display(),
+                e
+            ))
+        })?;
+        tracing::warn!(
+            "install at {} has no .install_complete sentinel; moved it to {} and reinstalling",
+            path.display(),
+            aside.display()
+        );
+        Ok(())
+    }
+
     /// Best-effort LRU touch in the DiskCache index.
     fn touch_disk_cache(&self) {
         if let Some(ref dc) = self.disk_cache {
@@ -476,17 +525,17 @@ impl PackageBase {
             .chip_install_path()
             .map_or_else(|| install_path.clone(), |path| path.into_path_buf());
 
-        if install_path.exists() {
+        // A hit requires the `.install_complete` sentinel, exactly as
+        // `is_cached()` documents: a directory that merely exists may be a
+        // partial extract, a CI cache restored before the atomic rename
+        // committed, or a legacy tree. Returning it hands the caller a corrupt
+        // framework root (FastLED/fbuild#2043).
+        if let Some(hit) = self.complete_install_dir() {
             // An existing-install hit is a use: refresh the DiskCache LRU so
             // background GC doesn't treat this package as the oldest unused
             // entry and delete it mid-build (FastLED/fbuild#1341).
             self.touch_disk_cache();
-            return Ok(install_path);
-        }
-
-        if target_path.exists() {
-            self.touch_disk_cache();
-            return Ok(target_path);
+            return Ok(hit.into_path_buf());
         }
 
         // Ensure parent directory exists
@@ -499,14 +548,19 @@ impl PackageBase {
         // Append _staging to dir name (can't use with_extension — version has dots)
         let _install_lock =
             install_lock::acquire_for_install(&target_path, &self.name, &self.version).await?;
-        if install_path.exists() {
+        // Re-check under the lock: a concurrent installer may have committed
+        // while we waited.
+        if let Some(hit) = self.complete_install_dir() {
             self.touch_disk_cache();
-            return Ok(install_path);
+            return Ok(hit.into_path_buf());
         }
-        if target_path.exists() {
-            self.touch_disk_cache();
-            return Ok(target_path);
-        }
+
+        // Neither candidate dir is a complete install, yet something may still
+        // sit at the commit path without its sentinel. `replace_file` (a
+        // rename) cannot land over a non-empty directory, and leaving the tree
+        // in place would let `find_core_root`-style fallbacks keep reading it.
+        // Move it aside, then install fresh.
+        Self::quarantine_incomplete_install(&target_path)?;
 
         let staging_path = target_path.with_file_name(format!(
             "{}_staging",
@@ -962,5 +1016,7 @@ mod toolchain_gcc_ar_tests {
 
 #[cfg(test)]
 mod chip_slice_tests;
+#[cfg(test)]
+mod install_repair_tests;
 #[cfg(test)]
 mod package_override_tests;

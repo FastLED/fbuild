@@ -55,8 +55,15 @@ impl Rp2040Cores {
         }
     }
 
-    #[cfg(test)]
-    fn with_cache_root(project_dir: &Path, cache_root: &Path) -> Self {
+    /// Construct against an explicit cache root instead of the ambient one.
+    ///
+    /// `Rp2040Cores::new` resolves `fbuild_paths::get_cache_root()`, i.e. the
+    /// user's real cache. Any caller that writes through a path getter
+    /// (`get_variant_dir`, `get_linker_script`, ...) must use this constructor
+    /// with a scratch root, or its writes land in a live install and can leave
+    /// a sentinel-less tree behind (FastLED/fbuild#2043). Same contract as
+    /// `PackageBase::with_cache_root`, which this forwards to.
+    pub fn with_cache_root(project_dir: &Path, cache_root: &Path) -> Self {
         Self {
             base: PackageBase::with_cache_root(
                 "rp2040-core",
