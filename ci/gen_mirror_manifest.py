@@ -434,6 +434,26 @@ def build_documents(
     return docs
 
 
+def write_site(
+    out_dir: Path,
+    hashed: dict[str, tuple[int, str]],
+    systems: dict[str, list[str]],
+    version: str,
+    prebuilt: list[dict] | None = None,
+) -> None:
+    """Write the documents under ``out_dir`` and delete shards no longer listed."""
+    docs = build_documents(hashed, systems, version, prebuilt)
+    shards_dir = out_dir / "shards"
+    shards_dir.mkdir(parents=True, exist_ok=True)
+    keep = {out_dir / rel for rel in docs}
+    for old in shards_dir.glob("*.json"):
+        if old not in keep:
+            old.unlink()
+    for rel, text in docs.items():
+        (out_dir / rel).write_text(text, encoding="utf-8")
+    print(f"wrote {len(docs) - 1} shards covering {len(hashed)} objects", file=sys.stderr)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--out-dir", type=Path, default=OUT_DIR)
@@ -471,16 +491,7 @@ def main() -> int:
     missing = set(objects) - set(hashed)
     version = args.version or existing_version(args.out_dir)
     prebuilt = json.loads(args.prebuilt.read_text()) if args.prebuilt else None
-    docs = build_documents(hashed, load_systems(s3, args.state_db), version, prebuilt)
-    shards_dir = args.out_dir / "shards"
-    shards_dir.mkdir(parents=True, exist_ok=True)
-    keep = {args.out_dir / rel for rel in docs}
-    for old in shards_dir.glob("*.json"):
-        if old not in keep:
-            old.unlink()
-    for rel, text in docs.items():
-        (args.out_dir / rel).write_text(text, encoding="utf-8")
-    print(f"wrote {len(docs) - 1} shards covering {len(hashed)} objects", file=sys.stderr)
+    write_site(args.out_dir, hashed, load_systems(s3, args.state_db), version, prebuilt)
     if missing:
         print(f"{len(missing)} objects left unhashed; rerun to retry", file=sys.stderr)
         return 1
