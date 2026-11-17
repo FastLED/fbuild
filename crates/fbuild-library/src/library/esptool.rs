@@ -26,11 +26,12 @@
 //!    See `extract_esptool_version`.
 //! 2. Windows registry metadata selects the published pioarduino source archive
 //!    at the same version: some releases (including 5.1.0) have no Windows binary.
-//!    Other hosts map `(OS, ARCH)` to a tasmota platform tag
+//!    The standalone path maps `(OS, ARCH)` to a release platform tag
 //!    (`linux-amd64`, `macos-arm64`, `windows-amd64`, …). An unsupported host
-//!    yields an error, and the caller falls back to an `esptool` on PATH.
-//! 3. `https://github.com/tasmota/esptool/releases/download/v{version}/esptool-{platform}.zip`
-//!    is downloaded + extracted via the shared [`PackageBase::staged_install`]
+//!    yields an error naming [`ESPTOOL_PATH_ENV_VAR`].
+//! 3. `https://github.com/pioarduino/esptool/releases/download/v{version}/esptool-{platform}.zip`
+//!    — the same release as the source archive (FastLED/fbuild#2061) — is
+//!    downloaded + extracted via the shared [`PackageBase::staged_install`]
 //!    pattern, and the `esptool` executable is located inside it.
 //!
 //! [`ESPTOOL_PATH_ENV_VAR`] (`FBUILD_ESPTOOL_PATH`) short-circuits the whole
@@ -151,9 +152,9 @@ impl Esptool {
         &self.version
     }
 
-    /// The tasmota release URL this package would download, or an error when
-    /// the host has no prebuilt binary. Reported alongside [`Self::version`]
-    /// when provisioning fails.
+    /// The URL this package would download (source archive or standalone
+    /// binary), or an error when the host has no prebuilt binary. Reported
+    /// alongside [`Self::version`] when provisioning fails.
     pub fn download_url(&self) -> Result<String> {
         if let Some(url) = &self.source_url {
             return Ok(url.clone());
@@ -161,9 +162,24 @@ impl Esptool {
         Ok(Self::release_url(&self.version, host_platform_tag()?))
     }
 
+    /// The standalone binary to try after the pinned source install failed on
+    /// `platform`, or `None` when no such release can exist: Windows has
+    /// source-only releases (5.1.0), and a PlatformIO registry payload's
+    /// version (`1.30300.0`) is a package version, not an esptool release tag
+    /// (FastLED/fbuild#2061).
+    fn standalone_fallback_url_for(&self, platform: &str, windows: bool) -> Option<String> {
+        let real_release = self.expected_runtime_version.is_some() && self.version != "unknown";
+        (standalone_fallback_permitted(windows) && real_release)
+            .then(|| Self::release_url(&self.version, platform))
+    }
+
+    /// The standalone PyInstaller binary from the pioarduino release that also
+    /// publishes the pinned source archive. tasmota/esptool mirrored these
+    /// assets but lags pioarduino (it has no v5.6.0), so asking it for the
+    /// pinned tag 404'd every Linux ESP32 build (FastLED/fbuild#2061).
     fn release_url(version: &str, platform: &str) -> String {
         format!(
-            "https://github.com/tasmota/esptool/releases/download/v{version}/esptool-{platform}.zip"
+            "https://github.com/pioarduino/esptool/releases/download/v{version}/esptool-{platform}.zip"
         )
     }
 
@@ -220,27 +236,33 @@ impl Esptool {
             return Ok(override_path);
         }
 
-        if let Some(url) = &self.source_url {
-            match self.ensure_source_installed(url).await {
-                Ok(binary) => return Ok(binary),
-                // The 617 KiB source archive costs a `uv` environment; spending
-                // one 82 MiB download beats failing a build that has a working
-                // standalone binary available (FastLED/fbuild#1944). Windows has
-                // releases (5.1.0) with no binary at all, so there it stays fatal.
-                Err(error)
-                    if standalone_fallback_permitted(fbuild_core::platform::host::is_windows()) =>
-                {
-                    tracing::warn!(
-                        %url,
-                        error = %error,
-                        "pinned esptool source install failed; falling back to the standalone binary"
-                    );
-                }
-                Err(error) => return Err(error),
-            }
-        }
-
-        self.ensure_standalone_installed().await
+        let Some(url) = &self.source_url else {
+            return self.ensure_standalone_installed().await;
+        };
+        let source_error = match self.ensure_source_installed(url).await {
+            Ok(binary) => return Ok(binary),
+            Err(error) => error,
+        };
+        // The 617 KiB source archive costs a `uv` environment; spending one
+        // 82 MiB download of the same release beats failing a build that has a
+        // working standalone binary available (FastLED/fbuild#1944).
+        let fallback_url = host_platform_tag().ok().and_then(|platform| {
+            self.standalone_fallback_url_for(platform, fbuild_core::platform::host::is_windows())
+        });
+        let Some(fallback_url) = fallback_url else {
+            return Err(FbuildError::PackageError(format!(
+                "pinned esptool source install from {url} failed: {source_error}"
+            )));
+        };
+        tracing::warn!(
+            %url,
+            %fallback_url,
+            error = %source_error,
+            "pinned esptool source install failed; falling back to the standalone binary"
+        );
+        self.ensure_standalone_installed()
+            .await
+            .map_err(|error| fallback_failed_error(url, &source_error, &fallback_url, &error))
     }
 
     /// Install the host's PyInstaller `esptool-<platform>.zip` (60-86 MiB).
@@ -363,6 +385,21 @@ impl Esptool {
 /// source install IS the install and its failure must surface (FastLED/fbuild#1944).
 fn standalone_fallback_permitted(windows: bool) -> bool {
     !windows
+}
+
+/// Both failures when the standalone fallback also fails, source first: the
+/// fallback's error alone hid the real cause (no `uv` on the CI runner) behind
+/// a 404 (FastLED/fbuild#2061).
+fn fallback_failed_error(
+    source_url: &str,
+    source_error: &FbuildError,
+    fallback_url: &str,
+    fallback_error: &FbuildError,
+) -> FbuildError {
+    FbuildError::PackageError(format!(
+        "pinned esptool source install from {source_url} failed: {source_error}; \
+         standalone fallback {fallback_url} also failed: {fallback_error}"
+    ))
 }
 
 fn validate_source_esptool(dir: &Path) -> Result<()> {
@@ -517,7 +554,7 @@ async fn verify_esptool_once(
 
 /// The interpreter of the venv `bin` lives in, when that venv's interpreter
 /// is absent or a dangling symlink. `None` for a binary outside a venv
-/// (the standalone tasmota build) or a healthy one.
+/// (the standalone PyInstaller build) or a healthy one.
 fn missing_venv_interpreter(bin: &Path) -> Option<NormalizedPath> {
     let bin_dir = bin.parent()?;
     if !bin_dir.parent()?.join("pyvenv.cfg").is_file() {
@@ -589,7 +626,7 @@ async fn verify_esptool_binary(bin: &Path) -> Result<fbuild_core::subprocess::To
     }
 }
 
-/// Map the host `(OS, ARCH)` to a tasmota esptool release platform tag.
+/// Map the host `(OS, ARCH)` to an esptool standalone-release platform tag.
 ///
 /// Returns `None` for hosts without a prebuilt binary, so the caller falls
 /// back to an `esptool` on PATH.
@@ -627,7 +664,7 @@ fn esptool_bin_name() -> &'static str {
 }
 
 /// Locate the `esptool` executable in an extracted tree, searching the root and
-/// up to two levels deep (the tasmota zip nests it under
+/// up to two levels deep (the standalone zip nests it under
 /// `esptool-<platform>/esptool`).
 fn find_esptool_binary(root: &Path) -> Option<NormalizedPath> {
     fn search(dir: &Path, depth: usize) -> Option<NormalizedPath> {

@@ -535,3 +535,94 @@ async fn live_registry_source_install_provisions_a_runnable_esptool() {
         binary.display()
     );
 }
+
+/// FastLED/fbuild#2061: the standalone fallback must come from the release
+/// the pinned source archive came from. tasmota/esptool lags pioarduino (no
+/// v5.6.0), so a tasmota URL 404'd every Linux ESP32 build once the platform
+/// moved to 5.6.0.
+#[test]
+fn standalone_fallback_uses_the_pinned_pioarduino_release() {
+    let tmp = tempfile::TempDir::new().unwrap();
+    let esptool = Esptool::from_metadata_url(
+        tmp.path(),
+        "https://github.com/pioarduino/esptool/releases/download/v5.6.0/esptool.zip",
+    );
+    assert_eq!(
+        esptool.standalone_fallback_url_for("linux-amd64", false),
+        Some(
+            "https://github.com/pioarduino/esptool/releases/download/v5.6.0/esptool-linux-amd64.zip"
+                .to_string()
+        )
+    );
+}
+
+/// The standalone-only path (no source archive selected) uses the same repo.
+#[test]
+fn standalone_primary_url_uses_pioarduino_not_tasmota() {
+    let tmp = tempfile::TempDir::new().unwrap();
+    let esptool = Esptool::from_metadata_url(
+        tmp.path(),
+        "https://github.com/pioarduino/registry/releases/download/v4.8.5/esptoolpy.zip",
+    );
+    assert!(esptool.source_url.is_none());
+    let url = esptool.download_url().unwrap();
+    assert!(
+        url.starts_with("https://github.com/pioarduino/esptool/releases/download/v4.8.5/esptool-"),
+        "{url}"
+    );
+}
+
+/// A PlatformIO registry payload's version (`1.30300.0`) is a package
+/// version, not an esptool release tag; a standalone fallback would request a
+/// release that cannot exist, so the source error must surface instead.
+#[test]
+fn registry_payload_has_no_standalone_fallback() {
+    let tmp = tempfile::TempDir::new().unwrap();
+    let payload = fbuild_core::platformio_package::ResolvedPayload {
+        owner: "platformio".into(),
+        kind: fbuild_core::platformio_package::PackageKind::Tool,
+        name: "tool-esptoolpy".into(),
+        version: "1.30300.0".into(),
+        system: "all".into(),
+        url: "https://dl.registry.platformio.org/download/platformio/tool/tool-esptoolpy/1.30300.0/tool-esptoolpy-1.30300.0.tar.gz".into(),
+        sha256: "published-registry-digest".into(),
+    };
+    let esptool = Esptool::from_registry_payload(tmp.path(), &payload);
+    assert_eq!(
+        esptool.standalone_fallback_url_for("linux-amd64", false),
+        None
+    );
+}
+
+/// Windows has source-only releases (5.1.0), so a source failure is final.
+#[test]
+fn windows_has_no_standalone_fallback() {
+    let tmp = tempfile::TempDir::new().unwrap();
+    let esptool = Esptool::from_metadata_url(
+        tmp.path(),
+        "https://github.com/pioarduino/esptool/releases/download/v5.6.0/esptool.zip",
+    );
+    assert_eq!(
+        esptool.standalone_fallback_url_for("windows-amd64", true),
+        None
+    );
+}
+
+/// FastLED/fbuild#2061: the source-install error was swallowed by the
+/// fallback's 404, so the real cause (no `uv` on the runner) never reached
+/// the build log. Both errors must be reported, source first.
+#[test]
+fn failed_fallback_reports_the_source_install_error_first() {
+    let error = fallback_failed_error(
+        "https://github.com/pioarduino/esptool/releases/download/v5.6.0/esptool.zip",
+        &FbuildError::PackageError("pinned esptool source needs uv: No such file".into()),
+        "https://github.com/pioarduino/esptool/releases/download/v5.6.0/esptool-linux-amd64.zip",
+        &FbuildError::PackageError("HTTP 404 Not Found".into()),
+    )
+    .to_string();
+    let source = error.find("needs uv").expect(&error);
+    let fallback = error.find("HTTP 404").expect(&error);
+    assert!(source < fallback, "{error}");
+    assert!(error.contains("esptool.zip"), "{error}");
+    assert!(error.contains("esptool-linux-amd64.zip"), "{error}");
+}
