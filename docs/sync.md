@@ -61,6 +61,20 @@ Each `lib_deps` entry is classified into one of these source types:
 and URL. Phase 2 will add the resolved commit SHA, archive URL, and
 `sha256`, flipping the status to `locked`.
 
+### What builds install today
+
+Builds read `lib_deps` from `platformio.ini`, not the lock. A GitHub entry
+installs GitHub's source archive of its ref; `/tree/<ref>` and direct
+`/archive/<ref>.zip` (or `.tar.gz`) URLs name a ref the same way as
+`#<ref>`. Non-GitHub git hosts and non-GitHub archive URLs are skipped with
+a warning that says why (FastLED/fbuild#2042).
+
+An install is pinned, as in PlatformIO (which reinstalls only on
+`pio pkg update`): a GitHub URL without a ref downloads the default branch
+once and reuses it, with no network call, until the build directory is
+cleaned. To pick up new commits, run `fbuild clean` (or build with
+`--clean`), or pin a `#<ref>` and change it.
+
 Local sources (`symlink://`, `file://`, filesystem paths) always get
 `status: "unlocked"` — they can't be reproducibly locked off the
 developer's machine, but they're still recorded for auditability.

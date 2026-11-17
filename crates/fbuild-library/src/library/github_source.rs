@@ -7,6 +7,17 @@
 //! serves for all three; without a ref it fetches `archive/HEAD.zip`, the
 //! repository's default branch, whatever it is called.
 //!
+//! GitHub's web URL of a ref (`…/tree/<ref>`) and its direct archive URLs
+//! (`…/archive/<ref>.zip`, `…/archive/refs/tags/<tag>.zip`, `.tar.gz`) name
+//! one ref too, and install the same way. PlatformIO itself clones a
+//! `/tree/` URL with git, which fails, and downloads an archive URL as a
+//! plain file (FastLED/fbuild#2042).
+//!
+//! Like PlatformIO, an install is pinned: a URL without a ref downloads the
+//! default branch once and reuses it, without a network call, until the
+//! build directory is cleaned (`fbuild clean`, or `fbuild build --clean`).
+//! PlatformIO likewise reinstalls only on `pio pkg update` (FastLED/fbuild#2042).
+//!
 //! The URL grammar is the shared PlatformIO one
 //! ([`fbuild_core::platformio_package::parse_package_spec`]), and the
 //! owner/repo split is the one platform repositories already use
@@ -33,7 +44,11 @@ impl GitHubSource {
     /// Parse a GitHub repository URL. `None` for anything else, including
     /// non-GitHub hosts, direct archive URLs and malformed refs.
     pub fn parse(spec: &str) -> Option<Self> {
-        let parsed = parse_package_spec(&canonical_github_host(spec)).ok()?;
+        let spec = canonical_github_host(spec);
+        if let Some(web) = Self::parse_web_url(&spec) {
+            return web;
+        }
+        let parsed = parse_package_spec(&spec).ok()?;
         if parsed.alias.is_some() {
             return None;
         }
@@ -48,6 +63,40 @@ impl GitHubSource {
             owner,
             repo,
             reference,
+        })
+    }
+
+    /// GitHub's web URL of a ref, `…/<o>/<r>/tree/<ref>`, or a direct
+    /// archive URL, `…/<o>/<r>/archive/<ref>.zip|.tar.gz` (including the
+    /// `refs/tags/<t>` and `refs/heads/<b>` forms). Both name one ref, so
+    /// they install like `#<ref>` (FastLED/fbuild#2042). `None` when the URL
+    /// has neither shape; `Some(None)` when it has one but is malformed.
+    fn parse_web_url(spec: &str) -> Option<Option<Self>> {
+        let path = spec.strip_prefix("https://github.com/")?;
+        let mut segments = path.splitn(4, '/');
+        let (owner, repo, kind) = (segments.next()?, segments.next()?, segments.next()?);
+        let rest = segments.next().unwrap_or("");
+        let reference = match kind {
+            "tree" => Some(rest.strip_suffix('/').unwrap_or(rest)),
+            "archive" => [".zip", ".tar.gz"]
+                .iter()
+                .find_map(|ext| rest.strip_suffix(ext)),
+            _ => return None,
+        };
+        Some(reference.and_then(|reference| Self::pinned(owner, repo, reference)))
+    }
+
+    /// `owner/repo` at `reference`, all validated.
+    fn pinned(owner: &str, repo: &str, reference: &str) -> Option<Self> {
+        if !valid_reference(reference) || reference.contains('#') {
+            return None;
+        }
+        let (owner, repo) =
+            github_owner_repo(&format!("https://github.com/{owner}/{repo}")).ok()?;
+        Some(Self {
+            owner,
+            repo,
+            reference: Some(reference.to_string()),
         })
     }
 

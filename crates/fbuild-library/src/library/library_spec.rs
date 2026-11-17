@@ -161,6 +161,57 @@ impl LibrarySpec {
     }
 }
 
+/// Why a remote `lib_deps` URL that [`LibrarySpec::parse`] rejects cannot be
+/// installed; `None` when `spec` is not a URL.
+///
+/// PlatformIO clones any `.git` URL and any github.com / gitlab.com /
+/// bitbucket repository URL with git, and downloads other URLs as archives.
+/// fbuild downloads GitHub's archive of a ref instead, so it has no git
+/// clone for other hosts and no generic archive download (FastLED/fbuild#2042).
+pub fn unsupported_url_reason(spec: &str) -> Option<&'static str> {
+    use fbuild_config::lib_source::{SourceType, classify};
+
+    let spec = spec.trim();
+    let url = spec
+        .split_once('=')
+        .map(|(_, url)| url.trim())
+        .filter(|url| is_url(url))
+        .unwrap_or(spec);
+    if !is_url(url) {
+        return None;
+    }
+    let bare = url.strip_prefix("git+").unwrap_or(url);
+    let host = bare
+        .split_once("://")
+        .map_or("", |(_, rest)| {
+            rest.split(['/', '#', '?']).next().unwrap_or("")
+        })
+        .to_ascii_lowercase();
+    if matches!(host.as_str(), "github.com" | "www.github.com") {
+        return Some(
+            "not a GitHub URL fbuild can install; use https://github.com/<owner>/<repo>[#<ref>], \
+             .../tree/<ref> or .../archive/<ref>.zip",
+        );
+    }
+    let path = bare.split(['#', '?']).next().unwrap_or(bare);
+    let is_git = classify(url).source_type == SourceType::Git
+        || path.trim_end_matches('/').ends_with(".git")
+        || (matches!(
+            host.as_str(),
+            "gitlab.com" | "bitbucket.org" | "bitbucket.com"
+        ) && ![".zip", ".tar.gz", ".tar.xz"]
+            .iter()
+            .any(|e| path.ends_with(e)));
+    Some(if is_git {
+        "fbuild installs git repositories only from GitHub (as its source archive); this host \
+         would need a git clone, which fbuild does not do. Use the library's registry name, a \
+         GitHub URL, or a local path"
+    } else {
+        "archive URLs outside github.com are not supported; use the library's registry name, a \
+         GitHub URL, or a local path"
+    })
+}
+
 /// A remote source URL in `lib_deps`.
 fn is_url(spec: &str) -> bool {
     ["http://", "https://", "git+"]
