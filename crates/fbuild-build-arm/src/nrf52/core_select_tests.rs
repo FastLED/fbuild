@@ -3,6 +3,7 @@
 use std::collections::HashMap;
 use std::path::Path;
 
+use fbuild_core::path::NormalizedPath;
 use fbuild_packages::library::Nrf52Framework;
 
 use super::*;
@@ -87,6 +88,10 @@ fn board_build_override_selects_the_core() {
     assert_eq!(selected_framework(&board).unwrap(), Nrf52Framework::Seeed);
 }
 
+fn sd_api(nordic: &Path, dir: &str) -> NormalizedPath {
+    NormalizedPath::new(nordic.join("softdevice").join(dir))
+}
+
 fn softdevice_tree(versions: &[&str]) -> tempfile::TempDir {
     let temp = tempfile::TempDir::new().unwrap();
     for version in versions {
@@ -103,27 +108,27 @@ fn v7_linker_script_selects_s140_7_api_headers() {
         "s140_nrf52_7.3.0_API",
     ]);
     let dir = softdevice_api_dir(nordic.path(), Path::new("/x/nrf52840_s140_v7.ld"));
-    assert_eq!(dir, nordic.path().join("softdevice/s140_nrf52_7.3.0_API"));
+    assert_eq!(dir, sd_api(nordic.path(), "s140_nrf52_7.3.0_API"));
 }
 
 #[test]
 fn v6_linker_script_keeps_s140_6_1_1_api_headers() {
     let nordic = softdevice_tree(&["s140_nrf52_6.1.1_API", "s140_nrf52_7.3.0_API"]);
     let dir = softdevice_api_dir(nordic.path(), Path::new("/x/nrf52840_s140_v6.ld"));
-    assert_eq!(dir, nordic.path().join("softdevice/s140_nrf52_6.1.1_API"));
+    assert_eq!(dir, sd_api(nordic.path(), "s140_nrf52_6.1.1_API"));
 }
 
 #[test]
 fn newest_matching_softdevice_release_wins() {
     let nordic = softdevice_tree(&["s140_nrf52_7.2.0_API", "s140_nrf52_7.10.0_API"]);
     let dir = softdevice_api_dir(nordic.path(), Path::new("nrf52840_s140_v7.ld"));
-    assert_eq!(dir, nordic.path().join("softdevice/s140_nrf52_7.10.0_API"));
+    assert_eq!(dir, sd_api(nordic.path(), "s140_nrf52_7.10.0_API"));
 }
 
 #[test]
 fn unversioned_or_missing_softdevice_falls_back_to_default() {
     let nordic = softdevice_tree(&["s140_nrf52_6.1.1_API"]);
-    let default = nordic.path().join("softdevice/s140_nrf52_6.1.1_API");
+    let default = sd_api(nordic.path(), "s140_nrf52_6.1.1_API");
     assert_eq!(
         softdevice_api_dir(nordic.path(), Path::new("nrf52_xxaa.ld")),
         default
@@ -135,13 +140,13 @@ fn unversioned_or_missing_softdevice_falls_back_to_default() {
     );
 }
 
-fn mdk(name: &str) -> std::path::PathBuf {
-    Path::new("/core/nRF5/nordic/nrfx/mdk").join(name)
+fn mdk(name: &str) -> NormalizedPath {
+    NormalizedPath::new("/core/nRF5/nordic/nrfx/mdk").join(name)
 }
 
 #[test]
 fn only_the_mcus_mdk_system_file_is_compiled() {
-    let other = Path::new("/core/nRF5/wiring.c").to_path_buf();
+    let other = NormalizedPath::new("/core/nRF5/wiring.c");
     let mut sources = vec![
         mdk("system_nrf52.c"),
         mdk("system_nrf52840.c"),
@@ -160,7 +165,7 @@ fn system_files_are_kept_when_none_matches_the_mcu() {
 
 #[test]
 fn system_named_files_outside_the_mdk_are_untouched() {
-    let elsewhere = Path::new("/core/nRF5/system_nrf52.c").to_path_buf();
+    let elsewhere = NormalizedPath::new("/core/nRF5/system_nrf52.c");
     let mut sources = vec![mdk("system_nrf52840.c"), elsewhere.clone()];
     retain_mcu_system_source(&mut sources, "nrf52840");
     assert_eq!(sources, vec![mdk("system_nrf52840.c"), elsewhere]);

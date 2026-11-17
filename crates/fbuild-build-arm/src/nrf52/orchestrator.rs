@@ -183,7 +183,9 @@ fn nrf52_core_include_dirs(core_dir: &Path, linker_script: &Path) -> Vec<std::pa
     include_dirs.push(nordic_dir.join("nrfx").join("drivers").join("include"));
     include_dirs.push(nordic_dir.join("nrfx").join("drivers").join("src"));
     // SoftDevice API includes (s140 for nRF52840)
-    let sd_dir = super::core_select::softdevice_api_dir(&nordic_dir, linker_script).join("include");
+    let sd_dir = super::core_select::softdevice_api_dir(&nordic_dir, linker_script)
+        .join("include")
+        .into_path_buf();
     if sd_dir.exists() {
         include_dirs.push(sd_dir.clone());
         let sd_chip = sd_dir.join("nrf52");

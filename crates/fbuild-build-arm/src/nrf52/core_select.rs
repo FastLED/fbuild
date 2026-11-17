@@ -19,8 +19,9 @@
 //! only one; fbuild links core objects directly, so it keeps only the
 //! board MCU's system file instead.
 
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
+use fbuild_core::path::NormalizedPath;
 use fbuild_packages::library::Nrf52Framework;
 
 /// SoftDevice API directory used when the linker script names no SoftDevice
@@ -54,8 +55,8 @@ pub(crate) fn selected_framework(
 /// `s140_nrf52_7.*_API` the core ships. Falls back to
 /// [`DEFAULT_SOFTDEVICE_API`] when the script names no SoftDevice or the
 /// core has no matching headers.
-pub(crate) fn softdevice_api_dir(nordic_dir: &Path, linker_script: &Path) -> PathBuf {
-    let softdevice_dir = nordic_dir.join("softdevice");
+pub(crate) fn softdevice_api_dir(nordic_dir: &Path, linker_script: &Path) -> NormalizedPath {
+    let softdevice_dir = NormalizedPath::new(nordic_dir).join("softdevice");
     linker_script
         .file_name()
         .and_then(|name| softdevice_from_ldscript(&name.to_string_lossy()))
@@ -76,7 +77,7 @@ fn softdevice_from_ldscript(file_name: &str) -> Option<(String, u32)> {
     Some((sd_name.to_string(), major))
 }
 
-fn newest_api_dir(softdevice_dir: &Path, sd_name: &str, major: u32) -> Option<PathBuf> {
+fn newest_api_dir(softdevice_dir: &Path, sd_name: &str, major: u32) -> Option<NormalizedPath> {
     let prefix = format!("{sd_name}_nrf52_");
     std::fs::read_dir(softdevice_dir)
         .ok()?
@@ -93,13 +94,13 @@ fn newest_api_dir(softdevice_dir: &Path, sd_name: &str, major: u32) -> Option<Pa
             (parsed.first() == Some(&major)).then(|| (parsed, entry.path()))
         })
         .max_by(|a, b| a.0.cmp(&b.0))
-        .map(|(_, path)| path)
+        .map(|(_, path)| NormalizedPath::new(path))
 }
 
 /// Drop the core's Nordic MDK system files (`nrfx/mdk/system_nrf52*.c`) other
 /// than `system_<mcu>.c`, the one Adafruit's chip guards would leave
 /// non-empty. A no-op when the core ships no system file for `mcu`.
-pub(crate) fn retain_mcu_system_source(core_sources: &mut Vec<PathBuf>, mcu: &str) {
+pub(crate) fn retain_mcu_system_source<P: AsRef<Path>>(core_sources: &mut Vec<P>, mcu: &str) {
     let wanted = format!("system_{}.c", mcu.to_ascii_lowercase());
     let mdk_dir = Path::new("nrfx").join("mdk");
     let mdk_system_file = |path: &Path| -> Option<String> {
@@ -109,11 +110,11 @@ pub(crate) fn retain_mcu_system_source(core_sources: &mut Vec<PathBuf>, mcu: &st
     };
     if !core_sources
         .iter()
-        .any(|path| mdk_system_file(path).is_some_and(|name| name == wanted))
+        .any(|path| mdk_system_file(path.as_ref()).is_some_and(|name| name == wanted))
     {
         return;
     }
-    core_sources.retain(|path| mdk_system_file(path).is_none_or(|name| name == wanted));
+    core_sources.retain(|path| mdk_system_file(path.as_ref()).is_none_or(|name| name == wanted));
 }
 
 #[cfg(test)]
