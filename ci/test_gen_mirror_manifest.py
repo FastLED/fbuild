@@ -6,6 +6,11 @@ Regressions for FastLED/fbuild#1825:
   bare re-run would rewrite every shard's version;
 - the incremental change check compared size only, so an object replaced with
   same-size bytes was never re-hashed and its committed SHA-256 went stale.
+
+And for FastLED/fbuild#2040 (item 2): a regeneration deleted the
+``@esp-toolchain`` shard, rewound ``@esp-libs`` to the registry shards'
+version and reordered the Index, because it rebuilt index entries that other
+tools (``publish_toolchain_slices.py``, ``publish_esp_slices.py``) publish.
 """
 
 from __future__ import annotations
@@ -178,26 +183,96 @@ class TestIncrementalHash(unittest.TestCase):
             self.assertEqual(recorded[key].sha256, "oldsha")
 
 
+KEY = "own/library/tool/1.0/tool-1.0.tar.gz"
+
+
+def foreign_shard(tool: str, version: str) -> str:
+    return gen.render(
+        {
+            "$schema": gen.SCHEMA,
+            "kind": "Release",
+            "schema_version": 1,
+            "tool": f"{gen.TOOL}/{tool}",
+            "version": version,
+            "components": [
+                {"id": f"{tool}/1.0", "required": False, "asset": {"size_bytes": 7, "sha256": "c" * 64}}
+            ],
+        }
+    )
+
+
+class TestCommittedIndex(unittest.TestCase):
+    """Shards another tool publishes survive a regeneration byte for byte."""
+
+    def setUp(self) -> None:
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        self.out_dir = Path(self.tmp.name) / "mirror"
+        self.hashed = {KEY: (5, "a" * 64)}
+        self.systems = {KEY: []}
+        gen.write_site(self.out_dir, self.hashed, self.systems, "2026.10.31")
+        index = json.loads((self.out_dir / "manifest.json").read_text())
+        for owner, name, version in (
+            ("@esp-libs", "esp-libs", "2026.11.04"),
+            ("@esp-toolchain", "esp-toolchain", "1"),
+        ):
+            text = foreign_shard(name, version)
+            (self.out_dir / "shards" / f"{name}.json").write_text(text, encoding="utf-8")
+            index["tools"][owner] = gen.descriptor(f"shards/{name}.json", text)
+        (self.out_dir / "manifest.json").write_text(gen.render(index), encoding="utf-8")
+        self.committed = self.snapshot()
+
+    def snapshot(self) -> dict[str, bytes]:
+        return {
+            str(path.relative_to(self.out_dir)): path.read_bytes()
+            for path in sorted(self.out_dir.rglob("*.json"))
+        }
+
+    def test_regenerating_keeps_the_esp_toolchain_shard_and_entry(self) -> None:
+        gen.write_site(self.out_dir, self.hashed, self.systems, "2026.10.31")
+        after = self.snapshot()
+        self.assertEqual(after["shards/esp-toolchain.json"], self.committed["shards/esp-toolchain.json"])
+        self.assertIn("@esp-toolchain", json.loads(after["manifest.json"])["tools"])
+
+    def test_registry_version_does_not_rewind_esp_libs(self) -> None:
+        gen.write_site(self.out_dir, self.hashed, self.systems, "2026.10.31")
+        esp_libs = json.loads((self.out_dir / "shards" / "esp-libs.json").read_text())
+        self.assertEqual(esp_libs["version"], "2026.11.04")
+
+    def test_unchanged_inputs_rewrite_the_index_byte_for_byte(self) -> None:
+        # Same keys in the same order, same descriptors: no reorder, no churn.
+        gen.write_site(self.out_dir, self.hashed, self.systems, "2026.10.31")
+        self.assertEqual(self.snapshot(), self.committed)
+
+    def test_new_registry_object_keeps_foreign_entries_last_in_committed_order(self) -> None:
+        key = "aaa/library/first/1.0/first-1.0.tar.gz"
+        gen.write_site(
+            self.out_dir, {**self.hashed, key: (3, "b" * 64)}, {**self.systems, key: []}, "2026.10.31"
+        )
+        tools = list(json.loads((self.out_dir / "manifest.json").read_text())["tools"])
+        self.assertEqual(tools[:2], ["aaa", "own"])
+        self.assertEqual(tools[-2:], ["@esp-libs", "@esp-toolchain"])
+        names = [t for t in tools if t.startswith(gen.NAMES_KEY)]
+        self.assertEqual(names, sorted(names))
+
+    def test_missing_foreign_shard_fails_before_writing(self) -> None:
+        (self.out_dir / "shards" / "esp-toolchain.json").unlink()
+        before = self.snapshot()
+        with self.assertRaises(gen.ForeignShardError):
+            gen.write_site(self.out_dir, self.hashed, self.systems, "2026.10.31")
+        self.assertEqual(self.snapshot(), before)
+
+    def test_foreign_shard_that_no_longer_matches_its_descriptor_fails(self) -> None:
+        (self.out_dir / "shards" / "esp-libs.json").write_text("{}\n", encoding="utf-8")
+        with self.assertRaises(gen.ForeignShardError):
+            gen.write_site(self.out_dir, self.hashed, self.systems, "2026.10.31")
+
+    def test_check_does_not_count_foreign_components_as_removed_objects(self) -> None:
+        self.assertEqual(sorted(gen.load_existing(self.out_dir)), [KEY])
+
+    def test_foreign_shard_version_is_not_the_registry_version(self) -> None:
+        self.assertEqual(gen.existing_version(self.out_dir), "2026.10.31")
+
+
 if __name__ == "__main__":
     unittest.main()
-
-
-class TestPrebuiltSlices(unittest.TestCase):
-    def test_optional_slices_leave_whole_asset_unchanged_and_manifest_v1(self):
-        from ci.gen_mirror_manifest import build_documents
-
-        whole = {
-            "urls": ["https://bucket.example/whole.tar.xz", "https://vendor.example/libs.tar.xz"],
-            "sha256": "a" * 64,
-            "size_bytes": 123,
-        }
-        slices = {"esp32s3": {"url": "slices/s3.tar.zst", "sha256": "b" * 64,
-                               "size": 42, "format": "tar.zst"}}
-        asset = {**whole, "slices": slices}
-        docs = build_documents({}, {}, "1", [{"id": "framework-arduinoespressif32-libs", "asset": asset}])
-        index = json.loads(docs["manifest.json"])
-        self.assertEqual(index["schema_version"], 1)
-        self.assertIn("@esp-libs", index["tools"])
-        parsed = json.loads(docs["shards/esp-libs.json"])["components"][0]["asset"]
-        self.assertEqual({k: parsed[k] for k in whole}, whole)
-        self.assertEqual(parsed["slices"], slices)

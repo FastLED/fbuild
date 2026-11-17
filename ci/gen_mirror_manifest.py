@@ -17,6 +17,14 @@ zackees/manifest.json v1 documents under ``site/mirror/``:
   such as ``lib_deps = FastLED``. ``<h>`` is the first hex digit of the
   SHA-256 of the ASCII-lowercased name.
 
+Every other ``@``-prefixed Index entry belongs to another tool and is kept
+verbatim (FastLED/fbuild#2040): ``@esp-libs`` is written by
+``ci/publish_esp_slices.py`` and ``@esp-toolchain`` by
+``ci/publish_toolchain_slices.py``. Their shards are never rewritten, renamed
+or deleted here, and they stay after the generated entries in committed
+order. A listed foreign shard that is missing or no longer matches its
+descriptor stops the run before anything is written.
+
 Together these are fbuild's registry index (FastLED/fbuild#1829): fbuild
 resolves package versions from them instead of PlatformIO's registry API.
 The ``system`` values come from the mirror's own state database
@@ -71,6 +79,10 @@ STATE_DB_KEY = "_state/manifest.db"
 NAMES_KEY = "@names-"  # '@' is escaped in owner keys, so no owner collides
 STATE_NAME = ".mirror-hashes.tsv"  # per-key size/ETag/sha256, local only (#1825)
 DEFAULT_VERSION = "1"
+
+
+class ForeignShardError(ValueError):
+    """The committed Index lists another tool's shard that cannot be kept as is."""
 
 
 @dataclass(frozen=True)
@@ -183,13 +195,56 @@ def load_systems(s3, state_db: Path | None) -> dict[str, list[str]]:
     return systems
 
 
+def is_generated(index_key: str) -> bool:
+    """Does this generator own the Index entry? Owners and ``@names-*`` only;
+    any other ``@`` key is published by another tool."""
+    return not index_key.startswith("@") or index_key.startswith(NAMES_KEY)
+
+
+def foreign_entries(out_dir: Path) -> dict[str, dict]:
+    """Committed Index entries another tool owns, in committed order."""
+    index = out_dir / "manifest.json"
+    if not index.exists():
+        return {}
+    tools = json.loads(index.read_text(encoding="utf-8")).get("tools", {})
+    return {key: entry for key, entry in tools.items() if not is_generated(key)}
+
+
+def foreign_paths(out_dir: Path, foreign: dict[str, dict]) -> set[Path]:
+    return {out_dir / entry["descriptor"]["url"] for entry in foreign.values()}
+
+
+def verify_foreign(out_dir: Path, foreign: dict[str, dict]) -> None:
+    """Every kept entry must still describe the shard bytes on disk."""
+    for key, entry in foreign.items():
+        rel = entry["descriptor"]["url"]
+        path = out_dir / rel
+        if not path.is_file():
+            raise ForeignShardError(f"{key}: the committed Index lists {rel}, which does not exist")
+        data = path.read_bytes()
+        actual = {"sha256": hashlib.sha256(data).hexdigest(), "size_bytes": len(data)}
+        expected = {field: entry["descriptor"].get(field) for field in actual}
+        if actual != expected:
+            raise ForeignShardError(f"{key}: descriptor {expected} does not describe {rel} {actual}")
+
+
+def generated_shards(out_dir: Path) -> list[Path]:
+    """Owner shards on disk: no names shards, no other tool's shards."""
+    foreign = foreign_paths(out_dir, foreign_entries(out_dir))
+    return [
+        shard
+        for shard in (out_dir / "shards").glob("*.json")
+        if not shard.name.startswith("names-") and shard not in foreign
+    ]
+
+
 def load_existing(out_dir: Path) -> dict[str, RecordedObject]:
     """``key -> recorded`` from the shards already on disk (no ETags there)."""
     known: dict[str, RecordedObject] = {}
-    for shard in (out_dir / "shards").glob("*.json"):
+    for shard in generated_shards(out_dir):
         for component in json.loads(shard.read_text()).get("components", []):
             asset = component.get("asset")
-            if asset is None or shard.name.startswith("names-"):
+            if asset is None:
                 continue
             known[component["id"]] = RecordedObject(asset["size_bytes"], None, asset["sha256"])
     return known
@@ -198,9 +253,7 @@ def load_existing(out_dir: Path) -> dict[str, RecordedObject]:
 def existing_version(out_dir: Path) -> str:
     """Version the shards on disk carry, so ``--version`` can keep it (#1825)."""
     versions: Counter[str] = Counter()
-    for shard in (out_dir / "shards").glob("*.json"):
-        if shard.name.startswith("names-"):
-            continue
+    for shard in generated_shards(out_dir):
         version = json.loads(shard.read_text()).get("version")
         if isinstance(version, str) and version:
             versions[version] += 1
@@ -378,10 +431,15 @@ def names_documents(
 
 
 def build_documents(
-    hashed: dict[str, tuple[int, str]], systems: dict[str, list[str]], version: str,
-    prebuilt: list[dict] | None = None,
+    hashed: dict[str, tuple[int, str]],
+    systems: dict[str, list[str]],
+    version: str,
+    foreign: dict[str, dict] | None = None,
 ) -> dict[str, str]:
-    """Relative path -> rendered document."""
+    """Relative path -> rendered document.
+
+    ``foreign`` entries are appended to the Index verbatim, after the
+    generated ones; their shards are not among the returned documents."""
     unknown = sorted(set(hashed) - set(systems))
     if unknown:
         raise ValueError(f"{len(unknown)} objects have no system in the state db, e.g. {unknown[:3]}")
@@ -408,26 +466,14 @@ def build_documents(
         rel = f"shards/{shard_id(owner)}.json"
         docs[rel] = shard
         tools[owner] = descriptor(rel, shard)
-    if prebuilt:
-        # Assets retain the original whole-bundle URLs/digests. Optional slices
-        # are additive on the existing vendor-URL-keyed asset, never new tools.
-        rel = "shards/esp-libs.json"
-        text = render(
-            {
-                "$schema": SCHEMA,
-                "kind": "Release",
-                "schema_version": 1,
-                "tool": f"{TOOL}/esp-libs",
-                "version": version,
-                "components": prebuilt,
-            }
-        )
-        docs[rel] = text
-        tools["@esp-libs"] = descriptor(rel, text)
     for bucket, text in names_documents(hashed, systems, version).items():
         rel = f"shards/names-{bucket}.json"
         docs[rel] = text
         tools[NAMES_KEY + bucket] = descriptor(rel, text)
+    for key, entry in (foreign or {}).items():
+        if key in tools:
+            raise ForeignShardError(f"{key}: generated here and also listed as another tool's entry")
+        tools[key] = entry
     docs["manifest.json"] = render(
         {"$schema": SCHEMA, "kind": "Index", "schema_version": 1, "tools": tools}
     )
@@ -439,13 +485,17 @@ def write_site(
     hashed: dict[str, tuple[int, str]],
     systems: dict[str, list[str]],
     version: str,
-    prebuilt: list[dict] | None = None,
 ) -> None:
-    """Write the documents under ``out_dir`` and delete shards no longer listed."""
-    docs = build_documents(hashed, systems, version, prebuilt)
+    """Write the documents under ``out_dir`` and delete shards no longer listed.
+
+    Other tools' entries and shards are kept as committed; one that cannot be
+    kept raises :class:`ForeignShardError` before any file is touched."""
+    foreign = foreign_entries(out_dir)
+    verify_foreign(out_dir, foreign)
+    docs = build_documents(hashed, systems, version, foreign)
     shards_dir = out_dir / "shards"
     shards_dir.mkdir(parents=True, exist_ok=True)
-    keep = {out_dir / rel for rel in docs}
+    keep = {out_dir / rel for rel in docs} | foreign_paths(out_dir, foreign)
     for old in shards_dir.glob("*.json"):
         if old not in keep:
             old.unlink()
@@ -463,8 +513,6 @@ def main() -> int:
         "--version",
         help=f"shard version (default: the version the shards on disk carry, else {DEFAULT_VERSION})",
     )
-    parser.add_argument("--prebuilt", type=Path,
-                        help="JSON component list with whole assets and optional slices maps")
     parser.add_argument("--workers", type=int, default=32)
     parser.add_argument(
         "--checkpoint",
@@ -490,8 +538,7 @@ def main() -> int:
     hashed = {key: (seen.size, seen.sha256) for key, seen in recorded.items()}
     missing = set(objects) - set(hashed)
     version = args.version or existing_version(args.out_dir)
-    prebuilt = json.loads(args.prebuilt.read_text()) if args.prebuilt else None
-    write_site(args.out_dir, hashed, load_systems(s3, args.state_db), version, prebuilt)
+    write_site(args.out_dir, hashed, load_systems(s3, args.state_db), version)
     if missing:
         print(f"{len(missing)} objects left unhashed; rerun to retry", file=sys.stderr)
         return 1
