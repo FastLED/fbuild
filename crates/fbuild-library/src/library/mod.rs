@@ -16,6 +16,7 @@ pub mod esp32_platform;
 pub mod esp8266_framework;
 pub mod esptool;
 pub mod framework_library;
+pub mod github_source;
 pub mod library_compiler;
 pub mod library_downloader;
 pub mod library_info;

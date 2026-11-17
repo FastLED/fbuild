@@ -262,7 +262,9 @@ fn select_remote_commit<'a>(stdout: &'a str, candidates: &[String]) -> Option<&'
         .find_map(|name| refs.get(name.as_str()).copied())
 }
 
-fn github_owner_repo(url: &str) -> Result<(String, String), RepositoryError> {
+/// `(owner, repo)` of a plain `https://github.com/<owner>/<repo>[.git]` URL; any
+/// other shape (query, fragment, credentials, extra path) is rejected.
+pub fn github_owner_repo(url: &str) -> Result<(String, String), RepositoryError> {
     let parsed =
         reqwest::Url::parse(url).map_err(|_| RepositoryError::UnsupportedUrl(url.into()))?;
     if parsed.scheme() != "https"

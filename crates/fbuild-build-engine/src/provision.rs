@@ -279,22 +279,27 @@ fn library_row(
     } else {
         format!("{}/{}", spec.owner, spec.name)
     };
-    let (url, install_path) = match (&spec.local_path, &spec.github_url) {
+    let (url, install_path) = match (&spec.local_path, &spec.github) {
         (Some(local), _) => (
             format!("file://{}", local.display()),
             local.display().to_string(),
         ),
         (None, Some(github)) => (
-            github.clone(),
-            libs_dir.join(spec.sanitized_name()).display().to_string(),
+            github.archive_url(),
+            libs_dir.join(spec.install_dir_name()).display().to_string(),
         ),
         (None, None) => (
             format!("registry:{name}"),
-            libs_dir.join(spec.sanitized_name()).display().to_string(),
+            libs_dir.join(spec.install_dir_name()).display().to_string(),
         ),
     };
+    let version = spec
+        .version
+        .clone()
+        .or_else(|| spec.github.as_ref().and_then(|g| g.reference.clone()))
+        .unwrap_or_default();
     ProvisionedPackage {
-        version: spec.version.clone().unwrap_or_default(),
+        version,
         url,
         install_path: Some(install_path),
         ..ProvisionedPackage::new(PackageKind::Library, name, status)

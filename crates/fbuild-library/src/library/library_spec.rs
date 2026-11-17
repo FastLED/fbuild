@@ -3,11 +3,14 @@
 //! Supports formats:
 //! - `owner/Name@^version`
 //! - `Name@version`
-//! - `https://github.com/owner/repo`
+//! - `https://github.com/owner/repo[.git][#ref]`, optionally `git+`-prefixed
+//!   or named (`Name=https://…`); see [`GitHubSource`]
 //! - `Name`
 //! - `Name=symlink://path` / `Name=file://path` (named local library)
 //! - `symlink://path`, `file://path`, or a bare directory path (unnamed
 //!   local library; name read from its manifest)
+
+use super::github_source::GitHubSource;
 
 /// Parsed library dependency specification.
 #[derive(Debug, Clone)]
@@ -15,7 +18,8 @@ pub struct LibrarySpec {
     pub owner: String,
     pub name: String,
     pub version: Option<String>,
-    pub github_url: Option<String>,
+    /// GitHub repository (and optional `#ref`) of a URL dependency.
+    pub github: Option<GitHubSource>,
     /// Local library root from a `Name=symlink://path` or `Name=file://path` dependency.
     pub local_path: Option<fbuild_core::path::NormalizedPath>,
     /// True for an unnamed local dependency (`symlink://path`, `file://path`
@@ -34,7 +38,8 @@ impl LibrarySpec {
     /// - `fastled/FastLED` (owner/name)
     /// - `FastLED@^3.7.8` (name@version, owner resolved via registry)
     /// - `FastLED` (name only)
-    /// - `https://github.com/owner/repo` (GitHub URL)
+    /// - `https://github.com/owner/repo[.git][#ref]` (GitHub URL, also
+    ///   `git+https://…` and `Name=https://…`)
     pub fn parse(spec: &str) -> Option<Self> {
         let spec = spec.trim();
         if spec.is_empty() {
@@ -68,19 +73,30 @@ impl LibrarySpec {
             return Some(Self::local(name, path, true));
         }
 
-        // Handle GitHub URLs
-        if spec.starts_with("http://") || spec.starts_with("https://") {
-            if let Some((owner, name)) = parse_github_url(spec) {
-                return Some(Self {
-                    owner,
-                    name,
-                    version: None,
-                    github_url: Some(spec.to_string()),
-                    local_path: None,
-                    infer_name: false,
-                });
+        // Repository URL, optionally named as PlatformIO's `<name>=<source>`
+        // (the name part never contains `/`, so a `=` inside a URL query
+        // does not split).
+        let (custom_name, url) = match spec.split_once('=') {
+            Some((name, url)) if !name.contains('/') && is_url(url.trim()) => {
+                (Some(name.trim()), url.trim())
             }
-            return None;
+            _ => (None, spec),
+        };
+        if is_url(url) {
+            let github = GitHubSource::parse(url)?;
+            let name = match custom_name {
+                Some("") => return None,
+                Some(name) => name.to_string(),
+                None => github.repo.clone(),
+            };
+            return Some(Self {
+                owner: github.owner.clone(),
+                name,
+                version: None,
+                github: Some(github),
+                local_path: None,
+                infer_name: false,
+            });
         }
 
         // Parse owner/name@version format
@@ -102,7 +118,7 @@ impl LibrarySpec {
                 owner,
                 name,
                 version,
-                github_url: None,
+                github: None,
                 local_path: None,
                 infer_name: false,
             })
@@ -111,7 +127,7 @@ impl LibrarySpec {
                 owner: String::new(),
                 name: lib_part.to_string(),
                 version,
-                github_url: None,
+                github: None,
                 local_path: None,
                 infer_name: false,
             })
@@ -123,7 +139,7 @@ impl LibrarySpec {
             owner: String::new(),
             name,
             version: None,
-            github_url: None,
+            github: None,
             local_path: Some(fbuild_core::path::NormalizedPath::new(path)),
             infer_name,
         }
@@ -133,6 +149,23 @@ impl LibrarySpec {
     pub fn sanitized_name(&self) -> String {
         self.name.to_lowercase().replace(['/', '@', ' '], "_")
     }
+
+    /// Directory the library installs into under the build's `libs/`. A
+    /// GitHub `#ref` is part of it, so changing the ref never reuses a
+    /// checkout of the previous one (FastLED/fbuild#2018).
+    pub fn install_dir_name(&self) -> String {
+        match self.github.as_ref().and_then(GitHubSource::dir_suffix) {
+            Some(suffix) => format!("{}-{suffix}", self.sanitized_name()),
+            None => self.sanitized_name(),
+        }
+    }
+}
+
+/// A remote source URL in `lib_deps`.
+fn is_url(spec: &str) -> bool {
+    ["http://", "https://", "git+"]
+        .iter()
+        .any(|scheme| spec.starts_with(scheme))
 }
 
 /// Return the path of an unnamed local `lib_deps` entry, or `None` when the
@@ -180,32 +213,6 @@ fn dir_name_fallback(path: &str) -> String {
         .to_string()
 }
 
-/// Parse owner/name from a GitHub URL without using regex.
-///
-/// Handles: `https://github.com/owner/repo`, `https://github.com/owner/repo.git`
-fn parse_github_url(url: &str) -> Option<(String, String)> {
-    // Find "github.com/" in the URL
-    let marker = "github.com/";
-    let start = url.find(marker)? + marker.len();
-    let rest = &url[start..];
-
-    // Split remaining path by '/'
-    let parts: Vec<&str> = rest.split('/').filter(|s| !s.is_empty()).collect();
-    if parts.len() < 2 {
-        return None;
-    }
-
-    let owner = parts[0].to_string();
-    let mut name = parts[1].to_string();
-
-    // Strip .git suffix
-    if let Some(stripped) = name.strip_suffix(".git") {
-        name = stripped.to_string();
-    }
-
-    Some((owner, name))
-}
-
 impl std::fmt::Display for LibrarySpec {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         if !self.owner.is_empty() {
@@ -215,6 +222,9 @@ impl std::fmt::Display for LibrarySpec {
         }
         if let Some(ref v) = self.version {
             write!(f, "@{}", v)?;
+        }
+        if let Some(reference) = self.github.as_ref().and_then(|g| g.reference.as_ref()) {
+            write!(f, "#{reference}")?;
         }
         Ok(())
     }
@@ -230,7 +240,7 @@ mod tests {
         assert_eq!(spec.owner, "fastled");
         assert_eq!(spec.name, "FastLED");
         assert_eq!(spec.version, Some("^3.7.8".to_string()));
-        assert!(spec.github_url.is_none());
+        assert!(spec.github.is_none());
     }
 
     #[test]
@@ -262,7 +272,7 @@ mod tests {
         let spec = LibrarySpec::parse("https://github.com/FastLED/FastLED").unwrap();
         assert_eq!(spec.owner, "FastLED");
         assert_eq!(spec.name, "FastLED");
-        assert!(spec.github_url.is_some());
+        assert!(spec.github.is_some());
     }
 
     #[test]

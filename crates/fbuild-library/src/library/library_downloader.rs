@@ -7,6 +7,7 @@ use std::path::{Path, PathBuf};
 
 use fbuild_core::{FbuildError, Result};
 
+use super::github_source::{GitHubSource, ensure_zip_archive};
 use super::library_spec::LibrarySpec;
 use super::registry;
 
@@ -14,18 +15,19 @@ use super::registry;
 /// [`download_library`] uses to skip the network. Offline, so `fbuild install
 /// --check` can ask it (FastLED/fbuild#1433).
 pub fn is_downloaded(spec: &LibrarySpec, libs_dir: &Path) -> bool {
-    let lib_dir = libs_dir.join(spec.sanitized_name());
+    let lib_dir = libs_dir.join(spec.install_dir_name());
     lib_dir.join("library.json").exists() && lib_dir.join("src").exists()
 }
 
 /// Download a library from its spec, returning the library directory.
 ///
-/// - GitHub URL deps: download archive from `{url}/archive/refs/heads/main.zip`
+/// - GitHub URL deps: download GitHub's zip archive of the `#ref` (default
+///   branch without one), see [`GitHubSource::archive_url`]
 /// - Registry deps: resolve via PlatformIO registry, download `.tar.gz`
 ///
-/// Final layout: `libs_dir/{sanitized_name}/src/` contains library sources.
+/// Final layout: `libs_dir/{install_dir_name}/src/` contains library sources.
 pub async fn download_library(spec: &LibrarySpec, libs_dir: &Path) -> Result<PathBuf> {
-    let lib_name = spec.sanitized_name();
+    let lib_name = spec.install_dir_name();
     let lib_dir = libs_dir.join(&lib_name);
 
     if is_downloaded(spec, libs_dir) {
@@ -41,8 +43,8 @@ pub async fn download_library(spec: &LibrarySpec, libs_dir: &Path) -> Result<Pat
         ))
     })?;
 
-    if let Some(ref github_url) = spec.github_url {
-        download_github_library(github_url, &spec.name, &lib_dir).await?;
+    if let Some(ref github) = spec.github {
+        download_github_library(github, &spec.name, &lib_dir).await?;
     } else {
         download_registry_library(spec, &lib_dir).await?;
     }
@@ -100,29 +102,16 @@ fn patch_dir_recursive(dir: &Path, patterns: &[(&str, &str)]) {
     }
 }
 
-/// Download a library from a GitHub URL.
-async fn download_github_library(url: &str, name: &str, lib_dir: &Path) -> Result<()> {
-    // Clean URL: strip .git suffix and trailing slashes
-    let clean_url = url.trim_end_matches('/').trim_end_matches(".git");
-
-    // Try main branch first, then master
-    let archive_url = format!("{}/archive/refs/heads/main.zip", clean_url);
-    tracing::info!("downloading {} from GitHub", name);
+/// Download a library from GitHub's archive of its ref.
+async fn download_github_library(github: &GitHubSource, name: &str, lib_dir: &Path) -> Result<()> {
+    let archive_url = github.archive_url();
+    tracing::info!("downloading {} from {}", name, archive_url);
 
     let download_dir = lib_dir.join("_download");
     std::fs::create_dir_all(&download_dir)?;
 
-    let result = crate::downloader::download_file(&archive_url, &download_dir).await;
-
-    let archive_path = match result {
-        Ok(path) => path,
-        Err(_) => {
-            // Try master branch
-            let master_url = format!("{}/archive/refs/heads/master.zip", clean_url);
-            tracing::debug!("main branch failed, trying master");
-            crate::downloader::download_file(&master_url, &download_dir).await?
-        }
-    };
+    let archive_path = crate::downloader::download_file(&archive_url, &download_dir).await?;
+    ensure_zip_archive(&archive_path, &archive_url)?;
 
     // Extract
     let extract_dir = lib_dir.join("_extract");
@@ -145,7 +134,13 @@ async fn download_github_library(url: &str, name: &str, lib_dir: &Path) -> Resul
     let _ = std::fs::remove_dir_all(&extract_dir);
 
     // Write library.json metadata
-    write_library_json(lib_dir, name, "", "github", "")?;
+    write_library_json(
+        lib_dir,
+        name,
+        &github.owner,
+        "github",
+        github.reference.as_deref().unwrap_or(""),
+    )?;
 
     Ok(())
 }
