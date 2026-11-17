@@ -171,7 +171,10 @@ impl BuildOrchestrator for Rp2040Orchestrator {
         {
             let start = Instant::now();
             let ctx = pipeline::BuildContext::new(params).await?;
-            return super::mbed::build(params, ctx, start).await;
+            // The Mbed recipe future is ~33 KB under MSVC (clippy::large_futures):
+            // `BuildParams`/`BuildContext` are wider there than on Linux, so an
+            // inline await sinks the whole state machine into this one future.
+            return Box::pin(super::mbed::build(params, ctx, start)).await;
         }
         ArduinoPicoOrchestrator.build(params).await
     }
