@@ -372,3 +372,22 @@ fn component_ids_round_trip_through_the_registry_encoding() {
         names_key("ESP32%20HUB75%20LED%20MATRIX%20PANEL%20DMA%20Display")
     );
 }
+
+#[test]
+fn not_indexed_error_tells_the_user_what_to_do() {
+    // FastLED/fbuild#2019: the miss must point at a workaround and at where
+    // mirroring is requested, not only state that the package is absent.
+    let message = RegistryError::NotIndexed("acme/library/Missing".into()).to_string();
+    assert!(message.contains("acme/library/Missing"), "{message}");
+    assert!(message.contains(INDEX_MISS_HINT), "{message}");
+    for needle in [
+        "lib/",
+        "git URL",
+        "https://github.com/FastLED/fbuild/issues",
+    ] {
+        assert!(
+            INDEX_MISS_HINT.contains(needle),
+            "{needle}: {INDEX_MISS_HINT}"
+        );
+    }
+}
