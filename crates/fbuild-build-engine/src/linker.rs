@@ -235,9 +235,9 @@ pub trait Linker: Send + Sync {
 
     /// Whether static RAM over the board's maximum fails the build.
     ///
-    /// Default `false`: like PlatformIO, RAM overflow is a warning, because the
-    /// `data + bss` figure over-counts on MCUs with several RAM regions (e.g.
-    /// Teensy 4 `DMAMEM`/`EXTMEM`). Linkers whose figure is the whole of the
+    /// Default `false`: like PlatformIO, RAM overflow is a warning, because one
+    /// static-RAM figure cannot describe MCUs with several RAM regions (e.g.
+    /// Teensy 4 RAM1/`DMAMEM`/`EXTMEM`). Linkers whose figure is the whole of the
     /// MCU's RAM (AVR) override this to fail, as arduino-cli does
     /// (FastLED/fbuild#1409).
     fn ram_overflow_is_fatal(&self) -> bool {
@@ -568,15 +568,16 @@ impl LinkerBase {
     /// Reads the headers directly instead of running the toolchain's `size`
     /// tool: GNU `size`'s Berkeley format counts read-only `SHT_NOBITS`
     /// reservations (Arduino-Pico's `.heap`) as `text`, so its flash figure
-    /// was off by the whole heap (FastLED/fbuild#2012). See
-    /// [`SizeInfo::from_elf_sections`] for the classification.
+    /// was off by the whole heap (FastLED/fbuild#2012). RAM is PlatformIO's
+    /// default `.data`/`.bss`/`.noinit` set (FastLED/fbuild#2027); platforms
+    /// with their own set use [`crate::elf_size::report_size_with_ram`].
     pub fn report_size(
         elf_path: &Path,
         max_flash: Option<u64>,
         max_ram: Option<u64>,
     ) -> Result<SizeInfo> {
-        let sections = crate::elf_size::read_elf_section_sizes(elf_path)?;
-        Ok(SizeInfo::from_elf_sections(&sections, max_flash, max_ram))
+        let ram = fbuild_core::PLATFORMIO_RAM_SECTIONS;
+        crate::elf_size::report_size_with_ram(elf_path, ram, max_flash, max_ram)
     }
 
     /// Derive the `nm` tool path from the `size` tool path.

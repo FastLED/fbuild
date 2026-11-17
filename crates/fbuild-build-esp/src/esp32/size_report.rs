@@ -18,6 +18,9 @@
 //! - **RAM** = static DRAM: [`DRAM_SECTIONS`], i.e. PlatformIO espressif32's
 //!   `SIZEDATAREGEXP` set. IRAM code is not RAM here, as in PlatformIO and in
 //!   the previous fbuild report (`idf_size` lists it as a separate IRAM row).
+//!
+//! Both are [`SizeInfo::from_elf_sections_with_ram`] with that set; the
+//! ESP32-only part is rejecting an ELF without ESP32 sections.
 
 use std::path::Path;
 
@@ -63,24 +66,12 @@ pub(crate) fn esp32_size_from_sections(
     if !sections.iter().any(|s| s.alloc && is_esp(s)) {
         return None;
     }
-    let image = SizeInfo::from_elf_sections(sections, None, None).total_flash;
-    let (mut data, mut bss) = (0u64, 0u64);
-    for s in sections
-        .iter()
-        .filter(|s| s.alloc && DRAM_SECTIONS.contains(&s.name.as_str()))
-    {
-        let bucket = if s.has_contents { &mut data } else { &mut bss };
-        *bucket = bucket.saturating_add(s.size);
-    }
-    Some(SizeInfo {
-        text: image.saturating_sub(data),
-        data,
-        bss,
-        total_flash: image,
-        total_ram: data.saturating_add(bss),
+    Some(SizeInfo::from_elf_sections_with_ram(
+        sections,
+        DRAM_SECTIONS,
         max_flash,
         max_ram,
-    })
+    ))
 }
 
 #[cfg(test)]
