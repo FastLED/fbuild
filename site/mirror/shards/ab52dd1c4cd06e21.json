@@ -110,6 +110,19 @@
    }
   },
   {
+   "id": "fastled/library/FastLED/3.10.9/FastLED-3.10.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastLED-3.10.9.tar.gz",
+    "size_bytes": 35733120,
+    "sha256": "8b6af0f3eaf024c1887abba85a34c4552bfbb6a38bb5b927eb986a115ad0f751",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fastled/library/FastLED/3.10.9/FastLED-3.10.9.tar.gz",
+     "https://dl.registry.platformio.org/download/fastled/library/FastLED/3.10.9/FastLED-3.10.9.tar.gz"
+    ]
+   }
+  },
+  {
    "id": "fastled/library/FastLED/3.3.2/FastLED-3.3.2.tar.gz",
    "required": false,
    "asset": {
