@@ -11,11 +11,18 @@ And for FastLED/fbuild#2040 (item 2): a regeneration deleted the
 ``@esp-toolchain`` shard, rewound ``@esp-libs`` to the registry shards'
 version and reordered the Index, because it rebuilt index entries that other
 tools (``publish_toolchain_slices.py``, ``publish_esp_slices.py``) publish.
+
+And for FastLED/fbuild#2040 (item 4): an incremental pass that adds one
+release must touch only the shards whose content changed, so a shard's
+version is the date its content last changed; and ``--check`` must see a
+state DB that disagrees with the bucket.
 """
 
 from __future__ import annotations
 
+import argparse
 import json
+import sqlite3
 import tempfile
 import unittest
 from pathlib import Path
@@ -141,27 +148,24 @@ class TestState(unittest.TestCase):
 
 
 class TestVersion(unittest.TestCase):
-    def make_shards(self, root: Path, versions: list[str]) -> Path:
-        out_dir = root / "site" / "mirror"
-        (out_dir / "shards").mkdir(parents=True)
-        for index, version in enumerate(versions):
-            shard = {"version": version, "components": []}
-            (out_dir / "shards" / f"{index:016x}.json").write_text(json.dumps(shard))
-        (out_dir / "shards" / "names-0.json").write_text(
-            json.dumps({"version": "ignored"})
-        )
-        return out_dir
+    def test_default_stamp_is_the_utc_date(self) -> None:
+        # 2026-10-31T23:30:00Z
+        self.assertEqual(gen.today_version(1793489400), "2026.10.31")
 
-    def test_keeps_the_version_the_shards_carry(self) -> None:
-        with tempfile.TemporaryDirectory() as tmp:
-            out_dir = self.make_shards(
-                Path(tmp), ["2026.10.31", "2026.10.31", "2026.10.30"]
-            )
-            self.assertEqual(gen.existing_version(out_dir), "2026.10.31")
+    def test_unchanged_document_keeps_its_previous_text_and_version(self) -> None:
+        doc = {"tool": "t", "version": "x", "components": [1]}
+        previous = gen.render({**doc, "version": "2026.10.31"})
+        self.assertEqual(gen.stamped(doc, "2026.11.17", previous), previous)
 
-    def test_falls_back_when_there_are_no_shards(self) -> None:
-        with tempfile.TemporaryDirectory() as tmp:
-            self.assertEqual(gen.existing_version(Path(tmp)), gen.DEFAULT_VERSION)
+    def test_changed_or_new_document_gets_the_new_stamp(self) -> None:
+        doc = {"tool": "t", "version": "x", "components": [1, 2]}
+        previous = gen.render({**doc, "components": [1], "version": "2026.10.31"})
+        for prev in (previous, None, "not json"):
+            with self.subTest(prev=prev):
+                self.assertEqual(
+                    json.loads(gen.stamped(doc, "2026.11.17", prev))["version"],
+                    "2026.11.17",
+                )
 
     def test_shard_loader_keeps_size_and_sha_without_an_etag(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -313,8 +317,79 @@ class TestCommittedIndex(unittest.TestCase):
     def test_check_does_not_count_foreign_components_as_removed_objects(self) -> None:
         self.assertEqual(sorted(gen.load_existing(self.out_dir)), [KEY])
 
-    def test_foreign_shard_version_is_not_the_registry_version(self) -> None:
-        self.assertEqual(gen.existing_version(self.out_dir), "2026.10.31")
+    def test_new_release_restamps_only_the_shards_it_changes(self) -> None:
+        other = "zzz/library/other/1.0/other-1.0.tar.gz"
+        gen.write_site(
+            self.out_dir,
+            {**self.hashed, other: (3, "b" * 64)},
+            {**self.systems, other: []},
+            "2026.10.31",
+        )
+        before = self.snapshot()
+        new = "own/library/tool/1.1/tool-1.1.tar.gz"
+        gen.write_site(
+            self.out_dir,
+            {**self.hashed, other: (3, "b" * 64), new: (4, "d" * 64)},
+            {**self.systems, other: [], new: []},
+            "2026.11.17",
+        )
+        after = self.snapshot()
+        changed = sorted(rel for rel in after if after[rel] != before.get(rel))
+        own = f"shards/{gen.shard_id('own')}.json"
+        self.assertEqual(changed, ["manifest.json", own])
+        self.assertEqual(json.loads(after[own])["version"], "2026.11.17")
+        zzz = f"shards/{gen.shard_id('zzz')}.json"
+        self.assertEqual(json.loads(after[zzz])["version"], "2026.10.31")
+        self.assertEqual(
+            json.loads(after["shards/esp-libs.json"])["version"], "2026.11.04"
+        )
+
+    def test_rerun_with_a_new_stamp_changes_nothing(self) -> None:
+        gen.write_site(self.out_dir, self.hashed, self.systems, "2099.01.01")
+        self.assertEqual(self.snapshot(), self.committed)
+
+
+def state_db(path: Path, keys: list[str]) -> Path:
+    conn = sqlite3.connect(path)
+    conn.execute("create table files (key text, system text, state text not null)")
+    with conn:
+        conn.executemany(
+            "insert into files values (?, '*', 'done')", [(k,) for k in keys]
+        )
+    conn.close()
+    return path
+
+
+class TestStateDbCheck(unittest.TestCase):
+    """``--check`` compares the state DB with the bucket (#2040 item 4)."""
+
+    def test_drift_reports_both_directions_and_ignores_external_rows(self) -> None:
+        objects = {KEY: gen.ListedObject(5, None), "o/library/n/2/n.zip": None}
+        systems = {KEY: [], "o/library/n/9/n.zip": [], "external/x.org/a/b.zip": []}
+        self.assertEqual(
+            gen.state_db_drift(objects, systems),
+            (["o/library/n/2/n.zip"], ["o/library/n/9/n.zip"]),
+        )
+
+    def run_check(self, db_keys: list[str]) -> int:
+        with tempfile.TemporaryDirectory() as tmp:
+            out_dir = Path(tmp) / "mirror"
+            gen.write_site(out_dir, {KEY: (5, "a" * 64)}, {KEY: []}, "2026.10.31")
+            args = argparse.Namespace(
+                out_dir=out_dir,
+                checkpoint=Path(tmp) / "none.tsv",
+                state_db=state_db(Path(tmp) / "m.db", db_keys),
+            )
+            return gen.check(None, args, {KEY: gen.ListedObject(5, None)})
+
+    def test_check_passes_when_shards_db_and_bucket_agree(self) -> None:
+        self.assertEqual(self.run_check([KEY]), 0)
+
+    def test_check_fails_on_an_object_without_a_done_row(self) -> None:
+        self.assertEqual(self.run_check([]), 1)
+
+    def test_check_fails_on_a_done_row_without_an_object(self) -> None:
+        self.assertEqual(self.run_check([KEY, "own/library/tool/2.0/t.tar.gz"]), 1)
 
 
 if __name__ == "__main__":
