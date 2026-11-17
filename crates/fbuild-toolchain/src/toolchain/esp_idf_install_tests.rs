@@ -59,7 +59,14 @@ fn fabricated_envs(base: &Path) -> (IdfEnvironment, IdfPythonEnvironment) {
     std::fs::create_dir_all(scripts.as_path()).unwrap();
     let env_dir = NormalizedPath::new(base).join("python_env").join("idf_env");
     std::fs::create_dir_all(env_dir.join("bin").as_path()).unwrap();
-    std::fs::write(env_dir.join("bin").join("python").as_path(), b"#!/bin/sh\n").unwrap();
+    // A venv interpreter carries the host executable suffix: `python()` and
+    // `missing_units()` look it up by its native name (Windows `python.exe`).
+    let python_exe = fbuild_core::platform::executable::native_name("python");
+    std::fs::write(
+        env_dir.join("bin").join(python_exe).as_path(),
+        b"#!/bin/sh\n",
+    )
+    .unwrap();
     (tools, IdfPythonEnvironment::new(env_dir))
 }
 

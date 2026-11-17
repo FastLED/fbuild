@@ -481,7 +481,7 @@ mod tests {
 
         let bin = find_bin_root(&chip_dir).join("bin");
         std::fs::create_dir_all(&bin).unwrap();
-        std::fs::write(bin.join("xtensa-esp-elf-gcc"), b"").unwrap();
+        std::fs::write(bin.join(tool_name("xtensa-esp-elf-gcc")), b"").unwrap();
         std::fs::write(
             crate::disk_cache::paths::install_complete_sentinel(&chip_dir),
             b"",
@@ -489,7 +489,7 @@ mod tests {
         .unwrap();
 
         assert!(tc.is_installed(), "a chip-scoped install must be found");
-        assert_eq!(tc.get_gcc_path(), bin.join("xtensa-esp-elf-gcc"));
+        assert_eq!(tc.get_gcc_path(), bin.join(tool_name("xtensa-esp-elf-gcc")));
         assert_eq!(tc.get_info().install_path, find_bin_root(&chip_dir));
     }
 
