@@ -261,6 +261,72 @@ fn malformed_database_is_an_error() {
     assert!(read_database(&missing).is_err());
 }
 
+/// A case-folding comparison key is how macOS and Windows see paths. It is
+/// only a *matching* device: the spelling written to the database must stay the
+/// one on disk (FastLED/fbuild#2048).
+///
+/// `full / macos / Test` caught this on the merged compile-database code: key
+/// components were emitted verbatim, so `FreeRTOS-Kernel/tasks.c` was written
+/// `freertos-kernel/tasks.c`. A case-sensitive volume cannot open that.
+#[test]
+fn relative_spelling_keeps_the_on_disk_case_when_the_key_folds_it() {
+    // Lowercasing stand-in for `comparison_key` on macOS/Windows.
+    fn folded(path: &std::path::Path) -> String {
+        path.to_string_lossy().to_lowercase()
+    }
+
+    let spelling = relative_spelling_with(
+        std::path::Path::new("/opt/idf/components/freertos/FreeRTOS-Kernel/tasks.c"),
+        std::path::Path::new("/proj"),
+        folded,
+    )
+    .expect("a shared root has a relative spelling");
+
+    assert_eq!(
+        spelling, "../opt/idf/components/freertos/FreeRTOS-Kernel/tasks.c",
+        "every component after the shared root must keep the case it was given"
+    );
+}
+
+/// The other half of the same contract: matching itself stays case-insensitive
+/// where the platform says so, so a project reached as `/Proj` still yields a
+/// plain relative spelling for `/proj/main/main.c`.
+#[test]
+fn relative_spelling_matches_case_insensitively_but_emits_the_source_spelling() {
+    fn folded(path: &std::path::Path) -> String {
+        path.to_string_lossy().to_lowercase()
+    }
+
+    let spelling = relative_spelling_with(
+        std::path::Path::new("/proj/Build/FreeRTOS-Kernel/tasks.c"),
+        std::path::Path::new("/Proj"),
+        folded,
+    )
+    .expect("case-insensitive matching still finds the shared root");
+
+    assert_eq!(spelling, "Build/FreeRTOS-Kernel/tasks.c");
+}
+
+/// Without folding (case-sensitive hosts) the key and the spelling agree: this
+/// pins that the split into two component lists did not change the `..` climb.
+#[test]
+fn relative_spelling_unchanged_when_the_key_does_not_fold() {
+    assert_eq!(
+        relative_spelling(
+            std::path::Path::new("/opt/idf/components/freertos/FreeRTOS-Kernel/tasks.c"),
+            std::path::Path::new("/proj/build/idf")
+        ),
+        Some("../../../opt/idf/components/freertos/FreeRTOS-Kernel/tasks.c".to_string())
+    );
+    assert_eq!(
+        relative_spelling(
+            std::path::Path::new("/proj/main/./main.c"),
+            std::path::Path::new("/proj")
+        ),
+        Some("main/main.c".to_string())
+    );
+}
+
 fn merged_path(fixture: &Fixture, name: &str) -> NormalizedPath {
     fixture.root().join(name)
 }

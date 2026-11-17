@@ -193,13 +193,31 @@ fn respell(path: &str, project_dir: &NormalizedPath) -> Option<String> {
 /// drives): there is no relative spelling then, and inventing one would be a
 /// path that silently does not resolve.
 fn relative_spelling(path: &Path, base: &Path) -> Option<String> {
-    let path_key = normalize_for_key(path);
-    let base_key = normalize_for_key(base);
-    let path: Vec<Component> = Path::new(&path_key).components().collect();
-    let base: Vec<Component> = Path::new(&base_key).components().collect();
-    let common = path
+    relative_spelling_with(path, base, normalize_for_key)
+}
+
+/// The core of [`relative_spelling`], with the comparison key injected.
+///
+/// Two parallel component lists are built on purpose: the **key** components
+/// (`comparison`) decide how much of the two paths is shared, the **on-disk**
+/// components decide what is emitted. A comparison key may case-fold (macOS,
+/// Windows), and a compile database is opened by tooling — an IDE indexer or a
+/// replay — so emitting the folded spelling would name a file that does not
+/// exist on a case-sensitive volume
+/// (`FreeRTOS-Kernel/tasks.c` written as `freertos-kernel/tasks.c`,
+/// FastLED/fbuild#2048). The key is only ever a matching device.
+fn relative_spelling_with(
+    path: &Path,
+    base: &Path,
+    comparison: fn(&Path) -> String,
+) -> Option<String> {
+    let path_key = comparison(path);
+    let base_key = comparison(base);
+    let path_key: Vec<Component> = Path::new(&path_key).components().collect();
+    let base_key: Vec<Component> = Path::new(&base_key).components().collect();
+    let common = path_key
         .iter()
-        .zip(base.iter())
+        .zip(base_key.iter())
         .take_while(|(left, right)| left == right)
         .count();
     if common == 0 {
@@ -208,13 +226,38 @@ fn relative_spelling(path: &Path, base: &Path) -> Option<String> {
     // Climb out of `base` and back down into `path`; a shared root is what
     // `common >= 1` above established, so every `..` here stays inside one
     // filesystem root.
-    let mut parts: Vec<String> = vec!["..".to_string(); base.len() - common];
+    let mut parts: Vec<String> = vec!["..".to_string(); base_key.len() - common];
+    let spelling = path_components(path);
+    let tail = spelling.get(common..).unwrap_or(&[]);
     parts.extend(
-        path[common..]
-            .iter()
+        tail.iter()
             .map(|component| component.as_os_str().to_string_lossy().into_owned()),
     );
     Some(parts.join("/"))
+}
+
+/// `path`'s components with `.` dropped and `..` applied, keeping the spelling
+/// exactly as it was given.
+///
+/// [`normalize`](fbuild_core::path::normalize) does the same fold but returns a
+/// `PathBuf`; this returns borrowed [`Component`]s so the caller can emit the
+/// original spelling without ever naming a `PathBuf`.
+fn path_components(path: &Path) -> Vec<Component<'_>> {
+    let mut components: Vec<Component> = Vec::new();
+    for component in path.components() {
+        match component {
+            Component::CurDir => {}
+            Component::ParentDir => {
+                if matches!(components.last(), Some(Component::Normal(_))) {
+                    components.pop();
+                } else {
+                    components.push(component);
+                }
+            }
+            _ => components.push(component),
+        }
+    }
+    components
 }
 
 /// Merge `delegated` into `native`, one entry per translation unit.
