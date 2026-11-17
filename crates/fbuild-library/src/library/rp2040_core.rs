@@ -55,8 +55,12 @@ impl Rp2040Cores {
         }
     }
 
-    #[cfg(test)]
-    fn with_cache_root(project_dir: &Path, cache_root: &Path) -> Self {
+    /// Construct against an explicit cache root instead of the global one.
+    ///
+    /// Tests in other crates use this so path getters that they write through
+    /// (e.g. [`Self::get_variant_dir`]) never touch `~/.fbuild/<mode>/cache`
+    /// (FastLED/fbuild#2043).
+    pub fn with_cache_root(project_dir: &Path, cache_root: &Path) -> Self {
         Self {
             base: PackageBase::with_cache_root(
                 "rp2040-core",

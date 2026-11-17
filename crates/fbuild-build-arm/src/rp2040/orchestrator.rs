@@ -1491,7 +1491,11 @@ mod tests {
         let tmp = tempfile::TempDir::new().unwrap();
         let build_dir = tmp.path().join("build");
         std::fs::create_dir_all(&build_dir).unwrap();
-        let framework = fbuild_packages::library::Rp2040Cores::new(tmp.path());
+        // An isolated cache root: the global one would receive a stray
+        // `variants/fbuild-test-rpipico/` tree (FastLED/fbuild#2043).
+        let cache_root = tmp.path().join("cache");
+        let framework =
+            fbuild_packages::library::Rp2040Cores::with_cache_root(tmp.path(), &cache_root);
         let mut board = fbuild_test_support::board_for_test("rpipico");
         board.variant = "fbuild-test-rpipico".to_string();
         board.max_flash = Some(2_097_152);
@@ -1499,6 +1503,11 @@ mod tests {
         let template = framework
             .get_variant_dir(&board.variant)
             .join("memmap_default.ld");
+        assert!(
+            template.starts_with(&cache_root),
+            "test must write under its own cache root, not {}",
+            template.display()
+        );
         std::fs::create_dir_all(template.parent().unwrap()).unwrap();
         std::fs::write(
             &template,
