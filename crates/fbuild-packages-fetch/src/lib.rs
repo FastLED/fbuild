@@ -22,6 +22,7 @@ pub mod platformio_repository;
 pub mod submodules;
 
 mod install_lock;
+mod install_repair;
 
 pub use cache::Cache;
 pub use disk_cache::DiskCache;
@@ -476,17 +477,10 @@ impl PackageBase {
             .chip_install_path()
             .map_or_else(|| install_path.clone(), |path| path.into_path_buf());
 
-        if install_path.exists() {
-            // An existing-install hit is a use: refresh the DiskCache LRU so
-            // background GC doesn't treat this package as the oldest unused
-            // entry and delete it mid-build (FastLED/fbuild#1341).
-            self.touch_disk_cache();
-            return Ok(install_path);
-        }
-
-        if target_path.exists() {
-            self.touch_disk_cache();
-            return Ok(target_path);
+        // Only a sentinel-bearing tree counts as installed, matching
+        // `is_cached()` (FastLED/fbuild#2043).
+        if let Some(existing) = self.existing_complete_install() {
+            return Ok(existing);
         }
 
         // Ensure parent directory exists
@@ -499,14 +493,12 @@ impl PackageBase {
         // Append _staging to dir name (can't use with_extension — version has dots)
         let _install_lock =
             install_lock::acquire_for_install(&target_path, &self.name, &self.version).await?;
-        if install_path.exists() {
-            self.touch_disk_cache();
-            return Ok(install_path);
+        if let Some(existing) = self.existing_complete_install() {
+            return Ok(existing);
         }
-        if target_path.exists() {
-            self.touch_disk_cache();
-            return Ok(target_path);
-        }
+        // Under the lock, a sentinel-less entry at the final path is foreign,
+        // never an install in progress (that extracts into `_staging`).
+        self.quarantine_incomplete_install(&target_path)?;
 
         let staging_path = target_path.with_file_name(format!(
             "{}_staging",
@@ -962,5 +954,7 @@ mod toolchain_gcc_ar_tests {
 
 #[cfg(test)]
 mod chip_slice_tests;
+#[cfg(test)]
+mod incomplete_install_tests;
 #[cfg(test)]
 mod package_override_tests;

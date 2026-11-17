@@ -18,7 +18,7 @@ fn sha256_hex(bytes: &[u8]) -> String {
 }
 
 /// A `.tar.zst` whose `bin/` entry is what the validation closure checks.
-fn tar_zst(entries: &[(&str, &[u8])]) -> Vec<u8> {
+pub(crate) fn tar_zst(entries: &[(&str, &[u8])]) -> Vec<u8> {
     let mut tar = tar::Builder::new(Vec::new());
     for (name, content) in entries {
         let mut header = tar::Header::new_gnu();
@@ -33,7 +33,9 @@ fn tar_zst(entries: &[(&str, &[u8])]) -> Vec<u8> {
 
 /// Serves each path's body and records every path requested, so a test can
 /// prove what fbuild did NOT download.
-async fn serve(bodies: Vec<(&'static str, Vec<u8>)>) -> (String, Arc<Mutex<Vec<String>>>) {
+pub(crate) async fn serve(
+    bodies: Vec<(&'static str, Vec<u8>)>,
+) -> (String, Arc<Mutex<Vec<String>>>) {
     use tokio::io::{AsyncReadExt, AsyncWriteExt};
 
     let listener = tokio::net::TcpListener::bind("127.0.0.1:0")
