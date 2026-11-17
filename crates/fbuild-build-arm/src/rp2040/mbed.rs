@@ -111,6 +111,7 @@ fn mcu_config(variant: &Path, name: &str) -> Result<ArmMcuConfig> {
         objcopy: crate::compiler::ObjcopyConfig {
             output_format: "binary".to_string(),
             remove_sections: Vec::new(),
+            only_sections: Vec::new(),
         },
         profiles: HashMap::new(),
         defines: Vec::new(),

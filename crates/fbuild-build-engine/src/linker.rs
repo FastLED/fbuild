@@ -641,20 +641,53 @@ impl LinkerBase {
         objcopy_path: &Path,
         elf_path: &Path,
         output_dir: &Path,
-        output_format: &str,
-        remove_sections: &[String],
+        config: &crate::compiler::ObjcopyConfig,
         tool_label: &str,
     ) -> Result<PathBuf> {
         Self::objcopy_firmware_with_env(
             objcopy_path,
             elf_path,
             output_dir,
-            output_format,
-            remove_sections,
+            config,
             tool_label,
             None,
         )
         .await
+    }
+
+    /// Output path objcopy writes for `output_format` (`firmware.hex` for
+    /// `ihex`, `firmware.bin` otherwise).
+    pub fn objcopy_output_path(output_dir: &Path, output_format: &str) -> PathBuf {
+        let ext = match output_format {
+            "ihex" => "hex",
+            _ => "bin",
+        };
+        output_dir.join(format!("firmware.{ext}"))
+    }
+
+    /// The objcopy argv (tool first) that converts `elf_path` to `out_path`.
+    pub fn objcopy_args(
+        objcopy_path: &Path,
+        elf_path: &Path,
+        out_path: &Path,
+        config: &crate::compiler::ObjcopyConfig,
+    ) -> Vec<String> {
+        let mut args = vec![
+            objcopy_path.to_string_lossy().to_string(),
+            "-O".to_string(),
+            config.output_format.clone(),
+        ];
+        for section in &config.only_sections {
+            args.push("-j".to_string());
+            args.push(section.clone());
+        }
+        for section in &config.remove_sections {
+            args.push("-R".to_string());
+            args.push(section.clone());
+        }
+        args.push(elf_path.to_string_lossy().to_string());
+        args.push(out_path.to_string_lossy().to_string());
+        args
     }
 
     /// As [`Self::objcopy_firmware`] but with explicit child env vars — used
@@ -664,32 +697,14 @@ impl LinkerBase {
         objcopy_path: &Path,
         elf_path: &Path,
         output_dir: &Path,
-        output_format: &str,
-        remove_sections: &[String],
+        config: &crate::compiler::ObjcopyConfig,
         tool_label: &str,
         env: Option<&[(&str, &str)]>,
     ) -> Result<PathBuf> {
         use fbuild_core::subprocess::run_command;
 
-        let ext = match output_format {
-            "ihex" => "hex",
-            _ => "bin",
-        };
-        let hex_path = output_dir.join(format!("firmware.{ext}"));
-
-        let mut args = vec![
-            objcopy_path.to_string_lossy().to_string(),
-            "-O".to_string(),
-            output_format.to_string(),
-        ];
-
-        for section in remove_sections {
-            args.push("-R".to_string());
-            args.push(section.clone());
-        }
-
-        args.push(elf_path.to_string_lossy().to_string());
-        args.push(hex_path.to_string_lossy().to_string());
+        let hex_path = Self::objcopy_output_path(output_dir, &config.output_format);
+        let args = Self::objcopy_args(objcopy_path, elf_path, &hex_path, config);
 
         let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
         // FastLED/fbuild#809: objcopy ELF→HEX/BIN bounded at 1 min.
@@ -715,6 +730,10 @@ impl LinkerBase {
 #[cfg(test)]
 #[path = "linker_tests.rs"]
 mod linker_tests;
+
+#[cfg(test)]
+#[path = "objcopy_tests.rs"]
+mod objcopy_tests;
 
 #[cfg(test)]
 mod tests {

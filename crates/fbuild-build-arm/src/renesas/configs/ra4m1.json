@@ -9,7 +9,7 @@
   },
   "linker_flags": ["-mcpu=cortex-m4", "-mthumb", "-mfloat-abi=hard", "-mfpu=fpv4-sp-d16", "-Wl,--gc-sections", "-Wl,--print-memory-usage", "--specs=nano.specs", "--specs=nosys.specs"],
   "linker_libs": ["-lgcc", "-lstdc++", "-lm", "-lc"],
-  "objcopy": {"output_format": "binary", "remove_sections": [".eeprom"]},
+  "objcopy": {"output_format": "binary", "remove_sections": [], "only_sections": [".text", ".data"]},
   "profiles": {
     "release": {"compile_flags": ["-Os", "-flto", "-fno-fat-lto-objects"], "link_flags": ["-flto", "-fuse-linker-plugin"]},
     "quick": {"compile_flags": ["-Os"], "link_flags": []}

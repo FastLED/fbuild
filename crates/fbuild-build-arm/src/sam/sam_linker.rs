@@ -261,8 +261,7 @@ impl Linker for SamLinker {
             &self.objcopy_path,
             elf_path,
             output_dir,
-            &self.mcu_config.objcopy.output_format,
-            &self.mcu_config.objcopy.remove_sections,
+            &self.mcu_config.objcopy,
             "arm-none-eabi-objcopy",
         )
         .await

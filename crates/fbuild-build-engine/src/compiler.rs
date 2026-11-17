@@ -42,6 +42,12 @@ pub struct ProfileFlags {
 pub struct ObjcopyConfig {
     pub output_format: String,
     pub remove_sections: Vec<String>,
+    /// When non-empty, copy only these sections (`-j`). A binary image
+    /// spans every allocated section, so a far-away one (e.g. Renesas
+    /// `.id_code` at 0x01010018) pads the file to megabytes
+    /// (FastLED/fbuild#2037).
+    #[serde(default)]
+    pub only_sections: Vec<String>,
 }
 
 /// Common interface for platform MCU configurations.
