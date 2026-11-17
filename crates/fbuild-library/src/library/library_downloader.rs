@@ -265,6 +265,29 @@ mod tests {
         assert_eq!(find_extracted_root(tmp.path()), tmp.path().to_path_buf());
     }
 
+    /// A GitHub dependency without a ref is pinned, as PlatformIO pins it:
+    /// once installed it is reused without a network call until the build
+    /// directory is cleaned (`fbuild clean` / `--clean`). The repository
+    /// does not exist, so any download attempt would fail (#2042).
+    #[tokio::test]
+    async fn default_branch_install_is_pinned_until_clean() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let spec = LibrarySpec::parse("https://github.com/fbuild-no-such-owner-2042/no-such-repo")
+            .unwrap();
+        assert_eq!(spec.github.as_ref().unwrap().reference, None);
+        let lib_dir = tmp.path().join(spec.install_dir_name());
+        std::fs::create_dir_all(lib_dir.join("src")).unwrap();
+        std::fs::write(lib_dir.join("src").join("pinned.h"), "// first install").unwrap();
+        write_library_json(&lib_dir, "no-such-repo", "o", "github", "").unwrap();
+
+        let dir = download_library(&spec, tmp.path()).await.unwrap();
+        assert_eq!(dir, lib_dir);
+        assert_eq!(
+            std::fs::read_to_string(dir.join("src").join("pinned.h")).unwrap(),
+            "// first install"
+        );
+    }
+
     #[test]
     fn test_write_library_json() {
         let tmp = tempfile::TempDir::new().unwrap();

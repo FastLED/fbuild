@@ -106,14 +106,116 @@ fn dir_suffix_is_filesystem_safe_and_distinguishes_refs() {
 fn rejects_non_github_archives_and_bad_refs() {
     for raw in [
         "https://gitlab.com/O/R.git#v1",
-        "https://github.com/O/R/archive/v1.zip",
-        "https://github.com/O/R/tree/main",
         "https://github.com/O/R.git#a/../b",
         "https://github.com/O/R.git#",
         "fastled/FastLED",
     ] {
         assert_eq!(GitHubSource::parse(raw), None, "{raw}");
     }
+}
+
+#[test]
+fn tree_url_installs_that_refs_archive() {
+    // GitHub's web URL of a ref: PlatformIO hands it to `git clone`, which
+    // fails; fbuild installs the same ref as `#<ref>` would (#2042).
+    for (raw, reference) in [
+        ("https://github.com/O/R/tree/v1", "v1"),
+        ("https://github.com/O/R/tree/v1/", "v1"),
+        ("http://www.github.com/O/R/tree/v1", "v1"),
+        ("https://github.com/O/R/tree/feature/x", "feature/x"),
+    ] {
+        let s = source(raw);
+        assert_eq!((s.owner.as_str(), s.repo.as_str()), ("O", "R"), "{raw}");
+        assert_eq!(s.reference.as_deref(), Some(reference), "{raw}");
+        assert_eq!(
+            s.archive_url(),
+            format!("https://github.com/O/R/archive/{reference}.zip"),
+            "{raw}"
+        );
+    }
+}
+
+#[test]
+fn direct_archive_url_installs_that_archive() {
+    let sha = "0123456789abcdef0123456789abcdef01234567";
+    for (raw, reference, archive) in [
+        (
+            "https://github.com/O/R/archive/refs/tags/v1.zip",
+            "refs/tags/v1",
+            "https://github.com/O/R/archive/refs/tags/v1.zip",
+        ),
+        (
+            "https://github.com/O/R/archive/refs/heads/main.tar.gz",
+            "refs/heads/main",
+            "https://github.com/O/R/archive/refs/heads/main.zip",
+        ),
+        (
+            "https://github.com/O/R/archive/v1.zip",
+            "v1",
+            "https://github.com/O/R/archive/v1.zip",
+        ),
+        (
+            &format!("https://github.com/O/R/archive/{sha}.zip"),
+            sha,
+            &format!("https://github.com/O/R/archive/{sha}.zip"),
+        ),
+    ] {
+        let s = source(raw);
+        assert_eq!((s.owner.as_str(), s.repo.as_str()), ("O", "R"), "{raw}");
+        assert_eq!(s.reference.as_deref(), Some(reference), "{raw}");
+        assert_eq!(s.archive_url(), archive, "{raw}");
+    }
+}
+
+#[test]
+fn rejects_malformed_web_urls() {
+    for raw in [
+        "https://github.com/O/R/tree",
+        "https://github.com/O/R/tree/",
+        "https://github.com/O/R/tree/a/../b",
+        "https://github.com/O/R/tree/v1#v2",
+        "https://github.com/O/R/tree/v1?x=1",
+        "https://github.com/O/R/archive/v1",
+        "https://github.com/O/R/archive/.zip",
+        "https://github.com/O/R/archive/v1.zip#v2",
+        "https://github.com/O/R/blob/main/README.md",
+        "https://github.com/O/R/releases/download/v1/R.zip",
+        "git+https://github.com/O/R/tree/v1",
+    ] {
+        assert_eq!(GitHubSource::parse(raw), None, "{raw}");
+    }
+}
+
+#[test]
+fn library_spec_accepts_tree_and_archive_urls() {
+    let tree = LibrarySpec::parse("https://github.com/FastLED/FastLED/tree/3.10.3").unwrap();
+    assert_eq!(tree.name, "FastLED");
+    assert_eq!(tree.install_dir_name(), "fastled-3.10.3");
+    let named =
+        LibrarySpec::parse("Leds=https://github.com/FastLED/FastLED/archive/3.10.3.zip").unwrap();
+    assert_eq!(named.name, "Leds");
+    assert_eq!(named.install_dir_name(), "leds-3.10.3");
+}
+
+#[test]
+fn unsupported_urls_get_a_reason_naming_the_gap() {
+    use crate::library::library_spec::unsupported_url_reason;
+    for git in [
+        "https://gitlab.com/O/R.git#v1",
+        "https://gitlab.com/O/R",
+        "git+https://git.example.com/O/R.git",
+        "https://bitbucket.org/O/R",
+        "https://git.example.com/O/R.git",
+    ] {
+        let reason = unsupported_url_reason(git).unwrap_or_else(|| panic!("{git}"));
+        assert!(reason.contains("git clone"), "{git}: {reason}");
+    }
+    let archive = unsupported_url_reason("https://example.com/lib.zip").unwrap();
+    assert!(archive.contains("archive"), "{archive}");
+    let github = unsupported_url_reason("https://github.com/O/R/blob/main/x.h").unwrap();
+    assert!(github.contains("/tree/<ref>"), "{github}");
+    assert_eq!(unsupported_url_reason("fastled/FastLED"), None);
+    assert_eq!(unsupported_url_reason("./lib/x"), None);
 }
 
 #[test]

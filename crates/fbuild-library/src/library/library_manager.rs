@@ -106,7 +106,10 @@ pub fn parse_lib_specs(lib_specs: &[String], lib_ignore: &[String]) -> Vec<Libra
         .filter_map(|s| {
             let parsed = LibrarySpec::parse(s);
             if parsed.is_none() && !s.trim().is_empty() {
-                tracing::warn!("ignoring unparseable lib_deps entry: {:?}", s);
+                match super::library_spec::unsupported_url_reason(s) {
+                    Some(reason) => tracing::warn!("ignoring lib_deps entry {:?}: {reason}", s),
+                    None => tracing::warn!("ignoring unparseable lib_deps entry: {:?}", s),
+                }
             }
             parsed
         })
