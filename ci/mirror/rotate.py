@@ -1,7 +1,7 @@
 #!/usr/bin/env -S uv run --quiet --script
 # /// script
 # requires-python = ">=3.11"
-# dependencies = ["boto3>=1.34", "httpx>=0.27"]
+# dependencies = ["boto3>=1.36", "httpx>=0.27"]
 # ///
 """Rotate DO droplets to work around PlatformIO's per-IP daily download cap.
 
@@ -20,6 +20,10 @@ The bucket's `_state/manifest.db` is the source of truth (FastLED/fbuild#2040).
 A fresh droplet is always restored from it, never from the local work copy; a
 local copy that has progress the bucket lacks stops the run before a droplet is
 created, and a droplet snapshot that is behind the bucket is never uploaded.
+Every write of `_state/manifest.db` is conditional on the ETag read before it
+(If-Match), so a concurrent writer makes the upload fail instead of being
+overwritten. When the registry refuses the droplet's client (any 403; see
+`mirror.RegistryRefused`) the supervisor stops with exit 3 rather than rotating.
 
 Usage:
     uv run --no-project --script ci/mirror/rotate.py                     # run the supervisor (long-lived)
@@ -32,6 +36,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import shutil
 import sqlite3
 import subprocess
 import sys
@@ -235,6 +240,14 @@ class ManifestConflict(RuntimeError):
     """Two copies of the state DB disagree in a way a human must resolve."""
 
 
+@dataclass(frozen=True)
+class BucketCopy:
+    """The bucket's state DB as downloaded: its progress and the ETag read."""
+
+    summary: ManifestSummary
+    etag: str
+
+
 def summarize_manifest(path: Path) -> ManifestSummary:
     conn = sqlite3.connect(f"file:{path}?mode=ro", uri=True)
     try:
@@ -288,27 +301,74 @@ def check_snapshot_upload(
         )
 
 
-def download_bucket_manifest(dest: Path) -> ManifestSummary | None:
+def _error_code(exc: Any) -> str:
+    return str(getattr(exc, "response", {}).get("Error", {}).get("Code", ""))
+
+
+def download_bucket_manifest(dest: Path) -> BucketCopy | None:
     """Fetch the bucket's state DB to `dest`; `None` only when there is none.
 
     Any other failure raises: treating a transient error as "no snapshot" would
-    start an empty manifest whose first snapshot overwrites the real one."""
+    start an empty manifest whose first snapshot overwrites the real one. The
+    body and the ETag come from one GET, so the ETag describes these bytes."""
     from botocore.exceptions import ClientError
 
     try:
-        s3().download_file(BUCKET, STATE_KEY, str(dest))
+        obj = s3().get_object(Bucket=BUCKET, Key=STATE_KEY)
     except ClientError as exc:
-        if exc.response.get("Error", {}).get("Code") in ("404", "NoSuchKey"):
+        if _error_code(exc) in ("404", "NoSuchKey"):
             return None
         raise
-    return summarize_manifest(dest)
+    with dest.open("wb") as fh:
+        shutil.copyfileobj(obj["Body"], fh)
+    return BucketCopy(summarize_manifest(dest), obj["ETag"])
+
+
+def put_bucket_manifest(path: Path, read: BucketCopy | None) -> None:
+    """Upload `path` as the bucket's state DB, but only over the copy `read`
+    (If-Match on its ETag), or only if there still is none (If-None-Match)."""
+    from botocore.exceptions import ClientError
+
+    condition = {"IfMatch": read.etag} if read else {"IfNoneMatch": "*"}
+    try:
+        s3().put_object(
+            Bucket=BUCKET,
+            Key=STATE_KEY,
+            Body=path.read_bytes(),
+            ContentType="binary/octet-stream",
+            **condition,
+        )
+    except ClientError as exc:
+        if _error_code(exc) in (
+            "PreconditionFailed",
+            "412",
+            "ConditionalRequestConflict",
+        ):
+            raise ManifestConflict(
+                f"the bucket's {STATE_KEY} changed since it was read"
+                f" ({condition}); not overwriting it. {path} holds this run's copy."
+            ) from exc
+        raise
+
+
+def backup_bucket_manifest(read: BucketCopy) -> str:
+    """Server-side copy of the state DB, only if it is still the copy `read`."""
+    key = f"{STATE_KEY}.bak-{time.strftime('%Y%m%dT%H%M%SZ', time.gmtime())}"
+    s3().copy_object(
+        Bucket=BUCKET,
+        Key=key,
+        CopySource={"Bucket": BUCKET, "Key": STATE_KEY},
+        CopySourceIfMatch=read.etag,
+    )
+    return key
 
 
 def plan_restore() -> Path | None:
     """The DB to restore onto a fresh droplet (the bucket copy), or `None`."""
     WORK.mkdir(parents=True, exist_ok=True)
     fetched = WORK / "manifest.bucket.db"
-    bucket = download_bucket_manifest(fetched)
+    read = download_bucket_manifest(fetched)
+    bucket = read.summary if read else None
     local_path = WORK / "manifest.db"
     local = None
     if local_path.exists() and local_path.stat().st_size:
@@ -362,10 +422,9 @@ def snapshot_manifest(ip: str) -> Path | None:
         log("WARNING manifest snapshot was empty")
         return None
     snapshot = summarize_manifest(pulled)
-    check_snapshot_upload(
-        snapshot, download_bucket_manifest(WORK / "manifest.bucket.db")
-    )
-    s3().upload_file(str(pulled), BUCKET, STATE_KEY)
+    read = download_bucket_manifest(WORK / "manifest.bucket.db")
+    check_snapshot_upload(snapshot, read.summary if read else None)
+    put_bucket_manifest(pulled, read)
     pulled.replace(local)
     log(f"manifest snapshot uploaded ({local.stat().st_size} bytes, {snapshot})")
     return local
@@ -416,12 +475,15 @@ Environment="{ua_env}={user_agent}"
 ExecStart=/root/.local/bin/uv run --quiet /opt/fbuild-mirror/mirror.py run
 Restart=always
 RestartSec=15
+# mirror.py exits {refused} when the registry refuses the client; restarting
+# cannot fix that, and rotate.py stops on the marker file instead.
+RestartPreventExitStatus={refused}
 StandardOutput=append:/var/log/fbuild-mirror.log
 StandardError=append:/var/log/fbuild-mirror.log
 
 [Install]
 WantedBy=multi-user.target
-""".format(ua_env=mirror.UA_ENV, user_agent=user_agent)
+""".format(ua_env=mirror.UA_ENV, user_agent=user_agent, refused=mirror.EXIT_REFUSED)
     payload = (
         "set -euo pipefail\n"
         "export DEBIAN_FRONTEND=noninteractive\n"
@@ -457,6 +519,8 @@ python3 - <<'PY'
 import json, os, sqlite3
 db = "/var/lib/fbuild-mirror/manifest.db"
 out = {"quota": os.path.exists("/var/lib/fbuild-mirror/quota_until")}
+if os.path.exists("/var/lib/fbuild-mirror/registry_refused"):
+    out["refused"] = open("/var/lib/fbuild-mirror/registry_refused").read()[:400]
 try:
     c = sqlite3.connect(f"file:{db}?mode=ro", uri=True, timeout=20)
     out["state"] = dict(c.execute("select state, count(*) from files group by state").fetchall())
@@ -542,7 +606,8 @@ def stall_action(unchanged: int, restarted: bool) -> str | None:
 
 
 def _monitor(ip: str, did: int, rotations: int) -> str | None:
-    """Watch one droplet: `"complete"`, `"capped"` (rotate it), or `None` (still healthy)."""
+    """Watch one droplet: `"complete"`, `"capped"` (rotate it), `"refused"`
+    (stop: a new IP will not help), or `None` (still healthy)."""
     last_seen: tuple[int, int, int] | None = None
     unchanged = 0
     restarted = False
@@ -558,6 +623,9 @@ def _monitor(ip: str, did: int, rotations: int) -> str | None:
             destroy_droplet(did)
             write_status(phase="complete", done=done, ip=ip)
             return "complete"
+        if info.get("refused"):
+            log(f"REGISTRY REFUSED THE MIRROR CLIENT; stopping: {info['refused']}")
+            return "refused"
         if info.get("quota"):
             log("quota exhausted on this droplet; rotating")
             return "capped"
@@ -578,21 +646,28 @@ def _monitor(ip: str, did: int, rotations: int) -> str | None:
     return None
 
 
-def main() -> int:
+def _preflight() -> str | None:
+    """Handle the read-only flags; the UA to run with, or `None` when done."""
     ap = argparse.ArgumentParser()
     ap.add_argument("--status", action="store_true")
     ap.add_argument("--print-user-agent", action="store_true")
     args = ap.parse_args()
     if args.status:
         print(STATUS.read_text() if STATUS.exists() else "no status yet")
-        return 0
+        return None
     user_agent = mirror.resolve_user_agent(os.environ)
     if args.print_user_agent:
         print(user_agent)
-        return 0
+        return None
     if not SSH_KEY_ID:
         raise SystemExit("set FBUILD_MIRROR_SSH_KEY_ID (doctl compute ssh-key list)")
+    return user_agent
 
+
+def main() -> int:
+    user_agent = _preflight()
+    if user_agent is None:
+        return 0
     LOCAL_DIR.mkdir(parents=True, exist_ok=True)
     WORK.mkdir(parents=True, exist_ok=True)
     rotations = 0
@@ -615,9 +690,12 @@ def main() -> int:
         outcome = _monitor(ip, did, rotations)
         if outcome == "complete":
             return 0
-        if outcome == "capped":
+        if outcome in ("capped", "refused"):
             snapshot_manifest(ip)
             destroy_droplet(did)
+            if outcome == "refused":
+                write_status(phase="refused", rotations=rotations)
+                return mirror.EXIT_REFUSED
             rotations += 1
             write_status(phase="rotating", rotations=rotations)
         # None: long-running, healthy box: keep monitoring.
