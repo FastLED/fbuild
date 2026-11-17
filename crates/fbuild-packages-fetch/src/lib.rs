@@ -480,7 +480,7 @@ impl PackageBase {
         // Only a sentinel-bearing tree counts as installed, matching
         // `is_cached()` (FastLED/fbuild#2043).
         if let Some(existing) = self.existing_complete_install() {
-            return Ok(existing);
+            return Ok(existing.into_path_buf());
         }
 
         // Ensure parent directory exists
@@ -494,7 +494,7 @@ impl PackageBase {
         let _install_lock =
             install_lock::acquire_for_install(&target_path, &self.name, &self.version).await?;
         if let Some(existing) = self.existing_complete_install() {
-            return Ok(existing);
+            return Ok(existing.into_path_buf());
         }
         // Under the lock, a sentinel-less entry at the final path is foreign,
         // never an install in progress (that extracts into `_staging`).

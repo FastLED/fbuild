@@ -8,16 +8,17 @@
 //! into a `_staging` sibling and commits with a rename under the install lock,
 //! so a sentinel-less final path is never a concurrent install in progress
 //! once that lock is held.
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
 use fbuild_core::FbuildError;
+use fbuild_core::path::NormalizedPath;
 
 use crate::PackageBase;
 
 impl PackageBase {
     /// The complete install already on disk (shared tree first, then this
     /// chip's slice), refreshing its LRU recency on a hit.
-    pub(crate) fn existing_complete_install(&self) -> Option<PathBuf> {
+    pub(crate) fn existing_complete_install(&self) -> Option<NormalizedPath> {
         let found = self
             .installed_dirs()
             .into_iter()
@@ -26,7 +27,7 @@ impl PackageBase {
         // background GC doesn't treat this package as the oldest unused
         // entry and delete it mid-build (FastLED/fbuild#1341).
         self.touch_disk_cache();
-        Some(found.into_path_buf())
+        Some(found)
     }
 
     /// Move a sentinel-less entry at `target_path` out of the way so the
