@@ -47,26 +47,29 @@ import time
 from pathlib import Path
 from typing import Any
 
-import boto3
-import httpx
-from botocore.client import Config
-from botocore.exceptions import ClientError
+# boto3/httpx are imported where they are used, so the pure helpers can be
+# imported (and unit tested) without the script's dependencies installed.
 
 API = "https://api.registry.platformio.org/v3"
 DL_PREFIX = "https://dl.registry.platformio.org/download/"
 # The CDN's daily download quota is keyed on the exact User-Agent string (a fresh
 # droplet IP is capped instantly when the string is the same), so allow an override.
 USER_AGENT = os.environ.get(
-    "FBUILD_MIRROR_UA", "PlatformIO/6.1.16 (fbuild-mirror; +https://github.com/FastLED/fbuild)"
+    "FBUILD_MIRROR_UA",
+    "PlatformIO/6.1.16 (fbuild-mirror; +https://github.com/FastLED/fbuild)",
 )
 
 STATE_DIR = Path(os.environ.get("FBUILD_MIRROR_STATE", "/var/lib/fbuild-mirror"))
 DB_PATH = STATE_DIR / "manifest.db"
-CREDS_PATH = Path(os.environ.get("FBUILD_MIRROR_CREDS", "/etc/fbuild-mirror/spaces.json"))
+CREDS_PATH = Path(
+    os.environ.get("FBUILD_MIRROR_CREDS", "/etc/fbuild-mirror/spaces.json")
+)
 BUCKET = os.environ.get("FBUILD_MIRROR_BUCKET", "fbuild")
 REGION = os.environ.get("FBUILD_MIRROR_REGION", "sfo3")
 CONCURRENCY = int(os.environ.get("FBUILD_MIRROR_CONCURRENCY", "3"))
-RECATALOG_SECONDS = int(os.environ.get("FBUILD_MIRROR_RECATALOG_SECONDS", str(12 * 3600)))
+RECATALOG_SECONDS = int(
+    os.environ.get("FBUILD_MIRROR_RECATALOG_SECONDS", str(12 * 3600))
+)
 
 SCHEMA = """
 create table if not exists packages (
@@ -108,6 +111,9 @@ def db() -> sqlite3.Connection:
 
 
 def s3_client() -> Any:
+    import boto3
+    from botocore.client import Config
+
     creds = json.loads(CREDS_PATH.read_text())
     return boto3.client(
         "s3",
@@ -115,7 +121,9 @@ def s3_client() -> Any:
         endpoint_url=f"https://{REGION}.digitaloceanspaces.com",
         aws_access_key_id=creds["access_key"],
         aws_secret_access_key=creds["secret_key"],
-        config=Config(retries={"max_attempts": 5, "mode": "standard"}, max_pool_connections=32),
+        config=Config(
+            retries={"max_attempts": 5, "mode": "standard"}, max_pool_connections=32
+        ),
     )
 
 
@@ -144,58 +152,182 @@ def log(msg: str) -> None:
 # --------------------------------------------------------------------------
 
 
+async def _search_page(client: Any, page: int) -> Any:
+    """One `/search` page, retried; the registry is flaky."""
+    for attempt in range(6):
+        try:
+            r = await client.get(
+                f"{API}/search", params={"query": "*", "page": page, "limit": 50}
+            )
+            r.raise_for_status()
+            return r
+        except Exception as exc:  # registry is flaky
+            log(f"search page {page} attempt {attempt + 1} failed: {exc}")
+            await asyncio.sleep(2 * (attempt + 1))
+    raise SystemExit(f"search page {page} kept failing; stopping (resumable)")
+
+
+def _record_packages(
+    conn: sqlite3.Connection, items: list[dict[str, Any]], now: int
+) -> None:
+    with conn:
+        for it in items:
+            owner = (it.get("owner") or {}).get("username") or "?"
+            conn.execute(
+                "insert or replace into packages"
+                " (owner, type, name, tier, seen_at, versions_fetched)"
+                " values (?,?,?,?,?, coalesce((select versions_fetched from packages"
+                "  where owner=? and type=? and name=?), 0))",
+                (
+                    owner,
+                    it.get("type"),
+                    it.get("name"),
+                    it.get("tier"),
+                    now,
+                    owner,
+                    it.get("type"),
+                    it.get("name"),
+                ),
+            )
+
+
+async def _search_catalog(
+    client: Any, conn: sqlite3.Connection, now: int, log_every: int
+) -> None:
+    """Page through the whole registry search into the `packages` table."""
+    page = 1
+    seen = 0
+    while True:
+        data = (await _search_page(client, page)).json()
+        total = data["total"]
+        items = data["items"]
+        if not items:
+            break
+        _record_packages(conn, items, now)
+        seen += len(items)
+        if seen % log_every < len(items):
+            log(f"catalog search {seen}/{total}")
+        if seen >= total:
+            break
+        page += 1
+        await asyncio.sleep(0.05)
+
+
+def _mark_fetched(conn: sqlite3.Connection, owner: str, kind: str, name: str) -> None:
+    with conn:
+        conn.execute(
+            "update packages set versions_fetched=1 where owner=? and type=? and name=?",
+            (owner, kind, name),
+        )
+
+
+async def _get_versions(client: Any, url: str, label: str) -> tuple[str, Any]:
+    """`("ok", body)`, `("gone", None)` for 404/410, or `("failed", None)`."""
+    for attempt in range(4):
+        try:
+            rr = await client.get(url)
+            if rr.status_code in (404, 410):
+                return "gone", None
+            rr.raise_for_status()
+            return "ok", rr.json()
+        except Exception as exc:
+            if attempt == 3:
+                log(f"versions {label} failed: {exc}")
+                return "failed", None
+            await asyncio.sleep(1.5 * (attempt + 1))
+    return "failed", None
+
+
+def file_rows(
+    body: dict[str, Any], owner: str, kind: str, name: str, now: int
+) -> list[tuple[Any, ...]]:
+    """`files` rows for every downloadable file of every version in `body`."""
+    rows = []
+    for ver in body.get("versions") or []:
+        for f in ver.get("files") or []:
+            dl = f.get("download_url")
+            if not dl:
+                continue
+            rows.append(
+                (
+                    dl,
+                    owner,
+                    kind,
+                    name,
+                    ver.get("name"),
+                    f.get("name") or dl.rsplit("/", 1)[-1],
+                    system_label(f.get("system")),
+                    f.get("size") or 0,
+                    (f.get("checksum") or {}).get("sha256"),
+                    object_key(dl),
+                    now,
+                )
+            )
+    return rows
+
+
+def _store_files(
+    conn: sqlite3.Connection,
+    rows: list[tuple[Any, ...]],
+    owner: str,
+    kind: str,
+    name: str,
+) -> None:
+    try:
+        with conn:
+            conn.executemany(
+                "insert or ignore into files"
+                " (url, owner, type, package, version, filename, system, size,"
+                "  sha256, key, state, updated_at)"
+                " values (?,?,?,?,?,?,?,?,?,?,'pending',?)",
+                rows,
+            )
+            conn.execute(
+                "update packages set versions_fetched=1 where owner=? and type=? and name=?",
+                (owner, kind, name),
+            )
+    except Exception as exc:  # one poison package must not stop the pass
+        log(f"catalog metadata error {owner}/{kind}/{name}: {exc}")
+        _mark_fetched(conn, owner, kind, name)
+
+
+async def _fetch_versions(
+    client: Any,
+    conn: sqlite3.Connection,
+    sem: asyncio.Semaphore,
+    progress: dict[str, int],
+    package: tuple[str, str, str],
+) -> None:
+    owner, kind, name = package
+    async with sem:
+        label = f"{owner}/{kind}/{name}"
+        outcome, body = await _get_versions(client, f"{API}/packages/{label}", label)
+        if outcome == "gone":
+            _mark_fetched(conn, owner, kind, name)
+            return
+        if outcome == "failed":
+            return
+        _store_files(
+            conn,
+            file_rows(body, owner, kind, name, int(time.time())),
+            owner,
+            kind,
+            name,
+        )
+        progress["done"] += 1
+        if progress["done"] % 200 == 0:
+            log(f"catalog metadata {progress['done']}/{progress['total']}")
+
+
 async def catalog(log_every: int = 500, max_packages: int = 0) -> int:
+    import httpx
+
     conn = db()
     now = int(time.time())
-    async with httpx.AsyncClient(headers={"User-Agent": USER_AGENT}, timeout=90.0) as client:
-        page = 1
-        total = None
-        seen = 0
-        while True:
-            for attempt in range(6):
-                try:
-                    r = await client.get(
-                        f"{API}/search", params={"query": "*", "page": page, "limit": 50}
-                    )
-                    r.raise_for_status()
-                    break
-                except Exception as exc:  # noqa: BLE001 - registry is flaky
-                    log(f"search page {page} attempt {attempt + 1} failed: {exc}")
-                    await asyncio.sleep(2 * (attempt + 1))
-            else:
-                raise SystemExit(f"search page {page} kept failing; stopping (resumable)")
-            data = r.json()
-            total = data["total"]
-            items = data["items"]
-            if not items:
-                break
-            with conn:
-                for it in items:
-                    owner = (it.get("owner") or {}).get("username") or "?"
-                    conn.execute(
-                        "insert or replace into packages"
-                        " (owner, type, name, tier, seen_at, versions_fetched)"
-                        " values (?,?,?,?,?, coalesce((select versions_fetched from packages"
-                        "  where owner=? and type=? and name=?), 0))",
-                        (
-                            owner,
-                            it.get("type"),
-                            it.get("name"),
-                            it.get("tier"),
-                            now,
-                            owner,
-                            it.get("type"),
-                            it.get("name"),
-                        ),
-                    )
-            seen += len(items)
-            if seen % log_every < len(items):
-                log(f"catalog search {seen}/{total}")
-            if seen >= total:
-                break
-            page += 1
-            await asyncio.sleep(0.05)
-
+    async with httpx.AsyncClient(
+        headers={"User-Agent": USER_AGENT}, timeout=90.0
+    ) as client:
+        await _search_catalog(client, conn, now, log_every)
         pending = conn.execute(
             "select owner, type, name from packages where versions_fetched = 0"
         ).fetchall()
@@ -203,80 +335,10 @@ async def catalog(log_every: int = 500, max_packages: int = 0) -> int:
             pending = pending[:max_packages]
         log(f"catalog: {len(pending)} packages still need version metadata")
         sem = asyncio.Semaphore(4)
-        done = 0
-
-        async def fetch_versions(owner: str, kind: str, name: str) -> None:
-            nonlocal done
-            async with sem:
-                url = f"{API}/packages/{owner}/{kind}/{name}"
-                for attempt in range(4):
-                    try:
-                        rr = await client.get(url)
-                        if rr.status_code in (404, 410):
-                            with conn:
-                                conn.execute(
-                                    "update packages set versions_fetched=1"
-                                    " where owner=? and type=? and name=?",
-                                    (owner, kind, name),
-                                )
-                            return
-                        rr.raise_for_status()
-                        body = rr.json()
-                        break
-                    except Exception as exc:  # noqa: BLE001
-                        if attempt == 3:
-                            log(f"versions {owner}/{kind}/{name} failed: {exc}")
-                            return
-                        await asyncio.sleep(1.5 * (attempt + 1))
-                else:
-                    return
-                now2 = int(time.time())
-                rows = []
-                for ver in body.get("versions") or []:
-                    for f in ver.get("files") or []:
-                        dl = f.get("download_url")
-                        if not dl:
-                            continue
-                        rows.append(
-                            (
-                                dl,
-                                owner,
-                                kind,
-                                name,
-                                ver.get("name"),
-                                f.get("name") or dl.rsplit("/", 1)[-1],
-                                system_label(f.get("system")),
-                                f.get("size") or 0,
-                                (f.get("checksum") or {}).get("sha256"),
-                                object_key(dl),
-                                now2,
-                            )
-                        )
-                try:
-                    with conn:
-                        conn.executemany(
-                            "insert or ignore into files"
-                            " (url, owner, type, package, version, filename, system, size,"
-                            "  sha256, key, state, updated_at)"
-                            " values (?,?,?,?,?,?,?,?,?,?,'pending',?)",
-                            rows,
-                        )
-                        conn.execute(
-                            "update packages set versions_fetched=1 where owner=? and type=? and name=?",
-                            (owner, kind, name),
-                        )
-                except Exception as exc:  # noqa: BLE001 - one poison package must not stop the pass
-                    log(f"catalog metadata error {owner}/{kind}/{name}: {exc}")
-                    with conn:
-                        conn.execute(
-                            "update packages set versions_fetched=1 where owner=? and type=? and name=?",
-                            (owner, kind, name),
-                        )
-                done += 1
-                if done % 200 == 0:
-                    log(f"catalog metadata {done}/{len(pending)}")
-
-        tasks = [fetch_versions(*p) for p in pending]
+        progress = {"done": 0, "total": len(pending)}
+        tasks = [
+            _fetch_versions(client, conn, sem, progress, tuple(p)) for p in pending
+        ]
         for chunk_start in range(0, len(tasks), 400):
             await asyncio.gather(*tasks[chunk_start : chunk_start + 400])
     total_files, total_bytes = conn.execute(
@@ -300,7 +362,9 @@ def sha256_file(path: Path) -> str:
 
 
 QUOTA_FILE = STATE_DIR / "quota_until"
-QUOTA_SLEEP_SECONDS = int(os.environ.get("FBUILD_MIRROR_QUOTA_SLEEP_SECONDS", str(24 * 3600)))
+QUOTA_SLEEP_SECONDS = int(
+    os.environ.get("FBUILD_MIRROR_QUOTA_SLEEP_SECONDS", str(24 * 3600))
+)
 
 
 class _QuotaExhausted(Exception):
@@ -327,8 +391,94 @@ async def _wait_for_cooldown() -> None:
         await asyncio.sleep(min(remaining, 5.0))
 
 
+def retry_after_delay(retry_after: str | None, attempt: int) -> float:
+    """Seconds to cool down after a 429.
+
+    Retry-After can be huge (the registry has been seen to ask for an hour);
+    cap it so the job keeps making progress."""
+    try:
+        delay = float(retry_after) if retry_after else 0.0
+    except ValueError:
+        delay = 0.0
+    return min(180.0, delay or 10.0 * (attempt + 1))
+
+
+async def _raise_for_429(r: Any, filename: str, attempt: int) -> None:
+    body = (await r.aread())[:400].decode("utf-8", "replace")
+    if "Download limit exceeded" in body:
+        raise _QuotaExhausted(body)
+    delay = retry_after_delay(r.headers.get("retry-after"), attempt)
+    _set_cooldown(delay)
+    log(f"registry 429 on {filename}: cooling down {delay:.0f}s")
+    raise _Throttled(f"429 (cooldown {delay:.0f}s)")
+
+
+async def _stream_once(
+    client: Any, url: str, dest: Path, filename: str, attempt: int
+) -> str | None:
+    """Stream `url` into `dest`; return an error text when the file is gone upstream."""
+    async with client.stream("GET", url) as r:
+        if r.status_code in (404, 410):
+            return f"HTTP {r.status_code}"
+        if r.status_code == 429:
+            await _raise_for_429(r, filename, attempt)
+        r.raise_for_status()
+        with dest.open("wb") as fh:
+            async for chunk in r.aiter_bytes(1 << 20):
+                fh.write(chunk)
+    return None
+
+
+async def _download(
+    client: Any, url: str, dest: Path, filename: str
+) -> tuple[str, str | None, int] | None:
+    """Download with retries. `None` once `dest` holds the file, else a final result."""
+    for attempt in range(6):
+        # The registry rate-limits the whole account, not one connection, so a
+        # 429 parks every worker until the shared cooldown expires.
+        await _wait_for_cooldown()
+        try:
+            gone = await _stream_once(client, url, dest, filename, attempt)
+            return ("gone", gone, 0) if gone else None
+        except _Throttled:
+            dest.unlink(missing_ok=True)
+            if attempt == 5:
+                return "error", "HTTP 429 Too Many Requests (gave up)", 0
+        except _QuotaExhausted:
+            dest.unlink(missing_ok=True)
+            raise
+        except Exception:
+            dest.unlink(missing_ok=True)
+            if attempt == 5:
+                raise
+            await asyncio.sleep(2 * (attempt + 1))
+    return None
+
+
+async def _verify_and_upload(
+    s3: Any, dest: Path, sha: str | None, key: str, size: int | None
+) -> tuple[str, str | None, int]:
+    got = dest.stat().st_size
+    if sha:
+        actual = await asyncio.to_thread(sha256_file, dest)
+        if actual != sha:
+            dest.unlink(missing_ok=True)
+            return "error", f"sha256 mismatch (registry said {sha}, got {actual})", 0
+    extra = {}
+    if size and got != size:
+        extra["x-registry-size"] = str(size)
+    await asyncio.to_thread(
+        s3.upload_file,
+        str(dest),
+        BUCKET,
+        key,
+        ExtraArgs={"ACL": "public-read", **({} if not extra else {"Metadata": extra})},
+    )
+    return "done", None, got
+
+
 async def fetch_one(
-    client: httpx.AsyncClient,
+    client: Any,
     s3: Any,
     row: tuple[Any, ...],
     workdir: Path,
@@ -337,74 +487,22 @@ async def fetch_one(
     url, filename, sha, key, size = row
     dest = workdir / f"{hashlib.sha1(url.encode()).hexdigest()}-{filename}"
     try:
-        for attempt in range(6):
-            # The registry rate-limits the whole account, not one connection, so a
-            # 429 parks every worker until the shared cooldown expires.
-            await _wait_for_cooldown()
-            try:
-                async with client.stream("GET", url) as r:
-                    if r.status_code in (404, 410):
-                        return "gone", f"HTTP {r.status_code}", 0
-                    if r.status_code == 429:
-                        body = (await r.aread())[:400].decode("utf-8", "replace")
-                        if "Download limit exceeded" in body:
-                            raise _QuotaExhausted(body)
-                        retry_after = r.headers.get("retry-after")
-                        try:
-                            delay = float(retry_after) if retry_after else 0.0
-                        except ValueError:
-                            delay = 0.0
-                        # Retry-After can be huge (the registry has been seen to
-                        # ask for an hour); cap it so the job keeps making progress.
-                        delay = min(180.0, delay or 10.0 * (attempt + 1))
-                        _set_cooldown(delay)
-                        log(f"registry 429 on {filename}: cooling down {delay:.0f}s")
-                        raise _Throttled(f"429 (cooldown {delay:.0f}s)")
-                    r.raise_for_status()
-                    with dest.open("wb") as fh:
-                        async for chunk in r.aiter_bytes(1 << 20):
-                            fh.write(chunk)
-                break
-            except _Throttled:
-                dest.unlink(missing_ok=True)
-                if attempt == 5:
-                    return "error", "HTTP 429 Too Many Requests (gave up)", 0
-                continue
-            except _QuotaExhausted:
-                dest.unlink(missing_ok=True)
-                raise
-            except Exception:
-                dest.unlink(missing_ok=True)
-                if attempt == 5:
-                    raise
-                await asyncio.sleep(2 * (attempt + 1))
-        got = dest.stat().st_size
-        if sha:
-            actual = await asyncio.to_thread(sha256_file, dest)
-            if actual != sha:
-                dest.unlink(missing_ok=True)
-                return "error", f"sha256 mismatch (registry said {sha}, got {actual})", 0
-        extra = {}
-        if size and got != size:
-            extra["x-registry-size"] = str(size)
-        await asyncio.to_thread(
-            s3.upload_file,
-            str(dest),
-            BUCKET,
-            key,
-            ExtraArgs={"ACL": "public-read", **({} if not extra else {"Metadata": extra})},
-        )
-        return "done", None, got
+        finished = await _download(client, url, dest, filename)
+        if finished is not None:
+            return finished
+        return await _verify_and_upload(s3, dest, sha, key, size)
     except _QuotaExhausted:
         # Must escape fetch_one: the transfer pass turns it into a 24 h pause.
         raise
-    except Exception as exc:  # noqa: BLE001 - recorded, retried next pass
+    except Exception as exc:  # recorded, retried next pass
         return "error", str(exc)[:500], 0
     finally:
         dest.unlink(missing_ok=True)
 
 
 async def transfer(limit: int = 0, owner_filter: str | None = None) -> int:
+    import httpx
+
     conn = db()
     s3 = s3_client()
     sql = (
@@ -427,7 +525,9 @@ async def transfer(limit: int = 0, owner_filter: str | None = None) -> int:
     t0 = time.time()
 
     async with httpx.AsyncClient(
-        headers={"User-Agent": USER_AGENT}, timeout=httpx.Timeout(60.0, read=300.0), follow_redirects=True
+        headers={"User-Agent": USER_AGENT},
+        timeout=httpx.Timeout(60.0, read=300.0),
+        follow_redirects=True,
     ) as client:
 
         async def worker(row: tuple[Any, ...]) -> None:
@@ -491,10 +591,13 @@ def status() -> int:
 
 
 def verify(sample: int = 50) -> int:
+    from botocore.exceptions import ClientError
+
     conn = db()
     s3 = s3_client()
     rows = conn.execute(
-        "select key, size from files where state='done' order by random() limit ?", (sample,)
+        "select key, size from files where state='done' order by random() limit ?",
+        (sample,),
     ).fetchall()
     bad = 0
     for key, size in rows:
@@ -545,17 +648,21 @@ def run() -> int:
             asyncio.run(transfer())
             remaining = (
                 db()
-                .execute("select count(*) from files where state in ('pending','error')")
+                .execute(
+                    "select count(*) from files where state in ('pending','error')"
+                )
                 .fetchone()[0]
             )
-            log(f"run: {remaining} file(s) still unfinished; sleeping before the next pass")
+            log(
+                f"run: {remaining} file(s) still unfinished; sleeping before the next pass"
+            )
             if remaining == 0:
                 time.sleep(RECATALOG_SECONDS)
             else:
                 time.sleep(60)
         except KeyboardInterrupt:
             return 0
-        except Exception as exc:  # noqa: BLE001 - keep the service alive
+        except Exception as exc:  # keep the service alive
             log(f"run loop error: {exc}")
             time.sleep(120)
 

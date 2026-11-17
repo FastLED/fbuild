@@ -32,9 +32,6 @@ import time
 from pathlib import Path
 from typing import Any
 
-import boto3
-from botocore.client import Config
-
 DROPLET_NAME = "fbuild-mirror"
 SIZE = "s-1vcpu-1gb"
 REGION = "sfo3"
@@ -42,19 +39,32 @@ IMAGE = "ubuntu-24-04-x64"
 # The DigitalOcean account's SSH key id (`doctl compute ssh-key list`) and the
 # matching private key. Account-specific, so never committed.
 SSH_KEY_ID = os.environ.get("FBUILD_MIRROR_SSH_KEY_ID", "")
-SSH_KEY_PATH = Path(os.environ.get("FBUILD_MIRROR_SSH_KEY", str(Path.home() / ".ssh/id_rsa")))
-SSH_OPTS = ["-o", "StrictHostKeyChecking=accept-new", "-o", "LogLevel=ERROR", "-o", "ConnectTimeout=15"]
+SSH_KEY_PATH = Path(
+    os.environ.get("FBUILD_MIRROR_SSH_KEY", str(Path.home() / ".ssh/id_rsa"))
+)
+SSH_OPTS = [
+    "-o",
+    "StrictHostKeyChecking=accept-new",
+    "-o",
+    "LogLevel=ERROR",
+    "-o",
+    "ConnectTimeout=15",
+]
 
 BUCKET = "fbuild"
 BUCKET_REGION = "sfo3"
 STATE_PREFIX = "_state/"
 # Local supervisor state (status file, manifest snapshots); never in the repo.
 LOCAL_DIR = Path(
-    os.environ.get("FBUILD_MIRROR_WORKDIR", str(Path.home() / ".local/state/fbuild-mirror"))
+    os.environ.get(
+        "FBUILD_MIRROR_WORKDIR", str(Path.home() / ".local/state/fbuild-mirror")
+    )
 )
 SCRIPT = Path(__file__).resolve().with_name("mirror.py")
 CREDS = Path(
-    os.environ.get("FBUILD_MIRROR_CREDS", str(Path.home() / ".config/do-spaces/credentials.json"))
+    os.environ.get(
+        "FBUILD_MIRROR_CREDS", str(Path.home() / ".config/do-spaces/credentials.json")
+    )
 )
 STATUS = LOCAL_DIR / "rotation-status.json"
 WORK = LOCAL_DIR / "rotation-work"
@@ -71,11 +81,16 @@ def log(msg: str) -> None:
 def run(cmd: list[str], *, check: bool = True, input_bytes: bytes | None = None) -> str:
     proc = subprocess.run(cmd, capture_output=True, input=input_bytes, timeout=900)
     if check and proc.returncode != 0:
-        raise RuntimeError(f"{' '.join(cmd)} -> {proc.returncode}: {proc.stderr.decode()[:400]}")
+        raise RuntimeError(
+            f"{' '.join(cmd)} -> {proc.returncode}: {proc.stderr.decode()[:400]}"
+        )
     return proc.stdout.decode()
 
 
 def s3() -> Any:
+    import boto3
+    from botocore.client import Config
+
     creds = json.loads(CREDS.read_text())
     return boto3.client(
         "s3",
@@ -89,13 +104,24 @@ def s3() -> Any:
 
 def ssh(ip: str, payload: str, *, timeout: int = 600) -> str:
     return run(
-        ["ssh", "-i", str(SSH_KEY_PATH), "-T", *SSH_OPTS, f"root@{ip}", "bash -euo pipefail -s"],
+        [
+            "ssh",
+            "-i",
+            str(SSH_KEY_PATH),
+            "-T",
+            *SSH_OPTS,
+            f"root@{ip}",
+            "bash -euo pipefail -s",
+        ],
         input_bytes=payload.encode(),
     )
 
 
 def droplets() -> list[dict[str, Any]]:
-    raw = run(["doctl", "compute", "droplet", "list", "--output", "json"], check=False) or "[]"
+    raw = (
+        run(["doctl", "compute", "droplet", "list", "--output", "json"], check=False)
+        or "[]"
+    )
     try:
         items = json.loads(raw)
     except json.JSONDecodeError:
@@ -113,9 +139,21 @@ def public_ip(droplet: dict[str, Any]) -> str:
 def create_droplet() -> dict[str, Any]:
     raw = run(
         [
-            "doctl", "compute", "droplet", "create", DROPLET_NAME,
-            "--size", SIZE, "--image", IMAGE, "--region", REGION,
-            "--ssh-keys", SSH_KEY_ID, "--output", "json",
+            "doctl",
+            "compute",
+            "droplet",
+            "create",
+            DROPLET_NAME,
+            "--size",
+            SIZE,
+            "--image",
+            IMAGE,
+            "--region",
+            REGION,
+            "--ssh-keys",
+            SSH_KEY_ID,
+            "--output",
+            "json",
         ]
     )
     created = json.loads(raw)
@@ -124,7 +162,10 @@ def create_droplet() -> dict[str, Any]:
     log(f"created droplet {did}")
     for _ in range(60):
         time.sleep(10)
-        got = run(["doctl", "compute", "droplet", "get", str(did), "--output", "json"], check=False)
+        got = run(
+            ["doctl", "compute", "droplet", "get", str(did), "--output", "json"],
+            check=False,
+        )
         try:
             info = json.loads(got)
             info = info[0] if isinstance(info, list) else info
@@ -140,7 +181,15 @@ def wait_for_ssh(ip: str, timeout: int = 300) -> None:
     """`active` from the API does not mean sshd is listening; poll before giving up."""
     deadline = time.time() + timeout
     while time.time() < deadline:
-        probe_cmd = ["ssh", "-i", str(SSH_KEY_PATH), "-T", *SSH_OPTS, f"root@{ip}", "true"]
+        probe_cmd = [
+            "ssh",
+            "-i",
+            str(SSH_KEY_PATH),
+            "-T",
+            *SSH_OPTS,
+            f"root@{ip}",
+            "true",
+        ]
         if subprocess.run(probe_cmd, capture_output=True, timeout=60).returncode == 0:
             log(f"ssh ready on {ip}")
             return
@@ -170,12 +219,21 @@ def snapshot_manifest(ip: str) -> Path | None:
             "PY\n",
             timeout=300,
         )
-    except Exception as exc:  # noqa: BLE001 - a dying box may refuse; keep the last good copy
+    except Exception as exc:  # a dying box may refuse; keep the last good copy
         log(f"WARNING manifest snapshot failed: {exc}")
         return None
     try:
-        run(["scp", "-i", str(SSH_KEY_PATH), *SSH_OPTS[2:], f"root@{ip}:/tmp/manifest-snapshot.db", str(local)])
-    except Exception as exc:  # noqa: BLE001
+        run(
+            [
+                "scp",
+                "-i",
+                str(SSH_KEY_PATH),
+                *SSH_OPTS[2:],
+                f"root@{ip}:/tmp/manifest-snapshot.db",
+                str(local),
+            ]
+        )
+    except Exception as exc:
         log(f"WARNING manifest download failed: {exc}")
         return None
     if local.stat().st_size == 0:
@@ -191,7 +249,7 @@ def restore_manifest(ip: str) -> bool:
     if not obj.exists() or obj.stat().st_size == 0:
         try:
             s3().download_file(BUCKET, STATE_PREFIX + "manifest.db", str(obj))
-        except Exception as exc:  # noqa: BLE001 - first-ever run has no snapshot
+        except Exception as exc:  # first-ever run has no snapshot
             log(f"no manifest snapshot to restore ({exc})")
             return False
     payload = b64_payload(SCRIPT.read_bytes(), "/tmp/mirror.py")
@@ -204,8 +262,15 @@ def restore_manifest(ip: str) -> bool:
     )
     raw = obj.read_bytes()
     run(
-        ["ssh", "-i", str(SSH_KEY_PATH), "-T", *SSH_OPTS, f"root@{ip}",
-         "cat > /var/lib/fbuild-mirror/manifest.db"],
+        [
+            "ssh",
+            "-i",
+            str(SSH_KEY_PATH),
+            "-T",
+            *SSH_OPTS,
+            f"root@{ip}",
+            "cat > /var/lib/fbuild-mirror/manifest.db",
+        ],
         input_bytes=raw,
     )
     log(f"manifest restored on {ip} ({len(raw)} bytes)")
@@ -294,7 +359,7 @@ PY
 def probe(ip: str) -> dict[str, Any] | None:
     try:
         raw = ssh(ip, PROBE, timeout=120).strip().splitlines()
-    except Exception:  # noqa: BLE001 - unreachable box == rotate
+    except Exception:  # unreachable box == rotate
         return None
     for line in reversed(raw):
         line = line.strip()
@@ -310,6 +375,100 @@ def write_status(**fields: Any) -> None:
     STATUS.write_text(json.dumps(fields, indent=1, sort_keys=True))
 
 
+def _start_droplet() -> tuple[int, str] | None:
+    """Create and provision a fresh droplet; `None` if it had to be destroyed."""
+    drip = create_droplet()
+    did, ip = int(drip["id"]), public_ip(drip)
+    restore = (WORK / "manifest.db").exists() or bool(
+        s3()
+        .list_objects_v2(Bucket=BUCKET, Prefix=STATE_PREFIX + "manifest.db", MaxKeys=1)
+        .get("Contents")
+    )
+    for attempt in range(2):
+        try:
+            wait_for_ssh(ip)
+            # Restore the manifest whenever a snapshot exists (i.e. not the very
+            # first droplet), then resume where the last box stopped.
+            provision(ip, restore=restore)
+            return did, ip
+        except Exception as exc:
+            log(f"provision attempt {attempt + 1} failed on droplet {did}: {exc}")
+            time.sleep(30)
+    log(f"giving up on droplet {did}; rotating")
+    destroy_droplet(did)
+    return None
+
+
+def _record_progress(
+    ip: str, did: int, rotations: int, info: dict[str, Any]
+) -> tuple[int, int, int]:
+    states = info.get("state") or {}
+    done = int(states.get("done", 0))
+    pending = int(states.get("pending", 0))
+    error = int(states.get("error", 0))
+    write_status(
+        ip=ip,
+        droplet_id=did,
+        rotations=rotations,
+        phase="monitoring",
+        done=done,
+        pending=pending,
+        error=error,
+        bytes_done=info.get("bytes_done", 0),
+        quota=bool(info.get("quota")),
+    )
+    log(
+        f"progress done={done} pending={pending} error={error} {(info.get('bytes_done') or 0) / 1e9:.2f}GB"
+    )
+    return done, pending, error
+
+
+def stall_action(unchanged: int, restarted: bool) -> str | None:
+    """`"restart"` / `"rotate"` once progress has stalled for long enough."""
+    if unchanged >= 3 and not restarted:
+        return "restart"
+    if unchanged >= 6:
+        return "rotate"
+    return None
+
+
+def _monitor(ip: str, did: int, rotations: int) -> str | None:
+    """Watch one droplet: `"complete"`, `"capped"` (rotate it), or `None` (still healthy)."""
+    last_seen: tuple[int, int, int] | None = None
+    unchanged = 0
+    restarted = False
+    for _ in range(600):
+        info = probe(ip)
+        if info is None:
+            log("droplet unreachable; rotating")
+            return "capped"
+        done, pending, error = now_seen = _record_progress(ip, did, rotations, info)
+        if pending == 0 and error == 0 and done > 0:
+            log("catalog fully mirrored — finishing")
+            snapshot_manifest(ip)
+            destroy_droplet(did)
+            write_status(phase="complete", done=done, ip=ip)
+            return "complete"
+        if info.get("quota"):
+            log("quota exhausted on this droplet; rotating")
+            return "capped"
+        unchanged = unchanged + 1 if now_seen == last_seen else 0
+        last_seen = now_seen
+        action = stall_action(unchanged, restarted)
+        if action == "restart":
+            # A process parked in a long sleep looks identical to a healthy one
+            # from the outside; bounce the unit before spending a rotation.
+            log("no progress for 3 probes; restarting the uploader service")
+            ssh(ip, "systemctl restart fbuild-mirror.service\n", timeout=120)
+            restarted = True
+            unchanged = 0
+        elif action == "rotate":
+            log("still no progress after a restart; rotating")
+            return "capped"
+        time.sleep(60)
+    return None
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--status", action="store_true")
@@ -323,102 +482,29 @@ def main() -> int:
     rotations = 0
     while rotations <= MAX_ROTATIONS:
         live = droplets()
-        first = not live
         if live:
-            drip = live[0]
-            did, ip = int(drip["id"]), public_ip(drip)
+            did, ip = int(live[0]["id"]), public_ip(live[0])
             if not ip:
                 log(f"droplet {did} has no public IP yet; waiting")
                 time.sleep(20)
                 continue
         else:
-            drip = create_droplet()
-            did, ip = int(drip["id"]), public_ip(drip)
-            restore = (WORK / "manifest.db").exists() or bool(
-                s3()
-                .list_objects_v2(Bucket=BUCKET, Prefix=STATE_PREFIX + "manifest.db", MaxKeys=1)
-                .get("Contents")
-            )
-            provisioned = False
-            for attempt in range(2):
-                try:
-                    wait_for_ssh(ip)
-                    # Restore the manifest whenever a snapshot exists (i.e. not the very
-                    # first droplet), then resume where the last box stopped.
-                    provision(ip, restore=restore)
-                    provisioned = True
-                    break
-                except Exception as exc:  # noqa: BLE001
-                    log(f"provision attempt {attempt + 1} failed on droplet {did}: {exc}")
-                    time.sleep(30)
-            if not provisioned:
-                log(f"giving up on droplet {did}; rotating")
-                destroy_droplet(did)
+            started = _start_droplet()
+            if started is None:
                 rotations += 1
                 continue
+            did, ip = started
         write_status(ip=ip, droplet_id=did, rotations=rotations, phase="monitoring")
         log(f"monitoring droplet {did} at {ip}")
-
-        capped = False
-        last_seen: tuple[int, int, int] | None = None
-        unchanged = 0
-        restarted = False
-        for _ in range(600):
-            info = probe(ip)
-            if info is None:
-                log("droplet unreachable; rotating")
-                capped = True
-                break
-            states = info.get("state") or {}
-            done = int(states.get("done", 0))
-            pending = int(states.get("pending", 0))
-            error = int(states.get("error", 0))
-            write_status(
-                ip=ip,
-                droplet_id=did,
-                rotations=rotations,
-                phase="monitoring",
-                done=done,
-                pending=pending,
-                error=error,
-                bytes_done=info.get("bytes_done", 0),
-                quota=bool(info.get("quota")),
-            )
-            log(f"progress done={done} pending={pending} error={error} "
-                f"{(info.get('bytes_done') or 0) / 1e9:.2f}GB")
-            if pending == 0 and error == 0 and done > 0:
-                log("catalog fully mirrored — finishing")
-                snapshot_manifest(ip)
-                destroy_droplet(did)
-                write_status(phase="complete", done=done, ip=ip)
-                return 0
-            if info.get("quota"):
-                log("quota exhausted on this droplet; rotating")
-                capped = True
-                break
-            now_seen = (done, pending, error)
-            unchanged = unchanged + 1 if now_seen == last_seen else 0
-            last_seen = now_seen
-            if unchanged >= 3 and not restarted:
-                # A process parked in a long sleep looks identical to a healthy one
-                # from the outside; bounce the unit before spending a rotation.
-                log("no progress for 3 probes; restarting the uploader service")
-                ssh(ip, "systemctl restart fbuild-mirror.service\n", timeout=120)
-                restarted = True
-                unchanged = 0
-            elif unchanged >= 6:
-                log("still no progress after a restart; rotating")
-                capped = True
-                break
-            time.sleep(60)
-
-        if capped:
+        outcome = _monitor(ip, did, rotations)
+        if outcome == "complete":
+            return 0
+        if outcome == "capped":
             snapshot_manifest(ip)
             destroy_droplet(did)
             rotations += 1
             write_status(phase="rotating", rotations=rotations)
-            continue
-        # Long-running, healthy box: keep monitoring.
+        # None: long-running, healthy box: keep monitoring.
     log("rotation budget exhausted")
     return 1
 
