@@ -240,4 +240,29 @@ mod tests {
                 .contains("ra4m1")
         );
     }
+
+    /// FastLED/fbuild#2037: `.id_code` sits at 0x01010018, so a plain
+    /// `-O binary` pads firmware.bin to ~16 MB. ArduinoCore-renesas
+    /// `platform.txt` (`compiler.elf2hex.bin.flags`) copies only
+    /// `.text` and `.data`; fbuild must do the same.
+    #[test]
+    fn test_renesas_bin_copies_only_text_and_data() {
+        let config = get_renesas_config_for_mcu("ra4m1").unwrap();
+        let out = crate::linker::LinkerBase::objcopy_output_path(
+            Path::new("out"),
+            &config.objcopy.output_format,
+        );
+        let args = crate::linker::LinkerBase::objcopy_args(
+            Path::new("arm-none-eabi-objcopy"),
+            Path::new("firmware.elf"),
+            &out,
+            &config.objcopy,
+        );
+        assert_eq!(
+            &args[1..7],
+            ["-O", "binary", "-j", ".text", "-j", ".data"],
+            "argv: {args:?}"
+        );
+        assert!(out.ends_with("firmware.bin"));
+    }
 }

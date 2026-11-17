@@ -404,6 +404,7 @@ fn arduino_mbed_mcu_config_from_variant_text(
         objcopy: crate::compiler::ObjcopyConfig {
             output_format: "binary".to_string(),
             remove_sections: Vec::new(),
+            only_sections: Vec::new(),
         },
         profiles: HashMap::new(),
         defines: Vec::new(),

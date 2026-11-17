@@ -677,6 +677,10 @@ impl LinkerBase {
             "-O".to_string(),
             config.output_format.clone(),
         ];
+        for section in &config.only_sections {
+            args.push("-j".to_string());
+            args.push(section.clone());
+        }
         for section in &config.remove_sections {
             args.push("-R".to_string());
             args.push(section.clone());
