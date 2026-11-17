@@ -211,20 +211,49 @@ pub(super) fn attempt_order(count: usize, mirror_first: bool) -> Vec<usize> {
 /// path a mirror bucket reproduces key for key.
 const REGISTRY_DOWNLOAD_HOST: &str = "dl.registry.platformio.org";
 
-/// The key a mirror bucket stores `url` under. A PlatformIO registry download
-/// maps to everything after `/download/`, e.g.
-/// `platformio/tool/framework-arduino-avr/5.4.0/…tar.gz`. `None` for any
-/// other host, including GitHub and a `/download/` segment off the registry:
-/// the bucket mirrors only the registry layout (FastLED/fbuild#1815).
-/// The registry owner of `url` (the first [`mirror_path`] segment), which
-/// names its manifest shard.
+/// Vendor hosts, besides the PlatformIO registry, whose files fbuild's bucket
+/// mirrors under `vendor/<host>/<path>` (FastLED/fbuild#2029). ARM's toolchain
+/// tarballs are served only from `developer.arm.com`, which answers 503 for
+/// hours at a time and takes every nRF52 build with it; the bucket copy lets a
+/// build survive that. Keys stay inside the `vendor/` root so the registry
+/// index does not mistake a host for a package owner.
+const MIRRORED_VENDOR_HOSTS: &[&str] = &["developer.arm.com"];
+
+/// The registry owner of `url` (the first [`registry_path`] segment), which
+/// names its manifest shard. `None` off the registry: a mirrored vendor host
+/// has no owner and therefore no shard.
 pub(super) fn registry_owner(url: &str) -> Option<String> {
-    mirror_path(url).map(|path| path.split('/').next().unwrap_or_default().to_string())
+    registry_path(url).map(|path| path.split('/').next().unwrap_or_default().to_string())
 }
 
-fn mirror_path(url: &str) -> Option<String> {
+/// The key a mirror bucket stores `url` under, or `None` when the bucket does
+/// not mirror `url`'s host at all.
+///
+/// - a PlatformIO registry download maps to everything after `/download/`,
+///   e.g. `platformio/tool/framework-arduino-avr/5.4.0/…tar.gz`;
+/// - a [`MIRRORED_VENDOR_HOSTS`] URL maps to `vendor/<host>/<path>`, its own
+///   path untouched, so publishing a vendor file needs no second rule.
+///
+/// GitHub and any other host (including a `/download/` segment off the
+/// registry) are not mirrored (FastLED/fbuild#1815).
+pub(super) fn mirror_path(url: &str) -> Option<String> {
+    if let Some(path) = registry_path(url) {
+        return Some(path);
+    }
+    let (host, path) = host_and_path(url)?;
+    MIRRORED_VENDOR_HOSTS
+        .contains(&host)
+        .then(|| format!("vendor/{host}/{path}"))
+}
+
+fn host_and_path(url: &str) -> Option<(&str, &str)> {
     let (_, after_scheme) = url.split_once("://")?;
-    let (host, path) = after_scheme.split_once('/')?;
+    after_scheme.split_once('/')
+}
+
+/// The registry layout's key for `url`, or `None` off `dl.registry.platformio.org`.
+fn registry_path(url: &str) -> Option<String> {
+    let (host, path) = host_and_path(url)?;
     match host {
         REGISTRY_DOWNLOAD_HOST => path.strip_prefix("download/").map(str::to_string),
         _ => None,
@@ -233,8 +262,8 @@ fn mirror_path(url: &str) -> Option<String> {
 
 /// `url` first, then the same file on each mirror, in order. A mirror entry is
 /// a base URL (the file name is appended) or a template substituting
-/// `{filename}` or `{path}`; `{path}` is the [`mirror_path`] and falls back
-/// to the file name on hosts the bucket does not mirror.
+/// `{filename}` or `{path}`; `{path}` is [`mirror_path`] and falls back to the
+/// file name on hosts the bucket does not mirror.
 pub(super) fn candidate_urls(url: &str, mirrors: &[String]) -> Vec<String> {
     let filename = url.rsplit('/').next().unwrap_or("download");
     let mirrored = mirror_path(url);
