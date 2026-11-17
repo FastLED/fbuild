@@ -127,6 +127,7 @@ fail coverage. This policy is tracked in [#1698](https://github.com/FastLED/fbui
 
 - **`dev-tools/`** -- Pip-installable package that provides soldr and repo-local development helper scripts
 - **`hooks/`** -- Claude Code hook scripts (tool guard, lint, readme guard, session lifecycle)
+- **`mirror/`** -- The PlatformIO-registry-to-bucket mirror tool (`mirror.py`, `rotate.py`) whose state DB `gen_mirror_manifest.py` reads (FastLED/fbuild#2040). Tested by `test_mirror_tool.py`.
 
 - **`test_cache_status.py`** streams the unchanged Cargo test selection with JSON compiler evidence; only a completed assertion failure enables setup-soldr failure saves. Compiler errors, incomplete logs and cancellation remain blocked.
 

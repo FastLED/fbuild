@@ -16,9 +16,15 @@ region (new IP = fresh quota), restores the manifest and restarts the service.
 Terminates only when the manifest has no pending/error rows, then snapshots the
 final manifest, destroys the droplet and writes a summary to the status file.
 
+The bucket's `_state/manifest.db` is the source of truth (FastLED/fbuild#2040).
+A fresh droplet is always restored from it, never from the local work copy; a
+local copy that has progress the bucket lacks stops the run before a droplet is
+created, and a droplet snapshot that is behind the bucket is never uploaded.
+
 Usage:
-    uv run rotate.py            # run the supervisor (long-lived)
-    uv run rotate.py --status   # print the recorded state, no changes
+    uv run --no-project --script ci/mirror/rotate.py                     # run the supervisor (long-lived)
+    uv run --no-project --script ci/mirror/rotate.py --status            # print the recorded state, no changes
+    uv run --no-project --script ci/mirror/rotate.py --print-user-agent  # the UA the droplet will send
 """
 
 from __future__ import annotations
@@ -26,11 +32,15 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import sqlite3
 import subprocess
 import sys
 import time
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
+
+import mirror  # sibling script: ci/mirror/mirror.py
 
 DROPLET_NAME = "fbuild-mirror"
 SIZE = "s-1vcpu-1gb"
@@ -54,13 +64,15 @@ SSH_OPTS = [
 BUCKET = "fbuild"
 BUCKET_REGION = "sfo3"
 STATE_PREFIX = "_state/"
+# Also read by ci/gen_mirror_manifest.py (its STATE_DB_KEY).
+STATE_KEY = STATE_PREFIX + "manifest.db"
 # Local supervisor state (status file, manifest snapshots); never in the repo.
 LOCAL_DIR = Path(
     os.environ.get(
         "FBUILD_MIRROR_WORKDIR", str(Path.home() / ".local/state/fbuild-mirror")
     )
 )
-SCRIPT = Path(__file__).resolve().with_name("mirror.py")
+SCRIPT = Path(mirror.__file__).resolve()
 CREDS = Path(
     os.environ.get(
         "FBUILD_MIRROR_CREDS", str(Path.home() / ".config/do-spaces/credentials.json")
@@ -202,10 +214,120 @@ def destroy_droplet(did: int | str) -> None:
     log(f"destroyed droplet {did}")
 
 
+@dataclass(frozen=True)
+class ManifestSummary:
+    """How far a state DB has got: `files` rows, `done` rows, newest `updated_at`."""
+
+    rows: int
+    done: int
+    newest: int
+
+    def ahead_of(self, other: ManifestSummary) -> list[str]:
+        """The measures in which this copy has progress `other` lacks."""
+        return [
+            name
+            for name in ("rows", "done", "newest")
+            if getattr(self, name) > getattr(other, name)
+        ]
+
+
+class ManifestConflict(RuntimeError):
+    """Two copies of the state DB disagree in a way a human must resolve."""
+
+
+def summarize_manifest(path: Path) -> ManifestSummary:
+    conn = sqlite3.connect(f"file:{path}?mode=ro", uri=True)
+    try:
+        rows, done, newest = conn.execute(
+            "select count(*), coalesce(sum(state = 'done'), 0),"
+            " coalesce(max(updated_at), 0) from files"
+        ).fetchone()
+    finally:
+        conn.close()
+    return ManifestSummary(rows, done, newest)
+
+
+def check_restore_sources(
+    local: ManifestSummary | None, bucket: ManifestSummary | None
+) -> bool:
+    """Whether to restore the bucket copy (`False`: first-ever run, start empty).
+
+    The bucket is the source of truth. A local copy is never restored; it only
+    stops the run when it holds progress the bucket lacks (a snapshot that never
+    reached the bucket), because restoring the bucket copy would then lose it and
+    the next snapshot would make that permanent."""
+    if bucket is None:
+        if local is not None:
+            raise ManifestConflict(
+                f"the bucket has no {STATE_KEY} but a local copy exists ({local});"
+                " upload it deliberately or remove it before rotating"
+            )
+        return False
+    if local is not None:
+        ahead = local.ahead_of(bucket)
+        if ahead:
+            raise ManifestConflict(
+                f"the local manifest copy ({local}) is ahead of the bucket's"
+                f" ({bucket}) in {', '.join(ahead)}; a snapshot probably failed to"
+                " upload. Inspect both and upload the right one deliberately."
+            )
+    return True
+
+
+def check_snapshot_upload(
+    snapshot: ManifestSummary, bucket: ManifestSummary | None
+) -> None:
+    """Refuse to overwrite the bucket copy with one that is behind it."""
+    if bucket is None:
+        return
+    behind = bucket.ahead_of(snapshot)
+    if behind:
+        raise ManifestConflict(
+            f"refusing to upload a droplet snapshot ({snapshot}): the bucket copy"
+            f" ({bucket}) is ahead in {', '.join(behind)}"
+        )
+
+
+def download_bucket_manifest(dest: Path) -> ManifestSummary | None:
+    """Fetch the bucket's state DB to `dest`; `None` only when there is none.
+
+    Any other failure raises: treating a transient error as "no snapshot" would
+    start an empty manifest whose first snapshot overwrites the real one."""
+    from botocore.exceptions import ClientError
+
+    try:
+        s3().download_file(BUCKET, STATE_KEY, str(dest))
+    except ClientError as exc:
+        if exc.response.get("Error", {}).get("Code") in ("404", "NoSuchKey"):
+            return None
+        raise
+    return summarize_manifest(dest)
+
+
+def plan_restore() -> Path | None:
+    """The DB to restore onto a fresh droplet (the bucket copy), or `None`."""
+    WORK.mkdir(parents=True, exist_ok=True)
+    fetched = WORK / "manifest.bucket.db"
+    bucket = download_bucket_manifest(fetched)
+    local_path = WORK / "manifest.db"
+    local = None
+    if local_path.exists() and local_path.stat().st_size:
+        local = summarize_manifest(local_path)
+    if not check_restore_sources(local, bucket):
+        log("no manifest in the bucket; starting a fresh catalog")
+        return None
+    if local is not None and bucket is not None and bucket.ahead_of(local):
+        log(
+            f"ignoring the stale local manifest ({local}); restoring the bucket's ({bucket})"
+        )
+    return fetched
+
+
 def snapshot_manifest(ip: str) -> Path | None:
     """Consistent-copy the SQLite manifest off the box and push it to Spaces."""
     WORK.mkdir(parents=True, exist_ok=True)
     local = WORK / "manifest.db"
+    pulled = WORK / "manifest.snapshot.db"
     try:
         # sqlite3's backup API gives a consistent copy even with the uploader writing.
         ssh(
@@ -230,37 +352,27 @@ def snapshot_manifest(ip: str) -> Path | None:
                 str(SSH_KEY_PATH),
                 *SSH_OPTS[2:],
                 f"root@{ip}:/tmp/manifest-snapshot.db",
-                str(local),
+                str(pulled),
             ]
         )
     except Exception as exc:
         log(f"WARNING manifest download failed: {exc}")
         return None
-    if local.stat().st_size == 0:
+    if pulled.stat().st_size == 0:
         log("WARNING manifest snapshot was empty")
         return None
-    s3().upload_file(str(local), BUCKET, STATE_PREFIX + "manifest.db")
-    log(f"manifest snapshot uploaded ({local.stat().st_size} bytes)")
+    snapshot = summarize_manifest(pulled)
+    check_snapshot_upload(
+        snapshot, download_bucket_manifest(WORK / "manifest.bucket.db")
+    )
+    s3().upload_file(str(pulled), BUCKET, STATE_KEY)
+    pulled.replace(local)
+    log(f"manifest snapshot uploaded ({local.stat().st_size} bytes, {snapshot})")
     return local
 
 
-def restore_manifest(ip: str) -> bool:
-    obj = WORK / "manifest.db"
-    if not obj.exists() or obj.stat().st_size == 0:
-        try:
-            s3().download_file(BUCKET, STATE_PREFIX + "manifest.db", str(obj))
-        except Exception as exc:  # first-ever run has no snapshot
-            log(f"no manifest snapshot to restore ({exc})")
-            return False
-    payload = b64_payload(SCRIPT.read_bytes(), "/tmp/mirror.py")
-    ssh(ip, payload)
-    ssh(
-        ip,
-        "install -d -m 755 /opt/fbuild-mirror /var/lib/fbuild-mirror\n"
-        "install -d -m 700 /etc/fbuild-mirror\n"
-        "mv /tmp/mirror.py /opt/fbuild-mirror/mirror.py\n",
-    )
-    raw = obj.read_bytes()
+def restore_manifest(ip: str, source: Path) -> None:
+    raw = source.read_bytes()
     run(
         [
             "ssh",
@@ -273,8 +385,7 @@ def restore_manifest(ip: str) -> bool:
         ],
         input_bytes=raw,
     )
-    log(f"manifest restored on {ip} ({len(raw)} bytes)")
-    return True
+    log(f"manifest restored on {ip} ({len(raw)} bytes from {source.name})")
 
 
 def b64_payload(data: bytes, dest: str) -> str:
@@ -284,7 +395,7 @@ def b64_payload(data: bytes, dest: str) -> str:
     return f"printf '%s' '{encoded}' | base64 -d > {dest}\n"
 
 
-def provision(ip: str, restore: bool) -> None:
+def provision(ip: str, source: Path | None, user_agent: str) -> None:
     setup = b64_payload(SCRIPT.read_bytes(), "/tmp/mirror.py")
     creds = b64_payload(CREDS.read_bytes(), "/etc/fbuild-mirror/spaces.json")
     unit = """[Unit]
@@ -301,6 +412,7 @@ Environment=FBUILD_MIRROR_BUCKET=fbuild
 Environment=FBUILD_MIRROR_REGION=sfo3
 Environment=FBUILD_MIRROR_CONCURRENCY=6
 Environment=UV_HTTP_TIMEOUT=120
+Environment="{ua_env}={user_agent}"
 ExecStart=/root/.local/bin/uv run --quiet /opt/fbuild-mirror/mirror.py run
 Restart=always
 RestartSec=15
@@ -309,7 +421,7 @@ StandardError=append:/var/log/fbuild-mirror.log
 
 [Install]
 WantedBy=multi-user.target
-"""
+""".format(ua_env=mirror.UA_ENV, user_agent=user_agent)
     payload = (
         "set -euo pipefail\n"
         "export DEBIAN_FRONTEND=noninteractive\n"
@@ -329,8 +441,8 @@ WantedBy=multi-user.target
     )
     ssh(ip, payload)
     # Restore the manifest BEFORE the service starts so the two never race on the DB.
-    if restore:
-        restore_manifest(ip)
+    if source is not None:
+        restore_manifest(ip, source)
     ssh(
         ip,
         "systemctl enable fbuild-mirror.service\n"
@@ -375,21 +487,18 @@ def write_status(**fields: Any) -> None:
     STATUS.write_text(json.dumps(fields, indent=1, sort_keys=True))
 
 
-def _start_droplet() -> tuple[int, str] | None:
+def _start_droplet(user_agent: str) -> tuple[int, str] | None:
     """Create and provision a fresh droplet; `None` if it had to be destroyed."""
+    # Decide what to restore before paying for a droplet: a conflict stops here.
+    source = plan_restore()
     drip = create_droplet()
     did, ip = int(drip["id"]), public_ip(drip)
-    restore = (WORK / "manifest.db").exists() or bool(
-        s3()
-        .list_objects_v2(Bucket=BUCKET, Prefix=STATE_PREFIX + "manifest.db", MaxKeys=1)
-        .get("Contents")
-    )
     for attempt in range(2):
         try:
             wait_for_ssh(ip)
             # Restore the manifest whenever a snapshot exists (i.e. not the very
             # first droplet), then resume where the last box stopped.
-            provision(ip, restore=restore)
+            provision(ip, source, user_agent)
             return did, ip
         except Exception as exc:
             log(f"provision attempt {attempt + 1} failed on droplet {did}: {exc}")
@@ -472,10 +581,17 @@ def _monitor(ip: str, did: int, rotations: int) -> str | None:
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--status", action="store_true")
+    ap.add_argument("--print-user-agent", action="store_true")
     args = ap.parse_args()
     if args.status:
         print(STATUS.read_text() if STATUS.exists() else "no status yet")
         return 0
+    user_agent = mirror.resolve_user_agent(os.environ)
+    if args.print_user_agent:
+        print(user_agent)
+        return 0
+    if not SSH_KEY_ID:
+        raise SystemExit("set FBUILD_MIRROR_SSH_KEY_ID (doctl compute ssh-key list)")
 
     LOCAL_DIR.mkdir(parents=True, exist_ok=True)
     WORK.mkdir(parents=True, exist_ok=True)
@@ -489,7 +605,7 @@ def main() -> int:
                 time.sleep(20)
                 continue
         else:
-            started = _start_droplet()
+            started = _start_droplet(user_agent)
             if started is None:
                 rotations += 1
                 continue

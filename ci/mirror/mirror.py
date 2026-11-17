@@ -29,7 +29,8 @@ verify    Re-HEAD a sample (or all) of the done rows against Spaces.
 
 The registry's CDN rejects requests whose User-Agent does not start with
 `PlatformIO/` (HTTP 403 "This download method is not supported"), so every
-registry request sends FBUILD_USER_AGENT below.
+registry request sends a `PlatformIO/` User-Agent: `FBUILD_MIRROR_UA` when set,
+otherwise fbuild's own production format (see `resolve_user_agent`).
 """
 
 from __future__ import annotations
@@ -44,6 +45,8 @@ import sqlite3
 import sys
 import tempfile
 import time
+import tomllib
+from collections.abc import Mapping
 from pathlib import Path
 from typing import Any
 
@@ -52,12 +55,65 @@ from typing import Any
 
 API = "https://api.registry.platformio.org/v3"
 DL_PREFIX = "https://dl.registry.platformio.org/download/"
-# The CDN's daily download quota is keyed on the exact User-Agent string (a fresh
-# droplet IP is capped instantly when the string is the same), so allow an override.
-USER_AGENT = os.environ.get(
-    "FBUILD_MIRROR_UA",
-    "PlatformIO/6.1.16 (fbuild-mirror; +https://github.com/FastLED/fbuild)",
-)
+# The User-Agent. The default is fbuild's production format,
+# `registry_user_agent()` in crates/fbuild-core/src/http.rs (ci/test_mirror_tool.py
+# keeps the two in step). The old `PlatformIO/6.1.16 (fbuild-mirror; +https://...)`
+# now gets 403 "This download method is not supported": on 2026-11-17 every UA
+# carrying the `fbuild-mirror` token was refused and the same strings without it
+# were served, whatever the PlatformIO version or the `+https://` comment
+# (FastLED/fbuild#2040 item 3). `FBUILD_MIRROR_UA` overrides it; the CDN's daily
+# download quota has also looked keyed on the exact string.
+UA_ENV = "FBUILD_MIRROR_UA"
+PIO_CORE_VERSION = "6.2.0"
+# Present when the script runs from a checkout; on a droplet rotate.py passes
+# FBUILD_MIRROR_UA instead.
+REPO_CARGO_TOML = Path(__file__).resolve().parent.parent.parent / "Cargo.toml"
+
+
+def fbuild_version(cargo_toml: Path) -> str | None:
+    """`[workspace.package] version` of an fbuild checkout, if there is one."""
+    try:
+        data = tomllib.loads(cargo_toml.read_text())
+    except (OSError, tomllib.TOMLDecodeError):
+        return None
+    version = data.get("workspace", {}).get("package", {}).get("version")
+    return version if isinstance(version, str) and version else None
+
+
+def default_user_agent(version: str) -> str:
+    """fbuild's production User-Agent for fbuild `version`."""
+    return f"PlatformIO/{PIO_CORE_VERSION} (fbuild/{version})"
+
+
+def resolve_user_agent(
+    env: Mapping[str, str], cargo_toml: Path = REPO_CARGO_TOML
+) -> str:
+    """`FBUILD_MIRROR_UA`, else the production UA for the checkout's version.
+
+    Raises ValueError rather than sending a UA the CDN is known to refuse. The
+    value also lands in a systemd `Environment="..."` line on the droplet, so
+    quotes, backslashes, `%` and control characters are refused too."""
+    user_agent = env.get(UA_ENV, "").strip()
+    if not user_agent:
+        version = fbuild_version(cargo_toml)
+        if version is None:
+            raise ValueError(
+                f"{UA_ENV} is unset and there is no fbuild Cargo.toml at {cargo_toml};"
+                " set it (`rotate.py --print-user-agent` prints the default)"
+            )
+        user_agent = default_user_agent(version)
+    if not user_agent.startswith("PlatformIO/"):
+        raise ValueError(
+            f"User-Agent {user_agent!r}: the registry CDN refuses any User-Agent"
+            " that does not start with 'PlatformIO/'"
+        )
+    if any(ord(ch) < 0x20 or ch in '"%\\' for ch in user_agent):
+        raise ValueError(
+            f"User-Agent {user_agent!r}: quotes, backslashes, % and control"
+            " characters are not allowed"
+        )
+    return user_agent
+
 
 STATE_DIR = Path(os.environ.get("FBUILD_MIRROR_STATE", "/var/lib/fbuild-mirror"))
 DB_PATH = STATE_DIR / "manifest.db"
@@ -319,13 +375,13 @@ async def _fetch_versions(
             log(f"catalog metadata {progress['done']}/{progress['total']}")
 
 
-async def catalog(log_every: int = 500, max_packages: int = 0) -> int:
+async def catalog(user_agent: str, log_every: int = 500, max_packages: int = 0) -> int:
     import httpx
 
     conn = db()
     now = int(time.time())
     async with httpx.AsyncClient(
-        headers={"User-Agent": USER_AGENT}, timeout=90.0
+        headers={"User-Agent": user_agent}, timeout=90.0
     ) as client:
         await _search_catalog(client, conn, now, log_every)
         pending = conn.execute(
@@ -500,7 +556,9 @@ async def fetch_one(
         dest.unlink(missing_ok=True)
 
 
-async def transfer(limit: int = 0, owner_filter: str | None = None) -> int:
+async def transfer(
+    user_agent: str, limit: int = 0, owner_filter: str | None = None
+) -> int:
     import httpx
 
     conn = db()
@@ -525,7 +583,7 @@ async def transfer(limit: int = 0, owner_filter: str | None = None) -> int:
     t0 = time.time()
 
     async with httpx.AsyncClient(
-        headers={"User-Agent": USER_AGENT},
+        headers={"User-Agent": user_agent},
         timeout=httpx.Timeout(60.0, read=300.0),
         follow_redirects=True,
     ) as client:
@@ -614,7 +672,7 @@ def verify(sample: int = 50) -> int:
     return 1 if bad else 0
 
 
-def run() -> int:
+def run(user_agent: str) -> int:
     last_catalog = 0.0
     while True:
         try:
@@ -643,9 +701,9 @@ def run() -> int:
                 )
                 conn.close()
             if need_catalog:
-                asyncio.run(catalog())
+                asyncio.run(catalog(user_agent))
                 last_catalog = time.monotonic()
-            asyncio.run(transfer())
+            asyncio.run(transfer(user_agent))
             remaining = (
                 db()
                 .execute(
@@ -680,17 +738,21 @@ def main() -> int:
     p_v = sub.add_parser("verify")
     p_v.add_argument("--sample", type=int, default=50)
     args = ap.parse_args()
-    if args.cmd == "catalog":
-        return asyncio.run(catalog(max_packages=args.max_packages))
-    if args.cmd == "transfer":
-        return asyncio.run(transfer(args.limit, args.owner))
-    if args.cmd == "run":
-        return run()
     if args.cmd == "status":
         return status()
     if args.cmd == "verify":
         return verify(args.sample)
-    return 2
+    try:
+        user_agent = resolve_user_agent(os.environ)
+    except ValueError as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 2
+    log(f"registry User-Agent: {user_agent}")
+    if args.cmd == "catalog":
+        return asyncio.run(catalog(user_agent, max_packages=args.max_packages))
+    if args.cmd == "transfer":
+        return asyncio.run(transfer(user_agent, args.limit, args.owner))
+    return run(user_agent)
 
 
 if __name__ == "__main__":
