@@ -1,5 +1,6 @@
 ﻿//! NRF52 platform build support (Nordic NRF52840, etc.)
 
+mod core_select;
 pub mod mcu_config;
 pub mod nrf52_compiler;
 pub mod nrf52_linker;
@@ -25,7 +26,8 @@ impl crate::PlatformSupport for Nrf52PlatformSupport {
     ) -> fbuild_core::Result<Vec<crate::provision::ProvisionedPackage>> {
         use crate::provision::{PackageKind, provision_package};
         let (toolchain, cores, cmsis) =
-            orchestrator::nrf52_packages(inputs.project_dir, Some(inputs.env_config)).await?;
+            orchestrator::nrf52_packages(inputs.project_dir, Some(inputs.env_config), inputs.board)
+                .await?;
         Ok(vec![
             provision_package(PackageKind::Toolchain, &toolchain, mode).await,
             provision_package(PackageKind::Framework, &cores, mode).await,

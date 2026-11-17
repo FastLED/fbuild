@@ -57,18 +57,21 @@ fn profile_label(profile: fbuild_core::BuildProfile) -> &'static str {
     }
 }
 
-/// NRF52's ARM GCC toolchain, Adafruit nRF52 cores and CMSIS for an env,
-/// honoring the `framework-arduinoadafruitnrf52` `platform_packages` override
-/// (FastLED/fbuild#664, #681). Shared by the build and `fbuild install`, so
-/// both provision the same packages (FastLED/fbuild#1433).
+/// NRF52's ARM GCC toolchain, Adafruit-family nRF52 core and CMSIS for an
+/// env. The core is the one the board selects (FastLED/fbuild#2017),
+/// honoring that package's `platform_packages` override (FastLED/fbuild#664,
+/// #681). Shared by the build and `fbuild install`, so both provision the
+/// same packages (FastLED/fbuild#1433).
 pub(crate) async fn nrf52_packages(
     project_dir: &Path,
     env_config: Option<&std::collections::HashMap<String, String>>,
+    board: &fbuild_config::BoardConfig,
 ) -> Result<(
     fbuild_packages::toolchain::ArmToolchain,
     fbuild_packages::library::Nrf52Cores,
     fbuild_packages::library::CmsisFramework,
 )> {
+    let framework = super::core_select::selected_framework(board)?;
     let registry_overrides = match env_config {
         Some(env) => {
             crate::package_override::resolve_registry_overrides(
@@ -76,7 +79,7 @@ pub(crate) async fn nrf52_packages(
                 env,
                 "nordicnrf52",
                 &[
-                    "framework-arduinoadafruitnrf52",
+                    framework.package_name(),
                     "framework-cmsis",
                     "toolchain-gccarmnoneeabi",
                 ],
@@ -89,6 +92,7 @@ pub(crate) async fn nrf52_packages(
     Ok(nrf52_packages_from_resolved(
         project_dir,
         env_config,
+        framework,
         &registry_overrides,
     ))
 }
@@ -96,27 +100,25 @@ pub(crate) async fn nrf52_packages(
 fn nrf52_packages_from_resolved(
     project_dir: &Path,
     env_config: Option<&std::collections::HashMap<String, String>>,
+    framework: fbuild_packages::library::Nrf52Framework,
     registry_overrides: &std::collections::HashMap<String, fbuild_config::PackageOverride>,
 ) -> (
     fbuild_packages::toolchain::ArmToolchain,
     fbuild_packages::library::Nrf52Cores,
     fbuild_packages::library::CmsisFramework,
 ) {
+    use fbuild_packages::library::Nrf52Cores;
     let toolchain = match registry_overrides.get("toolchain-gccarmnoneeabi").cloned() {
         Some(pin) => fbuild_packages::toolchain::ArmToolchain::with_override(project_dir, pin),
         None => fbuild_packages::toolchain::ArmToolchain::new(project_dir),
     };
-    let override_pin = registry_overrides
-        .get("framework-arduinoadafruitnrf52")
-        .cloned()
-        .or_else(|| {
-            env_config.and_then(|env| {
-                crate::package_override::resolve_override(env, "framework-arduinoadafruitnrf52")
-            })
-        });
+    let package = framework.package_name();
+    let override_pin = registry_overrides.get(package).cloned().or_else(|| {
+        env_config.and_then(|env| crate::package_override::resolve_override(env, package))
+    });
     let cores = match override_pin {
-        Some(o) => fbuild_packages::library::Nrf52Cores::with_override(project_dir, o),
-        None => fbuild_packages::library::Nrf52Cores::new(project_dir),
+        Some(o) => Nrf52Cores::with_framework_override(project_dir, framework, o),
+        None => Nrf52Cores::for_framework(project_dir, framework),
     };
     let cmsis = match registry_overrides.get("framework-cmsis").cloned() {
         Some(pin) => fbuild_packages::library::CmsisFramework::with_override(project_dir, pin),
@@ -167,8 +169,9 @@ fn without_flags(flags: Vec<String>, unwanted: &[&str]) -> Vec<String> {
 
 /// Include directories the Adafruit-family nRF52 core ships inside
 /// `cores/nRF5`: the Nordic SDK (nrfx), the SoftDevice API headers, FreeRTOS
-/// and SEGGER SystemView.
-fn nrf52_core_include_dirs(core_dir: &Path) -> Vec<std::path::PathBuf> {
+/// and SEGGER SystemView. The SoftDevice API headers are the ones matching
+/// the board's linker script (FastLED/fbuild#2017).
+fn nrf52_core_include_dirs(core_dir: &Path, linker_script: &Path) -> Vec<std::path::PathBuf> {
     let mut include_dirs = Vec::new();
     // Nordic SDK includes (bundled inside the core)
     let nordic_dir = core_dir.join("nordic");
@@ -180,10 +183,7 @@ fn nrf52_core_include_dirs(core_dir: &Path) -> Vec<std::path::PathBuf> {
     include_dirs.push(nordic_dir.join("nrfx").join("drivers").join("include"));
     include_dirs.push(nordic_dir.join("nrfx").join("drivers").join("src"));
     // SoftDevice API includes (s140 for nRF52840)
-    let sd_dir = nordic_dir
-        .join("softdevice")
-        .join("s140_nrf52_6.1.1_API")
-        .join("include");
+    let sd_dir = super::core_select::softdevice_api_dir(&nordic_dir, linker_script).join("include");
     if sd_dir.exists() {
         include_dirs.push(sd_dir.clone());
         let sd_chip = sd_dir.join("nrf52");
@@ -222,6 +222,7 @@ impl BuildOrchestrator for Nrf52Orchestrator {
         let (toolchain, framework, cmsis) = nrf52_packages(
             &params.project_dir,
             ctx.config.get_env_config(&params.env_name).ok(),
+            &ctx.board,
         )
         .await?;
         let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain).await?;
@@ -321,6 +322,7 @@ impl BuildOrchestrator for Nrf52Orchestrator {
             Some(&variant_dir),
             ctx.source_filter.as_deref(),
         )?;
+        super::core_select::retain_mcu_system_source(&mut sources.core_sources, &ctx.board.mcu);
 
         // Add TinyUSB sources (USB CDC Serial support for nRF52840).
         // Compile arduino/ wrapper, device and host stacks, USB classes, and
@@ -408,7 +410,7 @@ impl BuildOrchestrator for Nrf52Orchestrator {
         tracing::info!("CMSIS framework installed");
         include_dirs.push(cmsis.get_core_include_dir());
         include_dirs.push(cmsis.get_dsp_include_dir());
-        include_dirs.extend(nrf52_core_include_dirs(&core_dir));
+        include_dirs.extend(nrf52_core_include_dirs(&core_dir, &linker_script_path));
         // TinyUSB includes (USB CDC Serial support for nRF52840)
         let tinyusb_src = framework_dir
             .join("libraries")
@@ -601,8 +603,12 @@ mod tests {
                 fbuild_config::PackageOverride::new("https://example.test/gcc.tar.gz", "1.70201.0"),
             ),
         ]);
-        let (toolchain, framework, cmsis) =
-            nrf52_packages_from_resolved(temp.path(), None, &resolved);
+        let (toolchain, framework, cmsis) = nrf52_packages_from_resolved(
+            temp.path(),
+            None,
+            fbuild_packages::library::Nrf52Framework::Adafruit,
+            &resolved,
+        );
         assert_eq!(
             fbuild_packages::Package::get_info(&toolchain).version,
             "1.70201.0"

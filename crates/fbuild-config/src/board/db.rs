@@ -405,6 +405,9 @@ fn flatten_board_entry(entry: &serde_json::Value, board_id: &str) -> HashMap<Str
         if let Some(cmsis_dsp_lib) = build.get("cmsis_dsp_lib").and_then(|v| v.as_str()) {
             d.insert("cmsis_dsp_lib".into(), cmsis_dsp_lib.to_string());
         }
+        if let Some(package) = build.get("framework_package").and_then(|v| v.as_str()) {
+            d.insert("framework_package".into(), package.to_string());
+        }
         // Arduino sub-fields
         if let Some(arduino) = build.get("arduino").and_then(|v| v.as_object()) {
             if let Some(ldscript) = arduino.get("ldscript").and_then(|v| v.as_str()) {

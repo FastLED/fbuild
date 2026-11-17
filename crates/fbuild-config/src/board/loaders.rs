@@ -215,6 +215,7 @@ impl BoardConfig {
             openocd_target: get("openocd_target"),
             platform_str: get("platform_str"),
             cmsis_dsp_lib: get("cmsis_dsp_lib"),
+            framework_package: get("framework_package"),
             debug_tools: None, // boards.txt format does not contain debug metadata
         })
     }
@@ -383,6 +384,7 @@ impl BoardConfig {
             openocd_target: opt("openocd_target"),
             platform_str: defaults.get("platform_str").cloned(),
             cmsis_dsp_lib: opt("cmsis_dsp_lib"),
+            framework_package: opt("framework_package"),
             debug_tools: get_board_debug_tools(board_id),
         })
     }

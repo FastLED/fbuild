@@ -1,7 +1,12 @@
-//! Adafruit nRF52 Arduino core framework package.
+//! Adafruit-family nRF52 Arduino core framework packages.
 //!
-//! Downloads and manages the Adafruit nRF52 Arduino core from PlatformIO's
-//! registry (which includes submodules like TinyUSB pre-bundled).
+//! Downloads and manages one of two nRF52 Arduino cores, selected per board
+//! by [`Nrf52Framework`]:
+//! - Adafruit's core from PlatformIO's registry (which includes submodules
+//!   like TinyUSB pre-bundled), the default for every nRF52 board;
+//! - Seeed's fork of it, the only core that ships the Seeed XIAO nRF52840
+//!   variants (FastLED/fbuild#2017).
+//!
 //! Provides paths to: cores/nRF5, variants/, libraries/.
 
 use std::path::{Path, PathBuf};
@@ -11,24 +16,100 @@ use crate::{CacheSubdir, Framework, PackageBase, PackageInfo};
 const NRF52_CORE_VERSION: &str = "1.10601.0";
 const NRF52_CORE_URL: &str = "https://dl.registry.platformio.org/download/platformio/tool/framework-arduinoadafruitnrf52/1.10601.0/framework-arduinoadafruitnrf52-1.10601.0.tar.gz";
 
-/// Adafruit nRF52 Arduino core framework manager.
+// Seeed's "Seeed nRF52 Boards" core (`Seeeduino:nrf52`), a fork of the
+// Adafruit core that adds `variants/Seeed_XIAO_nRF52840{,_Sense}` and the
+// S140 7.3.0 SoftDevice API they link against. PlatformIO's
+// maxgerhardt/platform-nordicnrf52 builds the XIAO boards with an unpinned
+// git mirror of it (`framework-arduinoadafruitnrf52-seeed`); fbuild pins the
+// release archive instead. URL and SHA-256 are taken verbatim from Seeed's
+// board-manager index, https://files.seeedstudio.com/arduino/package_seeeduino_boards_index.json.
+const SEEED_NRF52_CORE_VERSION: &str = "1.1.13";
+const SEEED_NRF52_CORE_URL: &str =
+    "https://files.seeedstudio.com/arduino/core/nRF52/Seeed_nRF52_Boards-1.1.13.tar.bz2";
+const SEEED_NRF52_CORE_SHA256: &str =
+    "5243bd456e8b7a3328725e17e6c6efc9712662f5aa27b7dc807911aeb0e93071";
+
+/// Which nRF52 Arduino core a board builds against.
+///
+/// Named by the PlatformIO package each one stands in for, so the board JSON
+/// field `build.framework_package` and `platform_packages` overrides use the
+/// same names PlatformIO does.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum Nrf52Framework {
+    /// Adafruit's nRF52 core (`framework-arduinoadafruitnrf52`).
+    Adafruit,
+    /// Seeed's fork of it (`framework-arduinoadafruitnrf52-seeed`).
+    Seeed,
+}
+
+impl Nrf52Framework {
+    /// Every supported core, default first.
+    pub const ALL: [Self; 2] = [Self::Adafruit, Self::Seeed];
+
+    /// The PlatformIO package name this core stands in for.
+    pub fn package_name(self) -> &'static str {
+        match self {
+            Self::Adafruit => "framework-arduinoadafruitnrf52",
+            Self::Seeed => "framework-arduinoadafruitnrf52-seeed",
+        }
+    }
+
+    /// Look a core up by its PlatformIO package name.
+    pub fn from_package_name(name: &str) -> Option<Self> {
+        Self::ALL
+            .into_iter()
+            .find(|framework| framework.package_name() == name)
+    }
+
+    fn package_base(self, project_dir: &Path) -> PackageBase {
+        let (name, version, url, sha256) = self.pin();
+        PackageBase::new(
+            name,
+            version,
+            url,
+            url,
+            sha256,
+            CacheSubdir::Platforms,
+            project_dir,
+        )
+    }
+
+    fn pin(
+        self,
+    ) -> (
+        &'static str,
+        &'static str,
+        &'static str,
+        Option<&'static str>,
+    ) {
+        match self {
+            Self::Adafruit => ("nrf52-core", NRF52_CORE_VERSION, NRF52_CORE_URL, None),
+            Self::Seeed => (
+                "nrf52-core-seeed",
+                SEEED_NRF52_CORE_VERSION,
+                SEEED_NRF52_CORE_URL,
+                Some(SEEED_NRF52_CORE_SHA256),
+            ),
+        }
+    }
+}
+
+/// Adafruit-family nRF52 Arduino core framework manager.
 pub struct Nrf52Cores {
     base: PackageBase,
     install_dir: Option<PathBuf>,
 }
 
 impl Nrf52Cores {
+    /// Adafruit's core, the default for nRF52 boards.
     pub fn new(project_dir: &Path) -> Self {
+        Self::for_framework(project_dir, Nrf52Framework::Adafruit)
+    }
+
+    /// The pinned release of the given core.
+    pub fn for_framework(project_dir: &Path, framework: Nrf52Framework) -> Self {
         Self {
-            base: PackageBase::new(
-                "nrf52-core",
-                NRF52_CORE_VERSION,
-                NRF52_CORE_URL,
-                NRF52_CORE_URL,
-                None,
-                CacheSubdir::Platforms,
-                project_dir,
-            ),
+            base: framework.package_base(project_dir),
             install_dir: None,
         }
     }
@@ -38,17 +119,17 @@ impl Nrf52Cores {
     /// URL / version / checksum are replaced; `cache_subdir` and `name` are
     /// preserved. See `PackageBase::with_override` and FastLED/fbuild#681.
     pub fn with_override(project_dir: &Path, ovr: fbuild_config::PackageOverride) -> Self {
+        Self::with_framework_override(project_dir, Nrf52Framework::Adafruit, ovr)
+    }
+
+    /// [`Self::with_override`] for the given core.
+    pub fn with_framework_override(
+        project_dir: &Path,
+        framework: Nrf52Framework,
+        ovr: fbuild_config::PackageOverride,
+    ) -> Self {
         Self {
-            base: PackageBase::new(
-                "nrf52-core",
-                NRF52_CORE_VERSION,
-                NRF52_CORE_URL,
-                NRF52_CORE_URL,
-                None,
-                CacheSubdir::Platforms,
-                project_dir,
-            )
-            .with_override(ovr),
+            base: framework.package_base(project_dir).with_override(ovr),
             install_dir: None,
         }
     }

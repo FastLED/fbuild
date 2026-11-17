@@ -40,6 +40,11 @@ FBUILD_EXTENSION_BUILD_FIELDS = frozenset(
         # the matching `-l...` flag; fbuild needs it declared so the linker can
         # auto-link the right `arm_cortexM*_math` archive.
         "cmsis_dsp_lib",
+        # Framework package a board builds against when it differs from the
+        # platform default (FastLED/fbuild#2017). PlatformIO picks it by board
+        # name in platform.py (e.g. maxgerhardt/platform-nordicnrf52 maps the
+        # Seeed XIAO nRF52840 boards to framework-arduinoadafruitnrf52-seeed).
+        "framework_package",
     }
 )
 UPLOAD_FIELDS = (
