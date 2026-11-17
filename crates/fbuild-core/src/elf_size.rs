@@ -165,6 +165,103 @@ mod tests {
         assert_eq!(info.total_ram, 9_736);
     }
 
+    /// Non-allocated section row with a name (e.g. Arduino-Pico's
+    /// `.stack_dummy`, which `readelf -S` shows with no flags).
+    fn unalloc(name: &str, size: u64) -> ElfSectionSize {
+        ElfSectionSize {
+            name: name.to_string(),
+            ..sec(size, false, true, false, false)
+        }
+    }
+
+    /// FastLED/fbuild#2041: `readelf -S` of a real Arduino-Pico `rpipico`
+    /// blink (`tests/platform/rp2040`, `board_build.core = earlephilhower`),
+    /// debug sections omitted. PlatformIO raspberrypi
+    /// (`SIZEDATAREGEXP = ^(?:\.data|\.bss|\.noinit)\s+(\d+)` over
+    /// `size -A`) reports 4_664 + 5_124 = 9_788 bytes of RAM for this ELF.
+    #[test]
+    fn rp2040_real_blink_ram_matches_platformio() {
+        let sections = [
+            named(".boot2", 256, true, false, true),       // 0x10000000
+            named(".ota", 10_228, true, true, false),      // WA, 0x10000100
+            named(".partition", 1_804, true, true, false), // WA, 0x100028f4
+            named(".text", 62_128, true, false, true),     // 0x10003000
+            named(".rodata", 3_896, true, false, false),   // 0x100122b0
+            named(".ram_vector_table", 192, false, true, false), // 0x20000000
+            named(".data", 4_664, true, false, true),      // AX, 0x200000c0
+            named(".tdata", 0, true, true, false),
+            named(".tbss", 0, false, true, false),
+            named(".bss", 5_124, false, true, false),
+            named(".heap", 252_164, false, false, false),
+            named(".scratch_x", 0, true, true, false),
+            named(".scratch_y", 0, true, true, false),
+            named(".stack1_dummy", 2_048, false, true, false), // SCRATCH_X
+            unalloc(".stack_dummy", 2_048),                    // SCRATCH_Y
+            unalloc(".ARM.attributes", 40),
+            unalloc(".comment", 18),
+        ];
+        let info = SizeInfo::from_elf_sections(&sections, None, None);
+        assert_eq!(info.total_ram, 9_788);
+        assert_eq!((info.data, info.bss), (4_664, 5_124));
+        // firmware.bin: .boot2 + .ota + .partition + .text + .rodata + .data.
+        assert_eq!(info.total_flash, 82_976);
+    }
+
+    /// FastLED/fbuild#2041: `readelf -S` of a real Arduino-Pico `rpipico2`
+    /// (RP2350) blink (`tests/platform/rp2350`), debug sections omitted.
+    /// Same builder and `SIZEDATAREGEXP` as RP2040: 6_096 + 4_432 = 10_528.
+    #[test]
+    fn rp2350_real_blink_ram_matches_platformio() {
+        let sections = [
+            named(".ota", 10_252, true, true, false), // WA, 0x10000000
+            named(".partition", 2_036, true, true, false), // WA, 0x1000280c
+            named(".text", 60_444, true, false, true),
+            named(".rodata", 3_952, true, false, false),
+            named(".ARM.exidx", 8, true, false, false),
+            named(".binary_info", 4, true, false, false),
+            named(".ram_vector_table", 272, false, true, false),
+            named(".uninitialized_data", 0, true, true, false),
+            named(".data", 6_096, true, false, true), // AX, 0x20000110
+            named(".tdata", 0, true, true, false),
+            named(".tbss", 0, false, true, false),
+            named(".bss", 4_432, false, true, false),
+            named(".heap", 513_488, false, false, false),
+            named(".scratch_x", 0, true, true, false),
+            named(".scratch_y", 0, true, true, false),
+            named(".stack1_dummy", 2_048, false, true, false),
+            unalloc(".stack_dummy", 2_048),
+            named(".flash_end", 20, true, false, false),
+            named(".psram", 0, true, true, false),
+            unalloc(".ARM.attributes", 52),
+            unalloc(".comment", 18),
+        ];
+        let info = SizeInfo::from_elf_sections(&sections, None, None);
+        assert_eq!(info.total_ram, 10_528);
+        assert_eq!((info.data, info.bss), (6_096, 4_432));
+        assert_eq!(info.total_flash, 82_812);
+    }
+
+    /// FastLED/fbuild#2041: Arduino-Pico has no `.noinit`; its
+    /// `__uninitialized_ram` / `__scratch_x` / `__scratch_y` data lands in
+    /// `.uninitialized_data`, `.scratch_x` and `.scratch_y`, which
+    /// PlatformIO's name-only `SIZEDATAREGEXP` does not count. fbuild must
+    /// match it even when a sketch puts bytes there.
+    #[test]
+    fn rp2040_uninitialized_and_scratch_sections_are_not_ram() {
+        let sections = [
+            named(".text", 1_000, true, false, true),
+            named(".data", 100, true, false, true),
+            named(".bss", 200, false, true, false),
+            named(".uninitialized_data", 64, false, true, false),
+            named(".scratch_x", 128, true, true, false),
+            named(".scratch_y", 256, true, true, false),
+        ];
+        let info = SizeInfo::from_elf_sections(&sections, None, None);
+        assert_eq!(info.total_ram, 300);
+        // Scratch code/data is loaded from flash, so it is image bytes.
+        assert_eq!(info.total_flash, 1_000 + 100 + 128 + 256);
+    }
+
     /// FastLED/fbuild#2027: Adafruit nRF52 (`nrf52_common.ld`) grows a
     /// writable `.heap` up to `__StackLimit`. Static RAM is PlatformIO
     /// nordicnrf52's `.data + .bss + .noinit`, not the heap reservation.
