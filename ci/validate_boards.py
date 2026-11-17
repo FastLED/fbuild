@@ -161,8 +161,27 @@ def framework_extra_flags(core: str | None) -> tuple[str, ...]:
     return ()
 
 
+def join_separated_defines(flags: str) -> list[str]:
+    """Join a separated `-D NAME` into `-DNAME` (matches enrich_boards.rs).
+
+    Upstream `pico.json` / `nanorp2040connect.json` use the spaced form; the
+    bundle keeps one token per define (FastLED/fbuild#2038).
+    """
+    tokens = flags.split()
+    joined: list[str] = []
+    i = 0
+    while i < len(tokens):
+        if tokens[i] == "-D" and i + 1 < len(tokens):
+            joined.append("-D" + tokens[i + 1])
+            i += 2
+        else:
+            joined.append(tokens[i])
+            i += 1
+    return joined
+
+
 def merge_extra_flags(core: str | None, flags: str) -> str:
-    merged = flags.split()
+    merged = join_separated_defines(flags)
     existing = set(merged)
 
     # PlatformIO injects these framework defines during the build rather than

@@ -128,6 +128,12 @@ class ExtractTests(unittest.TestCase):
         extracted = vb.extract_upload({"protocol": "esptool", "speed": 460800, "not_ours": 1})
         self.assertEqual(extracted, {"protocol": "esptool", "speed": 460800})
 
+    def test_extract_build_joins_separated_defines(self) -> None:
+        # FastLED/fbuild#2038: upstream pico.json writes `-D ARDUINO_...`.
+        extracted = vb.extract_build({"extra_flags": "-D ARDUINO_RASPBERRY_PI_PICO -DARDUINO_ARCH_RP2040"})
+        self.assertEqual(extracted["extra_flags"], "-DARDUINO_RASPBERRY_PI_PICO -DARDUINO_ARCH_RP2040")
+        self.assertEqual(vb.join_separated_defines("-DA -D"), ["-DA", "-D"])
+
     def test_normalize_extra_flags_handles_non_string(self) -> None:
         self.assertEqual(vb.normalize_extra_flags(None), "")
         self.assertEqual(vb.normalize_extra_flags(12), "")
