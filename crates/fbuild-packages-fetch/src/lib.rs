@@ -35,7 +35,6 @@ type BoxedValidate<'a> = Box<dyn FnOnce(&Path) -> fbuild_core::Result<()> + Send
 
 use async_trait::async_trait;
 use fbuild_core::install_status::{self, InstallPhase, InstallRole};
-use fbuild_core::path::NormalizedPath;
 
 static PACKAGE_TOUCHES: OnceLock<Mutex<HashSet<String>>> = OnceLock::new();
 
@@ -401,54 +400,6 @@ impl PackageBase {
         }
         self.touch_disk_cache();
         true
-    }
-
-    /// The first candidate install dir that is a *complete* install.
-    ///
-    /// Candidates are the shared path and this chip's slice dir, in that
-    /// order (see `installed_dirs`). Existence alone is not a hit: only a
-    /// directory carrying the `.install_complete` sentinel counts, because
-    /// anything else is a partial tree that must be repaired
-    /// (FastLED/fbuild#2043).
-    fn complete_install_dir(&self) -> Option<NormalizedPath> {
-        self.installed_dirs()
-            .into_iter()
-            .find(|path| Self::is_complete_install(path.as_path()))
-    }
-
-    /// Move a sentinel-less install directory aside so a fresh install can
-    /// commit atomically at its path.
-    ///
-    /// Never deletes: the tree may hold a partial extract still worth
-    /// diagnosing, and a repair must not destroy a user's data. The successor
-    /// name is deterministic (`<name>.incomplete`), so repeated repairs replace
-    /// the previous quarantine instead of accumulating trees.
-    fn quarantine_incomplete_install(path: &Path) -> fbuild_core::Result<()> {
-        if !path.exists() {
-            return Ok(());
-        }
-        let aside = path.with_file_name(format!(
-            "{}.incomplete",
-            path.file_name().unwrap_or_default().to_string_lossy()
-        ));
-        if aside.is_dir() {
-            let _ = std::fs::remove_dir_all(&aside);
-        } else if aside.exists() {
-            let _ = std::fs::remove_file(&aside);
-        }
-        fbuild_core::platform::fs::rename_path(path, &aside).map_err(|e| {
-            fbuild_core::FbuildError::PackageError(format!(
-                "failed to quarantine incomplete install at {}: {}",
-                path.display(),
-                e
-            ))
-        })?;
-        tracing::warn!(
-            "install at {} has no .install_complete sentinel; moved it to {} and reinstalling",
-            path.display(),
-            aside.display()
-        );
-        Ok(())
     }
 
     /// Best-effort LRU touch in the DiskCache index.
