@@ -57,17 +57,14 @@ fn fabricated_envs(base: &Path) -> (IdfEnvironment, IdfPythonEnvironment) {
         .join("openocd")
         .join("scripts");
     std::fs::create_dir_all(scripts.as_path()).unwrap();
-    let env_dir = NormalizedPath::new(base).join("python_env").join("idf_env");
-    std::fs::create_dir_all(env_dir.join("bin").as_path()).unwrap();
-    // A venv interpreter carries the host executable suffix: `python()` and
-    // `missing_units()` look it up by its native name (Windows `python.exe`).
-    let python_exe = fbuild_core::platform::executable::native_name("python");
-    std::fs::write(
-        env_dir.join("bin").join(python_exe).as_path(),
-        b"#!/bin/sh\n",
-    )
-    .unwrap();
-    (tools, IdfPythonEnvironment::new(env_dir))
+    let python =
+        IdfPythonEnvironment::new(NormalizedPath::new(base).join("python_env").join("idf_env"));
+    // The interpreter lives in the directory the environment itself resolves —
+    // `bin` on Unix, `Scripts` on Windows — under its native name, because
+    // `python()` and `missing_units()` look for exactly that file.
+    std::fs::create_dir_all(python.bin_dir().as_path()).unwrap();
+    std::fs::write(python.python().as_path(), b"#!/bin/sh\n").unwrap();
+    (tools, python)
 }
 
 #[test]
