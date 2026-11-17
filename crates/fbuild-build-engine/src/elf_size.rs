@@ -176,6 +176,48 @@ mod tests {
         );
     }
 
+    /// FastLED/fbuild#2041: Arduino-Pico's section flags, which the old
+    /// flag rule got wrong. `.data` is `AX` (it holds RAM code) and
+    /// `.ota` / `.partition` are `WA` although they live in flash.
+    fn write_arduino_pico_flags_elf(path: &Path) {
+        use object::elf::{SHF_ALLOC, SHF_EXECINSTR, SHF_WRITE};
+        use object::write::Object;
+        use object::{Architecture, BinaryFormat, Endianness, SectionFlags, SectionKind};
+        let mut obj = Object::new(BinaryFormat::Elf, Architecture::Arm, Endianness::Little);
+        let mut progbits = |name: &[u8], size: usize, sh_flags: u32| {
+            let id = obj.add_section(Vec::new(), name.to_vec(), SectionKind::Data);
+            obj.append_section_data(id, &vec![0u8; size], 4);
+            obj.section_mut(id).flags = SectionFlags::Elf {
+                sh_flags: u64::from(sh_flags),
+            };
+        };
+        progbits(b".ota", 10_228, SHF_ALLOC | SHF_WRITE);
+        progbits(b".partition", 1_804, SHF_ALLOC | SHF_WRITE);
+        progbits(b".text", 0x400, SHF_ALLOC | SHF_EXECINSTR);
+        progbits(b".data", 4_664, SHF_ALLOC | SHF_EXECINSTR);
+        for (name, size) in [(&b".bss"[..], 5_124), (&b".stack1_dummy"[..], 2_048)] {
+            let id = obj.add_section(Vec::new(), name.to_vec(), SectionKind::UninitializedData);
+            obj.append_section_bss(id, size, 4);
+        }
+        std::fs::write(path, obj.write().unwrap()).unwrap();
+    }
+
+    #[test]
+    fn report_size_counts_arduino_pico_ax_data_and_not_writable_ota() {
+        let tmp = tempfile::tempdir().unwrap();
+        let elf = tmp.path().join("firmware.elf");
+        write_arduino_pico_flags_elf(&elf);
+        let sections = super::read_elf_section_sizes(&elf).unwrap();
+        let data = sections.iter().find(|s| s.name == ".data").unwrap();
+        assert!(data.alloc && data.executable && !data.writable);
+        let ota = sections.iter().find(|s| s.name == ".ota").unwrap();
+        assert!(ota.alloc && ota.writable && ota.has_contents);
+        let info = LinkerBase::report_size(&elf, None, None).unwrap();
+        // PlatformIO raspberrypi: .data + .bss only.
+        assert_eq!(info.total_ram, 4_664 + 5_124);
+        assert_eq!(info.total_flash, 10_228 + 1_804 + 0x400 + 4_664);
+    }
+
     #[test]
     fn report_size_rejects_non_elf() {
         let tmp = tempfile::tempdir().unwrap();
