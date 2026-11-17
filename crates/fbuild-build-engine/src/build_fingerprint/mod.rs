@@ -125,7 +125,30 @@ pub fn stable_hash_with_build_config<T: Serialize>(
     metadata: &T,
     ctx: &crate::pipeline::BuildContext,
 ) -> Result<String> {
-    stable_hash_json(&(metadata, ctx.effective_build_config()))
+    hash_build_inputs(
+        metadata,
+        &ctx.effective_build_config(),
+        &fbuild_build_identity(),
+    )
+}
+
+/// This fbuild binary's identity: the workspace version plus the checkout
+/// commit (`2.5.46+git.5fca4d49c9ab[-dirty]`).
+///
+/// fbuild adds compiler and linker flags of its own (MCU config JSONs, the
+/// release profile, built-in defaults) that are resolved only after the
+/// no-op check, so the fingerprint keys on the binary that owns them: a
+/// different fbuild can never reuse another's artifacts (FastLED/fbuild#2036).
+fn fbuild_build_identity() -> String {
+    fbuild_core::build_id::long_version()
+}
+
+fn hash_build_inputs<T: Serialize, C: Serialize>(
+    metadata: &T,
+    config: &C,
+    fbuild_identity: &str,
+) -> Result<String> {
+    stable_hash_json(&(metadata, config, fbuild_identity))
 }
 
 pub fn stable_hash_json<T: Serialize>(value: &T) -> Result<String> {
@@ -460,6 +483,8 @@ fn should_descend(path: &Path, root: &Path, excludes: &[String]) -> bool {
     !excludes.iter().any(|exclude| exclude == name)
 }
 
+#[cfg(test)]
+mod identity_tests;
 #[cfg(test)]
 mod symlink_tests;
 

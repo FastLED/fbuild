@@ -14,6 +14,12 @@ nothing relevant has changed.
   The watched file set follows symlinks, so a local library reached through
   `lib/<Lib> -> /elsewhere` still invalidates the warm path when a file under
   the link target changes (FastLED/fbuild#1753); traversal cycles are dropped.
+  `stable_hash_with_build_config` also hashes `fbuild_build_identity()`
+  (workspace version + build commit), so a different fbuild binary, whose
+  built-in MCU/profile flags may differ, never reuses another's artifacts
+  (FastLED/fbuild#2036).
+- **`identity_tests.rs`** -- Tests that the fbuild identity invalidates the
+  no-op metadata hash while unchanged inputs keep it.
 - **`fast_path.rs`** -- Shared warm-build cache contract. Orchestrators
   declare required outputs through `FastPathContract`, then use
   `fast_path_check` for reuse decisions and
