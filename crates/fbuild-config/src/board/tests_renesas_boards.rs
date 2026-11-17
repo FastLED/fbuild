@@ -74,6 +74,42 @@ fn uno_r4_minima_resolves_the_minima_variant_and_defines() {
     );
 }
 
+/// `unor4wifi.build.variant=UNOWIFIR4` in ArduinoCore-renesas 1.6.0. The
+/// core's recipes emit `-DARDUINO_ARCH_{build.arch}`, and the package
+/// architecture is `renesas_uno`, so Arduino IDE/CLI define
+/// `ARDUINO_ARCH_RENESAS_UNO` alongside the literal `ARDUINO_ARCH_RENESAS`.
+/// PlatformIO's `uno_r4_wifi.json` carries it too (FastLED/fbuild#2038).
+#[test]
+fn uno_r4_wifi_resolves_the_unowifir4_variant_and_defines() {
+    let config = BoardConfig::from_board_id("uno_r4_wifi", &HashMap::new()).unwrap();
+    assert_eq!(config.variant, "UNOWIFIR4");
+    assert_eq!(config.core, "arduino");
+    assert_eq!(config.platform(), Some(fbuild_core::Platform::RenesasRa));
+    assert_defines(
+        "uno_r4_wifi",
+        &config,
+        &[
+            "F_CPU",
+            "ARDUINO_UNOR4_WIFI",
+            "ARDUINO_UNOWIFIR4",
+            "NO_USB",
+            "BACKTRACE_SUPPORT",
+            "ARDUINO_ARCH_RENESAS",
+            "ARDUINO_ARCH_RENESAS_UNO",
+            "ARDUINO_FSP",
+            "CFG_TUSB_MCU",
+            "_RA_CORE",
+            "_RENESAS_RA_",
+        ],
+        &["ARDUINO_UNOR4_MINIMA", "ARDUINO_MINIMA"],
+    );
+    let defines = config.get_defines();
+    assert_eq!(
+        defines.get("ARDUINO_ARCH_RENESAS_UNO").map(String::as_str),
+        Some("1")
+    );
+}
+
 /// `nanor4.build.variant=NANOR4`; its `build.defines` add `ARDUINO_NANO_R4`
 /// and `ARDUINO_UNOR4_MINIMA`.
 #[test]

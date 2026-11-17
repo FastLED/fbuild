@@ -800,3 +800,75 @@ fn extra_flags_string_defines_keep_quotes_and_drop_escape_backslashes() {
     );
     assert_eq!(defines.get("PLAIN").map(String::as_str), Some("1"));
 }
+
+/// FastLED/fbuild#2038: `get_defines` already pairs a separated `-D NAME`
+/// with the following token (`parse_define_flags`), the same way GCC does.
+/// Pin that so a board JSON written in the spaced form never yields an empty
+/// macro name or drops the define.
+#[test]
+fn extra_flags_separated_define_resolves_like_the_joined_form() {
+    let mut config = BoardConfig::from_board_id("pico", &HashMap::new()).unwrap();
+    config.extra_flags = Some("-D ARDUINO_SPACED -DARDUINO_JOINED -D VALUE=2".to_string());
+    let defines = config.get_defines();
+    assert_eq!(defines.get("ARDUINO_SPACED").map(String::as_str), Some("1"));
+    assert_eq!(defines.get("ARDUINO_JOINED").map(String::as_str), Some("1"));
+    assert_eq!(defines.get("VALUE").map(String::as_str), Some("2"));
+    assert!(
+        !defines.contains_key(""),
+        "no empty macro name: {defines:?}"
+    );
+}
+
+/// FastLED/fbuild#2038: arduino-pico 4.5.3 emits `-DARDUINO_ARCH_{build.arch}`
+/// from its recipes, and `build.arch` is the package architecture `rp2040`
+/// for every board, RP2350 boards included. `ARDUINO_ARCH_RP2350` appears
+/// nowhere in the core; the RP2350 family is flagged by `PICO_RP2350=1` from
+/// `lib/rp2350/platform_def.txt`. maxgerhardt/platform-raspberrypi's
+/// `rpipico2.json` agrees (`-DARDUINO_ARCH_RP2040`).
+#[test]
+fn rpipico2_defines_arduino_arch_rp2040_like_upstream() {
+    let config = BoardConfig::from_board_id("rpipico2", &HashMap::new()).unwrap();
+    let defines = config.get_defines();
+    assert_eq!(
+        defines.get("ARDUINO_ARCH_RP2040").map(String::as_str),
+        Some("1")
+    );
+    assert!(
+        !defines.contains_key("ARDUINO_ARCH_RP2350"),
+        "arduino-pico never defines ARDUINO_ARCH_RP2350: {defines:?}"
+    );
+    assert_eq!(
+        defines
+            .get("ARDUINO_RASPBERRY_PI_PICO_2")
+            .map(String::as_str),
+        Some("1")
+    );
+}
+
+/// FastLED/fbuild#2038: upstream PlatformIO writes some defines as
+/// `-D NAME` (e.g. `pico`, `nanorp2040connect`). The resolver accepts both
+/// forms, but the bundle keeps the joined `-DNAME` form so token-level
+/// consumers (fingerprints, `build.extra_flags` for scripts, ad-hoc
+/// splitters) see one token per define. `enrich_boards` joins them when
+/// regenerating, so a re-run cannot reintroduce the spaced form.
+#[test]
+fn bundled_extra_flags_use_joined_define_form() {
+    let mut violations = Vec::new();
+    for (board_id, board) in get_board_db() {
+        let Some(flags) = board
+            .pointer("/build/extra_flags")
+            .and_then(serde_json::Value::as_str)
+        else {
+            continue;
+        };
+        if flags.split_whitespace().any(|token| token == "-D") {
+            violations.push(format!("{board_id}: {flags}"));
+        }
+    }
+    violations.sort();
+    assert!(
+        violations.is_empty(),
+        "write defines as -DNAME, not -D NAME (FastLED/fbuild#2038):\n{}",
+        violations.join("\n")
+    );
+}
