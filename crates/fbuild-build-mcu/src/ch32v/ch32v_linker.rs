@@ -11,6 +11,19 @@ use fbuild_core::{BuildProfile, Result, SizeInfo};
 use super::mcu_config::Ch32vMcuConfig;
 use crate::linker::{LinkExtraArgs, Linker};
 
+/// Static RAM sections of a CH32V image: PlatformIO ch32v's
+/// `SIZEDATAREGEXP`, by exact name (FastLED/fbuild#2027). Unlike the default
+/// set it counts the OpenWCH `Link.ld` `.stack` section (a fixed
+/// `__stack_size` block) and RAM code (`.highcode` / `.loadcode`).
+pub(crate) const CH32V_RAM_SECTIONS: &[&str] = &[
+    ".data",
+    ".bss",
+    ".noinit",
+    ".loadcode",
+    ".highcode",
+    ".stack",
+];
+
 /// CH32V-specific linker using riscv-none-elf-gcc (link driver), ar, objcopy, size.
 pub struct Ch32vLinker {
     gcc_path: PathBuf,
@@ -189,7 +202,8 @@ impl Linker for Ch32vLinker {
     }
 
     async fn report_size(&self, elf_path: &Path) -> Result<SizeInfo> {
-        crate::linker::LinkerBase::report_size(elf_path, self.max_flash, self.max_ram)
+        let ram = CH32V_RAM_SECTIONS;
+        crate::elf_size::report_size_with_ram(elf_path, ram, self.max_flash, self.max_ram)
     }
 }
 
@@ -197,6 +211,40 @@ impl Linker for Ch32vLinker {
 mod tests {
     use super::*;
     use crate::ch32v::mcu_config::get_ch32v_config_for_mcu;
+
+    /// FastLED/fbuild#2027: a real CH32V003 blink (OpenWCH `Link.ld`) section
+    /// table. PlatformIO ch32v counts the `.stack` block, which the flag rule
+    /// also counted (writable NOBITS). The only change is the 4-byte
+    /// `.init_array`: flagged writable but placed in flash, it no longer
+    /// counts as RAM (1_180 -> 1_176).
+    #[test]
+    fn ch32v_ram_keeps_platformio_stack_block() {
+        let row =
+            |name: &str, size: u64, contents: bool, w: bool, x: bool| fbuild_core::ElfSectionSize {
+                name: name.to_string(),
+                size,
+                alloc: true,
+                has_contents: contents,
+                writable: w,
+                executable: x,
+            };
+        let sections = [
+            row(".init", 160, true, false, true),
+            row(".text", 8_576, true, false, true),
+            row(".fini", 0, true, true, true),
+            row(".init_array", 4, true, true, false),
+            row(".data", 152, true, true, false),
+            row(".bss", 576, false, true, false),
+            row(".stack", 448, false, true, false),
+        ];
+        let info = SizeInfo::from_elf_sections_with_ram(&sections, CH32V_RAM_SECTIONS, None, None);
+        assert_eq!(info.total_ram, 1_176);
+        assert_eq!(info.total_flash, 160 + 8_576 + 4 + 152);
+        assert_eq!(
+            info.total_ram,
+            SizeInfo::from_elf_sections(&sections, None, None).total_ram + 448
+        );
+    }
 
     #[test]
     fn test_ch32v_linker_creation() {

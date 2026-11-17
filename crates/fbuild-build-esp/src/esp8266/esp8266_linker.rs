@@ -16,6 +16,11 @@ use fbuild_core::{BuildProfile, Result, SizeInfo};
 use super::mcu_config::Esp8266McuConfig;
 use crate::linker::{LinkExtraArgs, Linker, LinkerScripts};
 
+/// Static RAM sections of an ESP8266 image: PlatformIO espressif8266's
+/// `SIZEDATAREGEXP`, by exact name (FastLED/fbuild#2027). `.rodata` lives in
+/// DRAM (`dram0_0_seg`) on this core, so it counts as RAM as well as flash.
+pub(crate) const ESP8266_RAM_SECTIONS: &[&str] = &[".data", ".rodata", ".bss"];
+
 /// Generation of the firmware image recipe (linker-script rewrite + elf2bin);
 /// part of the build and link fingerprints so stale images are relinked when it
 /// changes.
@@ -394,12 +399,47 @@ impl Linker for Esp8266Linker {
     }
 
     async fn report_size(&self, elf_path: &Path) -> Result<SizeInfo> {
-        crate::linker::LinkerBase::report_size(elf_path, self.max_flash, self.max_ram)
+        let ram = ESP8266_RAM_SECTIONS;
+        crate::elf_size::report_size_with_ram(elf_path, ram, self.max_flash, self.max_ram)
     }
 }
 
 #[cfg(test)]
 mod tests {
+    /// FastLED/fbuild#2027: a real ESP8266 (Arduino core 3.1.2) section
+    /// table. RAM is PlatformIO espressif8266's `.data + .rodata + .bss`; the
+    /// flag rule gave 27_792 (`.data + .noinit + .bss`, missing the
+    /// DRAM-resident read-only `.rodata`).
+    #[test]
+    fn esp8266_ram_is_platformio_data_rodata_bss() {
+        let row =
+            |name: &str, size: u64, contents: bool, w: bool, x: bool| fbuild_core::ElfSectionSize {
+                name: name.to_string(),
+                size,
+                alloc: true,
+                has_contents: contents,
+                writable: w,
+                executable: x,
+            };
+        let sections = [
+            row(".data", 1_496, true, true, false),
+            row(".noinit", 56, true, true, false),
+            row(".text", 226, true, false, true),
+            row(".irom0.text", 240_476, true, true, true),
+            row(".text1", 26_721, true, false, true),
+            row(".rodata", 948, true, false, false),
+            row(".bss", 26_240, false, true, false),
+        ];
+        let info = fbuild_core::SizeInfo::from_elf_sections_with_ram(
+            &sections,
+            super::ESP8266_RAM_SECTIONS,
+            None,
+            None,
+        );
+        assert_eq!(info.total_ram, 1_496 + 948 + 26_240);
+        assert_eq!(info.total_flash, 1_496 + 56 + 226 + 240_476 + 26_721 + 948);
+    }
+
     #[test]
     fn exclude_file_names_match_hashed_objects() {
         let script = "    *.cpp.o(EXCLUDE_FILE (umm_malloc.cpp.o) .literal* EXCLUDE_FILE (umm_malloc.cpp.o) .text*)\n    KEEP (*(EXCLUDE_FILE (*crtend.o) .ctors))\n";

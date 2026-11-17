@@ -11,6 +11,21 @@ use fbuild_core::{BuildProfile, Result, SizeInfo};
 use super::mcu_config::TeensyMcuConfig;
 use crate::linker::{LinkExtraArgs, Linker, LinkerScripts, link_cwd_for};
 
+/// Static RAM sections of a Teensy image: PlatformIO teensy's
+/// `SIZEDATAREGEXP`, by exact name (FastLED/fbuild#2027). Teensy 3 adds its
+/// USB/DMA buffers; on Teensy 4 `.text.itcm` is code in RAM1 (ITCM), while
+/// `DMAMEM` (`.bss.dma`, RAM2) and the flash `.text.headers` are not counted.
+pub(crate) const TEENSY_RAM_SECTIONS: &[&str] = &[
+    ".usbdescriptortable",
+    ".dmabuffers",
+    ".usbbuffers",
+    ".data",
+    ".bss",
+    ".noinit",
+    ".text.itcm",
+    ".text.itcm.padding",
+];
+
 /// Teensy-specific linker using arm-none-eabi-gcc (link driver), ar, objcopy, size.
 pub struct TeensyLinker {
     gcc_path: PathBuf,
@@ -253,7 +268,8 @@ impl Linker for TeensyLinker {
     }
 
     async fn report_size(&self, elf_path: &Path) -> Result<SizeInfo> {
-        crate::linker::LinkerBase::report_size(elf_path, self.max_flash, self.max_ram)
+        let ram = TEENSY_RAM_SECTIONS;
+        crate::elf_size::report_size_with_ram(elf_path, ram, self.max_flash, self.max_ram)
     }
 }
 
@@ -261,6 +277,61 @@ impl Linker for TeensyLinker {
 mod tests {
     use super::*;
     use crate::teensy::mcu_config::get_teensy_config;
+
+    fn row(name: &str, size: u64, contents: bool, w: bool, x: bool) -> fbuild_core::ElfSectionSize {
+        fbuild_core::ElfSectionSize {
+            name: name.to_string(),
+            size,
+            alloc: true,
+            has_contents: contents,
+            writable: w,
+            executable: x,
+        }
+    }
+
+    /// FastLED/fbuild#2027: a real Teensy 4.1 (`imxrt1062_t41.ld`) section
+    /// table. RAM is RAM1 as PlatformIO teensy counts it: ITCM code, `.data`
+    /// and `.bss`. The flag rule gave 27_104: it counted the writable flash
+    /// `.text.headers` and `DMAMEM` `.bss.dma`, and missed `.text.itcm`.
+    #[test]
+    fn teensy41_ram_is_platformio_ram1() {
+        let sections = [
+            row(".text.headers", 5_120, true, true, false),
+            row(".text.code", 2_608, true, false, true),
+            row(".text.progmem", 256, true, false, false),
+            row(".text.itcm", 28_800, true, false, true),
+            row(".fini", 4, true, false, true),
+            row(".ARM.exidx", 8, true, false, false),
+            row(".data", 6_848, true, true, false),
+            row(".bss", 2_688, false, true, false),
+            row(".bss.dma", 12_448, false, true, false),
+            row(".bss.extram", 0, false, true, false),
+            row(".text.csf", 3_460, true, false, false),
+        ];
+        let info = SizeInfo::from_elf_sections_with_ram(&sections, TEENSY_RAM_SECTIONS, None, None);
+        assert_eq!(info.total_ram, 28_800 + 6_848 + 2_688);
+        assert_eq!(
+            info.total_flash,
+            5_120 + 2_608 + 256 + 28_800 + 4 + 8 + 6_848 + 3_460
+        );
+    }
+
+    /// Teensy 3 (`mk20dx256.ld`) keeps its USB/DMA buffers and `.noinit`
+    /// in RAM; all of them were already counted by the flag rule.
+    #[test]
+    fn teensy3_ram_counts_usb_and_dma_buffers() {
+        let sections = [
+            row(".text", 30_000, true, false, true),
+            row(".usbdescriptortable", 160, false, true, false),
+            row(".dmabuffers", 512, false, true, false),
+            row(".usbbuffers", 1_024, false, true, false),
+            row(".data", 900, true, true, false),
+            row(".noinit", 8, false, true, false),
+            row(".bss", 3_000, false, true, false),
+        ];
+        let info = SizeInfo::from_elf_sections_with_ram(&sections, TEENSY_RAM_SECTIONS, None, None);
+        assert_eq!(info.total_ram, 160 + 512 + 1_024 + 900 + 8 + 3_000);
+    }
 
     async fn run_native(args: &[String]) {
         let borrowed: Vec<_> = args.iter().map(String::as_str).collect();

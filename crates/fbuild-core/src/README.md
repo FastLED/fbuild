@@ -5,7 +5,7 @@
 - **`archive.rs`** -- Shared GNU archiver invocation with temporary response files for large or Windows object lists (#1656)
 
 - **`lib.rs`** -- Crate root; defines `FbuildError`, `Result`, `BuildProfile`, `Platform`, `OperationType`, `DaemonState`, `SizeInfo`; re-exports `BuildLog`
-- **`elf_size.rs`** -- `ElfSectionSize` and `SizeInfo::from_elf_sections()`: flash/RAM classification from ELF section headers; `SHT_NOBITS` never counts as flash (FastLED/fbuild#2012)
+- **`elf_size.rs`** -- `ElfSectionSize`, `SizeInfo::from_elf_sections()` / `from_elf_sections_with_ram()` and `PLATFORMIO_RAM_SECTIONS`: flash is every allocated section with contents (`SHT_NOBITS` never counts, FastLED/fbuild#2012); RAM is PlatformIO's `SIZEDATAREGEXP` section set by exact name (default `.data`/`.bss`/`.noinit`), so heap/stack reservations are not static RAM (FastLED/fbuild#2027)
 - **`build_log.rs`** -- `BuildLog` struct that accumulates output lines and optionally streams them through an `mpsc::Sender`
 - **`daemon_health.rs`** -- Daemon `/health` readiness states (`healthy` / `starting` / unreachable), `ReadinessDeadline` that stretches while the daemon reports `starting`, and `wait_until_healthy()` shared by the CLI and PyO3 clients (FastLED/fbuild#1480)
 - **`compiler_flags.rs`** -- `prepare_flags_for_exec()` to strip backslash-escaped quotes from GCC define flags on non-Windows platforms
