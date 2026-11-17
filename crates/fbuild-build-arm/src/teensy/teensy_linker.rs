@@ -316,21 +316,27 @@ mod tests {
         );
     }
 
-    /// Teensy 3 (`mk20dx256.ld`) keeps its USB/DMA buffers and `.noinit`
-    /// in RAM; all of them were already counted by the flag rule.
+    /// FastLED/fbuild#2042: the allocated sections of a real Teensy 3.1
+    /// (`mk20dx256.ld`) blink, from `readelf -S` of a dev-mode `--clean`
+    /// build. Teensy 3 keeps its USB/DMA buffers in RAM. PlatformIO teensy's
+    /// `SIZEDATAREGEXP` over `size -A` reports 160 + 444 + 864 + 272 + 1_120
+    /// = 2_860 bytes of RAM for this ELF.
     #[test]
-    fn teensy3_ram_counts_usb_and_dma_buffers() {
+    fn teensy31_real_blink_ram_matches_platformio() {
         let sections = [
-            row(".text", 30_000, true, false, true),
-            row(".usbdescriptortable", 160, false, true, false),
-            row(".dmabuffers", 512, false, true, false),
-            row(".usbbuffers", 1_024, false, true, false),
-            row(".data", 900, true, true, false),
-            row(".noinit", 8, false, true, false),
-            row(".bss", 3_000, false, true, false),
+            row(".text", 6_772, true, false, true), // 0x00000000
+            row(".fini", 4, true, false, true),
+            row(".usbdescriptortable", 160, false, true, false), // 0x1fff8000
+            row(".dmabuffers", 444, false, true, false),
+            row(".usbbuffers", 864, false, true, false),
+            row(".data", 272, true, true, false),
+            row(".bss", 1_120, false, true, false),
         ];
         let info = SizeInfo::from_elf_sections_with_ram(&sections, TEENSY_RAM_SECTIONS, None, None);
-        assert_eq!(info.total_ram, 160 + 512 + 1_024 + 900 + 8 + 3_000);
+        assert_eq!(info.total_ram, 2_860);
+        assert_eq!((info.data, info.bss), (272, 160 + 444 + 864 + 1_120));
+        // firmware.hex: .text + .fini + .data.
+        assert_eq!(info.total_flash, 7_048);
     }
 
     async fn run_native(args: &[String]) {

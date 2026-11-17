@@ -306,23 +306,46 @@ mod tests {
         assert_eq!(info.total_flash, 23_904);
     }
 
-    /// Arduino Renesas (`fsp.ld`): `.heap`, `.stack_dummy`, `.vector_table`
-    /// (which runs to the end of RAM) and the DTC table are reservations.
+    /// Writable but not `SHF_ALLOC` (`readelf` flag `W`): the empty
+    /// placeholders Arduino Renesas's `fsp.ld` emits.
+    fn writable_unalloc(name: &str) -> ElfSectionSize {
+        ElfSectionSize {
+            name: name.to_string(),
+            ..sec(0, false, true, true, false)
+        }
+    }
+
+    /// FastLED/fbuild#2042: `readelf -S` of a real Arduino Renesas
+    /// `uno_r4_minima` blink (`fsp.ld`, dev-mode `--clean` build), debug
+    /// sections omitted. `.heap`, `.stack_dummy` and `.vector_table` (which
+    /// runs to the end of RAM) are reservations. PlatformIO renesas-ra
+    /// (`SIZEDATAREGEXP = ^(?:\.data|\.bss|\.noinit)\s+(\d+)` over `size -A`)
+    /// reports 140 + 28 + 3_972 = 4_140 bytes of RAM for this ELF.
     #[test]
-    fn renesas_ram_excludes_heap_stack_and_vector_reservations() {
+    fn renesas_real_blink_ram_matches_platformio() {
         let sections = [
-            named(".text", 40_000, true, false, true),
-            named(".fsp_dtc_vector_table", 128, false, true, false),
-            named(".data", 300, true, true, false),
-            named(".noinit", 40, false, true, false),
-            named(".bss", 2_000, false, true, false),
-            named(".heap", 4_096, false, true, false),
+            named(".text", 27_884, true, false, true), // 0x00004000
+            named(".ARM.exidx", 8, true, false, false),
+            writable_unalloc(".fsp_dtc_vector_table"),
+            named(".data", 140, true, true, false), // 0x20000000
+            named(".noinit", 28, false, true, false),
+            named(".bss", 3_972, false, true, false),
+            named(".heap", 8_192, false, true, false),
             named(".stack_dummy", 1_024, false, true, false),
             named(".vector_table", 256, false, true, false),
+            writable_unalloc(".data_flash"),
+            named(".id_code", 28, true, false, false), // 0x01010018
+            writable_unalloc(".option_setting"),
+            writable_unalloc(".option_setting_ns"),
+            writable_unalloc(".option_setting_s"),
+            unalloc(".ARM.attributes", 48),
+            unalloc(".comment", 142),
         ];
         let info = SizeInfo::from_elf_sections(&sections, None, None);
-        assert_eq!(info.total_ram, 300 + 40 + 2_000);
-        assert_eq!((info.data, info.bss), (300, 2_040));
+        assert_eq!(info.total_ram, 4_140);
+        assert_eq!((info.data, info.bss), (140, 28 + 3_972));
+        // firmware.bin: .text + .ARM.exidx + .data + .id_code.
+        assert_eq!(info.total_flash, 28_060);
     }
 
     /// AVR (real `uno` ELF plus a `.noinit`): `.data + .bss + .noinit` was
