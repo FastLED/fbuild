@@ -6,8 +6,8 @@
 //! absolute *paths* of the link inputs, which differ per project.
 //!
 //! This cache keys the link output on the *contents* of the link inputs plus
-//! the link flags with the output directory normalized away. A hit restores
-//! `firmware.elf` and lets the normal convert/size legs run from it, so the
+//! the linker argv, with the input paths and output directory normalized
+//! away (FastLED/fbuild#2042). A hit restores `firmware.elf` and lets the normal convert/size legs run from it, so the
 //! ELF's debug info stays identical (verified byte-for-byte across two fresh
 //! dirs) without paying the linker.
 //!
@@ -40,10 +40,17 @@ fn field(hasher: &mut sha2::Sha256, bytes: &[u8]) {
 /// Digest of the link inputs' *contents*, independent of the directory they
 /// happen to live in.
 ///
+/// `command` is the argv the linker runs (`Linker::link_command`), so a
+/// built-in link flag is part of the key (FastLED/fbuild#2042). Its
+/// project-specific parts are normalized away: an argument naming an input
+/// becomes `<in>` (the input's bytes are hashed below) and the output
+/// directory becomes `<out>`.
+///
 /// Returns `None` when any input cannot be read: the caller then simply
 /// relinks, which is always correct.
 pub(crate) fn content_key(
     inputs: &[&Path],
+    command: &[String],
     extra: &LinkExtraArgs,
     platform_fingerprint: &str,
     output_dir: &Path,
@@ -54,13 +61,9 @@ pub(crate) fn content_key(
     field(&mut hasher, env!("CARGO_PKG_VERSION").as_bytes());
     field(&mut hasher, platform_fingerprint.as_bytes());
     field(&mut hasher, &[u8::from(extra.bloat_analysis)]);
-    let out = output_dir.to_string_lossy();
-    for flag in &extra.flags {
-        field(&mut hasher, flag.replace(out.as_ref(), "<out>").as_bytes());
-    }
-    field(&mut hasher, b"--libs");
-    for lib in &extra.libs {
-        field(&mut hasher, lib.replace(out.as_ref(), "<out>").as_bytes());
+    field(&mut hasher, b"--command");
+    for arg in normalized_command(command, inputs, output_dir) {
+        field(&mut hasher, arg.as_bytes());
     }
     field(&mut hasher, b"--inputs");
     for input in inputs {
@@ -77,6 +80,26 @@ pub(crate) fn content_key(
         field(&mut hasher, &contents.finalize());
     }
     Some(format!("{:x}", hasher.finalize()))
+}
+
+/// `command` with the per-project input paths and output directory replaced
+/// by placeholders, so two projects with identical inputs share a key.
+fn normalized_command(command: &[String], inputs: &[&Path], output_dir: &Path) -> Vec<String> {
+    let inputs: std::collections::HashSet<String> = inputs
+        .iter()
+        .map(|input| input.to_string_lossy().into_owned())
+        .collect();
+    let out = output_dir.to_string_lossy();
+    command
+        .iter()
+        .map(|arg| {
+            if inputs.contains(arg) {
+                "<in>".to_string()
+            } else {
+                arg.replace(out.as_ref(), "<out>")
+            }
+        })
+        .collect()
 }
 
 /// Directory holding the entry for `key`.
@@ -193,12 +216,24 @@ mod tests {
         NormalizedPath::new(&path)
     }
 
+    /// A key for the argv a GNU driver would run: flags, then the object.
     fn key(dir: &Path, object: &Path, flags: &[String]) -> String {
-        let extra = LinkExtraArgs {
-            flags: flags.to_vec(),
-            ..Default::default()
-        };
-        content_key(&[object], &extra, "fingerprint", dir).unwrap()
+        let command = argv(object, flags);
+        content_key(
+            &[object],
+            &command,
+            &LinkExtraArgs::default(),
+            "fingerprint",
+            dir,
+        )
+        .unwrap()
+    }
+
+    fn argv(object: &Path, flags: &[String]) -> Vec<String> {
+        let mut command = vec!["gcc".to_string()];
+        command.extend(flags.iter().cloned());
+        command.push(object.to_string_lossy().into_owned());
+        command
     }
 
     #[test]
@@ -228,8 +263,8 @@ mod tests {
         assert_ne!(base, key(dir.path(), &object, &[]));
         let extra = LinkExtraArgs::default();
         assert_ne!(
-            content_key(&[&object], &extra, "one", dir.path()),
-            content_key(&[&object], &extra, "two", dir.path())
+            content_key(&[&object], &[], &extra, "one", dir.path()),
+            content_key(&[&object], &[], &extra, "two", dir.path())
         );
     }
 
@@ -238,7 +273,7 @@ mod tests {
         let dir = tempfile::TempDir::new().unwrap();
         let missing = dir.path().join("gone.o");
         let extra = LinkExtraArgs::default();
-        assert!(content_key(&[&missing], &extra, "", dir.path()).is_none());
+        assert!(content_key(&[&missing], &[], &extra, "", dir.path()).is_none());
     }
 
     #[test]

@@ -283,7 +283,9 @@ pub trait Linker: Send + Sync {
     ) -> Result<LinkResult> {
         let candidate_elf = output_dir.join("firmware.elf");
         let all_objects: Vec<&PathBuf> = sketch_objects.iter().chain(core_objects).collect();
-        let digest = crate::link_digest::link_digest(&all_objects, extra, &self.link_fingerprint());
+        let command = self.link_command(sketch_objects, core_objects, output_dir, extra);
+        let fingerprint = self.link_fingerprint();
+        let digest = crate::link_digest::link_digest(&all_objects, &command, extra, &fingerprint);
         if candidate_elf.exists() {
             let can_skip = crate::link_digest::digest_matches(&candidate_elf, &digest)
                 && elf_is_up_to_date(&candidate_elf, all_objects.iter().copied());
@@ -312,8 +314,9 @@ pub trait Linker: Send + Sync {
                     all_objects.iter().map(|object| object.as_path()).collect();
                 crate::link_output_cache::content_key(
                     &inputs,
+                    &command,
                     extra,
-                    &self.link_fingerprint(),
+                    &fingerprint,
                     output_dir,
                 )
             });
