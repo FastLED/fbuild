@@ -144,7 +144,10 @@ def s3_client(credentials: Path | None):
         creds = json.loads(credentials.read_text())
         key_id, secret = creds["access_key"], creds["secret_key"]
     else:
-        key_id, secret = os.environ["AWS_ACCESS_KEY_ID"], os.environ["AWS_SECRET_ACCESS_KEY"]
+        key_id, secret = (
+            os.environ["AWS_ACCESS_KEY_ID"],
+            os.environ["AWS_SECRET_ACCESS_KEY"],
+        )
     return boto3.client(
         "s3",
         region_name=REGION,
@@ -167,7 +170,9 @@ def list_bucket(s3) -> dict[str, ListedObject]:
     for page in s3.get_paginator("list_objects_v2").paginate(Bucket=BUCKET_NAME):
         for obj in page.get("Contents", []):
             if is_registry_key(obj["Key"]):
-                objects[obj["Key"]] = ListedObject(obj["Size"], etag_value(obj.get("ETag")))
+                objects[obj["Key"]] = ListedObject(
+                    obj["Size"], etag_value(obj.get("ETag"))
+                )
     return objects
 
 
@@ -180,7 +185,9 @@ def load_systems(s3, state_db: Path | None) -> dict[str, list[str]]:
             s3.download_file(BUCKET_NAME, STATE_DB_KEY, str(state_db))
         db = sqlite3.connect(f"file:{state_db}?mode=ro", uri=True)
         try:
-            rows = db.execute("select key, system from files where state = 'done'").fetchall()
+            rows = db.execute(
+                "select key, system from files where state = 'done'"
+            ).fetchall()
         finally:
             db.close()
     systems: dict[str, list[str]] = {}
@@ -189,7 +196,9 @@ def load_systems(s3, state_db: Path | None) -> dict[str, list[str]]:
             systems[key] = []
             continue
         value = json.loads(system) if system.startswith("[") else [system]
-        if not isinstance(value, list) or not all(isinstance(v, str) and v for v in value):
+        if not isinstance(value, list) or not all(
+            isinstance(v, str) and v for v in value
+        ):
             raise ValueError(f"{key}: unreadable system {system!r}")
         systems[key] = [] if "*" in value else value
     return systems
@@ -220,12 +229,16 @@ def verify_foreign(out_dir: Path, foreign: dict[str, dict]) -> None:
         rel = entry["descriptor"]["url"]
         path = out_dir / rel
         if not path.is_file():
-            raise ForeignShardError(f"{key}: the committed Index lists {rel}, which does not exist")
+            raise ForeignShardError(
+                f"{key}: the committed Index lists {rel}, which does not exist"
+            )
         data = path.read_bytes()
         actual = {"sha256": hashlib.sha256(data).hexdigest(), "size_bytes": len(data)}
         expected = {field: entry["descriptor"].get(field) for field in actual}
         if actual != expected:
-            raise ForeignShardError(f"{key}: descriptor {expected} does not describe {rel} {actual}")
+            raise ForeignShardError(
+                f"{key}: descriptor {expected} does not describe {rel} {actual}"
+            )
 
 
 def generated_shards(out_dir: Path) -> list[Path]:
@@ -246,7 +259,9 @@ def load_existing(out_dir: Path) -> dict[str, RecordedObject]:
             asset = component.get("asset")
             if asset is None:
                 continue
-            known[component["id"]] = RecordedObject(asset["size_bytes"], None, asset["sha256"])
+            known[component["id"]] = RecordedObject(
+                asset["size_bytes"], None, asset["sha256"]
+            )
     return known
 
 
@@ -287,7 +302,9 @@ def load_state(path: Path | None) -> dict[str, RecordedObject]:
 
 
 def hash_object(key: str, size: int) -> str:
-    request = urllib.request.Request(bucket_url(key), headers={"User-Agent": USER_AGENT})
+    request = urllib.request.Request(
+        bucket_url(key), headers={"User-Agent": USER_AGENT}
+    )
     digest = hashlib.sha256()
     seen = 0
     with urllib.request.urlopen(request, timeout=600) as resp:
@@ -313,8 +330,12 @@ def is_stale(listed: ListedObject, recorded: RecordedObject | None) -> bool:
     return recorded.etag != listed.etag
 
 
-def stale_keys(objects: dict[str, ListedObject], known: dict[str, RecordedObject]) -> list[str]:
-    return sorted(key for key, listed in objects.items() if is_stale(listed, known.get(key)))
+def stale_keys(
+    objects: dict[str, ListedObject], known: dict[str, RecordedObject]
+) -> list[str]:
+    return sorted(
+        key for key, listed in objects.items() if is_stale(listed, known.get(key))
+    )
 
 
 def hash_missing(
@@ -325,9 +346,14 @@ def hash_missing(
 ) -> dict[str, RecordedObject]:
     """Download and hash every object that is new, resized or replaced."""
     known = {**known, **load_state(state)}
-    todo = {k: listed for k, listed in objects.items() if is_stale(listed, known.get(k))}
+    todo = {
+        k: listed for k, listed in objects.items() if is_stale(listed, known.get(k))
+    }
     total = sum(listed.size for listed in todo.values())
-    print(f"{len(todo)} of {len(objects)} objects need hashing ({total / 1e9:.1f} GB)", file=sys.stderr)
+    print(
+        f"{len(todo)} of {len(objects)} objects need hashing ({total / 1e9:.1f} GB)",
+        file=sys.stderr,
+    )
     result = {k: v for k, v in known.items() if k in objects and k not in todo}
     log = state.open("a", encoding="utf-8") if state else None
     try:
@@ -354,7 +380,10 @@ def _hash_all(
     lock = threading.Lock()
     failures: list[str] = []
     with ThreadPoolExecutor(max_workers=workers) as pool:
-        futures = {pool.submit(hash_object, k, listed.size): (k, listed) for k, listed in todo.items()}
+        futures = {
+            pool.submit(hash_object, k, listed.size): (k, listed)
+            for k, listed in todo.items()
+        }
         for n, future in enumerate(as_completed(futures), 1):
             key, listed = futures[future]
             size, etag = listed.size, listed.etag
@@ -369,7 +398,10 @@ def _hash_all(
             with lock:
                 done_bytes += size
             if n % 500 == 0 or n == len(futures):
-                print(f"  {n}/{len(futures)} ({done_bytes / 1e9:.1f}/{total / 1e9:.1f} GB)", file=sys.stderr)
+                print(
+                    f"  {n}/{len(futures)} ({done_bytes / 1e9:.1f}/{total / 1e9:.1f} GB)",
+                    file=sys.stderr,
+                )
     return failures
 
 
@@ -392,7 +424,11 @@ def asset_of(key: str, size: int, sha: str, systems: list[str]) -> dict:
 def descriptor(rel: str, text: str) -> dict:
     data = text.encode()
     return {
-        "descriptor": {"url": rel, "sha256": hashlib.sha256(data).hexdigest(), "size_bytes": len(data)},
+        "descriptor": {
+            "url": rel,
+            "sha256": hashlib.sha256(data).hexdigest(),
+            "size_bytes": len(data),
+        },
         "kind_hint": "data",
     }
 
@@ -413,7 +449,11 @@ def names_documents(
     buckets: dict[str, list[dict]] = {}
     for package, key in sorted(first_key.items()):
         buckets.setdefault(names_bucket(package.split("/")[1]), []).append(
-            {"id": package, "required": False, "asset": asset_of(key, *hashed[key], systems[key])}
+            {
+                "id": package,
+                "required": False,
+                "asset": asset_of(key, *hashed[key], systems[key]),
+            }
         )
     return {
         bucket: render(
@@ -442,7 +482,9 @@ def build_documents(
     generated ones; their shards are not among the returned documents."""
     unknown = sorted(set(hashed) - set(systems))
     if unknown:
-        raise ValueError(f"{len(unknown)} objects have no system in the state db, e.g. {unknown[:3]}")
+        raise ValueError(
+            f"{len(unknown)} objects have no system in the state db, e.g. {unknown[:3]}"
+        )
     by_owner: dict[str, list[str]] = {}
     for key in hashed:
         by_owner.setdefault(owner_of(key), []).append(key)
@@ -450,7 +492,11 @@ def build_documents(
     tools: dict[str, dict] = {}
     for owner in sorted(by_owner):
         components = [
-            {"id": key, "required": False, "asset": asset_of(key, *hashed[key], systems[key])}
+            {
+                "id": key,
+                "required": False,
+                "asset": asset_of(key, *hashed[key], systems[key]),
+            }
             for key in sorted(by_owner[owner])
         ]
         shard = render(
@@ -472,7 +518,9 @@ def build_documents(
         tools[NAMES_KEY + bucket] = descriptor(rel, text)
     for key, entry in (foreign or {}).items():
         if key in tools:
-            raise ForeignShardError(f"{key}: generated here and also listed as another tool's entry")
+            raise ForeignShardError(
+                f"{key}: generated here and also listed as another tool's entry"
+            )
         tools[key] = entry
     docs["manifest.json"] = render(
         {"$schema": SCHEMA, "kind": "Index", "schema_version": 1, "tools": tools}
@@ -501,14 +549,20 @@ def write_site(
             old.unlink()
     for rel, text in docs.items():
         (out_dir / rel).write_text(text, encoding="utf-8")
-    print(f"wrote {len(docs) - 1} shards covering {len(hashed)} objects", file=sys.stderr)
+    print(
+        f"wrote {len(docs) - 1} shards covering {len(hashed)} objects", file=sys.stderr
+    )
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--out-dir", type=Path, default=OUT_DIR)
-    parser.add_argument("--credentials", type=Path, help="JSON file with access_key/secret_key")
-    parser.add_argument("--state-db", type=Path, help=f"local copy of the bucket's {STATE_DB_KEY}")
+    parser.add_argument(
+        "--credentials", type=Path, help="JSON file with access_key/secret_key"
+    )
+    parser.add_argument(
+        "--state-db", type=Path, help=f"local copy of the bucket's {STATE_DB_KEY}"
+    )
     parser.add_argument(
         "--version",
         help=f"shard version (default: the version the shards on disk carry, else {DEFAULT_VERSION})",
@@ -519,7 +573,9 @@ def main() -> int:
         type=Path,
         help=f"record hashes/ETags here as they finish and reuse them on rerun (default: {STATE_NAME})",
     )
-    parser.add_argument("--check", action="store_true", help="fail if the documents are out of date")
+    parser.add_argument(
+        "--check", action="store_true", help="fail if the documents are out of date"
+    )
     args = parser.parse_args()
 
     s3 = s3_client(args.credentials)
@@ -530,7 +586,10 @@ def main() -> int:
         stale = stale_keys(objects, known)
         gone = sorted(set(known) - set(objects))
         if stale or gone:
-            print(f"{len(stale)} unhashed/changed and {len(gone)} removed objects; rerun", file=sys.stderr)
+            print(
+                f"{len(stale)} unhashed/changed and {len(gone)} removed objects; rerun",
+                file=sys.stderr,
+            )
             return 1
         return 0
 
