@@ -1503,8 +1503,9 @@ mod tests {
         let template = framework
             .get_variant_dir(&board.variant)
             .join("memmap_default.ld");
+        let root_key = fbuild_core::path::normalize_for_key(&cache_root);
         assert!(
-            template.starts_with(&cache_root),
+            fbuild_core::path::normalize_for_key(&template).starts_with(&format!("{root_key}/")),
             "test must write under its own cache root, not {}",
             template.display()
         );
