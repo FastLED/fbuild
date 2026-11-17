@@ -3,7 +3,7 @@
 
 use super::mirrors::{
     Candidates, DEFAULT_MIRROR, MIRROR_FIRST_ENV, MIRRORS_ENV, attempt_order, candidate_urls,
-    mirror_first_requested, resolve_unverified, resolve_with,
+    mirror_first_requested, mirror_path, registry_owner, resolve_unverified, resolve_with,
 };
 use super::tests::{
     FAST_RETRY_TIMING, complete_response, network_test_guard, run_flaky_server, test_client,
@@ -260,6 +260,72 @@ fn candidate_urls_path_falls_back_to_the_file_name_off_registry() {
         )[1],
         "https://mirror.example/pkg.tar.gz"
     );
+}
+
+/// ARM's toolchain host is mirrored under `vendor/<host>/<path>`: its own path
+/// is kept untouched, so publishing an ARM tarball needs no second rule
+/// (FastLED/fbuild#2029).
+const ARM_TARBALL: &str = "https://developer.arm.com/-/media/Files/downloads/gnu/15.2.rel1/binrel/arm-gnu-toolchain-15.2.rel1-x86_64-arm-none-eabi.tar.xz";
+const ARM_BUCKET_KEY: &str = "vendor/developer.arm.com/-/media/Files/downloads/gnu/15.2.rel1/binrel/arm-gnu-toolchain-15.2.rel1-x86_64-arm-none-eabi.tar.xz";
+
+#[test]
+fn candidate_urls_map_a_vendor_host_under_the_vendor_root() {
+    let mirrors = vec!["https://mirror.example/{path}".to_string()];
+    assert_eq!(mirror_path(ARM_TARBALL).as_deref(), Some(ARM_BUCKET_KEY));
+    assert_eq!(
+        candidate_urls(ARM_TARBALL, &mirrors),
+        vec![
+            ARM_TARBALL.to_string(),
+            format!("https://mirror.example/{ARM_BUCKET_KEY}"),
+        ]
+    );
+}
+
+/// A vendor host is a HOST, not a registry owner: `registry_owner` stays
+/// `None`, so no manifest shard is ever looked up for it and the
+/// `vendor/` root cannot be mistaken for a package owner.
+#[test]
+fn registry_owner_is_none_for_a_mirrored_vendor_host() {
+    assert_eq!(registry_owner(ARM_TARBALL), None);
+    assert_eq!(registry_owner("https://vendor.example/files/pkg.zip"), None);
+    assert_eq!(
+        registry_owner(
+            "https://dl.registry.platformio.org/download/platformio/tool/framework-arduino-avr/5.4.0/framework-arduino-avr-5.4.0.tar.gz"
+        )
+        .as_deref(),
+        Some("platformio")
+    );
+}
+
+/// With no mirror configured, the ARM tarball goes to fbuild's own bucket
+/// first and falls back to `developer.arm.com`, which answers 503 for hours
+/// at a time and takes every nRF52 build with it (FastLED/fbuild#2029).
+#[tokio::test]
+async fn unset_env_prefers_the_built_in_bucket_for_a_mirrored_vendor_host() {
+    let _guard = network_test_guard().await;
+    let _mirrors = ScopedEnv::unset(MIRRORS_ENV);
+    let _first = ScopedEnv::unset(MIRROR_FIRST_ENV);
+    let bucket = DEFAULT_MIRROR.trim_end_matches("{path}");
+    assert_eq!(
+        resolve_with(ARM_TARBALL, None),
+        Candidates::new(
+            vec![ARM_TARBALL.to_string(), format!("{bucket}{ARM_BUCKET_KEY}"),],
+            true
+        )
+    );
+    // The vendor outranks the bucket when the operator says so.
+    {
+        let _vendor_first = ScopedEnv::set(MIRROR_FIRST_ENV, "0");
+        assert_eq!(resolve_with(ARM_TARBALL, None).order, vec![0, 1]);
+    }
+    // An explicitly empty mirror list opts out of the bucket entirely.
+    {
+        let _opt_out = ScopedEnv::set(MIRRORS_ENV, "");
+        assert_eq!(
+            resolve_with(ARM_TARBALL, None),
+            Candidates::new(vec![ARM_TARBALL.to_string()], false)
+        );
+    }
 }
 
 /// The bucket mirrors only the registry layout: a GitHub URL has no mirror

@@ -5,7 +5,7 @@
 
 use fbuild_core::platformio_package::{PackageKind, RegistryMetadata};
 use fbuild_core::{FbuildError, Result};
-use fbuild_packages_fetch::platformio_registry::{RegistryClient, RegistryError};
+use fbuild_packages_fetch::platformio_registry::{INDEX_MISS_HINT, RegistryClient, RegistryError};
 
 /// Resolved library version with download URL.
 #[derive(Debug, Clone)]
@@ -77,7 +77,7 @@ async fn select_owner(client: &RegistryClient, name: &str) -> Result<RegistryMet
     candidates.sort_by_key(|m| std::cmp::Reverse(m.versions.len()));
     match candidates.as_slice() {
         [] => Err(FbuildError::PackageError(format!(
-            "library '{name}' is not in fbuild's registry index"
+            "library '{name}' is not in fbuild's registry index; {INDEX_MISS_HINT}"
         ))),
         [first, second, ..] if first.versions.len() == second.versions.len() => {
             Err(FbuildError::PackageError(format!(
@@ -102,12 +102,7 @@ fn select_version(
         .filter(|(parsed, _)| version_req.as_ref().is_none_or(|req| req.matches(parsed)))
         .max_by(|(a, _), (b, _)| a.cmp(b));
     let Some((_, version)) = best else {
-        return Err(FbuildError::PackageError(format!(
-            "no version of {}/{} matches constraint '{}'",
-            metadata.owner,
-            metadata.name,
-            version_spec.unwrap_or("*")
-        )));
+        return Err(no_matching_version(metadata, version_spec));
     };
     let file = version.files.first().ok_or_else(|| {
         FbuildError::PackageError(format!(
@@ -121,6 +116,29 @@ fn select_version(
         version: version.name.clone(),
         download_url: file.download_url.clone(),
     })
+}
+
+/// A constraint no indexed version satisfies. The index lists only what the
+/// mirror bucket holds, so a release newer than the last mirror pass is
+/// missing; name the newest mirrored version so that lag is visible
+/// (FastLED/fbuild#2019).
+fn no_matching_version(metadata: &RegistryMetadata, version_spec: Option<&str>) -> FbuildError {
+    let newest = metadata
+        .versions
+        .iter()
+        .filter_map(|version| Some((lenient_parse_version(&version.name)?, &version.name)))
+        .max_by(|(a, _), (b, _)| a.cmp(b))
+        .map_or_else(
+            || "none is mirrored".to_string(),
+            |(_, name)| format!("newest mirrored version is {name}"),
+        );
+    FbuildError::PackageError(format!(
+        "no version of {}/{} matches constraint '{}'; {newest} \
+         (fbuild's registry index can lag new releases); {INDEX_MISS_HINT}",
+        metadata.owner,
+        metadata.name,
+        version_spec.unwrap_or("*")
+    ))
 }
 
 /// Leniently parse a version string, padding with `.0` if needed.
@@ -229,6 +247,37 @@ mod tests {
             .await
             .unwrap_err();
         assert!(tie.to_string().contains("owner/OneWire"), "{tie}");
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn index_misses_name_the_newest_mirrored_version_and_the_way_out() {
+        // FastLED/fbuild#2019: `fastled/FastLED@3.10.9` against an index that
+        // stops at 3.10.8, and a library the index does not list at all.
+        let client = client(&[
+            lib("fastled", "FastLED", "3.10.7"),
+            lib("fastled", "FastLED", "3.10.8"),
+        ])
+        .await;
+        let stale = resolve_library_with(&client, "fastled", "FastLED", Some("3.10.9"))
+            .await
+            .unwrap_err()
+            .to_string();
+        assert!(stale.contains("'3.10.9'"), "{stale}");
+        assert!(
+            stale.contains("newest mirrored version is 3.10.8"),
+            "{stale}"
+        );
+        assert!(stale.contains("lag"), "{stale}");
+        assert!(stale.contains(INDEX_MISS_HINT), "{stale}");
+
+        for owner in ["", "adafruit"] {
+            let missing = resolve_library_with(&client, owner, "Adafruit Zero DMA Library", None)
+                .await
+                .unwrap_err()
+                .to_string();
+            assert!(missing.contains("Adafruit Zero DMA Library"), "{missing}");
+            assert!(missing.contains(INDEX_MISS_HINT), "{missing}");
+        }
     }
 
     #[test]

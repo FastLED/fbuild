@@ -329,6 +329,74 @@ pub(crate) fn names_key(name: &str) -> String {
     format!("@names-{}", &digest[..1])
 }
 
+/// Index keys that may hold the names shard for `name`: the plain spelling,
+/// and the percent-encoded spelling an index generated from the mirror bucket
+/// carries whenever the registry download path encodes the name
+/// (`ESP32 HUB75 LED MATRIX PANEL DMA Display` -> `ESP32%20HUB75...`). Bucket
+/// keys are the registry's own paths, so `names_bucket` in
+/// `ci/gen_mirror_manifest.py` hashes the encoded spelling while a `lib_deps`
+/// spec carries the display name (#2019). Trying both spellings resolves
+/// either generation of the index.
+pub(crate) fn names_keys(name: &str) -> Vec<String> {
+    let encoded = encode_component(name);
+    let mut keys = vec![names_key(name)];
+    if encoded != name {
+        keys.push(names_key(&encoded));
+    }
+    keys
+}
+
+/// Percent-encode one path segment the way `urllib.parse.quote(text,
+/// safe="%")` in `ci/gen_mirror_manifest.py` does: unreserved bytes and `%`
+/// survive, every other byte becomes `%XX` with upper-case hex digits.
+pub(crate) fn encode_component(text: &str) -> String {
+    text.bytes()
+        .map(|b| match b {
+            b'A'..=b'Z' | b'a'..=b'z' | b'0'..=b'9' | b'_' | b'.' | b'-' | b'~' | b'%' => {
+                char::from(b).to_string()
+            }
+            _ => format!("%{b:02X}"),
+        })
+        .collect()
+}
+
+/// Percent-decode one component id segment. Bytes that are not a valid escape
+/// are kept, and the result is lossily decoded as UTF-8, so an id that carries
+/// no escape round-trips unchanged.
+pub(crate) fn decode_component(text: &str) -> String {
+    let bytes = text.as_bytes();
+    let mut out = Vec::with_capacity(bytes.len());
+    let mut index = 0;
+    while index < bytes.len() {
+        match (bytes[index], bytes.get(index + 1), bytes.get(index + 2)) {
+            (b'%', Some(high), Some(low)) => match (hex_value(*high), hex_value(*low)) {
+                (Some(high), Some(low)) => {
+                    out.push(high * 16 + low);
+                    index += 3;
+                }
+                _ => {
+                    out.push(bytes[index]);
+                    index += 1;
+                }
+            },
+            (byte, _, _) => {
+                out.push(byte);
+                index += 1;
+            }
+        }
+    }
+    String::from_utf8_lossy(&out).into_owned()
+}
+
+fn hex_value(byte: u8) -> Option<u8> {
+    match byte {
+        b'0'..=b'9' => Some(byte - b'0'),
+        b'a'..=b'f' => Some(byte - b'a' + 10),
+        b'A'..=b'F' => Some(byte - b'A' + 10),
+        _ => None,
+    }
+}
+
 /// The Index key for a registry owner: escaped like `urllib.parse.quote(owner,
 /// safe="%")` in `ci/gen_mirror_manifest.py`, so `@` can never be an owner.
 pub(crate) fn owner_key(owner: &str) -> String {

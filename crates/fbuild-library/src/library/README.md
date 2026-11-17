@@ -7,6 +7,7 @@ Arduino library and framework dependency management: spec parsing, download, com
 - **`mod.rs`** -- Module root; re-exports framework types and `LibrarySpec`
 - **`library_spec.rs`** -- Parser for `lib_deps` formats (`owner/Name@^version`, GitHub URLs, bare names, and named `symlink://`/`file://` local dependencies)
 - **`library_downloader.rs`** -- Downloads libraries from GitHub URLs or the PlatformIO registry
+- **`github_source.rs`** -- GitHub `lib_deps` URLs (`https://github.com/O/R[.git][#ref]`, `git+https://…`, `Name=https://…`): the archive URL of the ref (`archive/<ref>.zip`, `archive/HEAD.zip` without one), a ref-qualified install directory so refs never collide, and a zip check that names an HTML response instead of a zip reader error (FastLED/fbuild#2018). Tests in `github_source_tests.rs`
 - **`library_info.rs`** -- Scans installed libraries for include directories and source files
 - **`library_compiler.rs`** -- Compiles library C/C++ sources and archives into static `.a` files. `.c`, `.S` (assembler-with-cpp) and `.s` (raw assembly) go through the C driver with the target C flags; the remaining collected extensions (`.cpp`/`.cc`/`.cxx`) go through C++. The rebuild signature is computed from that same choice, so changing a driver invalidates the object instead of silently reusing it (FastLED/fbuild#1885).
 - **`library_dispatch_tests.rs`** -- The driver/flag/signature contract for library TUs, kept in its own module so the main test file stays under the per-file cap

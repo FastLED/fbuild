@@ -230,3 +230,164 @@ fn no_runtime_code_references_the_platformio_registry_api() {
     }
     assert!(offenders.is_empty(), "{offenders:?}");
 }
+
+#[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+async fn spaced_names_resolve_through_the_encoded_index_spelling() {
+    // The published index repeats the bucket key, so a name the registry
+    // percent-encodes reaches it as `ESP32%20HUB75...` while a `lib_deps` spec
+    // carries the display name (#2019). Owner-qualified and owner-less
+    // lookups -- the two `lib_deps` paths -- must both find it, and the
+    // reported name must be the display name.
+    let name = "ESP32 HUB75 LED MATRIX PANEL DMA Display";
+    let files = [
+        IndexFile {
+            owner: "mrfaptastic",
+            kind: "library",
+            name,
+            version: "3.0.13",
+            systems: &[],
+            sha256: OTHER,
+        },
+        IndexFile {
+            owner: "mrfaptastic",
+            kind: "library",
+            name,
+            version: "3.0.14",
+            systems: &[],
+            sha256: HASH,
+        },
+    ];
+    let (client, _) = client_for(&files).await;
+
+    let owners = client.owners(PackageKind::Library, name).await.unwrap();
+    assert_eq!(owners, ["mrfaptastic"]);
+
+    let metadata = client
+        .package_metadata("mrfaptastic", PackageKind::Library, name)
+        .await
+        .unwrap_or_else(|error| panic!("{error}"));
+    assert_eq!(metadata.owner, "mrfaptastic");
+    assert_eq!(metadata.name, name);
+    let versions = metadata
+        .versions
+        .iter()
+        .map(|version| version.name.as_str())
+        .collect::<Vec<_>>();
+    assert_eq!(versions, ["3.0.13", "3.0.14"]);
+    let file = &metadata.versions.last().expect("3.0.14 is indexed").files[0];
+    assert_eq!(
+        file.download_url,
+        "https://dl.registry.platformio.org/download/mrfaptastic/library/ESP32%20HUB75%20LED%20MATRIX%20PANEL%20DMA%20Display/3.0.14/ESP32%20HUB75%20LED%20MATRIX%20PANEL%20DMA%20Display-3.0.14.tar.gz"
+    );
+    assert_eq!(file.sha256.as_deref(), Some(HASH));
+}
+
+/// Live: the published index resolves the names #2019 reports. The mirror
+/// bucket stores them percent-encoded, so this is the production proof for the
+/// decoding and dual-spelling lookup.
+#[tokio::test]
+#[ignore = "network: fetches https://fastled.github.io/fbuild/mirror/manifest.json"]
+async fn published_index_resolves_percent_encoded_names_live() {
+    // `published_manifest` is inert under `cfg!(test)`, so read the served
+    // index by URL: the same documents a release resolves from.
+    let source = crate::downloader::manifest::manifest_urls()
+        .into_iter()
+        .next()
+        .expect("a published index URL");
+    assert!(source.starts_with("https://"), "{source}");
+    let client = RegistryClient::new(source, reqwest::Client::new());
+    for (owner, name) in [
+        ("mrfaptastic", "ESP32 HUB75 LED MATRIX PANEL DMA Display"),
+        ("adafruit", "Adafruit Zero DMA Library"),
+        ("fastled", "FastLED"),
+    ] {
+        assert!(
+            client
+                .owners(PackageKind::Library, name)
+                .await
+                .unwrap()
+                .iter()
+                .any(|listed| listed == owner),
+            "{owner} is not an indexed owner of {name}"
+        );
+        let metadata = client
+            .package_metadata(owner, PackageKind::Library, name)
+            .await
+            .unwrap_or_else(|error| panic!("{owner}/{name}: {error}"));
+        assert_eq!(metadata.name, name);
+        assert!(!metadata.versions.is_empty(), "{name} lists no versions");
+    }
+    let metadata = client
+        .package_metadata(
+            "mrfaptastic",
+            PackageKind::Library,
+            "ESP32 HUB75 LED MATRIX PANEL DMA Display",
+        )
+        .await
+        .unwrap();
+    assert!(
+        metadata.versions.iter().any(|v| v.name == "3.0.14"),
+        "3.0.14 is indexed"
+    );
+}
+
+#[test]
+fn component_ids_round_trip_through_the_registry_encoding() {
+    use crate::downloader::manifest::{decode_component, encode_component, names_key, names_keys};
+
+    for (plain, encoded) in [
+        (
+            "ESP32 HUB75 LED MATRIX PANEL DMA Display",
+            "ESP32%20HUB75%20LED%20MATRIX%20PANEL%20DMA%20Display",
+        ),
+        (
+            "FANET Protocol implementation in c++",
+            "FANET%20Protocol%20implementation%20in%20c%2B%2B",
+        ),
+        (
+            "SparkFun MPU-9250 (DMP) Library",
+            "SparkFun%20MPU-9250%20%28DMP%29%20Library",
+        ),
+        ("custom-board", "custom-board"),
+        (
+            "mruby|c for ESP32-Arduino",
+            "mruby%7Cc%20for%20ESP32-Arduino",
+        ),
+    ] {
+        assert_eq!(encode_component(plain), encoded);
+        assert_eq!(decode_component(encoded), plain);
+        assert_eq!(decode_component(plain), plain);
+    }
+    // A plain name needs one lookup; an encoded one tries both spellings, so
+    // either generation of the index resolves (#2019).
+    assert_eq!(names_keys("custom-board"), vec![names_key("custom-board")]);
+    let spaced = names_keys("ESP32 HUB75 LED MATRIX PANEL DMA Display");
+    assert_eq!(spaced.len(), 2);
+    assert_eq!(
+        spaced[0],
+        names_key("ESP32 HUB75 LED MATRIX PANEL DMA Display")
+    );
+    assert_eq!(
+        spaced[1],
+        names_key("ESP32%20HUB75%20LED%20MATRIX%20PANEL%20DMA%20Display")
+    );
+}
+
+#[test]
+fn not_indexed_error_tells_the_user_what_to_do() {
+    // FastLED/fbuild#2019: the miss must point at a workaround and at where
+    // mirroring is requested, not only state that the package is absent.
+    let message = RegistryError::NotIndexed("acme/library/Missing".into()).to_string();
+    assert!(message.contains("acme/library/Missing"), "{message}");
+    assert!(message.contains(INDEX_MISS_HINT), "{message}");
+    for needle in [
+        "lib/",
+        "git URL",
+        "https://github.com/FastLED/fbuild/issues",
+    ] {
+        assert!(
+            INDEX_MISS_HINT.contains(needle),
+            "{needle}: {INDEX_MISS_HINT}"
+        );
+    }
+}

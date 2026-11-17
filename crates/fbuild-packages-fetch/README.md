@@ -17,10 +17,19 @@ Extracted from `fbuild-packages` for compile parallelism (FastLED/fbuild#1008 Ph
 
 - a `dl.registry.platformio.org` download maps to the part after `/download/`,
   e.g. `platformio/tool/framework-arduino-avr/5.4.0/framework-arduino-avr-5.4.0.tar.gz`;
+- a `developer.arm.com` download keeps its whole path under `vendor/`, e.g.
+  `vendor/developer.arm.com/-/media/Files/downloads/gnu/15.2.rel1/binrel/arm-gnu-toolchain-15.2.rel1-x86_64-arm-none-eabi.tar.xz`
+  (FastLED/fbuild#2029: ARM answers 503 for hours and takes every nRF52 build
+  with it, so the bucket copy is tried first);
 - any other URL degrades to the file name, exactly as `{filename}` does.
 
 fbuild's own bucket uses this layout, so builds hit it by default. Downloads
-from other hosts skip the built-in mirror and go straight to the vendor.
+from other hosts skip the built-in mirror and go straight to the vendor. A
+host joins the mirrored set by naming it in `MIRRORED_VENDOR_HOSTS`
+(`downloader_mirrors.rs`); its objects live under `vendor/<host>/<path>`, a
+root the registry index ignores (those keys are not `<owner>/<type>/<name>/
+<version>/<file>`, so `ci/gen_mirror_manifest.py` leaves them out and no shard
+is ever looked up for the host).
 
 ```bash
 # Vendor first, bucket as fallback:
@@ -93,9 +102,41 @@ PlatformIO's registry API:
   the asset), so owner-less specs can find their owner. `<h>` is the first
   hex digit of the SHA-256 of the ASCII-lowercased name.
 
+Component ids repeat the mirror bucket's key, which is the registry's own
+download path, so a name the registry percent-encodes arrives in that spelling:
+`owner/library/ESP32%20HUB75%20LED%20MATRIX%20PANEL%20DMA%20Display/...`.
+Resolution percent-decodes ids before comparing them with a spec's display
+name, and looks up the `@names-<h>` shard under both the display name and its
+encoded spelling, because the generator buckets those shards by the bucket
+key (FastLED/fbuild#2019).
+
 A package the index does not list fails with `RegistryError::NotIndexed`, and
 an unreachable index or shard with `RegistryError::IndexUnavailable`; neither
-falls back to PlatformIO. `platformio_registry_fixture` builds and serves an
+falls back to PlatformIO. The index lists only what the mirror bucket holds:
+`site/mirror/README.md` regenerates these documents from the bucket, and the
+bucket is filled by the separate mirroring tool, so a version the bucket has
+not received yet cannot resolve. `platformio_registry_fixture` builds and serves an
 index for tests in this and dependent crates.
+
+### What is mirrored, and how to get a library added (FastLED/fbuild#2019)
+
+- **No allow-list.** The bucket mirrors the PlatformIO registry catalogue
+  wholesale (every package, version and file) as of the last mirror pass.
+  Nothing is nominated per library. The list of what is mirrored is the index
+  itself: <https://fastled.github.io/fbuild/mirror/manifest.json> maps each
+  owner to a shard listing every mirrored archive. A shard's `version` is the
+  date it was regenerated.
+- **New releases are not followed automatically.** Two maintainer-run steps
+  pick them up. The separate mirroring tool re-catalogues the registry and
+  uploads new archives to the bucket. Then `ci/gen_mirror_manifest.py`
+  regenerates `site/mirror/` from the bucket, and that commit publishes it.
+  This repo's CI schedules neither step, so the index lags the registry until
+  both run. A version released after the last pass fails with "no version ...
+  matches", which names the newest mirrored version.
+- **To request a library or a newer release,** open an issue at
+  <https://github.com/FastLED/fbuild/issues> naming `owner/name@version`.
+  Until it is mirrored, vendor the library under `lib/` or depend on its git
+  URL; neither goes through the index. Both index-miss errors say this
+  (`platformio_registry::INDEX_MISS_HINT`).
 
 A failed fetch reports the attempt count and time spent, and names any mirrors tried.
