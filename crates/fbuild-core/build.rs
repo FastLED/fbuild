@@ -25,9 +25,14 @@ fn main() {
     // dependents. `git status` cannot be watched that way — the dirty flag is
     // therefore as fresh as the last HEAD/index movement, which is the case
     // that matters (a *different build*, not an in-place edit).
-    for relative in ["../.git/HEAD", "../.git/index"] {
-        if std::path::Path::new(relative).exists() {
-            println!("cargo:rerun-if-changed={relative}");
+    //
+    // The watched files come from git itself: cargo resolves relative
+    // `rerun-if-changed` paths against this crate's directory, and the old
+    // hardcoded `../.git/*` pointed at the nonexistent `crates/.git`, so the
+    // stamp never followed HEAD in incremental builds (FastLED/fbuild#2036).
+    for watched in git_watch_paths() {
+        if std::path::Path::new(&watched).exists() {
+            println!("cargo:rerun-if-changed={watched}");
         }
     }
     println!("cargo:rerun-if-changed=build.rs");
@@ -43,6 +48,19 @@ fn main() {
         "cargo:rustc-env=FBUILD_BUILD_DIRTY={}",
         if dirty { "1" } else { "0" }
     );
+}
+
+/// HEAD, the index and the checked-out branch ref, as absolute paths. A commit
+/// moves the branch ref; a checkout moves HEAD; staging moves the index.
+fn git_watch_paths() -> Vec<String> {
+    let Some(git_dir) = run_git(&["rev-parse", "--absolute-git-dir"]) else {
+        return Vec::new();
+    };
+    let mut paths = vec![format!("{git_dir}/HEAD"), format!("{git_dir}/index")];
+    if let Some(branch_ref) = run_git(&["symbolic-ref", "-q", "HEAD"]) {
+        paths.push(format!("{git_dir}/{branch_ref}"));
+    }
+    paths
 }
 
 /// Placeholder used when the checkout cannot be fingerprinted.
