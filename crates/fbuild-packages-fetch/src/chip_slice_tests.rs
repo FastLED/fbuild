@@ -1,4 +1,7 @@
 //! A chip slice must install, verify and stay chip-scoped (FastLED/fbuild#1944).
+//!
+//! The archive/serve fixtures below are shared (`pub(crate)`) with the
+//! install-repair tests, which drive the same `staged_install` seam.
 
 use std::collections::HashMap;
 use std::path::Path;
@@ -13,12 +16,12 @@ use crate::{CacheSubdir, PackageBase};
 const CHIP: &str = "esp32s3";
 const OTHER_CHIP: &str = "esp32s2";
 
-fn sha256_hex(bytes: &[u8]) -> String {
+pub(crate) fn sha256_hex(bytes: &[u8]) -> String {
     format!("{:x}", Sha256::digest(bytes))
 }
 
 /// A `.tar.zst` whose `bin/` entry is what the validation closure checks.
-fn tar_zst(entries: &[(&str, &[u8])]) -> Vec<u8> {
+pub(crate) fn tar_zst(entries: &[(&str, &[u8])]) -> Vec<u8> {
     let mut tar = tar::Builder::new(Vec::new());
     for (name, content) in entries {
         let mut header = tar::Header::new_gnu();
@@ -33,7 +36,9 @@ fn tar_zst(entries: &[(&str, &[u8])]) -> Vec<u8> {
 
 /// Serves each path's body and records every path requested, so a test can
 /// prove what fbuild did NOT download.
-async fn serve(bodies: Vec<(&'static str, Vec<u8>)>) -> (String, Arc<Mutex<Vec<String>>>) {
+pub(crate) async fn serve(
+    bodies: Vec<(&'static str, Vec<u8>)>,
+) -> (String, Arc<Mutex<Vec<String>>>) {
     use tokio::io::{AsyncReadExt, AsyncWriteExt};
 
     let listener = tokio::net::TcpListener::bind("127.0.0.1:0")
@@ -71,13 +76,18 @@ async fn serve(bodies: Vec<(&'static str, Vec<u8>)>) -> (String, Arc<Mutex<Vec<S
     (base, hits)
 }
 
-fn base_with(tmp: &Path, cache_root: &Path, url: &str) -> PackageBase {
+pub(crate) fn base_with(tmp: &Path, cache_root: &Path, url: &str) -> PackageBase {
     base_pinned(tmp, cache_root, url, None)
 }
 
 /// `checksum` is the vendor's whole-archive pin, exactly as the real
 /// `Esp32Toolchain` carries it.
-fn base_pinned(tmp: &Path, cache_root: &Path, url: &str, checksum: Option<&str>) -> PackageBase {
+pub(crate) fn base_pinned(
+    tmp: &Path,
+    cache_root: &Path,
+    url: &str,
+    checksum: Option<&str>,
+) -> PackageBase {
     PackageBase::with_cache_root(
         "esp32-xtensa-gcc",
         "14.2.0_20241119",
@@ -90,7 +100,7 @@ fn base_pinned(tmp: &Path, cache_root: &Path, url: &str, checksum: Option<&str>)
     )
 }
 
-fn validate_gcc(dir: &Path) -> fbuild_core::Result<()> {
+pub(crate) fn validate_gcc(dir: &Path) -> fbuild_core::Result<()> {
     if dir.join("bin").join("xtensa-esp-elf-gcc").is_file() {
         return Ok(());
     }

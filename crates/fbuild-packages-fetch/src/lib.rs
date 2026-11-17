@@ -476,17 +476,17 @@ impl PackageBase {
             .chip_install_path()
             .map_or_else(|| install_path.clone(), |path| path.into_path_buf());
 
-        if install_path.exists() {
+        // A hit requires the `.install_complete` sentinel, exactly as
+        // `is_cached()` documents: a directory that merely exists may be a
+        // partial extract, a CI cache restored before the atomic rename
+        // committed, or a legacy tree. Returning it hands the caller a corrupt
+        // framework root (FastLED/fbuild#2043).
+        if let Some(hit) = self.complete_install_dir() {
             // An existing-install hit is a use: refresh the DiskCache LRU so
             // background GC doesn't treat this package as the oldest unused
             // entry and delete it mid-build (FastLED/fbuild#1341).
             self.touch_disk_cache();
-            return Ok(install_path);
-        }
-
-        if target_path.exists() {
-            self.touch_disk_cache();
-            return Ok(target_path);
+            return Ok(hit.into_path_buf());
         }
 
         // Ensure parent directory exists
@@ -499,14 +499,19 @@ impl PackageBase {
         // Append _staging to dir name (can't use with_extension — version has dots)
         let _install_lock =
             install_lock::acquire_for_install(&target_path, &self.name, &self.version).await?;
-        if install_path.exists() {
+        // Re-check under the lock: a concurrent installer may have committed
+        // while we waited.
+        if let Some(hit) = self.complete_install_dir() {
             self.touch_disk_cache();
-            return Ok(install_path);
+            return Ok(hit.into_path_buf());
         }
-        if target_path.exists() {
-            self.touch_disk_cache();
-            return Ok(target_path);
-        }
+
+        // Neither candidate dir is a complete install, yet something may still
+        // sit at the commit path without its sentinel. `replace_file` (a
+        // rename) cannot land over a non-empty directory, and leaving the tree
+        // in place would let `find_core_root`-style fallbacks keep reading it.
+        // Move it aside, then install fresh.
+        Self::quarantine_incomplete_install(&target_path)?;
 
         let staging_path = target_path.with_file_name(format!(
             "{}_staging",
@@ -962,5 +967,7 @@ mod toolchain_gcc_ar_tests {
 
 #[cfg(test)]
 mod chip_slice_tests;
+#[cfg(test)]
+mod install_repair_tests;
 #[cfg(test)]
 mod package_override_tests;
