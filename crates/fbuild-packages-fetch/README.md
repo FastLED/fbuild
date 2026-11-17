@@ -109,4 +109,25 @@ bucket is filled by the separate mirroring tool, so a version the bucket has
 not received yet cannot resolve. `platformio_registry_fixture` builds and serves an
 index for tests in this and dependent crates.
 
+### What is mirrored, and how to get a library added (FastLED/fbuild#2019)
+
+- **No allow-list.** The bucket mirrors the PlatformIO registry catalogue
+  wholesale (every package, version and file) as of the last mirror pass.
+  Nothing is nominated per library. The list of what is mirrored is the index
+  itself: <https://fastled.github.io/fbuild/mirror/manifest.json> maps each
+  owner to a shard listing every mirrored archive. A shard's `version` is the
+  date it was regenerated.
+- **New releases are not followed automatically.** Two maintainer-run steps
+  pick them up. The separate mirroring tool re-catalogues the registry and
+  uploads new archives to the bucket. Then `ci/gen_mirror_manifest.py`
+  regenerates `site/mirror/` from the bucket, and that commit publishes it.
+  This repo's CI schedules neither step, so the index lags the registry until
+  both run. A version released after the last pass fails with "no version ...
+  matches", which names the newest mirrored version.
+- **To request a library or a newer release,** open an issue at
+  <https://github.com/FastLED/fbuild/issues> naming `owner/name@version`.
+  Until it is mirrored, vendor the library under `lib/` or depend on its git
+  URL; neither goes through the index. Both index-miss errors say this
+  (`platformio_registry::INDEX_MISS_HINT`).
+
 A failed fetch reports the attempt count and time spent, and names any mirrors tried.

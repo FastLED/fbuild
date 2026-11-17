@@ -28,6 +28,12 @@ use crate::downloader::{
 /// then serves them bucket-first.
 const REGISTRY_DOWNLOAD_PREFIX: &str = "https://dl.registry.platformio.org/download/";
 
+/// What a user can do when a spec misses fbuild's registry index
+/// (FastLED/fbuild#2019). Mirroring is explained in this crate's README,
+/// section "Registry index".
+pub const INDEX_MISS_HINT: &str = "vendor it under lib/, depend on its git URL, \
+     or request mirroring at https://github.com/FastLED/fbuild/issues";
+
 #[derive(Debug, thiserror::Error)]
 pub enum RegistryError {
     #[error(transparent)]
@@ -43,7 +49,8 @@ pub enum RegistryError {
     #[error("fbuild's registry index is unavailable: {0}")]
     IndexUnavailable(String),
     #[error(
-        "{0} is not in fbuild's registry index; only packages mirrored to fbuild's bucket resolve"
+        "{0} is not in fbuild's registry index, which lists only packages mirrored to fbuild's \
+         bucket; {INDEX_MISS_HINT}"
     )]
     NotIndexed(String),
 }
