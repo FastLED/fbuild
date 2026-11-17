@@ -14,8 +14,13 @@ Clients fetch from <https://fastled.github.io/fbuild/mirror/manifest.json>,
 then from the raw copy on `main`. See `crates/fbuild-packages-fetch/README.md`
 for client behaviour.
 
-Do not hand-edit these files. Regenerate them after the bucket changes. Only
-new, resized or replaced objects are downloaded and hashed: the generator keeps
+Do not hand-edit these files. Regenerate them after the bucket changes.
+The generator writes the owner shards, the `@names-*` shards and the Index.
+`@esp-libs` (`ci/publish_esp_slices.py`) and `@esp-toolchain`
+(`ci/publish_toolchain_slices.py`) belong to other tools: a regeneration keeps
+their shards and Index entries exactly as committed (FastLED/fbuild#2040).
+
+Only new, resized or replaced objects are downloaded and hashed: the generator keeps
 `site/.mirror-hashes.tsv` (git-ignored, one `size\tetag\tsha256\tkey` line per
 object) so an object replaced with same-size bytes is noticed by its changed
 ETag, and a bare re-run keeps the version the shards already carry

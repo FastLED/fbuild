@@ -276,10 +276,11 @@ def register(shard_path: Path, index_path: Path, component: dict) -> dict:
 def check(shard_path: Path, index_path: Path) -> dict:
     """Assert the Index still describes the shard that is checked in.
 
-    The Index is a generated document, so a regeneration that does not know
-    about this owner drops `@esp-toolchain` and every client silently goes back
-    to whole archives. That failure is invisible in the shard itself, so it is
-    checked here instead: the descriptor must hash these exact bytes.
+    If the Index stops listing `@esp-toolchain` (a hand edit, another writer;
+    `gen_mirror_manifest.py` keeps it since FastLED/fbuild#2040), every client
+    silently goes back to whole archives. That failure is invisible in the
+    shard itself, so it is checked here instead: the descriptor must hash these
+    exact bytes.
     """
     if not shard_path.exists():
         raise ValueError(f"{shard_path} does not exist")

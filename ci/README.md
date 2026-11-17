@@ -144,9 +144,17 @@ writing OUTPUT. `uncompressed_bytes` counts file payload bytes; `entries`
 counts tar members. The stdout JSON includes `manifest_slices` for pasting into
 an existing libs asset's optional `slices` map. Upload keys must match
 `--slice-prefix` (default `slices/`), relative to the manifest index directory.
-The slicer never writes `site/mirror`. Pass a JSON component list with existing
-whole-asset fields plus `slices` to `gen_mirror_manifest.py --prebuilt FILE`;
-its `@esp-libs` shard preserves the whole bundle for older clients.
+The slicer never writes `site/mirror`. `publish_esp_slices.py` owns the
+`@esp-libs` shard: it upserts one version's component (whole bundle for older
+clients plus `slices`) and its Index descriptor.
+
+`gen_mirror_manifest.py` regenerates only the registry owners and `@names-*`.
+Every other `@` Index entry (`@esp-libs`, `@esp-toolchain`) is another tool's:
+its descriptor and shard are kept byte for byte, after the generated entries in
+committed order, and a listed shard that is missing or no longer hashes to its
+descriptor stops the run before anything is written (FastLED/fbuild#2040). The
+former `--prebuilt FILE` flag is gone; it rewrote `@esp-libs` wholesale with the
+registry shards' version.
 
 Toolchain slices (#1944): `uv run --no-project ci/slice_toolchain.py
 <extracted-toolchain-dir> --out-dir OUTPUT --chips esp32s3 --verify` writes one
@@ -180,9 +188,9 @@ enforces it), so a slice-less chip never depends on the vendor being up. Files
 are written only after every upload passed a HEAD size check, so an entry never
 points at a missing object. `--check --shard ... --index ...` needs no network and fails
 when the Index descriptor no longer hashes the committed shard -- the Index is a
-generated document, so a regeneration that does not know about `@esp-toolchain`
-would otherwise drop the owner and silently return every client to whole
-archives. Published linux-amd64 slices of 14.2.0_20260121 (1.1 GB extracted,
+generated document; `gen_mirror_manifest.py` keeps this entry on a
+regeneration (FastLED/fbuild#2040), and `--check` still catches a hand edit or
+another writer that drops it. Published linux-amd64 slices of 14.2.0_20260121 (1.1 GB extracted,
 verified in 6m24s + 11m for the other two): `esp32s3` 106,462,349 B, `esp32s2`
 106,655,161 B, `esp32` 141,361,956 B, against the vendor archive's 176,559,292 B.
 
