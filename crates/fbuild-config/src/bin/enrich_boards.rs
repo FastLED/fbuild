@@ -142,15 +142,35 @@ fn framework_extra_flags(core: Option<&str>) -> &'static [&'static str] {
     }
 }
 
+/// Join a separated `-D NAME` into `-DNAME`. Some upstream PlatformIO boards
+/// (`pico`, `nanorp2040connect`) use the spaced form; the bundle keeps one
+/// token per define (FastLED/fbuild#2038). Whitespace-token level on purpose:
+/// `ini_parser::parse_flags` does the same join but also strips the quoting
+/// layer, which the stored JSON must keep.
+fn join_separated_defines(flags: &str) -> Vec<String> {
+    let mut tokens = flags.split_whitespace();
+    let mut joined = Vec::new();
+    while let Some(token) = tokens.next() {
+        match (token, tokens.clone().next()) {
+            ("-D", Some(name)) => {
+                tokens.next();
+                joined.push(format!("-D{name}"));
+            }
+            _ => joined.push(token.to_string()),
+        }
+    }
+    joined
+}
+
 fn merge_extra_flags(core: Option<&str>, flags: &str) -> String {
-    let mut merged: Vec<String> = flags.split_whitespace().map(str::to_string).collect();
-    let existing: BTreeSet<&str> = flags.split_whitespace().collect();
+    let mut merged = join_separated_defines(flags);
+    let existing: BTreeSet<String> = merged.iter().cloned().collect();
 
     // PlatformIO injects these framework defines at build time rather than
     // storing them in the board JSON, but fbuild consumes the static board
     // assets directly and needs the full define set preserved there.
     for flag in framework_extra_flags(core) {
-        if !existing.contains(flag) {
+        if !existing.contains(*flag) {
             merged.push((*flag).to_string());
         }
     }
@@ -435,5 +455,31 @@ fn report_arduino_boards_without_variant(board_files: &[PathBuf]) {
     );
     for (platform, ids) in &by_platform {
         eprintln!("  {platform}: {}", ids.join(", "));
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    /// FastLED/fbuild#2038: upstream `pico.json` writes `-D ARDUINO_...`;
+    /// regenerating must not reintroduce the spaced form into the bundle.
+    #[test]
+    fn merge_extra_flags_joins_separated_defines() {
+        assert_eq!(
+            merge_extra_flags(None, "-D ARDUINO_RASPBERRY_PI_PICO -DARDUINO_ARCH_RP2040"),
+            "-DARDUINO_RASPBERRY_PI_PICO -DARDUINO_ARCH_RP2040"
+        );
+        assert_eq!(merge_extra_flags(None, "-DA -D"), "-DA -D");
+    }
+
+    #[test]
+    fn merge_extra_flags_keeps_escaped_quotes_and_dedupes_framework_flags() {
+        assert_eq!(
+            merge_extra_flags(None, r#"-DUSB_PRODUCT=\"NanoESP32\""#),
+            r#"-DUSB_PRODUCT=\"NanoESP32\""#
+        );
+        let merged = merge_extra_flags(Some("megatinycore"), "-D CLOCK_SOURCE=0");
+        assert_eq!(merged.matches("-DCLOCK_SOURCE=0").count(), 1, "{merged}");
     }
 }
