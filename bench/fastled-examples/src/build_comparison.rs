@@ -445,7 +445,7 @@ fn measure_tool(
                     restarted,
                     packages,
                     phases: pio_phases,
-                } = timed_build(
+                } = timed_cold_build(
                     kind,
                     board,
                     options,
@@ -621,7 +621,7 @@ fn timed_cold_install(
     Ok(started.elapsed().as_secs_f64() * 1000.0)
 }
 
-fn retry(attempts: usize, mut action: impl FnMut() -> AppResult<()>) -> AppResult<()> {
+fn retry<T>(attempts: usize, mut action: impl FnMut() -> AppResult<T>) -> AppResult<T> {
     let mut remaining = attempts;
     loop {
         remaining -= 1;
@@ -630,6 +630,49 @@ fn retry(attempts: usize, mut action: impl FnMut() -> AppResult<()>) -> AppResul
             result => return result,
         }
     }
+}
+
+/// PlatformIO and fbuild download every package inside the timed cold build,
+/// so they hit the same transient resets as Arduino CLI's install (run
+/// 44094404157: one reset in a 347 MB PlatformIO download failed the whole
+/// run). Arduino's compile downloads nothing; its install is retried instead.
+fn cold_build_attempts(kind: ToolKind) -> usize {
+    match kind {
+        ToolKind::Arduino => 1,
+        ToolKind::PlatformIo | ToolKind::Fbuild => COLD_INSTALL_ATTEMPTS,
+    }
+}
+
+/// [`timed_build`] for a cold trial. Failed attempts stay inside the timer, as
+/// in [`timed_cold_install`], so a retry can only make the tool look slower.
+#[allow(clippy::too_many_arguments)]
+fn timed_cold_build(
+    kind: ToolKind,
+    board: Board,
+    options: &Options,
+    repo_root: &Path,
+    project_dir: &Path,
+    fbuild: &Path,
+    arduino_build_dir: &Path,
+    log: &mut File,
+    envs: &[(&str, OsString)],
+) -> AppResult<TimedBuild> {
+    let started = Instant::now();
+    let mut build = retry(cold_build_attempts(kind), || {
+        timed_build(
+            kind,
+            board,
+            options,
+            repo_root,
+            project_dir,
+            fbuild,
+            arduino_build_dir,
+            log,
+            envs,
+        )
+    })?;
+    build.elapsed_ms = started.elapsed().as_secs_f64() * 1000.0;
+    Ok(build)
 }
 
 /// Bytes received on non-loopback interfaces, per Linux `/proc/net/dev`

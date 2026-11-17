@@ -241,12 +241,41 @@ fn retry_stops_on_success_and_reports_the_last_failure() {
     assert_eq!(calls, 2);
 
     let mut calls = 0;
-    let result = retry(3, || {
+    let result = retry::<()>(3, || {
         calls += 1;
         Err(io::Error::other("down").into())
     });
     assert!(result.is_err());
     assert_eq!(calls, 3);
+}
+
+#[test]
+fn retry_returns_the_successful_attempts_value() {
+    let mut calls = 0;
+    let result = retry(3, || {
+        calls += 1;
+        if calls < 3 {
+            Err(io::Error::other("connection reset by peer").into())
+        } else {
+            Ok(calls * 10)
+        }
+    });
+    assert_eq!(result.unwrap(), 30);
+}
+
+/// Run 44094404157 lost 105 minutes when one TCP reset broke PlatformIO's
+/// 347 MB `esp32-core-libs` download on the 10 Mbit/s link: Arduino CLI's
+/// install was retried, the downloading PlatformIO and fbuild cold builds were
+/// not. Arduino's compile downloads nothing, so it keeps a single attempt.
+#[test]
+fn every_downloading_cold_build_is_retried() {
+    assert_eq!(
+        cold_build_attempts(ToolKind::PlatformIo),
+        COLD_INSTALL_ATTEMPTS
+    );
+    assert_eq!(cold_build_attempts(ToolKind::Fbuild), COLD_INSTALL_ATTEMPTS);
+    assert_eq!(cold_build_attempts(ToolKind::Arduino), 1);
+    const { assert!(COLD_INSTALL_ATTEMPTS > 1) };
 }
 
 #[test]

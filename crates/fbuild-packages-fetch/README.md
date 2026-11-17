@@ -127,7 +127,7 @@ index for tests in this and dependent crates.
   owner to a shard listing every mirrored archive. A shard's `version` is the
   date it was regenerated.
 - **New releases are not followed automatically.** Two maintainer-run steps
-  pick them up. The separate mirroring tool re-catalogues the registry and
+  pick them up. The mirroring tool in `ci/mirror/` re-catalogues the registry and
   uploads new archives to the bucket. Then `ci/gen_mirror_manifest.py`
   regenerates `site/mirror/` from the bucket, and that commit publishes it.
   This repo's CI schedules neither step, so the index lags the registry until
