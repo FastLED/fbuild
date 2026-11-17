@@ -39,6 +39,7 @@ zccache = { workspace = true }
 
 [dev-dependencies]
 filetime = { workspace = true }
+tracing-test = { workspace = true, features = ["no-env-filter"] }
 fbuild-test-support = { path = "../fbuild-test-support" }
 tokio = { workspace = true, features = ["macros", "rt-multi-thread", "sync"] }
 

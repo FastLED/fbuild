@@ -93,6 +93,29 @@ impl SizeInfo {
     }
 }
 
+/// Explain why RAM will read 0 bytes when no allocated section carries one
+/// of the platform's `ram_sections` names (FastLED/fbuild#2042).
+///
+/// The size report then cannot tell "no static RAM" from "a linker layout
+/// this table does not know", and the RAM limit check passes vacuously.
+/// Callers warn rather than fail: the link already succeeded and the linker
+/// script's own region checks still hold, so the report is what is
+/// incomplete, not the firmware. A present but empty RAM section is a real
+/// 0 and returns `None`.
+pub fn ram_sections_missing(sections: &[ElfSectionSize], ram_sections: &[&str]) -> Option<String> {
+    let present = sections
+        .iter()
+        .any(|s| s.alloc && ram_sections.contains(&s.name.as_str()));
+    if present {
+        return None;
+    }
+    Some(format!(
+        "no allocated RAM section ({}) in the ELF; RAM is reported as 0 bytes \
+         and the RAM limit is not checked",
+        ram_sections.join(", ")
+    ))
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -394,6 +417,47 @@ mod tests {
         assert_eq!(info.total_ram, 10 + 30 + 256);
         assert_eq!(info.total_flash, 1_030);
         assert_eq!(info.text, 1_020);
+    }
+
+    /// FastLED/fbuild#2042: a layout with none of the platform's RAM
+    /// sections reports 0 bytes of RAM, which must be flagged rather than
+    /// passed off as a real figure.
+    #[test]
+    fn missing_ram_sections_are_reported() {
+        let sections = [
+            named(".text", 1_000, true, false, true),
+            named(".ram_data", 64, true, true, false),
+            named(".zero", 128, false, true, false),
+        ];
+        let info = SizeInfo::from_elf_sections(&sections, None, Some(2_048));
+        assert_eq!(info.total_ram, 0);
+        let warning = ram_sections_missing(&sections, PLATFORMIO_RAM_SECTIONS)
+            .expect("no .data/.bss/.noinit must be reported");
+        assert!(warning.contains(".data, .bss, .noinit"), "{warning}");
+    }
+
+    /// An empty but present RAM section is a real 0, not an unknown layout.
+    #[test]
+    fn present_but_empty_ram_section_is_not_reported() {
+        let sections = [
+            named(".text", 1_000, true, false, true),
+            named(".bss", 0, false, true, false),
+        ];
+        assert_eq!(
+            ram_sections_missing(&sections, PLATFORMIO_RAM_SECTIONS),
+            None
+        );
+    }
+
+    /// A RAM name on an unallocated section does not count as present,
+    /// matching how [`SizeInfo::from_elf_sections_with_ram`] ignores it.
+    #[test]
+    fn unallocated_ram_named_section_is_still_missing() {
+        let sections = [
+            named(".text", 1_000, true, false, true),
+            unalloc(".data", 64),
+        ];
+        assert!(ram_sections_missing(&sections, PLATFORMIO_RAM_SECTIONS).is_some());
     }
 
     /// Unallocated sections never count, even with a RAM name.

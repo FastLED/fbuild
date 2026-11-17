@@ -46,12 +46,14 @@ pub(crate) fn esp32_report_size(
     max_ram: Option<u64>,
 ) -> fbuild_core::Result<SizeInfo> {
     let sections = crate::elf_size::read_elf_section_sizes(elf_path)?;
-    esp32_size_from_sections(&sections, max_flash, max_ram).ok_or_else(|| {
+    let size_info = esp32_size_from_sections(&sections, max_flash, max_ram).ok_or_else(|| {
         fbuild_core::FbuildError::BuildFailed(format!(
             "size report: {} has no ESP32 .flash.*/.dram0.* sections",
             elf_path.display()
         ))
-    })
+    })?;
+    crate::elf_size::warn_if_ram_sections_missing(elf_path, &sections, DRAM_SECTIONS);
+    Ok(size_info)
 }
 
 /// Classify ESP32 ELF sections (see the module docs). Returns `None` when no

@@ -189,3 +189,33 @@ fn esp32_report_size_reads_elf_headers() {
     std::fs::write(&elf, b"not an elf").unwrap();
     assert!(esp32_report_size(&elf, None, None).is_err());
 }
+
+/// FastLED/fbuild#2042: an ESP32 layout without `.dram0.data`, `.dram0.bss`
+/// or `.noinit` still reports (the link succeeded) but warns that RAM reads
+/// 0 because no RAM section was found, not because none is used.
+#[tracing_test::traced_test]
+#[test]
+fn esp32_report_size_warns_without_dram_sections() {
+    use object::write::Object;
+    use object::{Architecture, BinaryFormat, Endianness, SectionKind};
+
+    let mut obj = Object::new(BinaryFormat::Elf, Architecture::Riscv32, Endianness::Little);
+    let text = obj.add_section(Vec::new(), b".flash.text".to_vec(), SectionKind::Text);
+    obj.append_section_data(text, &[0u8; 0x100], 4);
+    let dummy = obj.add_section(
+        Vec::new(),
+        b".dram0.dummy".to_vec(),
+        SectionKind::UninitializedData,
+    );
+    obj.append_section_bss(dummy, 0x8000, 4);
+
+    let tmp = tempfile::tempdir().unwrap();
+    let elf = tmp.path().join("firmware.elf");
+    std::fs::write(&elf, obj.write().unwrap()).unwrap();
+
+    let info = esp32_report_size(&elf, None, Some(0x5_0000)).unwrap();
+    assert_eq!(info.total_ram, 0);
+    assert!(logs_contain(
+        "no allocated RAM section (.dram0.data, .dram0.bss, .noinit)"
+    ));
+}

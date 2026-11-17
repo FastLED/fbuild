@@ -35,7 +35,7 @@ pub mod time;
 pub mod usb;
 
 pub use build_log::BuildLog;
-pub use elf_size::{ElfSectionSize, PLATFORMIO_RAM_SECTIONS};
+pub use elf_size::{ElfSectionSize, PLATFORMIO_RAM_SECTIONS, ram_sections_missing};
 pub use env_namespace::EnvNamespace;
 
 use serde::{Deserialize, Serialize};
