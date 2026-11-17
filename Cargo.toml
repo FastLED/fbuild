@@ -104,7 +104,11 @@ tokio = { version = "1", features = ["rt-multi-thread", "macros", "net", "sync",
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 thiserror = "2"
-tracing = "0.1"
+# `log` is already on in the workspace build via axum's default `tower-log`.
+# Enabling it here makes every per-crate build (`clippy -p <crate>`, the lint
+# hook's single-file mode) expand `tracing::*!` macros the same way, so
+# `#[expect(clippy::cognitive_complexity)]` baselines hold in both graphs.
+tracing = { version = "0.1", features = ["log"] }
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 clap = { version = "4", features = ["derive"] }
 axum = { version = "0.8", features = ["ws"] }
