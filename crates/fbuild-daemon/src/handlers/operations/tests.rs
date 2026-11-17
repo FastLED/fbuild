@@ -282,3 +282,43 @@ mod device_lease_admission_tests {
             .unwrap();
     }
 }
+
+mod resolve_env_platform_tests {
+    //! The build, deploy and emulator handlers share one env → platform
+    //! resolution and one `400` message for an unknown platform.
+    use super::super::common::resolve_env_platform;
+    use std::collections::HashMap;
+
+    fn env(pairs: &[(&str, &str)]) -> HashMap<String, String> {
+        pairs
+            .iter()
+            .map(|(k, v)| ((*k).to_string(), (*v).to_string()))
+            .collect()
+    }
+
+    #[test]
+    fn known_platform_resolves() {
+        let env = env(&[("platform", "atmelavr"), ("board", "uno")]);
+        assert_eq!(
+            resolve_env_platform(&env),
+            Ok(fbuild_core::Platform::AtmelAvr)
+        );
+    }
+
+    #[test]
+    fn unknown_platform_names_the_platform() {
+        let env = env(&[("platform", "made-up-platform")]);
+        assert_eq!(
+            resolve_env_platform(&env),
+            Err("unsupported platform: made-up-platform".to_string())
+        );
+    }
+
+    #[test]
+    fn missing_platform_is_unsupported() {
+        assert_eq!(
+            resolve_env_platform(&HashMap::new()),
+            Err("unsupported platform: ".to_string())
+        );
+    }
+}

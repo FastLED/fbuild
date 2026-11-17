@@ -145,6 +145,17 @@ fn env_default_enabled(name: &str) -> bool {
     }
 }
 
+/// Resolve an env's `platform =` value to the [`fbuild_core::Platform`] the
+/// build, deploy and emulator handlers dispatch on. `Err` carries the
+/// message those handlers return as `400 Bad Request`.
+pub(crate) fn resolve_env_platform(
+    env_config: &std::collections::HashMap<String, String>,
+) -> Result<fbuild_core::Platform, String> {
+    let platform_str = env_config.get("platform").map_or("", String::as_str);
+    fbuild_core::Platform::from_platform_str(platform_str)
+        .ok_or_else(|| format!("unsupported platform: {platform_str}"))
+}
+
 pub(crate) fn qemu_extra_build_flags(platform: fbuild_core::Platform, mcu: &str) -> Vec<String> {
     if platform == fbuild_core::Platform::Espressif32 && mcu.eq_ignore_ascii_case("esp32s3") {
         vec![

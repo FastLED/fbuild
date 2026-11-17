@@ -2,7 +2,7 @@
 
 use super::common::{
     OperationGuard, export_artifacts_bundle, resolve_build_dir, resolve_client_path,
-    resolve_request_project_dir,
+    resolve_env_platform, resolve_request_project_dir,
 };
 use crate::context::DaemonContext;
 use crate::models::{BuildRequest, OperationResponse};
@@ -197,16 +197,12 @@ pub async fn build(
         }
     };
 
-    let platform_str = env_config.get("platform").cloned().unwrap_or_default();
-    let platform = match fbuild_core::Platform::from_platform_str(&platform_str) {
-        Some(p) => p,
-        None => {
+    let platform = match resolve_env_platform(env_config) {
+        Ok(p) => p,
+        Err(message) => {
             return (
                 StatusCode::BAD_REQUEST,
-                Json(OperationResponse::fail(
-                    request_id,
-                    format!("unsupported platform: {}", platform_str),
-                )),
+                Json(OperationResponse::fail(request_id, message)),
             )
                 .into_response();
         }
