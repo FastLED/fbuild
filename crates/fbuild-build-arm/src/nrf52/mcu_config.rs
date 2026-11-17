@@ -159,11 +159,36 @@ mod tests {
         let config = get_nrf52_config_for_mcu("nrf52840").unwrap();
         let release = config.get_profile("release").unwrap();
         assert!(release.compile_flags.contains(&"-Os".to_string()));
-        assert!(release.compile_flags.contains(&"-flto".to_string()));
 
         let quick = config.get_profile("quick").unwrap();
         assert!(quick.compile_flags.contains(&"-Os".to_string()));
         assert!(quick.link_flags.is_empty());
+    }
+
+    /// FastLED/fbuild#2016: the Adafruit nRF52 core's FreeRTOS port uses
+    /// `ldr rN, =symbol` in naked functions, which fails with `offset out of
+    /// range` once LTO emits the program as one unit. The core's own
+    /// `platform.txt` never enables LTO, so no profile may default it on.
+    #[test]
+    fn no_profile_enables_lto_by_default() {
+        // Every MCU with an embedded config; keep in sync with
+        // `get_nrf52_config_for_mcu`.
+        const SUPPORTED_MCUS: &[&str] = &["nrf52840"];
+        for mcu in SUPPORTED_MCUS {
+            let config = get_nrf52_config_for_mcu(mcu).unwrap();
+            for (name, profile) in &config.profiles {
+                let lto: Vec<&String> = profile
+                    .compile_flags
+                    .iter()
+                    .chain(&profile.link_flags)
+                    .filter(|flag| flag.contains("lto") || *flag == "-fuse-linker-plugin")
+                    .collect();
+                assert!(
+                    lto.is_empty(),
+                    "{mcu} profile '{name}' enables LTO: {lto:?}"
+                );
+            }
+        }
     }
 
     #[test]
