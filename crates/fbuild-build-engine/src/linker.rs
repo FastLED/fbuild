@@ -178,6 +178,22 @@ pub trait Linker: Send + Sync {
         extra: &LinkExtraArgs,
     ) -> Result<PathBuf>;
 
+    /// The argv [`Linker::link`] runs for these inputs, driver first, before
+    /// any transport encoding such as a Windows response file.
+    ///
+    /// Required, and `link` builds its command through it, so the argv the
+    /// link digest sees is the argv the linker runs: a flag from an MCU config
+    /// JSON, a board file or orchestrator code is covered without listing its
+    /// source (FastLED/fbuild#2042). Must not touch the filesystem beyond
+    /// reads; archives `link` synthesizes appear at the path it will write.
+    fn link_command(
+        &self,
+        objects: &[PathBuf],
+        archives: &[PathBuf],
+        output_dir: &Path,
+        extra: &LinkExtraArgs,
+    ) -> Vec<String>;
+
     /// Convert ELF to firmware format (.hex, .bin, etc.).
     async fn convert_firmware(&self, elf_path: &Path, output_dir: &Path) -> Result<PathBuf>;
 

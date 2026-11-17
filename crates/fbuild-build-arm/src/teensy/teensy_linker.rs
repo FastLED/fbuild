@@ -141,6 +141,16 @@ impl TeensyLinker {
 
 #[async_trait::async_trait]
 impl Linker for TeensyLinker {
+    fn link_command(
+        &self,
+        objects: &[PathBuf],
+        archives: &[PathBuf],
+        output_dir: &Path,
+        extra: &LinkExtraArgs,
+    ) -> Vec<String> {
+        self.build_link_args(objects, archives, &output_dir.join("firmware.elf"), extra)
+    }
+
     async fn archive(&self, objects: &[PathBuf], output: &Path) -> Result<()> {
         crate::linker::LinkerBase::archive(&self.ar_path, objects, output, "arm-none-eabi-ar").await
     }
@@ -155,7 +165,7 @@ impl Linker for TeensyLinker {
         std::fs::create_dir_all(output_dir)?;
         let elf_path = output_dir.join("firmware.elf");
 
-        let args = self.build_link_args(objects, archives, &elf_path, extra);
+        let args = self.link_command(objects, archives, output_dir, extra);
 
         if self.verbose {
             tracing::debug!(target: "fbuild_build::linker::teensy", "link: {}", args.join(" "));

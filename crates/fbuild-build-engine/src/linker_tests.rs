@@ -16,6 +16,28 @@ use fbuild_core::{Result, SizeInfo};
 use crate::linker::{LinkExtraArgs, Linker};
 use crate::perf_log::PerfTimer;
 
+/// The argv a GNU-style driver would run: what a real `link_command` returns.
+fn fake_command(
+    builtin: &[String],
+    objects: &[PathBuf],
+    archives: &[PathBuf],
+    output_dir: &Path,
+    extra: &LinkExtraArgs,
+) -> Vec<String> {
+    let mut args = vec!["fake-gcc".to_string()];
+    args.extend(builtin.iter().cloned());
+    args.extend(extra.flags.iter().cloned());
+    args.push(format!("-o{}", output_dir.join("firmware.elf").display()));
+    args.extend(
+        objects
+            .iter()
+            .chain(archives)
+            .map(|p| p.display().to_string()),
+    );
+    args.extend(extra.libs.iter().cloned());
+    args
+}
+
 /// A linker that fabricates artifacts instead of running a toolchain, so the
 /// tests measure the accounting and nothing else.
 struct FakeLinker {
@@ -38,6 +60,16 @@ impl Linker for FakeLinker {
         let elf = output.join("firmware.elf");
         std::fs::write(&elf, b"\x7fELF fake")?;
         Ok(elf)
+    }
+
+    fn link_command(
+        &self,
+        objects: &[PathBuf],
+        archives: &[PathBuf],
+        output_dir: &Path,
+        extra: &LinkExtraArgs,
+    ) -> Vec<String> {
+        fake_command(&[], objects, archives, output_dir, extra)
     }
 
     async fn convert_firmware(&self, _elf: &Path, output_dir: &Path) -> Result<PathBuf> {
@@ -205,6 +237,16 @@ impl Linker for CachedLinker {
         let elf = output.join("firmware.elf");
         std::fs::write(&elf, b"\x7fELF cached")?;
         Ok(elf)
+    }
+
+    fn link_command(
+        &self,
+        objects: &[PathBuf],
+        archives: &[PathBuf],
+        output_dir: &Path,
+        extra: &LinkExtraArgs,
+    ) -> Vec<String> {
+        fake_command(&[], objects, archives, output_dir, extra)
     }
 
     async fn convert_firmware(&self, _elf: &Path, output_dir: &Path) -> Result<PathBuf> {

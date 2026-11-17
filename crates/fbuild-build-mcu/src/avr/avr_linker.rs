@@ -57,6 +57,9 @@ impl AvrLinker {
     }
 }
 
+/// Archive `link` builds from raw framework objects (FastLED/fbuild#304).
+const FRAMEWORK_ARCHIVE: &str = "libframework.a";
+
 /// Partition a mixed list of link inputs into (existing archives, raw objects).
 ///
 /// Inputs ending in `.a` (case-sensitive — matches the toolchain convention) are
@@ -141,6 +144,24 @@ impl Linker for AvrLinker {
         crate::linker::LinkerBase::archive(&self.ar_path, objects, output, "avr-ar").await
     }
 
+    fn link_command(
+        &self,
+        objects: &[PathBuf],
+        archives: &[PathBuf],
+        output_dir: &Path,
+        extra: &LinkExtraArgs,
+    ) -> Vec<String> {
+        let (existing_archives, raw_objects) = partition_link_inputs(archives);
+        let mut linker_archives: Vec<PathBuf> =
+            Vec::with_capacity(existing_archives.len() + usize::from(!raw_objects.is_empty()));
+        if !raw_objects.is_empty() {
+            linker_archives.push(output_dir.join(FRAMEWORK_ARCHIVE));
+        }
+        linker_archives.extend(existing_archives);
+        let elf_path = output_dir.join("firmware.elf");
+        self.build_link_args(objects, &linker_archives, output_dir, &elf_path, extra)
+    }
+
     async fn link(
         &self,
         objects: &[PathBuf],
@@ -162,23 +183,18 @@ impl Linker for AvrLinker {
         // Use gcc-ar (not plain ar) so the LTO bytecode plugin index is
         // written — preserves -fuse-linker-plugin compatibility, which the
         // default avr.json profile enables via `-flto -fuse-linker-plugin`.
-        let (existing_archives, raw_objects) = partition_link_inputs(archives);
-        let mut linker_archives: Vec<PathBuf> =
-            Vec::with_capacity(existing_archives.len() + usize::from(!raw_objects.is_empty()));
+        let (_, raw_objects) = partition_link_inputs(archives);
         if !raw_objects.is_empty() {
-            let framework_archive = output_dir.join("libframework.a");
             crate::linker::LinkerBase::archive(
                 &self.gcc_ar_path,
                 &raw_objects,
-                &framework_archive,
+                &output_dir.join(FRAMEWORK_ARCHIVE),
                 "avr-gcc-ar",
             )
             .await?;
-            linker_archives.push(framework_archive);
         }
-        linker_archives.extend(existing_archives);
 
-        let args = self.build_link_args(objects, &linker_archives, output_dir, &elf_path, extra);
+        let args = self.link_command(objects, archives, output_dir, extra);
 
         if self.verbose {
             tracing::debug!(target: "fbuild_build::linker::avr", "link: {}", args.join(" "));

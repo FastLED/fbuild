@@ -131,6 +131,18 @@ impl ArmLinker {
 
 #[async_trait::async_trait]
 impl Linker for ArmLinker {
+    fn link_command(
+        &self,
+        objects: &[PathBuf],
+        archives: &[PathBuf],
+        output_dir: &Path,
+        extra: &LinkExtraArgs,
+    ) -> Vec<String> {
+        let elf_path = output_dir.join("firmware.elf");
+        let map_path = output_dir.join("firmware.map");
+        self.build_link_args(objects, archives, &elf_path, &map_path, extra)
+    }
+
     async fn archive(&self, objects: &[PathBuf], output: &Path) -> Result<()> {
         crate::linker::LinkerBase::archive(&self.ar_path, objects, output, "arm-none-eabi-ar").await
     }
@@ -144,8 +156,7 @@ impl Linker for ArmLinker {
     ) -> Result<PathBuf> {
         std::fs::create_dir_all(output_dir)?;
         let elf_path = output_dir.join("firmware.elf");
-        let map_path = output_dir.join("firmware.map");
-        let args = self.build_link_args(objects, archives, &elf_path, &map_path, extra);
+        let args = self.link_command(objects, archives, output_dir, extra);
 
         if self.verbose {
             tracing::debug!(target: "fbuild_build::linker::generic_arm", "link: {}", args.join(" "));
