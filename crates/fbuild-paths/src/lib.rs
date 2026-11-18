@@ -13,6 +13,7 @@ pub mod dev_daemon_namespace;
 pub mod executable_hash;
 pub mod long_paths;
 pub mod running_process;
+pub mod wheel_targets;
 
 #[cfg(test)]
 mod owner_port_tests;

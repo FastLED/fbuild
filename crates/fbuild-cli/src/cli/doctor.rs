@@ -8,7 +8,13 @@
 //! a build acts on — `doctor` is the same measurement, reported instead of
 //! enforced.
 //!
-//! Nothing here mutates state: no daemon round-trip, no cache eviction, and an
+//! It also reports the wheel-build cargo target store under the home directory
+//! (FastLED/fbuild#2062): every `pip install` of a checkout creates one full
+//! release target dir there and nothing else reclaims it, so the store grows one
+//! per worktree ever created. `--reclaim-targets` is the one mutating path -- the
+//! cron entry point -- and it only deletes dead target dirs inside the store.
+//!
+//! Nothing else mutates state: no daemon round-trip, no cache eviction, and an
 //! unmeasurable volume is a warning line rather than a failure (an unreadable
 //! `statvfs` must not look like a full disk). The exit code carries the
 //! verdict so CI can gate on it.
@@ -16,9 +22,11 @@
 //! ```text
 //! fbuild doctor --check-disk
 //! fbuild doctor --check-disk ../my-project
+//! fbuild doctor --check-disk --reclaim-targets   # cron: reclaim dead targets
 //! ```
 
 use std::path::Path;
+use std::time::SystemTime;
 
 use clap::Args;
 use fbuild_build::build_output::format_bytes;
@@ -30,6 +38,7 @@ use fbuild_build::esp32::orchestrator::disk_requirements::{
 };
 use fbuild_core::path::NormalizedPath;
 use fbuild_core::{FbuildError, Result};
+use fbuild_paths::wheel_targets::{self, ReclaimedTarget, StoreSurvey};
 
 use crate::output;
 
@@ -46,6 +55,12 @@ pub struct DoctorArgs {
     /// directory.
     #[arg(value_name = "PROJECT_DIR")]
     pub project_dir: Option<String>,
+
+    /// Reclaim wheel-build cargo target dirs whose owning checkout is gone (or
+    /// whose files are all older than the idle gate) -- the cron entry point.
+    /// Deletes only inside the store.
+    #[arg(long)]
+    pub reclaim_targets: bool,
 }
 
 /// A rendered `--check-disk` report and its verdict.
@@ -78,7 +93,8 @@ pub fn run_doctor(args: DoctorArgs) -> Result<()> {
     };
 
     let check = render_disk_check(&report, &reclaimable, &cache_root, disabled);
-    output::result(check.text.trim_end());
+    let targets = wheel_build_targets_report(args.reclaim_targets);
+    output::result(format!("{}\n{targets}", check.text.trim_end()).trim_end());
     if check.ok {
         return Ok(());
     }
@@ -87,6 +103,96 @@ pub fn run_doctor(args: DoctorArgs) -> Result<()> {
         report.short_roots().count(),
         report.roots().len()
     )))
+}
+
+/// Report the wheel-build cargo target store, reclaiming dead entries when
+/// `reclaim` is set (FastLED/fbuild#2062 item 3).
+///
+/// A target dir is one full release build that nothing else in fbuild removes,
+/// so an unreclaimed store grows one per worktree ever created. `reclaim` only
+/// ever runs from an explicit flag -- `doctor` stays read-only otherwise.
+pub fn wheel_build_targets_report(reclaim: bool) -> String {
+    let idle_days = wheel_build_idle_days();
+    let now = SystemTime::now();
+    let Some(store) = wheel_targets::store_root() else {
+        return "wheel-build cargo targets: could not determine the home directory\n".to_string();
+    };
+    let measured = wheel_targets::survey(store.as_path(), idle_days, now);
+    let mut text = render_wheel_targets(&measured, idle_days);
+    if reclaim {
+        let reclaimed = wheel_targets::reclaim(store.as_path(), idle_days, now);
+        text.push_str(&render_reclaimed(&reclaimed));
+    }
+    text
+}
+
+/// The idle gate for unstamped target dirs, from the environment a wheel build
+/// uses. A bad value falls back to the documented default.
+pub fn wheel_build_idle_days() -> f64 {
+    const IDLE_DAYS_ENV: &str = "FBUILD_WHEEL_BUILD_IDLE_DAYS";
+    std::env::var(IDLE_DAYS_ENV)
+        .ok()
+        .and_then(|raw| raw.trim().parse::<f64>().ok())
+        .filter(|days| days.is_finite() && *days >= 0.0)
+        .unwrap_or(wheel_targets::DEFAULT_IDLE_DAYS)
+}
+
+/// Render one target store. Pure so tests can inject a surveyed store instead
+/// of depending on this host's real one.
+pub fn render_wheel_targets(measured: &StoreSurvey, idle_days: f64) -> String {
+    let store = measured.store().display_slash();
+    if !measured.present() {
+        return format!("wheel-build cargo targets under {store}: none (not created yet)\n");
+    }
+    let mut text = format!("wheel-build cargo targets under {store}:\n");
+    if measured.targets().is_empty() {
+        text.push_str("  none\n");
+        return text;
+    }
+    for target in measured.targets() {
+        let owner = target.owner().unwrap_or("unstamped");
+        let verdict = match target.verdict() {
+            Some(verdict) => format!("DEAD ({})", verdict.reason(idle_days)),
+            None => "keep".to_string(),
+        };
+        text.push_str(&format!(
+            "  {:<24} {:>9}  {:<34} {}\n",
+            target.name(),
+            format_bytes(target.bytes()),
+            owner,
+            verdict,
+        ));
+    }
+    text.push_str(&format!(
+        "  {:<24} {:>9}  {} reclaimable in {} dead target(s)\n",
+        "total",
+        format_bytes(measured.total_bytes()),
+        format_bytes(measured.reclaimable_bytes()),
+        measured.dead().count(),
+    ));
+    text
+}
+
+/// Render what a reclaim pass actually removed.
+pub fn render_reclaimed(reclaimed: &[ReclaimedTarget]) -> String {
+    if reclaimed.is_empty() {
+        return "reclaimed: nothing\n".to_string();
+    }
+    let freed: u64 = reclaimed.iter().map(ReclaimedTarget::bytes_freed).sum();
+    let mut text = format!(
+        "reclaimed {} from {} dead target(s):\n",
+        format_bytes(freed),
+        reclaimed.len()
+    );
+    for target in reclaimed {
+        text.push_str(&format!(
+            "  - {} ({}, {})\n",
+            target.name(),
+            target.reason(),
+            format_bytes(target.bytes_freed()),
+        ));
+    }
+    text
 }
 
 /// Render the report. Pure so tests can inject volumes instead of depending on
