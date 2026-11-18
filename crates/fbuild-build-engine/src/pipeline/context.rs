@@ -170,124 +170,7 @@ impl BuildContext {
         for note in &overlay.notes {
             build_log.push(format!("extra_scripts: {}", note));
         }
-        // FastLED/fbuild#1407: warn about registry pins still ignored by a
-        // family adapter, but not pins whose adapter resolves them.
-        if let Ok(env_config) = config.get_env_config(env_name) {
-            let platform = env_config.get("platform").map(String::as_str).unwrap_or("");
-            let resolved_platform = match fbuild_core::Platform::from_platform_str(platform) {
-                Some(fbuild_core::Platform::Espressif32) => {
-                    Some(fbuild_core::Platform::Espressif32)
-                }
-                Some(fbuild_core::Platform::Espressif8266) => {
-                    Some(fbuild_core::Platform::Espressif8266)
-                }
-                Some(fbuild_core::Platform::Teensy) => Some(fbuild_core::Platform::Teensy),
-                Some(fbuild_core::Platform::Ststm32) => Some(fbuild_core::Platform::Ststm32),
-                Some(fbuild_core::Platform::NordicNrf51) => {
-                    Some(fbuild_core::Platform::NordicNrf51)
-                }
-                Some(fbuild_core::Platform::NordicNrf52) => {
-                    Some(fbuild_core::Platform::NordicNrf52)
-                }
-                Some(fbuild_core::Platform::AtmelSam) => Some(fbuild_core::Platform::AtmelSam),
-                Some(fbuild_core::Platform::RenesasRa) => Some(fbuild_core::Platform::RenesasRa),
-                Some(fbuild_core::Platform::Apollo3) => Some(fbuild_core::Platform::Apollo3),
-                Some(fbuild_core::Platform::NxpLpc) => Some(fbuild_core::Platform::NxpLpc),
-                Some(fbuild_core::Platform::SiliconLabs) => {
-                    Some(fbuild_core::Platform::SiliconLabs)
-                }
-                Some(fbuild_core::Platform::RaspberryPi) => {
-                    Some(fbuild_core::Platform::RaspberryPi)
-                }
-                Some(fbuild_core::Platform::AtmelAvr) => Some(fbuild_core::Platform::AtmelAvr),
-                Some(fbuild_core::Platform::AtmelMegaAvr) => {
-                    Some(fbuild_core::Platform::AtmelMegaAvr)
-                }
-                _ => None,
-            };
-            let resolved_packages: &[&str] = match resolved_platform {
-                Some(fbuild_core::Platform::Espressif32) => &["framework-arduinoespressif32"],
-                Some(fbuild_core::Platform::Espressif8266) => {
-                    &["framework-arduinoespressif8266", "toolchain-xtensa"]
-                }
-                Some(fbuild_core::Platform::Teensy) => {
-                    &["framework-arduinoteensy", "toolchain-gccarmnoneeabi-teensy"]
-                }
-                Some(fbuild_core::Platform::Ststm32) => &[
-                    "framework-arduinoststm32",
-                    "framework-arduino-mbed",
-                    "framework-cmsis",
-                    "toolchain-gccarmnoneeabi",
-                ],
-                Some(fbuild_core::Platform::NordicNrf51) => {
-                    &["framework-arduinonordicnrf5", "toolchain-gccarmnoneeabi"]
-                }
-                Some(fbuild_core::Platform::NordicNrf52) => &[
-                    "framework-arduinoadafruitnrf52",
-                    "framework-cmsis",
-                    "toolchain-gccarmnoneeabi",
-                ],
-                Some(fbuild_core::Platform::AtmelSam) => &[
-                    "framework-arduino-sam",
-                    "framework-arduino-samd-adafruit",
-                    "framework-arduino-sam-clearcore",
-                    "framework-cmsis",
-                    "framework-cmsis-atmel",
-                    "toolchain-gccarmnoneeabi",
-                ],
-                Some(fbuild_core::Platform::RenesasRa) => {
-                    &["framework-arduinorenesas-uno", "toolchain-gccarmnoneeabi"]
-                }
-                Some(fbuild_core::Platform::Apollo3) => {
-                    &["framework-arduinoapollo3", "toolchain-gccarmnoneeabi"]
-                }
-                Some(fbuild_core::Platform::NxpLpc) => &[
-                    "framework-arduino-lpc8xx",
-                    "framework-cmsis",
-                    "toolchain-gccarmnoneeabi",
-                ],
-                Some(fbuild_core::Platform::SiliconLabs) => {
-                    &["framework-arduino-silabs", "toolchain-gccarmnoneeabi"]
-                }
-                Some(fbuild_core::Platform::RaspberryPi) => &[
-                    "framework-arduinopico",
-                    "toolchain-rp2040-earlephilhower",
-                    "tool-picotool-rp2040-earlephilhower",
-                ],
-                Some(fbuild_core::Platform::AtmelAvr) => &[
-                    "framework-arduino-avr",
-                    "framework-arduino-avr-attiny",
-                    "framework-arduino-avr-digistump",
-                    "framework-arduino-avr-minicore",
-                    "framework-arduino-avr-majorcore",
-                    "framework-arduino-avr-megacore",
-                    "framework-arduino-avr-microcore",
-                    "framework-arduino-avr-mightycore",
-                    "framework-arduino-avr-bean",
-                    "framework-arduino-avr-dwenguino",
-                    "framework-arduino-avr-nicai",
-                    "framework-arduino-avr-panstamp",
-                    "framework-arduino-avr-prusa_rambo",
-                    "toolchain-atmelavr",
-                ],
-                Some(fbuild_core::Platform::AtmelMegaAvr) => &[
-                    "framework-arduino-megaavr",
-                    "framework-arduino-megaavr-megacorex",
-                    "framework-arduino-megaavr-megatinycore",
-                    "framework-arduino-megaavr-dxcore",
-                    "toolchain-atmelavr",
-                ],
-                _ => &[],
-            };
-            for warning in fbuild_config::ignored_version_pins_with_resolved_packages(
-                env_config,
-                resolved_platform,
-                resolved_packages,
-            ) {
-                tracing::warn!("{warning}");
-                build_log.push(format!("Warning: {warning}"));
-            }
-        }
+        log_config_warnings(&mut build_log, &config, env_name);
 
         // 4. Setup build directories
         //
@@ -462,6 +345,137 @@ fn assemble_compile_overlays(
         project,
     ]);
     (user_overlay, src_overlay)
+}
+
+/// Push the user-facing warnings about `env_name`'s configuration into the
+/// build log the CLI streams.
+fn log_config_warnings(
+    build_log: &mut BuildLog,
+    config: &fbuild_config::PlatformIOConfig,
+    env_name: &str,
+) {
+    log_ignored_version_pins(build_log, config, env_name);
+}
+
+/// Warn in the build log about registry pins still ignored by a family
+/// adapter, but not pins whose adapter resolves them (FastLED/fbuild#1407).
+fn log_ignored_version_pins(
+    build_log: &mut BuildLog,
+    config: &fbuild_config::PlatformIOConfig,
+    env_name: &str,
+) {
+    if let Ok(env_config) = config.get_env_config(env_name) {
+        let platform = env_config.get("platform").map(String::as_str).unwrap_or("");
+        let resolved_platform = adapter_resolved_platform(platform);
+        let resolved_packages = adapter_resolved_packages(resolved_platform);
+        for warning in fbuild_config::ignored_version_pins_with_resolved_packages(
+            env_config,
+            resolved_platform,
+            resolved_packages,
+        ) {
+            tracing::warn!("{warning}");
+            build_log.push(format!("Warning: {warning}"));
+        }
+    }
+}
+
+/// The platform whose family adapter resolves registry version pins, if any.
+fn adapter_resolved_platform(platform: &str) -> Option<fbuild_core::Platform> {
+    match fbuild_core::Platform::from_platform_str(platform) {
+        Some(fbuild_core::Platform::Espressif32) => Some(fbuild_core::Platform::Espressif32),
+        Some(fbuild_core::Platform::Espressif8266) => Some(fbuild_core::Platform::Espressif8266),
+        Some(fbuild_core::Platform::Teensy) => Some(fbuild_core::Platform::Teensy),
+        Some(fbuild_core::Platform::Ststm32) => Some(fbuild_core::Platform::Ststm32),
+        Some(fbuild_core::Platform::NordicNrf51) => Some(fbuild_core::Platform::NordicNrf51),
+        Some(fbuild_core::Platform::NordicNrf52) => Some(fbuild_core::Platform::NordicNrf52),
+        Some(fbuild_core::Platform::AtmelSam) => Some(fbuild_core::Platform::AtmelSam),
+        Some(fbuild_core::Platform::RenesasRa) => Some(fbuild_core::Platform::RenesasRa),
+        Some(fbuild_core::Platform::Apollo3) => Some(fbuild_core::Platform::Apollo3),
+        Some(fbuild_core::Platform::NxpLpc) => Some(fbuild_core::Platform::NxpLpc),
+        Some(fbuild_core::Platform::SiliconLabs) => Some(fbuild_core::Platform::SiliconLabs),
+        Some(fbuild_core::Platform::RaspberryPi) => Some(fbuild_core::Platform::RaspberryPi),
+        Some(fbuild_core::Platform::AtmelAvr) => Some(fbuild_core::Platform::AtmelAvr),
+        Some(fbuild_core::Platform::AtmelMegaAvr) => Some(fbuild_core::Platform::AtmelMegaAvr),
+        _ => None,
+    }
+}
+
+/// The packages whose registry version pins `platform`'s adapter resolves.
+fn adapter_resolved_packages(platform: Option<fbuild_core::Platform>) -> &'static [&'static str] {
+    match platform {
+        Some(fbuild_core::Platform::Espressif32) => &["framework-arduinoespressif32"],
+        Some(fbuild_core::Platform::Espressif8266) => {
+            &["framework-arduinoespressif8266", "toolchain-xtensa"]
+        }
+        Some(fbuild_core::Platform::Teensy) => {
+            &["framework-arduinoteensy", "toolchain-gccarmnoneeabi-teensy"]
+        }
+        Some(fbuild_core::Platform::Ststm32) => &[
+            "framework-arduinoststm32",
+            "framework-arduino-mbed",
+            "framework-cmsis",
+            "toolchain-gccarmnoneeabi",
+        ],
+        Some(fbuild_core::Platform::NordicNrf51) => {
+            &["framework-arduinonordicnrf5", "toolchain-gccarmnoneeabi"]
+        }
+        Some(fbuild_core::Platform::NordicNrf52) => &[
+            "framework-arduinoadafruitnrf52",
+            "framework-cmsis",
+            "toolchain-gccarmnoneeabi",
+        ],
+        Some(fbuild_core::Platform::AtmelSam) => &[
+            "framework-arduino-sam",
+            "framework-arduino-samd-adafruit",
+            "framework-arduino-sam-clearcore",
+            "framework-cmsis",
+            "framework-cmsis-atmel",
+            "toolchain-gccarmnoneeabi",
+        ],
+        Some(fbuild_core::Platform::RenesasRa) => {
+            &["framework-arduinorenesas-uno", "toolchain-gccarmnoneeabi"]
+        }
+        Some(fbuild_core::Platform::Apollo3) => {
+            &["framework-arduinoapollo3", "toolchain-gccarmnoneeabi"]
+        }
+        Some(fbuild_core::Platform::NxpLpc) => &[
+            "framework-arduino-lpc8xx",
+            "framework-cmsis",
+            "toolchain-gccarmnoneeabi",
+        ],
+        Some(fbuild_core::Platform::SiliconLabs) => {
+            &["framework-arduino-silabs", "toolchain-gccarmnoneeabi"]
+        }
+        Some(fbuild_core::Platform::RaspberryPi) => &[
+            "framework-arduinopico",
+            "toolchain-rp2040-earlephilhower",
+            "tool-picotool-rp2040-earlephilhower",
+        ],
+        Some(fbuild_core::Platform::AtmelAvr) => &[
+            "framework-arduino-avr",
+            "framework-arduino-avr-attiny",
+            "framework-arduino-avr-digistump",
+            "framework-arduino-avr-minicore",
+            "framework-arduino-avr-majorcore",
+            "framework-arduino-avr-megacore",
+            "framework-arduino-avr-microcore",
+            "framework-arduino-avr-mightycore",
+            "framework-arduino-avr-bean",
+            "framework-arduino-avr-dwenguino",
+            "framework-arduino-avr-nicai",
+            "framework-arduino-avr-panstamp",
+            "framework-arduino-avr-prusa_rambo",
+            "toolchain-atmelavr",
+        ],
+        Some(fbuild_core::Platform::AtmelMegaAvr) => &[
+            "framework-arduino-megaavr",
+            "framework-arduino-megaavr-megacorex",
+            "framework-arduino-megaavr-megatinycore",
+            "framework-arduino-megaavr-dxcore",
+            "toolchain-atmelavr",
+        ],
+        _ => &[],
+    }
 }
 
 #[cfg(test)]
