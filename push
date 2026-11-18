@@ -78,8 +78,14 @@ def main(argv: list[str] | None = None) -> int:
     if branch == "HEAD" or branch in PROTECTED:
         print(f"./push: refusing to push {branch!r}; work on a feature branch", file=sys.stderr)
         return 3
-    if git("status", "--porcelain", "--untracked-files=no"):
+    status = git("status", "--porcelain", "--untracked-files=normal").splitlines()
+    if any(not line.startswith("??") for line in status):
         print("./push: refusing: tracked files have uncommitted changes (a proof binds the committed tree)", file=sys.stderr)
+        return 3
+    if status and not args.no_proof:
+        # The dylint lane's local gate refuses any untracked file; check now
+        # rather than after the hours-long lint lane.
+        print("./push: refusing: untracked files would fail the dylint lane; commit, move or ignore them (or pass --no-proof)", file=sys.stderr)
         return 3
 
     if not args.no_proof:
