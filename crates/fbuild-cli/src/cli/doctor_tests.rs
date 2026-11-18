@@ -8,7 +8,10 @@ use std::path::Path;
 
 use fbuild_build::disk_preflight::{DiskRoot, FreeSpace, ReclaimableCache, measure};
 
-use super::{project_dir_to_measure, render_disk_check};
+use fbuild_core::path::NormalizedPath;
+use fbuild_paths::wheel_targets;
+
+use super::{project_dir_to_measure, render_disk_check, render_reclaimed, render_wheel_targets};
 
 const MB: u64 = 1024 * 1024;
 const GB: u64 = 1024 * MB;
@@ -173,4 +176,97 @@ fn the_project_dir_is_made_absolute_without_touching_the_filesystem() {
     );
     // Default is the current directory.
     assert!(project_dir_to_measure(None).as_path().is_absolute());
+}
+
+/// Days the wheel-target tests pass as the idle gate.
+const IDLE_DAYS: f64 = wheel_targets::DEFAULT_IDLE_DAYS;
+
+/// A store directory holding two targets: one owned by a live checkout, one
+/// whose owner is gone.
+fn store_with_targets() -> (tempfile::TempDir, NormalizedPath) {
+    let dir = tempfile::tempdir().expect("temp dir");
+    let store = NormalizedPath::new(dir.path()).join("wheel-build");
+    std::fs::create_dir_all(store.as_path()).expect("store dir");
+    let live_owner = NormalizedPath::new(dir.path()).join("live-worktree");
+    std::fs::create_dir_all(live_owner.as_path()).expect("live worktree");
+    for (name, owner) in [
+        ("fbuild-live0000000", live_owner.display_slash()),
+        ("fbuild-dead0000000", "/checkouts/gone".to_string()),
+    ] {
+        let target = store.join(name);
+        std::fs::create_dir_all(target.as_path()).expect("target dir");
+        std::fs::write(target.join("artifact.rlib"), vec![b'x'; 32]).expect("artifact");
+        std::fs::write(
+            target.join(wheel_targets::source_stamp_name()),
+            format!("{owner}\n"),
+        )
+        .expect("stamp");
+    }
+    (dir, store)
+}
+
+#[test]
+fn the_target_store_report_names_owners_and_dead_entries() {
+    let (_dir, store) = store_with_targets();
+    let measured = wheel_targets::survey(store.as_path(), IDLE_DAYS, std::time::SystemTime::now());
+    let text = render_wheel_targets(&measured, IDLE_DAYS);
+
+    assert!(
+        text.contains("wheel-build cargo targets under"),
+        "the store is named: {text}"
+    );
+    assert!(text.contains("fbuild-live0000000"), "{text}");
+    assert!(
+        text.contains("live-worktree"),
+        "the live owner is named: {text}"
+    );
+    assert!(
+        text.contains("keep"),
+        "a live owner keeps its target: {text}"
+    );
+    assert!(text.contains("fbuild-dead0000000"), "{text}");
+    assert!(
+        text.contains("DEAD (owner gone: /checkouts/gone)"),
+        "the dead target says why: {text}"
+    );
+    assert!(
+        text.contains("reclaimable in 1 dead target(s)"),
+        "the total line counts the dead ones: {text}"
+    );
+}
+
+#[test]
+fn a_missing_target_store_reports_none_rather_than_a_failure() {
+    let dir = tempfile::tempdir().expect("temp dir");
+    let missing = NormalizedPath::new(dir.path()).join("never-built");
+    let measured =
+        wheel_targets::survey(missing.as_path(), IDLE_DAYS, std::time::SystemTime::now());
+    let text = render_wheel_targets(&measured, IDLE_DAYS);
+    assert!(
+        text.contains("none (not created yet)"),
+        "an absent store is stated, not failed: {text}"
+    );
+}
+
+#[test]
+fn a_reclaim_pass_reports_what_it_freed() {
+    let (_dir, store) = store_with_targets();
+    let reclaimed =
+        wheel_targets::reclaim(store.as_path(), IDLE_DAYS, std::time::SystemTime::now());
+    let text = render_reclaimed(&reclaimed);
+    assert_eq!(reclaimed.len(), 1, "one dead target: {text}");
+    assert!(
+        text.contains("reclaimed ") && text.contains("from 1 dead target(s)"),
+        "{text}"
+    );
+    assert!(text.contains("fbuild-dead0000000"), "{text}");
+    assert!(
+        text.contains("owner gone: /checkouts/gone"),
+        "the reason survives into the report: {text}"
+    );
+}
+
+#[test]
+fn an_empty_reclaim_says_nothing_was_reclaimed() {
+    assert_eq!(render_reclaimed(&[]), "reclaimed: nothing\n");
 }
