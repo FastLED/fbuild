@@ -298,10 +298,15 @@ class FractionalWorkflowTests(unittest.TestCase):
             "\n".join(step.get("run", "") for step in lint_job["steps"]),
         )
         setup = next(step for step in lint_job["steps"] if step.get("uses", "").startswith("zackees/setup-soldr@"))
-        self.assertIs(setup["with"]["dylint-output-cache"], False)
-        restore = next(step for step in lint_job["steps"] if step.get("name") == "Restore compiled Dylint libraries")
-        self.assertIn("hashFiles('dylints/**')", restore["with"]["key"])
-        self.assertTrue(any(step.get("name") == "Save compiled Dylint libraries" for step in lint_job["steps"]))
+        # The nightly target tree is what makes Dylint slow: a different
+        # compiler from the stable build, so its check artifacts were never
+        # persisted. setup-soldr's output cache (commit-free key since
+        # setup-soldr#540) saves target/dylint/{libraries,target}/<nightly>-<host>;
+        # it supersedes the bespoke short-path library cache and its symlink.
+        self.assertIs(setup["with"]["dylint-output-cache"], True)
+        names = {step.get("name") for step in lint_job["steps"]}
+        for retired in ("Restore compiled Dylint libraries", "Reuse cached Dylint library tree", "Save compiled Dylint libraries"):
+            self.assertNotIn(retired, names)
         ui_tests = next(step for step in lint_job["steps"] if step.get("name") == "Test Dylint libraries")
         self.assertIn("git diff --quiet FETCH_HEAD HEAD -- dylints", ui_tests["run"])
         gate = dylint["jobs"]["gate"]
