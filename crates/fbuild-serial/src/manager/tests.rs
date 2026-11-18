@@ -1002,3 +1002,21 @@ async fn resolve_open_family_remembers_late_inference_for_next_timeout() {
         .await;
     assert_eq!(second, crate::boards::BoardFamily::Esp32NativeUsbCdc);
 }
+
+fn unidentified(_: &str) -> Option<crate::boards::BoardFamily> {
+    None
+}
+
+/// An unidentified port is an answer, not a failure: it must not reuse a
+/// family remembered from a board that used to be on that port name.
+#[tokio::test]
+async fn resolve_open_family_forgets_family_when_port_is_unidentified() {
+    let mgr = SharedSerialManager::new();
+    let bound = Duration::from_secs(5);
+    mgr.resolve_open_family_with("COM_SWAPPED", slow_native_usb, bound)
+        .await;
+    let family = mgr
+        .resolve_open_family_with("COM_SWAPPED", unidentified, bound)
+        .await;
+    assert_eq!(family, crate::boards::BoardFamily::CdcAcmBridge);
+}

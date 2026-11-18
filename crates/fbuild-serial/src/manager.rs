@@ -37,10 +37,10 @@ const SERIAL_READ_TIMEOUT: Duration = Duration::from_millis(10);
 pub const OPEN_FAMILY_RESOLVE_TIMEOUT: Duration = Duration::from_secs(3);
 
 /// Run `resolve` on a blocking thread, bounded by `bound`, and log how long
-/// it took. Any failure (unidentified port, panic, timeout) falls back to
-/// `last_known`, else [`crate::boards::BoardFamily::CdcAcmBridge`]. A
-/// timed-out resolver keeps running on its blocking thread, but it opens
-/// nothing, so nothing leaks.
+/// it took. An unidentified port gets [`crate::boards::BoardFamily::CdcAcmBridge`];
+/// a resolver that panics or exceeds `bound` falls back to `last_known`, else
+/// `CdcAcmBridge`. A timed-out resolver keeps running on its blocking thread,
+/// but it opens nothing, so nothing leaks.
 pub(crate) async fn resolve_family_bounded<F>(
     port: &str,
     resolve: F,
@@ -50,13 +50,14 @@ pub(crate) async fn resolve_family_bounded<F>(
 where
     F: FnOnce() -> Option<crate::boards::BoardFamily> + Send + 'static,
 {
-    let fallback = last_known.unwrap_or(crate::boards::BoardFamily::CdcAcmBridge);
+    const UNIDENTIFIED: crate::boards::BoardFamily = crate::boards::BoardFamily::CdcAcmBridge;
+    let fallback = last_known.unwrap_or(UNIDENTIFIED);
     let started = std::time::Instant::now();
     let outcome = tokio::time::timeout(bound, tokio::task::spawn_blocking(resolve)).await;
     let elapsed_ms = u64::try_from(started.elapsed().as_millis()).unwrap_or(u64::MAX);
     let (family, outcome) = match outcome {
         Ok(Ok(Some(family))) => (family, "resolved"),
-        Ok(Ok(None)) => (fallback, "unidentified; fallback"),
+        Ok(Ok(None)) => (UNIDENTIFIED, "unidentified"),
         Ok(Err(_)) => (fallback, "inference panicked; fallback"),
         Err(_) => (fallback, "inference exceeded its bound; fallback"),
     };
@@ -154,13 +155,14 @@ impl SharedSerialManager {
     /// `open_port` as an explicit `family` argument — pre-open enumeration
     /// is not a wedged driver. See FastLED/fbuild#2083.
     ///
-    /// Bounded by [`OPEN_FAMILY_RESOLVE_TIMEOUT`]. A successful inference is
+    /// Bounded by [`OPEN_FAMILY_RESOLVE_TIMEOUT`]. Each inference's answer is
     /// remembered per port, including one that finishes after the bound, and
-    /// is the fallback when a later inference is too slow or fails. Inference
+    /// is the fallback when a later inference is too slow or panics. Inference
     /// always runs, so a different board on a reused port name is still
-    /// detected whenever the host answers in time. With nothing remembered the
-    /// fallback is [`crate::boards::BoardFamily::CdcAcmBridge`], the same
-    /// `(true, true)` idle DTR/RTS state `open_port` applies for `None`.
+    /// detected whenever the host answers in time. An unidentified port, or a
+    /// timeout with nothing remembered, gets
+    /// [`crate::boards::BoardFamily::CdcAcmBridge`], the same `(true, true)`
+    /// idle DTR/RTS state `open_port` applies for `None`.
     pub async fn resolve_open_family(&self, port: &str) -> crate::boards::BoardFamily {
         self.resolve_open_family_with(
             port,
@@ -181,9 +183,11 @@ impl SharedSerialManager {
         let owned = port.to_string();
         let resolve = move || {
             let family = infer(&owned);
-            if let Some(family) = family {
-                cache.insert(owned, family);
-            }
+            // An answer in either direction replaces what was remembered.
+            match family {
+                Some(family) => cache.insert(owned, family),
+                None => cache.remove(&owned).map(|(_, family)| family),
+            };
             family
         };
         resolve_family_bounded(port, resolve, bound, last_known).await
