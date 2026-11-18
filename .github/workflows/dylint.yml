@@ -21,12 +21,13 @@ on:
         type: string
         required: false
         default: "standalone"
-  # PRs and merge-queue runs reach Dylint through ci-minimal.yml's
-  # workflow_call, gated by the single required "CI summary" check.
-  # setup-soldr skips cache uploads on PRs. A main run seeds the shared
-  # Dylint compile cache that subsequent PRs are allowed to restore.
-  push:
-    branches: [main]
+  # PRs, merge-queue runs and main pushes all reach Dylint through
+  # ci-minimal.yml's workflow_call (gated by the single required "CI
+  # summary" check). setup-soldr skips cache uploads on PRs; ci-minimal's
+  # main-push call seeds the shared three-target Dylint caches that PRs
+  # restore. There is deliberately no standalone `push` trigger: it shared
+  # that call's output-cache key and, being Linux-only and faster, always
+  # won the save, so the Windows/macOS check tree was never persisted.
 
 # Auto-cancel superseded PR runs: pushing again to a feature branch
 # supersedes the in-flight run instead of queueing behind it. Non-PR
