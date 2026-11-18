@@ -10,6 +10,30 @@ pub use nrf52_compiler::Nrf52Compiler;
 pub use nrf52_linker::Nrf52Linker;
 pub use orchestrator::Nrf52Orchestrator;
 
+/// The nRF52 core (and which one) a build of `board` compiles against, without downloading
+/// it: the board's `build.framework_package` (FastLED/fbuild#2017) with the
+/// env's `platform_packages` override for that package. `fbuild lib-select`
+/// uses this so it inspects the same core's `libraries/` as the build
+/// (FastLED/fbuild#2042). A registry pin (`platform = nordicnrf52@x.y.z`) is
+/// not resolved here: that needs the registry, and lib-select stays offline.
+pub fn installed_cores(
+    project_dir: &std::path::Path,
+    env_config: &std::collections::HashMap<String, String>,
+    board: &fbuild_config::BoardConfig,
+) -> fbuild_core::Result<(
+    fbuild_packages::library::Nrf52Framework,
+    fbuild_packages::library::Nrf52Cores,
+)> {
+    let framework = core_select::selected_framework(board)?;
+    let (_, cores, _) = orchestrator::nrf52_packages_from_resolved(
+        project_dir,
+        Some(env_config),
+        framework,
+        &std::collections::HashMap::new(),
+    );
+    Ok((framework, cores))
+}
+
 /// NRF52 platform support.
 pub struct Nrf52PlatformSupport;
 

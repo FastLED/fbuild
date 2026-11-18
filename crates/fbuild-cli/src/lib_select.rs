@@ -94,7 +94,15 @@ pub fn run(project_dir: &Path, env: Option<&str>, explain: bool, json: bool) -> 
         }
     };
 
-    let framework_info = match resolve_framework(&project_dir, platform, &board, env_cfg) {
+    let board_config = resolve_board_config(&config, &env_name, &board, &project_dir);
+
+    let framework_info = match resolve_framework(
+        &project_dir,
+        platform,
+        &board,
+        board_config.as_ref(),
+        env_cfg,
+    ) {
         Ok(info) => info,
         Err(msg) => {
             eprintln!("lib-select: {}", msg);
@@ -112,8 +120,9 @@ pub fn run(project_dir: &Path, env: Option<&str>, explain: bool, json: bool) -> 
     // inactive branches are not library dependencies. Sketch-local defines
     // are collected by `resolve_active`; board defines start with the same
     // registry values that the platform orchestrator supplies to the build.
-    let board_defines = BoardConfig::from_board_id(&board, &HashMap::new())
-        .map(|config| config.get_defines())
+    let board_defines = board_config
+        .as_ref()
+        .map(BoardConfig::get_defines)
         .unwrap_or_default();
     let selection = resolve_active(&seeds, &search_paths, &libraries, &board_defines);
 
@@ -151,6 +160,23 @@ struct FrameworkInfo {
     libraries_dir: PathBuf,
 }
 
+/// Resolve the board the way the build does (`[env]` `board_build.*`
+/// overrides, project-local `boards/<id>.json`), so platform code that picks
+/// its core from board data inspects the same core (FastLED/fbuild#2042).
+fn resolve_board_config(
+    config: &PlatformIOConfig,
+    env_name: &str,
+    board: &str,
+    project_dir: &Path,
+) -> Result<BoardConfig, String> {
+    config
+        .get_board_overrides(env_name)
+        .and_then(|overrides| {
+            fbuild_build::resolution::resolve_board(board, &overrides, Some(project_dir))
+        })
+        .map_err(|err| err.to_string())
+}
+
 /// `(display name, libraries dir, framework root)` from a libraries dir +
 /// display name, so each `resolve_framework` match arm can stay a one-liner.
 fn info(name: &str, libs: PathBuf) -> (String, PathBuf, PathBuf) {
@@ -172,11 +198,12 @@ fn resolve_framework(
     project_dir: &Path,
     platform: Platform,
     board: &str,
+    board_config: Result<&BoardConfig, &String>,
     env_config: &HashMap<String, String>,
 ) -> Result<FrameworkInfo, String> {
     use fbuild_packages::library::{
         Apollo3Cores, AvrFramework, Ch32vCores, Esp32Framework, Esp8266Framework, Nrf51Cores,
-        Nrf52Cores, RenesasCores, SamCores, SilabsCores, Stm32Cores, TeensyCores,
+        RenesasCores, SamCores, SilabsCores, Stm32Cores, TeensyCores,
     };
 
     let (name, libraries_dir, root): (String, PathBuf, PathBuf) = match platform {
@@ -220,10 +247,14 @@ fn resolve_framework(
                 .get_libraries_dir()
                 .into_path_buf(),
         ),
-        Platform::NordicNrf52 => info(
-            "framework-arduinoadafruitnrf52",
-            Nrf52Cores::new(project_dir).get_libraries_dir(),
-        ),
+        Platform::NordicNrf52 => {
+            let (name, libraries) = nrf52_framework_libraries(
+                project_dir,
+                env_config,
+                board_config.map_err(Clone::clone)?,
+            )?;
+            info(name, libraries)
+        }
         Platform::AtmelSam => info(
             "framework-arduinosam",
             SamCores::new(project_dir).get_libraries_dir(),
@@ -304,6 +335,19 @@ fn rp2040_framework_libraries_dir(
         |override_spec| Rp2040Cores::with_override(project_dir, override_spec),
     );
     framework.get_libraries_dir()
+}
+
+/// The nRF52 core the build selects for `board` (Adafruit's, or Seeed's
+/// fork for the XIAO nRF52840 boards, FastLED/fbuild#2017) and its
+/// `libraries/` dir, honoring the env's `platform_packages` override.
+fn nrf52_framework_libraries(
+    project_dir: &Path,
+    env_config: &HashMap<String, String>,
+    board: &BoardConfig,
+) -> Result<(&'static str, PathBuf), String> {
+    let (framework, cores) = fbuild_build::nrf52::installed_cores(project_dir, env_config, board)
+        .map_err(|err| err.to_string())?;
+    Ok((framework.package_name(), cores.get_libraries_dir()))
 }
 
 /// Mirror of `fbuild_build::framework_libs::framework_include_scan_roots`.
@@ -550,6 +594,36 @@ mod tests {
             "override cache path was not selected: {}",
             libraries.display()
         );
+    }
+
+    /// FastLED/fbuild#2042: the XIAO nRF52840 boards build with Seeed's
+    /// core (#2030), so lib-select must inspect that core's `libraries/`,
+    /// not Adafruit's, while Adafruit boards keep Adafruit's.
+    #[test]
+    fn nrf52_diagnostic_uses_the_core_the_build_selects() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let env = HashMap::new();
+        let board = |id: &str| BoardConfig::from_board_id(id, &HashMap::new()).unwrap();
+
+        let (name, libraries) =
+            nrf52_framework_libraries(tmp.path(), &env, &board("xiaoble_adafruit")).unwrap();
+        assert_eq!(name, "framework-arduinoadafruitnrf52-seeed");
+        let seeed_dir = fbuild_packages::library::Nrf52Cores::for_framework(
+            tmp.path(),
+            fbuild_packages::library::Nrf52Framework::Seeed,
+        )
+        .get_libraries_dir();
+        assert_eq!(libraries, seeed_dir);
+
+        let (name, libraries) =
+            nrf52_framework_libraries(tmp.path(), &env, &board("adafruit_feather_nrf52840"))
+                .unwrap();
+        assert_eq!(name, "framework-arduinoadafruitnrf52");
+        assert_eq!(
+            libraries,
+            fbuild_packages::library::Nrf52Cores::new(tmp.path()).get_libraries_dir()
+        );
+        assert_ne!(libraries, seeed_dir);
     }
 
     #[test]

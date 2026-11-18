@@ -97,7 +97,7 @@ pub(crate) async fn nrf52_packages(
     ))
 }
 
-fn nrf52_packages_from_resolved(
+pub(super) fn nrf52_packages_from_resolved(
     project_dir: &Path,
     env_config: Option<&std::collections::HashMap<String, String>>,
     framework: fbuild_packages::library::Nrf52Framework,
