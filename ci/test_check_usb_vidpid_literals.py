@@ -6,8 +6,8 @@ import unittest
 
 
 spec = importlib.util.spec_from_file_location("guard", "ci/check_usb_vidpid_literals.py")
+assert spec is not None and spec.loader is not None
 guard = importlib.util.module_from_spec(spec)
-assert spec.loader is not None
 sys.modules[spec.name] = guard
 spec.loader.exec_module(guard)
 

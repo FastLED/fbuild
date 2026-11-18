@@ -24,6 +24,7 @@ import subprocess
 import sys
 import time
 from pathlib import Path
+from typing import Callable
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 RESULTS_DIR = REPO_ROOT / "ci" / "bench-results"
@@ -84,7 +85,7 @@ def force_rebuild() -> None:
                    timeout=600)
 
 
-def measure_scenario(name: str, before: callable, cmds: list[tuple[str, list[str]]]) -> dict:
+def measure_scenario(name: str, before: Callable[[], object], cmds: list[tuple[str, list[str]]]) -> dict:
     print(f"\n=== {name} ===", flush=True)
     before()
     out: dict = {"commands": []}
@@ -104,13 +105,14 @@ def main() -> int:
         print(f"missing target files: {RUST_FILE} or {PYTHON_FILE}", file=sys.stderr)
         return 1
 
+    scenarios: dict[str, dict] = {}
     results: dict[str, object] = {
         "label": label,
         "platform": sys.platform,
         "python": sys.version.split()[0],
         "rust_file": str(RUST_FILE.relative_to(REPO_ROOT)),
         "python_file": str(PYTHON_FILE.relative_to(REPO_ROOT)),
-        "scenarios": {},
+        "scenarios": scenarios,
     }
 
     print("[setup] pre-warm uv sync", flush=True)
@@ -121,7 +123,7 @@ def main() -> int:
     print("[setup] pre-prime cargo via forced reinstall", flush=True)
     force_rebuild()
 
-    results["scenarios"]["warm"] = measure_scenario(
+    scenarios["warm"] = measure_scenario(
         "warm (no touch)",
         before=lambda: None,
         cmds=[
@@ -130,7 +132,7 @@ def main() -> int:
         ],
     )
 
-    results["scenarios"]["rust_touched"] = measure_scenario(
+    scenarios["rust_touched"] = measure_scenario(
         "rust touched (uv sync only checks if rebuild needed)",
         before=lambda: touch(RUST_FILE),
         cmds=[
@@ -140,7 +142,7 @@ def main() -> int:
     )
 
     warm_state()
-    results["scenarios"]["python_touched"] = measure_scenario(
+    scenarios["python_touched"] = measure_scenario(
         "python touched",
         before=lambda: touch(PYTHON_FILE),
         cmds=[
@@ -150,7 +152,7 @@ def main() -> int:
     )
 
     warm_state()
-    results["scenarios"]["both_touched"] = measure_scenario(
+    scenarios["both_touched"] = measure_scenario(
         "rust + python touched",
         before=lambda: (touch(RUST_FILE), touch(PYTHON_FILE)),
         cmds=[
@@ -165,7 +167,7 @@ def main() -> int:
     print("\n[setup] reset cargo cache for reinstall scenarios", flush=True)
     force_rebuild()
 
-    results["scenarios"]["forced_reinstall_clean"] = measure_scenario(
+    scenarios["forced_reinstall_clean"] = measure_scenario(
         "forced reinstall — no source changes (mtime-skip fast path)",
         before=lambda: None,
         cmds=[
@@ -173,7 +175,7 @@ def main() -> int:
         ],
     )
 
-    results["scenarios"]["forced_reinstall_dirty"] = measure_scenario(
+    scenarios["forced_reinstall_dirty"] = measure_scenario(
         "forced reinstall — after touching .rs (cargo incremental)",
         before=lambda: touch(RUST_FILE),
         cmds=[

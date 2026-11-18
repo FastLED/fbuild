@@ -41,7 +41,7 @@ class Harness:
         self._stack.enter_context(patch.object(run_dylint.subprocess, "run", self._run))
         return self
 
-    def __exit__(self, *exc_info) -> bool:
+    def __exit__(self, *exc_info) -> bool | None:
         return self._stack.__exit__(*exc_info)
 
     def _run(self, args, **kwargs):

@@ -84,17 +84,19 @@ class StepProof:
 
 def read_steps(raw: dict[str, JsonValue]) -> tuple[StepProof, ...]:
     tree = raw.get("tree")
-    if not isinstance(tree, dict) or not isinstance(tree.get("groups"), list):
+    if not isinstance(tree, dict) or not isinstance(groups := tree.get("groups"), list):
         raise ValueError("Dylint proof lacks job groups")
     steps: list[StepProof] = []
-    for group in tree["groups"]:
-        if not isinstance(group, dict) or not isinstance(group.get("jobs"), list):
+    for group in groups:
+        if not isinstance(group, dict) or not isinstance(jobs := group.get("jobs"), list):
             raise ValueError("invalid Dylint job group")
-        for job in group["jobs"]:
-            if not isinstance(job, dict) or not isinstance(job.get("sections"), list):
+        for job in jobs:
+            if not isinstance(job, dict) or not isinstance(
+                sections := job.get("sections"), list
+            ):
                 raise ValueError("Dylint proof lacks step evidence")
             job_id = wire_string(job, "job_id")
-            for section in job["sections"]:
+            for section in sections:
                 if not isinstance(section, dict):
                     raise ValueError("invalid Dylint step evidence")
                 conclusion = section.get("conclusion")
@@ -103,10 +105,9 @@ def read_steps(raw: dict[str, JsonValue]) -> tuple[StepProof, ...]:
                 steps.append(
                     StepProof(
                         job_id,
-                        *(
-                            wire_string(section, key)
-                            for key in ("name", "stage", "status")
-                        ),
+                        wire_string(section, "name"),
+                        wire_string(section, "stage"),
+                        wire_string(section, "status"),
                         conclusion,
                     )
                 )

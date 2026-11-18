@@ -50,6 +50,9 @@ tests = ["ci/test_no_legacy_cross.py"]
 [scripts.check_python_complexity]
 tests = ["ci/test_check_python_complexity.py"]
 
+[scripts.check_python_types]
+tests = ["ci/test_check_python_types.py"]
+
 [scripts.check_rust_toolchain_pins]
 tests = ["ci/test_rust_toolchain_pins.py"]
 

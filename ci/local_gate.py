@@ -100,9 +100,11 @@ class RunProof:
             raise ValueError("bosn job evidence contains malformed log records")
         jobs: list[JobProof] = []
         for group in groups:
-            if not isinstance(group, dict) or not isinstance(group.get("jobs"), list):
+            if not isinstance(group, dict) or not isinstance(
+                group_jobs := group.get("jobs"), list
+            ):
                 raise ValueError("invalid bosn job group")
-            for job in group["jobs"]:
+            for job in group_jobs:
                 if not isinstance(job, dict):
                     raise ValueError("invalid bosn job record")
                 jobs.append(
@@ -122,14 +124,18 @@ class RunProof:
             Path(wire_string(raw, "workspace")).resolve(),
             wire_string(raw, "sha"),
             raw["dirty"],
-            *(wire_string(raw, key) for key in ("engine", "act_version", "workflow")),
+            wire_string(raw, "engine"),
+            wire_string(raw, "act_version"),
+            wire_string(raw, "workflow"),
             selected_job,
-            *(
-                wire_string(raw, key)
-                for key in ("mode", "event", "state", "conclusion")
-            ),
+            wire_string(raw, "mode"),
+            wire_string(raw, "event"),
+            wire_string(raw, "state"),
+            wire_string(raw, "conclusion"),
             wire_count(raw, "exit_code"),
-            *(wire_count(counts, key) for key in ("total", "completed", "failed")),
+            wire_count(counts, "total"),
+            wire_count(counts, "completed"),
+            wire_count(counts, "failed"),
             tuple(jobs),
         )
 
