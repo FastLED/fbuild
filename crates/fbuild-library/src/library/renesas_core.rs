@@ -19,26 +19,117 @@ const RENESAS_CORE_URL: &str =
 const RENESAS_CORE_SHA256: &str =
     "71aa5d81f9455dbc2e8977b594963494e41466a8ed439a841b9d029b4aa31c8b";
 
+/// `arduino:renesas_portenta` — the separate core package for the RA6M5
+/// boards (Portenta C33). Same repo and layout as `renesas_uno`, different
+/// package/architecture, so it is a second pinned download rather than a
+/// different extractor (FastLED/fbuild#2054).
+const RENESAS_PORTENTA_CORE_VERSION: &str = "1.6.0";
+const RENESAS_PORTENTA_CORE_URL: &str =
+    "https://downloads.arduino.cc/cores/staging/ArduinoCore-renesas_portenta-1.6.0.tar.bz2";
+/// SHA-256 published in Arduino's package_index.json for renesas_portenta 1.6.0.
+const RENESAS_PORTENTA_CORE_SHA256: &str =
+    "363d1aae79c07a250e9b790d96328f37ac863f1b857404f1b2529f3f5d5896a0";
+
+/// Which Arduino Renesas core package a board builds against.
+///
+/// Arduino splits the RA support into two Board Manager packages that share
+/// one repository and layout: `arduino:renesas_uno` for the RA4M1 boards and
+/// `arduino:renesas_portenta` for the RA6M5 ones. The package decides the
+/// download, the install directory and the `platform_packages` registry key;
+/// everything downstream (core/variant dirs, FSP `includes.txt`, bundled
+/// `libraries/`, `fsp.ld`, `libs/libfsp.a`) is read identically from whichever
+/// archive is installed (FastLED/fbuild#2054).
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
+pub enum RenesasCoreKind {
+    /// `arduino:renesas_uno` — UNO R4 Minima/WiFi, Nano R4 (RA4M1).
+    #[default]
+    Uno,
+    /// `arduino:renesas_portenta` — Portenta C33 (RA6M5).
+    Portenta,
+}
+
+impl RenesasCoreKind {
+    /// MCU family name (as returned by `renesas_mcu_family`) to core package.
+    pub fn for_family(family: &str) -> Self {
+        match family {
+            "ra6m5" => Self::Portenta,
+            _ => Self::Uno,
+        }
+    }
+
+    /// Install-directory name, distinct per kind so the two cores can be
+    /// installed side by side in the same `platforms` cache.
+    fn package_name(self) -> &'static str {
+        match self {
+            Self::Uno => "renesas-core",
+            Self::Portenta => "renesas-portenta-core",
+        }
+    }
+
+    fn version(self) -> &'static str {
+        match self {
+            Self::Uno => RENESAS_CORE_VERSION,
+            Self::Portenta => RENESAS_PORTENTA_CORE_VERSION,
+        }
+    }
+
+    fn url(self) -> &'static str {
+        match self {
+            Self::Uno => RENESAS_CORE_URL,
+            Self::Portenta => RENESAS_PORTENTA_CORE_URL,
+        }
+    }
+
+    fn checksum(self) -> &'static str {
+        match self {
+            Self::Uno => RENESAS_CORE_SHA256,
+            Self::Portenta => RENESAS_PORTENTA_CORE_SHA256,
+        }
+    }
+
+    /// `platform_packages` registry key for this core, as Arduino's package
+    /// architecture spells it (`framework-arduinorenesas-{architecture}`).
+    pub fn registry_key(self) -> &'static str {
+        match self {
+            Self::Uno => "framework-arduinorenesas-uno",
+            Self::Portenta => "framework-arduinorenesas-portenta",
+        }
+    }
+}
+
 /// Arduino Renesas core framework manager.
 pub struct RenesasCores {
     base: PackageBase,
     install_dir: Option<PathBuf>,
+    kind: RenesasCoreKind,
 }
 
 impl RenesasCores {
+    /// The `arduino:renesas_uno` core (UNO R4 family).
     pub fn new(project_dir: &Path) -> Self {
+        Self::with_kind(project_dir, RenesasCoreKind::Uno)
+    }
+
+    /// A specific Renesas core package (FastLED/fbuild#2054).
+    pub fn with_kind(project_dir: &Path, kind: RenesasCoreKind) -> Self {
         Self {
             base: PackageBase::new(
-                "renesas-core",
-                RENESAS_CORE_VERSION,
-                RENESAS_CORE_URL,
-                RENESAS_CORE_URL,
-                Some(RENESAS_CORE_SHA256),
+                kind.package_name(),
+                kind.version(),
+                kind.url(),
+                kind.url(),
+                Some(kind.checksum()),
                 CacheSubdir::Platforms,
                 project_dir,
             ),
             install_dir: None,
+            kind,
         }
+    }
+
+    /// The core package this manager installs.
+    pub fn kind(&self) -> RenesasCoreKind {
+        self.kind
     }
 
     /// Construct with a consumer-supplied override (parsed from the env's
@@ -46,18 +137,29 @@ impl RenesasCores {
     /// URL / version / checksum are replaced; `cache_subdir` and `name` are
     /// preserved. See `PackageBase::with_override` and FastLED/fbuild#681.
     pub fn with_override(project_dir: &Path, ovr: fbuild_config::PackageOverride) -> Self {
+        Self::with_kind_and_override(project_dir, RenesasCoreKind::Uno, ovr)
+    }
+
+    /// [`Self::with_override`] for a specific core package
+    /// (FastLED/fbuild#2054).
+    pub fn with_kind_and_override(
+        project_dir: &Path,
+        kind: RenesasCoreKind,
+        ovr: fbuild_config::PackageOverride,
+    ) -> Self {
         Self {
             base: PackageBase::new(
-                "renesas-core",
-                RENESAS_CORE_VERSION,
-                RENESAS_CORE_URL,
-                RENESAS_CORE_URL,
-                Some(RENESAS_CORE_SHA256),
+                kind.package_name(),
+                kind.version(),
+                kind.url(),
+                kind.url(),
+                Some(kind.checksum()),
                 CacheSubdir::Platforms,
                 project_dir,
             )
             .with_override(ovr),
             install_dir: None,
+            kind,
         }
     }
 
@@ -75,6 +177,7 @@ impl RenesasCores {
                 cache_root,
             ),
             install_dir: None,
+            kind: RenesasCoreKind::Uno,
         }
     }
 
@@ -305,6 +408,64 @@ mod tests {
         assert_eq!(
             info.checksum.as_deref(),
             Some("71aa5d81f9455dbc2e8977b594963494e41466a8ed439a841b9d029b4aa31c8b")
+        );
+    }
+
+    /// FastLED/fbuild#2054: the Portenta C33 builds against the separate
+    /// `arduino:renesas_portenta` package, pinned to the same 1.6.0 release as
+    /// the UNO core and checksummed from Arduino's package_index.json.
+    #[test]
+    fn portenta_core_is_a_second_pinned_package() {
+        let tmp = tempfile::tempdir().unwrap();
+        let info = RenesasCores::with_kind(tmp.path(), RenesasCoreKind::Portenta).get_info();
+        assert_eq!(info.version, "1.6.0");
+        assert_eq!(
+            info.url,
+            "https://downloads.arduino.cc/cores/staging/ArduinoCore-renesas_portenta-1.6.0.tar.bz2"
+        );
+        assert_eq!(
+            info.checksum.as_deref(),
+            Some("363d1aae79c07a250e9b790d96328f37ac863f1b857404f1b2529f3f5d5896a0")
+        );
+    }
+
+    /// The two cores install side by side: same cache subdir, different name,
+    /// so installing Portenta must not overwrite (or satisfy) the UNO core.
+    #[test]
+    fn portenta_core_installs_under_its_own_name() {
+        assert_eq!(RenesasCoreKind::Uno.package_name(), "renesas-core");
+        assert_eq!(
+            RenesasCoreKind::Portenta.package_name(),
+            "renesas-portenta-core"
+        );
+        let tmp = tempfile::tempdir().unwrap();
+        let uno = RenesasCores::with_kind(tmp.path(), RenesasCoreKind::Uno);
+        let portenta = RenesasCores::with_kind(tmp.path(), RenesasCoreKind::Portenta);
+        assert_ne!(
+            uno.resolved_dir(),
+            portenta.resolved_dir(),
+            "the two Renesas cores must not share an install dir"
+        );
+        assert_eq!(portenta.kind(), RenesasCoreKind::Portenta);
+    }
+
+    /// The RA6M5 family is the one board family served by renesas_portenta;
+    /// everything else stays on renesas_uno.
+    #[test]
+    fn core_kind_follows_the_mcu_family() {
+        assert_eq!(
+            RenesasCoreKind::for_family("ra6m5"),
+            RenesasCoreKind::Portenta
+        );
+        assert_eq!(RenesasCoreKind::for_family("ra4m1"), RenesasCoreKind::Uno);
+        assert_eq!(
+            RenesasCoreKind::Portenta.registry_key(),
+            "framework-arduinorenesas-portenta",
+            "platform_packages names the Portenta core, not the UNO one"
+        );
+        assert_eq!(
+            RenesasCoreKind::Uno.registry_key(),
+            "framework-arduinorenesas-uno"
         );
     }
 

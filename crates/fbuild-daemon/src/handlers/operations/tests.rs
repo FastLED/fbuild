@@ -348,14 +348,17 @@ mod unbuildable_board_tests {
         );
     }
 
+    /// A board whose platform *does* have an orchestrator is still rejected by
+    /// name when its own JSON carries an `unsupported_reason` (FastLED/fbuild#2039).
+    /// The Portenta C33 used to be the example here; it became buildable in
+    /// FastLED/fbuild#2054, so the remaining one is the WebAssembly board.
     #[test]
     fn rejected_board_on_supported_platform_is_named() {
-        let err = resolve_env_platform(&env("renesas-ra", "portenta_c33")).unwrap_err();
+        let err = resolve_env_platform(&env("wasm", "wasm")).unwrap_err();
         assert!(
-            err.starts_with("board 'portenta_c33' cannot be built by fbuild: it needs"),
+            err.starts_with("board 'wasm' cannot be built by fbuild: fbuild has no WebAssembly"),
             "{err}"
         );
-        assert!(err.contains("FastLED/fbuild#2054"), "{err}");
     }
 
     /// FastLED/fbuild#2042: a Zephyr-only board with `framework = arduino`
