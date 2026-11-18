@@ -83,7 +83,10 @@ impl GitHubSource {
                 .find_map(|ext| rest.strip_suffix(ext)),
             _ => return None,
         };
-        Some(reference.and_then(|reference| Self::pinned(owner, repo, reference)))
+        // The ref is a URL path here, so it may be percent-encoded
+        // (`feature%2Fx`); `archive_url` encodes it again (FastLED/fbuild#2042).
+        let reference = reference.and_then(percent_decode);
+        Some(reference.and_then(|reference| Self::pinned(owner, repo, &reference)))
     }
 
     /// `owner/repo` at `reference`, all validated.
@@ -169,6 +172,27 @@ fn canonical_github_host(spec: &str) -> String {
         }
     }
     spec.to_string()
+}
+
+/// Decode `%XX` escapes in a URL path. `None` for a malformed escape or a
+/// result that is not UTF-8.
+fn percent_decode(text: &str) -> Option<String> {
+    let mut bytes = Vec::with_capacity(text.len());
+    let mut rest = text.as_bytes();
+    while let Some((&byte, tail)) = rest.split_first() {
+        if byte == b'%' {
+            let hex = tail
+                .get(..2)
+                .filter(|h| h.iter().all(u8::is_ascii_hexdigit))?;
+            let hex = std::str::from_utf8(hex).ok()?;
+            bytes.push(u8::from_str_radix(hex, 16).ok()?);
+            rest = &tail[2..];
+        } else {
+            bytes.push(byte);
+            rest = tail;
+        }
+    }
+    String::from_utf8(bytes).ok()
 }
 
 /// A ref must be a usable URL path: no whitespace or control characters, no
