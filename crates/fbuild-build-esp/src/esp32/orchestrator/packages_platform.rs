@@ -326,7 +326,7 @@ fn reject_unhonored_platform_pin(env_config: Option<&HashMap<String, String>>) -
     Ok(())
 }
 
-/// Provision the managed `tool-esptoolpy` package (the tasmota PyInstaller
+/// Provision the managed `tool-esptoolpy` package (the PyInstaller
 /// standalone binary) from `platform.json` and return the path to the
 /// `esptool` executable.
 ///

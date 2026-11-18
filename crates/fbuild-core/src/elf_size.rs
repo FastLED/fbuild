@@ -89,6 +89,7 @@ impl SizeInfo {
             total_ram: data.saturating_add(bss),
             max_flash,
             max_ram,
+            ram_warning: ram_sections_missing(sections, ram_sections),
         }
     }
 }
@@ -436,6 +437,26 @@ mod tests {
         let warning = ram_sections_missing(&sections, PLATFORMIO_RAM_SECTIONS)
             .expect("no .data/.bss/.noinit must be reported");
         assert!(warning.contains(".data, .bss, .noinit"), "{warning}");
+    }
+
+    /// The size report carries the missing-section warning, so the build log
+    /// can show it (FastLED/fbuild#2042); a real RAM section clears it.
+    #[test]
+    fn size_info_carries_the_missing_ram_warning() {
+        let sections = [named(".text", 1_000, true, false, true)];
+        let info = SizeInfo::from_elf_sections(&sections, None, Some(2_048));
+        assert_eq!(
+            info.ram_warning,
+            ram_sections_missing(&sections, PLATFORMIO_RAM_SECTIONS)
+        );
+        assert!(info.ram_warning.is_some());
+
+        let with_ram = [
+            named(".text", 1_000, true, false, true),
+            named(".bss", 64, false, true, false),
+        ];
+        let info = SizeInfo::from_elf_sections(&with_ram, None, Some(2_048));
+        assert_eq!(info.ram_warning, None);
     }
 
     /// An empty but present RAM section is a real 0, not an unknown layout.

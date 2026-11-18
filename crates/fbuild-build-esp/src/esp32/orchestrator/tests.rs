@@ -360,7 +360,7 @@ fn deploy_esptool_requires_v5_cli() {
     use super::packages::speaks_v5_cli;
     use std::path::Path;
     assert!(speaks_v5_cli(Path::new(
-        "/cache/tasmota-esptool/5.1.0/esptool-linux-amd64/esptool"
+        "/cache/esptool-standalone/5.1.0/esptool-linux-amd64/esptool"
     )));
     assert!(speaks_v5_cli(Path::new("C:/cache/esptool/esptool.exe")));
     assert!(!speaks_v5_cli(Path::new(
@@ -416,7 +416,7 @@ fn deploy_esptool_usable_prefers_the_probe() {
     );
     assert!(
         !deploy_esptool_usable(
-            Path::new("/cache/tasmota-esptool/5.1.0/esptool-linux-amd64/esptool"),
+            Path::new("/cache/esptool-standalone/5.1.0/esptool-linux-amd64/esptool"),
             Some(EsptoolGeneration::V4)
         ),
         "a v4 binary is rejected whatever it is called"

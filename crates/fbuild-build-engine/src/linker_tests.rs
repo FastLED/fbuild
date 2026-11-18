@@ -89,6 +89,7 @@ impl Linker for FakeLinker {
             total_ram: 0,
             max_flash: None,
             max_ram: None,
+            ram_warning: None,
         })
     }
 
@@ -295,6 +296,7 @@ impl Linker for CachedLinker {
             total_ram: 0,
             max_flash: None,
             max_ram: None,
+            ram_warning: None,
         })
     }
 

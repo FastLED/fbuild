@@ -136,6 +136,35 @@ fn tree_url_installs_that_refs_archive() {
 }
 
 #[test]
+fn percent_encoded_web_url_ref_is_decoded_once() {
+    // A ref copied from a URL arrives percent-encoded; archive_url encodes
+    // it again, so it must be decoded first or `%2F` became `%252F` (#2042).
+    for raw in [
+        "https://github.com/O/R/tree/feature%2Fx",
+        "https://github.com/O/R/tree/feature%2fx",
+        "https://github.com/O/R/archive/feature%2Fx.zip",
+    ] {
+        let s = source(raw);
+        assert_eq!(s.reference.as_deref(), Some("feature/x"), "{raw}");
+        assert_eq!(
+            s.archive_url(),
+            "https://github.com/O/R/archive/feature/x.zip",
+            "{raw}"
+        );
+    }
+    let plus = source("https://github.com/O/R/tree/v1%2B2");
+    assert_eq!(plus.reference.as_deref(), Some("v1+2"));
+    for raw in [
+        "https://github.com/O/R/tree/a%2F..%2Fb",
+        "https://github.com/O/R/tree/v%201",
+        "https://github.com/O/R/tree/v%zz",
+        "https://github.com/O/R/tree/v%FF",
+    ] {
+        assert_eq!(GitHubSource::parse(raw), None, "{raw}");
+    }
+}
+
+#[test]
 fn direct_archive_url_installs_that_archive() {
     let sha = "0123456789abcdef0123456789abcdef01234567";
     for (raw, reference, archive) in [

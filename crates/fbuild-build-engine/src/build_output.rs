@@ -121,6 +121,9 @@ pub fn log_size_report(log: &mut BuildLog, size: &SizeInfo) {
     if let Some(msg) = size.ram_overflow() {
         log.push(format!("Warning! {msg}"));
     }
+    if let Some(msg) = &size.ram_warning {
+        log.push(format!("Warning: size report: {msg}"));
+    }
 }
 
 /// Emit an artifact listing line with its on-disk size.
@@ -307,6 +310,7 @@ mod tests {
             total_ram: 600,
             max_flash: Some(32256),
             max_ram: Some(2048),
+            ram_warning: None,
         };
         log_size_report(&mut log, &size);
         let lines = log.into_lines();
@@ -328,10 +332,41 @@ mod tests {
             total_ram: 300,
             max_flash: None,
             max_ram: None,
+            ram_warning: None,
         };
         log_size_report(&mut log, &size);
         let lines = log.into_lines();
         assert!(lines[0].contains("0.0%"));
+    }
+
+    /// The size warnings reach the build log the CLI shows, not only the
+    /// daemon's tracing output (FastLED/fbuild#2042).
+    #[test]
+    fn size_report_warnings_reach_the_build_log() {
+        let mut log = BuildLog::new();
+        let size = SizeInfo {
+            text: 1000,
+            data: 2000,
+            bss: 1000,
+            total_flash: 3000,
+            total_ram: 3000,
+            max_flash: Some(32_256),
+            max_ram: Some(2048),
+            ram_warning: Some("no allocated RAM section (.data) in the ELF".into()),
+        };
+        log_size_report(&mut log, &size);
+        let lines = log.into_lines();
+        assert!(
+            lines.iter().any(|l| l
+                == "Warning! The data size (3000 bytes) is greater than maximum allowed (2048 bytes)"),
+            "{lines:?}"
+        );
+        assert!(
+            lines
+                .iter()
+                .any(|l| l == "Warning: size report: no allocated RAM section (.data) in the ELF"),
+            "{lines:?}"
+        );
     }
 
     #[test]
