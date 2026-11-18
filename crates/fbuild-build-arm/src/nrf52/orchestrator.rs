@@ -15,7 +15,9 @@
 use std::path::Path;
 use std::time::Instant;
 
+use fbuild_core::path::NormalizedPath;
 use fbuild_core::{Platform, Result};
+use fbuild_packages::Framework;
 use serde::Serialize;
 
 use crate::build_fingerprint::{
@@ -26,6 +28,7 @@ use crate::compile_database::TargetArchitecture;
 use crate::pipeline;
 use crate::{BuildOrchestrator, BuildParams, BuildResult, SourceScanner};
 
+use super::framework_libs;
 use super::nrf52_compiler::Nrf52Compiler;
 use super::nrf52_linker::Nrf52Linker;
 
@@ -388,10 +391,60 @@ impl BuildOrchestrator for Nrf52Orchestrator {
             }
         }
 
+        // 6b. Bundled framework libraries this project reaches
+        // (FastLED/fbuild#2072). The loop above puts `Wire/` and `SPI/` on the
+        // include path but nothing ever compiled their sources, so a sketch
+        // calling `Wire.begin()` compiled and then failed to link with
+        // `undefined reference to TwoWire::begin()`. Resolve the same
+        // library-dependency selection the Teensy/STM32/RP2040/Renesas
+        // orchestrators use, seeded from the project's translation units and
+        // honoring `lib_deps`, with the include path built above so SDK
+        // headers resolve as they will at compile time. Only reached
+        // libraries contribute, so an unreached one (`Bluefruit52Lib`,
+        // `Adafruit_LittleFS`, ...) never shadows a core header or bloats the
+        // build. `Adafruit_TinyUSB_Arduino` is excluded inside the selector:
+        // the TinyUSB block above already compiles it unconditionally.
+        framework_libs::warn_unsupported_ldf_mode(
+            ctx.config
+                .get_lib_ldf_mode(&params.env_name)
+                .ok()
+                .flatten()
+                .as_deref(),
+        );
+        let lib_deps = ctx.config.get_lib_deps(&params.env_name)?;
+        let normalized_include_dirs: Vec<NormalizedPath> =
+            include_dirs.iter().map(NormalizedPath::new).collect();
+        let already_compiled: Vec<NormalizedPath> = sources
+            .core_sources
+            .iter()
+            .map(NormalizedPath::new)
+            .collect();
+        let bundled_libraries = framework_libs::select_bundled_libraries(
+            &framework.get_libraries_dir(),
+            &params.project_dir,
+            &ctx.src_dir,
+            &defines,
+            &lib_deps,
+            &normalized_include_dirs,
+            &already_compiled,
+        )?;
+        framework_libs::log_selection(&bundled_libraries);
+        include_dirs.extend(
+            bundled_libraries
+                .include_dirs
+                .iter()
+                .map(|dir| dir.as_path().to_path_buf()),
+        );
+        sources.core_sources.extend(
+            bundled_libraries
+                .sources
+                .iter()
+                .map(|source| source.as_path().to_path_buf()),
+        );
+
         // 6a. Download `lib_deps` from the registry / remote URLs before
         // creating the compiler, so the downloaded library include directories
         // are available during compilation (FastLED/fbuild#1276).
-        let lib_deps = ctx.config.get_lib_deps(&params.env_name)?;
         let lib_ignore = ctx
             .config
             .get_lib_ignore(&params.env_name)

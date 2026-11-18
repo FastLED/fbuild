@@ -1,6 +1,7 @@
 ﻿//! NRF52 platform build support (Nordic NRF52840, etc.)
 
 mod core_select;
+mod framework_libs;
 pub mod mcu_config;
 pub mod nrf52_compiler;
 pub mod nrf52_linker;
