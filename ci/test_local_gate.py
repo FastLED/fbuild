@@ -4,7 +4,7 @@ import unittest
 from dataclasses import replace
 from pathlib import Path
 
-from ci.local_gate import JsonValue, JobProof, RunProof, verify_run
+from ci.local_gate import JsonValue, JobProof, RunProof, RunSelection, verify_run
 
 
 class RunProofTests(unittest.TestCase):
@@ -118,6 +118,45 @@ class RunProofTests(unittest.TestCase):
         for candidate in candidates:
             with self.subTest(candidate=candidate), self.assertRaises(ValueError):
                 verify_run(candidate, self.root, self.sha)
+
+    def test_declared_event_confined_job_must_skip_exactly(self) -> None:
+        selection = RunSelection(
+            self.proof.workflow,
+            "linux",
+            "workflow_dispatch",
+            frozenset({"check", "python-facade-tests"}),
+            frozenset({"queue-cache-janitor"}),
+        )
+        skipped = RunProof(
+            self.proof.workspace,
+            self.proof.sha,
+            None,
+            self.proof.engine,
+            self.proof.act_version,
+            self.proof.workflow,
+            self.proof.job,
+            self.proof.mode,
+            self.proof.event,
+            "done",
+            "success",
+            0,
+            3,
+            3,
+            0,
+            (
+                *self.proof.jobs,
+                JobProof("queue-cache-janitor", "completed", "skipped"),
+            ),
+        )
+        verify_run(skipped, self.root, self.sha, selection)
+        for candidate in (
+            # A declared skip that ran is not the event-confined job.
+            replace(skipped, jobs=(*self.proof.jobs, JobProof("queue-cache-janitor", "completed", "success"))),
+            # It cannot vanish from the report either.
+            replace(skipped, total=2, completed=2, jobs=self.proof.jobs),
+        ):
+            with self.subTest(candidate=candidate), self.assertRaises(ValueError):
+                verify_run(candidate, self.root, self.sha, selection)
 
     def test_wrong_event_does_not_prove_dispatch_gate(self) -> None:
         with self.assertRaises(ValueError):

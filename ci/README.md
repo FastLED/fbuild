@@ -36,14 +36,20 @@ Merge-queue and `main` runs never skip. Tests:
 
 `local_gate.py` has separate `--lane linux-minimal` and `--lane dylint` entrypoints.
 The first runs both required Ubuntu jobs through bosn's pinned act2 engine;
-the second replays the entire existing `dylint.yml` workflow with the ordinary
-unlabelled PR event. The default runs both. It checks clean source identity, native Linux x64 execution,
+the second replays every job of `dylint.yml` under the file's own
+`workflow_dispatch` trigger. A PR never dispatches it: PRs reach the file
+through ci-minimal's `workflow_call`, and selecting that call site would drag
+in its `prooft` dependency, whose checkout and setup steps carry no literal
+name for any declaration to attest. `dylint.yml` declares only
+`workflow_dispatch` and `workflow_call`, so a `pull_request` replay selects no
+stage at all ([#2086](https://github.com/FastLED/fbuild/issues/2086)). The default runs both. It checks clean source identity, native Linux x64 execution,
 all three Dylint job verdicts and the completed policy, library and workspace
 steps. The wrapper uses released Bosn >=0.1.22 for the stock runner tools.
 `local-gate.toml` reports optional attestations in shadow mode. The local gate uses the existing
-workflow-dispatch event for the Ubuntu pair and PR/minimal for Dylint before
-stamping the tree. Dispatch Dylint adds cross-target work, so it is not used as
-a substitute for the ordinary PR selection. Library UI fixtures retain their
+workflow-dispatch event for both the Ubuntu pair and Dylint before stamping
+the tree. Dispatch Dylint runs the same three-target graph the PR path runs
+through ci-minimal's `workflow_call`; soldr 0.9.53+ points the cross-target
+lint libraries at the host build, so the extra targets do not rebuild them. Library UI fixtures retain their
 existing source-change condition. Shared replay coverage binds every Ubuntu action and command to its literal
 execution name. The advisory verifier runs independently and is not part of the Linux proof. The original Ubuntu
 and Dylint terminal reports are each forwarded unchanged to the pinned shared
