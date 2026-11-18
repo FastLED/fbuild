@@ -944,7 +944,7 @@ async fn resolve_open_family_is_total_and_bounded() {
 
 /// FastLED/fbuild#2083: family inference runs outside the WebSocket open
 /// cap, so it needs its own bound. A stalled `available_ports()` walk must
-/// fall back to `CdcAcmBridge` at the bound instead of holding the attach.
+/// fall back at the bound instead of holding the attach.
 #[tokio::test]
 async fn resolve_family_bounded_falls_back_when_inference_stalls() {
     let started = std::time::Instant::now();
@@ -955,6 +955,7 @@ async fn resolve_family_bounded_falls_back_when_inference_stalls() {
             Some(crate::boards::BoardFamily::Esp32NativeUsbCdc)
         },
         Duration::from_millis(20),
+        None,
     )
     .await;
     assert_eq!(family, crate::boards::BoardFamily::CdcAcmBridge);
@@ -972,7 +973,32 @@ async fn resolve_family_bounded_keeps_family_inferred_in_time() {
         "COM_FAST_ENUM",
         || Some(crate::boards::BoardFamily::Esp32NativeUsbCdc),
         Duration::from_secs(5),
+        None,
     )
     .await;
     assert_eq!(family, crate::boards::BoardFamily::Esp32NativeUsbCdc);
+}
+
+fn slow_native_usb(_: &str) -> Option<crate::boards::BoardFamily> {
+    std::thread::sleep(Duration::from_millis(200));
+    Some(crate::boards::BoardFamily::Esp32NativeUsbCdc)
+}
+
+/// A slow inference that finishes after the bound is still remembered, and
+/// the next too-slow attach uses it instead of the `CdcAcmBridge` default,
+/// whose DTR/RTS idle is wrong for a native-USB ESP32.
+#[tokio::test]
+async fn resolve_open_family_remembers_late_inference_for_next_timeout() {
+    let mgr = SharedSerialManager::new();
+    let bound = Duration::from_millis(20);
+    let first = mgr
+        .resolve_open_family_with("COM_LATE_ENUM", slow_native_usb, bound)
+        .await;
+    assert_eq!(first, crate::boards::BoardFamily::CdcAcmBridge);
+    // Let the abandoned blocking resolver finish and record its answer.
+    tokio::time::sleep(Duration::from_millis(400)).await;
+    let second = mgr
+        .resolve_open_family_with("COM_LATE_ENUM", slow_native_usb, bound)
+        .await;
+    assert_eq!(second, crate::boards::BoardFamily::Esp32NativeUsbCdc);
 }
