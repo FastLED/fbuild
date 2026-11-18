@@ -466,6 +466,58 @@ async fn ws_open_port_timeout_returns_error_with_deadline() {
     );
 }
 
+/// FastLED/fbuild#2083: board-family inference slower than the open cap
+/// must not fail the attach. Only the open itself is charged to the cap,
+/// and the open receives the family the slow resolver produced.
+#[tokio::test]
+async fn ws_slow_family_resolution_does_not_consume_open_cap() {
+    use fbuild_serial::boards::BoardFamily;
+    let opened_with = std::sync::Mutex::new(None);
+    let result = ws_serial_open_port_with_family(
+        &fbuild_serial::SharedSerialManager::new(),
+        "COM_SLOW_ENUM",
+        async {
+            tokio::time::sleep(std::time::Duration::from_millis(200)).await;
+            BoardFamily::Esp32NativeUsbCdc
+        },
+        |family| {
+            *opened_with.lock().unwrap() = Some(family);
+            async { Ok(()) }
+        },
+        std::time::Duration::from_millis(20),
+    )
+    .await;
+    assert_eq!(
+        result,
+        Ok(()),
+        "slow pre-open work must not fail the attach"
+    );
+    assert_eq!(
+        *opened_with.lock().unwrap(),
+        Some(BoardFamily::Esp32NativeUsbCdc)
+    );
+}
+
+/// A genuine open timeout still fails, and the message carries the
+/// pre-open time so a reader can tell enumeration from a wedged driver.
+#[tokio::test]
+async fn ws_open_timeout_reports_pre_open_time() {
+    let message = ws_serial_open_port_with_family(
+        &fbuild_serial::SharedSerialManager::new(),
+        "COM_HUNG",
+        async { fbuild_serial::boards::BoardFamily::CdcAcmBridge },
+        |_| std::future::pending::<fbuild_core::Result<()>>(),
+        std::time::Duration::from_millis(10),
+    )
+    .await
+    .expect_err("hung open_port must time out");
+    assert!(
+        message.contains("open_port(COM_HUNG) exceeded 10ms"),
+        "{message}"
+    );
+    assert!(message.contains("(pre-open "), "{message}");
+}
+
 async fn run_pending_attach_timeout_scope(ctx: std::sync::Arc<DaemonContext>) -> String {
     let attach_guard = PendingAttachGuard::new(ctx.clone());
     attach_guard.set_target("client-hung".to_string(), "COM_HUNG".to_string());
