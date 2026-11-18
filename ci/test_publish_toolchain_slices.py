@@ -64,7 +64,10 @@ class FakeS3:
 
 
 def metadata(
-    version="esp-14.2.0_20260121", sha=SHA, size=176559292, status="recommended"
+    version="esp-14.2.0_20260121",
+    sha=SHA,
+    size=176559292,
+    status: str | None = "recommended",
 ):
     return {
         "tools": [
@@ -256,7 +259,7 @@ class ComponentTests(unittest.TestCase):
                 "linux-amd64",
                 self.entry(),
                 {},
-                None,
+                "https://bucket/whole.tar.xz",
             )
 
     def test_a_later_publish_keeps_the_chips_an_earlier_run_published(self):

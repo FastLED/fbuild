@@ -146,6 +146,7 @@ def summarize(out_dir: Path) -> None:
 
 
 def main() -> int:
+    assert __doc__ is not None
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--iterations", "-n", type=int, default=3)
     ap.add_argument("--scenarios", default="cold,warm,hot",

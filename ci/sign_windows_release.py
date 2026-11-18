@@ -298,6 +298,7 @@ def smoke_dirs(directories: list[Path]) -> None:
 
 
 def main(argv: list[str] | None = None) -> int:
+    assert __doc__ is not None
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("mode", choices=("sign", "verify", "smoke"))
     parser.add_argument("--dir", dest="dirs", type=Path, action="append", required=True)

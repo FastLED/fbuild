@@ -68,7 +68,7 @@ class SliceTests(unittest.TestCase):
                     ),
                 )
             slice_archive(str(source), "3.3.5", root / "one", check=True)
-            path.write_bytes(b"tampered")
+            (root / "one" / first["slices"][-1]["name"]).write_bytes(b"tampered")
             with self.assertRaisesRegex(ValueError, "slice differs"):
                 slice_archive(str(source), "3.3.5", root / "one", check=True)
 

@@ -113,6 +113,7 @@ class FetchOneTest(unittest.TestCase):
     def test_sha_mismatch_is_an_error_and_nothing_is_uploaded(self) -> None:
         result, s3, leftovers = fetch([FakeResponse(200, b"x")], "0" * 64)
         self.assertEqual(result[0], "error")
+        assert result[1] is not None
         self.assertIn("sha256 mismatch", result[1])
         self.assertEqual(s3.uploads, [])
         self.assertEqual(leftovers, [])
@@ -303,6 +304,7 @@ class UserAgentTest(unittest.TestCase):
         self.assertIsNotNone(
             match, "registry_user_agent() changed shape; update this test"
         )
+        assert match is not None
         self.assertEqual(
             mirror.default_user_agent("1.2.3"), match.group(1).replace("{}", "1.2.3")
         )
@@ -310,6 +312,7 @@ class UserAgentTest(unittest.TestCase):
     def test_the_repo_checkout_resolves(self) -> None:
         version = mirror.fbuild_version(ROOT / "Cargo.toml")
         self.assertTrue(version)
+        assert version is not None
         self.assertEqual(
             mirror.resolve_user_agent({}), mirror.default_user_agent(version)
         )
@@ -457,6 +460,7 @@ class StaleManifestGuardTest(unittest.TestCase):
             ):
                 source = rotate.plan_restore()
             self.assertIsNotNone(source)
+            assert source is not None
             self.assertEqual(source.read_bytes(), bucket_db.read_bytes())
             self.assertEqual((work / "manifest.db").read_bytes(), local_before)
 
@@ -567,7 +571,7 @@ class ConditionalStateDbWriteTest(unittest.TestCase):
 
 
 FakeBotocoreExceptions = types.ModuleType("botocore.exceptions")
-FakeBotocoreExceptions.ClientError = FakeClientError
+setattr(FakeBotocoreExceptions, "ClientError", FakeClientError)
 
 
 class FakeApiResponse:
@@ -596,6 +600,7 @@ class FakeApi:
     async def get(self, url: str, params: dict | None = None) -> FakeApiResponse:
         self.calls.append(url)
         if url == f"{mirror.API}/search" and self.search:
+            assert params is not None
             assert params["sort"] == "updated"
             start = (params["page"] - 1) * params["limit"]
             items = self.search[start : start + params["limit"]]
@@ -633,7 +638,9 @@ def versions(owner: str, name: str, *names: str) -> dict:
     }
 
 
-T0 = mirror.registry_time("2026-10-30T08:41:57Z")
+_T0 = mirror.registry_time("2026-10-30T08:41:57Z")
+assert _T0 is not None
+T0 = _T0
 
 
 class IncrementalCatalogTest(unittest.TestCase):

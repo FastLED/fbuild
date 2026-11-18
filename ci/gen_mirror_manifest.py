@@ -640,6 +640,7 @@ def check(s3, args: argparse.Namespace, objects: dict[str, ListedObject]) -> int
 
 
 def main() -> int:
+    assert __doc__ is not None
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--out-dir", type=Path, default=OUT_DIR)
     parser.add_argument(

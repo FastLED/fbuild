@@ -204,7 +204,7 @@ class StalePagesArtifactTests(unittest.TestCase):
                 self.send_response(204)
                 self.end_headers()
 
-            def log_message(self, *args: object) -> None:
+            def log_message(self, format: str, *args: object) -> None:
                 return
 
         server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)

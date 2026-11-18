@@ -48,6 +48,7 @@ import json
 import re
 import subprocess
 import sys
+from collections.abc import Callable
 from pathlib import Path
 
 BUCKET = "fbuild"
@@ -365,7 +366,7 @@ def publish(
     tree: Path | None = None,
     chips: tuple[str, ...] = (),
     level: int = 19,
-    run_slicer=slice_tree,
+    run_slicer: Callable[[Path, tuple[str, ...], Path, int], dict] = slice_tree,
 ) -> dict:
     """Upload the slices, verify them, then make them resolvable."""
     version, hosts = load_hosts(metadata, toolchain, version_name)
@@ -412,11 +413,9 @@ def _uploaded(
 
 
 def _mirror_whole(
-    s3, archive: Path | None, entry: dict, version: str, host: str, toolchain: str
-) -> str | None:
+    s3, archive: Path, entry: dict, version: str, host: str, toolchain: str
+) -> str:
     """Mirror the vendor archive, refusing bytes the metadata does not pin."""
-    if archive is None:
-        return None
     if (
         file_sha256(archive) != entry["sha256"]
         or archive.stat().st_size != entry["size"]
