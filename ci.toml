@@ -94,7 +94,8 @@ ci-full = { add = { platforms = "all", suites = ["board-build"] } }
 budget   = "9.5GB"
 write-on = ["main", "nightly"]
 never    = []
-retired  = []
+# The bespoke short-path lint-library cache, superseded by dylint-output.
+retired  = ["fbuild-dylint-libraries-"]
 pr       = { mode = "none", families = [], max-per-pr = "0MB", budget = "0MB", trim = "on-close" }
 
 # `compile` names setup-soldr's literal `-v3-` build-cache prefix: the pinned
@@ -111,7 +112,10 @@ dylint          = { via = "setup-soldr:dylint",         max = "600MB",  per = "n
 soldr-mini      = { via = "setup-soldr:soldr-mini",     max = "30MB",   per = "platform", min = "1MB", evict = "lru" }
 fbuild-tools    = { prefix = "fbuild-toolchain-",       max = "700MB",  per = "none", evict = "lru" }
 fbuild-build    = { prefix = "fbuild-build-",           max = "400MB",  per = "none", evict = "lru" }
-dylint-libs     = { prefix = "fbuild-dylint-libraries-", max = "150MB", per = "none", evict = "lru" }
+# setup-soldr's Dylint output cache: the nightly-compiled lint libraries and
+# workspace check tree for all three dylint.yml targets (~1.5 GB raw per
+# target on Linux before compression). Declared so the janitor keeps it.
+dylint-output   = { via = "setup-soldr:dylint-output",  max = "1500MB", per = "none", min = "1MB", evict = "lru" }
 verdict         = { prefix = "soldr-verdict-",          max = "1MB", min = "0B" }
 uv              = { via = "setup-uv",                   max = "100MB",  per = "platform", evict = "lru" }
 

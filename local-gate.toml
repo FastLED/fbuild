@@ -51,9 +51,8 @@ tools = ["bosn", "uv"]
 [[gate.replay.jobs]]
 source-job = "dylint.yml:dylint"
 key = "Dylint/Dylint Full (Linux builder, all OS targets)"
-steps = ["Checkout source", "Set up uv", "Provision cold-build disk capacity", "Validate Dylint allowlist paths", "Enforce shrink-only .fbuild allowlist", "Validate platform-boundary ledgers", "Setup soldr", "Repair registry sources missing packaged files", "Prepare prebuilt Dylint tools and driver", "Install rustfmt for the Dylint toolchain", "Check Dylint library formatting", "Restore compiled Dylint libraries", "Test Dylint libraries", "Reuse cached Dylint library tree", "Run dylint over workspace", "Save compiled Dylint libraries"]
+steps = ["Checkout source", "Set up uv", "Provision cold-build disk capacity", "Validate Dylint allowlist paths", "Enforce shrink-only .fbuild allowlist", "Validate platform-boundary ledgers", "Setup soldr", "Repair registry sources missing packaged files", "Prepare prebuilt Dylint tools and driver", "Install rustfmt for the Dylint toolchain", "Check Dylint library formatting", "Test Dylint libraries", "Run dylint over workspace"]
 lanes = ["dylint"]
-cache-save-steps = ["Save compiled Dylint libraries"]
 
 [[gate.replay.jobs]]
 source-job = "dylint.yml:gate"

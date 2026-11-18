@@ -110,9 +110,15 @@ jobs:
           dylint: true
           dylint-cache: true
           dylint-foundation-cache: true
-          # This layer keys by the whole source SHA, so every PR commit misses.
-          # The lint-library cache below keys only the lint source tree.
-          dylint-output-cache: false
+          # The nightly check tree is what makes Dylint slow: it is built by a
+          # different compiler from the stable workspace build, so nothing else
+          # persists it. This layer saves target/dylint/{libraries,target}/
+          # <nightly>-<host> after a successful run. Its key has been commit-free
+          # since setup-soldr#540 (toolchain, driver, manifests, target shape,
+          # Cargo.lock; restore drops only the lockfile), and cargo's own
+          # fingerprints recheck whatever changed. It supersedes the bespoke
+          # short-path lint-library cache this job used to carry.
+          dylint-output-cache: true
           toolchain: 1.95.0
           # The old "dylint" key contains an immutable, empty build-cache
           # entry. Use a fresh stable key shared by main and future PRs.
@@ -163,12 +169,6 @@ jobs:
             RUSTUP_TOOLCHAIN=nightly-2026-08-15 \
               soldr cargo fmt --manifest-path "$manifest" --all -- --check
           done < <(find dylints -mindepth 2 -maxdepth 2 -name Cargo.toml | sort)
-      - name: Restore compiled Dylint libraries
-        id: dylint_libraries_cache
-        uses: actions/cache/restore@v5
-        with:
-          path: target/dylint/libraries/nightly-2026-08-15/release
-          key: fbuild-dylint-libraries-v1-linux-nightly-2026-08-15-${{ hashFiles('dylints/**') }}
       - name: Test Dylint libraries
         # UI fixtures execute on the Linux host; workspace checks below use
         # the same host lint libraries against each platform target.
@@ -206,23 +206,6 @@ jobs:
             RUSTUP_TOOLCHAIN=nightly-2026-08-15 \
               soldr cargo test --manifest-path "$manifest"
           done < <(find dylints -mindepth 2 -maxdepth 2 -name Cargo.toml | sort)
-      - name: Reuse cached Dylint library tree
-        run: |
-          # setup-soldr saves the short nightly path; Soldr writes a
-          # host-qualified path. Point both names at one tree so warm runs
-          # reuse the 27 compiled lint libraries without a copy over
-          # read-only restored cache files. Do not cache the much larger
-          # three-platform workspace target tree here.
-          short="${SOLDR_DYLINT_CONFIGURED_TOOLCHAIN}"
-          qualified="${short}-x86_64-unknown-linux-gnu"
-          root="$PWD/target/dylint/libraries"
-          mkdir -p "$root/$short"
-          if test -L "$root/$qualified"; then
-            test "$(readlink "$root/$qualified")" = "$short"
-          else
-            test ! -e "$root/$qualified"
-            ln -s "$short" "$root/$qualified"
-          fi
       - name: Run dylint over workspace
         env:
           FULL_TARGETS: ${{ inputs.ref != '' || github.event_name == 'workflow_dispatch' }}
@@ -274,13 +257,6 @@ jobs:
           qualified="${SOLDR_DYLINT_CONFIGURED_TOOLCHAIN}-x86_64-unknown-linux-gnu|${SOLDR_DYLINT_CONFIGURED_RUSTC_RELEASE}|${SOLDR_DYLINT_CONFIGURED_RUSTC_COMMIT_HASH}"
           test "$(cat "$SOLDR_DYLINT_SUCCESS_MARKER")" = "$qualified"
           printf '%s\n' "$identity" > "$SOLDR_DYLINT_SUCCESS_MARKER"
-      - name: Save compiled Dylint libraries
-        if: steps.dylint_libraries_cache.outputs.cache-hit != 'true'
-        uses: actions/cache/save@v5
-        with:
-          path: target/dylint/libraries/nightly-2026-08-15/release
-          key: ${{ steps.dylint_libraries_cache.outputs.cache-primary-key }}
-
   gate:
     name: Dylint
     if: always()
