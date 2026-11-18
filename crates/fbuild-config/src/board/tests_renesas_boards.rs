@@ -74,6 +74,37 @@ fn uno_r4_minima_resolves_the_minima_variant_and_defines() {
     );
 }
 
+/// `portenta_c33.build.variant=PORTENTA_C33` in the separate
+/// `arduino:renesas_portenta` 1.6.0 package (the board is an RA6M5, not the
+/// RA4M1 the UNO R4 boards use). FastLED/fbuild#2054 moved this board off the
+/// reject list, so its variant/core/defines must match that package's
+/// `boards.txt` exactly.
+#[test]
+fn portenta_c33_resolves_the_portenta_variant_and_defines() {
+    let config = BoardConfig::from_board_id("portenta_c33", &HashMap::new()).unwrap();
+    assert_eq!(config.variant, "PORTENTA_C33");
+    assert_eq!(config.core, "arduino");
+    // BoardConfig normalizes `mcu` to lower case; the builder maps it back to
+    // the RA6M5 family (see `renesas_mcu_family`).
+    assert_eq!(config.mcu, "r7fa6m5bh2cbg");
+    assert_eq!(config.platform(), Some(fbuild_core::Platform::RenesasRa));
+    assert_defines(
+        "portenta_c33",
+        &config,
+        &[
+            "F_CPU",
+            "ARDUINO_PORTENTA_C33",
+            "ARDUINO_ARCH_RENESAS",
+            "ARDUINO_ARCH_RENESAS_PORTENTA",
+            "ARDUINO_FSP",
+            "CFG_TUSB_MCU",
+            "_RA_CORE",
+            "_RENESAS_RA_",
+        ],
+        &["NO_USB", "ARDUINO_UNOWIFIR4", "ARDUINO_ARCH_RENESAS_UNO"],
+    );
+}
+
 /// `unor4wifi.build.variant=UNOWIFIR4` in ArduinoCore-renesas 1.6.0. The
 /// core's recipes emit `-DARDUINO_ARCH_{build.arch}`, and the package
 /// architecture is `renesas_uno`, so Arduino IDE/CLI define

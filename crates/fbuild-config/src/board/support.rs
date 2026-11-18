@@ -7,8 +7,8 @@
 //!   heltec-cubecell, infineonxmc, ...). Those entries usually also lack the
 //!   `build` data a build would need, and nothing could supply it;
 //! - the board JSON carries an `unsupported_reason`, because the board needs
-//!   something fbuild does not install yet (e.g. `portenta_c33` needs the
-//!   `renesas_portenta` core).
+//!   something fbuild does not implement at all (e.g. `wasm` needs a
+//!   WebAssembly build orchestrator).
 //!
 //! A buildable board can still be built with the wrong framework: its
 //! `frameworks` list names what PlatformIO supports for it, and about a

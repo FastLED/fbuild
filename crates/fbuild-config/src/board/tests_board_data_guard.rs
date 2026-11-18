@@ -59,13 +59,7 @@ const REJECTED_PLATFORMS: &[&str] = &[
 
 /// Boards on a supported platform that fbuild still cannot build. Each one's
 /// JSON carries an `unsupported_reason`.
-const REJECTED_BOARDS: &[(&str, &str)] = &[
-    (
-        "portenta_c33",
-        "needs the renesas_portenta core and an RA6M5 MCU config (FastLED/fbuild#2054)",
-    ),
-    ("wasm", "Platform::Wasm has no native orchestrator"),
-];
+const REJECTED_BOARDS: &[(&str, &str)] = &[("wasm", "Platform::Wasm has no native orchestrator")];
 
 /// `(platform, reason)`: Arduino boards that may omit `build.core`.
 const NO_CORE_EXPECTED: &[(&str, &str)] = &[(
@@ -208,19 +202,14 @@ fn every_bundled_board_is_usable_expected_or_rejected() {
     );
 }
 
+/// FastLED/fbuild#2054: the Portenta C33 now has its core package
+/// (`arduino:renesas_portenta`) and an RA6M5 MCU config, so it is a buildable
+/// bundled board with no `unsupported_reason` -- the early typed rejection is
+/// gone and the board takes the ordinary renesas-ra path.
 #[test]
-fn portenta_c33_is_rejected_with_the_missing_core() {
-    let err = ensure_board_buildable("portenta_c33", None).unwrap_err();
-    assert!(matches!(
-        &err,
-        fbuild_core::FbuildError::UnsupportedBoard { board, .. } if board == "portenta_c33"
-    ));
-    assert_eq!(
-        err.to_string(),
-        "board 'portenta_c33' cannot be built by fbuild: it needs the separate Arduino \
-         renesas_portenta core and an RA6M5 MCU config, which fbuild does not support yet \
-         (FastLED/fbuild#2054)"
-    );
+fn portenta_c33_is_buildable() {
+    ensure_board_buildable("portenta_c33", None).unwrap();
+    ensure_board_buildable("portenta_c33", Some("arduino")).unwrap();
 }
 
 #[test]
