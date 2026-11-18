@@ -47,13 +47,26 @@ use crate::{CacheSubdir, PackageBase, PackageInfo};
 /// handlers in the LPC845/LPC804 startup vector tables + weak NMI
 /// alias. Unblocks FastLED ISR-driven drivers (DMA chunk-chain refill
 /// for SPI/UART async streaming — FastLED/FastLED#3453 follow-up).
-const ACLPC_COMMIT: &str = "9e8be028892e6eeb4796b46d0069dbb1a39a47a9";
-const ACLPC_VERSION: &str = "0.2.3+g9e8be02";
-const ACLPC_URL: &str = "https://github.com/FastLED/framework-arduino-lpc8xx/archive/9e8be028892e6eeb4796b46d0069dbb1a39a47a9.tar.gz";
+///
+/// 0.2.4+g547b5a7 (framework-arduino-lpc8xx#39, #42; FastLED/fbuild#2075):
+///   #39: `.ramfunc*` input sections collected into `.data` in
+///        `lpc8xx_common.ld` (FastLED `FL_RAMFUNC` / `-DFASTLED_M0_RAMFUNC`).
+///   #42: `pinMode()` maps the pin through the scrambled `IOCON_INDEX_PIO0_n`
+///        table instead of indexing `LPC_IOCON->PIO0[pin]` (pulls landed on
+///        the wrong pad), adds `INPUT_PULLDOWN`, and replaces the HardFault
+///        C handler with a naked trampoline that hands the C reporter the
+///        stacked frame before the prologue moves SP (it reported a garbage
+///        PC). The new `platform.txt` include line
+///        (`variants/{build.lpc_family}` + `CMSIS/`) matches what the
+///        nxplpc orchestrator already passes (`variant_dir(lpc_family)` +
+///        the CMSIS core include dir), so no fbuild include-path change.
+const ACLPC_COMMIT: &str = "547b5a7053f60c59bbd86e9c6796bebae07c8241";
+const ACLPC_VERSION: &str = "0.2.4+g547b5a7";
+const ACLPC_URL: &str = "https://github.com/FastLED/framework-arduino-lpc8xx/archive/547b5a7053f60c59bbd86e9c6796bebae07c8241.tar.gz";
 // SHA256 of the archive GitHub currently serves for
-// `github.com/FastLED/framework-arduino-lpc8xx/archive/9e8be02889…tar.gz`.
-// Verified 2026-07-02 via `curl … | sha256sum`.
-const ACLPC_CHECKSUM: &str = "c295ed4204eb123f735538196dd431bc8ebbe3bac86b0ffde32d6bfbab484758";
+// `github.com/FastLED/framework-arduino-lpc8xx/archive/547b5a7053…tar.gz`.
+// Verified 2026-11-17 via `curl … | sha256sum` (two downloads, identical).
+const ACLPC_CHECKSUM: &str = "c504510c95c63308acdabf11d8515dbde800b55ab267457bad44a3bf4bce7df7";
 
 /// Arduino LPC8xx core framework manager.
 pub struct ArduinoCoreLpc8xx {
