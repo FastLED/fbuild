@@ -1,5 +1,13 @@
-# Both reusable Ubuntu jobs must pass. This does not prove boards, full mode,
-# Windows/macOS execution or cross-target Dylint coverage. Ordinary-PR Dylint is a separate native lane.
+# Both reusable Ubuntu jobs must pass. This does not prove boards, full mode
+# or Windows/macOS execution.
+#
+# Dylint: `./push` proves the `lint` lane (`prooft soldr -- soldr lint rust
+# --check --cross-dylint`: clippy + Dylint per target) and the `dylint` lane
+# (`ci.local_gate --lane dylint`: the dylint.yml replay). ci-minimal's `prooft`
+# job reads this file from the PR base and skips the Dylint call only when
+# dylint.yml's policy, dylint and gate jobs are all credited. ci-minimal passes
+# `ref`, so that call lints the Linux, Windows and macOS x64 targets: those
+# three per-target gates belong to dylint.yml:dylint as well.
 version: 1
 gates:
   general/all/ubuntu-ci-guards: {lane: linux-minimal, fidelity: native}
@@ -30,5 +38,5 @@ gates:
 jobs:
   ci-minimal.yml:linux: [general/all/ubuntu-ci-guards, rust/x86_64-unknown-linux-gnu/workspace-clippy, rust/x86_64-unknown-linux-gnu/workspace-test, rust/x86_64-unknown-linux-gnu/python-facade-test]
   dylint.yml:policy: [general/all/dylint-policy]
-  dylint.yml:dylint: [rust/x86_64-unknown-linux-gnu/dylint-library-check, rust/x86_64-unknown-linux-gnu/workspace-dylint]
-  dylint.yml:gate: [general/all/dylint-policy, rust/x86_64-unknown-linux-gnu/dylint-library-check, rust/x86_64-unknown-linux-gnu/workspace-dylint]
+  dylint.yml:dylint: [rust/x86_64-unknown-linux-gnu/dylint-library-check, rust/x86_64-unknown-linux-gnu/workspace-dylint, rust/x86_64-unknown-linux-gnu/dylint, rust/x86_64-pc-windows-msvc/dylint, rust/x86_64-apple-darwin/dylint]
+  dylint.yml:gate: [general/all/dylint-policy, rust/x86_64-unknown-linux-gnu/dylint-library-check, rust/x86_64-unknown-linux-gnu/workspace-dylint, rust/x86_64-unknown-linux-gnu/dylint, rust/x86_64-pc-windows-msvc/dylint, rust/x86_64-apple-darwin/dylint]

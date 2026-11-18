@@ -224,6 +224,30 @@ class FractionalWorkflowTests(unittest.TestCase):
         self.assertIn("lane", dylint[True]["workflow_call"]["inputs"])
         self.assertIn("inputs.lane", dylint["concurrency"]["group"])
 
+    def test_dylint_call_is_skipped_only_on_a_prooft_credit(self):
+        """`./push` stamps Ci-Attestation trailers; ci-minimal's `prooft` job
+        judges them from the PR base and the Dylint call is skipped only when
+        every dylint.yml job it would run is credited. A failed or missing
+        verdict must run Dylint, never skip it."""
+        minimal = self.load("ci-minimal.yml")["jobs"]
+        prooft = minimal["prooft"]
+        self.assertEqual(["python3 -P ci/prooft_verify.py"], [s["run"] for s in prooft["steps"] if "run" in s])
+        plan = next(s for s in prooft["steps"] if s.get("id") == "plan")
+        self.assertEqual("hashFiles('ci/prooft_verify.py') != ''", plan["if"], "a base without the verifier must not fail the job")
+        checkout = prooft["steps"][0]
+        self.assertIn("pull_request.base.sha", checkout["with"]["ref"])
+        for job in ("policy", "dylint", "gate"):
+            self.assertIn(f"skip_{job}", prooft["outputs"])
+        dylint = minimal["dylint"]
+        self.assertEqual(["prooft"], dylint["needs"])
+        condition = dylint["if"]
+        self.assertIn("!cancelled()", condition)
+        self.assertIn("needs.prooft.result == 'success'", condition)
+        for job in ("policy", "dylint", "gate"):
+            self.assertIn(f"needs.prooft.outputs.skip_{job} == 'true'", condition)
+        self.assertIn("prooft", minimal["ci-summary"]["needs"])
+        self.assertIn("prooft", minimal["queue-cache-janitor"]["needs"])
+
     def load(self, name):
         # PyYAML treats `on` as a YAML 1.1 boolean; inspect its True key.
         return yaml.safe_load((render_workflows.WORKFLOWS_DIR / name).read_text())
@@ -400,7 +424,7 @@ class FractionalWorkflowTests(unittest.TestCase):
             {
                 "cancel-superseded", "verify", "linux", "glibc_floor", "board_plan", "fbuild_bin",
                 "pr_boards", "reuse_decision", "test", "full", "selected-coverage",
-                "queue-cache-janitor", "dylint", "ci-summary",
+                "queue-cache-janitor", "prooft", "dylint", "ci-summary",
             },
             set(minimal["jobs"]),
         )

@@ -1,0 +1,102 @@
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.11"
+# dependencies = []
+# ///
+"""Push a branch the way CI expects: prove Dylint, push, then open the PR.
+
+    ./push                  # prove both lanes, push, open a PR if none exists
+    ./push --no-pr          # prove and push only
+    ./push --prove-only     # stamp HEAD, push nothing
+    ./push --no-proof       # push without proving (CI runs Dylint itself)
+
+Ported from obs-rust/obs-studio's `./push`. Two prooft lanes run on the
+committed HEAD, each stamping `Ci-Attestation:` trailers for the gates it
+passed (ci-attestations.yml):
+
+- lint:   prooft soldr -- soldr lint rust --check --cross-dylint
+          fmt, then clippy + Dylint for every target in
+          [workspace.metadata.soldr].targets (Linux, Windows, macOS).
+- dylint: prooft run dylint -- uv run ... python -m ci.local_gate --lane dylint
+          the dylint.yml replay (policy, lint-library UI tests, workspace).
+
+ci-minimal's `prooft` job then skips the hosted Dylint call for this PR
+head. The merge queue and main always run it. prooft amends HEAD, so a
+branch pushed before is updated with --force-with-lease.
+
+Exit codes: 0 pushed, 1 a step failed, 2 usage, 3 refused.
+"""
+
+from __future__ import annotations
+
+import argparse
+import subprocess
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent
+sys.path.insert(0, str(ROOT))
+from ci.prooft_verify import PROOFT_SOURCE  # noqa: E402  (one pin for CI and ./push)
+
+PROTECTED = {"main", "master"}
+# prooft subcommand + arguments for each lane, in run order.
+LANES: dict[str, list[str]] = {
+    "lint": ["soldr", "--", "soldr", "lint", "rust", "--check", "--cross-dylint"],
+    "dylint": [
+        "run", "dylint", "--",
+        "uv", "run", "--no-project", "--python", "3.12", "python", "-m", "ci.local_gate", "--lane", "dylint",
+    ],
+}
+
+
+def git(*args: str) -> str:
+    return subprocess.run(["git", *args], cwd=ROOT, check=True, capture_output=True, text=True).stdout.strip()
+
+
+def step(argv: list[str]) -> int:
+    print(f"./push: $ {' '.join(argv)}", flush=True)
+    return subprocess.run(argv, cwd=ROOT, check=False).returncode
+
+
+def has_open_pr(branch: str) -> bool:
+    out = subprocess.run(
+        ["gh", "pr", "list", "--head", branch, "--state", "open", "--json", "number", "--jq", "length"],
+        cwd=ROOT, check=False, capture_output=True, text=True,
+    )
+    return out.returncode == 0 and out.stdout.strip() not in ("", "0")
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("--no-proof", action="store_true", help="skip the local Dylint proof")
+    parser.add_argument("--no-pr", action="store_true", help="do not open a pull request")
+    parser.add_argument("--prove-only", action="store_true", help="stamp HEAD but push nothing")
+    parser.add_argument("--remote", default="origin")
+    args = parser.parse_args(argv)
+
+    branch = git("rev-parse", "--abbrev-ref", "HEAD")
+    if branch == "HEAD" or branch in PROTECTED:
+        print(f"./push: refusing to push {branch!r}; work on a feature branch", file=sys.stderr)
+        return 3
+    if git("status", "--porcelain", "--untracked-files=no"):
+        print("./push: refusing: tracked files have uncommitted changes (a proof binds the committed tree)", file=sys.stderr)
+        return 3
+
+    if not args.no_proof:
+        for lane, prooft_args in LANES.items():
+            code = step(["uvx", "--from", PROOFT_SOURCE, "prooft", "-C", str(ROOT), *prooft_args])
+            if code != 0:
+                print(f"./push: the {lane} lane failed (exit {code}); nothing pushed", file=sys.stderr)
+                return 1
+    if args.prove_only:
+        return 0
+
+    if step(["git", "push", "--force-with-lease", "-u", args.remote, f"HEAD:refs/heads/{branch}"]) != 0:
+        return 1
+    if args.no_pr or has_open_pr(branch):
+        return 0
+    return 0 if step(["gh", "pr", "create", "--fill", "--head", branch]) == 0 else 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())

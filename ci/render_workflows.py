@@ -456,7 +456,7 @@ def render_reuse_decision() -> str:
 # live cache families (FastLED/fbuild#2071), so keep it at CI_LINT_SHA or newer.
 QUEUE_JANITOR_CI_LINT_SHA = "635fb1262b59702b9293a145e7201410612104e5"
 QUEUE_JANITOR_NEEDS = (
-    "cancel-superseded", "verify", "linux", "glibc_floor", "dylint", "board_plan", "fbuild_bin",
+    "cancel-superseded", "verify", "linux", "glibc_floor", "prooft", "dylint", "board_plan", "fbuild_bin",
     "pr_boards", "reuse_decision", "test", "full", "selected-coverage", "ci-summary",
 )
 # CI summary needs every ci-minimal job except the janitor (which runs after
@@ -497,6 +497,47 @@ def render_glibc_floor_call() -> str:
     )
 
 
+def render_prooft_job() -> str:
+    """Judge `./push`'s Ci-Attestation trailers (forge-ci/prooft) from the PR base.
+
+    The base is checked out, so ci/prooft_verify.py, its pinned prooft
+    revision and ci-attestations.yml all come from the base: a PR cannot edit
+    what judges it. Only pull_request events can earn a skip; the merge queue
+    and main always run Dylint.
+    """
+    return (
+        "  prooft:\n"
+        "    name: Prooft attestation plan\n"
+        "    runs-on: ubuntu-latest\n"
+        "    timeout-minutes: 5\n"
+        "    permissions:\n"
+        "      contents: read\n"
+        "    outputs:\n"
+        "      skip_policy: ${{ steps.plan.outputs.skip_policy }}\n"
+        "      skip_dylint: ${{ steps.plan.outputs.skip_dylint }}\n"
+        "      skip_gate: ${{ steps.plan.outputs.skip_gate }}\n"
+        "    steps:\n"
+        "      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6\n"
+        "        with:\n"
+        "          ref: ${{ github.event.pull_request.base.sha || github.sha }}\n"
+        "          fetch-depth: 0\n"
+        "          persist-credentials: false\n"
+        "      - uses: astral-sh/setup-uv@v3\n"
+        "      - name: Plan attested skips\n"
+        "        id: plan\n"
+        # A base without the verifier (the PR that introduces it) skips the
+        # step: empty outputs never equal 'true', so Dylint runs.
+        "        if: hashFiles('ci/prooft_verify.py') != ''\n"
+        "        env:\n"
+        "          EVENT_NAME: ${{ github.event_name }}\n"
+        "          BASE_SHA: ${{ github.event.pull_request.base.sha || '' }}\n"
+        "          HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}\n"
+        "          PR_TITLE: ${{ github.event.pull_request.title || '' }}\n"
+        "          FORK: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository }}\n"
+        "        run: python3 -P ci/prooft_verify.py\n"
+    )
+
+
 def render_dylint_call() -> str:
     """Dylint inside ci-minimal, so the single `CI summary` gate sees its jobs.
 
@@ -508,7 +549,15 @@ def render_dylint_call() -> str:
     the two calls would cancel each other (FastLED/fbuild#1874).
     """
     return (
-        "  dylint:\n"
+        render_prooft_job()
+        + "  dylint:\n"
+        # Skipped only when the base-owned prooft verdict credits every
+        # dylint.yml job; a failed or missing verdict runs Dylint.
+        "    needs: [prooft]\n"
+        "    if: ${{ !cancelled() && !(needs.prooft.result == 'success'"
+        " && needs.prooft.outputs.skip_policy == 'true'"
+        " && needs.prooft.outputs.skip_dylint == 'true'"
+        " && needs.prooft.outputs.skip_gate == 'true') }}\n"
         "    uses: ./.github/workflows/dylint.yml\n"
         "    secrets: inherit\n"
         "    with:\n"
