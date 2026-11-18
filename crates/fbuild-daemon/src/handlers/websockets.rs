@@ -235,6 +235,12 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
                     }
                     // Open port if needed
                     if open_if_needed {
+                        // FastLED/fbuild#2083: resolve the board family
+                        // BEFORE the timed region. `available_ports()` plus
+                        // sysfs health can take seconds on a loaded host and
+                        // used to be charged to the 3 s open cap, failing
+                        // healthy attaches as `session closed`.
+                        let family = ctx.serial_manager.resolve_open_family(&port).await;
                         let open_result = await_ws_serial_open_port(
                             &ctx.serial_manager,
                             &port,
@@ -242,7 +248,7 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
                                 &port,
                                 baud_rate,
                                 &client_id,
-                                None,
+                                Some(family),
                                 client_metadata.clone(),
                             ),
                             WS_SERIAL_OPEN_PORT_TIMEOUT,
@@ -525,6 +531,12 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
                                 reopen_deadline.get_or_insert_with(|| {
                                     tokio::time::Instant::now() + WS_SERIAL_RECOVERY_TIMEOUT
                                 });
+                                // FastLED/fbuild#2083: family inference is
+                                // pre-open work; keep it outside the cap.
+                                let family = ctx
+                                    .serial_manager
+                                    .resolve_open_family(&recovered_port)
+                                    .await;
                                 let opened = await_ws_serial_open_port(
                                     &ctx.serial_manager,
                                     &recovered_port,
@@ -532,7 +544,7 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
                                         &recovered_port,
                                         baud_rate,
                                         &client_id_owned,
-                                        None,
+                                        Some(family),
                                         client_metadata_owned.clone(),
                                     ),
                                     WS_SERIAL_OPEN_PORT_TIMEOUT,
