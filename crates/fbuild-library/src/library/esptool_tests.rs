@@ -74,7 +74,7 @@ fn extract_version_falls_back_to_unknown() {
 fn platform_tag_is_known_for_this_host_or_none() {
     // Just assert the mapping is total over the match arms without panic;
     // the value depends on the build host.
-    let tag = tasmota_platform_tag();
+    let tag = esptool_release_platform_tag();
     if let Some(t) = tag {
         assert!(t.starts_with("linux-") || t.starts_with("macos-") || t.starts_with("windows-"));
     }

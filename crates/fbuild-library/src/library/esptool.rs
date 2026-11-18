@@ -630,7 +630,7 @@ async fn verify_esptool_binary(bin: &Path) -> Result<fbuild_core::subprocess::To
 ///
 /// Returns `None` for hosts without a prebuilt binary, so the caller falls
 /// back to an `esptool` on PATH.
-fn tasmota_platform_tag() -> Option<&'static str> {
+fn esptool_release_platform_tag() -> Option<&'static str> {
     match (
         fbuild_core::platform::host::os_name(),
         fbuild_core::platform::host::arch_name(),
@@ -645,10 +645,10 @@ fn tasmota_platform_tag() -> Option<&'static str> {
     }
 }
 
-/// [`tasmota_platform_tag`] with the unsupported-host case turned into the
+/// [`esptool_release_platform_tag`] with the unsupported-host case turned into the
 /// error both `ensure_installed` and `download_url` report.
 fn host_platform_tag() -> Result<&'static str> {
-    tasmota_platform_tag().ok_or_else(|| {
+    esptool_release_platform_tag().ok_or_else(|| {
         FbuildError::PackageError(format!(
             "no prebuilt esptool binary for {}/{} — set {ESPTOOL_PATH_ENV_VAR} \
              to an esptool executable",
