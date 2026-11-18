@@ -132,15 +132,22 @@ pub fn stable_hash_with_build_config<T: Serialize>(
     )
 }
 
-/// This fbuild binary's identity: the workspace version plus the checkout
-/// commit (`2.5.46+git.5fca4d49c9ab[-dirty]`).
+/// This fbuild binary's identity: the workspace version, the checkout
+/// commit and a digest of its embedded assets
+/// (`2.5.46+git.5fca4d49c9ab[-dirty]+assets.<sha256>`).
 ///
 /// fbuild adds compiler and linker flags of its own (MCU config JSONs, the
 /// release profile, built-in defaults) that are resolved only after the
 /// no-op check, so the fingerprint keys on the binary that owns them: a
 /// different fbuild can never reuse another's artifacts (FastLED/fbuild#2036).
+/// The commit stamp cannot see an uncommitted config JSON edit, so the
+/// embedded assets' bytes are part of it too (FastLED/fbuild#2042).
 fn fbuild_build_identity() -> String {
-    fbuild_core::build_id::long_version()
+    format!(
+        "{}+assets.{}",
+        fbuild_core::build_id::long_version(),
+        fbuild_core::build_id::EMBEDDED_ASSETS_DIGEST
+    )
 }
 
 fn hash_build_inputs<T: Serialize, C: Serialize>(

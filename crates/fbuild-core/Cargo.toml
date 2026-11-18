@@ -82,6 +82,11 @@ windows-sys = { version = "0.61", features = [
 # Selected Windows IPC creates a protected owner-only pipe descriptor.
 widestring = { workspace = true }
 
+[build-dependencies]
+# build.rs hashes the workspace's embedded assets into the build identity
+# (FastLED/fbuild#2042).
+sha2 = { workspace = true }
+
 [dev-dependencies]
 # Test-only embedded USB-vendor fixture extraction. Production never links it.
 tar = { workspace = true }

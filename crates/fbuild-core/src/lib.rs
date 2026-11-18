@@ -8,7 +8,10 @@
 
 pub mod archive;
 pub mod build_id;
+// `build.rs` helpers, compiled here only for their unit tests.
 pub mod build_log;
+#[cfg(test)]
+mod build_stamp;
 pub mod channel;
 pub mod compiler_flags;
 pub mod daemon_diagnostics;

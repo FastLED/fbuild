@@ -23,6 +23,13 @@ pub fn dirty() -> bool {
 /// Placeholder when no checkout could be fingerprinted (tarball, no git).
 pub const UNKNOWN: &str = "unknown";
 
+/// SHA-256 of the assets compiled into fbuild (config JSONs, board files,
+/// scripts), or [`UNKNOWN`]. Stamped by `build.rs` (FastLED/fbuild#2042).
+pub const EMBEDDED_ASSETS_DIGEST: &str = match option_env!("FBUILD_EMBEDDED_ASSETS_DIGEST") {
+    Some(digest) => digest,
+    None => UNKNOWN,
+};
+
 /// The workspace version compiled into this binary.
 pub fn version() -> &'static str {
     env!("CARGO_PKG_VERSION")

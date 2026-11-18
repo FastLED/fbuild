@@ -16,10 +16,34 @@ use fbuild_core::{Result, SizeInfo};
 use crate::linker::{LinkExtraArgs, Linker};
 use crate::perf_log::PerfTimer;
 
+/// The argv a GNU-style driver would run: what a real `link_command` returns.
+fn fake_command(
+    builtin: &[String],
+    objects: &[PathBuf],
+    archives: &[PathBuf],
+    output_dir: &Path,
+    extra: &LinkExtraArgs,
+) -> Vec<String> {
+    let mut args = vec!["fake-gcc".to_string()];
+    args.extend(builtin.iter().cloned());
+    args.extend(extra.flags.iter().cloned());
+    args.push(format!("-o{}", output_dir.join("firmware.elf").display()));
+    args.extend(
+        objects
+            .iter()
+            .chain(archives)
+            .map(|p| p.display().to_string()),
+    );
+    args.extend(extra.libs.iter().cloned());
+    args
+}
+
 /// A linker that fabricates artifacts instead of running a toolchain, so the
 /// tests measure the accounting and nothing else.
 struct FakeLinker {
     size_tool: PathBuf,
+    /// Flags the platform adds itself, as an MCU config JSON would.
+    builtin: Vec<String>,
 }
 
 #[async_trait::async_trait]
@@ -38,6 +62,16 @@ impl Linker for FakeLinker {
         let elf = output.join("firmware.elf");
         std::fs::write(&elf, b"\x7fELF fake")?;
         Ok(elf)
+    }
+
+    fn link_command(
+        &self,
+        objects: &[PathBuf],
+        archives: &[PathBuf],
+        output_dir: &Path,
+        extra: &LinkExtraArgs,
+    ) -> Vec<String> {
+        fake_command(&self.builtin, objects, archives, output_dir, extra)
     }
 
     async fn convert_firmware(&self, _elf: &Path, output_dir: &Path) -> Result<PathBuf> {
@@ -77,6 +111,7 @@ fn project() -> (tempfile::TempDir, FakeLinker, Vec<PathBuf>) {
         .unwrap();
     let linker = FakeLinker {
         size_tool: tmp.path().join("size"),
+        builtin: Vec::new(),
     };
     (tmp, linker, vec![object])
 }
@@ -156,6 +191,33 @@ async fn a_reused_elf_records_the_conversion_but_not_a_link() {
     assert!(second.recorded("link-size").is_some());
 }
 
+/// A built-in link flag (MCU config JSON, board file, orchestrator code) is
+/// not in `LinkExtraArgs`, yet changing it must relink (FastLED/fbuild#2042).
+#[tokio::test]
+async fn a_changed_builtin_link_flag_relinks() {
+    let (tmp, mut linker, objects) = project();
+    let extra = LinkExtraArgs::default();
+    let mut first = PerfTimer::new("link-first");
+    first.activate();
+    linker
+        .link_all(&objects, &[], tmp.path(), &extra, false, &mut first)
+        .await
+        .unwrap();
+
+    linker.builtin = vec!["-Wl,--defsym=__builtin=1".to_string()];
+    let mut second = PerfTimer::new("link-second");
+    second.activate();
+    linker
+        .link_all(&objects, &[], tmp.path(), &extra, false, &mut second)
+        .await
+        .unwrap();
+
+    assert!(
+        second.recorded("link-elf").is_some(),
+        "a changed built-in link flag must relink, not reuse the old ELF"
+    );
+}
+
 #[tokio::test]
 async fn requested_symbol_analysis_is_attributed() {
     let (tmp, linker, objects) = project();
@@ -186,6 +248,7 @@ struct CachedLinker {
     size_tool: PathBuf,
     cache: PathBuf,
     links: std::sync::atomic::AtomicUsize,
+    builtin: Vec<String>,
 }
 
 #[async_trait::async_trait]
@@ -205,6 +268,16 @@ impl Linker for CachedLinker {
         let elf = output.join("firmware.elf");
         std::fs::write(&elf, b"\x7fELF cached")?;
         Ok(elf)
+    }
+
+    fn link_command(
+        &self,
+        objects: &[PathBuf],
+        archives: &[PathBuf],
+        output_dir: &Path,
+        extra: &LinkExtraArgs,
+    ) -> Vec<String> {
+        fake_command(&self.builtin, objects, archives, output_dir, extra)
     }
 
     async fn convert_firmware(&self, _elf: &Path, output_dir: &Path) -> Result<PathBuf> {
@@ -248,6 +321,7 @@ async fn an_identical_link_in_a_fresh_directory_reuses_the_cached_elf() {
         size_tool: first.path().join("size"),
         cache: cache.path().to_path_buf(),
         links: std::sync::atomic::AtomicUsize::new(0),
+        builtin: Vec::new(),
     };
     let extra = LinkExtraArgs::default();
     let mut perf = PerfTimer::new("cache-first");
@@ -316,5 +390,53 @@ async fn an_identical_link_in_a_fresh_directory_reuses_the_cached_elf() {
         linker.links.load(std::sync::atomic::Ordering::SeqCst),
         2,
         "changed inputs must relink"
+    );
+}
+
+/// A fresh directory must not restore an ELF linked with different built-in
+/// flags, even though its objects and `LinkExtraArgs` match (FastLED/fbuild#2042).
+#[tokio::test]
+async fn a_changed_builtin_link_flag_misses_the_cross_project_cache() {
+    let cache = tempfile::TempDir::new().unwrap();
+    let first = tempfile::TempDir::new().unwrap();
+    let mut linker = CachedLinker {
+        size_tool: first.path().join("size"),
+        cache: cache.path().to_path_buf(),
+        links: std::sync::atomic::AtomicUsize::new(0),
+        builtin: Vec::new(),
+    };
+    let extra = LinkExtraArgs::default();
+    let mut perf = PerfTimer::new("cache-first");
+    linker
+        .link_all(
+            &[object_in(first.path(), b"same object")],
+            &[],
+            first.path(),
+            &extra,
+            false,
+            &mut perf,
+        )
+        .await
+        .unwrap();
+
+    linker.builtin = vec!["-Wl,--defsym=__builtin=1".to_string()];
+    let second = tempfile::TempDir::new().unwrap();
+    let mut perf2 = PerfTimer::new("cache-second");
+    linker
+        .link_all(
+            &[object_in(second.path(), b"same object")],
+            &[],
+            second.path(),
+            &extra,
+            false,
+            &mut perf2,
+        )
+        .await
+        .unwrap();
+
+    assert_eq!(
+        linker.links.load(std::sync::atomic::Ordering::SeqCst),
+        2,
+        "a changed built-in link flag must relink instead of restoring"
     );
 }

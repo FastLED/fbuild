@@ -201,76 +201,32 @@ fn hashed_object_pattern(name: &str) -> String {
     }
 }
 
+/// Archive `link` bundles the loose core objects into.
+const BUNDLED_CORE_ARCHIVE: &str = "libfbuild-core.a";
+
+/// Split core inputs into real `.a` archives and loose objects, which `link`
+/// bundles into [`BUNDLED_CORE_ARCHIVE`].
+fn partition_core_inputs(archives: &[PathBuf]) -> (Vec<PathBuf>, Vec<PathBuf>) {
+    archives.iter().cloned().partition(|path| {
+        path.extension()
+            .and_then(|ext| ext.to_str())
+            .is_some_and(|ext| ext.eq_ignore_ascii_case("a"))
+    })
+}
+
 #[async_trait::async_trait]
 impl Linker for Esp8266Linker {
-    /// Everything `link` and `generate_linker_scripts` read besides objects and
-    /// `LinkExtraArgs`. Built field by field: `mcu_config.profiles` is a
-    /// `HashMap`, so its `Debug` order isn't stable across processes.
-    fn link_fingerprint(&self) -> String {
-        let profile_flags = self
-            .mcu_config
-            .profiles
-            .get(self.profile.as_dir_name())
-            .map(|p| p.link_flags.clone())
-            .unwrap_or_default();
-        format!(
-            "esp8266-image-{IMAGE_GENERATION}|{:?}|{:?}|{:?}|{:?}|{:?}|{:?}|{:?}|{:?}|{:?}",
-            self.gcc_path,
-            self.mcu_config.linker_flags,
-            profile_flags,
-            self.mcu_config.linker_libs,
-            self.mcu_config.defines,
-            self.linker_scripts,
-            self.sdk_lib_dir,
-            self.sdk_nonosdk_lib_dir,
-            self.sdk_ld_dir,
-        )
-    }
-
-    async fn archive(&self, objects: &[PathBuf], output: &Path) -> Result<()> {
-        crate::linker::LinkerBase::archive(&self.ar_path, objects, output, "xtensa-lx106-elf-ar")
-            .await
-    }
-
-    async fn link(
+    fn link_command(
         &self,
         objects: &[PathBuf],
         archives: &[PathBuf],
         output_dir: &Path,
         extra: &LinkExtraArgs,
-    ) -> Result<PathBuf> {
-        std::fs::create_dir_all(output_dir)?;
-
-        // Preprocess linker script template before linking
-        self.generate_linker_scripts(output_dir).await?;
-
+    ) -> Vec<String> {
         let elf_path = output_dir.join("firmware.elf");
-        let mut positional_archives: Vec<PathBuf> = archives
-            .iter()
-            .filter(|path| {
-                path.extension()
-                    .and_then(|ext| ext.to_str())
-                    .map(|ext| ext.eq_ignore_ascii_case("a"))
-                    .unwrap_or(false)
-            })
-            .cloned()
-            .collect();
-        let loose_objects: Vec<PathBuf> = archives
-            .iter()
-            .filter(|path| {
-                !path
-                    .extension()
-                    .and_then(|ext| ext.to_str())
-                    .map(|ext| ext.eq_ignore_ascii_case("a"))
-                    .unwrap_or(false)
-            })
-            .cloned()
-            .collect();
-
+        let (mut positional_archives, loose_objects) = partition_core_inputs(archives);
         if !loose_objects.is_empty() {
-            let bundled_archive = output_dir.join("libfbuild-core.a");
-            self.archive(&loose_objects, &bundled_archive).await?;
-            positional_archives.insert(0, bundled_archive);
+            positional_archives.insert(0, output_dir.join(BUNDLED_CORE_ARCHIVE));
         }
 
         let mut args: Vec<String> = vec![self.gcc_path.to_string_lossy().to_string()];
@@ -315,6 +271,58 @@ impl Linker for Esp8266Linker {
         args.extend(self.mcu_config.linker_libs.iter().cloned());
         args.extend(extra.libs.iter().cloned());
         args.push("-Wl,--end-group".to_string());
+        args
+    }
+
+    /// Everything `link` and `generate_linker_scripts` read besides objects and
+    /// `LinkExtraArgs`. Built field by field: `mcu_config.profiles` is a
+    /// `HashMap`, so its `Debug` order isn't stable across processes.
+    fn link_fingerprint(&self) -> String {
+        let profile_flags = self
+            .mcu_config
+            .profiles
+            .get(self.profile.as_dir_name())
+            .map(|p| p.link_flags.clone())
+            .unwrap_or_default();
+        format!(
+            "esp8266-image-{IMAGE_GENERATION}|{:?}|{:?}|{:?}|{:?}|{:?}|{:?}|{:?}|{:?}|{:?}",
+            self.gcc_path,
+            self.mcu_config.linker_flags,
+            profile_flags,
+            self.mcu_config.linker_libs,
+            self.mcu_config.defines,
+            self.linker_scripts,
+            self.sdk_lib_dir,
+            self.sdk_nonosdk_lib_dir,
+            self.sdk_ld_dir,
+        )
+    }
+
+    async fn archive(&self, objects: &[PathBuf], output: &Path) -> Result<()> {
+        crate::linker::LinkerBase::archive(&self.ar_path, objects, output, "xtensa-lx106-elf-ar")
+            .await
+    }
+
+    async fn link(
+        &self,
+        objects: &[PathBuf],
+        archives: &[PathBuf],
+        output_dir: &Path,
+        extra: &LinkExtraArgs,
+    ) -> Result<PathBuf> {
+        std::fs::create_dir_all(output_dir)?;
+
+        // Preprocess linker script template before linking
+        self.generate_linker_scripts(output_dir).await?;
+
+        let elf_path = output_dir.join("firmware.elf");
+        let (_, loose_objects) = partition_core_inputs(archives);
+        if !loose_objects.is_empty() {
+            self.archive(&loose_objects, &output_dir.join(BUNDLED_CORE_ARCHIVE))
+                .await?;
+        }
+
+        let args = self.link_command(objects, archives, output_dir, extra);
 
         if self.verbose {
             tracing::debug!(target: "fbuild_build::linker::esp8266", "link: {}", args.join(" "));

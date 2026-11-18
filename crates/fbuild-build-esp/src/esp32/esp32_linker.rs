@@ -597,6 +597,16 @@ impl Esp32Linker {
 
 #[async_trait::async_trait]
 impl Linker for Esp32Linker {
+    fn link_command(
+        &self,
+        objects: &[PathBuf],
+        archives: &[PathBuf],
+        output_dir: &Path,
+        extra: &LinkExtraArgs,
+    ) -> Vec<String> {
+        self.build_link_args(objects, archives, &output_dir.join("firmware.elf"), extra)
+    }
+
     fn link_output_cache_dir(&self) -> Option<&Path> {
         self.link_output_cache_dir
             .as_ref()
@@ -647,7 +657,7 @@ impl Linker for Esp32Linker {
                 .unwrap_or_else(|| error.into())
         })?;
         let elf_path = output_dir.join("firmware.elf");
-        let link_args = self.build_link_args(objects, archives, &elf_path, extra);
+        let link_args = self.link_command(objects, archives, output_dir, extra);
 
         if self.verbose {
             tracing::info!("link: {}", link_args.join(" "));

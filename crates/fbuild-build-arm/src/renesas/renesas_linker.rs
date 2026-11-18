@@ -56,20 +56,14 @@ impl RenesasLinker {
 
 #[async_trait::async_trait]
 impl Linker for RenesasLinker {
-    async fn archive(&self, objects: &[PathBuf], output: &Path) -> Result<()> {
-        crate::linker::LinkerBase::archive(&self.ar_path, objects, output, "arm-none-eabi-ar").await
-    }
-
-    async fn link(
+    fn link_command(
         &self,
         objects: &[PathBuf],
         archives: &[PathBuf],
         output_dir: &Path,
         extra: &LinkExtraArgs,
-    ) -> Result<PathBuf> {
-        std::fs::create_dir_all(output_dir)?;
+    ) -> Vec<String> {
         let elf_path = output_dir.join("firmware.elf");
-
         let mut args: Vec<String> = vec![self.gcc_path.to_string_lossy().to_string()];
 
         // Linker flags from config
@@ -117,6 +111,24 @@ impl Linker for RenesasLinker {
         // Linker libraries from config
         args.extend(self.mcu_config.linker_libs.iter().cloned());
         args.extend(extra.libs.iter().cloned());
+        args
+    }
+
+    async fn archive(&self, objects: &[PathBuf], output: &Path) -> Result<()> {
+        crate::linker::LinkerBase::archive(&self.ar_path, objects, output, "arm-none-eabi-ar").await
+    }
+
+    async fn link(
+        &self,
+        objects: &[PathBuf],
+        archives: &[PathBuf],
+        output_dir: &Path,
+        extra: &LinkExtraArgs,
+    ) -> Result<PathBuf> {
+        std::fs::create_dir_all(output_dir)?;
+        let elf_path = output_dir.join("firmware.elf");
+
+        let args = self.link_command(objects, archives, output_dir, extra);
 
         if self.verbose {
             tracing::debug!(target: "fbuild_build::linker::renesas", "link: {}", args.join(" "));

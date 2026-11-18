@@ -49,3 +49,20 @@ fn effective_flags_still_invalidate_with_identity() {
 fn identity_carries_the_workspace_version() {
     assert!(fbuild_build_identity().starts_with(&format!("{}+git.", env!("CARGO_PKG_VERSION"))));
 }
+
+/// A config JSON edited in a dev checkout leaves the commit stamp alone, so
+/// the identity must carry the embedded assets' bytes (FastLED/fbuild#2042).
+#[test]
+fn identity_carries_the_embedded_assets_digest() {
+    let digest = fbuild_core::build_id::EMBEDDED_ASSETS_DIGEST;
+    assert_eq!(
+        digest.len(),
+        64,
+        "build.rs must stamp a SHA-256, got {digest:?}"
+    );
+    assert!(digest.chars().all(|c| c.is_ascii_hexdigit()));
+    assert!(
+        fbuild_build_identity().ends_with(digest),
+        "the no-op fingerprint identity must include the assets digest"
+    );
+}
