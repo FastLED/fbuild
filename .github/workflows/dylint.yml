@@ -101,6 +101,13 @@ jobs:
       - name: Setup soldr
         uses: zackees/setup-soldr@v0
         with:
+          # setup-soldr@v0 is vendor-locked to soldr 0.9.51, which links only
+          # the host lint-library tree into soldr's shared store. Each
+          # Windows/macOS pass then rebuilt all 27 lint libraries and their
+          # rustc_private dependency graph from scratch (~10 of 13 minutes).
+          # 0.9.52+ (forge-ci/soldr 2f99d7f3) points the cross-target library
+          # dirs at the same host build.
+          version: "0.9.53"
           # ci-tests applies the prescribed bounded resource contract for the
           # workspace validation domain. Dylint deliberately remains on its
           # separate pinned nightly/driver lifecycle in the explicit steps
