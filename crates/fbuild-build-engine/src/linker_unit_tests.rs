@@ -247,3 +247,12 @@ fn test_nm_path_from_size_path_with_exe() {
     let nm = LinkerBase::nm_path_from_size_path(&size);
     assert_eq!(nm, PathBuf::from("C:/toolchain/bin/arm-none-eabi-nm.exe"));
 }
+
+/// APE host tools carry the `.com` suffix even on Linux (#1633): the sibling
+/// `nm` must keep the same suffix or `size`/`nm` disagree about the tool.
+#[test]
+fn test_nm_path_from_size_path_with_ape_com() {
+    let size = PathBuf::from("/toolchain/bin/arm-none-eabi-size.com");
+    let nm = LinkerBase::nm_path_from_size_path(&size);
+    assert_eq!(nm, PathBuf::from("/toolchain/bin/arm-none-eabi-nm.com"));
+}

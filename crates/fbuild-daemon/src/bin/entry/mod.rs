@@ -182,6 +182,9 @@ async fn run_async(heap_profile_rate: Option<usize>) -> i32 {
         eprintln!("warning: failed to install process containment: {}", e);
     }
 
+    // APE (cosmocc) host tools: keep extracted loaders under fbuild's own cache.
+    fbuild_core::platform::ape::set_default_cache_root(fbuild_paths::get_cache_root().join("ape"));
+
     let port = args.port.unwrap_or_else(fbuild_paths::get_daemon_port);
 
     // Build the broadcast hub before installing the tracing subscriber

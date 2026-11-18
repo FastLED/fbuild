@@ -240,7 +240,22 @@ impl EmulatorRunner for Avr8jsRunner {
 /// - macOS: `brew install simavr`
 /// - Windows: build from source (MSYS2/MinGW) — limited support
 async fn find_simavr() -> fbuild_core::Result<PathBuf> {
-    let simavr = fbuild_core::platform::executable::name("simavr", "simavr.exe");
+    // Prefer an explicit PATH hit so a `simavr.com` APE is found on every
+    // host; otherwise probe the bare native name (the OS resolves PATH).
+    let resolved = std::env::var_os("PATH")
+        .and_then(|path| {
+            fbuild_core::platform::executable::find_tool_on_paths(
+                std::env::split_paths(&path),
+                "simavr",
+            )
+        })
+        .map(|path| path.to_string_lossy().into_owned());
+    let simavr = resolved
+        .as_deref()
+        .unwrap_or(fbuild_core::platform::executable::name(
+            "simavr",
+            "simavr.exe",
+        ));
     // Try running simavr to verify it exists; route through containment
     // (issue #32). This is a short-lived probe so the containment
     // difference is purely consistency.
