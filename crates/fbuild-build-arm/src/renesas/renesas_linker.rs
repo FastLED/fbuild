@@ -6,7 +6,7 @@
 use std::path::{Path, PathBuf};
 
 use fbuild_core::subprocess::run_command;
-use fbuild_core::{BuildProfile, Result, SizeInfo};
+use fbuild_core::{BuildProfile, ElfSectionSize, Result, SizeInfo};
 
 use super::mcu_config::RenesasMcuConfig;
 use crate::linker::{LinkExtraArgs, Linker, link_cwd_for};
@@ -204,8 +204,38 @@ impl Linker for RenesasLinker {
     }
 
     async fn report_size(&self, elf_path: &Path) -> Result<SizeInfo> {
-        crate::linker::LinkerBase::report_size(elf_path, self.max_flash, self.max_ram)
+        let sections = crate::elf_size::read_elf_section_sizes(elf_path)?;
+        crate::elf_size::warn_if_ram_sections_missing(
+            elf_path,
+            &sections,
+            fbuild_core::PLATFORMIO_RAM_SECTIONS,
+        );
+        Ok(renesas_size_info(&sections, self.max_flash, self.max_ram))
     }
+}
+
+/// Allocated Renesas RA sections with contents that are not code flash:
+/// `fsp.ld` places `.id_code` in the `ID_CODE` region (0x01010018 on the
+/// RA4M1), which `max_flash` does not measure and firmware.bin
+/// (`-j .text -j .data`, FastLED/fbuild#2037) does not carry.
+const NON_CODE_FLASH_SECTIONS: &[&str] = &[".id_code"];
+
+/// Renesas size report: the generic section classification without
+/// [`NON_CODE_FLASH_SECTIONS`], so flash matches PlatformIO renesas-ra's
+/// `SIZEPROGREGEXP` (`.text|.data|.rodata|.text.align|.ARM.exidx`) on
+/// ArduinoCore-renesas ELFs (FastLED/fbuild#2042). RAM is PlatformIO's
+/// default `.data|.bss|.noinit` set.
+fn renesas_size_info(
+    sections: &[ElfSectionSize],
+    max_flash: Option<u64>,
+    max_ram: Option<u64>,
+) -> SizeInfo {
+    let code_flash: Vec<ElfSectionSize> = sections
+        .iter()
+        .filter(|s| !NON_CODE_FLASH_SECTIONS.contains(&s.name.as_str()))
+        .cloned()
+        .collect();
+    SizeInfo::from_elf_sections(&code_flash, max_flash, max_ram)
 }
 
 #[cfg(test)]
@@ -276,5 +306,48 @@ mod tests {
             "argv: {args:?}"
         );
         assert!(out.ends_with("firmware.bin"));
+    }
+
+    /// FastLED/fbuild#2042: `readelf -S` of a real `uno_r4_minima` blink
+    /// (the same ELF as `fbuild_core`'s Renesas RAM test). `.id_code` lives
+    /// in the RA4M1 ID-code region at 0x01010018, outside the 256 KiB code
+    /// flash `max_flash` measures and outside firmware.bin (`-j .text -j
+    /// .data`). PlatformIO renesas-ra's `SIZEPROGREGEXP`
+    /// (`.text|.data|.rodata|.text.align|.ARM.exidx`) gives 28_032.
+    #[test]
+    fn test_renesas_flash_excludes_id_code_like_platformio() {
+        fn row(name: &str, size: u64, alloc: bool, contents: bool, w: bool) -> ElfSectionSize {
+            ElfSectionSize {
+                name: name.to_string(),
+                size,
+                alloc,
+                has_contents: contents,
+                writable: w,
+                executable: name == ".text",
+            }
+        }
+        let sections = [
+            row(".text", 27_884, true, true, false),
+            row(".ARM.exidx", 8, true, true, false),
+            row(".fsp_dtc_vector_table", 0, false, true, true),
+            row(".data", 140, true, true, true),
+            row(".noinit", 28, true, false, true),
+            row(".bss", 3_972, true, false, true),
+            row(".heap", 8_192, true, false, true),
+            row(".stack_dummy", 1_024, true, false, true),
+            row(".vector_table", 256, true, false, true),
+            row(".data_flash", 0, false, true, true),
+            row(".id_code", 28, true, true, false),
+            row(".option_setting", 0, false, true, true),
+            row(".ARM.attributes", 48, false, true, false),
+            row(".comment", 142, false, true, false),
+        ];
+        let info = renesas_size_info(&sections, Some(262_144), Some(32_768));
+        assert_eq!(info.total_flash, 28_032);
+        assert_eq!(info.total_ram, 4_140);
+        assert_eq!(
+            (info.max_flash, info.max_ram),
+            (Some(262_144), Some(32_768))
+        );
     }
 }
