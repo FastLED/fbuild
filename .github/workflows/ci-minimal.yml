@@ -67,7 +67,35 @@ jobs:
     with:
       ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
       glibc_floor: false
+  prooft:
+    name: Prooft attestation plan
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    outputs:
+      skip_policy: ${{ steps.plan.outputs.skip_policy }}
+      skip_dylint: ${{ steps.plan.outputs.skip_dylint }}
+      skip_gate: ${{ steps.plan.outputs.skip_gate }}
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          ref: ${{ github.event.pull_request.base.sha || github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@v3
+      - name: Plan attested skips
+        id: plan
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha || '' }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          PR_TITLE: ${{ github.event.pull_request.title || '' }}
+          FORK: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository }}
+        run: python3 -P ci/prooft_verify.py
   dylint:
+    needs: [prooft]
+    if: ${{ !cancelled() && !(needs.prooft.result == 'success' && needs.prooft.outputs.skip_policy == 'true' && needs.prooft.outputs.skip_dylint == 'true' && needs.prooft.outputs.skip_gate == 'true') }}
     uses: ./.github/workflows/dylint.yml
     secrets: inherit
     with:
@@ -236,7 +264,7 @@ jobs:
   ci-summary:
     name: CI summary
     if: always()
-    needs: [cancel-superseded, verify, linux, glibc_floor, dylint, board_plan, fbuild_bin, pr_boards, test, full, selected-coverage]
+    needs: [cancel-superseded, verify, linux, glibc_floor, prooft, dylint, board_plan, fbuild_bin, pr_boards, test, full, selected-coverage]
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
@@ -257,7 +285,7 @@ jobs:
         run: python3 -P ci/gate_jobs.py
   queue-cache-janitor:
     name: End-of-queue cache janitor
-    needs: [cancel-superseded, verify, linux, glibc_floor, dylint, board_plan, fbuild_bin, pr_boards, reuse_decision, test, full, selected-coverage, ci-summary]
+    needs: [cancel-superseded, verify, linux, glibc_floor, prooft, dylint, board_plan, fbuild_bin, pr_boards, reuse_decision, test, full, selected-coverage, ci-summary]
     if: always() && github.event_name == 'merge_group'
     runs-on: ubuntu-24.04
     timeout-minutes: 5

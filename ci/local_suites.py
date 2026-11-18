@@ -45,6 +45,7 @@ DRIFT_UNITTEST_MODULES: tuple[str, ...] = (
     "ci.test_build_qemu_linux_runtime",
     "ci.test_setup_soldr_cache_keys",
     "ci.test_gate_jobs",
+    "ci.test_prooft_verify",
     "ci.test_wheel_check",
     "ci.test_check_test_layout",
     "ci.test_lint_entrypoint",

@@ -18,6 +18,22 @@ workspace free bytes before and after; Rust/fbuild caches and disk guards stay
 unchanged. Run its focused checks with
 `uv run --no-project python -m unittest ci.test_reclaim_android_ndks`.
 
+`prooft_verify.py` is ci-minimal's `prooft` job. The job checks out the PR
+*base*, and the script runs the pinned [forge-ci/prooft](https://github.com/forge-ci/prooft)
+`plan` against `ci-attestations.yml`. The ci-minimal Dylint call is skipped only
+when dylint.yml's `policy`, `dylint` and `gate` jobs are all credited by the
+head's `Ci-Attestation:` trailers. The repository-root `./push` writes those
+trailers:
+
+1. `prooft soldr -- soldr lint rust --check --cross-dylint` stamps clippy and
+   Dylint for every target.
+2. `prooft run dylint -- … ci.local_gate --lane dylint` stamps the dylint.yml
+   replay.
+3. `./push` then pushes and opens the PR.
+
+Merge-queue and `main` runs never skip. Tests:
+`uv run --with pyyaml --no-project python -m unittest ci.test_prooft_verify`.
+
 `local_gate.py` has separate `--lane linux-minimal` and `--lane dylint` entrypoints.
 The first runs both required Ubuntu jobs through bosn's pinned act2 engine;
 the second replays the entire existing `dylint.yml` workflow with the ordinary

@@ -82,6 +82,9 @@ tests = ["ci/test_enforce_platform_boundary.py"]
 [scripts.find_direct_subprocess]
 tests = ["ci/test_find_direct_subprocess.py"]
 
+[scripts.prooft_verify]
+tests = ["ci/test_prooft_verify.py"]
+
 [scripts.gate_jobs]
 tests = ["ci/test_gate_jobs.py"]
 
