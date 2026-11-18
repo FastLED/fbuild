@@ -32,6 +32,7 @@ import hashlib
 import json
 import os
 import tempfile
+import time
 import unittest
 import zipfile
 from contextlib import redirect_stderr
@@ -96,6 +97,10 @@ class FakeRepo(unittest.TestCase):
             ("STAGED_PROFILE_PATH", self.stamp),
             ("PYTHON_EXT_DIR", self.pyext),
             ("STAGED_NATIVE_EXT_PATH", self.native),
+            # The store the sweep walks lives next to the target dir, so the
+            # tests must own it too -- otherwise `_stage_artifacts` would sweep
+            # the developer's real ~/.fbuild/cargo-target/wheel-build.
+            ("WHEEL_BUILD_TARGET_DIR", self.target),
         ):
             patcher = mock.patch.object(bb, name, value)
             patcher.start()
@@ -569,6 +574,231 @@ class RealRepoReconciliationTests(unittest.TestCase):
         text = (REAL_ROOT / "pyproject.toml").read_text(encoding="utf-8")
         self.assertIn('build-backend = "build_backend"', text)
         self.assertIn('backend-path = ["ci"]', text)
+
+
+class WheelBuildStoreTests(unittest.TestCase):
+    """FastLED/fbuild#2062: the wheel-build store must be reclaimable.
+
+    `_wheel_build_target_dir` keys a target on `sha256(str(repo_root))`, so once
+    a checkout is deleted the store cannot tell which path the target belonged
+    to and nothing ever removes it: 31.8 GB of orphans on the box this was
+    filed from. These tests pin both halves of the cure -- the owner stamp and
+    the sweep -- and, just as importantly, pin what is NOT reclaimed: the live
+    target, a recently-touched legacy target, and anything that is not a plain
+    directory.
+    """
+
+    def setUp(self) -> None:
+        tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(tmp.cleanup)
+        self.tmp = Path(tmp.name)
+        self.store = self.tmp / "wheel-build"
+        self.store.mkdir(parents=True)
+        self.current = self.store / "repo-bbbbbbbbbbbb"
+        self.owner = self.tmp / "repo"
+        self.owner.mkdir()
+
+    # -- fixtures ------------------------------------------------------------
+
+    def target(
+        self,
+        name: str,
+        *,
+        source: str | None = None,
+        age: float = 0.0,
+        size: int = 1024,
+    ) -> Path:
+        """Lay down a target dir with one cargo-shaped release artifact."""
+        path = self.store / name
+        _touch(path / "release" / "fbuild", age=age, size=size)
+        if source is not None:
+            (path / bb.WHEEL_BUILD_SOURCE_STAMP).write_text(f"{source}\n")
+        return path
+
+    def names(self, targets) -> set[str]:
+        return {t.path.name for t in targets}
+
+    # -- the stamp -----------------------------------------------------------
+
+    def test_source_stamp_records_the_owning_checkout(self):
+        bb.record_wheel_build_source(self.current, self.owner)
+        stamp = self.current / bb.WHEEL_BUILD_SOURCE_STAMP
+        self.assertEqual(stamp.read_text(encoding="utf-8").strip(), str(self.owner))
+
+    def test_source_stamp_is_idempotent_and_rewrites_a_moved_checkout(self):
+        bb.record_wheel_build_source(self.current, self.owner)
+        first = (self.current / bb.WHEEL_BUILD_SOURCE_STAMP).read_text(encoding="utf-8")
+        bb.record_wheel_build_source(self.current, self.owner)
+        self.assertEqual(
+            (self.current / bb.WHEEL_BUILD_SOURCE_STAMP).read_text(encoding="utf-8"),
+            first,
+        )
+        moved = self.tmp / "elsewhere"
+        moved.mkdir()
+        bb.record_wheel_build_source(self.current, moved)
+        self.assertEqual(
+            (self.current / bb.WHEEL_BUILD_SOURCE_STAMP)
+            .read_text(encoding="utf-8")
+            .strip(),
+            str(moved),
+        )
+
+    def test_stamp_failure_never_raises(self):
+        """An unwritable store is a lost diagnostic, never a failed install."""
+        blocked = self.tmp / "blocked"
+        blocked.write_text("not a directory", encoding="utf-8")
+        bb.record_wheel_build_source(blocked / "target", self.owner)  # no raise
+
+    # -- the sweep -----------------------------------------------------------
+
+    def test_orphaned_target_is_planned_and_reclaimed(self):
+        gone = self.tmp / "deleted-worktree"
+        victim = self.target("fbuild-wt-gone-111111111111", source=str(gone))
+        doomed = bb.plan_wheel_build_reclaim(self.store, self.current, idle_days=14)
+        self.assertEqual(self.names(doomed), {victim.name})
+        self.assertIn("owner gone", doomed[0].reason)
+        # the artifact plus the owner stamp it was created with
+        self.assertGreaterEqual(doomed[0].bytes_freed, 1024)
+
+        reclaimed = bb.reclaim_stale_wheel_build_targets(
+            self.store, self.current, idle_days=14
+        )
+        self.assertEqual(self.names(reclaimed), {victim.name})
+        self.assertFalse(victim.exists())
+
+    def test_live_target_is_kept(self):
+        live = self.target("fbuild-wt-live-222222222222", source=str(self.owner))
+        self.assertEqual(
+            bb.reclaim_stale_wheel_build_targets(self.store, self.current, idle_days=0),
+            [],
+        )
+        self.assertTrue(live.exists())
+
+    def test_current_target_is_never_reclaimed(self):
+        """The caller builds INTO this one, whatever its stamp claims."""
+        self.target(self.current.name, source=str(self.tmp / "vanished"))
+        bb.reclaim_stale_wheel_build_targets(self.store, self.current, idle_days=0)
+        self.assertTrue(self.current.exists())
+
+    def test_target_stamped_with_the_current_checkout_is_kept(self):
+        """A moved checkout leaves an old-named target that is still ours."""
+        moved = self.target("fbuild-0ld0000000000", source=str(self.owner))
+        bb.reclaim_stale_wheel_build_targets(
+            self.store, self.current, idle_days=0, now=time.time() + 3650 * 86400
+        )
+        self.assertTrue(moved.exists())
+
+    def test_legacy_target_without_a_stamp_uses_the_idle_gate(self):
+        stale = self.target("fbuild-wt-old-333333333333", age=20 * 86400)
+        fresh = self.target("fbuild-wt-new-444444444444", age=3600)
+        reclaimed = bb.reclaim_stale_wheel_build_targets(
+            self.store, self.current, idle_days=14
+        )
+        self.assertEqual(self.names(reclaimed), {stale.name})
+        self.assertFalse(stale.exists())
+        self.assertTrue(fresh.exists())
+
+    def test_idle_gate_of_zero_keeps_a_target_touched_after_the_cutoff(self):
+        """Even the most aggressive gate only reclaims strictly-older targets."""
+        fresh = self.target("fbuild-wt-hot-555555555555", age=-3600)
+        self.assertEqual(
+            self.names(
+                bb.reclaim_stale_wheel_build_targets(
+                    self.store, self.current, idle_days=0
+                )
+            ),
+            set(),
+        )
+        self.assertTrue(fresh.exists())
+
+    def test_dry_run_reports_without_deleting(self):
+        victim = self.target("fbuild-wt-gone-666666666666", source=str(self.tmp / "x"))
+        reported = bb.reclaim_stale_wheel_build_targets(
+            self.store, self.current, idle_days=14, dry_run=True
+        )
+        self.assertEqual(self.names(reported), {victim.name})
+        self.assertTrue(victim.exists())
+
+    def test_symlinked_entries_are_left_alone(self):
+        outside = self.tmp / "outside"
+        _touch(outside / "precious.bin", age=90 * 86400)
+        link = self.store / "fbuild-wt-link-777777777777"
+        link.symlink_to(outside, target_is_directory=True)
+        self.assertEqual(
+            bb.reclaim_stale_wheel_build_targets(self.store, self.current, idle_days=0),
+            [],
+        )
+        self.assertTrue((outside / "precious.bin").exists())
+        self.assertTrue(link.is_symlink())
+
+    def test_plain_files_in_the_store_are_not_targets(self):
+        marker = self.store / "README.txt"
+        marker.write_text("hand-written note", encoding="utf-8")
+        bb.reclaim_stale_wheel_build_targets(self.store, self.current, idle_days=0)
+        self.assertTrue(marker.exists())
+
+    def test_bad_idle_gate_is_rejected(self):
+        with self.assertRaises(ValueError):
+            bb.plan_wheel_build_reclaim(self.store, self.current, idle_days=-1)
+
+    def test_missing_store_is_not_an_error(self):
+        self.assertEqual(
+            bb.reclaim_stale_wheel_build_targets(
+                self.tmp / "absent", self.current, idle_days=14
+            ),
+            [],
+        )
+
+    # -- wiring --------------------------------------------------------------
+
+    def test_idle_gate_env_override(self):
+        with mock.patch.dict(os.environ, {bb.WHEEL_BUILD_IDLE_DAYS_ENV: "3"}):
+            self.assertEqual(bb._wheel_build_idle_days(), 3.0)
+        for bad in ("", "garbage", "-2"):
+            with mock.patch.dict(os.environ, {bb.WHEEL_BUILD_IDLE_DAYS_ENV: bad}):
+                self.assertEqual(
+                    bb._wheel_build_idle_days(), bb.DEFAULT_WHEEL_BUILD_IDLE_DAYS
+                )
+
+    def test_sweep_is_env_disabled(self):
+        victim = self.target("fbuild-wt-gone-888888888888", source=str(self.tmp / "x"))
+        with mock.patch.object(bb, "WHEEL_BUILD_TARGET_DIR", self.current):
+            with mock.patch.object(bb, "_wheel_build_store", return_value=self.store):
+                with mock.patch.dict(os.environ, {bb.WHEEL_BUILD_SWEEP_ENV: "0"}):
+                    bb._sweep_wheel_build_targets()
+        self.assertTrue(victim.exists())
+
+    def test_cli_dry_run_reports_and_exits_zero(self):
+        victim = self.target("fbuild-wt-gone-999999999999", source=str(self.tmp / "x"))
+        from contextlib import redirect_stdout
+
+        out = StringIO()
+        with redirect_stdout(out):
+            code = bb.main(
+                ["--reclaim-stale-targets", "--dry-run", "--store", str(self.store)]
+            )
+        self.assertEqual(code, 0)
+        self.assertIn("would reclaim", out.getvalue())
+        self.assertIn(victim.name, out.getvalue())
+        self.assertTrue(victim.exists())
+
+
+class SweepDuringBuildTests(FakeRepo):
+    """A build stamps its own target and reclaims its dead siblings."""
+
+    def test_rebuild_stamps_the_target_and_sweeps_siblings(self):
+        self.builders()
+        self.target.mkdir(parents=True, exist_ok=True)
+        sibling = self.target.parent / "deadbeef-deadbeef"
+        _touch(sibling / "release" / "fbuild", age=0, size=16)
+        (sibling / bb.WHEEL_BUILD_SOURCE_STAMP).write_text(
+            f"{self.tmp / 'gone'}\n", encoding="utf-8"
+        )
+        with redirect_stderr(StringIO()):
+            bb._stage_artifacts()
+        stamp = self.target / bb.WHEEL_BUILD_SOURCE_STAMP
+        self.assertEqual(stamp.read_text(encoding="utf-8").strip(), str(self.repo))
+        self.assertFalse(sibling.exists(), "a dead sibling target survived the build")
 
 
 if __name__ == "__main__":

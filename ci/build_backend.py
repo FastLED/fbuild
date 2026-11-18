@@ -79,6 +79,7 @@ key has to carry everything that changes the *bytes*:
 
 from __future__ import annotations
 
+import argparse
 import base64
 import csv
 import hashlib
@@ -92,14 +93,14 @@ import os
 import shutil
 import subprocess
 import sys
+import time
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 TARGET_BINARY_NAME = "fbuild.exe" if sys.platform == "win32" else "fbuild"
-TARGET_DAEMON_NAME = (
-    "fbuild-daemon.exe" if sys.platform == "win32" else "fbuild-daemon"
-)
+TARGET_DAEMON_NAME = "fbuild-daemon.exe" if sys.platform == "win32" else "fbuild-daemon"
 STAGED_BIN_DIR = REPO_ROOT / "ci" / "bin"
 STAGED_BINARY_PATH = STAGED_BIN_DIR / TARGET_BINARY_NAME
 STAGED_DAEMON_PATH = STAGED_BIN_DIR / TARGET_DAEMON_NAME
@@ -118,6 +119,7 @@ else:
     # Same `.so` suffix on macOS and Linux — what CPython searches for.
     STAGED_NATIVE_EXT_NAME = "_native.so"
 STAGED_NATIVE_EXT_PATH = PYTHON_EXT_DIR / STAGED_NATIVE_EXT_NAME
+
 
 # Pin cargo's target directory to a persistent path keyed by this repo's
 # root. The build never runs cargo in a temp copy of the tree (which would
@@ -142,6 +144,269 @@ def _wheel_build_target_dir(repo_root: Path) -> Path:
 
 WHEEL_BUILD_TARGET_DIR = _wheel_build_target_dir(REPO_ROOT)
 os.environ.setdefault("CARGO_TARGET_DIR", str(WHEEL_BUILD_TARGET_DIR))
+
+# FastLED/fbuild#2062: the store above is immortal. `_wheel_build_target_dir`
+# keys the directory on `sha256(str(repo_root))`, which is one-way, so once a
+# checkout or agent worktree is deleted nothing left in the store can say which
+# path a target belonged to -- let alone whether that path still exists. The
+# directory is never reclaimed either, so the store grows one full release
+# target (0.06-4 GB) per worktree ever created: 38 entries / 52 GB, of which
+# 17 / 31.8 GB were orphans, on the box this was filed from.
+#
+# Two halves close it:
+#
+#   * every target records its owning checkout in `.fbuild-wheel-source`, so
+#     liveness is one `Path.exists()` instead of a guess, and a diagnostic can
+#     name the checkout a target belongs to;
+#   * a build sweeps sibling targets whose recorded owner is GONE (exact
+#     evidence, no age needed) or, for targets written before the stamp
+#     existed, whose newest file is older than the idle gate.
+#
+# Target dirs are caches, so deleting a live one only costs a rebuild -- but
+# "cannot tell" still means "keep": an unreadable entry, a scan over budget and
+# a symlinked entry all survive untouched.
+WHEEL_BUILD_SOURCE_STAMP = ".fbuild-wheel-source"
+DEFAULT_WHEEL_BUILD_IDLE_DAYS = 14.0
+WHEEL_BUILD_SWEEP_ENV = "FBUILD_WHEEL_BUILD_SWEEP"
+WHEEL_BUILD_IDLE_DAYS_ENV = "FBUILD_WHEEL_BUILD_IDLE_DAYS"
+# Files scanned inside ONE legacy (unstamped) target before the sweep gives up
+# and keeps it. A cargo target dir holds ~10k files; the cap keeps `pip install`
+# from spending seconds on a directory whose age it cannot establish cheaply.
+WHEEL_BUILD_SCAN_BUDGET = 20_000
+
+
+@dataclass(frozen=True)
+class ReclaimedTarget:
+    """One sibling target the sweep dropped (or would drop, under --dry-run)."""
+
+    path: Path
+    reason: str
+    bytes_freed: int
+
+
+def _wheel_build_store() -> Path:
+    """The `~/.fbuild/cargo-target/wheel-build` store holding every target."""
+    return WHEEL_BUILD_TARGET_DIR.parent
+
+
+def _dir_key(path: Path) -> str:
+    """Comparison key for a directory path (case-insensitive on Windows)."""
+    return os.path.normcase(os.path.abspath(str(path)))
+
+
+def record_wheel_build_source(target: Path, root: Path) -> None:
+    """Record `root` as the checkout owning `target` (idempotent, best-effort).
+
+    Written into the target dir itself so the store stays self-describing. A
+    failure here is a lost diagnostic, never a failed install.
+    """
+    stamp = target / WHEEL_BUILD_SOURCE_STAMP
+    text = f"{_dir_key(root)}\n"
+    try:
+        if stamp.read_text(encoding="utf-8") == text:
+            return
+    except OSError:
+        pass
+    try:
+        target.mkdir(parents=True, exist_ok=True)
+        stamp.write_text(text, encoding="utf-8")
+    except OSError:
+        pass
+
+
+def _recorded_source(target: Path) -> Optional[str]:
+    """The owner path recorded inside `target`, or None when unstamped."""
+    try:
+        recorded = (
+            (target / WHEEL_BUILD_SOURCE_STAMP).read_text(encoding="utf-8").strip()
+        )
+    except OSError:
+        return None
+    return recorded or None
+
+
+def _scan_target(
+    target: Path, *, budget: int = WHEEL_BUILD_SCAN_BUDGET
+) -> Optional[tuple[float, int]]:
+    """(newest mtime, total bytes) under `target`; None when over `budget`.
+
+    One metadata walk, no file reads. `os.walk` does not follow symlinks, so a
+    linked tree is never counted as part of this target.
+    """
+    newest = 0.0
+    total = 0
+    scanned = 0
+    for dirpath, _dirnames, filenames in os.walk(target, onerror=lambda _e: None):
+        for name in filenames:
+            scanned += 1
+            if scanned > budget:
+                return None
+            try:
+                info = os.lstat(os.path.join(dirpath, name))
+            except OSError:
+                continue
+            total += info.st_size
+            if info.st_mtime > newest:
+                newest = info.st_mtime
+    return newest, total
+
+
+def _format_bytes(count: int) -> str:
+    """Human-readable size, MB/GB only -- these are build target dirs."""
+    value = float(count)
+    for unit in ("B", "KB", "MB"):
+        if value < 1024.0:
+            return f"{value:.0f} {unit}" if unit == "B" else f"{value:.1f} {unit}"
+        value /= 1024.0
+    return f"{value:.1f} GB"
+
+
+def _wheel_build_idle_days() -> float:
+    """Idle gate for legacy (unstamped) targets; bad values fall back to 14."""
+    raw = os.environ.get(WHEEL_BUILD_IDLE_DAYS_ENV, "").strip()
+    if not raw:
+        return DEFAULT_WHEEL_BUILD_IDLE_DAYS
+    try:
+        days = float(raw)
+    except ValueError:
+        return DEFAULT_WHEEL_BUILD_IDLE_DAYS
+    return days if days >= 0 else DEFAULT_WHEEL_BUILD_IDLE_DAYS
+
+
+def _sibling_target_dirs(store: Path, current_key: str) -> "list[Path]":
+    """Plain directory children of `store`, minus the caller's own target.
+
+    Symlinks are skipped: `os.scandir(...).is_dir(follow_symlinks=False)` says
+    no, so a linked entry can never be walked or deleted through this path.
+    """
+    siblings: list[Path] = []
+    try:
+        entries = list(os.scandir(store))
+    except OSError:
+        return siblings
+    for entry in entries:
+        try:
+            if not entry.is_dir(follow_symlinks=False):
+                continue
+        except OSError:
+            continue
+        path = Path(entry.path)
+        if _dir_key(path) == current_key:
+            continue
+        siblings.append(path)
+    return siblings
+
+
+def _reclaim_verdict(
+    path: Path, current_key: str, cutoff: float, idle_days: float
+) -> "Optional[ReclaimedTarget]":
+    """Why `path` is dead, or None when it must be kept."""
+    recorded = _recorded_source(path)
+    if recorded is not None:
+        owner = Path(recorded)
+        if _dir_key(owner) == current_key or owner.exists():
+            return None
+        scan = _scan_target(path)
+        return ReclaimedTarget(
+            path=path,
+            reason=f"owner gone: {recorded}",
+            bytes_freed=scan[1] if scan else 0,
+        )
+    scan = _scan_target(path)
+    if scan is None:  # too big to date cheaply: keep it rather than guess
+        return None
+    newest, total = scan
+    if newest >= cutoff:
+        return None
+    return ReclaimedTarget(
+        path=path,
+        reason=f"idle > {idle_days:g}d, no owner stamp",
+        bytes_freed=total,
+    )
+
+
+def plan_wheel_build_reclaim(
+    store: Path,
+    current: Path,
+    *,
+    idle_days: float = DEFAULT_WHEEL_BUILD_IDLE_DAYS,
+    now: Optional[float] = None,
+) -> "list[ReclaimedTarget]":
+    """Decide which sibling targets in `store` are dead. Deletes nothing.
+
+    `current` is the target the caller is about to build into: it is never a
+    candidate, whatever its stamp says. A target is doomed when its recorded
+    owner no longer exists (or is `current`), or -- for a legacy target with no
+    stamp -- when every file in it is older than `idle_days`.
+    """
+    if idle_days < 0:
+        raise ValueError(f"idle_days must be >= 0, got {idle_days}")
+    reference = time.time() if now is None else now
+    cutoff = reference - idle_days * 86400.0
+    current_key = _dir_key(current)
+    doomed: list[ReclaimedTarget] = []
+    for path in _sibling_target_dirs(store, current_key):
+        verdict = _reclaim_verdict(path, current_key, cutoff, idle_days)
+        if verdict is not None:
+            doomed.append(verdict)
+    return doomed
+
+
+def reclaim_stale_wheel_build_targets(
+    store: Optional[Path] = None,
+    current: Optional[Path] = None,
+    *,
+    idle_days: Optional[float] = None,
+    dry_run: bool = False,
+    now: Optional[float] = None,
+) -> "list[ReclaimedTarget]":
+    """Delete dead sibling targets; returns the ones actually reclaimed.
+
+    A target is only ever removed when it is a direct child of `store`, so a
+    malformed entry can never turn into a delete somewhere else on disk.
+    """
+    store = _wheel_build_store() if store is None else store
+    current = WHEEL_BUILD_TARGET_DIR if current is None else current
+    if idle_days is None:
+        idle_days = _wheel_build_idle_days()
+    doomed = plan_wheel_build_reclaim(store, current, idle_days=idle_days, now=now)
+    if dry_run:
+        return doomed
+    reclaimed: list[ReclaimedTarget] = []
+    for victim in doomed:
+        if victim.path.parent != store:
+            continue
+        try:
+            shutil.rmtree(victim.path)
+        except OSError:
+            continue
+        reclaimed.append(victim)
+    return reclaimed
+
+
+def _sweep_wheel_build_targets() -> None:
+    """Reclaim dead sibling targets before building into this one.
+
+    Env: `FBUILD_WHEEL_BUILD_SWEEP=0` disables it, `FBUILD_WHEEL_BUILD_IDLE_DAYS`
+    moves the legacy idle gate (default 14). Never raises: a sweep failure must
+    not fail an install.
+    """
+    raw = os.environ.get(WHEEL_BUILD_SWEEP_ENV, "1").strip().lower()
+    if raw in ("0", "false", "no", "off"):
+        return
+    try:
+        reclaimed = reclaim_stale_wheel_build_targets()
+    except (OSError, ValueError):
+        return
+    if not reclaimed:
+        return
+    freed = sum(target.bytes_freed for target in reclaimed)
+    sys.stderr.write(
+        f"  reclaimed {_format_bytes(freed)} from {len(reclaimed)} dead "
+        f"wheel-build target(s) in {_wheel_build_store()}\n"
+    )
+    for target in reclaimed:
+        sys.stderr.write(f"    - {target.path.name} ({target.reason})\n")
 
 
 def _iter_cargo_inputs() -> "list[Path]":
@@ -577,6 +842,10 @@ def _stage_artifacts() -> None:
         return
 
     _require_soldr()
+    # FastLED/fbuild#2062: this directory is a cache keyed on a one-way digest,
+    # so it must (a) name its owner and (b) take its dead siblings with it.
+    _sweep_wheel_build_targets()
+    record_wheel_build_source(WHEEL_BUILD_TARGET_DIR, REPO_ROOT)
     binary_path, daemon_path = _build_fbuild_binaries()
     # Atomic staging: a killed install must not leave a partial artifact that
     # the next run adopts as fresh.
@@ -686,9 +955,12 @@ class _WheelWriter:
         """Stream a (possibly ~100 MB) file in, hashing as it is copied."""
         sha = hashlib.sha256()
         size = 0
-        with path.open("rb") as src, self._zip.open(
-            self._info(arcname, executable), "w", force_zip64=True
-        ) as dst:
+        with (
+            path.open("rb") as src,
+            self._zip.open(
+                self._info(arcname, executable), "w", force_zip64=True
+            ) as dst,
+        ):
             for chunk in iter(lambda: src.read(1 << 20), b""):
                 sha.update(chunk)
                 dst.write(chunk)
@@ -760,5 +1032,74 @@ def build_wheel(wheel_directory, config_settings=None, metadata_directory=None) 
     return _write_wheel(wheel_directory, _add_package)
 
 
-def build_editable(wheel_directory, config_settings=None, metadata_directory=None) -> str:
+def build_editable(
+    wheel_directory, config_settings=None, metadata_directory=None
+) -> str:
     return _write_wheel(wheel_directory, _add_editable_pth)
+
+
+# ---------------------------------------------------------------------------
+# `python -m ci.build_backend --reclaim-stale-targets`
+#
+# The store is written by every `pip install` of every checkout, including
+# agent worktrees, so the owner of the disk is rarely the process that notices.
+# This entry point is the cron-shaped command `fbuild doctor` cannot be: it
+# reclaims the store without a checkout, without building anything.
+# ---------------------------------------------------------------------------
+
+
+def main(argv: Optional["list[str]"] = None) -> int:
+    parser = argparse.ArgumentParser(
+        prog="python -m ci.build_backend",
+        description=(
+            "Reclaim dead ~/.fbuild/cargo-target/wheel-build targets "
+            "(FastLED/fbuild#2062)."
+        ),
+    )
+    parser.add_argument(
+        "--reclaim-stale-targets",
+        action="store_true",
+        help="report and delete dead sibling targets (required)",
+    )
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="report what would be reclaimed without deleting anything",
+    )
+    parser.add_argument(
+        "--idle-days",
+        type=float,
+        default=None,
+        help=(
+            "idle gate for targets with no owner stamp "
+            f"(default {DEFAULT_WHEEL_BUILD_IDLE_DAYS:g})"
+        ),
+    )
+    parser.add_argument(
+        "--store",
+        type=Path,
+        default=None,
+        help="store to sweep (default: the real wheel-build store)",
+    )
+    args = parser.parse_args(sys.argv[1:] if argv is None else argv)
+    if not args.reclaim_stale_targets:
+        parser.error("pass --reclaim-stale-targets (this module builds wheels)")
+
+    store = _wheel_build_store() if args.store is None else args.store
+    reclaimed = reclaim_stale_wheel_build_targets(
+        store, idle_days=args.idle_days, dry_run=args.dry_run
+    )
+    freed = sum(target.bytes_freed for target in reclaimed)
+    verb = "would reclaim" if args.dry_run else "reclaimed"
+    print(
+        f"{store}: {verb} {_format_bytes(freed)} across {len(reclaimed)} dead target(s)"
+    )
+    for target in reclaimed:
+        print(
+            f"  {_format_bytes(target.bytes_freed)}  {target.path.name}  ({target.reason})"
+        )
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
