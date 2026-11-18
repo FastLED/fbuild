@@ -64,6 +64,15 @@ fail coverage. This policy is tracked in [#1698](https://github.com/FastLED/fbui
   non-emptiness; staging goes through `os.replace`, so an interrupted install cannot
   leave a truncated artifact that later runs adopt as current. Tested by
   `test_build_backend.py`.
+  The cargo target dir itself lives in `~/.fbuild/cargo-target/wheel-build/<name>-<sha256>`,
+  one per checkout, and the digest is one-way -- so a deleted worktree used to leave an
+  unreclaimable 0.06-4 GB target behind forever ([#2062](https://github.com/FastLED/fbuild/issues/2062):
+  31.8 GB of orphans on a real dev box). Each target now records its owning checkout in
+  `.fbuild-wheel-source`, and a build sweeps sibling targets whose owner is gone (exact
+  evidence) or, for unstamped legacy targets, whose newest file is older than
+  `FBUILD_WHEEL_BUILD_IDLE_DAYS` (default 14). `FBUILD_WHEEL_BUILD_SWEEP=0` disables the
+  sweep. To reclaim from outside a build -- e.g. from a disk-cleanup cron --
+  `uv run --no-project python -m ci.build_backend --reclaim-stale-targets [--dry-run]`.
 - **`build_dist.py`** -- Triggers GitHub Actions native builds, downloads artifacts, and assembles `dist/` for PyPI packaging
 - **`build_qemu_linux_runtime.py`** -- Builds the Linux runtime-library bundle Espressif QEMU needs
   (`ldd` closure minus glibc, built in `ubuntu:20.04` so the bundle's glibc floor stays at 2.30).
