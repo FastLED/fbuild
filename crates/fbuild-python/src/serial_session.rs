@@ -436,8 +436,7 @@ impl SerialSession {
             };
         let (mut write, mut read) = ws_stream.split();
 
-        let attach = attach_message(&cfg);
-        let attach_json = serde_json::to_string(&attach)
+        let attach_json = serde_json::to_string(&attach_message(&cfg))
             .expect("fbuild-python: ClientMessage::Attach serialization is infallible");
         match tokio::time::timeout_at(
             deadline,
@@ -455,29 +454,21 @@ impl SerialSession {
             Ok(Some(Err(_))) | Ok(None) => return Err(SessionError::Closed),
             Err(_) => return Err(SessionError::Timeout),
         };
-        match msg {
-            tungstenite::Message::Text(text) => {
-                match serde_json::from_str::<ServerMessage>(&text) {
-                    Ok(ServerMessage::Attached { success, .. }) if success => {
-                        if cfg.verbose {
-                            eprintln!("attached");
-                        }
-                    }
-                    Ok(ServerMessage::Attached { message, .. }) => {
-                        return Err(SessionError::ConnectionFailed(format!(
-                            "daemon rejected serial attach: {message}"
-                        )));
-                    }
-                    // FastLED/fbuild#2083: the daemon reports an open_port
-                    // failure or timeout as an `Error` frame; discarding its
-                    // text left callers with a bare `session closed`.
-                    Ok(ServerMessage::Error { message }) => {
-                        return Err(SessionError::ConnectionFailed(format!(
-                            "daemon rejected serial attach: {message}"
-                        )));
-                    }
-                    _ => return Err(SessionError::Closed),
+        let tungstenite::Message::Text(text) = msg else {
+            return Err(SessionError::Closed);
+        };
+        match serde_json::from_str::<ServerMessage>(&text) {
+            Ok(ServerMessage::Attached { success: true, .. }) => {
+                if cfg.verbose {
+                    eprintln!("attached");
                 }
+            }
+            // FastLED/fbuild#2083: an `error` frame (open_port failure or
+            // timeout) carries the reason a bare `session closed` used to hide.
+            Ok(ServerMessage::Error { message } | ServerMessage::Attached { message, .. }) => {
+                return Err(SessionError::ConnectionFailed(format!(
+                    "daemon rejected serial attach: {message}"
+                )));
             }
             _ => return Err(SessionError::Closed),
         }
