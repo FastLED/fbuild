@@ -151,6 +151,16 @@ struct FrameworkInfo {
     libraries_dir: PathBuf,
 }
 
+/// `(display name, libraries dir, framework root)` from a libraries dir +
+/// display name, so each `resolve_framework` match arm can stay a one-liner.
+fn info(name: &str, libs: PathBuf) -> (String, PathBuf, PathBuf) {
+    let root = libs
+        .parent()
+        .map(Path::to_path_buf)
+        .unwrap_or_else(|| libs.clone());
+    (name.to_string(), libs, root)
+}
+
 /// Map (platform, board) → an installed framework on disk.
 ///
 /// Each platform's framework lives at a different cache path. We instantiate
@@ -168,16 +178,6 @@ fn resolve_framework(
         Apollo3Cores, AvrFramework, Ch32vCores, Esp32Framework, Esp8266Framework, Nrf51Cores,
         Nrf52Cores, RenesasCores, SamCores, SilabsCores, Stm32Cores, TeensyCores,
     };
-
-    /// Build a `FrameworkInfo` from a libraries dir + display name. Pulled out
-    /// so each match arm can stay a one-liner.
-    fn info(name: &str, libs: PathBuf) -> (String, PathBuf, PathBuf) {
-        let root = libs
-            .parent()
-            .map(Path::to_path_buf)
-            .unwrap_or_else(|| libs.clone());
-        (name.to_string(), libs, root)
-    }
 
     let (name, libraries_dir, root): (String, PathBuf, PathBuf) = match platform {
         Platform::Teensy => info(
