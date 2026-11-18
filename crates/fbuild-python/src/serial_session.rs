@@ -468,6 +468,14 @@ impl SerialSession {
                             "daemon rejected serial attach: {message}"
                         )));
                     }
+                    // FastLED/fbuild#2083: the daemon reports an open_port
+                    // failure or timeout as an `Error` frame; discarding its
+                    // text left callers with a bare `session closed`.
+                    Ok(ServerMessage::Error { message }) => {
+                        return Err(SessionError::ConnectionFailed(format!(
+                            "daemon rejected serial attach: {message}"
+                        )));
+                    }
                     _ => return Err(SessionError::Closed),
                 }
             }

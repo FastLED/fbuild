@@ -926,3 +926,18 @@ async fn stale_session_cleanup_keeps_logical_alias_to_physical_port() {
         "logical alias must still resolve to the physical port"
     );
 }
+
+/// FastLED/fbuild#2083: the WebSocket attach resolves the board family
+/// BEFORE starting its 3 s open deadline. The helper must be total and
+/// bounded even for a port that cannot be identified.
+#[tokio::test]
+async fn resolve_open_family_is_total_and_bounded() {
+    let mgr = SharedSerialManager::new();
+    let family = tokio::time::timeout(
+        std::time::Duration::from_secs(5),
+        mgr.resolve_open_family("__fbuild_missing_test_port__"),
+    )
+    .await
+    .expect("family resolution must not stall");
+    assert_eq!(family, crate::boards::BoardFamily::CdcAcmBridge);
+}

@@ -93,6 +93,25 @@ impl SharedSerialManager {
         }
     }
 
+    /// Resolve the board family for `port` on a blocking thread.
+    ///
+    /// Family inference walks `available_ports()` plus sysfs health and can
+    /// take seconds on a loaded host. Callers that wrap [`Self::open_port`]
+    /// in a short deadline (the WebSocket serial attach) must resolve the
+    /// family here first, outside their timer, and pass the result to
+    /// `open_port` as an explicit `family` argument — pre-open enumeration
+    /// is not a wedged driver. See FastLED/fbuild#2083.
+    ///
+    /// Total: a port that cannot be identified falls back to
+    /// [`crate::boards::BoardFamily::CdcAcmBridge`], the same `(true, true)`
+    /// idle DTR/RTS state `open_port` applies for `None`.
+    pub async fn resolve_open_family(&self, port: &str) -> crate::boards::BoardFamily {
+        let port = port.to_string();
+        tokio::task::spawn_blocking(move || crate::boards::family_for_port_or_default(&port))
+            .await
+            .unwrap_or(crate::boards::BoardFamily::CdcAcmBridge)
+    }
+
     /// Open a serial port. Retries with backoff for Windows USB-CDC.
     ///
     /// `family` (FastLED/fbuild#687) consults
