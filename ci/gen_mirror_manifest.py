@@ -86,6 +86,9 @@ REGISTRY_PREFIX = "https://dl.registry.platformio.org/download/"
 TOOL = "fbuild-download-mirror"
 USER_AGENT = "fbuild-mirror-manifest/2"
 STATE_DB_KEY = "_state/manifest.db"
+# `mirror_path` in downloader_mirrors.rs keeps vendor-host files under this
+# first segment; it is not a registry owner and gets no shard.
+VENDOR_ROOT = "vendor"
 NAMES_KEY = "@names-"  # '@' is escaped in owner keys, so no owner collides
 STATE_NAME = ".mirror-hashes.tsv"  # per-key size/ETag/sha256, local only (#1825)
 
@@ -131,9 +134,15 @@ def bucket_url(key: str) -> str:
 def is_registry_key(key: str) -> bool:
     """``<owner>/<type>/<name>/<version>/<file>``: the registry layout the
     bucket mirrors. Anything else (bucket bookkeeping such as ``_state/``)
-    is not a download and is left out."""
+    is not a download and is left out, and so is the ``vendor/<host>/<path>``
+    root of non-registry downloads (FastLED/fbuild#2029), at any depth."""
     parts = key.split("/")
-    return len(parts) == 5 and all(parts) and not parts[0].startswith("_")
+    return (
+        len(parts) == 5
+        and all(parts)
+        and not parts[0].startswith("_")
+        and parts[0] != VENDOR_ROOT
+    )
 
 
 def owner_of(key: str) -> str:
