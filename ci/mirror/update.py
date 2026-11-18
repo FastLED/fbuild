@@ -154,6 +154,7 @@ def publish(db_path: Path, read: rotate.BucketCopy, user_agent: str) -> int:
 
 
 def parse_args(argv: list[str] | None) -> argparse.Namespace:
+    assert __doc__ is not None
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--since", type=parse_since, help="scan from this date")
     ap.add_argument(

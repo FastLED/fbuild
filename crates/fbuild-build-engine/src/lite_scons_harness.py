@@ -73,6 +73,7 @@ import tempfile
 import time
 import traceback
 import types
+from typing import Any
 
 
 # --------------------------------------------------------------------------
@@ -127,7 +128,7 @@ class Action:
         started = time.monotonic()
         if callable(self.action):
             try:
-                ret = self.action(target=target, source=source, env=env)
+                ret: Any = self.action(target=target, source=source, env=env)
                 rc = 0 if (ret is None or ret == 0) else int(ret)
                 return {
                     "kind": "callable", "repr": repr(self), "rc": rc,
@@ -627,7 +628,9 @@ def install_scons_module(env):
 
     def Import(*names):
         import inspect
-        frame = inspect.currentframe().f_back
+        current = inspect.currentframe()
+        assert current is not None  # CPython always provides frames
+        frame = current.f_back
         if frame is None:
             return
         for nm in names:

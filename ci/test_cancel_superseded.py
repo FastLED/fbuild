@@ -25,6 +25,7 @@ import contextlib
 import io
 import unittest
 import warnings
+from email.message import Message
 from urllib.error import HTTPError, URLError
 
 from ci import cancel_superseded as cancel
@@ -199,7 +200,7 @@ class MainTest(unittest.TestCase):
 
     def test_a_finished_run_conflict_is_tolerated(self):
         current = run(901, 1919)
-        error = HTTPError("https://api.github.com/x", 409, "Conflict", {}, None)
+        error = HTTPError("https://api.github.com/x", 409, "Conflict", Message(), None)
         api = FakeApi(
             current,
             [run(900, 1919, created_at="2026-11-05T19:00:00Z"), current],

@@ -38,11 +38,10 @@ from __future__ import annotations
 
 import argparse
 import csv
-import io
 import re
 import sys
 from pathlib import Path
-from typing import Iterator
+from typing import Iterator, TextIO
 
 # A complete `#[ignore]`, `#[ignore = "reason"]` or `#[ignore = r#"reason"#]`
 # attribute is parsed structurally by `parse_ignore_attribute`; these regexes
@@ -293,7 +292,7 @@ def collect_inventory(workspace_root: Path) -> list[dict]:
     return findings
 
 
-def emit_csv(findings: list[dict], out: io.TextIOBase) -> None:
+def emit_csv(findings: list[dict], out: TextIO) -> None:
     writer = csv.DictWriter(
         out, fieldnames=["file", "test_name", "reason", "line"], lineterminator="\n"
     )
@@ -302,7 +301,7 @@ def emit_csv(findings: list[dict], out: io.TextIOBase) -> None:
         writer.writerow(row)
 
 
-def emit_markdown(findings: list[dict], out: io.TextIOBase) -> None:
+def emit_markdown(findings: list[dict], out: TextIO) -> None:
     total = len(findings)
     missing_reason = sum(1 for f in findings if not f["reason"])
     out.write("# Ignored-test inventory\n\n")

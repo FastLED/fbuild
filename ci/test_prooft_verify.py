@@ -30,6 +30,7 @@ PR_ENV = {"EVENT_NAME": "pull_request", "BASE_SHA": "b" * 40, "HEAD_SHA": "h" * 
 def load_push():
     loader = importlib.machinery.SourceFileLoader("fbuild_push", str(ROOT / "push"))
     spec = importlib.util.spec_from_loader("fbuild_push", loader)
+    assert spec is not None
     module = importlib.util.module_from_spec(spec)
     loader.exec_module(module)
     return module

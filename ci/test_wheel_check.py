@@ -120,7 +120,9 @@ def wheel(members: dict[str, bytes]) -> tuple[str, int, zipfile.ZipFile]:
 
 class DebugSectionTests(unittest.TestCase):
     def test_elf_with_dwarf_is_rejected(self) -> None:
-        kind, debug = wheel_check.debug_sections(elf64([".text", ".debug_info", ".debug_line"]))
+        result = wheel_check.debug_sections(elf64([".text", ".debug_info", ".debug_line"]))
+        assert result is not None
+        kind, debug = result
         self.assertEqual(kind, "ELF")
         self.assertEqual(debug, [".debug_info", ".debug_line"])
 
@@ -130,7 +132,9 @@ class DebugSectionTests(unittest.TestCase):
         )
 
     def test_compressed_elf_debug_is_rejected(self) -> None:
-        self.assertEqual(wheel_check.debug_sections(elf64([".zdebug_info"]))[1], [".zdebug_info"])
+        result = wheel_check.debug_sections(elf64([".zdebug_info"]))
+        assert result is not None
+        self.assertEqual(result[1], [".zdebug_info"])
 
     def test_macho_dwarf_segment_is_rejected_thin_and_fat(self) -> None:
         self.assertEqual(wheel_check.debug_sections(macho64(["__TEXT", "__DWARF"])), ("Mach-O", ["__DWARF"]))
