@@ -1,4 +1,4 @@
-"""Replay the selected Ubuntu or ordinary-PR Dylint workflow through act2.
+"""Replay the selected Ubuntu or Dylint workflow through act2.
 
 This proof covers native Linux x64 only. Board builds, extended/full mode and
 the other native hosts retain their remote validation.
@@ -25,10 +25,19 @@ REQUIRED_JOBS = frozenset({"check", "python-facade-tests"})
 
 @dataclass(frozen=True)
 class RunSelection:
+    """One replay invocation and the verdicts it must produce.
+
+    `skipped_jobs` names jobs the workflow itself confines to another event
+    (dylint.yml's `merge_group`-only cache janitor). act2 still reports them,
+    explicitly skipped, so a proof that demanded every reported job succeed
+    could never accept the run.
+    """
+
     workflow: str
     job: str | None
     event: str
     required_jobs: frozenset[str]
+    skipped_jobs: frozenset[str] = frozenset()
 
 
 UBUNTU_SELECTION = RunSelection(WORKFLOW, "linux", "workflow_dispatch", REQUIRED_JOBS)
@@ -125,6 +134,10 @@ class RunProof:
         )
 
 
+def expected_job_count(selection: RunSelection) -> int:
+    return len(selection.required_jobs) + len(selection.skipped_jobs)
+
+
 def verify_run(
     proof: RunProof,
     workspace: Path,
@@ -147,7 +160,7 @@ def verify_run(
         proof.state != "done"
         or proof.conclusion != "success"
         or proof.exit_code != 0
-        or proof.total != len(selection.required_jobs)
+        or proof.total != expected_job_count(selection)
         or proof.completed != proof.total
         or proof.failed != 0
         or len(proof.jobs) != proof.total
@@ -161,10 +174,36 @@ def verify_run(
             or matching[0].conclusion != "success"
         ):
             raise ValueError(f"required Ubuntu job {job_id} did not pass")
+    for job_id in selection.skipped_jobs:
+        matching = [job for job in proof.jobs if job.job_id == job_id]
+        if (
+            len(matching) != 1
+            or matching[0].status != "completed"
+            or matching[0].conclusion != "skipped"
+        ):
+            raise ValueError(f"event-excluded job {job_id} did not skip")
     if any(
-        job.status != "completed" or job.conclusion != "success" for job in proof.jobs
+        job.status != "completed"
+        or (
+            job.conclusion != "success"
+            and job.job_id not in selection.skipped_jobs
+        )
+        for job in proof.jobs
     ):
         raise ValueError("selected job evidence includes a non-successful job")
+
+
+def submitted_run_id(reply: dict[str, JsonValue]) -> str:
+    """The run id from `bosn ci run --json`.
+
+    bosn 0.1.22 answers with `{"run": "<id>"}`; 0.1.32 waits for the run and
+    answers with its terminal report, which carries the same id as `"id"`.
+    """
+    for key in ("run", "id"):
+        value = reply.get(key)
+        if isinstance(value, str) and value:
+            return value
+    raise ValueError("bosn submit reply lacks a run id")
 
 
 def bosn_command(*arguments: str) -> list[str]:
@@ -226,7 +265,7 @@ def run_ubuntu(sha: str) -> None:
             "--json",
         )
     )
-    run_id = wire_string(submitted, "run")
+    run_id = submitted_run_id(submitted)
     print(f"bosn local gate run: {run_id}", flush=True)
     subprocess.run(bosn_command("ci", "wait", run_id), cwd=ROOT, check=True)
     report = output(bosn_command("ci", "show", run_id, "--json"))
