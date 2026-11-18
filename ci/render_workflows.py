@@ -452,8 +452,9 @@ def render_reuse_decision() -> str:
 
 
 # GEN-022 (forge-ci/ci.yml#405): the end-of-queue janitor needs ci-lint with
-# the #405 repo-wide LRU budget pass, which CI_LINT_SHA predates.
-QUEUE_JANITOR_CI_LINT_SHA = "953c4e13691b10c1c4f1f9c39fa259fd732c5789"
+# the #405 repo-wide LRU budget pass. It must also classify setup-soldr's
+# live cache families (FastLED/fbuild#2071), so keep it at CI_LINT_SHA or newer.
+QUEUE_JANITOR_CI_LINT_SHA = "635fb1262b59702b9293a145e7201410612104e5"
 QUEUE_JANITOR_NEEDS = (
     "cancel-superseded", "verify", "linux", "glibc_floor", "dylint", "board_plan", "fbuild_bin",
     "pr_boards", "reuse_decision", "test", "full", "selected-coverage", "ci-summary",
