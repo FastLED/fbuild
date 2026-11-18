@@ -110,6 +110,10 @@ jobs:
       # setup-soldr started, and the mismatched daemon refused every compile.
       - name: Check tracked Python complexity ratchet
         run: uv run --no-project python ci/check_python_complexity.py
+      # Every tracked .py must pass basedpyright ([tool.basedpyright] in
+      # pyproject.toml). The checker supplies its own uv environment.
+      - name: Check tracked Python types
+        run: uv run --no-project python ci/check_python_types.py
       - name: Test cold-build disk provisioning
         run: uv run --no-project python -m unittest ci.test_reclaim_android_ndks
       - name: Lint subprocess spawns
