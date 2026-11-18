@@ -127,14 +127,26 @@ class PushTests(unittest.TestCase):
     def test_refuses_protected_branches_and_dirty_trees(self) -> None:
         push = load_push()
         for branch, dirty in (("main", ""), ("feature", " M crates/x.rs")):
-            outputs = {("rev-parse", "--abbrev-ref", "HEAD"): branch, ("status", "--porcelain", "--untracked-files=no"): dirty}
+            outputs = {("rev-parse", "--abbrev-ref", "HEAD"): branch, ("status", "--porcelain", "--untracked-files=normal"): dirty}
             with patch.object(push, "git", lambda *a, o=outputs: o[a]), patch.object(push, "step") as step:
                 self.assertEqual(3, push.main([]))
             step.assert_not_called()
 
+    def test_untracked_files_refuse_a_proof_but_not_a_plain_push(self) -> None:
+        # The dylint lane's local gate refuses any untracked file, so proving
+        # with one present burns the whole lint lane first and then fails.
+        push = load_push()
+        outputs = {("rev-parse", "--abbrev-ref", "HEAD"): "feature", ("status", "--porcelain", "--untracked-files=normal"): "?? notes.txt"}
+        with patch.object(push, "git", lambda *a: outputs[a]), patch.object(push, "step") as step:
+            self.assertEqual(3, push.main([]))
+        step.assert_not_called()
+        with patch.object(push, "git", lambda *a: outputs[a]), patch.object(push, "step", return_value=0) as step, patch.object(push, "has_open_pr", return_value=True):
+            self.assertEqual(0, push.main(["--no-proof"]))
+        self.assertIn("push", step.call_args_list[0][0][0])
+
     def test_failed_proof_pushes_nothing(self) -> None:
         push = load_push()
-        outputs = {("rev-parse", "--abbrev-ref", "HEAD"): "feature", ("status", "--porcelain", "--untracked-files=no"): ""}
+        outputs = {("rev-parse", "--abbrev-ref", "HEAD"): "feature", ("status", "--porcelain", "--untracked-files=normal"): ""}
         with patch.object(push, "git", lambda *a: outputs[a]), patch.object(push, "step", return_value=1) as step:
             self.assertEqual(1, push.main([]))
         self.assertEqual(1, step.call_count)
