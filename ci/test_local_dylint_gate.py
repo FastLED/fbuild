@@ -134,8 +134,10 @@ class DylintProofTests(unittest.TestCase):
         """dylint.yml's janitor is `merge_group`-only; a dispatch replay must show it skipped."""
         raw = completed_record()
         tree = raw["tree"]
-        assert isinstance(tree, dict) and isinstance(tree["groups"], list)
-        jobs = tree["groups"][0]["jobs"]
+        assert isinstance(tree, dict)
+        groups = tree["groups"]
+        assert isinstance(groups, list) and isinstance(groups[0], dict)
+        jobs = groups[0]["jobs"]
         assert isinstance(jobs, list)
         janitor = next(
             job for job in jobs if isinstance(job, dict) and job["job_id"] == "queue-cache-janitor"

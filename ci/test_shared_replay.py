@@ -74,7 +74,7 @@ class SharedReplayTests(unittest.TestCase):
             path = f".github/workflows/{workflow}"
             with self.subTest(lane=selection["lane"], workflow=workflow):
                 document = files[path].document
-                assert document is not None
+                assert isinstance(document, dict)
                 triggers = get_on_section(document)
                 self.assertIn(
                     selection["event"],
