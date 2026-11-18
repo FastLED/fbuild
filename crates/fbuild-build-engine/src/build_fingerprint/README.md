@@ -15,9 +15,11 @@ nothing relevant has changed.
   `lib/<Lib> -> /elsewhere` still invalidates the warm path when a file under
   the link target changes (FastLED/fbuild#1753); traversal cycles are dropped.
   `stable_hash_with_build_config` also hashes `fbuild_build_identity()`
-  (workspace version + build commit), so a different fbuild binary, whose
-  built-in MCU/profile flags may differ, never reuses another's artifacts
-  (FastLED/fbuild#2036).
+  (workspace version + build commit + embedded-assets digest), so a different
+  fbuild binary, whose built-in MCU/profile flags may differ, never reuses
+  another's artifacts (FastLED/fbuild#2036). The assets digest covers an
+  uncommitted config JSON edit in a dev checkout, which the commit stamp
+  cannot see (FastLED/fbuild#2042).
 - **`identity_tests.rs`** -- Tests that the fbuild identity invalidates the
   no-op metadata hash while unchanged inputs keep it.
 - **`fast_path.rs`** -- Shared warm-build cache contract. Orchestrators

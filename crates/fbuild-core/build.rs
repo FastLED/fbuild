@@ -15,8 +15,17 @@
 //! The probe is best-effort by design. A missing `git`, a source tarball with
 //! no `.git`, or a repository owned by another user must never fail a build —
 //! the stamp degrades to `unknown`, which the CLI prints verbatim.
+//!
+//! It also stamps a digest of the assets compiled into the workspace (config
+//! JSONs, board files, scripts). The commit stamp cannot see an uncommitted
+//! edit, so the no-op build fingerprint keys on these bytes too
+//! (FastLED/fbuild#2042).
 
+use std::path::Path;
 use std::process::Command;
+
+#[path = "src/build_stamp.rs"]
+mod build_stamp;
 
 fn main() {
     // `cargo:rerun-if-changed` on the ref/index files is what actually makes
@@ -24,17 +33,22 @@ fn main() {
     // changed `rustc-env` value recompiles `fbuild-core` and relinks its
     // dependents. `git status` cannot be watched that way — the dirty flag is
     // therefore as fresh as the last HEAD/index movement, which is the case
-    // that matters (a *different build*, not an in-place edit).
+    // that matters (a *different build*, not an in-place edit; in-place asset
+    // edits are covered by the assets digest below).
     //
-    // The watched files come from git itself: cargo resolves relative
-    // `rerun-if-changed` paths against this crate's directory, and the old
-    // hardcoded `../.git/*` pointed at the nonexistent `crates/.git`, so the
-    // stamp never followed HEAD in incremental builds (FastLED/fbuild#2036).
-    for watched in git_watch_paths() {
-        if std::path::Path::new(&watched).exists() {
-            println!("cargo:rerun-if-changed={watched}");
+    // The watched files are resolved from the checkout's `.git` itself, so a
+    // linked worktree watches its own HEAD/index and the branch ref in the
+    // shared git dir, and a packed branch watches `packed-refs`
+    // (FastLED/fbuild#2036, #2042). Paths are absolute: cargo resolves
+    // relative ones against this crate's directory.
+    let manifest_dir = std::env::var("CARGO_MANIFEST_DIR").unwrap_or_default();
+    let manifest_dir = Path::new(&manifest_dir);
+    if let Some(layout) = build_stamp::find_git_layout(manifest_dir) {
+        for watched in build_stamp::git_watch_paths(&layout) {
+            println!("cargo:rerun-if-changed={}", watched.display());
         }
     }
+    stamp_embedded_assets(manifest_dir);
     println!("cargo:rerun-if-changed=build.rs");
 
     let commit = run_git(&["rev-parse", "--short=12", "HEAD"]).unwrap_or_else(unknown);
@@ -50,17 +64,18 @@ fn main() {
     );
 }
 
-/// HEAD, the index and the checked-out branch ref, as absolute paths. A commit
-/// moves the branch ref; a checkout moves HEAD; staging moves the index.
-fn git_watch_paths() -> Vec<String> {
-    let Some(git_dir) = run_git(&["rev-parse", "--absolute-git-dir"]) else {
-        return Vec::new();
+/// Hash every asset the workspace crates compile in and watch each one, so
+/// an edited config JSON reruns this script and changes the stamp.
+fn stamp_embedded_assets(manifest_dir: &Path) {
+    let Some(crates_dir) = manifest_dir.parent() else {
+        return;
     };
-    let mut paths = vec![format!("{git_dir}/HEAD"), format!("{git_dir}/index")];
-    if let Some(branch_ref) = run_git(&["symbolic-ref", "-q", "HEAD"]) {
-        paths.push(format!("{git_dir}/{branch_ref}"));
+    let assets = build_stamp::embedded_assets(crates_dir);
+    for asset in assets.files.iter().chain(&assets.asset_dirs) {
+        println!("cargo:rerun-if-changed={}", asset.path.display());
     }
-    paths
+    let digest = build_stamp::assets_digest(&assets.files);
+    println!("cargo:rustc-env=FBUILD_EMBEDDED_ASSETS_DIGEST={digest}");
 }
 
 /// Placeholder used when the checkout cannot be fingerprinted.
