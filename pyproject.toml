@@ -70,3 +70,26 @@ external = ["D401", "E402", "F401"]
 
 [tool.ruff.lint.mccabe]
 max-complexity = 10
+
+# Every tracked Python file is type-checked by basedpyright
+# (ci/check_python_types.py runs the pinned version over `git ls-files '*.py'`).
+# `standard` with zero errors is the floor; tighten the mode, never loosen it.
+[tool.basedpyright]
+typeCheckingMode = "standard"
+# CI scripts, hooks and tests run under uv's Python 3.12.
+pythonVersion = "3.12"
+# The import roots the scripts actually run with: `python -m ci.x` from the
+# repo root, `python ci/x.py` (script dir on sys.path), the hooks and mirror
+# script dirs, and the installed `fbuild` package (python/fbuild).
+extraPaths = [".", "ci", "ci/hooks", "ci/mirror", "python"]
+reportUnnecessaryTypeIgnoreComment = "error"
+# python/ and tests/ import the PyO3 extension `fbuild._native`, which is
+# typed by python/fbuild/_native.pyi. Whether its compiled source exists
+# depends on whether the checkout has built the wheel, so the
+# missing-source report is switched off only there. An inline ignore would
+# instead be "unnecessary" (an error above) in every built checkout.
+# The shipped package must also keep working on the oldest `requires-python`.
+executionEnvironments = [
+  { root = "python", pythonVersion = "3.10", reportMissingModuleSource = "none" },
+  { root = "tests", reportMissingModuleSource = "none" },
+]

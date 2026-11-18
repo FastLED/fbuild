@@ -54,7 +54,7 @@ import tomllib
 from collections.abc import Callable, Iterable, Mapping
 from datetime import datetime
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 # boto3/httpx are imported where they are used, so the pure helpers can be
 # imported (and unit tested) without the script's dependencies installed.
@@ -840,10 +840,11 @@ async def run_chunk(
         refused = errors.subgroup(RegistryRefused)
         quota = errors.subgroup(_QuotaExhausted)
         if refused is not None:
-            record_refusal(refused.exceptions[0])
+            # TaskGroup groups the tasks' own (leaf) exceptions one level deep.
+            record_refusal(cast(RegistryRefused, refused.exceptions[0]))
             return EXIT_REFUSED
         if quota is not None:
-            _pause_for_quota(quota.exceptions[0])
+            _pause_for_quota(cast(_QuotaExhausted, quota.exceptions[0]))
             return 0
         raise
     return None
