@@ -3,7 +3,7 @@
  "kind": "Release",
  "schema_version": 1,
  "tool": "fbuild-download-mirror/xylopyrographer",
- "version": "2026.10.31",
+ "version": "2026.11.17",
  "components": [
   {
    "id": "xylopyrographer/library/BooleanButton/1.1.0/BooleanButton-1.1.0.tar.gz",
@@ -119,6 +119,19 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/xylopyrographer/library/LiteLED/3.2.0/LiteLED-3.2.0.tar.gz",
      "https://dl.registry.platformio.org/download/xylopyrographer/library/LiteLED/3.2.0/LiteLED-3.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xylopyrographer/library/LiteLED/3.3.0/LiteLED-3.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LiteLED-3.3.0.tar.gz",
+    "size_bytes": 76214,
+    "sha256": "4ff3e2344d54449b3cd9408b494b53ecad3d0a9173cdc1c89365b0cfd3ff2f00",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xylopyrographer/library/LiteLED/3.3.0/LiteLED-3.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xylopyrographer/library/LiteLED/3.3.0/LiteLED-3.3.0.tar.gz"
     ]
    }
   },
