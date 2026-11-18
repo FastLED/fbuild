@@ -8,6 +8,7 @@ the published FastLED/boards artifacts during the build/cache phase.
 | ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `usb-vendors.tar.zst`   | Frozen test-only USB Vendor-ID fixture used by `crate::usb::embedded` under `cfg(test)`. It is never a production fallback. |
 | `usb-vids.proto.zstd`   | Test fixture for the compact VID:PID overlay produced by **FastLED/boards**. It must never be used as a production built-in catalogue. Production ingestion fetches/consumes the published boards artifact. |
+| `ape-hello/`            | Test-only cosmocc hello-world APE (with source and build script) used by `crate::platform::ape` tests. See `ape-hello/README.md`. |
 
 ## How to refresh the VID:PID overlay (`usb-vids.proto.zstd`)
 
