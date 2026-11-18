@@ -666,6 +666,7 @@ fn size_cache_from_older_classifier_is_ignored() {
             total_ram: 5,
             max_flash: None,
             max_ram: None,
+            ram_warning: None,
         },
     };
     save_json(&linker.size_cache_path(out.path()), &stale).unwrap();

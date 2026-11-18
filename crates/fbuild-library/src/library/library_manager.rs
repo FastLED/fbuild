@@ -105,10 +105,9 @@ pub fn parse_lib_specs(lib_specs: &[String], lib_ignore: &[String]) -> Vec<Libra
         .iter()
         .filter_map(|s| {
             let parsed = LibrarySpec::parse(s);
-            if parsed.is_none() && !s.trim().is_empty() {
-                match super::library_spec::unsupported_url_reason(s) {
-                    Some(reason) => tracing::warn!("ignoring lib_deps entry {:?}: {reason}", s),
-                    None => tracing::warn!("ignoring unparseable lib_deps entry: {:?}", s),
+            if parsed.is_none() {
+                if let Some(warning) = skipped_lib_dep_warning(s) {
+                    tracing::warn!("{warning}");
                 }
             }
             parsed
@@ -119,6 +118,29 @@ pub fn parse_lib_specs(lib_specs: &[String], lib_ignore: &[String]) -> Vec<Libra
                 .any(|ig| ig.eq_ignore_ascii_case(&spec.name))
         })
         .collect()
+}
+
+/// The warning for every `lib_deps` entry [`parse_lib_specs`] skips, in
+/// order, so a build can show them in the log the user sees
+/// (FastLED/fbuild#2042).
+pub fn skipped_lib_dep_warnings(lib_specs: &[String]) -> Vec<String> {
+    lib_specs
+        .iter()
+        .filter(|s| LibrarySpec::parse(s).is_none())
+        .filter_map(|s| skipped_lib_dep_warning(s))
+        .collect()
+}
+
+/// Why [`parse_lib_specs`] skips `spec`, given that `LibrarySpec::parse`
+/// rejected it; `None` for a blank entry.
+fn skipped_lib_dep_warning(spec: &str) -> Option<String> {
+    if spec.trim().is_empty() {
+        return None;
+    }
+    Some(match super::library_spec::unsupported_url_reason(spec) {
+        Some(reason) => format!("ignoring lib_deps entry {spec:?}: {reason}"),
+        None => format!("ignoring unparseable lib_deps entry: {spec:?}"),
+    })
 }
 
 /// Libraries resolved and installed but not yet compiled.

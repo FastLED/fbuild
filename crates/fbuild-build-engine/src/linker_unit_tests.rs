@@ -21,6 +21,7 @@ fn size(total_flash: u64, total_ram: u64) -> SizeInfo {
         total_ram,
         max_flash: Some(32256),
         max_ram: Some(2048),
+        ram_warning: None,
     }
 }
 

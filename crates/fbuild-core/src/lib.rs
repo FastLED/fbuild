@@ -278,6 +278,12 @@ pub struct SizeInfo {
     pub total_ram: u64,
     pub max_flash: Option<u64>,
     pub max_ram: Option<u64>,
+    /// Why `total_ram` cannot be trusted, when the ELF has none of the
+    /// platform's RAM sections ([`ram_sections_missing`]). Carried here so
+    /// the build log the user sees reports it, not just the daemon's tracing
+    /// output (FastLED/fbuild#2042).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub ram_warning: Option<String>,
 }
 
 impl SizeInfo {
@@ -338,6 +344,7 @@ impl SizeInfo {
                         total_ram: data + bss,
                         max_flash,
                         max_ram,
+                        ram_warning: None,
                     });
                 }
             }
@@ -381,6 +388,7 @@ impl SizeInfo {
                 total_ram: data + bss,
                 max_flash,
                 max_ram,
+                ram_warning: None,
             })
         } else {
             None
@@ -509,6 +517,7 @@ mod tests {
             total_ram: 300,
             max_flash: Some(32768),
             max_ram: Some(2048),
+            ram_warning: None,
         };
         assert!(info.flash_percent().unwrap() < 4.0);
         assert!(info.ram_percent().unwrap() < 15.0);
@@ -524,6 +533,7 @@ mod tests {
             total_ram: 300,
             max_flash: None,
             max_ram: None,
+            ram_warning: None,
         };
         assert!(info.flash_percent().is_none());
         assert!(info.ram_percent().is_none());
@@ -543,6 +553,7 @@ mod tests {
             total_ram: 42184,
             max_flash: Some(32256),
             max_ram: Some(2048),
+            ram_warning: None,
         };
         assert_eq!(
             info.flash_overflow().as_deref(),
@@ -564,6 +575,7 @@ mod tests {
             total_ram: 2048,
             max_flash: Some(32256),
             max_ram: Some(2048),
+            ram_warning: None,
         };
         assert!(info.flash_overflow().is_none());
         assert!(info.ram_overflow().is_none());

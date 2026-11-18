@@ -355,6 +355,22 @@ fn log_config_warnings(
     env_name: &str,
 ) {
     log_ignored_version_pins(build_log, config, env_name);
+    log_skipped_lib_deps(build_log, config, env_name);
+}
+
+/// Warn in the build log about `lib_deps` entries the library manager skips,
+/// such as git URLs on hosts other than GitHub (FastLED/fbuild#2042).
+fn log_skipped_lib_deps(
+    build_log: &mut BuildLog,
+    config: &fbuild_config::PlatformIOConfig,
+    env_name: &str,
+) {
+    let Ok(lib_deps) = config.get_lib_deps(env_name) else {
+        return;
+    };
+    for warning in fbuild_packages::library::library_manager::skipped_lib_dep_warnings(&lib_deps) {
+        build_log.push(format!("Warning: {warning}"));
+    }
 }
 
 /// Warn in the build log about registry pins still ignored by a family
@@ -560,6 +576,32 @@ mod tests {
         assert!(
             src.common.contains(&"-DSRC_ONLY".to_string()),
             "build_src_flags must reach the sketch overlay"
+        );
+    }
+
+    /// A `lib_deps` entry the build skips is reported in the build log the
+    /// CLI shows, not only in the daemon's tracing output (FastLED/fbuild#2042).
+    #[test]
+    fn skipped_lib_deps_are_warned_in_the_build_log() {
+        let dir = tempfile::TempDir::new().unwrap();
+        let ini = dir.path().join("platformio.ini");
+        std::fs::write(
+            &ini,
+            "[env:uno]\nplatform = atmelavr\nboard = uno\nframework = arduino\n\
+             lib_deps =\n    fastled/FastLED\n    https://gitlab.com/owner/lib.git\n",
+        )
+        .unwrap();
+        let config = fbuild_config::PlatformIOConfig::from_path(&ini).unwrap();
+        let mut log = BuildLog::new();
+        log_config_warnings(&mut log, &config, "uno");
+        let lines = log.into_lines();
+        let warnings: Vec<_> = lines.iter().filter(|l| l.contains("lib_deps")).collect();
+        assert_eq!(warnings.len(), 1, "{lines:?}");
+        assert!(
+            warnings[0].starts_with(
+                "Warning: ignoring lib_deps entry \"https://gitlab.com/owner/lib.git\": "
+            ),
+            "{lines:?}"
         );
     }
 }
