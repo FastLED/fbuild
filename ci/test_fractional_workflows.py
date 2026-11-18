@@ -282,9 +282,12 @@ class FractionalWorkflowTests(unittest.TestCase):
         self.assertEqual("./.github/workflows/dylint.yml", full["jobs"]["dylint"]["uses"])
         self.assertNotIn("run_full", full["jobs"]["dylint"]["with"])
         dylint = self.load("dylint.yml")
-        self.assertEqual(["main"], dylint[True]["push"]["branches"])
-        # Only `CI summary` is required now; PRs and the merge queue reach
-        # Dylint via ci-minimal's workflow_call, so no duplicate triggers.
+        # Only `CI summary` is required now; PRs, the merge queue and main
+        # pushes all reach Dylint via ci-minimal's workflow_call, so no
+        # duplicate triggers. A standalone push run shared ci-minimal's Dylint
+        # output-cache key and, being Linux-only and faster, always won the
+        # save, so the three-target tree was never persisted.
+        self.assertNotIn("push", dylint[True])
         self.assertNotIn("merge_group", dylint[True])
         self.assertNotIn("pull_request", dylint[True])
         self.assertEqual("Dylint", dylint["jobs"]["gate"]["name"])
