@@ -23,23 +23,20 @@ pub use debug_prefix_map::{
 };
 /// The project-local and home-local fbuild directory segment: `.fbuild`.
 ///
-/// This is the canonical spelling. Nothing outside `fbuild-paths` /
-/// `fbuild-core` should write the literal — see the `ban_raw_fbuild_path`
-/// Dylint (FastLED/fbuild#1349).
+/// This is the canonical spelling; nothing outside `fbuild-paths` /
+/// `fbuild-core` writes the literal (see the `ban_raw_fbuild_path` Dylint,
+/// FastLED/fbuild#1349).
 ///
-/// Re-exported from `fbuild-core` rather than defined here: `fbuild-core`
-/// needs the segment too (`compile_cwd_from_output` walks for it,
-/// `response_file` builds under it) and cannot depend on this crate, since
-/// the dependency runs the other way. Keeping the name reachable at
+/// Re-exported from `fbuild-core` rather than defined here because that crate
+/// needs the segment too and cannot depend on this one. Keeping the name at
 /// `fbuild_paths::FBUILD_DIR_NAME` means no consumer has to know that.
 pub use fbuild_core::path::FBUILD_DIR_NAME;
 
 /// The build-tree segment directly under [`FBUILD_DIR_NAME`]: `build`.
 ///
-/// `<project>/.fbuild/build/` is the default build root; note that
-/// `FBUILD_BUILD_DIR` can replace the whole root, so prefer
-/// [`get_project_build_root`] or [`BuildLayout`] over joining this
-/// segment by hand.
+/// `<project>/.fbuild/build/` is the default build root, and `FBUILD_BUILD_DIR`
+/// can replace the whole root — prefer [`get_project_build_root`] or
+/// [`BuildLayout`] over joining this segment by hand.
 pub const BUILD_DIR_NAME: &str = "build";
 
 /// Check if running in development mode.
@@ -54,8 +51,7 @@ pub fn is_dev_mode() -> bool {
 
 /// Root fbuild directory: `~/.fbuild/{dev|prod}`
 ///
-/// Panics when the home directory cannot be determined. Callers that must
-/// degrade instead of panicking want [`try_get_fbuild_root`].
+/// Panics without a home directory; [`try_get_fbuild_root`] degrades instead.
 pub fn get_fbuild_root() -> PathBuf {
     try_get_fbuild_root().expect("could not determine home directory")
 }
