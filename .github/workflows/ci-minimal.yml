@@ -180,7 +180,7 @@ jobs:
         timeout-minutes: 1
         with:
           repository: zackees/ci.yml
-          ref: b93b8c4a20ce3cd476c75a278ad01a31bde2438b
+          ref: 635fb1262b59702b9293a145e7201410612104e5
           path: .ci-lint
           persist-credentials: false
       - uses: astral-sh/setup-uv@v3

@@ -390,7 +390,7 @@ def render_pr_boards() -> str:
 
 
 # zackees/ci.yml commit that provides `ci-lint reuse-check` (stdlib-only).
-CI_LINT_SHA = "b93b8c4a20ce3cd476c75a278ad01a31bde2438b"
+CI_LINT_SHA = "635fb1262b59702b9293a145e7201410612104e5"
 # Job names green on both the default PR tier and main pushes (zackees/ci.yml#162).
 REUSE_REQUIRED_JOBS = (
     "linux / Check (ubuntu-latest)",

@@ -14,7 +14,7 @@
 # (shadow mode), and declaring both is a GATE-001 violation.
 schema  = 3
 profile = "rust-pypi-app"
-linter  = "zackees/ci.yml@b93b8c4a20ce3cd476c75a278ad01a31bde2438b"   # the pin ci-minimal.yml's verify job checks out
+linter  = "zackees/ci.yml@635fb1262b59702b9293a145e7201410612104e5"   # the pin ci-minimal.yml's verify job checks out
 
 # -- Platforms -----------------------------------------------------------------
 # Exactly Cargo.toml's [workspace.metadata.soldr].targets (CT-006). The
@@ -97,8 +97,14 @@ never    = []
 retired  = []
 pr       = { mode = "none", families = [], max-per-pr = "0MB", budget = "0MB", trim = "on-close" }
 
+# `compile` names setup-soldr's literal `-v3-` build-cache prefix: the pinned
+# linter's `via = "setup-soldr:build-cache"` still resolves to `-v2-`, so the
+# end-of-queue janitor deleted every live v3 compile cache as CACHE-001
+# "undeclared family" and each Dylint run restored nothing (0% zccache hits).
+# `verdict` sets `min = "0B"`: soldr verdict records are ~450 B by design and
+# the default 1KB poison floor (CACHE-005) deleted the Dylint skip ledger.
 [cache.family]
-compile         = { via = "setup-soldr:build-cache",    max = "1200MB", lockfile = true, per = "platform", min = "1MB", evict = "lru" }
+compile         = { prefix = "setup-soldr-buildcache-v3-", max = "1200MB", lockfile = true, per = "platform", min = "1MB", evict = "lru" }
 toolchain       = { via = "setup-soldr:solo-toolchain", max = "200MB",  per = "platform", evict = "lru" }
 registry        = { via = "setup-soldr:cargo-registry", max = "350MB",  lockfile = true, per = "none", evict = "lru" }
 dylint          = { via = "setup-soldr:dylint",         max = "600MB",  per = "none", min = "1MB", evict = "lru" }
@@ -106,7 +112,7 @@ soldr-mini      = { via = "setup-soldr:soldr-mini",     max = "30MB",   per = "p
 fbuild-tools    = { prefix = "fbuild-toolchain-",       max = "700MB",  per = "none", evict = "lru" }
 fbuild-build    = { prefix = "fbuild-build-",           max = "400MB",  per = "none", evict = "lru" }
 dylint-libs     = { prefix = "fbuild-dylint-libraries-", max = "150MB", per = "none", evict = "lru" }
-verdict         = { prefix = "soldr-verdict-",          max = "1MB" }
+verdict         = { prefix = "soldr-verdict-",          max = "1MB", min = "0B" }
 uv              = { via = "setup-uv",                   max = "100MB",  per = "platform", evict = "lru" }
 
 [cache.promote]
