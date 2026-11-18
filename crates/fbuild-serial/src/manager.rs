@@ -24,6 +24,51 @@ const READ_BUF_SIZE: usize = 4096;
 // (the timeout path also sleeps 10 ms).
 const SERIAL_READ_TIMEOUT: Duration = Duration::from_millis(10);
 
+/// Bound on pre-open board-family inference (FastLED/fbuild#2083).
+///
+/// Inference runs outside the WebSocket open cap, so without its own bound a
+/// hung `available_ports()` would leave a serial attach pending forever (the
+/// FastLED/fbuild#977 failure the open cap exists to prevent). Generous on
+/// purpose: inference took 3.5 s on a loaded host, and giving up early picks
+/// the `CdcAcmBridge` fallback, whose DTR/RTS idle is wrong for native ESP USB.
+pub const OPEN_FAMILY_RESOLVE_TIMEOUT: Duration = Duration::from_secs(5);
+
+/// Run `resolve` on a blocking thread, bounded by `bound`, and log how long
+/// it took. Any failure (unidentified port, panic, timeout) falls back to
+/// [`crate::boards::BoardFamily::CdcAcmBridge`]. A timed-out resolver keeps
+/// running on its blocking thread, but it opens nothing, so nothing leaks.
+pub(crate) async fn resolve_family_bounded<F>(
+    port: &str,
+    resolve: F,
+    bound: Duration,
+) -> crate::boards::BoardFamily
+where
+    F: FnOnce() -> Option<crate::boards::BoardFamily> + Send + 'static,
+{
+    const FALLBACK: crate::boards::BoardFamily = crate::boards::BoardFamily::CdcAcmBridge;
+    let started = std::time::Instant::now();
+    let outcome = tokio::time::timeout(bound, tokio::task::spawn_blocking(resolve)).await;
+    let elapsed_ms = u64::try_from(started.elapsed().as_millis()).unwrap_or(u64::MAX);
+    let (family, outcome) = match outcome {
+        Ok(Ok(Some(family))) => (family, "resolved"),
+        Ok(Ok(None)) => (FALLBACK, "unidentified; CdcAcmBridge fallback"),
+        Ok(Err(_)) => (FALLBACK, "inference panicked; CdcAcmBridge fallback"),
+        Err(_) => (
+            FALLBACK,
+            "inference exceeded its bound; CdcAcmBridge fallback",
+        ),
+    };
+    tracing::info!(
+        port,
+        ?family,
+        elapsed_ms,
+        bound_ms = u64::try_from(bound.as_millis()).unwrap_or(u64::MAX),
+        outcome,
+        "serial_manager: pre-open board family"
+    );
+    family
+}
+
 fn now_unix_secs() -> f64 {
     std::time::SystemTime::now()
         .duration_since(std::time::UNIX_EPOCH)
@@ -102,14 +147,18 @@ impl SharedSerialManager {
     /// `open_port` as an explicit `family` argument — pre-open enumeration
     /// is not a wedged driver. See FastLED/fbuild#2083.
     ///
-    /// Total: a port that cannot be identified falls back to
+    /// Total and bounded by [`OPEN_FAMILY_RESOLVE_TIMEOUT`]: a port that
+    /// cannot be identified in time falls back to
     /// [`crate::boards::BoardFamily::CdcAcmBridge`], the same `(true, true)`
     /// idle DTR/RTS state `open_port` applies for `None`.
     pub async fn resolve_open_family(&self, port: &str) -> crate::boards::BoardFamily {
-        let port = port.to_string();
-        tokio::task::spawn_blocking(move || crate::boards::family_for_port_or_default(&port))
-            .await
-            .unwrap_or(crate::boards::BoardFamily::CdcAcmBridge)
+        let owned = port.to_string();
+        resolve_family_bounded(
+            port,
+            move || crate::boards::family_for_port(&owned),
+            OPEN_FAMILY_RESOLVE_TIMEOUT,
+        )
+        .await
     }
 
     /// Open a serial port. Retries with backoff for Windows USB-CDC.

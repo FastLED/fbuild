@@ -941,3 +941,38 @@ async fn resolve_open_family_is_total_and_bounded() {
     .expect("family resolution must not stall");
     assert_eq!(family, crate::boards::BoardFamily::CdcAcmBridge);
 }
+
+/// FastLED/fbuild#2083: family inference runs outside the WebSocket open
+/// cap, so it needs its own bound. A stalled `available_ports()` walk must
+/// fall back to `CdcAcmBridge` at the bound instead of holding the attach.
+#[tokio::test]
+async fn resolve_family_bounded_falls_back_when_inference_stalls() {
+    let started = std::time::Instant::now();
+    let family = resolve_family_bounded(
+        "COM_SLOW_ENUM",
+        || {
+            std::thread::sleep(Duration::from_millis(500));
+            Some(crate::boards::BoardFamily::Esp32NativeUsbCdc)
+        },
+        Duration::from_millis(20),
+    )
+    .await;
+    assert_eq!(family, crate::boards::BoardFamily::CdcAcmBridge);
+    assert!(
+        started.elapsed() < Duration::from_millis(400),
+        "resolver must return at its bound, took {:?}",
+        started.elapsed()
+    );
+}
+
+/// The bound must not discard a family that arrives in time.
+#[tokio::test]
+async fn resolve_family_bounded_keeps_family_inferred_in_time() {
+    let family = resolve_family_bounded(
+        "COM_FAST_ENUM",
+        || Some(crate::boards::BoardFamily::Esp32NativeUsbCdc),
+        Duration::from_secs(5),
+    )
+    .await;
+    assert_eq!(family, crate::boards::BoardFamily::Esp32NativeUsbCdc);
+}
