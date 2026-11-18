@@ -71,6 +71,28 @@ class TestListing(unittest.TestCase):
         )
         self.assertEqual(objects["own/pkg/tool/1.0/b.tar.gz"].etag, "def-3")
 
+    def test_vendor_mirror_keys_are_not_registry_keys(self) -> None:
+        """``vendor/<host>/<path>`` (FastLED/fbuild#2029) is never an owner,
+        whatever its depth -- the five-segment one included."""
+        arm = (
+            "vendor/developer.arm.com/-/media/Files/downloads/gnu/15.2.rel1/"
+            "binrel/arm-gnu-toolchain-15.2.rel1-x86_64-arm-none-eabi.tar.xz"
+        )
+        short = "vendor/example.com/dir/sub/file.tar.gz"
+        pages = [
+            {
+                "Contents": [
+                    {"Key": arm, "Size": 7, "ETag": '"a"'},
+                    {"Key": short, "Size": 7, "ETag": '"b"'},
+                    {"Key": "own/pkg/tool/1.0/a.tar.gz", "Size": 7, "ETag": '"c"'},
+                ]
+            }
+        ]
+        self.assertEqual(
+            sorted(gen.list_bucket(FakeS3(pages))), ["own/pkg/tool/1.0/a.tar.gz"]
+        )
+        self.assertFalse(gen.is_registry_key(short))
+
     def test_object_without_etag_is_still_listed(self) -> None:
         pages = [{"Contents": [{"Key": "own/pkg/tool/1.0/a.tar.gz", "Size": 7}]}]
         self.assertIsNone(
