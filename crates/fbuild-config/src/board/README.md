@@ -21,14 +21,17 @@ PlatformIO board JSON database. Re-exported from the parent crate as
   PSRAM heuristics, and database invariants.
 - `support.rs` — `ensure_board_buildable`: fails early with
   `FbuildError::UnsupportedBoard` for a bundled board fbuild cannot build (its
-  platform has no orchestrator, or its JSON carries an `unsupported_reason`).
+  platform has no orchestrator, or its JSON carries an `unsupported_reason`),
+  or one whose `frameworks` list lacks the env's `framework`, as PlatformIO's
+  "This board doesn't support arduino framework!" (FastLED/fbuild#2042).
   Called by the build-side board funnel and the daemon handlers
   (FastLED/fbuild#2039).
 - `tests_renesas_boards.rs` — Guards that every bundled Renesas RA board names
   its ArduinoCore-renesas variant, core and defines (FastLED/fbuild#2015).
 - `tests_board_data_guard.rs` — Bundle-wide guard: every Arduino board has a
   core and variant, is on an allow-list with a reason, or is rejected
-  (FastLED/fbuild#2039).
+  (FastLED/fbuild#2039); `framework = arduino` rejects exactly the boards
+  that do not list it (FastLED/fbuild#2042).
 
 This split was introduced to satisfy the CI LOC gate (no `.rs` file may
 exceed 1000 lines); behaviour and the public API are unchanged.

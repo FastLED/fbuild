@@ -48,8 +48,12 @@ impl<'a> ResolutionContext<'a> {
 
     /// Resolve the board config, honoring `[env]` board overrides and a
     /// project-local `boards/<id>.json` when the bundled DB has no entry.
+    /// A bundled board whose `frameworks` list lacks the env's `framework`
+    /// fails first, as in PlatformIO (FastLED/fbuild#2042).
     pub fn resolve_board(&self) -> Result<BoardConfig> {
         let board_id = self.board_id()?;
+        let env = self.config.get_env_config(self.env_name)?;
+        fbuild_config::ensure_board_buildable(&board_id, env.get("framework").map(String::as_str))?;
         let overrides = self.config.get_board_overrides(self.env_name)?;
         resolve_board(&board_id, &overrides, Some(self.project_dir))
     }
@@ -75,7 +79,7 @@ pub fn resolve_board(
     overrides: &HashMap<String, String>,
     project_dir: Option<&Path>,
 ) -> Result<BoardConfig> {
-    fbuild_config::ensure_board_buildable(board_id)?;
+    fbuild_config::ensure_board_buildable(board_id, None)?;
     BoardConfig::from_board_id_in_project(board_id, overrides, project_dir)
 }
 
@@ -151,6 +155,32 @@ mod tests {
         );
         let err = super::platform_for_board("bw12", None).unwrap_err();
         assert!(err.to_string().contains("platform 'libretiny'"), "{err}");
+    }
+
+    /// FastLED/fbuild#2042: the env's `framework` is checked against the
+    /// board's `frameworks` list before resolution, as PlatformIO does.
+    #[test]
+    fn board_without_the_env_framework_fails_before_resolution() {
+        let dir = write_project(
+            "[env:z]\nplatform = nordicnrf52\nboard = nrf52833_dk\nframework = arduino\n",
+        );
+        let config = PlatformIOConfig::from_path(&dir.path().join("platformio.ini")).unwrap();
+        let err = ResolutionContext::new(dir.path(), "z", &config)
+            .resolve_board()
+            .unwrap_err();
+        assert!(matches!(err, FbuildError::UnsupportedBoard { .. }), "{err}");
+        assert!(
+            err.to_string()
+                .contains("doesn't support the arduino framework"),
+            "{err}"
+        );
+        let dir = write_project(
+            "[env:dk]\nplatform = nordicnrf52\nboard = nrf52840_dk\nframework = arduino\n",
+        );
+        let config = PlatformIOConfig::from_path(&dir.path().join("platformio.ini")).unwrap();
+        ResolutionContext::new(dir.path(), "dk", &config)
+            .resolve_board()
+            .unwrap();
     }
 
     #[test]

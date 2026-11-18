@@ -357,4 +357,31 @@ mod unbuildable_board_tests {
         );
         assert!(err.contains("FastLED/fbuild#2054"), "{err}");
     }
+
+    /// FastLED/fbuild#2042: a Zephyr-only board with `framework = arduino`
+    /// is rejected by name, as PlatformIO's "This board doesn't support
+    /// arduino framework!" does; the same board with no framework is not.
+    #[test]
+    fn board_without_the_env_framework_is_named() {
+        let mut zephyr_only = env("nordicnrf52", "nrf52833_dk");
+        assert_eq!(
+            resolve_env_platform(&zephyr_only),
+            Ok(fbuild_core::Platform::NordicNrf52)
+        );
+        zephyr_only.insert("framework".to_string(), "arduino".to_string());
+        assert_eq!(
+            resolve_env_platform(&zephyr_only),
+            Err(
+                "board 'nrf52833_dk' cannot be built by fbuild: it doesn't support the \
+                 arduino framework (its frameworks: zephyr)"
+                    .to_string()
+            )
+        );
+        let mut arduino = env("nordicnrf52", "nrf52840_dk");
+        arduino.insert("framework".to_string(), "arduino".to_string());
+        assert_eq!(
+            resolve_env_platform(&arduino),
+            Ok(fbuild_core::Platform::NordicNrf52)
+        );
+    }
 }

@@ -367,7 +367,9 @@ mod tests {
         let info = SizeInfo::from_elf_sections(&sections, None, None);
         assert_eq!(info.total_ram, 4_140);
         assert_eq!((info.data, info.bss), (140, 28 + 3_972));
-        // firmware.bin: .text + .ARM.exidx + .data + .id_code.
+        // Every allocated section with contents: .text + .ARM.exidx + .data +
+        // .id_code. The Renesas linker's own report leaves out .id_code, which
+        // is not code flash, and gets PlatformIO's 28_032 (FastLED/fbuild#2042).
         assert_eq!(info.total_flash, 28_060);
     }
 
