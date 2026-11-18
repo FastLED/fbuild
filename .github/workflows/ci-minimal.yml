@@ -86,6 +86,7 @@ jobs:
       - uses: astral-sh/setup-uv@v3
       - name: Plan attested skips
         id: plan
+        if: hashFiles('ci/prooft_verify.py') != ''
         env:
           EVENT_NAME: ${{ github.event_name }}
           BASE_SHA: ${{ github.event.pull_request.base.sha || '' }}

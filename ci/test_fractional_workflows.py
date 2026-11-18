@@ -232,6 +232,8 @@ class FractionalWorkflowTests(unittest.TestCase):
         minimal = self.load("ci-minimal.yml")["jobs"]
         prooft = minimal["prooft"]
         self.assertEqual(["python3 -P ci/prooft_verify.py"], [s["run"] for s in prooft["steps"] if "run" in s])
+        plan = next(s for s in prooft["steps"] if s.get("id") == "plan")
+        self.assertEqual("hashFiles('ci/prooft_verify.py') != ''", plan["if"], "a base without the verifier must not fail the job")
         checkout = prooft["steps"][0]
         self.assertIn("pull_request.base.sha", checkout["with"]["ref"])
         for job in ("policy", "dylint", "gate"):

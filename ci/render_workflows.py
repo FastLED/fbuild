@@ -524,6 +524,9 @@ def render_prooft_job() -> str:
         "      - uses: astral-sh/setup-uv@v3\n"
         "      - name: Plan attested skips\n"
         "        id: plan\n"
+        # A base without the verifier (the PR that introduces it) skips the
+        # step: empty outputs never equal 'true', so Dylint runs.
+        "        if: hashFiles('ci/prooft_verify.py') != ''\n"
         "        env:\n"
         "          EVENT_NAME: ${{ github.event_name }}\n"
         "          BASE_SHA: ${{ github.event.pull_request.base.sha || '' }}\n"
