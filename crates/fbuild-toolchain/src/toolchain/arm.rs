@@ -9,6 +9,8 @@
 
 use std::path::{Path, PathBuf};
 
+use fbuild_core::platform::host::{HostArch, HostOs, HostPlatform};
+
 use crate::{CacheSubdir, PackageBase, PackageInfo, Toolchain};
 
 /// ARM GCC toolchain version.
@@ -20,22 +22,25 @@ pub struct ArmToolchain {
     base: PackageBase,
     /// Resolved install path (set after ensure_installed)
     install_dir: Option<PathBuf>,
+    /// Set when ARM publishes no package for this host and no override pins one.
+    unsupported_host: Option<HostPlatform>,
 }
 
 impl ArmToolchain {
     pub fn new(project_dir: &Path) -> Self {
-        let (url, checksum) = platform_package();
+        let (url, checksum, unsupported_host) = host_source();
         Self {
             base: PackageBase::new(
                 "arm-gcc",
                 ARM_GCC_VERSION,
                 &url,
                 ARM_GCC_BASE_URL,
-                checksum.as_deref(),
+                checksum,
                 CacheSubdir::Toolchains,
                 project_dir,
             ),
             install_dir: None,
+            unsupported_host,
         }
     }
 
@@ -44,24 +49,26 @@ impl ArmToolchain {
     pub fn with_override(project_dir: &Path, ovr: fbuild_config::PackageOverride) -> Self {
         let mut toolchain = Self::new(project_dir);
         toolchain.base = toolchain.base.with_override(ovr);
+        toolchain.unsupported_host = None;
         toolchain
     }
 
     #[cfg(test)]
     fn with_cache_root(project_dir: &Path, cache_root: &Path) -> Self {
-        let (url, checksum) = platform_package();
+        let (url, checksum, unsupported_host) = host_source();
         Self {
             base: PackageBase::with_cache_root(
                 "arm-gcc",
                 ARM_GCC_VERSION,
                 &url,
                 ARM_GCC_BASE_URL,
-                checksum.as_deref(),
+                checksum,
                 CacheSubdir::Toolchains,
                 project_dir,
                 cache_root,
             ),
             install_dir: None,
+            unsupported_host,
         }
     }
 
@@ -112,6 +119,9 @@ impl crate::Package for ArmToolchain {
         if self.is_installed() {
             return Ok(self.resolved_dir());
         }
+        if let Some(host) = self.unsupported_host {
+            return Err(unsupported_host(host));
+        }
 
         let install_path = self.base.staged_install(Self::validate).await?;
         Ok(find_bin_root(&install_path))
@@ -159,8 +169,8 @@ impl Toolchain for ArmToolchain {
 /// A platform-specific ARM toolchain package entry.
 struct ArmPlatformPackage {
     filename: &'static str,
-    /// SHA-256 checksum. `None` = skip verification (not yet captured).
-    checksum: Option<&'static str>,
+    /// SHA-256 checksum, as ARM publishes it in `<filename>.sha256asc`.
+    checksum: &'static str,
 }
 
 /// All platform variants for the ARM toolchain — no `cfg!` so tests can
@@ -171,60 +181,78 @@ fn all_platform_packages() -> [(&'static str, ArmPlatformPackage); 4] {
             "windows",
             ArmPlatformPackage {
                 filename: "arm-gnu-toolchain-15.2.rel1-mingw-w64-x86_64-arm-none-eabi.zip",
-                checksum: Some("7936cac895611023ffb22a64b8e426098c7104cb689778c1894572ca840b9ece"),
+                checksum: "7936cac895611023ffb22a64b8e426098c7104cb689778c1894572ca840b9ece",
             },
         ),
         (
-            "macos",
+            "macos-arm64",
             ArmPlatformPackage {
-                filename: "arm-gnu-toolchain-15.2.rel1-darwin-x86_64-arm-none-eabi.tar.xz",
-                // TODO: capture real checksum from macOS CI run
-                checksum: None,
+                filename: "arm-gnu-toolchain-15.2.rel1-darwin-arm64-arm-none-eabi.tar.xz",
+                checksum: "1938a84b7105c192e3fb4fa5e893ba25f425f7ddab40515ae608cd40f68669a8",
             },
         ),
         (
             "linux-aarch64",
             ArmPlatformPackage {
                 filename: "arm-gnu-toolchain-15.2.rel1-aarch64-arm-none-eabi.tar.xz",
-                // TODO: capture real checksum from aarch64 CI run
-                checksum: None,
+                checksum: "d061559d814b205ed30c5b7c577c03317ec447ca51cd5a159d26b12a5bbeb20c",
             },
         ),
         (
             "linux-x86_64",
             ArmPlatformPackage {
                 filename: "arm-gnu-toolchain-15.2.rel1-x86_64-arm-none-eabi.tar.xz",
-                // TODO: capture real checksum from Linux x86_64 CI run
-                checksum: None,
+                checksum: "597893282ac8c6ab1a4073977f2362990184599643b4c5ee34870a8215783a16",
             },
         ),
     ]
 }
 
-/// Get the platform-specific download URL and optional checksum for the current host.
-fn platform_package() -> (String, Option<String>) {
-    let key = if fbuild_core::platform::host::is_windows() {
-        "windows"
-    } else if fbuild_core::platform::host::is_macos() {
-        "macos"
-    } else if fbuild_core::platform::host::current().arch()
-        == fbuild_core::platform::host::HostArch::Aarch64
-    {
-        "linux-aarch64"
-    } else {
-        "linux-x86_64"
-    };
+/// Key into [`all_platform_packages`] for `host`, or `None` where ARM
+/// publishes no 15.2.rel1 build: its last darwin-x86_64 release is
+/// 14.2.rel1, so Intel macOS has no package (FastLED/fbuild#2029).
+fn platform_key(host: HostPlatform) -> Option<&'static str> {
+    match (host.os(), host.arch()) {
+        (HostOs::Windows, _) => Some("windows"),
+        (HostOs::Macos, HostArch::Aarch64) => Some("macos-arm64"),
+        (HostOs::Macos, _) => None,
+        (HostOs::Linux, HostArch::Aarch64) => Some("linux-aarch64"),
+        (HostOs::Linux, _) => Some("linux-x86_64"),
+    }
+}
 
-    let packages = all_platform_packages();
-    let (_, pkg) = packages
-        .iter()
+/// Download URL and pinned SHA-256 for `host`, or `None` (see [`platform_key`]).
+fn platform_package(host: HostPlatform) -> Option<(String, &'static str)> {
+    let key = platform_key(host)?;
+    all_platform_packages()
+        .into_iter()
         .find(|(k, _)| *k == key)
-        .expect("no ARM package for current platform");
+        .map(|(_, pkg)| {
+            (
+                format!("{}/15.2.rel1/binrel/{}", ARM_GCC_BASE_URL, pkg.filename),
+                pkg.checksum,
+            )
+        })
+}
 
-    (
-        format!("{}/15.2.rel1/binrel/{}", ARM_GCC_BASE_URL, pkg.filename),
-        pkg.checksum.map(|s| s.to_string()),
-    )
+/// URL, SHA-256 and unsupported host for the machine running fbuild. A host
+/// without a package gets the vendor directory as a URL that is never
+/// fetched: `ensure_installed` rejects it first unless an override pins a
+/// compiler.
+fn host_source() -> (String, Option<&'static str>, Option<HostPlatform>) {
+    let host = fbuild_core::platform::host::current();
+    match platform_package(host) {
+        Some((url, checksum)) => (url, Some(checksum), None),
+        None => (ARM_GCC_BASE_URL.to_string(), None, Some(host)),
+    }
+}
+
+fn unsupported_host(host: HostPlatform) -> fbuild_core::FbuildError {
+    fbuild_core::FbuildError::PackageError(format!(
+        "ARM publishes no GCC {ARM_GCC_VERSION} toolchain for {} {} (pinned: windows, macos-arm64, linux-aarch64, linux-x86_64); pin a host compiler through the PlatformIO platform's packages instead",
+        host.os_name(),
+        host.arch_name(),
+    ))
 }
 
 /// Find the actual root directory containing bin/ inside an extracted archive.
@@ -259,11 +287,76 @@ mod tests {
     use crate::Package;
     use std::collections::HashMap;
 
+    fn host(os: HostOs, arch: HostArch) -> HostPlatform {
+        HostPlatform::new(os, arch)
+    }
+
     #[test]
     fn test_platform_package_returns_url() {
-        let (url, _checksum) = platform_package();
-        assert!(url.starts_with("https://developer.arm.com"));
-        assert!(url.contains("arm-none-eabi"));
+        let (url, checksum) = platform_package(host(HostOs::Linux, HostArch::X86_64)).unwrap();
+        assert_eq!(
+            url,
+            "https://developer.arm.com/-/media/Files/downloads/gnu/15.2.rel1/binrel/arm-gnu-toolchain-15.2.rel1-x86_64-arm-none-eabi.tar.xz"
+        );
+        assert_eq!(
+            checksum,
+            "597893282ac8c6ab1a4073977f2362990184599643b4c5ee34870a8215783a16"
+        );
+    }
+
+    /// Apple Silicon gets ARM's native darwin-arm64 build; Intel macOS has
+    /// no 15.2.rel1 build at all (ARM's last darwin-x86_64 is 14.2.rel1).
+    #[test]
+    fn test_platform_package_selects_host_build() {
+        let cases = [
+            (HostOs::Windows, HostArch::X86_64, Some("mingw-w64-x86_64")),
+            (HostOs::Windows, HostArch::Aarch64, Some("mingw-w64-x86_64")),
+            (HostOs::Macos, HostArch::Aarch64, Some("darwin-arm64")),
+            (HostOs::Macos, HostArch::X86_64, None),
+            (HostOs::Linux, HostArch::Aarch64, Some("15.2.rel1-aarch64")),
+            (HostOs::Linux, HostArch::X86_64, Some("15.2.rel1-x86_64")),
+        ];
+        for (os, arch, want) in cases {
+            let got = platform_package(host(os, arch)).map(|(url, _)| url);
+            match want {
+                Some(part) => assert!(
+                    got.as_deref().is_some_and(|url| url.contains(part)),
+                    "{os:?} {arch:?}: {got:?} lacks {part}"
+                ),
+                None => assert_eq!(got, None, "{os:?} {arch:?}"),
+            }
+        }
+    }
+
+    /// Every key `platform_key` can return has a package entry.
+    #[test]
+    fn test_every_platform_key_has_a_package() {
+        let keys: Vec<_> = all_platform_packages().iter().map(|(k, _)| *k).collect();
+        for os in [HostOs::Windows, HostOs::Macos, HostOs::Linux] {
+            for arch in [
+                HostArch::X86,
+                HostArch::X86_64,
+                HostArch::Arm,
+                HostArch::Aarch64,
+                HostArch::Other,
+            ] {
+                if let Some(key) = platform_key(host(os, arch)) {
+                    assert!(keys.contains(&key), "{os:?} {arch:?} -> {key} has no entry");
+                }
+            }
+        }
+    }
+
+    /// A host without a package fails with a typed error naming the host
+    /// instead of fetching a URL that does not exist.
+    #[tokio::test]
+    async fn test_unsupported_host_fails_fast() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let mut tc = ArmToolchain::with_cache_root(tmp.path(), &tmp.path().join("cache"));
+        tc.unsupported_host = Some(host(HostOs::Macos, HostArch::X86_64));
+        let err = tc.ensure_installed().await.unwrap_err().to_string();
+        assert!(err.contains("macos x86_64"), "{err}");
+        assert!(err.contains("15.2.Rel1"), "{err}");
     }
 
     #[test]
@@ -325,28 +418,29 @@ mod tests {
         assert_eq!(tc.get_size_path(), bin.join("arm-none-eabi-size.com"));
     }
 
-    /// Checksums that are present must be valid 64-char lowercase hex (SHA-256).
+    /// Every host entry pins a valid SHA-256, so neither the bucket copy nor
+    /// the vendor copy is ever installed unverified (FastLED/fbuild#2029).
     /// Catches placeholder hashes like `a000...0002` on all platforms.
     #[test]
-    fn test_all_checksums_are_valid_or_none() {
+    fn test_every_platform_entry_has_a_valid_checksum() {
         for (platform, pkg) in &all_platform_packages() {
-            if let Some(hash) = pkg.checksum {
-                assert_eq!(
-                    hash.len(),
-                    64,
-                    "checksum for {platform} has wrong length ({}): {hash}",
-                    hash.len(),
-                );
-                assert!(
-                    hash.chars().all(|c| c.is_ascii_hexdigit()),
-                    "checksum for {platform} contains non-hex characters: {hash}",
-                );
-                // Reject obviously-fake placeholder patterns
-                assert!(
-                    !hash.starts_with("a000000"),
-                    "checksum for {platform} looks like a placeholder: {hash}",
-                );
-            }
+            let hash = pkg.checksum;
+            assert_eq!(
+                hash.len(),
+                64,
+                "checksum for {platform} has wrong length ({}): {hash}",
+                hash.len(),
+            );
+            assert!(
+                hash.chars()
+                    .all(|c| c.is_ascii_digit() || ('a'..='f').contains(&c)),
+                "checksum for {platform} is not lowercase hex: {hash}",
+            );
+            // Reject obviously-fake placeholder patterns
+            assert!(
+                !hash.starts_with("a000000"),
+                "checksum for {platform} looks like a placeholder: {hash}",
+            );
         }
     }
 
