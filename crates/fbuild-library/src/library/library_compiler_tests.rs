@@ -929,41 +929,6 @@ fn failure_message_always_carries_the_exit_status() {
     );
 }
 
-/// FastLED/fbuild#1628 ask 3 / #1630: `-9` with empty stderr used to be the
-/// whole story, which reads like a compiler crash instead of a kill.
-#[test]
-fn a_signal_killed_compiler_is_reported_as_a_kill() {
-    let killed = compile_failure_message(Path::new("/src/a.cpp"), "fastled", -9, "");
-    if fbuild_core::platform::host::is_unix() {
-        assert!(
-            killed.contains("exit code -9 = SIGKILL (signal 9)"),
-            "{killed}"
-        );
-        assert!(killed.contains("killed by a signal"), "{killed}");
-        assert!(
-            killed.contains("not a source or compiler error"),
-            "{killed}"
-        );
-    } else {
-        // Windows collapses every abnormal exit to -1 and keeps no signal.
-        assert!(!killed.contains("SIGKILL"), "{killed}");
-    }
-    assert!(killed.contains("wrote nothing to stderr"), "{killed}");
-}
-
-/// A tool that shells out reports `128 + signal` (zccache forwards 137 for a
-/// SIGKILLed child), so that spelling must be named too.
-#[test]
-fn a_shell_convention_kill_code_is_named() {
-    let killed = compile_failure_message(Path::new("/src/a.cpp"), "fastled", 137, "");
-    if fbuild_core::platform::host::is_unix() {
-        assert!(
-            killed.contains("exit code 137 = SIGKILL (signal 9)"),
-            "{killed}"
-        );
-    }
-}
-
 #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
 async fn backend_compiles_get_their_temp_dir_under_the_library_build_dir() {
     if fbuild_core::platform::host::is_windows() {

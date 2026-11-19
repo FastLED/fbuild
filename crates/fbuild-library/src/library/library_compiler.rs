@@ -890,6 +890,13 @@ fn write_sources(dir: &Path, names: &[&str]) -> Vec<PathBuf> {
 #[path = "library_compiler_tests.rs"]
 mod tests;
 
+/// Signal-kill reporting lives in its own file: `library_compiler_tests.rs` is
+/// at the 1000-LOC gate's limit and these are a separate concern
+/// (FastLED/fbuild#1628 ask 3, #1630).
+#[cfg(test)]
+#[path = "library_compiler_signal_tests.rs"]
+mod signal_tests;
+
 #[cfg(test)]
 #[path = "library_dispatch_tests.rs"]
 mod dispatch_tests;
