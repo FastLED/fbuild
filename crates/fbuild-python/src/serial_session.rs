@@ -63,6 +63,11 @@ pub(crate) fn live_session_count() -> usize {
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub(crate) enum SessionError {
     Timeout,
+    /// The attach did not finish within its budget (FastLED/fbuild#2095).
+    HandshakeTimeout {
+        stage: HandshakeStage,
+        waited: Duration,
+    },
     Closed,
     ConnectionFailed(String),
     PortGone,
@@ -75,6 +80,14 @@ impl std::fmt::Display for SessionError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let msg = match self {
             SessionError::Timeout => "timed out",
+            SessionError::HandshakeTimeout { stage, waited } => {
+                return write!(
+                    f,
+                    "daemon WebSocket attach/handshake timed out after {:.1}s {}",
+                    waited.as_secs_f64(),
+                    stage.describe()
+                );
+            }
             SessionError::Closed => "session closed",
             SessionError::ConnectionFailed(message) => return f.write_str(message),
             SessionError::PortGone => "port disconnected",
@@ -417,61 +430,10 @@ pub(crate) struct SerialSession {
 
 impl SerialSession {
     /// Attach to the daemon's `/ws/serial-monitor` endpoint: connect,
-    /// handshake, then spawn the sole reader task. Capped at
-    /// `cfg.handshake_timeout` (default callers use 5s).
+    /// handshake (see [`attach::handshake`], capped at
+    /// `cfg.handshake_timeout`), then spawn the sole reader task.
     pub(crate) async fn connect(cfg: SessionConfig) -> Result<Self, SessionError> {
-        let deadline = tokio::time::Instant::now() + cfg.handshake_timeout;
-        let (ws_stream, _) =
-            match tokio::time::timeout_at(deadline, tokio_tungstenite::connect_async(&cfg.ws_url))
-                .await
-            {
-                Ok(Ok(ok)) => ok,
-                Ok(Err(error)) => {
-                    return Err(SessionError::ConnectionFailed(format!(
-                        "failed to connect to daemon WebSocket at {}: {error}",
-                        cfg.ws_url
-                    )));
-                }
-                Err(_) => return Err(SessionError::Timeout),
-            };
-        let (mut write, mut read) = ws_stream.split();
-
-        let attach_json = serde_json::to_string(&attach_message(&cfg))
-            .expect("fbuild-python: ClientMessage::Attach serialization is infallible");
-        match tokio::time::timeout_at(
-            deadline,
-            write.send(tungstenite::Message::Text(attach_json.into())),
-        )
-        .await
-        {
-            Ok(Ok(())) => {}
-            Ok(Err(_)) => return Err(SessionError::Closed),
-            Err(_) => return Err(SessionError::Timeout),
-        }
-
-        let msg = match tokio::time::timeout_at(deadline, read.next()).await {
-            Ok(Some(Ok(msg))) => msg,
-            Ok(Some(Err(_))) | Ok(None) => return Err(SessionError::Closed),
-            Err(_) => return Err(SessionError::Timeout),
-        };
-        let tungstenite::Message::Text(text) = msg else {
-            return Err(SessionError::Closed);
-        };
-        match serde_json::from_str::<ServerMessage>(&text) {
-            Ok(ServerMessage::Attached { success: true, .. }) => {
-                if cfg.verbose {
-                    eprintln!("attached");
-                }
-            }
-            // FastLED/fbuild#2083: an `error` frame (open_port failure or
-            // timeout) carries the reason a bare `session closed` used to hide.
-            Ok(ServerMessage::Error { message } | ServerMessage::Attached { message, .. }) => {
-                return Err(SessionError::ConnectionFailed(format!(
-                    "daemon rejected serial attach: {message}"
-                )));
-            }
-            _ => return Err(SessionError::Closed),
-        }
+        let (write, read) = attach::handshake(&cfg).await?;
 
         let inner = Arc::new(Inner {
             sink: tokio::sync::Mutex::new(Some(write)),
@@ -992,7 +954,9 @@ async fn reader_task(inner: Arc<Inner>, mut read: WsSource, auto_reconnect: bool
 
 mod attach;
 
-pub(crate) use attach::attach_message;
+pub(crate) use attach::{ATTACH_HANDSHAKE_TIMEOUT, HandshakeStage};
+#[cfg(test)]
+use attach::attach_message;
 
 #[cfg(test)]
 #[path = "serial_session/tests.rs"]

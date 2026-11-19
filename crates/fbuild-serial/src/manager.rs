@@ -28,10 +28,11 @@ const SERIAL_READ_TIMEOUT: Duration = Duration::from_millis(10);
 ///
 /// Inference runs outside the WebSocket open cap, so without its own bound a
 /// hung `available_ports()` would leave a serial attach pending forever (the
-/// FastLED/fbuild#977 failure the open cap exists to prevent). 3 s keeps
-/// inference plus a normal open inside the Python client's 5 s attach
-/// handshake: on a loaded bench host inference alone took 3.3-6.3 s, and an
-/// attach that answers after the client gave up is a failure anyway. On
+/// FastLED/fbuild#977 failure the open cap exists to prevent). The Python
+/// client's attach budget is derived from this bound plus
+/// [`WS_SERIAL_OPEN_PORT_TIMEOUT`] (FastLED/fbuild#2095); on a loaded bench
+/// host inference alone took 3.3-6.3 s, so it is cut off rather than allowed
+/// to push the answer past that budget. On
 /// expiry the port's last resolved family is used (see
 /// [`SharedSerialManager::resolve_open_family`]).
 pub const OPEN_FAMILY_RESOLVE_TIMEOUT: Duration = Duration::from_secs(3);

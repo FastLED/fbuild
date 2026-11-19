@@ -35,21 +35,13 @@ fn map_err(err: SessionError) -> PyErr {
     match err {
         SessionError::Timeout => pyo3::exceptions::PyTimeoutError::new_err(err.to_string()),
         SessionError::Closed
+        | SessionError::HandshakeTimeout { .. }
         | SessionError::ConnectionFailed(_)
         | SessionError::PortGone
         | SessionError::Preempted => pyo3::exceptions::PyConnectionError::new_err(err.to_string()),
         SessionError::ProtocolDesync | SessionError::WriteFailed(_) => {
             pyo3::exceptions::PyRuntimeError::new_err(err.to_string())
         }
-    }
-}
-
-fn map_connect_err(err: SessionError) -> PyErr {
-    match err {
-        SessionError::Timeout => pyo3::exceptions::PyConnectionError::new_err(
-            "daemon WebSocket attach/handshake timed out",
-        ),
-        other => map_err(other),
     }
 }
 
@@ -135,7 +127,7 @@ impl AsyncSerialMonitor {
             client_id: self.client_id.clone(),
             lease_id: self.lease_id.clone(),
             max_buffered_lines: crate::serial_session::DEFAULT_MAX_BUFFERED_LINES,
-            handshake_timeout: std::time::Duration::from_secs(5),
+            handshake_timeout: crate::serial_session::ATTACH_HANDSHAKE_TIMEOUT,
         }
     }
 }
@@ -189,7 +181,7 @@ impl AsyncSerialMonitor {
 
         pyo3_async_runtimes::tokio::future_into_py(py, async move {
             let _lifecycle = lifecycle.lock().await;
-            let session = SerialSession::connect(cfg).await.map_err(map_connect_err)?;
+            let session = SerialSession::connect(cfg).await.map_err(map_err)?;
             let old = session_slot.write().await.replace(Arc::new(session));
             if let Some(old) = old {
                 old.close().await;
@@ -367,7 +359,7 @@ impl AsyncSerialMonitor {
             }
             let success = post_reset_request_async(port, board).await?;
             if was_connected {
-                let new_session = SerialSession::connect(cfg).await.map_err(map_connect_err)?;
+                let new_session = SerialSession::connect(cfg).await.map_err(map_err)?;
                 *session_slot.write().await = Some(Arc::new(new_session));
             }
 

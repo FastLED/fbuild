@@ -20,21 +20,13 @@ fn map_err(err: SessionError) -> PyErr {
     match err {
         SessionError::Timeout => pyo3::exceptions::PyTimeoutError::new_err(err.to_string()),
         SessionError::Closed
+        | SessionError::HandshakeTimeout { .. }
         | SessionError::ConnectionFailed(_)
         | SessionError::PortGone
         | SessionError::Preempted => pyo3::exceptions::PyConnectionError::new_err(err.to_string()),
         SessionError::ProtocolDesync | SessionError::WriteFailed(_) => {
             pyo3::exceptions::PyRuntimeError::new_err(err.to_string())
         }
-    }
-}
-
-fn map_connect_err(err: SessionError) -> PyErr {
-    match err {
-        SessionError::Timeout => pyo3::exceptions::PyConnectionError::new_err(
-            "daemon WebSocket attach/handshake timed out",
-        ),
-        other => map_err(other),
     }
 }
 
@@ -88,7 +80,7 @@ impl SerialMonitor {
             client_id: self.client_id.clone(),
             lease_id: self.lease_id.clone(),
             max_buffered_lines: crate::serial_session::DEFAULT_MAX_BUFFERED_LINES,
-            handshake_timeout: std::time::Duration::from_secs(5),
+            handshake_timeout: crate::serial_session::ATTACH_HANDSHAKE_TIMEOUT,
         }
     }
 
@@ -146,7 +138,7 @@ impl SerialMonitor {
         let cfg = slf.config();
         let session = py
             .detach(|| block_on_guarded(rt, SerialSession::connect(cfg)))?
-            .map_err(map_connect_err)?;
+            .map_err(map_err)?;
         slf.runtime = Some(rt);
         slf.session = Some(session);
         Ok(slf)
@@ -348,7 +340,7 @@ impl SerialMonitor {
                 let cfg = self.config();
                 let session = py
                     .detach(|| block_on_guarded(rt, SerialSession::connect(cfg)))?
-                    .map_err(map_connect_err)?;
+                    .map_err(map_err)?;
                 self.session = Some(session);
             }
         }

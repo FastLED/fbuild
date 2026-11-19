@@ -8,7 +8,8 @@ use super::*;
 fn connect_attach_timeout_is_connection_error() {
     init_python();
     let (_port, _env_guard) = start_daemon_and_set_env(DaemonKnobs {
-        attach_delay: Duration::from_secs(8),
+        // Past the facades' attach budget (ATTACH_HANDSHAKE_TIMEOUT, 10 s).
+        attach_delay: Duration::from_secs(13),
         ..Default::default()
     });
     pyo3::Python::attach(|py| {
@@ -16,7 +17,7 @@ fn connect_attach_timeout_is_connection_error() {
             py,
             r#"
 import asyncio, faulthandler
-faulthandler.dump_traceback_later(25, exit=True)
+faulthandler.dump_traceback_later(45, exit=True)
 from _native import SerialMonitor, AsyncSerialMonitor
 
 try:

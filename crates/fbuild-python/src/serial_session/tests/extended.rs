@@ -194,11 +194,81 @@ async fn at16_handshake_stall_times_out() {
             handshake_timeout: Duration::from_millis(300),
         };
         let started = tokio::time::Instant::now();
-        let result = SerialSession::connect(cfg).await;
-        assert_eq!(result.err(), Some(SessionError::Timeout));
+        let err = SerialSession::connect(cfg)
+            .await
+            .err()
+            .expect("must time out");
+        assert_eq!(
+            err,
+            SessionError::HandshakeTimeout {
+                stage: HandshakeStage::Connecting,
+                waited: Duration::from_millis(300),
+            }
+        );
         assert!(started.elapsed() < Duration::from_secs(5));
     })
     .await;
+}
+
+/// FastLED/fbuild#2095: a daemon that accepted the connection and the
+/// attach but has not answered yet (a starved host) must be told apart from
+/// one that never answered at all, and the message must say how long the
+/// client waited. The prefix stays stable for callers that match on it.
+#[tokio::test]
+async fn at16b_handshake_timeout_names_the_stage_reached() {
+    with_watchdog(Duration::from_secs(10), async {
+        let listener = TcpListener::bind("127.0.0.1:0").await.unwrap();
+        let port = listener.local_addr().unwrap().port();
+        tokio::spawn(async move {
+            let (stream, _) = listener.accept().await.unwrap();
+            let mut ws = tokio_tungstenite::accept_async(stream).await.unwrap();
+            // Read the attach, then never reply.
+            let _attach = ws.next().await;
+            std::future::pending::<()>().await
+        });
+        let cfg = SessionConfig {
+            ws_url: format!("ws://127.0.0.1:{port}"),
+            port: "COM_TEST".into(),
+            baud_rate: 115200,
+            auto_reconnect: false,
+            verbose: false,
+            client_id: "test".into(),
+            lease_id: None,
+            max_buffered_lines: DEFAULT_MAX_BUFFERED_LINES,
+            handshake_timeout: Duration::from_millis(300),
+        };
+        let err = SerialSession::connect(cfg)
+            .await
+            .err()
+            .expect("must time out");
+        assert_eq!(
+            err,
+            SessionError::HandshakeTimeout {
+                stage: HandshakeStage::AwaitingAttachReply,
+                waited: Duration::from_millis(300),
+            }
+        );
+        let message = err.to_string();
+        assert!(
+            message.starts_with("daemon WebSocket attach/handshake timed out after 0.3s"),
+            "{message}"
+        );
+        assert!(message.contains("attach reply"), "{message}");
+    })
+    .await;
+}
+
+/// FastLED/fbuild#2095: the client's attach budget must outlast the daemon's
+/// own worst case (pre-open family resolution, then the open cap), or an
+/// attach the daemon completes is reported as a client-side timeout.
+#[test]
+fn attach_handshake_budget_covers_the_daemon_worst_case() {
+    let daemon_worst_case = fbuild_serial::OPEN_FAMILY_RESOLVE_TIMEOUT
+        .saturating_add(fbuild_serial::WS_SERIAL_OPEN_PORT_TIMEOUT);
+    assert!(
+        ATTACH_HANDSHAKE_TIMEOUT >= daemon_worst_case.saturating_add(Duration::from_secs(2)),
+        "client budget {ATTACH_HANDSHAKE_TIMEOUT:?} vs daemon worst case {daemon_worst_case:?}"
+    );
 }
 
 #[tokio::test]
@@ -547,6 +617,9 @@ async fn run_at19_chaos_soak(seed: u64) {
                                         | SessionError::Preempted
                                         | SessionError::ProtocolDesync
                                         | SessionError::WriteFailed(_)) => {}
+                                        Err(SessionError::HandshakeTimeout { .. }) => {
+                                            panic!("a write cannot hit the attach budget (seed={seed})")
+                                        }
                                     }
                                 }
                                 2 => {
@@ -630,7 +703,10 @@ async fn refused_daemon_connection_is_recoverable() {
             // Windows can report a closed localhost listener only after the
             // connect deadline. Both Python facades map this connect timeout
             // to a ConnectionError with the daemon WebSocket recovery hint.
-            SessionError::Timeout => {}
+            SessionError::HandshakeTimeout {
+                stage: HandshakeStage::Connecting,
+                ..
+            } => {}
             other => panic!("unexpected connection error: {other}"),
         }
     })
