@@ -153,7 +153,9 @@ fail coverage. This policy is tracked in [#1698](https://github.com/FastLED/fbui
   from the identity fields, `cold` is reported as NOT PROVABLE (a Bosn record
   has no cache-state field), and a run that did not complete successfully is
   rendered but never paired. Tested by `test_measure_dylint_gate.py`. Run it
-  with `uv run --no-project python -m ci.measure_dylint_gate RUN [RUN ...]`.
+  with `uv run --no-project python -m ci.measure_dylint_gate RUN [RUN ...]`;
+  `--latest N` measures the newest N runs of `--workflow` (default
+  `.github/workflows/dylint.yml`), because a Bosn listing spans every workflow.
 - **`render_workflows.py`** -- Re-renders the `on:` and `concurrency:` blocks of `.github/workflows/build-*.yml` and the full `nightly-platforms.yml` from `board_families.json` + `ci_common_paths.txt`. CI invokes `--check` to enforce no drift. See [docs/DEVELOPMENT.md](../docs/DEVELOPMENT.md#ci-per-board-build-triggers) and FastLED/fbuild#835.
 - **`select_boards.py`** -- Picks which `build-<board>.yml` workflows `nightly-platforms.yml` dispatches: path-selected from a push diff, or `--all` for the nightly badge refresh. Tested by `test_select_boards.py`.
 - **`test_setup_soldr_cache_keys.py`** -- Every saving `zackees/setup-soldr` step must set a `cache-key-suffix` unique per runner; jobs sharing a key race to own one immutable cache entry.

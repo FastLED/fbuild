@@ -32,8 +32,11 @@ Usage::
     uv run --no-project python -m ci.measure_dylint_gate --from-file run.json RUN
 
 ``--from-file`` reads a ``bosn ci show <run> --json`` document instead of
-asking Bosn, which is what the tests use. Exit code is 0 when at least one run
-was a complete success, 1 when none was.
+asking Bosn, which is what the tests use. ``--latest N`` selects the newest N
+runs of this closure (``--workflow``, default ``.github/workflows/dylint.yml``):
+a Bosn listing spans every workflow, so an unfiltered "newest N" can measure
+runs that never touched Dylint. Exit code is 0 when at least one run was a
+complete success, 1 when none was.
 """
 
 from __future__ import annotations
@@ -67,6 +70,14 @@ FRAME_STAGES = frozenset({"Main"})
 # used as a verdict: the sampled text is the evidence, the count is a pointer.
 PROVENANCE_KEYWORDS = ("snapshot", "cache", "restore", "saved", "reuse", "hit", "miss")
 PROVENANCE_SAMPLES = 2
+
+# The closure this module measures. `bosn ci list` returns the newest runs of
+# *every* workflow, so `--latest N` must say which workflow it means: asking
+# for the newest four runs can otherwise return nothing from this closure while
+# the report still reads as a measurement of it.
+DYLINT_WORKFLOW = ".github/workflows/dylint.yml"
+LISTING_PAGE = 50
+MAX_LISTING = 2000
 
 
 @dataclass(frozen=True)
@@ -469,7 +480,17 @@ def _read_log_lines(run_id: str) -> list[str]:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("runs", nargs="*", help="bosn run ids")
-    parser.add_argument("--latest", type=int, help="measure the newest N runs")
+    parser.add_argument(
+        "--latest",
+        type=int,
+        help="measure the newest N runs of --workflow",
+    )
+    parser.add_argument(
+        "--workflow",
+        default=DYLINT_WORKFLOW,
+        metavar="PATH",
+        help="workflow file --latest selects from (default: the Dylint closure)",
+    )
     parser.add_argument(
         "--from-file",
         action="append",
@@ -492,7 +513,10 @@ def main() -> None:
             measure(run_id, document(bosn_command("ci", "show", run_id, "--json")))
         )
     if args.latest:
-        for run_id in _latest_ids(args.latest):
+        latest_ids = _latest_ids(args.latest, args.workflow)
+        if not latest_ids and not (args.runs or args.from_file):
+            parser.error(f"no {args.workflow} run to measure")
+        for run_id in latest_ids:
             measured.append(
                 measure(run_id, document(bosn_command("ci", "show", run_id, "--json")))
             )
@@ -509,12 +533,31 @@ def main() -> None:
         raise SystemExit(1)
 
 
-def _latest_ids(count: int) -> list[str]:
-    listing = document(bosn_command("ci", "list", "--limit", str(count), "--json"))
-    runs = listing.get("runs")
-    if not isinstance(runs, list):
-        raise ValueError("bosn run listing lacks a runs array")
-    return [_string(run, "id") for run in runs if isinstance(run, dict)]
+def _latest_ids(count: int, workflow: str = DYLINT_WORKFLOW) -> list[str]:
+    """The newest `count` run ids of `workflow`, newest first.
+
+    A run listing carries no workflow predicate and no cursor, only a newest-N
+    limit, so the filter is applied here: escalate the limit until enough
+    matches are visible or the listing is exhausted. Newest first is preserved,
+    and fewer than `count` matches is reported as what exists rather than
+    padded with unrelated runs.
+    """
+    if count <= 0:
+        raise ValueError("--latest needs a positive run count")
+    limit = max(count, LISTING_PAGE)
+    while True:
+        listing = document(bosn_command("ci", "list", "--limit", str(limit), "--json"))
+        runs = listing.get("runs")
+        if not isinstance(runs, list):
+            raise ValueError("bosn run listing lacks a runs array")
+        matched = [
+            _string(run, "id")
+            for run in runs
+            if isinstance(run, dict) and run.get("workflow") == workflow
+        ]
+        if len(matched) >= count or len(runs) < limit or limit >= MAX_LISTING:
+            return matched[:count]
+        limit = min(limit * 2, MAX_LISTING)
 
 
 def _run_json(run: RunMeasurement) -> JsonValue:

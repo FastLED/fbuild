@@ -1,7 +1,9 @@
 """The measurement recorder reports only what a Bosn record proves."""
 
 import unittest
+from unittest.mock import patch
 
+from ci import measure_dylint_gate as measure_module
 from ci.local_gate import JsonValue
 from ci.measure_dylint_gate import (
     Attribution,
@@ -244,6 +246,99 @@ class JsonRecordTests(unittest.TestCase):
         assert isinstance(regimes, dict)
         self.assertEqual(regimes["fresh-engine warm"], ["run-a->run-b"])
         self.assertEqual(regimes["cold"], [])
+
+
+class LatestSelectionTests(unittest.TestCase):
+    """`--latest` selects one workflow, never whatever happened to run last.
+
+    `bosn ci list` returns the newest runs of every workflow (`callee.yml`,
+    `integration.yml`, `ci.yml`, ...), so a bare list limit is not a filter:
+    asking for four runs can return nothing from the Dylint closure while the
+    report still claims to measure it.
+    """
+
+    def select(
+        self, count: int, pages: list[dict[str, JsonValue]]
+    ) -> tuple[list[str], list[str]]:
+        requests: list[str] = []
+        pending = list(pages)
+
+        def fake_bosn(*args: str) -> list[str]:
+            requests.append(args[args.index("--limit") + 1])
+            return ["bosn", *args]
+
+        def fake_document(argv: list[str]) -> dict[str, JsonValue]:
+            self.assertEqual(argv[0], "bosn")
+            return pending.pop(0)
+
+        with (
+            patch.object(measure_module, "bosn_command", fake_bosn),
+            patch.object(measure_module, "document", fake_document),
+        ):
+            return measure_module._latest_ids(count), requests
+
+    @staticmethod
+    def listing(*entries: tuple[str, str]) -> dict[str, JsonValue]:
+        return {
+            "runs": [
+                {"id": run_id, "workflow": workflow} for run_id, workflow in entries
+            ]
+        }
+
+    @staticmethod
+    def callee(count: int) -> list[tuple[str, str]]:
+        return [
+            (f"callee-{index}", ".github/workflows/callee.yml")
+            for index in range(count)
+        ]
+
+    def test_latest_reads_only_the_dylint_workflow(self) -> None:
+        selected, _ = self.select(
+            3,
+            [
+                self.listing(
+                    ("newest", ".github/workflows/callee.yml"),
+                    ("dylint-a", ".github/workflows/dylint.yml"),
+                    ("middle", ".github/workflows/ci.yml"),
+                    ("dylint-b", ".github/workflows/dylint.yml"),
+                    ("oldest", ".github/workflows/integration.yml"),
+                )
+            ],
+        )
+        self.assertEqual(selected, ["dylint-a", "dylint-b"])
+
+    def test_latest_escalates_the_listing_past_unrelated_runs(self) -> None:
+        first_page = self.listing(
+            *self.callee(49), ("dylint-old", ".github/workflows/dylint.yml")
+        )
+        second_page = self.listing(
+            *self.callee(57),
+            ("dylint-a", ".github/workflows/dylint.yml"),
+            ("dylint-b", ".github/workflows/dylint.yml"),
+            ("dylint-c", ".github/workflows/dylint.yml"),
+        )
+        selected, requests = self.select(2, [first_page, second_page])
+        self.assertEqual(selected, ["dylint-a", "dylint-b"])
+        self.assertEqual(len(requests), 2)
+        self.assertGreater(int(requests[1]), int(requests[0]))
+
+    def test_latest_stops_when_the_listing_is_exhausted(self) -> None:
+        selected, requests = self.select(
+            4,
+            [
+                self.listing(
+                    ("dylint-a", ".github/workflows/dylint.yml"),
+                    ("callee", ".github/workflows/callee.yml"),
+                    ("dylint-b", ".github/workflows/dylint.yml"),
+                )
+            ],
+        )
+        self.assertEqual(selected, ["dylint-a", "dylint-b"])
+        self.assertEqual(len(requests), 1)
+
+    def test_latest_rejects_a_non_positive_count(self) -> None:
+        with self.assertRaises(ValueError):
+            measure_module._latest_ids(0)
 
 
 if __name__ == "__main__":
