@@ -219,6 +219,7 @@ def pypi_wheels(version: str) -> list[tuple[str, int, zipfile.ZipFile]]:
 
 
 def main(argv: list[str] | None = None) -> int:
+    assert __doc__ is not None
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("wheels", nargs="*", type=Path, help="wheel files to check")
     parser.add_argument("--pypi", metavar="VERSION", help="check a release already on PyPI")

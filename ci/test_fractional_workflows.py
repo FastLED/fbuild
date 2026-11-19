@@ -331,7 +331,14 @@ class FractionalWorkflowTests(unittest.TestCase):
         # setup-soldr#540) saves target/dylint/{libraries,target}/<nightly>-<host>;
         # it supersedes the bespoke short-path library cache and its symlink.
         self.assertIs(setup["with"]["dylint-output-cache"], True)
-        names = {step.get("name") for step in lint_job["steps"]}
+        # soldr < 0.9.52 rebuilt every lint library per cross target (the
+        # cross-target library dir was not linked to the shared host build).
+        # setup-soldr@v0 defaults to 0.9.52 since its promotion to a2c1d423
+        # (which also keys this output cache by soldr version, setup-soldr#678),
+        # so the floating tag is used as-is: no RUST-013 version pin.
+        self.assertEqual("zackees/setup-soldr@v0", setup["uses"])
+        self.assertNotIn("version", setup["with"])
+        names ={step.get("name") for step in lint_job["steps"]}
         for retired in ("Restore compiled Dylint libraries", "Reuse cached Dylint library tree", "Save compiled Dylint libraries"):
             self.assertNotIn(retired, names)
         ui_tests = next(step for step in lint_job["steps"] if step.get("name") == "Test Dylint libraries")

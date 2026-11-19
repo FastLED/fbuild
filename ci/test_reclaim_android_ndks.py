@@ -30,6 +30,18 @@ class ReclaimAndroidNdksTest(unittest.TestCase):
                     with self.assertRaisesRegex(RuntimeError, "GitHub-hosted Linux"):
                         reclaim_android_ndks.main()
 
+    def test_main_without_an_android_sdk_reclaims_nothing(self):
+        """act2 replays the hosted guard with no ANDROID_HOME (FastLED/fbuild#2086)."""
+        environment = {"GITHUB_ACTIONS": "true", "RUNNER_ENVIRONMENT": "github-hosted"}
+        with (
+            mock.patch.dict(os.environ, environment, clear=True),
+            mock.patch.object(sys, "platform", "linux"),
+            mock.patch.object(reclaim_android_ndks, "reclaim") as reclaim,
+            mock.patch("sys.stdout"),
+        ):
+            self.assertIsNone(reclaim_android_ndks.main())
+        reclaim.assert_not_called()
+
     def install_metadata(self, root: Path, version: str, package: str) -> None:
         metadata = root / "ndk" / version / "package.xml"
         metadata.parent.mkdir(parents=True)

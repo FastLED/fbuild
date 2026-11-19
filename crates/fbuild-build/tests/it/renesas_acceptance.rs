@@ -221,3 +221,144 @@ async fn install_test_compile_backend() {
         })
         .await;
 }
+
+/// Build params shared by the Renesas acceptance builds: a clean release build
+/// of `env_name` in `project`, 4 jobs, compile database on.
+fn build_params_for(project: &std::path::Path, env_name: &str) -> BuildParams {
+    BuildParams {
+        project_dir: project.to_path_buf(),
+        shrink: Default::default(),
+        env_name: env_name.to_string(),
+        build_dir: project
+            .join(fbuild_paths::FBUILD_DIR_NAME)
+            .join(fbuild_paths::BUILD_DIR_NAME)
+            .join(env_name)
+            .join("release"),
+        clean_all: false,
+        clean_only: false,
+        clean: true,
+        profile: BuildProfile::Release,
+        verbose: true,
+        jobs: Some(4),
+        generate_compiledb: true,
+        compiledb_only: false,
+        log_sender: None,
+        symbol_analysis: false,
+        symbol_analysis_path: None,
+        no_timestamp: true,
+        src_dir: None,
+        pio_env: Default::default(),
+        extra_build_flags: Vec::new(),
+        watch_set_cache: None,
+        bloat_analysis: false,
+        caller_path: None,
+    }
+}
+
+/// FastLED/fbuild#2054: the Portenta C33 is an RA6M5 and builds against the
+/// SEPARATE `arduino:renesas_portenta` core package, not `arduino:renesas_uno`.
+/// A blink must compile, link against that core's prebuilt `libs/libfsp.a` and
+/// its `variants/PORTENTA_C33/fsp.ld`, and carry the Cortex-M33/FPv5 flags the
+/// core's `boards.txt` gives the board. Before #2054 the board was rejected
+/// before the build with a typed `UnsupportedBoard` error.
+#[tokio::test(flavor = "multi_thread", worker_threads = 4)]
+#[ignore = "#2054: downloads ARM GCC + the Arduino renesas_portenta core; builds a real blink"]
+async fn portenta_c33_blink_builds_against_the_renesas_portenta_core() {
+    tokio::task::spawn_blocking(|| {
+        let registry = tempfile::tempdir().unwrap();
+        assert!(fbuild_core::usb::profiles::populate_profiles_from_paths(
+            &registry.path().join("_meta.json"),
+            &registry.path().join("usb-profiles.json"),
+        ));
+    })
+    .await
+    .unwrap();
+    install_test_compile_backend().await;
+    let tmp = tempfile::tempdir().unwrap();
+    let project = tmp.path();
+    std::fs::write(
+        project.join("platformio.ini"),
+        "[env:portenta_c33]\nplatform = renesas-ra\nboard = portenta_c33\nframework = arduino\n",
+    )
+    .unwrap();
+    std::fs::create_dir(project.join("src")).unwrap();
+    std::fs::write(
+        project.join("src/main.cpp"),
+        r#"
+#include <Arduino.h>
+void setup() {
+  pinMode(LED_BUILTIN, OUTPUT);
+}
+void loop() {
+  digitalWrite(LED_BUILTIN, HIGH);
+  delay(500);
+  digitalWrite(LED_BUILTIN, LOW);
+  delay(500);
+}
+"#,
+    )
+    .unwrap();
+    let params = build_params_for(project, "portenta_c33");
+    let result = tokio::time::timeout(
+        std::time::Duration::from_secs(900),
+        fbuild_build::renesas::RenesasOrchestrator.build(&params),
+    )
+    .await
+    .expect("Portenta C33 build timed out")
+    .expect("Portenta C33 build must succeed");
+    assert!(result.success);
+    let elf = result.elf_path.as_ref().expect("firmware ELF");
+    assert!(elf.is_file());
+    assert!(result.size_info.as_ref().unwrap().total_flash > 0);
+
+    let commands: Vec<serde_json::Value> = serde_json::from_slice(
+        &std::fs::read(
+            result
+                .compile_database_path
+                .as_ref()
+                .expect("compile database"),
+        )
+        .unwrap(),
+    )
+    .unwrap();
+    let files: Vec<String> = commands
+        .iter()
+        .map(|command| {
+            fbuild_core::path::NormalizedPath::from(command["file"].as_str().unwrap_or(""))
+                .display_slash()
+        })
+        .collect();
+    // The core itself comes from the renesas_portenta archive: a build that
+    // silently fell back to renesas_uno would fail here.
+    assert!(
+        files
+            .iter()
+            .any(|file| file.contains("ArduinoCore-renesas_portenta-1.6.0/")
+                && file.ends_with("/cores/arduino/main.cpp")),
+        "the RA6M5 core must come from the renesas_portenta package: {files:?}"
+    );
+    // boards.txt: build.mcu=cortex-m33, build.fpu=-mfpu=fpv5-sp-d16. Entries
+    // carry either a `command` string or an `arguments` array.
+    let invocation = |command: &serde_json::Value| -> String {
+        match command.get("command").and_then(|value| value.as_str()) {
+            Some(line) => line.to_string(),
+            None => command["arguments"]
+                .as_array()
+                .map(|args| {
+                    args.iter()
+                        .filter_map(|arg| arg.as_str())
+                        .collect::<Vec<_>>()
+                        .join(" ")
+                })
+                .unwrap_or_default(),
+        }
+    };
+    assert!(
+        commands.iter().any(|command| {
+            let line = invocation(command);
+            line.contains("-mcpu=cortex-m33") && line.contains("-mfpu=fpv5-sp-d16")
+        }),
+        "compile flags must match the RA6M5 boards.txt entry (build.mcu=cortex-m33, \
+         build.fpu=-mfpu=fpv5-sp-d16)"
+    );
+}

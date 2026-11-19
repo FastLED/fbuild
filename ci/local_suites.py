@@ -31,6 +31,7 @@ DRIFT_UNITTEST_MODULES: tuple[str, ...] = (
     "ci.test_benchmark_publish",
     "ci.test_sign_windows_release",
     "ci.test_check_python_complexity",
+    "ci.test_check_python_types",
     "ci.test_crate_guard_parity",
     "ci.test_find_direct_subprocess",
     "ci.test_audit_ignored_tests",
@@ -53,6 +54,7 @@ DRIFT_UNITTEST_MODULES: tuple[str, ...] = (
     "ci.test_run_dylint",
     "ci.test_merge_bench_history",
     "ci.test_publish_bench_site",
+    "ci.test_measure_dylint_gate",
 )
 
 # Modules the local gate additionally runs. Their subject is the local proof

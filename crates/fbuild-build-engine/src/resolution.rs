@@ -142,15 +142,15 @@ mod tests {
 
     #[test]
     fn unbuildable_bundled_board_fails_before_resolution() {
-        let dir = write_project("[env:c33]\nplatform = renesas-ra\nboard = portenta_c33\n");
+        let dir = write_project("[env:wasm]\nplatform = wasm\nboard = wasm\n");
         let config = PlatformIOConfig::from_path(&dir.path().join("platformio.ini")).unwrap();
-        let err = ResolutionContext::new(dir.path(), "c33", &config)
+        let err = ResolutionContext::new(dir.path(), "wasm", &config)
             .resolve_board()
             .unwrap_err();
         assert!(matches!(err, FbuildError::UnsupportedBoard { .. }), "{err}");
         assert!(
             err.to_string()
-                .starts_with("board 'portenta_c33' cannot be built by fbuild: it needs"),
+                .starts_with("board 'wasm' cannot be built by fbuild: fbuild has no"),
             "{err}"
         );
         let err = super::platform_for_board("bw12", None).unwrap_err();

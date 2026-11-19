@@ -53,7 +53,7 @@ pub use library_manager::LibraryResult;
 pub use library_spec::LibrarySpec;
 pub use nrf51_core::Nrf51Cores;
 pub use nrf52_core::{Nrf52Cores, Nrf52Framework};
-pub use renesas_core::RenesasCores;
+pub use renesas_core::{RenesasCoreKind, RenesasCores};
 pub use rp2040_core::Rp2040Cores;
 pub use sam_core::SamCores;
 pub use samd_core::SamdCores;

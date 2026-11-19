@@ -12,6 +12,7 @@ use crate::compiler::{CompilerFlags, McuConfig, ObjcopyConfig, ProfileFlags};
 use crate::mcu_config::DefineEntry;
 
 const RA4M1_JSON: &str = include_str!("configs/ra4m1.json");
+const RA6M5_JSON: &str = include_str!("configs/ra6m5.json");
 
 /// Complete Renesas RA MCU configuration parsed from JSON.
 #[derive(Debug, Clone, Deserialize)]
@@ -62,14 +63,35 @@ impl McuConfig for RenesasMcuConfig {
     }
 }
 
+/// Resolve a board's `mcu` value to the Renesas RA MCU family fbuild knows.
+///
+/// Board JSONs carry whatever PlatformIO's board file carries: the UNO R4
+/// boards say `RA4M1`, the Portenta C33 says the full part number
+/// `R7FA6M5BH2CBG`. Both spellings map to the family whose config and core
+/// package fbuild pins (FastLED/fbuild#2054).
+pub fn renesas_mcu_family(mcu: &str) -> Result<&'static str> {
+    let lower = mcu.to_lowercase();
+    if lower.starts_with("ra4m1") || lower.starts_with("r7fa4m1") {
+        return Ok("ra4m1");
+    }
+    if lower.starts_with("ra6m5") || lower.starts_with("r7fa6m5") {
+        return Ok("ra6m5");
+    }
+    Err(fbuild_core::FbuildError::ConfigError(format!(
+        "unsupported Renesas RA MCU: '{}' (supported: ra4m1, ra6m5)",
+        mcu
+    )))
+}
+
 /// Load the Renesas RA MCU configuration for a specific MCU.
 pub fn get_renesas_config_for_mcu(mcu: &str) -> Result<RenesasMcuConfig> {
-    let json = match mcu {
+    let json = match renesas_mcu_family(mcu)? {
         "ra4m1" => RA4M1_JSON,
-        _ => {
+        "ra6m5" => RA6M5_JSON,
+        family => {
             return Err(fbuild_core::FbuildError::ConfigError(format!(
-                "unsupported Renesas RA MCU: '{}' (supported: ra4m1)",
-                mcu
+                "unsupported Renesas RA MCU family: '{}'",
+                family
             )));
         }
     };
@@ -170,6 +192,54 @@ mod tests {
     fn test_renesas_config_unsupported_mcu() {
         let result = get_renesas_config_for_mcu("unknown_mcu");
         assert!(result.is_err());
+        let err = result.unwrap_err().to_string();
+        assert!(err.contains("supported: ra4m1, ra6m5"), "{err}");
+    }
+
+    /// FastLED/fbuild#2054: the Portenta C33 is an RA6M5 (Cortex-M33 with a
+    /// single-precision FPv5 FPU), and its board JSON names the part number
+    /// rather than the family, so both spellings must resolve.
+    #[test]
+    fn test_ra6m5_config_parses_from_family_and_part_number() {
+        for mcu in ["ra6m5", "R7FA6M5BH2CBG"] {
+            let config = get_renesas_config_for_mcu(mcu).unwrap();
+            assert_eq!(config.name, "RA6M5");
+            assert_eq!(config.architecture, "arm-cortex-m33");
+            assert!(
+                config
+                    .compiler_flags
+                    .common
+                    .contains(&"-mcpu=cortex-m33".to_string())
+            );
+            assert!(
+                config
+                    .compiler_flags
+                    .common
+                    .contains(&"-mfpu=fpv5-sp-d16".to_string())
+            );
+            assert!(
+                config
+                    .linker_flags
+                    .contains(&"-mcpu=cortex-m33".to_string())
+            );
+            // boards.txt portenta_c33.compiler.fsp.extra_ldflags
+            for lib in ["-lstdc++", "-lsupc++", "-lm", "-lc", "-lgcc", "-lnosys"] {
+                assert!(
+                    config.linker_libs.contains(&lib.to_string()),
+                    "missing {lib}"
+                );
+            }
+        }
+    }
+
+    /// The RA4M1 boards keep resolving to their own family through the same
+    /// mapping; the part-number spelling is accepted too.
+    #[test]
+    fn test_mcu_family_mapping() {
+        assert_eq!(renesas_mcu_family("RA4M1").unwrap(), "ra4m1");
+        assert_eq!(renesas_mcu_family("R7FA4M1AB3CFM").unwrap(), "ra4m1");
+        assert_eq!(renesas_mcu_family("R7FA6M5BH2CBG").unwrap(), "ra6m5");
+        assert!(renesas_mcu_family("stm32h7").is_err());
     }
 
     #[test]

@@ -67,7 +67,9 @@ def spool_tar(source: Path, scratch: Path) -> dict:
             name = safe_name(member.name)
             payload = scratch / str(len(members))
             if member.isfile():
-                with archive.extractfile(member) as src, payload.open("wb") as dst:
+                extracted = archive.extractfile(member)
+                assert extracted is not None  # isfile() members always have data
+                with extracted as src, payload.open("wb") as dst:
                     shutil.copyfileobj(src, dst)
             _record(members, name, member, payload)
     _check_ancestors(members)

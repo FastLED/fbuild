@@ -40,6 +40,9 @@ struct DaemonKnobs {
     suppress_write_echo: bool,
     suppress_echo_on_nth_write: Option<usize>,
     attach_reject_message: Option<&'static str>,
+    /// Reply to the attach with a raw `error` frame (what the daemon sends
+    /// when `open_port` fails or exceeds its cap) instead of an ack.
+    attach_error_message: Option<&'static str>,
 }
 #[expect(
     clippy::cognitive_complexity,
@@ -65,6 +68,15 @@ async fn fake_daemon(listener: TcpListener, knobs: DaemonKnobs) {
         };
         if !attach_seen.load(Ordering::Relaxed) {
             attach_seen.store(true, Ordering::Relaxed);
+            if let Some(message) = knobs.attach_error_message {
+                let frame = serde_json::json!({ "type": "error", "message": message });
+                sink.lock()
+                    .await
+                    .send(tungstenite::Message::Text(frame.to_string().into()))
+                    .await
+                    .unwrap();
+                return;
+            }
             let ack = serde_json::json!({
                 "type": "attached",
                 "success": knobs.attach_reject_message.is_none(),
@@ -359,6 +371,44 @@ async fn rejected_attach_reports_daemon_reason() {
             result,
             Err(SessionError::ConnectionFailed(message)) if message.contains("port is busy")
         ));
+    })
+    .await;
+}
+
+/// FastLED/fbuild#2083: the daemon answers a failed/timed-out `open_port`
+/// with an `error` frame. It used to fall into the wildcard and surface as a
+/// bare `session closed`, hiding the daemon's own diagnosis from callers.
+#[tokio::test]
+async fn attach_error_frame_surfaces_daemon_reason() {
+    with_watchdog(Duration::from_secs(10), async {
+        let listener = TcpListener::bind("127.0.0.1:0").await.unwrap();
+        let port = listener.local_addr().unwrap().port();
+        tokio::spawn(fake_daemon(
+            listener,
+            DaemonKnobs {
+                attach_error_message: Some(
+                    "open_port(/dev/ttyACM1) exceeded 3s; serial driver may be wedged",
+                ),
+                ..Default::default()
+            },
+        ));
+        let result = SerialSession::connect(SessionConfig {
+            ws_url: format!("ws://127.0.0.1:{port}"),
+            port: "COM_TEST".into(),
+            baud_rate: 115200,
+            auto_reconnect: true,
+            verbose: false,
+            client_id: "test".into(),
+            lease_id: None,
+            max_buffered_lines: DEFAULT_MAX_BUFFERED_LINES,
+            handshake_timeout: Duration::from_secs(5),
+        })
+        .await;
+        let Err(SessionError::ConnectionFailed(message)) = result else {
+            panic!("error frame must surface as ConnectionFailed");
+        };
+        assert!(message.contains("exceeded 3s"), "got: {message}");
+        assert!(message.contains("/dev/ttyACM1"), "got: {message}");
     })
     .await;
 }

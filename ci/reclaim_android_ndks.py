@@ -45,7 +45,15 @@ def main() -> None:
     if (os.environ.get("GITHUB_ACTIONS") != "true" or sys.platform != "linux"
             or os.environ.get("RUNNER_ENVIRONMENT") != "github-hosted"):
         raise RuntimeError("NDK provisioning requires a GitHub-hosted Linux CI runner")
-    reclaim(Path(os.environ["ANDROID_HOME"]), Path.cwd())
+    sdk_root = os.environ.get("ANDROID_HOME")
+    if not sdk_root:
+        # A replay engine runs the hosted guard without the runner image's
+        # preinstalled Android SDK. No package is SDK-owned there, so there is
+        # nothing to reclaim: stay a no-op instead of failing the replay
+        # (FastLED/fbuild#2086).
+        print("No ANDROID_HOME: no SDK-owned NDK is installed; nothing to reclaim", flush=True)
+        return
+    reclaim(Path(sdk_root), Path.cwd())
 
 
 if __name__ == "__main__":

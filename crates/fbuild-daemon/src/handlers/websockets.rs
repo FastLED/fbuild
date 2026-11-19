@@ -169,6 +169,49 @@ where
     }
 }
 
+/// Resolve the board family, then run `open` under `cap` (FastLED/fbuild#2083).
+///
+/// Family inference (`available_ports()` plus sysfs health) is pre-open work
+/// with its own bound, so it is awaited before the cap starts: on a loaded
+/// host it took 3.5 s and used to fail healthy attaches. The start and the
+/// outcome of every WebSocket open are logged with the pre-open and open
+/// times, and a failure message carries the pre-open time.
+async fn ws_serial_open_port_with_family<R, O, F>(
+    manager: &fbuild_serial::SharedSerialManager,
+    port: &str,
+    resolve_family: R,
+    open: O,
+    cap: Duration,
+) -> Result<(), String>
+where
+    R: Future<Output = fbuild_serial::boards::BoardFamily>,
+    O: FnOnce(fbuild_serial::boards::BoardFamily) -> F,
+    F: Future<Output = fbuild_core::Result<()>>,
+{
+    let started = std::time::Instant::now();
+    let family = resolve_family.await;
+    let pre_open_ms = started.elapsed().as_millis();
+    tracing::info!(
+        port,
+        ?family,
+        pre_open_ms,
+        cap_ms = cap.as_millis(),
+        "ws serial attach: opening port"
+    );
+    let open_started = std::time::Instant::now();
+    let result = await_ws_serial_open_port(manager, port, open(family), cap)
+        .await
+        .map_err(|message| format!("{message} (pre-open {pre_open_ms}ms)"));
+    let open_ms = open_started.elapsed().as_millis();
+    match &result {
+        Ok(()) => tracing::info!(port, pre_open_ms, open_ms, "ws serial attach: port opened"),
+        Err(error) => {
+            tracing::warn!(port, pre_open_ms, open_ms, %error, "ws serial attach: open failed");
+        }
+    }
+    result
+}
+
 #[expect(
     clippy::cognitive_complexity,
     clippy::too_many_lines,
@@ -235,16 +278,19 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
                     }
                     // Open port if needed
                     if open_if_needed {
-                        let open_result = await_ws_serial_open_port(
+                        let open_result = ws_serial_open_port_with_family(
                             &ctx.serial_manager,
                             &port,
-                            ctx.serial_manager.open_port(
-                                &port,
-                                baud_rate,
-                                &client_id,
-                                None,
-                                client_metadata.clone(),
-                            ),
+                            ctx.serial_manager.resolve_open_family(&port),
+                            |family| {
+                                ctx.serial_manager.open_port(
+                                    &port,
+                                    baud_rate,
+                                    &client_id,
+                                    Some(family),
+                                    client_metadata.clone(),
+                                )
+                            },
                             WS_SERIAL_OPEN_PORT_TIMEOUT,
                         )
                         .await;
@@ -525,16 +571,19 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
                                 reopen_deadline.get_or_insert_with(|| {
                                     tokio::time::Instant::now() + WS_SERIAL_RECOVERY_TIMEOUT
                                 });
-                                let opened = await_ws_serial_open_port(
+                                let opened = ws_serial_open_port_with_family(
                                     &ctx.serial_manager,
                                     &recovered_port,
-                                    ctx.serial_manager.open_port(
-                                        &recovered_port,
-                                        baud_rate,
-                                        &client_id_owned,
-                                        None,
-                                        client_metadata_owned.clone(),
-                                    ),
+                                    ctx.serial_manager.resolve_open_family(&recovered_port),
+                                    |family| {
+                                        ctx.serial_manager.open_port(
+                                            &recovered_port,
+                                            baud_rate,
+                                            &client_id_owned,
+                                            Some(family),
+                                            client_metadata_owned.clone(),
+                                        )
+                                    },
                                     WS_SERIAL_OPEN_PORT_TIMEOUT,
                                 )
                                 .await;

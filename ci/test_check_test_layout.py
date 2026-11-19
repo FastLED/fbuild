@@ -75,10 +75,10 @@ class LayoutTests(unittest.TestCase):
             self.assertEqual([], violations(root))
 
 
-def run_main(argv: list[str] | None = None) -> tuple[int, str, str]:
+def run_main() -> tuple[int, str, str]:
     out, err = io.StringIO(), io.StringIO()
     with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
-        rc = check_test_layout.main() if argv is None else check_test_layout.main(argv)
+        rc = check_test_layout.main()
     return rc, out.getvalue(), err.getvalue()
 
 

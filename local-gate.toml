@@ -21,7 +21,7 @@ mode = "minimal"
 [[gate.replay.jobs]]
 source-job = "check-ubuntu.yml:check"
 key = "linux/Check Ubuntu/Check (ubuntu-latest)"
-steps = ["Checkout source", "Verify candidate SHA", "Set up uv", "Select workspace test interpreter", "Setup soldr", "Clippy", "Check tracked Python complexity ratchet", "Test cold-build disk provisioning", "Lint subprocess spawns", "Guard production USB VID/PID catalogue literals", "Test", "Test optional SDK library linkage with native GCC LTO", "Test library assembly and archive policies with native GCC", "Test GNU linker overflow summaries", "Test large library archive"]
+steps = ["Checkout source", "Verify candidate SHA", "Set up uv", "Select workspace test interpreter", "Setup soldr", "Clippy", "Check tracked Python complexity ratchet", "Check tracked Python types", "Test cold-build disk provisioning", "Lint subprocess spawns", "Guard production USB VID/PID catalogue literals", "Test", "Test optional SDK library linkage with native GCC LTO", "Test library assembly and archive policies with native GCC", "Test GNU linker overflow summaries", "Test large library archive"]
 lanes = ["linux-minimal"]
 
 [[gate.replay.jobs]]
@@ -73,11 +73,17 @@ lanes = ["dylint"]
 source-job = "dylint.yml:queue-cache-janitor"
 lanes = ["dylint"]
 
+# `dylint.yml` has no `pull_request` trigger since #79a5200a: PRs, the merge
+# queue and main pushes reach it only through a caller's `workflow_call`, so a
+# pull_request replay of the file selects no stages at all (FastLED/fbuild#2086).
+# Its own `workflow_dispatch` trigger replays every job of the file; the
+# called-workflow call site (`ci-minimal.yml:dylint`) is not usable here because
+# its `prooft` dependency has unnamed steps no declaration can attest.
 [[gate.replay.selections]]
 lane = "dylint"
 workflow = "dylint.yml"
 all-jobs = true
-event = "pull_request"
+event = "workflow_dispatch"
 inputs = {}
 
 # RUST-033 (FastLED/fbuild#1793): the whole lint phase as one lane. soldr runs

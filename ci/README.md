@@ -36,14 +36,20 @@ Merge-queue and `main` runs never skip. Tests:
 
 `local_gate.py` has separate `--lane linux-minimal` and `--lane dylint` entrypoints.
 The first runs both required Ubuntu jobs through bosn's pinned act2 engine;
-the second replays the entire existing `dylint.yml` workflow with the ordinary
-unlabelled PR event. The default runs both. It checks clean source identity, native Linux x64 execution,
+the second replays every job of `dylint.yml` under the file's own
+`workflow_dispatch` trigger. A PR never dispatches it: PRs reach the file
+through ci-minimal's `workflow_call`, and selecting that call site would drag
+in its `prooft` dependency, whose checkout and setup steps carry no literal
+name for any declaration to attest. `dylint.yml` declares only
+`workflow_dispatch` and `workflow_call`, so a `pull_request` replay selects no
+stage at all ([#2086](https://github.com/FastLED/fbuild/issues/2086)). The default runs both. It checks clean source identity, native Linux x64 execution,
 all three Dylint job verdicts and the completed policy, library and workspace
 steps. The wrapper uses released Bosn >=0.1.22 for the stock runner tools.
 `local-gate.toml` reports optional attestations in shadow mode. The local gate uses the existing
-workflow-dispatch event for the Ubuntu pair and PR/minimal for Dylint before
-stamping the tree. Dispatch Dylint adds cross-target work, so it is not used as
-a substitute for the ordinary PR selection. Library UI fixtures retain their
+workflow-dispatch event for both the Ubuntu pair and Dylint before stamping
+the tree. Dispatch Dylint runs the same three-target graph the PR path runs
+through ci-minimal's `workflow_call`; soldr 0.9.52+ (setup-soldr@v0's default) points the cross-target
+lint libraries at the host build, so the extra targets do not rebuild them. Library UI fixtures retain their
 existing source-change condition. Shared replay coverage binds every Ubuntu action and command to its literal
 execution name. The advisory verifier runs independently and is not part of the Linux proof. The original Ubuntu
 and Dylint terminal reports are each forwarded unchanged to the pinned shared
@@ -135,6 +141,21 @@ fail coverage. This policy is tracked in [#1698](https://github.com/FastLED/fbui
 - **`extract_pio_build_flags.py`** -- Extracts compiler/linker flags from PlatformIO for each board and writes reference JSONs
 - **`lint.py`** -- Workspace linting (rustfmt + clippy), supports single-file and auto-fix modes
 - **`platform_boundary_research.py`** -- Host-independent phase-1 inventory and cross-host drift check for FastLED/fbuild#1307
+- **`measure_dylint_gate.py`** -- Records a Dylint local-gate cold/warm
+  measurement from runs that already exist, because the Bosn record already
+  carries everything FastLED/fbuild#1643 asks to record: `sha`/`git_tree`/
+  `tree_digest`, `payload_sha256`, the pinned `engine_id` + act binary digest +
+  runner image, and every executed step with its `duration_ms`. It attributes
+  those durations into the overheads the issue names (checkout, setup, work,
+  cache, aggregation, frame) and samples the log stream for snapshot/cache
+  provenance. It never runs the gate and never infers: a pair of records proves
+  `identical-input reuse`, `fresh-engine warm` or `changed-source warm` only
+  from the identity fields, `cold` is reported as NOT PROVABLE (a Bosn record
+  has no cache-state field), and a run that did not complete successfully is
+  rendered but never paired. Tested by `test_measure_dylint_gate.py`. Run it
+  with `uv run --no-project python -m ci.measure_dylint_gate RUN [RUN ...]`;
+  `--latest N` measures the newest N runs of `--workflow` (default
+  `.github/workflows/dylint.yml`), because a Bosn listing spans every workflow.
 - **`render_workflows.py`** -- Re-renders the `on:` and `concurrency:` blocks of `.github/workflows/build-*.yml` and the full `nightly-platforms.yml` from `board_families.json` + `ci_common_paths.txt`. CI invokes `--check` to enforce no drift. See [docs/DEVELOPMENT.md](../docs/DEVELOPMENT.md#ci-per-board-build-triggers) and FastLED/fbuild#835.
 - **`select_boards.py`** -- Picks which `build-<board>.yml` workflows `nightly-platforms.yml` dispatches: path-selected from a push diff, or `--all` for the nightly badge refresh. Tested by `test_select_boards.py`.
 - **`test_setup_soldr_cache_keys.py`** -- Every saving `zackees/setup-soldr` step must set a `cache-key-suffix` unique per runner; jobs sharing a key race to own one immutable cache entry.
@@ -161,6 +182,7 @@ fail coverage. This policy is tracked in [#1698](https://github.com/FastLED/fbui
 - **`audit_ignored_tests.py`** -- Weekly inventory of every `#[ignore]` attribute, published as the body of tracking issue #880 (FastLED/fbuild#839). Detection runs on a blanked copy of the source, so a mention inside a `//` or nested `/* ... */` comment, a string/raw-string fixture or a `'"'` char literal is not an ignored test, while `#[ignore = "reason"]` (normal or raw string) and bare `#[ignore]` both are. `test_audit_ignored_tests.py` covers each of those faces plus the live workspace, and cross-checks every reported line against the file it names.
 
 - **`check_python_complexity.py`** -- Runs configured C901/RUF100 checks on every tracked Python file, including scripts excluded from normal discovery (FastLED/fbuild#1639). `test_check_python_complexity.py` drives the same seams, so a raised `max-complexity`, a dropped rule, or a file-selection regression fails a test instead of silently loosening the ratchet.
+- **`check_python_types.py`** -- Runs the pinned basedpyright over every tracked Python file in a uv environment that also holds the scripts' third-party imports, passing that interpreter as `--pythonpath` so they resolve. Policy lives in `[tool.basedpyright]` in `pyproject.toml`. `test_check_python_types.py` drives the same command against synthetic modules, so a loosened mode, a disabled rule, a stale ignore or an unresolvable dependency fails a test.
 
 ESP libs slices: `uv run --no-project ci/slice_esp_libs.py SOURCE --version 3.3.5
 --out-dir OUTPUT` reads the xz once and spools payloads to temporary disk to sort

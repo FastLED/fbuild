@@ -10,6 +10,7 @@ class ToolGuardTests(unittest.TestCase):
     def test_blocks_bare_rust_tool(self):
         result = check_command("cargo test")
         self.assertIsNotNone(result)
+        assert result is not None
         self.assertEqual(result[0], "cargo")
 
     def test_blocks_uv_run_rust_tool_shim(self):
@@ -28,6 +29,7 @@ class ToolGuardTests(unittest.TestCase):
             with self.subTest(command=command):
                 result = check_command(command)
                 self.assertIsNotNone(result)
+                assert result is not None
                 self.assertEqual(result[0], "cargo")
 
     def test_blocks_uv_run_soldr(self):
@@ -45,6 +47,7 @@ class ToolGuardTests(unittest.TestCase):
             with self.subTest(command=command):
                 result = check_command(command)
                 self.assertIsNotNone(result, f"expected deny for: {command}")
+                assert result is not None
                 self.assertEqual(result[0], "soldr")
 
     def test_allows_soldr_wrapped_rust_tool(self):
@@ -56,6 +59,7 @@ class ToolGuardTests(unittest.TestCase):
     def test_blocks_bare_python(self):
         result = check_command("python ci/script.py")
         self.assertIsNotNone(result)
+        assert result is not None
         self.assertEqual(result[0], "python")
 
     def test_extracts_powershell_command_field(self):
