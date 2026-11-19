@@ -5,6 +5,7 @@ import unittest
 from ci.local_gate import JsonValue
 from ci.measure_dylint_gate import (
     Attribution,
+    _as_json,
     demanded_regimes,
     measure,
     pairs,
@@ -212,6 +213,37 @@ class MalformedRecordTests(unittest.TestCase):
         del raw["finished_at"]
         with self.assertRaises(ValueError):
             measure("run-a", raw)
+
+
+class JsonRecordTests(unittest.TestCase):
+    def test_record_is_serializable_and_carries_the_demanded_identity(self) -> None:
+        import json
+
+        runs = (
+            measure("run-a", record()),
+            measure("run-b", record(run_id="run-b", engine="engine-b")),
+        )
+        document = _as_json(runs, pairs(runs))
+        json.dumps(document)  # a record that cannot be serialized is not a record
+        entries = document["runs"]
+        assert isinstance(entries, list)
+        first = entries[0]
+        assert isinstance(first, dict)
+        for key in (
+            "tree_digest",
+            "payload_sha256",
+            "engine_id",
+            "act_binary_digest",
+            "runner_image",
+            "attribution_ms",
+            "executed_steps",
+            "provenance",
+        ):
+            self.assertIn(key, first)
+        regimes = document["regimes"]
+        assert isinstance(regimes, dict)
+        self.assertEqual(regimes["fresh-engine warm"], ["run-a->run-b"])
+        self.assertEqual(regimes["cold"], [])
 
 
 if __name__ == "__main__":

@@ -458,8 +458,11 @@ def _read_log_lines(run_id: str) -> list[str]:
         if not raw.strip():
             continue
         record: JsonValue = json.loads(raw)
-        if isinstance(record, dict) and isinstance(record.get("text"), str):
-            lines.append(record["text"])
+        if not isinstance(record, dict):
+            continue
+        text = record.get("text")
+        if isinstance(text, str):
+            lines.append(text)
     return lines
 
 
@@ -514,51 +517,56 @@ def _latest_ids(count: int) -> list[str]:
     return [_string(run, "id") for run in runs if isinstance(run, dict)]
 
 
+def _run_json(run: RunMeasurement) -> JsonValue:
+    """One run's record, in the order a reader wants it."""
+    attribution: dict[str, JsonValue] = {}
+    for name in Attribution.__dataclass_fields__:
+        attribution[name.removesuffix("_ms")] = getattr(run.attribution, name)
+    steps: list[JsonValue] = []
+    for step in run.executed_steps:
+        steps.append(
+            {"job": step.job, "name": step.name, "duration_ms": step.duration_ms}
+        )
+    provenance: dict[str, JsonValue] = {}
+    for key, count in run.provenance.items():
+        provenance[key] = count
+    samples: dict[str, JsonValue] = {}
+    for key, sample in run.samples.items():
+        samples[key] = list(sample)
+    return {
+        "id": run.run_id,
+        "evidence": run.complete,
+        "sha": run.sha,
+        "git_tree": run.git_tree,
+        "tree_digest": run.tree_digest,
+        "payload_sha256": run.payload_sha256,
+        "engine_id": run.engine_id,
+        "act_version": run.act_version,
+        "act_binary_digest": run.act_binary_digest,
+        "runner_image": run.runner_image,
+        "workflow": run.workflow,
+        "event": run.event,
+        "trigger": run.trigger,
+        "mode": run.mode,
+        "conclusion": run.conclusion,
+        "exit_code": run.exit_code,
+        "started_at": run.started_at,
+        "wall_ms": run.wall_ms,
+        "serial_gap_ms": run.serial_gap_ms,
+        "attribution_ms": attribution,
+        "executed_steps": steps,
+        "provenance": provenance,
+        "provenance_samples": samples,
+    }
+
+
 def _as_json(
     runs: tuple[RunMeasurement, ...], found: tuple[ReusePair, ...]
-) -> JsonValue:
-    return {
-        "runs": [
-            {
-                "id": run.run_id,
-                "evidence": run.complete,
-                "sha": run.sha,
-                "git_tree": run.git_tree,
-                "tree_digest": run.tree_digest,
-                "payload_sha256": run.payload_sha256,
-                "engine_id": run.engine_id,
-                "act_version": run.act_version,
-                "act_binary_digest": run.act_binary_digest,
-                "runner_image": run.runner_image,
-                "workflow": run.workflow,
-                "event": run.event,
-                "trigger": run.trigger,
-                "mode": run.mode,
-                "conclusion": run.conclusion,
-                "exit_code": run.exit_code,
-                "wall_ms": run.wall_ms,
-                "started_at": run.started_at,
-                "serial_gap_ms": run.serial_gap_ms,
-                "attribution_ms": {
-                    name.removesuffix("_ms"): getattr(run.attribution, name)
-                    for name in Attribution.__dataclass_fields__
-                },
-                "executed_steps": [
-                    {
-                        "job": step.job,
-                        "name": step.name,
-                        "duration_ms": step.duration_ms,
-                    }
-                    for step in run.executed_steps
-                ],
-                "provenance": run.provenance,
-                "provenance_samples": {
-                    key: list(value) for key, value in run.samples.items()
-                },
-            }
-            for run in runs
-        ],
-        "pairs": [
+) -> dict[str, JsonValue]:
+    runs_json: list[JsonValue] = [_run_json(run) for run in runs]
+    pairs_json: list[JsonValue] = []
+    for pair in found:
+        pairs_json.append(
             {
                 "earlier": pair.earlier,
                 "later": pair.later,
@@ -567,12 +575,14 @@ def _as_json(
                 "later_ms": pair.later_ms,
                 "delta_ms": pair.delta_ms,
             }
-            for pair in found
-        ],
-        "regimes": {
-            regime: [f"{pair.earlier}->{pair.later}" for pair in covering]
-            for regime, covering in demanded_regimes(found).items()
-        },
+        )
+    regimes_json: dict[str, JsonValue] = {}
+    for regime, covering in demanded_regimes(found).items():
+        regimes_json[regime] = [f"{pair.earlier}->{pair.later}" for pair in covering]
+    return {
+        "runs": runs_json,
+        "pairs": pairs_json,
+        "regimes": regimes_json,
         "caveats": [
             "cold is not provable from a bosn record (no cache-state field)",
             "bosn records carry no host-load field; a controlled measurement needs an idle host",
