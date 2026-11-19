@@ -149,6 +149,9 @@ fn a_detached_head_watches_only_head_and_index() {
 #[test]
 fn the_probe_degrades_outside_a_checkout() {
     let missing = Path::new(env!("CARGO_MANIFEST_DIR")).join("no-such-checkout-dir");
-    assert_eq!(run_git(&missing, &["rev-parse", "--short=12", "HEAD"]), None);
+    assert_eq!(
+        run_git(&missing, &["rev-parse", "--short=12", "HEAD"]),
+        None
+    );
     emit(&missing);
 }

@@ -15,5 +15,8 @@
 static GLOBAL: mimalloc_pprof::MiMalloc = mimalloc_pprof::MiMalloc;
 
 fn main() {
+    // FastLED/fbuild#1742: this binary's commit stamp, installed before the
+    // daemon reads it for `/health` and broker registration.
+    let _ = fbuild_core::build_id::STAMP.set(fbuild_core::build_stamp!());
     std::process::exit(fbuild_daemon::entry::run());
 }

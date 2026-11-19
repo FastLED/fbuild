@@ -1,38 +1,25 @@
-//! Stamp the workspace build identity into `fbuild-core` (FastLED/fbuild#1742).
+//! Stamp the embedded-assets digest into `fbuild-core` (FastLED/fbuild#2042).
 //!
-//! Two builds of the same workspace version used to be indistinguishable:
-//! `fbuild --version` and `fbuild daemon status` both printed `2.5.46`, so an
-//! editable install that kept yesterday's binaries — or a daemon left running
-//! from an older checkout — looked current, and a missing feature was blamed on
-//! fbuild instead of on the stale binary (#1742, and the daemon confusion in
-//! #1739).
+//! The no-op build fingerprint keys on the bytes of the assets compiled into
+//! the workspace (config JSONs, board files, scripts), because the commit
+//! stamp cannot see an uncommitted edit. The digest changes only when those
+//! bytes do, so it is safe this low in the crate graph.
 //!
-//! The commit and dirty flag are baked in at compile time and reported by both
-//! binaries. `fbuild-core` carries the stamp for the whole workspace: every
-//! crate that reports a version depends on it, so a single probe keeps the CLI
-//! and the daemon agreeing instead of duplicating git logic per binary.
-//!
-//! The probe is best-effort by design. A missing `git`, a source tarball with
-//! no `.git`, or a repository owned by another user must never fail a build —
-//! the stamp degrades to `unknown`, which the CLI prints verbatim.
-//!
-//! It also stamps a digest of the assets compiled into the workspace (config
-//! JSONs, board files, scripts). The commit stamp cannot see an uncommitted
-//! edit, so the no-op build fingerprint keys on these bytes too
-//! (FastLED/fbuild#2042).
+//! The commit stamp is deliberately *not* here. It changes on every commit,
+//! and stamped into `fbuild-core` it recompiled all 19 workspace crates that
+//! depend on it, so every hosted clippy, test and Dylint pass rechecked the
+//! whole workspace whatever the commit touched. `fbuild-cli` and
+//! `fbuild-daemon`, at the top of the graph, stamp it instead
+//! (`commit_stamp.rs`, FastLED/fbuild#1742).
 
 use std::path::Path;
 
 #[path = "src/build_stamp.rs"]
 mod build_stamp;
-#[path = "commit_stamp.rs"]
-mod commit_stamp;
 
 fn main() {
-    // The commit stamp and its git watch paths: see `commit_stamp::emit`.
     let manifest_dir = std::env::var("CARGO_MANIFEST_DIR").unwrap_or_default();
     let manifest_dir = Path::new(&manifest_dir);
-    commit_stamp::emit(manifest_dir);
     stamp_embedded_assets(manifest_dir);
     println!("cargo:rerun-if-changed=build.rs");
 }

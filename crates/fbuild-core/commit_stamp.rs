@@ -108,17 +108,28 @@ pub fn emit(manifest_dir: &Path) {
     }
     let commit = run_git(manifest_dir, &["rev-parse", "--short=12", "HEAD"])
         .unwrap_or_else(|| "unknown".to_string());
-    let dirty = run_git(manifest_dir, &["status", "--porcelain", "--untracked-files=no"])
-        .is_some_and(|porcelain| !porcelain.is_empty());
+    let dirty = run_git(
+        manifest_dir,
+        &["status", "--porcelain", "--untracked-files=no"],
+    )
+    .is_some_and(|porcelain| !porcelain.is_empty());
     println!("cargo:rustc-env=FBUILD_BUILD_COMMIT={commit}");
-    println!("cargo:rustc-env=FBUILD_BUILD_DIRTY={}", if dirty { "1" } else { "0" });
+    println!(
+        "cargo:rustc-env=FBUILD_BUILD_DIRTY={}",
+        if dirty { "1" } else { "0" }
+    );
 }
 
 /// `git -C <dir> <args>` trimmed stdout, or `None` when git is absent, the
 /// directory is not a repository, or the command fails.
 fn run_git(dir: &Path, args: &[&str]) -> Option<String> {
     // allow-direct-spawn: compile-time git stamp; build scripts link no fbuild crates.
-    let output = Command::new("git").arg("-C").arg(dir).args(args).output().ok()?;
+    let output = Command::new("git")
+        .arg("-C")
+        .arg(dir)
+        .args(args)
+        .output()
+        .ok()?;
     if !output.status.success() {
         return None;
     }
