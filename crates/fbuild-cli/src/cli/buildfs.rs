@@ -459,6 +459,7 @@ fn stage_data(data_dir: &NormalizedPath, staging: &NormalizedPath) -> Result<()>
             data_dir.as_path().display()
         ));
     }
+    ensure_unique_projections(&entries)?;
 
     // Blob leases must outlive the pack so hardlinked children stay valid.
     let mut leases = Vec::new();
@@ -541,6 +542,37 @@ fn starts_with_json_object(path: &Path) -> Result<bool> {
         .map(str::trim)
         .find(|line| !line.is_empty() && !line.starts_with('#'))
         .is_some_and(|line| line.starts_with('{')))
+}
+
+/// Reject two `data/` declarations that would land on the same name in the
+/// image.
+///
+/// A blob pointer is staged at its *projected* name — `data/video1.rgb.fetch`
+/// becomes `video1.rgb` — so a pointer silently overwrote a committed
+/// `data/video1.rgb`, and two pointers naming the same blob
+/// (`video1.rgb.fetch` + `video1.rgb.lnk`) silently overwrote each other, with
+/// the last source staged winning. The image must never depend on walk order:
+/// this is the "two declarations naming the same file" error case.
+///
+/// FastLED's plain-text runtime `.lnk` links are *not* pointers (they ship as
+/// data under their own name), so they never collide with anything here.
+fn ensure_unique_projections(entries: &[(String, NormalizedPath)]) -> Result<()> {
+    let mut staged: HashMap<String, &str> = HashMap::new();
+    for (relative, source) in entries {
+        let projected = if classify_pointer(source.as_path())?.is_some() {
+            strip_pointer_suffix(relative)
+        } else {
+            relative.clone()
+        };
+        if let Some(first) = staged.insert(projected.clone(), relative.as_str()) {
+            return Err(FbuildError::BuildFailed(format!(
+                "{first} and {relative} both land on {projected} in the image: a blob pointer is \
+                 staged at its blob's name, so one would silently overwrite the other. Remove one \
+                 declaration, or rename the blob it points at."
+            )));
+        }
+    }
+    Ok(())
 }
 
 fn strip_pointer_suffix(relative: &str) -> String {

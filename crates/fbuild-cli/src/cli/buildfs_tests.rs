@@ -317,3 +317,80 @@ async fn broken_pointer_aborts_the_build() {
         .expect_err("broken pointer aborts");
     assert!(format!("{err}").contains("does not parse"), "{err}");
 }
+
+/// A JSON fbuild pointer naming `name` in the temp dir.
+fn write_json_pointer(dir: &std::path::Path, name: &str) -> NormalizedPath {
+    let path = dir.join(name);
+    std::fs::write(
+        &path,
+        format!(
+            "{{\"v\":1,\"url\":\"https://example.com/blob\",\"sha256\":\"{}\"}}",
+            "a".repeat(64)
+        ),
+    )
+    .unwrap();
+    NormalizedPath::new(path)
+}
+
+#[test]
+fn committed_file_and_pointer_with_the_same_projected_name_is_an_error() {
+    let root = tempfile::tempdir_in(fbuild_paths::dev_or_prod_temp_root()).unwrap();
+    std::fs::write(root.path().join("video1.rgb"), b"committed").unwrap();
+    write_json_pointer(root.path(), "video1.rgb.fetch");
+    let entries = collect_entries(&NormalizedPath::new(root.path())).unwrap();
+    let err = ensure_unique_projections(&entries).expect_err("collision must be refused");
+    let message = format!("{err}");
+    assert!(message.contains("video1.rgb.fetch"), "{message}");
+    assert!(message.contains("both land on video1.rgb"), "{message}");
+    assert!(message.contains("silently overwrite"), "{message}");
+}
+
+#[test]
+fn two_pointers_projecting_to_the_same_blob_name_is_an_error() {
+    let root = tempfile::tempdir_in(fbuild_paths::dev_or_prod_temp_root()).unwrap();
+    write_json_pointer(root.path(), "video1.rgb.fetch");
+    write_json_pointer(root.path(), "video1.rgb.lnk");
+    let entries = collect_entries(&NormalizedPath::new(root.path())).unwrap();
+    let err = ensure_unique_projections(&entries).expect_err("collision must be refused");
+    assert!(
+        format!("{err}").contains("both land on video1.rgb"),
+        "{err}"
+    );
+}
+
+#[test]
+fn distinct_pointers_and_runtime_lnk_links_stage_without_collision() {
+    let root = tempfile::tempdir_in(fbuild_paths::dev_or_prod_temp_root()).unwrap();
+    write_json_pointer(root.path(), "a.bin.fetch");
+    // FastLED's plain-text runtime link is data, not an fbuild pointer: it
+    // ships under its own name and cannot collide with `track.mp3`.
+    std::fs::write(
+        root.path().join("track.mp3.lnk"),
+        b"# link\nhttps://example.com/track.mp3\n",
+    )
+    .unwrap();
+    std::fs::write(root.path().join("track.mp3"), b"audio").unwrap();
+    std::fs::write(root.path().join("readme.txt"), b"hi").unwrap();
+    let entries = collect_entries(&NormalizedPath::new(root.path())).unwrap();
+    ensure_unique_projections(&entries).expect("distinct names never collide");
+}
+
+/// The check must actually run inside staging, before anything is fetched: a
+/// colliding tree fails without touching the network or the disk cache.
+#[test]
+fn stage_data_refuses_a_projection_collision_before_fetching() {
+    let root = tempfile::tempdir_in(fbuild_paths::dev_or_prod_temp_root()).unwrap();
+    let data = root.path().join("data");
+    std::fs::create_dir_all(&data).unwrap();
+    std::fs::write(data.join("video1.rgb"), b"committed").unwrap();
+    write_json_pointer(&data, "video1.rgb.fetch");
+    let staging = NormalizedPath::new(root.path().join("stage"));
+    let err = stage_data(&NormalizedPath::new(&data), &staging)
+        .expect_err("staging must refuse the collision");
+    let message = format!("{err}");
+    assert!(message.contains("both land on video1.rgb"), "{message}");
+    assert!(
+        !staging.as_path().join("video1.rgb").exists(),
+        "nothing staged"
+    );
+}
