@@ -194,9 +194,63 @@ async fn at16_handshake_stall_times_out() {
             handshake_timeout: Duration::from_millis(300),
         };
         let started = tokio::time::Instant::now();
-        let result = SerialSession::connect(cfg).await;
-        assert_eq!(result.err(), Some(SessionError::Timeout));
+        let error = SerialSession::connect(cfg)
+            .await
+            .err()
+            .expect("a stalled WS upgrade must time out");
+        let SessionError::ConnectionFailed(message) = error else {
+            panic!("expected a handshake timeout error, got {error}");
+        };
+        assert!(message.contains("attach/handshake timed out"), "{message}");
+        assert!(
+            message.contains("no WebSocket upgrade completed"),
+            "{message}"
+        );
         assert!(started.elapsed() < Duration::from_secs(5));
+    })
+    .await;
+}
+
+/// FastLED/fbuild#2095: when the daemon accepts the attach frame but never
+/// answers it (a starved daemon still opening the port), the client must say
+/// so — the reply stage, and how long it waited — instead of the bare
+/// "attach/handshake timed out".
+#[tokio::test]
+async fn handshake_timeout_names_the_attach_reply_stage() {
+    with_watchdog(Duration::from_secs(10), async {
+        let listener = TcpListener::bind("127.0.0.1:0").await.unwrap();
+        let port = listener.local_addr().unwrap().port();
+        tokio::spawn(async move {
+            let (stream, _) = listener.accept().await.unwrap();
+            let ws = tokio_tungstenite::accept_async(stream).await.unwrap();
+            let (_sink, mut source) = ws.split();
+            // Drain the attach frame, then never reply to it.
+            let _ = source.next().await;
+            std::future::pending::<()>().await;
+        });
+        let cfg = SessionConfig {
+            ws_url: format!("ws://127.0.0.1:{port}"),
+            port: "COM_TEST".into(),
+            baud_rate: 115200,
+            auto_reconnect: false,
+            verbose: false,
+            client_id: "test".into(),
+            lease_id: None,
+            max_buffered_lines: DEFAULT_MAX_BUFFERED_LINES,
+            handshake_timeout: Duration::from_millis(300),
+        };
+        let error = SerialSession::connect(cfg)
+            .await
+            .err()
+            .expect("an unanswered attach must time out");
+        let SessionError::ConnectionFailed(message) = error else {
+            panic!("expected a handshake timeout error, got {error}");
+        };
+        assert!(
+            message.contains("attach sent, but the daemon sent no reply"),
+            "{message}"
+        );
+        assert!(message.contains("timed out after 0.3s"), "{message}");
     })
     .await;
 }
@@ -623,16 +677,13 @@ async fn refused_daemon_connection_is_recoverable() {
             .await
             .err()
             .expect("connection should fail");
-        match error {
-            SessionError::ConnectionFailed(message) => {
-                assert!(message.contains("daemon WebSocket"), "{message}");
-            }
-            // Windows can report a closed localhost listener only after the
-            // connect deadline. Both Python facades map this connect timeout
-            // to a ConnectionError with the daemon WebSocket recovery hint.
-            SessionError::Timeout => {}
-            other => panic!("unexpected connection error: {other}"),
-        }
+        // Windows can report a closed localhost listener only after the
+        // connect deadline; that path is the same ConnectionFailed handshake
+        // timeout, naming the connecting stage (#2095).
+        let SessionError::ConnectionFailed(message) = error else {
+            panic!("unexpected connection error: {error}");
+        };
+        assert!(message.contains("daemon WebSocket"), "{message}");
     })
     .await;
 }

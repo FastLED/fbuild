@@ -47,7 +47,9 @@ pub mod session;
 pub mod sysfs_usb;
 pub mod usb_recovery;
 
-pub use manager::{PortSessionInfo, SerialClientInfo, SharedSerialManager};
+pub use manager::{
+    OPEN_FAMILY_RESOLVE_TIMEOUT, PortSessionInfo, SerialClientInfo, SharedSerialManager,
+};
 pub use messages::{
     SerialClientMessage, SerialClientMetadata, SerialServerMessage, SerialStreamEvent,
 };

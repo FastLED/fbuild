@@ -40,15 +40,12 @@ use crate::messages::{ClientMessage, ServerMessage, WsSink, WsSource};
 /// Serial-line prefix of a device's JSON-RPC reply.
 const REMOTE_PREFIX: &str = "REMOTE:";
 
-/// Default cap on buffered, undelivered serial lines. Overflow drops the
-/// oldest lines and counts them (`SerialSession::lines_dropped`); see §4.3.
+/// Default cap on buffered, undelivered lines (§4.3); overflow drops the oldest.
 pub(crate) const DEFAULT_MAX_BUFFERED_LINES: usize = 10_000;
 
-/// How many `SerialSession`s are currently live (incremented on a
-/// successful `connect`, decremented in `Drop`). Compiled only in debug
-/// builds (on for `cargo test`, off for a release wheel): AT-P16 uses this,
-/// via `crate::live_session_count()`, to prove a dropped-without-`close()`
-/// session's reader task actually terminates instead of leaking.
+/// How many `SerialSession`s are live (incremented on `connect`, decremented
+/// in `Drop`; debug builds only). AT-P16 proves a dropped-without-`close()`
+/// session's reader task terminates instead of leaking.
 #[cfg(debug_assertions)]
 static LIVE_SESSIONS: AtomicUsize = AtomicUsize::new(0);
 
@@ -57,9 +54,9 @@ pub(crate) fn live_session_count() -> usize {
     LIVE_SESSIONS.load(Ordering::SeqCst)
 }
 
-/// Errors surfaced by every core operation. Mapped to Python exceptions in
-/// the facades (`Timeout` -> `TimeoutError`, `Closed`/`PortGone`/`Preempted`/`ConnectionFailed`
-/// -> `ConnectionError`, `ProtocolDesync`/`WriteFailed` -> `RuntimeError`).
+/// Core errors; the facades map them to Python exceptions (`Timeout` ->
+/// `TimeoutError`; `Closed`/`PortGone`/`Preempted`/`ConnectionFailed` ->
+/// `ConnectionError`; `ProtocolDesync`/`WriteFailed` -> `RuntimeError`).
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub(crate) enum SessionError {
     Timeout,
@@ -416,11 +413,11 @@ pub(crate) struct SerialSession {
 }
 
 impl SerialSession {
-    /// Attach to the daemon's `/ws/serial-monitor` endpoint: connect,
-    /// handshake, then spawn the sole reader task. Capped at
-    /// `cfg.handshake_timeout` (default callers use 5s).
+    /// Attach to the daemon's `/ws/serial-monitor` endpoint within
+    /// `cfg.handshake_timeout`, then spawn the sole reader task.
     pub(crate) async fn connect(cfg: SessionConfig) -> Result<Self, SessionError> {
-        let deadline = tokio::time::Instant::now() + cfg.handshake_timeout;
+        let clock = HandshakeClock::new(cfg.handshake_timeout);
+        let deadline = clock.deadline();
         let (ws_stream, _) =
             match tokio::time::timeout_at(deadline, tokio_tungstenite::connect_async(&cfg.ws_url))
                 .await
@@ -432,7 +429,7 @@ impl SerialSession {
                         cfg.ws_url
                     )));
                 }
-                Err(_) => return Err(SessionError::Timeout),
+                Err(_) => return Err(clock.expired(HandshakeStage::Connecting)),
             };
         let (mut write, mut read) = ws_stream.split();
 
@@ -446,13 +443,13 @@ impl SerialSession {
         {
             Ok(Ok(())) => {}
             Ok(Err(_)) => return Err(SessionError::Closed),
-            Err(_) => return Err(SessionError::Timeout),
+            Err(_) => return Err(clock.expired(HandshakeStage::SendingAttach)),
         }
 
         let msg = match tokio::time::timeout_at(deadline, read.next()).await {
             Ok(Some(Ok(msg))) => msg,
             Ok(Some(Err(_))) | Ok(None) => return Err(SessionError::Closed),
-            Err(_) => return Err(SessionError::Timeout),
+            Err(_) => return Err(clock.expired(HandshakeStage::AwaitingReply)),
         };
         let tungstenite::Message::Text(text) = msg else {
             return Err(SessionError::Closed);
@@ -991,8 +988,10 @@ async fn reader_task(inner: Arc<Inner>, mut read: WsSource, auto_reconnect: bool
 }
 
 mod attach;
+mod handshake;
 
 pub(crate) use attach::attach_message;
+pub(crate) use handshake::{DEFAULT_HANDSHAKE_TIMEOUT, HandshakeClock, HandshakeStage};
 
 #[cfg(test)]
 #[path = "serial_session/tests.rs"]

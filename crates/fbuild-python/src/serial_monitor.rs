@@ -88,7 +88,7 @@ impl SerialMonitor {
             client_id: self.client_id.clone(),
             lease_id: self.lease_id.clone(),
             max_buffered_lines: crate::serial_session::DEFAULT_MAX_BUFFERED_LINES,
-            handshake_timeout: std::time::Duration::from_secs(5),
+            handshake_timeout: crate::serial_session::DEFAULT_HANDSHAKE_TIMEOUT,
         }
     }
 
