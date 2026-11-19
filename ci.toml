@@ -181,12 +181,3 @@ cache-actions     = { only-in = ".github/actions/setup" }
 
 [publish]
 pypi = { auth = "oidc", environment = "pypi", mode = "rehearsal" }
-
-# setup-soldr@v0 still defaults to soldr 0.9.51, which rebuilds every lint
-# library per cross target. dylint.yml pins 0.9.53 until v0 moves (#2082).
-[[exceptions]]
-rule    = "RUST-013"
-path    = ".github/workflows/dylint.yml"
-reason  = "setup-soldr@v0 is vendor-locked to soldr 0.9.51; 0.9.52+ shares the host lint-library build with cross-target Dylint passes (~10 of 13 min). Drop once v0 defaults to >= 0.9.52."
-issue   = "https://github.com/FastLED/fbuild/issues/2082"
-expires = "2027-01-31"

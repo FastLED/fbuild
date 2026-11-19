@@ -48,7 +48,7 @@ steps. The wrapper uses released Bosn >=0.1.22 for the stock runner tools.
 `local-gate.toml` reports optional attestations in shadow mode. The local gate uses the existing
 workflow-dispatch event for both the Ubuntu pair and Dylint before stamping
 the tree. Dispatch Dylint runs the same three-target graph the PR path runs
-through ci-minimal's `workflow_call`; soldr 0.9.53+ points the cross-target
+through ci-minimal's `workflow_call`; soldr 0.9.52+ (setup-soldr@v0's default) points the cross-target
 lint libraries at the host build, so the extra targets do not rebuild them. Library UI fixtures retain their
 existing source-change condition. Shared replay coverage binds every Ubuntu action and command to its literal
 execution name. The advisory verifier runs independently and is not part of the Linux proof. The original Ubuntu
