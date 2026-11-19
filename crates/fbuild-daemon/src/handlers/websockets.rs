@@ -7,7 +7,9 @@ use axum::extract::ws::{Message, WebSocket};
 use axum::extract::{State, WebSocketUpgrade};
 use axum::response::IntoResponse;
 use fbuild_core::channel as mpsc;
-use fbuild_serial::{SerialClientMessage, SerialServerMessage, SerialStreamEvent};
+use fbuild_serial::{
+    SerialClientMessage, SerialServerMessage, SerialStreamEvent, WS_SERIAL_OPEN_PORT_TIMEOUT,
+};
 use futures::{SinkExt, StreamExt};
 use std::future::Future;
 use std::sync::Arc;
@@ -111,12 +113,6 @@ async fn cleanup_ws_serial_session(ctx: &Arc<DaemonContext>, port: &str, client_
 /// for every dead connection. See FastLED/fbuild#808.
 const WS_ATTACH_HANDSHAKE_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(10);
 
-/// Cap on the WebSocket serial attach `open_port` await. WebSocket serial
-/// clients attach over localhost and should fail fast if the daemon cannot
-/// claim the port; this is intentionally shorter than the HTTP monitor paths
-/// so a wedged USB driver cannot leave a pending attach counted forever. See
-/// FastLED/fbuild#977.
-const WS_SERIAL_OPEN_PORT_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(3);
 const WS_SERIAL_RECOVERY_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(30);
 
 fn format_timeout_for_error(timeout: Duration) -> String {

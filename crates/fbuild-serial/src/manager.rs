@@ -36,6 +36,14 @@ const SERIAL_READ_TIMEOUT: Duration = Duration::from_millis(10);
 /// [`SharedSerialManager::resolve_open_family`]).
 pub const OPEN_FAMILY_RESOLVE_TIMEOUT: Duration = Duration::from_secs(3);
 
+/// Cap on the daemon's WebSocket serial attach `open_port` await, which runs
+/// after [`OPEN_FAMILY_RESOLVE_TIMEOUT`]. WebSocket serial clients attach
+/// over localhost and should fail fast if the daemon cannot claim the port;
+/// this is intentionally shorter than the HTTP monitor paths so a wedged USB
+/// driver cannot leave a pending attach counted forever. See
+/// FastLED/fbuild#977.
+pub const WS_SERIAL_OPEN_PORT_TIMEOUT: Duration = Duration::from_secs(3);
+
 /// Run `resolve` on a blocking thread, bounded by `bound`, and log how long
 /// it took. An unidentified port gets [`crate::boards::BoardFamily::CdcAcmBridge`];
 /// a resolver that panics or exceeds `bound` falls back to `last_known`, else
