@@ -327,7 +327,10 @@ pub async fn compile_library_link_inputs_gated(
     let backend_owned = backend.clone();
     let history_root_arc = std::sync::Arc::new(history_root_owned);
 
-    let mut first_error: Option<String> = None;
+    // Keep the error itself, not just its text: a signal kill must stay
+    // recognisable to callers that remember failures (FastLED/fbuild#1628
+    // ask 2, #1630), and flattening it to a string erased that.
+    let mut first_error: Option<FbuildError> = None;
     for (source, signature) in stale_sources {
         if failed.load(std::sync::atomic::Ordering::Relaxed) {
             break;
@@ -335,7 +338,7 @@ pub async fn compile_library_link_inputs_gated(
         let permit = match gate.clone().acquire_owned().await {
             Ok(permit) => permit,
             Err(e) => {
-                first_error = Some(format!("semaphore closed: {e}"));
+                first_error = Some(FbuildError::BuildFailed(format!("semaphore closed: {e}")));
                 break;
             }
         };
@@ -393,19 +396,21 @@ pub async fn compile_library_link_inputs_gated(
             Ok(Ok(())) => {}
             Ok(Err(e)) => {
                 if first_error.is_none() {
-                    first_error = Some(e.to_string());
+                    first_error = Some(e);
                 }
             }
             Err(join_err) => {
                 if first_error.is_none() {
-                    first_error = Some(format!("compile task panicked: {join_err}"));
+                    first_error = Some(FbuildError::BuildFailed(format!(
+                        "compile task panicked: {join_err}"
+                    )));
                 }
             }
         }
     }
 
     if let Some(error) = first_error {
-        return Err(FbuildError::BuildFailed(error));
+        return Err(error);
     }
 
     let mut all_objects = all_objects;
@@ -612,10 +617,7 @@ async fn compile_one_source(
     };
 
     if exit_code != 0 {
-        log_signal_kill(source, lib_name, exit_code);
-        return Err(FbuildError::BuildFailed(compile_failure_message(
-            source, lib_name, exit_code, &stderr,
-        )));
+        return Err(compile_exit_error(source, lib_name, exit_code, &stderr));
     }
 
     std::fs::write(command_hash_path(&obj), rebuild_signature)?;
@@ -623,18 +625,25 @@ async fn compile_one_source(
     Ok(obj)
 }
 
-/// Record a signal kill in the daemon log (FastLED/fbuild#1628 ask 3, #1630).
+/// The error for a non-zero compiler exit.
 ///
-/// A killed compiler wrote nothing to stderr and has no exit status of its own,
-/// so the log line is the only place the signal and its meaning can survive.
-fn log_signal_kill(source: &Path, lib_name: &str, exit_code: i32) {
-    if let Some(termination) = fbuild_core::termination::host_termination(exit_code) {
-        tracing::warn!(
-            "compiler for {} in library {} {}",
-            source.display(),
-            lib_name,
-            termination.log_line()
-        );
+/// A killed compiler reached no verdict about the source, so its failure gets
+/// its own kind and no caller that remembers failures may cache it
+/// (FastLED/fbuild#1628 ask 2, #1630). The daemon log is the only place the
+/// signal survives after the fact.
+fn compile_exit_error(source: &Path, lib_name: &str, exit_code: i32, stderr: &str) -> FbuildError {
+    let message = compile_failure_message(source, lib_name, exit_code, stderr);
+    match fbuild_core::termination::host_termination(exit_code) {
+        Some(termination) => {
+            tracing::warn!(
+                "compiler for {} in library {} {}",
+                source.display(),
+                lib_name,
+                termination.log_line()
+            );
+            FbuildError::ProcessTerminated { message, exit_code }
+        }
+        None => FbuildError::BuildFailed(message),
     }
 }
 

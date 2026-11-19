@@ -74,6 +74,15 @@ impl LibCompileBackend for FakeBackend {
             .unwrap_or_default()
             .to_string_lossy()
             .into_owned();
+        if name.starts_with("killed") {
+            // The spelling a SIGKILLed compiler reaches us as on Unix
+            // (FastLED/fbuild#1628 ask 2, #1630).
+            return Ok(LibCompileOutcome {
+                exit_code: -9,
+                stdout: Vec::new(),
+                stderr: Vec::new(),
+            });
+        }
         if name.starts_with("bad") {
             return Ok(LibCompileOutcome {
                 exit_code: 1,
@@ -243,6 +252,43 @@ async fn finish_keeps_selection_order_and_tolerates_failures() {
     let (again, _) = fx.build(&libraries, &already, 2).await;
     assert_eq!(again, archives);
     assert_eq!(fx.backend.calls.load(Ordering::SeqCst), calls);
+}
+
+/// A framework library whose compiler was killed by a signal is not a verdict
+/// about the library: the compiler never evaluated it. Remembering the failure
+/// — in the build-dir marker or the persistent global cache — would replay the
+/// kill on every later build, so a retry could never recover
+/// (FastLED/fbuild#1628 ask 2, #1630).
+#[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+async fn signal_killed_framework_lib_is_not_remembered_so_the_next_build_retries() {
+    if fbuild_core::platform::host::is_windows() {
+        return;
+    }
+    let fx = Fixture::new();
+    let libraries = vec![fx.library("Delta", &["killed.cpp"])];
+
+    let (archives, _) = fx.build(&libraries, &HashSet::new(), 2).await;
+    assert!(archives.is_empty(), "{archives:?}");
+
+    let marker = framework_failure_marker(fx.build_dir().as_path(), "delta");
+    assert!(
+        !marker.exists(),
+        "a kill must not write the build-dir marker"
+    );
+    assert!(
+        !fx.ctx().cache.has_failed("delta"),
+        "a kill must not poison the persistent framework-library cache"
+    );
+
+    // The next build retries the library instead of skipping it.
+    let calls = fx.backend.calls.load(Ordering::SeqCst);
+    let (again, _) = fx.build(&libraries, &HashSet::new(), 2).await;
+    assert!(again.is_empty(), "{again:?}");
+    assert_eq!(
+        fx.backend.calls.load(Ordering::SeqCst),
+        calls + 1,
+        "the killed library must be recompiled, not replayed"
+    );
 }
 
 /// Pending libraries compile concurrently: with one TU each, two in flight is

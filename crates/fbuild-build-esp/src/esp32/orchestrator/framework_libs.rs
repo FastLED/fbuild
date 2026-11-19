@@ -443,6 +443,20 @@ impl FwLibsPlan {
                         ));
                     }
                     tracing::debug!("framework library {} failed to compile: {}", name, e);
+                    if e.is_signal_kill() {
+                        // A kill is not a verdict about this library: the
+                        // compiler never evaluated it and wrote no diagnostic.
+                        // Remembering it would replay the kill on every later
+                        // build (both markers are consulted before compiling),
+                        // so a retry could never recover (FastLED/fbuild#1628
+                        // ask 2, #1630).
+                        tracing::warn!(
+                            "framework library {} was killed before any diagnostic; \
+                             not remembering the failure so the next build retries",
+                            name
+                        );
+                        continue;
+                    }
                     record_failed_framework_lib(&marker, &ctx.signature, &e.to_string());
                     if let Err(error) = ctx.cache.record_failure(&name) {
                         tracing::warn!(

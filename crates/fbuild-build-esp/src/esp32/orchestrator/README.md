@@ -10,7 +10,7 @@ exceeds the 1000-LOC gate.
 | `packages.rs` | pioarduino platform / framework / toolchain resolution. |
 | `job_pool.rs` | The build's single compile job pool (FastLED/fbuild#1559): one `tokio::join!` of lib_deps, framework libs, project-as-library, core + sketch, local libs and boot artifacts on one job gate; `link_order` keeps the archive order. Tests in `job_pool_tests.rs`. |
 | `compile_phases.rs` | Core + sketch compile on the caller's shared job gate. |
-| `framework_libs.rs` | Built-in Arduino libraries shipped with the framework: sync prepare (cache hits, failure skips), concurrent compile on the shared gate, in-order finish. Tests in `framework_libs_tests.rs`. |
+| `framework_libs.rs` | Built-in Arduino libraries shipped with the framework: sync prepare (cache hits, failure skips), concurrent compile on the shared gate, in-order finish. A failed library is remembered for the next build — except a compiler killed by a signal, which is retried instead of replayed (FastLED/fbuild#1628 ask 2, #1630). Tests in `framework_libs_tests.rs`. |
 | `local_libs.rs` | Libraries from the project's `lib/` directory, and the project-as-library. |
 | `embed.rs` | `objcopy --input-target binary` conversion of embedded files. |
 | `embed_stage.rs` | `.lnk` resolution and target selection wrapper around `embed`. |
