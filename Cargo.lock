@@ -1170,6 +1170,7 @@ dependencies = [
  "thiserror",
  "tokio",
  "tracing",
+ "tracing-test",
  "widestring",
  "windows-sys 0.61.2",
  "zstd",

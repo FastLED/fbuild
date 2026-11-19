@@ -106,6 +106,9 @@ tar = { workspace = true }
 # NOT depend on zccache, so its test binary links exactly one copy. The heap half of #1361 stays in fbuild-daemon, which needs no
 # probe crate at all.
 running-process-probe-daemon = { workspace = true }
+# Log-capture assertions (`#[traced_test]` + `logs_contain`) for the
+# child-kill WARN in `subprocess.rs` (FastLED/fbuild#1628 ask 1).
+tracing-test = { workspace = true }
 
 [lints]
 workspace = true
