@@ -612,6 +612,7 @@ async fn compile_one_source(
     };
 
     if exit_code != 0 {
+        log_signal_kill(source, lib_name, exit_code);
         return Err(FbuildError::BuildFailed(compile_failure_message(
             source, lib_name, exit_code, &stderr,
         )));
@@ -622,9 +623,27 @@ async fn compile_one_source(
     Ok(obj)
 }
 
+/// Record a signal kill in the daemon log (FastLED/fbuild#1628 ask 3, #1630).
+///
+/// A killed compiler wrote nothing to stderr and has no exit status of its own,
+/// so the log line is the only place the signal and its meaning can survive.
+fn log_signal_kill(source: &Path, lib_name: &str, exit_code: i32) {
+    if let Some(termination) = fbuild_core::termination::host_termination(exit_code) {
+        tracing::warn!(
+            "compiler for {} in library {} {}",
+            source.display(),
+            lib_name,
+            termination.log_line()
+        );
+    }
+}
+
 /// The error for a failed library TU. The exit status is always included: a
 /// compiler killed by a signal exits non-zero with no stderr, and without it
-/// the failure is undiagnosable (FastLED/fbuild#1569).
+/// the failure is undiagnosable (FastLED/fbuild#1569). A kill additionally
+/// names its signal and says that nothing was compiled and nothing was wrong
+/// with the source (FastLED/fbuild#1628 ask 3, #1630) — `-9` alone reads like a
+/// compiler crash.
 fn compile_failure_message(source: &Path, lib_name: &str, exit_code: i32, stderr: &str) -> String {
     let stderr = stderr.trim_end();
     let detail = if stderr.is_empty() {
@@ -632,11 +651,23 @@ fn compile_failure_message(source: &Path, lib_name: &str, exit_code: i32, stderr
     } else {
         stderr
     };
-    format!(
-        "failed to compile {} in library {} (exit code {exit_code}):\n{detail}",
-        source.display(),
-        lib_name
-    )
+    match fbuild_core::termination::host_termination(exit_code) {
+        Some(termination) => {
+            let label = termination.label();
+            let hint = fbuild_core::termination::KILL_HINT;
+            format!(
+                "failed to compile {} in library {} (exit code {exit_code} = {label}):\n\
+                 {detail}\n\n{hint}",
+                source.display(),
+                lib_name
+            )
+        }
+        None => format!(
+            "failed to compile {} in library {} (exit code {exit_code}):\n{detail}",
+            source.display(),
+            lib_name
+        ),
+    }
 }
 
 fn object_needs_rebuild(source: &Path, object: &Path, signature: &str) -> Result<bool> {
@@ -858,6 +889,13 @@ fn write_sources(dir: &Path, names: &[&str]) -> Vec<PathBuf> {
 #[cfg(test)]
 #[path = "library_compiler_tests.rs"]
 mod tests;
+
+/// Signal-kill reporting lives in its own file: `library_compiler_tests.rs` is
+/// at the 1000-LOC gate's limit and these are a separate concern
+/// (FastLED/fbuild#1628 ask 3, #1630).
+#[cfg(test)]
+#[path = "library_compiler_signal_tests.rs"]
+mod signal_tests;
 
 #[cfg(test)]
 #[path = "library_dispatch_tests.rs"]
