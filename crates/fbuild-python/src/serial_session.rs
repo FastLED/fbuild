@@ -954,9 +954,9 @@ async fn reader_task(inner: Arc<Inner>, mut read: WsSource, auto_reconnect: bool
 
 mod attach;
 
-pub(crate) use attach::{ATTACH_HANDSHAKE_TIMEOUT, HandshakeStage};
 #[cfg(test)]
 use attach::attach_message;
+pub(crate) use attach::{ATTACH_HANDSHAKE_TIMEOUT, HandshakeStage};
 
 #[cfg(test)]
 #[path = "serial_session/tests.rs"]
