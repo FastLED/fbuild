@@ -4,6 +4,7 @@
 use std::process::Command;
 
 fn git(args: &[&str]) -> Option<String> {
+    // allow-direct-spawn: test oracle reading the checkout HEAD the stamp must match.
     let output = Command::new("git")
         .arg("-C")
         .arg(env!("CARGO_MANIFEST_DIR"))
@@ -18,6 +19,7 @@ fn git(args: &[&str]) -> Option<String> {
 
 #[test]
 fn long_version_reports_the_checkout_commit() {
+    // allow-direct-spawn: test driver invoking the fbuild CLI binary under test.
     let output = Command::new(env!("CARGO_BIN_EXE_fbuild"))
         .arg("--version")
         .env("FBUILD_NO_UPDATE_CHECK", "1")
