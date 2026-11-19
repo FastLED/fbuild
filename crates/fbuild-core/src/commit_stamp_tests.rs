@@ -143,15 +143,3 @@ fn a_detached_head_watches_only_head_and_index() {
     let layout = find_git_layout(&git.parent().unwrap().join("x")).unwrap();
     assert_eq!(git_watch_paths(&layout).len(), 2);
 }
-
-/// The probe must never fail a build: outside any checkout (a source tarball)
-/// git yields nothing and the stamp degrades to `unknown`.
-#[test]
-fn the_probe_degrades_outside_a_checkout() {
-    let missing = Path::new(env!("CARGO_MANIFEST_DIR")).join("no-such-checkout-dir");
-    assert_eq!(
-        run_git(&missing, &["rev-parse", "--short=12", "HEAD"]),
-        None
-    );
-    emit(&missing);
-}

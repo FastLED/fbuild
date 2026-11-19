@@ -2,7 +2,7 @@
 //! `fbuild daemon status` report (FastLED/fbuild#1742).
 //!
 //! A `build.rs` includes this file with `#[path]`; `fbuild-core`'s library
-//! compiles it only under `cfg(test)` so the git-layout helpers get unit
+//! compiles its git-layout helpers (not the probe) under `cfg(test)` for unit
 //! tests. Build scripts cannot link fbuild crates, so this file uses `std`
 //! only, and it lives outside `src/` because the probe spawns `git` directly.
 //!
@@ -17,6 +17,7 @@
 //! `packed-refs`.
 
 use std::path::Path;
+#[cfg(not(test))]
 use std::process::Command;
 
 /// The per-checkout git dir (HEAD, index) and the shared dir (refs).
@@ -100,6 +101,10 @@ pub fn git_watch_paths(layout: &GitLayout) -> Vec<Box<Path>> {
 /// own `.git`, so a linked worktree watches its HEAD/index and the branch ref
 /// in the shared git dir, and a packed branch watches `packed-refs`
 /// (FastLED/fbuild#2036, #2042).
+// Build scripts only: fbuild-core's tests compile this file from `src/`, where
+// the spawn-discipline Dylint bans a raw `git` spawn. The fbuild-cli
+// integration test covers the probe end to end through `fbuild --version`.
+#[cfg(not(test))]
 pub fn emit(manifest_dir: &Path) {
     if let Some(layout) = find_git_layout(manifest_dir) {
         for watched in git_watch_paths(&layout) {
@@ -122,6 +127,7 @@ pub fn emit(manifest_dir: &Path) {
 
 /// `git -C <dir> <args>` trimmed stdout, or `None` when git is absent, the
 /// directory is not a repository, or the command fails.
+#[cfg(not(test))]
 fn run_git(dir: &Path, args: &[&str]) -> Option<String> {
     // allow-direct-spawn: compile-time git stamp; build scripts link no fbuild crates.
     let output = Command::new("git")
