@@ -34,6 +34,7 @@ pub mod response_file;
 pub mod shell_split;
 pub mod subprocess;
 pub mod symbol_analysis;
+pub mod termination;
 pub mod time;
 pub mod usb;
 
