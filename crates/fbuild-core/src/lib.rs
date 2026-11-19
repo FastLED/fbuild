@@ -114,6 +114,15 @@ pub enum FbuildError {
     #[error("{message}")]
     CommandFailed { message: String, exit_code: i32 },
 
+    /// A subprocess was terminated by a signal instead of exiting.
+    ///
+    /// A kill is not a verdict about the input: the compiler never evaluated
+    /// the source. It is a distinct kind precisely so a caller that caches
+    /// failures can tell the two apart and leave the transient one uncached
+    /// (FastLED/fbuild#1628 ask 2, #1630).
+    #[error("{message}")]
+    ProcessTerminated { message: String, exit_code: i32 },
+
     #[error("timeout: {0}")]
     Timeout(String),
 
@@ -125,6 +134,19 @@ pub enum FbuildError {
 }
 
 pub type Result<T> = std::result::Result<T, FbuildError>;
+
+impl FbuildError {
+    /// True when a subprocess was killed by a signal rather than exiting.
+    ///
+    /// Such a failure says nothing about the source — nothing was compiled and
+    /// no diagnostic was written — so a caller that remembers failures
+    /// (framework libraries keep a persistent negative-cache marker) must skip
+    /// that write; a retry must recompile, not replay the kill
+    /// (FastLED/fbuild#1628 ask 2, #1630).
+    pub fn is_signal_kill(&self) -> bool {
+        matches!(self, Self::ProcessTerminated { .. })
+    }
+}
 
 /// Build profile selection.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
