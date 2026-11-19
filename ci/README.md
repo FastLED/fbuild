@@ -141,6 +141,19 @@ fail coverage. This policy is tracked in [#1698](https://github.com/FastLED/fbui
 - **`extract_pio_build_flags.py`** -- Extracts compiler/linker flags from PlatformIO for each board and writes reference JSONs
 - **`lint.py`** -- Workspace linting (rustfmt + clippy), supports single-file and auto-fix modes
 - **`platform_boundary_research.py`** -- Host-independent phase-1 inventory and cross-host drift check for FastLED/fbuild#1307
+- **`measure_dylint_gate.py`** -- Records a Dylint local-gate cold/warm
+  measurement from runs that already exist, because the Bosn record already
+  carries everything FastLED/fbuild#1643 asks to record: `sha`/`git_tree`/
+  `tree_digest`, `payload_sha256`, the pinned `engine_id` + act binary digest +
+  runner image, and every executed step with its `duration_ms`. It attributes
+  those durations into the overheads the issue names (checkout, setup, work,
+  cache, aggregation, frame) and samples the log stream for snapshot/cache
+  provenance. It never runs the gate and never infers: a pair of records proves
+  `identical-input reuse`, `fresh-engine warm` or `changed-source warm` only
+  from the identity fields, `cold` is reported as NOT PROVABLE (a Bosn record
+  has no cache-state field), and a run that did not complete successfully is
+  rendered but never paired. Tested by `test_measure_dylint_gate.py`. Run it
+  with `uv run --no-project python -m ci.measure_dylint_gate RUN [RUN ...]`.
 - **`render_workflows.py`** -- Re-renders the `on:` and `concurrency:` blocks of `.github/workflows/build-*.yml` and the full `nightly-platforms.yml` from `board_families.json` + `ci_common_paths.txt`. CI invokes `--check` to enforce no drift. See [docs/DEVELOPMENT.md](../docs/DEVELOPMENT.md#ci-per-board-build-triggers) and FastLED/fbuild#835.
 - **`select_boards.py`** -- Picks which `build-<board>.yml` workflows `nightly-platforms.yml` dispatches: path-selected from a push diff, or `--all` for the nightly badge refresh. Tested by `test_select_boards.py`.
 - **`test_setup_soldr_cache_keys.py`** -- Every saving `zackees/setup-soldr` step must set a `cache-key-suffix` unique per runner; jobs sharing a key race to own one immutable cache entry.
