@@ -1,92 +1,15 @@
-//! Filesystem helpers for `build.rs`'s build-identity stamp (FastLED/fbuild#2042).
+//! Embedded-assets digest for `build.rs` (FastLED/fbuild#2042).
 //!
 //! `build.rs` includes this file with `#[path]`, and the library compiles it
 //! only under `cfg(test)` so the helpers get unit tests. Build scripts cannot
 //! link fbuild crates, so this file uses `std` only.
 //!
-//! Two jobs:
-//!
-//! * **Git watch paths.** Cargo reruns the build script when a
-//!   `rerun-if-changed` file moves. The branch ref lives in the *common* git
-//!   dir, which is not the per-checkout git dir in a worktree (`.git` is a
-//!   `gitdir:` file and `commondir` names the shared dir), and a ref may exist
-//!   only in `packed-refs`.
-//! * **Embedded asset digest.** Config JSONs and other assets are compiled in
+//! Config JSONs and other assets are compiled in
 //!   with `include_str!` / `include_dir!`. Their bytes feed the no-op build
 //!   fingerprint, so an edit relinks even in a dirty dev checkout, where the
 //!   commit stamp does not move.
 
 use std::path::Path;
-
-/// The per-checkout git dir (HEAD, index) and the shared dir (refs).
-#[derive(Debug, PartialEq, Eq)]
-pub struct GitLayout {
-    /// `.git`, or `<common>/worktrees/<name>` in a linked worktree.
-    pub git_dir: Box<Path>,
-    /// Where branch refs and `packed-refs` live. Equal to `git_dir` outside a
-    /// linked worktree.
-    pub common_dir: Box<Path>,
-}
-
-/// The path in a `.git` file (`gitdir: <path>`), as written.
-pub fn parse_gitdir_file(contents: &str) -> Option<&str> {
-    let path = contents.lines().next()?.strip_prefix("gitdir:")?.trim();
-    (!path.is_empty()).then_some(path)
-}
-
-/// The git layout of the checkout containing `start`, found by walking up to
-/// the nearest `.git`. `None` outside a checkout (e.g. a source tarball).
-pub fn find_git_layout(start: &Path) -> Option<GitLayout> {
-    let dot_git = start
-        .ancestors()
-        .map(|dir| dir.join(".git"))
-        .find(|candidate| candidate.exists())?;
-    let git_dir = if dot_git.is_dir() {
-        dot_git
-    } else {
-        let contents = std::fs::read_to_string(&dot_git).ok()?;
-        let target = parse_gitdir_file(&contents)?;
-        dot_git.parent()?.join(target)
-    };
-    let common_dir = match std::fs::read_to_string(git_dir.join("commondir")) {
-        Ok(contents) => git_dir.join(contents.trim()),
-        Err(_) => git_dir.clone(),
-    };
-    Some(GitLayout {
-        git_dir: git_dir.into_boxed_path(),
-        common_dir: common_dir.into_boxed_path(),
-    })
-}
-
-/// Existing files whose change can mean HEAD names a different commit.
-///
-/// HEAD and the index are per checkout. The branch ref is in the common dir:
-/// its loose file when there is one, otherwise `packed-refs` plus the ref's
-/// directory, so the loose file appearing on the next commit is seen. Only
-/// existing paths are returned: cargo treats a missing one as always stale.
-pub fn git_watch_paths(layout: &GitLayout) -> Vec<Box<Path>> {
-    let head = layout.git_dir.join("HEAD");
-    let mut paths = vec![head.clone(), layout.git_dir.join("index")];
-    let branch = std::fs::read_to_string(&head)
-        .ok()
-        .and_then(|contents| Some(contents.strip_prefix("ref:")?.trim().to_string()));
-    if let Some(branch) = branch {
-        let loose = layout.common_dir.join(&branch);
-        if loose.is_file() {
-            paths.push(loose);
-        } else {
-            paths.push(layout.common_dir.join("packed-refs"));
-            if let Some(parent) = loose.parent() {
-                paths.push(parent.to_path_buf());
-            }
-        }
-    }
-    paths
-        .into_iter()
-        .filter(|path| path.exists())
-        .map(|path| path.into_boxed_path())
-        .collect()
-}
 
 /// An embedded asset file or directory.
 #[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
