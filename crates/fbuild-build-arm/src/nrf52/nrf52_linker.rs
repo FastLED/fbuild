@@ -78,6 +78,22 @@ impl Linker for Nrf52Linker {
         }
         args.extend(extra.flags.iter().cloned());
 
+        // The Adafruit nRF52 core's FreeRTOS port uses `ldr rN, =symbol` in
+        // naked functions. With LTO's default partitioner the merged unit
+        // places those literal pools farther than the 4 KB PC-relative reach
+        // of the load, and the assembler fails with "offset out of range"
+        // (FastLED/fbuild#2016). Per-symbol partitions keep each pool in
+        // range, so LTO stays on and the link succeeds. Only add the flag
+        // when LTO is actually requested and the caller did not choose a
+        // partition strategy already.
+        let lto_requested = args
+            .iter()
+            .any(|flag| flag == "-flto" || flag.starts_with("-flto="));
+        let partition_chosen = args.iter().any(|flag| flag.starts_with("-flto-partition"));
+        if lto_requested && !partition_chosen {
+            args.push("-flto-partition=max".to_string());
+        }
+
         // Linker search dirs (for INCLUDE directives in linker scripts)
         for dir in &self.linker_search_dirs {
             args.push(format!("-L{}", dir.display()));
@@ -247,5 +263,52 @@ mod tests {
                 .to_string_lossy()
                 .contains("nrf52840")
         );
+    }
+
+    fn test_linker() -> Nrf52Linker {
+        Nrf52Linker::new(
+            PathBuf::from("/bin/arm-none-eabi-gcc"),
+            PathBuf::from("/bin/arm-none-eabi-ar"),
+            PathBuf::from("/bin/arm-none-eabi-objcopy"),
+            PathBuf::from("/bin/arm-none-eabi-size"),
+            PathBuf::from("/nrf52/nrf52840.ld"),
+            vec![],
+            get_nrf52_config_for_mcu("nrf52840").unwrap(),
+            BuildProfile::Release,
+            Some(1048576),
+            Some(262144),
+            false,
+        )
+    }
+
+    fn command_with_extra(extra_flags: &[&str]) -> Vec<String> {
+        let extra = LinkExtraArgs {
+            flags: extra_flags.iter().map(|f| f.to_string()).collect(),
+            libs: vec![],
+            bloat_analysis: false,
+        };
+        test_linker().link_command(&[], &[], Path::new("/tmp/out"), &extra)
+    }
+
+    /// LTO's default partitioner puts the naked FreeRTOS `ldr =symbol`
+    /// literal pools out of range; the per-symbol partitioner keeps them in
+    /// reach. See the comment in `link_command`.
+    #[test]
+    fn adds_partition_max_when_lto_is_requested() {
+        let args = command_with_extra(&["-flto", "-fuse-linker-plugin"]);
+        assert!(args.iter().any(|a| a == "-flto-partition=max"));
+    }
+
+    #[test]
+    fn leaves_non_lto_link_alone() {
+        let args = command_with_extra(&["-Os"]);
+        assert!(!args.iter().any(|a| a.starts_with("-flto-partition")));
+    }
+
+    #[test]
+    fn respects_an_explicit_partition_choice() {
+        let args = command_with_extra(&["-flto", "-flto-partition=one"]);
+        assert!(!args.iter().any(|a| a == "-flto-partition=max"));
+        assert!(args.iter().any(|a| a == "-flto-partition=one"));
     }
 }
