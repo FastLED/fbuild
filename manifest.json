@@ -31,8 +31,8 @@
     }
   },
   "branch": "benchmark-stats",
-  "generated_at": "2026-11-18T09:33:58Z",
-  "git_sha": "b94d8f27b551fed104640f6abb5004dfaca3c2da",
+  "generated_at": "2026-11-19T09:33:47Z",
+  "git_sha": "400faf61726241aabe2c5a6fd76f5ac926cf2a07",
   "repository": "FastLED/fbuild",
   "schema_version": 1
 }
