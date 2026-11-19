@@ -61,9 +61,32 @@ pub fn for_sdk_ld_flags(config: Esp32McuConfig, sdk_ld_flags: &[String]) -> Esp3
 /// Apply caller removals before SDK LTO policy and linker construction.
 /// GCC's driver suppresses its linker plugin if any `-fno-lto` survives,
 /// even when an overlay appends `-flto` later (FastLED/fbuild#1862).
+///
+/// Dangling `-specs=` entries are dropped first: an SDK's `flags/ld_flags`
+/// can be generated on a build host and ship with that host's absolute paths.
 pub fn effective_sdk_ld_flags(mut flags: Vec<String>, build_unflags: &[String]) -> Vec<String> {
+    flags.retain(|flag| !is_dangling_specs(flag));
     crate::pipeline::remove_unflagged_tokens(&mut flags, build_unflags);
     flags
+}
+
+/// Whether a `-specs=` flag names an absolute path that does not exist here.
+///
+/// pioarduino's ESP32-C2 skeleton ships
+/// `-specs=/home/runner/work/esp32-arduino-lib-builder/esp32-arduino-lib-builder/build/specs/nano.specs`
+/// — the lib-builder's CMake configure path, baked into the shipped
+/// `flags/ld_flags`. GCC then fails the link with "cannot read spec file"
+/// and the ESP32-C2 build is red for every user. The paired SDKs are
+/// picolibc (ESP-IDF 6.x), whose default specs already apply, so the
+/// dangling entry is dropped rather than rewritten: a relative
+/// `-specs=nano.specs` would select a newlib variant the toolchain does not
+/// ship. An absolute path that really exists is kept.
+fn is_dangling_specs(flag: &str) -> bool {
+    // GCC accepts both spellings; the shipped artifact uses `--specs=`.
+    flag.strip_prefix("--specs=")
+        .or_else(|| flag.strip_prefix("-specs="))
+        .map(std::path::Path::new)
+        .is_some_and(|path| path.is_absolute() && !path.exists())
 }
 
 fn apply_if(condition: bool, config: Esp32McuConfig, rule: Rule) -> Esp32McuConfig {
@@ -366,6 +389,38 @@ mod tests {
         let base = get_mcu_config("esp32c6").unwrap();
         assert!(has_lto(&base));
         assert!(has_lto(&for_sdk_ld_flags(base, &flags)));
+    }
+
+    #[test]
+    fn dangling_absolute_specs_are_dropped() {
+        // pioarduino's ESP32-C2 skeleton bakes the lib-builder's path.
+        let baked = "--specs=/home/runner/work/esp32-arduino-lib-builder/esp32-arduino-lib-builder/build/specs/nano.specs";
+        let flags = effective_sdk_ld_flags(vec![baked.into(), "-Wl,--gc-sections".into()], &[]);
+        assert_eq!(flags, vec!["-Wl,--gc-sections"]);
+    }
+
+    #[test]
+    fn existing_absolute_specs_and_relative_specs_survive() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let specs = tmp.path().join("nano.specs");
+        std::fs::write(&specs, "%rename link _l _l_nano").unwrap();
+        let absolute = format!("-specs={}", specs.display());
+        let flags = effective_sdk_ld_flags(
+            vec![
+                absolute.clone(),
+                "-specs=nano.specs".into(),
+                "-Wl,--gc-sections".into(),
+            ],
+            &[],
+        );
+        assert_eq!(
+            flags,
+            vec![
+                absolute,
+                "-specs=nano.specs".to_string(),
+                "-Wl,--gc-sections".to_string()
+            ]
+        );
     }
 
     #[test]
