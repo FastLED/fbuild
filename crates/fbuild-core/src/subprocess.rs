@@ -384,14 +384,14 @@ async fn run_command_passthrough_inner(
         None => {
             // Same ownership boundary as the captured path: a passthrough
             // command's descendants stop with it, not after it
-            // (FastLED/fbuild#1867).
-            if let Some(pid) = child.id() {
-                let _ = process::terminate_tree(pid, process::Termination::Force);
-            }
-            let _ = child.kill().await;
+            // (FastLED/fbuild#1867). The kill names itself, see
+            // `stop_timed_out_command`.
+            let limit = timeout.unwrap_or_default();
+            let pid = child.id().unwrap_or(0);
+            stop_timed_out_command(&mut child, pid, args, limit).await;
             return Err(FbuildError::Timeout(format!(
                 "command timed out after {}s",
-                timeout.map(|d| d.as_secs()).unwrap_or(0)
+                limit.as_secs()
             )));
         }
     };
@@ -601,7 +601,7 @@ async fn wait_and_capture(
             args, error
         ))),
         Err(_) => {
-            stop_timed_out_command(&mut child, pid).await;
+            stop_timed_out_command(&mut child, pid, args, limit).await;
             Err(FbuildError::Timeout(format!(
                 "command timed out after {}s",
                 limit.as_secs()
@@ -623,12 +623,24 @@ where
     Ok(bytes)
 }
 
-/// Stop and reap everything a timed-out command started.
+/// Stop and reap everything a timed-out command started, naming what died.
 ///
 /// Completes before the timeout error is returned, so the caller's project
 /// lock is only released once no writer the command owned can still touch its
 /// output (FastLED/fbuild#1867).
-async fn stop_timed_out_command(child: &mut Child, pid: u32) {
+///
+/// The WARN is the only durable record of the kill: the returned
+/// `FbuildError::Timeout` reaches one caller with one line of text, while the
+/// daemon log is what survives after the fact (FastLED/fbuild#1628 ask 1 —
+/// every child kill names a reason and a PID; a silent force-kill is
+/// undiagnosable later, which is exactly how the `exit -9` hunt stalled).
+async fn stop_timed_out_command(child: &mut Child, pid: u32, args: &[&str], limit: Duration) {
+    tracing::warn!(
+        pid,
+        limit_ms = limit.as_millis() as u64,
+        argv = ?args,
+        "force-killing a timed-out command tree (reason: timeout)"
+    );
     if pid != 0 {
         // The child leads its own process group inside the daemon, so this
         // reaches the compiler driver's descendants too. Already gone is fine.
@@ -1321,6 +1333,7 @@ exit 0
     }
 
     #[tokio::test]
+    #[tracing_test::traced_test]
     async fn run_command_default_timeout_fires_when_overridden_short() {
         // Bypass the cached `default_subprocess_timeout()` (which reads
         // the env var only once per process) by going through the
@@ -1341,6 +1354,46 @@ exit 0
             Err(FbuildError::Timeout(_)) => {} // expected
             other => panic!("expected Timeout, got {:?}", other),
         }
+        // FastLED/fbuild#1628 ask 1: the kill must name a reason and a PID.
+        // A silently force-killed child is what made the `exit -9` hunt
+        // unattributable after the fact.
+        assert!(
+            logs_contain("force-killing a timed-out command tree"),
+            "a timed-out command must log its kill"
+        );
+        assert!(
+            logs_contain("reason: timeout"),
+            "the kill log must carry the reason"
+        );
+        assert!(logs_contain("pid="), "the kill log must carry the PID");
+    }
+
+    /// The passthrough path kills through the same helper, so it logs too.
+    ///
+    /// It has its own kill site historically; without this test a future
+    /// refactor could reintroduce a silent kill on exactly the call shape
+    /// `pio`/long-tool passthroughs use.
+    #[tokio::test]
+    #[tracing_test::traced_test]
+    async fn run_command_passthrough_timeout_logs_the_kill() {
+        let args = if crate::platform::host::is_windows() {
+            vec!["ping", "-n", "30", "127.0.0.1"]
+        } else {
+            vec!["sleep", "30"]
+        };
+        let result =
+            run_command_passthrough_inner(&args, None, None, Some(Duration::from_millis(200)))
+                .await;
+        assert!(
+            matches!(result, Err(FbuildError::Timeout(_))),
+            "expected Timeout, got {:?}",
+            result
+        );
+        assert!(
+            logs_contain("force-killing a timed-out command tree"),
+            "the passthrough kill must log too"
+        );
+        assert!(logs_contain("pid="), "the kill log must carry the PID");
     }
 
     #[tokio::test]

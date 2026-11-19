@@ -127,7 +127,7 @@ pub async fn run_command_reporting_with_limit(
             )));
         }
         Err(_) => {
-            stop_timed_out_command(&mut child, pid).await;
+            stop_timed_out_command(&mut child, pid, args, timeout).await;
             (None, true)
         }
     };
