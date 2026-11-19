@@ -88,10 +88,12 @@ mod tests {
 
     #[test]
     fn default_budget_covers_the_daemons_worst_case() {
-        // The daemon resolves the family (3 s) and then opens the port under
-        // its own 3 s WS_SERIAL_OPEN_PORT_TIMEOUT; a client budget at or below
-        // that sum gives up on a daemon that is still working (#2095).
-        let worst_case = fbuild_serial::OPEN_FAMILY_RESOLVE_TIMEOUT + Duration::from_secs(3);
+        // The daemon resolves the family and then opens the port under its
+        // own WS_SERIAL_OPEN_PORT_TIMEOUT; a client budget at or below that
+        // sum gives up on a daemon that is still working (#2095). Both bounds
+        // are read from fbuild-serial, so raising either fails this guard.
+        let worst_case =
+            fbuild_serial::OPEN_FAMILY_RESOLVE_TIMEOUT + fbuild_serial::WS_SERIAL_OPEN_PORT_TIMEOUT;
         assert!(
             DEFAULT_HANDSHAKE_TIMEOUT > worst_case,
             "client budget {DEFAULT_HANDSHAKE_TIMEOUT:?} must exceed the daemon's {worst_case:?} attach worst case"

@@ -49,6 +49,7 @@ pub mod usb_recovery;
 
 pub use manager::{
     OPEN_FAMILY_RESOLVE_TIMEOUT, PortSessionInfo, SerialClientInfo, SharedSerialManager,
+    WS_SERIAL_OPEN_PORT_TIMEOUT,
 };
 pub use messages::{
     SerialClientMessage, SerialClientMetadata, SerialServerMessage, SerialStreamEvent,
