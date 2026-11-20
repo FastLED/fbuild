@@ -73,7 +73,7 @@ jobs:
         with:
           ref: ${{ needs.verify.outputs.candidate_sha }}
           persist-credentials: false
-      - uses: zackees/setup-soldr@9337570234850b50322e696037127fa3cf8ac703 # setup-soldr#629 S3 remote cache
+      - uses: zackees/setup-soldr@1e1ae41b04c5a0b050e637d0a4d3f8cd30bfb83e # setup-soldr#686 generation restore (v0 canary)
         with:
           s3-bucket: forge-ci-cache
           s3-endpoint: sfo3.digitaloceanspaces.com
