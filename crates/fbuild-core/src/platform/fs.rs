@@ -102,6 +102,16 @@ pub fn executable_memo_identity(metadata: &std::fs::Metadata) -> std::io::Result
     super::selected::fs::executable_memo_identity(metadata)
 }
 
+/// Return whether this host can key a short-lived executable hash memo.
+///
+/// Unix hosts expose inode and change-time data that moves exactly when the
+/// image is replaced. The Windows metadata set does not, so callers hash the
+/// image directly there instead of trusting a memo.
+#[must_use]
+pub fn executable_memo_supported() -> bool {
+    super::selected::fs::executable_memo_supported()
+}
+
 /// Normalize a lexical path into the host's comparison-key representation.
 #[must_use]
 pub fn comparison_key(path: &Path) -> String {

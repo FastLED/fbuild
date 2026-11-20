@@ -1,12 +1,8 @@
 //! Content identity for executable images when their modification times disagree.
 
-use std::io;
+use std::io::{self, Write};
 use std::path::Path;
 
-#[cfg(unix)]
-use std::io::Write;
-
-#[cfg(unix)]
 const MEMO_HEADER: &str = "fbuild-image-hash v1";
 
 /// Hash a binary on demand. Normal daemon probes compare mtimes without
@@ -20,8 +16,13 @@ pub fn blake3_file(path: &Path) -> io::Result<blake3::Hash> {
 
 /// Reuse a digest across short-lived CLI processes while the executable's
 /// file identity is unchanged. A stale or unwritable memo only costs a rehash.
-#[cfg(unix)]
+///
+/// Hosts whose metadata cannot key the memo hash the image directly; the
+/// capability reports that policy, so this module carries no host conditionals.
 pub fn memoized_blake3_file(path: &Path, memo_dir: &Path) -> io::Result<blake3::Hash> {
+    if !fbuild_core::platform::fs::executable_memo_supported() {
+        return blake3_file(path);
+    }
     let before = file_identity(path)?;
     let name = blake3::hash(path.as_os_str().as_encoded_bytes());
     let memo = memo_dir.join(format!("{}.identity", &name.to_hex().as_str()[..32]));
@@ -61,19 +62,10 @@ pub fn memoized_blake3_file(path: &Path, memo_dir: &Path) -> io::Result<blake3::
     Ok(hash)
 }
 
-/// Windows metadata does not provide a reliable change-time key for this
-/// memo, so hash the image directly when the mtime check asks for it.
-#[cfg(not(unix))]
-pub fn memoized_blake3_file(path: &Path, _memo_dir: &Path) -> io::Result<blake3::Hash> {
-    blake3_file(path)
-}
-
-#[cfg(unix)]
 fn file_identity(path: &Path) -> io::Result<String> {
     fbuild_core::platform::fs::executable_memo_identity(&path.metadata()?)
 }
 
-#[cfg(unix)]
 fn write_memo(dir: &Path, path: &Path, identity: &str, hash: blake3::Hash) -> io::Result<()> {
     std::fs::create_dir_all(dir)?;
     let mut temporary = tempfile::NamedTempFile::new_in(dir)?;
@@ -82,7 +74,7 @@ fn write_memo(dir: &Path, path: &Path, identity: &str, hash: blake3::Hash) -> io
     Ok(())
 }
 
-#[cfg(all(test, unix))]
+#[cfg(test)]
 mod tests {
     use super::*;
 
@@ -95,6 +87,18 @@ mod tests {
         let first = memoized_blake3_file(&image, &memo_dir).unwrap();
         assert_eq!(first, blake3::hash(b"first image"));
         assert_eq!(memoized_blake3_file(&image, &memo_dir).unwrap(), first);
+        if fbuild_core::platform::fs::executable_memo_supported() {
+            // The reuse path must be a cache hit, not a second read.
+            assert!(
+                std::fs::read_dir(&memo_dir).unwrap().next().is_some(),
+                "a supported host must write the identity memo"
+            );
+        } else {
+            assert!(
+                !memo_dir.exists(),
+                "an unsupported host must hash directly without a memo"
+            );
+        }
 
         // Replacement must invalidate the memo even if the byte count matches.
         let replacement = root.path().join("replacement");
@@ -103,5 +107,47 @@ mod tests {
         let second = memoized_blake3_file(&image, &memo_dir).unwrap();
         assert_eq!(second, blake3::hash(b"other image"));
         assert_ne!(second, first);
+    }
+
+    #[test]
+    fn a_written_memo_is_trusted_instead_of_rehashing() {
+        let root = tempfile::tempdir().unwrap();
+        let image = root.path().join("image");
+        let memo_dir = root.path().join("memo");
+        std::fs::write(&image, b"first image").unwrap();
+        let first = memoized_blake3_file(&image, &memo_dir).unwrap();
+        assert_eq!(first, blake3::hash(b"first image"));
+        if !fbuild_core::platform::fs::executable_memo_supported() {
+            return;
+        }
+
+        // Spoof the stored digest: a rehash would overwrite it, a memo hit
+        // answers with it. Proves the reuse path is real, not a direct read.
+        let memo = std::fs::read_dir(&memo_dir)
+            .unwrap()
+            .next()
+            .unwrap()
+            .unwrap()
+            .path();
+        let contents = std::fs::read_to_string(&memo).unwrap();
+        let mut lines: Vec<&str> = contents.lines().collect();
+        assert_eq!(lines.len(), 3, "memo carries header, identity and digest");
+        let spoofed = blake3::hash(b"spoofed memo").to_hex();
+        std::fs::write(&memo, format!("{}\n{}\n{spoofed}\n", lines[0], lines[1])).unwrap();
+        lines.clear();
+
+        assert_eq!(
+            memoized_blake3_file(&image, &memo_dir).unwrap(),
+            blake3::hash(b"spoofed memo"),
+            "an unchanged image must be answered from the identity memo"
+        );
+    }
+
+    #[test]
+    fn direct_hash_matches_the_file_bytes() {
+        let root = tempfile::tempdir().unwrap();
+        let image = root.path().join("image");
+        std::fs::write(&image, b"direct image").unwrap();
+        assert_eq!(blake3_file(&image).unwrap(), blake3::hash(b"direct image"));
     }
 }
