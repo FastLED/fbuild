@@ -38,6 +38,7 @@ use std::path::Path;
 
 use fbuild_core::path::NormalizedPath;
 use fbuild_core::platform::host::{self, HostArch, HostPlatform};
+use fbuild_core::platform::runtime::{self, BinaryProbe};
 use fbuild_core::{FbuildError, Result};
 
 use crate::{CacheSubdir, PackageBase, PackageInfo};
@@ -249,94 +250,25 @@ pub fn build_linux_qemu_ld_library_path(
     Some(ld_library_path_with(&lib_dir, current))
 }
 
-/// Result of probing a QEMU binary with `--version`.
-#[cfg_attr(not(target_os = "linux"), allow(dead_code))]
-enum QemuProbe {
-    /// The binary started; its shared-library dependencies all resolved.
-    Started,
-    /// The dynamic linker could not satisfy a dependency (exit code 127).
-    /// Carries the linker's own line when it could be recovered.
-    MissingSharedLibrary(String),
-    /// The probe produced no exit code to interpret: the binary could not be
-    /// executed, or the run failed or timed out before one was available.
-    ///
-    /// Distinct from [`QemuProbe::Inconclusive`] (which *did* get an exit
-    /// code, just not one that means anything) because the two say different
-    /// things about the runtime bundle. Collapsing "never produced a result"
-    /// into the bundle's own failure mode is what made a failed `exec` report
-    /// itself as a missing shared library, sending readers after QEMU
-    /// dependencies for a problem that was never there
-    /// (FastLED/fbuild#1366).
-    ///
-    /// Deliberately *not* split further into spawn-vs-timeout. The error
-    /// crossing this boundary is already flattened to a string by
-    /// `subprocess::spawn_err`, so telling them apart here would mean matching
-    /// on message text — and inventing a distinction the code cannot actually
-    /// make is precisely the bug above. The carried string is the underlying
-    /// error, which says which it was.
-    ///
-    /// Treated as non-fatal exactly like `Inconclusive`: the real run reports
-    /// it with full context.
-    ProbeFailed(String),
-    /// Probe could not be interpreted (some other non-127 exit). Treated as
-    /// non-fatal: the real run reports it with full context.
-    Inconclusive,
-}
-
 /// Probe the QEMU binary with `--version` to verify its shared library
 /// dependencies resolve at runtime.
 ///
-/// `lib_dir`, when given, is prepended to `LD_LIBRARY_PATH` for the probe so
-/// the caller can ask "does it start *with* the bundled runtime libraries?".
+/// `lib_dir`, when given, leads this host's dynamic-library search path for
+/// the probe so the caller can ask "does it start *with* the bundled runtime
+/// libraries?".
 ///
-/// Probing is Linux-only. Windows resolves its DLLs through the `PATH`
-/// hydration path above, and macOS builds are self-contained.
-fn probe_qemu_binary(qemu_binary: &Path, lib_dir: Option<&Path>) -> QemuProbe {
-    #[cfg(not(target_os = "linux"))]
-    {
-        let _ = (qemu_binary, lib_dir);
-        QemuProbe::Started
-    }
-
-    #[cfg(target_os = "linux")]
-    {
-        // Short synchronous probe: verify the QEMU binary can start before we
-        // hand it to the async emulator runner. Uses run_command_blocking which
-        // routes through containment (no console flash on Windows, containment
-        // group on all platforms) and is ~100 ms.
-        let ld_library_path = lib_dir
-            .map(|dir| ld_library_path_with(dir, std::env::var("LD_LIBRARY_PATH").ok().as_deref()));
-        let env: Option<Vec<(&str, &str)>> = ld_library_path
-            .as_deref()
-            .map(|value| vec![("LD_LIBRARY_PATH", value)]);
-
-        // Retrying variant: fbuild probes binaries it has just downloaded and
-        // extracted, and `exec` on a file any process still holds open for
-        // writing fails with `ETXTBSY` — including a `fork`ed child of this
-        // process that has not reached its own `exec` yet. See
-        // FastLED/fbuild#1366.
-        let probe_result = fbuild_core::subprocess::run_command_blocking_retrying_exec_busy(
-            &[&qemu_binary.to_string_lossy(), "--version"],
-            None, // cwd
-            env.as_deref(),
-            Some(std::time::Duration::from_secs(5)),
-        );
-
-        match probe_result {
-            Ok(out) if out.success() => QemuProbe::Started,
-            Ok(out) if out.exit_code == 127 => {
-                let detail = out
-                    .stderr
-                    .lines()
-                    .find(|l| l.contains("error while loading shared libraries"))
-                    .map(|l| l.trim().to_string())
-                    .unwrap_or_else(|| out.stderr.trim().to_string());
-                QemuProbe::MissingSharedLibrary(detail)
-            }
-            Err(error) => QemuProbe::ProbeFailed(error.to_string()),
-            Ok(_) => QemuProbe::Inconclusive,
-        }
-    }
+/// The probe itself is a host mechanic (`fbuild_core::platform::runtime`): a
+/// host that resolves runtime libraries another way reports a started binary
+/// without running anything.
+fn probe_qemu_binary(qemu_binary: &Path, lib_dir: Option<&Path>) -> BinaryProbe {
+    let library_path = match (runtime::library_path_var(), lib_dir) {
+        (Some(var), Some(dir)) => Some(ld_library_path_with(
+            dir,
+            std::env::var(var).ok().as_deref(),
+        )),
+        _ => None,
+    };
+    runtime::probe_binary(qemu_binary, library_path.as_deref())
 }
 
 /// Make sure the resolved QEMU binary can actually start on this host.
@@ -352,8 +284,8 @@ fn probe_qemu_binary(qemu_binary: &Path, lib_dir: Option<&Path>) -> QemuProbe {
 /// downloads it and never has its own libraries shadowed.
 pub(crate) async fn ensure_qemu_can_start(qemu_binary: &Path, project_dir: &Path) -> Result<()> {
     let missing = match probe_qemu_binary(qemu_binary, None) {
-        QemuProbe::Started | QemuProbe::Inconclusive => return Ok(()),
-        QemuProbe::ProbeFailed(detail) => {
+        BinaryProbe::Started | BinaryProbe::Inconclusive => return Ok(()),
+        BinaryProbe::ProbeFailed(detail) => {
             // Not a runtime-library problem, so downloading the bundle would
             // fix nothing. Say what actually happened and let the real run
             // report it with full context.
@@ -364,7 +296,7 @@ pub(crate) async fn ensure_qemu_can_start(qemu_binary: &Path, project_dir: &Path
             );
             return Ok(());
         }
-        QemuProbe::MissingSharedLibrary(detail) => detail,
+        BinaryProbe::MissingSharedLibrary(detail) => detail,
     };
 
     tracing::info!(
@@ -381,13 +313,13 @@ pub(crate) async fn ensure_qemu_can_start(qemu_binary: &Path, project_dir: &Path
         .map_err(|e| runtime_unavailable_error(qemu_binary, &missing, &e.to_string()))?;
 
     match probe_qemu_binary(qemu_binary, Some(lib_dir.as_path())) {
-        QemuProbe::Started | QemuProbe::Inconclusive => Ok(()),
+        BinaryProbe::Started | BinaryProbe::Inconclusive => Ok(()),
         // Non-fatal for the same reason `Inconclusive` is: the probe learned
         // nothing about the runtime bundle. Logged rather than swallowed,
         // because "could not execute the binary at all" is a different problem
         // from "started and could not find a .so", and the next thing to fail
         // will be the real run (FastLED/fbuild#1366).
-        QemuProbe::ProbeFailed(detail) => {
+        BinaryProbe::ProbeFailed(detail) => {
             tracing::warn!(
                 "QEMU probe at {} produced no usable result even with the runtime bundle applied: {}",
                 qemu_binary.display(),
@@ -395,15 +327,17 @@ pub(crate) async fn ensure_qemu_can_start(qemu_binary: &Path, project_dir: &Path
             );
             Ok(())
         }
-        QemuProbe::MissingSharedLibrary(still_missing) => Err(FbuildError::PackageError(format!(
-            "QEMU at {} cannot start even with the fbuild runtime bundle at {} applied.\n\
+        BinaryProbe::MissingSharedLibrary(still_missing) => {
+            Err(FbuildError::PackageError(format!(
+                "QEMU at {} cannot start even with the fbuild runtime bundle at {} applied.\n\
              {}\n\
              The bundle carries the full non-glibc dependency closure of the Espressif QEMU binaries, so this points at a host glibc older than the bundle's build image (ubuntu 22.04, glibc 2.35), or at a library the closure does not cover.\n\
              Please report it at https://github.com/FastLED/fbuild/issues.",
-            qemu_binary.display(),
-            lib_dir.display(),
-            still_missing,
-        ))),
+                qemu_binary.display(),
+                lib_dir.display(),
+                still_missing,
+            )))
+        }
     }
 }
 
@@ -552,7 +486,7 @@ mod tests {
             fbuild_core::platform::fs::set_executable(&probe).unwrap();
         };
         assert!(
-            matches!(probe_qemu_binary(&probe, None), QemuProbe::Started),
+            matches!(probe_qemu_binary(&probe, None), BinaryProbe::Started),
             "probe should report Started when the binary returns 0"
         );
     }
@@ -575,7 +509,7 @@ mod tests {
         fbuild_core::platform::fs::set_executable(&probe).unwrap();
 
         match probe_qemu_binary(&probe, None) {
-            QemuProbe::MissingSharedLibrary(detail) => assert!(
+            BinaryProbe::MissingSharedLibrary(detail) => assert!(
                 detail.contains("libslirp.so.0"),
                 "probe should name the missing library: {detail}"
             ),
@@ -611,14 +545,14 @@ mod tests {
         assert!(
             matches!(
                 probe_qemu_binary(&probe, None),
-                QemuProbe::MissingSharedLibrary(_)
+                BinaryProbe::MissingSharedLibrary(_)
             ),
             "without the bundle the stub must fail like a real missing .so"
         );
         assert!(
             matches!(
                 probe_qemu_binary(&probe, Some(&lib_dir)),
-                QemuProbe::Started
+                BinaryProbe::Started
             ),
             "probe must put the bundle directory on LD_LIBRARY_PATH"
         );

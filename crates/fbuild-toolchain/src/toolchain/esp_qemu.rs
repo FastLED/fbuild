@@ -14,6 +14,7 @@
 
 use std::path::{Path, PathBuf};
 
+use fbuild_core::path::NormalizedPath;
 use fbuild_core::platform::host::{self, HostArch, HostPlatform};
 use fbuild_core::{FbuildError, Result};
 
@@ -132,27 +133,22 @@ impl EspQemu {
         let resolved = if let Ok(raw) = std::env::var(self.arch.env_var()) {
             let path = PathBuf::from(raw);
             let path = validate_qemu_path(path, self.arch.env_var())?;
-            hydrate_windows_runtime(&path)?;
-            validate_windows_runtime(&path)?;
+            stage_runtime_libraries(&path)?;
             path
         } else if let Some(path) = find_tool_on_path(self.arch.stem()) {
-            hydrate_windows_runtime(&path)?;
-            validate_windows_runtime(&path)?;
+            stage_runtime_libraries(&path)?;
             path
         } else if self.is_installed() {
             let path = find_qemu_binary(&self.base.install_path(), self.arch)?;
-            hydrate_windows_runtime(&path)?;
-            validate_windows_runtime(&path)?;
+            stage_runtime_libraries(&path)?;
             path
         } else if let Some(path) = find_existing_idf_qemu(self.arch) {
-            hydrate_windows_runtime(&path)?;
-            validate_windows_runtime(&path)?;
+            stage_runtime_libraries(&path)?;
             path
         } else {
             let _ = self.ensure_installed().await?;
             let path = find_qemu_binary(&self.base.install_path(), self.arch)?;
-            hydrate_windows_runtime(&path)?;
-            validate_windows_runtime(&path)?;
+            stage_runtime_libraries(&path)?;
             path
         };
 
@@ -475,14 +471,6 @@ fn find_tool_on_path(stem: &str) -> Option<PathBuf> {
         .map(fbuild_core::path::NormalizedPath::into_path_buf)
 }
 
-/// An exact file name on PATH (e.g. a DLL — never a tool-name expansion).
-fn find_on_path(file_name: &str) -> Option<PathBuf> {
-    let path_var = std::env::var_os("PATH")?;
-    std::env::split_paths(&path_var)
-        .map(|dir| dir.join(file_name))
-        .find(|candidate| candidate.is_file())
-}
-
 fn find_existing_idf_qemu(arch: EspQemuArch) -> Option<PathBuf> {
     let tools_subdir = arch.subdir_name();
     for root in candidate_idf_tools_roots() {
@@ -524,140 +512,41 @@ fn user_home_dir() -> Option<PathBuf> {
 }
 
 pub fn build_windows_qemu_path_env(qemu_path: &Path, current_path: &str) -> Result<String> {
-    hydrate_windows_runtime(qemu_path)?;
-    let mut dirs = windows_runtime_dirs(qemu_path)?;
+    stage_runtime_libraries(qemu_path)?;
+    let mut dirs: Vec<NormalizedPath> =
+        fbuild_core::platform::runtime::runtime_library_dirs(qemu_path).map_err(|error| {
+            FbuildError::PackageError(format!(
+                "failed to resolve the runtime libraries QEMU at {} needs: {error}",
+                qemu_path.display()
+            ))
+        })?;
+
+    // The executable's own directory leads: the loader searches it before
+    // `PATH`, and the staged DLL lives there.
     for dir in std::env::split_paths(std::ffi::OsStr::new(current_path)) {
+        let dir = NormalizedPath::from(dir);
         if !dirs.contains(&dir) {
             dirs.push(dir);
         }
     }
-    std::env::join_paths(dirs)
+    std::env::join_paths(dirs.iter().map(|dir| dir.as_path()))
         .map_err(|e| FbuildError::PackageError(format!("failed to build QEMU PATH: {}", e)))
         .map(|joined| joined.to_string_lossy().into_owned())
 }
 
-#[cfg(windows)]
-fn validate_windows_runtime(qemu_path: &Path) -> Result<()> {
-    let _ = windows_runtime_dirs(qemu_path)?;
-    Ok(())
-}
-
-#[cfg(windows)]
-fn hydrate_windows_runtime(qemu_path: &Path) -> Result<()> {
-    let exe_dir = qemu_path.parent().ok_or_else(|| {
+/// Stage the runtime libraries a resolved QEMU binary needs on this host.
+///
+/// MinGW-built QEMU links `libiconv-2.dll`, which the Espressif archive does
+/// not ship; the host platform stages a copy beside the executable. A host
+/// whose binaries are self-contained reports success without doing anything.
+fn stage_runtime_libraries(qemu_path: &Path) -> Result<()> {
+    fbuild_core::platform::runtime::stage_runtime_libraries(qemu_path).map_err(|error| {
         FbuildError::PackageError(format!(
-            "qemu executable has no parent directory: {}",
+            "QEMU at {} needs a runtime library this host cannot provide: {error}\n\
+             Install Git for Windows or add its bin directory to PATH, then retry.",
             qemu_path.display()
         ))
-    })?;
-    let target = exe_dir.join("libiconv-2.dll");
-    if target.is_file() {
-        return Ok(());
-    }
-
-    let Some(source) = find_windows_libiconv_path() else {
-        return Ok(());
-    };
-    if source == target {
-        return Ok(());
-    }
-
-    std::fs::copy(&source, &target).map_err(|e| {
-        FbuildError::PackageError(format!(
-            "failed to stage libiconv-2.dll next to {} from {}: {}",
-            qemu_path.display(),
-            source.display(),
-            e
-        ))
-    })?;
-    Ok(())
-}
-
-#[cfg(not(windows))]
-fn validate_windows_runtime(_qemu_path: &Path) -> Result<()> {
-    Ok(())
-}
-
-#[cfg(not(windows))]
-fn hydrate_windows_runtime(_qemu_path: &Path) -> Result<()> {
-    Ok(())
-}
-
-fn windows_runtime_dirs(qemu_path: &Path) -> Result<Vec<PathBuf>> {
-    let exe_dir = qemu_path.parent().ok_or_else(|| {
-        FbuildError::PackageError(format!(
-            "qemu executable has no parent directory: {}",
-            qemu_path.display()
-        ))
-    })?;
-
-    let mut dirs = vec![exe_dir.to_path_buf()];
-    if exe_dir.join("libiconv-2.dll").is_file() {
-        return Ok(dirs);
-    }
-
-    if let Some(iconv) =
-        find_windows_libiconv_path().and_then(|path| path.parent().map(Path::to_path_buf))
-    {
-        dirs.push(iconv);
-        return Ok(dirs);
-    }
-
-    Err(FbuildError::PackageError(format!(
-        "QEMU on Windows requires libiconv-2.dll. Install Git for Windows or add libiconv-2.dll to PATH before running {}",
-        qemu_path.display()
-    )))
-}
-
-fn find_windows_libiconv_path() -> Option<PathBuf> {
-    if let Some(path) = find_on_path("libiconv-2.dll") {
-        return Some(path);
-    }
-
-    let mut candidates = Vec::new();
-    for var in ["ProgramW6432", "ProgramFiles"] {
-        if let Some(root) = std::env::var_os(var) {
-            let root = PathBuf::from(root);
-            candidates.push(
-                root.join("Git")
-                    .join("mingw64")
-                    .join("bin")
-                    .join("libiconv-2.dll"),
-            );
-            candidates.push(
-                root.join("Git")
-                    .join("mingw64")
-                    .join("libexec")
-                    .join("git-core")
-                    .join("libiconv-2.dll"),
-            );
-        }
-    }
-    candidates.push(PathBuf::from(
-        r"C:\Program Files\Git\mingw64\bin\libiconv-2.dll",
-    ));
-    candidates.push(PathBuf::from(
-        r"C:\Program Files\Git\mingw64\libexec\git-core\libiconv-2.dll",
-    ));
-    candidates.push(PathBuf::from(r"C:\msys64\ucrt64\bin\libiconv-2.dll"));
-
-    if let Some(local) = std::env::var_os("LOCALAPPDATA") {
-        let avr_root = PathBuf::from(local)
-            .join("Arduino15")
-            .join("packages")
-            .join("arduino")
-            .join("tools")
-            .join("avr-gcc");
-        if let Ok(versions) = std::fs::read_dir(avr_root) {
-            for version in versions.flatten() {
-                let root = version.path();
-                candidates.push(root.join("bin").join("libiconv-2.dll"));
-                candidates.push(root.join("avr").join("bin").join("libiconv-2.dll"));
-            }
-        }
-    }
-
-    candidates.into_iter().find(|path| path.is_file())
+    })
 }
 
 #[cfg(test)]
@@ -736,9 +625,21 @@ mod tests {
         }
     }
 
-    #[cfg(windows)]
     #[test]
     fn build_windows_qemu_path_env_keeps_exe_dir_first() {
+        if !host::is_windows() {
+            // A host that stages nothing still preserves the PATH it was
+            // given, rather than dropping it on the floor.
+            let tmp = tempfile::TempDir::new().unwrap();
+            let exe = tmp.path().join(EspQemuArch::Xtensa.binary_name());
+            std::fs::write(&exe, b"").unwrap();
+            assert_eq!(
+                build_windows_qemu_path_env(&exe, "/usr/local/bin").unwrap(),
+                "/usr/local/bin"
+            );
+            return;
+        }
+
         let tmp = tempfile::TempDir::new().unwrap();
         let exe_dir = tmp.path().join("qemu").join("bin");
         let runtime_dir = tmp.path().join("runtime");
@@ -755,35 +656,6 @@ mod tests {
         assert_eq!(parts[0], exe_dir);
         assert!(exe_dir.join("libiconv-2.dll").is_file());
         assert!(!parts.contains(&runtime_dir));
-
-        if let Some(path) = old_path {
-            std::env::set_var("PATH", path);
-        } else {
-            std::env::remove_var("PATH");
-        }
-    }
-
-    #[cfg(windows)]
-    #[test]
-    fn hydrate_windows_runtime_copies_iconv_next_to_exe() {
-        let tmp = tempfile::TempDir::new().unwrap();
-        let exe_dir = tmp.path().join("qemu").join("bin");
-        let runtime_dir = tmp.path().join("runtime");
-        std::fs::create_dir_all(&exe_dir).unwrap();
-        std::fs::create_dir_all(&runtime_dir).unwrap();
-        let exe = exe_dir.join(EspQemuArch::Xtensa.binary_name());
-        std::fs::write(&exe, b"").unwrap();
-        let iconv = runtime_dir.join("libiconv-2.dll");
-        std::fs::write(&iconv, b"iconv").unwrap();
-
-        let old_path = std::env::var_os("PATH");
-        std::env::set_var("PATH", &runtime_dir);
-
-        hydrate_windows_runtime(&exe).unwrap();
-        assert_eq!(
-            std::fs::read(exe_dir.join("libiconv-2.dll")).unwrap(),
-            b"iconv"
-        );
 
         if let Some(path) = old_path {
             std::env::set_var("PATH", path);

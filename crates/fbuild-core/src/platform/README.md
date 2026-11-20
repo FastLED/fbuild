@@ -56,6 +56,18 @@ Hosts without an openable pseudo-terminal report `is_supported() == false` and
 `open()` returns `Unsupported`, so a test asks instead of selecting a host
 itself.
 
+`runtime` owns the runtime-library mechanics of third-party binaries fbuild
+installs: `probe_binary` reports whether a binary can start and, when it
+cannot, the linker's own complaint; `stage_runtime_libraries` places the
+libraries a binary needs beside it; `runtime_library_dirs` names the
+directories a child must have on its search path; and `library_path_var`
+names the variable this host's loader reads, `None` when it resolves
+libraries another way. Linux probes the binary (`LD_LIBRARY_PATH`) and stages
+nothing; Windows stages `libiconv-2.dll` beside the executable and reports
+`PATH` directories; macOS binaries are self-contained and need neither.
+Which archive to install, which library to look for, and how to compose a
+search path stay with the caller.
+
 `ape` detects Actually Portable Executable (cosmocc) images by their magic
 (`MZqFpD='`, `jartsr='`, `APEDBG='`) and, on Unix hosts, launches them as
 `<loader> <image> <args...>`, because `posix_spawn` cannot exec an APE without a
