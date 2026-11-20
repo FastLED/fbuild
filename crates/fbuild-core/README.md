@@ -2,6 +2,11 @@
 
 Core types, errors, and utilities shared across all fbuild crates.
 
+## Build scripts
+
+- **`build.rs`** -- stamps the embedded-assets digest (`build_id::EMBEDDED_ASSETS_DIGEST`)
+- **`commit_stamp.rs`** -- the commit-stamp probe and its git watch paths, `#[path]`-included by a `build.rs` (FastLED/fbuild#1742). It lives outside `src/` because it spawns `git` directly; the library compiles it only for its tests
+
 ## Key Types
 
 - `FbuildError` -- Workspace-wide error enum (build, deploy, serial, config, package, daemon, timeout, IO)

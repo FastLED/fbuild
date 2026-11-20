@@ -6,7 +6,8 @@
 
 - **`lib.rs`** -- Crate root; defines `FbuildError`, `Result`, `BuildProfile`, `Platform`, `OperationType`, `DaemonState`, `SizeInfo`; re-exports `BuildLog`
 - **`elf_size.rs`** -- `ElfSectionSize`, `SizeInfo::from_elf_sections()` / `from_elf_sections_with_ram()` and `PLATFORMIO_RAM_SECTIONS`: flash is every allocated section with contents (`SHT_NOBITS` never counts, FastLED/fbuild#2012); RAM is PlatformIO's `SIZEDATAREGEXP` section set by exact name (default `.data`/`.bss`/`.noinit`), so heap/stack reservations are not static RAM (FastLED/fbuild#2027)
-- **`build_stamp.rs`** -- `build.rs` helpers, compiled into the library only for their tests (`build_stamp_tests.rs`): resolve the git dir for worktrees (`.git` file + `commondir`) and packed refs so the commit stamp follows HEAD, and digest the workspace's embedded assets (`src/` and `assets/` non-Rust files) into `build_id::EMBEDDED_ASSETS_DIGEST` for the no-op fingerprint (FastLED/fbuild#2042)
+- **`build_stamp.rs`** -- `build.rs` helper, compiled into the library only for its tests (`build_stamp_tests.rs`): digest the workspace's embedded assets (`src/` and `assets/` non-Rust files) into `build_id::EMBEDDED_ASSETS_DIGEST` for the no-op fingerprint (FastLED/fbuild#2042)
+- **`commit_stamp_tests.rs`** -- tests for `../commit_stamp.rs`: git-dir resolution for worktrees (`.git` file + `commondir`) and packed refs, so the commit stamp follows HEAD
 - **`build_log.rs`** -- `BuildLog` struct that accumulates output lines and optionally streams them through an `mpsc::Sender`
 - **`daemon_health.rs`** -- Daemon `/health` readiness states (`healthy` / `starting` / unreachable), `ReadinessDeadline` that stretches while the daemon reports `starting`, and `wait_until_healthy()` shared by the CLI and PyO3 clients (FastLED/fbuild#1480)
 - **`compiler_flags.rs`** -- `prepare_flags_for_exec()` to strip backslash-escaped quotes from GCC define flags on non-Windows platforms

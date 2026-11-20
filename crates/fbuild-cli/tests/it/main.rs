@@ -2,6 +2,7 @@
 //! each top-level `tests/*.rs` file links the crate's whole dependency
 //! graph separately, so these modules share one link instead.
 
+mod build_stamp;
 mod ci_command;
 mod daemon_crash_recovery;
 mod lib_select;

@@ -12,7 +12,12 @@ pub mod build_id;
 pub mod build_log;
 #[cfg(test)]
 mod build_stamp;
+// The commit-stamp probe, outside `src/` (it spawns git); compiled here only
+// for its git-layout tests.
 pub mod channel;
+#[cfg(test)]
+#[path = "../commit_stamp.rs"]
+mod commit_stamp;
 pub mod compiler_flags;
 pub mod daemon_diagnostics;
 pub mod daemon_health;

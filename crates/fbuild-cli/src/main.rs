@@ -8,6 +8,9 @@ mod sync;
 mod update_check;
 
 fn main() {
+    // FastLED/fbuild#1742: this binary's commit stamp, installed before
+    // anything (including the busybox daemon dispatch below) reads it.
+    let _ = fbuild_core::build_id::STAMP.set(fbuild_core::build_stamp!());
     // FastLED/fbuild#1851 — busybox-style argv[0] dispatch, first thing in the
     // process. A `fbuild-daemon` invocation runs the daemon from this image and
     // must not pay for the 8 MB stack trampoline, the dev-namespace hash, the
