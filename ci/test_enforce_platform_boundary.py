@@ -16,10 +16,10 @@ class EnforcePlatformBoundaryTests(unittest.TestCase):
     def test_committed_exact_occurrence_ledger_matches_whole_tree(self) -> None:
         # Keep the row count explicit so additions to host mechanics require
         # a deliberate inventory update. The executable identity, the daemon's
-        # live-image path, the WebSocket serial handler's pseudo-terminals, and
-        # the executable hash memo now live behind the platform boundary,
-        # leaving 15 occurrences.
-        self.assertEqual(len(self.expected), 15)
+        # live-image path, the WebSocket serial handler's pseudo-terminals, the
+        # executable hash memo, and QEMU's runtime-library policy now live
+        # behind the platform boundary, leaving 6 occurrences.
+        self.assertEqual(len(self.expected), 6)
         self.assertFalse(boundary.validate_ledger(self.expected))
         self.assertFalse(boundary.compare(self.expected, self.observed))
 
