@@ -80,11 +80,24 @@ escape hatch.
 Downstream build steps (e.g. esp32's `embed_files` → `objcopy`) consume
 the materialized file as if it had been in the source tree all along.
 
+A pointer names a **source**, never a destination, so `--materialize` takes
+the destination from the command line instead of from a `dest` field: the
+build tree (`resources/`, the projection a real build uses) by default, an
+explicit directory, or — with `--in-place` — beside the pointer itself, which
+is what an SD-card copy or the fastled-wasm VFS packer needs. `--in-place`
+writes generated files into the source tree, so each name is added to the
+scanned root's `.gitignore` (idempotently) as part of the same run.
+
 ## CLI
 
 ```bash
 # Fetch every pointer-referenced blob into the disk cache
 fbuild lnk pull [<project_dir>]
+
+# ...and write the blobs out as normal files, for tools that are not fbuild
+fbuild lnk pull --materialize [<project_dir>]         # -> <build root>/resources/
+fbuild lnk pull --materialize-dir out [<project_dir>] # -> out/<same relative path>
+fbuild lnk pull --in-place [<project_dir>]            # -> beside each pointer
 
 # Verify every cached blob matches its sha256 (no network)
 fbuild lnk check [<project_dir>]

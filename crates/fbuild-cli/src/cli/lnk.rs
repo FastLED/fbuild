@@ -33,8 +33,22 @@ pub async fn run_lnk(
     }
 
     match action {
-        LnkAction::Pull { project_dir } => {
+        LnkAction::Pull {
+            project_dir,
+            materialize,
+            materialize_dir,
+            in_place,
+        } => {
+            use crate::cli::lnk_materialize::{
+                MaterializeMode, materialize_discovered, record_gitignore,
+            };
+
             let root = resolve_root(project_dir, top_level_project_dir);
+            // Absolute, so the destination's relative projection and the
+            // `.gitignore` entries describe the same tree the scanner walked.
+            let root = std::path::absolute(&root).unwrap_or(root);
+            let mode =
+                MaterializeMode::from_flags(materialize, materialize_dir.as_deref(), in_place)?;
             let discovered = scan_for_lnk(&root)?;
             if discovered.is_empty() {
                 output::result(format!(
@@ -44,6 +58,47 @@ pub async fn run_lnk(
                 return Ok(());
             }
             let cache = open_cache()?;
+
+            // `--materialize` resolves *and* writes the blob (the same
+            // resolve, then a hardlink/copy or an extract), so the cache-only
+            // loop below is skipped: one pass, one set of messages.
+            if let Some(mode) = mode {
+                let outcome = materialize_discovered(&discovered, &root, &mode, &cache);
+                for entry in &outcome.written {
+                    output::result(format!(
+                        "file {}  →  {}",
+                        entry.lnk_path.display(),
+                        entry.target_path.display()
+                    ));
+                }
+                for (path, reason) in &outcome.failures {
+                    output::error(format!("FAIL {}: {}", path.display(), reason));
+                }
+                if mode == MaterializeMode::InPlace {
+                    match record_gitignore(&root, &outcome.written) {
+                        Ok(added) if !added.is_empty() => output::result(format!(
+                            "gitignore: added {} generated name(s) to {}",
+                            added.len(),
+                            root.join(".gitignore").display()
+                        )),
+                        Ok(_) => {}
+                        Err(e) => output::warn(format!(
+                            "could not record the generated names in .gitignore: {e}"
+                        )),
+                    }
+                }
+                output::result(format!(
+                    "\nlnk pull: materialized {} of {} into {}",
+                    outcome.written.len(),
+                    discovered.len(),
+                    mode.describe(&root)
+                ));
+                if !outcome.failures.is_empty() {
+                    std::process::exit(1);
+                }
+                return Ok(());
+            }
+
             let mut ok = 0usize;
             let mut failed = 0usize;
             for d in &discovered {

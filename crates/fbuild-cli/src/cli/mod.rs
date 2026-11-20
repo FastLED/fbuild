@@ -36,6 +36,7 @@ pub mod ide_debug;
 pub mod install;
 pub mod libraries;
 pub mod lnk;
+mod lnk_materialize;
 pub mod monitor_parse;
 pub mod pio;
 pub mod plotter;
