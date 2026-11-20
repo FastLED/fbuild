@@ -11,7 +11,9 @@ import json
 import os
 import platform
 import subprocess
+import sys
 import tempfile
+import tomllib
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -19,7 +21,7 @@ from ci.local_suites import LOCAL_UNITTEST_MODULES
 
 JsonValue = str | int | float | bool | None | list["JsonValue"] | dict[str, "JsonValue"]
 ROOT = Path(__file__).resolve().parent.parent
-WORKFLOW = ".github/workflows/ci-minimal.yml"
+WORKFLOW = ".github/workflows/check-ubuntu.yml"
 REQUIRED_JOBS = frozenset({"check", "python-facade-tests"})
 
 
@@ -40,7 +42,7 @@ class RunSelection:
     skipped_jobs: frozenset[str] = frozenset()
 
 
-UBUNTU_SELECTION = RunSelection(WORKFLOW, "linux", "workflow_dispatch", REQUIRED_JOBS)
+UBUNTU_SELECTION = RunSelection(WORKFLOW, None, "workflow_dispatch", REQUIRED_JOBS, frozenset({"glibc-floor"}))
 
 
 def wire_string(raw: dict[str, JsonValue], key: str) -> str:
@@ -225,7 +227,7 @@ def bosn_command(*arguments: str) -> list[str]:
         "--refresh-package",
         "bosn",
         "--from",
-        "bosn>=0.1.22",
+        "bosn>=0.1.32",
         "bosn",
         *arguments,
     ]
@@ -237,9 +239,13 @@ def bosn_command(*arguments: str) -> list[str]:
 
 def output(argv: list[str]) -> str:
     with tempfile.TemporaryFile(mode="w+", encoding="utf-8") as stream:
-        subprocess.run(argv, cwd=ROOT, stdout=stream, check=True)
+        result = subprocess.run(argv, cwd=ROOT, stdout=stream, check=False)
         stream.seek(0)
-        return stream.read()
+        text = stream.read()
+        if result.returncode:
+            print(text, file=sys.stderr, end="")
+            result.check_returncode()
+        return text
 
 
 def document(argv: list[str]) -> dict[str, JsonValue]:
@@ -247,6 +253,17 @@ def document(argv: list[str]) -> dict[str, JsonValue]:
     if not isinstance(raw, dict):
         raise ValueError("bosn returned a non-object document")
     return raw
+
+
+def load_aware_test_threads(cpus: int, load: float) -> int:
+    cpus = max(1, cpus)
+    return max(1, int(cpus * cpus / max(cpus, load)))
+
+
+def replay_concurrency() -> list[str]:
+    threads = load_aware_test_threads(len(os.sched_getaffinity(0)), os.getloadavg()[0])
+    print(f"Local replay concurrency: {threads} jobs and test threads", flush=True)
+    return ["--env", f"CARGO_BUILD_JOBS={threads}", "--env", f"RUST_TEST_THREADS={threads}"]
 
 
 def run_ubuntu(sha: str) -> None:
@@ -258,10 +275,13 @@ def run_ubuntu(sha: str) -> None:
             str(ROOT),
             "--workflow",
             WORKFLOW,
-            "--job",
-            "linux",
             "--event",
-            "workflow_dispatch",
+            UBUNTU_SELECTION.event,
+            "--input",
+            "glibc_floor=false",
+            "--input",
+            f"ref={sha}",
+            *replay_concurrency(),
             "--mode",
             "minimal",
             "--sha",
@@ -284,6 +304,29 @@ def run_ubuntu(sha: str) -> None:
         Path(report_path).write_text(report, encoding="utf-8")
 
 
+def validate_ci_scripts() -> None:
+    source = tomllib.loads((ROOT / "ci.toml").read_text(encoding="utf-8"))["linter"]
+    subprocess.run(
+        [
+            "uv",
+            "run",
+            "--no-project",
+            "--with",
+            "pyyaml==6.0.2",
+            "--with",
+            "zstandard>=0.23",
+            "--with",
+            f"ci-lint @ git+https://github.com/{source}",
+            "python",
+            "-m",
+            "unittest",
+            *LOCAL_UNITTEST_MODULES,
+        ],
+        cwd=ROOT,
+        check=True,
+    )
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--lane", choices=("linux-minimal", "dylint", "lint"))
@@ -295,39 +338,8 @@ def main() -> None:
         raise ValueError("origin/HEAD must name main, not this feature branch")
     if output(["git", "status", "--porcelain", "--untracked-files=normal"]).strip():
         raise ValueError("commit the worktree before running the local gate")
-    subprocess.run(
-        [
-            "uv",
-            "run",
-            "--no-project",
-            "--with",
-            "pyyaml==6.0.2",
-            "--with",
-            "zstandard>=0.23",
-            "--with",
-            "ci-lint @ git+https://github.com/zackees/ci.yml@6711e4e418cf9b11de31e30e710b0bb1d9291e5b",
-            "python",
-            "-m",
-            "unittest",
-            *LOCAL_UNITTEST_MODULES,
-        ],
-        cwd=ROOT,
-        check=True,
-    )
-    subprocess.run(
-        [
-            "uv",
-            "run",
-            "--no-project",
-            "--with",
-            "pyyaml==6.0.2",
-            "python",
-            "-c",
-            "import pathlib,yaml; [yaml.safe_load(pathlib.Path(p).read_text()) for p in ('.github/workflows/ci-minimal.yml','.github/workflows/check-ubuntu.yml')]",
-        ],
-        cwd=ROOT,
-        check=True,
-    )
+    if lane is None:
+        validate_ci_scripts()
     daemon = output(["docker", "info", "--format", "{{.OSType}}/{{.Architecture}}"])
     if (
         platform.system() != "Linux"

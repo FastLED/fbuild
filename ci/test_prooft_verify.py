@@ -15,6 +15,7 @@ import importlib.util
 import os
 import subprocess
 import tempfile
+import tomllib
 import unittest
 from pathlib import Path
 from unittest.mock import patch
@@ -24,7 +25,7 @@ import yaml
 from ci import prooft_verify
 
 ROOT = Path(__file__).resolve().parents[1]
-PR_ENV = {"EVENT_NAME": "pull_request", "BASE_SHA": "b" * 40, "HEAD_SHA": "h" * 40, "PR_TITLE": "t", "FORK": "false"}
+PR_ENV = {"EVENT_NAME": "pull_request", "BASE_SHA": "b" * 40, "HEAD_SHA": "a" * 40, "PR_TITLE": "t", "FORK": "false"}
 
 
 def load_push():
@@ -60,7 +61,7 @@ class VerifierTests(unittest.TestCase):
             self.assertIn(f"skip_{job}=false\n", written)
 
     def test_non_pr_events_run_everything_without_calling_prooft(self) -> None:
-        for event in ("merge_group", "push", "workflow_dispatch"):
+        for event in ("push", "workflow_dispatch"):
             code, calls, written = self.run_main({**PR_ENV, "EVENT_NAME": event}, [])
             self.assertEqual(0, code)
             self.assertEqual([], calls)
@@ -74,13 +75,49 @@ class VerifierTests(unittest.TestCase):
     def test_pr_is_planned_by_the_pinned_prooft_against_the_base(self) -> None:
         code, calls, _ = self.run_main(PR_ENV, [0, 0])
         self.assertEqual(0, code)
-        self.assertEqual(["git", "fetch", "-q", "origin", "h" * 40], calls[0])
+        self.assertEqual(["git", "fetch", "-q", "origin", "a" * 40], calls[0])
         plan = calls[1]
         self.assertEqual(["uvx", "--from", prooft_verify.PROOFT_SOURCE, "prooft"], plan[:4])
         self.assertRegex(prooft_verify.PROOFT_SOURCE, r"@[0-9a-f]{40}$")
-        for flag, value in (("--base", "b" * 40), ("--head", "h" * 40), ("--title", "t")):
+        for flag, value in (("--base", "b" * 40), ("--head", "a" * 40), ("--title", "t")):
             self.assertEqual(value, plan[plan.index(flag) + 1])
         self.assertIn("--github-output", plan)
+
+    def test_merge_group_plans_actual_pr_and_queue_heads(self) -> None:
+        base, queued, pr = "b" * 40, "a" * 40, "c" * 40
+        env = {
+            **PR_ENV,
+            "EVENT_NAME": "merge_group",
+            "QUEUE_REF": "refs/heads/gh-readonly-queue/main/pr-42-" + base,
+            "GITHUB_REPOSITORY": "FastLED/fbuild",
+        }
+
+        def api(argv, **_kwargs):
+            self.assertEqual(["gh", "api", "repos/FastLED/fbuild/pulls/42"], argv[:3])
+            return subprocess.CompletedProcess(argv, 0, f'["{pr}", "FastLED/fbuild", "feature", "open", false]')
+
+        plan = subprocess.CompletedProcess([], 0)
+        history = subprocess.CompletedProcess([], 0, f"{base} {pr}")
+        with (
+            patch.dict(os.environ, env, clear=True),
+            patch.object(prooft_verify, "fetch", return_value=True) as fetch,
+            patch.object(prooft_verify.subprocess, "run", side_effect=[history, plan]) as run,
+            patch.object(prooft_verify, "queue_pr_head", return_value=pr) as lookup,
+        ):
+            self.assertEqual(0, prooft_verify.main())
+        lookup.assert_called_once_with(env["QUEUE_REF"], env["GITHUB_REPOSITORY"])
+        self.assertEqual([pr, queued], [call.args[0] for call in fetch.call_args_list])
+        self.assertEqual(
+            ["queue", "--base", base, "--pr-head", pr, "--queue-head", queued, "--github-output"],
+            run.call_args.args[0][6:],
+        )
+        with patch.object(prooft_verify.subprocess, "run", api):
+            self.assertEqual(pr, prooft_verify.queue_pr_head(env["QUEUE_REF"], env["GITHUB_REPOSITORY"]))
+
+    def test_invalid_queue_metadata_runs_everything(self) -> None:
+        code, calls, written = self.run_main({**PR_ENV, "EVENT_NAME": "merge_group"}, [])
+        self.assertEqual((0, []), (code, calls))
+        self.assert_runs_everything(written)
 
     def test_failed_fetch_or_verifier_runs_everything(self) -> None:
         for codes in ([1], [0, 2]):
@@ -96,7 +133,7 @@ class PolicyTests(unittest.TestCase):
         self.policy = yaml.safe_load((ROOT / "ci-attestations.yml").read_text())
 
     def test_every_job_the_dylint_call_runs_is_mapped(self) -> None:
-        for job in prooft_verify.JOBS:
+        for job in ("policy", "dylint", "gate"):
             self.assertIn(f"dylint.yml:{job}", self.policy["jobs"])
 
     def test_dylint_job_requires_every_target_the_call_lints(self) -> None:
@@ -106,6 +143,14 @@ class PolicyTests(unittest.TestCase):
             self.assertIn(f"rust/{triple}/dylint", gates)
         self.assertEqual(set(gates) | {"general/all/dylint-policy"}, set(self.policy["jobs"]["dylint.yml:gate"]))
 
+    def test_rust_proof_input_keys_cover_every_workspace_member(self) -> None:
+        workspace = tomllib.loads((ROOT / "Cargo.toml").read_text())["workspace"]
+        for lane in ("lint", "dylint"):
+            inputs = self.policy["lanes"][lane]["inputs"]
+            for member in workspace["members"]:
+                with self.subTest(lane=lane, member=member):
+                    self.assertIn(f"{member.split('/', 1)[0]}/**", inputs)
+
     def test_every_mapped_gate_is_declared(self) -> None:
         for job, gates in self.policy["jobs"].items():
             for gate in gates:
@@ -113,44 +158,89 @@ class PolicyTests(unittest.TestCase):
 
 
 class PushTests(unittest.TestCase):
-    def test_push_lanes_prove_every_gate_the_dylint_call_needs(self) -> None:
+    @staticmethod
+    def git_outputs(branch: str = "feature", status: str = "") -> dict[tuple[str, ...], str]:
+        return {
+            ("rev-parse", "--abbrev-ref", "HEAD"): branch,
+            ("for-each-ref", "--format=%(symref:short)", "refs/remotes/origin/HEAD"): "origin/trunk",
+            ("status", "--porcelain", "--untracked-files=no"): status,
+            ("ls-files", "--others", "--exclude-standard"): "",
+        }
+
+    def test_push_lanes_prove_every_required_gate(self) -> None:
         push = load_push()
         policy = yaml.safe_load((ROOT / "ci-attestations.yml").read_text())
-        needed = {g for job in prooft_verify.JOBS for g in policy["jobs"][f"dylint.yml:{job}"]}
-        proven = {g for g, spec in policy["gates"].items() if spec["lane"] in push.LANES}
+        needed = {gate for gates in policy["jobs"].values() for gate in gates}
+        proven = {gate for gate, spec in policy["gates"].items() if spec["lane"] in push.LANES}
         self.assertLessEqual(needed, proven)
-
-    def test_lint_lane_is_the_cross_target_soldr_lint(self) -> None:
-        push = load_push()
-        self.assertEqual(["soldr", "--", "soldr", "lint", "rust", "--check", "--cross-dylint"], push.LANES["lint"])
+        self.assertEqual(set(push.LANES), set(policy["lanes"]))
 
     def test_refuses_protected_branches_and_dirty_trees(self) -> None:
         push = load_push()
-        for branch, dirty in (("main", ""), ("feature", " M crates/x.rs")):
-            outputs = {("rev-parse", "--abbrev-ref", "HEAD"): branch, ("status", "--porcelain", "--untracked-files=normal"): dirty}
-            with patch.object(push, "git", lambda *a, o=outputs: o[a]), patch.object(push, "step") as step:
+        cases = (("main", ""), ("trunk", ""), ("HEAD", ""), ("feature", " M crates/x.rs"))
+        for branch, status in cases:
+            outputs = self.git_outputs(branch, status)
+            with patch.object(push, "git", lambda *args: outputs[args]), patch.object(push, "attest") as attest:
                 self.assertEqual(3, push.main([]))
-            step.assert_not_called()
+            attest.assert_not_called()
 
-    def test_untracked_files_refuse_a_proof_but_not_a_plain_push(self) -> None:
-        # The dylint lane's local gate refuses any untracked file, so proving
-        # with one present burns the whole lint lane first and then fails.
+    def test_no_proof_bypass_is_a_usage_error(self) -> None:
         push = load_push()
-        outputs = {("rev-parse", "--abbrev-ref", "HEAD"): "feature", ("status", "--porcelain", "--untracked-files=normal"): "?? notes.txt"}
-        with patch.object(push, "git", lambda *a: outputs[a]), patch.object(push, "step") as step:
-            self.assertEqual(3, push.main([]))
+        with patch.object(push, "step") as step, self.assertRaises(SystemExit) as raised:
+            push.main(["--no-proof"])
+        self.assertEqual(2, raised.exception.code)
         step.assert_not_called()
-        with patch.object(push, "git", lambda *a: outputs[a]), patch.object(push, "step", return_value=0) as step, patch.object(push, "has_open_pr", return_value=True):
-            self.assertEqual(0, push.main(["--no-proof"]))
-        self.assertIn("push", step.call_args_list[0][0][0])
 
     def test_failed_proof_pushes_nothing(self) -> None:
         push = load_push()
-        outputs = {("rev-parse", "--abbrev-ref", "HEAD"): "feature", ("status", "--porcelain", "--untracked-files=normal"): ""}
-        with patch.object(push, "git", lambda *a: outputs[a]), patch.object(push, "step", return_value=1) as step:
+        outputs = self.git_outputs()
+        with (
+            patch.object(push, "git", lambda *args: outputs[args]),
+            patch.object(push, "attest", return_value=False),
+            patch.object(push, "step") as step,
+        ):
             self.assertEqual(1, push.main([]))
-        self.assertEqual(1, step.call_count)
-        self.assertNotIn("push", step.call_args[0][0])
+        step.assert_not_called()
+
+    def test_lanes_verify_before_push_and_pr(self) -> None:
+        push = load_push()
+        calls = []
+        outputs = self.git_outputs()
+
+        def git(*args, **_kwargs):
+            return "" if args[0] == "update-ref" else outputs[args]
+
+        def run(argv):
+            calls.append(argv)
+            return 0
+
+        gates = {lane: {lane} for lane in push.LANES}
+        with (
+            patch.object(push, "git", git),
+            patch.object(push, "lane_gates", return_value=gates),
+            patch.object(push, "reuse_proof"),
+            patch.object(push, "proof_status", side_effect=[set(), {"lint"}, set(gates)]),
+            patch.object(push, "step", run),
+            patch.object(push, "has_open_pr", return_value=False),
+        ):
+            self.assertEqual(0, push.main([]))
+        self.assertEqual([
+            ["run", "linux-minimal"], ["run", "dylint"], ["verify", "HEAD"],
+        ], [argv[6:8] for argv in calls[:3]])
+        self.assertEqual(["git", "push"], calls[3][:2])
+        self.assertEqual(["gh", "pr", "create"], calls[4][:3])
+
+    def test_missing_gate_after_verify_refuses_push(self) -> None:
+        push = load_push()
+        gates = {lane: {lane} for lane in push.LANES}
+        with (
+            patch.object(push, "git"),
+            patch.object(push, "lane_gates", return_value=gates),
+            patch.object(push, "reuse_proof"),
+            patch.object(push, "proof_status", return_value={"lint"}),
+            patch.object(push, "step", return_value=0),
+        ):
+            self.assertFalse(push.attest("feature"))
 
 
 if __name__ == "__main__":

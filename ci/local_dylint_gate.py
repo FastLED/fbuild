@@ -1,22 +1,4 @@
-"""Replay every job of the Dylint workflow the PR path actually runs.
-
-`dylint.yml` lost its own `pull_request`/`merge_group` triggers in #79a5200a:
-PRs, the merge queue and main pushes all reach it through a caller's
-`workflow_call` (ci-minimal, ci-full). Replaying the file under
-`pull_request` therefore selected no stages at all ("act: Error: Could not
-find any stages to run"), which is FastLED/fbuild#2086.
-
-The caller call site cannot be replayed here: selecting `ci-minimal.yml:dylint`
-drags in its `prooft` dependency, whose checkout/setup steps have no literal
-names, so no declaration form can attest it (and its output-driven `if:`
-needs the deferred-output producer). `dylint.yml` keeps its
-`workflow_dispatch` trigger for exactly this purpose, and the local
-`linux-minimal` lane already replays `ci-minimal.yml` the same way. Under
-dispatch the file's own `FULL_TARGETS` expression makes "Run dylint over
-workspace" cover all three OS targets, which is what the PR path runs through
-ci-minimal's call -- the old pull_request selection was Linux-only, so the
-replay is now a superset of the proof it used to claim: same jobs, same steps.
-"""
+"""Replay the hosted Dylint workflow, extending it to every shipping target."""
 
 from __future__ import annotations
 
@@ -33,6 +15,7 @@ from ci.local_gate import (
     bosn_command,
     document,
     output,
+    replay_concurrency,
     submitted_run_id,
     verify_run,
     wire_string,
@@ -147,6 +130,9 @@ def run_dylint(workspace: Path, sha: str) -> None:
             SELECTION.workflow,
             "--event",
             "workflow_dispatch",
+            "--input",
+            "all_targets=true",
+            *replay_concurrency(),
             "--mode",
             "minimal",
             "--sha",

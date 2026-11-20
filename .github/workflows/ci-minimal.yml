@@ -52,16 +52,20 @@ jobs:
       - name: Verify source-bound local proof
         env:
           GATE_EVENT: ${{ github.event_name }}
+          CI_LINT_SOURCE: git+https://github.com/zackees/ci.yml@635fb1262b59702b9293a145e7201410612104e5
         run: |
           if [ "$GATE_EVENT" = "pull_request" ]; then
-            if ! uvx --from git+https://github.com/zackees/ci.yml@6711e4e418cf9b11de31e30e710b0bb1d9291e5b ci-lint local-gate verify --repo .; then
+            if ! uvx --from "$CI_LINT_SOURCE" ci-lint local-gate verify --repo .; then
               echo "::warning::Optional local proof could not be verified; hosted CI provides validation."
             fi
           else
             echo "Local proof is advisory; hosted CI provides validation"
           fi
   linux:
-    if: github.event_name != 'pull_request' || (!contains(github.event.pull_request.labels.*.name, 'ci-test') && !contains(github.event.pull_request.labels.*.name, 'ci-full'))
+    needs: [prooft]
+    if: >-
+      ${{ !cancelled() && !(needs.prooft.result == 'success' && needs.prooft.outputs.skip_linux == 'true')
+          && (github.event_name != 'pull_request' || (!contains(github.event.pull_request.labels.*.name, 'ci-test') && !contains(github.event.pull_request.labels.*.name, 'ci-full'))) }}
     uses: ./.github/workflows/check-ubuntu.yml
     secrets: inherit
     with:
@@ -73,14 +77,16 @@ jobs:
     timeout-minutes: 5
     permissions:
       contents: read
+      pull-requests: read
     outputs:
+      skip_linux: ${{ steps.plan.outputs.skip_linux }}
       skip_policy: ${{ steps.plan.outputs.skip_policy }}
       skip_dylint: ${{ steps.plan.outputs.skip_dylint }}
       skip_gate: ${{ steps.plan.outputs.skip_gate }}
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
-          ref: ${{ github.event.pull_request.base.sha || github.sha }}
+          ref: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha || github.sha }}
           fetch-depth: 0
           persist-credentials: false
       - uses: astral-sh/setup-uv@v3
@@ -89,11 +95,14 @@ jobs:
         if: hashFiles('ci/prooft_verify.py') != ''
         env:
           EVENT_NAME: ${{ github.event_name }}
-          BASE_SHA: ${{ github.event.pull_request.base.sha || '' }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha || '' }}
           HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          QUEUE_REF: ${{ github.event.merge_group.head_ref }}
+          GH_TOKEN: ${{ github.token }}
           PR_TITLE: ${{ github.event.pull_request.title || '' }}
+          EXTENDED: ${{ contains(github.event.pull_request.labels.*.name, 'ci-test') || contains(github.event.pull_request.labels.*.name, 'ci-full') }}
           FORK: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository }}
-        run: python3 -P ci/prooft_verify.py
+        run: uv run --no-project python -m ci.prooft_verify
   dylint:
     needs: [prooft]
     if: ${{ !cancelled() && !(needs.prooft.result == 'success' && needs.prooft.outputs.skip_policy == 'true' && needs.prooft.outputs.skip_dylint == 'true' && needs.prooft.outputs.skip_gate == 'true') }}
@@ -240,11 +249,12 @@ jobs:
   selected-coverage:
     name: CI selected coverage
     if: always()
-    needs: [linux, test, full, pr_boards]
+    needs: [linux, prooft, test, full, pr_boards]
     runs-on: ubuntu-latest
     steps:
       - env:
           LINUX: ${{ needs.linux.result }}
+          LINUX_ATTESTED: ${{ needs.prooft.result == 'success' && needs.prooft.outputs.skip_linux == 'true' }}
           TEST_SELECTED: ${{ contains(github.event.pull_request.labels.*.name, 'ci-test') }}
           TEST_RESULT: ${{ needs.test.result }}
           FULL_SELECTED: ${{ contains(github.event.pull_request.labels.*.name, 'ci-full') }}
@@ -258,7 +268,9 @@ jobs:
           elif [ "$TEST_SELECTED" = true ]; then
             test "$TEST_RESULT" = success
           else
-            test "$LINUX" = success
+            if [ "$LINUX" != skipped ] || [ "$LINUX_ATTESTED" != true ]; then
+              test "$LINUX" = success
+            fi
             # Path-selected boards: skipped when the PR touches none.
             case "$PR_BOARDS" in success|skipped) ;; *) exit 1 ;; esac
           fi

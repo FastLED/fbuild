@@ -18,48 +18,27 @@ workspace free bytes before and after; Rust/fbuild caches and disk guards stay
 unchanged. Run its focused checks with
 `uv run --no-project python -m unittest ci.test_reclaim_android_ndks`.
 
-`prooft_verify.py` is ci-minimal's `prooft` job. The job checks out the PR
-*base*, and the script runs the pinned [forge-ci/prooft](https://github.com/forge-ci/prooft)
-`plan` against `ci-attestations.yml`. The ci-minimal Dylint call is skipped only
-when dylint.yml's `policy`, `dylint` and `gate` jobs are all credited by the
-head's `Ci-Attestation:` trailers. The repository-root `./push` writes those
-trailers:
+`./push` validates a committed feature branch before pushing it. It runs
+formatting and cross-target Clippy, replays the checks and unit tests from
+`check-ubuntu.yml`, and replays `dylint.yml` with every shipping target and
+all lint-library UI tests. The Ubuntu replay supplies host Clippy. Bosn
+receives build and test concurrency limits based on the host's current load.
+Prooft reuses fresh attestations with matching lane inputs and verifies all
+gates before push. Use `./push --prove-only` to validate and stamp locally.
 
-1. `prooft soldr -- soldr lint rust --check --cross-dylint` stamps clippy and
-   Dylint for every target.
-2. `prooft run dylint -- … ci.local_gate --lane dylint` stamps the dylint.yml
-   replay.
-3. `./push` then pushes and opens the PR.
+`prooft_verify.py` reads the policy and tool pin from the trusted base commit.
+Default PR runs with valid proof can skip formatting, both jobs in the
+`ci-minimal.yml` Linux call, and the Dylint call. Expanded CI and main pushes
+retain hosted coverage. A PR changing a workflow or the attestation policy
+requires hosted validation. Merge groups ask `prooft queue` to compare the PR
+proofs with the queue head's inputs. The current pin requires a linear
+first-parent chain, so fbuild's MERGE-method queue falls back to hosted checks.
 
-Merge-queue and `main` runs never skip. Tests:
-`uv run --with pyyaml --no-project python -m unittest ci.test_prooft_verify`.
-
-`local_gate.py` has separate `--lane linux-minimal` and `--lane dylint` entrypoints.
-The first runs both required Ubuntu jobs through bosn's pinned act2 engine;
-the second replays every job of `dylint.yml` under the file's own
-`workflow_dispatch` trigger. A PR never dispatches it: PRs reach the file
-through ci-minimal's `workflow_call`, and selecting that call site would drag
-in its `prooft` dependency, whose checkout and setup steps carry no literal
-name for any declaration to attest. `dylint.yml` declares only
-`workflow_dispatch` and `workflow_call`, so a `pull_request` replay selects no
-stage at all ([#2086](https://github.com/FastLED/fbuild/issues/2086)). The default runs both. It checks clean source identity, native Linux x64 execution,
-all three Dylint job verdicts and the completed policy, library and workspace
-steps. The wrapper uses released Bosn >=0.1.22 for the stock runner tools.
-`local-gate.toml` reports optional attestations in shadow mode. The local gate uses the existing
-workflow-dispatch event for both the Ubuntu pair and Dylint before stamping
-the tree. Dispatch Dylint runs the same three-target graph the PR path runs
-through ci-minimal's `workflow_call`; soldr 0.9.52+ (setup-soldr@v0's default) points the cross-target
-lint libraries at the host build, so the extra targets do not rebuild them. Library UI fixtures retain their
-existing source-change condition. Shared replay coverage binds every Ubuntu action and command to its literal
-execution name. The advisory verifier runs independently and is not part of the Linux proof. The original Ubuntu
-and Dylint terminal reports are each forwarded unchanged to the pinned shared
-checker. Every concrete job, prerequisite, action and validation command is
-declared. The matching exact-hit guarded library cache save may be skipped;
-validation steps still need executed-success evidence. Dylint retains its
-additional private command checks, and both lanes must pass before stamping. Board builds, extended/full
-mode and other native hosts retain their remote coverage. The migration is
-tracked in [#1635](https://github.com/FastLED/fbuild/issues/1635), with Dylint
-parity and complete cold/warm measurements in [#1643](https://github.com/FastLED/fbuild/issues/1643).
+The optional ci-lint verifier still reports proofs in shadow mode using the
+pin from `ci.toml`. The local wrappers verify the exact committed source and
+the terminal Bosn reports. The migration is tracked in
+[FastLED/fbuild#1635](https://github.com/FastLED/fbuild/issues/1635) and
+[FastLED/fbuild#1643](https://github.com/FastLED/fbuild/issues/1643).
 
 ## Optional local proof and repository copies
 

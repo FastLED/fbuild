@@ -3,105 +3,161 @@
 # requires-python = ">=3.11"
 # dependencies = []
 # ///
-"""Push a branch the way CI expects: prove Dylint, push, then open the PR.
+"""Prove a committed feature branch, push it, and open a PR.
 
-    ./push                  # prove both lanes, push, open a PR if none exists
-    ./push --no-pr          # prove and push only
-    ./push --prove-only     # stamp HEAD, push nothing
-    ./push --no-proof       # push without proving (CI runs Dylint itself)
-
-Ported from obs-rust/obs-studio's `./push`. Two prooft lanes run on the
-committed HEAD, each stamping `Ci-Attestation:` trailers for the gates it
-passed (ci-attestations.yml):
-
-- lint:   prooft soldr -- soldr lint rust --check --cross-dylint
-          fmt, then clippy + Dylint for every target in
-          [workspace.metadata.soldr].targets (Linux, Windows, macOS).
-- dylint: prooft run dylint -- uv run ... python -m ci.local_gate --lane dylint
-          the dylint.yml replay (policy, lint-library UI tests, workspace).
-
-ci-minimal's `prooft` job then skips the hosted Dylint call for this PR
-head. The merge queue and main always run it. prooft amends HEAD, so a
-branch pushed before is updated with --force-with-lease.
-
-Exit codes: 0 pushed, 1 a step failed, 2 usage, 3 refused.
+Use --prove-only to stamp HEAD locally or --no-pr to only prove and push.
+Exit codes: 0 success, 1 failed step, 2 usage, 3 refused.
 """
 
 from __future__ import annotations
 
 import argparse
+import json
 import subprocess
 import sys
+import tempfile
+import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT))
-from ci.prooft_verify import PROOFT_SOURCE  # noqa: E402  (one pin for CI and ./push)
+from ci.prooft_verify import prooft_argv  # noqa: E402
 
-PROTECTED = {"main", "master"}
-# prooft subcommand + arguments for each lane, in run order.
-LANES: dict[str, list[str]] = {
-    "lint": ["soldr", "--", "soldr", "lint", "rust", "--check", "--cross-dylint"],
-    "dylint": [
-        "run", "dylint", "--",
-        "uv", "run", "--no-project", "--python", "3.12", "python", "-m", "ci.local_gate", "--lane", "dylint",
-    ],
+LOCAL_GATE = ["uv", "run", "--no-project", "--python", "3.12", "python", "-m", "ci.local_gate", "--lane"]
+LANES = {
+    "linux-minimal": [*LOCAL_GATE, "linux-minimal"],
+    "lint": ["uv", "run", "--no-project", "python", "-m", "ci.local_lint_gate", "--cross-clippy"],
+    "dylint": [*LOCAL_GATE, "dylint"],
 }
 
 
-def git(*args: str) -> str:
-    return subprocess.run(["git", *args], cwd=ROOT, check=True, capture_output=True, text=True).stdout.strip()
+def git(*args: str, root: Path = ROOT) -> str:
+    return subprocess.run(
+        ["git", *args], cwd=root, check=True, stdout=subprocess.PIPE, text=True,
+    ).stdout.strip()
 
 
-def step(argv: list[str]) -> int:
+def step(argv: list[str], *, stdin: str | None = None) -> int:
     print(f"./push: $ {' '.join(argv)}", flush=True)
-    return subprocess.run(argv, cwd=ROOT, check=False).returncode
+    return subprocess.run(argv, cwd=ROOT, check=False, input=stdin, text=True).returncode
+
+
+def read(argv: list[str]) -> subprocess.CompletedProcess[str]:
+    return subprocess.run(argv, cwd=ROOT, check=False, stdout=subprocess.PIPE, text=True)
+
+
+def proof_status(root: Path) -> set[str]:
+    result = read(prooft_argv("verify", "HEAD", "--json", root=root))
+    rows = json.loads(result.stdout)
+    return {row["gate"] for row in rows if row["state"] == "valid"}
+
+
+def lane_gates(root: Path) -> dict[str, set[str]]:
+    result = read(prooft_argv("lanes", root=root))
+    result.check_returncode()
+    gates = dict(line.split(": ", 1) for line in result.stdout.splitlines())
+    if set(gates) != set(LANES) or not all(gates.values()):
+        raise ValueError("push lanes do not match ci-attestations.yml")
+    return {lane: set(paths.split(", ")) for lane, paths in gates.items()}
+
+
+def reuse_proof(ref: str, root: Path, valid: set[str]) -> None:
+    exists = subprocess.run(
+        ["git", "show-ref", "--verify", "--quiet", ref], cwd=root, check=False,
+    )
+    if exists.returncode != 0:
+        return
+    result = read(prooft_argv("emit", ref, root=root))
+    result.check_returncode()
+    # prooft validates the bundle against HEAD's input keys and retains the
+    # execution timestamps. Exit 1 also covers a bundle with no matching inputs.
+    bundle = json.loads(result.stdout)
+    bundle["attestations"] = [item for item in bundle["attestations"] if item["gate"] not in valid]
+    if bundle["attestations"]:
+        step(prooft_argv("apply", "-", root=root), stdin=json.dumps(bundle))
+
+
+def attest(branch: str, root: Path = ROOT) -> bool:
+    gates = lane_gates(root)
+    valid = proof_status(root)
+    proof_ref = f"refs/fbuild/push/{branch}"
+    if any(not paths <= valid for paths in gates.values()):
+        reuse_proof(proof_ref, root, valid)
+        valid = proof_status(root)
+    for lane, command in LANES.items():
+        if gates[lane] <= valid:
+            print(f"./push: {lane}: existing proof (inputs unchanged)", flush=True)
+            continue
+        started = time.monotonic()
+        code = step(prooft_argv("run", lane, "--", *command, root=root))
+        print(f"./push: {lane}: {time.monotonic() - started:.1f}s (exit {code})", flush=True)
+        if code != 0:
+            return False
+        git("update-ref", proof_ref, "HEAD", root=root)
+    code = step(prooft_argv("verify", "HEAD", root=root))
+    if code != 0:
+        return False
+    valid = proof_status(root)
+    if any(not paths <= valid for paths in gates.values()):
+        return False
+    git("update-ref", proof_ref, "HEAD", root=root)
+    return True
+
+
+def attest_checkout(branch: str) -> bool:
+    if not git("ls-files", "--others", "--exclude-standard"):
+        return attest(branch)
+    # Bosn snapshots untracked files. Replay a separate checkout of the
+    # committed inputs when the contributor has local scratch files.
+    original = git("rev-parse", "HEAD")
+    with tempfile.TemporaryDirectory(prefix="fbuild-push-") as temp:
+        checkout = Path(temp) / "source"
+        git("worktree", "add", "--detach", str(checkout), original)
+        try:
+            if not attest(branch, checkout):
+                return False
+            stamped = git("rev-parse", "HEAD", root=checkout)
+        finally:
+            git("worktree", "remove", str(checkout))
+    git("update-ref", f"refs/heads/{branch}", stamped, original)
+    return True
 
 
 def has_open_pr(branch: str) -> bool:
-    out = subprocess.run(
-        ["gh", "pr", "list", "--head", branch, "--state", "open", "--json", "number", "--jq", "length"],
-        cwd=ROOT, check=False, capture_output=True, text=True,
-    )
-    return out.returncode == 0 and out.stdout.strip() not in ("", "0")
+    result = read(["gh", "pr", "list", "--head", branch, "--state", "open", "--json", "number", "--jq", "length"])
+    result.check_returncode()
+    return int(result.stdout) > 0
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--no-proof", action="store_true", help="skip the local Dylint proof")
+    parser = argparse.ArgumentParser(description=__doc__, allow_abbrev=False)
     parser.add_argument("--no-pr", action="store_true", help="do not open a pull request")
     parser.add_argument("--prove-only", action="store_true", help="stamp HEAD but push nothing")
     parser.add_argument("--remote", default="origin")
     args = parser.parse_args(argv)
 
-    branch = git("rev-parse", "--abbrev-ref", "HEAD")
-    if branch == "HEAD" or branch in PROTECTED:
-        print(f"./push: refusing to push {branch!r}; work on a feature branch", file=sys.stderr)
-        return 3
-    status = git("status", "--porcelain", "--untracked-files=normal").splitlines()
-    if any(not line.startswith("??") for line in status):
-        print("./push: refusing: tracked files have uncommitted changes (a proof binds the committed tree)", file=sys.stderr)
-        return 3
-    if status and not args.no_proof:
-        # The dylint lane's local gate refuses any untracked file; check now
-        # rather than after the hours-long lint lane.
-        print("./push: refusing: untracked files would fail the dylint lane; commit, move or ignore them (or pass --no-proof)", file=sys.stderr)
-        return 3
-
-    if not args.no_proof:
-        for lane, prooft_args in LANES.items():
-            code = step(["uvx", "--from", PROOFT_SOURCE, "prooft", "-C", str(ROOT), *prooft_args])
-            if code != 0:
-                print(f"./push: the {lane} lane failed (exit {code}); nothing pushed", file=sys.stderr)
-                return 1
-    if args.prove_only:
-        return 0
-
-    if step(["git", "push", "--force-with-lease", "-u", args.remote, f"HEAD:refs/heads/{branch}"]) != 0:
+    try:
+        branch = git("rev-parse", "--abbrev-ref", "HEAD")
+        default = git("for-each-ref", "--format=%(symref:short)", f"refs/remotes/{args.remote}/HEAD")
+        if branch in {"HEAD", "main", "master", default.removeprefix(f"{args.remote}/")}:
+            print(f"./push: refusing to push {branch!r}; work on a feature branch", file=sys.stderr)
+            return 3
+        if git("status", "--porcelain", "--untracked-files=no"):
+            print("./push: refusing: tracked files have uncommitted changes", file=sys.stderr)
+            return 3
+        if not attest_checkout(branch):
+            print("./push: proof failed; nothing pushed", file=sys.stderr)
+            return 1
+        if args.prove_only:
+            return 0
+        if step(["git", "push", "--force-with-lease", "-u", "--", args.remote, f"HEAD:refs/heads/{branch}"]) != 0:
+            return 1
+        if args.no_pr or has_open_pr(branch):
+            return 0
+        return 0 if step(["gh", "pr", "create", "--fill", "--head", branch]) == 0 else 1
+    except (OSError, subprocess.CalledProcessError, ValueError, KeyError) as error:
+        print(f"./push: {error}", file=sys.stderr)
         return 1
-    if args.no_pr or has_open_pr(branch):
-        return 0
-    return 0 if step(["gh", "pr", "create", "--fill", "--head", branch]) == 0 else 1
 
 
 if __name__ == "__main__":

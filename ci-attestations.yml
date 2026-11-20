@@ -1,15 +1,15 @@
-# Both reusable Ubuntu jobs must pass. This does not prove boards, full mode
-# or Windows/macOS execution.
-#
-# Dylint: `./push` proves the `lint` lane (`prooft soldr -- soldr lint rust
-# --check --cross-dylint`: clippy + Dylint per target) and the `dylint` lane
-# (`ci.local_gate --lane dylint`: the dylint.yml replay). ci-minimal's `prooft`
-# job reads this file from the PR base and skips the Dylint call only when
-# dylint.yml's policy, dylint and gate jobs are all credited. ci-minimal passes
-# `ref`, so that call lints the Linux, Windows and macOS x64 targets: those
-# three per-target gates belong to dylint.yml:dylint as well.
+# The Rust lanes include build scripts, fixtures, toolchain and CI settings.
+# Linux checks also read Python sources and repository-wide guard inputs.
 version: 1
+lanes:
+  lint:
+    inputs: [".cargo/**", ".github/**", ".clippy.toml", ".rustfmt.toml", ".gitattributes", "Cargo.*", "rust-toolchain.toml", "crates/**", "bench/**", "tests/**", "site/**", "ci/**", "python/**", "dylints/**", "pyproject.toml", "uv.lock", "ci.toml", "local-gate.toml", "ci-attestations.yml", "push", ".env", ".intentionally-empty-file.o"]
+  dylint:
+    inputs: [".cargo/**", ".github/**", ".clippy.toml", ".rustfmt.toml", ".gitattributes", "Cargo.*", "rust-toolchain.toml", "crates/**", "bench/**", "tests/**", "site/**", "ci/**", "python/**", "dylints/**", "pyproject.toml", "uv.lock", "ci.toml", "local-gate.toml", "ci-attestations.yml", "push", ".env", ".intentionally-empty-file.o", ".gitignore", "lint", "test"]
+  linux-minimal:
+    inputs: ["**"]
 gates:
+  rust/all/fmt: {lane: lint, fidelity: native}
   general/all/ubuntu-ci-guards: {lane: linux-minimal, fidelity: native}
   rust/x86_64-unknown-linux-gnu/workspace-clippy: {lane: linux-minimal, fidelity: native}
   rust/x86_64-unknown-linux-gnu/workspace-test: {lane: linux-minimal, fidelity: native}
@@ -17,26 +17,26 @@ gates:
   general/all/dylint-policy: {lane: dylint, fidelity: native}
   rust/x86_64-unknown-linux-gnu/dylint-library-check: {lane: dylint, fidelity: native}
   rust/x86_64-unknown-linux-gnu/workspace-dylint: {lane: dylint, fidelity: native}
-  # RUST-033 (#1793): the `lint` lane runs the whole lint phase with
-  # --cross-dylint, so one pass proves clippy and Dylint per target.
+  # RUST-033 (#1793): cross Clippy and Dylint cover all shipping targets.
   rust/x86_64-unknown-linux-musl/clippy: {lane: lint, fidelity: native}
-  rust/x86_64-unknown-linux-musl/dylint: {lane: lint, fidelity: native}
+  rust/x86_64-unknown-linux-musl/dylint: {lane: dylint, fidelity: native}
   rust/aarch64-unknown-linux-musl/clippy: {lane: lint, fidelity: native}
-  rust/aarch64-unknown-linux-musl/dylint: {lane: lint, fidelity: native}
-  rust/x86_64-unknown-linux-gnu/clippy: {lane: lint, fidelity: native}
-  rust/x86_64-unknown-linux-gnu/dylint: {lane: lint, fidelity: native}
+  rust/aarch64-unknown-linux-musl/dylint: {lane: dylint, fidelity: native}
+  rust/x86_64-unknown-linux-gnu/clippy: {lane: linux-minimal, fidelity: native}
+  rust/x86_64-unknown-linux-gnu/dylint: {lane: dylint, fidelity: native}
   rust/aarch64-unknown-linux-gnu/clippy: {lane: lint, fidelity: native}
-  rust/aarch64-unknown-linux-gnu/dylint: {lane: lint, fidelity: native}
+  rust/aarch64-unknown-linux-gnu/dylint: {lane: dylint, fidelity: native}
   rust/x86_64-apple-darwin/clippy: {lane: lint, fidelity: native}
-  rust/x86_64-apple-darwin/dylint: {lane: lint, fidelity: native}
+  rust/x86_64-apple-darwin/dylint: {lane: dylint, fidelity: native}
   rust/aarch64-apple-darwin/clippy: {lane: lint, fidelity: native}
-  rust/aarch64-apple-darwin/dylint: {lane: lint, fidelity: native}
+  rust/aarch64-apple-darwin/dylint: {lane: dylint, fidelity: native}
   rust/x86_64-pc-windows-msvc/clippy: {lane: lint, fidelity: native}
-  rust/x86_64-pc-windows-msvc/dylint: {lane: lint, fidelity: native}
+  rust/x86_64-pc-windows-msvc/dylint: {lane: dylint, fidelity: native}
   rust/aarch64-pc-windows-msvc/clippy: {lane: lint, fidelity: native}
-  rust/aarch64-pc-windows-msvc/dylint: {lane: lint, fidelity: native}
+  rust/aarch64-pc-windows-msvc/dylint: {lane: dylint, fidelity: native}
 jobs:
-  ci-minimal.yml:linux: [general/all/ubuntu-ci-guards, rust/x86_64-unknown-linux-gnu/workspace-clippy, rust/x86_64-unknown-linux-gnu/workspace-test, rust/x86_64-unknown-linux-gnu/python-facade-test]
+  fmt.yml:fmt: [rust/all/fmt]
+  ci-minimal.yml:linux: [general/all/ubuntu-ci-guards, rust/x86_64-unknown-linux-gnu/clippy, rust/x86_64-unknown-linux-gnu/workspace-test, rust/x86_64-unknown-linux-gnu/python-facade-test]
   dylint.yml:policy: [general/all/dylint-policy]
   dylint.yml:dylint: [rust/x86_64-unknown-linux-gnu/dylint-library-check, rust/x86_64-unknown-linux-gnu/workspace-dylint, rust/x86_64-unknown-linux-gnu/dylint, rust/x86_64-pc-windows-msvc/dylint, rust/x86_64-apple-darwin/dylint]
   dylint.yml:gate: [general/all/dylint-policy, rust/x86_64-unknown-linux-gnu/dylint-library-check, rust/x86_64-unknown-linux-gnu/workspace-dylint, rust/x86_64-unknown-linux-gnu/dylint, rust/x86_64-pc-windows-msvc/dylint, rust/x86_64-apple-darwin/dylint]

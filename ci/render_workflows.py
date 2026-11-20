@@ -29,6 +29,7 @@ import argparse
 import glob
 import json
 import textwrap
+import tomllib
 import sys
 from pathlib import Path
 
@@ -390,7 +391,8 @@ def render_pr_boards() -> str:
 
 
 # zackees/ci.yml commit that provides `ci-lint reuse-check` (stdlib-only).
-CI_LINT_SHA = "635fb1262b59702b9293a145e7201410612104e5"
+CI_LINT_SOURCE = tomllib.loads((REPO / "ci.toml").read_text())["linter"]
+CI_LINT_SHA = CI_LINT_SOURCE.split("@", 1)[1]
 # Job names green on both the default PR tier and main pushes (zackees/ci.yml#162).
 REUSE_REQUIRED_JOBS = (
     "linux / Check (ubuntu-latest)",
@@ -454,7 +456,7 @@ def render_reuse_decision() -> str:
 # GEN-022 (forge-ci/ci.yml#405): the end-of-queue janitor needs ci-lint with
 # the #405 repo-wide LRU budget pass. It must also classify setup-soldr's
 # live cache families (FastLED/fbuild#2071), so keep it at CI_LINT_SHA or newer.
-QUEUE_JANITOR_CI_LINT_SHA = "635fb1262b59702b9293a145e7201410612104e5"
+QUEUE_JANITOR_CI_LINT_SHA = CI_LINT_SHA
 QUEUE_JANITOR_NEEDS = (
     "cancel-superseded", "verify", "linux", "glibc_floor", "prooft", "dylint", "board_plan", "fbuild_bin",
     "pr_boards", "reuse_decision", "test", "full", "selected-coverage", "ci-summary",
@@ -502,8 +504,7 @@ def render_prooft_job() -> str:
 
     The base is checked out, so ci/prooft_verify.py, its pinned prooft
     revision and ci-attestations.yml all come from the base: a PR cannot edit
-    what judges it. Only pull_request events can earn a skip; the merge queue
-    and main always run Dylint.
+    what judges it. The merge group uses its recorded base and head.
     """
     return (
         "  prooft:\n"
@@ -512,14 +513,16 @@ def render_prooft_job() -> str:
         "    timeout-minutes: 5\n"
         "    permissions:\n"
         "      contents: read\n"
+        "      pull-requests: read\n"
         "    outputs:\n"
+        "      skip_linux: ${{ steps.plan.outputs.skip_linux }}\n"
         "      skip_policy: ${{ steps.plan.outputs.skip_policy }}\n"
         "      skip_dylint: ${{ steps.plan.outputs.skip_dylint }}\n"
         "      skip_gate: ${{ steps.plan.outputs.skip_gate }}\n"
         "    steps:\n"
         "      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6\n"
         "        with:\n"
-        "          ref: ${{ github.event.pull_request.base.sha || github.sha }}\n"
+        "          ref: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha || github.sha }}\n"
         "          fetch-depth: 0\n"
         "          persist-credentials: false\n"
         "      - uses: astral-sh/setup-uv@v3\n"
@@ -530,11 +533,14 @@ def render_prooft_job() -> str:
         "        if: hashFiles('ci/prooft_verify.py') != ''\n"
         "        env:\n"
         "          EVENT_NAME: ${{ github.event_name }}\n"
-        "          BASE_SHA: ${{ github.event.pull_request.base.sha || '' }}\n"
+        "          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha || '' }}\n"
         "          HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}\n"
+        "          QUEUE_REF: ${{ github.event.merge_group.head_ref }}\n"
+        "          GH_TOKEN: ${{ github.token }}\n"
         "          PR_TITLE: ${{ github.event.pull_request.title || '' }}\n"
+        "          EXTENDED: ${{ contains(github.event.pull_request.labels.*.name, 'ci-test') || contains(github.event.pull_request.labels.*.name, 'ci-full') }}\n"
         "          FORK: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository }}\n"
-        "        run: python3 -P ci/prooft_verify.py\n"
+        "        run: uv run --no-project python -m ci.prooft_verify\n"
     )
 
 
@@ -691,15 +697,16 @@ def render_local_gate_verify() -> str:
       - name: Verify source-bound local proof
         env:
           GATE_EVENT: ${{ github.event_name }}
+          CI_LINT_SOURCE: git+https://github.com/__CI_LINT_SOURCE__
         run: |
           if [ "$GATE_EVENT" = "pull_request" ]; then
-            if ! uvx --from git+https://github.com/zackees/ci.yml@6711e4e418cf9b11de31e30e710b0bb1d9291e5b ci-lint local-gate verify --repo .; then
+            if ! uvx --from "$CI_LINT_SOURCE" ci-lint local-gate verify --repo .; then
               echo "::warning::Optional local proof could not be verified; hosted CI provides validation."
             fi
           else
             echo "Local proof is advisory; hosted CI provides validation"
           fi
-"""
+""".replace("__CI_LINT_SOURCE__", CI_LINT_SOURCE)
 
 
 def render_ci(boards: list[dict], tier: str, families: dict) -> str:
@@ -859,8 +866,11 @@ def render_ci(boards: list[dict], tier: str, families: dict) -> str:
         + (render_cancel_superseded() if minimal else "")
         + verify
         + "  linux:\n"
-        + ("    if: github.event_name != 'pull_request' || (!contains(github.event.pull_request.labels.*.name, 'ci-test') && !contains(github.event.pull_request.labels.*.name, 'ci-full'))\n" if minimal else gate)
-        + ("" if minimal else "    needs: verify\n")
+        + ("    needs: [prooft]\n"
+           "    if: >-\n"
+           "      ${{ !cancelled() && !(needs.prooft.result == 'success' && needs.prooft.outputs.skip_linux == 'true')\n"
+           "          && (github.event_name != 'pull_request' || (!contains(github.event.pull_request.labels.*.name, 'ci-test') && !contains(github.event.pull_request.labels.*.name, 'ci-full'))) }}\n"
+           if minimal else gate + "    needs: verify\n")
         + "    uses: ./.github/workflows/check-ubuntu.yml\n"
         + "    secrets: inherit\n"
         + "    with:\n"
@@ -951,11 +961,12 @@ def render_ci(boards: list[dict], tier: str, families: dict) -> str:
            "  selected-coverage:\n"
            "    name: CI selected coverage\n"
            "    if: always()\n"
-           "    needs: [linux, test, full, pr_boards]\n"
+           "    needs: [linux, prooft, test, full, pr_boards]\n"
            "    runs-on: ubuntu-latest\n"
            "    steps:\n"
            "      - env:\n"
            "          LINUX: ${{ needs.linux.result }}\n"
+           "          LINUX_ATTESTED: ${{ needs.prooft.result == 'success' && needs.prooft.outputs.skip_linux == 'true' }}\n"
            "          TEST_SELECTED: ${{ contains(github.event.pull_request.labels.*.name, 'ci-test') }}\n"
            "          TEST_RESULT: ${{ needs.test.result }}\n"
            "          FULL_SELECTED: ${{ contains(github.event.pull_request.labels.*.name, 'ci-full') }}\n"
@@ -969,7 +980,9 @@ def render_ci(boards: list[dict], tier: str, families: dict) -> str:
            "          elif [ \"$TEST_SELECTED\" = true ]; then\n"
            "            test \"$TEST_RESULT\" = success\n"
            "          else\n"
-           "            test \"$LINUX\" = success\n"
+           "            if [ \"$LINUX\" != skipped ] || [ \"$LINUX_ATTESTED\" != true ]; then\n"
+           "              test \"$LINUX\" = success\n"
+           "            fi\n"
            "            # Path-selected boards: skipped when the PR touches none.\n"
            "            case \"$PR_BOARDS\" in success|skipped) ;; *) exit 1 ;; esac\n"
            "          fi\n"
