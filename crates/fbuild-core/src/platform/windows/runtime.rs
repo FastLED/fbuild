@@ -100,7 +100,7 @@ fn find_libiconv_path() -> Option<NormalizedPath> {
     let mut candidates: Vec<NormalizedPath> = Vec::new();
     for var in ["ProgramW6432", "ProgramFiles"] {
         if let Some(root) = std::env::var_os(var) {
-            let root = NormalizedPath::from(std::path::PathBuf::from(root));
+            let root = NormalizedPath::from(std::path::Path::new(&root));
             candidates.push(
                 root.join("Git")
                     .join("mingw64")
@@ -125,7 +125,7 @@ fn find_libiconv_path() -> Option<NormalizedPath> {
     candidates.push(NormalizedPath::from(r"C:\msys64\ucrt64\bin\libiconv-2.dll"));
 
     if let Some(local) = std::env::var_os("LOCALAPPDATA") {
-        let avr_root = NormalizedPath::from(std::path::PathBuf::from(local))
+        let avr_root = NormalizedPath::from(std::path::Path::new(&local))
             .join("Arduino15")
             .join("packages")
             .join("arduino")
