@@ -221,13 +221,29 @@ jobs:
           # need only crates with target-specific source in the checked-in
           # boundary baseline; deriving this list makes new platform code
           # enter the cross-target check when its ledger is updated.
+          #
+          # An EMPTY baseline is phase 9's terminal state and is legitimate:
+          # no crate carries target-specific source any more, so there is
+          # nothing a cross-target pass could police. The row count is what
+          # tells an empty ledger apart from a parse regression, so a
+          # non-empty ledger must still yield packages.
+          baseline_rows="$(awk -F '\t' '!/^#/ && NF { n++ } END { print n+0 }' \
+            dylints/enforce_platform_boundary/src/baseline.txt)"
           mapfile -t platform_packages < <(
             awk -F '\t' '!/^#/ && $1 ~ /^crates\// { split($1, parts, "/"); print parts[2] }' \
               dylints/enforce_platform_boundary/src/baseline.txt | sort -u
           )
-          test "${#platform_packages[@]}" -gt 0
+          if test "$baseline_rows" -gt 0; then
+            # Every data row must name a crate package, and the derived list
+            # must be non-empty, or the filter above has stopped matching.
+            test "$(awk -F '\t' '!/^#/ && NF && $1 !~ /^crates\// { n++ } END { print n+0 }' \
+              dylints/enforce_platform_boundary/src/baseline.txt)" -eq 0
+            test "${#platform_packages[@]}" -gt 0
+          else
+            echo "platform-boundary baseline is empty: no cross-target passes needed"
+          fi
           targets=(x86_64-unknown-linux-gnu)
-          if test "$FULL_TARGETS" = true; then
+          if test "$FULL_TARGETS" = true && test "${#platform_packages[@]}" -gt 0; then
             targets+=(x86_64-pc-windows-msvc x86_64-apple-darwin)
           fi
           for triple in "${targets[@]}"; do

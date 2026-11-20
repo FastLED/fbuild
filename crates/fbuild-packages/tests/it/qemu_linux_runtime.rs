@@ -15,7 +15,6 @@
 //! that already has the libraries the test still passes — it just proves the
 //! host path rather than the bundle path, which is also a behaviour worth
 //! keeping (fbuild must not download the bundle it does not need).
-#![cfg(target_os = "linux")]
 
 use std::path::Path;
 
@@ -47,6 +46,10 @@ fn qemu_starts(qemu: &Path, project_dir: &Path) -> (bool, String) {
 #[tokio::test]
 #[ignore = "downloads Espressif QEMU (~15 MB) and, on a host missing the libraries, the runtime bundle (~5 MB)"]
 async fn esp_qemu_starts_without_any_host_library_install() {
+    if !fbuild_core::platform::host::is_linux() {
+        eprintln!("skipping: bundle provisioning is a Linux host policy");
+        return;
+    }
     let project = tempfile::TempDir::new().expect("temp project dir");
 
     for arch in [EspQemuArch::Xtensa, EspQemuArch::Riscv32] {
