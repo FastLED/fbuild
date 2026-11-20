@@ -8,6 +8,7 @@ pub(super) mod host;
 pub(super) mod ipc;
 mod owner_thread;
 pub(super) mod process;
+pub(super) mod pty;
 pub(super) mod usb_pnp;
 
 pub(super) const HOST_OS: HostOs = HostOs::Linux;
