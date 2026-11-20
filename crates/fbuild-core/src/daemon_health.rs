@@ -325,6 +325,7 @@ mod tests {
         // ~20 starting answers at 100 ms polls is ~2 s, far past the 300 ms
         // base budget that would have given up before FastLED/fbuild#1480.
         let (url, served) = serve(20).await;
+        let started = Instant::now();
         let mut phases = Vec::new();
         let outcome = wait_until_healthy_with(
             crate::http::client(),
@@ -336,9 +337,28 @@ mod tests {
         )
         .await;
         assert_eq!(outcome, WaitOutcome::Healthy);
-        assert_eq!(served.load(Ordering::SeqCst), 21);
-        assert_eq!(phases.len(), 20);
-        assert_eq!(phases[0].as_deref(), Some("compile_backend"));
+        // Bounds, not equalities. The HTTP client may replay a request on a
+        // fresh connection when the pooled one has been closed under it, and a
+        // replay makes the fixture serve one answer twice, so the exact number
+        // of round trips is not observable from outside the waiter. The old
+        // equalities flaked at 19 observed answers of 21 served ones on a
+        // loaded CI runner (run 44790566297, 2026-11-20).
+        let served = served.load(Ordering::SeqCst);
+        assert!(served >= 21, "the fixture served {served} answers");
+        assert!(
+            phases.len() >= 10,
+            "on_starting should run for the starting answers, saw {phases:?}"
+        );
+        assert!(
+            phases
+                .iter()
+                .all(|phase| phase.as_deref() == Some("compile_backend")),
+            "every starting answer names its phase: {phases:?}"
+        );
+        // The property FastLED/fbuild#1480 is about: the wait outlived the
+        // 300 ms base budget that ended it before the starting state existed.
+        let waited = started.elapsed();
+        assert!(waited >= Duration::from_millis(300), "{waited:?}");
     }
 
     #[tokio::test]
@@ -367,17 +387,31 @@ mod tests {
         assert!(waited < 5 * SECOND, "{waited:?}");
     }
 
+    /// Endpoint that completes no HTTP exchange: every accepted connection is
+    /// closed at once, so a probe sees "no answer". The listener stays bound
+    /// for the whole test, so no sibling test can claim the port -- the old
+    /// bind-then-drop version handed the ephemeral port back to the kernel,
+    /// where this module's own `serve()` could pick it up and answer
+    /// `503 starting`, which is exactly how the assertion below flipped on
+    /// run 44790566297 (2026-11-20).
+    async fn serve_nothing() -> String {
+        let listener = tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap();
+        let url = format!("http://{}/health", listener.local_addr().unwrap());
+        tokio::spawn(async move {
+            while let Ok((stream, _)) = listener.accept().await {
+                drop(stream);
+            }
+        });
+        url
+    }
+
     #[tokio::test]
     async fn wait_gives_up_on_an_unreachable_endpoint_after_the_base_budget() {
-        // Bind then drop, so the port is (almost certainly) refused.
-        let port = {
-            let l = std::net::TcpListener::bind("127.0.0.1:0").unwrap();
-            l.local_addr().unwrap().port()
-        };
+        let url = serve_nothing().await;
         let started = Instant::now();
         let outcome = wait_until_healthy_with(
             crate::http::client(),
-            &format!("http://127.0.0.1:{port}/health"),
+            &url,
             Duration::from_millis(300),
             crate::time::SHORT_HTTP_TIMEOUT,
             30 * SECOND,
@@ -390,6 +424,8 @@ mod tests {
                 last: DaemonHealth::Unreachable
             }
         );
-        assert!(started.elapsed() < 5 * SECOND);
+        let waited = started.elapsed();
+        assert!(waited >= Duration::from_millis(300), "{waited:?}");
+        assert!(waited < 5 * SECOND, "{waited:?}");
     }
 }
