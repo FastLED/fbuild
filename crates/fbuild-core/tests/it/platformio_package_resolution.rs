@@ -2,7 +2,6 @@
 //! platform dispatch. These fixtures are offline and intentionally include a
 //! platform name that fbuild cannot build.
 
-#[cfg(windows)]
 use fbuild_core::path::NormalizedPath;
 use fbuild_core::platformio_package::{
     PackageKind, PackageLock, PackageSource, ResolutionError, parse_package_spec,
@@ -104,13 +103,14 @@ fn classifies_archive_repository_and_local_payload_paths() {
     assert!(parse_package_spec("bad alias@not a version").is_err());
 }
 
-#[cfg(windows)]
 #[test]
 fn windows_file_url_maps_to_drive_path() {
     let spec = parse_package_spec("file:///C:/platforms/custom").unwrap();
-    assert!(
-        matches!(spec.source, PackageSource::LocalPath { path } if path == NormalizedPath::new(r"C:\platforms\custom"))
-    );
+    let win = fbuild_core::platform::host::is_windows();
+    let drive_path = r"C:\platforms\custom";
+    let posix_path = "/C:/platforms/custom";
+    let expected = NormalizedPath::new(if win { drive_path } else { posix_path });
+    assert!(matches!(spec.source, PackageSource::LocalPath { path } if path == expected));
 }
 
 #[test]

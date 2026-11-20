@@ -226,8 +226,7 @@ async fn ensure_avr8js_npm_in_reports_clear_error_without_npm() {
     let saved_pathext = std::env::var_os("PATHEXT");
 
     std::env::set_var("PATH", "");
-    #[cfg(windows)]
-    {
+    if fbuild_core::platform::host::is_windows() {
         // Ensure .cmd isn't resolved via some fallback.
         std::env::set_var("PATHEXT", "");
     }

@@ -7,6 +7,24 @@ import unittest
 from ci import enforce_platform_boundary as boundary
 
 
+def _synthetic_row(**overrides: object) -> boundary.LedgerRow:
+    """A well-formed ledger row over a real, non-exempt source file.
+
+    The committed ledger is empty by design -- every host mechanic now sits
+    behind the platform boundary -- so validation tests construct the rows
+    they exercise instead of borrowing one from the tree.
+    """
+    row = boundary.LedgerRow(
+        "crates/fbuild-core/src/platformio_package.rs",
+        "attr_cfg",
+        "#[cfg(windows)]",
+        0,
+        "host",
+        "host_mechanic",
+    )
+    return dataclasses.replace(row, **overrides)
+
+
 class EnforcePlatformBoundaryTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
@@ -15,11 +33,13 @@ class EnforcePlatformBoundaryTests(unittest.TestCase):
 
     def test_committed_exact_occurrence_ledger_matches_whole_tree(self) -> None:
         # Keep the row count explicit so additions to host mechanics require
-        # a deliberate inventory update. The executable identity, the daemon's
-        # live-image path, the WebSocket serial handler's pseudo-terminals, the
-        # executable hash memo, and QEMU's runtime-library policy now live
-        # behind the platform boundary, leaving 6 occurrences.
-        self.assertEqual(len(self.expected), 6)
+        # a deliberate inventory update. Every host mechanic in the tree now
+        # lives behind the platform boundary -- the executable identity and
+        # live image, the WebSocket handler's pseudo-terminals, the executable
+        # hash memo, QEMU's runtime-library policy, and even the last test-only
+        # OS branches -- so the ledger is empty and any new occurrence fails
+        # here first.
+        self.assertEqual(len(self.expected), 0)
         self.assertFalse(boundary.validate_ledger(self.expected))
         self.assertFalse(boundary.compare(self.expected, self.observed))
 
@@ -161,28 +181,22 @@ class EnforcePlatformBoundaryTests(unittest.TestCase):
         self.assertFalse(bypasses, bypasses)
 
     def test_duplicate_and_non_contiguous_ordinal_are_rejected(self) -> None:
-        malformed = [*self.expected, self.expected[0]]
-        failures = boundary.validate_ledger(malformed)
+        row = _synthetic_row()
+        failures = boundary.validate_ledger([row, row])
 
         self.assertTrue(any("duplicate" in failure for failure in failures))
         self.assertTrue(any("non-contiguous" in failure for failure in failures))
 
     def test_second_identical_occurrence_in_grandfathered_file_is_new(self) -> None:
-        first = self.expected[0]
-        same_group = [
-            row
-            for row in self.expected
-            if (row.path, row.kind, row.normalized)
-            == (first.path, first.kind, first.normalized)
-        ]
-        extra = dataclasses.replace(first, ordinal=len(same_group))
+        first = _synthetic_row()
+        extra = dataclasses.replace(first, ordinal=1)
 
-        failures = boundary.compare(self.expected, [*self.observed, extra])
+        failures = boundary.compare([first], [first, extra])
 
         self.assertTrue(any("new occurrence" in failure for failure in failures))
 
     def test_deleted_source_requires_deleting_ledger_row(self) -> None:
-        failures = boundary.compare(self.expected, self.observed[1:])
+        failures = boundary.compare([_synthetic_row()], [])
 
         self.assertTrue(any("stale occurrence" in failure for failure in failures))
 
@@ -193,17 +207,16 @@ class EnforcePlatformBoundaryTests(unittest.TestCase):
         )
 
     def test_actual_dylint_undercount_is_rejected(self) -> None:
-        expected = boundary.scanner_dylint_counts(self.expected)
-        source, kind, normalized = next(iter(expected))
+        source, kind, normalized = (
+            "crates/fbuild-core/src/platformio_package.rs",
+            "attr_cfg",
+            "#[cfg(windows)]",
+        )
+        expected = boundary.collections.Counter({(source, kind, normalized): 2})
         process = "123"
         sources = {(process, source)}
         findings = boundary.collections.Counter(
-            {
-                (process, source, kind, normalized): expected[
-                    (source, kind, normalized)
-                ]
-                - 1
-            }
+            {(process, source, kind, normalized): 1}
         )
 
         failures = boundary.compare_dylint_observations(expected, sources, findings)

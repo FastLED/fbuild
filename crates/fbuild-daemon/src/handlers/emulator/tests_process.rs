@@ -6,27 +6,24 @@ use crate::handlers::operations::MonitorOutcome;
 use std::path::PathBuf;
 
 pub(super) fn test_process_command(lines: &[&str]) -> (PathBuf, Vec<String>) {
-    #[cfg(windows)]
-    {
+    if fbuild_core::platform::host::is_windows() {
         let system_root = std::env::var("SystemRoot").unwrap_or_else(|_| "C:\\Windows".to_string());
-        let exe = PathBuf::from(system_root).join(r"System32\cmd.exe");
+        let shell = fbuild_core::platform::executable::native_name("cmd");
+        let exe = PathBuf::from(system_root).join("System32").join(shell);
         let script = lines
             .iter()
             .map(|line| format!("echo {}", line))
             .collect::<Vec<_>>()
             .join(" & ");
         (exe, vec!["/C".to_string(), script])
-    }
-
-    #[cfg(not(windows))]
-    {
+    } else {
         let script = lines
             .iter()
             .map(|line| format!("printf '%s\\n' '{}'", line.replace('\'', "'\"'\"'")))
             .collect::<Vec<_>>()
             .join("; ");
-        // Absolute, not a bare `sh` resolved through PATH. The Windows branch
-        // above already builds an absolute `cmd.exe` path; this side did not,
+        // Absolute, not a bare `sh` resolved through PATH. The Windows arm
+        // above already builds an absolute `cmd.exe` path; this one did not,
         // and an ubuntu runner failed with
         //
         //   failed to launch QEMU at sh: No such file or directory (os error 2)
