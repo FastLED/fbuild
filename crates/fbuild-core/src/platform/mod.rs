@@ -11,6 +11,7 @@ pub mod fs;
 pub mod host;
 pub mod ipc;
 pub mod process;
+pub mod pty;
 
 std::cfg_select! {
     target_os = "windows" => {

@@ -46,6 +46,16 @@ probing. Broker framing/routing, daemon retry/yield policy, and HTTP/protobuf
 compatibility remain with the daemon. Additional native shutdown notifications
 route through `process` into the daemon's neutral shutdown channel.
 
+`pty` owns the pseudo-terminal pair that handler tests use as a stand-in for
+an attached board: `PtyPair::open` allocates master and slave on Linux,
+`slave_name` reports the device path a test hands to fbuild as a serial port,
+`wait_for_master_input` polls the master side, and `read_master_exact` drains
+it. Holding the pair keeps the terminal live; dropping it closes both
+directions, which is how the deploy-preemption tests make a port disappear.
+Hosts without an openable pseudo-terminal report `is_supported() == false` and
+`open()` returns `Unsupported`, so a test asks instead of selecting a host
+itself.
+
 `ape` detects Actually Portable Executable (cosmocc) images by their magic
 (`MZqFpD='`, `jartsr='`, `APEDBG='`) and, on Unix hosts, launches them as
 `<loader> <image> <args...>`, because `posix_spawn` cannot exec an APE without a

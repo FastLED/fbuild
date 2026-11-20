@@ -1,40 +1,30 @@
 use super::*;
 
+/// Open a pseudo-terminal for a handler test, or `None` on a host that has
+/// none. The native allocation lives behind [`fbuild_core::platform::pty`], so
+/// these tests carry no host selection of their own.
+fn open_test_pty() -> Option<fbuild_core::platform::pty::PtyPair> {
+    if !fbuild_core::platform::pty::is_supported() {
+        return None;
+    }
+    Some(
+        fbuild_core::platform::pty::PtyPair::open()
+            .unwrap_or_else(|error| panic!("open pseudo-terminal: {error}")),
+    )
+}
+
 /// #1485's client FIFO relies on the daemon emitting request replies in
 /// request order. Exercise the production WebSocket handler with a real
 /// pseudo-terminal, so this catches a future inbound/writer concurrency
 /// change that reorders `write_ack` and `in_waiting` frames.
-#[cfg(target_os = "linux")]
 #[tokio::test]
 #[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 async fn serial_ws_replies_follow_request_order() {
-    use std::ffi::CStr;
-    use std::os::fd::{AsRawFd, FromRawFd, OwnedFd};
     use tokio_tungstenite::tungstenite::Message as ClientMessage;
-
-    let mut master_fd = -1;
-    let mut slave_fd = -1;
-    // SAFETY: openpty initializes both fds on success. OwnedFd takes over
-    // each descriptor exactly once, and ttyname_r writes into a sized buffer.
-    let rc = unsafe {
-        libc::openpty(
-            &mut master_fd,
-            &mut slave_fd,
-            std::ptr::null_mut(),
-            std::ptr::null(),
-            std::ptr::null(),
-        )
+    let Some(pty) = open_test_pty() else {
+        return;
     };
-    assert_eq!(rc, 0, "openpty failed: {}", std::io::Error::last_os_error());
-    let _master = unsafe { OwnedFd::from_raw_fd(master_fd) };
-    let slave = unsafe { OwnedFd::from_raw_fd(slave_fd) };
-    let mut name = [0 as std::ffi::c_char; 256];
-    let rc = unsafe { libc::ttyname_r(slave.as_raw_fd(), name.as_mut_ptr(), name.len()) };
-    assert_eq!(rc, 0, "ttyname_r failed: {rc}");
-    let port = unsafe { CStr::from_ptr(name.as_ptr()) }
-        .to_str()
-        .unwrap()
-        .to_owned();
+    let port = pty.slave_name().to_owned();
 
     let (shutdown_tx, _shutdown_rx) = tokio::sync::watch::channel(false);
     let ctx = Arc::new(DaemonContext::new(8765, shutdown_tx, "test".to_string()));
@@ -154,96 +144,38 @@ async fn serial_ws_replies_follow_request_order() {
 
 /// The real handler must keep one WebSocket alive across deploy's physical
 /// port close and re-open its serial subscription after preemption clears.
-#[cfg(target_os = "linux")]
 #[tokio::test]
 async fn serial_ws_preemption_reconnects_after_deploy() {
     serial_ws_preemption_reconnects_after_deploy_impl(false, false).await;
 }
 
-#[cfg(target_os = "linux")]
 #[tokio::test]
 async fn serial_ws_preemption_reconnects_to_renumbered_port() {
     serial_ws_preemption_reconnects_after_deploy_impl(true, false).await;
 }
 
-#[cfg(target_os = "linux")]
 #[tokio::test]
 async fn serial_ws_preemption_without_recovered_port_closes_monitor() {
     serial_ws_preemption_reconnects_after_deploy_impl(false, true).await;
 }
 
-#[cfg(target_os = "linux")]
 #[expect(
     clippy::cognitive_complexity,
     clippy::too_many_lines,
     reason = "baseline, zackees/ci.yml#229"
 )]
 async fn serial_ws_preemption_reconnects_after_deploy_impl(renumber: bool, fail_recovery: bool) {
-    use std::ffi::CStr;
-    use std::os::fd::{AsRawFd, FromRawFd, OwnedFd};
     use tokio_tungstenite::tungstenite::Message as ClientMessage;
-
-    let mut master_fd = -1;
-    let mut slave_fd = -1;
-    // SAFETY: openpty initializes both descriptors on success; OwnedFd takes
-    // each exactly once and ttyname_r writes into the sized buffer.
-    assert_eq!(
-        unsafe {
-            libc::openpty(
-                &mut master_fd,
-                &mut slave_fd,
-                std::ptr::null_mut(),
-                std::ptr::null_mut(),
-                std::ptr::null(),
-            )
-        },
-        0
-    );
-    let master = unsafe { OwnedFd::from_raw_fd(master_fd) };
-    let slave = unsafe { OwnedFd::from_raw_fd(slave_fd) };
-    let mut name = [0 as std::ffi::c_char; 256];
-    assert_eq!(
-        unsafe { libc::ttyname_r(slave.as_raw_fd(), name.as_mut_ptr(), name.len()) },
-        0
-    );
-    let port = unsafe { CStr::from_ptr(name.as_ptr()) }
-        .to_str()
-        .unwrap()
-        .to_owned();
-    let mut recovered_master = None;
-    let mut recovered_slave = None;
-    let recovered_port = if renumber {
-        let mut new_master_fd = -1;
-        let mut new_slave_fd = -1;
-        assert_eq!(
-            unsafe {
-                libc::openpty(
-                    &mut new_master_fd,
-                    &mut new_slave_fd,
-                    std::ptr::null_mut(),
-                    std::ptr::null_mut(),
-                    std::ptr::null(),
-                )
-            },
-            0
-        );
-        recovered_master = Some(unsafe { OwnedFd::from_raw_fd(new_master_fd) });
-        let new_slave = unsafe { OwnedFd::from_raw_fd(new_slave_fd) };
-        let mut new_name = [0 as std::ffi::c_char; 256];
-        assert_eq!(
-            unsafe {
-                libc::ttyname_r(new_slave.as_raw_fd(), new_name.as_mut_ptr(), new_name.len())
-            },
-            0
-        );
-        let new_port = unsafe { CStr::from_ptr(new_name.as_ptr()) }
-            .to_str()
-            .unwrap()
-            .to_owned();
-        recovered_slave = Some(new_slave);
-        new_port
-    } else {
-        port.clone()
+    let Some(initial_pty) = open_test_pty() else {
+        return;
+    };
+    let port = initial_pty.slave_name().to_owned();
+    // A renumbered port is a second terminal: the first pair is closed below
+    // so the original device name really disappears from the host.
+    let recovered_pty = renumber.then(|| open_test_pty().expect("open a second pseudo-terminal"));
+    let recovered_port = match &recovered_pty {
+        Some(pty) => pty.slave_name().to_owned(),
+        None => port.clone(),
     };
 
     let (shutdown_tx, _shutdown_rx) = tokio::sync::watch::channel(false);
@@ -330,8 +262,7 @@ async fn serial_ws_preemption_reconnects_after_deploy_impl(renumber: bool, fail_
     }
 
     if renumber {
-        drop(master);
-        drop(slave);
+        drop(initial_pty);
     }
 
     ctx.serial_manager
@@ -373,23 +304,22 @@ async fn serial_ws_preemption_reconnects_after_deploy_impl(renumber: bool, fail_
     assert_eq!(ack["type"], "write_ack", "{ack}");
     assert_eq!(ack["success"], true, "{ack}");
     assert_eq!(ack["bytes_written"], 5, "{ack}");
-    if let Some(master) = recovered_master.as_ref() {
-        let mut poll_fd = libc::pollfd {
-            fd: master.as_raw_fd(),
-            events: libc::POLLIN,
-            revents: 0,
-        };
-        assert_eq!(unsafe { libc::poll(&mut poll_fd, 1, 2_000) }, 1);
-        let mut bytes = [0u8; 16];
-        let count =
-            unsafe { libc::read(master.as_raw_fd(), bytes.as_mut_ptr().cast(), bytes.len()) };
-        assert_eq!(&bytes[..count as usize], b"after");
+    if let Some(pty) = recovered_pty.as_ref() {
+        assert!(
+            pty.wait_for_master_input(Duration::from_secs(2))
+                .expect("poll the pseudo-terminal master"),
+            "the post-reconnect write must reach the master side"
+        );
+        let mut bytes = [0u8; 5];
+        pty.read_master_exact(&mut bytes)
+            .expect("read the pseudo-terminal master");
+        assert_eq!(&bytes, b"after");
     }
 
     ws.send(ClientMessage::Text(r#"{"type":"detach"}"#.into()))
         .await
         .unwrap();
-    drop((recovered_master, recovered_slave));
+    drop(recovered_pty);
     server.abort();
 }
 

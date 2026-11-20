@@ -1195,7 +1195,6 @@ dependencies = [
  "fbuild-serial",
  "fbuild-test-support",
  "futures",
- "libc",
  "mimalloc-pprof",
  "prost",
  "regex",
