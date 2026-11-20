@@ -298,7 +298,7 @@ def render_fbuild_bin_job(needs: str, condition: str, ref: str) -> str:
         "        with:\n"
         f"          ref: {ref}\n"
         "          persist-credentials: false\n"
-        "      - uses: zackees/setup-soldr@9337570234850b50322e696037127fa3cf8ac703 # setup-soldr#629 S3 remote cache\n"
+        "      - uses: zackees/setup-soldr@b52b02106d9d01a29550cd33861bdd5e9114ba3f # setup-soldr#682 generation saves (v0 canary)\n"
         "        with:\n"
         "          s3-bucket: forge-ci-cache\n"
         "          s3-endpoint: sfo3.digitaloceanspaces.com\n"
