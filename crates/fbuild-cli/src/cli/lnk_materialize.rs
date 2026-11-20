@@ -17,7 +17,7 @@
 //! to a build tree at all); `--in-place` deliberately does not, so it also
 //! records each generated name in the scanned root's `.gitignore`.
 
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
 use fbuild_core::path::NormalizedPath;
 use fbuild_core::{FbuildError, Result};
@@ -45,7 +45,7 @@ pub(crate) struct MaterializeOutcome {
     /// `(pointer, reason)` for every pointer that could not be written. One
     /// bad pointer does not stop the rest: the cached blobs that do resolve
     /// are still usable.
-    pub failures: Vec<(PathBuf, String)>,
+    pub failures: Vec<(NormalizedPath, String)>,
 }
 
 impl MaterializeMode {
@@ -76,7 +76,7 @@ impl MaterializeMode {
                     "--materialize-dir needs a directory".to_string(),
                 ));
             }
-            return Ok(Some(Self::Dir(NormalizedPath::new(PathBuf::from(dir)))));
+            return Ok(Some(Self::Dir(NormalizedPath::new(dir))));
         }
         Ok(materialize.then_some(Self::BuildResources))
     }
@@ -87,7 +87,7 @@ impl MaterializeMode {
     /// pointer's path relative to it is what keeps a project's directory
     /// shape in the destination, so `data/video1.rgb.fetch` becomes
     /// `<dest>/data/video1.rgb` rather than a flat pile of blobs.
-    pub(crate) fn target(&self, scan_root: &Path, lnk_path: &Path) -> Result<PathBuf> {
+    pub(crate) fn target(&self, scan_root: &Path, lnk_path: &Path) -> Result<NormalizedPath> {
         let file_name = lnk_path
             .file_name()
             .and_then(|n| n.to_str())
@@ -107,33 +107,35 @@ impl MaterializeMode {
         match self {
             Self::InPlace => {
                 let parent = lnk_path.parent().unwrap_or_else(|| Path::new(""));
-                Ok(parent.join(projected))
+                Ok(NormalizedPath::new(parent.join(projected)))
             }
             Self::BuildResources | Self::Dir(_) => {
-                let relative = lnk_path.strip_prefix(scan_root).map_err(|_| {
-                    FbuildError::ConfigError(format!(
-                        "{} is not under the scanned root {}",
-                        lnk_path.display(),
-                        scan_root.display()
-                    ))
-                })?;
-                let relative = relative
-                    .parent()
-                    .map(|dir| dir.join(projected))
-                    .unwrap_or_else(|| PathBuf::from(projected));
+                let relative = NormalizedPath::new(lnk_path)
+                    .relative_to(&NormalizedPath::new(scan_root))
+                    .ok_or_else(|| {
+                        FbuildError::ConfigError(format!(
+                            "{} is not under the scanned root {}",
+                            lnk_path.display(),
+                            scan_root.display()
+                        ))
+                    })?;
+                let relative = match relative.parent() {
+                    Some(dir) => NormalizedPath::new(dir.join(projected)),
+                    None => NormalizedPath::new(projected),
+                };
                 Ok(self.root(scan_root).join(relative))
             }
         }
     }
 
     /// The directory every target is rooted in.
-    pub(crate) fn root(&self, scan_root: &Path) -> PathBuf {
+    pub(crate) fn root(&self, scan_root: &Path) -> NormalizedPath {
         match self {
-            Self::BuildResources => {
-                fbuild_paths::get_project_build_root(scan_root).join("resources")
-            }
-            Self::Dir(dir) => dir.as_path().to_path_buf(),
-            Self::InPlace => scan_root.to_path_buf(),
+            Self::BuildResources => NormalizedPath::new(
+                fbuild_paths::get_project_build_root(scan_root).join("resources"),
+            ),
+            Self::Dir(dir) => dir.clone(),
+            Self::InPlace => NormalizedPath::new(scan_root),
         }
     }
 
@@ -163,13 +165,17 @@ pub(crate) fn materialize_discovered(
         let target = match mode.target(scan_root, &entry.path) {
             Ok(target) => target,
             Err(e) => {
-                outcome.failures.push((entry.path.clone(), e.to_string()));
+                outcome
+                    .failures
+                    .push((NormalizedPath::new(&entry.path), e.to_string()));
                 continue;
             }
         };
         match materialize_one(&entry.path, &entry.lnk, &target, cache) {
             Ok(materialized) => outcome.written.push(materialized),
-            Err(e) => outcome.failures.push((entry.path.clone(), e.to_string())),
+            Err(e) => outcome
+                .failures
+                .push((NormalizedPath::new(&entry.path), e.to_string())),
         }
     }
     outcome
@@ -187,10 +193,12 @@ pub(crate) fn record_gitignore(
 ) -> Result<Vec<String>> {
     let mut wanted: Vec<String> = Vec::new();
     for entry in written {
-        let Ok(relative) = entry.target_path.strip_prefix(scan_root) else {
+        let Some(relative) =
+            NormalizedPath::new(&entry.target_path).relative_to(&NormalizedPath::new(scan_root))
+        else {
             continue;
         };
-        let name = relative.to_string_lossy().replace('\\', "/");
+        let name = relative.display_slash();
         if !name.is_empty() && !wanted.contains(&name) {
             wanted.push(name);
         }
@@ -199,7 +207,7 @@ pub(crate) fn record_gitignore(
         return Ok(wanted);
     }
 
-    let path = scan_root.join(".gitignore");
+    let path = NormalizedPath::new(scan_root).join(".gitignore");
     let existing = std::fs::read_to_string(&path).unwrap_or_default();
     let listed: Vec<&str> = existing.lines().map(str::trim).collect();
     let missing: Vec<&String> = wanted
@@ -261,8 +269,14 @@ mod tests {
             .unwrap();
     }
 
-    fn write_pointer(root: &Path, relative: &str, url: &str, sha: &str, size: usize) -> PathBuf {
-        let path = root.join(relative);
+    fn write_pointer(
+        root: &Path,
+        relative: &str,
+        url: &str,
+        sha: &str,
+        size: usize,
+    ) -> NormalizedPath {
+        let path = NormalizedPath::new(root.join(relative));
         std::fs::create_dir_all(path.parent().unwrap()).unwrap();
         std::fs::write(
             &path,
@@ -325,7 +339,7 @@ mod tests {
         let pointer = scan_root.join("assets/sfx/boom.wav.fetch");
         let mode = MaterializeMode::Dir(NormalizedPath::new(work.path().join("out")));
         assert_eq!(
-            mode.target(scan_root, &pointer).unwrap(),
+            mode.target(scan_root, &pointer).unwrap().as_path(),
             work.path().join("out/assets/sfx/boom.wav")
         );
     }
@@ -337,7 +351,8 @@ mod tests {
         assert_eq!(
             MaterializeMode::InPlace
                 .target(work.path(), &pointer)
-                .unwrap(),
+                .unwrap()
+                .as_path(),
             work.path().join("data/video1.rgb")
         );
     }
@@ -442,7 +457,7 @@ mod tests {
     #[test]
     fn in_place_writes_beside_the_pointer_and_gitignores_it() {
         let work = tempdir();
-        let scan_root = work.path().to_path_buf();
+        let scan_root = NormalizedPath::new(work.path());
         let bytes = b"sd card asset".to_vec();
         let sha = sha256_of(&bytes);
         let url = "https://example.invalid/sd.bin";
@@ -459,7 +474,7 @@ mod tests {
         let landed = scan_root.join("data/sd.bin");
         assert_eq!(std::fs::read(&landed).unwrap(), bytes);
         assert!(pointer.exists(), "in-place must not delete the pointer");
-        assert_eq!(outcome.written[0].target_path, landed);
+        assert_eq!(outcome.written[0].target_path, landed.as_path());
 
         let added = record_gitignore(&scan_root, &outcome.written).unwrap();
         assert_eq!(added, vec!["data/sd.bin".to_string()]);
