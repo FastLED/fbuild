@@ -864,6 +864,22 @@ pub enum LnkAction {
     Pull {
         /// Project root to scan. Defaults to the current directory.
         project_dir: Option<String>,
+        /// Also write each resolved blob out as a normal file, so tools that
+        /// are not fbuild can consume it (an SD-card copy, the fastled-wasm
+        /// VFS packer, `cp` in a release script). The default destination is
+        /// the build tree's `resources/` directory, so the source tree stays
+        /// clean.
+        #[arg(long)]
+        materialize: bool,
+        /// Write the materialized files under this directory instead of the
+        /// build tree. Implies `--materialize`.
+        #[arg(long, value_name = "DIR")]
+        materialize_dir: Option<String>,
+        /// Write each blob beside its pointer (`data/a.bin.fetch` →
+        /// `data/a.bin`). Implies `--materialize`; the generated names are
+        /// added to the scanned root's `.gitignore`.
+        #[arg(long)]
+        in_place: bool,
     },
     /// Verify every pointed-at blob in the cache matches its sha256,
     /// without touching the network. Reports mismatches; exits non-zero on
