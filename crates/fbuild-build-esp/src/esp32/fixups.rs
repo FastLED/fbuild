@@ -81,12 +81,18 @@ pub fn effective_sdk_ld_flags(mut flags: Vec<String>, build_unflags: &[String]) 
 /// dangling entry is dropped rather than rewritten: a relative
 /// `-specs=nano.specs` would select a newlib variant the toolchain does not
 /// ship. An absolute path that really exists is kept.
+///
+/// "Absolute" means rooted (`Path::has_root`), not `Path::is_absolute`: the
+/// baked path is POSIX, and on a Windows host `/home/runner/...` has no drive
+/// prefix, so `is_absolute` is false there and the dangling flag would reach
+/// GCC. A rooted path resolves against the current drive on Windows, so the
+/// existence check still keeps one that really exists (FastLED/fbuild#2107).
 fn is_dangling_specs(flag: &str) -> bool {
     // GCC accepts both spellings; the shipped artifact uses `--specs=`.
     flag.strip_prefix("--specs=")
         .or_else(|| flag.strip_prefix("-specs="))
         .map(std::path::Path::new)
-        .is_some_and(|path| path.is_absolute() && !path.exists())
+        .is_some_and(|path| path.has_root() && !path.exists())
 }
 
 fn apply_if(condition: bool, config: Esp32McuConfig, rule: Rule) -> Esp32McuConfig {
@@ -397,6 +403,18 @@ mod tests {
         let baked = "--specs=/home/runner/work/esp32-arduino-lib-builder/esp32-arduino-lib-builder/build/specs/nano.specs";
         let flags = effective_sdk_ld_flags(vec![baked.into(), "-Wl,--gc-sections".into()], &[]);
         assert_eq!(flags, vec!["-Wl,--gc-sections"]);
+    }
+
+    /// FastLED/fbuild#2107: a baked POSIX path must count as absolute on
+    /// every host, including Windows, where `Path::is_absolute` is false for
+    /// a path without a drive prefix. Covers both GCC spellings.
+    #[test]
+    fn posix_rooted_specs_are_dangling_on_every_host() {
+        let missing = "/fbuild-2107-missing/build/specs/nano.specs";
+        assert!(is_dangling_specs(&format!("--specs={missing}")));
+        assert!(is_dangling_specs(&format!("-specs={missing}")));
+        assert!(!is_dangling_specs("-specs=nano.specs"));
+        assert!(!is_dangling_specs("-Wl,--gc-sections"));
     }
 
     #[test]
