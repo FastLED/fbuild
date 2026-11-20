@@ -31,8 +31,10 @@ Default PR runs with valid proof can skip formatting, both jobs in the
 `ci-minimal.yml` Linux call, and the Dylint call. Expanded CI and main pushes
 retain hosted coverage. A PR changing a workflow or the attestation policy
 requires hosted validation. Merge groups ask `prooft queue` to compare the PR
-proofs with the queue head's inputs. The current pin requires a linear
-first-parent chain, so fbuild's MERGE-method queue falls back to hosted checks.
+proofs with the queue head's inputs. For a two-parent MERGE entry, fbuild
+uses the base-owned PR plan when the entry directly merges the recorded PR
+head into the event base and has the same tree as the PR. Other two-parent
+entries run hosted checks until prooft supports their topology.
 
 The optional ci-lint verifier still reports proofs in shadow mode using the
 pin from `ci.toml`. The local wrappers verify the exact committed source and

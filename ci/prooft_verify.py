@@ -66,6 +66,14 @@ def queue_pr_head(ref: str, repository: str) -> str:
     return head
 
 
+def same_tree(pr_head: str, queue_head: str) -> bool:
+    trees = subprocess.run(
+        ["git", "rev-parse", f"{pr_head}^{{tree}}", f"{queue_head}^{{tree}}"], cwd=ROOT,
+        check=True, stdout=subprocess.PIPE, text=True,
+    ).stdout.split()
+    return len(trees) == 2 and trees[0] == trees[1]
+
+
 def queue(base: str, head: str) -> int:
     pr_head = queue_pr_head(os.environ.get("QUEUE_REF", ""), os.environ.get("GITHUB_REPOSITORY", ""))
     if not re.fullmatch(r"[0-9a-f]{40}", pr_head) or not fetch(pr_head) or not fetch(head):
@@ -76,8 +84,12 @@ def queue(base: str, head: str) -> int:
     ).stdout.split()
     if len(parents) == 2 and parents[1] != pr_head:
         return run_all("the PR has moved since the merge group was built")
-    # The pinned prooft currently declines MERGE-method heads. Keep the real
-    # history intact so unsupported topology falls back to hosted jobs.
+    if parents == [base, pr_head] and same_tree(pr_head, head):
+        # prooft queue rejects two-parent commits. These exact parents bind
+        # the queue entry to this base and PR, and Git verifies the queued
+        # tree is byte-for-byte the one the normal base-owned plan checks.
+        print("prooft: MERGE queue entry has the verified PR's identical tree", flush=True)
+        return plan("plan", "--base", base, "--head", pr_head)
     return plan("queue", "--base", base, "--pr-head", pr_head, "--queue-head", head)
 
 

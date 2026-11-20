@@ -97,7 +97,7 @@ class VerifierTests(unittest.TestCase):
             return subprocess.CompletedProcess(argv, 0, f'["{pr}", "FastLED/fbuild", "feature", "open", false]')
 
         plan = subprocess.CompletedProcess([], 0)
-        history = subprocess.CompletedProcess([], 0, f"{base} {pr}")
+        history = subprocess.CompletedProcess([], 0, base)
         with (
             patch.dict(os.environ, env, clear=True),
             patch.object(prooft_verify, "fetch", return_value=True) as fetch,
@@ -113,6 +113,44 @@ class VerifierTests(unittest.TestCase):
         )
         with patch.object(prooft_verify.subprocess, "run", api):
             self.assertEqual(pr, prooft_verify.queue_pr_head(env["QUEUE_REF"], env["GITHUB_REPOSITORY"]))
+
+    def test_merge_method_credits_only_verified_identical_trees(self) -> None:
+        base, queued, pr, other = "b" * 40, "a" * 40, "c" * 40, "d" * 40
+        tree, changed = "e" * 40, "f" * 40
+        cases = (
+            ([base, pr], [tree, tree], "plan"),
+            ([base, pr], [tree, changed], "queue"),
+            ([other, pr], [], "queue"),
+            ([base, other], [], None),
+        )
+        for parents, trees, command in cases:
+            with (
+                self.subTest(parents=parents, trees=trees),
+                patch.object(prooft_verify, "queue_pr_head", return_value=pr),
+                patch.object(prooft_verify, "fetch", return_value=True),
+                patch.object(prooft_verify, "plan", return_value=0) as plan,
+                patch.object(prooft_verify, "run_all", return_value=0) as run_all,
+                patch.object(
+                    prooft_verify.subprocess, "run",
+                    side_effect=[subprocess.CompletedProcess([], 0, " ".join(values))
+                                 for values in (parents, trees)],
+                ) as git,
+            ):
+                self.assertEqual(0, prooft_verify.queue(base, queued))
+            if command == "plan":
+                plan.assert_called_once_with("plan", "--base", base, "--head", pr)
+            elif command == "queue":
+                plan.assert_called_once_with(
+                    "queue", "--base", base, "--pr-head", pr, "--queue-head", queued,
+                )
+            else:
+                plan.assert_not_called()
+                run_all.assert_called_once()
+            if trees:
+                self.assertEqual(
+                    ["git", "rev-parse", f"{pr}^{{tree}}", f"{queued}^{{tree}}"],
+                    git.call_args.args[0],
+                )
 
     def test_invalid_queue_metadata_runs_everything(self) -> None:
         code, calls, written = self.run_main({**PR_ENV, "EVENT_NAME": "merge_group"}, [])
