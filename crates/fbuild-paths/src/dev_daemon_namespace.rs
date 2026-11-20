@@ -88,7 +88,7 @@ where
 /// (ASLR/IAT/`.data` mutation), while the on-disk bytes identify the
 /// checkout build.
 fn hash_current_exe() -> std::io::Result<[u8; 32]> {
-    let exe = std::env::current_exe()?;
+    let exe = fbuild_core::platform::executable::current_image()?;
     let mut file = std::fs::File::open(&exe)?;
     let mut hasher = blake3::Hasher::new();
     std::io::copy(&mut file, &mut hasher)?;

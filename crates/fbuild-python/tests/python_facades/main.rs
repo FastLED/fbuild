@@ -319,15 +319,19 @@ fn start_fake_daemon(
         "fail_first_write": knobs.fail_first_write,
     });
     // allow-direct-spawn: integration test runs its own binary as a fake daemon child.
-    let mut child = std::process::Command::new(std::env::current_exe().unwrap())
-        .args(["--ignored", "--exact", "fake_daemon_child", "--nocapture"])
-        .env("FBUILD_FACADE_DAEMON_KNOBS", knobs_json.to_string())
-        .env("FBUILD_FACADE_DAEMON_PORT_FILE", &port_file)
-        .env("FBUILD_FACADE_DAEMON_EVENT_FILE", event_file.as_path())
-        .stdout(std::process::Stdio::null())
-        .stderr(std::process::Stdio::inherit())
-        .spawn()
-        .expect("start fake daemon child");
+    let mut child = std::process::Command::new(
+        fbuild_core::platform::executable::current_image()
+            .unwrap()
+            .as_path(),
+    )
+    .args(["--ignored", "--exact", "fake_daemon_child", "--nocapture"])
+    .env("FBUILD_FACADE_DAEMON_KNOBS", knobs_json.to_string())
+    .env("FBUILD_FACADE_DAEMON_PORT_FILE", &port_file)
+    .env("FBUILD_FACADE_DAEMON_EVENT_FILE", event_file.as_path())
+    .stdout(std::process::Stdio::null())
+    .stderr(std::process::Stdio::inherit())
+    .spawn()
+    .expect("start fake daemon child");
     let deadline = std::time::Instant::now() + Duration::from_secs(5);
     loop {
         if let Ok(contents) = std::fs::read_to_string(&port_file) {

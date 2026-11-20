@@ -64,6 +64,11 @@ pub(crate) fn file_identity(path: &Path) -> std::io::Result<same_file::Handle> {
     same_file::Handle::from_path(path)
 }
 
+pub(crate) fn executable_memo_supported() -> bool {
+    // inode and change-time data key the memo exactly.
+    true
+}
+
 pub(crate) fn executable_memo_identity(metadata: &std::fs::Metadata) -> std::io::Result<String> {
     use std::os::unix::fs::MetadataExt;
     let modified = metadata

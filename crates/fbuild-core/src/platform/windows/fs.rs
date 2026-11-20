@@ -210,6 +210,11 @@ pub(crate) fn file_identity(path: &Path) -> std::io::Result<same_file::Handle> {
     same_file::Handle::from_path(path)
 }
 
+pub(crate) fn executable_memo_supported() -> bool {
+    // the Windows metadata set cannot key the memo.
+    false
+}
+
 pub(crate) fn executable_memo_identity(metadata: &std::fs::Metadata) -> std::io::Result<String> {
     Ok(format!(
         "{} {} {} {}",
