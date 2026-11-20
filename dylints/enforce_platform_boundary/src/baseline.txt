@@ -4,10 +4,6 @@ crates/fbuild-core/tests/it/platformio_package_resolution.rs	attr_cfg	windows	1
 crates/fbuild-daemon/src/handlers/emulator/tests_npm_cache.rs	attr_cfg	windows	0
 crates/fbuild-daemon/src/handlers/emulator/tests_process.rs	attr_cfg	windows	0
 crates/fbuild-daemon/src/handlers/emulator/tests_process.rs	attr_cfg	windows	1
-crates/fbuild-daemon/src/handlers/health.rs	attr_cfg	target_os	0
-crates/fbuild-daemon/src/handlers/health.rs	attr_cfg	target_os	1
-crates/fbuild-daemon/src/handlers/health.rs	attr_cfg	target_os	2
-crates/fbuild-daemon/src/handlers/health.rs	attr_cfg	target_os	3
 crates/fbuild-daemon/src/handlers/websockets_tests.rs	attr_cfg	target_os	0
 crates/fbuild-daemon/src/handlers/websockets_tests.rs	attr_cfg	target_os	1
 crates/fbuild-daemon/src/handlers/websockets_tests.rs	attr_cfg	target_os	2

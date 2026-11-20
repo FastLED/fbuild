@@ -15,11 +15,23 @@ class EnforcePlatformBoundaryTests(unittest.TestCase):
 
     def test_committed_exact_occurrence_ledger_matches_whole_tree(self) -> None:
         # Keep the row count explicit so additions to host mechanics require
-        # a deliberate inventory update. The executable identity now lives
-        # behind the platform boundary, leaving 44 occurrences.
-        self.assertEqual(len(self.expected), 44)
+        # a deliberate inventory update. The executable identity and the
+        # daemon's live-image path now live behind the platform boundary,
+        # leaving 40 occurrences.
+        self.assertEqual(len(self.expected), 40)
         self.assertFalse(boundary.validate_ledger(self.expected))
         self.assertFalse(boundary.compare(self.expected, self.observed))
+
+    def test_ledger_has_no_regeneration_escape_hatch(self) -> None:
+        # A rewrite mode would let a failing gate be "fixed" by recording
+        # whatever the tree currently contains. The ledger and the Dylint
+        # baseline are reviewed artifacts, so neither a CLI switch nor a
+        # helper that renders them may exist.
+        for attribute in ("render", "render_dylint_baseline"):
+            self.assertFalse(hasattr(boundary, attribute), attribute)
+        with self.assertRaises(SystemExit) as raised:
+            boundary.main(["--write"])
+        self.assertEqual(raised.exception.code, 2)
 
     def test_private_platform_implementation_findings_are_not_baselined(self) -> None:
         finding = boundary.research.Finding(

@@ -1,10 +1,15 @@
-"""Enforce the transitional exact-occurrence host-platform ledger.
+"""Enforce the exact-occurrence host-platform ledger.
 
 The checker walks every handwritten Rust source and crate manifest without
 module expansion. It is independent of the compiler lint, so inactive,
 private, orphaned, test, example, bench, and build-script code remains in the
 cross-host union. Ordinary migration changes must remove source occurrences
 and their ledger rows together.
+
+This checker has no regeneration mode: the ledger and the Dylint baseline are
+reviewed artifacts, and a failing comparison must be explained occurrence by
+occurrence instead of being rewritten to match whatever the tree currently
+contains.
 """
 
 from __future__ import annotations
@@ -147,11 +152,6 @@ def rows_from_findings(findings: list[research.Finding]) -> list[LedgerRow]:
     return sorted(rows)
 
 
-def render(rows: list[LedgerRow]) -> str:
-    header = "path\tkind\tnormalized\tordinal\tcapability\tclassification"
-    return header + "\n" + "\n".join(row.tsv() for row in rows) + "\n"
-
-
 def parse_ledger(path: Path = LEDGER) -> list[LedgerRow]:
     rows: list[LedgerRow] = []
     for line_number, raw in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
@@ -261,13 +261,6 @@ def scanner_dylint_counts(rows: list[LedgerRow]) -> collections.Counter[tuple[st
     return counts
 
 
-def render_dylint_baseline(counts: collections.Counter[tuple[str, str, str]]) -> str:
-    lines = ["# path<TAB>kind<TAB>normalized<TAB>ordinal"]
-    for key, count in sorted(counts.items()):
-        lines.extend("\t".join((*key, str(ordinal))) for ordinal in range(count))
-    return "\n".join(lines) + "\n"
-
-
 def parse_dylint_observations(
     path: Path,
 ) -> tuple[
@@ -311,18 +304,10 @@ def compare_dylint_observations(
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--write", action="store_true")
     parser.add_argument("--print-totals", action="store_true")
     parser.add_argument("--dylint-observed", type=Path)
     args = parser.parse_args(argv)
     observed = rows_from_findings(research.inventory(ROOT))
-    if args.write:
-        LEDGER.write_text(render(observed), encoding="utf-8", newline="\n")
-        DYLINT_BASELINE.write_text(
-            render_dylint_baseline(scanner_dylint_counts(observed)),
-            encoding="utf-8",
-            newline="\n",
-        )
     try:
         expected = parse_ledger()
         dylint_expected = parse_dylint_baseline()
