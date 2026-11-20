@@ -36,8 +36,9 @@ pub async fn health_check(State(ctx): State<Arc<DaemonContext>>) -> Json<HealthR
     })
 }
 
-/// Hash the running image on demand. On Linux `/proc/self/exe` names the
-/// loaded inode even if the original path was replaced after startup.
+/// Hash the running image on demand. Where the host exposes a live-image
+/// handle (`/proc/self/exe` on Linux) that handle names the loaded inode even
+/// if the original path was replaced after startup.
 pub async fn image_hash(
     ConnectInfo(peer): ConnectInfo<SocketAddr>,
     State(ctx): State<Arc<DaemonContext>>,
@@ -49,25 +50,25 @@ pub async fn image_hash(
     let hash = tokio::task::spawn_blocking(move || {
         ctx.source_hash
             .get_or_init(|| {
-                #[cfg(target_os = "linux")]
-                let path = std::path::Path::new("/proc/self/exe");
-                #[cfg(not(target_os = "linux"))]
-                let path = {
-                    let path = std::path::Path::new(&ctx.source_exe);
-                    // A replaced pathname no longer identifies the running image.
-                    // If it changed after startup, retain the mtime restart decision.
-                    let current_mtime = path
-                        .metadata()
-                        .and_then(|meta| meta.modified())
-                        .ok()
-                        .and_then(|time| time.duration_since(std::time::UNIX_EPOCH).ok())
-                        .map(|duration| duration.as_secs_f64());
-                    if current_mtime != Some(ctx.source_mtime) {
-                        return None;
+                let path = match fbuild_core::platform::executable::replace_proof_live_image() {
+                    Some(live) => live,
+                    None => {
+                        let path = std::path::Path::new(&ctx.source_exe);
+                        // A replaced pathname no longer identifies the running image.
+                        // If it changed after startup, retain the mtime restart decision.
+                        let current_mtime = path
+                            .metadata()
+                            .and_then(|meta| meta.modified())
+                            .ok()
+                            .and_then(|time| time.duration_since(std::time::UNIX_EPOCH).ok())
+                            .map(|duration| duration.as_secs_f64());
+                        if current_mtime != Some(ctx.source_mtime) {
+                            return None;
+                        }
+                        fbuild_core::path::NormalizedPath::from(path)
                     }
-                    path
                 };
-                fbuild_paths::executable_hash::blake3_file(path)
+                fbuild_paths::executable_hash::blake3_file(&path)
                     .map(|digest| digest.to_hex().to_string())
                     .map_err(|error| tracing::warn!("cannot hash daemon image: {error}"))
                     .ok()
@@ -103,11 +104,9 @@ mod image_hash_tests {
             .await
             .unwrap()
             .0;
-        #[cfg(target_os = "linux")]
-        let path = std::path::Path::new("/proc/self/exe");
-        #[cfg(not(target_os = "linux"))]
-        let path = std::path::Path::new(&ctx.source_exe);
-        let expected = fbuild_paths::executable_hash::blake3_file(path)
+        let path = fbuild_core::platform::executable::replace_proof_live_image()
+            .unwrap_or_else(|| fbuild_core::path::NormalizedPath::from(&ctx.source_exe));
+        let expected = fbuild_paths::executable_hash::blake3_file(&path)
             .unwrap()
             .to_hex()
             .to_string();

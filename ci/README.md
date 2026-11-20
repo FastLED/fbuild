@@ -136,7 +136,7 @@ fail coverage. This policy is tracked in [#1698](https://github.com/FastLED/fbui
   so a renamed directory cannot print "paths are current". Tested by
   `test_check_dylint_allowlists.py`.
 - **`check_rust_toolchain_pins.py`** -- Prevents fbuild-owned Rust 1.95.0 MSRV, toolchain, workflow, and bootstrap declarations from drifting
-- **`enforce_platform_boundary.py`** -- Independent whole-tree and manifest checker for the exact host-platform occurrence ledger
+- **`enforce_platform_boundary.py`** -- Independent whole-tree and manifest checker for the exact host-platform occurrence ledger. It has no regeneration mode: the ledger and the Dylint baseline are reviewed artifacts, so a delta must be explained occurrence by occurrence.
 - **`env.py`** -- Centralized PATH activation ensuring the Rust tool bin directory is on PATH before invoking Rust tools
 - **`extract_pio_build_flags.py`** -- Extracts compiler/linker flags from PlatformIO for each board and writes reference JSONs
 - **`lint.py`** -- Workspace linting (rustfmt + clippy), supports single-file and auto-fix modes

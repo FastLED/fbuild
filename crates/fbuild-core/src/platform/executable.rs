@@ -162,6 +162,18 @@ pub fn split_tool_suffix(file_name: &str) -> (&str, &str) {
     (file_name, "")
 }
 
+/// Return a path that still names the loaded image after the launch path is
+/// replaced, when this host exposes one.
+///
+/// Linux reports `/proc/self/exe`, which keeps naming the running inode even
+/// after the file at the launch path is replaced, renamed, or unlinked. Hosts
+/// without such a handle return `None`, and callers that hash the running
+/// image have to decide for themselves whether the launch path still
+/// identifies it.
+pub fn replace_proof_live_image() -> Option<NormalizedPath> {
+    super::selected::replace_proof_live_image()
+}
+
 /// Discover the path of the currently running executable image.
 pub fn current_image() -> io::Result<NormalizedPath> {
     std::env::current_exe().map(NormalizedPath::from)

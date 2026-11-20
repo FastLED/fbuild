@@ -1,4 +1,5 @@
 use super::host::{HostArch, HostOs};
+use crate::path::NormalizedPath;
 
 pub(super) mod ape;
 pub(super) mod device;
@@ -10,6 +11,12 @@ pub(super) mod process;
 pub(super) mod usb_pnp;
 
 pub(super) const HOST_OS: HostOs = HostOs::Windows;
+
+/// This host exposes no handle that survives replacement of the launch
+/// path, so callers must judge the path they were given.
+pub(super) fn replace_proof_live_image() -> Option<NormalizedPath> {
+    None
+}
 
 pub(super) fn host_arch() -> HostArch {
     match std::env::consts::ARCH {
