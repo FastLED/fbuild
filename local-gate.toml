@@ -38,6 +38,12 @@ lanes = ["linux-minimal"]
 source-job = "check-ubuntu.yml:glibc-floor"
 lanes = ["linux-minimal"]
 
+# The forge-pool runner selector (pool-select) only picks a runner and proves
+# nothing about the tree, so it carries no step list and derives no checks.
+[[gate.replay.jobs]]
+source-job = "check-ubuntu.yml:pool"
+lanes = ["linux-minimal"]
+
 [[gate.replay.selections]]
 lane = "linux-minimal"
 workflow = "check-ubuntu.yml"
