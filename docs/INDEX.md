@@ -31,6 +31,7 @@ fbuild docs.
 | How does deploy preemption work? | [architecture/deploy-preemption.md](architecture/deploy-preemption.md) |
 | What are the cross-platform portability constraints? | [architecture/portability.md](architecture/portability.md) |
 | How is host-platform code being centralized and inventoried? | [platform-boundary-research.md](platform-boundary-research.md) |
+| Did the host-platform boundary phase 9/9 closeout pass its audit? | [platform-boundary-closeout.md](platform-boundary-closeout.md) |
 | How does library selection (LDF) work in fbuild? | [architecture/library-selection.md](architecture/library-selection.md) |
 | Why was my library wrongly compiled (#204) / not found (#202)? | [architecture/library-selection.md](architecture/library-selection.md#why) |
 | Why did we choose X over Y? | [DESIGN_DECISIONS.md](DESIGN_DECISIONS.md) |
