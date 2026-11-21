@@ -151,7 +151,7 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           persist-credentials: false
-      - uses: zackees/setup-soldr@9337570234850b50322e696037127fa3cf8ac703 # setup-soldr#629 S3 remote cache
+      - uses: zackees/setup-soldr@271d19234f51ed1a908ee6ecdd721a75dff1dbb6 # setup-soldr#687 generation restore (v0 canary)
         with:
           s3-bucket: forge-ci-cache
           s3-endpoint: sfo3.digitaloceanspaces.com
