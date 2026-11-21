@@ -144,12 +144,9 @@ jobs:
           # runaway caches. Hard cap stays at the action default (6 GiB).
           cache-payload-warn-bytes: 2GiB
 
-      # No separate `cargo check`: clippy type-checks the same
-      # `--workspace --all-targets` set, so a prior check only re-did that work.
-      # Measured locally (fresh target dir, warm zccache): check+clippy 194s
-      # vs clippy alone 106s.
-      - name: Clippy
-        run: soldr cargo clippy --workspace --all-targets -- -D warnings
+      # Host Clippy runs in dylint.yml's `dylint` job, not here: this job is
+      # replayed through bosn by the local gate, and lint never runs under
+      # bosn (GATE-016). The local `dylint` lane covers Clippy with `soldr lint`.
       # Both guards are stdlib-only. `--no-project` skips building the fbuild
       # package, whose soldr build backend is pinned older than the broker
       # setup-soldr started, and the mismatched daemon refused every compile.
