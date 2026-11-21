@@ -132,15 +132,16 @@ block fails CI with a copy-paste fix.
 
 ### Bumping soldr
 
-All `zackees/setup-soldr@v0` steps pin the installed soldr binary version.
-The full board template temporarily pins the setup action itself to merged
-commit `f63d8987580fd50667d95b19130e82d9691ddd75` as a downstream canary
-for setup-soldr#517 before the floating `v0` reference moves.
-When bumping it, first confirm the proposed tag is a published, non-draft
-release with the required platform assets. Update every setup-soldr call site
-in one PR, retain the previous pin until that release exists, and require
-representative CI to pass before merging. Keep the action reference at `@v0`;
-the pin is for the binary it installs.
+Every setup-soldr step uses the floating `zackees/setup-soldr@v0` reference
+and does not pin a soldr binary `version:`; the action installs the latest
+release, so there is nothing to bump here. No call site pins an exact
+setup-soldr commit (the last exact-SHA pins moved to `@v0` in #2123).
+
+To canary an unreleased setup-soldr change against fbuild, open a
+not-for-merge PR that temporarily points one or more `zackees/setup-soldr`
+references at the setup-soldr commit SHA, add the `ci-full` label so the
+full Linux/Windows/macOS matrix runs, and close the PR once the result is
+recorded. Never merge an exact-SHA pin to `main`.
 
 ### Native Build Attestations
 
