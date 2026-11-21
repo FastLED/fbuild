@@ -10,6 +10,11 @@ use crate::{CacheSubdir, Framework, PackageBase, PackageInfo};
 const SILABS_CORE_VERSION: &str = "2.2.0";
 const SILABS_CORE_URL: &str =
     "https://github.com/SiliconLabs/arduino/archive/refs/tags/2.2.0.tar.gz";
+/// SHA-256 of the archive served at `SILABS_CORE_URL`, computed from a
+/// download on 2026-11-21 and re-opened to confirm it contains
+/// `cores/silabs/Arduino.h` (FastLED/fbuild#2128). Without it `PackageBase`
+/// accepts any bytes the host returns.
+const SILABS_CORE_SHA256: &str = "79a80075830aa2c75710f016c801ce1a2fbcad6cf3dd4af99a98a6333a4279a9";
 
 // The core declares `extra/core-api` as a submodule, and the source archive
 // ships it empty. Nothing reads it: `ensure_arduino_api()` installs
@@ -34,7 +39,7 @@ impl SilabsCores {
                 SILABS_CORE_VERSION,
                 SILABS_CORE_URL,
                 SILABS_CORE_URL,
-                None,
+                Some(SILABS_CORE_SHA256),
                 CacheSubdir::Platforms,
                 project_dir,
             )
@@ -54,7 +59,7 @@ impl SilabsCores {
                 SILABS_CORE_VERSION,
                 SILABS_CORE_URL,
                 SILABS_CORE_URL,
-                None,
+                Some(SILABS_CORE_SHA256),
                 CacheSubdir::Platforms,
                 project_dir,
             )
@@ -71,7 +76,7 @@ impl SilabsCores {
                 SILABS_CORE_VERSION,
                 SILABS_CORE_URL,
                 SILABS_CORE_URL,
-                None,
+                Some(SILABS_CORE_SHA256),
                 CacheSubdir::Platforms,
                 project_dir,
                 cache_root,
@@ -261,5 +266,23 @@ mod tests {
         let tmp = tempfile::TempDir::new().unwrap();
         let result = SilabsCores::validate(tmp.path());
         assert!(result.is_err());
+    }
+
+    /// The archive is pinned, so a changed or truncated download is rejected
+    /// instead of unpacked (FastLED/fbuild#2128).
+    #[test]
+    fn the_core_archive_is_checksum_pinned() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        assert_eq!(
+            SilabsCores::new(tmp.path()).base.checksum.as_deref(),
+            Some(SILABS_CORE_SHA256)
+        );
+        assert_eq!(
+            SilabsCores::with_cache_root(tmp.path(), &tmp.path().join("cache"))
+                .base
+                .checksum
+                .as_deref(),
+            Some(SILABS_CORE_SHA256)
+        );
     }
 }

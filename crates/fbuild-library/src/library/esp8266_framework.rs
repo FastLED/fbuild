@@ -42,6 +42,12 @@ const ESP8266_FRAMEWORK_VERSION: &str = "3.1.2";
 /// including `lfs.h`.
 const ESP8266_FRAMEWORK_URL: &str =
     "https://github.com/esp8266/Arduino/releases/download/3.1.2/esp8266-3.1.2.zip";
+/// SHA-256 of the archive served at `ESP8266_FRAMEWORK_URL`, computed from a
+/// download on 2026-11-21 and re-opened to confirm it contains
+/// `cores/esp8266/Arduino.h` (FastLED/fbuild#2128). Without it `PackageBase`
+/// accepts any bytes the host returns.
+const ESP8266_FRAMEWORK_SHA256: &str =
+    "b3f47686d7783c120c2f10bf82788f921c53db8642cc87012599abb6e335b182";
 
 /// ESP8266 Arduino framework manager.
 pub struct Esp8266Framework {
@@ -56,7 +62,7 @@ impl Esp8266Framework {
                 ESP8266_FRAMEWORK_VERSION,
                 ESP8266_FRAMEWORK_URL,
                 ESP8266_FRAMEWORK_URL,
-                None,
+                Some(ESP8266_FRAMEWORK_SHA256),
                 CacheSubdir::Platforms,
                 project_dir,
             ),
@@ -74,7 +80,7 @@ impl Esp8266Framework {
                 ESP8266_FRAMEWORK_VERSION,
                 ESP8266_FRAMEWORK_URL,
                 ESP8266_FRAMEWORK_URL,
-                None,
+                Some(ESP8266_FRAMEWORK_SHA256),
                 CacheSubdir::Platforms,
                 project_dir,
             )
@@ -90,7 +96,7 @@ impl Esp8266Framework {
                 ESP8266_FRAMEWORK_VERSION,
                 ESP8266_FRAMEWORK_URL,
                 ESP8266_FRAMEWORK_URL,
-                None,
+                Some(ESP8266_FRAMEWORK_SHA256),
                 CacheSubdir::Platforms,
                 project_dir,
                 cache_root,
@@ -366,5 +372,23 @@ mod tests {
         let nested = tmp.path().join("Arduino-3.1.2");
         std::fs::create_dir_all(nested.join("cores")).unwrap();
         assert_eq!(find_framework_root(tmp.path()), nested);
+    }
+
+    /// The archive is pinned, so a changed or truncated download is rejected
+    /// instead of unpacked (FastLED/fbuild#2128).
+    #[test]
+    fn the_core_archive_is_checksum_pinned() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        assert_eq!(
+            Esp8266Framework::new(tmp.path()).base.checksum.as_deref(),
+            Some(ESP8266_FRAMEWORK_SHA256)
+        );
+        assert_eq!(
+            Esp8266Framework::with_cache_root(tmp.path(), &tmp.path().join("cache"))
+                .base
+                .checksum
+                .as_deref(),
+            Some(ESP8266_FRAMEWORK_SHA256)
+        );
     }
 }

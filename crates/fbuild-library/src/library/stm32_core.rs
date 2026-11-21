@@ -11,6 +11,11 @@ use crate::{CacheSubdir, Framework, PackageBase, PackageInfo};
 const STM32_CORE_VERSION: &str = "2.9.0";
 const STM32_CORE_URL: &str =
     "https://github.com/stm32duino/Arduino_Core_STM32/archive/refs/tags/2.9.0.tar.gz";
+/// SHA-256 of the archive served at `STM32_CORE_URL`, computed from a
+/// download on 2026-11-21 and re-opened to confirm it contains
+/// `cores/arduino/Arduino.h` (FastLED/fbuild#2128). Without it `PackageBase`
+/// accepts any bytes the host returns.
+const STM32_CORE_SHA256: &str = "35d8657ab056bda9c78e87b3b3c62cdabef17ded0aab2d63b5fe915abb442e45";
 
 /// STM32duino core framework manager.
 pub struct Stm32Cores {
@@ -26,7 +31,7 @@ impl Stm32Cores {
                 STM32_CORE_VERSION,
                 STM32_CORE_URL,
                 STM32_CORE_URL,
-                None,
+                Some(STM32_CORE_SHA256),
                 CacheSubdir::Platforms,
                 project_dir,
             ),
@@ -45,7 +50,7 @@ impl Stm32Cores {
                 STM32_CORE_VERSION,
                 STM32_CORE_URL,
                 STM32_CORE_URL,
-                None,
+                Some(STM32_CORE_SHA256),
                 CacheSubdir::Platforms,
                 project_dir,
             )
@@ -62,7 +67,7 @@ impl Stm32Cores {
                 STM32_CORE_VERSION,
                 STM32_CORE_URL,
                 STM32_CORE_URL,
-                None,
+                Some(STM32_CORE_SHA256),
                 CacheSubdir::Platforms,
                 project_dir,
                 cache_root,
@@ -288,5 +293,23 @@ mod tests {
         let tmp = tempfile::TempDir::new().unwrap();
         let result = Stm32Cores::validate(tmp.path());
         assert!(result.is_err());
+    }
+
+    /// The archive is pinned, so a changed or truncated download is rejected
+    /// instead of unpacked (FastLED/fbuild#2128).
+    #[test]
+    fn the_core_archive_is_checksum_pinned() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        assert_eq!(
+            Stm32Cores::new(tmp.path()).base.checksum.as_deref(),
+            Some(STM32_CORE_SHA256)
+        );
+        assert_eq!(
+            Stm32Cores::with_cache_root(tmp.path(), &tmp.path().join("cache"))
+                .base
+                .checksum
+                .as_deref(),
+            Some(STM32_CORE_SHA256)
+        );
     }
 }

@@ -12,6 +12,12 @@ use crate::{CacheSubdir, Framework, PackageBase, PackageInfo};
 const ARDUINO_MBED_CORE_VERSION: &str = "4.5.0";
 const ARDUINO_MBED_CORE_URL: &str =
     "https://github.com/arduino/ArduinoCore-mbed/archive/refs/tags/4.5.0.tar.gz";
+/// SHA-256 of the archive served at `ARDUINO_MBED_CORE_URL`, computed from a
+/// download on 2026-11-21 and re-opened to confirm it contains
+/// `cores/arduino/Arduino.h` (FastLED/fbuild#2128). Without it `PackageBase`
+/// accepts any bytes the host returns.
+const ARDUINO_MBED_CORE_SHA256: &str =
+    "c0fc6d51ab390bcbe6264242d368cd48f48a4f638d73a1e389414b8f3bc8e1bc";
 
 /// ArduinoCore-mbed framework manager.
 pub struct ArduinoMbedCore {
@@ -27,7 +33,7 @@ impl ArduinoMbedCore {
                 ARDUINO_MBED_CORE_VERSION,
                 ARDUINO_MBED_CORE_URL,
                 ARDUINO_MBED_CORE_URL,
-                None,
+                Some(ARDUINO_MBED_CORE_SHA256),
                 CacheSubdir::Platforms,
                 project_dir,
             ),
@@ -46,7 +52,7 @@ impl ArduinoMbedCore {
                 ARDUINO_MBED_CORE_VERSION,
                 ARDUINO_MBED_CORE_URL,
                 ARDUINO_MBED_CORE_URL,
-                None,
+                Some(ARDUINO_MBED_CORE_SHA256),
                 CacheSubdir::Platforms,
                 project_dir,
             )
@@ -63,7 +69,7 @@ impl ArduinoMbedCore {
                 ARDUINO_MBED_CORE_VERSION,
                 ARDUINO_MBED_CORE_URL,
                 ARDUINO_MBED_CORE_URL,
-                None,
+                Some(ARDUINO_MBED_CORE_SHA256),
                 CacheSubdir::Platforms,
                 project_dir,
                 cache_root,
@@ -322,5 +328,23 @@ mod tests {
         let core = ArduinoMbedCore::new(tmp.path());
         let path = core.get_boards_txt();
         assert!(path.to_string_lossy().contains("boards.txt"));
+    }
+
+    /// The archive is pinned, so a changed or truncated download is rejected
+    /// instead of unpacked (FastLED/fbuild#2128).
+    #[test]
+    fn the_core_archive_is_checksum_pinned() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        assert_eq!(
+            ArduinoMbedCore::new(tmp.path()).base.checksum.as_deref(),
+            Some(ARDUINO_MBED_CORE_SHA256)
+        );
+        assert_eq!(
+            ArduinoMbedCore::with_cache_root(tmp.path(), &tmp.path().join("cache"))
+                .base
+                .checksum
+                .as_deref(),
+            Some(ARDUINO_MBED_CORE_SHA256)
+        );
     }
 }

@@ -12,6 +12,11 @@ use crate::{CacheSubdir, Framework, PackageBase, PackageInfo};
 const RP2040_CORE_VERSION: &str = "4.5.3";
 const RP2040_CORE_URL: &str =
     "https://github.com/earlephilhower/arduino-pico/releases/download/4.5.3/rp2040-4.5.3.zip";
+/// SHA-256 of the archive served at `RP2040_CORE_URL`, computed from a
+/// download on 2026-11-21 and re-opened to confirm it contains
+/// `cores/rp2040/Arduino.h` (FastLED/fbuild#2128). Without it `PackageBase`
+/// accepts any bytes the host returns.
+const RP2040_CORE_SHA256: &str = "96a19c55832010a2fca3314f42e901b41c26d260b60871280839e58f1f5ea51b";
 
 /// RP2040 (arduino-pico) core framework manager.
 pub struct Rp2040Cores {
@@ -27,7 +32,7 @@ impl Rp2040Cores {
                 RP2040_CORE_VERSION,
                 RP2040_CORE_URL,
                 RP2040_CORE_URL,
-                None,
+                Some(RP2040_CORE_SHA256),
                 CacheSubdir::Platforms,
                 project_dir,
             ),
@@ -46,7 +51,7 @@ impl Rp2040Cores {
                 RP2040_CORE_VERSION,
                 RP2040_CORE_URL,
                 RP2040_CORE_URL,
-                None,
+                Some(RP2040_CORE_SHA256),
                 CacheSubdir::Platforms,
                 project_dir,
             )
@@ -70,7 +75,7 @@ impl Rp2040Cores {
                 RP2040_CORE_VERSION,
                 RP2040_CORE_URL,
                 RP2040_CORE_URL,
-                None,
+                Some(RP2040_CORE_SHA256),
                 CacheSubdir::Platforms,
                 project_dir,
                 cache_root,
@@ -377,5 +382,23 @@ mod tests {
         let tmp = tempfile::TempDir::new().unwrap();
         let result = Rp2040Cores::validate(tmp.path());
         assert!(result.is_err());
+    }
+
+    /// The archive is pinned, so a changed or truncated download is rejected
+    /// instead of unpacked (FastLED/fbuild#2128).
+    #[test]
+    fn the_core_archive_is_checksum_pinned() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        assert_eq!(
+            Rp2040Cores::new(tmp.path()).base.checksum.as_deref(),
+            Some(RP2040_CORE_SHA256)
+        );
+        assert_eq!(
+            Rp2040Cores::with_cache_root(tmp.path(), &tmp.path().join("cache"))
+                .base
+                .checksum
+                .as_deref(),
+            Some(RP2040_CORE_SHA256)
+        );
     }
 }
