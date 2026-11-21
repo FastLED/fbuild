@@ -21,15 +21,15 @@ use fbuild_core::path::NormalizedPath;
 
 use crate::BuildOrchestrator;
 
-/// Copy the committed fixture into a scratch project so the build never writes
-/// into the repository.
-fn copy_fixture(destination: &Path) {
+/// Copy a committed `tests/platform/<fixture>` into a scratch project so the
+/// build never writes into the repository.
+fn copy_fixture(fixture: &str, destination: &Path) {
     let source = Path::new(env!("CARGO_MANIFEST_DIR"))
         .join("..")
         .join("..")
         .join("tests")
         .join("platform")
-        .join("espidf_component");
+        .join(fixture);
     std::fs::create_dir_all(destination).unwrap();
     let source = NormalizedPath::new(&source);
     let destination = NormalizedPath::new(destination);
@@ -68,11 +68,15 @@ fn build_root() -> (tempfile::TempDir, NormalizedPath) {
     }
 }
 
-fn params(project: &NormalizedPath, build_dir: &NormalizedPath) -> crate::BuildParams {
+fn params(
+    project: &NormalizedPath,
+    build_dir: &NormalizedPath,
+    env_name: &str,
+) -> crate::BuildParams {
     crate::BuildParams {
         project_dir: project.as_path().to_path_buf(),
         shrink: Default::default(),
-        env_name: "esp32s3".into(),
+        env_name: env_name.into(),
         clean_all: false,
         clean_only: false,
         clean: false,
@@ -102,11 +106,11 @@ fn params(project: &NormalizedPath, build_dir: &NormalizedPath) -> crate::BuildP
 async fn espidf_component_project_builds_and_publishes_artifacts() {
     let (_scratch, root) = build_root();
     let project = root.join("project");
-    copy_fixture(project.as_path());
+    copy_fixture("espidf_component", project.as_path());
     let build_dir = root.join("build");
 
     let result = crate::esp32::Esp32Orchestrator
-        .build(&params(&project, &build_dir))
+        .build(&params(&project, &build_dir, "esp32s3"))
         .await
         .expect("the delegated build must succeed");
 
