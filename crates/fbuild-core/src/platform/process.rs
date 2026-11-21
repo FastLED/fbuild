@@ -3,7 +3,7 @@
 use std::ffi::OsStr;
 use std::fs::File;
 use std::process::{ChildStderr, ChildStdin, ChildStdout, Command, ExitStatus};
-use std::sync::{OnceLock, RwLock, RwLockReadGuard, RwLockWriteGuard};
+use std::sync::{OnceLock, RwLockReadGuard};
 use std::time::{Duration, Instant};
 
 use crate::path::NormalizedPath;
@@ -103,27 +103,11 @@ pub fn containment_is_initialized() -> bool {
     CONTAINMENT.get().is_some()
 }
 
-/// Process-wide fork lock, as Go's `syscall.ForkLock`.
-///
-/// A file this process writes and then executes fails with `ETXTBSY` if a
-/// sibling thread forks while the writable descriptor is open: the forked
-/// child holds it until its own `exec`. Every spawn helper here holds the
-/// lock shared across fork→exec (`spawn` returns only after the child has
-/// exec'd); writers of to-be-executed files hold it exclusively while their
-/// descriptor is open, so no child can inherit it.
-static FORK_LOCK: RwLock<()> = RwLock::new(());
-
-/// Hold across a fork→exec that bypasses this module's spawn helpers (the
-/// few allowlisted direct `Command` spawns), so the child can't inherit a
-/// loader that [`exclusive_fork_guard`] is writing. Release it before
-/// waiting on the child.
+/// Hold the shared APE fork lock across a raw fork/exec that bypasses
+/// running-process. Build the command before taking this guard, and release
+/// it before waiting. The running-process spawn helpers acquire it themselves.
 pub fn shared_fork_guard() -> RwLockReadGuard<'static, ()> {
-    FORK_LOCK.read().unwrap_or_else(|e| e.into_inner())
-}
-
-/// Hold while a file that will be executed is open for writing.
-pub fn exclusive_fork_guard() -> RwLockWriteGuard<'static, ()> {
-    FORK_LOCK.write().unwrap_or_else(|e| e.into_inner())
+    running_process::ape::fork_guard()
 }
 
 /// Construct a [`Command`] for `program`, routing an APE (cosmocc) image
@@ -185,12 +169,9 @@ pub fn spawn_contained(
         stderr: into_running_stdio(stdio.stderr),
         ..running_process::SpawnStdio::default()
     };
-    let inner = {
-        let _fork = shared_fork_guard();
-        match CONTAINMENT.get() {
-            Some(group) => group.spawn(command, stdio)?,
-            None => running_process::spawn(command, stdio)?,
-        }
+    let inner = match CONTAINMENT.get() {
+        Some(group) => group.spawn(command, stdio)?,
+        None => running_process::spawn(command, stdio)?,
     };
     Ok(ContainedChild { inner })
 }
@@ -213,7 +194,6 @@ pub fn spawn_detached(
     stderr: Option<&File>,
     environment: DetachedEnvironment,
 ) -> std::io::Result<u32> {
-    let _fork = shared_fork_guard();
     super::selected::process::spawn_detached(command, stderr, environment)
 }
 
@@ -242,10 +222,8 @@ fn spawn_tokio_contained_here(
         }
         super::selected::process::configure_tokio_owner_death(command)?;
     }
-    let child = {
-        let _fork = shared_fork_guard();
-        running_process::spawn_tokio(command, running_process::TokioSpawnOptions::default())?
-    };
+    let child =
+        running_process::spawn_tokio(command, running_process::TokioSpawnOptions::default())?;
     if CONTAINMENT.get().is_some() {
         super::selected::process::after_tokio_spawn(&child)?;
     }
