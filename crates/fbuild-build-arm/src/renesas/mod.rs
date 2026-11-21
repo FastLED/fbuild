@@ -10,6 +10,29 @@ pub use orchestrator::RenesasOrchestrator;
 pub use renesas_compiler::RenesasCompiler;
 pub use renesas_linker::RenesasLinker;
 
+/// The Arduino Renesas core a build of `board` compiles against, without
+/// downloading it: `renesas_uno` or `renesas_portenta` by the board's MCU
+/// family (FastLED/fbuild#2054), with the env's `platform_packages` override
+/// for that core. `fbuild lib-select` uses this so it inspects the same
+/// core's `libraries/` as the build (FastLED/fbuild#2131). A registry pin
+/// (`platform = renesas-ra@x.y.z`) is not resolved here: that needs the
+/// registry, and lib-select stays offline.
+pub fn installed_cores(
+    project_dir: &std::path::Path,
+    env_config: &std::collections::HashMap<String, String>,
+    board: &fbuild_config::BoardConfig,
+) -> fbuild_core::Result<fbuild_packages::library::RenesasCores> {
+    let mcu_family = mcu_config::renesas_mcu_family(&board.mcu)?;
+    let core_kind = fbuild_packages::library::RenesasCoreKind::for_family(mcu_family);
+    let (_, cores) = orchestrator::renesas_packages_from_resolved(
+        project_dir,
+        Some(env_config),
+        &std::collections::HashMap::new(),
+        core_kind,
+    );
+    Ok(cores)
+}
+
 /// Renesas RA platform support.
 pub struct RenesasPlatformSupport;
 
