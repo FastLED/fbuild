@@ -14,6 +14,12 @@ const APOLLO3_CORE_VERSION: &str = "2.2.1";
 /// (mbed-os, mbed-bridge, SVL uploader with linker scripts).
 const APOLLO3_CORE_URL: &str =
     "https://github.com/sparkfun/Arduino_Apollo3/releases/download/v2.2.1/Arduino_Apollo3.tar.gz";
+/// SHA-256 of the archive served at `APOLLO3_CORE_URL`, computed from a
+/// download on 2026-11-21 and re-opened to confirm it contains
+/// `cores/arduino/mbed-bridge/Arduino.h` (FastLED/fbuild#2128). Without it `PackageBase`
+/// accepts any bytes the host returns.
+const APOLLO3_CORE_SHA256: &str =
+    "9906c1cf923fcc93441da24154bb68e6cd716f9b9477a33a7bbcfcec231fb694";
 
 /// Apollo3 (SparkFun Arduino) core framework manager.
 pub struct Apollo3Cores {
@@ -29,7 +35,7 @@ impl Apollo3Cores {
                 APOLLO3_CORE_VERSION,
                 APOLLO3_CORE_URL,
                 APOLLO3_CORE_URL,
-                None,
+                Some(APOLLO3_CORE_SHA256),
                 CacheSubdir::Platforms,
                 project_dir,
             ),
@@ -48,7 +54,7 @@ impl Apollo3Cores {
                 APOLLO3_CORE_VERSION,
                 APOLLO3_CORE_URL,
                 APOLLO3_CORE_URL,
-                None,
+                Some(APOLLO3_CORE_SHA256),
                 CacheSubdir::Platforms,
                 project_dir,
             )
@@ -65,7 +71,7 @@ impl Apollo3Cores {
                 APOLLO3_CORE_VERSION,
                 APOLLO3_CORE_URL,
                 APOLLO3_CORE_URL,
-                None,
+                Some(APOLLO3_CORE_SHA256),
                 CacheSubdir::Platforms,
                 project_dir,
                 cache_root,
@@ -251,5 +257,23 @@ mod tests {
         let tmp = tempfile::TempDir::new().unwrap();
         let result = Apollo3Cores::validate(tmp.path());
         assert!(result.is_err());
+    }
+
+    /// The archive is pinned, so a changed or truncated download is rejected
+    /// instead of unpacked (FastLED/fbuild#2128).
+    #[test]
+    fn the_core_archive_is_checksum_pinned() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        assert_eq!(
+            Apollo3Cores::new(tmp.path()).base.checksum.as_deref(),
+            Some(APOLLO3_CORE_SHA256)
+        );
+        assert_eq!(
+            Apollo3Cores::with_cache_root(tmp.path(), &tmp.path().join("cache"))
+                .base
+                .checksum
+                .as_deref(),
+            Some(APOLLO3_CORE_SHA256)
+        );
     }
 }
