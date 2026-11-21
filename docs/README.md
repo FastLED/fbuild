@@ -20,6 +20,7 @@ Documentation is organized by reader intent. Start with
 - **`architecture/`** -- subsystem-specific architecture documents
 - **`platform-boundary-research.md`** -- host-platform boundary decision and migration ordering for #1306
 - **`platform-boundary-research-inventory.md`** -- reproducible phase-1 host/native source inventory
+- **`platform-boundary-closeout.md`** -- phase 9/9 closeout audit: zero ledger and the requirement-by-requirement #1306 verdict
 - **`CLAUDE.md`** -- guide mapping crates to relevant architecture docs
 - **`DESIGN_DECISIONS.md`** -- ADR-style decisions with rationale
 - **`ROADMAP.md`** -- implementation phases for the Rust port
