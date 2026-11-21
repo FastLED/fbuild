@@ -373,6 +373,40 @@ mod tests {
         let entry = lookup_entry("tiny").unwrap();
         assert_eq!(entry.name, "attiny-core");
         assert!(entry.github.contains("ATTinyCore"));
+        assert_eq!(
+            entry.checksum.as_deref(),
+            Some("e3b94d9fc5776e1fdcb48c4fe045fa89a268f35758bc54ed63fabbd66ef5d36d")
+        );
+    }
+
+    /// Every registry entry must pin its archive: this JSON is the production
+    /// path for AVR boards, and an unpinned entry accepts any bytes GitHub (or
+    /// a proxy) returns (FastLED/fbuild#2128 pinned the last eight, which
+    /// covered ATTinyCore, Digistump, MiniCore, megaTinyCore, MegaCoreX and
+    /// megaAVR). A new entry without a checksum has to be a deliberate edit
+    /// that also removes this guard.
+    #[test]
+    fn every_registry_entry_is_checksum_pinned() {
+        let registry = load_registry();
+        let mut bad = Vec::new();
+        for (name, entry) in &registry {
+            match entry.checksum.as_deref() {
+                None => bad.push(format!("{name}: no checksum")),
+                Some(sum)
+                    if sum.len() != 64
+                        || !sum
+                            .chars()
+                            .all(|c| c.is_ascii_hexdigit() && !c.is_ascii_uppercase()) =>
+                {
+                    bad.push(format!("{name}: malformed checksum {sum:?}"));
+                }
+                Some(_) => {}
+            }
+        }
+        assert!(
+            bad.is_empty(),
+            "AVR registry entries without a valid pinned archive checksum: {bad:?}"
+        );
     }
 
     #[test]

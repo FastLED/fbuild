@@ -51,6 +51,11 @@ use crate::http;
 const ARDUINO_API_VERSION: &str = "1.5.2";
 const ARDUINO_API_URL: &str =
     "https://github.com/arduino/ArduinoCore-API/archive/refs/tags/1.5.2.tar.gz";
+/// SHA-256 of the archive above (68,441 bytes), computed 2026-11-21 from the
+/// pinned tag. This fetcher bypasses `PackageBase`, so it had no checksum at
+/// all -- a truncated or substituted download was copied into `cores/`
+/// unchecked (FastLED/fbuild#2128).
+const ARDUINO_API_SHA256: &str = "2c76d4dcea29d1d093d821804dcc1ccd83d172ef0d359d7c651cdbba6e6bfa57";
 
 /// Ensure the ArduinoCore-API `api/` directory exists in the framework's core dir.
 ///
@@ -110,6 +115,10 @@ pub async fn ensure_arduino_api(core_dir: &Path) -> Result<()> {
     })?;
     tokio::fs::write(&archive_path, &bytes).await?;
 
+    // Integrity gate: verify before anything is unpacked or copied into the
+    // consumer's `cores/` directory.
+    verify_archive(&archive_path)?;
+
     // Extract
     let extract_dir = tmp_dir.path().join("extracted");
     std::fs::create_dir_all(&extract_dir)?;
@@ -156,6 +165,11 @@ pub async fn ensure_arduino_api(core_dir: &Path) -> Result<()> {
     Ok(())
 }
 
+/// Verify a downloaded ArduinoCore-API archive against [`ARDUINO_API_SHA256`].
+fn verify_archive(path: &Path) -> Result<()> {
+    fbuild_packages_fetch::downloader::verify_checksum(path, ARDUINO_API_SHA256)
+}
+
 /// Find the `api/` directory inside an extracted ArduinoCore-API archive.
 fn find_api_dir(extract_dir: &Path) -> Option<std::path::PathBuf> {
     // Direct: extract_dir/api/
@@ -198,6 +212,59 @@ fn copy_dir_recursive(src: &Path, dst: &Path) -> Result<()> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn test_url_and_checksum_are_pinned() {
+        assert_eq!(
+            ARDUINO_API_URL,
+            "https://github.com/arduino/ArduinoCore-API/archive/refs/tags/1.5.2.tar.gz"
+        );
+        assert_eq!(ARDUINO_API_SHA256.len(), 64);
+        assert!(
+            ARDUINO_API_SHA256
+                .chars()
+                .all(|c| c.is_ascii_digit() || ('a'..='f').contains(&c)),
+            "checksum must be 64 lowercase hex digits: {ARDUINO_API_SHA256}"
+        );
+        assert_eq!(
+            ARDUINO_API_SHA256,
+            "2c76d4dcea29d1d093d821804dcc1ccd83d172ef0d359d7c651cdbba6e6bfa57"
+        );
+    }
+
+    /// The integrity gate must reject bytes that are not the pinned archive,
+    /// and it must do so before extraction -- this is the whole point of the
+    /// pin, and a test of the constant alone would not prove it is wired.
+    #[test]
+    fn test_verify_archive_rejects_unpinned_bytes() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let path = tmp.path().join("ArduinoCore-API.tar.gz");
+        std::fs::write(&path, b"not the pinned archive").unwrap();
+        let err = verify_archive(&path).unwrap_err().to_string();
+        assert!(err.contains("checksum mismatch"), "got: {err}");
+        assert!(err.contains(ARDUINO_API_SHA256), "got: {err}");
+    }
+
+    #[test]
+    fn test_verify_archive_accepts_the_pinned_digest() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let path = tmp.path().join("blob");
+        std::fs::write(&path, b"payload").unwrap();
+        // Re-derive the digest of these bytes and verify through the same gate,
+        // proving the gate compares rather than always failing.
+        let digest = {
+            use sha2::{Digest, Sha256};
+            let mut hasher = Sha256::new();
+            hasher.update(b"payload");
+            hasher
+                .finalize()
+                .iter()
+                .map(|byte| format!("{byte:02x}"))
+                .collect::<String>()
+        };
+        fbuild_packages_fetch::downloader::verify_checksum(&path, &digest).unwrap();
+        assert_ne!(digest, ARDUINO_API_SHA256);
+    }
 
     #[test]
     fn test_find_api_dir_direct() {
