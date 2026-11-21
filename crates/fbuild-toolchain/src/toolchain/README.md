@@ -6,7 +6,7 @@ Platform-specific toolchain management: download, cache, and provide tool paths 
 
 - **`mod.rs`** -- Module root; re-exports `AvrToolchain`, `ArmToolchain`, `TeensyArmToolchain`, `Esp32Toolchain`, `Esp8266Toolchain`, `ClangComponent`
 - **`avr.rs`** -- AVR-GCC 7.3.0 toolchain from Arduino's CDN
-- **`arm.rs`** -- ARM GCC 15.2 toolchain (arm-none-eabi) from developer.arm.com, mirrored in fbuild's bucket; SHA-256 pinned for Windows, macOS arm64 and Linux x86_64/aarch64 (ARM ships no Intel macOS build of 15.2)
+- **`arm.rs`** -- ARM GCC 15.2 toolchain (arm-none-eabi) from developer.arm.com, mirrored in fbuild's bucket; SHA-256 pinned for Windows, macOS arm64 and Linux x86_64/aarch64; Intel macOS pins 14.2.rel1, ARM's last darwin-x86_64 release
 - **`teensy_arm.rs`** -- Teensy-pinned ARM GCC 11.3.1 package from PlatformIO/PJRC
 - **`esp32.rs`** -- ESP32 RISC-V (`riscv32-esp-elf`) and Xtensa (`xtensa-esp-elf`) GCC from Espressif
 - **`esp32_metadata.rs`** -- Resolves ESP32 toolchain URLs from `tools.json` metadata packages
