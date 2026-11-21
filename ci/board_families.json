@@ -704,6 +704,15 @@
       "family": "renesas"
     },
     {
+      "workflow": "matrix-portenta_c33",
+      "workflow_name": "Arduino Portenta C33",
+      "test_dir": "tests/platform/portenta_c33",
+      "env_name": "portenta_c33",
+      "firmware_ext": "bin",
+      "family": "renesas",
+      "matrix_only": true
+    },
+    {
       "workflow": "build-uno.yml",
       "workflow_name": "Arduino Uno",
       "test_dir": "tests/platform/uno",

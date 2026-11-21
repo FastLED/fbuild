@@ -169,6 +169,63 @@ class RealSotTests(unittest.TestCase):
         self.assertIn("build-esp32dev.yml", selected)
 
 
+class MatrixOnlyBoardTests(unittest.TestCase):
+    """A `matrix_only` board is built from the CI matrices but has no workflow
+    file, so the dispatcher must never be handed its id (FastLED/fbuild#2131)."""
+
+    FAMILIES = {**FAMILIES, "renesas": {"crate_paths": ["crates/fbuild-build-arm/src/renesas/**"]}}
+    BOARDS = [
+        *BOARDS,
+        {"workflow": "build-uno_r4_wifi.yml", "test_dir": "tests/platform/uno_r4_wifi", "family": "renesas"},
+        {
+            "workflow": "matrix-portenta_c33",
+            "test_dir": "tests/platform/portenta_c33",
+            "family": "renesas",
+            "matrix_only": True,
+        },
+    ]
+
+    def run_main(self, *argv, changed):
+        boards = [{**b, "workflow_name": b["workflow"], "env_name": "e", "firmware_ext": "bin"} for b in self.BOARDS]
+        return MainTests().run_main(*argv, sot={"boards": boards, "families": self.FAMILIES}, changed=changed)
+
+    def test_family_change_puts_it_in_the_pr_matrix(self) -> None:
+        rc, out = self.run_main("--matrix", "--base", "b", changed=["crates/fbuild-build-arm/src/renesas/mod.rs"])
+        self.assertEqual(0, rc)
+        self.assertEqual(
+            ["build-uno_r4_wifi.yml", "matrix-portenta_c33"],
+            sorted(e["workflow"] for e in json.loads(out)),
+        )
+
+    def test_dispatch_list_never_names_it(self) -> None:
+        for argv, changed in (
+            (("--all",), None),
+            (("--base", "b"), ["tests/platform/portenta_c33/platformio.ini"]),
+            (("--base", "b"), ["crates/fbuild-build-arm/src/renesas/mod.rs"]),
+        ):
+            with self.subTest(argv=argv, changed=changed):
+                rc, out = self.run_main(*argv, changed=changed)
+                self.assertEqual(0, rc)
+                self.assertNotIn("matrix-portenta_c33", json.loads(out))
+
+    def test_its_id_is_not_a_trigger_path(self) -> None:
+        paths = render_workflows.render_paths_for_board(self.BOARDS[-1], self.FAMILIES, COMMON)
+        self.assertEqual(
+            ["tests/platform/portenta_c33/**", "crates/fbuild-build-arm/src/renesas/**"],
+            paths,
+        )
+
+    def test_real_sot_matrix_only_boards_have_no_workflow_file(self) -> None:
+        boards = render_workflows.load_sot()["boards"]
+        matrix_only = [b for b in boards if not render_workflows.has_workflow_file(b)]
+        self.assertIn("matrix-portenta_c33", [b["workflow"] for b in matrix_only])
+        for board in matrix_only:
+            with self.subTest(board=board["workflow"]):
+                self.assertFalse((render_workflows.WORKFLOWS_DIR / board["workflow"]).exists())
+                self.assertFalse(board["workflow"].endswith(".yml"))
+                self.assertTrue((render_workflows.REPO / board["test_dir"] / "platformio.ini").is_file())
+
+
 class ChangedFilesTests(unittest.TestCase):
     """`changed_files` is the fail-open boundary of the whole dispatcher.
 

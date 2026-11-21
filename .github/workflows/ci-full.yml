@@ -842,6 +842,15 @@ jobs:
             toolchain_cache: false
             package_cache_path: ""
             package_cache_hash_files: ""
+          - workflow: "matrix-portenta_c33"
+            workflow_name: "Arduino Portenta C33"
+            test_dir: "tests/platform/portenta_c33"
+            env_name: "portenta_c33"
+            firmware_ext: "bin"
+            workflow_aliases: ["matrix-portenta_c33"]
+            toolchain_cache: false
+            package_cache_path: ""
+            package_cache_hash_files: ""
           - workflow: "build-uno.yml"
             workflow_name: "Arduino Uno"
             test_dir: "tests/platform/uno"

@@ -22,6 +22,7 @@ from functools import lru_cache
 
 from render_workflows import (
     execution_boards,
+    has_workflow_file,
     load_common_paths,
     load_sot,
     package_cache_fields,
@@ -80,6 +81,12 @@ def select_workflows(boards, families, common_paths, changed):
     return sorted(selected)
 
 
+def dispatchable(boards, workflows):
+    """`workflows` minus the matrix-only boards, which have no file to dispatch."""
+    files = {b["workflow"] for b in boards if has_workflow_file(b)}
+    return [w for w in workflows if w in files]
+
+
 def matrix_entries(boards, families, workflows):
     """template_build.yml matrix records for the selected `workflows`.
 
@@ -130,7 +137,7 @@ def main() -> int:
     if args.matrix:
         print(json.dumps(matrix_entries(sot["boards"], sot["families"], workflows)))
     else:
-        print(json.dumps(workflows))
+        print(json.dumps(dispatchable(sot["boards"], workflows)))
     return 0
 
 

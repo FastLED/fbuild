@@ -203,7 +203,7 @@ fn resolve_framework(
 ) -> Result<FrameworkInfo, String> {
     use fbuild_packages::library::{
         Apollo3Cores, AvrFramework, Ch32vCores, Esp32Framework, Esp8266Framework, Nrf51Cores,
-        RenesasCores, SamCores, SilabsCores, Stm32Cores, TeensyCores,
+        SamCores, SilabsCores, Stm32Cores, TeensyCores,
     };
 
     let (name, libraries_dir, root): (String, PathBuf, PathBuf) = match platform {
@@ -261,7 +261,7 @@ fn resolve_framework(
         ),
         Platform::RenesasRa => info(
             "framework-arduinorenesas",
-            RenesasCores::new(project_dir).get_libraries_dir(),
+            renesas_framework_libraries(project_dir, env_config, board_config)?,
         ),
         Platform::SiliconLabs => info(
             "framework-arduinosilabs",
@@ -348,6 +348,21 @@ fn nrf52_framework_libraries(
     let (framework, cores) = fbuild_build::nrf52::installed_cores(project_dir, env_config, board)
         .map_err(|err| err.to_string())?;
     Ok((framework.package_name(), cores.get_libraries_dir()))
+}
+
+/// The `libraries/` dir of the Renesas core the build selects for `board`:
+/// `renesas_uno` for the RA4M1 boards, `renesas_portenta` for the RA6M5
+/// Portenta C33 (FastLED/fbuild#2131), honoring the env's
+/// `platform_packages` override.
+fn renesas_framework_libraries(
+    project_dir: &Path,
+    env_config: &HashMap<String, String>,
+    board: Result<&BoardConfig, &String>,
+) -> Result<PathBuf, String> {
+    let board = board.map_err(Clone::clone)?;
+    let cores = fbuild_build::renesas::installed_cores(project_dir, env_config, board)
+        .map_err(|err| err.to_string())?;
+    Ok(cores.get_libraries_dir())
 }
 
 /// Mirror of `fbuild_build::framework_libs::framework_include_scan_roots`.
@@ -624,6 +639,51 @@ mod tests {
             fbuild_packages::library::Nrf52Cores::new(tmp.path()).get_libraries_dir()
         );
         assert_ne!(libraries, seeed_dir);
+    }
+
+    /// FastLED/fbuild#2131: the Portenta C33 (RA6M5) builds against
+    /// `arduino:renesas_portenta`, so lib-select must inspect that core's
+    /// `libraries/`, while the UNO R4 boards (RA4M1) keep `renesas_uno`.
+    #[test]
+    fn renesas_diagnostic_uses_the_core_the_build_selects() {
+        use fbuild_packages::library::{RenesasCoreKind, RenesasCores};
+
+        let tmp = tempfile::TempDir::new().unwrap();
+        let env = HashMap::new();
+        let board = |id: &str| BoardConfig::from_board_id(id, &HashMap::new()).unwrap();
+        let uno_dir = RenesasCores::with_kind(tmp.path(), RenesasCoreKind::Uno).get_libraries_dir();
+        let portenta_dir =
+            RenesasCores::with_kind(tmp.path(), RenesasCoreKind::Portenta).get_libraries_dir();
+        assert_ne!(uno_dir, portenta_dir);
+
+        let libraries =
+            renesas_framework_libraries(tmp.path(), &env, Ok(&board("portenta_c33"))).unwrap();
+        assert_eq!(libraries, portenta_dir);
+
+        let libraries =
+            renesas_framework_libraries(tmp.path(), &env, Ok(&board("uno_r4_wifi"))).unwrap();
+        assert_eq!(libraries, uno_dir);
+    }
+
+    /// The build reads the core override under the kind's own registry key
+    /// (`framework-arduinorenesas-portenta`); the diagnostic must follow it.
+    #[test]
+    fn renesas_diagnostic_uses_platform_package_override() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let env = HashMap::from([(
+            "platform_packages".to_string(),
+            "framework-arduinorenesas-portenta@https://example.invalid/portenta-9.9.9.zip"
+                .to_string(),
+        )]);
+        let board = BoardConfig::from_board_id("portenta_c33", &HashMap::new()).unwrap();
+
+        let libraries = renesas_framework_libraries(tmp.path(), &env, Ok(&board)).unwrap();
+
+        assert!(
+            libraries.to_string_lossy().contains("0.0.0+override"),
+            "override cache path was not selected: {}",
+            libraries.display()
+        );
     }
 
     #[test]

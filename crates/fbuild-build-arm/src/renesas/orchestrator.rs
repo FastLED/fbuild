@@ -96,7 +96,7 @@ pub(crate) async fn renesas_packages(
     ))
 }
 
-fn renesas_packages_from_resolved(
+pub(super) fn renesas_packages_from_resolved(
     project_dir: &Path,
     env_config: Option<&std::collections::HashMap<String, String>>,
     registry_overrides: &std::collections::HashMap<String, fbuild_config::PackageOverride>,
