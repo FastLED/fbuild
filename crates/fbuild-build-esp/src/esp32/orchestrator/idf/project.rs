@@ -7,6 +7,120 @@ use fbuild_core::path::NormalizedPath;
 
 use fbuild_core::{FbuildError, Result};
 
+/// Parse only the leading line-comment region; retain Kconfig text verbatim.
+pub(super) fn parse_sdkconfig_block(
+    text: &str,
+    path: &Path,
+) -> Result<Option<Vec<(usize, String)>>> {
+    let mut start = None;
+    let mut complete = false;
+    let mut body = Vec::new();
+    let mut keys = std::collections::HashSet::new();
+    let error =
+        |line, message| FbuildError::ConfigError(format!("{}:{line}: {message}", path.display()));
+    for (index, raw) in text.lines().enumerate() {
+        let line = index + 1;
+        let trimmed = raw.trim_start();
+        let Some(comment) = trimmed.strip_prefix("//") else {
+            if start.is_some() && !complete {
+                return Err(error(line, "expected // sdkconfig body line"));
+            }
+            if trimmed.is_empty() {
+                continue;
+            }
+            break;
+        };
+        let value = comment.strip_prefix(' ').unwrap_or(comment);
+        if value.trim() == "@sdkconfig" {
+            if start.is_some() {
+                return Err(error(line, "multiple @sdkconfig blocks"));
+            }
+            start = Some(line);
+        } else if start.is_some() && !complete {
+            if value.trim() == "@end-sdkconfig" {
+                complete = true;
+                continue;
+            }
+            if let Some(key) = block_config_key(value) {
+                if !keys.insert(key.to_owned()) {
+                    return Err(error(line, "duplicate sdkconfig key"));
+                }
+            } else if !value.trim().is_empty() && !value.starts_with('#') {
+                return Err(error(line, "invalid sdkconfig body line"));
+            }
+            body.push((line, value.to_owned()));
+        }
+    }
+    if let Some(line) = start {
+        if !complete {
+            return Err(error(line, "unterminated @sdkconfig block"));
+        }
+        Ok(Some(body))
+    } else {
+        Ok(None)
+    }
+}
+
+fn block_config_key(value: &str) -> Option<&str> {
+    let key = if let Some(unset) = value.strip_prefix("# ") {
+        unset.strip_suffix(" is not set")?
+    } else {
+        value.split_once('=')?.0
+    };
+    let name = key.strip_prefix("CONFIG_")?;
+    (!name.is_empty()
+        && name
+            .bytes()
+            .all(|c| c.is_ascii_uppercase() || c.is_ascii_digit() || c == b'_'))
+    .then_some(key)
+}
+
+#[cfg(test)]
+mod block_tests {
+    use super::*;
+
+    #[test]
+    fn sdkconfig_block_preserves_lines_and_values() {
+        let path = Path::new("main.c");
+        let text = "// heading\n// @sdkconfig\n// CONFIG_X=1000\n// # CONFIG_Y is not set\n// @end-sdkconfig\nint x;\n";
+        assert_eq!(
+            parse_sdkconfig_block(text, path).unwrap().unwrap(),
+            vec![
+                (3, "CONFIG_X=1000".into()),
+                (4, "# CONFIG_Y is not set".into())
+            ]
+        );
+        assert!(
+            parse_sdkconfig_block("int x;\n// @sdkconfig\n// invalid\n", path)
+                .unwrap()
+                .is_none()
+        );
+    }
+
+    #[test]
+    fn sdkconfig_block_errors_name_source_line() {
+        for (text, line) in [
+            (
+                "// @sdkconfig\n// CONFIG_X=y\n// CONFIG_X=n\n// @end-sdkconfig\n",
+                3,
+            ),
+            (
+                "// @sdkconfig\n// CONFIG_X=y\n// # CONFIG_X is not set\n// @end-sdkconfig\n",
+                3,
+            ),
+            ("// @sdkconfig\n// CONFIG_X=y\n", 1),
+            ("// @sdkconfig\n// invalid\n// @end-sdkconfig\n", 2),
+            ("// @sdkconfig\nint x;\n", 2),
+            ("// @sdkconfig\n// @end-sdkconfig\n// @sdkconfig\n", 3),
+        ] {
+            let error = parse_sdkconfig_block(text, Path::new("main.c"))
+                .unwrap_err()
+                .to_string();
+            assert!(error.contains(&format!("main.c:{line}")), "{error}");
+        }
+    }
+}
+
 pub(super) fn write_changed(path: &Path, text: &str) -> Result<()> {
     if std::fs::read_to_string(path).ok().as_deref() != Some(text) {
         std::fs::write(path, text)?;
