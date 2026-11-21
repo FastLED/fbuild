@@ -26,7 +26,7 @@ overwritten. When the registry refuses the droplet's client (any 403; see
 `mirror.RegistryRefused`) the supervisor stops with exit 3 rather than rotating.
 
 Usage:
-    uv run --no-project --script ci/mirror/rotate.py                     # run the supervisor (long-lived)
+    FBUILD_MIRROR_UA='PlatformIO/...' uv run --no-project --script ci/mirror/rotate.py  # run the supervisor (long-lived)
     uv run --no-project --script ci/mirror/rotate.py --status            # print the recorded state, no changes
     uv run --no-project --script ci/mirror/rotate.py --print-user-agent  # the UA the droplet will send
 """
@@ -41,6 +41,7 @@ import sqlite3
 import subprocess
 import sys
 import time
+from collections.abc import Mapping
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -363,6 +364,57 @@ def backup_bucket_manifest(read: BucketCopy) -> str:
     return key
 
 
+BACKUP_PREFIX = STATE_KEY + ".bak-"
+
+
+@dataclass(frozen=True)
+class Backup:
+    """One `_state/manifest.db.bak-*` object; `mtime` is its LastModified."""
+
+    key: str
+    size: int
+    mtime: float
+
+
+def list_backups() -> list[Backup]:
+    """Every state DB backup in the bucket, oldest first (read-only)."""
+    found: list[Backup] = []
+    kwargs: dict[str, Any] = {"Bucket": BUCKET, "Prefix": BACKUP_PREFIX}
+    while True:
+        page = s3().list_objects_v2(**kwargs)
+        for obj in page.get("Contents", []):
+            found.append(
+                Backup(obj["Key"], int(obj["Size"]), obj["LastModified"].timestamp())
+            )
+        if not page.get("IsTruncated"):
+            break
+        kwargs["ContinuationToken"] = page["NextContinuationToken"]
+    return sorted(found, key=lambda b: (b.mtime, b.key))
+
+
+def plan_backup_prune(backups: list[Backup], keep: int) -> list[Backup]:
+    """The backups to delete so only the newest `keep` remain, newest first.
+
+    Pure: deciding is separate from deleting, so a dry run shows exactly what
+    `delete_backups` would remove. At least one backup is always kept, and
+    anything that is not a `.bak-` copy is refused rather than skipped."""
+    if keep < 1:
+        raise ValueError(f"keep must be at least 1, got {keep}")
+    for backup in backups:
+        if not backup.key.startswith(BACKUP_PREFIX):
+            raise ValueError(f"{backup.key} is not a state DB backup")
+    newest_first = sorted(backups, key=lambda b: (b.mtime, b.key), reverse=True)
+    return newest_first[keep:]
+
+
+def delete_backups(doomed: list[Backup]) -> None:
+    for backup in doomed:
+        if not backup.key.startswith(BACKUP_PREFIX):
+            raise ValueError(f"{backup.key} is not a state DB backup")
+        s3().delete_object(Bucket=BUCKET, Key=backup.key)
+        log(f"deleted {backup.key}")
+
+
 def plan_restore() -> Path | None:
     """The DB to restore onto a fresh droplet (the bucket copy), or `None`."""
     WORK.mkdir(parents=True, exist_ok=True)
@@ -646,6 +698,25 @@ def _monitor(ip: str, did: int, rotations: int) -> str | None:
     return None
 
 
+def full_pass_user_agent(
+    env: Mapping[str, str], cargo_toml: Path = mirror.REPO_CARGO_TOML
+) -> str:
+    """The UA for a full pass: `FBUILD_MIRROR_UA`, which must be set explicitly.
+
+    The CDN refused the `fbuild-mirror` UA after a ~102 GB pass. Running the
+    next bulk pass under fbuild's production UA by default would risk the same
+    refusal for every real fbuild client's registry fallback, so the operator
+    has to choose the string. The small incremental pass (`update.py`) keeps
+    the production default (FastLED/fbuild#2040)."""
+    if not env.get(mirror.UA_ENV, "").strip():
+        raise ValueError(
+            f"a full pass needs {mirror.UA_ENV} set explicitly; it does not default"
+            " to fbuild's production User-Agent, which real clients depend on"
+            " (`--print-user-agent` prints that default)"
+        )
+    return mirror.resolve_user_agent(env, cargo_toml)
+
+
 def _preflight() -> str | None:
     """Handle the read-only flags; the UA to run with, or `None` when done."""
     ap = argparse.ArgumentParser()
@@ -655,10 +726,13 @@ def _preflight() -> str | None:
     if args.status:
         print(STATUS.read_text() if STATUS.exists() else "no status yet")
         return None
-    user_agent = mirror.resolve_user_agent(os.environ)
     if args.print_user_agent:
-        print(user_agent)
+        print(mirror.resolve_user_agent(os.environ))
         return None
+    try:
+        user_agent = full_pass_user_agent(os.environ)
+    except ValueError as exc:
+        raise SystemExit(f"error: {exc}") from exc
     if not SSH_KEY_ID:
         raise SystemExit("set FBUILD_MIRROR_SSH_KEY_ID (doctl compute ssh-key list)")
     return user_agent
