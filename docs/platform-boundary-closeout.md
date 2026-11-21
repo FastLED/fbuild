@@ -103,10 +103,10 @@ Ordinary PRs therefore do not run them — the Windows lane's last success befor
 this audit was `6b64d783` (2026-11-01) and the macOS lane's was `cab2098e`
 (2026-08-28). The closeout run is the `ci-full` validation of this PR.
 
-### 5.1 The three-host run caught a Windows-only defect
+### 5.1 The three-host run caught two Windows-only lints
 
 The first `ci-full` run of this audit failed `full / windows / Check (windows-latest)` in
-Clippy, on `main`:
+Clippy, on `d3f6c86c`:
 
 ```
 error: useless conversion to the same type: `path::NormalizedPath`
@@ -114,11 +114,18 @@ error: useless conversion to the same type: `path::NormalizedPath`
 66 |     let mut dirs = vec![NormalizedPath::from(exe_dir)];
 ```
 
-`parent_dir()` already returns `NormalizedPath`, so the `from()` call was an identity
-conversion. It survived normal CI because `platform/windows/**` is compiled only on a
-Windows host and the Linux lanes never see it — which is precisely the gap this matrix is
-meant to close. Fixed in the same PR (`let mut dirs = vec![exe_dir];`); the Windows-target
-`clippy -p fbuild-core --all-targets -- -D warnings` run locally is clean afterwards.
+`parent_dir()` already returns `NormalizedPath`, so the `from()` was an identity conversion.
+Reproducing the lane locally with `clippy --target x86_64-pc-windows-msvc --all-targets`
+found a second one in `handlers/websockets_tests.rs`: `drop()` on `PtyPair`, which has no
+drop glue where pseudo-terminals are unsupported (`clippy::drop_non_drop`).
+
+Neither is reachable from the Linux lanes, because the code lives behind the Windows arm of
+the selector — the exact gap this matrix exists to close, and the reason the two lanes had
+been dark since 2026-11-01 / 2026-08-28. Both were fixed on `main` by **#2122
+(`f0cc1c23`)**: explicit `PtyPair::close()` instead of `drop()`, and the redundant
+conversion removed. A full workspace Windows-target clippy is clean there (exit 0, 0
+errors); Linux is unaffected because the changed handles end at the same point
+(`cargo test -p fbuild-daemon --lib websockets`: 19 passed).
 
 ## 6. Residuals, stated honestly
 
