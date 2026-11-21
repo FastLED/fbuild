@@ -15,7 +15,7 @@
       "github": "SpenceKonde/ATTinyCore",
       "version": "1.5.2",
       "tag_prefix": "",
-      "checksum": null,
+      "checksum": "e3b94d9fc5776e1fdcb48c4fe045fa89a268f35758bc54ed63fabbd66ef5d36d",
       "validation_path": "cores/tiny/Arduino.h"
     },
     "tinymodern": {
@@ -23,7 +23,7 @@
       "github": "SpenceKonde/ATTinyCore",
       "version": "1.5.2",
       "tag_prefix": "",
-      "checksum": null,
+      "checksum": "e3b94d9fc5776e1fdcb48c4fe045fa89a268f35758bc54ed63fabbd66ef5d36d",
       "validation_path": "cores/tinymodern/Arduino.h"
     },
     "dtiny": {
@@ -31,7 +31,7 @@
       "github": "ArminJo/DigistumpArduino",
       "version": "1.7.2",
       "tag_prefix": "",
-      "checksum": null,
+      "checksum": "5bfd9a8917ed362d6b14cb6e31849f301c8445dbc41d0ace97930b7a1fccd1cb",
       "validation_path": "cores/tiny/Arduino.h",
       "core_dir": "tiny"
     },
@@ -40,7 +40,7 @@
       "github": "ArminJo/DigistumpArduino",
       "version": "1.7.2",
       "tag_prefix": "",
-      "checksum": null,
+      "checksum": "5bfd9a8917ed362d6b14cb6e31849f301c8445dbc41d0ace97930b7a1fccd1cb",
       "validation_path": "cores/pro/Arduino.h",
       "core_dir": "pro"
     },
@@ -49,7 +49,7 @@
       "github": "MCUdude/MiniCore",
       "version": "2.2.2",
       "tag_prefix": "v",
-      "checksum": null,
+      "checksum": "5f5084ea031ff3730a727954db9ae68a1a4c91e1e339e83bb2337d63e2f443c6",
       "validation_path": "cores/MCUdude_corefiles/Arduino.h",
       "core_dir": "MCUdude_corefiles"
     },
@@ -94,7 +94,7 @@
       "github": "SpenceKonde/megaTinyCore",
       "version": "2.6.11",
       "tag_prefix": "",
-      "checksum": null,
+      "checksum": "b1ada43f348503b3c7b624790dc5df7bbe90c865f96b03072d57b4d25e7bf634",
       "validation_path": "cores/megatinycore/Arduino.h",
       "core_dir": "megatinycore"
     },
@@ -103,7 +103,7 @@
       "github": "MCUdude/MegaCoreX",
       "version": "1.1.5",
       "tag_prefix": "v",
-      "checksum": null,
+      "checksum": "267b4ff629b47012d83408cdcc45035e40dcd6c4b5d68b36dff34a46bce45b7b",
       "validation_path": "cores/coreX-corefiles/Arduino.h",
       "core_dir": "coreX-corefiles"
     },
@@ -112,7 +112,7 @@
       "github": "arduino/ArduinoCore-megaavr",
       "version": "1.8.8",
       "tag_prefix": "",
-      "checksum": null,
+      "checksum": "81d0e83151e6a97cfb29bc2c84dda41c0f3c8eb0420f6358b610fc679bb405c1",
       "validation_path": "cores/arduino/Arduino.h",
       "core_dir": "arduino",
       "needs_arduino_api": true

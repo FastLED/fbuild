@@ -8,8 +8,16 @@ use std::path::{Path, PathBuf};
 use crate::{CacheSubdir, Framework, PackageBase, PackageInfo};
 
 const ATTINY_CORE_VERSION: &str = "1.5.2";
+// ATTinyCore names the release tag `1.5.2`, with NO `v` prefix (its releases are
+// 1.5.2 / 1.5.1 / 1.5.0; only the old 1.0.x and 1.1.x tags carry one). The
+// `v1.5.2` spelling returned HTTP 404, so every ATTinyCore install failed at
+// download (FastLED/fbuild#2128). URL verified 2026-11-21.
 const ATTINY_CORE_URL: &str =
-    "https://github.com/SpenceKonde/ATTinyCore/archive/refs/tags/v1.5.2.tar.gz";
+    "https://github.com/SpenceKonde/ATTinyCore/archive/refs/tags/1.5.2.tar.gz";
+// SHA-256 of the archive above (20,420,559 bytes), computed 2026-11-21 from the
+// pinned tag. A version bump must recompute it -- `test_url_and_checksum_are_pinned`
+// fails on any unnoticed edit.
+const ATTINY_CORE_SHA256: &str = "e3b94d9fc5776e1fdcb48c4fe045fa89a268f35758bc54ed63fabbd66ef5d36d";
 
 /// ATTinyCore Arduino framework manager.
 pub struct ATTinyCore {
@@ -25,7 +33,7 @@ impl ATTinyCore {
                 ATTINY_CORE_VERSION,
                 ATTINY_CORE_URL,
                 ATTINY_CORE_URL,
-                None, // No checksum verification for now
+                Some(ATTINY_CORE_SHA256),
                 CacheSubdir::Platforms,
                 project_dir,
             ),
@@ -41,7 +49,7 @@ impl ATTinyCore {
                 ATTINY_CORE_VERSION,
                 ATTINY_CORE_URL,
                 ATTINY_CORE_URL,
-                None,
+                Some(ATTINY_CORE_SHA256),
                 CacheSubdir::Platforms,
                 project_dir,
                 cache_root,
@@ -171,6 +179,41 @@ mod tests {
         let tmp = tempfile::TempDir::new().unwrap();
         std::fs::create_dir_all(tmp.path().join("cores/tiny")).unwrap();
         assert_eq!(find_core_root(tmp.path()), tmp.path().to_path_buf());
+    }
+
+    /// Both constants are pinned exactly, so moving either one is a deliberate
+    /// edit that shows up in review.
+    ///
+    /// The URL was `.../tags/v1.5.2.tar.gz` (404, the tag has no `v`) and the
+    /// checksum was `None` -- an unverified download -- until FastLED/fbuild#2128.
+    #[test]
+    fn test_url_and_checksum_are_pinned() {
+        assert_eq!(
+            ATTINY_CORE_URL,
+            "https://github.com/SpenceKonde/ATTinyCore/archive/refs/tags/1.5.2.tar.gz"
+        );
+        assert_eq!(ATTINY_CORE_SHA256.len(), 64);
+        assert!(
+            ATTINY_CORE_SHA256
+                .chars()
+                .all(|c| c.is_ascii_digit() || ('a'..='f').contains(&c)),
+            "checksum must be 64 lowercase hex digits: {ATTINY_CORE_SHA256}"
+        );
+        assert_eq!(
+            ATTINY_CORE_SHA256,
+            "e3b94d9fc5776e1fdcb48c4fe045fa89a268f35758bc54ed63fabbd66ef5d36d"
+        );
+    }
+
+    /// The pin has to reach `PackageBase`, not just sit in the module: the
+    /// constructor is what the installer reads.
+    #[test]
+    fn test_constructor_carries_the_checksum() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let core = ATTinyCore::new(tmp.path());
+        let info = core.get_info();
+        assert_eq!(info.checksum.as_deref(), Some(ATTINY_CORE_SHA256));
+        assert_eq!(info.url, ATTINY_CORE_URL);
     }
 
     #[test]
