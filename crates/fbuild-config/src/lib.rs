@@ -7,6 +7,7 @@
 //! - MCU memory specs (flash/RAM limits)
 
 pub mod board;
+pub mod github_url;
 pub mod ini_parser;
 pub mod lib_source;
 pub mod mcu;
