@@ -207,6 +207,8 @@ uv run --no-project python ci/render_workflows.py
 git add -p .github/workflows ci/
 ```
 
+A board entry marked `"matrix_only": true` has no `build-<board>.yml` of its own: its `workflow` value is only a unique id (no `.yml`). It is built by the `ci-full` matrix and by the path-selected PR boards, but the nightly dispatcher skips it and it has no README badge. Use it to give a board CI coverage without adding a workflow file (the Portenta C33, FastLED/fbuild#2131).
+
 The `ci-workflow-drift.yml` workflow runs `render_workflows.py --check` on every PR and fails if a committed workflow does not match the SOT.
 
 ### Forcing a build

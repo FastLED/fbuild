@@ -111,6 +111,18 @@ def validate_source_paths(sot: dict, common_paths: list[str]) -> None:
         raise ValueError(f"SOT contains paths that match nothing:\n{details}")
 
 
+def has_workflow_file(board: dict) -> bool:
+    """Whether a board owns a standalone `build-<board>.yml`.
+
+    A `"matrix_only": true` board has none: it is built from the CI tier
+    matrices over template_build.yml (ci-full, and the path-selected PR
+    boards) but is never dispatched by nightly-platforms.yml and has no README
+    badge. Its `workflow` value is only a unique id. That is how a board gets
+    CI coverage without adding a workflow file (FastLED/fbuild#2131).
+    """
+    return not board.get("matrix_only", False)
+
+
 def render_paths_for_board(board: dict, families: dict, common_paths: list[str]) -> list[str]:
     family = board["family"]
     if family not in families:
@@ -131,7 +143,8 @@ def render_paths_for_board(board: dict, families: dict, common_paths: list[str])
     # Non-core boards are covered by the nightly sweep.
     if board.get("core", False):
         paths.extend(common_paths)
-    paths.append(f".github/workflows/{board['workflow']}")
+    if has_workflow_file(board):
+        paths.append(f".github/workflows/{board['workflow']}")
 
     seen: set[str] = set()
     deduped: list[str] = []
@@ -1175,7 +1188,12 @@ def main() -> int:  # noqa: C901
         print(str(exc), file=sys.stderr)
         return 1
 
-    sot_workflows = {b["workflow"] for b in boards}
+    ids = [b["workflow"] for b in boards]
+    if len(ids) != len(set(ids)):
+        print("SOT has duplicate `workflow` ids", file=sys.stderr)
+        return 1
+    file_boards = [b for b in boards if has_workflow_file(b)]
+    sot_workflows = {b["workflow"] for b in file_boards}
     on_disk = {p.name for p in WORKFLOWS_DIR.glob("build-*.yml")}
     missing_from_sot = sorted(on_disk - sot_workflows)
     missing_on_disk = sorted(sot_workflows - on_disk)
@@ -1192,7 +1210,7 @@ def main() -> int:  # noqa: C901
 
     drift: list[Path] = []
     updated: list[Path] = []
-    for board in boards:
+    for board in file_boards:
         path = WORKFLOWS_DIR / board["workflow"]
         old = path.read_text(encoding="utf-8")
         new_on = render_on_block(board, families, common_paths)

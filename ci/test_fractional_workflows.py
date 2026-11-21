@@ -261,7 +261,7 @@ class FractionalWorkflowTests(unittest.TestCase):
         return yaml.safe_load((render_workflows.WORKFLOWS_DIR / name).read_text())
 
     def test_board_workflows_have_no_independent_pr_or_main_trigger(self):
-        for board in render_workflows.load_sot()["boards"]:
+        for board in filter(render_workflows.has_workflow_file, render_workflows.load_sot()["boards"]):
             with self.subTest(board=board["workflow"]):
                 events = self.load(board["workflow"])[True]
                 self.assertNotIn("push", events)
@@ -419,7 +419,7 @@ class FractionalWorkflowTests(unittest.TestCase):
         self.assertIn('fbuild-run-id="$GITHUB_RUN_ID"', run)
 
     def test_board_workflows_reuse_a_dispatched_fbuild_binary(self):
-        for board in render_workflows.load_sot()["boards"]:
+        for board in filter(render_workflows.has_workflow_file, render_workflows.load_sot()["boards"]):
             with self.subTest(workflow=board["workflow"]):
                 wf = self.load(board["workflow"])
                 self.assertIn("fbuild-run-id", wf[True]["workflow_dispatch"]["inputs"])

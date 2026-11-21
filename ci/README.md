@@ -140,7 +140,7 @@ fail coverage. This policy is tracked in [#1698](https://github.com/FastLED/fbui
 - **`render_workflows.py`** -- Re-renders the `on:` and `concurrency:` blocks of `.github/workflows/build-*.yml` and the full `nightly-platforms.yml` from `board_families.json` + `ci_common_paths.txt`. CI invokes `--check` to enforce no drift. See [docs/DEVELOPMENT.md](../docs/DEVELOPMENT.md#ci-per-board-build-triggers) and FastLED/fbuild#835.
 - **`select_boards.py`** -- Picks which `build-<board>.yml` workflows `nightly-platforms.yml` dispatches: path-selected from a push diff, or `--all` for the nightly badge refresh. Tested by `test_select_boards.py`.
 - **`test_setup_soldr_cache_keys.py`** -- Every saving `zackees/setup-soldr` step must set a `cache-key-suffix` unique per runner; jobs sharing a key race to own one immutable cache entry.
-- **`board_families.json`** -- SOT: per-board metadata (workflow / test_dir / env_name / family) plus the family → crate-path mapping consumed by `render_workflows.py`.
+- **`board_families.json`** -- SOT: per-board metadata (workflow / test_dir / env_name / family) plus the family → crate-path mapping consumed by `render_workflows.py`. A `"matrix_only": true` board has no `build-*.yml`; it runs only from the CI tier matrices.
 - **`ci_common_paths.txt`** -- SOT: paths whose changes force-run *every* per-board build workflow.
 - **`test.py`** -- Workspace test runner with `--full` (stress + integration) and per-crate filtering
 - **`trampoline.py`** -- Development helpers that run fbuild workspace binaries through soldr-managed Cargo
