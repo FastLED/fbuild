@@ -103,6 +103,23 @@ Ordinary PRs therefore do not run them — the Windows lane's last success befor
 this audit was `6b64d783` (2026-11-01) and the macOS lane's was `cab2098e`
 (2026-08-28). The closeout run is the `ci-full` validation of this PR.
 
+### 5.1 The three-host run caught a Windows-only defect
+
+The first `ci-full` run of this audit failed `full / windows / Check (windows-latest)` in
+Clippy, on `main`:
+
+```
+error: useless conversion to the same type: `path::NormalizedPath`
+  --> crates\fbuild-core\src\platform\windows\runtime.rs:66:25
+66 |     let mut dirs = vec![NormalizedPath::from(exe_dir)];
+```
+
+`parent_dir()` already returns `NormalizedPath`, so the `from()` call was an identity
+conversion. It survived normal CI because `platform/windows/**` is compiled only on a
+Windows host and the Linux lanes never see it — which is precisely the gap this matrix is
+meant to close. Fixed in the same PR (`let mut dirs = vec![exe_dir];`); the Windows-target
+`clippy -p fbuild-core --all-targets -- -D warnings` run locally is clean afterwards.
+
 ## 6. Residuals, stated honestly
 
 - macOS coverage is `cargo test --workspace` on two runners; there is no
