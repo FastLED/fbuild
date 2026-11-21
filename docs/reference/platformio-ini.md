@@ -177,13 +177,26 @@ board_build.build_system = espidf
 
 - `native` (default) keeps the Arduino path unchanged.
 - `espidf` provisions the pinned ESP-IDF release (source, toolchains, CMake,
-  Ninja, Python environment — ~1.8 GB on first use), runs
-  `idf.py set-target <chip>` and `idf.py build`, and publishes
+  Ninja, Python environment), runs `idf.py set-target <chip>` and
+  `idf.py build`, and publishes
   `bin`/`elf`/`map`/`bootloader.bin`/`partition-table.bin`/`sdkconfig`/
   `compile_commands.json` under `<build>/idf/`, with an `idf-artifacts.json`
   index recording each file's byte count.
-- Only the `esp32s3` target is provisioned today; another MCU is a
-  configuration error naming the chip.
+- The chip comes from the board. Provisioned targets and their first-use
+  install size:
+
+  | MCU | Toolchain profile | First install |
+  |---|---|---|
+  | `esp32s3` | Xtensa | ~1.8 GB |
+  | `esp32c3`, `esp32c5`, `esp32c6`, `esp32p4` | RISC-V | ~2.8 GB |
+
+  The two profiles share the source tree, the Python environment, CMake and
+  Ninja, so a machine that builds both families pays for those once. Any other
+  MCU is a configuration error naming the chip.
+- `esp32p4` is built for pre-rev-3 silicon only (boards whose `chip_variant` is
+  `esp32p4_es`, e.g. `esp32-p4-evboard`): the pinned ESP-IDF v5.5.1 supports chip
+  revisions up to v1.99. A rev-3 board (`esp32-p4_r3`) is refused before anything
+  is downloaded.
 
 A failing or timed-out delegated build reports its stage, argv, exit code and
 the tail of both streams.
