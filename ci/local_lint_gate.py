@@ -18,9 +18,11 @@ FastLED/fbuild#1793 (fleet policy RUST-033).
 
 from __future__ import annotations
 
+import os
 import platform
 import subprocess
 import sys
+import tomllib
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -49,5 +51,31 @@ def run_lint() -> None:
     raise SystemExit(result.returncode)
 
 
+def run_cross_clippy() -> None:
+    """The Ubuntu replay checks host Clippy; this lane checks format and cross Clippy."""
+    if platform.system() != "Linux" or platform.machine().lower() not in {"x86_64", "amd64"}:
+        raise SystemExit("cross Clippy lane requires a Linux x86-64 host")
+    from ci.local_gate import load_aware_test_threads
+
+    manifest = tomllib.loads((ROOT / "Cargo.toml").read_text(encoding="utf-8"))
+    targets = manifest["workspace"]["metadata"]["soldr"]["targets"]
+    threads = load_aware_test_threads(len(os.sched_getaffinity(0)), os.getloadavg()[0])
+    env = {**os.environ, "CARGO_BUILD_JOBS": str(threads)}
+    # These checks type-check abi3 targets without linking or running the
+    # embedded Python tests. The Ubuntu lane runs those with real CPython.
+    cross_env = {**env, "PYO3_CROSS": "1", "PYO3_CROSS_PYTHON_VERSION": "3.10"}
+    subprocess.run(["soldr", "cargo", "fmt", "--all", "--check"], cwd=ROOT, env=env, check=True)
+    for target in targets:
+        if target == "x86_64-unknown-linux-gnu":
+            continue
+        subprocess.run(
+            ["soldr", "cargo", "clippy", "--workspace", "--all-targets", "--target", target, "--", "-D", "warnings"],
+            cwd=ROOT, env=cross_env, check=True,
+        )
+
+
 if __name__ == "__main__":
-    run_lint()
+    if sys.argv[1:] == ["--cross-clippy"]:
+        run_cross_clippy()
+    else:
+        run_lint()

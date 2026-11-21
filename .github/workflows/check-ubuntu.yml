@@ -1,7 +1,16 @@
 name: Check Ubuntu
 
 on:
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      ref:
+        type: string
+        required: false
+        default: ""
+      glibc_floor:
+        description: Run the release glibc cross-link check
+        type: boolean
+        default: true
   workflow_call:
     inputs:
       ref:
@@ -122,7 +131,11 @@ jobs:
         run: uv run --no-project python ci/check_usb_vidpid_literals.py
       - name: Test
         id: tests
-        run: uv run --no-project python ci/test_cache_status.py -- soldr cargo test --workspace
+        run: |
+          # APE tests need owner-controlled temp directories. Bosn's runner
+          # starts with umask 0000, while hosted Ubuntu defaults to 0022.
+          umask 022
+          uv run --no-project python ci/test_cache_status.py -- soldr cargo test --workspace
       - name: Test optional SDK library linkage with native GCC LTO
         run: |
           soldr cargo test -p fbuild-build-engine --lib optional_framework_archive_preserves_only_referenced_initializers -- --ignored
@@ -147,7 +160,7 @@ jobs:
     # glibc-2.17 sysroot, then read the linked symbol tables. No new workflow
     # file: this is another job in the existing Ubuntu lane.
     name: glibc 2.17 floor (linux x86_64 + aarch64)
-    if: ${{ github.event_name == 'workflow_dispatch' || inputs.glibc_floor }}
+    if: ${{ inputs.glibc_floor }}
     runs-on: ubuntu-latest
     # Cold cache: two release cross-links of fbuild-cli + fbuild-daemon.
     # Measured ~16 min for the daemon alone on a loaded 16-core host with an

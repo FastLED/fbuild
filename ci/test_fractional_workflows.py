@@ -146,6 +146,8 @@ class FractionalWorkflowTests(unittest.TestCase):
         steps = self.load("ci-minimal.yml")["jobs"]["verify"]["steps"]
         verifier = next(step for step in steps if "local-gate verify" in step.get("run", ""))
         self.assertNotIn("if", verifier)
+        contract = tomllib.loads((render_workflows.REPO / "ci.toml").read_text())
+        self.assertEqual("git+https://github.com/" + contract["linter"], verifier["env"]["CI_LINT_SOURCE"])
         self.assertEqual("${{ github.event_name }}", verifier["env"]["GATE_EVENT"])
         # Run the generated shell decision itself. A refused attestation must
         # report a warning on a PR; dispatch does not require one.
@@ -154,7 +156,7 @@ class FractionalWorkflowTests(unittest.TestCase):
             with self.subTest(event=event), tempfile.TemporaryFile() as stream:
                 result = subprocess.run(
                     ["bash", "-e", "-c", script],
-                    env={**os.environ, "GATE_EVENT": event},
+                    env={**os.environ, "GATE_EVENT": event, "CI_LINT_SOURCE": verifier["env"]["CI_LINT_SOURCE"]},
                     stdout=stream, stderr=stream,
                 )
                 self.assertEqual(expected, result.returncode)
@@ -185,10 +187,16 @@ class FractionalWorkflowTests(unittest.TestCase):
             ("check", "soldr cargo test --workspace"),
             ("python-facade-tests", "soldr cargo test -p fbuild-python --test python_facades -- --ignored"),
         ):
-            steps = [step for step in jobs[job_id]["steps"] if step.get("run") == command or step.get("run") == "uv run --no-project python ci/test_cache_status.py -- " + command]
+            allowed = {command, "uv run --no-project python ci/test_cache_status.py -- " + command}
+            steps = [
+                step for step in jobs[job_id]["steps"]
+                if step.get("run", "").strip().splitlines()[-1:] and step["run"].strip().splitlines()[-1] in allowed
+            ]
             self.assertEqual(1, len(steps))
             self.assertNotIn("if", steps[0])
             self.assertFalse(steps[0].get("continue-on-error", False))
+            if command == "soldr cargo test --workspace":
+                self.assertIn("umask 022", steps[0]["run"].splitlines())
 
     def test_release_cross_link_is_a_sibling_job(self):
         minimal = self.load("ci-minimal.yml")["jobs"]
@@ -231,7 +239,7 @@ class FractionalWorkflowTests(unittest.TestCase):
         verdict must run Dylint, never skip it."""
         minimal = self.load("ci-minimal.yml")["jobs"]
         prooft = minimal["prooft"]
-        self.assertEqual(["python3 -P ci/prooft_verify.py"], [s["run"] for s in prooft["steps"] if "run" in s])
+        self.assertEqual(["uv run --no-project python -m ci.prooft_verify"], [s["run"] for s in prooft["steps"] if "run" in s])
         plan = next(s for s in prooft["steps"] if s.get("id") == "plan")
         self.assertEqual("hashFiles('ci/prooft_verify.py') != ''", plan["if"], "a base without the verifier must not fail the job")
         checkout = prooft["steps"][0]
@@ -380,7 +388,11 @@ class FractionalWorkflowTests(unittest.TestCase):
             self.assertEqual(f"./.github/workflows/{workflow_name}", full["jobs"][job]["uses"])
             self.assertEqual("${{ needs.verify.outputs.candidate_sha }}", full["jobs"][job]["with"]["ref"])
             self.assertIn("workflow_call", self.load(workflow_name)[True])
-            self.assertEqual("${{ inputs.ref }}", self.load(workflow_name)["jobs"][next(iter(self.load(workflow_name)["jobs"]))]["steps"][0]["with"]["ref"])
+            jobs = self.load(workflow_name)["jobs"]
+            if workflow_name == "fmt.yml":
+                self.assertEqual("${{ inputs.ref || github.event.pull_request.head.sha }}", jobs["fmt"]["steps"][0]["with"]["ref"])
+            else:
+                self.assertEqual("${{ inputs.ref }}", next(iter(jobs.values()))["steps"][0]["with"]["ref"])
             self.assertIn("inputs.ref != ''", self.load(workflow_name)["concurrency"]["group"])
 
     def test_fast_matrix_matches_selected_boards(self):
@@ -533,10 +545,10 @@ class FractionalWorkflowTests(unittest.TestCase):
     def test_selected_coverage_requires_every_requested_tier(self):
         minimal = self.load("ci-minimal.yml")
         job = minimal["jobs"]["selected-coverage"]
-        self.assertEqual({"linux", "test", "full", "pr_boards"}, set(job["needs"]))
+        self.assertEqual({"linux", "prooft", "test", "full", "pr_boards"}, set(job["needs"]))
         self.assertIn("always()", job["if"])
         script = job["steps"][0]["run"]
-        base = {**os.environ, "LINUX": "success", "TEST_SELECTED": "false", "TEST_RESULT": "skipped", "FULL_SELECTED": "false", "FULL_RESULT": "skipped", "FULL_COVERAGE": "", "PR_BOARDS": "skipped"}
+        base = {**os.environ, "LINUX": "success", "LINUX_ATTESTED": "false", "TEST_SELECTED": "false", "TEST_RESULT": "skipped", "FULL_SELECTED": "false", "FULL_RESULT": "skipped", "FULL_COVERAGE": "", "PR_BOARDS": "skipped"}
         cases = [
             ({}, 0),
             ({"TEST_SELECTED": "true", "TEST_RESULT": "skipped"}, 1),
@@ -546,6 +558,9 @@ class FractionalWorkflowTests(unittest.TestCase):
             ({"FULL_SELECTED": "true", "FULL_RESULT": "success", "FULL_COVERAGE": "true", "LINUX": "skipped"}, 0),
             ({"TEST_SELECTED": "true", "TEST_RESULT": "skipped", "FULL_SELECTED": "true", "FULL_RESULT": "success", "FULL_COVERAGE": "true", "LINUX": "skipped"}, 0),
             ({"LINUX": "failure"}, 1),
+            ({"LINUX": "skipped"}, 1),
+            ({"LINUX": "skipped", "LINUX_ATTESTED": "true"}, 0),
+            ({"LINUX": "failure", "LINUX_ATTESTED": "true"}, 1),
             ({"PR_BOARDS": "success"}, 0),
             ({"PR_BOARDS": "failure"}, 1),
             ({"PR_BOARDS": "cancelled"}, 1),

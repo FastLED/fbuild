@@ -4,7 +4,7 @@
 run = ["uv", "run", "--no-project", "--python", "3.12", "python", "-m", "ci.local_gate"]
 verify = "ci-minimal.yml:verify"
 # cancel-superseded (GEN-022, ci.yml#409) runs only on merge_group, first, with no `needs:`.
-verify-exempt = ["cancel-superseded"]
+verify-exempt = ["cancel-superseded", "prooft"]
 mode = "shadow"
 
 [gate.lanes.linux-minimal]
@@ -20,18 +20,18 @@ mode = "minimal"
 
 [[gate.replay.jobs]]
 source-job = "check-ubuntu.yml:check"
-key = "linux/Check Ubuntu/Check (ubuntu-latest)"
+key = "Check (ubuntu-latest)"
 steps = ["Checkout source", "Verify candidate SHA", "Set up uv", "Select workspace test interpreter", "Setup soldr", "Clippy", "Check tracked Python complexity ratchet", "Check tracked Python types", "Test cold-build disk provisioning", "Lint subprocess spawns", "Guard production USB VID/PID catalogue literals", "Test", "Test optional SDK library linkage with native GCC LTO", "Test library assembly and archive policies with native GCC", "Test GNU linker overflow summaries", "Test large library archive"]
 lanes = ["linux-minimal"]
 
 [[gate.replay.jobs]]
 source-job = "check-ubuntu.yml:python-facade-tests"
-key = "linux/Check Ubuntu/Python facade tests (ubuntu-latest)"
+key = "Python facade tests (ubuntu-latest)"
 steps = ["Checkout source", "Verify candidate SHA", "Set up uv", "Setup soldr", "Run embedded-CPython facade tests", "Test (python facades, --ignored)"]
 lanes = ["linux-minimal"]
 
-# The release cross-link is declared but not executed for this lane: ci-minimal
-# passes a literal `glibc_floor: false`, so the job exists in the expanded graph
+# The release cross-link is declared but the replay disables it with
+# `glibc_floor: false`, so the job exists in the expanded graph
 # as a skipped job and derives no required checks. Omitting `steps` is what asks
 # for that derivation -- a skipped job must not demand proof it never produces.
 [[gate.replay.jobs]]
@@ -40,9 +40,10 @@ lanes = ["linux-minimal"]
 
 [[gate.replay.selections]]
 lane = "linux-minimal"
-job = "linux"
+workflow = "check-ubuntu.yml"
+all-jobs = true
 event = "workflow_dispatch"
-inputs = {}
+inputs = { glibc_floor = "false" }
 
 [gate.lanes.dylint]
 run = ["uv", "run", "--no-project", "--python", "3.12", "python", "-m", "ci.local_gate", "--lane", "dylint"]
@@ -73,18 +74,14 @@ lanes = ["dylint"]
 source-job = "dylint.yml:queue-cache-janitor"
 lanes = ["dylint"]
 
-# `dylint.yml` has no `pull_request` trigger since #79a5200a: PRs, the merge
-# queue and main pushes reach it only through a caller's `workflow_call`, so a
-# pull_request replay of the file selects no stages at all (FastLED/fbuild#2086).
-# Its own `workflow_dispatch` trigger replays every job of the file; the
-# called-workflow call site (`ci-minimal.yml:dylint`) is not usable here because
-# its `prooft` dependency has unnamed steps no declaration can attest.
+# Replay Dylint directly with its dispatch input for all shipping targets
+# and UI fixtures. The hosted caller's prooft dependency is separate.
 [[gate.replay.selections]]
 lane = "dylint"
 workflow = "dylint.yml"
 all-jobs = true
 event = "workflow_dispatch"
-inputs = {}
+inputs = { all_targets = "true" }
 
 # RUST-033 (FastLED/fbuild#1793): the whole lint phase as one lane. soldr runs
 # rustfmt, Clippy for the host and every declared [workspace.metadata.soldr]

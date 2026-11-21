@@ -4,7 +4,12 @@ name: Dylint
 # manual dispatch check Linux, Windows, and macOS targets on one Linux builder.
 
 on:
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      all_targets:
+        description: Cover every soldr shipping target and run all lint UI tests
+        type: boolean
+        default: false
   workflow_call:
     inputs:
       ref:
@@ -173,11 +178,13 @@ jobs:
       - name: Test Dylint libraries
         # UI fixtures execute on the Linux host; workspace checks below use
         # the same host lint libraries against each platform target.
+        env:
+          ALL_TARGETS: ${{ inputs.all_targets }}
         run: |
           # UI fixtures test the lint implementations themselves. Repeating
           # all 27 suites on a workflow-only or application-only PR spends
           # minutes compiling their separate test-profile trees.
-          if git diff --quiet FETCH_HEAD HEAD -- dylints; then
+          if [ "$ALL_TARGETS" != true ] && git diff --quiet FETCH_HEAD HEAD -- dylints; then
             echo "Dylint sources unchanged; skipping library UI fixtures"
             exit 0
           fi
@@ -209,6 +216,7 @@ jobs:
           done < <(find dylints -mindepth 2 -maxdepth 2 -name Cargo.toml | sort)
       - name: Run dylint over workspace
         env:
+          ALL_TARGETS: ${{ inputs.all_targets }}
           FULL_TARGETS: ${{ inputs.ref != '' || github.event_name == 'workflow_dispatch' }}
           # The platform-boundary check below reads the observation TSVs a
           # real Dylint pass writes. A soldr verdict hit (same inputs as an
@@ -243,11 +251,18 @@ jobs:
             echo "platform-boundary baseline is empty: no cross-target passes needed"
           fi
           targets=(x86_64-unknown-linux-gnu)
-          if test "$FULL_TARGETS" = true && test "${#platform_packages[@]}" -gt 0; then
+          if test "$ALL_TARGETS" = true; then
+            shipping_targets="$(uv run --no-project python -c 'import tomllib; print(*tomllib.load(open("Cargo.toml", "rb"))["workspace"]["metadata"]["soldr"]["targets"], sep="\n")')"
+            mapfile -t targets <<< "$shipping_targets"
+          elif test "$FULL_TARGETS" = true && test "${#platform_packages[@]}" -gt 0; then
             targets+=(x86_64-pc-windows-msvc x86_64-apple-darwin)
           fi
           for triple in "${targets[@]}"; do
-            if test "$triple" = x86_64-unknown-linux-gnu; then
+            cross_env=()
+            if test "$ALL_TARGETS" = true && test "$triple" != x86_64-unknown-linux-gnu; then
+              cross_env=(PYO3_CROSS=1 PYO3_CROSS_PYTHON_VERSION=3.10)
+            fi
+            if test "$ALL_TARGETS" = true || test "$triple" = x86_64-unknown-linux-gnu; then
               package_args=(--workspace)
             else
               package_args=()
@@ -258,7 +273,7 @@ jobs:
             observed="$PWD/target/platform-boundary-dylint-observed-$triple.tsv"
             export FBUILD_PLATFORM_BOUNDARY_OBSERVED="$observed"
             rm -f "$observed"
-            if ! env -u RUSTUP_TOOLCHAIN soldr dylint --all -- "${package_args[@]}" --all-targets --target "$triple"; then
+            if ! env -u RUSTUP_TOOLCHAIN "${cross_env[@]}" soldr dylint --all -- "${package_args[@]}" --all-targets --target "$triple"; then
               status=1
               continue
             fi

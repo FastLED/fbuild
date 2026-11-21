@@ -4,7 +4,14 @@ import unittest
 from dataclasses import replace
 from pathlib import Path
 
-from ci.local_gate import JsonValue, JobProof, RunProof, RunSelection, verify_run
+from ci.local_gate import (
+    JsonValue,
+    JobProof,
+    RunProof,
+    RunSelection,
+    load_aware_test_threads,
+    verify_run,
+)
 
 
 class RunProofTests(unittest.TestCase):
@@ -17,19 +24,20 @@ class RunProofTests(unittest.TestCase):
             None,
             "act",
             "0.2.89-act2.2",
-            ".github/workflows/ci-minimal.yml",
-            "linux",
+            ".github/workflows/check-ubuntu.yml",
+            None,
             "minimal",
             "workflow_dispatch",
             "done",
             "success",
             0,
-            2,
-            2,
+            3,
+            3,
             0,
             (
                 JobProof("check", "completed", "success"),
                 JobProof("python-facade-tests", "completed", "success"),
+                JobProof("glibc-floor", "completed", "skipped"),
             ),
         )
 
@@ -44,13 +52,13 @@ class RunProofTests(unittest.TestCase):
             "engine": "act",
             "act_version": "0.2.89-act2.2",
             "workflow": self.proof.workflow,
-            "job": "linux",
+            "job": None,
             "mode": "minimal",
             "event": "workflow_dispatch",
             "state": "done",
             "conclusion": "success",
             "exit_code": 0,
-            "jobs": {"total": 2, "completed": 2, "failed": 0},
+            "jobs": {"total": 3, "completed": 3, "failed": 0},
             "tree": {
                 "malformed_lines": 0,
                 "groups": [
@@ -88,7 +96,7 @@ class RunProofTests(unittest.TestCase):
         verify_run(self.proof, self.root, self.sha)
         with self.assertRaises(ValueError):
             verify_run(
-                replace(self.proof, total=3, completed=3,
+                replace(self.proof, total=4, completed=4,
                         jobs=(*self.proof.jobs, JobProof("verify", "completed", "success"))),
                 self.root, self.sha,
             )
@@ -122,10 +130,10 @@ class RunProofTests(unittest.TestCase):
     def test_declared_event_confined_job_must_skip_exactly(self) -> None:
         selection = RunSelection(
             self.proof.workflow,
-            "linux",
+            None,
             "workflow_dispatch",
             frozenset({"check", "python-facade-tests"}),
-            frozenset({"queue-cache-janitor"}),
+            frozenset({"queue-cache-janitor", "glibc-floor"}),
         )
         skipped = RunProof(
             self.proof.workspace,
@@ -140,8 +148,8 @@ class RunProofTests(unittest.TestCase):
             "done",
             "success",
             0,
-            3,
-            3,
+            4,
+            4,
             0,
             (
                 *self.proof.jobs,
@@ -161,3 +169,10 @@ class RunProofTests(unittest.TestCase):
     def test_wrong_event_does_not_prove_dispatch_gate(self) -> None:
         with self.assertRaises(ValueError):
             verify_run(replace(self.proof, event="pull_request"), self.root, self.sha)
+
+
+class LoadAwareTests(unittest.TestCase):
+    def test_busy_and_idle_hosts(self) -> None:
+        for cpus, load, wanted in ((16, 0, 16), (16, 32, 8), (16, 160, 1), (1, 100, 1)):
+            with self.subTest(cpus=cpus, load=load):
+                self.assertEqual(wanted, load_aware_test_threads(cpus, load))
